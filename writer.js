@@ -1,0 +1,1 @@
+const fs = require("fs"); const content = Buffer.from(process.argv[2], "base64").toString("utf8"); fs.writeFileSync("src/components/electrician-tools/site-safety/PhotoDocumentation.tsx", content); console.log("Written:", content.length);

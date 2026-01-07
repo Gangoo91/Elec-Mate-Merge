@@ -40,19 +40,28 @@ interface PhotoDoc {
   created_at: string;
 }
 
+const categoryOptions: IOSSelectOption[] = [
+  { value: "safety", label: "Safety Hazard", description: "Document safety concerns" },
+  { value: "progress", label: "Progress", description: "Work progress photos" },
+  { value: "electrical", label: "Electrical", description: "Electrical installations" },
+  { value: "before", label: "Before", description: "Before work started" },
+  { value: "after", label: "After", description: "Completed work" },
+  { value: "issue", label: "Issue", description: "Problems found" },
+  { value: "inspection", label: "Inspection", description: "Inspection documentation" },
+  { value: "other", label: "Other", description: "Miscellaneous" }
+];
+
 const PhotoDocumentation = () => {
   return (
-    <Card className="bg-card border-border">
+    <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Camera className="h-5 w-5 text-primary" />
+          <Camera className="h-5 w-5" />
           Photo Documentation
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-muted-foreground">
-          Photo documentation feature coming soon. Capture and organize site photos with GPS tagging and categorization.
-        </p>
+        <p className="text-muted-foreground">Photo documentation feature coming soon.</p>
       </CardContent>
     </Card>
   );

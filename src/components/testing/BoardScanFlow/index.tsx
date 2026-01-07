@@ -10,6 +10,7 @@
 import React, { useState, useCallback } from 'react';
 import { useStreamingBoardAnalysis } from '@/hooks/useStreamingBoardAnalysis';
 import { useOrientation } from '@/hooks/useOrientation';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { CaptureScreen } from './CaptureScreen';
 import { AnalyzingScreen } from './AnalyzingScreen';
 import { ResultsPreview } from './ResultsPreview';
@@ -116,47 +117,43 @@ export const BoardScanFlow: React.FC<BoardScanFlowProps> = ({
     });
   }, [capturedImages, onComplete]);
 
-  // Render current step
-  switch (step) {
-    case 'capture':
-      return (
-        <CaptureScreen
-          onCapture={handleCapture}
-          onCancel={onCancel}
-          isMobile={isMobile}
-        />
-      );
-
-    case 'analyzing':
-      return (
-        <AnalyzingScreen
-          images={capturedImages}
-          progress={analysis.progress}
-          stage={analysis.stage}
-          stageMessage={analysis.stageMessage}
-          board={analysis.board as BoardInfo | null}
-          circuits={analysis.circuits as DetectedCircuit[]}
-          warnings={analysis.warnings}
-          onCancel={handleCancelAnalysis}
-        />
-      );
-
-    case 'results':
-      return (
-        <ResultsPreview
-          images={capturedImages}
-          board={analysis.board as BoardInfo | null}
-          circuits={analysis.circuits as DetectedCircuit[]}
-          onAccept={handleAccept}
-          onRescan={handleRescan}
-          onCancel={onCancel}
-          isMobile={isMobile}
-        />
-      );
-
-    default:
-      return null;
-  }
+  // Render current step inside Sheet
+  return (
+    <Sheet open={true} onOpenChange={(open) => !open && onCancel()}>
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+        {step === 'capture' && (
+          <CaptureScreen
+            onCapture={handleCapture}
+            onCancel={onCancel}
+            isMobile={isMobile}
+          />
+        )}
+        {step === 'analyzing' && (
+          <AnalyzingScreen
+            images={capturedImages}
+            progress={analysis.progress}
+            stage={analysis.stage}
+            stageMessage={analysis.stageMessage}
+            board={analysis.board as BoardInfo | null}
+            circuits={analysis.circuits as DetectedCircuit[]}
+            warnings={analysis.warnings}
+            onCancel={handleCancelAnalysis}
+          />
+        )}
+        {step === 'results' && (
+          <ResultsPreview
+            images={capturedImages}
+            board={analysis.board as BoardInfo | null}
+            circuits={analysis.circuits as DetectedCircuit[]}
+            onAccept={handleAccept}
+            onRescan={handleRescan}
+            onCancel={onCancel}
+            isMobile={isMobile}
+          />
+        )}
+      </SheetContent>
+    </Sheet>
+  );
 };
 
 export default BoardScanFlow;

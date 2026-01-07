@@ -1,118 +1,219 @@
-import { ArrowLeft, BookOpen, Shield, Eye, Zap, TestTube, FileCheck, GraduationCap, ClipboardCheck } from 'lucide-react';
+import { ArrowLeft, BookOpen, Shield, Link2, Zap, CircleDot, FileCheck, ToggleRight, Eye, ChevronRight, Clock, Target, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+
+const TITLE = "Inspection & Testing Course - Electrical Upskilling";
+const DESCRIPTION = "Master electrical inspection and testing with our comprehensive BS 7671 compliant course. 8 modules covering safe isolation, continuity, insulation resistance, earth fault loop, RCD testing, and certification.";
 
 const InspectionTesting = () => {
+  useSEO({ title: TITLE, description: DESCRIPTION });
+
   const modules = [
     {
       id: 1,
       title: "Introduction to Inspection & Testing",
-      description: "Essential foundation knowledge and regulatory requirements for electrical inspection and testing",
+      description: "Purpose, legal requirements, BS 7671 overview, test equipment and safety",
       icon: BookOpen,
-      link: "../module-1",
+      link: "module1",
+      sections: 5,
+      duration: "2-3 hours",
     },
     {
       id: 2,
-      title: "Safety, Tools & Preparation",
-      description: "Safety protocols, testing equipment selection and pre-inspection preparation procedures",
+      title: "Safe Isolation Procedures",
+      description: "Isolation principles, lock-off/tag-out, proving dead, re-energisation",
       icon: Shield,
-      link: "../module-2",
+      link: "module2",
+      sections: 6,
+      duration: "2-3 hours",
     },
     {
       id: 3,
-      title: "Visual Inspection & Pre-Test Requirements",
-      description: "Comprehensive visual inspection techniques and documentation requirements before testing",
-      icon: Eye,
-      link: "../module-3",
+      title: "Continuity Testing",
+      description: "R1+R2, ring final circuits, bonding conductors, measurement techniques",
+      icon: Link2,
+      link: "module3",
+      sections: 6,
+      duration: "3-4 hours",
     },
     {
       id: 4,
-      title: "Continuity & Insulation Resistance Testing",
-      description: "Protective conductor continuity and insulation resistance measurement procedures",
+      title: "Insulation Resistance Testing",
+      description: "Test voltages, procedures, SERDs, interpreting results, troubleshooting",
       icon: Zap,
-      link: "../module-4",
+      link: "module4",
+      sections: 6,
+      duration: "3-4 hours",
     },
     {
       id: 5,
-      title: "Polarity, Earth Fault Loop Impedance & Fault Current Testing",
-      description: "Advanced testing procedures for circuit protection and earthing system verification",
-      icon: TestTube,
-      link: "../module-5",
+      title: "Earth Fault Loop Impedance",
+      description: "Zs and Ze testing, maximum values, PFC calculation, RCD circuits",
+      icon: CircleDot,
+      link: "module5",
+      sections: 6,
+      duration: "3-4 hours",
     },
     {
       id: 6,
-      title: "RCD Testing & Functional Verification",
-      description: "Residual current device testing and functional checks for safety systems",
+      title: "RCD Testing",
+      description: "RCD types, trip time testing, ramp testing, selective discrimination",
       icon: FileCheck,
-      link: "../module-6",
+      link: "module6",
+      sections: 5,
+      duration: "2-3 hours",
     },
     {
       id: 7,
-      title: "Reporting & Certification",
-      description: "Electrical Installation Condition Reports and certification procedures to BS 7671",
-      icon: ClipboardCheck,
-      link: "../module-7",
+      title: "Polarity & Functional Testing",
+      description: "Polarity verification, three-phase rotation, switchgear operation",
+      icon: ToggleRight,
+      link: "module7",
+      sections: 5,
+      duration: "2-3 hours",
     },
     {
       id: 8,
-      title: "Mock Exams & Self-Assessment",
-      description: "Practice examinations and competency assessment for City & Guilds qualifications",
-      icon: GraduationCap,
-      link: "../module-8",
+      title: "Visual Inspection & Documentation",
+      description: "Inspection checklists, EICs, PIRs, Minor Works certificates",
+      icon: Eye,
+      link: "module8",
+      sections: 5,
+      duration: "2-3 hours",
     }
   ];
 
-  return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      {/* Back Button */}
-      <Link to="/electrician/upskilling">
-        <Button variant="ghost" className="text-white hover:text-foreground transition-colors p-0 h-auto min-h-[48px]">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Study Centre
-        </Button>
-      </Link>
+  const totalSections = modules.reduce((acc, m) => acc + m.sections, 0);
 
-      {/* Header */}
-      <div className="space-y-1">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight">
+  return (
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* iOS-style Sticky Header */}
+      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center h-[56px] px-4 max-w-4xl mx-auto">
+          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
+            <Link to="/electrician/upskilling">
+              <ArrowLeft className="h-5 w-5" />
+              <span className="hidden sm:inline">Back</span>
+            </Link>
+          </Button>
+          <span className="flex-1 text-center text-[17px] font-semibold text-white">Inspection & Testing</span>
+          <div className="w-[60px]" />
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="px-4 pt-8 pb-6 max-w-4xl mx-auto">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+            <Zap className="h-8 w-8 text-elec-yellow" />
+          </div>
+        </div>
+        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
           Inspection & Testing
         </h1>
-        <p className="text-sm sm:text-base text-white">
-          Electrical inspection, testing and certification procedures
+        <p className="text-[17px] text-white/70 leading-relaxed mb-6">
+          Master electrical inspection and testing procedures to BS 7671. From safe isolation to certification documentation.
         </p>
-      </div>
 
-      {/* Module Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+        {/* Quick Stats */}
+        <div className="grid grid-cols-3 gap-3">
+          <Card variant="ios" className="p-3 text-center">
+            <div className="text-2xl font-bold text-elec-yellow">{modules.length}</div>
+            <div className="text-[13px] text-white/60">Modules</div>
+          </Card>
+          <Card variant="ios" className="p-3 text-center">
+            <div className="text-2xl font-bold text-elec-yellow">{totalSections}</div>
+            <div className="text-[13px] text-white/60">Sections</div>
+          </Card>
+          <Card variant="ios" className="p-3 text-center">
+            <div className="text-2xl font-bold text-elec-yellow">20+</div>
+            <div className="text-[13px] text-white/60">Hours</div>
+          </Card>
+        </div>
+      </section>
+
+      {/* Course Highlights */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <Card variant="ios-elevated" className="border-elec-yellow/20">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-[17px] font-semibold flex items-center gap-2">
+              <Award className="h-5 w-5 text-elec-yellow" />
+              What You'll Learn
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <div className="flex items-start gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+              <p className="text-[15px] text-white/80">Safe isolation procedures and proving dead techniques</p>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+              <p className="text-[15px] text-white/80">All BS 7671 required tests: continuity, insulation, earth fault loop, RCD</p>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+              <p className="text-[15px] text-white/80">Electrical Installation Certificates and condition reports</p>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+              <p className="text-[15px] text-white/80">Practical fault-finding and troubleshooting skills</p>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Module List */}
+      <section className="px-4 pb-8 max-w-4xl mx-auto">
+        <h2 className="text-[22px] font-semibold text-white mb-4">Course Modules</h2>
+        <div className="space-y-3">
           {modules.map((module) => {
             const IconComponent = module.icon;
             return (
-              <Link key={module.id} to={module.link} className="block h-full">
-                <div className="bg-card/50 rounded-lg active:scale-[0.98] active:bg-card/70 transition-all duration-200 cursor-pointer h-full flex flex-col min-h-[48px]">
-                  <div className="text-center p-3 sm:p-4 flex-grow flex flex-col justify-center min-h-[48px]">
-                    <div className="flex justify-center mb-2 sm:mb-3">
-                      <div className="p-2 sm:p-2.5 rounded-lg bg-primary/10">
-                        <IconComponent className="h-4 w-4 sm:h-5 sm:w-5 text-primary" strokeWidth={2} />
+              <Link key={module.id} to={module.link} className="block">
+                <Card
+                  variant="ios"
+                  interactive
+                  className="p-4 transition-all duration-200 active:scale-[0.98]"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex-shrink-0">
+                      <IconComponent className="h-6 w-6 text-elec-yellow" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-[11px] font-medium text-elec-yellow uppercase tracking-wide">
+                          Module {module.id}
+                        </span>
+                        <span className="text-[11px] text-white/40">•</span>
+                        <span className="text-[11px] text-white/50 flex items-center gap-1">
+                          <Target className="h-3 w-3" />
+                          {module.sections} sections
+                        </span>
+                      </div>
+                      <h3 className="text-[17px] font-semibold text-white leading-tight mb-1">
+                        {module.title}
+                      </h3>
+                      <p className="text-[13px] text-white/60 line-clamp-1">
+                        {module.description}
+                      </p>
+                      <div className="flex items-center gap-1 mt-2 text-[12px] text-white/40">
+                        <Clock className="h-3 w-3" />
+                        {module.duration}
                       </div>
                     </div>
-
-                    <span className="text-[9px] sm:text-[10px] font-medium text-primary/70 uppercase tracking-wide mb-1">
-                      Module {module.id}
-                    </span>
-
-                    <h3 className="text-sm sm:text-base font-semibold text-white leading-tight mb-1 line-clamp-2">
-                      {module.title}
-                    </h3>
-
-                    <p className="text-white text-[10px] sm:text-xs line-clamp-2 hidden sm:block">
-                      {module.description}
-                    </p>
+                    <ChevronRight className="h-5 w-5 text-white/30 flex-shrink-0" />
                   </div>
-                </div>
+                </Card>
               </Link>
             );
           })}
-      </div>
+        </div>
+      </section>
+
+      {/* Bottom Safe Area Padding */}
+      <div className="h-8 pb-safe" />
     </div>
   );
 };

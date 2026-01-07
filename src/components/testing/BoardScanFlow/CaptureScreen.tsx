@@ -124,7 +124,7 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({
   }, [capturedImages, onCapture, stopCamera, triggerHaptic]);
 
   return (
-    <div className="fixed inset-0 z-50 bg-black flex flex-col">
+    <div className="flex flex-col h-full bg-black">
       {/* Header */}
       <header className="flex items-center justify-between p-4 bg-black/80 backdrop-blur">
         <Button
@@ -318,7 +318,7 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({
             )}
           >
             <Zap className="h-5 w-5" />
-            Analyze {capturedImages.length} Photo{capturedImages.length > 1 ? 's' : ''}
+            Analyse {capturedImages.length} Photo{capturedImages.length > 1 ? 's' : ''}
           </Button>
           <Button
             variant="outline"

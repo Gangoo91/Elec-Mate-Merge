@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
 import {
   Zap,
   GraduationCap,
@@ -18,7 +19,8 @@ import {
   BadgeCheck,
   Calculator,
   FileCheck,
-  Play
+  Play,
+  Sparkles
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
@@ -33,7 +35,8 @@ const Index = () => {
       icon: GraduationCap,
       link: "/apprentice",
       features: ["Level 2 & 3", "AM2 Prep", "OJT Log"],
-      stat: "2,000+ questions"
+      stat: "2,000+ questions",
+      color: "blue"
     },
     {
       title: "Electrician Hub",
@@ -41,7 +44,8 @@ const Index = () => {
       icon: Zap,
       link: "/electrician",
       features: ["BS7671", "Calcs", "Certs"],
-      stat: "50+ tools"
+      stat: "50+ tools",
+      color: "yellow"
     },
     {
       title: "Employer Hub",
@@ -49,7 +53,8 @@ const Index = () => {
       icon: Briefcase,
       link: "/employer",
       features: ["Jobs", "GPS", "Voice AI"],
-      stat: "Full control"
+      stat: "Full control",
+      color: "purple"
     },
     {
       title: "Study Centre",
@@ -57,7 +62,8 @@ const Index = () => {
       icon: BookOpen,
       link: "/study-centre",
       features: ["14 Courses", "Exams", "Certs"],
-      stat: "14 courses"
+      stat: "14 courses",
+      color: "green"
     }
   ];
 
@@ -76,53 +82,118 @@ const Index = () => {
     { quote: "Managing my team has never been easier.", author: "David W.", role: "Birmingham" }
   ];
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 400, damping: 25 }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { type: "spring", stiffness: 300, damping: 25 }
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-black text-white safe-top safe-bottom">
+    <div className="min-h-screen bg-black text-white safe-top safe-bottom overflow-hidden">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-elec-yellow/5 via-transparent to-transparent" />
+        {/* Animated background */}
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            className="absolute inset-0 bg-gradient-to-b from-elec-yellow/10 via-elec-yellow/5 to-transparent"
+          />
+          {/* Primary animated orb */}
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.15, 0.25, 0.15]
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-elec-yellow/20 blur-[120px]"
+          />
+          {/* Secondary orb */}
+          <motion.div
+            animate={{
+              scale: [1.1, 0.9, 1.1],
+              opacity: [0.08, 0.15, 0.08]
+            }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute top-1/2 right-0 w-[300px] h-[300px] rounded-full bg-blue-500/15 blur-[100px]"
+          />
+        </div>
 
         {/* Content */}
-        <div className="relative max-w-lg mx-auto px-6 pt-8 pb-12">
-          {/* Logo - iOS centered */}
-          <div className="flex justify-center mb-8 ios-animate-in">
-            <Link to="/" className="flex items-center gap-2.5">
-              <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(255,209,0,0.25)]">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="relative max-w-lg mx-auto px-6 pt-8 pb-12"
+        >
+          {/* Logo */}
+          <motion.div variants={itemVariants} className="flex justify-center mb-8">
+            <Link to="/" className="flex items-center gap-2.5 group">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-14 h-14 rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(255,209,0,0.3)] ring-2 ring-elec-yellow/20"
+              >
                 <img src="/logo.jpg" alt="Elec-Mate" className="w-full h-full object-cover" />
-              </div>
-              <span className="text-ios-title-3 font-bold">
+              </motion.div>
+              <span className="text-[22px] font-bold tracking-tight">
                 Elec-<span className="text-elec-yellow">Mate</span>
               </span>
             </Link>
-          </div>
+          </motion.div>
 
           {/* Free trial badge */}
-          <div className="flex justify-center mb-6 ios-animate-in-delayed" style={{ '--ios-delay': '50ms' } as any}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow text-ios-caption-1 font-medium">
-              <Play className="h-3.5 w-3.5 fill-current" />
+          <motion.div variants={itemVariants} className="flex justify-center mb-6">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-elec-yellow/20 to-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow text-ios-footnote font-semibold shadow-lg shadow-elec-yellow/10"
+            >
+              <Play className="h-4 w-4 fill-current" />
               7-Day Free Trial
-            </div>
-          </div>
+              <Sparkles className="h-3.5 w-3.5 opacity-70" />
+            </motion.div>
+          </motion.div>
 
-          {/* Headline - iOS large title */}
-          <div className="text-center mb-8 ios-animate-in-delayed" style={{ '--ios-delay': '100ms' } as any}>
-            <h1 className="text-ios-title-large text-white mb-3">
+          {/* Headline */}
+          <motion.div variants={itemVariants} className="text-center mb-8">
+            <h1 className="text-[32px] leading-tight font-bold tracking-tight text-white mb-4">
               Your Complete
               <br />
-              <span className="text-elec-yellow">Electrical Career</span>
+              <span className="text-elec-yellow bg-gradient-to-r from-elec-yellow to-yellow-300 bg-clip-text text-transparent">Electrical Career</span>
               <br />
               Platform
             </h1>
-            <p className="text-ios-body text-white/60 max-w-sm mx-auto">
+            <p className="text-ios-body text-white/60 max-w-sm mx-auto leading-relaxed">
               From apprentice to master electrician. Training, tools, and team management.
             </p>
-          </div>
+          </motion.div>
 
-          {/* CTA Buttons - iOS style stacked */}
-          <div className="space-y-3 mb-8 ios-animate-in-delayed" style={{ '--ios-delay': '150ms' } as any}>
+          {/* CTA Buttons */}
+          <motion.div variants={itemVariants} className="space-y-3 mb-8">
             {user ? (
-              <Button asChild variant="ios-primary" size="ios-large" className="w-full">
+              <Button asChild variant="ios-primary" size="ios-large" className="w-full h-[56px] shadow-lg shadow-elec-yellow/25">
                 <Link to="/apprentice/study">
                   Go to Dashboard
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -130,38 +201,51 @@ const Index = () => {
               </Button>
             ) : (
               <>
-                <Button asChild variant="ios-primary" size="ios-large" className="w-full">
-                  <Link to="/auth/signup">
-                    Start Free Trial
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
-                <Button asChild variant="ios-secondary" size="ios-default" className="w-full">
-                  <Link to="/auth/signin">
-                    Sign In
-                  </Link>
-                </Button>
+                <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+                  <Button asChild variant="ios-primary" size="ios-large" className="w-full h-[56px] shadow-lg shadow-elec-yellow/25">
+                    <Link to="/auth/signup">
+                      Start Free Trial
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Link>
+                  </Button>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+                  <Button asChild variant="ios-secondary" size="ios-default" className="w-full h-[52px]">
+                    <Link to="/auth/signin">
+                      Sign In
+                    </Link>
+                  </Button>
+                </motion.div>
               </>
             )}
-          </div>
+          </motion.div>
 
-          {/* Trust indicators - horizontal scroll */}
-          <div className="flex justify-center gap-4 text-ios-caption-1 text-white/50 ios-animate-in-delayed" style={{ '--ios-delay': '200ms' } as any}>
+          {/* Trust indicators */}
+          <motion.div
+            variants={itemVariants}
+            className="flex justify-center gap-6 text-ios-caption-1 text-white/50"
+          >
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-3.5 w-3.5 text-green-500" />
+              <CheckCircle2 className="h-4 w-4 text-green-500" />
               No card required
             </span>
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="h-3.5 w-3.5 text-green-500" />
-              BS7671
+              <CheckCircle2 className="h-4 w-4 text-green-500" />
+              BS7671 Compliant
             </span>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
-      {/* Stats Bar - iOS style */}
-      <section className="border-y border-white/10 bg-white/5">
-        <div className="max-w-lg mx-auto px-6 py-5">
+      {/* Stats Bar */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="border-y border-white/10 bg-gradient-to-r from-white/[0.03] via-white/[0.06] to-white/[0.03]"
+      >
+        <div className="max-w-lg mx-auto px-6 py-6">
           <div className="grid grid-cols-4 gap-4 text-center">
             {[
               { value: "2k+", label: "Questions" },
@@ -169,221 +253,339 @@ const Index = () => {
               { value: "14", label: "Courses" },
               { value: "24/7", label: "Access" }
             ].map((stat, i) => (
-              <div key={i}>
-                <div className="text-ios-headline text-elec-yellow">{stat.value}</div>
-                <div className="text-ios-caption-2 text-white/40">{stat.label}</div>
-              </div>
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, type: "spring", stiffness: 400 }}
+              >
+                <div className="text-[20px] font-bold text-elec-yellow">{stat.value}</div>
+                <div className="text-ios-caption-2 text-white/40 mt-0.5">{stat.label}</div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* Hub Cards - iOS card style */}
-      <section className="py-10 px-6">
+      {/* Hub Cards */}
+      <section className="py-12 px-6">
         <div className="max-w-lg mx-auto">
-          <div className="text-center mb-6">
-            <h2 className="text-ios-title-2 text-white mb-2">Four Specialized Hubs</h2>
-            <p className="text-ios-subhead text-white/50">Everything you need in one place</p>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <h2 className="text-[24px] font-bold text-white mb-2">Four Specialized Hubs</h2>
+            <p className="text-ios-body text-white/50">Everything you need in one place</p>
+          </motion.div>
 
           <div className="space-y-3">
             {hubs.map((hub, index) => (
-              <Link
+              <motion.div
                 key={index}
-                to={hub.link}
-                className="block ios-animate-in-delayed"
-                style={{ '--ios-delay': `${index * 50}ms` } as any}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, type: "spring", stiffness: 300 }}
               >
-                <Card variant="ios" interactive className="ios-card-tap">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center shrink-0">
-                        <hub.icon className="h-6 w-6 text-elec-yellow" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-0.5">
-                          <h3 className="text-ios-headline text-white">{hub.title}</h3>
-                          <ChevronRight className="h-5 w-5 text-white/30" />
+                <Link to={hub.link} className="block">
+                  <motion.div
+                    whileHover={{ scale: 1.01, x: 4 }}
+                    whileTap={{ scale: 0.99 }}
+                  >
+                    <Card variant="ios" interactive className="bg-white/[0.04] backdrop-blur-xl border-white/10 hover:border-white/20 transition-all">
+                      <CardContent className="p-4">
+                        <div className="flex items-center gap-4">
+                          <div className={cn(
+                            "w-14 h-14 rounded-xl flex items-center justify-center shrink-0 shadow-lg",
+                            hub.color === 'blue' && "bg-gradient-to-br from-blue-500/30 to-blue-600/10 shadow-blue-500/20",
+                            hub.color === 'yellow' && "bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/10 shadow-elec-yellow/20",
+                            hub.color === 'purple' && "bg-gradient-to-br from-purple-500/30 to-purple-600/10 shadow-purple-500/20",
+                            hub.color === 'green' && "bg-gradient-to-br from-green-500/30 to-green-600/10 shadow-green-500/20"
+                          )}>
+                            <hub.icon className={cn(
+                              "h-7 w-7",
+                              hub.color === 'blue' && "text-blue-400",
+                              hub.color === 'yellow' && "text-elec-yellow",
+                              hub.color === 'purple' && "text-purple-400",
+                              hub.color === 'green' && "text-green-400"
+                            )} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between mb-1">
+                              <h3 className="text-ios-headline font-semibold text-white">{hub.title}</h3>
+                              <ChevronRight className="h-5 w-5 text-white/30" />
+                            </div>
+                            <p className="text-ios-caption-1 text-white/50 mb-2">{hub.description}</p>
+                            <div className="flex flex-wrap gap-1.5">
+                              {hub.features.map((feature, i) => (
+                                <span key={i} className="text-ios-caption-2 px-2.5 py-1 rounded-lg bg-white/5 text-white/50 border border-white/5">
+                                  {feature}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
                         </div>
-                        <p className="text-ios-caption-1 text-white/50 mb-2">{hub.description}</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {hub.features.map((feature, i) => (
-                            <span key={i} className="text-ios-caption-2 px-2 py-0.5 rounded-md bg-white/5 text-white/40">
-                              {feature}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features Grid - iOS compact style */}
-      <section className="py-10 px-6 bg-white/[0.02]">
-        <div className="max-w-lg mx-auto">
-          <div className="text-center mb-6">
-            <h2 className="text-ios-title-2 text-white mb-2">Built for UK Electricians</h2>
-            <p className="text-ios-subhead text-white/50">Professional tools and features</p>
-          </div>
+      {/* Features Grid */}
+      <section className="py-12 px-6 relative">
+        {/* Background accent */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent pointer-events-none" />
+
+        <div className="relative max-w-lg mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <h2 className="text-[24px] font-bold text-white mb-2">Built for UK Electricians</h2>
+            <p className="text-ios-body text-white/50">Professional tools and features</p>
+          </motion.div>
 
           <div className="grid grid-cols-3 gap-3">
             {features.map((feature, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center ios-card-tap"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05, type: "spring", stiffness: 400 }}
+                whileHover={{ scale: 1.02, y: -2 }}
+                className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 text-center backdrop-blur-sm hover:bg-white/[0.06] transition-colors"
               >
-                <div className="w-10 h-10 rounded-xl bg-elec-yellow/10 flex items-center justify-center mx-auto mb-2">
+                <div className="w-11 h-11 rounded-xl bg-elec-yellow/15 flex items-center justify-center mx-auto mb-3">
                   <feature.icon className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <h3 className="text-ios-footnote font-semibold text-white mb-0.5">{feature.title}</h3>
                 <p className="text-ios-caption-2 text-white/40">{feature.desc}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Elec-ID Section - iOS card */}
-      <section className="py-10 px-6">
-        <div className="max-w-lg mx-auto">
-          <Card variant="ios-elevated" className="border-elec-yellow/30 overflow-hidden">
+      {/* Elec-ID Section */}
+      <section className="py-12 px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ type: "spring", stiffness: 300 }}
+          className="max-w-lg mx-auto"
+        >
+          <Card variant="ios-elevated" className="border-elec-yellow/20 bg-gradient-to-br from-white/[0.06] to-white/[0.02] overflow-hidden backdrop-blur-xl">
             <CardContent className="p-6">
-              <div className="flex items-center gap-2 mb-4">
-                <BadgeCheck className="h-4 w-4 text-elec-yellow" />
-                <span className="text-ios-caption-1 text-elec-yellow font-medium">New Feature</span>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="flex items-center gap-2 mb-4"
+              >
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-elec-yellow/20 text-elec-yellow text-ios-caption-1 font-semibold">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  New Feature
+                </div>
+              </motion.div>
 
-              <h2 className="text-ios-title-2 text-white mb-2">
+              <h2 className="text-[24px] font-bold text-white mb-2">
                 Your <span className="text-elec-yellow">Elec-ID</span>
               </h2>
-              <p className="text-ios-subhead text-white/60 mb-4">
+              <p className="text-ios-body text-white/60 mb-5 leading-relaxed">
                 A portable digital credential that follows your career.
               </p>
 
               {/* Elec-ID Card Preview */}
-              <div className="bg-white/5 rounded-xl border border-elec-yellow/20 p-4 mb-4">
-                <div className="h-1 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 rounded -mt-4 -mx-4 mb-4" />
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
-                    <Lightbulb className="h-5 w-5 text-elec-yellow" />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3, type: "spring" }}
+                className="bg-gradient-to-br from-white/[0.08] to-white/[0.02] rounded-2xl border border-elec-yellow/20 p-5 mb-5 shadow-lg shadow-elec-yellow/5"
+              >
+                <div className="h-1.5 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 rounded-full -mt-5 -mx-5 mb-5" />
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/10 flex items-center justify-center shadow-lg shadow-elec-yellow/20">
+                    <Lightbulb className="h-6 w-6 text-elec-yellow" />
                   </div>
                   <div className="flex-1">
                     <div className="text-ios-caption-2 text-white/40 uppercase tracking-wider">Elec-ID</div>
-                    <div className="font-mono text-ios-subhead font-bold text-white">ELEC-2026-00001</div>
+                    <div className="font-mono text-ios-headline font-bold text-white">ELEC-2026-00001</div>
                   </div>
-                  <div className="flex items-center gap-1 text-ios-caption-2 text-green-400 bg-green-500/10 px-2 py-1 rounded-lg">
-                    <ShieldCheck className="h-3 w-3" />
+                  <div className="flex items-center gap-1.5 text-ios-caption-1 text-green-400 bg-green-500/15 px-3 py-1.5 rounded-full font-medium">
+                    <ShieldCheck className="h-3.5 w-3.5" />
                     Verified
                   </div>
                 </div>
-                <div className="grid grid-cols-3 gap-2 pt-3 border-t border-white/10">
+                <div className="grid grid-cols-3 gap-3 pt-4 border-t border-white/10">
                   {[
                     { value: "5", label: "Years" },
                     { value: "8", label: "Certs" },
                     { value: "12", label: "Training" }
                   ].map((stat, i) => (
-                    <div key={i} className="text-center">
-                      <div className="text-ios-headline text-elec-yellow">{stat.value}</div>
+                    <div key={i} className="text-center p-2 rounded-lg bg-white/5">
+                      <div className="text-ios-headline font-bold text-elec-yellow">{stat.value}</div>
                       <div className="text-ios-caption-2 text-white/40">{stat.label}</div>
                     </div>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="space-y-2 mb-4">
+              <div className="space-y-2.5 mb-5">
                 {["JIB verified credentials", "Shareable QR code", "Complete training history"].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2 text-ios-footnote text-white/70">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow" />
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4 + i * 0.1 }}
+                    className="flex items-center gap-2.5 text-ios-footnote text-white/70"
+                  >
+                    <CheckCircle2 className="h-4 w-4 text-elec-yellow" />
                     {item}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
 
-              <Button asChild variant="ios-primary" size="ios-default" className="w-full">
-                <Link to="/auth/signup">
-                  Create Your Elec-ID
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+              <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+                <Button asChild variant="ios-primary" size="ios-default" className="w-full h-[52px] shadow-lg shadow-elec-yellow/20">
+                  <Link to="/auth/signup">
+                    Create Your Elec-ID
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </motion.div>
             </CardContent>
           </Card>
-        </div>
+        </motion.div>
       </section>
 
-      {/* Testimonials - iOS horizontal scroll */}
-      <section className="py-10 px-6 bg-white/[0.02]">
-        <div className="max-w-lg mx-auto">
-          <div className="text-center mb-6">
-            <h2 className="text-ios-title-3 text-white">Trusted by Professionals</h2>
-          </div>
+      {/* Testimonials */}
+      <section className="py-12 px-6 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent pointer-events-none" />
+
+        <div className="relative max-w-lg mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <h2 className="text-[24px] font-bold text-white">Trusted by Professionals</h2>
+          </motion.div>
 
           <div className="space-y-3">
             {testimonials.map((t, index) => (
-              <Card key={index} variant="ios">
-                <CardContent className="p-4">
-                  <div className="flex gap-0.5 mb-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-3.5 w-3.5 fill-elec-yellow text-elec-yellow" />
-                    ))}
-                  </div>
-                  <p className="text-ios-subhead text-white/80 mb-3">"{t.quote}"</p>
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-                      <span className="text-ios-caption-2 font-bold text-elec-yellow">
-                        {t.author.split(' ').map(n => n[0]).join('')}
-                      </span>
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, type: "spring" }}
+              >
+                <Card variant="ios" className="bg-white/[0.04] backdrop-blur-xl border-white/10">
+                  <CardContent className="p-5">
+                    <div className="flex gap-0.5 mb-3">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-elec-yellow text-elec-yellow" />
+                      ))}
                     </div>
-                    <div>
-                      <div className="text-ios-footnote font-medium text-white">{t.author}</div>
-                      <div className="text-ios-caption-2 text-white/40">{t.role}</div>
+                    <p className="text-ios-body text-white/80 mb-4 leading-relaxed">"{t.quote}"</p>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/10 flex items-center justify-center">
+                        <span className="text-ios-footnote font-bold text-elec-yellow">
+                          {t.author.split(' ').map(n => n[0]).join('')}
+                        </span>
+                      </div>
+                      <div>
+                        <div className="text-ios-subhead font-semibold text-white">{t.author}</div>
+                        <div className="text-ios-caption-1 text-white/40">{t.role}</div>
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="py-12 px-6">
-        <div className="max-w-sm mx-auto text-center">
-          <div className="w-16 h-16 rounded-2xl bg-elec-yellow flex items-center justify-center mx-auto mb-6 shadow-[0_4px_20px_rgba(255,209,0,0.25)]">
-            <Zap className="h-8 w-8 text-black" />
-          </div>
-          <h2 className="text-ios-title-2 text-white mb-2">Ready to Power Up?</h2>
-          <p className="text-ios-body text-white/50 mb-6">
+      <section className="py-16 px-6 relative">
+        {/* Background glow */}
+        <motion.div
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.1, 0.15, 0.1]
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-elec-yellow/15 blur-[100px] pointer-events-none"
+        />
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="relative max-w-sm mx-auto text-center"
+        >
+          <motion.div
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", stiffness: 400, delay: 0.1 }}
+            className="w-20 h-20 rounded-3xl bg-gradient-to-br from-elec-yellow to-yellow-500 flex items-center justify-center mx-auto mb-6 shadow-[0_8px_32px_rgba(255,209,0,0.35)]"
+          >
+            <Zap className="h-10 w-10 text-black" />
+          </motion.div>
+          <h2 className="text-[26px] font-bold text-white mb-3">Ready to Power Up?</h2>
+          <p className="text-ios-body text-white/50 mb-8 leading-relaxed">
             Join UK electrical professionals using Elec-Mate
           </p>
 
-          <Button asChild variant="ios-primary" size="ios-large" className="w-full mb-4">
-            <Link to="/auth/signup">
-              Start Your Free Trial
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
+          <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+            <Button asChild variant="ios-primary" size="ios-large" className="w-full h-[56px] mb-5 shadow-lg shadow-elec-yellow/25">
+              <Link to="/auth/signup">
+                Start Your Free Trial
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </motion.div>
 
-          <div className="flex justify-center gap-3 text-ios-caption-1 text-white/40">
+          <div className="flex justify-center gap-4 text-ios-caption-1 text-white/40">
             <span>No card</span>
             <span className="w-1 h-1 rounded-full bg-white/20 self-center" />
             <span>7 days free</span>
             <span className="w-1 h-1 rounded-full bg-white/20 self-center" />
             <span>Cancel anytime</span>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Footer */}
-      <footer className="py-6 px-6 border-t border-white/10">
-        <div className="max-w-lg mx-auto flex flex-col items-center gap-3">
-          <div className="flex items-center gap-2">
-            <Zap className="h-5 w-5 text-elec-yellow" />
-            <span className="text-ios-subhead font-bold text-white">
+      <motion.footer
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="py-8 px-6 border-t border-white/10"
+      >
+        <div className="max-w-lg mx-auto flex flex-col items-center gap-4">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-elec-yellow flex items-center justify-center">
+              <Zap className="h-4 w-4 text-black" />
+            </div>
+            <span className="text-ios-headline font-bold text-white">
               Elec-<span className="text-elec-yellow">Mate</span>
             </span>
           </div>
@@ -391,7 +593,7 @@ const Index = () => {
             © {new Date().getFullYear()} Elec-Mate. Powering UK electrical professionals.
           </p>
         </div>
-      </footer>
+      </motion.footer>
     </div>
   );
 };

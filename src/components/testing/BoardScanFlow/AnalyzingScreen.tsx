@@ -47,7 +47,7 @@ interface AnalyzingScreenProps {
 const STAGES = [
   { id: 'connecting', label: 'Connecting to AI' },
   { id: 'gemini', label: 'Reading labels' },
-  { id: 'claude', label: 'Analyzing components' },
+  { id: 'claude', label: 'Analysing components' },
   { id: 'openai', label: 'Verifying results' },
   { id: 'complete', label: 'Complete' },
 ];
@@ -72,7 +72,7 @@ export const AnalyzingScreen: React.FC<AnalyzingScreenProps> = ({
   );
 
   return (
-    <div className="fixed inset-0 z-50 bg-background flex flex-col">
+    <div className="flex flex-col h-full bg-background">
       {/* Header */}
       <header className="flex items-center justify-between p-4 border-b border-border">
         <div className="flex items-center gap-3">
@@ -80,7 +80,7 @@ export const AnalyzingScreen: React.FC<AnalyzingScreenProps> = ({
             <Sparkles className="h-5 w-5 text-primary animate-pulse" />
           </div>
           <div>
-            <h2 className="font-semibold">Analyzing Board</h2>
+            <h2 className="font-semibold">Analysing Board</h2>
             <p className="text-sm text-muted-foreground">{stageMessage}</p>
           </div>
         </div>
@@ -100,7 +100,7 @@ export const AnalyzingScreen: React.FC<AnalyzingScreenProps> = ({
         <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-muted max-w-lg mx-auto">
           <img
             src={images[0]}
-            alt="Board being analyzed"
+            alt="Board being analysed"
             className="w-full h-full object-cover"
           />
           {/* Scanning overlay effect */}
@@ -114,7 +114,7 @@ export const AnalyzingScreen: React.FC<AnalyzingScreenProps> = ({
           />
           {/* Progress badge */}
           <Badge className="absolute bottom-3 right-3 bg-black/60 text-white">
-            {Math.round(progress)}% analyzed
+            {Math.round(progress)}% analysed
           </Badge>
         </div>
 

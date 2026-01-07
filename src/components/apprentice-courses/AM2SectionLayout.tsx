@@ -4,9 +4,14 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
+interface Breadcrumb {
+  label: string;
+  href?: string;
+}
+
 interface AM2SectionLayoutProps {
   backHref: string;
-  breadcrumbs: string[];
+  breadcrumbs: (string | Breadcrumb)[];
   children: React.ReactNode;
   className?: string;
 }
@@ -46,23 +51,39 @@ export const AM2SectionLayout = memo(function AM2SectionLayout({
 
             {/* Breadcrumbs */}
             <nav className="flex items-center gap-1.5 overflow-x-auto scrollbar-none">
-              {breadcrumbs.map((crumb, index) => (
-                <React.Fragment key={index}>
-                  {index > 0 && (
-                    <ChevronRight className="w-3.5 h-3.5 text-white/30 flex-shrink-0" />
-                  )}
-                  <span
-                    className={cn(
-                      'text-ios-footnote whitespace-nowrap',
-                      index === breadcrumbs.length - 1
-                        ? 'text-white font-medium'
-                        : 'text-white/50'
+              {breadcrumbs.map((crumb, index) => {
+                const label = typeof crumb === 'string' ? crumb : crumb.label;
+                const href = typeof crumb === 'string' ? undefined : crumb.href;
+                const isLast = index === breadcrumbs.length - 1;
+
+                return (
+                  <React.Fragment key={index}>
+                    {index > 0 && (
+                      <ChevronRight className="w-3.5 h-3.5 text-white/30 flex-shrink-0" />
                     )}
-                  >
-                    {crumb}
-                  </span>
-                </React.Fragment>
-              ))}
+                    {href && !isLast ? (
+                      <Link
+                        to={href}
+                        className={cn(
+                          'text-ios-footnote whitespace-nowrap text-white/50',
+                          'hover:text-white/70 transition-colors'
+                        )}
+                      >
+                        {label}
+                      </Link>
+                    ) : (
+                      <span
+                        className={cn(
+                          'text-ios-footnote whitespace-nowrap',
+                          isLast ? 'text-white font-medium' : 'text-white/50'
+                        )}
+                      >
+                        {label}
+                      </span>
+                    )}
+                  </React.Fragment>
+                );
+              })}
             </nav>
           </div>
         </div>
