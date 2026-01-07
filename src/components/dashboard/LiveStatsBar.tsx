@@ -1,11 +1,12 @@
 /**
  * LiveStatsBar
  *
- * Real-time stats bar with actual user data.
- * Horizontal scroll on mobile with snap points.
+ * Premium real-time stats bar with actual user data.
+ * Best-in-class mobile horizontal scroll with fade indicators.
  */
 
 import { motion } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
 import {
   FileText,
   PoundSterling,
@@ -14,6 +15,8 @@ import {
   Clock,
   CheckCircle,
   AlertCircle,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useDashboardData } from '@/hooks/useDashboardData';
@@ -122,6 +125,29 @@ export function LiveStatsBar() {
   const dashboardData = useDashboardData();
   const navigate = useNavigate();
   const { isLoading } = dashboardData;
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  // Track scroll position for fade indicators
+  const updateScrollState = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 10);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+  };
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    updateScrollState();
+    el.addEventListener('scroll', updateScrollState, { passive: true });
+    window.addEventListener('resize', updateScrollState);
+    return () => {
+      el.removeEventListener('scroll', updateScrollState);
+      window.removeEventListener('resize', updateScrollState);
+    };
+  }, [isLoading]);
 
   // Dynamic icon for overdue stat
   const getIcon = (config: StatConfig) => {
@@ -145,7 +171,7 @@ export function LiveStatsBar() {
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className="h-24 rounded-xl glass-premium animate-pulse"
+            className="h-20 sm:h-24 rounded-xl glass-premium animate-pulse"
           />
         ))}
       </div>
@@ -153,52 +179,91 @@ export function LiveStatsBar() {
   }
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className={cn(
-        // Mobile: horizontal scroll with snap
-        'flex gap-3 overflow-x-auto pb-2 -mx-4 px-4',
-        'snap-x snap-mandatory scroll-smooth',
-        'scrollbar-none',
-        // Desktop: grid layout
-        'sm:grid sm:grid-cols-3 lg:grid-cols-5 sm:gap-4',
-        'sm:overflow-visible sm:mx-0 sm:px-0 sm:pb-0'
-      )}
-    >
-      {statsConfig.map((config) => {
-        const Icon = getIcon(config);
-        const variant = getVariant(config);
-        const value = config.getValue(dashboardData);
-        const subtitle = config.getSubtitle?.(dashboardData);
+    <div className="relative">
+      {/* Left fade indicator - mobile only */}
+      <div
+        className={cn(
+          'absolute left-0 top-0 bottom-0 w-8 z-10 pointer-events-none',
+          'bg-gradient-to-r from-elec-dark to-transparent',
+          'transition-opacity duration-200 sm:hidden',
+          canScrollLeft ? 'opacity-100' : 'opacity-0'
+        )}
+      />
 
-        return (
-          <motion.div
-            key={config.id}
-            variants={itemVariants}
+      {/* Right fade indicator - mobile only */}
+      <div
+        className={cn(
+          'absolute right-0 top-0 bottom-0 w-8 z-10 pointer-events-none',
+          'bg-gradient-to-l from-elec-dark to-transparent',
+          'transition-opacity duration-200 sm:hidden',
+          canScrollRight ? 'opacity-100' : 'opacity-0'
+        )}
+      />
+
+      <motion.div
+        ref={scrollRef}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className={cn(
+          // Mobile: premium horizontal scroll
+          'flex gap-2.5 overflow-x-auto pb-1 -mx-4 px-4',
+          'snap-x snap-mandatory scroll-smooth',
+          'scrollbar-none overscroll-x-contain',
+          // Desktop: grid layout
+          'sm:grid sm:grid-cols-3 lg:grid-cols-5 sm:gap-4',
+          'sm:overflow-visible sm:mx-0 sm:px-0 sm:pb-0'
+        )}
+      >
+        {statsConfig.map((config, index) => {
+          const Icon = getIcon(config);
+          const variant = getVariant(config);
+          const value = config.getValue(dashboardData);
+          const subtitle = config.getSubtitle?.(dashboardData);
+
+          return (
+            <motion.div
+              key={config.id}
+              variants={itemVariants}
+              className={cn(
+                // Mobile: compact cards with snap
+                'flex-shrink-0 w-[140px] snap-start',
+                // First/last card snap alignment
+                index === 0 && 'snap-start',
+                index === statsConfig.length - 1 && 'snap-end',
+                // Desktop: equal width columns
+                'sm:w-full sm:flex-shrink'
+              )}
+            >
+              <StatCard
+                label={config.label}
+                value={value}
+                icon={Icon}
+                variant={variant}
+                prefix={config.prefix}
+                suffix={config.suffix}
+                subtitle={subtitle}
+                formatAsCurrency={config.formatAsCurrency}
+                onClick={config.path ? () => navigate(config.path!) : undefined}
+              />
+            </motion.div>
+          );
+        })}
+      </motion.div>
+
+      {/* Scroll hint dots - mobile only */}
+      <div className="flex justify-center gap-1 mt-2 sm:hidden">
+        {statsConfig.map((_, i) => (
+          <div
+            key={i}
             className={cn(
-              // Mobile: fixed width for scroll, uniform sizing
-              'flex-shrink-0 w-[160px] snap-start',
-              // Desktop: equal width columns
-              'sm:w-full sm:flex-shrink'
+              'w-1 h-1 rounded-full transition-colors',
+              i === 0 ? 'bg-elec-yellow' : 'bg-white/20'
             )}
-          >
-            <StatCard
-              label={config.label}
-              value={value}
-              icon={Icon}
-              variant={variant}
-              prefix={config.prefix}
-              suffix={config.suffix}
-              subtitle={subtitle}
-              formatAsCurrency={config.formatAsCurrency}
-              onClick={config.path ? () => navigate(config.path!) : undefined}
-            />
-          </motion.div>
-        );
-      })}
-    </motion.div>
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 

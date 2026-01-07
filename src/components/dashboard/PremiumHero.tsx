@@ -23,21 +23,21 @@ const getGreeting = () => {
   return 'Good evening';
 };
 
-// SVG Progress Ring Component
+// SVG Progress Ring Component - fully responsive
 const StreakRing: React.FC<{
   progress: number; // 0-100
-  size?: number;
   strokeWidth?: number;
-}> = ({ progress, size = 72, strokeWidth = 4 }) => {
-  const radius = (size - strokeWidth) / 2;
+}> = ({ progress, strokeWidth = 3 }) => {
+  // Use viewBox for responsive scaling
+  const size = 100;
+  const radius = (size - strokeWidth * 2) / 2;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
     <svg
-      width={size}
-      height={size}
-      className="absolute inset-0 -rotate-90"
+      viewBox={`0 0 ${size} ${size}`}
+      className="absolute inset-0 w-full h-full -rotate-90"
     >
       {/* Background circle */}
       <circle
@@ -150,7 +150,7 @@ export function PremiumHero() {
         {/* Content */}
         <div className="relative z-10 p-4 sm:p-5 md:p-6">
           <div className="flex items-start gap-4 sm:gap-5">
-            {/* Profile Photo with Streak Ring */}
+            {/* Profile Photo with Streak Ring - Mobile optimized */}
             <div className="relative flex-shrink-0">
               <input
                 ref={fileInputRef}
@@ -159,24 +159,20 @@ export function PremiumHero() {
                 className="hidden"
                 onChange={handlePhotoUpload}
               />
-              <button
+              <motion.button
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploading}
+                whileTap={{ scale: 0.95 }}
                 className="group relative touch-manipulation"
               >
-                <div className="relative">
-                  {/* Streak ring around avatar */}
-                  <div className="w-16 h-16 sm:w-[72px] sm:h-[72px] md:w-20 md:h-20">
-                    <StreakRing
-                      progress={streakProgress}
-                      size={80}
-                      strokeWidth={4}
-                    />
-                  </div>
+                {/* Container with responsive size: 56px mobile, 72px tablet, 80px desktop */}
+                <div className="relative w-14 h-14 sm:w-[72px] sm:h-[72px] md:w-20 md:h-20">
+                  {/* Streak ring - now scales with container */}
+                  <StreakRing progress={streakProgress} strokeWidth={3} />
 
-                  {/* Avatar */}
+                  {/* Avatar - inset from ring */}
                   <div className={cn(
-                    'absolute inset-1 rounded-xl overflow-hidden',
+                    'absolute inset-[5px] sm:inset-[6px] rounded-lg sm:rounded-xl overflow-hidden',
                     'bg-white/[0.05] border border-white/10',
                     'flex items-center justify-center',
                     'transition-all duration-200',
@@ -190,21 +186,21 @@ export function PremiumHero() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <User className="w-7 h-7 sm:w-8 sm:h-8 text-white/40" />
+                      <User className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white/40" />
                     )}
                   </div>
 
-                  {/* Camera overlay */}
+                  {/* Camera overlay - hidden on mobile, visible on hover for desktop */}
                   <div className="
-                    absolute inset-1 rounded-xl
+                    absolute inset-[5px] sm:inset-[6px] rounded-lg sm:rounded-xl
                     bg-black/60 opacity-0 group-hover:opacity-100
-                    flex items-center justify-center
+                    hidden sm:flex items-center justify-center
                     transition-opacity duration-200
                   ">
                     <Camera className="w-5 h-5 text-white" />
                   </div>
                 </div>
-              </button>
+              </motion.button>
             </div>
 
             {/* Text content */}

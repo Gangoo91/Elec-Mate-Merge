@@ -15,7 +15,7 @@ interface HeaderProps {
   toggleSidebar: () => void;
 }
 
-// Live clock component with smooth animations
+// Live clock component - desktop only
 const LiveClock = ({ className }: { className?: string }) => {
   const [time, setTime] = useState(new Date());
 
@@ -33,7 +33,7 @@ const LiveClock = ({ className }: { className?: string }) => {
 
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      {/* Date pill - hidden on mobile */}
+      {/* Date pill */}
       <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10">
         <span className="text-xs font-medium text-white/60">{day}</span>
         <span className="text-xs font-semibold text-white/80">{date}</span>
@@ -41,28 +41,19 @@ const LiveClock = ({ className }: { className?: string }) => {
 
       {/* Time display */}
       <div className="flex items-center">
-        <div className="flex items-baseline gap-0.5 px-2 sm:px-2.5 py-1 rounded-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/10 backdrop-blur-sm">
-          {/* Hours */}
-          <span className="text-sm sm:text-base font-bold tabular-nums text-white tracking-tight">
+        <div className="flex items-baseline gap-0.5 px-2.5 py-1 rounded-lg bg-gradient-to-br from-white/10 to-white/5 border border-white/10 backdrop-blur-sm">
+          <span className="text-base font-bold tabular-nums text-white tracking-tight">
             {hours}
           </span>
-          {/* Colon with pulse animation */}
-          <span className="text-sm sm:text-base font-bold text-elec-yellow animate-pulse">
-            :
-          </span>
-          {/* Minutes */}
-          <span className="text-sm sm:text-base font-bold tabular-nums text-white tracking-tight">
+          <span className="text-base font-bold text-elec-yellow animate-pulse">:</span>
+          <span className="text-base font-bold tabular-nums text-white tracking-tight">
             {minutes}
           </span>
-          {/* Seconds - subtle, hidden on smallest screens */}
-          <span className="hidden sm:inline-flex items-baseline">
+          <span className="inline-flex items-baseline">
             <span className="text-xs font-medium text-white/40 ml-0.5">:</span>
-            <span className="text-xs font-medium tabular-nums text-white/40 w-4">
-              {seconds}
-            </span>
+            <span className="text-xs font-medium tabular-nums text-white/40 w-4">{seconds}</span>
           </span>
-          {/* AM/PM badge */}
-          <span className="ml-1 px-1 sm:px-1.5 py-0.5 text-[10px] sm:text-xs font-bold rounded bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30">
+          <span className="ml-1 px-1.5 py-0.5 text-xs font-bold rounded bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30">
             {period.toUpperCase()}
           </span>
         </div>
@@ -98,49 +89,51 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
       ref={headerRef}
       className={cn(
         "fixed top-0 left-0 right-0 z-50",
-        "backdrop-blur-xl bg-elec-dark/80",
+        "backdrop-blur-xl bg-elec-dark/90",
         "border-b transition-all duration-300",
-        // Scroll-based styling changes
         isScrolled
           ? "border-white/15 shadow-xl shadow-black/40"
-          : "border-white/5 shadow-lg shadow-black/20",
-        // Safe area for notch devices
+          : "border-white/5",
         "safe-area-inset-top"
       )}
     >
-      <div className="flex items-center justify-between h-14 sm:h-16 px-3 sm:px-4">
+      {/* Mobile: Compact 52px | Desktop: 64px */}
+      <div className="flex items-center justify-between h-[52px] sm:h-16 px-2 sm:px-4">
         {/* Left side - Menu toggle and branding */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3">
           {isMobile && (
-            <motion.div whileTap={{ scale: 0.95 }}>
+            <motion.div whileTap={{ scale: 0.92 }}>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={toggleSidebar}
                 className={cn(
-                  "h-10 w-10 min-w-[44px] min-h-[44px]",
-                  "hover:bg-white/10 active:bg-white/15",
-                  "touch-manipulation rounded-xl",
-                  "transition-colors duration-150"
+                  "h-9 w-9 min-w-[36px] min-h-[36px]",
+                  "hover:bg-white/10 active:bg-white/20",
+                  "touch-manipulation rounded-lg",
+                  "transition-all duration-150"
                 )}
                 aria-label="Toggle navigation menu"
               >
-                <Menu className="h-5 w-5" />
+                <Menu className="h-[18px] w-[18px]" />
               </Button>
             </motion.div>
           )}
 
-          {/* Enhanced branding with gradient icon container */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Branding - compact on mobile */}
+          <div className="flex items-center gap-1.5 sm:gap-3">
             <motion.div
-              className="p-1.5 sm:p-2 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30 shadow-lg shadow-elec-yellow/10"
-              whileHover={{ scale: 1.05 }}
+              className={cn(
+                "p-1 sm:p-2 rounded-lg sm:rounded-xl",
+                "bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5",
+                "border border-elec-yellow/30"
+              )}
               whileTap={{ scale: 0.95 }}
             >
               <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
             </motion.div>
-            <div className="flex items-center gap-1">
-              <h1 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight">
+            <div className="flex items-center">
+              <h1 className="text-base sm:text-xl md:text-2xl font-bold tracking-tight">
                 <span className="bg-gradient-to-r from-elec-yellow to-amber-400 bg-clip-text text-transparent">Elec</span>
                 <span className="text-white/90">-</span>
                 <span className="text-white">Mate</span>
@@ -150,11 +143,11 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           </div>
         </div>
 
-        {/* Center - Live Clock (desktop) */}
+        {/* Center - Live Clock (desktop only) */}
         <LiveClock className="hidden md:flex" />
 
-        {/* Right side - Actions */}
-        <div className="flex items-center gap-1 sm:gap-1.5">
+        {/* Right side - Actions with tighter mobile spacing */}
+        <div className="flex items-center gap-0.5 sm:gap-1.5">
           <MessagesDropdown />
           <NotificationDropdown />
           <UserProfileDropdown />

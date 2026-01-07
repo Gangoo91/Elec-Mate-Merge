@@ -97,40 +97,40 @@ export function StatCard({
   return (
     <motion.div
       whileHover={isClickable ? { y: -2, scale: 1.02 } : undefined}
-      whileTap={isClickable ? { scale: 0.98 } : undefined}
+      whileTap={isClickable ? { scale: 0.96 } : undefined}
       onClick={onClick}
       className={cn(
         // Base styling
-        'relative overflow-hidden',
+        'relative overflow-hidden h-full',
         // Responsive border radius
-        'rounded-xl sm:rounded-2xl',
+        'rounded-lg sm:rounded-xl',
         // Glass morphism
         'glass-premium',
-        // Responsive padding
-        'p-3 sm:p-4',
-        // Responsive min-height for uniform sizing
-        'min-h-[80px] sm:min-h-[100px]',
+        // Compact mobile padding, comfortable desktop
+        'p-2.5 sm:p-4',
+        // More compact mobile height
+        'min-h-[72px] sm:min-h-[100px]',
         // Cursor for clickable
         isClickable && 'cursor-pointer',
         // Touch optimization
-        'touch-manipulation active:scale-[0.98] transition-transform',
+        'touch-manipulation active:scale-[0.97] transition-transform duration-150',
         className
       )}
     >
       {/* Content */}
-      <div className="flex items-start justify-between gap-2 sm:gap-3">
-        {/* Icon - responsive sizing */}
+      <div className="flex items-start justify-between gap-1.5 sm:gap-3">
+        {/* Icon - compact mobile sizing */}
         <div className={cn(
-          'flex-shrink-0 p-2 sm:p-2.5 rounded-lg sm:rounded-xl',
+          'flex-shrink-0 p-1.5 sm:p-2.5 rounded-md sm:rounded-xl',
           styles.iconBg
         )}>
-          <Icon className={cn('h-4 w-4 sm:h-5 sm:w-5', styles.iconColor)} />
+          <Icon className={cn('h-3.5 w-3.5 sm:h-5 sm:w-5', styles.iconColor)} />
         </div>
 
         {/* Stats */}
         <div className="flex-1 min-w-0 text-right">
-          {/* Value - responsive text */}
-          <div className="flex items-baseline justify-end gap-1">
+          {/* Value - compact mobile text */}
+          <div className="flex items-baseline justify-end gap-0.5">
             <AnimatedCounter
               value={value}
               prefix={prefix}
@@ -138,19 +138,19 @@ export function StatCard({
               decimals={decimals}
               formatAsCurrency={formatAsCurrency}
               className={cn(
-                'text-xl sm:text-2xl font-bold tracking-tight',
+                'text-lg sm:text-2xl font-bold tracking-tight',
                 styles.accentColor
               )}
             />
           </div>
 
-          {/* Label - responsive text */}
-          <p className="text-[10px] sm:text-xs text-white/80 mt-0.5 truncate">{label}</p>
+          {/* Label - compact */}
+          <p className="text-[9px] sm:text-xs text-white/70 mt-0.5 truncate">{label}</p>
 
-          {/* Trend indicator */}
+          {/* Trend indicator - hidden on mobile for cleaner look */}
           {trendDirection && (
             <div className={cn(
-              'inline-flex items-center gap-0.5 mt-1 sm:mt-1.5 text-[10px] font-medium px-1.5 py-0.5 rounded-full',
+              'hidden sm:inline-flex items-center gap-0.5 mt-1.5 text-[10px] font-medium px-1.5 py-0.5 rounded-full',
               trendDirection === 'up' && 'bg-green-500/10 text-green-400',
               trendDirection === 'down' && 'bg-red-500/10 text-red-400',
               trendDirection === 'neutral' && 'bg-white/5 text-white/60'
@@ -164,9 +164,9 @@ export function StatCard({
             </div>
           )}
 
-          {/* Subtitle */}
+          {/* Subtitle - hidden on mobile for cleaner look */}
           {subtitle && (
-            <p className="text-[10px] text-white/60 mt-1">{subtitle}</p>
+            <p className="hidden sm:block text-[10px] text-white/60 mt-1 truncate">{subtitle}</p>
           )}
         </div>
       </div>
