@@ -2338,6 +2338,23 @@
     to { transform: translateY(0); }
   }
 
+  /* Fade in up animation for staggered card reveals */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    opacity: 0;
+  }
+
   /* Desktop: Centered modal instead of sheet */
   @media (min-width: 768px) {
     .tool-sheet-container {
