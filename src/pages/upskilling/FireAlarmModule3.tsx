@@ -1,119 +1,141 @@
-import { ArrowLeft, MapPin, Shield, Map, Users, Settings, FileText } from 'lucide-react';
+import { ArrowLeft, MapPin, ChevronRight, Clock, Target, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
+
+const TITLE = "Module 3: System Design & Zone Planning - Fire Alarm Course";
+const DESCRIPTION = "Learn about zone design, addressable systems, cause and effect programming, and interface design for fire alarm systems.";
 
 const FireAlarmModule3 = () => {
+  useSEO({ title: TITLE, description: DESCRIPTION });
+
   const sections = [
     {
       id: 1,
-      title: "Zone Planning Principles and Fire Compartments",
-      icon: Map,
-      description: "Zone layout and fire compartment considerations"
+      title: "Zone Design Principles",
+      description: "Zone layouts, floor areas, search distances and zone indication",
+      icon: CheckCircle,
+      link: "section-1",
     },
     {
       id: 2,
-      title: "Detection Coverage Requirements (BS 5839)", 
-      icon: Shield,
-      description: "British Standard coverage requirements"
+      title: "Addressable vs Conventional",
+      description: "System architectures, loop design and device addressing",
+      icon: CheckCircle,
+      link: "section-2",
     },
     {
       id: 3,
-      title: "Detector and Sounder Placement Rules",
-      icon: MapPin,
-      description: "Device positioning and placement guidelines"
+      title: "Cause & Effect Programming",
+      description: "Input/output relationships, staged alarms and evacuation strategies",
+      icon: CheckCircle,
+      link: "section-3",
     },
     {
       id: 4,
-      title: "Designing for Accessibility and Escape Routes",
-      icon: Users,
-      description: "Accessibility considerations and escape route design"
+      title: "Interface Design",
+      description: "Integration with other systems, BMS, access control and lifts",
+      icon: CheckCircle,
+      link: "section-4",
     },
     {
       id: 5,
-      title: "Cause and Effect Programming Basics",
-      icon: Settings,
-      description: "Programming cause and effect relationships"
+      title: "Network & Multi-Panel Systems",
+      description: "Networked panels, peer-to-peer communication and redundancy",
+      icon: CheckCircle,
+      link: "section-5",
     },
     {
       id: 6,
-      title: "Planning Drawings and Fire Strategy Alignment",
-      icon: FileText,
-      description: "Documentation and fire strategy integration"
-    }
+      title: "Design Documentation",
+      description: "Design specifications, drawings, schedules and risk assessments",
+      icon: CheckCircle,
+      link: "section-6",
+    },
   ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="../fire-alarm-course">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Fire Alarm Course
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* iOS Header */}
+      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center h-[56px] px-4 max-w-4xl mx-auto">
+          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
+            <Link to="../fire-alarm-course">
+              <ArrowLeft className="h-5 w-5" />
+              <span className="hidden sm:inline">Course</span>
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold text-white mb-4">
-              Module 3: System Design and Zone Planning
-            </h1>
-            <p className="text-lg text-gray-400 mb-6">
-              Zone planning, coverage requirements, and system design principles
-            </p>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Module 3
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                6 Sections
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                60 minutes
-              </Badge>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 auto-rows-fr">
-            {sections.map((section) => (
-              <Link 
-                key={section.id} 
-                to={`../fire-alarm-module-3-section-${section.id}`}
-                className="h-full"
-              >
-                <Card className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col">
-                  <CardContent className="text-center space-y-3 p-4 flex-grow flex flex-col justify-center">
-                    <div className="flex justify-center">
-                      <section.icon className="h-8 w-8 text-yellow-400" strokeWidth={2.5} />
-                    </div>
-                    
-                    <div className="flex justify-center">
-                      <Badge 
-                        variant="secondary" 
-                        className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-bold text-xs px-3 py-1 border-0"
-                      >
-                        Section {section.id}
-                      </Badge>
-                    </div>
-                    
-                    <h3 className="text-lg font-bold text-white leading-tight group-hover:text-yellow-400 transition-colors duration-300">
-                      {section.title}
-                    </h3>
-                    
-                    <p className="text-gray-400 text-xs leading-relaxed">
-                      {section.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
+          <span className="flex-1 text-center text-[17px] font-semibold text-white">Module 3</span>
+          <div className="w-[60px]" />
         </div>
-      </div>
+      </header>
+
+      {/* Hero */}
+      <section className="px-4 pt-8 pb-6 max-w-4xl mx-auto">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20">
+            <MapPin className="h-7 w-7 text-amber-400" />
+          </div>
+          <span className="text-[11px] font-medium text-amber-400 uppercase tracking-wide">
+            Module 3 of 7
+          </span>
+        </div>
+        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
+          System Design & Zone Planning
+        </h1>
+        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
+          Designing effective zone layouts, selecting system architectures and programming cause & effect relationships.
+        </p>
+        <div className="flex items-center gap-4 text-[13px] text-white/50">
+          <span className="flex items-center gap-1">
+            <Target className="h-4 w-4" />
+            {sections.length} sections
+          </span>
+          <span className="flex items-center gap-1">
+            <Clock className="h-4 w-4" />
+            3-4 hours
+          </span>
+        </div>
+      </section>
+
+      {/* Sections Grid */}
+      <section className="px-4 pb-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {sections.map((section) => (
+            <Link key={section.id} to={section.link}>
+              <Card variant="ios" className="h-full active:scale-[0.98] transition-transform touch-manipulation">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                      <section.icon className="h-5 w-5 text-amber-400" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[11px] text-white/50 mb-1">Section {section.id}</p>
+                      <h3 className="text-[15px] font-semibold text-white mb-1 leading-tight">{section.title}</h3>
+                      <p className="text-[13px] text-white/60 line-clamp-2">{section.description}</p>
+                    </div>
+                    <ChevronRight className="h-5 w-5 text-white/30 flex-shrink-0 mt-1" />
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Module Overview Card */}
+      <section className="px-4 pb-safe max-w-4xl mx-auto">
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-[15px] font-semibold text-white/80">Module Overview</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-[13px] text-white/70">
+            <p>This module covers the design principles that determine how a fire alarm system is structured and programmed.</p>
+            <p>You'll learn to create effective zone layouts, choose between conventional and addressable systems, and design complex cause & effect relationships.</p>
+          </CardContent>
+        </Card>
+      </section>
     </div>
   );
 };

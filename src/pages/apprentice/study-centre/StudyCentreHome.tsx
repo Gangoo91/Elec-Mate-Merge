@@ -96,26 +96,15 @@ export default function StudyCentreHome() {
   // AM2 Assessment modules
   const am2Modules = [
     {
-      id: "am2-prep",
-      title: "AM2 Exam Preparation",
-      description: "Complete AM2 assessment preparation - practical tasks and theory revision",
+      id: "am2",
+      title: "AM2 Preparation & Guidance",
+      description: "Complete AM2 assessment preparation - practical tasks, testing, fault diagnosis and exam strategy",
       category: "AM2",
       duration: "8 weeks",
       progress: 0,
       lessonsCount: 20,
       questionsCount: 400,
       icon: <Award className="h-4 w-4 text-elec-yellow" />
-    },
-    {
-      id: "am2-mock",
-      title: "AM2 Mock Exams",
-      description: "Timed practice exams simulating the real AM2 assessment conditions",
-      category: "AM2",
-      duration: "2 weeks",
-      progress: 0,
-      lessonsCount: 8,
-      questionsCount: 200,
-      icon: <GraduationCap className="h-4 w-4 text-green-400" />
     }
   ];
 
