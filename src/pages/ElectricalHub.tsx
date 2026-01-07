@@ -27,6 +27,9 @@ import {
   AlertCircle,
   CheckCircle,
   Receipt,
+  MessageSquare,
+  BadgeCheck,
+  Building2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -421,7 +424,35 @@ const mainResources: ToolCardProps[] = [
   },
 ];
 
-// Additional resources
+// Company resources - employer integration features
+const companyResources: ToolCardProps[] = [
+  {
+    title: 'My Expenses',
+    description: 'Submit & track claims',
+    icon: Receipt,
+    link: '/employer?section=expenses',
+  },
+  {
+    title: 'Timesheets',
+    description: 'Log work hours',
+    icon: Clock,
+    link: '/employer?section=timesheets',
+  },
+  {
+    title: 'Team Comms',
+    description: 'Messages & updates',
+    icon: MessageSquare,
+    link: '/employer?section=comms',
+  },
+  {
+    title: 'My Elec-ID',
+    description: 'Professional profile',
+    icon: BadgeCheck,
+    link: '/employer?section=elecid',
+  },
+];
+
+// Additional resources - business development
 const additionalResources: ToolCardProps[] = [
   {
     title: 'Quote Builder',
@@ -434,12 +465,6 @@ const additionalResources: ToolCardProps[] = [
     description: 'Manage billing',
     icon: PoundSterling,
     link: '/electrician/invoices',
-  },
-  {
-    title: 'My Expenses',
-    description: 'Submit & track claims',
-    icon: Receipt,
-    link: '/employer?section=expenses',
   },
   {
     title: 'Business Hub',
@@ -513,6 +538,20 @@ const ElectricalHub = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 touch-grid">
                 {mainResources.map((resource) => (
                   <ToolCard key={resource.link} {...resource} />
+                ))}
+              </div>
+            </motion.section>
+
+            {/* Company - Employer Integration */}
+            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+              <div className="flex items-center gap-2 px-1">
+                <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+                <h2 className="text-lg sm:text-xl font-semibold text-white">Company</h2>
+                <span className="text-xs text-white/50 ml-1">Employer tools</span>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 touch-grid">
+                {companyResources.map((resource) => (
+                  <CompactToolCard key={resource.link} {...resource} />
                 ))}
               </div>
             </motion.section>

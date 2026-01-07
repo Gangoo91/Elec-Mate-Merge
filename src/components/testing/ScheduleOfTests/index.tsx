@@ -42,7 +42,7 @@ import TestMethodInfo from '@/components/inspection-app/TestMethodInfo';
 import DistributionBoardVerificationSection from '@/components/inspection-app/testing/DistributionBoardVerificationSection';
 
 import { Button } from '@/components/ui/button';
-import { BarChart3, Wrench, Zap, FileText, X } from 'lucide-react';
+import { BarChart3, Wrench, Zap, FileText, X, Camera } from 'lucide-react';
 
 interface ScheduleOfTestsProps {
   formData: any;
@@ -279,38 +279,83 @@ const Dialogs: React.FC<{
   setShowAutoFillPrompt: (show: boolean) => void;
 }> = ({ aiAnalysis, bulkOps, circuitState, showAutoFillPrompt, setShowAutoFillPrompt }) => (
   <>
-    {/* Board Capture */}
+    {/* Board Capture - Tool Sheet Pattern */}
     {aiAnalysis.showBoardCapture && (
-      <DialogOverlay>
-        <BoardPhotoCapture
-          onAnalysisComplete={aiAnalysis.handleBoardAnalysisComplete}
-          onClose={aiAnalysis.closeBoardCapture}
-        />
-      </DialogOverlay>
-    )}
-
-    {/* Test Results Scan */}
-    {aiAnalysis.showTestResultsScan && (
-      <DialogOverlay>
-        <TestResultsPhotoCapture
-          onAnalysisComplete={aiAnalysis.handleTestResultsAnalysisComplete}
-          onClose={aiAnalysis.closeTestResultsScan}
-        />
-      </DialogOverlay>
-    )}
-
-    {/* AI Review */}
-    {aiAnalysis.showAIReview && aiAnalysis.detectedCircuits && (
-      <DialogOverlay className="p-4">
-        <div className="max-h-[90vh] overflow-auto w-full">
-          <SimpleCircuitTable
-            circuits={aiAnalysis.detectedCircuits.circuits || []}
-            board={aiAnalysis.detectedCircuits.board || {}}
-            onApply={aiAnalysis.handleApplyAICircuits}
-            onClose={aiAnalysis.closeAIReview}
-          />
+      <>
+        <div className="tool-sheet-overlay" onClick={aiAnalysis.closeBoardCapture} />
+        <div className="tool-sheet-container">
+          <div className="tool-sheet-handle md:hidden" />
+          <div className="tool-sheet-header">
+            <div className="tool-sheet-title">
+              <Camera className="h-5 w-5 text-elec-yellow" />
+              AI Board Scanner
+            </div>
+            <Button variant="ghost" size="icon" onClick={aiAnalysis.closeBoardCapture}>
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+          <div className="tool-sheet-content">
+            <BoardPhotoCapture
+              onAnalysisComplete={aiAnalysis.handleBoardAnalysisComplete}
+              onClose={aiAnalysis.closeBoardCapture}
+              renderContentOnly={true}
+            />
+          </div>
         </div>
-      </DialogOverlay>
+      </>
+    )}
+
+    {/* Test Results Scan - Tool Sheet Pattern */}
+    {aiAnalysis.showTestResultsScan && (
+      <>
+        <div className="tool-sheet-overlay" onClick={aiAnalysis.closeTestResultsScan} />
+        <div className="tool-sheet-container">
+          <div className="tool-sheet-handle md:hidden" />
+          <div className="tool-sheet-header">
+            <div className="tool-sheet-title">
+              <Camera className="h-5 w-5 text-elec-yellow" />
+              Scan Test Results
+            </div>
+            <Button variant="ghost" size="icon" onClick={aiAnalysis.closeTestResultsScan}>
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+          <div className="tool-sheet-content">
+            <TestResultsPhotoCapture
+              onAnalysisComplete={aiAnalysis.handleTestResultsAnalysisComplete}
+              onClose={aiAnalysis.closeTestResultsScan}
+              renderContentOnly={true}
+            />
+          </div>
+        </div>
+      </>
+    )}
+
+    {/* AI Review - Tool Sheet Pattern */}
+    {aiAnalysis.showAIReview && aiAnalysis.detectedCircuits && (
+      <>
+        <div className="tool-sheet-overlay" onClick={aiAnalysis.closeAIReview} />
+        <div className="tool-sheet-container">
+          <div className="tool-sheet-handle md:hidden" />
+          <div className="tool-sheet-header">
+            <div className="tool-sheet-title">
+              <Zap className="h-5 w-5 text-elec-yellow" />
+              Review Detected Circuits
+            </div>
+            <Button variant="ghost" size="icon" onClick={aiAnalysis.closeAIReview}>
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+          <div className="tool-sheet-content">
+            <SimpleCircuitTable
+              circuits={aiAnalysis.detectedCircuits.circuits || []}
+              board={aiAnalysis.detectedCircuits.board || {}}
+              onApply={aiAnalysis.handleApplyAICircuits}
+              onClose={aiAnalysis.closeAIReview}
+            />
+          </div>
+        </div>
+      </>
     )}
 
     {/* Test Results Review */}
@@ -346,27 +391,47 @@ const Dialogs: React.FC<{
       circuitNumber={circuitState.newCircuitNumber}
     />
 
-    {/* Smart Auto Fill */}
+    {/* Smart Auto Fill - Tool Sheet Pattern */}
     {bulkOps.showSmartAutoFillDialog && (
-      <DialogOverlay>
-        <div className="bg-background rounded-lg max-w-2xl w-full">
-          <DialogHeader title="Smart Circuit Auto-Fill" onClose={bulkOps.closeSmartAutoFill} />
-          <div className="p-4">
+      <>
+        <div className="tool-sheet-overlay" onClick={bulkOps.closeSmartAutoFill} />
+        <div className="tool-sheet-container">
+          <div className="tool-sheet-handle md:hidden" />
+          <div className="tool-sheet-header">
+            <div className="tool-sheet-title">
+              <Zap className="h-5 w-5 text-elec-yellow" />
+              Smart Circuit Auto-Fill
+            </div>
+            <Button variant="ghost" size="icon" onClick={bulkOps.closeSmartAutoFill}>
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+          <div className="tool-sheet-content">
             <MobileSmartAutoFill
               testResults={circuitState.testResults}
               onUpdate={circuitState.bulkUpdate}
             />
           </div>
         </div>
-      </DialogOverlay>
+      </>
     )}
 
-    {/* RCD Presets */}
+    {/* RCD Presets - Tool Sheet Pattern */}
     {bulkOps.showRcdPresetsDialog && (
-      <DialogOverlay>
-        <div className="bg-background rounded-lg max-w-2xl w-full">
-          <DialogHeader title="Quick RCD Presets" onClose={bulkOps.closeRcdPresets} />
-          <div className="p-4">
+      <>
+        <div className="tool-sheet-overlay" onClick={bulkOps.closeRcdPresets} />
+        <div className="tool-sheet-container">
+          <div className="tool-sheet-handle md:hidden" />
+          <div className="tool-sheet-header">
+            <div className="tool-sheet-title">
+              <Zap className="h-5 w-5 text-elec-yellow" />
+              Quick RCD Presets
+            </div>
+            <Button variant="ghost" size="icon" onClick={bulkOps.closeRcdPresets}>
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+          <div className="tool-sheet-content">
             <QuickRcdPresets
               testResults={circuitState.testResults.map((r) => ({
                 id: r.id,
@@ -376,7 +441,7 @@ const Dialogs: React.FC<{
             />
           </div>
         </div>
-      </DialogOverlay>
+      </>
     )}
 
     {/* Bulk Infill */}
@@ -387,25 +452,6 @@ const Dialogs: React.FC<{
       onApply={bulkOps.handleBulkInfill}
     />
   </>
-);
-
-// Helper components
-const DialogOverlay: React.FC<{ children: React.ReactNode; className?: string }> = ({
-  children,
-  className = '',
-}) => (
-  <div className={`fixed inset-0 bg-black/50 flex items-center justify-center p-3 md:p-4 z-50 ${className}`}>
-    <div className="max-w-2xl w-full">{children}</div>
-  </div>
-);
-
-const DialogHeader: React.FC<{ title: string; onClose: () => void }> = ({ title, onClose }) => (
-  <div className="flex items-center justify-between p-4 border-b">
-    <h3 className="text-lg font-semibold">{title}</h3>
-    <Button variant="ghost" size="sm" onClick={onClose}>
-      <X className="h-4 w-4" />
-    </Button>
-  </div>
 );
 
 export default ScheduleOfTests;

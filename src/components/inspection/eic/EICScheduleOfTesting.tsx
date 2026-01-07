@@ -1134,45 +1134,86 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
       {/* Dialogs - Render outside conditional blocks */}
       
-      {/* AI Board Photo Capture */}
+      {/* AI Board Photo Capture - Tool Sheet Pattern */}
       {showPhotoCapture && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="max-w-2xl w-full">
-            <BoardPhotoCapture
-              onAnalysisComplete={handleAIAnalysisComplete}
-              onClose={() => setShowPhotoCapture(false)}
-            />
+        <>
+          <div className="tool-sheet-overlay" onClick={() => setShowPhotoCapture(false)} />
+          <div className="tool-sheet-container">
+            <div className="tool-sheet-handle md:hidden" />
+            <div className="tool-sheet-header">
+              <div className="tool-sheet-title">
+                <Camera className="h-5 w-5 text-elec-yellow" />
+                AI Board Scanner
+              </div>
+              <Button variant="ghost" size="icon" onClick={() => setShowPhotoCapture(false)}>
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="tool-sheet-content">
+              <BoardPhotoCapture
+                onAnalysisComplete={handleAIAnalysisComplete}
+                onClose={() => setShowPhotoCapture(false)}
+                renderContentOnly={true}
+              />
+            </div>
           </div>
-        </div>
+        </>
       )}
 
-      {/* Test Results Photo Capture */}
+      {/* Test Results Photo Capture - Tool Sheet Pattern */}
       {showTestResultsScan && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="max-w-2xl w-full">
-            <TestResultsPhotoCapture
-              onAnalysisComplete={handleTestResultsAnalysisComplete}
-              onClose={() => setShowTestResultsScan(false)}
-            />
+        <>
+          <div className="tool-sheet-overlay" onClick={() => setShowTestResultsScan(false)} />
+          <div className="tool-sheet-container">
+            <div className="tool-sheet-handle md:hidden" />
+            <div className="tool-sheet-header">
+              <div className="tool-sheet-title">
+                <Camera className="h-5 w-5 text-elec-yellow" />
+                Scan Test Results
+              </div>
+              <Button variant="ghost" size="icon" onClick={() => setShowTestResultsScan(false)}>
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="tool-sheet-content">
+              <TestResultsPhotoCapture
+                onAnalysisComplete={handleTestResultsAnalysisComplete}
+                onClose={() => setShowTestResultsScan(false)}
+                renderContentOnly={true}
+              />
+            </div>
           </div>
-        </div>
+        </>
       )}
 
-      {/* AI Circuit Review */}
+      {/* AI Circuit Review - Tool Sheet Pattern */}
       {showCircuitReview && detectedCircuits && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="max-h-[90vh] overflow-auto w-full">
-            <SimpleCircuitTable
-              circuits={detectedCircuits.circuits || []}
-              board={detectedCircuits.board || { make: 'Unknown', model: 'Unknown', mainSwitch: 'Unknown', spd: 'Unknown', totalWays: 0 }}
-              onApply={handleApplyAICircuitsFromTable}
-              onClose={() => {
-                setShowCircuitReview(false);
-                setDetectedCircuits(null);
-              }}
-            />
+        <>
+          <div className="tool-sheet-overlay" onClick={() => { setShowCircuitReview(false); setDetectedCircuits(null); }} />
+          <div className="tool-sheet-container">
+            <div className="tool-sheet-handle md:hidden" />
+            <div className="tool-sheet-header">
+              <div className="tool-sheet-title">
+                <Zap className="h-5 w-5 text-elec-yellow" />
+                Review Detected Circuits
+              </div>
+              <Button variant="ghost" size="icon" onClick={() => { setShowCircuitReview(false); setDetectedCircuits(null); }}>
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="tool-sheet-content">
+              <SimpleCircuitTable
+                circuits={detectedCircuits.circuits || []}
+                board={detectedCircuits.board || { make: 'Unknown', model: 'Unknown', mainSwitch: 'Unknown', spd: 'Unknown', totalWays: 0 }}
+                onApply={handleApplyAICircuitsFromTable}
+                onClose={() => {
+                  setShowCircuitReview(false);
+                  setDetectedCircuits(null);
+                }}
+              />
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Test Results Review Dialog */}
@@ -1211,78 +1252,76 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         circuitNumber={newCircuitNumber}
       />
 
-      {/* Smart Auto-Fill Dialog - Mobile */}
+      {/* Smart Auto-Fill Dialog - Tool Sheet Pattern */}
       {showSmartAutoFillDialog && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-3 z-50">
-          <div className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="bg-background rounded-lg">
-              <div className="flex items-center justify-between p-4 border-b">
-                <h3 className="text-lg font-semibold">Smart Circuit Auto-Fill</h3>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => setShowSmartAutoFillDialog(false)}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+        <>
+          <div className="tool-sheet-overlay" onClick={() => setShowSmartAutoFillDialog(false)} />
+          <div className="tool-sheet-container">
+            <div className="tool-sheet-handle md:hidden" />
+            <div className="tool-sheet-header">
+              <div className="tool-sheet-title">
+                <Zap className="h-5 w-5 text-elec-yellow" />
+                Smart Circuit Auto-Fill
               </div>
-              <div className="p-4">
-                <MobileSmartAutoFill 
-                  testResults={testResults}
-                  onUpdate={handleBulkUpdate}
-                />
-              </div>
+              <Button variant="ghost" size="icon" onClick={() => setShowSmartAutoFillDialog(false)}>
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="tool-sheet-content">
+              <MobileSmartAutoFill
+                testResults={testResults}
+                onUpdate={handleBulkUpdate}
+              />
             </div>
           </div>
-        </div>
+        </>
       )}
 
-      {/* RCD Presets Dialog - Mobile */}
+      {/* RCD Presets Dialog - Tool Sheet Pattern */}
       {showRcdPresetsDialog && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-3 z-50">
-          <div className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="bg-background rounded-lg">
-              <div className="flex items-center justify-between p-4 border-b">
-                <h3 className="text-lg font-semibold">Quick RCD Presets</h3>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => setShowRcdPresetsDialog(false)}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+        <>
+          <div className="tool-sheet-overlay" onClick={() => setShowRcdPresetsDialog(false)} />
+          <div className="tool-sheet-container">
+            <div className="tool-sheet-handle md:hidden" />
+            <div className="tool-sheet-header">
+              <div className="tool-sheet-title">
+                <Shield className="h-5 w-5 text-elec-yellow" />
+                Quick RCD Presets
               </div>
-              <div className="p-4">
-                <QuickRcdPresets 
-                  testResults={testResults.map(r => ({ id: r.id, circuitDesignation: r.circuitDesignation }))}
-                  onApplyToCircuits={(circuitIds, preset) => {
-                    const updatedResults = testResults.map(result => {
-                      if (circuitIds.includes(result.id)) {
-                        return {
-                          ...result,
-                          rcdBsStandard: preset.bsStandard,
-                          rcdType: preset.type,
-                          rcdRating: preset.rating,
-                          rcdRatingA: preset.ratingA,
-                        };
-                      }
-                      return result;
-                    });
-                    
-                    setTestResults(updatedResults);
-                    onUpdate('scheduleOfTests', updatedResults);
-                    setShowRcdPresetsDialog(false);
-                    
-                    toast.success(`✓ ${preset.label} Applied`, {
-                      description: `RCD details set for ${circuitIds.length} circuit${circuitIds.length > 1 ? 's' : ''}`,
-                      duration: 2000,
-                    });
-                  }}
-                />
-              </div>
+              <Button variant="ghost" size="icon" onClick={() => setShowRcdPresetsDialog(false)}>
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="tool-sheet-content">
+              <QuickRcdPresets
+                testResults={testResults.map(r => ({ id: r.id, circuitDesignation: r.circuitDesignation }))}
+                onApplyToCircuits={(circuitIds, preset) => {
+                  const updatedResults = testResults.map(result => {
+                    if (circuitIds.includes(result.id)) {
+                      return {
+                        ...result,
+                        rcdBsStandard: preset.bsStandard,
+                        rcdType: preset.type,
+                        rcdRating: preset.rating,
+                        rcdRatingA: preset.ratingA,
+                      };
+                    }
+                    return result;
+                  });
+
+                  setTestResults(updatedResults);
+                  onUpdate('scheduleOfTests', updatedResults);
+                  setShowRcdPresetsDialog(false);
+
+                  toast.success(`✓ ${preset.label} Applied`, {
+                    description: `RCD details set for ${circuitIds.length} circuit${circuitIds.length > 1 ? 's' : ''}`,
+                    duration: 2000,
+                  });
+                }}
+              />
             </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Bulk Infill Dialog */}
