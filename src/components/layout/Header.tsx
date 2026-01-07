@@ -3,8 +3,6 @@ import { Menu, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import RecordingIndicator from "../apprentice/timer/RecordingIndicator";
-import NotificationDropdown from "../notifications/NotificationDropdown";
-import { MessagesDropdown } from "./MessagesDropdown";
 import UserProfileDropdown from "../auth/UserProfileDropdown";
 import { useRef, useEffect, useState } from "react";
 import { format } from "date-fns";
@@ -146,10 +144,8 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
         {/* Center - Live Clock (desktop only) */}
         <LiveClock className="hidden md:flex" />
 
-        {/* Right side - Actions with tighter mobile spacing */}
-        <div className="flex items-center gap-0.5 sm:gap-1.5">
-          <MessagesDropdown />
-          <NotificationDropdown />
+        {/* Right side - Profile with combined notifications/messages */}
+        <div className="flex items-center">
           <UserProfileDropdown />
         </div>
       </div>

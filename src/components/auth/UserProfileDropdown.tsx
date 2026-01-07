@@ -1,21 +1,51 @@
-
+import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { LogOut, User, Settings, MessageSquare, ChevronRight, Sparkles } from 'lucide-react';
+import { LogOut, User, Settings, MessageSquare, Bell, ChevronRight, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { useNotifications } from '@/components/notifications/NotificationProvider';
+import { useCombinedUnreadWithNotifications } from '@/hooks/useCombinedUnread';
+import { MessagesSheet } from './MessagesSheet';
+import { NotificationsSheet } from './NotificationsSheet';
 
 const UserProfileDropdown = () => {
   const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
+
+  // Sheet states
+  const [messagesOpen, setMessagesOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // Get notification count safely
+  let notificationUnread = 0;
+  try {
+    const { unreadCount } = useNotifications();
+    notificationUnread = unreadCount;
+  } catch (e) {
+    // NotificationProvider not available
+  }
+
+  // Get combined unread counts
+  const { messageUnread, hasUnread } = useCombinedUnreadWithNotifications(notificationUnread);
+
+  const handleOpenMessages = () => {
+    setDropdownOpen(false);
+    setTimeout(() => setMessagesOpen(true), 150);
+  };
+
+  const handleOpenNotifications = () => {
+    setDropdownOpen(false);
+    setTimeout(() => setNotificationsOpen(true), 150);
+  };
 
   const handleSignOut = async () => {
     await signOut();
@@ -54,7 +84,8 @@ const UserProfileDropdown = () => {
   };
 
   return (
-    <DropdownMenu>
+    <>
+    <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
       <DropdownMenuTrigger asChild>
         <button
           className={cn(
@@ -76,8 +107,15 @@ const UserProfileDropdown = () => {
               </AvatarFallback>
             </Avatar>
 
-            {/* Online status indicator */}
-            <span className="absolute -bottom-0.5 -right-0.5 block h-3 w-3 rounded-full border-2 border-elec-dark bg-green-500 shadow-lg shadow-green-500/50" />
+            {/* Online status indicator OR unread badge */}
+            {hasUnread ? (
+              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-red-500 border-2 border-elec-dark" />
+              </span>
+            ) : (
+              <span className="absolute -bottom-0.5 -right-0.5 block h-3 w-3 rounded-full border-2 border-elec-dark bg-green-500 shadow-lg shadow-green-500/50" />
+            )}
           </div>
         </button>
       </DropdownMenuTrigger>
@@ -114,6 +152,48 @@ const UserProfileDropdown = () => {
         {/* Menu items */}
         <div className="p-2">
           <DropdownMenuItem
+            onClick={handleOpenNotifications}
+            className="flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer hover:bg-elec-yellow/10 focus:bg-elec-yellow/10 group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-1.5 rounded-lg bg-red-500/10 text-red-400 group-hover:bg-red-500/20 transition-colors">
+                <Bell className="h-4 w-4" />
+              </div>
+              <span className="font-medium">Notifications</span>
+            </div>
+            <div className="flex items-center gap-2">
+              {notificationUnread > 0 && (
+                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-bold text-white">
+                  {notificationUnread > 9 ? '9+' : notificationUnread}
+                </span>
+              )}
+              <ChevronRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            onClick={handleOpenMessages}
+            className="flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer hover:bg-elec-yellow/10 focus:bg-elec-yellow/10 group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-1.5 rounded-lg bg-elec-yellow/10 text-elec-yellow group-hover:bg-elec-yellow/20 transition-colors">
+                <MessageSquare className="h-4 w-4" />
+              </div>
+              <span className="font-medium">Messages</span>
+            </div>
+            <div className="flex items-center gap-2">
+              {messageUnread > 0 && (
+                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-elec-yellow px-1.5 text-[10px] font-bold text-black">
+                  {messageUnread > 9 ? '9+' : messageUnread}
+                </span>
+              )}
+              <ChevronRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator className="bg-border/50 my-1" />
+
+          <DropdownMenuItem
             onClick={() => navigate('/profile')}
             className="flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer hover:bg-elec-yellow/10 focus:bg-elec-yellow/10 group"
           >
@@ -122,19 +202,6 @@ const UserProfileDropdown = () => {
                 <User className="h-4 w-4" />
               </div>
               <span className="font-medium">Profile</span>
-            </div>
-            <ChevronRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-          </DropdownMenuItem>
-
-          <DropdownMenuItem
-            onClick={() => navigate('/messages')}
-            className="flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer hover:bg-elec-yellow/10 focus:bg-elec-yellow/10 group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="p-1.5 rounded-lg bg-purple-500/10 text-purple-400 group-hover:bg-purple-500/20 transition-colors">
-                <MessageSquare className="h-4 w-4" />
-              </div>
-              <span className="font-medium">Messages</span>
             </div>
             <ChevronRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
           </DropdownMenuItem>
@@ -169,6 +236,11 @@ const UserProfileDropdown = () => {
         </div>
       </DropdownMenuContent>
     </DropdownMenu>
+
+    {/* Slide-out sheets */}
+    <MessagesSheet open={messagesOpen} onOpenChange={setMessagesOpen} />
+    <NotificationsSheet open={notificationsOpen} onOpenChange={setNotificationsOpen} />
+    </>
   );
 };
 

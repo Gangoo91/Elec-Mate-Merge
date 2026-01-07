@@ -1,0 +1,413 @@
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { MessageSquare, ArrowLeft, Building2, Briefcase, Heart, Hash, GraduationCap } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+// Hooks
+import { useConversations, useElectricianConversations } from "@/hooks/useConversations";
+import { useMessages, useSendMessage, useMarkAllAsRead, useTypingIndicator } from "@/hooks/useMessages";
+import { useAuth } from "@/contexts/AuthContext";
+import { useElecIdProfile } from "@/hooks/useElecIdProfile";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { toast } from "@/hooks/use-toast";
+
+// Team chat hooks
+import { useMyTeamChannels, useTeamDMConversations, useTeamChatUnread } from "@/hooks/useTeamChat";
+
+// College chat hooks
+import { useCollegeConversations } from "@/hooks/useCollegeChat";
+
+// Employer components
+import { ConversationList } from "@/components/employer/vacancies/ConversationList";
+import { MessageList } from "@/components/employer/messaging/MessageList";
+import { MessageInput } from "@/components/employer/messaging/MessageInput";
+
+// Electrician components
+import { ElectricianConversationList } from "@/components/electrician/messaging/ElectricianConversationList";
+
+// Team chat components
+import { TeamChatList, TeamChatView } from "@/components/employer/team-chat";
+
+// College chat components
+import { CollegeChatList, CollegeChatView } from "@/components/college/chat";
+
+// Peer support
+import { peerConversationService, peerMessageService, PeerConversation, PeerMessage } from "@/services/peerSupportService";
+
+// Types
+import type { Conversation, ElectricianConversation } from "@/services/conversationService";
+import type { TeamChannel, TeamDirectMessage } from "@/services/teamChatService";
+import type { CollegeConversation } from "@/services/collegeChatService";
+import { cn } from "@/lib/utils";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { formatDistanceToNow } from "date-fns";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
+type ActiveConversation = Conversation | ElectricianConversation;
+type ChatMode = 'job' | 'team' | 'college' | 'peer';
+
+interface MessagesSheetProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+// Peer Support Conversation List Item (simplified from MessagesDropdown)
+function PeerConversationListItem({
+  conversation,
+  currentUserId,
+  onClick,
+}: {
+  conversation: PeerConversation;
+  currentUserId: string;
+  onClick: (conv: PeerConversation) => void;
+}) {
+  const isSupporter = conversation.supporter?.user_id === currentUserId;
+  const otherName = isSupporter ? 'Anonymous Seeker' : (conversation.supporter?.display_name || 'Peer Supporter');
+  const initials = otherName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  const timeAgo = conversation.last_message_at
+    ? formatDistanceToNow(new Date(conversation.last_message_at), { addSuffix: false })
+    : null;
+
+  return (
+    <Card
+      className="cursor-pointer transition-all duration-200 border-border hover:border-pink-500/50 hover:shadow-md"
+      onClick={() => onClick(conversation)}
+    >
+      <CardContent className="p-3 sm:p-4">
+        <div className="flex items-center gap-3">
+          <Avatar className="h-12 w-12 border-2 border-pink-200 dark:border-pink-900">
+            <AvatarImage src={conversation.supporter?.avatar_url || undefined} />
+            <AvatarFallback className="bg-gradient-to-br from-pink-500/20 to-purple-500/20 text-pink-500 font-semibold">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="font-semibold truncate text-foreground">{otherName}</h3>
+              {timeAgo && (
+                <span className="text-xs text-muted-foreground shrink-0">{timeAgo}</span>
+              )}
+            </div>
+            <div className="flex items-center gap-2 mt-1">
+              <Badge variant="outline" className="text-xs px-2 py-0 bg-pink-500/10 text-pink-500 border-pink-500/30">
+                <Heart className="h-3 w-3 mr-1" />
+                {isSupporter ? 'Supporting' : 'Peer Support'}
+              </Badge>
+            </div>
+          </div>
+          <MessageSquare className="h-5 w-5 text-pink-500" />
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+// Peer Conversation List
+function PeerConversationList({ onSelect }: { onSelect: (conv: PeerConversation) => void }) {
+  const { user } = useAuth();
+  const { data: conversations, isLoading } = useQuery({
+    queryKey: ['peer-conversations'],
+    queryFn: () => peerConversationService.getMyConversations(),
+  });
+
+  if (isLoading) {
+    return (
+      <div className="p-4 space-y-3">
+        {[1, 2].map((i) => (
+          <div key={i} className="flex items-center gap-3 p-4 rounded-xl border border-border">
+            <Skeleton className="h-12 w-12 rounded-full" />
+            <div className="flex-1 space-y-2">
+              <Skeleton className="h-4 w-3/4" />
+              <Skeleton className="h-3 w-1/2" />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (!conversations || conversations.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center p-8 text-center">
+        <div className="p-4 rounded-full bg-pink-500/10 mb-4">
+          <Heart className="h-10 w-10 text-pink-500" />
+        </div>
+        <h3 className="font-semibold text-foreground mb-2">No Support Chats</h3>
+        <p className="text-sm text-muted-foreground mb-4 max-w-xs">
+          Connect with a trained peer supporter for confidential support
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-4 space-y-3">
+      {conversations.map((conv) => (
+        <PeerConversationListItem
+          key={conv.id}
+          conversation={conv}
+          currentUserId={user?.id || ''}
+          onClick={onSelect}
+        />
+      ))}
+    </div>
+  );
+}
+
+export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const [activeTab, setActiveTab] = useState<ChatMode>('job');
+  const [selectedConversation, setSelectedConversation] = useState<ActiveConversation | null>(null);
+  const [selectedPeerConversation, setSelectedPeerConversation] = useState<PeerConversation | null>(null);
+  const [selectedTeamChannel, setSelectedTeamChannel] = useState<TeamChannel | null>(null);
+  const [selectedTeamDM, setSelectedTeamDM] = useState<TeamDirectMessage | null>(null);
+  const [selectedCollegeConversation, setSelectedCollegeConversation] = useState<CollegeConversation | null>(null);
+  const [peerMessages, setPeerMessages] = useState<PeerMessage[]>([]);
+  const [isSending, setIsSending] = useState(false);
+
+  const isMobile = useIsMobile();
+  const { user } = useAuth();
+
+  // Determine context based on path
+  const isEmployerContext = location.pathname.startsWith('/employer');
+  const isCollegeContext = location.pathname.startsWith('/college');
+
+  // Get electrician profile
+  const { profile: elecIdProfile } = useElecIdProfile();
+
+  // Get employer ID for team chat
+  const employerId = isEmployerContext ? user?.id : undefined;
+
+  // Conversations data
+  const { data: employerConversations = [], isLoading: employerLoading, totalUnread: employerUnread } = useConversations();
+  const { data: electricianConversations = [], isLoading: electricianLoading, totalUnread: electricianUnread } = useElectricianConversations(elecIdProfile?.id);
+  const { data: peerConversations = [] } = useQuery({
+    queryKey: ['peer-conversations'],
+    queryFn: () => peerConversationService.getMyConversations(),
+  });
+  const teamChatUnread = useTeamChatUnread(employerId);
+  const { data: collegeConversations = [], totalUnread: collegeUnread } = useCollegeConversations();
+
+  // Calculate unreads
+  const jobConversations = isEmployerContext ? employerConversations : electricianConversations;
+  const jobLoading = isEmployerContext ? employerLoading : electricianLoading;
+  const jobUnread = isEmployerContext ? employerUnread : electricianUnread;
+  const userType = isEmployerContext ? 'employer' : 'electrician';
+  const peerUnread = peerConversations?.filter(c => c.status === 'active').length || 0;
+  const totalUnread = jobUnread + teamChatUnread + collegeUnread + peerUnread;
+
+  // Messages for selected job conversation
+  const { data: messages = [], isLoading: messagesLoading } = useMessages(selectedConversation?.id || '');
+
+  // Reset state when sheet closes
+  const handleClose = (isOpen: boolean) => {
+    if (!isOpen) {
+      setSelectedConversation(null);
+      setSelectedPeerConversation(null);
+      setSelectedTeamChannel(null);
+      setSelectedTeamDM(null);
+      setSelectedCollegeConversation(null);
+      setPeerMessages([]);
+    }
+    onOpenChange(isOpen);
+  };
+
+  // Handle back to list
+  const handleBack = () => {
+    setSelectedConversation(null);
+    setSelectedPeerConversation(null);
+    setSelectedTeamChannel(null);
+    setSelectedTeamDM(null);
+    setSelectedCollegeConversation(null);
+    setPeerMessages([]);
+  };
+
+  const isInChat = selectedConversation || selectedPeerConversation || selectedTeamChannel || selectedTeamDM || selectedCollegeConversation;
+  const isInTeamChat = selectedTeamChannel || selectedTeamDM;
+  const isInCollegeChat = !!selectedCollegeConversation;
+
+  return (
+    <Sheet open={open} onOpenChange={handleClose}>
+      <SheetContent
+        side={isMobile ? "bottom" : "right"}
+        className={cn(
+          "p-0 flex flex-col bg-background",
+          isMobile ? "h-[95vh] rounded-t-2xl" : "w-[420px] max-w-[420px]"
+        )}
+      >
+        {/* List View */}
+        {!isInChat ? (
+          <>
+            <SheetHeader className="p-4 border-b border-border shrink-0">
+              <SheetTitle className="flex items-center gap-2 text-foreground">
+                <MessageSquare className="h-5 w-5 text-elec-yellow" />
+                Messages
+                {totalUnread > 0 && (
+                  <Badge className="bg-elec-yellow text-black ml-auto">
+                    {totalUnread}
+                  </Badge>
+                )}
+              </SheetTitle>
+            </SheetHeader>
+
+            {/* Tabs for different message types */}
+            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as ChatMode)} className="flex-1 flex flex-col overflow-hidden">
+              <TabsList className={cn("mx-4 mt-2 grid shrink-0", isEmployerContext ? "grid-cols-3" : isCollegeContext ? "grid-cols-2" : "grid-cols-2")}>
+                <TabsTrigger value="job" className="gap-1.5">
+                  <Briefcase className="h-4 w-4" />
+                  <span className="hidden sm:inline">Jobs</span>
+                  {jobUnread > 0 && (
+                    <Badge variant="secondary" className="h-5 w-5 p-0 text-[10px] justify-center">
+                      {jobUnread}
+                    </Badge>
+                  )}
+                </TabsTrigger>
+                {isEmployerContext && (
+                  <TabsTrigger value="team" className="gap-1.5">
+                    <Hash className="h-4 w-4" />
+                    <span className="hidden sm:inline">Team</span>
+                    {teamChatUnread > 0 && (
+                      <Badge variant="secondary" className="h-5 w-5 p-0 text-[10px] justify-center bg-blue-500/20 text-blue-500">
+                        {teamChatUnread}
+                      </Badge>
+                    )}
+                  </TabsTrigger>
+                )}
+                {isCollegeContext && (
+                  <TabsTrigger value="college" className="gap-1.5">
+                    <GraduationCap className="h-4 w-4" />
+                    <span className="hidden sm:inline">College</span>
+                    {collegeUnread > 0 && (
+                      <Badge variant="secondary" className="h-5 w-5 p-0 text-[10px] justify-center bg-green-500/20 text-green-500">
+                        {collegeUnread}
+                      </Badge>
+                    )}
+                  </TabsTrigger>
+                )}
+                {!isCollegeContext && (
+                  <TabsTrigger value="peer" className="gap-1.5">
+                    <Heart className="h-4 w-4" />
+                    <span className="hidden sm:inline">Mates</span>
+                    {peerUnread > 0 && (
+                      <Badge variant="secondary" className="h-5 w-5 p-0 text-[10px] justify-center bg-pink-500/20 text-pink-500">
+                        {peerUnread}
+                      </Badge>
+                    )}
+                  </TabsTrigger>
+                )}
+              </TabsList>
+
+              <div className="flex-1 overflow-hidden">
+                <ScrollArea className="h-full">
+                  <TabsContent value="job" className="m-0 p-4">
+                    {isEmployerContext ? (
+                      <ConversationList
+                        conversations={employerConversations}
+                        isLoading={employerLoading}
+                        onSelect={(conv) => setSelectedConversation(conv)}
+                      />
+                    ) : (
+                      <ElectricianConversationList
+                        conversations={electricianConversations}
+                        isLoading={electricianLoading}
+                        onSelect={(conv) => setSelectedConversation(conv)}
+                      />
+                    )}
+                  </TabsContent>
+
+                  {isEmployerContext && (
+                    <TabsContent value="team" className="m-0">
+                      <TeamChatList
+                        employerId={employerId || ''}
+                        onSelectChannel={setSelectedTeamChannel}
+                        onSelectDM={setSelectedTeamDM}
+                      />
+                    </TabsContent>
+                  )}
+
+                  {isCollegeContext && (
+                    <TabsContent value="college" className="m-0">
+                      <CollegeChatList
+                        conversations={collegeConversations}
+                        onSelect={setSelectedCollegeConversation}
+                        userType="staff"
+                      />
+                    </TabsContent>
+                  )}
+
+                  {!isCollegeContext && (
+                    <TabsContent value="peer" className="m-0">
+                      <PeerConversationList onSelect={setSelectedPeerConversation} />
+                    </TabsContent>
+                  )}
+                </ScrollArea>
+              </div>
+            </Tabs>
+          </>
+        ) : (
+          // Chat View
+          <div className="flex flex-col h-full">
+            <div className="flex items-center gap-2 p-4 border-b border-border shrink-0">
+              <Button variant="ghost" size="icon" onClick={handleBack} className="h-8 w-8">
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-foreground truncate">
+                  {selectedConversation && ('company_name' in selectedConversation ? selectedConversation.company_name : selectedConversation.vacancy_title)}
+                  {selectedTeamChannel && `#${selectedTeamChannel.name}`}
+                  {selectedTeamDM && 'Direct Message'}
+                  {selectedCollegeConversation && selectedCollegeConversation.title}
+                  {selectedPeerConversation && 'Peer Support'}
+                </h3>
+              </div>
+            </div>
+
+            <div className="flex-1 overflow-hidden">
+              {isInTeamChat && (
+                <TeamChatView
+                  channel={selectedTeamChannel}
+                  directMessage={selectedTeamDM}
+                  employerId={employerId || ''}
+                  onBack={handleBack}
+                />
+              )}
+              {isInCollegeChat && selectedCollegeConversation && (
+                <CollegeChatView
+                  conversation={selectedCollegeConversation}
+                  userType="staff"
+                  onBack={handleBack}
+                />
+              )}
+              {selectedConversation && (
+                <div className="flex flex-col h-full">
+                  <ScrollArea className="flex-1 p-4">
+                    <MessageList
+                      messages={messages}
+                      isLoading={messagesLoading}
+                      currentUserId={user?.id || ''}
+                    />
+                  </ScrollArea>
+                  <div className="p-4 border-t border-border shrink-0">
+                    <MessageInput
+                      conversationId={selectedConversation.id}
+                      recipientId={isEmployerContext ? selectedConversation.electrician_id : selectedConversation.employer_id}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </SheetContent>
+    </Sheet>
+  );
+}
