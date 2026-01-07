@@ -3,8 +3,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
 
 const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
-const anthropicApiKey = Deno.env.get('ANTHROPIC_API_KEY');
 const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
+// Note: Claude/Anthropic removed - using Gemini + OpenAI only
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -24,7 +24,6 @@ interface BoardReadRequest {
     is_three_phase?: boolean;
   };
   options?: {
-    use_claude_ocr?: boolean;
     use_openai_components?: boolean;
     fast_mode?: boolean;
   };
@@ -236,115 +235,6 @@ JSON format:
 }
 
 /**
- * Stage 2: Claude Vision - Precise OCR for Circuit Labels
- * OPTIMIZED: Shorter prompt, focused on corrections only
- */
-async function analyzeWithClaude(images: string[], geminiResults: Partial<DetectedCircuit>[]): Promise<{
-  labelCorrections: Map<number, string>;
-  additionalCircuits: Partial<DetectedCircuit>[];
-}> {
-  if (!anthropicApiKey) {
-    console.log('Stage 2: Skipped (no Anthropic API key)');
-    return { labelCorrections: new Map(), additionalCircuits: [] };
-  }
-
-  console.log('Stage 2: Claude Vision - Precise OCR');
-
-  // OPTIMIZED: Concise prompt focused on corrections
-  const systemPrompt = `OCR specialist: Read circuit labels in UK consumer unit. Fix errors, expand abbreviations. Return JSON only.
-
-Current readings to verify:
-${geminiResults.slice(0, 20).map(c => `${c.index}:"${c.label_text || '?'}"`).join(', ')}
-
-Abbreviations: K=Kitchen, Lts=Lights, Skt=Sockets, Dn=Downstairs, Up=Upstairs, Grd=Ground, 1st=First, FF=First Floor, GF=Ground Floor, Ext=External, Emg=Emergency, CU=Consumer Unit
-
-Three-phase labels: Look for L1/L2/L3 markings, phase indicators, "3P" notation
-
-Return: {"label_readings":[{"position":1,"text_read":"Full Label","confidence":0.9}],"corrections":[{"position":3,"original":"K Skt","corrected":"Kitchen Sockets"}],"missed_circuits":[{"position":12,"text_read":"Garage"}]}`;
-
-  const imageContents = await Promise.all(
-    images.slice(0, 2).map(async (url) => {
-      const { mimeType, data } = await urlToBase64(url);
-      return {
-        type: "image" as const,
-        source: {
-          type: "base64" as const,
-          media_type: mimeType,
-          data: data
-        }
-      };
-    })
-  );
-
-  const response = await fetchWithTimeout(
-    'https://api.anthropic.com/v1/messages',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': anthropicApiKey,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 2000,
-        messages: [{
-          role: 'user',
-          content: [
-            ...imageContents,
-            { type: 'text', text: systemPrompt }
-          ]
-        }]
-      }),
-    },
-    30000
-  );
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error('Claude error:', errorText);
-    return { labelCorrections: new Map(), additionalCircuits: [] };
-  }
-
-  const data = await response.json();
-  const text = data.content?.find((c: any) => c.type === 'text')?.text;
-
-  if (!text) {
-    return { labelCorrections: new Map(), additionalCircuits: [] };
-  }
-
-  try {
-    const result = parseAIResponse(text, 'Claude OCR response');
-
-    const corrections = new Map<number, string>();
-    for (const correction of result.corrections || []) {
-      corrections.set(correction.position, correction.corrected);
-    }
-
-    // Also add high-confidence label readings as potential corrections
-    for (const reading of result.label_readings || []) {
-      if (reading.confidence > 0.8 && reading.text_read) {
-        corrections.set(reading.position, reading.text_read);
-      }
-    }
-
-    const additionalCircuits = (result.missed_circuits || []).map((c: any) => ({
-      index: c.position,
-      label_text: c.text_read,
-      confidence: 'medium' as const,
-      source_model: 'claude-ocr'
-    }));
-
-    console.log(`Claude OCR: ${corrections.size} corrections, ${additionalCircuits.length} missed circuits found`);
-    return { labelCorrections: corrections, additionalCircuits };
-
-  } catch (e) {
-    console.error('Claude OCR parse error:', e);
-    return { labelCorrections: new Map(), additionalCircuits: [] };
-  }
-}
-
-/**
  * Stage 3: OpenAI - Component Rating Verification
  * OPTIMIZED: Shorter prompt, only return corrections
  */
@@ -447,7 +337,6 @@ Return ONLY corrections (skip verified): {"device_verifications":[{"position":3,
 
 function mergeResults(
   geminiResult: { board: Partial<BoardStructure>; circuits: Partial<DetectedCircuit>[] },
-  claudeResult: { labelCorrections: Map<number, string>; additionalCircuits: Partial<DetectedCircuit>[] },
   openaiResult: { deviceCorrections: Map<number, Partial<DetectedCircuit['device']>> },
   hints: BoardReadRequest['hints']
 ): AnalysisResult {
@@ -455,7 +344,6 @@ function mergeResults(
   const warnings: string[] = [];
   const modelsUsed: string[] = ['gemini'];
 
-  if (claudeResult.labelCorrections.size > 0) modelsUsed.push('claude-ocr');
   if (openaiResult.deviceCorrections.size > 0) modelsUsed.push('openai-verify');
 
   // Merge circuits
@@ -486,39 +374,6 @@ function mergeResults(
     });
   }
 
-  // Apply Claude label corrections
-  for (const [index, correctedLabel] of claudeResult.labelCorrections) {
-    const circuit = circuitMap.get(index);
-    if (circuit) {
-      if (circuit.label_text !== correctedLabel) {
-        decisions.push(`Position ${index}: Label updated from "${circuit.label_text}" to "${correctedLabel}" (Claude OCR)`);
-        circuit.label_text = correctedLabel;
-        circuit.source_model = 'gemini+claude';
-      }
-    }
-  }
-
-  // Add missed circuits from Claude
-  for (const missedCircuit of claudeResult.additionalCircuits) {
-    const index = missedCircuit.index || 0;
-    if (!circuitMap.has(index)) {
-      circuitMap.set(index, {
-        index,
-        label_text: missedCircuit.label_text || `Circuit ${index}`,
-        device: { category: 'MCB', type: '', rating_amps: null, curve: null, breaking_capacity_kA: null },
-        live_conductor_size_mm2: null,
-        cpc_size_mm2: null,
-        pictograms: [],
-        phase: '1P',
-        confidence: 'low',
-        evidence: 'Detected by Claude OCR (missed by Gemini)',
-        notes: '',
-        source_model: 'claude-ocr'
-      });
-      decisions.push(`Position ${index}: New circuit detected by Claude OCR`);
-    }
-  }
-
   // Apply OpenAI device corrections
   for (const [index, deviceCorrection] of openaiResult.deviceCorrections) {
     const circuit = circuitMap.get(index);
@@ -528,9 +383,7 @@ function mergeResults(
       const newDevice = `${circuit.device.category} ${circuit.device.rating_amps || '?'}A`;
       if (oldDevice !== newDevice) {
         decisions.push(`Position ${index}: Device updated from ${oldDevice} to ${newDevice} (OpenAI verify)`);
-        circuit.source_model = circuit.source_model.includes('claude')
-          ? 'gemini+claude+openai'
-          : 'gemini+openai';
+        circuit.source_model = 'gemini+openai';
       }
     }
   }
@@ -618,51 +471,20 @@ serve(async (req) => {
     // Stage 1: Gemini - Board Structure (always runs)
     const geminiResult = await analyzeWithGemini(images, hints);
 
-    // Stage 2+3: Claude OCR + OpenAI Verification IN PARALLEL for speed
-    let claudeResult = { labelCorrections: new Map<number, string>(), additionalCircuits: [] as Partial<DetectedCircuit>[] };
+    // Stage 2: OpenAI Verification (optional enhancement)
     let openaiResult = { deviceCorrections: new Map<number, Partial<DetectedCircuit['device']>>() };
 
-    if (!options?.fast_mode) {
-      const parallelTasks: Promise<any>[] = [];
-
-      // Claude OCR task
-      if (options?.use_claude_ocr !== false && anthropicApiKey) {
-        parallelTasks.push(
-          analyzeWithClaude(images, geminiResult.circuits)
-            .then(result => ({ type: 'claude', result }))
-            .catch(e => {
-              console.error('Claude parallel error:', e);
-              return { type: 'claude', result: { labelCorrections: new Map(), additionalCircuits: [] } };
-            })
-        );
-      }
-
-      // OpenAI verification task
-      if (options?.use_openai_components !== false && openaiApiKey) {
-        parallelTasks.push(
-          verifyWithOpenAI(images, geminiResult.circuits)
-            .then(result => ({ type: 'openai', result }))
-            .catch(e => {
-              console.error('OpenAI parallel error:', e);
-              return { type: 'openai', result: { deviceCorrections: new Map() } };
-            })
-        );
-      }
-
-      // Run in parallel
-      if (parallelTasks.length > 0) {
-        console.log(`Running ${parallelTasks.length} enhancement tasks in parallel...`);
-        const results = await Promise.all(parallelTasks);
-
-        for (const { type, result } of results) {
-          if (type === 'claude') claudeResult = result;
-          if (type === 'openai') openaiResult = result;
-        }
+    if (!options?.fast_mode && options?.use_openai_components !== false && openaiApiKey) {
+      console.log('Running OpenAI device verification...');
+      try {
+        openaiResult = await verifyWithOpenAI(images, geminiResult.circuits);
+      } catch (e) {
+        console.error('OpenAI verification error:', e);
       }
     }
 
     // Merge results
-    const result = mergeResults(geminiResult, claudeResult, openaiResult, hints);
+    const result = mergeResults(geminiResult, openaiResult, hints);
 
     // Add metadata
     result.metadata.analysisTime = Date.now() - startTime;

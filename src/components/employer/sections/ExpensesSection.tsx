@@ -147,11 +147,11 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
   }, [sortField]);
 
   const handleApprove = useCallback((id: string) => {
-    approveMutation.mutate({ id, approvedBy: "Admin" });
+    approveMutation.mutate(id);
   }, [approveMutation]);
 
   const handleReject = useCallback((id: string, reason?: string) => {
-    rejectMutation.mutate({ id, approvedBy: "Admin", reason: reason || "Rejected" });
+    rejectMutation.mutate({ id, reason: reason || "Rejected" });
   }, [rejectMutation]);
 
   const handleMarkPaid = useCallback((id: string) => {

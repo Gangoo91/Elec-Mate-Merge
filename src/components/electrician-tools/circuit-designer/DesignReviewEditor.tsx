@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -10,11 +11,12 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { InstallationDesign, CircuitDesign } from '@/types/installation-design';
 import type { EnhancedInstallationGuidance } from '@/types/circuit-design';
-import { 
-  CheckCircle2, AlertTriangle, AlertCircle, Download, Zap, Cable, Shield, 
+import {
+  CheckCircle2, AlertTriangle, AlertCircle, Download, Zap, Cable, Shield,
   TrendingDown, Percent, Gauge, Wrench, MapPin, ClipboardCheck, FileText,
-  Upload, Loader2, Check, ChevronDown, Copy, TestTube, Anchor, Clock
+  Upload, Loader2, Check, ChevronDown, Copy, TestTube, Anchor, Clock, FileCheck
 } from 'lucide-react';
+import { ResultsSuccessAnimation } from './ResultsSuccessAnimation';
 import { downloadEICPDF } from '@/lib/eic/pdfGenerator';
 import { generateEICSchedule } from '@/lib/eic/scheduleGenerator';
 import { toast } from 'sonner';
@@ -206,6 +208,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const [showCircuitSelector, setShowCircuitSelector] = useState(false);
   const [regeneratingCircuits, setRegeneratingCircuits] = useState<Set<number>>(new Set());
   const [justificationsPatchVersion, setJustificationsPatchVersion] = useState(0);
+  const [showSuccessAnimation, setShowSuccessAnimation] = useState(true);
+  const [isSendingToEIC, setIsSendingToEIC] = useState(false);
 
   // Responsive breakpoint detection
   useEffect(() => {
@@ -1034,6 +1038,103 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
     }
   };
 
+  // Send design to EIC Schedule
+  const handleSendToEIC = async () => {
+    setIsSendingToEIC(true);
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast.error('Please sign in to save designs');
+        return;
+      }
+
+      // Transform design circuits to EIC schedule format
+      const scheduleCircuits = design.circuits.map((circuit, idx) => ({
+        circuitNumber: (circuit.circuitNumber || idx + 1).toString(),
+        phaseType: circuit.phases === 'three' ? '3-phase' : 'single-phase',
+        circuitDescription: circuit.name,
+        referenceMethod: circuit.installationMethod || 'Reference Method C',
+        pointsServed: circuit.loadType === 'lighting' ? '8' : circuit.loadType === 'socket' ? '6' : '1',
+        liveSize: circuit.cableSize?.toString() || '',
+        cpcSize: circuit.cpcSize?.toString() || '',
+        protectiveDeviceType: circuit.protectionDevice?.type || 'MCB',
+        protectiveDeviceCurve: circuit.protectionDevice?.curve || 'B',
+        protectiveDeviceRating: circuit.protectionDevice?.rating?.toString() || '',
+        protectiveDeviceKaRating: circuit.protectionDevice?.kaRating?.toString() || '6',
+        bsStandard: 'BS EN 60898',
+        r1r2: circuit.expectedTestResults?.r1r2?.at20C ||
+              circuit.expectedTests?.r1r2?.at20C || '',
+        zs: circuit.calculations?.zs?.toFixed(2) || '',
+        maxZs: circuit.calculations?.maxZs?.toFixed(2) ||
+               circuit.expectedTests?.zs?.maxPermitted || '',
+        insulationTestVoltage: '500V DC',
+        insulationResistance: '≥1.0MΩ',
+        polarity: 'Verify on-site',
+        rcdRating: circuit.rcdProtected ? '30mA' : undefined,
+        rcdOneX: circuit.rcdProtected ? '≤300ms' : undefined,
+        pfc: 'Test on-site',
+        functionalTesting: 'Test on-site'
+      }));
+
+      // Generate a unique installation ID
+      const installationId = `INST-${Date.now()}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
+
+      // Build schedule_data JSON matching EIC format
+      const scheduleData = {
+        circuits: scheduleCircuits,
+        supply: {
+          voltage: design.consumerUnit?.incomingSupply?.voltage || 230,
+          phases: design.consumerUnit?.incomingSupply?.phases || 'single',
+          earthingSystem: design.consumerUnit?.incomingSupply?.earthingSystem || 'TN-C-S',
+          ze: design.consumerUnit?.incomingSupply?.Ze || 0.35,
+          pscc: design.consumerUnit?.incomingSupply?.incomingPFC || 6000
+        },
+        projectInfo: {
+          projectName: design.projectName,
+          installationType: design.installationType,
+          clientName: design.clientName,
+          totalLoad: design.totalLoad,
+          diversifiedLoad: (design as any).diversifiedLoad || design.totalLoad
+        },
+        source: 'circuit-designer',
+        generatedAt: new Date().toISOString()
+      };
+
+      // Save to eic_schedules table with correct schema
+      const { data: schedule, error } = await supabase
+        .from('eic_schedules')
+        .insert({
+          user_id: user.id,
+          installation_address: design.location || design.projectName || 'Not specified',
+          installation_id: installationId,
+          designer_name: design.electricianName || 'Circuit Designer AI',
+          design_date: new Date().toISOString().split('T')[0],
+          schedule_data: scheduleData,
+          status: 'pending'
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      toast.success('Design saved to EIC', {
+        description: 'Opening EIC form with pre-filled circuits...'
+      });
+
+      // Navigate to EIC form with the design ID
+      navigate(`/electrician/inspection-testing?section=eic&designId=${schedule.id}`);
+
+    } catch (error) {
+      console.error('Failed to save design to EIC:', error);
+      toast.error('Failed to save design', {
+        description: error instanceof Error ? error.message : 'Unknown error'
+      });
+    } finally {
+      setIsSendingToEIC(false);
+    }
+  };
+
   const allCompliant = design.circuits.every(c => {
     const zsMax = c.expectedTests?.zs?.maxPermitted ?? c.calculations?.maxZs ?? 999;
     const zsCompliant = c.expectedTests?.zs?.compliant ?? (c.calculations?.zs <= zsMax);
@@ -1363,11 +1464,23 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   // Mobile-first responsive rendering
   if (isMobile) {
     return (
-      <MobileCircuitResults 
-        design={design} 
-        onReset={onReset} 
-        onExport={handleExportPDF}
-      />
+      <>
+        {/* Success Animation */}
+        {showSuccessAnimation && (
+          <ResultsSuccessAnimation
+            onComplete={() => setShowSuccessAnimation(false)}
+            circuitCount={design.circuits.length}
+            projectName={design.projectName}
+          />
+        )}
+        <MobileCircuitResults
+          design={design}
+          onReset={onReset}
+          onExport={handleExportPDF}
+          onSendToEIC={handleSendToEIC}
+          isSendingToEIC={isSendingToEIC}
+        />
+      </>
     );
   }
 
@@ -1377,7 +1490,22 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
   // Desktop view
   return (
-    <div className="space-y-4 sm:space-y-5 md:space-y-6 px-3 sm:px-4 pb-safe">
+    <>
+      {/* Success Animation */}
+      {showSuccessAnimation && (
+        <ResultsSuccessAnimation
+          onComplete={() => setShowSuccessAnimation(false)}
+          circuitCount={design.circuits.length}
+          projectName={design.projectName}
+        />
+      )}
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: showSuccessAnimation ? 2.5 : 0 }}
+        className="space-y-4 sm:space-y-5 md:space-y-6 px-3 sm:px-4 pb-safe"
+      >
       {/* Failed Circuits Warning Banner */}
       {failedCircuitsCount > 0 && (
         <Alert variant="destructive" className="animate-in fade-in duration-300">
@@ -2358,10 +2486,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
       {/* Actions */}
       <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
-        <Button 
-          size="lg" 
-          onClick={handleExportPDF} 
-          className={`w-full sm:flex-1 min-h-[44px] touch-manipulation ${isExporting ? 'animate-pulse' : ''}`} 
+        <Button
+          size="lg"
+          onClick={handleExportPDF}
+          className={`w-full sm:flex-1 min-h-[44px] touch-manipulation ${isExporting ? 'animate-pulse' : ''}`}
           disabled={isExporting}
         >
           {isExporting ? (
@@ -2373,6 +2501,25 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             <>
               <Download className="h-5 w-5 mr-2" />
               Export PDF
+            </>
+          )}
+        </Button>
+        <Button
+          size="lg"
+          variant="outline"
+          onClick={handleSendToEIC}
+          disabled={isSendingToEIC}
+          className="w-full sm:flex-1 min-h-[44px] touch-manipulation bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 hover:border-elec-yellow/50"
+        >
+          {isSendingToEIC ? (
+            <>
+              <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+              Saving...
+            </>
+          ) : (
+            <>
+              <FileCheck className="h-5 w-5 mr-2" />
+              Send to EIC
             </>
           )}
         </Button>
@@ -2431,6 +2578,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           New Design
         </Button>
       </div>
-    </div>
+    </motion.div>
+    </>
   );
 };

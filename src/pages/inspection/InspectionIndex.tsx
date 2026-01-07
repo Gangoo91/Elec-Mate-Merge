@@ -31,6 +31,10 @@ const InspectionIndex = () => {
     const params = new URLSearchParams(window.location.search);
     return params.get('reportType');
   });
+  const [currentDesignId, setCurrentDesignId] = useState<string | null>(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('designId');
+  });
 
   // Update section when navigation state changes (from customer page)
   useEffect(() => {
@@ -39,12 +43,13 @@ const InspectionIndex = () => {
     }
   }, [location.state?.section]);
 
-  // Update section, reportId, and reportType when URL parameters change
+  // Update section, reportId, reportType, and designId when URL parameters change
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const section = params.get('section');
     const reportId = params.get('reportId');
     const reportType = params.get('reportType');
+    const designId = params.get('designId');
 
     if (section && section !== currentSection) {
       setCurrentSection(section);
@@ -54,6 +59,9 @@ const InspectionIndex = () => {
     }
     if (reportType !== currentReportType) {
       setCurrentReportType(reportType);
+    }
+    if (designId !== currentDesignId) {
+      setCurrentDesignId(designId);
     }
   }, [location.search]);
 
@@ -108,6 +116,7 @@ const InspectionIndex = () => {
               <EICForm
                 onBack={() => handleNavigate('dashboard')}
                 initialReportId={currentReportId}
+                designId={currentDesignId}
               />
             </ErrorBoundary>
           </div>

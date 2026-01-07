@@ -1,24 +1,35 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useSwipeable } from 'react-swipeable';
 import { InstallationDesign } from '@/types/installation-design';
 import { MobileButton } from '@/components/ui/mobile-button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { 
-  ArrowLeft, ArrowRight, Zap, Cable, Shield, TrendingDown, 
-  CheckCircle2, AlertTriangle, AlertCircle, Download, RotateCcw
+import {
+  ArrowLeft, ArrowRight, Zap, Cable, Shield, TrendingDown,
+  CheckCircle2, AlertTriangle, AlertCircle, Download, RotateCcw,
+  FileCheck, Loader2
 } from 'lucide-react';
 import { CircuitWorkingsSheet } from './CircuitWorkingsSheet';
 import { CircuitCard } from './CircuitCard';
 import { MobileSystemSummary } from './mobile/MobileSystemSummary';
+import { cn } from '@/lib/utils';
 
 interface MobileCircuitResultsProps {
   design: InstallationDesign;
   onReset: () => void;
   onExport: () => void;
+  onSendToEIC?: () => void;
+  isSendingToEIC?: boolean;
 }
 
-export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircuitResultsProps) => {
+export const MobileCircuitResults = ({
+  design,
+  onReset,
+  onExport,
+  onSendToEIC,
+  isSendingToEIC = false
+}: MobileCircuitResultsProps) => {
   const [selectedCircuitIndex, setSelectedCircuitIndex] = useState(0);
   const [showWorkingsSheet, setShowWorkingsSheet] = useState(false);
 
@@ -185,17 +196,15 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
         />
       </div>
 
-      {/* Action Panel - Scrollable */}
-      <div className="px-3 sm:px-4 pb-4 sm:pb-6 space-y-2.5 sm:space-y-3">
+      {/* Action Panel - Premium Styling */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="px-3 sm:px-4 pb-4 sm:pb-6 space-y-2.5 sm:space-y-3"
+      >
+        {/* Primary Actions */}
         <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
-          <MobileButton
-            variant="elec-outline"
-            size="wide"
-            icon={<RotateCcw className="h-5 w-5" />}
-            onClick={onReset}
-          >
-            New Design
-          </MobileButton>
           <MobileButton
             variant="elec"
             size="wide"
@@ -204,8 +213,34 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
           >
             Export PDF
           </MobileButton>
+          {onSendToEIC && (
+            <MobileButton
+              variant="elec-outline"
+              size="wide"
+              icon={isSendingToEIC ? <Loader2 className="h-5 w-5 animate-spin" /> : <FileCheck className="h-5 w-5" />}
+              onClick={onSendToEIC}
+              disabled={isSendingToEIC}
+              className={cn(
+                "bg-elec-yellow/10 border-elec-yellow/30",
+                "hover:bg-elec-yellow/20 hover:border-elec-yellow/50",
+                "text-elec-yellow"
+              )}
+            >
+              {isSendingToEIC ? 'Saving...' : 'Send to EIC'}
+            </MobileButton>
+          )}
         </div>
-      </div>
+        {/* Secondary Actions */}
+        <MobileButton
+          variant="ghost"
+          size="wide"
+          icon={<RotateCcw className="h-5 w-5" />}
+          onClick={onReset}
+          className="w-full text-white/60 hover:text-white hover:bg-white/5"
+        >
+          New Design
+        </MobileButton>
+      </motion.div>
 
       {/* Bottom Sheet - Workings Only */}
       <CircuitWorkingsSheet

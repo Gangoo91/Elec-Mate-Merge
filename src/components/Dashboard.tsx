@@ -6,6 +6,7 @@ import CertificateTypeGrid from './dashboard/CertificateTypeGrid';
 import RecentCertificatesCard from './dashboard/RecentCertificatesCard';
 import { PendingNotificationsCard } from './dashboard/PendingNotificationsCard';
 import { ExpiringCertificatesCard } from './dashboard/ExpiringCertificatesCard';
+import { DesignedCircuitsCard } from './dashboard/DesignedCircuitsCard';
 import { CustomerStats } from './customers/CustomerStats';
 import { useCustomers } from '@/hooks/useCustomers';
 import HelpPanel from './HelpPanel';
@@ -66,6 +67,9 @@ const Dashboard = ({ onNavigate }: { onNavigate: (section: string, reportId?: st
         <main className="px-3 sm:px-4 py-4 space-y-4 pb-20 sm:pb-6">
           {/* Certificate Type Grid with AI Scanner */}
           <CertificateTypeGrid onNavigate={handleNavigate} />
+
+          {/* Designed Circuits from Circuit Designer */}
+          <DesignedCircuitsCard onNavigate={handleNavigate} />
 
           {/* Customer Stats - only if has customers */}
           {isLoading ? (

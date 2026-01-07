@@ -17,9 +17,11 @@ import StartNewEICRDialog from './StartNewEICRDialog';
 import { BoardScanFlow } from './testing/BoardScanFlow';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { Save, Upload, AlertTriangle, Bell } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Save, Upload, AlertTriangle, Bell, CircuitBoard, Zap } from 'lucide-react';
+import { useDesignedCircuit, useUpdateDesignedCircuitStatus } from '@/hooks/useDesignedCircuits';
 
-const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialReportId?: string | null }) => {
+const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; initialReportId?: string | null; designId?: string | null }) => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
@@ -122,6 +124,11 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
   const [authChecked, setAuthChecked] = useState(false);
   const [showStartNewDialog, setShowStartNewDialog] = useState(false);
   const [showBoardScan, setShowBoardScan] = useState(false);
+  const [hasLoadedDesign, setHasLoadedDesign] = useState(false);
+
+  // Fetch design data if designId is provided (from Circuit Designer)
+  const { data: designData, isLoading: isLoadingDesign } = useDesignedCircuit(designId || '');
+  const updateDesignStatus = useUpdateDesignedCircuitStatus();
 
   // Generate and manage temporary report ID for photo uploads
   const { effectiveReportId } = useReportId({
@@ -203,6 +210,80 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
       }));
     }
   }, [customerDataFromNav, initialReportId]);
+
+  // Pre-populate form from Circuit Designer design data
+  useEffect(() => {
+    if (designData && !hasLoadedDesign && !initialReportId) {
+      const scheduleData = designData.schedule_data;
+
+      // Transform design circuits to test results format
+      const transformedCircuits = scheduleData.circuits?.map((circuit: any, idx: number) => ({
+        id: `design-${Date.now()}-${idx + 1}`,
+        circuitNumber: circuit.circuitNumber || (idx + 1).toString(),
+        circuitDesignation: `C${idx + 1}`,
+        circuitDescription: circuit.circuitDescription || circuit.name || '',
+        circuitType: circuit.loadType || '',
+        phaseType: circuit.phaseType || (circuit.phases === 3 ? '3P' : '1P'),
+        referenceMethod: circuit.referenceMethod || circuit.installationMethod || '',
+        pointsServed: circuit.pointsServed || '',
+        liveSize: circuit.liveSize || circuit.cableSize?.toString() || '',
+        cpcSize: circuit.cpcSize || '',
+        bsStandard: circuit.bsStandard || 'BS EN 60898',
+        protectiveDeviceType: circuit.protectiveDeviceType || circuit.protectionDevice?.type || 'MCB',
+        protectiveDeviceCurve: circuit.protectiveDeviceCurve || circuit.protectionDevice?.curve || 'B',
+        protectiveDeviceRating: circuit.protectiveDeviceRating || circuit.protectionDevice?.rating?.toString() || '',
+        protectiveDeviceKaRating: circuit.protectiveDeviceKaRating || '6',
+        // Expected values from design (shown as guidance)
+        expectedR1R2: circuit.r1r2 || circuit.expectedTestResults?.r1r2?.at20C || '',
+        expectedZs: circuit.zs || circuit.calculations?.zs?.toString() || '',
+        expectedMaxZs: circuit.maxZs || circuit.calculations?.maxZs?.toString() || '',
+        // Actual test values (to be filled on-site)
+        r1r2: '',
+        zs: '',
+        maxZs: circuit.maxZs || circuit.calculations?.maxZs?.toString() || '',
+        insulationTestVoltage: circuit.insulationTestVoltage || '500V',
+        insulationLiveNeutral: '',
+        insulationLiveEarth: '',
+        polarity: '',
+        rcdRating: circuit.rcdRating || (circuit.rcdProtected ? '30mA' : ''),
+        rcdType: circuit.rcdType || '',
+        rcdOneX: '',
+        rcdFiveX: '',
+        pfc: '',
+        functionalTesting: '',
+        autoFilled: true,
+        fromDesigner: true,
+        notes: 'Pre-filled from AI Circuit Designer - verify on-site'
+      })) || [];
+
+      // Pre-populate form data
+      setFormData(prev => ({
+        ...prev,
+        installationAddress: designData.installation_address || prev.installationAddress,
+        clientName: scheduleData.projectInfo?.clientName || prev.clientName,
+        description: scheduleData.projectInfo?.projectName || prev.description,
+        supplyVoltage: scheduleData.supply?.voltage?.toString() || '230',
+        phases: scheduleData.supply?.phases === 3 ? '3' : '1',
+        earthingArrangement: scheduleData.supply?.earthingSystem || 'TN-C-S',
+        scheduleOfTests: transformedCircuits,
+        // Store design source reference
+        designSourceId: designId,
+        designSourceDate: designData.created_at,
+      }));
+
+      setHasLoadedDesign(true);
+
+      toast({
+        title: 'Design Loaded',
+        description: `${transformedCircuits.length} circuits pre-filled from Circuit Designer. Enter actual test readings on-site.`,
+      });
+
+      // Update design status to 'in-progress'
+      if (designId) {
+        updateDesignStatus.mutate({ id: designId, status: 'in-progress' });
+      }
+    }
+  }, [designData, hasLoadedDesign, designId, initialReportId, toast, updateDesignStatus]);
 
   // Track when authentication has been checked
   useEffect(() => {
@@ -797,9 +878,37 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
     );
   }
 
+  // Loading state for design
+  if (designId && isLoadingDesign) {
+    return (
+      <div className="flex items-center justify-center min-h-[50vh]">
+        <div className="text-center space-y-4">
+          <div className="p-4 rounded-full bg-elec-yellow/10 inline-flex">
+            <CircuitBoard className="h-8 w-8 text-elec-yellow animate-pulse" />
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-foreground">Loading Design</h3>
+            <p className="text-sm text-muted-foreground">Pre-filling circuits from Circuit Designer...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="p-2 sm:p-4 space-y-3 sm:space-y-6">
+        {/* Design Source Banner */}
+        {(formData as any).designSourceId && (
+          <Alert className="bg-elec-yellow/10 border-elec-yellow/30">
+            <Zap className="h-4 w-4 text-elec-yellow" />
+            <AlertDescription className="text-elec-yellow">
+              <span className="font-medium">Circuit Designer Integration:</span>{' '}
+              {formData.scheduleOfTests?.length || 0} circuits pre-filled with expected test values. Enter actual readings on-site.
+            </AlertDescription>
+          </Alert>
+        )}
+
         <EICFormHeader
           onBack={onBack}
           isSaving={isSaving}

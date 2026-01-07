@@ -1,11 +1,8 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { DesignProgress } from '@/hooks/useAIDesigner';
-import { CheckCircle2, Loader2, Clock, XCircle, Zap, Wrench, AlertCircle } from 'lucide-react';
 import { useEffect, useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { DesignProgress } from '@/hooks/useAIDesigner';
+import { Zap, Clock, CircuitBoard, XCircle, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface DesignProcessingViewProps {
@@ -16,20 +13,42 @@ interface DesignProcessingViewProps {
   totalCircuits?: number;
 }
 
-export const DesignProcessingView = ({ 
-  progress, 
-  retryMessage, 
-  onCancel, 
+// Stage configuration
+const STAGES = [
+  { name: 'Initialising', description: 'Preparing design service', icon: '⚡' },
+  { name: 'Analysing', description: 'Understanding requirements', icon: '📋' },
+  { name: 'Regulations', description: 'Querying BS 7671 database', icon: '📚' },
+  { name: 'Designing', description: 'AI circuit calculations', icon: '🤖' },
+  { name: 'Validating', description: 'Compliance verification', icon: '✓' },
+  { name: 'Finalising', description: 'Generating documentation', icon: '📄' },
+  { name: 'Complete', description: 'Transferring to browser', icon: '✨' }
+];
+
+// Rotating tips during processing
+const TIPS = [
+  "BS 7671 requires all circuits to have appropriate overcurrent protection",
+  "Voltage drop must not exceed 3% for lighting or 5% for other circuits",
+  "RCDs are mandatory for socket outlets up to 32A in domestic premises",
+  "Cable sizing considers current capacity, voltage drop, and fault current",
+  "Earth fault loop impedance (Zs) must not exceed the maximum for the protective device",
+  "Diversity factors reduce the design current for domestic installations",
+  "Installation methods affect cable current-carrying capacity significantly"
+];
+
+export const DesignProcessingView = ({
+  progress,
+  retryMessage,
+  onCancel,
   userRequest,
-  totalCircuits = 0 
+  totalCircuits = 0
 }: DesignProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [startTime] = useState(Date.now());
   const [displayPercent, setDisplayPercent] = useState(0);
   const [lastProgressChange, setLastProgressChange] = useState(Date.now());
+  const [currentTip, setCurrentTip] = useState(0);
   const lastProgressRef = useRef(0);
 
-  // Determine current stage and percent early
   const currentStage = Math.min(progress?.stage || 0, 6);
   const currentPercent = progress?.percent || 0;
 
@@ -41,7 +60,15 @@ export const DesignProcessingView = ({
     return () => clearInterval(interval);
   }, [startTime]);
 
-  // Track when progress last changed
+  // Rotate tips
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTip(prev => (prev + 1) % TIPS.length);
+    }, 8000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Track progress changes
   useEffect(() => {
     if (currentPercent !== lastProgressRef.current) {
       lastProgressRef.current = currentPercent;
@@ -49,17 +76,11 @@ export const DesignProcessingView = ({
     }
   }, [currentPercent]);
 
-  // Calculate if progress is stalled
-  const secondsSinceProgressChange = Math.floor((Date.now() - lastProgressChange) / 1000);
-  const isProgressStalled = secondsSinceProgressChange > 30 && elapsedTime > 90;
-  const isTakingLong = elapsedTime > 150;
-  const isTakingVeryLong = elapsedTime > 240;
-
-  // Smooth progress animation to prevent frozen UI at 40%
+  // Smooth progress animation
   useEffect(() => {
     const diff = currentPercent - displayPercent;
     if (Math.abs(diff) > 0) {
-      const increment = diff / 20; // 20 steps over 2 seconds
+      const increment = diff / 20;
       const interval = setInterval(() => {
         setDisplayPercent(prev => {
           const next = prev + increment;
@@ -74,199 +95,270 @@ export const DesignProcessingView = ({
     }
   }, [currentPercent, displayPercent]);
 
-  // Enhanced stage definitions with detailed descriptions
-  const stageDetails = [
-    { 
-      name: 'Initialising', 
-      description: 'Preparing design service',
-      icon: '🔧',
-      estimatedSeconds: 5
-    },
-    { 
-      name: 'Understanding Requirements', 
-      description: 'Analysing your project specifications',
-      icon: '📋',
-      estimatedSeconds: 5
-    },
-    { 
-      name: 'Searching Regulations', 
-      description: 'Querying BS 7671 intelligence database',
-      icon: '📚',
-      estimatedSeconds: 8
-    },
-    { 
-      name: 'AI Circuit Design', 
-      description: 'Calculating cables, protection, and installation guidance',
-      icon: '🤖',
-      estimatedSeconds: 150
-    },
-    { 
-      name: 'Compliance Validation', 
-      description: 'Verifying BS 7671 compliance',
-      icon: '✓',
-      estimatedSeconds: 5
-    },
-    { 
-      name: 'Finalising Documentation', 
-      description: 'Generating materials list and guidance',
-      icon: '📄',
-      estimatedSeconds: 3
-    },
-    { 
-      name: 'Downloading Data', 
-      description: 'Transferring design to browser',
-      icon: '⬇️',
-      estimatedSeconds: 2
-    }
-  ];
+  const secondsSinceProgressChange = Math.floor((Date.now() - lastProgressChange) / 1000);
+  const isProgressStalled = secondsSinceProgressChange > 30 && elapsedTime > 90;
+  const isTakingLong = elapsedTime > 150;
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+    return mins > 0 ? `${mins}:${secs.toString().padStart(2, '0')}` : `0:${secs.toString().padStart(2, '0')}`;
   };
 
-  // Estimate completed circuits based on progress
-  const estimatedCompleted = totalCircuits > 0 
+  const estimatedCompleted = totalCircuits > 0
     ? Math.floor((currentPercent / 100) * totalCircuits)
     : 0;
 
-  const EXPECTED_TOTAL_SECONDS = 240; // 4 minutes for unified agent
+  const EXPECTED_TOTAL_SECONDS = 240;
   const estimatedTimeRemaining = Math.max(0, EXPECTED_TOTAL_SECONDS - elapsedTime);
 
-  const getStatusVariant = (status: string): "default" | "secondary" | "destructive" | "outline" => {
-    switch (status) {
-      case 'complete': return 'default';
-      case 'processing': return 'secondary';
-      case 'failed': return 'destructive';
-      default: return 'outline';
-    }
-  };
-
-  const getStatusBadgeText = (status: string): string => {
-    switch (status) {
-      case 'complete': return 'Complete ✓';
-      case 'processing': return 'Processing...';
-      case 'failed': return 'Failed';
-      case 'pending': return 'Pending';
-      default: return status;
-    }
-  };
-
   return (
-    <div className="min-h-[60vh] flex items-center justify-center px-3 sm:px-4 py-4 sm:py-6 pb-safe">
-      <Card className="border-elec-yellow/20 bg-elec-card max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto w-full">
-        <CardContent className="p-4 sm:p-6">
-          {/* Header Section */}
-          <div className="flex items-center gap-3 mb-3 text-left">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center shrink-0">
-              <Loader2 className="w-5 h-5 text-elec-yellow animate-spin" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h2 className="text-lg font-semibold text-foreground text-left">Designing Your Installation</h2>
-              <p className="text-xs text-muted-foreground text-left">BS 7671 compliant circuit design in progress</p>
-            </div>
-          </div>
+    <div className="min-h-screen bg-gradient-to-b from-black via-[#0a0a0f] to-black flex flex-col items-center justify-center px-4 py-8 pb-safe">
+      {/* Animated Background Glow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-elec-yellow/5 blur-[100px]"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
 
-          {/* Overall Progress */}
-          <div className="mb-4 text-left">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-              <span className="text-sm text-muted-foreground text-left">Overall Progress</span>
-              <span className="text-2xl font-bold text-elec-yellow text-left">{Math.round(displayPercent)}%</span>
-            </div>
-            <div className="w-full bg-muted/20 rounded-full h-3 overflow-hidden">
-              <div 
-                className="h-full bg-elec-yellow transition-all duration-300"
-                style={{ width: `${displayPercent}%` }}
-              />
-            </div>
-          </div>
-
-          {/* Current Activity */}
-          <div className="bg-muted/10 rounded-lg p-4 mb-4 text-left">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-elec-yellow/10 flex items-center justify-center shrink-0 mt-0.5">
-                <span className="text-lg">{stageDetails[currentStage].icon}</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground mb-1 text-left">
-                  {stageDetails[currentStage].name}
-                </p>
-                <p className="text-xs text-muted-foreground text-left">
-                  {stageDetails[currentStage].description}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 gap-3 mb-4 text-left">
-            <div className="bg-muted/10 rounded-lg p-3">
-              <div className="flex items-center gap-2 mb-2">
-                <Clock className="w-4 h-4 text-muted-foreground" />
-                <span className="text-xs text-muted-foreground text-left">Time</span>
-              </div>
-              <p className="text-lg font-semibold text-foreground text-left">{formatTime(elapsedTime)}</p>
-            </div>
-            
-            {totalCircuits > 0 && (
-              <div className="bg-muted/10 rounded-lg p-3">
-                <div className="flex items-center gap-2 mb-2">
-                  <Zap className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-xs text-muted-foreground text-left">Circuits</span>
-                </div>
-                <p className="text-lg font-semibold text-foreground text-left">
-                  {estimatedCompleted}<span className="text-muted-foreground">/{totalCircuits}</span>
-                </p>
-              </div>
-            )}
-          </div>
-
-
-          {/* Estimated Time Remaining */}
-          <div className="flex items-center justify-start gap-2 text-xs text-muted-foreground pt-4 border-t border-border/20">
-            <Clock className="w-3.5 h-3.5" />
-            <span className="text-left">Estimated time remaining: ~{formatTime(estimatedTimeRemaining)}</span>
-          </div>
-
-          {/* Taking Longer Reassurance Message */}
-          {(isProgressStalled || isTakingLong) && (
-            <Alert className="mt-4 border-amber-500/30 bg-amber-500/10">
-              <AlertCircle className="h-4 w-4 text-amber-500" />
-              <AlertDescription className="text-amber-200 text-sm">
-                {isTakingVeryLong 
-                  ? "Taking longer than expected. Large installations may take up to 5 minutes — your design is still being generated."
-                  : "Your design is still processing. AI response times can vary — please wait a moment longer."}
-              </AlertDescription>
-            </Alert>
-          )}
-
-          {/* Retry Message */}
-          {retryMessage && (
-            <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg flex items-start gap-2">
-              <Loader2 className="w-4 h-4 animate-spin text-amber-500 flex-shrink-0 mt-0.5" />
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-amber-400 mb-0.5">Recovery Mode</p>
-                <p className="text-xs text-muted-foreground">{retryMessage}</p>
-              </div>
-            </div>
-          )}
-
-          {/* Cancel Button */}
-          {onCancel && (
-            <div className="mt-6 pt-4 border-t border-border/20">
-              <Button
-                variant="outline"
-                onClick={onCancel}
-                className="w-full min-h-[44px] border-red-500/30 hover:bg-red-500/10 hover:border-red-500/50 text-foreground touch-manipulation"
+      <div className="relative z-10 w-full max-w-md mx-auto space-y-8">
+        {/* Animated Icon */}
+        <div className="flex justify-center">
+          <div className="relative">
+            {/* Outer ring */}
+            <motion.div
+              className="absolute inset-0 rounded-full border-2 border-elec-yellow/20"
+              style={{ width: 120, height: 120, margin: -10 }}
+              animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            {/* Middle ring */}
+            <motion.div
+              className="absolute inset-0 rounded-full border border-elec-yellow/30"
+              style={{ width: 100, height: 100 }}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            />
+            {/* Inner glow */}
+            <motion.div
+              className="w-[100px] h-[100px] rounded-full bg-elec-yellow/10 flex items-center justify-center"
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <motion.div
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
               >
-                <XCircle className="w-4 h-4 mr-2" />
-                Cancel Design
-              </Button>
+                <Zap className="h-12 w-12 text-elec-yellow drop-shadow-[0_0_15px_rgba(247,208,44,0.5)]" />
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Title */}
+        <div className="text-center space-y-2">
+          <h1 className="text-2xl font-bold text-white">
+            Designing Your Installation
+          </h1>
+          <p className="text-sm text-white/50">
+            BS 7671 compliant circuit design
+          </p>
+        </div>
+
+        {/* Large Progress Percentage */}
+        <div className="text-center">
+          <motion.span
+            className="text-6xl font-bold text-elec-yellow tabular-nums"
+            key={Math.round(displayPercent)}
+            initial={{ scale: 1.1, opacity: 0.8 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            {Math.round(displayPercent)}
+          </motion.span>
+          <span className="text-3xl font-bold text-elec-yellow/60">%</span>
+        </div>
+
+        {/* Premium Progress Bar */}
+        <div className="relative">
+          <div className="h-2 bg-white/5 rounded-full overflow-hidden backdrop-blur">
+            <motion.div
+              className="h-full bg-gradient-to-r from-elec-yellow/80 via-elec-yellow to-elec-yellow/80 rounded-full relative"
+              style={{ width: `${displayPercent}%` }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* Shimmer effect */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                animate={{ x: ['-100%', '200%'] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+              />
+            </motion.div>
+          </div>
+          {/* Glow under progress bar */}
+          <div
+            className="absolute -bottom-2 left-0 h-4 bg-elec-yellow/20 blur-md rounded-full transition-all duration-300"
+            style={{ width: `${displayPercent}%` }}
+          />
+        </div>
+
+        {/* Stage Indicator */}
+        <div className="flex justify-center gap-1.5">
+          {STAGES.map((_, idx) => (
+            <motion.div
+              key={idx}
+              className={cn(
+                "w-2 h-2 rounded-full transition-all duration-300",
+                idx < currentStage
+                  ? "bg-elec-yellow"
+                  : idx === currentStage
+                  ? "bg-elec-yellow shadow-[0_0_8px_rgba(247,208,44,0.8)]"
+                  : "bg-white/10"
+              )}
+              animate={idx === currentStage ? { scale: [1, 1.3, 1] } : {}}
+              transition={{ duration: 1, repeat: Infinity }}
+            />
+          ))}
+        </div>
+
+        {/* Current Stage */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentStage}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="text-center space-y-1"
+          >
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-2xl">{STAGES[currentStage]?.icon}</span>
+              <span className="text-lg font-semibold text-white">
+                {STAGES[currentStage]?.name}
+              </span>
+            </div>
+            <p className="text-sm text-white/50">
+              {STAGES[currentStage]?.description}
+            </p>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className={cn(
+            "p-4 rounded-xl",
+            "bg-white/5 backdrop-blur border border-white/10"
+          )}>
+            <div className="flex items-center gap-2 mb-2">
+              <Clock className="h-4 w-4 text-white/40" />
+              <span className="text-xs text-white/40">Elapsed</span>
+            </div>
+            <p className="text-xl font-bold text-white tabular-nums">
+              {formatTime(elapsedTime)}
+            </p>
+          </div>
+
+          {totalCircuits > 0 && (
+            <div className={cn(
+              "p-4 rounded-xl",
+              "bg-white/5 backdrop-blur border border-white/10"
+            )}>
+              <div className="flex items-center gap-2 mb-2">
+                <CircuitBoard className="h-4 w-4 text-white/40" />
+                <span className="text-xs text-white/40">Circuits</span>
+              </div>
+              <p className="text-xl font-bold text-white">
+                <span className="text-elec-yellow">{estimatedCompleted}</span>
+                <span className="text-white/40">/{totalCircuits}</span>
+              </p>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+
+        {/* Estimated Time Remaining */}
+        <div className="text-center">
+          <p className="text-xs text-white/40">
+            ~{formatTime(estimatedTimeRemaining)} remaining
+          </p>
+        </div>
+
+        {/* Rotating Tips */}
+        <div className={cn(
+          "p-4 rounded-xl",
+          "bg-white/5 backdrop-blur border border-white/10"
+        )}>
+          <div className="flex items-start gap-3">
+            <Sparkles className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={currentTip}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="text-xs text-white/60 leading-relaxed"
+              >
+                {TIPS[currentTip]}
+              </motion.p>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Taking Longer Message */}
+        {(isProgressStalled || isTakingLong) && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={cn(
+              "p-3 rounded-xl",
+              "bg-amber-500/10 border border-amber-500/20"
+            )}
+          >
+            <p className="text-xs text-amber-200 text-center">
+              Taking a bit longer than usual. Complex installations may take up to 5 minutes.
+            </p>
+          </motion.div>
+        )}
+
+        {/* Retry Message */}
+        {retryMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={cn(
+              "p-3 rounded-xl",
+              "bg-amber-500/10 border border-amber-500/20"
+            )}
+          >
+            <p className="text-xs text-amber-200 text-center">
+              <span className="font-semibold">Recovery Mode:</span> {retryMessage}
+            </p>
+          </motion.div>
+        )}
+
+        {/* Cancel Button */}
+        {onCancel && (
+          <div className="pt-4">
+            <Button
+              variant="ghost"
+              onClick={onCancel}
+              className={cn(
+                "w-full h-12 rounded-xl",
+                "bg-white/5 border border-white/10",
+                "hover:bg-red-500/10 hover:border-red-500/20",
+                "text-white/60 hover:text-red-300",
+                "transition-all duration-300",
+                "touch-manipulation"
+              )}
+            >
+              <XCircle className="h-4 w-4 mr-2" />
+              Cancel Design
+            </Button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
