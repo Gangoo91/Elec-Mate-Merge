@@ -41,6 +41,7 @@ export interface OnboardingFormData {
 interface ElecIdOnboardingProps {
   onComplete: (data: OnboardingFormData) => void;
   onSkip?: () => void;
+  elecIdNumber?: string; // Pass actual Elec-ID from parent
 }
 
 const STEPS = [
@@ -116,7 +117,7 @@ const TIER_BENEFITS = [
   },
 ];
 
-const ElecIdOnboarding = ({ onComplete, onSkip }: ElecIdOnboardingProps) => {
+const ElecIdOnboarding = ({ onComplete, onSkip, elecIdNumber }: ElecIdOnboardingProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
     jobTitle: "",
@@ -317,69 +318,30 @@ const ElecIdOnboarding = ({ onComplete, onSkip }: ElecIdOnboardingProps) => {
           <div className="space-y-4 sm:space-y-6">
             <div className="text-center mb-4 sm:mb-6">
               <p className="text-sm sm:text-base text-muted-foreground px-2">
-                Upload documents to verify your credentials and unlock higher tiers.
+                You can verify your credentials later to unlock extra features.
               </p>
             </div>
 
-            {/* Tier progression */}
-            <div className="space-y-2 sm:space-y-3 max-w-md mx-auto">
-              {TIER_BENEFITS.map((tier, index) => (
-                <div
-                  key={tier.tier}
-                  className={`p-3 sm:p-4 rounded-xl border ${
-                    index === 0
-                      ? "border-elec-yellow bg-elec-yellow/10"
-                      : "border-white/10 bg-white/5"
-                  }`}
-                >
-                  <div className="flex items-center gap-2 sm:gap-3">
-                    <div className={`p-1.5 sm:p-2 rounded-lg ${tier.bg} flex-shrink-0`}>
-                      <tier.icon className={`h-4 w-4 sm:h-5 sm:w-5 ${tier.color}`} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <h4 className={`font-semibold text-sm sm:text-base ${tier.color}`}>
-                          {tier.label}
-                        </h4>
-                        {index === 0 && (
-                          <Badge className="bg-elec-yellow text-elec-dark text-[9px] sm:text-[10px] px-1.5 py-0">
-                            Current
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="flex flex-wrap gap-1 sm:gap-1.5 mt-0.5 sm:mt-1">
-                        {tier.benefits.slice(0, 3).map((benefit, i) => (
-                          <span
-                            key={i}
-                            className="text-[10px] sm:text-xs text-muted-foreground"
-                          >
-                            {benefit}
-                            {i < Math.min(tier.benefits.length, 3) - 1 && " •"}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    {index > 0 && (
-                      <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground flex-shrink-0" />
-                    )}
+            {/* Simple verification info */}
+            <div className="max-w-sm mx-auto space-y-3">
+              <div className="p-4 rounded-xl border border-elec-yellow/30 bg-elec-yellow/10">
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-foreground">Your Elec-ID is ready!</p>
+                    <p className="text-xs text-muted-foreground">Basic profile created</p>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
 
-            {/* Quick upload prompt */}
-            <div className="text-center pt-2 sm:pt-4">
-              <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3 px-2">
-                You can upload documents now or later from your Elec-ID settings.
-              </p>
-              <Button
-                variant="outline"
-                className="border-white/20 h-10 sm:h-11 text-sm"
-                onClick={handleNext}
-              >
-                <Upload className="h-4 w-4 mr-2" />
-                Skip for Now
-              </Button>
+              <div className="p-4 rounded-xl border border-white/10 bg-white/5">
+                <p className="text-sm text-muted-foreground mb-2">Optional next steps:</p>
+                <ul className="text-xs text-muted-foreground space-y-1">
+                  <li>• Upload your ECS/CSCS card for verification</li>
+                  <li>• Add qualifications & training</li>
+                  <li>• Build your work history</li>
+                </ul>
+              </div>
             </div>
           </div>
         );
@@ -407,7 +369,7 @@ const ElecIdOnboarding = ({ onComplete, onSkip }: ElecIdOnboardingProps) => {
               <div className="text-left">
                 <p className="text-[10px] sm:text-xs text-muted-foreground">Your Elec-ID</p>
                 <p className="font-mono font-bold text-base sm:text-xl text-foreground">
-                  EM-{Math.random().toString(36).substring(2, 8).toUpperCase()}
+                  {elecIdNumber || 'Generating...'}
                 </p>
               </div>
             </div>

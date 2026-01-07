@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { UnitsPocketCard } from '@/components/apprentice-courses/UnitsPocketCard';
+import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = "Test Sequence and Documentation - Inspection & Testing";

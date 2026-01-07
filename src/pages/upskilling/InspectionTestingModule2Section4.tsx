@@ -4,10 +4,10 @@ import { ArrowLeft, Zap, CheckCircle2, AlertTriangle, Activity, Target, Lightbul
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import Quiz from '@/components/apprentice-courses/Quiz';
-import InlineCheck from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
-import { useSEO } from '@/hooks/useSEO';
+import useSEO from '@/hooks/useSEO';
 
 const InspectionTestingModule2Section4 = () => {
   useSEO({

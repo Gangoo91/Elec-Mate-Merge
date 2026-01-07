@@ -63,12 +63,13 @@ export default defineConfig(({ mode }) => ({
           },
           {
             urlPattern: /^https:\/\/.*supabase\.co\/.*/i,
-            handler: 'NetworkFirst',
+            handler: 'NetworkFirst', // Network with fallback, times out after 8s
             options: {
               cacheName: 'supabase-cache',
+              networkTimeoutSeconds: 8, // Timeout after 8s instead of hanging forever
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 24 * 60 * 60 // 24 hours
+                maxAgeSeconds: 60 // Only cache for 1 minute (auth needs to be fresh)
               }
             }
           }

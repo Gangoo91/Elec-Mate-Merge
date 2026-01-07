@@ -229,6 +229,7 @@ export const peerSupporterService = {
 export const peerConversationService = {
   /**
    * Get all conversations for current user (as seeker or supporter)
+   * Filters out conversations with blocked users
    */
   async getMyConversations(): Promise<PeerConversation[]> {
     const { data: { user } } = await supabase.auth.getUser();
@@ -257,7 +258,26 @@ export const peerConversationService = {
     const { data, error } = await query;
 
     if (error) throw error;
-    return (data as unknown as PeerConversation[]) || [];
+
+    const conversations = (data as unknown as PeerConversation[]) || [];
+
+    // Filter out conversations with blocked users
+    // Import peerBlockService dynamically to avoid circular dependency
+    const blockedUsers = await peerBlockService.getBlockedUsers();
+
+    if (blockedUsers.length === 0) {
+      return conversations;
+    }
+
+    return conversations.filter(conv => {
+      // Determine the other user in the conversation
+      const otherUserId = conv.seeker_id === user.id
+        ? conv.supporter?.user_id
+        : conv.seeker_id;
+
+      // Keep conversation if other user is not blocked
+      return !otherUserId || !blockedUsers.includes(otherUserId);
+    });
   },
 
   /**
@@ -422,6 +442,145 @@ export const peerMessageService = {
     return () => {
       supabase.removeChannel(channel);
     };
+  },
+};
+
+// =====================================================
+// PEER BLOCKS
+// =====================================================
+export const peerBlockService = {
+  /**
+   * Block a user
+   */
+  async blockUser(blockedUserId: string): Promise<void> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('Not authenticated');
+
+    const { error } = await supabase.from('mental_health_peer_blocks').insert({
+      blocker_id: user.id,
+      blocked_user_id: blockedUserId
+    });
+
+    if (error) throw error;
+  },
+
+  /**
+   * Unblock a user
+   */
+  async unblockUser(blockedUserId: string): Promise<void> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('Not authenticated');
+
+    const { error } = await supabase
+      .from('mental_health_peer_blocks')
+      .delete()
+      .eq('blocker_id', user.id)
+      .eq('blocked_user_id', blockedUserId);
+
+    if (error) throw error;
+  },
+
+  /**
+   * Get list of blocked user IDs
+   */
+  async getBlockedUsers(): Promise<string[]> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return [];
+
+    const { data, error } = await supabase
+      .from('mental_health_peer_blocks')
+      .select('blocked_user_id')
+      .eq('blocker_id', user.id);
+
+    if (error) throw error;
+    return data?.map(b => b.blocked_user_id) || [];
+  },
+
+  /**
+   * Check if a specific user is blocked
+   */
+  async isBlocked(userId: string): Promise<boolean> {
+    const blocked = await this.getBlockedUsers();
+    return blocked.includes(userId);
+  },
+
+  /**
+   * Check if the current user is blocked by another user
+   */
+  async amIBlockedBy(userId: string): Promise<boolean> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return false;
+
+    const { data, error } = await supabase
+      .from('mental_health_peer_blocks')
+      .select('id')
+      .eq('blocker_id', userId)
+      .eq('blocked_user_id', user.id)
+      .single();
+
+    if (error && error.code !== 'PGRST116') throw error;
+    return !!data;
+  },
+};
+
+// =====================================================
+// PEER REPORTS
+// =====================================================
+export type ReportReason = 'harassment' | 'inappropriate' | 'spam' | 'other';
+
+export interface PeerReport {
+  id: string;
+  reporter_id: string;
+  reported_user_id: string;
+  conversation_id?: string;
+  reason: ReportReason;
+  additional_notes?: string;
+  status: 'pending' | 'reviewed' | 'actioned' | 'dismissed';
+  admin_notes?: string;
+  reviewed_by?: string;
+  reviewed_at?: string;
+  created_at: string;
+}
+
+export const peerReportService = {
+  /**
+   * Report a user
+   */
+  async reportUser(params: {
+    reportedUserId: string;
+    conversationId?: string;
+    reason: ReportReason;
+    additionalNotes?: string;
+  }): Promise<void> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('Not authenticated');
+
+    const { error } = await supabase.from('mental_health_peer_reports').insert({
+      reporter_id: user.id,
+      reported_user_id: params.reportedUserId,
+      conversation_id: params.conversationId || null,
+      reason: params.reason,
+      additional_notes: params.additionalNotes || null
+    });
+
+    if (error) throw error;
+  },
+
+  /**
+   * Get my submitted reports
+   */
+  async getMyReports(): Promise<PeerReport[]> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return [];
+
+    const { data, error } = await supabase
+      .from('mental_health_peer_reports')
+      .select('*')
+      .eq('reporter_id', user.id)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return (data as unknown as PeerReport[]) || [];
   },
 };
 

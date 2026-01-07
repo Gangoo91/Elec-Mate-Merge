@@ -206,7 +206,7 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
               </Button>
             )}
 
-            {podcast.links.website && !podcast.links.spotify && !podcast.links.apple && !podcast.links.youtube && !podcast.links.facebook && (
+            {podcast.links.website && (
               <Button
                 size="sm"
                 onClick={() => openLink(podcast.links.website!)}

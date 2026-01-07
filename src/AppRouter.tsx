@@ -38,6 +38,7 @@ const CircuitDesigner = lazy(() => import("@/pages/electrician-tools/CircuitDesi
 const EnrichmentMonitor = lazy(() => import("@/pages/Admin/EnrichmentMonitor"));
 const EmployerDashboard = lazy(() => import("@/pages/employer/EmployerDashboard"));
 const CollegeDashboard = lazy(() => import("@/pages/college/CollegeDashboard"));
+const ElecIdPage = lazy(() => import("@/pages/ElecIdPage"));
 const PrivacyPolicy = lazy(() => import("@/pages/legal/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("@/pages/legal/TermsOfService"));
 
@@ -130,6 +131,9 @@ const AppRouter = () => {
 
         {/* College Hub Routes */}
         <Route path="college" element={<LazyRoute><CollegeDashboard /></LazyRoute>} />
+
+        {/* Elec-ID Route */}
+        <Route path="elec-id" element={<LazyRoute><ElecIdPage /></LazyRoute>} />
 
         {/* Apprentice Routes */}
         <Route path="apprentice/*" element={<LazyRoute><ApprenticeRoutes /></LazyRoute>} />

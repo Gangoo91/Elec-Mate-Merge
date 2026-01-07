@@ -136,16 +136,29 @@ export interface ECSCardType {
   label: string;
   color: string;
   description: string;
+  category?: 'ECS' | 'CSCS' | 'Scheme' | 'Other';
 }
 
 export const ECS_CARD_TYPES: ECSCardType[] = [
-  { value: 'gold', label: 'ECS Gold Card', color: '#FFD700', description: 'Fully qualified with NVQ L3 and AM2' },
-  { value: 'blue', label: 'ECS Blue Card', color: '#4169E1', description: 'Qualified electrical technician' },
-  { value: 'yellow', label: 'ECS Yellow Card', color: '#FFD93D', description: 'Apprentice or trainee' },
-  { value: 'white', label: 'ECS White Card', color: '#F5F5F5', description: 'Electrical labourer' },
-  { value: 'green', label: 'ECS Green Card', color: '#228B22', description: 'Electricians mate' },
-  { value: 'black', label: 'ECS Black Card', color: '#1A1A1A', description: 'Manager or supervisor' },
-  { value: 'red', label: 'ECS Red Card', color: '#DC143C', description: 'Experienced without formal quals' },
+  // ECS Cards
+  { value: 'gold', label: 'ECS Gold Card', color: '#FFD700', description: 'Fully qualified with NVQ L3 and AM2', category: 'ECS' },
+  { value: 'blue', label: 'ECS Blue Card', color: '#4169E1', description: 'Qualified electrical technician', category: 'ECS' },
+  { value: 'yellow', label: 'ECS Yellow Card', color: '#FFD93D', description: 'Apprentice or trainee', category: 'ECS' },
+  { value: 'white', label: 'ECS White Card', color: '#F5F5F5', description: 'Electrical labourer', category: 'ECS' },
+  { value: 'green', label: 'ECS Green Card', color: '#228B22', description: 'Electricians mate', category: 'ECS' },
+  { value: 'black', label: 'ECS Black Card', color: '#1A1A1A', description: 'Manager or supervisor', category: 'ECS' },
+  { value: 'red', label: 'ECS Red Card', color: '#DC143C', description: 'Experienced without formal quals', category: 'ECS' },
+  // CSCS Cards (Construction Skills Certification Scheme)
+  { value: 'cscs_green', label: 'CSCS Green Card', color: '#00A651', description: 'Construction Site Operative', category: 'CSCS' },
+  { value: 'cscs_blue', label: 'CSCS Blue Card', color: '#0066CC', description: 'Skilled Worker', category: 'CSCS' },
+  { value: 'cscs_gold', label: 'CSCS Gold Card', color: '#D4AF37', description: 'Supervisory or Management', category: 'CSCS' },
+  // Competent Person Schemes
+  { value: 'niceic', label: 'NICEIC Registered', color: '#003087', description: 'NICEIC approved contractor', category: 'Scheme' },
+  { value: 'napit', label: 'NAPIT Registered', color: '#E31837', description: 'NAPIT approved contractor', category: 'Scheme' },
+  { value: 'elecsa', label: 'ELECSA Registered', color: '#1E3A8A', description: 'ELECSA approved contractor', category: 'Scheme' },
+  { value: 'stroma', label: 'Stroma Registered', color: '#00B388', description: 'Stroma certification scheme', category: 'Scheme' },
+  // Other / None
+  { value: 'none', label: 'No card yet', color: '#6B7280', description: 'Not currently registered', category: 'Other' },
 ];
 
 export const SKILL_LEVELS = [

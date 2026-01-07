@@ -72,8 +72,16 @@ export function useAuthSession() {
       }
     );
 
-    // THEN check for existing session
+    // THEN check for existing session with timeout for slow mobile networks
     const initSession = async () => {
+      // Timeout to prevent infinite loading on slow mobile connections
+      const timeoutId = setTimeout(() => {
+        if (mounted) {
+          console.warn('Auth session check timed out after 8s');
+          setIsLoading(false);
+        }
+      }, 8000);
+
       try {
         const { data: { session: currentSession } } = await supabase.auth.getSession();
 
@@ -89,6 +97,7 @@ export function useAuthSession() {
       } catch (error) {
         console.error('Error getting session:', error);
       } finally {
+        clearTimeout(timeoutId);
         if (mounted) {
           setIsLoading(false);
         }

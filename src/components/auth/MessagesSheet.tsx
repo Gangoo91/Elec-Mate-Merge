@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { MessageSquare, ArrowLeft, Building2, Briefcase, Heart, Hash, GraduationCap } from "lucide-react";
+import { MessageSquare, ArrowLeft, Building2, Briefcase, Heart, Hash, GraduationCap, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -36,6 +36,7 @@ import { CollegeChatList, CollegeChatView } from "@/components/college/chat";
 
 // Peer support
 import { peerConversationService, peerMessageService, PeerConversation, PeerMessage } from "@/services/peerSupportService";
+import { PeerChatActions } from "@/components/mental-health/peer-support/PeerChatActions";
 
 // Types
 import type { Conversation, ElectricianConversation } from "@/services/conversationService";
@@ -48,6 +49,7 @@ import { formatDistanceToNow } from "date-fns";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui/input";
 
 type ActiveConversation = Conversation | ElectricianConversation;
 type ChatMode = 'job' | 'team' | 'college' | 'peer';
@@ -156,6 +158,157 @@ function PeerConversationList({ onSelect }: { onSelect: (conv: PeerConversation)
           onClick={onSelect}
         />
       ))}
+    </div>
+  );
+}
+
+// Peer Chat View Component
+function PeerChatView({
+  conversation,
+  currentUserId,
+  onBack,
+}: {
+  conversation: PeerConversation;
+  currentUserId: string;
+  onBack: () => void;
+}) {
+  const [messages, setMessages] = useState<PeerMessage[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [newMessage, setNewMessage] = useState("");
+  const [isSending, setIsSending] = useState(false);
+
+  // Load messages
+  useEffect(() => {
+    const loadMessages = async () => {
+      try {
+        const msgs = await peerMessageService.getMessages(conversation.id);
+        setMessages(msgs);
+        await peerMessageService.markAsRead(conversation.id);
+      } catch (error) {
+        console.error("Error loading peer messages:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadMessages();
+
+    // Subscribe to new messages
+    const unsubscribe = peerMessageService.subscribeToMessages(
+      conversation.id,
+      (newMsg) => {
+        setMessages((prev) => [...prev, newMsg]);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [conversation.id]);
+
+  const handleSend = async () => {
+    if (!newMessage.trim() || isSending) return;
+
+    setIsSending(true);
+    try {
+      await peerMessageService.sendMessage(conversation.id, newMessage.trim());
+      setNewMessage("");
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast({
+        title: "Failed to send",
+        description: "Please try again",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSending(false);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Loader2 className="h-8 w-8 animate-spin text-pink-500" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col h-full">
+      <ScrollArea className="flex-1 p-4">
+        <div className="space-y-4">
+          {messages.length === 0 ? (
+            <div className="text-center py-8">
+              <Heart className="h-12 w-12 text-pink-500/30 mx-auto mb-3" />
+              <p className="text-muted-foreground">
+                Start the conversation with a message
+              </p>
+            </div>
+          ) : (
+            messages.map((msg) => {
+              const isMine = msg.sender_id === currentUserId;
+              return (
+                <div
+                  key={msg.id}
+                  className={cn("flex", isMine ? "justify-end" : "justify-start")}
+                >
+                  <div
+                    className={cn(
+                      "max-w-[80%] rounded-2xl px-4 py-2",
+                      isMine
+                        ? "bg-pink-500 text-white"
+                        : "bg-muted text-foreground"
+                    )}
+                  >
+                    <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                    <p
+                      className={cn(
+                        "text-[10px] mt-1",
+                        isMine ? "text-pink-200" : "text-muted-foreground"
+                      )}
+                    >
+                      {formatDistanceToNow(new Date(msg.created_at), {
+                        addSuffix: true,
+                      })}
+                    </p>
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
+      </ScrollArea>
+
+      {/* Message Input */}
+      <div className="p-4 border-t border-border shrink-0">
+        <div className="flex gap-2">
+          <Input
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Type a message..."
+            disabled={isSending}
+            className="flex-1"
+          />
+          <Button
+            onClick={handleSend}
+            disabled={!newMessage.trim() || isSending}
+            size="icon"
+            className="bg-pink-500 hover:bg-pink-600 text-white shrink-0"
+          >
+            {isSending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Send className="h-4 w-4" />
+            )}
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -366,9 +519,33 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                   {selectedTeamChannel && `#${selectedTeamChannel.name}`}
                   {selectedTeamDM && 'Direct Message'}
                   {selectedCollegeConversation && selectedCollegeConversation.title}
-                  {selectedPeerConversation && 'Peer Support'}
+                  {selectedPeerConversation && (
+                    selectedPeerConversation.supporter?.user_id === user?.id
+                      ? 'Anonymous Seeker'
+                      : (selectedPeerConversation.supporter?.display_name || 'Peer Supporter')
+                  )}
                 </h3>
               </div>
+              {/* Peer Chat Actions */}
+              {selectedPeerConversation && (
+                <PeerChatActions
+                  otherUserId={
+                    selectedPeerConversation.supporter?.user_id === user?.id
+                      ? selectedPeerConversation.seeker_id
+                      : (selectedPeerConversation.supporter?.user_id || '')
+                  }
+                  otherUserName={
+                    selectedPeerConversation.supporter?.user_id === user?.id
+                      ? 'Anonymous Seeker'
+                      : (selectedPeerConversation.supporter?.display_name || 'Peer Supporter')
+                  }
+                  conversationId={selectedPeerConversation.id}
+                  onBlocked={() => {
+                    handleBack();
+                    queryClient.invalidateQueries({ queryKey: ['peer-conversations'] });
+                  }}
+                />
+              )}
             </div>
 
             <div className="flex-1 overflow-hidden">
@@ -403,6 +580,14 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                     />
                   </div>
                 </div>
+              )}
+              {/* Peer Chat View */}
+              {selectedPeerConversation && (
+                <PeerChatView
+                  conversation={selectedPeerConversation}
+                  currentUserId={user?.id || ''}
+                  onBack={handleBack}
+                />
               )}
             </div>
           </div>

@@ -51,20 +51,4 @@ const categoryOptions: IOSSelectOption[] = [
   { value: "other", label: "Other", description: "Miscellaneous" }
 ];
 
-const PhotoDocumentation = () => {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Camera className="h-5 w-5" />
-          Photo Documentation
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-muted-foreground">Photo documentation feature coming soon.</p>
-      </CardContent>
-    </Card>
-  );
-};
-
-export default PhotoDocumentation;
+export default function PhotoDocumentation() { return (<div className="min-h-screen bg-gradient-to-b from-elec-dark to-black"><p>Component rewritten</p></div>); }
