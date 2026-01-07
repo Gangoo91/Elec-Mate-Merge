@@ -72,6 +72,7 @@ const SignUp = () => {
     dataProcessingAccepted: false,
     timestamp: ''
   });
+  const [showElecIdConfirm, setShowElecIdConfirm] = useState(false);
 
   const { signUp } = useAuth();
   const navigate = useNavigate();
@@ -825,11 +826,14 @@ const SignUp = () => {
               >
                 <motion.div variants={containerVariants} initial="hidden" animate="visible">
                   <motion.div variants={itemVariants} className="text-center mb-6">
-                    <h1 className="text-[28px] font-bold text-white tracking-tight mb-1">Get Your Elec-ID</h1>
-                    <p className="text-ios-body text-white/50">Your digital credential</p>
+                    <div className="flex items-center justify-center gap-2 mb-1">
+                      <h1 className="text-[28px] font-bold text-white tracking-tight">Get Your Elec-ID</h1>
+                      <span className="px-2 py-0.5 text-xs font-bold bg-green-500 text-white rounded-full animate-pulse">FREE</span>
+                    </div>
+                    <p className="text-ios-body text-white/50">Your digital credential - no cost, ever</p>
                   </motion.div>
 
-                  {/* Elec-ID card preview */}
+                  {/* Elec-ID benefits card */}
                   <motion.div variants={itemVariants}>
                     <Card variant="ios" className="border-elec-yellow/30 mb-4 bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-xl overflow-hidden">
                       <CardContent className="p-5">
@@ -838,21 +842,27 @@ const SignUp = () => {
                             <BadgeCheck className="h-7 w-7 text-elec-yellow" />
                           </div>
                           <div>
-                            <p className="text-ios-headline text-white font-semibold">Elec-ID</p>
-                            <p className="text-ios-caption-1 text-white/50">Portable credential</p>
+                            <p className="text-ios-headline text-white font-semibold">Elec-ID Benefits</p>
+                            <p className="text-ios-caption-1 text-green-400 font-medium">100% Free - Always</p>
                           </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-3">
-                          {['Qualifications', 'Training', 'Work history', 'Shareable QR'].map((item, idx) => (
+                        <div className="grid grid-cols-1 gap-2">
+                          {[
+                            { text: 'Store all qualifications in one place', icon: '📜' },
+                            { text: 'Track training & CPD progress', icon: '📊' },
+                            { text: 'Build your work history portfolio', icon: '💼' },
+                            { text: 'Share via QR code with employers', icon: '📱' },
+                            { text: 'Verifiable digital credential', icon: '✅' },
+                          ].map((item, idx) => (
                             <motion.div
-                              key={item}
-                              initial={{ opacity: 0, scale: 0.9 }}
-                              animate={{ opacity: 1, scale: 1 }}
+                              key={item.text}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: 0.3 + idx * 0.05 }}
-                              className="flex items-center gap-2 p-2 rounded-lg bg-white/5 text-ios-caption-1 text-white/70"
+                              className="flex items-center gap-3 p-2.5 rounded-lg bg-white/5 text-ios-caption-1 text-white/80"
                             >
-                              <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
-                              <span>{item}</span>
+                              <span className="text-base">{item.icon}</span>
+                              <span>{item.text}</span>
                             </motion.div>
                           ))}
                         </div>
@@ -864,7 +874,15 @@ const SignUp = () => {
                   <motion.button
                     variants={itemVariants}
                     type="button"
-                    onClick={() => setProfile({ ...profile, createElecId: !profile.createElecId })}
+                    onClick={() => {
+                      if (profile.createElecId) {
+                        // User wants to uncheck - show confirmation
+                        setShowElecIdConfirm(true);
+                      } else {
+                        setProfile({ ...profile, createElecId: true });
+                        setShowElecIdConfirm(false);
+                      }
+                    }}
                     whileTap={{ scale: 0.98 }}
                     className={cn(
                       "w-full p-4 rounded-2xl border-2 text-left mb-4 transition-all duration-200",
@@ -879,11 +897,69 @@ const SignUp = () => {
                         className="h-6 w-6 border-2 border-elec-yellow data-[state=checked]:bg-elec-yellow data-[state=checked]:text-black"
                       />
                       <div className="flex-1">
-                        <p className="text-ios-headline font-semibold text-white">Yes, create my Elec-ID</p>
-                        <p className="text-ios-caption-1 text-white/50">Set up your credential now</p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-ios-headline font-semibold text-white">Yes, create my Elec-ID</p>
+                          <Gift className="h-4 w-4 text-green-400" />
+                        </div>
+                        <p className="text-ios-caption-1 text-white/50">It's free - set up your credential now</p>
                       </div>
                     </div>
                   </motion.button>
+
+                  {/* "Are you sure?" confirmation */}
+                  <AnimatePresence>
+                    {showElecIdConfirm && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="mb-4 overflow-hidden"
+                      >
+                        <div className="p-4 rounded-2xl border-2 border-orange-500/30 bg-orange-500/10">
+                          <div className="flex items-start gap-3 mb-3">
+                            <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <p className="text-ios-headline font-semibold text-white mb-1">Are you sure?</p>
+                              <p className="text-ios-caption-1 text-white/70">
+                                Elec-ID is completely free and helps you:
+                              </p>
+                              <ul className="mt-2 space-y-1 text-ios-caption-1 text-white/60">
+                                <li>• Stand out to employers with verified credentials</li>
+                                <li>• Keep all your qualifications in one place</li>
+                                <li>• Share your profile with a simple QR code</li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                setProfile({ ...profile, createElecId: false });
+                                setShowElecIdConfirm(false);
+                              }}
+                              className="flex-1 border-white/20 text-white hover:bg-white/10"
+                            >
+                              Skip for now
+                            </Button>
+                            <Button
+                              type="button"
+                              variant="ios-primary"
+                              size="sm"
+                              onClick={() => {
+                                setProfile({ ...profile, createElecId: true });
+                                setShowElecIdConfirm(false);
+                              }}
+                              className="flex-1"
+                            >
+                              Get my free Elec-ID
+                            </Button>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
                   {/* ECS card type */}
                   <AnimatePresence>
@@ -898,7 +974,7 @@ const SignUp = () => {
                         <select
                           value={profile.ecsCardType}
                           onChange={(e) => setProfile({ ...profile, ecsCardType: e.target.value })}
-                          className="w-full h-[56px] px-4 rounded-2xl border-2 border-white/10 bg-white/[0.03] text-white text-ios-body focus:border-elec-yellow/60 focus:outline-none transition-colors"
+                          className="w-full h-[56px] px-4 rounded-2xl border-2 border-white/10 bg-[#1a1a2e] text-white text-ios-body focus:border-elec-yellow/60 focus:outline-none transition-colors [&>option]:bg-[#1a1a2e] [&>option]:text-white [&>option]:py-2"
                         >
                           <option value="">Select card type...</option>
                           {ecsCardTypes.map((type) => (

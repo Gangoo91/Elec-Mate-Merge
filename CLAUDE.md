@@ -103,32 +103,26 @@ src/pages/study-centre/
 
 ## Supabase Architecture
 
-### Frontend Auth & User Data
+**Single Supabase Backend (elec-mate):**
 - **Project:** `jtwygbeceundfgnkirof`
 - **URL:** `https://jtwygbeceundfgnkirof.supabase.co`
-- **Purpose:** User authentication, profiles, user-specific data
+- **Contains:** Auth, user profiles, all tables (277), all edge functions (316), RAG data
+- **Users:** 27 registered accounts
 - **client.ts points here**
-
-### Backend Edge Functions & RAG Data (elec-mate)
-- **Project:** `cjjlpiyfzvhffkfyszgh`
-- **URL:** `https://cjjlpiyfzvhffkfyszgh.supabase.co`
-- **Purpose:** All AI edge functions, RAG embeddings, pricing data
-- **Has:** OpenAI API key (GPT-5-mini), all edge functions deployed
-- **Deploy edge functions here:** `--project-ref cjjlpiyfzvhffkfyszgh`
 
 ### Edge Function Deployment
 ```bash
-SUPABASE_ACCESS_TOKEN=sbp_7b34e1898aec791530c65e44070eae652ac94933 npx supabase functions deploy <function-name> --project-ref cjjlpiyfzvhffkfyszgh
+npx supabase functions deploy <function-name> --project-ref jtwygbeceundfgnkirof
 ```
 
-### Key Edge Functions (on elec-mate)
+### Key Edge Functions
 - `create-cost-engineer-job` / `process-cost-engineer-job` - AI Cost Engineer
 - `health-safety-v3` / `create-health-safety-job` - AI RAMS
 - `designer-agent-v3` / `create-circuit-design-job` - Circuit Designer
 - `installer-v3` - Installation guidance
 - `commissioning-v3` - Commissioning specialist
 
-### RAG Tables (on elec-mate)
+### RAG Tables
 - `pricing_embeddings` - Trade pricing data
 - `practical_work_intelligence` - Labour timing data
 - `design_knowledge` - Circuit design patterns
