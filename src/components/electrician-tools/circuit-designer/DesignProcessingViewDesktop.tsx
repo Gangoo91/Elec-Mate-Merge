@@ -1,8 +1,8 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Zap, Clock, XCircle, Loader2, CircuitBoard, Sparkles } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { DesignProgress } from "@/hooks/useAIDesigner";
-import { useState, useEffect } from "react";
-import { Zap, Clock, AlertCircle } from "lucide-react";
 
 interface DesignProcessingViewDesktopProps {
   progress: DesignProgress | null;
@@ -12,6 +12,22 @@ interface DesignProcessingViewDesktopProps {
   retryMessage?: string | null;
 }
 
+const STAGES = [
+  { name: 'Init', icon: '⚡' },
+  { name: 'Analyse', icon: '📋' },
+  { name: 'Regs', icon: '📚' },
+  { name: 'Design', icon: '🤖' },
+  { name: 'Validate', icon: '✓' },
+  { name: 'Done', icon: '✨' }
+];
+
+const TIPS = [
+  "BS 7671 requires appropriate overcurrent protection for all circuits",
+  "Voltage drop: max 3% for lighting, 5% for other circuits",
+  "RCDs mandatory for socket outlets ≤32A in domestic premises",
+  "Zs must not exceed the max for the protective device"
+];
+
 export const DesignProcessingViewDesktop = ({
   progress,
   userRequest,
@@ -19,192 +35,247 @@ export const DesignProcessingViewDesktop = ({
   onCancel,
   retryMessage
 }: DesignProcessingViewDesktopProps) => {
-  const [startTime] = useState(new Date());
-  const [recentlyCompleted] = useState<string[]>([]);
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [startTime] = useState(Date.now());
+  const [currentTip, setCurrentTip] = useState(0);
 
-  const currentStage = progress?.stage || 0;
+  const currentStage = Math.min(progress?.stage || 0, 6);
   const currentPercent = progress?.percent || 0;
-  const estimatedCompleted = totalCircuits > 0 ? Math.floor((currentPercent / 100) * totalCircuits) : 0;
 
-  // Time tracking
   useEffect(() => {
     const interval = setInterval(() => {
-      const elapsed = Math.floor((new Date().getTime() - startTime.getTime()) / 1000);
-      setElapsedTime(elapsed);
+      setElapsedTime(Math.floor((Date.now() - startTime) / 1000));
     }, 1000);
-
     return () => clearInterval(interval);
   }, [startTime]);
 
-  // Estimate remaining time
-  const EXPECTED_TOTAL_SECONDS = 70;
-  const estimatedTimeRemaining = Math.max(0, Math.floor((EXPECTED_TOTAL_SECONDS * (100 - currentPercent)) / 100));
+  // Rotate tips
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTip(prev => (prev + 1) % TIPS.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
 
-  const formatTime = (seconds: number): string => {
+  const estimatedCompleted = totalCircuits > 0
+    ? Math.floor((currentPercent / 100) * totalCircuits)
+    : 0;
+
+  const EXPECTED_TOTAL_SECONDS = 240;
+  const estimatedTimeRemaining = Math.max(0, EXPECTED_TOTAL_SECONDS - elapsedTime);
+
+  const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
+    const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const stageDetails = [
-    { name: 'Initialising', description: 'Preparing design service', icon: '🔧' },
-    { name: 'Understanding Requirements', description: 'Analysing specifications', icon: '📋' },
-    { name: 'Searching Regulations', description: 'Querying BS 7671 database', icon: '📚' },
-    { name: 'AI Circuit Design', description: 'Calculating cables & protection', icon: '🤖' },
-    { name: 'Compliance Validation', description: 'Verifying compliance', icon: '✓' },
-    { name: 'Finalising Documentation', description: 'Generating docs', icon: '📄' },
-    { name: 'Downloading Data', description: 'Transferring to browser', icon: '⬇️' }
-  ];
-
   return (
-    <div className="min-h-screen bg-elec-grey">
-      <div className="max-w-6xl mx-auto p-6 space-y-6">
-        {/* Overall Progress Card */}
-        <Card className="border-elec-yellow/20 shadow-lg">
-          <CardContent className="pt-6 pb-5 space-y-4">
-            {/* Title */}
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                <Zap className="w-6 h-6 text-elec-yellow" />
-              </div>
-              <div className="flex-1">
-                <h2 className="text-xl font-semibold text-foreground">AI Circuit Design</h2>
-                <p className="text-sm text-gray-200 mt-0.5">{stageDetails[currentStage]?.description}</p>
-              </div>
+    <div className="h-[100dvh] bg-gradient-to-b from-black via-[#0a0a0f] to-black flex flex-col overflow-hidden">
+      {/* Background Glow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-elec-yellow/5 blur-[100px]"
+          animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+
+      {/* Main Content - Desktop optimized with max-w-xl */}
+      <div className="relative z-10 flex-1 flex flex-col justify-evenly px-6 py-8 max-w-xl mx-auto w-full">
+
+        {/* Header Section */}
+        <div className="text-center space-y-4">
+          {/* Animated Icon */}
+          <div className="flex justify-center">
+            <div className="relative">
+              <motion.div
+                className="absolute inset-0 rounded-full border border-elec-yellow/20"
+                style={{ width: 88, height: 88, margin: -8 }}
+                animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.7, 0.4] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+              <motion.div
+                className="absolute inset-0 rounded-full border border-elec-yellow/10"
+                style={{ width: 100, height: 100, margin: -14 }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              />
+              <motion.div
+                className="w-[72px] h-[72px] rounded-full bg-elec-yellow/10 flex items-center justify-center"
+                animate={{ scale: [1, 1.03, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <motion.div
+                  animate={{ rotate: [0, 5, -5, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <Zap className="h-10 w-10 text-elec-yellow drop-shadow-[0_0_10px_rgba(247,208,44,0.4)]" />
+                </motion.div>
+              </motion.div>
+              <motion.div
+                className="absolute inset-0 rounded-full bg-elec-yellow/20"
+                animate={{ scale: [1, 1.3], opacity: [0.3, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                style={{ width: 72, height: 72 }}
+              />
             </div>
+          </div>
 
-            {/* Progress Bar */}
-            <div className="space-y-2.5">
-              <div className="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden shadow-inner">
-                <div 
-                  className="h-full bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow transition-all duration-700 ease-out shadow-lg shadow-elec-yellow/30"
-                  style={{ width: `${currentPercent}%` }}
-                />
-              </div>
-
-              {/* Stats Row */}
-              <div className="flex items-center justify-between text-sm">
-                <span className="font-semibold text-elec-yellow text-base">{currentPercent}%</span>
-                <div className="flex items-center gap-3 text-gray-200">
-                  <span className="flex items-center gap-1.5">
-                    <Clock className="w-4 h-4" />
-                    {formatTime(elapsedTime)}
-                  </span>
-                  <span className="text-gray-600">•</span>
-                  <span>~{formatTime(estimatedTimeRemaining)} remaining</span>
-                </div>
-              </div>
-
-            </div>
-
-            {/* Stage Timeline - Clean Card-Based Design */}
-            <div className="mt-6 space-y-2">
-              {stageDetails.map((stage, idx) => {
-                const isActive = idx === currentStage;
-                const isComplete = idx < currentStage;
-                const isPending = idx > currentStage;
-
-                return (
-                  <div
-                    key={idx}
-                    className={`flex items-center gap-4 p-3 rounded-lg border transition-all ${
-                      isActive ? 'border-elec-yellow bg-elec-yellow/10' : 
-                      isComplete ? 'border-green-500/30 bg-green-500/5' : 
-                      'border-gray-700/30 bg-gray-800/20'
-                    }`}
-                  >
-                    {/* Stage Icon */}
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg ${
-                      isActive ? 'bg-elec-yellow/20 animate-pulse' : 
-                      isComplete ? 'bg-green-500/20' : 
-                      'bg-gray-700/30'
-                    }`}>
-                      {isComplete ? '✓' : stage.icon}
-                    </div>
-                    
-                    {/* Stage Info */}
-                    <div className="flex-1">
-                      <div className={`font-semibold text-sm ${
-                        isActive ? 'text-elec-yellow' : 
-                        isComplete ? 'text-green-400' : 
-                        'text-gray-400'
-                      }`}>
-                        {stage.name}
-                      </div>
-                      <div className="text-xs text-gray-200 mt-0.5">
-                        {stage.description}
-                      </div>
-                    </div>
-                    
-                    {/* Status Indicator */}
-                    <div className="text-xs">
-                      {isComplete && <span className="text-green-400">✓ Done</span>}
-                      {isActive && <span className="text-elec-yellow animate-pulse">In Progress</span>}
-                      {isPending && <span className="text-gray-500">Pending</span>}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* User Request */}
-            {userRequest && (
-              <div className="mt-4 pt-4 border-t border-elec-yellow/10">
-                <p className="text-xs text-gray-500 mb-1">Your Request:</p>
-                <p className="text-sm text-gray-200 leading-relaxed">{userRequest}</p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Retry Message */}
-        {retryMessage && (
-          <Card className="border-amber-500/50 bg-amber-500/5">
-            <CardContent className="p-4">
-              <div className="flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-amber-500 mt-0.5 flex-shrink-0" />
-                <div className="flex-1">
-                  <p className="text-sm text-amber-100">{retryMessage}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Horizontal Stats Cards */}
-        <div className="grid grid-cols-3 gap-4">
-          <Card className="border-elec-yellow/20">
-            <CardContent className="p-4 text-center">
-              <div className="text-3xl font-bold text-elec-yellow">{currentPercent}%</div>
-              <div className="text-xs text-gray-200 mt-1">Complete</div>
-            </CardContent>
-          </Card>
-          <Card className="border-elec-yellow/20">
-            <CardContent className="p-4 text-center">
-              <div className="text-3xl font-bold text-foreground">{estimatedCompleted}/{totalCircuits}</div>
-              <div className="text-xs text-gray-200 mt-1">Circuits Designed</div>
-            </CardContent>
-          </Card>
-          <Card className="border-elec-yellow/20">
-            <CardContent className="p-4 text-center">
-              <div className="text-3xl font-bold text-foreground">{formatTime(elapsedTime)}</div>
-              <div className="text-xs text-gray-200 mt-1">Time Elapsed</div>
-            </CardContent>
-          </Card>
+          <div>
+            <h2 className="text-2xl font-bold text-white">AI Circuit Design</h2>
+            <p className="text-sm text-white/50 mt-1">BS 7671 compliant installation</p>
+          </div>
         </div>
 
-        {/* Cancel Button - Bottom Right */}
-        {onCancel && (
-          <div className="flex justify-end pt-2">
-            <Button 
-              variant="outline" 
-              onClick={onCancel} 
-              className="border-elec-yellow/20 hover:bg-elec-yellow/10 hover:border-elec-yellow/50 transition-colors"
+        {/* Progress Section */}
+        <div className="space-y-4">
+          {/* Large Percentage */}
+          <div className="text-center">
+            <motion.span
+              className="text-6xl font-bold text-elec-yellow tabular-nums"
+              key={Math.round(currentPercent)}
+              initial={{ scale: 1.05 }}
+              animate={{ scale: 1 }}
             >
-              Cancel Generation
-            </Button>
+              {Math.round(currentPercent)}
+            </motion.span>
+            <span className="text-3xl font-bold text-elec-yellow/60">%</span>
           </div>
+
+          {/* Progress Bar */}
+          <div className="relative">
+            <div className="h-3 bg-white/5 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-gradient-to-r from-elec-yellow/80 via-elec-yellow to-elec-yellow/80 rounded-full relative"
+                style={{ width: `${currentPercent}%` }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  animate={{ x: ['-100%', '200%'] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                />
+              </motion.div>
+            </div>
+            <div
+              className="absolute -bottom-1 left-0 h-4 bg-elec-yellow/20 blur-md rounded-full transition-all duration-300"
+              style={{ width: `${currentPercent}%` }}
+            />
+          </div>
+
+          {/* Stage Dots */}
+          <div className="flex justify-center gap-2">
+            {STAGES.map((stage, idx) => (
+              <motion.div
+                key={idx}
+                className={cn(
+                  "w-2.5 h-2.5 rounded-full transition-all duration-300",
+                  idx < currentStage
+                    ? "bg-elec-yellow"
+                    : idx === currentStage
+                    ? "bg-elec-yellow shadow-[0_0_8px_rgba(247,208,44,0.8)]"
+                    : "bg-white/10"
+                )}
+                animate={idx === currentStage ? { scale: [1, 1.3, 1] } : {}}
+                transition={{ duration: 1, repeat: Infinity }}
+              />
+            ))}
+          </div>
+
+          {/* Current Stage Name */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStage}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              className="text-center"
+            >
+              <span className="text-base font-medium text-white">
+                {STAGES[currentStage]?.icon} {STAGES[currentStage]?.name}
+              </span>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Stats Row */}
+        <div className="flex items-center justify-center gap-8">
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-1 mb-1">
+              <Clock className="h-4 w-4 text-white/40" />
+              <span className="text-xs text-white/40">Elapsed</span>
+            </div>
+            <p className="text-xl font-bold text-white tabular-nums">
+              {formatTime(elapsedTime)}
+            </p>
+          </div>
+
+          {totalCircuits > 0 && (
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-1 mb-1">
+                <CircuitBoard className="h-4 w-4 text-white/40" />
+                <span className="text-xs text-white/40">Circuits</span>
+              </div>
+              <p className="text-xl font-bold text-white">
+                <span className="text-elec-yellow">{estimatedCompleted}</span>
+                <span className="text-white/40">/{totalCircuits}</span>
+              </p>
+            </div>
+          )}
+
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-1 mb-1">
+              <Loader2 className="h-4 w-4 text-white/40 animate-spin" />
+              <span className="text-xs text-white/40">Remaining</span>
+            </div>
+            <p className="text-xl font-bold text-white tabular-nums">
+              ~{formatTime(estimatedTimeRemaining)}
+            </p>
+          </div>
+        </div>
+
+        {/* Tip Card */}
+        <div className={cn(
+          "p-4 rounded-xl",
+          "bg-white/5 border border-white/10"
+        )}>
+          <div className="flex items-start gap-3">
+            <Sparkles className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={currentTip}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="text-sm text-white/50 leading-relaxed"
+              >
+                {TIPS[currentTip]}
+              </motion.p>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Warning Messages */}
+        {retryMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20"
+          >
+            <p className="text-xs text-amber-200 text-center">{retryMessage}</p>
+          </motion.div>
+        )}
+
+        {/* Cancel Button */}
+        {onCancel && (
+          <button
+            onClick={onCancel}
+            className="w-full py-3 text-sm text-white/40 hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all flex items-center justify-center gap-2"
+          >
+            <XCircle className="h-4 w-4" />
+            Cancel Design
+          </button>
         )}
       </div>
     </div>

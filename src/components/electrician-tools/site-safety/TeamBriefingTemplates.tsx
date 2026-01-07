@@ -1,16 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
-import { Users, Loader2, Calendar, ChevronDown, ChevronUp, Plus, FileText, AlertTriangle } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
+import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { BriefingFormWizard } from "./BriefingFormWizard";
-import { BriefingHistory } from "./BriefingHistory";
-import { HeroAIBriefingCard } from "./HeroAIBriefingCard";
 import { TemplateLibrary } from "./briefing-templates/TemplateLibrary";
+import {
+  BriefingHeroCard,
+  BriefingFilterTabs,
+  TemplateCard,
+  HistoryCard,
+  PendingCard,
+} from "./briefings";
 
 interface TeamBriefing {
   id: string;
@@ -26,7 +27,7 @@ interface TeamBriefing {
   duration_minutes: number;
   notes: string;
   completed: boolean;
-  status: 'scheduled' | 'in_progress' | 'completed' | 'cancelled' | 'postponed';
+  status: "scheduled" | "in_progress" | "completed" | "cancelled" | "postponed";
   qr_code?: string;
   created_at: string;
 }
@@ -48,6 +49,8 @@ interface NearMissData {
   photo_urls?: string[];
 }
 
+type TabId = "templates" | "history" | "pending";
+
 const TeamBriefingTemplates = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [briefings, setBriefings] = useState<TeamBriefing[]>([]);
@@ -55,17 +58,16 @@ const TeamBriefingTemplates = () => {
   const [showAIWizard, setShowAIWizard] = useState(false);
   const [editingBriefing, setEditingBriefing] = useState<any>(null);
   const [nearMissData, setNearMissData] = useState<NearMissData | null>(null);
-  const [scheduledBriefingsExpanded, setScheduledBriefingsExpanded] = useState(false);
   const [showTemplateLibrary, setShowTemplateLibrary] = useState(false);
+  const [activeTab, setActiveTab] = useState<TabId>("templates");
 
   useEffect(() => {
     fetchBriefings();
     checkForNearMissData();
   }, []);
 
-  // Check for near miss data from sessionStorage (matching Cost Engineer → Quote Hub pattern)
   const checkForNearMissData = () => {
-    const nearMissSessionId = searchParams.get('nearMissSessionId');
+    const nearMissSessionId = searchParams.get("nearMissSessionId");
     if (nearMissSessionId) {
       const storedData = sessionStorage.getItem(`nearMissData_${nearMissSessionId}`);
       if (storedData) {
@@ -73,20 +75,15 @@ const TeamBriefingTemplates = () => {
           const parsedData = JSON.parse(storedData) as NearMissData;
           setNearMissData(parsedData);
           setShowAIWizard(true);
-          
-          // Clear the URL param but keep the data
-          searchParams.delete('nearMissSessionId');
+          searchParams.delete("nearMissSessionId");
           setSearchParams(searchParams, { replace: true });
-          
-          // Clear from sessionStorage after retrieving
           sessionStorage.removeItem(`nearMissData_${nearMissSessionId}`);
-          
           toast({
             title: "Creating Briefing from Near Miss",
             description: "The form has been pre-filled with details from the near miss report.",
           });
         } catch (e) {
-          console.error('Error parsing near miss data:', e);
+          console.error("Error parsing near miss data:", e);
         }
       }
     }
@@ -98,28 +95,32 @@ const TeamBriefingTemplates = () => {
       if (!user) return;
 
       const { data, error } = await supabase
-        .from('team_briefings')
-        .select('*')
-        .order('briefing_date', { ascending: false });
+        .from("team_briefings")
+        .select("*")
+        .order("briefing_date", { ascending: false });
 
       if (error) throw error;
-      setBriefings((data || []).map(item => ({
-        ...item,
-        attendees: Array.isArray(item.attendees) ? item.attendees as Array<{ name: string; signature?: string; timestamp?: string; photo?: string }> : [],
-        key_points: item.key_points || [],
-        safety_points: item.safety_points || [],
-        equipment_required: item.equipment_required || [],
-        duration_minutes: item.duration_minutes || 10,
-        notes: item.notes || "",
-        status: (item as any).status || 'scheduled' as const,
-        qr_code: (item as any).qr_code || undefined
-      })));
+      setBriefings(
+        (data || []).map((item) => ({
+          ...item,
+          attendees: Array.isArray(item.attendees)
+            ? (item.attendees as Array<{ name: string; signature?: string; timestamp?: string; photo?: string }>)
+            : [],
+          key_points: item.key_points || [],
+          safety_points: item.safety_points || [],
+          equipment_required: item.equipment_required || [],
+          duration_minutes: item.duration_minutes || 10,
+          notes: item.notes || "",
+          status: ((item as any).status || "scheduled") as TeamBriefing["status"],
+          qr_code: (item as any).qr_code || undefined,
+        }))
+      );
     } catch (error) {
-      console.error('Error fetching briefings:', error);
+      console.error("Error fetching briefings:", error);
       toast({
         title: "Error",
         description: "Failed to load briefings",
-        variant: "destructive"
+        variant: "destructive",
       });
     } finally {
       setLoading(false);
@@ -147,10 +148,9 @@ const TeamBriefingTemplates = () => {
   const handleStatusChange = async (briefingId: string, newStatus: string) => {
     try {
       const updates: any = { status: newStatus };
-      
-      if (newStatus === 'in_progress') {
+      if (newStatus === "in_progress") {
         updates.started_at = new Date().toISOString();
-      } else if (newStatus === 'completed') {
+      } else if (newStatus === "completed") {
         updates.completed = true;
       }
 
@@ -163,7 +163,7 @@ const TeamBriefingTemplates = () => {
 
       toast({
         title: "Status Updated",
-        description: `Briefing marked as ${newStatus.replace('_', ' ')}`,
+        description: `Briefing marked as ${newStatus.replace("_", " ")}`,
       });
 
       fetchBriefings();
@@ -189,23 +189,51 @@ const TeamBriefingTemplates = () => {
     setShowAIWizard(true);
   };
 
-  const upcomingBriefings = briefings.filter(b => new Date(b.briefing_date) >= new Date() && b.status === 'scheduled').length;
+  // Calculate stats
+  const stats = useMemo(() => {
+    const now = new Date();
+    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+    const totalBriefings = briefings.length;
+    const thisWeek = briefings.filter((b) => new Date(b.created_at) >= weekAgo).length;
+    const pendingSignatures = briefings.filter(
+      (b) => b.status !== "completed" && b.attendees.some((a) => !a.signature)
+    ).length;
+    const completedBriefings = briefings.filter((b) => b.status === "completed").length;
+    const signatureRate = totalBriefings > 0 ? Math.round((completedBriefings / totalBriefings) * 100) : 0;
+
+    return { totalBriefings, thisWeek, pendingSignatures, signatureRate };
+  }, [briefings]);
+
+  // Filter briefings by tab
+  const pendingBriefings = useMemo(() => {
+    return briefings.filter(
+      (b) => b.status !== "completed" && b.status !== "cancelled" && b.attendees.some((a) => !a.signature)
+    );
+  }, [briefings]);
+
+  const completedBriefings = useMemo(() => {
+    return briefings.filter((b) => b.status === "completed" || b.attendees.every((a) => a.signature));
+  }, [briefings]);
+
+  // Tab configuration
+  const tabs = [
+    { id: "templates" as const, label: "Templates", count: 0 },
+    { id: "history" as const, label: "History", count: completedBriefings.length },
+    { id: "pending" as const, label: "Pending", count: pendingBriefings.length },
+  ];
 
   if (loading) {
     return (
-      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
-        <CardContent className="py-16">
-          <div className="flex flex-col items-center justify-center gap-4">
-            <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
-              <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-            </div>
-            <div className="text-center">
-              <p className="text-white font-medium">Loading Briefings</p>
-              <p className="text-sm text-white/50 mt-1">Fetching your team briefings...</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="flex flex-col items-center justify-center py-16 gap-4">
+        <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+        </div>
+        <div className="text-center">
+          <p className="text-white font-medium">Loading Briefings</p>
+          <p className="text-sm text-white/50 mt-1">Fetching your team briefings...</p>
+        </div>
+      </div>
     );
   }
 
@@ -214,247 +242,172 @@ const TeamBriefingTemplates = () => {
   }
 
   if (showAIWizard) {
-    return <BriefingFormWizard 
-      initialData={editingBriefing}
-      nearMissData={nearMissData}
-      onClose={handleCloseWizard} 
-      onSuccess={() => {
-        handleCloseWizard();
-        fetchBriefings();
-      }} 
-    />;
+    return (
+      <BriefingFormWizard
+        initialData={editingBriefing}
+        nearMissData={nearMissData}
+        onClose={handleCloseWizard}
+        onSuccess={() => {
+          handleCloseWizard();
+          fetchBriefings();
+        }}
+      />
+    );
   }
 
   return (
-    <div className="space-y-6 pb-24">
-      {/* MOBILE LAYOUT */}
-      <div className="md:hidden space-y-4 px-3">
-        {/* Hero AI Briefing Card */}
-        <HeroAIBriefingCard onCreateBriefing={handleCreateNew} />
+    <div className="space-y-5 pb-24">
+      {/* Hero Card */}
+      <BriefingHeroCard
+        totalBriefings={stats.totalBriefings}
+        thisWeek={stats.thisWeek}
+        pendingSignatures={stats.pendingSignatures}
+        signatureRate={stats.signatureRate}
+        onCreateBriefing={handleCreateNew}
+      />
 
-        {/* Quick Action Buttons */}
-        <div className="grid grid-cols-2 gap-3">
-          <MobileButton
-            variant="elec"
-            size="wide"
-            onClick={handleCreateNew}
-            className="font-semibold"
-          >
-            <Plus className="mr-2 h-5 w-5" />
-            New Briefing
-          </MobileButton>
-          <MobileButton
-            variant="elec-outline"
-            size="wide"
-            onClick={() => setShowTemplateLibrary(true)}
-          >
-            <FileText className="mr-2 h-5 w-5" />
-            Templates
-          </MobileButton>
-        </div>
+      {/* Tab Navigation */}
+      <BriefingFilterTabs
+        tabs={tabs}
+        activeTab={activeTab}
+        onChange={(id) => setActiveTab(id as TabId)}
+      />
+
+      {/* Tab Content */}
+      <div className="space-y-3">
+        {/* Templates Tab */}
+        {activeTab === "templates" && (
+          <div className="space-y-3">
+            {/* Default templates */}
+            <TemplateCard
+              template={{
+                id: "site-induction",
+                name: "Site Induction",
+                description: "Standard site induction briefing",
+                hazardCount: 8,
+                usageCount: briefings.filter((b) => b.template_id === "site-induction").length,
+                isAIPowered: true,
+              }}
+              onStart={handleCreateNew}
+              index={0}
+            />
+            <TemplateCard
+              template={{
+                id: "toolbox-talk",
+                name: "Toolbox Talk",
+                description: "Daily toolbox talk template",
+                hazardCount: 5,
+                usageCount: briefings.filter((b) => b.template_id === "toolbox-talk").length,
+                isAIPowered: true,
+              }}
+              onStart={handleCreateNew}
+              index={1}
+            />
+            <TemplateCard
+              template={{
+                id: "electrical-safety",
+                name: "Electrical Safety",
+                description: "Electrical work safety briefing",
+                hazardCount: 10,
+                usageCount: briefings.filter((b) => b.template_id === "electrical-safety").length,
+                isAIPowered: true,
+              }}
+              onStart={handleCreateNew}
+              index={2}
+            />
+            <TemplateCard
+              template={{
+                id: "hot-works",
+                name: "Hot Works Permit",
+                description: "Hot works safety briefing",
+                hazardCount: 7,
+                usageCount: briefings.filter((b) => b.template_id === "hot-works").length,
+              }}
+              onStart={handleCreateNew}
+              index={3}
+            />
+
+            {/* View all templates button */}
+            <button
+              onClick={() => setShowTemplateLibrary(true)}
+              className="w-full p-4 rounded-xl border border-dashed border-white/20 text-white/50 hover:text-white hover:bg-white/5 hover:border-white/30 transition-all min-h-[56px] active:scale-[0.98]"
+            >
+              View All Templates
+            </button>
+          </div>
+        )}
 
         {/* History Tab */}
-        <div className="mt-6">
-          <h3 className="text-base font-semibold text-elec-light mb-3">Recent Briefings</h3>
-          <BriefingHistory
-            onEdit={handleEdit}
-            onDuplicate={handleDuplicate}
-            onStatusChange={handleStatusChange}
-          />
-        </div>
-
-        {/* Scheduled Briefings - Collapsible at Bottom */}
-        <div className="border-t border-white/10 pt-6">
-          <button
-            onClick={() => setScheduledBriefingsExpanded(!scheduledBriefingsExpanded)}
-            className="w-full flex items-center justify-between mb-4 touch-manipulation min-h-[44px] active:scale-[0.98] transition-transform"
-          >
-            <h2 className="text-lg font-semibold text-white flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-                <Calendar className="h-4 w-4 text-elec-yellow" />
+        {activeTab === "history" && (
+          <div className="space-y-3">
+            {completedBriefings.length > 0 ? (
+              completedBriefings.map((briefing, index) => (
+                <HistoryCard
+                  key={briefing.id}
+                  briefing={{
+                    id: briefing.id,
+                    name: briefing.briefing_name,
+                    location: briefing.location,
+                    date: new Date(briefing.briefing_date).toLocaleDateString("en-GB"),
+                    time: briefing.briefing_time,
+                    attendeeCount: briefing.attendees.length,
+                    status: briefing.status,
+                    signedCount: briefing.attendees.filter((a) => a.signature).length,
+                  }}
+                  onView={() => handleEdit(briefing)}
+                  onShare={() => {
+                    toast({
+                      title: "Share",
+                      description: "Share functionality coming soon",
+                    });
+                  }}
+                  onDownload={() => {
+                    toast({
+                      title: "Download",
+                      description: "PDF download coming soon",
+                    });
+                  }}
+                  index={index}
+                />
+              ))
+            ) : (
+              <div className="text-center py-12 text-white/50">
+                <p>No completed briefings yet</p>
+                <p className="text-sm mt-1">Create your first briefing to see it here</p>
               </div>
-              Scheduled Briefings
-              {upcomingBriefings > 0 && (
-                <span className="bg-elec-yellow text-black text-xs font-bold px-2.5 py-1 rounded-full">
-                  {upcomingBriefings}
-                </span>
-              )}
-            </h2>
-            <div className="p-2 rounded-xl bg-white/5">
-              {scheduledBriefingsExpanded ? (
-                <ChevronUp className="h-5 w-5 text-white/50" />
-              ) : (
-                <ChevronDown className="h-5 w-5 text-white/50" />
-              )}
-            </div>
-          </button>
-
-          {scheduledBriefingsExpanded && (
-            <div className="space-y-3 animate-fade-in">
-              {briefings && briefings.filter(b => b.status !== 'cancelled' && new Date(b.briefing_date) >= new Date()).length > 0 ? (
-                briefings
-                  .filter(b => b.status !== 'cancelled' && new Date(b.briefing_date) >= new Date())
-                  .slice(0, 5)
-                  .map((briefing) => {
-                    const statusColors = {
-                      'completed': 'border-green-500/30 bg-green-500/5',
-                      'in_progress': 'border-yellow-500/30 bg-yellow-500/5',
-                      'scheduled': 'border-white/10',
-                    };
-                    const statusColor = statusColors[briefing.status as keyof typeof statusColors] || 'border-white/10';
-
-                    return (
-                      <div
-                        key={briefing.id}
-                        className={`bg-[#1e1e1e] border ${statusColor} rounded-2xl p-4 hover:border-elec-yellow/30 transition-all active:scale-[0.98]`}
-                      >
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="flex-1">
-                            <h3 className="font-semibold text-white mb-1 text-sm">{briefing.briefing_name}</h3>
-                            <p className="text-xs text-white/50">
-                              {briefing.location}
-                            </p>
-                          </div>
-                          <Badge className={`text-xs capitalize ${
-                            briefing.status === 'completed' ? 'bg-green-500/10 text-green-400 border border-green-500/20' :
-                            briefing.status === 'in_progress' ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20' :
-                            'bg-white/5 text-white/70 border border-white/10'
-                          }`}>
-                            {briefing.status === 'in_progress' ? 'In Progress' : briefing.status}
-                          </Badge>
-                        </div>
-                        <div className="flex items-center gap-4 text-xs text-white/40">
-                          <div className="flex items-center gap-1.5">
-                            <Calendar className="h-3.5 w-3.5" />
-                            <span>{new Date(briefing.briefing_date).toLocaleDateString('en-GB')}</span>
-                          </div>
-                          {briefing.attendees?.length > 0 && (
-                            <div className="flex items-center gap-1.5">
-                              <Users className="h-3.5 w-3.5" />
-                              <span>{briefing.attendees.length}</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })
-              ) : (
-                <div className="bg-[#1e1e1e] border border-white/10 border-dashed rounded-2xl p-6 text-center">
-                  <div className="p-3 rounded-xl bg-white/5 w-fit mx-auto mb-3">
-                    <Calendar className="h-10 w-10 text-white/30" />
-                  </div>
-                  <p className="text-white/50 text-sm">No scheduled briefings yet</p>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* DESKTOP LAYOUT */}
-      <div className="hidden md:block space-y-6">
-        {/* Statistics Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl hover:border-white/20 transition-colors">
-            <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-elec-yellow mb-1">{briefings.length}</div>
-              <div className="text-sm text-white/50">Total Briefings</div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl hover:border-white/20 transition-colors">
-            <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-green-400 mb-1">
-                {briefings.filter(b => b.status === 'completed').length}
-              </div>
-              <div className="text-sm text-white/50">Completed</div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl hover:border-white/20 transition-colors">
-            <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-blue-400 mb-1">
-                {briefings.reduce((total, b) => total + b.attendees.length, 0)}
-              </div>
-              <div className="text-sm text-white/50">Total Attendees</div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl hover:border-white/20 transition-colors">
-            <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-orange-400 mb-1">
-                {upcomingBriefings}
-              </div>
-              <div className="text-sm text-white/50">Upcoming</div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Desktop Content */}
-        <div className="space-y-6">
-          <HeroAIBriefingCard onCreateBriefing={handleCreateNew} />
-          
-          <div>
-            <h3 className="text-xl font-semibold text-elec-light mb-4">Recent Briefings</h3>
-            <BriefingHistory
-              onEdit={handleEdit}
-              onDuplicate={handleDuplicate}
-              onStatusChange={handleStatusChange}
-            />
+            )}
           </div>
-        </div>
+        )}
 
-        {/* Desktop Scheduled Briefings */}
-        <div>
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-              <Calendar className="h-5 w-5 text-elec-yellow" />
-            </div>
-            Scheduled Briefings
-          </h2>
-          {briefings && briefings.length > 0 ? (
-            <div className="grid md:grid-cols-2 gap-4">
-              {briefings.map((briefing) => (
-                <Card key={briefing.id} className="bg-[#1e1e1e] border border-white/10 rounded-2xl hover:border-white/20 transition-all">
-                  <CardContent className="p-5">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <h3 className="font-semibold text-white">{briefing.briefing_name}</h3>
-                        <p className="text-sm text-white/50">{briefing.location}</p>
-                      </div>
-                      <Badge className={`capitalize ${
-                        briefing.status === 'completed' ? 'bg-green-500/10 text-green-400 border border-green-500/20' :
-                        briefing.status === 'in_progress' ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20' :
-                        'bg-white/5 text-white/70 border border-white/10'
-                      }`}>
-                        {briefing.status.replace('_', ' ')}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center gap-4 text-sm text-white/50">
-                      <div className="flex items-center gap-1.5">
-                        <Calendar className="h-4 w-4" />
-                        <span>{new Date(briefing.briefing_date).toLocaleDateString('en-GB')}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <Users className="h-4 w-4" />
-                        <span>{briefing.attendees.length}</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : (
-            <Card className="bg-[#1e1e1e] border border-white/10 border-dashed rounded-2xl">
-              <CardContent className="p-8 text-center">
-                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 w-fit mx-auto mb-4">
-                  <Calendar className="h-12 w-12 text-white/40" />
-                </div>
-                <p className="text-white/50">No scheduled briefings yet</p>
-              </CardContent>
-            </Card>
-          )}
-        </div>
+        {/* Pending Tab */}
+        {activeTab === "pending" && (
+          <div className="space-y-3">
+            {pendingBriefings.length > 0 ? (
+              pendingBriefings.map((briefing, index) => (
+                <PendingCard
+                  key={briefing.id}
+                  briefing={{
+                    id: briefing.id,
+                    name: briefing.briefing_name,
+                    location: briefing.location,
+                    date: new Date(briefing.briefing_date).toLocaleDateString("en-GB"),
+                    time: briefing.briefing_time,
+                    attendeeCount: briefing.attendees.length,
+                    status: briefing.status,
+                    signedCount: briefing.attendees.filter((a) => a.signature).length,
+                  }}
+                  onContinue={() => handleEdit(briefing)}
+                  index={index}
+                />
+              ))
+            ) : (
+              <div className="text-center py-12 text-white/50">
+                <p>No pending briefings</p>
+                <p className="text-sm mt-1">All briefings are up to date</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

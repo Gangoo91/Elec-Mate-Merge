@@ -1,12 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Wrench, XCircle, Loader2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Wrench, Clock, XCircle, Loader2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { MaintenanceEquipmentDetails } from "@/types/maintenance-method";
-import { CircularProgress } from '@/components/agents/shared/CircularProgress';
-import { StageTimeline, getStageFromProgress } from '@/components/agents/shared/StageTimeline';
-import { TimeStatsGrid } from '@/components/agents/shared/TimeStatsGrid';
-import { AGENT_CONFIG } from '@/components/agents/shared/AgentConfig';
 
 interface MaintenanceMethodProcessingViewProps {
   progress: number;
@@ -18,136 +14,215 @@ interface MaintenanceMethodProcessingViewProps {
   isCancelling?: boolean;
 }
 
-const ESTIMATED_TIME = 300; // 5 minutes for maintenance methods
+const STAGES = [
+  { name: 'Init', icon: '⚡' },
+  { name: 'Search', icon: '🔍' },
+  { name: 'Analyse', icon: '📊' },
+  { name: 'Generate', icon: '🔧' },
+  { name: 'Validate', icon: '✓' },
+  { name: 'Done', icon: '✨' }
+];
+
+const ESTIMATED_TIME = 300; // 5 minutes
 
 export const MaintenanceMethodProcessingView = ({
   progress,
-  currentStep,
-  originalQuery,
-  equipmentDetails,
-  startTime = Date.now(),
   onCancel,
-  isCancelling
+  isCancelling = false
 }: MaintenanceMethodProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
-  const config = AGENT_CONFIG['maintenance'];
+  const [startTime] = useState(Date.now());
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setElapsedTime((prev) => prev + 1);
+      setElapsedTime(Math.floor((Date.now() - startTime) / 1000));
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [startTime]);
 
-  // Calculate remaining time and current stage
   const remainingTime = Math.max(0, ESTIMATED_TIME - elapsedTime);
-  const currentStage = getStageFromProgress(progress);
+  const currentStage = Math.floor((progress / 100) * (STAGES.length - 1));
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
 
   return (
-    <div className="min-h-[70vh] flex items-center justify-center px-4 sm:px-6 animate-fade-in">
-      <Card
-        className="w-full max-w-lg agent-card"
-        style={{ borderColor: `${config.gradientFrom}20` }}
-      >
-        <CardHeader className="text-center space-y-4 pb-4">
-          {/* Animated Header Icon */}
+    <div className="h-[100dvh] bg-gradient-to-b from-black via-[#0a0a0f] to-black flex flex-col overflow-hidden">
+      {/* Background Glow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-elec-yellow/5 blur-[80px]"
+          animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+
+      <div className="relative z-10 flex-1 flex flex-col justify-evenly px-4 py-6 max-w-md mx-auto w-full">
+
+        {/* Header */}
+        <div className="text-center space-y-3">
           <div className="flex justify-center">
-            <div
-              className="relative w-16 h-16 rounded-2xl flex items-center justify-center animate-pulse"
-              style={{
-                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
-                boxShadow: `0 0 30px ${config.gradientFrom}30`,
-              }}
-            >
-              <Wrench className="h-8 w-8" style={{ color: config.gradientFrom }} />
-              {/* Outer glow ring */}
-              <div
-                className="absolute inset-0 rounded-2xl animate-ping opacity-30"
-                style={{ background: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+            <div className="relative">
+              <motion.div
+                className="absolute inset-0 rounded-full border border-elec-yellow/20"
+                style={{ width: 72, height: 72, margin: -6 }}
+                animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.7, 0.4] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+              <motion.div
+                className="absolute inset-0 rounded-full border border-elec-yellow/10"
+                style={{ width: 84, height: 84, margin: -12 }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              />
+              <motion.div
+                className="w-[60px] h-[60px] rounded-full bg-elec-yellow/10 flex items-center justify-center"
+                animate={{ scale: [1, 1.03, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <motion.div
+                  animate={{ rotate: [0, 5, -5, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <Wrench className="h-8 w-8 text-elec-yellow drop-shadow-[0_0_10px_rgba(247,208,44,0.4)]" />
+                </motion.div>
+              </motion.div>
+              <motion.div
+                className="absolute inset-0 rounded-full bg-elec-yellow/20"
+                animate={{ scale: [1, 1.3], opacity: [0.3, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                style={{ width: 60, height: 60 }}
               />
             </div>
           </div>
+          <div>
+            <h2 className="text-xl font-bold text-white">Generating Maintenance Method</h2>
+            <p className="text-xs text-white/50 mt-1">Analysing BS 7671 requirements</p>
+          </div>
+        </div>
 
-          <div className="space-y-2">
-            <CardTitle className="text-xl sm:text-2xl font-bold">
-              <span
-                className="bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})` }}
+        {/* Progress */}
+        <div className="space-y-3">
+          <div className="text-center">
+            <motion.span
+              className="text-5xl font-bold text-elec-yellow tabular-nums"
+              key={Math.round(progress)}
+              initial={{ scale: 1.05 }}
+              animate={{ scale: 1 }}
+            >
+              {Math.round(progress)}
+            </motion.span>
+            <span className="text-2xl font-bold text-elec-yellow/60">%</span>
+          </div>
+
+          <div className="relative">
+            <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-gradient-to-r from-elec-yellow/80 via-elec-yellow to-elec-yellow/80 rounded-full relative"
+                style={{ width: `${progress}%` }}
+                transition={{ duration: 0.3 }}
               >
-                {config.processingTitle}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  animate={{ x: ['-100%', '200%'] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                />
+              </motion.div>
+            </div>
+            <div
+              className="absolute -bottom-1 left-0 h-3 bg-elec-yellow/20 blur-md rounded-full transition-all duration-300"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+
+          {/* Stage Dots */}
+          <div className="flex justify-center gap-1.5">
+            {STAGES.map((stage, idx) => (
+              <motion.div
+                key={idx}
+                className={cn(
+                  "w-2 h-2 rounded-full transition-all duration-300",
+                  idx < currentStage
+                    ? "bg-elec-yellow"
+                    : idx === currentStage
+                    ? "bg-elec-yellow shadow-[0_0_6px_rgba(247,208,44,0.8)]"
+                    : "bg-white/10"
+                )}
+                animate={idx === currentStage ? { scale: [1, 1.3, 1] } : {}}
+                transition={{ duration: 1, repeat: Infinity }}
+              />
+            ))}
+          </div>
+
+          {/* Current Stage */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStage}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              className="text-center"
+            >
+              <span className="text-sm font-medium text-white">
+                {STAGES[currentStage]?.icon} {STAGES[currentStage]?.name}
               </span>
-            </CardTitle>
-            <p className="text-sm sm:text-base text-white/60">
-              Analysing BS 7671 maintenance requirements
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Stats Row */}
+        <div className="flex items-center justify-center gap-6">
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-1 mb-1">
+              <Clock className="h-3 w-3 text-white/40" />
+              <span className="text-[10px] text-white/40">Elapsed</span>
+            </div>
+            <p className="text-lg font-bold text-white tabular-nums">
+              {formatTime(elapsedTime)}
             </p>
           </div>
-        </CardHeader>
-
-        <CardContent className="space-y-6 pb-6">
-          {/* Circular Progress Ring */}
-          <div className="flex justify-center py-4">
-            <CircularProgress
-              progress={progress}
-              agentType="maintenance"
-              size="lg"
-            />
-          </div>
-
-          {/* Time Stats Grid */}
-          <TimeStatsGrid
-            elapsedSeconds={elapsedTime}
-            remainingSeconds={remainingTime}
-          />
-
-          {/* Stage Timeline */}
-          <div className="pt-2">
-            <StageTimeline
-              currentStage={currentStage}
-              agentType="maintenance"
-              compact
-            />
-          </div>
-
-          {/* Overdue Warning */}
-          {elapsedTime > ESTIMATED_TIME && (
-            <div
-              className="p-3 rounded-xl border animate-slide-up"
-              style={{
-                background: `${config.gradientFrom}10`,
-                borderColor: `${config.gradientFrom}30`
-              }}
-            >
-              <p className="text-sm text-center" style={{ color: config.gradientFrom }}>
-                Still processing... Complex equipment may take longer.
-              </p>
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-1 mb-1">
+              <Loader2 className="h-3 w-3 text-white/40 animate-spin" />
+              <span className="text-[10px] text-white/40">Remaining</span>
             </div>
-          )}
+            <p className="text-lg font-bold text-white tabular-nums">
+              ~{formatTime(remainingTime)}
+            </p>
+          </div>
+        </div>
 
-          {/* Cancel Button */}
-          {onCancel && (
-            <div className="pt-4 border-t border-white/10">
-              <Button
-                variant="ghost"
-                onClick={onCancel}
-                disabled={isCancelling}
-                className="w-full h-12 text-red-400 hover:text-red-300 hover:bg-red-500/10 border border-red-500/20 rounded-xl touch-manipulation active:scale-[0.98] transition-all"
-              >
-                {isCancelling ? (
-                  <>
-                    <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                    Cancelling...
-                  </>
-                ) : (
-                  <>
-                    <XCircle className="h-5 w-5 mr-2" />
-                    Cancel Generation
-                  </>
-                )}
-              </Button>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+        {/* Overdue Warning */}
+        {elapsedTime > ESTIMATED_TIME && (
+          <motion.div
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20"
+          >
+            <p className="text-[10px] text-amber-200 text-center">
+              Taking longer than usual. Complex equipment may take up to 7 minutes.
+            </p>
+          </motion.div>
+        )}
+
+        {/* Cancel Button */}
+        {onCancel && (
+          <button
+            onClick={onCancel}
+            disabled={isCancelling}
+            className="w-full py-3 text-xs text-white/40 hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all flex items-center justify-center gap-1.5 disabled:opacity-50"
+          >
+            {isCancelling ? (
+              <><Loader2 className="w-3 h-3 animate-spin" /> Cancelling...</>
+            ) : (
+              <><XCircle className="w-3 h-3" /> Cancel</>
+            )}
+          </button>
+        )}
+      </div>
     </div>
   );
 };

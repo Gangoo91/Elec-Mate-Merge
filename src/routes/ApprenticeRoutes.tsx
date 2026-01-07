@@ -1,104 +1,107 @@
 
+import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import ApprenticeHub from "@/pages/ApprenticeHub";
-import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
+import { LazyRoute } from "@/components/LazyRoute";
 
-import RightsAndPay from "@/pages/apprentice/RightsAndPay";
-import WorkLifeBalance from "@/pages/apprentice/mental-health/WorkLifeBalance";
-import MentalHealthResources from "@/pages/apprentice/mental-health/MentalHealthResources";
-import StressManagement from "@/pages/apprentice/mental-health/StressManagement";
-import CrisisResources from "@/pages/apprentice/mental-health/CrisisResources";
-import SupportNetwork from "@/pages/apprentice/mental-health/SupportNetwork";
-import OnJobTools from "@/pages/apprentice/OnJobTools";
-import OnJobCalculations from "@/pages/apprentice/OnJobCalculations";
-import OnJobSafetyCases from "@/pages/apprentice/OnJobSafetyCases";
-import OnJobWorkplaceCulture from "@/pages/apprentice/OnJobWorkplaceCulture";
-import TestingProcedures from "@/pages/apprentice/TestingProcedures";
-import OnJobAssessment from "@/pages/apprentice/OnJobAssessment";
-import OnJobBS7671RunThrough from "@/pages/apprentice/OnJobBS7671RunThrough";
-import OnJobSupervisorKnowledge from "@/pages/apprentice/OnJobSupervisorKnowledge";
-import OnJobFlashcards from "@/pages/apprentice/OnJobFlashcards";
-import ApprenticeToolbox from "@/pages/apprentice/ApprenticeToolbox";
-import ProfessionalDevelopment from "@/pages/apprentice/ProfessionalDevelopment";
-import ApprenticeOJT from "@/pages/apprentice/ApprenticeOJT";
-import AdvancedHelp from "@/pages/apprentice/AdvancedHelp";
-import ProfessionalToolGuide from "@/pages/apprentice/ProfessionalToolGuide";
-import PortfolioBuilding from "@/pages/apprentice/toolbox/PortfolioBuilding";
-import ToolsGuide from "@/pages/apprentice/toolbox/ToolsGuide";
-import ElectricalInstallationGuides from "@/pages/apprentice/toolbox/ElectricalInstallationGuides";
-import CommercialInstallations from "@/pages/apprentice/toolbox/CommercialInstallations";
-import IndustrialInstallations from "@/pages/apprentice/toolbox/IndustrialInstallations";
-import OutdoorInstallations from "@/pages/apprentice/toolbox/OutdoorInstallations";
-import DomesticInstallations from "@/pages/apprentice/DomesticInstallations";
-import SpecialistInstallations from "@/pages/apprentice/SpecialistInstallations";
-import CommunicationSkills from "@/pages/apprentice/toolbox/CommunicationSkills";
-import StudyTips from "@/pages/apprentice/toolbox/StudyTips";
-import LearningFromMistakes from "@/pages/apprentice/toolbox/LearningFromMistakes";
-import TimeManagement from "@/pages/apprentice/toolbox/TimeManagement";
-import ApprenticeshipExpectations from "@/pages/apprentice/toolbox/ApprenticeshipExpectations";
-import OffJobTrainingGuide from "@/pages/apprentice/toolbox/OffJobTrainingGuide";
-import SiteJargon from "@/pages/apprentice/toolbox/SiteJargon";
-import ApprenticeshipFunding from "@/pages/apprentice/toolbox/ApprenticeshipFunding";
-import EndPointAssessment from "@/pages/apprentice/toolbox/EndPointAssessment";
-import Year1 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year1";
-import Year2 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year2";
-import Year3 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year3";
-import Year4 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year4";
-import InspectionTesting from "@/pages/apprentice/InspectionTesting";
-import InspectionTestingHubPage from "@/pages/apprentice/LearningHubPage";
-import UnifiedApprenticeHub from "@/pages/apprentice/UnifiedApprenticeHub";
+// Lazy-loaded pages
+const ApprenticeHub = lazy(() => import("@/pages/ApprenticeHub"));
+const ApprenticeMentalHealth = lazy(() => import("@/pages/apprentice/ApprenticeMentalHealth"));
+const RightsAndPay = lazy(() => import("@/pages/apprentice/RightsAndPay"));
+const WorkLifeBalance = lazy(() => import("@/pages/apprentice/mental-health/WorkLifeBalance"));
+const MentalHealthResources = lazy(() => import("@/pages/apprentice/mental-health/MentalHealthResources"));
+const StressManagement = lazy(() => import("@/pages/apprentice/mental-health/StressManagement"));
+const CrisisResources = lazy(() => import("@/pages/apprentice/mental-health/CrisisResources"));
+const SupportNetwork = lazy(() => import("@/pages/apprentice/mental-health/SupportNetwork"));
+const OnJobTools = lazy(() => import("@/pages/apprentice/OnJobTools"));
+const OnJobCalculations = lazy(() => import("@/pages/apprentice/OnJobCalculations"));
+const OnJobSafetyCases = lazy(() => import("@/pages/apprentice/OnJobSafetyCases"));
+const OnJobWorkplaceCulture = lazy(() => import("@/pages/apprentice/OnJobWorkplaceCulture"));
+const TestingProcedures = lazy(() => import("@/pages/apprentice/TestingProcedures"));
+const OnJobAssessment = lazy(() => import("@/pages/apprentice/OnJobAssessment"));
+const OnJobBS7671RunThrough = lazy(() => import("@/pages/apprentice/OnJobBS7671RunThrough"));
+const OnJobSupervisorKnowledge = lazy(() => import("@/pages/apprentice/OnJobSupervisorKnowledge"));
+const OnJobFlashcards = lazy(() => import("@/pages/apprentice/OnJobFlashcards"));
+const ApprenticeToolbox = lazy(() => import("@/pages/apprentice/ApprenticeToolbox"));
+const ProfessionalDevelopment = lazy(() => import("@/pages/apprentice/ProfessionalDevelopment"));
+const ApprenticeOJT = lazy(() => import("@/pages/apprentice/ApprenticeOJT"));
+const AdvancedHelp = lazy(() => import("@/pages/apprentice/AdvancedHelp"));
+const ProfessionalToolGuide = lazy(() => import("@/pages/apprentice/ProfessionalToolGuide"));
+const PortfolioBuilding = lazy(() => import("@/pages/apprentice/toolbox/PortfolioBuilding"));
+const ToolsGuide = lazy(() => import("@/pages/apprentice/toolbox/ToolsGuide"));
+const ElectricalInstallationGuides = lazy(() => import("@/pages/apprentice/toolbox/ElectricalInstallationGuides"));
+const CommercialInstallations = lazy(() => import("@/pages/apprentice/toolbox/CommercialInstallations"));
+const IndustrialInstallations = lazy(() => import("@/pages/apprentice/toolbox/IndustrialInstallations"));
+const OutdoorInstallations = lazy(() => import("@/pages/apprentice/toolbox/OutdoorInstallations"));
+const DomesticInstallations = lazy(() => import("@/pages/apprentice/DomesticInstallations"));
+const SpecialistInstallations = lazy(() => import("@/pages/apprentice/SpecialistInstallations"));
+const CommunicationSkills = lazy(() => import("@/pages/apprentice/toolbox/CommunicationSkills"));
+const StudyTips = lazy(() => import("@/pages/apprentice/toolbox/StudyTips"));
+const LearningFromMistakes = lazy(() => import("@/pages/apprentice/toolbox/LearningFromMistakes"));
+const TimeManagement = lazy(() => import("@/pages/apprentice/toolbox/TimeManagement"));
+const ApprenticeshipExpectations = lazy(() => import("@/pages/apprentice/toolbox/ApprenticeshipExpectations"));
+const OffJobTrainingGuide = lazy(() => import("@/pages/apprentice/toolbox/OffJobTrainingGuide"));
+const SiteJargon = lazy(() => import("@/pages/apprentice/toolbox/SiteJargon"));
+const ApprenticeshipFunding = lazy(() => import("@/pages/apprentice/toolbox/ApprenticeshipFunding"));
+const EndPointAssessment = lazy(() => import("@/pages/apprentice/toolbox/EndPointAssessment"));
+const Year1 = lazy(() => import("@/pages/apprentice/toolbox/apprenticeship-expectations/Year1"));
+const Year2 = lazy(() => import("@/pages/apprentice/toolbox/apprenticeship-expectations/Year2"));
+const Year3 = lazy(() => import("@/pages/apprentice/toolbox/apprenticeship-expectations/Year3"));
+const Year4 = lazy(() => import("@/pages/apprentice/toolbox/apprenticeship-expectations/Year4"));
+const InspectionTesting = lazy(() => import("@/pages/apprentice/InspectionTesting"));
+const InspectionTestingHubPage = lazy(() => import("@/pages/apprentice/LearningHubPage"));
+const UnifiedApprenticeHub = lazy(() => import("@/pages/apprentice/UnifiedApprenticeHub"));
 
 const ApprenticeRoutes = () => (
   <Routes>
-    <Route index element={<ApprenticeHub />} />
-    <Route path="calculators" element={<OnJobCalculations />} />
-    <Route path="ojt" element={<ApprenticeOJT />} />
-    <Route path="advanced-help" element={<AdvancedHelp />} />
-    <Route path="bs7671-inspection-testing" element={<OnJobBS7671RunThrough />} />
-    <Route path="mental-health" element={<ApprenticeMentalHealth />} />
-    <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
-    <Route path="mental-health/resources" element={<MentalHealthResources />} />
-    <Route path="mental-health/stress-management" element={<StressManagement />} />
-    <Route path="mental-health/crisis-resources" element={<CrisisResources />} />
-    <Route path="mental-health/support-network" element={<SupportNetwork />} />
-    
-    <Route path="rights-and-pay" element={<RightsAndPay />} />
-    <Route path="toolbox" element={<ApprenticeToolbox />} />
-    <Route path="toolbox/apprenticeship-expectations" element={<ApprenticeshipExpectations />} />
-    <Route path="toolbox/apprenticeship-expectations/year-1" element={<Year1 />} />
-    <Route path="toolbox/apprenticeship-expectations/year-2" element={<Year2 />} />
-    <Route path="toolbox/apprenticeship-expectations/year-3" element={<Year3 />} />
-    <Route path="toolbox/apprenticeship-expectations/year-4" element={<Year4 />} />
-    <Route path="toolbox/off-job-training-guide" element={<OffJobTrainingGuide />} />
-    <Route path="toolbox/site-jargon" element={<SiteJargon />} />
-    <Route path="toolbox/portfolio-building" element={<PortfolioBuilding />} />
-    <Route path="toolbox/communication-skills" element={<CommunicationSkills />} />
-    <Route path="toolbox/study-tips" element={<StudyTips />} />
-    <Route path="toolbox/learning-from-mistakes" element={<LearningFromMistakes />} />
-    <Route path="toolbox/time-management" element={<TimeManagement />} />
-    <Route path="toolbox/apprenticeship-funding" element={<ApprenticeshipFunding />} />
-    <Route path="toolbox/end-point-assessment" element={<EndPointAssessment />} />
-    <Route path="professional-development" element={<ProfessionalDevelopment />} />
-    <Route path="toolbox/professional-tool-guide" element={<ProfessionalToolGuide />} />
-    <Route path="on-job-tools" element={<OnJobTools />} />
-    <Route path="on-job-tools/tools-guide" element={<ToolsGuide />} />
-    <Route path="on-job-tools/electrical-installation-guides" element={<ElectricalInstallationGuides />} />
-    <Route path="on-job-tools/electrical-installation-guides/commercial" element={<CommercialInstallations />} />
-    <Route path="on-job-tools/electrical-installation-guides/industrial" element={<IndustrialInstallations />} />
-    <Route path="on-job-tools/electrical-installation-guides/outdoor" element={<OutdoorInstallations />} />
-    <Route path="on-job-tools/electrical-installation-guides/domestic" element={<DomesticInstallations />} />
-    <Route path="on-job-tools/electrical-installation-guides/specialist" element={<SpecialistInstallations />} />
-    <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
-    <Route path="on-job-tools/assessment" element={<OnJobAssessment />} />
-    <Route path="on-job-tools/safety-cases" element={<OnJobSafetyCases />} />
-    <Route path="on-job-tools/workplace-culture" element={<OnJobWorkplaceCulture />} />
-    <Route path="on-job-tools/testing-procedures" element={<TestingProcedures />} />
-    <Route path="on-job-tools/bs7671-runthrough" element={<OnJobBS7671RunThrough />} />
-    <Route path="on-job-tools/supervisor-knowledge" element={<OnJobSupervisorKnowledge />} />
-    <Route path="on-job-tools/flashcards" element={<OnJobFlashcards />} />
-    <Route path="inspection-testing" element={<InspectionTesting />} />
-    <Route path="inspection-testing-hub" element={<InspectionTestingHubPage />} />
-    <Route path="hub" element={<UnifiedApprenticeHub />} />
+    <Route index element={<LazyRoute><ApprenticeHub /></LazyRoute>} />
+    <Route path="calculators" element={<LazyRoute><OnJobCalculations /></LazyRoute>} />
+    <Route path="ojt" element={<LazyRoute><ApprenticeOJT /></LazyRoute>} />
+    <Route path="advanced-help" element={<LazyRoute><AdvancedHelp /></LazyRoute>} />
+    <Route path="bs7671-inspection-testing" element={<LazyRoute><OnJobBS7671RunThrough /></LazyRoute>} />
+    <Route path="mental-health" element={<LazyRoute><ApprenticeMentalHealth /></LazyRoute>} />
+    <Route path="mental-health/work-life-balance" element={<LazyRoute><WorkLifeBalance /></LazyRoute>} />
+    <Route path="mental-health/resources" element={<LazyRoute><MentalHealthResources /></LazyRoute>} />
+    <Route path="mental-health/stress-management" element={<LazyRoute><StressManagement /></LazyRoute>} />
+    <Route path="mental-health/crisis-resources" element={<LazyRoute><CrisisResources /></LazyRoute>} />
+    <Route path="mental-health/support-network" element={<LazyRoute><SupportNetwork /></LazyRoute>} />
+
+    <Route path="rights-and-pay" element={<LazyRoute><RightsAndPay /></LazyRoute>} />
+    <Route path="toolbox" element={<LazyRoute><ApprenticeToolbox /></LazyRoute>} />
+    <Route path="toolbox/apprenticeship-expectations" element={<LazyRoute><ApprenticeshipExpectations /></LazyRoute>} />
+    <Route path="toolbox/apprenticeship-expectations/year-1" element={<LazyRoute><Year1 /></LazyRoute>} />
+    <Route path="toolbox/apprenticeship-expectations/year-2" element={<LazyRoute><Year2 /></LazyRoute>} />
+    <Route path="toolbox/apprenticeship-expectations/year-3" element={<LazyRoute><Year3 /></LazyRoute>} />
+    <Route path="toolbox/apprenticeship-expectations/year-4" element={<LazyRoute><Year4 /></LazyRoute>} />
+    <Route path="toolbox/off-job-training-guide" element={<LazyRoute><OffJobTrainingGuide /></LazyRoute>} />
+    <Route path="toolbox/site-jargon" element={<LazyRoute><SiteJargon /></LazyRoute>} />
+    <Route path="toolbox/portfolio-building" element={<LazyRoute><PortfolioBuilding /></LazyRoute>} />
+    <Route path="toolbox/communication-skills" element={<LazyRoute><CommunicationSkills /></LazyRoute>} />
+    <Route path="toolbox/study-tips" element={<LazyRoute><StudyTips /></LazyRoute>} />
+    <Route path="toolbox/learning-from-mistakes" element={<LazyRoute><LearningFromMistakes /></LazyRoute>} />
+    <Route path="toolbox/time-management" element={<LazyRoute><TimeManagement /></LazyRoute>} />
+    <Route path="toolbox/apprenticeship-funding" element={<LazyRoute><ApprenticeshipFunding /></LazyRoute>} />
+    <Route path="toolbox/end-point-assessment" element={<LazyRoute><EndPointAssessment /></LazyRoute>} />
+    <Route path="professional-development" element={<LazyRoute><ProfessionalDevelopment /></LazyRoute>} />
+    <Route path="toolbox/professional-tool-guide" element={<LazyRoute><ProfessionalToolGuide /></LazyRoute>} />
+    <Route path="on-job-tools" element={<LazyRoute><OnJobTools /></LazyRoute>} />
+    <Route path="on-job-tools/tools-guide" element={<LazyRoute><ToolsGuide /></LazyRoute>} />
+    <Route path="on-job-tools/electrical-installation-guides" element={<LazyRoute><ElectricalInstallationGuides /></LazyRoute>} />
+    <Route path="on-job-tools/electrical-installation-guides/commercial" element={<LazyRoute><CommercialInstallations /></LazyRoute>} />
+    <Route path="on-job-tools/electrical-installation-guides/industrial" element={<LazyRoute><IndustrialInstallations /></LazyRoute>} />
+    <Route path="on-job-tools/electrical-installation-guides/outdoor" element={<LazyRoute><OutdoorInstallations /></LazyRoute>} />
+    <Route path="on-job-tools/electrical-installation-guides/domestic" element={<LazyRoute><DomesticInstallations /></LazyRoute>} />
+    <Route path="on-job-tools/electrical-installation-guides/specialist" element={<LazyRoute><SpecialistInstallations /></LazyRoute>} />
+    <Route path="on-job-tools/calculations" element={<LazyRoute><OnJobCalculations /></LazyRoute>} />
+    <Route path="on-job-tools/assessment" element={<LazyRoute><OnJobAssessment /></LazyRoute>} />
+    <Route path="on-job-tools/safety-cases" element={<LazyRoute><OnJobSafetyCases /></LazyRoute>} />
+    <Route path="on-job-tools/workplace-culture" element={<LazyRoute><OnJobWorkplaceCulture /></LazyRoute>} />
+    <Route path="on-job-tools/testing-procedures" element={<LazyRoute><TestingProcedures /></LazyRoute>} />
+    <Route path="on-job-tools/bs7671-runthrough" element={<LazyRoute><OnJobBS7671RunThrough /></LazyRoute>} />
+    <Route path="on-job-tools/supervisor-knowledge" element={<LazyRoute><OnJobSupervisorKnowledge /></LazyRoute>} />
+    <Route path="on-job-tools/flashcards" element={<LazyRoute><OnJobFlashcards /></LazyRoute>} />
+    <Route path="inspection-testing" element={<LazyRoute><InspectionTesting /></LazyRoute>} />
+    <Route path="inspection-testing-hub" element={<LazyRoute><InspectionTestingHubPage /></LazyRoute>} />
+    <Route path="hub" element={<LazyRoute><UnifiedApprenticeHub /></LazyRoute>} />
   </Routes>
 );
 

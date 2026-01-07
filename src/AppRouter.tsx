@@ -1,45 +1,53 @@
 
+import { lazy } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import LandingPage from "@/pages/LandingPage";
-import Index from "@/pages/Index";
-import SignIn from "@/pages/auth/SignIn";
-import SignUp from "@/pages/auth/SignUp";
-import ForgotPassword from "@/pages/auth/ForgotPassword";
-import ResetPassword from "@/pages/auth/ResetPassword";
+import { LazyRoute } from "@/components/LazyRoute";
+
+// Core components that should load immediately (small, critical path)
 import Layout from "@/components/layout/Layout";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import Dashboard from "@/pages/Dashboard";
-import Profile from "@/pages/Profile";
-import Settings from "@/pages/Settings";
-import Subscriptions from "@/pages/Subscriptions";
-import PaymentSuccess from "@/pages/PaymentSuccess";
-import NotFound from "@/pages/NotFound";
-import ApprenticeRoutes from "@/routes/ApprenticeRoutes";
-import ElectricianHubRoutes from "@/routes/ElectricianHubRoutes";
-import ElectricianRoutes from "@/routes/ElectricianRoutes";
-import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
-import RightsAndPay from "@/pages/apprentice/RightsAndPay";
-import NotificationsPage from "@/pages/NotificationsPage";
-import PublicQuote from "@/pages/PublicQuote";
-import LaTeXPDFGeneratorPage from "@/pages/LaTeXPDFGeneratorPage";
-import InvoiceQuoteBuilder from "@/pages/electrician/InvoiceQuoteBuilder";
-import InvoiceViewPage from "@/pages/electrician/InvoiceViewPage";
-import QuoteViewPage from "@/pages/electrician/QuoteViewPage";
-import AdminRAGProcessor from "@/pages/AdminRAGProcessor";
-import { ConsultationResults } from "@/components/install-planner-v2/ConsultationResults";
-import ProcessOnsiteGuide from "@/pages/ProcessOnsiteGuide";
-import AutoProcessOnsite from "@/pages/AutoProcessOnsite";
-import KnowledgeUploader from "@/pages/Admin/KnowledgeUploader";
-import LearningReview from "@/pages/admin/LearningReview";
-import CircuitDesigner from "@/pages/electrician-tools/CircuitDesigner";
-import InspectionRoutes from "@/routes/InspectionRoutes";
-import StudyCentreRoutes from "@/routes/StudyCentreRoutes";
-import UpskillingRoutes from "@/routes/UpskillingRoutes";
-import EnrichmentMonitor from "@/pages/Admin/EnrichmentMonitor";
-import EmployerDashboard from "@/pages/employer/EmployerDashboard";
-import CollegeDashboard from "@/pages/college/CollegeDashboard";
-import PrivacyPolicy from "@/pages/legal/PrivacyPolicy";
-import TermsOfService from "@/pages/legal/TermsOfService";
+
+// Lazy-loaded pages
+const LandingPage = lazy(() => import("@/pages/LandingPage"));
+const Index = lazy(() => import("@/pages/Index"));
+const SignIn = lazy(() => import("@/pages/auth/SignIn"));
+const SignUp = lazy(() => import("@/pages/auth/SignUp"));
+const ForgotPassword = lazy(() => import("@/pages/auth/ForgotPassword"));
+const ResetPassword = lazy(() => import("@/pages/auth/ResetPassword"));
+const Dashboard = lazy(() => import("@/pages/Dashboard"));
+const Profile = lazy(() => import("@/pages/Profile"));
+const Settings = lazy(() => import("@/pages/Settings"));
+const Subscriptions = lazy(() => import("@/pages/Subscriptions"));
+const PaymentSuccess = lazy(() => import("@/pages/PaymentSuccess"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
+const ApprenticeMentalHealth = lazy(() => import("@/pages/apprentice/ApprenticeMentalHealth"));
+const RightsAndPay = lazy(() => import("@/pages/apprentice/RightsAndPay"));
+const NotificationsPage = lazy(() => import("@/pages/NotificationsPage"));
+const PublicQuote = lazy(() => import("@/pages/PublicQuote"));
+const LaTeXPDFGeneratorPage = lazy(() => import("@/pages/LaTeXPDFGeneratorPage"));
+const InvoiceQuoteBuilder = lazy(() => import("@/pages/electrician/InvoiceQuoteBuilder"));
+const InvoiceViewPage = lazy(() => import("@/pages/electrician/InvoiceViewPage"));
+const QuoteViewPage = lazy(() => import("@/pages/electrician/QuoteViewPage"));
+const AdminRAGProcessor = lazy(() => import("@/pages/AdminRAGProcessor"));
+const ConsultationResults = lazy(() => import("@/components/install-planner-v2/ConsultationResults").then(m => ({ default: m.ConsultationResults })));
+const ProcessOnsiteGuide = lazy(() => import("@/pages/ProcessOnsiteGuide"));
+const AutoProcessOnsite = lazy(() => import("@/pages/AutoProcessOnsite"));
+const KnowledgeUploader = lazy(() => import("@/pages/Admin/KnowledgeUploader"));
+const LearningReview = lazy(() => import("@/pages/admin/LearningReview"));
+const CircuitDesigner = lazy(() => import("@/pages/electrician-tools/CircuitDesigner"));
+const EnrichmentMonitor = lazy(() => import("@/pages/Admin/EnrichmentMonitor"));
+const EmployerDashboard = lazy(() => import("@/pages/employer/EmployerDashboard"));
+const CollegeDashboard = lazy(() => import("@/pages/college/CollegeDashboard"));
+const PrivacyPolicy = lazy(() => import("@/pages/legal/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("@/pages/legal/TermsOfService"));
+
+// Lazy-loaded route modules
+const ApprenticeRoutes = lazy(() => import("@/routes/ApprenticeRoutes"));
+const ElectricianHubRoutes = lazy(() => import("@/routes/ElectricianHubRoutes"));
+const ElectricianRoutes = lazy(() => import("@/routes/ElectricianRoutes"));
+const InspectionRoutes = lazy(() => import("@/routes/InspectionRoutes"));
+const StudyCentreRoutes = lazy(() => import("@/routes/StudyCentreRoutes"));
+const UpskillingRoutes = lazy(() => import("@/routes/UpskillingRoutes"));
 
 const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
   const location = useLocation();
@@ -52,82 +60,82 @@ const AppRouter = () => {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/process-onsite-now" element={<AutoProcessOnsite />} />
-      <Route path="/index" element={<Index />} />
-      <Route path="/auth/signin" element={<SignIn />} />
-      <Route path="/auth/signup" element={<SignUp />} />
-      <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-      <Route path="/auth/reset-password" element={<ResetPassword />} />
-      <Route path="/privacy" element={<PrivacyPolicy />} />
-      <Route path="/terms" element={<TermsOfService />} />
-      <Route path="/quote/:token" element={<PublicQuote />} />
-      <Route path="/public-quote/:token" element={<PublicQuote />} />
-      <Route path="/pdf-generator" element={<LaTeXPDFGeneratorPage />} />
-      
+      <Route path="/" element={<LazyRoute><LandingPage /></LazyRoute>} />
+      <Route path="/process-onsite-now" element={<LazyRoute><AutoProcessOnsite /></LazyRoute>} />
+      <Route path="/index" element={<LazyRoute><Index /></LazyRoute>} />
+      <Route path="/auth/signin" element={<LazyRoute><SignIn /></LazyRoute>} />
+      <Route path="/auth/signup" element={<LazyRoute><SignUp /></LazyRoute>} />
+      <Route path="/auth/forgot-password" element={<LazyRoute><ForgotPassword /></LazyRoute>} />
+      <Route path="/auth/reset-password" element={<LazyRoute><ResetPassword /></LazyRoute>} />
+      <Route path="/privacy" element={<LazyRoute><PrivacyPolicy /></LazyRoute>} />
+      <Route path="/terms" element={<LazyRoute><TermsOfService /></LazyRoute>} />
+      <Route path="/quote/:token" element={<LazyRoute><PublicQuote /></LazyRoute>} />
+      <Route path="/public-quote/:token" element={<LazyRoute><PublicQuote /></LazyRoute>} />
+      <Route path="/pdf-generator" element={<LazyRoute><LaTeXPDFGeneratorPage /></LazyRoute>} />
+
       {/* Legacy/Direct Access Routes - Redirect to proper paths */}
       <Route path="/rights-and-pay" element={<Navigate to="/apprentice/rights-and-pay" replace />} />
-      
+
       {/* Main Protected Routes */}
       <Route path="/" element={
         <ProtectedRoute>
           <Layout />
         </ProtectedRoute>
       }>
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="settings" element={<Settings />} />
-        <Route path="notifications" element={<NotificationsPage />} />
-        <Route path="subscriptions" element={<Subscriptions />} />
-        <Route path="payment-success" element={<PaymentSuccess />} />
-        <Route path="admin/rag-processor" element={<AdminRAGProcessor />} />
-        <Route path="admin/process-onsite-guide" element={<ProcessOnsiteGuide />} />
-        <Route path="admin/knowledge-uploader" element={<KnowledgeUploader />} />
-        <Route path="admin/learning-review" element={<LearningReview />} />
-        <Route path="admin/enrichment" element={<EnrichmentMonitor />} />
-        
+        <Route path="dashboard" element={<LazyRoute><Dashboard /></LazyRoute>} />
+        <Route path="profile" element={<LazyRoute><Profile /></LazyRoute>} />
+        <Route path="settings" element={<LazyRoute><Settings /></LazyRoute>} />
+        <Route path="notifications" element={<LazyRoute><NotificationsPage /></LazyRoute>} />
+        <Route path="subscriptions" element={<LazyRoute><Subscriptions /></LazyRoute>} />
+        <Route path="payment-success" element={<LazyRoute><PaymentSuccess /></LazyRoute>} />
+        <Route path="admin/rag-processor" element={<LazyRoute><AdminRAGProcessor /></LazyRoute>} />
+        <Route path="admin/process-onsite-guide" element={<LazyRoute><ProcessOnsiteGuide /></LazyRoute>} />
+        <Route path="admin/knowledge-uploader" element={<LazyRoute><KnowledgeUploader /></LazyRoute>} />
+        <Route path="admin/learning-review" element={<LazyRoute><LearningReview /></LazyRoute>} />
+        <Route path="admin/enrichment" element={<LazyRoute><EnrichmentMonitor /></LazyRoute>} />
+
         {/* Top level routes for shared features */}
-        <Route path="mental-health" element={<ApprenticeMentalHealth />} />
-        
+        <Route path="mental-health" element={<LazyRoute><ApprenticeMentalHealth /></LazyRoute>} />
+
         {/* Electrician Tools Routes */}
         <Route path="electrician-tools" element={<Navigate to="/electrician" replace />} />
-        <Route path="electrician-tools/*" element={<ElectricianRoutes />} />
-        <Route path="electrician/circuit-designer" element={<CircuitDesigner />} />
-        <Route path="install-planner/results/:conversationId" element={<ConsultationResults />} />
-        
+        <Route path="electrician-tools/*" element={<LazyRoute><ElectricianRoutes /></LazyRoute>} />
+        <Route path="electrician/circuit-designer" element={<LazyRoute><CircuitDesigner /></LazyRoute>} />
+        <Route path="install-planner/results/:conversationId" element={<LazyRoute><ConsultationResults /></LazyRoute>} />
+
         {/* Legacy Materials Routes -> Redirect to canonical electrician paths */}
         <Route path="materials" element={<LegacyRedirect from="/materials" to="/electrician/materials" />} />
         <Route path="materials/*" element={<LegacyRedirect from="/materials" to="/electrician/materials" />} />
-        
+
         {/* Electrical Hub Routes (legacy -> redirect) */}
         <Route path="electrical-hub" element={<LegacyRedirect from="/electrical-hub" to="/electrician" />} />
         <Route path="electrical-hub/*" element={<LegacyRedirect from="/electrical-hub" to="/electrician" />} />
         {/* Canonical Electrician Hub */}
-        <Route path="electrician/invoice-quote-builder/:quoteId" element={<InvoiceQuoteBuilder />} />
-        <Route path="electrician/invoices/:id/view" element={<InvoiceViewPage />} />
-        <Route path="electrician/quotes/view/:id" element={<QuoteViewPage />} />
-        <Route path="electrician/*" element={<ElectricianHubRoutes />} />
-        
+        <Route path="electrician/invoice-quote-builder/:quoteId" element={<LazyRoute><InvoiceQuoteBuilder /></LazyRoute>} />
+        <Route path="electrician/invoices/:id/view" element={<LazyRoute><InvoiceViewPage /></LazyRoute>} />
+        <Route path="electrician/quotes/view/:id" element={<LazyRoute><QuoteViewPage /></LazyRoute>} />
+        <Route path="electrician/*" element={<LazyRoute><ElectricianHubRoutes /></LazyRoute>} />
+
         {/* Employer Hub Routes */}
-        
+
         {/* Inspection & Testing Routes */}
-        <Route path="electrician/inspection-testing/*" element={<InspectionRoutes />} />
-        
+        <Route path="electrician/inspection-testing/*" element={<LazyRoute><InspectionRoutes /></LazyRoute>} />
+
         {/* Study Centre Routes */}
-        <Route path="study-centre/*" element={<StudyCentreRoutes />} />
-        
+        <Route path="study-centre/*" element={<LazyRoute><StudyCentreRoutes /></LazyRoute>} />
+
         {/* Professional Upskilling Routes */}
-        <Route path="electrician/upskilling/*" element={<UpskillingRoutes />} />
-        <Route path="employer" element={<EmployerDashboard />} />
+        <Route path="electrician/upskilling/*" element={<LazyRoute><UpskillingRoutes /></LazyRoute>} />
+        <Route path="employer" element={<LazyRoute><EmployerDashboard /></LazyRoute>} />
 
         {/* College Hub Routes */}
-        <Route path="college" element={<CollegeDashboard />} />
+        <Route path="college" element={<LazyRoute><CollegeDashboard /></LazyRoute>} />
 
         {/* Apprentice Routes */}
-        <Route path="apprentice/*" element={<ApprenticeRoutes />} />
-        
+        <Route path="apprentice/*" element={<LazyRoute><ApprenticeRoutes /></LazyRoute>} />
+
         {/* Catch-all route for 404 */}
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<LazyRoute><NotFound /></LazyRoute>} />
       </Route>
     </Routes>
   );

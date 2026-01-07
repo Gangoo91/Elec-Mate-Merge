@@ -1,158 +1,161 @@
 
+import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import BusinessAdmin from "@/pages/electrician/BusinessAdmin";
-import SafetyShares from "@/pages/electrician/SafetyShares";
-import MajorProjects from "@/pages/electrician/safety-shares/MajorProjects";
-import SafetyAlerts from "@/pages/electrician/safety-shares/SafetyAlerts";
-import SafetyAlertsEnhanced from "@/pages/electrician/safety-shares/SafetyAlertsEnhanced";
-import IndustryNews from "@/pages/electrician/safety-shares/IndustryNews";
-import IndustryNewsEnhanced from "@/pages/electrician/safety-shares/IndustryNewsEnhanced";
-import SafetyResources from "@/pages/electrician/safety-shares/SafetyResources";
-import SafetyResourcesEnhanced from "@/pages/electrician/safety-shares/SafetyResourcesEnhanced";
-import LearningFromExperience from "@/pages/electrician/safety-shares/LearningFromExperience";
-import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
-import JobVacancies from "@/pages/electrician/JobVacancies";
-import ElectricalMaterials from "@/pages/electrician/ElectricalMaterials";
+import { LazyRoute } from "@/components/LazyRoute";
 
-import ElectricalTools from "@/pages/electrician/ElectricalTools";
-import LivePricingHub from "@/pages/electrician/LivePricingHub";
-import ElectricalHub from "@/pages/ElectricalHub";
-import CareerProgression from "@/pages/electrician/CareerProgression";
-import BusinessHub from "@/pages/electrician/BusinessHub";
-import BusinessDevelopment from "@/pages/electrician/BusinessDevelopment";
-import BusinessCustomers from "@/pages/electrician/business-development/BusinessCustomers";
-import BusinessTemplates from "@/pages/electrician/business-development/BusinessTemplates";
-import BusinessStartup from "@/pages/electrician/business-development/BusinessStartup";
-import BusinessApprentices from "@/pages/electrician/business-development/BusinessApprentices";
-import BusinessElectricians from "@/pages/electrician/business-development/BusinessElectricians";
-import BusinessGrowth from "@/pages/electrician/business-development/BusinessGrowth";
-import TaxFinances from "@/pages/electrician/business-development/TaxFinances";
-import DebtRecovery from "@/pages/electrician/business-development/DebtRecovery";
-import ElectricianMentalHealth from "@/pages/electrician/ElectricianMentalHealth";
-import WorkLifeBalance from "@/pages/electrician/mental-health/WorkLifeBalance";
-import MentalHealthResources from "@/pages/electrician/mental-health/MentalHealthResources";
-import BusinessCalculators from "@/pages/electrician/business-development/tools/BusinessCalculators";
-import JobProfitabilityCalculator from "@/pages/electrician/business-development/tools/JobProfitabilityCalculator";
-import BusinessCostCalculator from "@/pages/electrician/business-development/tools/BusinessCostCalculator";
-import CashFlowPlanner from "@/pages/electrician/business-development/tools/CashFlowPlanner";
-import PricingStrategyCalculator from "@/pages/electrician/business-development/tools/PricingStrategyCalculator";
-import EquipmentROICalculator from "@/pages/electrician/business-development/tools/EquipmentROICalculator";
-import HourlyRateCalculator from "@/pages/electrician/business-development/tools/HourlyRateCalculator";
-import CapacityPlanningTool from "@/pages/electrician/business-development/tools/CapacityPlanningTool";
-import TaxNIEstimator from "@/pages/electrician/business-development/tools/TaxNIEstimator";
-import SupplierMaterials from "@/pages/electrician/SupplierMaterials";
-import CategoryMaterials from "@/pages/electrician/CategoryMaterials";
-import MaterialsSlugRedirect from "@/pages/electrician/MaterialsSlugRedirect";
-import MaterialPriceComparisonPage from "@/pages/MaterialPriceComparison";
-import BreakEvenCalculator from "@/pages/electrician/business-development/tools/BreakEvenCalculator";
-import StaffCostCalculator from "@/pages/electrician/business-development/tools/StaffCostCalculator";
-import QuoteVarianceTracker from "@/pages/electrician/business-development/tools/QuoteVarianceTracker";
-import MinimumChargeCalculator from "@/pages/electrician/business-development/tools/MinimumChargeCalculator";
-import VATSchemeComparison from "@/pages/electrician/business-development/tools/VATSchemeComparison";
-import CISDRCHelper from "@/pages/electrician/business-development/tools/CISDRCHelper";
-import QuoteBuilder from "@/pages/electrician/QuoteBuilder";
-import QuoteBuilderCreate from "@/pages/electrician/QuoteBuilderCreate";
-import QuoteBuilderEdit from "@/pages/electrician/QuoteBuilderEdit";
-import SmartQuoteBuilderPage from "@/pages/electrician/SmartQuoteBuilderPage";
-import QuotesPage from "@/pages/electrician/QuotesPage";
-import InvoicesPage from "@/pages/electrician/InvoicesPage";
-import InvoiceBuilderCreate from "@/pages/electrician/InvoiceBuilderCreate";
-import QuoteInvoiceDashboard from "@/pages/electrician/QuoteInvoiceDashboard";
-import Calculations from "@/pages/electrician-tools/Calculations";
-import InstallPlannerV2 from "@/pages/electrician-tools/InstallPlannerV2";
-import InstallPlannerResults from "@/pages/electrician-tools/InstallPlannerResults";
-import SiteSafety from "@/pages/electrician-tools/SiteSafety";
-import AgentSelectorPage from "@/pages/electrician-tools/AgentSelectorPage";
-import CircuitDesigner from "@/pages/electrician-tools/CircuitDesigner";
-import CostEngineerPage from "@/pages/electrician-tools/CostEngineerPage";
-import InstallationSpecialistPage from "@/pages/electrician-tools/InstallationSpecialistPage";
-import HealthSafetyPage from "@/pages/electrician-tools/HealthSafetyPage";
-import CommissioningPage from "@/pages/electrician-tools/CommissioningPage";
-import ProjectManagerPage from "@/pages/electrician-tools/ProjectManagerPage";
-import MaintenancePage from "@/pages/electrician-tools/MaintenancePage";
-import TutorPage from "@/pages/electrician-tools/TutorPage";
-import AIMethodStatementPage from "@/pages/electrician-tools/AIMethodStatementPage";
+// Lazy-loaded pages
+const BusinessAdmin = lazy(() => import("@/pages/electrician/BusinessAdmin"));
+const SafetyShares = lazy(() => import("@/pages/electrician/SafetyShares"));
+const MajorProjects = lazy(() => import("@/pages/electrician/safety-shares/MajorProjects"));
+const SafetyAlerts = lazy(() => import("@/pages/electrician/safety-shares/SafetyAlerts"));
+const SafetyAlertsEnhanced = lazy(() => import("@/pages/electrician/safety-shares/SafetyAlertsEnhanced"));
+const IndustryNews = lazy(() => import("@/pages/electrician/safety-shares/IndustryNews"));
+const IndustryNewsEnhanced = lazy(() => import("@/pages/electrician/safety-shares/IndustryNewsEnhanced"));
+const SafetyResources = lazy(() => import("@/pages/electrician/safety-shares/SafetyResources"));
+const SafetyResourcesEnhanced = lazy(() => import("@/pages/electrician/safety-shares/SafetyResourcesEnhanced"));
+const LearningFromExperience = lazy(() => import("@/pages/electrician/safety-shares/LearningFromExperience"));
+const ApprenticeMentalHealth = lazy(() => import("@/pages/apprentice/ApprenticeMentalHealth"));
+const JobVacancies = lazy(() => import("@/pages/electrician/JobVacancies"));
+const ElectricalMaterials = lazy(() => import("@/pages/electrician/ElectricalMaterials"));
+const ElectricalTools = lazy(() => import("@/pages/electrician/ElectricalTools"));
+const LivePricingHub = lazy(() => import("@/pages/electrician/LivePricingHub"));
+const ElectricalHub = lazy(() => import("@/pages/ElectricalHub"));
+const CareerProgression = lazy(() => import("@/pages/electrician/CareerProgression"));
+const BusinessHub = lazy(() => import("@/pages/electrician/BusinessHub"));
+const BusinessDevelopment = lazy(() => import("@/pages/electrician/BusinessDevelopment"));
+const BusinessCustomers = lazy(() => import("@/pages/electrician/business-development/BusinessCustomers"));
+const BusinessTemplates = lazy(() => import("@/pages/electrician/business-development/BusinessTemplates"));
+const BusinessStartup = lazy(() => import("@/pages/electrician/business-development/BusinessStartup"));
+const BusinessApprentices = lazy(() => import("@/pages/electrician/business-development/BusinessApprentices"));
+const BusinessElectricians = lazy(() => import("@/pages/electrician/business-development/BusinessElectricians"));
+const BusinessGrowth = lazy(() => import("@/pages/electrician/business-development/BusinessGrowth"));
+const TaxFinances = lazy(() => import("@/pages/electrician/business-development/TaxFinances"));
+const DebtRecovery = lazy(() => import("@/pages/electrician/business-development/DebtRecovery"));
+const ElectricianMentalHealth = lazy(() => import("@/pages/electrician/ElectricianMentalHealth"));
+const WorkLifeBalance = lazy(() => import("@/pages/electrician/mental-health/WorkLifeBalance"));
+const MentalHealthResources = lazy(() => import("@/pages/electrician/mental-health/MentalHealthResources"));
+const BusinessCalculators = lazy(() => import("@/pages/electrician/business-development/tools/BusinessCalculators"));
+const JobProfitabilityCalculator = lazy(() => import("@/pages/electrician/business-development/tools/JobProfitabilityCalculator"));
+const BusinessCostCalculator = lazy(() => import("@/pages/electrician/business-development/tools/BusinessCostCalculator"));
+const CashFlowPlanner = lazy(() => import("@/pages/electrician/business-development/tools/CashFlowPlanner"));
+const PricingStrategyCalculator = lazy(() => import("@/pages/electrician/business-development/tools/PricingStrategyCalculator"));
+const EquipmentROICalculator = lazy(() => import("@/pages/electrician/business-development/tools/EquipmentROICalculator"));
+const HourlyRateCalculator = lazy(() => import("@/pages/electrician/business-development/tools/HourlyRateCalculator"));
+const CapacityPlanningTool = lazy(() => import("@/pages/electrician/business-development/tools/CapacityPlanningTool"));
+const TaxNIEstimator = lazy(() => import("@/pages/electrician/business-development/tools/TaxNIEstimator"));
+const SupplierMaterials = lazy(() => import("@/pages/electrician/SupplierMaterials"));
+const CategoryMaterials = lazy(() => import("@/pages/electrician/CategoryMaterials"));
+const MaterialsSlugRedirect = lazy(() => import("@/pages/electrician/MaterialsSlugRedirect"));
+const MaterialPriceComparisonPage = lazy(() => import("@/pages/MaterialPriceComparison"));
+const BreakEvenCalculator = lazy(() => import("@/pages/electrician/business-development/tools/BreakEvenCalculator"));
+const StaffCostCalculator = lazy(() => import("@/pages/electrician/business-development/tools/StaffCostCalculator"));
+const QuoteVarianceTracker = lazy(() => import("@/pages/electrician/business-development/tools/QuoteVarianceTracker"));
+const MinimumChargeCalculator = lazy(() => import("@/pages/electrician/business-development/tools/MinimumChargeCalculator"));
+const VATSchemeComparison = lazy(() => import("@/pages/electrician/business-development/tools/VATSchemeComparison"));
+const CISDRCHelper = lazy(() => import("@/pages/electrician/business-development/tools/CISDRCHelper"));
+const QuoteBuilder = lazy(() => import("@/pages/electrician/QuoteBuilder"));
+const QuoteBuilderCreate = lazy(() => import("@/pages/electrician/QuoteBuilderCreate"));
+const QuoteBuilderEdit = lazy(() => import("@/pages/electrician/QuoteBuilderEdit"));
+const SmartQuoteBuilderPage = lazy(() => import("@/pages/electrician/SmartQuoteBuilderPage"));
+const QuotesPage = lazy(() => import("@/pages/electrician/QuotesPage"));
+const InvoicesPage = lazy(() => import("@/pages/electrician/InvoicesPage"));
+const InvoiceBuilderCreate = lazy(() => import("@/pages/electrician/InvoiceBuilderCreate"));
+const QuoteInvoiceDashboard = lazy(() => import("@/pages/electrician/QuoteInvoiceDashboard"));
+const Calculations = lazy(() => import("@/pages/electrician-tools/Calculations"));
+const InstallPlannerV2 = lazy(() => import("@/pages/electrician-tools/InstallPlannerV2"));
+const InstallPlannerResults = lazy(() => import("@/pages/electrician-tools/InstallPlannerResults"));
+const SiteSafety = lazy(() => import("@/pages/electrician-tools/SiteSafety"));
+const AgentSelectorPage = lazy(() => import("@/pages/electrician-tools/AgentSelectorPage"));
+const CircuitDesigner = lazy(() => import("@/pages/electrician-tools/CircuitDesigner"));
+const CostEngineerPage = lazy(() => import("@/pages/electrician-tools/CostEngineerPage"));
+const InstallationSpecialistPage = lazy(() => import("@/pages/electrician-tools/InstallationSpecialistPage"));
+const HealthSafetyPage = lazy(() => import("@/pages/electrician-tools/HealthSafetyPage"));
+const CommissioningPage = lazy(() => import("@/pages/electrician-tools/CommissioningPage"));
+const ProjectManagerPage = lazy(() => import("@/pages/electrician-tools/ProjectManagerPage"));
+const MaintenancePage = lazy(() => import("@/pages/electrician-tools/MaintenancePage"));
+const TutorPage = lazy(() => import("@/pages/electrician-tools/TutorPage"));
+const AIMethodStatementPage = lazy(() => import("@/pages/electrician-tools/AIMethodStatementPage"));
 
 const ElectricianHubRoutes = () => (
   <Routes>
     {/* Default route - show Electrical Hub as the main page */}
-    <Route index element={<ElectricalHub />} />
-    
-    <Route path="job-vacancies" element={<JobVacancies />} />
-    <Route path="materials" element={<ElectricalMaterials />} />
-    <Route path="materials/compare" element={<MaterialPriceComparisonPage />} />
-    <Route path="materials/category/:categoryId" element={<CategoryMaterials />} />
-    <Route path="materials/supplier/:supplierSlug" element={<SupplierMaterials />} />
-    <Route path="materials/:slug" element={<MaterialsSlugRedirect />} />
-    <Route path="tools" element={<ElectricalTools />} />
-    <Route path="safety-shares" element={<SafetyShares />} />
-    <Route path="safety-shares/projects" element={<MajorProjects />} />
-    <Route path="safety-shares/alerts" element={<SafetyAlerts />} />
-    <Route path="safety-shares/alerts-enhanced" element={<SafetyAlertsEnhanced />} />
-    <Route path="safety-shares/news" element={<IndustryNews />} />
-    <Route path="safety-shares/news-enhanced" element={<IndustryNewsEnhanced />} />
-    <Route path="safety-shares/resources" element={<SafetyResources />} />
-    <Route path="safety-shares/resources-enhanced" element={<SafetyResourcesEnhanced />} />
-    <Route path="safety-shares/lfe" element={<LearningFromExperience />} />
-    <Route path="live-pricing" element={<LivePricingHub />} />
-    <Route path="mental-health" element={<ElectricianMentalHealth />} />
-    <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
-    <Route path="mental-health/resources" element={<MentalHealthResources />} />
-    
-    <Route path="career-progression" element={<CareerProgression />} />
-    
+    <Route index element={<LazyRoute><ElectricalHub /></LazyRoute>} />
+
+    <Route path="job-vacancies" element={<LazyRoute><JobVacancies /></LazyRoute>} />
+    <Route path="materials" element={<LazyRoute><ElectricalMaterials /></LazyRoute>} />
+    <Route path="materials/compare" element={<LazyRoute><MaterialPriceComparisonPage /></LazyRoute>} />
+    <Route path="materials/category/:categoryId" element={<LazyRoute><CategoryMaterials /></LazyRoute>} />
+    <Route path="materials/supplier/:supplierSlug" element={<LazyRoute><SupplierMaterials /></LazyRoute>} />
+    <Route path="materials/:slug" element={<LazyRoute><MaterialsSlugRedirect /></LazyRoute>} />
+    <Route path="tools" element={<LazyRoute><ElectricalTools /></LazyRoute>} />
+    <Route path="safety-shares" element={<LazyRoute><SafetyShares /></LazyRoute>} />
+    <Route path="safety-shares/projects" element={<LazyRoute><MajorProjects /></LazyRoute>} />
+    <Route path="safety-shares/alerts" element={<LazyRoute><SafetyAlerts /></LazyRoute>} />
+    <Route path="safety-shares/alerts-enhanced" element={<LazyRoute><SafetyAlertsEnhanced /></LazyRoute>} />
+    <Route path="safety-shares/news" element={<LazyRoute><IndustryNews /></LazyRoute>} />
+    <Route path="safety-shares/news-enhanced" element={<LazyRoute><IndustryNewsEnhanced /></LazyRoute>} />
+    <Route path="safety-shares/resources" element={<LazyRoute><SafetyResources /></LazyRoute>} />
+    <Route path="safety-shares/resources-enhanced" element={<LazyRoute><SafetyResourcesEnhanced /></LazyRoute>} />
+    <Route path="safety-shares/lfe" element={<LazyRoute><LearningFromExperience /></LazyRoute>} />
+    <Route path="live-pricing" element={<LazyRoute><LivePricingHub /></LazyRoute>} />
+    <Route path="mental-health" element={<LazyRoute><ElectricianMentalHealth /></LazyRoute>} />
+    <Route path="mental-health/work-life-balance" element={<LazyRoute><WorkLifeBalance /></LazyRoute>} />
+    <Route path="mental-health/resources" element={<LazyRoute><MentalHealthResources /></LazyRoute>} />
+
+    <Route path="career-progression" element={<LazyRoute><CareerProgression /></LazyRoute>} />
+
     {/* Business Routes */}
-    <Route path="business" element={<BusinessHub />} />
-    <Route path="business-admin" element={<BusinessAdmin />} />
-    <Route path="quote-builder" element={<QuoteBuilder />} />
-    <Route path="quote-builder/create" element={<QuoteBuilderCreate />} />
-    <Route path="quote-builder/:id" element={<QuoteBuilderEdit />} />
-    <Route path="quote-builder/smart" element={<SmartQuoteBuilderPage />} />
-    <Route path="quotes" element={<QuotesPage />} />
-    <Route path="invoices" element={<InvoicesPage />} />
-    <Route path="invoice-builder/create" element={<InvoiceBuilderCreate />} />
-    <Route path="quote-invoice-dashboard" element={<QuoteInvoiceDashboard />} />
+    <Route path="business" element={<LazyRoute><BusinessHub /></LazyRoute>} />
+    <Route path="business-admin" element={<LazyRoute><BusinessAdmin /></LazyRoute>} />
+    <Route path="quote-builder" element={<LazyRoute><QuoteBuilder /></LazyRoute>} />
+    <Route path="quote-builder/create" element={<LazyRoute><QuoteBuilderCreate /></LazyRoute>} />
+    <Route path="quote-builder/:id" element={<LazyRoute><QuoteBuilderEdit /></LazyRoute>} />
+    <Route path="quote-builder/smart" element={<LazyRoute><SmartQuoteBuilderPage /></LazyRoute>} />
+    <Route path="quotes" element={<LazyRoute><QuotesPage /></LazyRoute>} />
+    <Route path="invoices" element={<LazyRoute><InvoicesPage /></LazyRoute>} />
+    <Route path="invoice-builder/create" element={<LazyRoute><InvoiceBuilderCreate /></LazyRoute>} />
+    <Route path="quote-invoice-dashboard" element={<LazyRoute><QuoteInvoiceDashboard /></LazyRoute>} />
     {/* Business Development Routes */}
-    <Route path="business-development" element={<BusinessDevelopment />} />
-    <Route path="business-development/startup" element={<BusinessStartup />} />
-    <Route path="business-development/apprentices" element={<BusinessApprentices />} />
-    <Route path="business-development/electricians" element={<BusinessElectricians />} />
-    <Route path="business-development/growth" element={<BusinessGrowth />} />
-    <Route path="business-development/customers" element={<BusinessCustomers />} />
-    <Route path="business-development/templates" element={<BusinessTemplates />} />
-    <Route path="business-development/tax-finances" element={<TaxFinances />} />
-    <Route path="business-development/debt-recovery" element={<DebtRecovery />} />
-    <Route path="business-development/tools" element={<BusinessCalculators />} />
-    <Route path="business-development/tools/job-profitability" element={<JobProfitabilityCalculator />} />
-    <Route path="business-development/tools/business-cost" element={<BusinessCostCalculator />} />
-    <Route path="business-development/tools/cash-flow" element={<CashFlowPlanner />} />
-    <Route path="business-development/tools/pricing-strategy" element={<PricingStrategyCalculator />} />
-    <Route path="business-development/tools/roi-calculator" element={<EquipmentROICalculator />} />
-    <Route path="business-development/tools/hourly-rate" element={<HourlyRateCalculator />} />
-    <Route path="business-development/tools/capacity-planner" element={<CapacityPlanningTool />} />
-    <Route path="business-development/tools/tax-estimator" element={<TaxNIEstimator />} />
-    <Route path="business-development/tools/break-even" element={<BreakEvenCalculator />} />
-    <Route path="business-development/tools/staff-cost" element={<StaffCostCalculator />} />
-    <Route path="business-development/tools/quote-variance" element={<QuoteVarianceTracker />} />
-    <Route path="business-development/tools/minimum-charge" element={<MinimumChargeCalculator />} />
-    <Route path="business-development/tools/vat-scheme" element={<VATSchemeComparison />} />
-    <Route path="business-development/tools/cis-drc" element={<CISDRCHelper />} />
-    
+    <Route path="business-development" element={<LazyRoute><BusinessDevelopment /></LazyRoute>} />
+    <Route path="business-development/startup" element={<LazyRoute><BusinessStartup /></LazyRoute>} />
+    <Route path="business-development/apprentices" element={<LazyRoute><BusinessApprentices /></LazyRoute>} />
+    <Route path="business-development/electricians" element={<LazyRoute><BusinessElectricians /></LazyRoute>} />
+    <Route path="business-development/growth" element={<LazyRoute><BusinessGrowth /></LazyRoute>} />
+    <Route path="business-development/customers" element={<LazyRoute><BusinessCustomers /></LazyRoute>} />
+    <Route path="business-development/templates" element={<LazyRoute><BusinessTemplates /></LazyRoute>} />
+    <Route path="business-development/tax-finances" element={<LazyRoute><TaxFinances /></LazyRoute>} />
+    <Route path="business-development/debt-recovery" element={<LazyRoute><DebtRecovery /></LazyRoute>} />
+    <Route path="business-development/tools" element={<LazyRoute><BusinessCalculators /></LazyRoute>} />
+    <Route path="business-development/tools/job-profitability" element={<LazyRoute><JobProfitabilityCalculator /></LazyRoute>} />
+    <Route path="business-development/tools/business-cost" element={<LazyRoute><BusinessCostCalculator /></LazyRoute>} />
+    <Route path="business-development/tools/cash-flow" element={<LazyRoute><CashFlowPlanner /></LazyRoute>} />
+    <Route path="business-development/tools/pricing-strategy" element={<LazyRoute><PricingStrategyCalculator /></LazyRoute>} />
+    <Route path="business-development/tools/roi-calculator" element={<LazyRoute><EquipmentROICalculator /></LazyRoute>} />
+    <Route path="business-development/tools/hourly-rate" element={<LazyRoute><HourlyRateCalculator /></LazyRoute>} />
+    <Route path="business-development/tools/capacity-planner" element={<LazyRoute><CapacityPlanningTool /></LazyRoute>} />
+    <Route path="business-development/tools/tax-estimator" element={<LazyRoute><TaxNIEstimator /></LazyRoute>} />
+    <Route path="business-development/tools/break-even" element={<LazyRoute><BreakEvenCalculator /></LazyRoute>} />
+    <Route path="business-development/tools/staff-cost" element={<LazyRoute><StaffCostCalculator /></LazyRoute>} />
+    <Route path="business-development/tools/quote-variance" element={<LazyRoute><QuoteVarianceTracker /></LazyRoute>} />
+    <Route path="business-development/tools/minimum-charge" element={<LazyRoute><MinimumChargeCalculator /></LazyRoute>} />
+    <Route path="business-development/tools/vat-scheme" element={<LazyRoute><VATSchemeComparison /></LazyRoute>} />
+    <Route path="business-development/tools/cis-drc" element={<LazyRoute><CISDRCHelper /></LazyRoute>} />
+
     {/* Core Workshop Tools */}
-    <Route path="agent-selector" element={<AgentSelectorPage />} />
-    <Route path="circuit-designer" element={<CircuitDesigner />} />
-    <Route path="cost-engineer" element={<CostEngineerPage />} />
-    <Route path="installation-specialist" element={<InstallationSpecialistPage />} />
-    <Route path="health-safety" element={<HealthSafetyPage />} />
-    <Route path="commissioning" element={<CommissioningPage />} />
-    <Route path="project-manager" element={<ProjectManagerPage />} />
-    <Route path="maintenance" element={<MaintenancePage />} />
-    <Route path="tutor" element={<TutorPage />} />
-    <Route path="method-statement" element={<AIMethodStatementPage />} />
-    <Route path="calculations" element={<Calculations />} />
-    <Route path="install-planner" element={<InstallPlannerV2 />} />
-    <Route path="install-planner/results/:conversationId?" element={<InstallPlannerResults />} />
-    <Route path="site-safety" element={<SiteSafety />} />
+    <Route path="agent-selector" element={<LazyRoute><AgentSelectorPage /></LazyRoute>} />
+    <Route path="circuit-designer" element={<LazyRoute><CircuitDesigner /></LazyRoute>} />
+    <Route path="cost-engineer" element={<LazyRoute><CostEngineerPage /></LazyRoute>} />
+    <Route path="installation-specialist" element={<LazyRoute><InstallationSpecialistPage /></LazyRoute>} />
+    <Route path="health-safety" element={<LazyRoute><HealthSafetyPage /></LazyRoute>} />
+    <Route path="commissioning" element={<LazyRoute><CommissioningPage /></LazyRoute>} />
+    <Route path="project-manager" element={<LazyRoute><ProjectManagerPage /></LazyRoute>} />
+    <Route path="maintenance" element={<LazyRoute><MaintenancePage /></LazyRoute>} />
+    <Route path="tutor" element={<LazyRoute><TutorPage /></LazyRoute>} />
+    <Route path="method-statement" element={<LazyRoute><AIMethodStatementPage /></LazyRoute>} />
+    <Route path="calculations" element={<LazyRoute><Calculations /></LazyRoute>} />
+    <Route path="install-planner" element={<LazyRoute><InstallPlannerV2 /></LazyRoute>} />
+    <Route path="install-planner/results/:conversationId?" element={<LazyRoute><InstallPlannerResults /></LazyRoute>} />
+    <Route path="site-safety" element={<LazyRoute><SiteSafety /></LazyRoute>} />
   </Routes>
 );
 

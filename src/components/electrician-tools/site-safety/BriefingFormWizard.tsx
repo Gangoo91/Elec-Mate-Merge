@@ -1,36 +1,63 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion, AnimatePresence } from "framer-motion";
+import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { IOSInput } from "@/components/ui/ios-input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowLeft, ArrowRight, Sparkles, Save, FileText, Users, AlertTriangle, Camera, Loader2, Clock, AlertCircle, ChevronDown, ChevronUp } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Progress } from "@/components/ui/progress";
-import { TemplateSelector } from "./briefing-templates/TemplateSelector";
-import { FormattedTextDisplay } from "./FormattedTextDisplay";
-import { useBriefingAutoSave } from "@/hooks/useBriefingAutoSave";
-import { RiskMatrixGuide } from "./wizard-helpers/RiskMatrixGuide";
-import { StepValidation } from "./wizard-helpers/StepValidation";
-import { EnhancedPhotoManager } from "./wizard-helpers/EnhancedPhotoManager";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Sparkles,
+  Save,
+  FileText,
+  MapPin,
+  Home,
+  Clock,
+  Calendar,
+  Users,
+  Camera,
+  Loader2,
+  X,
+  Check,
+  Plus,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import {
+  BriefingTypePicker,
+  BriefingType,
+  HazardPillSelector,
+  RiskLevelSlider,
+  RiskLevel,
+  SignaturePad,
+  AttendeeSignatureCard,
+} from "./briefings";
 
-const HAZARD_CATEGORIES = [
-  { id: 'live-circuits', label: 'Live Circuits', category: 'Electrical' },
-  { id: 'high-voltage', label: 'High Voltage', category: 'Electrical' },
-  { id: 'arc-flash', label: 'Arc Flash', category: 'Electrical' },
-  { id: 'working-at-height', label: 'Working at Height', category: 'Physical' },
-  { id: 'confined-spaces', label: 'Confined Spaces', category: 'Physical' },
-  { id: 'manual-handling', label: 'Manual Handling', category: 'Physical' },
-  { id: 'poor-lighting', label: 'Poor Lighting', category: 'Environmental' },
-  { id: 'noise', label: 'Excessive Noise', category: 'Environmental' },
-  { id: 'asbestos', label: 'Asbestos', category: 'Chemical' },
-  { id: 'restricted-access', label: 'Restricted Access', category: 'Access' },
-];
+// Schema for the form
+const briefingSchema = z.object({
+  briefingType: z.string().min(1, "Please select a briefing type"),
+  siteName: z.string().min(2, "Site name is required"),
+  siteAddress: z.string().optional(),
+  briefingTitle: z.string().min(3, "Title must be at least 3 characters"),
+  briefingContent: z.string().min(50, "Content must be at least 50 characters"),
+  briefingDate: z.string().min(1, "Date is required"),
+  briefingTime: z.string().min(1, "Time is required"),
+  hazards: z.array(z.string()).min(1, "Select at least one hazard"),
+  riskLevel: z.enum(["low", "medium", "high"]),
+  photos: z.array(z.object({
+    url: z.string(),
+    caption: z.string().optional(),
+  })).optional(),
+  attendees: z.array(z.object({
+    name: z.string(),
+    signature: z.string().optional(),
+    timestamp: z.string().optional(),
+  })).optional(),
+});
+
+type BriefingFormData = z.infer<typeof briefingSchema>;
 
 interface NearMissData {
   id: string;
@@ -56,143 +83,101 @@ interface BriefingFormWizardProps {
   onSuccess: () => void;
 }
 
-export const BriefingFormWizard = ({ initialData, nearMissData, onClose, onSuccess }: BriefingFormWizardProps) => {
+const STEP_TITLES = [
+  "Type & Site",
+  "Briefing Content",
+  "Hazards",
+  "Photos",
+  "Review & Signatures",
+];
+
+export const BriefingFormWizard = ({
+  initialData,
+  nearMissData,
+  onClose,
+  onSuccess,
+}: BriefingFormWizardProps) => {
   const { toast } = useToast();
-  const [step, setStep] = useState(nearMissData ? 1 : 0); // Skip template if from near miss
+  const [step, setStep] = useState(0);
   const [aiGenerating, setAiGenerating] = useState(false);
-  const [aiContent, setAiContent] = useState<any>(null);
   const [uploadingPhotos, setUploadingPhotos] = useState(false);
-  const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
-  const [showTemplateSelector, setShowTemplateSelector] = useState(!initialData && !nearMissData);
-  const [showRestoreDialog, setShowRestoreDialog] = useState(false);
-  
+  const [newAttendeeName, setNewAttendeeName] = useState("");
+  const [signingAttendeeIndex, setSigningAttendeeIndex] = useState<number | null>(null);
 
-  // Build initial form data - pre-populate from editing OR near miss data
-  const buildInitialFormData = () => {
-    // If we have near miss data, pre-fill from it
-    if (nearMissData) {
-      const severityToRiskLevel: Record<string, string> = {
-        'low': 'low',
-        'medium': 'medium', 
-        'high': 'high',
-        'critical': 'critical'
-      };
-      
-      return {
-        briefingType: "near-miss-review",
-        briefingTitle: `Near Miss Review: ${nearMissData.categoryLabel} - ${nearMissData.location}`,
-        location: nearMissData.location,
-        contractorCompany: "",
-        conductorName: "",
-        briefingDate: new Date().toISOString().split('T')[0],
-        briefingTime: "09:00",
-        briefingContent: nearMissData.description,
-        workScope: `Review of near miss incident: ${nearMissData.description}`,
-        environment: "",
-        teamSize: 4,
-        experienceLevel: "",
-        identifiedHazards: [nearMissData.category],
-        customHazards: nearMissData.potential_consequences || "",
-        riskLevel: severityToRiskLevel[nearMissData.severity] || "medium",
-        specialConsiderations: nearMissData.preventive_measures || "",
-        briefingDescription: "",
-        hazards: "",
-        safetyWarning: "",
-        additionalInfo: nearMissData.immediate_actions || "",
-        photos: (nearMissData.photo_urls || []).map(url => ({ url, caption: 'From near miss report' })),
-        attendees: [] as any[],
-        linkedNearMissId: nearMissData.id,
-      };
-    }
-    
-    // Otherwise use initialData for editing
-    return {
-      briefingType: initialData?.briefing_type || "site-work",
-      briefingTitle: initialData?.briefing_name || initialData?.title || "",
-      location: initialData?.location || "",
-      contractorCompany: initialData?.contractor_company || "",
-      conductorName: initialData?.conductor_name || "",
-      briefingDate: initialData?.briefing_date || new Date().toISOString().split('T')[0],
-      briefingTime: initialData?.briefing_time || "09:00",
-      briefingContent: initialData?.briefing_content || "",
-      workScope: initialData?.work_scope || "",
-      environment: initialData?.environment || "",
-      teamSize: initialData?.team_size || 4,
-      experienceLevel: initialData?.experience_level || "",
-      identifiedHazards: initialData?.identified_hazards || [] as string[],
-      customHazards: initialData?.custom_hazards || "",
-      riskLevel: initialData?.risk_level || "medium",
-      specialConsiderations: initialData?.special_considerations || "",
-      briefingDescription: initialData?.briefing_description || "",
-      hazards: initialData?.hazards || "",
-      safetyWarning: initialData?.safety_warning || "",
-      additionalInfo: initialData?.notes || "",
-      photos: initialData?.photos || [] as any[],
-      attendees: initialData?.attendees || [] as any[],
-    };
+  // Default values
+  const defaultValues: Partial<BriefingFormData> = {
+    briefingType: nearMissData ? "near-miss-review" : initialData?.briefing_type || "",
+    siteName: nearMissData?.location || initialData?.location || "",
+    siteAddress: initialData?.site_address || "",
+    briefingTitle: nearMissData
+      ? `Near Miss Review: ${nearMissData.categoryLabel}`
+      : initialData?.briefing_name || "",
+    briefingContent: nearMissData?.description || initialData?.briefing_description || "",
+    briefingDate: initialData?.briefing_date || new Date().toISOString().split("T")[0],
+    briefingTime: initialData?.briefing_time || "09:00",
+    hazards: nearMissData ? [nearMissData.category] : initialData?.identified_hazards || [],
+    riskLevel: (nearMissData?.severity as RiskLevel) || initialData?.risk_level || "medium",
+    photos: (nearMissData?.photo_urls?.map(url => ({ url, caption: "" })) || initialData?.photos || []),
+    attendees: initialData?.attendees || [],
   };
 
-  const [formData, setFormData] = useState(buildInitialFormData());
+  const methods = useForm<BriefingFormData>({
+    resolver: zodResolver(briefingSchema),
+    defaultValues,
+    mode: "onChange",
+  });
 
-  // Auto-save hook
-  const {
-    loadSavedData,
-    saveData: manualSave,
-    clearSavedData,
-    lastSaved,
-    hasUnsavedChanges,
-    timeSinceLastSave,
-  } = useBriefingAutoSave(formData, step, !!initialData || !!nearMissData);
+  const { watch, setValue, formState: { errors } } = methods;
+  const formData = watch();
 
-  const totalSteps = 7; // Including template selection
-  const progress = (step / totalSteps) * 100;
+  const totalSteps = STEP_TITLES.length;
+  const progress = ((step + 1) / totalSteps) * 100;
 
-  // Check for saved data on mount
-  useEffect(() => {
-    if (initialData || nearMissData) return; // Don't load auto-save when editing or from near miss
-    
-    const saved = loadSavedData();
-    if (saved) {
-      setShowRestoreDialog(true);
-    }
-  }, []);
-
-  const handleRestoreSaved = () => {
-    const saved = loadSavedData();
-    if (saved) {
-      setFormData(saved.formData);
-      setStep(saved.step);
-      toast({
-        title: "Progress Restored",
-        description: "Your previous work has been restored.",
+  // AI Content Generation
+  const handleGenerateAI = async () => {
+    setAiGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-briefing-content", {
+        body: {
+          briefingType: formData.briefingType,
+          briefingContext: {
+            briefingTitle: formData.briefingTitle,
+            briefingContent: formData.briefingContent,
+            location: formData.siteName,
+          },
+          hazards: {
+            identified: formData.hazards,
+            riskLevel: formData.riskLevel,
+          },
+        },
       });
+
+      if (error) throw error;
+
+      // Update form with AI content
+      const briefingContent = data.content.briefingOverview
+        ?.map((p: any) => p.content)
+        .join("\n\n") || data.content.briefingDescription || formData.briefingContent;
+
+      setValue("briefingContent", briefingContent);
+
+      toast({
+        title: "AI Content Generated",
+        description: "Review and edit the AI-generated content.",
+      });
+    } catch (error: any) {
+      console.error("AI generation error:", error);
+      toast({
+        title: "Generation Failed",
+        description: error.message || "Failed to generate content.",
+        variant: "destructive",
+      });
+    } finally {
+      setAiGenerating(false);
     }
-    setShowRestoreDialog(false);
   };
 
-  const handleDiscardSaved = () => {
-    clearSavedData();
-    setShowRestoreDialog(false);
-  };
-
-  const handleTemplateSelect = (template: any) => {
-    setSelectedTemplate(template);
-    setShowTemplateSelector(false);
-    
-    // Pre-populate form data based on template
-    if (template.template_schema) {
-      const schema = template.template_schema;
-      setFormData(prev => ({
-        ...prev,
-        briefingType: template.template_type,
-        workScope: schema.work_scope || prev.workScope,
-        identifiedHazards: schema.hazards || prev.identifiedHazards,
-      }));
-    }
-    
-    setStep(1); // Move to first actual form step
-  };
-
+  // Photo upload
   const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files || files.length === 0) return;
@@ -205,40 +190,32 @@ export const BriefingFormWizard = ({ initialData, nearMissData, onClose, onSucce
       const uploadedPhotos: any[] = [];
 
       for (const file of Array.from(files)) {
-        const fileExt = file.name.split('.').pop();
+        const fileExt = file.name.split(".").pop();
         const fileName = `${user.id}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
 
         const { data, error } = await supabase.storage
-          .from('briefing-photos')
+          .from("briefing-photos")
           .upload(fileName, file, {
-            cacheControl: '3600',
-            upsert: false
+            cacheControl: "3600",
+            upsert: false,
           });
 
         if (error) throw error;
 
         const { data: { publicUrl } } = supabase.storage
-          .from('briefing-photos')
+          .from("briefing-photos")
           .getPublicUrl(data.path);
 
-        uploadedPhotos.push({
-          url: publicUrl,
-          caption: '',
-          filename: file.name
-        });
+        uploadedPhotos.push({ url: publicUrl, caption: "" });
       }
 
-      setFormData(prev => ({
-        ...prev,
-        photos: [...prev.photos, ...uploadedPhotos]
-      }));
+      setValue("photos", [...(formData.photos || []), ...uploadedPhotos]);
 
       toast({
         title: "Photos Uploaded",
-        description: `${uploadedPhotos.length} photo(s) added successfully.`,
+        description: `${uploadedPhotos.length} photo(s) added.`,
       });
     } catch (error: any) {
-      console.error('Photo upload error:', error);
       toast({
         title: "Upload Failed",
         description: error.message || "Failed to upload photos.",
@@ -250,172 +227,82 @@ export const BriefingFormWizard = ({ initialData, nearMissData, onClose, onSucce
   };
 
   const handleDeletePhoto = (index: number) => {
-    setFormData(prev => ({
-      ...prev,
-      photos: prev.photos.filter((_, idx) => idx !== index)
-    }));
-    toast({
-      title: "Photo Removed",
-      description: "Photo removed from briefing.",
-    });
+    setValue(
+      "photos",
+      (formData.photos || []).filter((_, idx) => idx !== index)
+    );
   };
 
-  const handleGenerateAI = async () => {
-    setAiGenerating(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('generate-briefing-content', {
-        body: {
-          briefingType: formData.briefingType,
-          briefingContext: {
-            briefingTitle: formData.briefingTitle,
-            briefingContent: formData.briefingContent,
-            workScope: formData.workScope,
-            environment: formData.environment,
-            location: formData.location,
-            teamSize: formData.teamSize,
-            experienceLevel: formData.experienceLevel
-          },
-          hazards: {
-            identified: formData.identifiedHazards,
-            custom: formData.customHazards,
-            riskLevel: formData.riskLevel,
-            specialConsiderations: formData.specialConsiderations
-          }
-        }
-      });
-
-      if (error) throw error;
-      
-      setAiContent(data.content);
-
-      // Flatten structured arrays back into text for editing
-      const briefingDescriptionText = data.content.briefingOverview
-        ?.map((p: any) => p.content)
-        .join('\n\n') || data.content.briefingDescription || '';
-
-      const hazardsText = data.content.hazardsAndControls
-        ? Array.isArray(data.content.hazardsAndControls)
-          ? data.content.hazardsAndControls.map((h: any) => {
-              let text = `**Hazard ${h.hazardId}: ${h.hazardName}**\n`;
-              text += `${h.description}\n`;
-              text += `**Risk Level:** ${h.riskLevel}\n\n`;
-              text += `**Control Measures:**\n`;
-              text += h.controls.map((c: string) => `- ${c}`).join('\n');
-              if (h.requiredPPE?.length > 0) {
-                text += `\n\n**Required PPE:**\n`;
-                text += h.requiredPPE.map((ppe: string) => `- ${ppe}`).join('\n');
-              }
-              return text;
-            }).join('\n\n---\n\n')
-          : data.content.hazardsAndControls
-        : '';
-
-      const safetyWarningText = data.content.safetyWarning?.headline 
-        ? `**${data.content.safetyWarning.level}: ${data.content.safetyWarning.headline}**\n\n${data.content.safetyWarning.details.join('\n- ')}`
-        : data.content.safetyWarning || '';
-
-      const additionalInfoText = data.content.additionalInfo
-        ? Array.isArray(data.content.additionalInfo)
-          ? data.content.additionalInfo
-              .map((info: any) => info.content)
-              .join('\n\n')
-          : data.content.additionalInfo
-        : '';
-
-      setFormData(prev => ({
-        ...prev,
-        briefingDescription: briefingDescriptionText,
-        hazards: hazardsText,
-        safetyWarning: safetyWarningText,
-        additionalInfo: additionalInfoText,
-      }));
-
-      toast({
-        title: "AI Content Generated",
-        description: "Review and edit the AI-generated briefing content below.",
-      });
-    } catch (error: any) {
-      console.error('AI generation error:', error);
-      toast({
-        title: "Generation Failed",
-        description: error.message || "Failed to generate briefing content. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setAiGenerating(false);
-    }
+  // Attendee management
+  const addAttendee = () => {
+    if (!newAttendeeName.trim()) return;
+    setValue("attendees", [
+      ...(formData.attendees || []),
+      { name: newAttendeeName.trim(), signature: undefined, timestamp: undefined },
+    ]);
+    setNewAttendeeName("");
   };
 
+  const removeAttendee = (index: number) => {
+    setValue(
+      "attendees",
+      (formData.attendees || []).filter((_, idx) => idx !== index)
+    );
+  };
+
+  const handleSignature = (index: number, signature: string | undefined) => {
+    const updated = [...(formData.attendees || [])];
+    updated[index] = {
+      ...updated[index],
+      signature,
+      timestamp: signature ? new Date().toLocaleString() : undefined,
+    };
+    setValue("attendees", updated);
+    setSigningAttendeeIndex(null);
+  };
+
+  // Save briefing
   const handleSave = async (asDraft = false) => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
       const { data: profile } = await supabase
-        .from('profiles')
-        .select('full_name')
-        .eq('id', user.id)
+        .from("profiles")
+        .select("full_name")
+        .eq("id", user.id)
         .single();
 
       const briefingData = {
         user_id: user.id,
-        template_id: 'ai-generated',
+        template_id: "ai-generated",
         briefing_name: formData.briefingTitle,
         briefing_date: formData.briefingDate,
         briefing_time: formData.briefingTime,
-        location: formData.location,
+        location: formData.siteName,
         attendees: formData.attendees,
         completed: !asDraft,
-        
-        // Briefing fields
         briefing_type: formData.briefingType,
         job_name: formData.briefingTitle,
-        contractor_company: formData.contractorCompany,
-        conductor_name: formData.conductorName,
-        work_scope: formData.workScope,
-        environment_type: formData.environment,
-        team_size: formData.teamSize,
+        work_scope: formData.briefingContent,
         risk_level: formData.riskLevel,
-        identified_hazards: formData.identifiedHazards,
-        custom_hazards: formData.customHazards,
-        special_considerations: formData.specialConsiderations,
-        briefing_description: formData.briefingDescription,
-        hazards: formData.hazards,
-        safety_warning: formData.safetyWarning,
-        notes: formData.additionalInfo,
-        ai_generated: !!aiContent,
-        ai_prompt_data: aiContent ? {
-          briefingType: formData.briefingType,
-          briefingContext: {
-            briefingTitle: formData.briefingTitle,
-            briefingContent: formData.briefingContent,
-            workScope: formData.workScope,
-            environment: formData.environment,
-          },
-          hazards: {
-            identified: formData.identifiedHazards,
-            custom: formData.customHazards,
-            riskLevel: formData.riskLevel,
-          },
-          aiContent: aiContent  // Store FULL structured response
-        } : null,
+        identified_hazards: formData.hazards,
+        briefing_description: formData.briefingContent,
         photos: formData.photos,
         created_by_name: profile?.full_name || user.email,
+        status: asDraft ? "draft" : "scheduled",
       };
 
       let error;
-      
       if (initialData?.id) {
-        // Update existing briefing
         const { error: updateError } = await supabase
-          .from('team_briefings')
+          .from("team_briefings")
           .update(briefingData)
-          .eq('id', initialData.id);
+          .eq("id", initialData.id);
         error = updateError;
       } else {
-        // Insert new briefing
         const { error: insertError } = await supabase
-          .from('team_briefings')
+          .from("team_briefings")
           .insert([briefingData]);
         error = insertError;
       }
@@ -423,17 +310,17 @@ export const BriefingFormWizard = ({ initialData, nearMissData, onClose, onSucce
       if (error) throw error;
 
       toast({
-        title: initialData?.id ? "Briefing Updated" : (asDraft ? "Draft Saved" : "Briefing Created"),
-        description: initialData?.id ? "Briefing updated successfully." : (asDraft ? "You can complete it later." : "Team briefing created successfully."),
+        title: initialData?.id
+          ? "Briefing Updated"
+          : asDraft
+            ? "Draft Saved"
+            : "Briefing Created",
+        description: "Successfully saved.",
       });
-
-      // Clear auto-save data on successful save
-      clearSavedData();
 
       onSuccess();
       onClose();
     } catch (error: any) {
-      console.error('Save error:', error);
       toast({
         title: "Save Failed",
         description: error.message || "Failed to save briefing.",
@@ -442,466 +329,340 @@ export const BriefingFormWizard = ({ initialData, nearMissData, onClose, onSucce
     }
   };
 
-  const renderStep = () => {
+  // Step validation
+  const canProceed = () => {
     switch (step) {
       case 0:
-        return (
-          <div className="space-y-4">
-            <div className="text-center mb-6">
-              <h2 className="text-xl font-bold text-elec-light mb-2">Choose a Template</h2>
-              <p className="text-sm text-elec-light/60">
-                Start with a template or create from scratch
-              </p>
-            </div>
-            <TemplateSelector
-              onSelectTemplate={handleTemplateSelect}
-              selectedType={formData.briefingType}
-            />
-            <Button
-              variant="outline"
-              className="w-full border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-              onClick={() => setStep(1)}
-            >
-              Skip - Start from Scratch
-            </Button>
-          </div>
-        );
-      
+        return formData.briefingType && formData.siteName;
       case 1:
-        return (
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label className="text-elec-light">Briefing Type</Label>
-              <MobileSelectWrapper
-                label=""
-                value={formData.briefingType}
-                onValueChange={(v) => setFormData(prev => ({ ...prev, briefingType: v }))}
-                options={[
-                  { value: "site-work", label: "Site Work/Installation" },
-                  { value: "lfe", label: "LFE - Lessons From Experience" },
-                  { value: "hse-update", label: "HSE Update" },
-                  { value: "business-update", label: "Business Update" },
-                  { value: "safety-alert", label: "Safety Alert" },
-                  { value: "regulatory", label: "Regulatory Change" },
-                  { value: "general", label: "General Briefing" },
-                ]}
-              />
-            </div>
-            
-            <MobileInputWrapper
-              label={formData.briefingType === 'site-work' ? 'Job/Site Name' : 'Briefing Title'}
-              value={formData.briefingTitle}
-              onChange={(v) => setFormData(prev => ({ ...prev, briefingTitle: v }))}
-              placeholder={
-                formData.briefingType === 'site-work' 
-                  ? 'e.g. Office Rewire - 123 High Street'
-                  : formData.briefingType === 'lfe'
-                  ? 'e.g. Arc Flash Incident - Manchester Office'
-                  : formData.briefingType === 'hse-update'
-                  ? 'e.g. New HSE Guidance on Working at Height'
-                  : 'Enter briefing title'
-              }
-              icon={<FileText className="h-4 w-4" />}
-              hint="A clear, descriptive title helps identify the briefing later"
-            />
-
-            <MobileInputWrapper
-              label="Location"
-              value={formData.location}
-              onChange={(v) => setFormData(prev => ({ ...prev, location: v }))}
-              placeholder="Full site address or meeting location"
-              icon={<FileText className="h-4 w-4" />}
-              hint="BS 7671 requires full site address for installation work"
-            />
-
-            <MobileInputWrapper
-              label="Contractor Company"
-              value={formData.contractorCompany}
-              onChange={(v) => setFormData(prev => ({ ...prev, contractorCompany: v }))}
-              placeholder="Your company name"
-              icon={<FileText className="h-4 w-4" />}
-            />
-
-            <MobileInputWrapper
-              label="Briefing Conductor"
-              value={formData.conductorName}
-              onChange={(v) => setFormData(prev => ({ ...prev, conductorName: v }))}
-              placeholder="Who will conduct this briefing"
-              icon={<Users className="h-4 w-4" />}
-            />
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <MobileInputWrapper
-                label="Date"
-                type="date"
-                value={formData.briefingDate}
-                onChange={(v) => setFormData(prev => ({ ...prev, briefingDate: v }))}
-              />
-
-              <MobileInputWrapper
-                label="Time"
-                type="time"
-                value={formData.briefingTime}
-                onChange={(v) => setFormData(prev => ({ ...prev, briefingTime: v }))}
-              />
-            </div>
-          </div>
-        );
-
+        return formData.briefingTitle && formData.briefingContent?.length >= 50;
       case 2:
-        return (
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label className="text-elec-light">
-                {formData.briefingType === 'site-work' ? 'Work Description' : 'Briefing Content'}
-              </Label>
-              <Textarea
-                value={formData.briefingContent}
-                onChange={(e) => setFormData(prev => ({ ...prev, briefingContent: e.target.value }))}
-                placeholder={
-                  formData.briefingType === 'site-work'
-                    ? 'Describe the work to be carried out in detail...'
-                    : formData.briefingType === 'lfe'
-                    ? 'Describe the incident, what happened, and key learnings...'
-                    : formData.briefingType === 'hse-update'
-                    ? 'Describe the HSE update and its implications...'
-                    : 'Describe the briefing content in detail...'
-                }
-                className="min-h-32 bg-card border-primary/30 text-elec-light resize-none"
-                maxLength={500}
-              />
-              <div className="flex items-center justify-between">
-                <p className="text-xs text-elec-light/60">
-                  {formData.briefingContent.length}/500 characters
-                </p>
-                {formData.briefingContent.length < 50 && (
-                  <p className="text-xs text-elec-yellow/70">
-                    Add {50 - formData.briefingContent.length} more for AI generation
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {formData.briefingType === 'site-work' && (
-              <>
-                <MobileSelectWrapper
-                  label="Work Scope"
-                  value={formData.workScope}
-                  onValueChange={(v) => setFormData(prev => ({ ...prev, workScope: v }))}
-                  options={[
-                    { value: "", label: "Select work type..." },
-                    { value: "installation", label: "Installation" },
-                    { value: "maintenance", label: "Maintenance" },
-                    { value: "testing", label: "Testing & Inspection" },
-                    { value: "repairs", label: "Repairs" },
-                    { value: "upgrade", label: "Upgrade/Modification" },
-                    { value: "emergency", label: "Emergency Work" },
-                    { value: "commissioning", label: "Commissioning" },
-                  ]}
-                />
-
-                <MobileSelectWrapper
-                  label="Environment Type"
-                  value={formData.environment}
-                  onValueChange={(v) => setFormData(prev => ({ ...prev, environment: v }))}
-                  options={[
-                    { value: "", label: "Select environment..." },
-                    { value: "domestic", label: "Domestic Residence" },
-                    { value: "commercial", label: "Commercial Building" },
-                    { value: "industrial", label: "Industrial Facility" },
-                    { value: "construction", label: "Construction Site" },
-                    { value: "public", label: "Public Area" },
-                    { value: "healthcare", label: "Healthcare Facility" },
-                    { value: "education", label: "Educational Institution" },
-                  ]}
-                />
-              </>
-            )}
-
-            <MobileInputWrapper
-              label="Team Size"
-              type="number"
-              inputMode="numeric"
-              value={formData.teamSize.toString()}
-              onChange={(v) => {
-                const parsed = parseInt(v);
-                setFormData(prev => ({ 
-                  ...prev, 
-                  teamSize: v === '' ? 1 : Math.max(1, Math.min(20, isNaN(parsed) ? 1 : parsed))
-                }));
-              }}
-              min="1"
-              max="20"
-              icon={<Users className="h-4 w-4" />}
-            />
-
-            <MobileSelectWrapper
-              label="Team Experience Level"
-              value={formData.experienceLevel}
-              onValueChange={(v) => setFormData(prev => ({ ...prev, experienceLevel: v }))}
-              options={[
-                { value: "", label: "Select experience level..." },
-                { value: "apprentice", label: "Apprentice Level" },
-                { value: "qualified", label: "Qualified Electricians" },
-                { value: "mixed", label: "Mixed Experience" },
-                 { value: "senior", label: "Senior/Expert Team" },
-               ]}
-             />
-
-            {/* Smart Validation */}
-            <StepValidation step={step} formData={formData} />
-          </div>
-        );
-
+        return formData.hazards && formData.hazards.length > 0;
       case 3:
+        return true; // Photos optional
+      case 4:
+        return true; // Review step
+      default:
+        return true;
+    }
+  };
+
+  const nextStep = () => {
+    if (step < totalSteps - 1 && canProceed()) {
+      setStep(step + 1);
+    }
+  };
+
+  const prevStep = () => {
+    if (step > 0) {
+      setStep(step - 1);
+    }
+  };
+
+  // Render step content
+  const renderStepContent = () => {
+    switch (step) {
+      // Step 1: Type & Site
+      case 0:
         return (
           <div className="space-y-6">
-            <h3 className="text-lg font-bold text-elec-yellow flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5" />
-              Hazards & Risk Assessment
-            </h3>
+            <BriefingTypePicker
+              value={formData.briefingType as BriefingType}
+              onChange={(type) => setValue("briefingType", type)}
+              error={errors.briefingType?.message}
+            />
 
-            <div className="space-y-4">
-              <Label className="text-elec-light">Quick Select Hazards</Label>
-              <div className="grid grid-cols-2 gap-3">
-                {HAZARD_CATEGORIES.map((hazard) => (
-                  <div key={hazard.id} className="flex items-center space-x-2 bg-card/50 p-3 rounded-lg border border-primary/20">
-                    <Checkbox
-                      id={hazard.id}
-                      checked={formData.identifiedHazards.includes(hazard.label)}
-                      onCheckedChange={(checked) => {
-                        setFormData(prev => ({
-                          ...prev,
-                          identifiedHazards: checked
-                            ? [...prev.identifiedHazards, hazard.label]
-                            : prev.identifiedHazards.filter(h => h !== hazard.label)
-                        }));
-                      }}
+            <IOSInput
+              label="Site Name"
+              icon={<MapPin className="h-5 w-5" />}
+              placeholder="e.g. Acme Construction"
+              value={formData.siteName}
+              onChange={(e) => setValue("siteName", e.target.value)}
+              error={errors.siteName?.message}
+            />
+
+            <IOSInput
+              label="Site Address"
+              icon={<Home className="h-5 w-5" />}
+              placeholder="e.g. 123 High Street, Manchester"
+              value={formData.siteAddress || ""}
+              onChange={(e) => setValue("siteAddress", e.target.value)}
+              hint="Optional"
+            />
+
+            <div className="grid grid-cols-2 gap-3">
+              <IOSInput
+                label="Date"
+                type="date"
+                icon={<Calendar className="h-5 w-5" />}
+                value={formData.briefingDate}
+                onChange={(e) => setValue("briefingDate", e.target.value)}
+                className="[color-scheme:dark]"
+              />
+              <IOSInput
+                label="Time"
+                type="time"
+                icon={<Clock className="h-5 w-5" />}
+                value={formData.briefingTime}
+                onChange={(e) => setValue("briefingTime", e.target.value)}
+                className="[color-scheme:dark]"
+              />
+            </div>
+          </div>
+        );
+
+      // Step 2: Briefing Content
+      case 1:
+        return (
+          <div className="space-y-5">
+            {/* AI Assist Button */}
+            <Button
+              type="button"
+              onClick={handleGenerateAI}
+              disabled={aiGenerating || !formData.briefingType}
+              className={cn(
+                "w-full h-12",
+                "bg-gradient-to-r from-purple-500 to-blue-500",
+                "hover:from-purple-600 hover:to-blue-600",
+                "text-white font-medium"
+              )}
+            >
+              {aiGenerating ? (
+                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+              ) : (
+                <Sparkles className="h-5 w-5 mr-2" />
+              )}
+              {aiGenerating ? "Generating..." : "AI Assist"}
+            </Button>
+
+            <IOSInput
+              label="Briefing Title"
+              icon={<FileText className="h-5 w-5" />}
+              placeholder="e.g. Daily Site Induction Briefing"
+              value={formData.briefingTitle}
+              onChange={(e) => setValue("briefingTitle", e.target.value)}
+              error={errors.briefingTitle?.message}
+            />
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-white/80">
+                Briefing Content
+              </label>
+              <textarea
+                value={formData.briefingContent}
+                onChange={(e) => setValue("briefingContent", e.target.value)}
+                placeholder="Enter the briefing content. Include key points, safety information, and any specific instructions..."
+                rows={8}
+                className={cn(
+                  "w-full px-4 py-3 rounded-xl",
+                  "bg-white/5 border border-white/10",
+                  "text-white placeholder:text-white/40",
+                  "focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:border-elec-yellow/50",
+                  "transition-all resize-none"
+                )}
+              />
+              <div className="flex justify-between text-xs text-white/40">
+                <span>{errors.briefingContent?.message}</span>
+                <span>{formData.briefingContent?.length || 0} / 50 min</span>
+              </div>
+            </div>
+          </div>
+        );
+
+      // Step 3: Hazards
+      case 2:
+        return (
+          <div className="space-y-6">
+            <HazardPillSelector
+              value={formData.hazards || []}
+              onChange={(hazards) => setValue("hazards", hazards)}
+              error={errors.hazards?.message}
+            />
+
+            <RiskLevelSlider
+              value={formData.riskLevel as RiskLevel}
+              onChange={(level) => setValue("riskLevel", level)}
+            />
+          </div>
+        );
+
+      // Step 4: Photos
+      case 3:
+        return (
+          <div className="space-y-5">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-white/80">
+                Site Photos (Optional)
+              </label>
+              <p className="text-xs text-white/50">
+                Add photos to document site conditions
+              </p>
+            </div>
+
+            {/* Upload Area */}
+            <label
+              className={cn(
+                "flex flex-col items-center justify-center",
+                "h-32 rounded-xl border-2 border-dashed",
+                "border-white/20 hover:border-white/40",
+                "bg-white/5 hover:bg-white/10",
+                "cursor-pointer transition-all",
+                uploadingPhotos && "pointer-events-none opacity-50"
+              )}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handlePhotoUpload}
+                className="hidden"
+                disabled={uploadingPhotos}
+              />
+              {uploadingPhotos ? (
+                <Loader2 className="h-8 w-8 text-white/50 animate-spin" />
+              ) : (
+                <>
+                  <Camera className="h-8 w-8 text-white/50 mb-2" />
+                  <span className="text-sm text-white/50">Tap to add photos</span>
+                  <span className="text-xs text-white/30 mt-1">Max 5 photos</span>
+                </>
+              )}
+            </label>
+
+            {/* Photo Grid */}
+            {formData.photos && formData.photos.length > 0 && (
+              <div className="grid grid-cols-3 gap-2">
+                {formData.photos.map((photo, idx) => (
+                  <div key={idx} className="relative aspect-square">
+                    <img
+                      src={photo.url}
+                      alt=""
+                      className="w-full h-full object-cover rounded-lg"
                     />
-                    <label
-                      htmlFor={hazard.id}
-                      className="text-sm font-medium text-elec-light cursor-pointer"
+                    <button
+                      type="button"
+                      onClick={() => handleDeletePhoto(idx)}
+                      className="absolute -top-2 -right-2 p-1 rounded-full bg-red-500 text-white"
                     >
-                      {hazard.label}
-                    </label>
+                      <X className="h-3 w-3" />
+                    </button>
                   </div>
                 ))}
               </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-elec-light">Additional Custom Hazards</Label>
-              <Textarea
-                value={formData.customHazards}
-                onChange={(e) => setFormData(prev => ({ ...prev, customHazards: e.target.value }))}
-                placeholder="Describe any additional site-specific hazards..."
-                className="h-24 bg-card border-primary/30 text-elec-light"
-              />
-            </div>
-
-            {/* Risk Matrix Guide */}
-            <div className="space-y-2">
-              <Label className="text-elec-light">Overall Risk Level</Label>
-              <RiskMatrixGuide
-                selectedRiskLevel={formData.riskLevel}
-                identifiedHazards={formData.identifiedHazards.map(h => 
-                  HAZARD_CATEGORIES.find(cat => cat.label === h)?.id || ''
-                )}
-                onRiskLevelChange={(level) => setFormData(prev => ({ ...prev, riskLevel: level }))}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-elec-light">Special Safety Considerations</Label>
-              <Textarea
-                value={formData.specialConsiderations}
-                onChange={(e) => setFormData(prev => ({ ...prev, specialConsiderations: e.target.value }))}
-                placeholder="Any specific safety concerns, client requirements, or site conditions..."
-                className="h-24 bg-card border-primary/30 text-elec-light"
-              />
-            </div>
-
-            {/* Smart Validation */}
-            <StepValidation step={step} formData={formData} />
+            )}
           </div>
         );
 
+      // Step 5: Review & Signatures
       case 4:
         return (
-          <div className="space-y-6">
-            <div className="text-center space-y-3 py-4">
-              <Sparkles className="h-12 w-12 text-elec-yellow mx-auto" />
-              <h3 className="text-lg font-semibold text-elec-light">Generate AI Content</h3>
-              <p className="text-sm text-elec-light/70">
-                Click below to generate BS 7671 compliant briefing content
-              </p>
+          <div className="space-y-5">
+            {/* Summary Card */}
+            <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-3">
+              <div className="flex items-center gap-2">
+                <FileText className="h-4 w-4 text-elec-yellow" />
+                <span className="font-medium text-white">{formData.briefingTitle}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-white/60">
+                <MapPin className="h-3.5 w-3.5" />
+                <span>{formData.siteName}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-white/60">
+                <Calendar className="h-3.5 w-3.5" />
+                <span>{formData.briefingDate} at {formData.briefingTime}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-white/60">
+                <span className="capitalize">{formData.hazards?.length || 0} hazards</span>
+                <span className="text-white/30">•</span>
+                <span className="capitalize">{formData.riskLevel} risk</span>
+              </div>
             </div>
 
-            {!aiContent && !aiGenerating && (
-              <Button
-                onClick={handleGenerateAI}
-                className="w-full h-12 bg-elec-yellow text-background font-semibold"
-                disabled={!formData.briefingContent}
-              >
-                <Sparkles className="h-5 w-5 mr-2" />
-                Generate with AI
-              </Button>
-            )}
-
-            {aiGenerating && (
-              <div className="text-center space-y-4 py-8">
-                <Loader2 className="h-12 w-12 animate-spin text-elec-yellow mx-auto" />
-                <p className="text-sm text-elec-light">Generating professional briefing content...</p>
+            {/* Attendees */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-medium text-white/80">
+                  Attendees & Signatures
+                </label>
+                <span className="text-xs text-white/50">
+                  {(formData.attendees || []).filter((a) => a.signature).length} of{" "}
+                  {(formData.attendees || []).length} signed
+                </span>
               </div>
-            )}
 
-            {aiContent && (
-              <div className="space-y-4">
-                <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3">
-                  <p className="text-sm text-elec-light">
-                    ✅ AI content generated! Review and edit below.
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-elec-light text-sm">Briefing Overview</Label>
-                  <FormattedTextDisplay
-                    value={formData.briefingDescription}
-                    onChange={(value) => setFormData(prev => ({ ...prev, briefingDescription: value }))}
-                    placeholder="Describe the work being carried out..."
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-elec-light text-sm">Hazards & Controls</Label>
-                  <FormattedTextDisplay
-                    value={formData.hazards}
-                    onChange={(value) => setFormData(prev => ({ ...prev, hazards: value }))}
-                    placeholder="List hazards and control measures..."
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-elec-light text-sm">Safety Warning</Label>
-                  <FormattedTextDisplay
-                    value={formData.safetyWarning}
-                    onChange={(value) => setFormData(prev => ({ ...prev, safetyWarning: value }))}
-                    placeholder="Any safety warnings or precautions..."
-                  />
-                </div>
-
-                {formData.briefingType === 'general' && (
-                  <div className="space-y-2">
-                    <Label className="text-elec-light text-sm">Additional Information</Label>
-                    <FormattedTextDisplay
-                      value={formData.additionalInfo}
-                      onChange={(value) => setFormData(prev => ({ ...prev, additionalInfo: value }))}
-                      placeholder="Any additional relevant information..."
-                    />
-                  </div>
-                )}
-
+              {/* Add Attendee */}
+              <div className="flex gap-2">
+                <IOSInput
+                  placeholder="Enter attendee name"
+                  value={newAttendeeName}
+                  onChange={(e) => setNewAttendeeName(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addAttendee())}
+                  icon={<Users className="h-5 w-5" />}
+                />
                 <Button
-                  onClick={handleGenerateAI}
-                  variant="outline"
-                  className="w-full"
-                  size="sm"
+                  type="button"
+                  onClick={addAttendee}
+                  disabled={!newAttendeeName.trim()}
+                  className="h-[50px] px-4 bg-elec-yellow text-black hover:bg-elec-yellow/90"
                 >
-                  Regenerate Content
+                  <Plus className="h-4 w-4" />
                 </Button>
+              </div>
 
-                {/* Smart Validation */}
-                <StepValidation step={step} formData={formData} />
-              </div>
-            )}
-          </div>
-        );
+              {/* Attendee List */}
+              <AnimatePresence>
+                {(formData.attendees || []).map((attendee, idx) => (
+                  <div key={idx}>
+                    {signingAttendeeIndex === idx ? (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="space-y-2"
+                      >
+                        <SignaturePad
+                          name={`Signature for ${attendee.name}`}
+                          value={attendee.signature}
+                          onChange={(sig) => handleSignature(idx, sig)}
+                        />
+                        <div className="flex gap-2">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            onClick={() => setSigningAttendeeIndex(null)}
+                            className="flex-1 h-10 text-white/60"
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            type="button"
+                            onClick={() => handleSignature(idx, attendee.signature)}
+                            disabled={!attendee.signature}
+                            className="flex-1 h-10 bg-emerald-500 text-white hover:bg-emerald-600"
+                          >
+                            <Check className="h-4 w-4 mr-1" />
+                            Confirm
+                          </Button>
+                        </div>
+                      </motion.div>
+                    ) : (
+                      <AttendeeSignatureCard
+                        name={attendee.name}
+                        signed={!!attendee.signature}
+                        timestamp={attendee.timestamp}
+                        onSign={() => setSigningAttendeeIndex(idx)}
+                        onRemove={() => removeAttendee(idx)}
+                      />
+                    )}
+                  </div>
+                ))}
+              </AnimatePresence>
 
-      case 5:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-base font-semibold text-elec-light mb-3">Photo Upload (Optional)</h3>
-            
-            {/* Enhanced Photo Manager */}
-            <EnhancedPhotoManager
-              photos={formData.photos}
-              onPhotosChange={(photos) => setFormData(prev => ({ ...prev, photos }))}
-              onPhotoUpload={handlePhotoUpload}
-              onDeletePhoto={handleDeletePhoto}
-              uploadingPhotos={uploadingPhotos}
-            />
-          </div>
-        );
-
-      case 6:
-        return (
-          <div className="space-y-4">
-            <h3 className="text-base font-semibold text-elec-light mb-3">Review & Complete</h3>
-            
-            <div className="bg-card/50 border border-primary/20 rounded-lg p-4 space-y-2.5">
-              <div className="flex justify-between items-start gap-3">
-                <span className="text-xs text-elec-light/70 flex-shrink-0">Briefing:</span>
-                <span className="text-xs font-medium text-elec-light text-right">{formData.briefingTitle}</span>
-              </div>
-              <div className="flex justify-between items-start gap-3">
-                <span className="text-xs text-elec-light/70 flex-shrink-0">Type:</span>
-                <span className="text-xs font-medium text-elec-light text-right">
-                  {formData.briefingType === 'site-work' ? 'Site Work' : 
-                   formData.briefingType === 'lfe' ? 'LFE' :
-                   formData.briefingType === 'hse-update' ? 'HSE Update' :
-                   formData.briefingType === 'business-update' ? 'Business Update' :
-                   formData.briefingType === 'safety-alert' ? 'Safety Alert' :
-                   formData.briefingType === 'regulatory' ? 'Regulatory' : 'General'}
-                </span>
-              </div>
-              <div className="flex justify-between items-start gap-3">
-                <span className="text-xs text-elec-light/70 flex-shrink-0">Location:</span>
-                <span className="text-xs font-medium text-elec-light text-right">{formData.location}</span>
-              </div>
-              <div className="flex justify-between items-start gap-3">
-                <span className="text-xs text-elec-light/70 flex-shrink-0">Date & Time:</span>
-                <span className="text-xs font-medium text-elec-light text-right">
-                  {new Date(formData.briefingDate).toLocaleDateString('en-GB')} at {formData.briefingTime}
-                </span>
-              </div>
-              <div className="flex justify-between items-start gap-3">
-                <span className="text-xs text-elec-light/70 flex-shrink-0">Team Size:</span>
-                <span className="text-xs font-medium text-elec-light text-right">{formData.teamSize} people</span>
-              </div>
-              <div className="flex justify-between items-start gap-3">
-                <span className="text-xs text-elec-light/70 flex-shrink-0">Risk Level:</span>
-                <span className={`text-xs font-bold text-right ${
-                  formData.riskLevel === 'critical' ? 'text-destructive' :
-                  formData.riskLevel === 'high' ? 'text-warning' : 'text-elec-yellow'
-                }`}>
-                  {formData.riskLevel.toUpperCase()}
-                </span>
-              </div>
-              <div className="flex justify-between items-start gap-3">
-                <span className="text-xs text-elec-light/70 flex-shrink-0">AI Generated:</span>
-                <span className="text-xs font-medium text-elec-yellow text-right">
-                  {aiContent ? 'Yes ✓' : 'No'}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-2.5">
-              <Button
-                onClick={() => handleSave(false)}
-                className="w-full h-11 bg-elec-yellow text-background font-semibold"
-              >
-                <FileText className="h-4 w-4 mr-2" />
-                Complete Briefing
-              </Button>
-
-              <Button
-                onClick={() => handleSave(true)}
-                variant="outline"
-                className="w-full h-11"
-              >
-                <Save className="h-4 w-4 mr-2" />
-                Save as Draft
-              </Button>
+              {(formData.attendees || []).length === 0 && (
+                <p className="text-center py-4 text-white/40 text-sm">
+                  Add attendees to collect signatures
+                </p>
+              )}
             </div>
           </div>
         );
@@ -912,126 +673,113 @@ export const BriefingFormWizard = ({ initialData, nearMissData, onClose, onSucce
   };
 
   return (
-    <>
-      {/* Restore Dialog */}
-      {showRestoreDialog && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <Card className="w-full max-w-md bg-background border-primary/30">
-            <CardHeader>
-              <CardTitle className="text-elec-yellow flex items-center gap-2">
-                <AlertCircle className="h-5 w-5" />
-                Continue Previous Work?
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-sm text-elec-light">
-                We found unsaved work from a previous session. Would you like to continue where you left off?
+    <FormProvider {...methods}>
+      <div className="min-h-screen bg-elec-dark">
+        {/* Header */}
+        <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur border-b border-white/10">
+          <div className="flex items-center justify-between px-4 py-3">
+            <button
+              onClick={step === 0 ? onClose : prevStep}
+              className="p-2 -ml-2 text-white/60 hover:text-white"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+            <div className="text-center">
+              <p className="text-xs text-white/50">
+                Step {step + 1} of {totalSteps}
               </p>
-              <div className="flex gap-3">
-                <Button
-                  onClick={handleRestoreSaved}
-                  className="flex-1 bg-elec-yellow text-background"
-                >
-                  Restore
-                </Button>
-                <Button
-                  onClick={handleDiscardSaved}
-                  variant="outline"
-                  className="flex-1"
-                >
-                  Start Fresh
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-
-      <Card className="w-full max-w-2xl mx-auto bg-background border-primary/30">
-        <CardHeader>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-elec-yellow">AI-Powered Briefing Wizard</CardTitle>
-              {!initialData && timeSinceLastSave && (
-                <div className="flex items-center gap-2 text-xs text-elec-light/60">
-                  <Clock className="h-3 w-3" />
-                  <span>Saved {timeSinceLastSave}</span>
-                </div>
-              )}
+              <p className="text-sm font-medium text-white">
+                {STEP_TITLES[step]}
+              </p>
             </div>
-            <Progress value={progress} className="h-2" />
-            <div className="flex justify-between text-xs text-elec-light/60">
-              <span>Step {step} of {totalSteps}</span>
-              <span>{Math.round(progress)}% Complete</span>
-            </div>
-            {hasUnsavedChanges && !initialData && (
-              <Alert className="bg-elec-yellow/5 border-elec-yellow/20">
-                <AlertCircle className="h-4 w-4 text-elec-yellow" />
-                <AlertDescription className="text-xs text-elec-light/70">
-                  Your progress is being auto-saved every 30 seconds
-                </AlertDescription>
-              </Alert>
-            )}
+            <button
+              onClick={onClose}
+              className="p-2 -mr-2 text-white/60 hover:text-white"
+            >
+              <X className="h-5 w-5" />
+            </button>
           </div>
-        </CardHeader>
 
-        <CardContent className="space-y-6">
-          {renderStep()}
+          {/* Progress bar */}
+          <div className="h-1 bg-white/10">
+            <motion.div
+              className="h-full bg-elec-yellow"
+              initial={{ width: 0 }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.3 }}
+            />
+          </div>
+        </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t">
-            <div className="flex gap-3 flex-1">
-              {step > 1 && (
+        {/* Content */}
+        <div className="p-4 pb-32">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={step}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.2 }}
+            >
+              {renderStepContent()}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Footer Actions */}
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-elec-dark/95 backdrop-blur border-t border-white/10 safe-area-pb">
+          <div className="flex gap-3">
+            {step === totalSteps - 1 ? (
+              <>
                 <Button
-                  onClick={() => setStep(s => s - 1)}
+                  type="button"
                   variant="outline"
-                  className="flex-1"
-                >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Previous
-                </Button>
-              )}
-
-              {step < totalSteps && (
-                <Button
-                  onClick={() => setStep(s => s + 1)}
-                  className="flex-1 bg-elec-yellow text-background"
-                  disabled={
-                    (step === 1 && (!formData.briefingTitle || !formData.location || !formData.conductorName)) ||
-                    (step === 2 && !formData.briefingContent) ||
-                    (step === 4 && !aiContent)
-                  }
-                >
-                  Next
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
-              )}
-            </div>
-            
-            <div className="flex gap-3">
-              {!initialData && (
-                <Button
-                  onClick={manualSave}
-                  variant="outline"
-                  size="sm"
-                  className="w-full sm:w-auto"
+                  onClick={() => handleSave(true)}
+                  className="flex-1 h-14 border-white/20 text-white/80"
                 >
                   <Save className="h-4 w-4 mr-2" />
-                  Save Progress
+                  Save Draft
                 </Button>
-              )}
-              
-              <Button
-                onClick={onClose}
-                variant="ghost"
-                size="sm"
-                className="w-full sm:w-auto"
-              >
-                Close
-              </Button>
-            </div>
+                <Button
+                  type="button"
+                  onClick={() => handleSave(false)}
+                  className="flex-1 h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
+                >
+                  <Check className="h-4 w-4 mr-2" />
+                  Complete
+                </Button>
+              </>
+            ) : (
+              <>
+                {step > 0 && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={prevStep}
+                    className="h-14 px-6 border-white/20 text-white/80"
+                  >
+                    <ArrowLeft className="h-4 w-4 mr-2" />
+                    Back
+                  </Button>
+                )}
+                <Button
+                  type="button"
+                  onClick={nextStep}
+                  disabled={!canProceed()}
+                  className={cn(
+                    "flex-1 h-14 font-semibold",
+                    "bg-elec-yellow text-black hover:bg-elec-yellow/90",
+                    "disabled:opacity-50 disabled:cursor-not-allowed"
+                  )}
+                >
+                  Continue
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+              </>
+            )}
           </div>
-        </CardContent>
-      </Card>
-    </>
+        </div>
+      </div>
+    </FormProvider>
   );
 };

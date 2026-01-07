@@ -1,8 +1,7 @@
-import React from 'react';
-import { Card } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { Button } from '@/components/ui/button';
-import { Loader2, Clock, Shield, Wrench, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FileText, Clock, XCircle, Loader2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface MethodStatementProcessingViewProps {
   overallProgress: number;
@@ -14,15 +13,25 @@ interface MethodStatementProcessingViewProps {
   jobDescription: string;
 }
 
+const STAGES = [
+  { name: 'Init', icon: '⚡' },
+  { name: 'Risks', icon: '🛡️' },
+  { name: 'Analyse', icon: '📊' },
+  { name: 'Generate', icon: '📝' },
+  { name: 'Validate', icon: '✓' },
+  { name: 'Done', icon: '✨' }
+];
+
 export const MethodStatementProcessingView: React.FC<MethodStatementProcessingViewProps> = ({
   overallProgress,
   currentStep,
   elapsedTime,
   estimatedTimeRemaining,
   onCancel,
-  isCancelling,
-  jobDescription
+  isCancelling = false
 }) => {
+  const currentStage = Math.floor((overallProgress / 100) * (STAGES.length - 1));
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -30,118 +39,173 @@ export const MethodStatementProcessingView: React.FC<MethodStatementProcessingVi
   };
 
   return (
-    <Card className="p-4 sm:p-6 lg:p-8 bg-elec-card border-emerald-500/20">
-      <div className="space-y-6">
+    <div className="h-[100dvh] bg-gradient-to-b from-black via-[#0a0a0f] to-black flex flex-col overflow-hidden">
+      {/* Background Glow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-elec-yellow/5 blur-[80px]"
+          animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+
+      <div className="relative z-10 flex-1 flex flex-col justify-evenly px-4 py-6 max-w-md mx-auto w-full">
+
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <h3 className="text-xl font-semibold text-emerald-400">Generating Method Statement</h3>
-          {onCancel && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onCancel}
-              disabled={isCancelling}
-              className="border-red-500/30 hover:bg-red-500/10 text-red-400"
+        <div className="text-center space-y-3">
+          <div className="flex justify-center">
+            <div className="relative">
+              <motion.div
+                className="absolute inset-0 rounded-full border border-elec-yellow/20"
+                style={{ width: 72, height: 72, margin: -6 }}
+                animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.7, 0.4] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+              <motion.div
+                className="absolute inset-0 rounded-full border border-elec-yellow/10"
+                style={{ width: 84, height: 84, margin: -12 }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              />
+              <motion.div
+                className="w-[60px] h-[60px] rounded-full bg-elec-yellow/10 flex items-center justify-center"
+                animate={{ scale: [1, 1.03, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <motion.div
+                  animate={{ rotate: [0, 5, -5, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <FileText className="h-8 w-8 text-elec-yellow drop-shadow-[0_0_10px_rgba(247,208,44,0.4)]" />
+                </motion.div>
+              </motion.div>
+              <motion.div
+                className="absolute inset-0 rounded-full bg-elec-yellow/20"
+                animate={{ scale: [1, 1.3], opacity: [0.3, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                style={{ width: 60, height: 60 }}
+              />
+            </div>
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-white">Generating Method Statement</h2>
+            <p className="text-xs text-white/50 mt-1">Analysing risks and procedures</p>
+          </div>
+        </div>
+
+        {/* Progress */}
+        <div className="space-y-3">
+          <div className="text-center">
+            <motion.span
+              className="text-5xl font-bold text-elec-yellow tabular-nums"
+              key={Math.round(overallProgress)}
+              initial={{ scale: 1.05 }}
+              animate={{ scale: 1 }}
             >
-              {isCancelling ? <Loader2 className="h-4 w-4 animate-spin" /> : <X className="h-4 w-4" />}
-              {isCancelling ? 'Cancelling...' : 'Cancel'}
-            </Button>
+              {Math.round(overallProgress)}
+            </motion.span>
+            <span className="text-2xl font-bold text-elec-yellow/60">%</span>
+          </div>
+
+          <div className="relative">
+            <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-gradient-to-r from-elec-yellow/80 via-elec-yellow to-elec-yellow/80 rounded-full relative"
+                style={{ width: `${overallProgress}%` }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  animate={{ x: ['-100%', '200%'] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                />
+              </motion.div>
+            </div>
+            <div
+              className="absolute -bottom-1 left-0 h-3 bg-elec-yellow/20 blur-md rounded-full transition-all duration-300"
+              style={{ width: `${overallProgress}%` }}
+            />
+          </div>
+
+          {/* Stage Dots */}
+          <div className="flex justify-center gap-1.5">
+            {STAGES.map((stage, idx) => (
+              <motion.div
+                key={idx}
+                className={cn(
+                  "w-2 h-2 rounded-full transition-all duration-300",
+                  idx < currentStage
+                    ? "bg-elec-yellow"
+                    : idx === currentStage
+                    ? "bg-elec-yellow shadow-[0_0_6px_rgba(247,208,44,0.8)]"
+                    : "bg-white/10"
+                )}
+                animate={idx === currentStage ? { scale: [1, 1.3, 1] } : {}}
+                transition={{ duration: 1, repeat: Infinity }}
+              />
+            ))}
+          </div>
+
+          {/* Current Stage */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStage}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              className="text-center"
+            >
+              <span className="text-sm font-medium text-white">
+                {STAGES[currentStage]?.icon} {STAGES[currentStage]?.name}
+              </span>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Current Step Message */}
+          {currentStep && (
+            <div className="text-center">
+              <span className="text-xs text-white/50">{currentStep}</span>
+            </div>
           )}
         </div>
 
-        {/* Job Description */}
-        <div className="p-3 bg-elec-dark/50 rounded-lg border border-emerald-500/10">
-          <p className="text-sm text-muted-foreground">{jobDescription}</p>
-        </div>
-
-        {/* Overall Progress */}
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Overall Progress</span>
-            <span className="text-emerald-400 font-semibold">{overallProgress}%</span>
-          </div>
-          <Progress value={overallProgress} className="h-3" />
-        </div>
-
-        {/* Current Step */}
-        <div className="p-4 bg-emerald-500/10 rounded-lg border border-emerald-500/30">
-          <div className="flex items-start gap-3">
-            <Loader2 className="h-5 w-5 text-emerald-400 animate-spin shrink-0 mt-0.5" />
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-emerald-400">Current Step</p>
-              <p className="text-xs text-emerald-400/70 mt-1 break-words">{currentStep || 'Initializing...'}</p>
+        {/* Stats Row */}
+        <div className="flex items-center justify-center gap-6">
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-1 mb-1">
+              <Clock className="h-3 w-3 text-white/40" />
+              <span className="text-[10px] text-white/40">Elapsed</span>
             </div>
-          </div>
-        </div>
-
-        {/* Agent Progress Indicators */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Health & Safety Agent */}
-          <div className={`p-4 rounded-lg border ${
-            overallProgress >= 40 
-              ? 'bg-emerald-500/10 border-emerald-500/30'
-              : 'bg-elec-dark/30 border-border/20'
-          }`}>
-            <div className="flex items-center gap-2 mb-2">
-              <Shield className={`h-4 w-4 ${overallProgress >= 40 ? 'text-emerald-400' : 'text-muted-foreground'}`} />
-              <span className={`text-sm font-medium ${overallProgress >= 40 ? 'text-emerald-400' : 'text-muted-foreground'}`}>
-                Risk Analysis
-              </span>
-            </div>
-            <p className="text-xs text-muted-foreground">
-              {overallProgress >= 40 
-                ? '✅ Hazards identified' 
-                : overallProgress > 0 
-                  ? 'Analyzing hazards...' 
-                  : 'Waiting...'}
+            <p className="text-lg font-bold text-white tabular-nums">
+              {formatTime(elapsedTime)}
             </p>
           </div>
-
-          {/* Installation Specialist */}
-          <div className={`p-4 rounded-lg border ${
-            overallProgress === 100 
-              ? 'bg-emerald-500/10 border-emerald-500/30'
-              : overallProgress >= 40
-                ? 'bg-blue-500/10 border-blue-500/30'
-                : 'bg-elec-dark/30 border-border/20'
-          }`}>
-            <div className="flex items-center gap-2 mb-2">
-              <Wrench className={`h-4 w-4 ${
-                overallProgress === 100 
-                  ? 'text-emerald-400' 
-                  : overallProgress >= 40 
-                    ? 'text-blue-400' 
-                    : 'text-muted-foreground'
-              }`} />
-              <span className={`text-sm font-medium ${
-                overallProgress === 100 
-                  ? 'text-emerald-400' 
-                  : overallProgress >= 40 
-                    ? 'text-blue-400' 
-                    : 'text-muted-foreground'
-              }`}>
-                Method Steps
-              </span>
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-1 mb-1">
+              <Loader2 className="h-3 w-3 text-white/40 animate-spin" />
+              <span className="text-[10px] text-white/40">Remaining</span>
             </div>
-            <p className="text-xs text-muted-foreground">
-              {overallProgress === 100 
-                ? '✅ Steps complete' 
-                : overallProgress >= 40 
-                  ? 'Generating steps...' 
-                  : 'Waiting for risk analysis...'}
+            <p className="text-lg font-bold text-white tabular-nums">
+              ~{formatTime(estimatedTimeRemaining)}
             </p>
           </div>
         </div>
 
-        {/* Time Info */}
-        <div className="flex justify-between text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4" />
-            <span>Elapsed: {formatTime(elapsedTime)}</span>
-          </div>
-          <span>Est. remaining: {formatTime(estimatedTimeRemaining)}</span>
-        </div>
+        {/* Cancel Button */}
+        {onCancel && (
+          <button
+            onClick={onCancel}
+            disabled={isCancelling}
+            className="w-full py-3 text-xs text-white/40 hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all flex items-center justify-center gap-1.5 disabled:opacity-50"
+          >
+            {isCancelling ? (
+              <><Loader2 className="w-3 h-3 animate-spin" /> Cancelling...</>
+            ) : (
+              <><XCircle className="w-3 h-3" /> Cancel</>
+            )}
+          </button>
+        )}
       </div>
-    </Card>
+    </div>
   );
 };
