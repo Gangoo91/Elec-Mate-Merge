@@ -18,6 +18,7 @@ import { ViewInvoiceSheet } from "@/components/employer/sheets/ViewInvoiceSheet"
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useQueryClient } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
+import { sortQuotes, sortInvoices } from "@/utils/financeSorting";
 import type { Quote, Invoice } from "@/services/financeService";
 
 export function QuotesInvoicesSection() {
@@ -43,16 +44,22 @@ export function QuotesInvoicesSection() {
     ]);
   };
 
-  const filteredQuotes = quotes.filter(q =>
-    (q.client?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-    (q.description?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-    (q.quote_number?.toLowerCase() || '').includes(searchQuery.toLowerCase())
+  // Filter and sort quotes by business priority
+  const filteredQuotes = sortQuotes(
+    quotes.filter(q =>
+      (q.client?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+      (q.description?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+      (q.quote_number?.toLowerCase() || '').includes(searchQuery.toLowerCase())
+    )
   );
 
-  const filteredInvoices = invoices.filter(inv =>
-    (inv.client?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-    (inv.project?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-    (inv.invoice_number?.toLowerCase() || '').includes(searchQuery.toLowerCase())
+  // Filter and sort invoices by business priority
+  const filteredInvoices = sortInvoices(
+    invoices.filter(inv =>
+      (inv.client?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+      (inv.project?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+      (inv.invoice_number?.toLowerCase() || '').includes(searchQuery.toLowerCase())
+    )
   );
 
   // Stats calculations

@@ -60,10 +60,25 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
     setError(null);
 
     try {
+      // First find the employee record for this user
+      const { data: employee } = await supabase
+        .from("employer_employees")
+        .select("id")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      if (!employee) {
+        // No employee record means no Elec-ID profile
+        setProfile(null);
+        setIsLoading(false);
+        return;
+      }
+
+      // Fetch the Elec-ID profile using the employee ID
       const { data, error: fetchError } = await supabase
         .from("employer_elec_id_profiles")
         .select("*")
-        .eq("employee_id", user.id)
+        .eq("employee_id", employee.id)
         .maybeSingle();
 
       if (fetchError) {
@@ -115,11 +130,48 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
 
         if (updateError) throw updateError;
       } else {
-        // Create new profile
+        // First, find or create an employee record for this user
+        let employeeId: string | null = null;
+
+        // Check if user already has an employee record
+        const { data: existingEmployee } = await supabase
+          .from("employer_employees")
+          .select("id")
+          .eq("user_id", user.id)
+          .maybeSingle();
+
+        if (existingEmployee) {
+          employeeId = existingEmployee.id;
+        } else {
+          // Create a new employee record for this user
+          const { data: newEmployee, error: employeeError } = await supabase
+            .from("employer_employees")
+            .insert({
+              user_id: user.id,
+              name: user.email?.split("@")[0] || "User",
+              role: "electrician",
+              team_role: "Electrician",
+              status: "active",
+              avatar_initials: (user.email?.substring(0, 2) || "US").toUpperCase(),
+              hourly_rate: 0,
+              certifications_count: 0,
+              active_jobs_count: 0,
+            })
+            .select("id")
+            .single();
+
+          if (employeeError) {
+            console.error("Error creating employee record:", employeeError);
+            throw new Error("Failed to create employee record. Please try again.");
+          }
+          employeeId = newEmployee.id;
+        }
+
+        // Create new Elec-ID profile
         const { error: insertError } = await supabase
           .from("employer_elec_id_profiles")
           .insert({
-            employee_id: user.id,
+            employee_id: employeeId,
             elec_id_number: elecIdNumber,
             activated: true,
             activated_at: now,

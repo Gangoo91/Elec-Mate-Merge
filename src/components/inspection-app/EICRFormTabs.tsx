@@ -1,22 +1,22 @@
-
 import React from 'react';
-import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { useEICRTabs } from '@/hooks/useEICRTabs';
 import { useIsMobile } from '@/hooks/use-mobile';
 import EICRTabContent from './EICRTabContent';
-import { FileText, Search, TestTube, User, FileCheck } from 'lucide-react';
+import EICRStepIndicator from './eicr/EICRStepIndicator';
+import { cn } from '@/lib/utils';
 
 interface EICRFormTabsProps {
   formData: any;
   onUpdate: (field: string, value: any) => void;
+  onProgressChange?: (progress: number, tabLabel: string) => void;
 }
 
-const EICRFormTabs = ({ formData, onUpdate }: EICRFormTabsProps) => {
+const EICRFormTabs = ({ formData, onUpdate, onProgressChange }: EICRFormTabsProps) => {
   const isMobile = useIsMobile();
-  const { 
-    currentTab, 
-    setCurrentTab, 
-    canAccessTab, 
+  const {
+    currentTab,
+    setCurrentTab,
+    tabConfigs,
     navigateNext,
     navigatePrevious,
     currentTabIndex,
@@ -24,10 +24,23 @@ const EICRFormTabs = ({ formData, onUpdate }: EICRFormTabsProps) => {
     canNavigateNext,
     canNavigatePrevious,
     getProgressPercentage,
+    getCurrentTabProgress,
     isCurrentTabComplete,
     currentTabHasRequiredFields,
-    toggleTabComplete
+    toggleTabComplete,
+    isTabComplete
   } = useEICRTabs(formData);
+
+  // Get current tab label
+  const currentTabConfig = tabConfigs.find(t => t.id === currentTab);
+  const currentTabLabel = currentTabConfig?.label || 'EICR Report';
+
+  // Notify parent of progress changes (use current tab progress for header display)
+  React.useEffect(() => {
+    if (onProgressChange) {
+      onProgressChange(getCurrentTabProgress(), currentTabLabel);
+    }
+  }, [currentTab, onProgressChange, getCurrentTabProgress, currentTabLabel]);
 
   const handleTabChange = (value: string) => {
     setCurrentTab(value as any);
@@ -54,48 +67,27 @@ const EICRFormTabs = ({ formData, onUpdate }: EICRFormTabsProps) => {
     onToggleComplete: handleToggleComplete
   };
 
-  const smartTabs: SmartTab[] = [
-    {
-      value: "details",
-      label: "Installation Details", 
-      icon: <FileText className="h-4 w-4" />,
-      content: <EICRTabContent tabValue="details" {...tabContentProps} />
-    },
-    {
-      value: "inspection",
-      label: "Inspection",
-      icon: <Search className="h-4 w-4" />,
-      content: <EICRTabContent tabValue="inspection" {...tabContentProps} />
-    },
-    {
-      value: "testing", 
-      label: "Testing",
-      icon: <TestTube className="h-4 w-4" />,
-      content: <EICRTabContent tabValue="testing" {...tabContentProps} />
-    },
-    {
-      value: "inspector",
-      label: "Inspector Details",
-      icon: <User className="h-4 w-4" />,
-      content: <EICRTabContent tabValue="inspector" {...tabContentProps} />
-    },
-    {
-      value: "certificate",
-      label: "Certificate",
-      icon: <FileCheck className="h-4 w-4" />,
-      content: <EICRTabContent tabValue="certificate" {...tabContentProps} />
-    }
-  ];
-
   return (
-    <div className="space-y-2 sm:space-y-4">
-      <SmartTabs
-        tabs={smartTabs}
-        value={currentTab} 
-        onValueChange={handleTabChange}
-        className="w-full"
-        breakpoint={4} // Use dropdown when more than 4 tabs
-      />
+    <div className="space-y-4 sm:space-y-6">
+      {/* Step Indicator Navigation */}
+      <div className="eicr-step-nav">
+        <EICRStepIndicator
+          currentTab={currentTab}
+          onTabChange={handleTabChange}
+          isTabComplete={isTabComplete}
+        />
+      </div>
+
+      {/* Tab Content with transition */}
+      <div
+        key={currentTab}
+        className={cn(
+          "animate-in fade-in-0 slide-in-from-right-2 duration-300",
+          "space-y-4 sm:space-y-6"
+        )}
+      >
+        <EICRTabContent tabValue={currentTab} {...tabContentProps} />
+      </div>
     </div>
   );
 };

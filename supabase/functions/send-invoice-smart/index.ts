@@ -80,7 +80,7 @@ serve(async (req: Request) => {
       
       // Fetch document data
       const { data: doc, error: docError } = await supabase
-        .from(docType === 'quote' ? 'quotes' : 'quotes')
+        .from(docType === 'quote' ? 'quotes' : 'invoices')
         .select('*')
         .eq('id', docId)
         .eq('user_id', user.id)
@@ -579,10 +579,10 @@ serve(async (req: Request) => {
                           <tr>
                             <td style="padding: 30px; text-align: center;">
                               <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9); font-weight: 500; letter-spacing: 1px; margin-bottom: 8px;">AMOUNT DUE</div>
-                              <div style="font-size: 48px; font-weight: 700; color: #ffffff; line-height: 1;">£${(doc.total || 0).toFixed(2)}</div>
-                              ${doc.invoice_due_date ? `
+                              <div style="font-size: 48px; font-weight: 700; color: #ffffff; line-height: 1;">£${(doc.amount || doc.total || 0).toFixed(2)}</div>
+                              ${(doc.due_date || doc.invoice_due_date) ? `
                                 <div style="margin-top: 12px; padding: 8px 16px; background-color: rgba(255, 255, 255, 0.2); border-radius: 20px; display: inline-block; font-size: 13px; color: #ffffff;">
-                                  ⏰ Payment Due: ${new Date(doc.invoice_due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                  ⏰ Payment Due: ${new Date(doc.due_date || doc.invoice_due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
                                 </div>
                               ` : ''}
                             </td>
@@ -622,13 +622,13 @@ serve(async (req: Request) => {
                                     </table>
                                   </td>
                                 </tr>
-                                ${doc.invoice_due_date ? `
+                                ${(doc.due_date || doc.invoice_due_date) ? `
                                 <tr>
                                   <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">
                                     <table role="presentation" style="width: 100%; border-collapse: collapse;">
                                       <tr>
                                         <td style="font-size: 13px; color: #6b7280; font-weight: 600;">⏰ Due Date</td>
-                                        <td style="font-size: 14px; color: #dc2626; font-weight: 700; text-align: right;">${new Date(doc.invoice_due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</td>
+                                        <td style="font-size: 14px; color: #dc2626; font-weight: 700; text-align: right;">${new Date(doc.due_date || doc.invoice_due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</td>
                                       </tr>
                                     </table>
                                   </td>

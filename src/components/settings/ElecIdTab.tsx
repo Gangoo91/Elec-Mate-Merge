@@ -21,7 +21,7 @@ import ElecIdSkills from "./elec-id/ElecIdSkills";
 import ElecIdCompliance from "./elec-id/ElecIdCompliance";
 import ElecIdShare from "./elec-id/ElecIdShare";
 import DocumentUploader from "./elec-id/DocumentUploader";
-import ElecIdOnboarding from "./elec-id/ElecIdOnboarding";
+import ElecIdOnboarding, { type OnboardingFormData } from "./elec-id/ElecIdOnboarding";
 import { useElecIdProfile } from "@/hooks/useElecIdProfile";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -170,8 +170,13 @@ const ElecIdTab = () => {
 
   // Show onboarding if not activated
   if (!isActivated) {
-    const handleOnboardingComplete = async () => {
-      await activateProfile({});
+    const handleOnboardingComplete = async (data: OnboardingFormData) => {
+      await activateProfile({
+        ecs_card_type: data.ecsCardType,
+        ecs_card_number: data.ecsCardNumber || null,
+        ecs_expiry_date: data.ecsCardExpiry,
+        bio: data.jobTitle,
+      });
       await refetch();
     };
 

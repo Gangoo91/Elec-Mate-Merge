@@ -11,6 +11,7 @@ import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { useCertificates } from '@/hooks/certificates/useCertificates';
+import { useActiveJobs } from '@/hooks/useJobs';
 import { differenceInDays, isPast } from 'date-fns';
 
 export interface DashboardUserData {
@@ -39,6 +40,7 @@ export interface DashboardBusinessData {
   unpaidInvoices: number;
   overdueInvoices: number;
   overdueValue: number;
+  activeJobs: number;
 }
 
 export interface DashboardCertificateData {
@@ -73,9 +75,10 @@ export function useDashboardData(): DashboardData {
   const { savedQuotes, loading: quotesLoading } = useQuoteStorage();
   const { invoices, isLoading: invoicesLoading } = useInvoiceStorage();
   const { certificates, loading: certificatesLoading } = useCertificates();
+  const { data: activeJobsData, isLoading: jobsLoading } = useActiveJobs();
 
   // Aggregate loading state
-  const isLoading = authLoading || streakLoading || quotesLoading || invoicesLoading || certificatesLoading;
+  const isLoading = authLoading || streakLoading || quotesLoading || invoicesLoading || certificatesLoading || jobsLoading;
 
   // User data
   const userData = useMemo((): DashboardUserData => {
@@ -150,8 +153,9 @@ export function useDashboardData(): DashboardData {
       unpaidInvoices: unpaidInvoices.length,
       overdueInvoices: overdueInvoices.length,
       overdueValue,
+      activeJobs: activeJobsData?.length || 0,
     };
-  }, [savedQuotes, invoices]);
+  }, [savedQuotes, invoices, activeJobsData]);
 
   // Certificate data
   const certificateData = useMemo((): DashboardCertificateData => {

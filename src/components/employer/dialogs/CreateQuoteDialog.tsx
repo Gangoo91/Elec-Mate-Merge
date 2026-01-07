@@ -7,11 +7,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { IOSStepIndicator } from "@/components/ui/ios-step-indicator";
 import { cn } from "@/lib/utils";
-import { 
-  Plus, 
-  Trash2, 
-  Package, 
+import {
+  Plus,
+  Trash2,
+  Package,
   User,
   FileCheck,
   ChevronLeft,
@@ -20,7 +21,8 @@ import {
   CheckCircle2,
   Clock,
   Sparkles,
-  Loader2
+  Loader2,
+  X
 } from "lucide-react";
 import { useCreateQuote, useNextQuoteNumber, usePriceBook } from "@/hooks/useFinance";
 import { supabase } from "@/integrations/supabase/client";
@@ -368,55 +370,9 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
     }
   };
 
-  // Progress Indicator Component
-  const ProgressIndicator = () => (
-    <div className="flex items-center justify-center px-4 py-4">
-      {STEPS.map((s, index) => {
-        const isComplete = step > s.id;
-        const isActive = step === s.id;
-        const IconComponent = s.icon;
-
-        return (
-          <div key={s.id} className="flex items-center">
-            <div className="flex flex-col items-center">
-              <div
-                className={cn(
-                  "w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200",
-                  isComplete && "bg-success text-success-foreground",
-                  isActive && "bg-elec-yellow text-elec-yellow-foreground ring-4 ring-elec-yellow/20",
-                  !isComplete && !isActive && "bg-muted text-muted-foreground"
-                )}
-              >
-                {isComplete ? (
-                  <CheckCircle2 className="h-4 w-4" />
-                ) : (
-                  <IconComponent className="h-4 w-4" />
-                )}
-              </div>
-              <span
-                className={cn(
-                  "text-xs mt-1.5 font-medium transition-colors",
-                  isActive && "text-elec-yellow",
-                  isComplete && "text-success",
-                  !isActive && !isComplete && "text-muted-foreground"
-                )}
-              >
-                {s.title}
-              </span>
-            </div>
-            {index < STEPS.length - 1 && (
-              <div
-                className={cn(
-                  "w-6 sm:w-10 h-1 mx-1 rounded-full transition-colors",
-                  step > s.id ? "bg-success" : "bg-muted"
-                )}
-              />
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
+  // Step labels for display
+  const stepLabels = ["Client", "Labour", "Materials", "Review"];
+  const currentStepLabel = stepLabels[step - 1];
 
   // Navigation Buttons Component
   const NavigationButtons = () => (
@@ -985,31 +941,46 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[95vh] p-0">
+      <SheetContent side="bottom" className="h-[95vh] p-0 rounded-t-3xl">
         <div className="flex flex-col h-full">
-          {/* Header */}
-          <SheetHeader className="px-4 py-3 border-b border-border">
+          {/* Native Header with drag indicator */}
+          <div className="pt-2 pb-1 flex justify-center">
+            <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+          </div>
+
+          <SheetHeader className="px-4 pb-4 border-b border-border">
             <div className="flex items-center justify-between">
-              <div>
-                <SheetTitle className="text-lg">New Quote</SheetTitle>
-                <SheetDescription className="text-xs font-mono">{quoteNumber}</SheetDescription>
+              <div className="flex items-center gap-3">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-9 w-9 rounded-full"
+                  onClick={() => onOpenChange(false)}
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+                <div>
+                  <SheetTitle className="text-lg font-semibold">New Quote</SheetTitle>
+                  <SheetDescription className="text-xs font-mono text-muted-foreground">{quoteNumber}</SheetDescription>
+                </div>
+              </div>
+              <div className="text-right">
+                <span className="text-sm font-medium text-muted-foreground">{currentStepLabel}</span>
+                <IOSStepIndicator steps={4} currentStep={step - 1} className="mt-1" />
               </div>
             </div>
           </SheetHeader>
 
-          {/* Progress Indicator */}
-          <ProgressIndicator />
-
           {/* Content */}
           <ScrollArea className="flex-1 px-4">
-            <div className="pb-8">
+            <div className="py-6 pb-32">
               {renderStepContent()}
               <NavigationButtons />
             </div>
           </ScrollArea>
 
-          {/* Totals Bar */}
-          <div className="px-4 py-3 border-t border-border bg-gradient-to-r from-primary/5 to-primary/10">
+          {/* Fixed Totals Bar */}
+          <div className="absolute bottom-0 left-0 right-0 px-4 py-4 border-t border-border bg-background/95 backdrop-blur-sm">
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-xs text-muted-foreground block">Quote Total</span>
@@ -1017,7 +988,7 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                   {labourItems.length + lineItems.length} item{(labourItems.length + lineItems.length) !== 1 ? 's' : ''}
                 </span>
               </div>
-              <span className="text-2xl font-bold text-elec-yellow">£{total.toFixed(2)}</span>
+              <span className="text-2xl font-bold text-elec-yellow tabular-nums">£{total.toFixed(2)}</span>
             </div>
           </div>
         </div>

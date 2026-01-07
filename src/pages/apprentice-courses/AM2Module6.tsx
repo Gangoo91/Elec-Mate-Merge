@@ -1,4 +1,4 @@
-import { ArrowLeft, Monitor, BookOpen, FileQuestion, Clock } from "lucide-react";
+import { Monitor, BookOpen, FileQuestion, Clock, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
@@ -48,7 +48,7 @@ const AM2Module6 = () => {
   return (
     <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <div className="border-b border-white/10 bg-card/50">
+      <div className="border-b border-white/10 backdrop-blur-md bg-black/20 sticky top-0 z-50">
         <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16 py-4">
           <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
@@ -61,12 +61,21 @@ const AM2Module6 = () => {
 
       {/* Main Content */}
       <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16 py-12">
-        <div className="mb-8">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
-            Module 6: Online Knowledge Test
+        {/* Hero Section */}
+        <div className="mb-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-elec-yellow/10 border border-elec-yellow/20 rounded-full mb-4">
+            <Monitor className="w-4 h-4 text-elec-yellow" />
+            <span className="text-ios-footnote font-medium text-elec-yellow">Module 6</span>
+          </div>
+          <h1 className="text-ios-title-1 font-bold text-white mb-3">
+            Online Knowledge Test
           </h1>
+          <p className="text-ios-body text-white/70 max-w-2xl leading-relaxed">
+            Master the AM2 online knowledge test with comprehensive preparation covering test format, core topics, time management, and exam techniques.
+          </p>
         </div>
 
+        {/* Sections Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {sections.map((section) => (
             <ModuleCard

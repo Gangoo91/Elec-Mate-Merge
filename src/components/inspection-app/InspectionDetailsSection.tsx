@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -84,16 +83,16 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
   const isOtherPurposeRequired = formData.purposeOfInspection === 'other';
 
   return (
-    <Card className="border border-border bg-card overflow-hidden">
+    <div className="eicr-section-card">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <SectionHeader 
-          title="Purpose & Inspection Details" 
+        <SectionHeader
+          title="Purpose & Inspection Details"
           icon={ClipboardList}
           isOpen={isOpen}
           color="blue-500"
         />
         <CollapsibleContent>
-          <CardContent className="p-3 sm:p-4 md:p-6 space-y-3 sm:space-y-4">
+          <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
         <div className="space-y-3 sm:space-y-4">
           <div className="space-y-2">
             <Label htmlFor="purposeOfInspection">Purpose of Inspection *</Label>
@@ -239,10 +238,10 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
             </div>
           </div>
         </div>
-          </CardContent>
+          </div>
         </CollapsibleContent>
       </Collapsible>
-    </Card>
+    </div>
   );
 };
 

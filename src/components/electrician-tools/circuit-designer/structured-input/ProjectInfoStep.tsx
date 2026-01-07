@@ -1,8 +1,6 @@
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Building, Building2, Factory } from "lucide-react";
+import { IOSInput } from "@/components/ui/ios-input";
+import { Building, Building2, Factory, FolderOpen } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ProjectInfoStepProps {
   projectName: string;
@@ -18,9 +16,9 @@ interface ProjectInfoStepProps {
 }
 
 const INSTALLATION_TYPES = [
-  { value: 'domestic', label: 'Domestic', icon: Building, description: 'Houses, flats, small residential' },
+  { value: 'domestic', label: 'Domestic', icon: Building, description: 'Houses, flats, residential' },
   { value: 'commercial', label: 'Commercial', icon: Building2, description: 'Offices, shops, restaurants' },
-  { value: 'industrial', label: 'Industrial', icon: Factory, description: 'Factories, warehouses, manufacturing' }
+  { value: 'industrial', label: 'Industrial', icon: Factory, description: 'Factories, warehouses' }
 ] as const;
 
 export const ProjectInfoStep = ({
@@ -36,96 +34,110 @@ export const ProjectInfoStep = ({
   setInstallationType
 }: ProjectInfoStepProps) => {
   return (
-    <div className="space-y-2.5 sm:space-y-3 md:space-y-4">
-      <div className="grid gap-2.5 sm:gap-3 md:gap-4">
-        {/* Installation Type - Primary Selection */}
-        <div className="space-y-2 sm:space-y-3">
-          <Label className="text-sm sm:text-base font-medium sm:font-semibold">Installation Type *</Label>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
-            {INSTALLATION_TYPES.map((type) => {
-              const Icon = type.icon;
-              const isSelected = installationType === type.value;
-              return (
-                <Card
-                  key={type.value}
-                  className={`p-3 sm:p-4 md:p-5 cursor-pointer transition-all touch-manipulation active:scale-98 ${
-                    isSelected
-                      ? 'border-primary bg-primary/5 shadow-md'
-                      : 'border-border hover:border-primary/50 hover:bg-accent/50'
-                  }`}
-                  onClick={() => setInstallationType(type.value as any)}
-                >
-                  <div className="flex items-start gap-2 sm:gap-3">
-                    <div className={`p-1.5 sm:p-2 rounded-md sm:rounded-lg ${isSelected ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
-                      <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
+    <div className="space-y-6">
+      {/* Section Header */}
+      <div className="flex items-center gap-3">
+        <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+          <FolderOpen className="h-5 w-5 text-elec-yellow" />
+        </div>
+        <div>
+          <h2 className="text-lg font-semibold text-white">Project Details</h2>
+          <p className="text-sm text-white/50">Basic information about your installation</p>
+        </div>
+      </div>
+
+      {/* Installation Type Selection */}
+      <div className="space-y-3">
+        <label className="block text-ios-subhead font-medium text-white/80">
+          Installation Type *
+        </label>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {INSTALLATION_TYPES.map((type) => {
+            const Icon = type.icon;
+            const isSelected = installationType === type.value;
+            return (
+              <div
+                key={type.value}
+                className={cn(
+                  "relative p-4 rounded-xl cursor-pointer",
+                  "bg-white/5 backdrop-blur border-2",
+                  "transition-all duration-ios-normal ease-ios-ease",
+                  "touch-manipulation active:scale-[0.98]",
+                  isSelected
+                    ? "border-elec-yellow bg-elec-yellow/10 shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.1)]"
+                    : "border-white/10 hover:border-white/20 hover:bg-white/8"
+                )}
+                onClick={() => setInstallationType(type.value as any)}
+              >
+                <div className="flex items-start gap-3">
+                  <div
+                    className={cn(
+                      "p-2 rounded-lg transition-colors duration-ios-fast",
+                      isSelected
+                        ? "bg-elec-yellow text-black"
+                        : "bg-white/10 text-white/60"
+                    )}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div
+                      className={cn(
+                        "font-semibold transition-colors duration-ios-fast",
+                        isSelected ? "text-elec-yellow" : "text-white"
+                      )}
+                    >
+                      {type.label}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="font-medium sm:font-semibold text-foreground text-sm sm:text-base">{type.label}</div>
-                      <div className="text-xs text-muted-foreground mt-0.5">{type.description}</div>
+                    <div className="text-xs text-white/50 mt-0.5">
+                      {type.description}
                     </div>
                   </div>
-                </Card>
-              );
-            })}
-          </div>
+                </div>
+                {/* Selection indicator */}
+                {isSelected && (
+                  <div className="absolute top-2 right-2">
+                    <div className="w-2 h-2 rounded-full bg-elec-yellow" />
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
+      </div>
 
-        {/* Project Name */}
-        <div className="space-y-1.5 sm:space-y-2">
-          <Label htmlFor="project-name" className="text-sm sm:text-base font-medium sm:font-semibold">
-            <span className="sm:hidden">Name *</span>
-            <span className="hidden sm:inline">Project Name *</span>
-          </Label>
-          <MobileInput
-            id="project-name"
-            value={projectName}
-            onChange={(e) => setProjectName(e.target.value)}
-            placeholder="e.g., 24 Maple Drive Rewire"
-            className="text-base"
-          />
-        </div>
+      {/* Form Fields */}
+      <div className="space-y-4">
+        <IOSInput
+          label="Project Name *"
+          value={projectName}
+          onChange={(e) => setProjectName(e.target.value)}
+          placeholder="e.g., 24 Maple Drive Rewire"
+        />
 
-        {/* Location */}
-        <div className="space-y-1.5 sm:space-y-2">
-          <Label htmlFor="location" className="text-sm sm:text-base font-medium sm:font-semibold">Location *</Label>
-          <MobileInput
-            id="location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder="e.g., Manchester, M1 1AA"
-            className="text-base"
-          />
-        </div>
+        <IOSInput
+          label="Location *"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          placeholder="e.g., Manchester, M1 1AA"
+          hint="Property address or area"
+        />
 
-        {/* Client Name */}
-        <div className="space-y-1.5 sm:space-y-2">
-          <Label htmlFor="client-name" className="text-sm sm:text-base font-medium sm:font-semibold">
-            <span className="sm:hidden">Client (Optional)</span>
-            <span className="hidden sm:inline">Client Name (Optional)</span>
-          </Label>
-          <MobileInput
-            id="client-name"
-            value={clientName}
-            onChange={(e) => setClientName(e.target.value)}
-            placeholder="e.g., John Smith"
-            className="text-base"
-          />
-        </div>
+        <IOSInput
+          label="Client Name"
+          value={clientName}
+          onChange={(e) => setClientName(e.target.value)}
+          placeholder="e.g., John Smith"
+          hint="Optional - for your records"
+        />
 
-        {/* Electrician Name */}
-        <div className="space-y-1.5 sm:space-y-2">
-          <Label htmlFor="electrician-name" className="text-sm sm:text-base font-medium sm:font-semibold">
-            <span className="sm:hidden">Company (Optional)</span>
-            <span className="hidden sm:inline">Electrician/Company Name (Optional)</span>
-          </Label>
-          <MobileInput
-            id="electrician-name"
-            value={electricianName}
-            onChange={(e) => setElectricianName(e.target.value)}
-            placeholder="e.g., ABC Electrical Ltd"
-            className="text-base"
-          />
-        </div>
+        <IOSInput
+          label="Company / Electrician"
+          value={electricianName}
+          onChange={(e) => setElectricianName(e.target.value)}
+          placeholder="e.g., ABC Electrical Ltd"
+          hint="Optional - appears on design output"
+        />
       </div>
     </div>
   );

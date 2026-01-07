@@ -1,8 +1,6 @@
 
 import React, { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Shield, AlertTriangle, XCircle, CheckCircle, Eye, EyeOff } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 import { checkRegulationCompliance, RegulationCheckResult } from '@/utils/autoRegChecker';
@@ -90,103 +88,104 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
 
   return (
     <>
-      <Card className="bg-gradient-to-r from-elec-gray/10 to-elec-gray/5 border-elec-yellow/30 shadow-lg">
-        <CardHeader className="pb-3 bg-elec-gray/5 border-b border-elec-yellow/20">
-          <CardTitle className="text-base flex items-center gap-2 text-elec-gray">
-            <Shield className="h-4 w-4 text-elec-yellow" />
-            BS 7671 Regulation Validation
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3 pt-2">
-          {/* Statistics Overview */}
-          <div className="space-y-3">
-            <h3 className="text-xs font-semibold text-foreground/70 uppercase tracking-wide">Compliance Overview</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="flex items-center gap-3 p-4 sm:p-5 bg-gradient-to-br from-emerald-500/20 to-green-500/10 rounded-xl border-2 border-emerald-400/50 shadow-lg shadow-emerald-500/20 hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/30 transition-all duration-200 touch-manipulation">
-                <CheckCircle className="h-8 w-8 text-emerald-400 flex-shrink-0" />
-                <div className="flex flex-col">
-                  <span className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">{stats.compliantCircuits}/{stats.totalCircuits}</span>
-                  <span className="text-xs text-foreground/90 font-medium tracking-wide">Compliant</span>
+      <div className="regulation-card">
+        {/* Header */}
+        <div className="regulation-header">
+          <div className="p-2 rounded-lg bg-elec-yellow/20">
+            <Shield className="h-5 w-5 text-elec-yellow" />
+          </div>
+          <div>
+            <h3 className="regulation-title">BS 7671 Regulation Validation</h3>
+            <p className="text-xs text-white/50">Automated compliance checking</p>
+          </div>
+        </div>
+
+        <div className="p-4 space-y-4">
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {/* Compliant */}
+            <div className="regulation-stat regulation-stat-success">
+              <CheckCircle className="h-6 w-6 text-emerald-400 flex-shrink-0" />
+              <div>
+                <span className="regulation-stat-value">{stats.compliantCircuits}/{stats.totalCircuits}</span>
+                <span className="regulation-stat-label block">Compliant</span>
+              </div>
+            </div>
+
+            {/* Critical Issues */}
+            {stats.criticalIssues > 0 && (
+              <div className="regulation-stat regulation-stat-error">
+                <XCircle className="h-6 w-6 text-red-400 flex-shrink-0" />
+                <div>
+                  <span className="regulation-stat-value">{stats.criticalIssues}</span>
+                  <span className="regulation-stat-label block">Critical</span>
                 </div>
               </div>
-              
-              {stats.criticalIssues > 0 && (
-                <div className="flex items-center gap-3 p-4 sm:p-5 bg-gradient-to-br from-red-500/20 to-rose-500/10 rounded-xl border-2 border-red-400/50 shadow-lg shadow-red-500/20 hover:scale-[1.02] hover:shadow-xl hover:shadow-red-500/30 transition-all duration-200 touch-manipulation">
-                  <XCircle className="h-8 w-8 text-red-400 flex-shrink-0" />
-                  <div className="flex flex-col">
-                    <span className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">{stats.criticalIssues}</span>
-                    <span className="text-xs text-foreground/90 font-medium tracking-wide">Critical</span>
-                  </div>
+            )}
+
+            {/* Warnings */}
+            {stats.warningIssues > 0 && (
+              <div className="regulation-stat regulation-stat-warning">
+                <AlertTriangle className="h-6 w-6 text-amber-400 flex-shrink-0" />
+                <div>
+                  <span className="regulation-stat-value">{stats.warningIssues}</span>
+                  <span className="regulation-stat-label block">Warnings</span>
                 </div>
-              )}
-              
-              {stats.warningIssues > 0 && (
-                <div className="flex items-center gap-3 p-4 sm:p-5 bg-gradient-to-br from-amber-500/20 to-yellow-500/10 rounded-xl border-2 border-amber-400/50 shadow-lg shadow-amber-500/20 hover:scale-[1.02] hover:shadow-xl hover:shadow-amber-500/30 transition-all duration-200 touch-manipulation">
-                  <AlertTriangle className="h-8 w-8 text-amber-400 flex-shrink-0" />
-                  <div className="flex flex-col">
-                    <span className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">{stats.warningIssues}</span>
-                    <span className="text-xs text-foreground/90 font-medium tracking-wide">Warnings</span>
-                  </div>
-                </div>
-              )}
-              
-              <div className="flex items-center gap-3 p-4 sm:p-5 bg-gradient-to-br from-blue-500/20 to-indigo-500/10 rounded-xl border-2 border-blue-400/50 shadow-lg shadow-blue-500/20 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-200 touch-manipulation">
-                <div className="flex flex-col">
-                  <span className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">{stats.totalIssues}</span>
-                  <span className="text-xs text-foreground/90 font-medium tracking-wide">Total Issues</span>
-                </div>
+              </div>
+            )}
+
+            {/* Total Issues */}
+            <div className="regulation-stat">
+              <div>
+                <span className="regulation-stat-value">{stats.totalIssues}</span>
+                <span className="regulation-stat-label block">Total Issues</span>
               </div>
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="space-y-2">
-            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Actions</h3>
-            <div className="flex flex-wrap gap-2">
-              <Button
-                onClick={analyseAllCircuits}
-                size="default"
-                className="gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-gray font-semibold shadow-md"
-                disabled={testResults.length === 0}
-              >
-                <Shield className="h-4 w-4" />
-                Validate All Circuits
-              </Button>
-              
-              <Button
-                onClick={() => onToggleRegulationStatus(!showRegulationStatus)}
-                size="default"
-                variant="outline"
-                className="gap-2 border-elec-yellow text-foreground hover:bg-elec-yellow hover:text-elec-gray-dark font-semibold transition-all"
-              >
-                {showRegulationStatus ? (
-                  <>
-                    <EyeOff className="h-4 w-4" />
-                    Hide Status
-                  </>
-                ) : (
-                  <>
-                    <Eye className="h-4 w-4" />
-                    Show Status
-                  </>
-                )}
-              </Button>
-            </div>
+          {/* Actions */}
+          <div className="flex flex-wrap gap-2">
+            <Button
+              onClick={analyseAllCircuits}
+              className="h-11 gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold active:scale-95 transition-all"
+              disabled={testResults.length === 0}
+            >
+              <Shield className="h-4 w-4" />
+              Validate All Circuits
+            </Button>
+
+            <Button
+              onClick={() => onToggleRegulationStatus(!showRegulationStatus)}
+              variant="outline"
+              className="h-11 gap-2 border-white/20 text-white hover:bg-white/10 font-medium active:scale-95 transition-all"
+            >
+              {showRegulationStatus ? (
+                <>
+                  <EyeOff className="h-4 w-4" />
+                  Hide Status
+                </>
+              ) : (
+                <>
+                  <Eye className="h-4 w-4" />
+                  Show Status
+                </>
+              )}
+            </Button>
           </div>
 
           {/* Info Banner */}
           {showRegulationStatus && (
-            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-2">
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-3">
               <div className="flex items-start gap-3">
                 <span className="text-elec-yellow text-lg">💡</span>
-                <p className="text-sm text-foreground leading-relaxed">
+                <p className="text-sm text-white/80 leading-relaxed">
                   Regulation status indicators are now visible in the table. Click the shield icon on circuits with issues to review details.
                 </p>
               </div>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Batch Validation Dialog */}
       <EnhancedRegulationWarningDialog

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CheckCircle, XCircle, AlertTriangle, AlertCircle, Info, FileText, Circle } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { Check, X, AlertTriangle, AlertCircle, Circle, FileText, Info } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface InspectionItem {
   id: string;
@@ -17,138 +16,170 @@ interface EnhancedInspectionOutcomeSelectProps {
   itemId: string;
   currentOutcome: InspectionItem['outcome'];
   onOutcomeChange: (itemId: string, outcome: InspectionItem['outcome']) => void;
+  compact?: boolean; // For desktop table view
 }
 
-interface OutcomeOption {
-  value: InspectionItem['outcome'];
-  label: string;
-  description: string;
-  icon: React.ReactNode;
-  color: string;
-  priority: 'critical' | 'warning' | 'normal';
-}
-
-const outcomeOptions: OutcomeOption[] = [
+// Primary outcomes (most common)
+const primaryOutcomes = [
   {
-    value: 'satisfactory',
-    label: 'Satisfactory',
-    description: 'Complies with BS 7671 requirements',
-    icon: <CheckCircle className="h-5 w-5" />,
-    color: 'text-bs7671-safe',
-    priority: 'normal'
+    value: 'satisfactory' as const,
+    label: 'OK',
+    icon: Check,
+    activeClass: 'bg-green-500 text-white border-green-500',
+    inactiveClass: 'bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20'
   },
   {
-    value: 'C1',
-    label: 'C1 - Danger Present',
-    description: 'Immediate danger to persons or property',
-    icon: <XCircle className="h-5 w-5" />,
-    color: 'text-bs7671-danger',
-    priority: 'critical'
+    value: 'C1' as const,
+    label: 'C1',
+    icon: X,
+    activeClass: 'bg-red-500 text-white border-red-500',
+    inactiveClass: 'bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20'
   },
   {
-    value: 'C2',
-    label: 'C2 - Potentially Dangerous',
-    description: 'Urgent remedial action required',
-    icon: <AlertCircle className="h-5 w-5" />,
-    color: 'text-bs7671-warning',
-    priority: 'critical'
+    value: 'C2' as const,
+    label: 'C2',
+    icon: AlertCircle,
+    activeClass: 'bg-orange-500 text-white border-orange-500',
+    inactiveClass: 'bg-orange-500/10 border-orange-500/30 text-orange-400 hover:bg-orange-500/20'
   },
   {
-    value: 'C3',
-    label: 'C3 - Improvement Recommended',
-    description: 'Does not comply with current standards',
-    icon: <AlertTriangle className="h-5 w-5" />,
-    color: 'text-bs7671-caution',
-    priority: 'warning'
-  },
-  {
-    value: 'not-applicable',
-    label: 'N/A - Not Applicable',
-    description: 'Does not apply to this installation',
-    icon: <Circle className="h-5 w-5" />,
-    color: 'text-muted-foreground',
-    priority: 'normal'
-  },
-  {
-    value: 'not-verified',
-    label: 'N/V - Not Verified',
-    description: 'Unable to verify compliance',
-    icon: <FileText className="h-5 w-5" />,
-    color: 'text-bs7671-info',
-    priority: 'normal'
-  },
-  {
-    value: 'limitation',
-    label: 'LIM - Limitation',
-    description: 'Inspection limitation noted',
-    icon: <Info className="h-5 w-5" />,
-    color: 'text-purple-500',
-    priority: 'normal'
+    value: 'C3' as const,
+    label: 'C3',
+    icon: AlertTriangle,
+    activeClass: 'bg-yellow-500 text-black border-yellow-500',
+    inactiveClass: 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/20'
   }
 ];
 
-const EnhancedInspectionOutcomeSelect = ({ 
-  itemId, 
-  currentOutcome, 
-  onOutcomeChange 
+// Secondary outcomes (less common)
+const secondaryOutcomes = [
+  {
+    value: 'not-applicable' as const,
+    label: 'N/A',
+    icon: Circle,
+    activeClass: 'bg-gray-500 text-white border-gray-500',
+    inactiveClass: 'bg-white/5 border-white/20 text-white/50 hover:bg-white/10'
+  },
+  {
+    value: 'not-verified' as const,
+    label: 'N/V',
+    icon: FileText,
+    activeClass: 'bg-blue-500 text-white border-blue-500',
+    inactiveClass: 'bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20'
+  },
+  {
+    value: 'limitation' as const,
+    label: 'LIM',
+    icon: Info,
+    activeClass: 'bg-purple-500 text-white border-purple-500',
+    inactiveClass: 'bg-purple-500/10 border-purple-500/30 text-purple-400 hover:bg-purple-500/20'
+  }
+];
+
+const EnhancedInspectionOutcomeSelect = ({
+  itemId,
+  currentOutcome,
+  onOutcomeChange,
+  compact = false
 }: EnhancedInspectionOutcomeSelectProps) => {
-  const currentOption = outcomeOptions.find(option => option.value === currentOutcome);
-  
-  const handleValueChange = (value: InspectionItem['outcome']) => {
-    onOutcomeChange(itemId, value);
+
+  const handleChipClick = (value: InspectionItem['outcome']) => {
+    // Haptic feedback on mobile
+    if ('vibrate' in navigator) {
+      navigator.vibrate(10);
+    }
+
+    // If clicking same value, deselect (set to empty)
+    if (currentOutcome === value) {
+      onOutcomeChange(itemId, '');
+    } else {
+      onOutcomeChange(itemId, value);
+    }
   };
 
-  const selectValue = currentOutcome === '' ? undefined : currentOutcome;
+  // Compact mode for desktop table - single row, smaller chips
+  if (compact) {
+    return (
+      <div className="flex flex-wrap gap-1">
+        {[...primaryOutcomes, ...secondaryOutcomes].map((chip) => {
+          const isActive = currentOutcome === chip.value;
+          const IconComponent = chip.icon;
 
+          return (
+            <button
+              key={chip.value}
+              type="button"
+              onClick={() => handleChipClick(chip.value)}
+              className={cn(
+                "px-2 py-1 rounded-lg text-xs font-medium",
+                "border transition-all touch-manipulation",
+                "active:scale-95",
+                isActive ? chip.activeClass : chip.inactiveClass
+              )}
+            >
+              {chip.label}
+            </button>
+          );
+        })}
+      </div>
+    );
+  }
+
+  // Full mode for mobile cards - 2 rows, larger touch targets
   return (
-    <Select
-      value={selectValue}
-      onValueChange={handleValueChange}
-    >
-      <SelectTrigger className="bs7671-outcome-select w-full touch-manipulation">
-        <SelectValue placeholder="Select outcome">
-          {currentOption && (
-            <div className="flex items-center gap-3">
-              <div className={currentOption.color}>
-                {currentOption.icon}
-              </div>
-              <div className="flex flex-col items-start gap-1">
-                <span className="text-sm font-medium">{currentOption.label}</span>
-              </div>
-            </div>
-          )}
-        </SelectValue>
-      </SelectTrigger>
-      
-      <SelectContent 
-        className="z-50 bg-popover border shadow-lg rounded-lg w-full max-w-sm mx-auto"
-        align="center"
-        sideOffset={4}
-        avoidCollisions={true}
-      >
-        {outcomeOptions.map((option) => (
-          <SelectItem 
-            key={option.value} 
-            value={option.value} 
-            className="bs7671-touch-target px-4 py-3 cursor-pointer focus:bg-muted group"
-          >
-            <div className="flex items-start gap-3 w-full">
-              <div className={`${option.color} flex-shrink-0 mt-0.5`}>
-                {option.icon}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-sm font-medium">{option.label}</span>
-                </div>
-                <p className="text-xs text-muted-foreground leading-tight">
-                  {option.description}
-                </p>
-              </div>
-            </div>
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <div className="space-y-2">
+      {/* Row 1: Primary outcomes (OK, C1, C2, C3) */}
+      <div className="flex gap-2">
+        {primaryOutcomes.map((chip) => {
+          const isActive = currentOutcome === chip.value;
+          const IconComponent = chip.icon;
+
+          return (
+            <button
+              key={chip.value}
+              type="button"
+              onClick={() => handleChipClick(chip.value)}
+              className={cn(
+                "flex-1 flex items-center justify-center gap-1.5",
+                "h-11 rounded-xl text-sm font-medium",
+                "border transition-all touch-manipulation",
+                "active:scale-95",
+                isActive ? chip.activeClass : chip.inactiveClass
+              )}
+            >
+              <IconComponent className="h-4 w-4" />
+              <span>{chip.label}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Row 2: Secondary outcomes (N/A, N/V, LIM) */}
+      <div className="flex gap-2">
+        {secondaryOutcomes.map((chip) => {
+          const isActive = currentOutcome === chip.value;
+          const IconComponent = chip.icon;
+
+          return (
+            <button
+              key={chip.value}
+              type="button"
+              onClick={() => handleChipClick(chip.value)}
+              className={cn(
+                "flex-1 flex items-center justify-center gap-1.5",
+                "h-11 rounded-xl text-sm font-medium",
+                "border transition-all touch-manipulation",
+                "active:scale-95",
+                isActive ? chip.activeClass : chip.inactiveClass
+              )}
+            >
+              <IconComponent className="h-4 w-4" />
+              <span>{chip.label}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 };
 

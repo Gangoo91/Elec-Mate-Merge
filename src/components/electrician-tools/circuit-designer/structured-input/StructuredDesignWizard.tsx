@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { DesignInputs, CircuitInput } from "@/types/installation-design";
 import { ProjectInfoStep } from "./ProjectInfoStep";
 import { SupplyDetailsStep } from "./SupplyDetailsStep";
@@ -10,17 +10,18 @@ import { CircuitBuilderStep } from "./CircuitBuilderStep";
 import { InstallationDetailsStep } from "./InstallationDetailsStep";
 import { PreCalculationStep } from "./PreCalculationStep";
 import { ReviewStep } from "./ReviewStep";
-import { ArrowLeft, ArrowRight, Sparkles, Trash2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles, Check } from "lucide-react";
 import { toast } from "sonner";
 import { clearDesignCache } from "@/utils/clearDesignCache";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
-import { 
-  calculateDesignCurrent, 
-  suggestMCBRating, 
+import {
+  calculateDesignCurrent,
+  suggestMCBRating,
   calculateDiversityFactor,
   estimateCableSize,
   validateCircuit
 } from "@/utils/circuit-calculations";
+import { cn } from "@/lib/utils";
 
 interface StructuredDesignWizardProps {
   onGenerate: (inputs: DesignInputs) => Promise<void>;
@@ -28,16 +29,33 @@ interface StructuredDesignWizardProps {
 }
 
 const STEPS = [
-  { id: 'project', label: 'Project Info', description: 'Basic details' },
-  { id: 'supply', label: 'Supply Details', description: 'Electrical characteristics' },
-  { id: 'circuits', label: 'Build Circuits', description: 'Add your circuits' },
-  { id: 'install', label: 'Installation Details', description: 'Per-circuit setup' },
-  { id: 'validate', label: 'Pre-Flight Check', description: 'Validate & estimate' },
+  { id: 'project', label: 'Project', description: 'Basic details' },
+  { id: 'supply', label: 'Supply', description: 'Electrical characteristics' },
+  { id: 'circuits', label: 'Circuits', description: 'Add your circuits' },
+  { id: 'install', label: 'Install', description: 'Per-circuit setup' },
+  { id: 'validate', label: 'Validate', description: 'Pre-flight check' },
   { id: 'review', label: 'Review', description: 'Final check' }
 ] as const;
 
+// Animation variants for step transitions
+const stepVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? 20 : -20,
+    opacity: 0
+  }),
+  center: {
+    x: 0,
+    opacity: 1
+  },
+  exit: (direction: number) => ({
+    x: direction < 0 ? 20 : -20,
+    opacity: 0
+  })
+};
+
 export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredDesignWizardProps) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [direction, setDirection] = useState(0);
   const [showClearCacheDialog, setShowClearCacheDialog] = useState(false);
   const [clearingCache, setClearingCache] = useState(false);
 
@@ -82,22 +100,15 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
   useEffect(() => {
     if (circuits.length > 0) {
       const updated = circuits.map(circuit => {
-        if (!circuit.loadPower) return circuit; // Allow calculations even without cable length
-        
-        // Calculate Ib (design current)
+        if (!circuit.loadPower) return circuit;
+
         const Ib = calculateDesignCurrent(circuit.loadPower, voltage, circuit.phases);
-        
-        // Suggest MCB rating
         const mcbRating = suggestMCBRating(Ib);
-        
-        // Calculate diversity factor
         const diversity = circuit.diversityOverride || calculateDiversityFactor(circuit.loadType);
-        
-        // Estimate cable size (use default 25m if not specified)
-        const cableSize = circuit.cableLength 
+        const cableSize = circuit.cableLength
           ? estimateCableSize(Ib, circuit.cableLength)
-          : estimateCableSize(Ib, 25); // Default assumption for estimation
-        
+          : estimateCableSize(Ib, 25);
+
         return {
           ...circuit,
           calculatedIb: Ib,
@@ -106,32 +117,26 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
           estimatedCableSize: cableSize,
         };
       });
-      
+
       setCircuits(updated);
     }
-  }, [voltage]); // Only recalculate when voltage changes
+  }, [voltage]);
 
   const canProceed = () => {
     switch (currentStep) {
-      case 0: // Project Info
-        return projectName.trim() !== '' && location.trim() !== '';
-      case 1: // Supply Details
-        return voltage > 0 && ze > 0;
-      case 2: // Circuits
-        return circuits.length > 0 && circuits.every(c => c.name && c.loadPower); // cableLength is optional
-      case 3: // Installation Details
-        return true; // Optional step - can skip
-      case 4: // Pre-Calculation
-        // Check for validation errors
+      case 0: return projectName.trim() !== '' && location.trim() !== '';
+      case 1: return voltage > 0 && ze > 0;
+      case 2: return circuits.length > 0 && circuits.every(c => c.name && c.loadPower);
+      case 3: return true;
+      case 4: {
         const hasErrors = circuits.some(c => {
           const validation = validateCircuit(c, voltage, earthingSystem);
           return !validation.isValid;
         });
         return !hasErrors;
-      case 5: // Review
-        return true;
-      default:
-        return false;
+      }
+      case 5: return true;
+      default: return false;
     }
   };
 
@@ -140,11 +145,21 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
       toast.error('Please complete all required fields');
       return;
     }
+    setDirection(1);
     setCurrentStep(prev => Math.min(prev + 1, STEPS.length - 1));
   };
 
   const handleBack = () => {
+    setDirection(-1);
     setCurrentStep(prev => Math.max(prev - 1, 0));
+  };
+
+  const handleStepClick = (stepIndex: number) => {
+    // Only allow clicking on completed steps or current step
+    if (stepIndex < currentStep) {
+      setDirection(stepIndex < currentStep ? -1 : 1);
+      setCurrentStep(stepIndex);
+    }
   };
 
   const handleClearCache = async () => {
@@ -156,9 +171,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
           description: `Cleared ${result.cleared} cache table${result.cleared !== 1 ? 's' : ''}`
         });
       } else {
-        toast.error('Failed to clear cache', {
-          description: result.error
-        });
+        toast.error('Failed to clear cache', { description: result.error });
       }
     } catch (error) {
       toast.error('Cache clear failed', {
@@ -201,11 +214,10 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
 
   const progressPercentage = ((currentStep + 1) / STEPS.length) * 100;
 
-  return (
-    <div className="space-y-3 sm:space-y-4 md:space-y-6">
-      {/* Step Content */}
-      <Card className="p-2.5 sm:p-4 md:p-6">
-        {currentStep === 0 && (
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 0:
+        return (
           <ProjectInfoStep
             projectName={projectName}
             setProjectName={setProjectName}
@@ -218,9 +230,9 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
             installationType={installationType}
             setInstallationType={setInstallationType}
           />
-        )}
-
-        {currentStep === 1 && (
+        );
+      case 1:
+        return (
           <SupplyDetailsStep
             voltage={voltage}
             setVoltage={setVoltage}
@@ -244,36 +256,33 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
             propertyAge={propertyAge}
             setPropertyAge={setPropertyAge}
           />
-        )}
-
-        {currentStep === 2 && (
+        );
+      case 2:
+        return (
           <CircuitBuilderStep
             circuits={circuits}
             setCircuits={setCircuits}
             installationType={installationType}
           />
-        )}
-
-        {/* Step 4: Installation Details */}
-        {currentStep === 3 && (
-          <InstallationDetailsStep 
+        );
+      case 3:
+        return (
+          <InstallationDetailsStep
             circuits={circuits}
             onUpdate={setCircuits}
             installationType={installationType}
           />
-        )}
-
-        {/* Step 5: Pre-Calculation & Validation */}
-        {currentStep === 4 && (
-          <PreCalculationStep 
+        );
+      case 4:
+        return (
+          <PreCalculationStep
             circuits={circuits}
             voltage={voltage}
             earthingSystem={earthingSystem}
           />
-        )}
-
-        {/* Step 6: Review */}
-        {currentStep === 5 && (
+        );
+      case 5:
+        return (
           <ReviewStep
             inputs={{
               projectName,
@@ -292,59 +301,175 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
               circuits
             }}
           />
-        )}
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      {/* Premium Step Indicator */}
+      <div className="px-2">
+        <div className="flex items-center justify-between gap-1 sm:gap-2">
+          {STEPS.map((step, index) => {
+            const isActive = index === currentStep;
+            const isCompleted = index < currentStep;
+            const isClickable = index < currentStep;
+
+            return (
+              <div
+                key={step.id}
+                className={cn(
+                  "flex-1 flex flex-col items-center",
+                  isClickable && "cursor-pointer"
+                )}
+                onClick={() => isClickable && handleStepClick(index)}
+              >
+                {/* Step circle */}
+                <div
+                  className={cn(
+                    "w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center",
+                    "text-xs sm:text-sm font-semibold",
+                    "transition-all duration-ios-normal ease-ios-ease",
+                    "border-2",
+                    isActive && "bg-elec-yellow text-black border-elec-yellow shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.2)]",
+                    isCompleted && "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40",
+                    !isActive && !isCompleted && "bg-white/5 text-white/40 border-white/10"
+                  )}
+                >
+                  {isCompleted ? (
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5" />
+                  ) : (
+                    index + 1
+                  )}
+                </div>
+                {/* Step label - show on larger screens */}
+                <span
+                  className={cn(
+                    "hidden sm:block mt-2 text-xs font-medium text-center transition-colors duration-ios-fast",
+                    isActive ? "text-elec-yellow" : isCompleted ? "text-white/60" : "text-white/30"
+                  )}
+                >
+                  {step.label}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Progress bar */}
+        <div className="mt-4 h-1 bg-white/10 rounded-full overflow-hidden">
+          <motion.div
+            className="h-full bg-gradient-to-r from-elec-yellow to-elec-yellow/80 rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: `${progressPercentage}%` }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          />
+        </div>
+      </div>
+
+      {/* Step Content with animations */}
+      <Card className="bg-white/5 backdrop-blur-xl border-white/10 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] overflow-hidden">
+        <div className="p-4 sm:p-6">
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={currentStep}
+              custom={direction}
+              variants={stepVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 }
+              }}
+            >
+              {renderStepContent()}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </Card>
 
-      {/* Navigation */}
-      <div className="mt-6 pb-safe">
-        <Card className="p-2.5 sm:p-4 shadow-sm border-t-2 border-primary/20 sticky bottom-0 sm:static">
-          <div className="flex items-center justify-between gap-2 sm:gap-4">
+      {/* Premium Navigation */}
+      <div className="pb-safe">
+        <Card className="bg-white/5 backdrop-blur-xl border-white/10 rounded-2xl p-3 sm:p-4 sticky bottom-0 sm:static shadow-[0_-4px_20px_rgba(0,0,0,0.3)]">
+          <div className="flex items-center justify-between gap-3">
             <Button
-              variant="outline"
+              variant="ghost"
               onClick={handleBack}
               disabled={currentStep === 0 || isProcessing}
-              className="gap-2 touch-manipulation min-h-[44px] sm:min-h-[40px]"
+              className={cn(
+                "gap-2 h-12 px-4 rounded-xl",
+                "bg-white/5 border border-white/10",
+                "hover:bg-white/10 hover:border-white/20",
+                "disabled:opacity-30",
+                "transition-all duration-ios-fast",
+                "touch-manipulation"
+              )}
             >
               <ArrowLeft className="h-4 w-4" />
               <span className="hidden sm:inline">Back</span>
             </Button>
-            
-            <div className="hidden sm:flex flex-1 text-center">
-              <p className="text-xs sm:text-sm text-muted-foreground w-full">
-                Step {currentStep + 1} of {STEPS.length}
-              </p>
+
+            {/* Step indicator for mobile */}
+            <div className="flex-1 flex justify-center sm:hidden">
+              <Badge variant="secondary" className="bg-white/10 text-white/80 border-0">
+                {currentStep + 1} / {STEPS.length}
+              </Badge>
+            </div>
+
+            {/* Progress percentage for desktop */}
+            <div className="hidden sm:flex flex-1 justify-center">
+              <Badge variant="secondary" className="bg-white/10 text-white/80 border-0 px-3 py-1">
+                {Math.round(progressPercentage)}% Complete
+              </Badge>
             </div>
 
             {currentStep < STEPS.length - 1 ? (
               <Button
                 onClick={handleNext}
                 disabled={!canProceed() || isProcessing}
-                className="gap-1.5 sm:gap-2 touch-manipulation min-h-[44px] sm:min-h-[40px] text-sm sm:text-base"
+                className={cn(
+                  "gap-2 h-12 px-6 rounded-xl",
+                  "bg-elec-yellow text-black font-semibold",
+                  "hover:bg-elec-yellow/90",
+                  "disabled:opacity-30 disabled:bg-white/10 disabled:text-white/40",
+                  "shadow-[0_2px_8px_rgba(0,0,0,0.2)]",
+                  "active:scale-[0.98]",
+                  "transition-all duration-ios-fast",
+                  "touch-manipulation"
+                )}
               >
-                <span className="hidden sm:inline">
-                  {currentStep === 2 ? 'Configure Installation' : currentStep === 3 ? 'Validate Design' : 'Next'}
-                </span>
-                <span className="sm:hidden">Next</span>
+                <span>Next</span>
                 <ArrowRight className="h-4 w-4" />
               </Button>
             ) : (
               <Button
                 onClick={handleGenerate}
                 disabled={!canProceed() || isProcessing}
-                size="lg"
-                className="gap-2 bg-gradient-to-r from-primary to-primary/80 touch-manipulation min-h-[44px] w-full sm:w-auto"
+                className={cn(
+                  "gap-2 h-12 px-6 rounded-xl",
+                  "bg-gradient-to-r from-elec-yellow to-amber-500 text-black font-semibold",
+                  "hover:from-elec-yellow/90 hover:to-amber-500/90",
+                  "disabled:opacity-30 disabled:from-white/10 disabled:to-white/10 disabled:text-white/40",
+                  "shadow-[0_4px_12px_rgba(0,0,0,0.3)]",
+                  "active:scale-[0.98]",
+                  "transition-all duration-ios-fast",
+                  "touch-manipulation"
+                )}
               >
                 {isProcessing ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
-                    <span className="hidden sm:inline">Generating Design...</span>
-                    <span className="sm:hidden">Generating...</span>
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-black/20 border-t-black" />
+                    <span className="hidden sm:inline">Generating...</span>
+                    <span className="sm:hidden">...</span>
                   </>
                 ) : (
                   <>
                     <Sparkles className="h-5 w-5" />
-                    <span className="hidden sm:inline">Generate Optimized Design ⚡</span>
-                    <span className="sm:hidden">Generate ⚡</span>
+                    <span className="hidden sm:inline">Generate Design</span>
+                    <span className="sm:hidden">Generate</span>
                   </>
                 )}
               </Button>

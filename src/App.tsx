@@ -10,6 +10,7 @@ import { NotificationProvider } from '@/components/notifications/NotificationPro
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/lib/queryClient';
 import ScrollToTop from '@/components/ScrollToTop';
+import { PWAUpdatePrompt } from '@/components/PWAUpdatePrompt';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <TrainingActivityMonitor />
               <AppRouter />
               <Toaster />
+              <PWAUpdatePrompt />
             </NotificationProvider>
           </ThemeProvider>
         </AuthProvider>

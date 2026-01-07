@@ -607,3 +607,254 @@ export const getEmployerVacancyStats = async (): Promise<{
     shortlistedCount: shortlistedResult.count || 0,
   };
 };
+
+// =============================================================================
+// VACANCY TEMPLATES
+// =============================================================================
+
+export interface VacancyTemplate {
+  id: string;
+  name: string;
+  title: string;
+  type: EmploymentType;
+  location: string | null;
+  work_arrangement: string | null;
+  salary_min: number | null;
+  salary_max: number | null;
+  salary_period: string;
+  benefits: string[];
+  requirements: string[];
+  experience_level: string | null;
+  description: string | null;
+  nice_to_have: string[] | null;
+  schedule: string | null;
+  is_system_template: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+/**
+ * Get all vacancy templates (system + user created)
+ */
+export const getVacancyTemplates = async (): Promise<VacancyTemplate[]> => {
+  const { data, error } = await supabase
+    .from('vacancy_templates')
+    .select('*')
+    .order('is_system_template', { ascending: false })
+    .order('name', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching vacancy templates:', error);
+    // Return built-in templates if table doesn't exist
+    return getBuiltInTemplates();
+  }
+
+  return data || getBuiltInTemplates();
+};
+
+/**
+ * Save a vacancy as a reusable template
+ */
+export const saveVacancyAsTemplate = async (
+  name: string,
+  vacancyData: Partial<Vacancy> & {
+    work_arrangement?: string;
+    experience_level?: string;
+    nice_to_have?: string[];
+    schedule?: string;
+  }
+): Promise<VacancyTemplate | null> => {
+  const template = {
+    name,
+    title: vacancyData.title || '',
+    type: vacancyData.type || 'Full-time',
+    location: vacancyData.location || null,
+    work_arrangement: vacancyData.work_arrangement || 'On-site',
+    salary_min: vacancyData.salary_min || null,
+    salary_max: vacancyData.salary_max || null,
+    salary_period: vacancyData.salary_period || 'year',
+    benefits: vacancyData.benefits || [],
+    requirements: vacancyData.requirements || [],
+    experience_level: vacancyData.experience_level || 'Mid',
+    description: vacancyData.description || null,
+    nice_to_have: vacancyData.nice_to_have || [],
+    schedule: vacancyData.schedule || null,
+    is_system_template: false,
+  };
+
+  const { data, error } = await supabase
+    .from('vacancy_templates')
+    .insert(template)
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error saving vacancy template:', error);
+    return null;
+  }
+
+  return data;
+};
+
+/**
+ * Delete a user-created template
+ */
+export const deleteVacancyTemplate = async (id: string): Promise<boolean> => {
+  const { error } = await supabase
+    .from('vacancy_templates')
+    .delete()
+    .eq('id', id)
+    .eq('is_system_template', false); // Can only delete user templates
+
+  if (error) {
+    console.error('Error deleting vacancy template:', error);
+    return false;
+  }
+
+  return true;
+};
+
+/**
+ * Duplicate an existing vacancy (for edit/clone)
+ */
+export const duplicateVacancy = async (vacancyId: string): Promise<Vacancy | null> => {
+  const original = await getVacancyById(vacancyId);
+  if (!original) return null;
+
+  const duplicatedData = {
+    title: `${original.title} (Copy)`,
+    location: original.location,
+    type: original.type,
+    status: 'Draft' as VacancyStatus,
+    salary_min: original.salary_min,
+    salary_max: original.salary_max,
+    salary_period: original.salary_period,
+    description: original.description,
+    requirements: original.requirements,
+    benefits: original.benefits,
+    closing_date: null,
+  };
+
+  return createVacancy(duplicatedData);
+};
+
+/**
+ * Built-in templates for common electrical industry roles
+ */
+function getBuiltInTemplates(): VacancyTemplate[] {
+  const now = new Date().toISOString();
+
+  return [
+    {
+      id: 'template-qualified-electrician',
+      name: 'Qualified Electrician',
+      title: 'Qualified Electrician',
+      type: 'Full-time',
+      location: null,
+      work_arrangement: 'On-site',
+      salary_min: 35000,
+      salary_max: 45000,
+      salary_period: 'year',
+      benefits: ['Company Vehicle', 'Pension', 'Tools Provided', 'Training Budget'],
+      requirements: ['18th Edition (BS7671)', 'NVQ Level 3', 'Full UK Driving Licence', 'ECS Gold Card'],
+      experience_level: 'Mid',
+      description: `<h2>About the Role</h2>
+<p>We are looking for an experienced Qualified Electrician to join our team. You will be responsible for carrying out electrical installations, maintenance, and repairs across residential and commercial properties.</p>
+
+<h2>Key Responsibilities</h2>
+<ul>
+<li>Install, maintain, and repair electrical systems</li>
+<li>Ensure all work complies with BS7671 regulations</li>
+<li>Complete accurate documentation and certification</li>
+<li>Diagnose and resolve electrical faults efficiently</li>
+</ul>
+
+<h2>What We Offer</h2>
+<ul>
+<li>Competitive salary with overtime opportunities</li>
+<li>Company vehicle and fuel card</li>
+<li>Ongoing training and development</li>
+<li>Supportive team environment</li>
+</ul>`,
+      nice_to_have: ['Testing & Inspection (2391)', 'Solar PV Experience'],
+      schedule: 'Monday - Friday, 8am - 5pm',
+      is_system_template: true,
+      created_at: now,
+      updated_at: now,
+    },
+    {
+      id: 'template-electrical-apprentice',
+      name: 'Electrical Apprentice',
+      title: 'Electrical Apprentice',
+      type: 'Apprenticeship',
+      location: null,
+      work_arrangement: 'On-site',
+      salary_min: 18000,
+      salary_max: 24000,
+      salary_period: 'year',
+      benefits: ['College Day Release', 'Tools Provided', 'Training', 'Pension'],
+      requirements: ['GCSE Maths (Grade 4+)', 'GCSE English (Grade 4+)', 'Full UK Driving Licence'],
+      experience_level: 'Entry',
+      description: `<h2>About the Apprenticeship</h2>
+<p>An exciting opportunity for someone looking to start their career in the electrical trade. You will gain hands-on experience while working towards your electrical qualifications.</p>
+
+<h2>What You'll Learn</h2>
+<ul>
+<li>Domestic and commercial electrical installations</li>
+<li>Electrical theory and regulations (BS7671)</li>
+<li>Testing, inspection, and fault finding</li>
+<li>Health and safety practices</li>
+</ul>
+
+<h2>Requirements</h2>
+<ul>
+<li>Enthusiasm to learn the trade</li>
+<li>Good problem-solving skills</li>
+<li>Reliable and punctual</li>
+<li>Ability to work as part of a team</li>
+</ul>`,
+      nice_to_have: ['Basic Hand Tool Experience', 'Construction Site Experience'],
+      schedule: '4 days on-site, 1 day college',
+      is_system_template: true,
+      created_at: now,
+      updated_at: now,
+    },
+    {
+      id: 'template-project-manager',
+      name: 'Electrical Project Manager',
+      title: 'Electrical Project Manager',
+      type: 'Full-time',
+      location: null,
+      work_arrangement: 'Hybrid',
+      salary_min: 50000,
+      salary_max: 65000,
+      salary_period: 'year',
+      benefits: ['Company Car', 'Pension', 'Bonus Scheme', 'Healthcare'],
+      requirements: ['18th Edition (BS7671)', 'Project Management Experience', 'Full UK Driving Licence', 'SMSTS'],
+      experience_level: 'Senior',
+      description: `<h2>About the Role</h2>
+<p>We are seeking an experienced Electrical Project Manager to oversee multiple electrical installation projects from tender to completion.</p>
+
+<h2>Key Responsibilities</h2>
+<ul>
+<li>Manage electrical installation projects</li>
+<li>Coordinate with clients, contractors, and team members</li>
+<li>Ensure projects are delivered on time and within budget</li>
+<li>Maintain compliance with regulations and safety standards</li>
+</ul>
+
+<h2>What We Offer</h2>
+<ul>
+<li>Competitive salary with performance bonus</li>
+<li>Company car and expenses</li>
+<li>Flexible working arrangements</li>
+<li>Career progression opportunities</li>
+</ul>`,
+      nice_to_have: ['PRINCE2 Certification', 'Commercial Project Experience'],
+      schedule: 'Monday - Friday, flexible hours',
+      is_system_template: true,
+      created_at: now,
+      updated_at: now,
+    },
+  ];
+}

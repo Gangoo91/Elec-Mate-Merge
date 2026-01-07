@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
-import { Plus, BarChart3, Zap, Camera, LayoutGrid, Table2, Shield, X, PenTool, FileText, Wrench, ClipboardList, ClipboardCheck, Wand2, Sparkles, MoreVertical, Layout, Table, Trash2, Grid, Pen } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Plus, BarChart3, Zap, Camera, LayoutGrid, Table2, Shield, X, PenTool, FileText, Wrench, ClipboardList, ClipboardCheck, Wand2, Sparkles, MoreVertical, Layout, Table, Trash2, Grid, Pen, ChevronDown, TestTube, Mic } from 'lucide-react';
 import { toast } from 'sonner';
 import { TestResult } from '@/types/testResult';
 import EnhancedTestResultDesktopTable from './EnhancedTestResultDesktopTable';
@@ -58,7 +59,23 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   const [showBulkInfillDialog, setShowBulkInfillDialog] = useState(false);
   const [showQuickFillPanel, setShowQuickFillPanel] = useState(false);
   const [lastDeleted, setLastDeleted] = useState<{ circuit: TestResult; index: number } | null>(null);
+  const [activeToolPanel, setActiveToolPanel] = useState<'ai' | 'smart' | null>(null);
   const orientation = useOrientation();
+
+  // Calculate completion stats for progress indicator
+  const { completedCount, progressPercent, pendingCount } = useMemo(() => {
+    const completed = testResults.filter(r =>
+      r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
+    ).length;
+    const percent = testResults.length > 0
+      ? Math.round((completed / testResults.length) * 100)
+      : 0;
+    return {
+      completedCount: completed,
+      progressPercent: percent,
+      pendingCount: testResults.length - completed
+    };
+  }, [testResults]);
   const saveTimeoutRef = useRef<NodeJS.Timeout>();
   const lastSavedHashRef = useRef('');
   const computeResultsHash = (results: TestResult[]) =>
@@ -883,139 +900,187 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
   return (
     <div className="pb-20 lg:pb-4">
-      {/* MOBILE FULL-WIDTH LAYOUT */}
+      {/* MOBILE FULL-WIDTH LAYOUT - Native iOS Feel */}
       {useMobileView ? (
-        <div className="w-full">
-          {/* Title Section */}
-          <div className="px-3 py-2 border-b border-border/50 bg-background">
-            <h2 className="text-lg font-bold text-foreground">Schedule of Tests</h2>
-            <span className="text-xs text-muted-foreground">{testResults.length} {testResults.length === 1 ? 'circuit' : 'circuits'}</span>
-          </div>
+        <div className="min-h-screen bg-background">
+          {/* Hero Section with Progress */}
+          <div className="testing-hero mx-2 mt-2 p-4">
+            <div className="relative z-10">
+              {/* Title Row */}
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-elec-yellow/20 border border-elec-yellow/30">
+                    <TestTube className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold text-white">Circuit Testing</h2>
+                    <p className="text-xs text-white/50">
+                      {testResults.length} circuits • {completedCount} complete
+                    </p>
+                  </div>
+                </div>
+                {/* Settings Menu */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="h-9 w-9 p-0 text-white/60 hover:text-white hover:bg-white/10">
+                      <MoreVertical className="h-5 w-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56 bg-card border-border">
+                    <DropdownMenuItem onClick={() => setShowQuickFillPanel(true)}>
+                      <Zap className="mr-2 h-4 w-4" />
+                      Quick Fill RCD
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={removeAllTestResults} className="text-destructive">
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Clear All Circuits
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
 
-          {/* Sticky Toolbar */}
-          <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-sm border-b border-border shadow-sm px-3 py-2 flex items-center gap-2 justify-end">
-            <div className="flex items-center gap-2">
-              {/* Primary Add Button */}
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-9 px-3 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
-                onClick={addTestResult}
-              >
-                <Plus className="h-4 w-4 mr-1 text-primary" />
-                <span className="text-sm font-medium">Add</span>
-              </Button>
-
-              <div className="w-px h-8 bg-border/50" />
-
-              {/* AI Board Scanner - Direct Access */}
-              <Button
-                variant="default"
-                size="sm"
-                className="h-9 px-3 shrink-0 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
-                title="AI Scan Board"
-                onClick={() => onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true)}
-              >
-                <Camera className="h-4 w-4 mr-1.5" />
-                Scan
-              </Button>
-
-              {/* AI Tools */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="h-9 w-9 p-0 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
-                    title="AI Tools"
-                  >
-                    <Wand2 className="h-4 w-4 text-primary" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-background z-50">
-                  <DropdownMenuItem onClick={() => setShowTestResultsScan(true)}>
-                    <FileText className="mr-2 h-4 w-4" />
-                    AI Scan Test Results
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setShowScribbleDialog(true)}>
-                    <Pen className="mr-2 h-4 w-4" />
-                    Scribble to Table
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* Smart Tools */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="h-9 w-9 p-0 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
-                    title="Smart Tools"
-                  >
-                    <Sparkles className="h-4 w-4 text-primary" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-background z-50">
-                  <DropdownMenuItem onClick={() => setShowSmartAutoFillDialog(true)}>
-                    <Zap className="mr-2 h-4 w-4" />
-                    Smart Auto-Fill
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setShowRcdPresetsDialog(true)}>
-                    <Shield className="mr-2 h-4 w-4" />
-                    Quick RCD Presets
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setShowBulkInfillDialog(true)}>
-                    <Grid className="mr-2 h-4 w-4" />
-                    Bulk Infill
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* More Options */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="h-9 w-9 p-0 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
-                    title="More Options"
-                  >
-                    <MoreVertical className="h-4 w-4 text-primary" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-background z-50">
-                  <DropdownMenuItem 
-                    onClick={() => {
-                      const newView = mobileViewType === 'table' ? 'card' : 'table';
-                      setMobileViewType(newView);
-                      setTableViewPreference(newView);
-                    }}
-                  >
-                    {mobileViewType === 'table' ? (
-                      <><Layout className="mr-2 h-4 w-4" /> Switch to Card View</>
-                    ) : (
-                      <><Table className="mr-2 h-4 w-4" /> Switch to Table View</>
-                    )}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setShowQuickFillPanel(true)}>
-                    <Zap className="mr-2 h-4 w-4 text-primary" />
-                    Quick Fill RCD
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={removeAllTestResults}
-                    className="text-destructive"
-                  >
-                    <Trash2 className="mr-2 h-4 w-4" />
-                    Clear All Circuits
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              {/* Progress Bar */}
+              <div className="testing-progress-bar mt-3">
+                <div className="testing-progress-fill" style={{ width: `${progressPercent}%` }} />
+              </div>
+              <div className="flex justify-between mt-1.5 text-xs">
+                <span className="text-white/40">Progress</span>
+                <span className="font-semibold text-elec-yellow">{progressPercent}%</span>
+              </div>
             </div>
           </div>
 
-          {/* Mobile Table - Full Width */}
-          <div className="w-full mt-2">
+          {/* Primary Actions */}
+          <div className="px-4 py-3 grid grid-cols-2 gap-2">
+            <Button
+              className="testing-action-primary"
+              onClick={() => onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true)}
+            >
+              <Camera className="h-4 w-4 mr-2" />
+              AI Scan
+            </Button>
+            <Button className="testing-action-secondary" onClick={addTestResult}>
+              <Plus className="h-4 w-4 mr-2" />
+              Add Circuit
+            </Button>
+          </div>
+
+          {/* Segmented Control for Tools */}
+          <div className="px-4 pb-3">
+            <div className="testing-segment-control">
+              <button
+                className="testing-segment-button"
+                data-active={activeToolPanel === 'ai'}
+                onClick={() => setActiveToolPanel(activeToolPanel === 'ai' ? null : 'ai')}
+              >
+                <Wand2 className="h-3.5 w-3.5" />
+                AI
+              </button>
+              <button
+                className="testing-segment-button"
+                data-active={activeToolPanel === 'smart'}
+                onClick={() => setActiveToolPanel(activeToolPanel === 'smart' ? null : 'smart')}
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                Smart
+              </button>
+              <button
+                className="testing-segment-button"
+                data-active={showAnalytics}
+                onClick={() => setShowAnalytics(!showAnalytics)}
+              >
+                <BarChart3 className="h-3.5 w-3.5" />
+                Stats
+              </button>
+              {/* Voice button - placeholder for Eleven Labs */}
+              <button
+                className="testing-segment-button"
+                onClick={() => toast.info('Voice assistant coming soon', { description: 'Eleven Labs integration in progress', duration: 2000 })}
+                title="Voice Assistant (Coming Soon)"
+              >
+                <Mic className="h-3.5 w-3.5" />
+                Voice
+              </button>
+            </div>
+
+            {/* AI Tools Panel */}
+            {activeToolPanel === 'ai' && (
+              <div className="testing-tool-panel">
+                <Button
+                  variant="ghost"
+                  className="testing-tool-button"
+                  onClick={() => { setShowTestResultsScan(true); setActiveToolPanel(null); }}
+                >
+                  <FileText className="h-4 w-4 mr-3" />
+                  AI Scan Test Results
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="testing-tool-button"
+                  onClick={() => { setShowScribbleDialog(true); setActiveToolPanel(null); }}
+                >
+                  <Pen className="h-4 w-4 mr-3" />
+                  Scribble to Table
+                </Button>
+              </div>
+            )}
+
+            {/* Smart Tools Panel */}
+            {activeToolPanel === 'smart' && (
+              <div className="testing-tool-panel">
+                <Button
+                  variant="ghost"
+                  className="testing-tool-button"
+                  onClick={() => { setShowSmartAutoFillDialog(true); setActiveToolPanel(null); }}
+                >
+                  <Zap className="h-4 w-4 mr-3" />
+                  Smart Auto-Fill
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="testing-tool-button"
+                  onClick={() => { setShowRcdPresetsDialog(true); setActiveToolPanel(null); }}
+                >
+                  <Shield className="h-4 w-4 mr-3" />
+                  Quick RCD Presets
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="testing-tool-button"
+                  onClick={() => { setShowBulkInfillDialog(true); setActiveToolPanel(null); }}
+                >
+                  <Grid className="h-4 w-4 mr-3" />
+                  Bulk Infill
+                </Button>
+              </div>
+            )}
+
+            {/* Analytics Panel */}
+            {showAnalytics && testResults.length > 0 && (
+              <div className="testing-tool-panel">
+                <TestAnalytics testResults={testResults} />
+              </div>
+            )}
+          </div>
+
+          {/* View Toggle + Circuit Count */}
+          <div className="px-4 pb-2 flex items-center justify-between">
+            <span className="text-xs text-muted-foreground">
+              {testResults.length} {testResults.length === 1 ? 'circuit' : 'circuits'}
+            </span>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleMobileView}
+              className="h-8 text-xs gap-1.5 text-muted-foreground hover:text-foreground"
+            >
+              {mobileViewType === 'table' ? <Layout className="h-3.5 w-3.5" /> : <Table className="h-3.5 w-3.5" />}
+              {mobileViewType === 'table' ? 'Cards' : 'Table'}
+            </Button>
+          </div>
+
+          {/* Circuit List/Table */}
+          <div className="px-2 pb-4">
             {mobileViewType === 'table' ? (
               <MobileHorizontalScrollTable
                 testResults={testResults}
@@ -1031,117 +1096,135 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                 onRemove={removeTestResult}
                 onBulkUpdate={handleBulkUpdate}
                 viewMode="card"
-                className="px-2"
+                className="px-0"
               />
             )}
           </div>
-
-          {/* Analytics Section */}
-          {testResults.length > 0 && (
-            <div className="border-t p-3 space-y-3">
-              <Button 
-                onClick={() => setShowAnalytics(!showAnalytics)} 
-                size="sm" 
-                variant="outline" 
-                className="w-full gap-2 h-11"
-              >
-                <BarChart3 className="h-4 w-4" />
-                Test Results Analytics
-              </Button>
-              {showAnalytics && (
-                <TestAnalytics testResults={testResults} />
-              )}
-            </div>
-          )}
         </div>
       ) : (
-        /* DESKTOP LAYOUT - MATCHING MOBILE STRUCTURE */
-        <div className="w-full space-y-8 py-6 lg:py-8 px-0 bg-elec-gray border border-primary/30 rounded-xl shadow-lg shadow-black/10">
-          {/* HEADER SECTION */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-8">
-            <div className="space-y-1">
-              <h3 className="text-lg font-semibold text-foreground">Circuit Test Results</h3>
-              <p className="text-sm text-muted-foreground">
-                Enter test results for each circuit according to BS 7671
-              </p>
-            </div>
-            {/* ACTIONS - Better grouped */}
-            <div className="flex flex-wrap gap-3 w-full sm:w-auto">
-              {/* AI Tools Group */}
-              <div className="flex gap-2 p-2 rounded-lg bg-card/50 border border-elec-yellow/30">
+        /* DESKTOP LAYOUT - Premium Professional Dashboard */
+        <div className="w-full space-y-6 py-6">
+          {/* Hero Card */}
+          <div className="testing-hero p-6">
+            <div className="relative z-10">
+              {/* Header Row */}
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 rounded-2xl bg-elec-yellow/20 border border-elec-yellow/30">
+                    <TestTube className="h-8 w-8 text-elec-yellow" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-white">Schedule of Tests</h2>
+                    <p className="text-sm text-white/60">
+                      BS 7671 compliant circuit testing & verification
+                    </p>
+                  </div>
+                </div>
+
+                {/* Stats Grid */}
+                <div className="flex gap-3">
+                  <div className="testing-stat-card min-w-[80px]">
+                    <span className="text-2xl font-bold text-white">{testResults.length}</span>
+                    <span className="text-xs text-white/50">Circuits</span>
+                  </div>
+                  <div className="testing-stat-card min-w-[80px]">
+                    <span className="text-2xl font-bold text-green-400">{completedCount}</span>
+                    <span className="text-xs text-white/50">Complete</span>
+                  </div>
+                  <div className="testing-stat-card min-w-[80px]">
+                    <span className="text-2xl font-bold text-amber-400">{pendingCount}</span>
+                    <span className="text-xs text-white/50">Pending</span>
+                  </div>
+                  <div className="testing-stat-card min-w-[80px]">
+                    <span className="text-2xl font-bold text-elec-yellow">{progressPercent}%</span>
+                    <span className="text-xs text-white/50">Progress</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons Grid */}
+              <div className="grid grid-cols-6 gap-3">
                 <Button
+                  className="testing-action-primary col-span-2"
                   onClick={() => onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true)}
-                  size="sm"
-                  className="h-9 text-sm px-4 gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
                 >
-                  <Camera className="h-4 w-4" />
+                  <Camera className="h-4 w-4 mr-2" />
                   AI Board Scan
                 </Button>
-                <Button 
-                  onClick={() => setShowTestResultsScan(true)} 
-                  size="sm" 
-                  variant="outline"
-                  className="h-9 text-sm px-4 gap-2 text-foreground bg-background/50 hover:bg-accent hover:text-accent-foreground"
-                >
-                  <ClipboardList className="h-4 w-4" />
+                <Button className="testing-action-secondary" onClick={() => setShowTestResultsScan(true)}>
+                  <FileText className="h-4 w-4 mr-2" />
                   Scan Results
                 </Button>
-              </div>
-              
-              {/* Smart Tools Group */}
-              <div className="flex gap-2 p-2 rounded-lg bg-card/50 border border-elec-yellow/30">
-                <Button 
-                  onClick={() => setShowScribbleDialog(true)} 
-                  size="sm" 
-                  variant="outline"
-                  className="h-9 text-sm px-4 gap-2 border-transparent hover:bg-muted"
-                >
-                  <PenTool className="h-4 w-4" />
+                <Button className="testing-action-secondary" onClick={() => setShowScribbleDialog(true)}>
+                  <PenTool className="h-4 w-4 mr-2" />
                   Text to Circuits
                 </Button>
-                <Button 
-                  onClick={() => setShowSmartAutoFillDialog(true)} 
-                  size="sm" 
-                  variant="outline"
-                  className="h-9 text-sm px-4 gap-2 border-transparent hover:bg-muted"
-                >
-                  <Zap className="h-4 w-4" />
-                  Smart Auto-Fill
+                <Button className="testing-action-secondary" onClick={() => setShowSmartAutoFillDialog(true)}>
+                  <Zap className="h-4 w-4 mr-2" />
+                  Smart Fill
                 </Button>
-                <Button 
-                  onClick={() => setShowBulkInfillDialog(true)} 
-                  size="sm" 
-                  variant="outline"
-                  className="h-9 text-sm px-4 gap-2 border-transparent hover:bg-muted"
-                >
-                  <ClipboardCheck className="h-4 w-4" />
-                  Bulk Infill
-                </Button>
-              </div>
-              
-              {/* Primary Actions */}
-              <div className="flex gap-2">
-                <Button onClick={addTestResult} size="sm" className="h-9 px-4 gap-2">
-                  <Plus className="h-4 w-4" />
+                <Button className="testing-action-secondary" onClick={addTestResult}>
+                  <Plus className="h-4 w-4 mr-2" />
                   Add Circuit
                 </Button>
-                {testResults.length > 0 && (
-                  <Button 
-                    onClick={removeAllTestResults} 
-                    size="sm" 
-                    variant="destructive"
-                    className="h-9 px-4 gap-2"
+              </div>
+
+              {/* Secondary Actions Row */}
+              <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/10">
+                <div className="flex gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
+                    onClick={() => setShowBulkInfillDialog(true)}
                   >
-                    Remove All
+                    <ClipboardCheck className="h-4 w-4 mr-2" />
+                    Bulk Infill
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
+                    onClick={() => setShowRcdPresetsDialog(true)}
+                  >
+                    <Shield className="h-4 w-4 mr-2" />
+                    RCD Presets
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
+                    onClick={() => setShowAnalytics(!showAnalytics)}
+                  >
+                    <BarChart3 className="h-4 w-4 mr-2" />
+                    Analytics
+                  </Button>
+                </div>
+                {testResults.length > 0 && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-9 text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                    onClick={removeAllTestResults}
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Clear All
                   </Button>
                 )}
               </div>
             </div>
           </div>
 
-          {/* TABLE - Full width, no card wrapper */}
-          <div data-autofill-section className="mt-6">
-            <EnhancedTestResultDesktopTable 
+          {/* Analytics Section */}
+          {showAnalytics && testResults.length > 0 && (
+            <div className="testing-table-container p-4">
+              <TestAnalytics testResults={testResults} />
+            </div>
+          )}
+
+          {/* Table Container */}
+          <div className="testing-table-container" data-autofill-section>
+            <EnhancedTestResultDesktopTable
               testResults={testResults}
               onUpdate={updateTestResult}
               onRemove={removeTestResult}
@@ -1151,24 +1234,6 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               onBulkFieldUpdate={handleBulkFieldUpdate}
             />
           </div>
-
-          {/* ANALYTICS BUTTON - At bottom */}
-          <div className="flex justify-center pt-6 border-t border-border/50">
-            <Button 
-              onClick={() => setShowAnalytics(!showAnalytics)} 
-              size="default"
-              variant="outline" 
-              className="h-10 px-6 gap-2 text-base"
-              disabled={testResults.length === 0}
-            >
-              <BarChart3 className="h-4 w-4" />
-              Test Results Analytics
-            </Button>
-          </div>
-
-          {showAnalytics && testResults.length > 0 && (
-            <TestAnalytics testResults={testResults} />
-          )}
         </div>
       )}
 
@@ -1183,28 +1248,91 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         </div>
       )}
 
-      {/* SHARED INFO SECTIONS - Appears for both mobile and desktop */}
-      <div className="w-full space-y-4 p-3 lg:p-6 pb-20 lg:pb-4 mt-4 bg-elec-gray rounded-xl border border-primary/30 shadow-lg shadow-black/10">
-        {/* Test Instrument Information */}
-        <div className="space-y-2">
-          <h3 className="text-sm font-semibold flex items-center gap-2 px-1">
-            <Wrench className="h-4 w-4 text-elec-yellow" />
-            Test Instrument Information
-          </h3>
-          <div className="bg-background/50 rounded-lg p-2">
-            <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
+      {/* SHARED INFO SECTIONS - Responsive Layout */}
+      {useMobileView ? (
+        /* Mobile: Collapsible Accordions */
+        <div className="px-4 pb-24 space-y-2 mt-4">
+          {/* Test Instrument Info */}
+          <div className="testing-info-section">
+            <Collapsible>
+              <CollapsibleTrigger asChild>
+                <button className="testing-info-header">
+                  <span className="flex items-center gap-2">
+                    <Wrench className="h-4 w-4 text-elec-yellow" />
+                    Test Instruments
+                  </span>
+                  <ChevronDown className="h-4 w-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                </button>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="px-4 pb-4">
+                <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
+
+          {/* Distribution Board Verification */}
+          <div className="testing-info-section">
+            <Collapsible>
+              <CollapsibleTrigger asChild>
+                <button className="testing-info-header">
+                  <span className="flex items-center gap-2">
+                    <Zap className="h-4 w-4 text-elec-yellow" />
+                    Distribution Board
+                  </span>
+                  <ChevronDown className="h-4 w-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                </button>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="px-4 pb-4">
+                <DistributionBoardVerificationSection
+                  data={{
+                    dbReference: formData.dbReference || '',
+                    zdb: formData.zdb || '',
+                    ipf: formData.ipf || '',
+                    confirmedCorrectPolarity: formData.confirmedCorrectPolarity || false,
+                    confirmedPhaseSequence: formData.confirmedPhaseSequence || false,
+                    spdOperationalStatus: formData.spdOperationalStatus || false,
+                    spdNA: formData.spdNA || false,
+                  }}
+                  onUpdate={(field, value) => onUpdate(field, value)}
+                />
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
+
+          {/* Test Method & Notes */}
+          <div className="testing-info-section">
+            <Collapsible>
+              <CollapsibleTrigger asChild>
+                <button className="testing-info-header">
+                  <span className="flex items-center gap-2">
+                    <FileText className="h-4 w-4 text-elec-yellow" />
+                    Test Method & Notes
+                  </span>
+                  <ChevronDown className="h-4 w-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                </button>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="px-4 pb-4">
+                <TestMethodInfo formData={formData} onUpdate={onUpdate} />
+              </CollapsibleContent>
+            </Collapsible>
           </div>
         </div>
+      ) : (
+        /* Desktop: Horizontal Card Grid */
+        <div className="grid grid-cols-3 gap-4 mt-6">
+          <div className="testing-info-section p-4">
+            <h3 className="text-sm font-semibold text-white/90 flex items-center gap-2 mb-4">
+              <Wrench className="h-4 w-4 text-elec-yellow" />
+              Test Instruments
+            </h3>
+            <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
+          </div>
 
-        <div className="h-px bg-muted/50" />
-
-        {/* Distribution Board Verification */}
-        <div className="space-y-2">
-          <h3 className="text-sm font-semibold flex items-center gap-2 px-1">
-            <Zap className="h-4 w-4 text-elec-yellow" />
-            Distribution Board Verification
-          </h3>
-          <div className="bg-background/50 rounded-lg p-2">
+          <div className="testing-info-section p-4">
+            <h3 className="text-sm font-semibold text-white/90 flex items-center gap-2 mb-4">
+              <Zap className="h-4 w-4 text-elec-yellow" />
+              Distribution Board
+            </h3>
             <DistributionBoardVerificationSection
               data={{
                 dbReference: formData.dbReference || '',
@@ -1218,21 +1346,16 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               onUpdate={(field, value) => onUpdate(field, value)}
             />
           </div>
-        </div>
 
-        <div className="h-px bg-muted/50" />
-
-        {/* Test Method & Notes */}
-        <div className="space-y-2">
-          <h3 className="text-sm font-semibold flex items-center gap-2 px-1">
-            <FileText className="h-4 w-4 text-elec-yellow" />
-            Test Method & Notes
-          </h3>
-          <div className="bg-background/50 rounded-lg p-2">
+          <div className="testing-info-section p-4">
+            <h3 className="text-sm font-semibold text-white/90 flex items-center gap-2 mb-4">
+              <FileText className="h-4 w-4 text-elec-yellow" />
+              Test Method & Notes
+            </h3>
             <TestMethodInfo formData={formData} onUpdate={onUpdate} />
           </div>
         </div>
-      </div>
+      )}
 
       {/* Quick Fill RCD Panel Dialog */}
       {showQuickFillPanel && (
@@ -1259,29 +1382,56 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         </div>
       )}
 
-      {/* SHARED DIALOGS - Fixed positioned overlays */}
+      {/* SHARED DIALOGS - Tool Sheet Pattern */}
       {/* AI Board Photo Capture */}
       {showBoardCapture && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-3 md:p-4 z-50">
-          <div className="max-w-2xl w-full">
-            <BoardPhotoCapture
-              onAnalysisComplete={handleAIAnalysisComplete}
-              onClose={() => setShowBoardCapture(false)}
-            />
+        <>
+          <div className="tool-sheet-overlay" onClick={() => setShowBoardCapture(false)} />
+          <div className="tool-sheet-container">
+            <div className="tool-sheet-handle md:hidden" />
+            <div className="tool-sheet-header">
+              <div className="tool-sheet-title">
+                <Camera className="h-5 w-5 text-elec-yellow" />
+                AI Board Scanner
+              </div>
+              <Button variant="ghost" size="icon" onClick={() => setShowBoardCapture(false)} className="text-white/70 hover:text-white hover:bg-white/10">
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="tool-sheet-content">
+              <BoardPhotoCapture
+                onAnalysisComplete={handleAIAnalysisComplete}
+                onClose={() => setShowBoardCapture(false)}
+                renderContentOnly={true}
+              />
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Test Results Photo Capture */}
       {showTestResultsScan && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-3 md:p-4 z-50">
-          <div className="max-w-2xl w-full">
-            <TestResultsPhotoCapture
-              onAnalysisComplete={handleTestResultsAnalysisComplete}
-              onClose={() => setShowTestResultsScan(false)}
-            />
+        <>
+          <div className="tool-sheet-overlay" onClick={() => setShowTestResultsScan(false)} />
+          <div className="tool-sheet-container">
+            <div className="tool-sheet-handle md:hidden" />
+            <div className="tool-sheet-header">
+              <div className="tool-sheet-title">
+                <FileText className="h-5 w-5 text-elec-yellow" />
+                AI Test Results Scanner
+              </div>
+              <Button variant="ghost" size="icon" onClick={() => setShowTestResultsScan(false)} className="text-white/70 hover:text-white hover:bg-white/10">
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="tool-sheet-content">
+              <TestResultsPhotoCapture
+                onAnalysisComplete={handleTestResultsAnalysisComplete}
+                onClose={() => setShowTestResultsScan(false)}
+              />
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* AI Circuit Review */}
@@ -1325,78 +1475,76 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
       {/* Smart Auto-Fill Dialog */}
       {showSmartAutoFillDialog && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-3 z-50">
-          <div className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="bg-background rounded-lg">
-              <div className="flex items-center justify-between p-4 border-b">
-                <h3 className="text-lg font-semibold">Smart Circuit Auto-Fill</h3>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => setShowSmartAutoFillDialog(false)}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+        <>
+          <div className="tool-sheet-overlay" onClick={() => setShowSmartAutoFillDialog(false)} />
+          <div className="tool-sheet-container">
+            <div className="tool-sheet-handle md:hidden" />
+            <div className="tool-sheet-header">
+              <div className="tool-sheet-title">
+                <Sparkles className="h-5 w-5 text-elec-yellow" />
+                Smart Circuit Auto-Fill
               </div>
-              <div className="p-4">
-                <MobileSmartAutoFill 
-                  testResults={testResults}
-                  onUpdate={handleBulkUpdate}
-                />
-              </div>
+              <Button variant="ghost" size="icon" onClick={() => setShowSmartAutoFillDialog(false)} className="text-white/70 hover:text-white hover:bg-white/10">
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="tool-sheet-content">
+              <MobileSmartAutoFill
+                testResults={testResults}
+                onUpdate={handleBulkUpdate}
+              />
             </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* RCD Presets Dialog */}
       {showRcdPresetsDialog && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-3 z-50">
-          <div className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="bg-background rounded-lg">
-              <div className="flex items-center justify-between p-4 border-b">
-                <h3 className="text-lg font-semibold">Quick RCD Presets</h3>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => setShowRcdPresetsDialog(false)}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+        <>
+          <div className="tool-sheet-overlay" onClick={() => setShowRcdPresetsDialog(false)} />
+          <div className="tool-sheet-container">
+            <div className="tool-sheet-handle md:hidden" />
+            <div className="tool-sheet-header">
+              <div className="tool-sheet-title">
+                <Zap className="h-5 w-5 text-elec-yellow" />
+                Quick RCD Presets
               </div>
-              <div className="p-4">
-                <QuickRcdPresets 
-                  testResults={testResults.map(r => ({ id: r.id, circuitDesignation: r.circuitDesignation }))}
-                  onApplyToCircuits={(circuitIds, preset) => {
-                    // Batch update all circuits at once
-                    const updatedResults = testResults.map(result => {
-                      if (circuitIds.includes(result.id)) {
-                        return {
-                          ...result,
-                          rcdBsStandard: preset.bsStandard,
-                          rcdType: preset.type,
-                          rcdRating: preset.rating,
-                          rcdRatingA: preset.ratingA,
-                        };
-                      }
-                      return result;
-                    });
-                    
-                    setTestResults(updatedResults);
-                    onUpdate('scheduleOfTests', updatedResults);
-                    setShowRcdPresetsDialog(false);
-                    
-                    // Show success toast
-                    toast.success(`✓ ${preset.label} Applied`, {
-                      description: `RCD details set for ${circuitIds.length} circuit${circuitIds.length > 1 ? 's' : ''}`,
-                      duration: 2000,
-                    });
-                  }}
-                />
-              </div>
+              <Button variant="ghost" size="icon" onClick={() => setShowRcdPresetsDialog(false)} className="text-white/70 hover:text-white hover:bg-white/10">
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="tool-sheet-content">
+              <QuickRcdPresets
+                testResults={testResults.map(r => ({ id: r.id, circuitDesignation: r.circuitDesignation }))}
+                onApplyToCircuits={(circuitIds, preset) => {
+                  // Batch update all circuits at once
+                  const updatedResults = testResults.map(result => {
+                    if (circuitIds.includes(result.id)) {
+                      return {
+                        ...result,
+                        rcdBsStandard: preset.bsStandard,
+                        rcdType: preset.type,
+                        rcdRating: preset.rating,
+                        rcdRatingA: preset.ratingA,
+                      };
+                    }
+                    return result;
+                  });
+
+                  setTestResults(updatedResults);
+                  onUpdate('scheduleOfTests', updatedResults);
+                  setShowRcdPresetsDialog(false);
+
+                  // Show success toast
+                  toast.success(`✓ ${preset.label} Applied`, {
+                    description: `RCD details set for ${circuitIds.length} circuit${circuitIds.length > 1 ? 's' : ''}`,
+                    duration: 2000,
+                  });
+                }}
+              />
             </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Scribble to Table Dialog - Mobile Only */}

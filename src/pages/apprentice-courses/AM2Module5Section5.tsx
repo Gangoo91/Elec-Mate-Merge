@@ -1,8 +1,10 @@
-import { ArrowLeft, ArrowRight, AlertTriangle, CheckCircle, Target, RotateCcw, Lightbulb, BookOpen, Wrench, ChevronLeft, ChevronRight, Zap, Eye, Settings, TestTube, FileText, Shield } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { RotateCcw, Target, TestTube, Eye, Lightbulb, BookOpen, Wrench, Shield, AlertTriangle } from "lucide-react";
+import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
+import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
+import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
+import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
+import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
+import { AM2LearningOutcomes } from "@/components/apprentice-courses/AM2LearningOutcomes";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import useSEO from "@/hooks/useSEO";
@@ -120,7 +122,7 @@ const AM2Module5Section5 = () => {
       question: "Why should you include measurement units in recorded results?",
       options: ["To show precision", "To meet professional documentation standards", "To confuse assessors", "Units are optional"],
       correctAnswer: 1,
-      explanation: "Including proper units (Ω, MΩ, V, ms) demonstrates professional documentation standards and technical accuracy."
+      explanation: "Including proper units (Ohms, MOhms, V, ms) demonstrates professional documentation standards and technical accuracy."
     },
     {
       id: 10,
@@ -131,150 +133,84 @@ const AM2Module5Section5 = () => {
     }
   ];
 
-  return (
-    <div className="min-h-screen bg-[#1a1a1a]">
-      {/* Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <div className="flex items-center justify-between gap-2">
-            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-              <Link to="..">
-                <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
-                <span className="hidden xs:inline">Back to Module 5</span>
-                <span className="xs:hidden">Back</span>
-              </Link>
-            </Button>
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" className="text-white hover:text-white p-2" asChild>
-                <Link to="../section4">
-                  <ChevronLeft className="w-4 h-4" />
-                  <span className="hidden sm:inline ml-1">Section 4</span>
-                </Link>
-              </Button>
-              <Button variant="ghost" className="text-white hover:text-white p-2" asChild>
-                <Link to="../section6">
-                  <span className="hidden sm:inline mr-1">Section 6</span>
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+  const learningOutcomes = [
+    "State why re-testing after rectification is mandatory for compliance",
+    "Match each fault type to the correct verification test",
+    "Carry out re-tests methodically and record results professionally",
+    "Demonstrate complete diagnose → rectify → verify process",
+    "Understand what assessors expect in re-testing documentation"
+  ];
 
-      {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
-        {/* Title Section */}
-        <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
-            <RotateCcw className="w-4 h-4" />
-            Module 5 – Section 5
-          </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
-            Re-testing Procedures After Fault Rectification
-          </h1>
-          <p className="text-sm sm:text-base text-white mb-6 sm:mb-8 leading-relaxed">
-            In AM2, every rectified fault must be followed by re-testing. This proves that the fault has been corrected and that the circuit now complies with BS 7671. It also shows the assessor that you understand the professional responsibility of leaving installations safe after work.
-          </p>
-          <p className="text-sm sm:text-base text-white leading-relaxed">
+  return (
+    <AM2SectionLayout
+      backHref="/apprentice-courses/am2/module5"
+      breadcrumbs={[
+        { label: "AM2", href: "/apprentice-courses/am2" },
+        { label: "Module 5", href: "/apprentice-courses/am2/module5" },
+        { label: "Section 5" }
+      ]}
+    >
+      <AM2HeroSection
+        icon={RotateCcw}
+        title="Re-testing Procedures After Fault Rectification"
+        description="In AM2, every rectified fault must be followed by re-testing. This proves that the fault has been corrected and that the circuit now complies with BS 7671. It also shows the assessor that you understand the professional responsibility of leaving installations safe after work."
+        badge="Module 5 - Section 5"
+      />
+
+      <div className="space-y-6">
+        {/* Introduction */}
+        <AM2ContentCard>
+          <p className="text-ios-body text-white/80 leading-relaxed">
             Skipping re-testing is one of the easiest ways to lose marks in the fault-finding section, even if you diagnosed the fault correctly.
           </p>
-        </div>
+        </AM2ContentCard>
 
         {/* Critical Warning */}
-        <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2 text-sm sm:text-base">
-                  CRITICAL: Re-testing is Mandatory for Every Rectification
-                </h3>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow mb-3 leading-relaxed">
-                  Forgetting to state the appropriate re-test after rectification will result in lost marks, even if your fault diagnosis was completely correct.
-                </p>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow font-medium leading-relaxed">
-                  Every fix must be verified — this demonstrates professional competence and compliance with BS 7671 Part 6.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Card>
+        <AM2CriticalWarning title="CRITICAL: Re-testing is Mandatory for Every Rectification">
+          <p className="text-ios-callout text-white/80 mb-3 leading-relaxed">
+            Forgetting to state the appropriate re-test after rectification will result in lost marks, even if your fault diagnosis was completely correct.
+          </p>
+          <p className="text-ios-callout text-white/80 font-medium leading-relaxed">
+            Every fix must be verified - this demonstrates professional competence and compliance with BS 7671 Part 6.
+          </p>
+        </AM2CriticalWarning>
 
         {/* Learning Outcomes */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <CheckCircle className="w-5 h-5" />
-              Learning Outcomes
-            </h2>
-            <p className="text-xs sm:text-sm text-white mb-4">
-              By the end of this section, you should be able to:
-            </p>
-            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-white">
+        <AM2LearningOutcomes outcomes={learningOutcomes} />
+
+        {/* Why Re-testing Matters */}
+        <AM2ContentCard
+          title="1. Why Re-testing Matters"
+          icon={Target}
+        >
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline font-semibold text-white mb-3">Essential Reasons for Re-testing:</h4>
+            <ul className="space-y-2">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                State why re-testing after rectification is mandatory for compliance
+                <span className="text-elec-yellow">•</span>
+                <span className="text-ios-callout text-white/80"><strong className="text-white">Safety Verification:</strong> Confirms the circuit is now safe to use</span>
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Match each fault type to the correct verification test
+                <span className="text-elec-yellow">•</span>
+                <span className="text-ios-callout text-white/80"><strong className="text-white">Proof of Rectification:</strong> Demonstrates that fixes were carried out correctly</span>
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Carry out re-tests methodically and record results professionally
+                <span className="text-elec-yellow">•</span>
+                <span className="text-ios-callout text-white/80"><strong className="text-white">Hidden Fault Detection:</strong> Prevents secondary faults being left in place</span>
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Demonstrate complete diagnose → rectify → verify process
+                <span className="text-elec-yellow">•</span>
+                <span className="text-ios-callout text-white/80"><strong className="text-white">BS 7671 Compliance:</strong> Satisfies Part 6 verification requirements</span>
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Understand what assessors expect in re-testing documentation
+                <span className="text-elec-yellow">•</span>
+                <span className="text-ios-callout text-white/80"><strong className="text-white">Professional Documentation:</strong> Provides evidence for certification</span>
               </li>
             </ul>
           </div>
-        </Card>
+        </AM2ContentCard>
 
-        {/* Why Re-testing Matters */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Target className="w-5 h-5" />
-              1. Why Re-testing Matters
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="border border-white/10 rounded-lg p-4">
-                <h4 className="font-medium text-white mb-3">Essential Reasons for Re-testing:</h4>
-                <ul className="text-sm text-white space-y-2">
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow font-bold">•</span>
-                    <span><strong>Safety Verification:</strong> Confirms the circuit is now safe to use</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow font-bold">•</span>
-                    <span><strong>Proof of Rectification:</strong> Demonstrates that fixes were carried out correctly</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow font-bold">•</span>
-                    <span><strong>Hidden Fault Detection:</strong> Prevents secondary faults being left in place</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow font-bold">•</span>
-                    <span><strong>BS 7671 Compliance:</strong> Satisfies Part 6 verification requirements</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-elec-yellow font-bold">•</span>
-                    <span><strong>Professional Documentation:</strong> Provides evidence for certification</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        <InlineCheck 
+        <InlineCheck
           id={quickCheckQuestions[0].id}
           question={quickCheckQuestions[0].question}
           options={quickCheckQuestions[0].options}
@@ -283,60 +219,105 @@ const AM2Module5Section5 = () => {
         />
 
         {/* Re-testing Requirements by Fault Type */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <TestTube className="w-5 h-5" />
-              2. Re-testing Requirements by Fault Type
-            </h2>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="border border-white/10 rounded-lg p-4">
-                <h4 className="font-medium text-white mb-3 text-sm sm:text-base">Open Circuit Faults:</h4>
-                <ul className="text-xs sm:text-sm text-white space-y-1">
-                  <li>• <strong>Fault:</strong> Complete break in conductor path</li>
-                  <li>• <strong>Re-test:</strong> Continuity test between conductor ends</li>
-                  <li>• <strong>Expected result:</strong> Low resistance reading (≤0.05Ω per metre)</li>
-                  <li>• <strong>Tool:</strong> Continuity tester with 200mA test current</li>
-                </ul>
-              </div>
-              
-              <div className="border border-white/10 rounded-lg p-4">
-                <h4 className="font-medium text-white mb-3 text-sm sm:text-base">Short Circuit Faults:</h4>
-                <ul className="text-xs sm:text-sm text-white space-y-1">
-                  <li>• <strong>Fault:</strong> Direct connection between conductors</li>
-                  <li>• <strong>Re-test:</strong> Insulation resistance between conductors</li>
-                  <li>• <strong>Expected result:</strong> ≥1MΩ (minimum acceptable)</li>
-                  <li>• <strong>Tool:</strong> Insulation resistance tester at 500V</li>
-                </ul>
-              </div>
+        <AM2ContentCard
+          title="2. Re-testing Requirements by Fault Type"
+          icon={TestTube}
+          accent
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline font-semibold text-white mb-3">Open Circuit Faults:</h4>
+              <ul className="space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Fault:</strong> Complete break in conductor path</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Re-test:</strong> Continuity test between conductor ends</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Expected result:</strong> Low resistance reading (0.05 Ohms per metre or less)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Tool:</strong> Continuity tester with 200mA test current</span>
+                </li>
+              </ul>
             </div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-              <div className="border border-white/10 rounded-lg p-4">
-                <h4 className="font-medium text-white mb-3 text-sm sm:text-base">High Resistance Connections:</h4>
-                <ul className="text-xs sm:text-sm text-white space-y-1">
-                  <li>• <strong>Fault:</strong> Poor connection causing high resistance</li>
-                  <li>• <strong>Re-test:</strong> Earth fault loop impedance (Zs)</li>
-                  <li>• <strong>Expected result:</strong> Within acceptable limits for circuit</li>
-                  <li>• <strong>Also check:</strong> Continuity at the connection point</li>
-                </ul>
-              </div>
-              
-              <div className="border border-white/10 rounded-lg p-4">
-                <h4 className="font-medium text-white mb-3 text-sm sm:text-base">Polarity Errors:</h4>
-                <ul className="text-xs sm:text-sm text-white space-y-1">
-                  <li>• <strong>Fault:</strong> Incorrect L/N connections</li>
-                  <li>• <strong>Re-test:</strong> Polarity test at outlets/switches</li>
-                  <li>• <strong>Expected result:</strong> Correct L/N identification</li>
-                  <li>• <strong>Tool:</strong> Proving unit or polarity tester</li>
-                </ul>
-              </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline font-semibold text-white mb-3">Short Circuit Faults:</h4>
+              <ul className="space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Fault:</strong> Direct connection between conductors</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Re-test:</strong> Insulation resistance between conductors</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Expected result:</strong> 1 MOhms or greater (minimum acceptable)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Tool:</strong> Insulation resistance tester at 500V</span>
+                </li>
+              </ul>
             </div>
           </div>
-        </Card>
 
-        <InlineCheck 
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline font-semibold text-white mb-3">High Resistance Connections:</h4>
+              <ul className="space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Fault:</strong> Poor connection causing high resistance</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Re-test:</strong> Earth fault loop impedance (Zs)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Expected result:</strong> Within acceptable limits for circuit</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Also check:</strong> Continuity at the connection point</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline font-semibold text-white mb-3">Polarity Errors:</h4>
+              <ul className="space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Fault:</strong> Incorrect L/N connections</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Re-test:</strong> Polarity test at outlets/switches</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Expected result:</strong> Correct L/N identification</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70"><strong className="text-white/90">Tool:</strong> Proving unit or polarity tester</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </AM2ContentCard>
+
+        <InlineCheck
           id={quickCheckQuestions[1].id}
           question={quickCheckQuestions[1].question}
           options={quickCheckQuestions[1].options}
@@ -345,80 +326,97 @@ const AM2Module5Section5 = () => {
         />
 
         {/* What Assessors Look For */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Eye className="w-5 h-5" />
-              3. What Assessors Look For
-            </h2>
-            
-            <div className="space-y-6">
-              <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-green-800 dark:text-green-200 mb-3">Key Assessment Criteria:</h4>
-                <ul className="text-sm text-green-700 dark:text-green-300 space-y-2">
-                  <li>• <strong>Clear linkage:</strong> Every rectification must be followed by appropriate re-test</li>
-                  <li>• <strong>Correct test method:</strong> Right test for the fault type identified</li>
-                  <li>• <strong>Realistic results:</strong> Recorded values that make sense for the circuit</li>
-                  <li>• <strong>Professional documentation:</strong> Clear, legible records with proper units</li>
-                  <li>• <strong>Safety confirmation:</strong> Statement that installation is now safe</li>
-                </ul>
-              </div>
-              
-              <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-amber-800 dark:text-amber-200 mb-3">Professional Testing Technique:</h4>
-                <p className="text-sm text-amber-700 dark:text-amber-300 mb-3">
-                  Assessors want to see that you understand the <em>purpose</em> of each re-test, not just the procedure.
-                </p>
-                <ul className="text-sm text-amber-700 dark:text-amber-300 space-y-1">
-                  <li>• Explain why this specific test proves the fault is rectified</li>
-                  <li>• Use proper terminology (not "check" but "re-test continuity")</li>
-                  <li>• Include measurement units (Ω, MΩ, V, ms)</li>
-                  <li>• State compliance with relevant BS 7671 requirements</li>
-                </ul>
-              </div>
+        <AM2ContentCard
+          title="3. What Assessors Look For"
+          icon={Eye}
+        >
+          <div className="space-y-4">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline font-semibold text-white mb-3">Key Assessment Criteria:</h4>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80"><strong className="text-white">Clear linkage:</strong> Every rectification must be followed by appropriate re-test</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80"><strong className="text-white">Correct test method:</strong> Right test for the fault type identified</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80"><strong className="text-white">Realistic results:</strong> Recorded values that make sense for the circuit</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80"><strong className="text-white">Professional documentation:</strong> Clear, legible records with proper units</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80"><strong className="text-white">Safety confirmation:</strong> Statement that installation is now safe</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-amber-950/20 border border-amber-800/30 rounded-xl p-4">
+              <h4 className="text-ios-headline font-semibold text-amber-200 mb-3">Professional Testing Technique:</h4>
+              <p className="text-ios-callout text-white/80 mb-3">
+                Assessors want to see that you understand the <em>purpose</em> of each re-test, not just the procedure.
+              </p>
+              <ul className="space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70">Explain why this specific test proves the fault is rectified</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70">Use proper terminology (not "check" but "re-test continuity")</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70">Include measurement units (Ohms, MOhms, V, ms)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-footnote text-white/70">State compliance with relevant BS 7671 requirements</span>
+                </li>
+              </ul>
             </div>
           </div>
-        </Card>
+        </AM2ContentCard>
 
         {/* Common Mistakes */}
-        <Card className="bg-red-500/20 border-border/30 hover:border-red-300/40 transition-all duration-300 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-red-800 dark:text-red-200 mb-4 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5" />
-              4. Common Candidate Mistakes
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="border border-red-300 dark:border-red-700 rounded-lg p-4">
-                <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">Top Mistakes That Lose Marks:</h4>
-                <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-2">
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-600 font-bold">✗</span>
-                    <span><strong>Forgetting re-test:</strong> Stating rectification without mentioning verification</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-600 font-bold">✗</span>
-                    <span><strong>Wrong test method:</strong> Using Zs when IR is needed, or vice versa</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-600 font-bold">✗</span>
-                    <span><strong>Unrealistic values:</strong> Recording exactly 0.00Ω or perfect book answers</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-600 font-bold">✗</span>
-                    <span><strong>Missing units:</strong> Recording "2.5" instead of "2.5Ω"</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-red-600 font-bold">✗</span>
-                    <span><strong>No safety confirmation:</strong> Failing to state installation is now safe</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+        <AM2ContentCard
+          title="4. Common Candidate Mistakes"
+          icon={AlertTriangle}
+        >
+          <div className="bg-red-950/20 border border-red-800/30 rounded-xl p-4">
+            <h4 className="text-ios-headline font-semibold text-red-200 mb-3">Top Mistakes That Lose Marks:</h4>
+            <ul className="space-y-2">
+              <li className="flex items-start gap-2">
+                <span className="text-red-400 font-bold">X</span>
+                <span className="text-ios-callout text-white/80"><strong className="text-white">Forgetting re-test:</strong> Stating rectification without mentioning verification</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400 font-bold">X</span>
+                <span className="text-ios-callout text-white/80"><strong className="text-white">Wrong test method:</strong> Using Zs when IR is needed, or vice versa</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400 font-bold">X</span>
+                <span className="text-ios-callout text-white/80"><strong className="text-white">Unrealistic values:</strong> Recording exactly 0.00 Ohms or perfect book answers</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400 font-bold">X</span>
+                <span className="text-ios-callout text-white/80"><strong className="text-white">Missing units:</strong> Recording "2.5" instead of "2.5 Ohms"</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400 font-bold">X</span>
+                <span className="text-ios-callout text-white/80"><strong className="text-white">No safety confirmation:</strong> Failing to state installation is now safe</span>
+              </li>
+            </ul>
           </div>
-        </Card>
+        </AM2ContentCard>
 
-        <InlineCheck 
+        <InlineCheck
           id={quickCheckQuestions[2].id}
           question={quickCheckQuestions[2].question}
           options={quickCheckQuestions[2].options}
@@ -427,223 +425,235 @@ const AM2Module5Section5 = () => {
         />
 
         {/* Professional Best Practices */}
-        <Card className="bg-transparent border-elec-yellow/30 hover:border-elec-yellow/30 transition-all duration-300 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-blue-800 dark:text-blue-200 mb-4 flex items-center gap-2">
-              <Lightbulb className="w-5 h-5" />
-              5. Professional Re-testing Best Practices
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="border border-blue-300 dark:border-blue-700 rounded-lg p-4">
-                <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">The "Fix and Verify" Formula:</h4>
-                <p className="text-sm text-blue-700 dark:text-elec-yellow mb-3">
-                  Always structure your answers as: <strong>Action + Re-test + Result + Compliance</strong>
+        <AM2ContentCard
+          title="5. Professional Re-testing Best Practices"
+          icon={Lightbulb}
+          accent
+        >
+          <div className="space-y-4">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline font-semibold text-white mb-3">The "Fix and Verify" Formula:</h4>
+              <p className="text-ios-callout text-white/80 mb-3">
+                Always structure your answers as: <strong className="text-white">Action + Re-test + Result + Compliance</strong>
+              </p>
+              <div className="bg-white/5 border border-white/10 rounded-lg p-3">
+                <p className="text-ios-callout text-white/80 font-mono">
+                  "Reconnect CPC at socket outlet → Re-test continuity → 0.15 Ohms recorded → Complies with BS 7671"
                 </p>
-                <div className="bg-blue-100 dark:bg-blue-900/30 rounded p-3">
-                  <p className="text-sm text-blue-800 dark:text-blue-200 font-mono">
-                    "Reconnect CPC at socket outlet → Re-test continuity → 0.15Ω recorded → Complies with BS 7671"
-                  </p>
-                </div>
               </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="border border-blue-300 dark:border-blue-700 rounded-lg p-4">
-                  <h5 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Time Management Tips:</h5>
-                  <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
-                    <li>• Plan rectification and re-test together</li>
-                    <li>• Have test equipment ready before rectifying</li>
-                    <li>• Document as you work, not afterwards</li>
-                  </ul>
-                </div>
-                
-                <div className="border border-blue-300 dark:border-blue-700 rounded-lg p-4">
-                  <h5 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Documentation Standards:</h5>
-                  <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
-                    <li>• Use technical terminology consistently</li>
-                    <li>• Include all relevant measurement units</li>
-                    <li>• Reference BS 7671 compliance explicitly</li>
-                  </ul>
-                </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                <h5 className="text-ios-callout font-semibold text-white mb-2">Time Management Tips:</h5>
+                <ul className="space-y-1">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span className="text-ios-footnote text-white/70">Plan rectification and re-test together</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span className="text-ios-footnote text-white/70">Have test equipment ready before rectifying</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span className="text-ios-footnote text-white/70">Document as you work, not afterwards</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                <h5 className="text-ios-callout font-semibold text-white mb-2">Documentation Standards:</h5>
+                <ul className="space-y-1">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span className="text-ios-footnote text-white/70">Use technical terminology consistently</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span className="text-ios-footnote text-white/70">Include all relevant measurement units</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span className="text-ios-footnote text-white/70">Reference BS 7671 compliance explicitly</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-        </Card>
+        </AM2ContentCard>
 
         {/* Real-World Applications */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Wrench className="w-5 h-5" />
-              6. Real-World Application Examples
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">✓ CORRECT Example:</h4>
-                <p className="text-sm text-green-700 dark:text-green-300 italic mb-2">
-                  "Open circuit detected in ring final circuit. Loose connection found at socket 4."
-                </p>
-                <p className="text-sm text-green-700 dark:text-green-300 font-medium">
-                  "Rectification: Remake connection at socket 4 terminals → Re-test: Ring final circuit continuity → Result: 0.24Ω recorded → Complies with BS 7671 Table I1"
-                </p>
-              </div>
-              
-              <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">✗ INCORRECT Example:</h4>
-                <p className="text-sm text-red-700 dark:text-elec-yellow italic mb-2">
-                  "Open circuit detected in ring final circuit. Loose connection found at socket 4."
-                </p>
-                <p className="text-sm text-red-700 dark:text-elec-yellow">
-                  "Fixed the connection." <em>(No re-test mentioned - marks lost!)</em>
-                </p>
-              </div>
-              
-              <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-amber-800 dark:text-amber-200 mb-2">Industry Reality Check:</h4>
-                <p className="text-sm text-amber-700 dark:text-amber-300">
-                  An electrician fixed a loose CPC connection but didn't re-test Zs. The circuit was later found to still have high earth loop impedance, creating a safety hazard. The client held the electrician responsible for incomplete work.
-                </p>
-              </div>
+        <AM2ContentCard
+          title="6. Real-World Application Examples"
+          icon={Wrench}
+        >
+          <div className="space-y-4">
+            <div className="bg-green-950/20 border border-green-800/30 rounded-xl p-4">
+              <h4 className="text-ios-headline font-semibold text-green-200 mb-3">CORRECT Example:</h4>
+              <p className="text-ios-callout text-white/80 italic mb-2">
+                "Open circuit detected in ring final circuit. Loose connection found at socket 4."
+              </p>
+              <p className="text-ios-callout text-white/80 font-medium">
+                "Rectification: Remake connection at socket 4 terminals → Re-test: Ring final circuit continuity → Result: 0.24 Ohms recorded → Complies with BS 7671 Table I1"
+              </p>
+            </div>
+
+            <div className="bg-red-950/20 border border-red-800/30 rounded-xl p-4">
+              <h4 className="text-ios-headline font-semibold text-red-200 mb-3">INCORRECT Example:</h4>
+              <p className="text-ios-callout text-white/80 italic mb-2">
+                "Open circuit detected in ring final circuit. Loose connection found at socket 4."
+              </p>
+              <p className="text-ios-callout text-white/80">
+                "Fixed the connection." <em>(No re-test mentioned - marks lost!)</em>
+              </p>
+            </div>
+
+            <div className="bg-amber-950/20 border border-amber-800/30 rounded-xl p-4">
+              <h4 className="text-ios-headline font-semibold text-amber-200 mb-3">Industry Reality Check:</h4>
+              <p className="text-ios-callout text-white/80">
+                An electrician fixed a loose CPC connection but didn't re-test Zs. The circuit was later found to still have high earth loop impedance, creating a safety hazard. The client held the electrician responsible for incomplete work.
+              </p>
             </div>
           </div>
-        </Card>
+        </AM2ContentCard>
 
         {/* Advanced Re-testing Scenarios */}
-        <Card className="bg-transparent border-elec-yellow/30 hover:border-elec-yellow/30 transition-all duration-300 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-purple-800 dark:text-purple-200 mb-4 flex items-center gap-2">
-              <Settings className="w-5 h-5" />
-              7. Advanced Re-testing Scenarios
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="border border-purple-300 dark:border-purple-700 rounded-lg p-4">
-                <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3">Multiple Test Requirements:</h4>
-                <p className="text-sm text-purple-700 dark:text-elec-yellow mb-3">
-                  Some faults require multiple re-tests to fully verify rectification:
-                </p>
-                <ul className="text-sm text-purple-700 dark:text-elec-yellow space-y-2">
-                  <li>• <strong>Earth fault:</strong> IR test (L-E, N-E) + RCD operation test</li>
-                  <li>• <strong>Damaged cable:</strong> Continuity + Insulation resistance + Zs</li>
-                  <li>• <strong>Accessory replacement:</strong> Polarity + Functional operation + IR</li>
-                </ul>
-              </div>
-              
-              <div className="border border-purple-300 dark:border-purple-700 rounded-lg p-4">
-                <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3">System-Wide Verification:</h4>
-                <p className="text-sm text-purple-700 dark:text-elec-yellow">
-                  After major rectifications, consider testing related circuits to ensure no secondary effects were introduced.
-                </p>
-              </div>
+        <AM2ContentCard
+          title="7. Advanced Re-testing Scenarios"
+          icon={Target}
+        >
+          <div className="space-y-4">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline font-semibold text-white mb-3">Multiple Test Requirements:</h4>
+              <p className="text-ios-callout text-white/80 mb-3">
+                Some faults require multiple re-tests to fully verify rectification:
+              </p>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80"><strong className="text-white">Earth fault:</strong> IR test (L-E, N-E) + RCD operation test</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80"><strong className="text-white">Damaged cable:</strong> Continuity + Insulation resistance + Zs</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80"><strong className="text-white">Accessory replacement:</strong> Polarity + Functional operation + IR</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline font-semibold text-white mb-3">System-Wide Verification:</h4>
+              <p className="text-ios-callout text-white/80">
+                After major rectifications, consider testing related circuits to ensure no secondary effects were introduced.
+              </p>
             </div>
           </div>
-        </Card>
+        </AM2ContentCard>
 
         {/* Professional Success Through Re-testing */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Shield className="w-5 h-5" />
-              8. Professional Success Through Proper Re-testing
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border border-elec-yellow/30 rounded-lg p-4">
-                <h4 className="font-medium text-white mb-3">Career Development Benefits:</h4>
-                <ul className="text-sm text-white space-y-2">
-                  <li>• <strong>Client confidence:</strong> Proper verification builds trust and repeat business</li>
-                  <li>• <strong>Legal protection:</strong> Documented re-testing provides liability coverage</li>
-                  <li>• <strong>Professional reputation:</strong> Thorough work sets you apart from competitors</li>
-                  <li>• <strong>Competency evidence:</strong> Systematic approach demonstrates skill level</li>
-                </ul>
-              </div>
-              
-              <div className="border border-white/10 rounded-lg p-4">
-                <h4 className="font-medium text-white mb-3">Building Industry Credibility:</h4>
-                <p className="text-sm text-white">
-                  Electricians who consistently verify their work through proper re-testing earn reputations as thorough professionals. 
-                  This attention to detail often leads to supervisory roles and higher-value contracts.
-                </p>
-              </div>
+        <AM2ContentCard
+          title="8. Professional Success Through Proper Re-testing"
+          icon={Shield}
+        >
+          <div className="space-y-4">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline font-semibold text-white mb-3">Career Development Benefits:</h4>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80"><strong className="text-white">Client confidence:</strong> Proper verification builds trust and repeat business</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80"><strong className="text-white">Legal protection:</strong> Documented re-testing provides liability coverage</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80"><strong className="text-white">Professional reputation:</strong> Thorough work sets you apart from competitors</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80"><strong className="text-white">Competency evidence:</strong> Systematic approach demonstrates skill level</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline font-semibold text-white mb-3">Building Industry Credibility:</h4>
+              <p className="text-ios-callout text-white/80">
+                Electricians who consistently verify their work through proper re-testing earn reputations as thorough professionals. This attention to detail often leads to supervisory roles and higher-value contracts.
+              </p>
             </div>
           </div>
-        </Card>
+        </AM2ContentCard>
 
         {/* Summary */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <BookOpen className="w-5 h-5" />
-              Summary: The Re-testing Imperative
-            </h2>
-            
-            <div className="space-y-4">
-              <p className="text-sm text-white leading-relaxed">
-                Re-testing after rectification isn't just an AM2 requirement — it's fundamental to electrical safety and professional competence. 
-                Every fix must be verified to ensure the circuit is safe and compliant.
-              </p>
-              
-              <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-                <h4 className="font-medium text-white mb-3">Remember the Golden Rules:</h4>
-                <ul className="text-sm text-white space-y-1">
-                  <li>• Every rectification requires an appropriate re-test</li>
-                  <li>• Match the test to the fault type corrected</li>
-                  <li>• Record realistic results with proper units</li>
-                  <li>• Confirm BS 7671 compliance explicitly</li>
-                  <li>• Document that the installation is now safe</li>
-                </ul>
-              </div>
-              
-              <p className="text-sm text-white font-medium">
-                Skipping re-testing guarantees lost marks in AM2, but more importantly, it compromises safety and professional standards.
-              </p>
+        <AM2ContentCard
+          title="Summary: The Re-testing Imperative"
+          icon={BookOpen}
+          accent
+        >
+          <div className="space-y-4">
+            <p className="text-ios-body text-white/80 leading-relaxed">
+              Re-testing after rectification isn't just an AM2 requirement - it's fundamental to electrical safety and professional competence. Every fix must be verified to ensure the circuit is safe and compliant.
+            </p>
+
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline font-semibold text-white mb-3">Remember the Golden Rules:</h4>
+              <ul className="space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80">Every rectification requires an appropriate re-test</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80">Match the test to the fault type corrected</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80">Record realistic results with proper units</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80">Confirm BS 7671 compliance explicitly</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span className="text-ios-callout text-white/80">Document that the installation is now safe</span>
+                </li>
+              </ul>
             </div>
+
+            <p className="text-ios-body text-white/80 font-medium">
+              Skipping re-testing guarantees lost marks in AM2, but more importantly, it compromises safety and professional standards.
+            </p>
           </div>
-        </Card>
+        </AM2ContentCard>
 
         {/* Quiz Section */}
-        <Card className="bg-transparent border-elec-yellow/30">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <FileText className="w-5 h-5" />
-              Test Your Knowledge
-            </h2>
-            <p className="text-sm text-white mb-6">
-              Test your understanding of re-testing procedures after fault rectification:
-            </p>
-            <Quiz 
-              questions={quizQuestions}
-              title="Re-testing Procedures Quiz"
-            />
-          </div>
-        </Card>
+        <div className="border-t border-white/10 pt-8">
+          <Quiz
+            title="Re-testing Procedures Quiz"
+            questions={quizQuestions}
+          />
+        </div>
 
-        {/* Bottom Navigation */}
-        <div className="mt-12 pt-8 border-t border-white/10 space-y-4">
-          {/* Previous Section */}
-          <Button variant="outline" className="w-full h-auto p-4 bg-[#1a1a1a] border-border text-white hover:bg-[#1a1a1a]/80" asChild>
-            <Link to="../section4">
-              <div className="flex items-center justify-center gap-3">
-                <ArrowLeft className="w-5 h-5" />
-                <span className="text-base font-medium">Previous: Fault Rectification</span>
-              </div>
-            </Link>
-          </Button>
+        {/* Navigation */}
+        <AM2NavigationFooter
+          previousHref="../section4"
+          previousLabel="Fault Rectification"
+          nextHref="../section6"
+          nextLabel="Quick Reference Sheet"
+          currentSection={5}
+          totalSections={6}
+        />
+      </div>
+    </AM2SectionLayout>
+  );
+};
 
-          {/* Next Section */}
-          <Button variant="outline" className="w-full h-auto p-4 bg-elec-yellow border-elec-yellow text-black hover:bg-elec-yellow/80" asChild>
-            <Link to="../section6">
-              <div className="flex items-center justify-center gap-3">
-                <span className="text-base font-medium">Next: Quick Reference Sheet</span>
-                <ArrowRight className="w-5 h-5" />
-               </div>
-             </Link>
-           </Button>
-         </div>
-       </div>
-     </div>
-   );
- };
- 
- export default AM2Module5Section5;
+export default AM2Module5Section5;

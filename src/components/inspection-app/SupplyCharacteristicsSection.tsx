@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Input } from '@/components/ui/input';
@@ -82,16 +81,16 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
   };
 
   return (
-    <Card className="border border-border bg-card overflow-hidden relative">
+    <div className="eicr-section-card">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <SectionHeader 
-          title="Supply & Earthing Characteristics" 
+        <SectionHeader
+          title="Supply & Earthing Characteristics"
           icon={Zap}
           isOpen={isOpen}
           color="purple-500"
         />
         <CollapsibleContent>
-          <CardContent className="p-3 sm:p-4 md:p-6 space-y-3 sm:space-y-4">
+          <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
         <div className="space-y-3 sm:space-y-4">
           <h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-border pb-2 flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-purple-400"></div>
@@ -337,10 +336,10 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
             </div>
           )}
         </div>
-          </CardContent>
+          </div>
         </CollapsibleContent>
       </Collapsible>
-    </Card>
+    </div>
   );
 };
 

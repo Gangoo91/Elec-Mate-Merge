@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,14 +8,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { 
-  Plus, 
-  Trash2, 
+import { IOSStepIndicator } from "@/components/ui/ios-step-indicator";
+import {
+  Plus,
+  Trash2,
   FileText,
   Calculator,
   ChevronLeft,
   ChevronRight,
-  Send
+  Send,
+  X
 } from "lucide-react";
 import { useCreateInvoice, useNextInvoiceNumber, useQuotes } from "@/hooks/useFinance";
 import type { Quote } from "@/services/financeService";
@@ -223,30 +225,45 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
     }
   };
 
+  // Step labels for display
+  const stepLabels = ["Client", "Items", "Review"];
+  const currentStepLabel = stepLabels[step - 1];
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[95vh] p-0">
+      <SheetContent side="bottom" className="h-[95vh] p-0 rounded-t-3xl">
         <div className="flex flex-col h-full">
-          {/* Header */}
-          <SheetHeader className="px-4 py-3 border-b border-border">
+          {/* Native Header with drag indicator */}
+          <div className="pt-2 pb-1 flex justify-center">
+            <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+          </div>
+
+          <SheetHeader className="px-4 pb-4 border-b border-border">
             <div className="flex items-center justify-between">
-              <div>
-                <SheetTitle className="text-lg">New Invoice</SheetTitle>
-                <SheetDescription className="text-xs">{invoiceNumber}</SheetDescription>
+              <div className="flex items-center gap-3">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-9 w-9 rounded-full"
+                  onClick={() => onOpenChange(false)}
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+                <div>
+                  <SheetTitle className="text-lg font-semibold">New Invoice</SheetTitle>
+                  <SheetDescription className="text-xs font-mono text-muted-foreground">{invoiceNumber}</SheetDescription>
+                </div>
               </div>
-              <div className="flex gap-1">
-                {[1, 2, 3].map((s) => (
-                  <div 
-                    key={s} 
-                    className={`w-8 h-1 rounded-full ${s <= step ? 'bg-elec-yellow' : 'bg-muted'}`} 
-                  />
-                ))}
+              <div className="text-right">
+                <span className="text-sm font-medium text-muted-foreground">{currentStepLabel}</span>
+                <IOSStepIndicator steps={3} currentStep={step - 1} className="mt-1" />
               </div>
             </div>
           </SheetHeader>
 
           {/* Content */}
-          <ScrollArea className="flex-1 px-4 py-4">
+          <ScrollArea className="flex-1 px-4">
+            <div className="py-6 pb-48">
             {step === 1 && (
               <div className="space-y-5">
                 {/* Create from Quote */}
@@ -477,7 +494,7 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                       </div>
                       <div className="flex justify-between pt-2 border-t border-border">
                         <span className="text-lg font-bold">Total Due</span>
-                        <span className="text-2xl font-bold text-elec-yellow">£{total.toFixed(2)}</span>
+                        <span className="text-2xl font-bold text-elec-yellow tabular-nums">£{total.toFixed(2)}</span>
                       </div>
                     </div>
                   </CardContent>
@@ -512,63 +529,67 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                 </div>
               </div>
             )}
+            </div>
           </ScrollArea>
 
-          {/* Totals Bar */}
-          <div className="px-4 py-2 border-t border-border bg-muted/30">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Calculator className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Total Due</span>
+          {/* Fixed Bottom Bar with Totals and Actions */}
+          <div className="absolute bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border">
+            {/* Totals Row */}
+            <div className="px-4 py-3 border-b border-border/50">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Calculator className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">Total Due</span>
+                </div>
+                <span className="text-xl font-bold text-elec-yellow tabular-nums">£{total.toFixed(2)}</span>
               </div>
-              <span className="text-xl font-bold text-elec-yellow">£{total.toFixed(2)}</span>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="px-4 py-3 pb-safe">
+              <div className="flex gap-3 w-full">
+                {step > 1 ? (
+                  <Button variant="outline" onClick={() => setStep(step - 1)} className="flex-1 h-12">
+                    <ChevronLeft className="h-4 w-4 mr-1" />
+                    Back
+                  </Button>
+                ) : (
+                  <Button variant="outline" onClick={() => onOpenChange(false)} className="flex-1 h-12">
+                    Cancel
+                  </Button>
+                )}
+                {step < 3 ? (
+                  <Button
+                    onClick={() => setStep(step + 1)}
+                    disabled={!canProceed()}
+                    className="flex-1 h-12"
+                  >
+                    Next
+                    <ChevronRight className="h-4 w-4 ml-1" />
+                  </Button>
+                ) : (
+                  <div className="flex gap-2 flex-1">
+                    <Button
+                      variant="outline"
+                      onClick={() => handleSubmit(false)}
+                      disabled={createInvoiceMutation.isPending}
+                      className="flex-1 h-12"
+                    >
+                      Save Draft
+                    </Button>
+                    <Button
+                      onClick={() => handleSubmit(true)}
+                      disabled={createInvoiceMutation.isPending}
+                      className="flex-1 h-12"
+                    >
+                      <Send className="h-4 w-4 mr-1" />
+                      Send
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-
-          {/* Footer */}
-          <SheetFooter className="px-4 py-3 border-t border-border pb-safe">
-            <div className="flex gap-3 w-full">
-              {step > 1 ? (
-                <Button variant="outline" onClick={() => setStep(step - 1)} className="flex-1 h-12">
-                  <ChevronLeft className="h-4 w-4 mr-1" />
-                  Back
-                </Button>
-              ) : (
-                <Button variant="outline" onClick={() => onOpenChange(false)} className="flex-1 h-12">
-                  Cancel
-                </Button>
-              )}
-              {step < 3 ? (
-                <Button
-                  onClick={() => setStep(step + 1)}
-                  disabled={!canProceed()}
-                  className="flex-1 h-12"
-                >
-                  Next
-                  <ChevronRight className="h-4 w-4 ml-1" />
-                </Button>
-              ) : (
-                <div className="flex gap-2 flex-1">
-                  <Button
-                    variant="outline"
-                    onClick={() => handleSubmit(false)}
-                    disabled={createInvoiceMutation.isPending}
-                    className="flex-1 h-12"
-                  >
-                    Save Draft
-                  </Button>
-                  <Button
-                    onClick={() => handleSubmit(true)}
-                    disabled={createInvoiceMutation.isPending}
-                    className="flex-1 h-12"
-                  >
-                    <Send className="h-4 w-4 mr-1" />
-                    Send
-                  </Button>
-                </div>
-              )}
-            </div>
-          </SheetFooter>
         </div>
       </SheetContent>
     </Sheet>

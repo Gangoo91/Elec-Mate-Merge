@@ -14,6 +14,7 @@ import { useStreamingBoardAnalysis } from '@/hooks/useStreamingBoardAnalysis';
 interface BoardPhotoCaptureProps {
   onAnalysisComplete: (data: any) => void;
   onClose: () => void;
+  renderContentOnly?: boolean; // When true, skip Card wrapper (used when parent provides container)
 }
 
 interface AnalysisOptions {
@@ -25,7 +26,8 @@ interface AnalysisOptions {
 
 export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
   onAnalysisComplete,
-  onClose
+  onClose,
+  renderContentOnly = false
 }) => {
   const [capturedImages, setCapturedImages] = useState<Array<{ url: string; status: 'compressing' | 'ready' }>>([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -715,20 +717,22 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
     }
   };
 
-  return (
-    <Card className="border-2 border-elec-blue w-full max-w-2xl">
-      <CardContent className="p-3 md:p-6 space-y-3 md:space-y-4">
-        {/* Hidden file input - always mounted for reliable mobile access */}
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={handleFileUpload}
-          className="hidden"
-          key="file-input"
-        />
-        
+  // Content that's shared between both render modes
+  const content = (
+    <>
+      {/* Hidden file input - always mounted for reliable mobile access */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        multiple
+        onChange={handleFileUpload}
+        className="hidden"
+        key="file-input"
+      />
+
+      {/* Only show internal header when NOT renderContentOnly (parent provides header) */}
+      {!renderContentOnly && (
         <div className="flex items-center justify-between">
           <h3 className="text-sm md:text-lg font-semibold flex items-center gap-1.5 md:gap-2">
             <Camera className="h-4 w-4 md:h-5 md:w-5 text-elec-blue" />
@@ -738,8 +742,9 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
             <X className="h-4 w-4 md:h-5 md:w-5" />
           </Button>
         </div>
+      )}
 
-        {/* AI Reading Direction Guidance */}
+      {/* AI Reading Direction Guidance */}
         <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-3 md:p-4">
           <div className="flex gap-2 md:gap-3">
             <Info className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
@@ -981,6 +986,35 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
             </div>
           </div>
         )}
+    </>
+  );
+
+  // Return with or without Card wrapper based on renderContentOnly prop
+  if (renderContentOnly) {
+    return (
+      <>
+        <div className="space-y-3 md:space-y-4">{content}</div>
+        {/* AI Results Preview Dialog */}
+        {previewData && (
+          <AIResultsPreview
+            open={showPreview}
+            onOpenChange={setShowPreview}
+            circuits={previewData.circuits}
+            board={previewData.board}
+            imageUrl={capturedImages[0]?.url}
+            metadata={previewData.metadata}
+            onApply={handleApplyFromPreview}
+            onRescan={handleRescan}
+          />
+        )}
+      </>
+    );
+  }
+
+  return (
+    <Card className="border-2 border-elec-blue w-full max-w-2xl">
+      <CardContent className="p-3 md:p-6 space-y-3 md:space-y-4">
+        {content}
       </CardContent>
 
       {/* AI Results Preview Dialog */}

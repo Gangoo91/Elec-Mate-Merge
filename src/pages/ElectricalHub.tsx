@@ -6,6 +6,7 @@
  * Yellow/gold theme throughout.
  */
 
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -25,6 +26,7 @@ import {
   Clock,
   AlertCircle,
   CheckCircle,
+  Receipt,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -142,6 +144,8 @@ function ElectricalHero() {
 // Stats Bar Component
 function ElectricalStatsBar() {
   const { business, certificates, isLoading } = useDashboardData();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const statItems = [
     {
@@ -169,70 +173,117 @@ function ElectricalStatsBar() {
     },
   ];
 
+  // Track scroll position for pagination dots
+  const handleScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardWidth = 140 + 12;
+    const newIndex = Math.round(el.scrollLeft / cardWidth);
+    setActiveIndex(Math.max(0, Math.min(newIndex, statItems.length - 1)));
+  };
+
   if (isLoading) {
     return (
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {[...Array(4)].map((_, i) => (
-          <div key={i} className="h-[100px] rounded-xl glass-premium animate-pulse" />
-        ))}
+      <div className="px-4 sm:px-0">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="h-[100px] rounded-xl glass-premium animate-pulse" />
+          ))}
+        </div>
       </div>
     );
   }
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory scrollbar-none sm:grid sm:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0 sm:pb-0"
-    >
-      {statItems.map((stat) => {
-        const Icon = stat.icon;
-        const isSuccess = stat.variant === 'success';
-        const isDanger = stat.variant === 'danger';
+    <div className="relative">
+      <motion.div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className={cn(
+          'flex gap-3 overflow-x-auto pb-2 -mx-4 px-4',
+          'snap-x snap-mandatory scrollbar-hide momentum-scroll-x',
+          'sm:grid sm:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0 sm:pb-0'
+        )}
+      >
+        {statItems.map((stat, index) => {
+          const Icon = stat.icon;
+          const isSuccess = stat.variant === 'success';
+          const isDanger = stat.variant === 'danger';
 
-        return (
-          <motion.div
-            key={stat.label}
-            variants={itemVariants}
-            className="flex-shrink-0 w-[140px] snap-start sm:w-full"
-          >
-            <div className="glass-premium rounded-xl p-4 h-[100px]">
-              <div className="flex items-start justify-between gap-2">
-                <div className={cn(
-                  'p-2 rounded-lg',
-                  isSuccess ? 'bg-green-500/10' : isDanger ? 'bg-red-500/10' : 'bg-elec-yellow/10'
-                )}>
-                  <Icon className={cn(
-                    'h-4 w-4',
-                    isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
-                  )} />
-                </div>
-                <div className="text-right">
-                  <div className="flex items-baseline justify-end">
-                    {stat.formatAsCurrency ? (
-                      <span className="text-xl font-bold text-elec-yellow">
-                        {business.formattedQuoteValue}
-                      </span>
-                    ) : (
-                      <AnimatedCounter
-                        value={stat.value}
-                        prefix={stat.prefix}
-                        className={cn(
-                          'text-xl font-bold',
-                          isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
-                        )}
-                      />
-                    )}
+          return (
+            <motion.div
+              key={stat.label}
+              variants={itemVariants}
+              whileTap={{ scale: 0.97 }}
+              className={cn(
+                'flex-shrink-0 w-[140px] snap-start touch-manipulation',
+                index === statItems.length - 1 && 'mr-4 sm:mr-0',
+                'sm:w-full'
+              )}
+            >
+              <div className="glass-premium rounded-xl p-4 h-[100px]">
+                <div className="flex items-start justify-between gap-2">
+                  <div className={cn(
+                    'p-2 rounded-lg',
+                    isSuccess ? 'bg-green-500/10' : isDanger ? 'bg-red-500/10' : 'bg-elec-yellow/10'
+                  )}>
+                    <Icon className={cn(
+                      'h-4 w-4',
+                      isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
+                    )} />
                   </div>
-                  <p className="text-xs text-white/70 mt-0.5">{stat.label}</p>
+                  <div className="text-right">
+                    <div className="flex items-baseline justify-end">
+                      {stat.formatAsCurrency ? (
+                        <span className="text-xl font-bold text-elec-yellow">
+                          {business.formattedQuoteValue}
+                        </span>
+                      ) : (
+                        <AnimatedCounter
+                          value={stat.value}
+                          prefix={stat.prefix}
+                          className={cn(
+                            'text-xl font-bold',
+                            isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
+                          )}
+                        />
+                      )}
+                    </div>
+                    <p className="text-xs text-white/70 mt-0.5">{stat.label}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        );
-      })}
-    </motion.div>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+
+      {/* Pagination dots - mobile only */}
+      <div className="flex justify-center gap-1.5 mt-3 sm:hidden">
+        {statItems.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => {
+              const el = scrollRef.current;
+              if (el) {
+                const cardWidth = 140 + 12;
+                el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
+              }
+            }}
+            className={cn(
+              'transition-all duration-200',
+              i === activeIndex
+                ? 'w-4 h-1.5 rounded-full bg-elec-yellow'
+                : 'w-1.5 h-1.5 rounded-full bg-white/20'
+            )}
+            aria-label={`View ${statItems[i].label}`}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -385,6 +436,12 @@ const additionalResources: ToolCardProps[] = [
     link: '/electrician/invoices',
   },
   {
+    title: 'My Expenses',
+    description: 'Submit & track claims',
+    icon: Receipt,
+    link: '/employer?section=expenses',
+  },
+  {
     title: 'Business Hub',
     description: 'Business management',
     icon: Briefcase,
@@ -412,66 +469,68 @@ const additionalResources: ToolCardProps[] = [
 
 const ElectricalHub = () => {
   return (
-    <div className="min-h-screen bg-[hsl(240,5.9%,10%)]">
-      <div className="mx-auto max-w-6xl py-4 md:py-6 lg:py-8 pb-safe">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-6 sm:space-y-8"
-        >
-          {/* Back Button */}
-          <motion.div variants={itemVariants} className="px-4 sm:px-0">
-            <Link to="/dashboard">
-              <Button
-                variant="ghost"
-                className="text-white/70 hover:text-white hover:bg-white/[0.05] -ml-2"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Dashboard
-              </Button>
-            </Link>
+    <div className="min-h-screen bg-[hsl(240,5.9%,10%)] flex flex-col">
+      <div className="flex-1 overflow-y-auto momentum-scroll-y">
+        <div className="mx-auto max-w-6xl py-4 md:py-6 lg:py-8 pb-safe">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="space-y-6 sm:space-y-8"
+          >
+            {/* Back Button - Larger touch target */}
+            <motion.div variants={itemVariants} className="px-4 sm:px-0">
+              <Link to="/dashboard">
+                <Button
+                  variant="ghost"
+                  className="text-white/70 hover:text-white hover:bg-white/[0.05] -ml-2 h-11 touch-manipulation"
+                >
+                  <ArrowLeft className="mr-2 h-5 w-5" />
+                  Back to Dashboard
+                </Button>
+              </Link>
+            </motion.div>
+
+            {/* Hero */}
+            <motion.section variants={itemVariants} className="px-4 sm:px-0">
+              <ElectricalHero />
+            </motion.section>
+
+            {/* Stats Bar - Now visible on mobile as carousel */}
+            <motion.section variants={itemVariants} className="sm:px-0">
+              <ElectricalStatsBar />
+            </motion.section>
+
+            {/* Featured AI Card */}
+            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+              <SectionHeader title="AI-Powered Tools" />
+              <FeaturedCard />
+            </motion.section>
+
+            {/* Core Daily Tools */}
+            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+              <SectionHeader title="Core Daily Tools" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 touch-grid">
+                {mainResources.map((resource) => (
+                  <ToolCard key={resource.link} {...resource} />
+                ))}
+              </div>
+            </motion.section>
+
+            {/* Business & Development */}
+            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+              <SectionHeader title="Business & Development" />
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 touch-grid">
+                {additionalResources.map((resource) => (
+                  <CompactToolCard key={resource.link} {...resource} />
+                ))}
+              </div>
+            </motion.section>
+
+            {/* Footer spacing for mobile nav */}
+            <div className="h-6 sm:h-8" />
           </motion.div>
-
-          {/* Hero */}
-          <motion.section variants={itemVariants} className="px-4 sm:px-0">
-            <ElectricalHero />
-          </motion.section>
-
-          {/* Stats Bar - Hidden on mobile for native app feel */}
-          <motion.section variants={itemVariants} className="hidden sm:block sm:px-0">
-            <ElectricalStatsBar />
-          </motion.section>
-
-          {/* Featured AI Card */}
-          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="AI-Powered Tools" />
-            <FeaturedCard />
-          </motion.section>
-
-          {/* Core Daily Tools */}
-          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="Core Daily Tools" />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              {mainResources.map((resource) => (
-                <ToolCard key={resource.link} {...resource} />
-              ))}
-            </div>
-          </motion.section>
-
-          {/* Business & Development */}
-          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="Business & Development" />
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-              {additionalResources.map((resource) => (
-                <CompactToolCard key={resource.link} {...resource} />
-              ))}
-            </div>
-          </motion.section>
-
-          {/* Footer spacing */}
-          <div className="h-4 sm:h-6" />
-        </motion.div>
+        </div>
       </div>
     </div>
   );

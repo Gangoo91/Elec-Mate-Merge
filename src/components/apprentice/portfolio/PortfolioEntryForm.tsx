@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Clock, ImagePlus, ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { PortfolioEntry, PortfolioCategory, PortfolioFile } from "@/types/portfolio";
 import { EvidenceUploader } from "@/components/apprentice/shared/EvidenceUploader";
+import { EvidenceRequirementsGuide } from "@/components/apprentice/portfolio/EvidenceRequirementsGuide";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import {
   ScrollbarFreeSelect,
@@ -385,6 +386,15 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
   // Step 3: Evidence
   const EvidenceStep = () => (
     <div className="space-y-5">
+      {/* Evidence Requirements Guide */}
+      {formData.categoryId && (
+        <EvidenceRequirementsGuide
+          categoryId={formData.categoryId}
+          uploadedFiles={formData.evidenceFiles.map(f => f.file).filter(Boolean) as File[]}
+          compact={isMobile}
+        />
+      )}
+
       <div className="space-y-3">
         <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
           <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>

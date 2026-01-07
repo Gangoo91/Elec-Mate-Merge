@@ -1,10 +1,12 @@
-import { ArrowLeft, ArrowRight, FileText, CheckCircle, AlertTriangle, Target, BookOpen, Timer, Lightbulb, ClipboardList, PenTool, Calculator, TrendingUp, Award } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { FileText, CheckCircle, AlertTriangle, Target, BookOpen, Timer, PenTool, Calculator, TrendingUp, Award, ClipboardList } from "lucide-react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
+import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
+import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
+import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
+import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
+import { AM2LearningOutcomes } from "@/components/apprentice-courses/AM2LearningOutcomes";
 import useSEO from "@/hooks/useSEO";
 
 const AM2Module4Section3 = () => {
@@ -12,6 +14,14 @@ const AM2Module4Section3 = () => {
     "Recording Test Results on Certification | AM2 Module 4 Section 3",
     "Master professional certification completion and test result recording for AM2 electrical assessment"
   );
+
+  const learningOutcomes = [
+    "Correctly complete test certificates used in AM2",
+    "Record results in the correct units (Ω, MΩ, V, A)",
+    "Avoid \"book answers\" and instead write realistic, measured values",
+    "Understand what assessors are looking for when they inspect your paperwork",
+    "Apply practical strategies to complete paperwork neatly under time pressure"
+  ];
 
   const quickCheckQuestions: Array<{
     id: string;
@@ -25,7 +35,7 @@ const AM2Module4Section3 = () => {
       question: "Which certificate is used to hand over completed installation results in AM2?",
       options: [
         "Minor Works Certificate",
-        "Electrical Installation Certificate (EIC)", 
+        "Electrical Installation Certificate (EIC)",
         "Periodic Inspection Report",
         "Test Schedule Only"
       ],
@@ -65,7 +75,7 @@ const AM2Module4Section3 = () => {
       options: [
         "Minor Works Certificate",
         "Electrical Installation Certificate (EIC)",
-        "Periodic Inspection Report", 
+        "Periodic Inspection Report",
         "EICR only"
       ],
       correctAnswer: 1,
@@ -93,7 +103,7 @@ const AM2Module4Section3 = () => {
         "Nothing wrong with it"
       ],
       correctAnswer: 1,
-      explanation: "Instead of infinity symbols, record the actual meter limit reading such as '&gt;200 MΩ' to show the measured value."
+      explanation: "Instead of infinity symbols, record the actual meter limit reading such as '>200 MΩ' to show the measured value."
     },
     {
       id: 4,
@@ -124,7 +134,7 @@ const AM2Module4Section3 = () => {
         "Leave blank"
       ],
       correctAnswer: 1,
-      explanation: "Record the actual meter limit reading (e.g. '&gt;200 MΩ') rather than infinity symbols or vague descriptions."
+      explanation: "Record the actual meter limit reading (e.g. '>200 MΩ') rather than infinity symbols or vague descriptions."
     },
     {
       id: 7,
@@ -177,729 +187,609 @@ const AM2Module4Section3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <div className="flex items-center justify-between gap-2">
-            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-              <Link to="..">
-                <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
-                <span className="hidden xs:inline">Back to Module 4</span>
-                <span className="xs:hidden">Back</span>
-              </Link>
-            </Button>
-            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-              <Link to="../section4">
-                <span className="hidden xs:inline">Module 4 Section 4</span>
-                <span className="xs:hidden">Section 4</span>
-                <ArrowRight className="w-4 h-4 ml-1 sm:ml-2" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </div>
+    <AM2SectionLayout
+      backHref=".."
+      breadcrumbs={["AM2", "Module 4", "Section 3"]}
+    >
+      {/* Hero Section */}
+      <AM2HeroSection
+        icon={FileText}
+        title="Recording Test Results on Certification"
+        description="Testing in AM2 isn't finished until the results are recorded on the correct certificates. Assessors expect you to fill in documentation clearly, accurately, and in full."
+        badge="Module 4 • Section 3"
+      />
 
-      {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
-        {/* Title Section */}
-        <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
-            <FileText className="w-4 h-4" />
-            Module 4 – Section 3
-          </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
-            Recording Test Results on Certification
-          </h1>
-          <p className="text-sm sm:text-base text-white mb-6 sm:mb-8 leading-relaxed">
-            Testing in AM2 isn't finished until the results are recorded on the correct certificates. Assessors expect you to fill in documentation (Electrical Installation Certificate and schedule of test results) clearly, accurately, and in full. This proves you can hand over safe, professional paperwork to a client in real life.
-          </p>
-        </div>
+      {/* Critical Warning */}
+      <AM2CriticalWarning title="CRITICAL: Poor Documentation = AM2 Failure">
+        <p className="text-ios-callout text-white/80 mb-2">
+          Poor, incomplete, or fake entries are one of the most common reasons candidates fail the testing stage. Professional paperwork completion is essential for AM2 success.
+        </p>
+        <p className="text-ios-callout text-white/90 font-medium">
+          Many candidates fail this section not from lack of testing skill, but from poor recording habits and rushed paperwork completion.
+        </p>
+      </AM2CriticalWarning>
 
-        {/* Critical Warning */}
-        <Card className="bg-red-100 dark:bg-red-900/30 border-red-300 dark:border-red-700/50 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-700 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold text-red-900 dark:text-red-100 mb-2 text-sm sm:text-base">
-                  CRITICAL: Poor Documentation = AM2 Failure
-                </h3>
-                <p className="text-xs sm:text-sm text-red-800 dark:text-red-200 mb-3 leading-relaxed">
-                  Poor, incomplete, or fake entries are one of the most common reasons candidates fail the testing stage. Professional paperwork completion is essential for AM2 success.
-                </p>
-                <p className="text-xs sm:text-sm text-red-800 dark:text-red-200 font-medium leading-relaxed">
-                  Many candidates fail this section not from lack of testing skill, but from poor recording habits and rushed paperwork completion.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Card>
+      {/* Learning Outcomes */}
+      <AM2ContentCard accent>
+        <AM2LearningOutcomes outcomes={learningOutcomes} />
+      </AM2ContentCard>
 
-        {/* Learning Outcomes */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <CheckCircle className="w-5 h-5" />
-              Learning Outcomes
-            </h2>
-            <p className="text-xs sm:text-sm text-white mb-4">
-              By the end of this section, you should be able to:
-            </p>
-            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-white">
+      {/* Paperwork Requirements */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
+          <ClipboardList className="h-5 w-5" />
+          1. Paperwork You'll Complete in AM2
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white font-semibold mb-3">Primary Certificates:</h4>
+            <ul className="text-ios-callout text-white/80 space-y-1.5">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Correctly complete test certificates used in AM2
+                <span className="text-elec-yellow">•</span>
+                <span>Electrical Installation Certificate (EIC)</span>
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Record results in the correct units (Ω, MΩ, V, A)
+                <span className="text-elec-yellow">•</span>
+                <span>Schedule of test results (for each circuit)</span>
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Avoid "book answers" and instead write realistic, measured values
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Understand what assessors are looking for when they inspect your paperwork
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Apply practical strategies to complete paperwork neatly under time pressure
+                <span className="text-elec-yellow">•</span>
+                <span>Schedule of inspections</span>
               </li>
             </ul>
           </div>
-        </Card>
 
-        {/* Paperwork Requirements */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <ClipboardList className="w-5 h-5" />
-              1. Paperwork You'll Complete in AM2
-            </h2>
-            
-            <div className="space-y-4 sm:space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
-                  <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 sm:mb-3 text-sm sm:text-base">Primary Certificates:</h4>
-                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1">
-                    <li>• Electrical Installation Certificate (EIC)</li>
-                    <li>• Schedule of test results (for each circuit)</li>
-                    <li>• Schedule of inspections</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-lg p-3 sm:p-4">
-                  <h4 className="font-medium text-green-800 dark:text-green-200 mb-2 sm:mb-3 text-sm sm:text-base">Test Results Required:</h4>
-                  <ul className="text-xs sm:text-sm text-green-700 dark:text-green-300 space-y-1">
-                    <li>• Continuity, insulation, polarity</li>
-                    <li>• Zs, PSC/PSCC, RCD results</li>
-                    <li>• Risk Assessment / Method Statement (RAMS)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white font-semibold mb-3">Test Results Required:</h4>
+            <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Continuity, insulation, polarity</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Zs, PSC/PSCC, RCD results</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Risk Assessment / Method Statement (RAMS)</span>
+              </li>
+            </ul>
           </div>
-        </Card>
+        </div>
+      </AM2ContentCard>
 
-        <InlineCheck 
-          id={quickCheckQuestions[0].id}
-          question={quickCheckQuestions[0].question}
-          options={quickCheckQuestions[0].options}
-          correctIndex={quickCheckQuestions[0].correctIndex}
-          explanation={quickCheckQuestions[0].explanation}
-        />
+      <InlineCheck
+        id={quickCheckQuestions[0].id}
+        question={quickCheckQuestions[0].question}
+        options={quickCheckQuestions[0].options}
+        correctIndex={quickCheckQuestions[0].correctIndex}
+        explanation={quickCheckQuestions[0].explanation}
+      />
 
-        {/* What Assessors Look For */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Target className="w-5 h-5" />
-              2. What Assessors Look For in Certification
-            </h2>
-            
-            <div className="space-y-4 sm:space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-lg p-3 sm:p-4">
-                  <h4 className="font-medium text-green-800 dark:text-green-200 mb-2 sm:mb-3 text-sm sm:text-base flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4" />
-                    Essential Requirements:
-                  </h4>
-                  <ul className="text-xs sm:text-sm text-green-700 dark:text-green-300 space-y-1">
-                    <li>• All sections filled in — no blanks</li>
-                    <li>• Units written correctly (Ω, MΩ, V, ms)</li>
-                    <li>• Results realistic and consistent with installation</li>
-                    <li>• Neat, legible handwriting</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg p-3 sm:p-4">
-                  <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-2 sm:mb-3 text-sm sm:text-base flex items-center gap-2">
-                    <PenTool className="w-4 h-4" />
-                    Professional Standards:
-                  </h4>
-                  <ul className="text-xs sm:text-sm text-orange-700 dark:text-elec-yellow space-y-1">
-                    <li>• No corrections by scribbling</li>
-                    <li>• Use one clear strike-through if needed</li>
-                    <li>• Consistent formatting throughout</li>
-                    <li>• Professional presentation quality</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+      {/* What Assessors Look For */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
+          <Target className="h-5 w-5" />
+          2. What Assessors Look For in Certification
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white font-semibold mb-3 flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-emerald-400" />
+              Essential Requirements:
+            </h4>
+            <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>All sections filled in - no blanks</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Units written correctly (Ω, MΩ, V, ms)</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Results realistic and consistent with installation</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Neat, legible handwriting</span>
+              </li>
+            </ul>
           </div>
-        </Card>
 
-        {/* Common Mistakes */}
-        <Card className="bg-red-100 dark:bg-red-900/30 border-red-300 dark:border-red-700/50 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-red-800 dark:text-red-200 mb-4 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5" />
-              3. Common Mistakes Candidates Make (NET Guidance)
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="font-medium text-red-900 dark:text-red-100 mb-2 sm:mb-3 text-sm sm:text-base">Documentation Errors:</h4>
-                  <ul className="text-xs sm:text-sm text-red-800 dark:text-red-200 space-y-2">
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-red-600 rounded-full mt-1.5 flex-shrink-0"></div>
-                      Leaving results blank
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-red-600 rounded-full mt-1.5 flex-shrink-0"></div>
-                      Writing "N/A" where a test was required
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-red-600 rounded-full mt-1.5 flex-shrink-0"></div>
-                      Using wrong units or missing units entirely
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-red-600 rounded-full mt-1.5 flex-shrink-0"></div>
-                      Rushing paperwork at the end → messy or incomplete
-                    </li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-red-900 dark:text-red-100 mb-2 sm:mb-3 text-sm sm:text-base">Unrealistic Values:</h4>
-                  <ul className="text-xs sm:text-sm text-red-800 dark:text-red-200 space-y-2">
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-red-600 rounded-full mt-1.5 flex-shrink-0"></div>
-                      Recording unrealistic numbers (e.g. 0.00 Ω for Zs)
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-red-600 rounded-full mt-1.5 flex-shrink-0"></div>
-                      Writing "infinite" instead of &gt;200 MΩ
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-red-600 rounded-full mt-1.5 flex-shrink-0"></div>
-                      Mixing up insulation resistance vs continuity values
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-red-600 rounded-full mt-1.5 flex-shrink-0"></div>
-                      Using obvious "book answers" from reference materials
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white font-semibold mb-3 flex items-center gap-2">
+              <PenTool className="h-4 w-4 text-elec-yellow" />
+              Professional Standards:
+            </h4>
+            <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>No corrections by scribbling</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Use one clear strike-through if needed</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Consistent formatting throughout</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Professional presentation quality</span>
+              </li>
+            </ul>
           </div>
-        </Card>
+        </div>
+      </AM2ContentCard>
 
-        <InlineCheck 
-          id={quickCheckQuestions[1].id}
-          question={quickCheckQuestions[1].question}
-          options={quickCheckQuestions[1].options}
-          correctIndex={quickCheckQuestions[1].correctIndex}
-          explanation={quickCheckQuestions[1].explanation}
-        />
-
-        {/* Advanced Certificate Completion Techniques */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Award className="w-5 h-5" />
-              Advanced Certificate Completion Techniques
-            </h2>
-            
-            <div className="space-y-4 sm:space-y-6">
-              {/* Certificate Types and Their Requirements */}
-              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3 text-sm sm:text-base flex items-center gap-2">
-                  <FileText className="w-4 h-4" />
-                  Detailed Certificate Requirements
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
-                  <div>
-                    <strong className="text-blue-700 dark:text-elec-yellow block mb-2">Electrical Installation Certificate (EIC):</strong>
-                    <ul className="text-elec-yellow dark:text-elec-yellow space-y-1">
-                      <li>• Designer, Constructor, Inspector details</li>
-                      <li>• Installation description and location</li>
-                      <li>• Earthing and bonding arrangements</li>
-                      <li>• Main switch details and characteristics</li>
-                      <li>• Supply characteristics (TN-S, TN-C-S, TT)</li>
-                      <li>• RCD details and test results</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <strong className="text-blue-700 dark:text-elec-yellow block mb-2">Schedule of Test Results:</strong>
-                    <ul className="text-elec-yellow dark:text-elec-yellow space-y-1">
-                      <li>• Circuit designation and description</li>
-                      <li>• Reference method and cable details</li>
-                      <li>• Continuity of protective conductors</li>
-                      <li>• Continuity of ring final circuit conductors</li>
-                      <li>• Insulation resistance values</li>
-                      <li>• Earth fault loop impedance (Zs)</li>
-                      <li>• RCD operating times and current</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* Professional Documentation Standards */}
-              <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-green-800 dark:text-green-200 mb-3 text-sm sm:text-base flex items-center gap-2">
-                  <PenTool className="w-4 h-4" />
-                  Professional Documentation Standards
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
-                  <div>
-                    <strong className="text-green-700 dark:text-green-300 block mb-2">Handwriting Quality:</strong>
-                    <ul className="text-green-600 dark:text-green-400 space-y-1">
-                      <li>• Use block capitals for important details</li>
-                      <li>• Maintain consistent letter sizing</li>
-                      <li>• Ensure adequate spacing between entries</li>
-                      <li>• Use appropriate pen (blue or black ink)</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <strong className="text-green-700 dark:text-green-300 block mb-2">Error Correction:</strong>
-                    <ul className="text-green-600 dark:text-green-400 space-y-1">
-                      <li>• Single line through error, initial change</li>
-                      <li>• Never use correction fluid or tape</li>
-                      <li>• Write correction clearly adjacent to error</li>
-                      <li>• Date and initial significant corrections</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <strong className="text-green-700 dark:text-green-300 block mb-2">Data Integrity:</strong>
-                    <ul className="text-green-600 dark:text-green-400 space-y-1">
-                      <li>• Record actual measured values only</li>
-                      <li>• Never estimate or interpolate results</li>
-                      <li>• Include environmental conditions</li>
-                      <li>• Note any limitations or deviations</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
+      {/* Common Mistakes */}
+      <AM2CriticalWarning title="3. Common Mistakes Candidates Make (NET Guidance)">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+          <div>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">Documentation Errors:</h4>
+            <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">•</span>
+                <span>Leaving results blank</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">•</span>
+                <span>Writing "N/A" where a test was required</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">•</span>
+                <span>Using wrong units or missing units entirely</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">•</span>
+                <span>Rushing paperwork at the end</span>
+              </li>
+            </ul>
           </div>
-        </Card>
 
-        {/* Recording Realistic Values */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Calculator className="w-5 h-5" />
-              4. Recording Realistic Values
-            </h2>
-            
-            <div className="space-y-4 sm:space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="space-y-4">
-                  <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
-                    <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 text-sm sm:text-base">Continuity Tests:</h4>
-                    <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-1">
-                      <li>• <strong>Continuity of CPC:</strong> Expect small values (fractions of an ohm)</li>
-                      <li>• <strong>Ring circuit continuity:</strong> Typically 0.05-0.5 Ω depending on cable size/length</li>
-                      <li>• <strong>Units:</strong> Always in Ω (ohms)</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-lg p-3 sm:p-4">
-                    <h4 className="font-medium text-green-800 dark:text-green-200 mb-2 text-sm sm:text-base">Insulation Resistance:</h4>
-                    <ul className="text-xs sm:text-sm text-green-700 dark:text-green-300 space-y-1">
-                      <li>• <strong>Typical readings:</strong> Should be very high (often &gt;200 MΩ)</li>
-                      <li>• <strong>Record meter limit:</strong> Write "&gt;200 MΩ" not "∞"</li>
-                      <li>• <strong>Minimum acceptable:</strong> 1 MΩ for most circuits</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-3 sm:p-4">
-                    <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2 text-sm sm:text-base">Earth Fault Loop Impedance (Zs):</h4>
-                    <ul className="text-xs sm:text-sm text-purple-700 dark:text-elec-yellow space-y-1">
-                      <li>• <strong>Realistic range:</strong> Typically 0.2-2.0 Ω for most circuits</li>
-                      <li>• <strong>Must align:</strong> With max permitted for protective device</li>
-                      <li>• <strong>Check BS 7671:</strong> Tables for maximum values</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg p-3 sm:p-4">
-                    <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-2 text-sm sm:text-base">RCD Testing:</h4>
-                    <ul className="text-xs sm:text-sm text-orange-700 dark:text-elec-yellow space-y-1">
-                      <li>• <strong>Trip times:</strong> Record at 1× and 5× IΔn in milliseconds (ms)</li>
-                    <li>• <strong>Standard RCD:</strong> &lt;300ms at 1×IΔn, &lt;40ms at 5×IΔn</li>
-                    <li>• <strong>Polarity:</strong> Tick "satisfactory" at each accessory</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800/30 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-2 text-sm sm:text-base">PSC/PSCC (Short Circuit Current):</h4>
-                <p className="text-xs sm:text-sm text-yellow-700 dark:text-yellow-300">
-                  Record measured value in kA or A. Typical domestic installations: 1-6 kA. Commercial installations may be higher.
-                  Always record the actual measured value, not estimated or calculated figures.
-                </p>
-              </div>
-            </div>
+          <div>
+            <h4 className="text-ios-headline text-white font-semibold mb-2">Unrealistic Values:</h4>
+            <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">•</span>
+                <span>Recording unrealistic numbers (e.g. 0.00 Ω for Zs)</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">•</span>
+                <span>Writing "infinite" instead of &gt;200 MΩ</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">•</span>
+                <span>Mixing up insulation resistance vs continuity values</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">•</span>
+                <span>Using obvious "book answers" from reference materials</span>
+              </li>
+            </ul>
           </div>
-        </Card>
+        </div>
+      </AM2CriticalWarning>
 
-        {/* Strategies for Success */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <TrendingUp className="w-5 h-5" />
-              5. Strategies for AM2 Success
-            </h2>
-            
-            <div className="space-y-4 sm:space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-lg p-3 sm:p-4">
-                  <h4 className="font-medium text-green-800 dark:text-green-200 mb-2 sm:mb-3 text-sm sm:text-base">During Testing:</h4>
-                  <ul className="text-xs sm:text-sm text-green-700 dark:text-green-300 space-y-2">
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-3 h-3 text-green-500 mt-1 flex-shrink-0" />
-                      <span>Record results as you test - don't leave until the end</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-3 h-3 text-green-500 mt-1 flex-shrink-0" />
-                      <span>Write clearly - if assessor can't read it, you lose marks</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-3 h-3 text-green-500 mt-1 flex-shrink-0" />
-                      <span>Check units - always write Ω, MΩ, V, ms</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
-                  <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 sm:mb-3 text-sm sm:text-base">Quality Control:</h4>
-                  <ul className="text-xs sm:text-sm text-blue-700 dark:text-elec-yellow space-y-2">
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
-                      <span>Double-check results against expected ranges</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
-                      <span>Compare with GN3 and BS 7671 guidance</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="w-3 h-3 text-elec-yellow mt-1 flex-shrink-0" />
-                      <span>Keep paperwork tidy - no scribbles or rushed writing</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/30 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-amber-800 dark:text-amber-200 mb-3 text-sm sm:text-base">Professional Tips:</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs sm:text-sm text-amber-700 dark:text-amber-300">
-                  <div>
-                    <strong>Time Management:</strong>
-                    <ul className="mt-1 space-y-1">
-                      <li>• Allocate 10-15 minutes for paperwork completion</li>
-                      <li>• Don't rush - accuracy is more important than speed</li>
-                      <li>• Review all sections before submitting</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <strong>Error Prevention:</strong>
-                    <ul className="mt-1 space-y-1">
-                      <li>• Use a systematic approach - same order every time</li>
-                      <li>• Cross-reference readings with test sequence</li>
-                      <li>• Have a colleague check your work if possible</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
+      <InlineCheck
+        id={quickCheckQuestions[1].id}
+        question={quickCheckQuestions[1].question}
+        options={quickCheckQuestions[1].options}
+        correctIndex={quickCheckQuestions[1].correctIndex}
+        explanation={quickCheckQuestions[1].explanation}
+      />
 
-        <InlineCheck 
-          id={quickCheckQuestions[2].id}
-          question={quickCheckQuestions[2].question}
-          options={quickCheckQuestions[2].options}
-          correctIndex={quickCheckQuestions[2].correctIndex}
-          explanation={quickCheckQuestions[2].explanation}
-        />
+      {/* Advanced Certificate Completion Techniques */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
+          <Award className="h-5 w-5" />
+          Advanced Certificate Completion Techniques
+        </h2>
 
-        {/* Troubleshooting Documentation Issues */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Calculator className="w-5 h-5" />
-              Troubleshooting Documentation Issues
-            </h2>
-            
-            <div className="space-y-4 sm:space-y-6">
-              {/* Common Problems and Solutions */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800/30 rounded-lg p-4">
-                  <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-3 text-sm sm:text-base">Common Documentation Problems:</h4>
-                  <div className="space-y-3 text-xs sm:text-sm">
-                    <div className="bg-[#1a1a1a]/50 rounded p-2">
-                      <strong className="text-white">Problem:</strong> <span className="text-white">Values don't match between different test sections</span><br/>
-                      <strong className="text-white">Solution:</strong> <span className="text-white">Cross-reference all entries, ensure consistency</span>
-                    </div>
-                    <div className="bg-[#1a1a1a]/50 rounded p-2">
-                      <strong className="text-white">Problem:</strong> <span className="text-white">Uncertain about which sections apply</span><br/>
-                      <strong className="text-white">Solution:</strong> <span className="text-white">Review circuit design, consult GN3 guidance</span>
-                    </div>
-                    <div className="bg-[#1a1a1a]/50 rounded p-2">
-                      <strong className="text-white">Problem:</strong> <span className="text-white">Running out of time for paperwork</span><br/>
-                      <strong className="text-white">Solution:</strong> <span className="text-white">Record as you test, allocate specific time slots</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-4">
-                  <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3 text-sm sm:text-base">Quality Assurance Checklist:</h4>
-                  <div className="space-y-2 text-xs sm:text-sm">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
-                      <span className="text-purple-700 dark:text-elec-yellow">All mandatory fields completed</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
-                      <span className="text-purple-700 dark:text-elec-yellow">Units specified for all numerical values</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
-                      <span className="text-purple-700 dark:text-elec-yellow">Signatures and dates in correct locations</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
-                      <span className="text-purple-700 dark:text-elec-yellow">Values within expected ranges</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
-                      <span className="text-purple-700 dark:text-elec-yellow">Cross-references match between documents</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0" />
-                      <span className="text-purple-700 dark:text-elec-yellow">Professional presentation throughout</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Industry Standards and Compliance */}
-              <div className="bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-3 text-sm sm:text-base">Industry Standards and Compliance:</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
-                  <div>
-                    <strong className="text-orange-700 dark:text-elec-yellow block mb-2">BS 7671 Requirements:</strong>
-                    <ul className="text-orange-600 dark:text-elec-yellow space-y-1">
-                      <li>• Schedule of inspections must be comprehensive</li>
-                      <li>• Test results must demonstrate compliance</li>
-                      <li>• Departures from BS 7671 must be recorded</li>
-                      <li>• Risk assessments must be documented</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <strong className="text-orange-700 dark:text-elec-yellow block mb-2">Professional Body Standards:</strong>
-                    <ul className="text-orange-600 dark:text-elec-yellow space-y-1">
-                      <li>• NICEIC documentation requirements</li>
-                      <li>• NAPIT certification standards</li>
-                      <li>• ECS competency card criteria</li>
-                      <li>• Insurance company requirements</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* Real-World Examples */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <BookOpen className="w-5 h-5" />
-              Real-World Examples
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="border-l-4 border-l-red-500 bg-red-100 dark:bg-red-900/30 p-3 sm:p-4">
-                <h4 className="font-medium text-red-900 dark:text-red-100 mb-2 text-sm sm:text-base">Example 1: Infinity Symbol Error</h4>
-                <p className="text-xs sm:text-sm text-red-800 dark:text-red-200 mb-2">
-                  Candidate recorded all insulation resistance results as "∞." Assessor marked incorrect — <strong>failed paperwork section</strong>
-                </p>
-                <p className="text-xs text-red-700 dark:text-elec-yellow">
-                  Lesson: Always record meter limit readings like "&gt;200 MΩ" instead of infinity symbols.
-                </p>
-              </div>
-              
-              <div className="border-l-4 border-l-red-500 bg-red-100 dark:bg-red-900/30 p-3 sm:p-4">
-                <h4 className="font-medium text-red-900 dark:text-red-100 mb-2 text-sm sm:text-base">Example 2: Incomplete Documentation</h4>
-                <p className="text-xs sm:text-sm text-red-800 dark:text-red-200 mb-2">
-                  Candidate left several boxes blank, assuming assessor wouldn't check. <strong>Lost easy marks</strong>
-                </p>
-                <p className="text-xs text-red-700 dark:text-elec-yellow">
-                  Lesson: Every applicable section must be completed. Blanks = lost marks.
-                </p>
-              </div>
-              
-              <div className="border-l-4 border-green-500 bg-green-50 dark:bg-green-950/20 p-3 sm:p-4">
-                <h4 className="font-medium text-green-800 dark:text-green-200 mb-2 text-sm sm:text-base">Example 3: Professional Excellence</h4>
-                <p className="text-xs sm:text-sm text-green-700 dark:text-green-300 mb-2">
-                  Candidate completed paperwork neatly, with realistic results matching the installation. <strong>Passed smoothly</strong>
-                </p>
-                <p className="text-xs text-green-600 dark:text-green-400">
-                  Lesson: Professional presentation and realistic values demonstrate competence and earn full marks.
-                </p>
-              </div>
-              
-              <div className="border-l-4 border-elec-yellow bg-yellow-50 dark:bg-yellow-950/20 p-3 sm:p-4">
-                <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-2 text-sm sm:text-base">Example 4: Real-Life Consequence</h4>
-                <p className="text-xs sm:text-sm text-yellow-700 dark:text-yellow-300 mb-2">
-                  On-site, a contractor handed over an EIC with unreadable handwriting. Work failed audit. Same problem in AM2 = marks lost.
-                </p>
-                <p className="text-xs text-elec-yellow dark:text-elec-yellow">
-                  Lesson: Professional legibility is essential for client handover and regulatory compliance.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* NET AM2 Specific Guidance */}
-        <Card className="bg-gradient-to-r from-card/10 to-elec-yellow/10 border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Award className="w-5 h-5" />
-              NET AM2 Specific Assessment Criteria
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-[#1a1a1a]/50 rounded-lg p-3 sm:p-4">
-                  <h4 className="font-medium text-white mb-2 text-sm sm:text-base">Documentation Standards:</h4>
-                  <ul className="text-xs sm:text-sm text-white space-y-1">
-                    <li>• All certificates must be fully completed</li>
-                    <li>• Professional handwriting standards enforced</li>
-                    <li>• Realistic values that match installation type</li>
-                    <li>• Correct use of technical terminology</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-[#1a1a1a]/50 rounded-lg p-3 sm:p-4">
-                  <h4 className="font-medium text-white mb-2 text-sm sm:text-base">Assessment Focus Areas:</h4>
-                  <ul className="text-xs sm:text-sm text-white space-y-1">
-                    <li>• Accuracy of recorded measurements</li>
-                    <li>• Consistency between test results</li>
-                    <li>• Professional presentation quality</li>
-                    <li>• Compliance with current regulations</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="bg-elec-yellow/10 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-elec-yellow mb-2 text-sm sm:text-base">Key Success Factors:</h4>
-                <p className="text-xs sm:text-sm text-white">
-                  NET assessors specifically look for candidates who can demonstrate professional documentation skills that would be acceptable 
-                  for client handover in real-world scenarios. This includes neat presentation, accurate technical data, and complete compliance records.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* Section Summary */}
-        <Card className="bg-gradient-to-r from-elec-yellow/5 to-card/5 border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <BookOpen className="w-5 h-5" />
-              Section Summary
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="bg-[#1a1a1a]/50 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-white mb-3 text-sm sm:text-base">Key Takeaways:</h4>
-                <ul className="text-xs sm:text-sm text-white space-y-2">
+        <div className="space-y-4">
+          {/* Certificate Types */}
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white font-semibold mb-3 flex items-center gap-2">
+              <FileText className="h-4 w-4 text-elec-yellow" />
+              Detailed Certificate Requirements
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-ios-callout text-elec-yellow font-semibold mb-2">Electrical Installation Certificate (EIC):</p>
+                <ul className="text-ios-callout text-white/80 space-y-1">
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Paperwork is part of the test — not an afterthought</span>
+                    <span className="text-elec-yellow">•</span>
+                    <span>Designer, Constructor, Inspector details</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Complete all sections of EIC and test schedules with realistic, measured results</span>
+                    <span className="text-elec-yellow">•</span>
+                    <span>Installation description and location</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Record results in correct units (Ω, MΩ, V, ms) as you test</span>
+                    <span className="text-elec-yellow">•</span>
+                    <span>Earthing and bonding arrangements</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Write clearly and neatly — illegible handwriting loses marks</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Many candidates fail from poor recording habits, not lack of testing skill</span>
+                    <span className="text-elec-yellow">•</span>
+                    <span>Supply characteristics (TN-S, TN-C-S, TT)</span>
                   </li>
                 </ul>
               </div>
-              
-              <div className="bg-elec-yellow/10 rounded-lg p-3 sm:p-4">
-                <h4 className="font-medium text-elec-yellow mb-2 text-sm sm:text-base">Next Steps:</h4>
-                <p className="text-xs sm:text-sm text-white">
-                  You're now ready to move on to Module 4 Section 4, where we'll cover the practical implementation 
-                  and integration of all testing procedures in real AM2 scenarios.
-                </p>
+              <div>
+                <p className="text-ios-callout text-elec-yellow font-semibold mb-2">Schedule of Test Results:</p>
+                <ul className="text-ios-callout text-white/80 space-y-1">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Circuit designation and description</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Continuity of protective conductors</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Insulation resistance values</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Earth fault loop impedance (Zs)</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-        </Card>
 
-        {/* Quiz Section */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Timer className="w-5 h-5" />
-              Test Your Knowledge
-            </h2>
-            <p className="text-xs sm:text-sm text-white mb-6">
-              Complete this 10-question quiz to test your understanding of professional certification and test result recording.
-            </p>
-            <Quiz questions={quizQuestions} title="Recording Test Results on Certification" />
+          {/* Professional Documentation Standards */}
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white font-semibold mb-3 flex items-center gap-2">
+              <PenTool className="h-4 w-4 text-emerald-400" />
+              Professional Documentation Standards
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <p className="text-ios-callout text-emerald-400 font-semibold mb-2">Handwriting Quality:</p>
+                <ul className="text-ios-callout text-white/80 space-y-1">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Use block capitals for important details</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Maintain consistent letter sizing</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Use appropriate pen (blue or black ink)</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-ios-callout text-emerald-400 font-semibold mb-2">Error Correction:</p>
+                <ul className="text-ios-callout text-white/80 space-y-1">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Single line through error, initial change</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Never use correction fluid or tape</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Date and initial significant corrections</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-ios-callout text-emerald-400 font-semibold mb-2">Data Integrity:</p>
+                <ul className="text-ios-callout text-white/80 space-y-1">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Record actual measured values only</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Never estimate or interpolate results</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Note any limitations or deviations</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-        </Card>
-
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-4 pt-6 sm:pt-8">
-          <Button variant="outline" className="w-full sm:w-auto" asChild>
-            <Link to="../section2" className="flex items-center justify-center">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              <span className="text-sm sm:text-base">Previous: Safe Use of Test Instruments</span>
-            </Link>
-          </Button>
-          <Button className="w-full sm:w-auto" asChild>
-            <Link to="../section4" className="flex items-center justify-center">
-              <span className="text-sm sm:text-base">Next: Module 4 Section 4</span>
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
         </div>
-      </div>
-    </div>
+      </AM2ContentCard>
+
+      {/* Recording Realistic Values */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
+          <Calculator className="h-5 w-5" />
+          4. Recording Realistic Values
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-4">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline text-white font-semibold mb-2">Continuity Tests:</h4>
+              <ul className="text-ios-callout text-white/80 space-y-1.5">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span><strong className="text-white">Continuity of CPC:</strong> Expect small values (fractions of an ohm)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span><strong className="text-white">Ring circuit continuity:</strong> Typically 0.05-0.5 Ω</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span><strong className="text-white">Units:</strong> Always in Ω (ohms)</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline text-white font-semibold mb-2">Insulation Resistance:</h4>
+              <ul className="text-ios-callout text-white/80 space-y-1.5">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span><strong className="text-white">Typical readings:</strong> Should be very high (often &gt;200 MΩ)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span><strong className="text-white">Record meter limit:</strong> Write "&gt;200 MΩ" not "∞"</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span><strong className="text-white">Minimum acceptable:</strong> 1 MΩ for most circuits</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline text-white font-semibold mb-2">Earth Fault Loop Impedance (Zs):</h4>
+              <ul className="text-ios-callout text-white/80 space-y-1.5">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span><strong className="text-white">Realistic range:</strong> Typically 0.2-2.0 Ω for most circuits</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span><strong className="text-white">Must align:</strong> With max permitted for protective device</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span><strong className="text-white">Check BS 7671:</strong> Tables for maximum values</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline text-white font-semibold mb-2">RCD Testing:</h4>
+              <ul className="text-ios-callout text-white/80 space-y-1.5">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span><strong className="text-white">Trip times:</strong> Record at 1x and 5x IΔn in milliseconds (ms)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span><strong className="text-white">Standard RCD:</strong> &lt;300ms at 1xIΔn, &lt;40ms at 5xIΔn</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span><strong className="text-white">Polarity:</strong> Tick "satisfactory" at each accessory</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4 mt-4">
+          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">PSC/PSCC (Short Circuit Current):</h4>
+          <p className="text-ios-callout text-white/80">
+            Record measured value in kA or A. Typical domestic installations: 1-6 kA. Commercial installations may be higher.
+            Always record the actual measured value, not estimated or calculated figures.
+          </p>
+        </div>
+      </AM2ContentCard>
+
+      {/* Strategies for Success */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
+          <TrendingUp className="h-5 w-5" />
+          5. Strategies for AM2 Success
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white font-semibold mb-3">During Testing:</h4>
+            <ul className="text-ios-callout text-white/80 space-y-2">
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                <span>Record results as you test - don't leave until the end</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                <span>Write clearly - if assessor can't read it, you lose marks</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                <span>Check units - always write Ω, MΩ, V, ms</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white font-semibold mb-3">Quality Control:</h4>
+            <ul className="text-ios-callout text-white/80 space-y-2">
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <span>Double-check results against expected ranges</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <span>Compare with GN3 and BS 7671 guidance</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <span>Keep paperwork tidy - no scribbles or rushed writing</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
+          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-3">Professional Tips:</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <p className="text-ios-callout text-white font-semibold mb-1">Time Management:</p>
+              <ul className="text-ios-callout text-white/80 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Allocate 10-15 minutes for paperwork completion</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Don't rush - accuracy is more important than speed</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Review all sections before submitting</span>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <p className="text-ios-callout text-white font-semibold mb-1">Error Prevention:</p>
+              <ul className="text-ios-callout text-white/80 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Use a systematic approach - same order every time</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Cross-reference readings with test sequence</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Have a colleague check your work if possible</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck
+        id={quickCheckQuestions[2].id}
+        question={quickCheckQuestions[2].question}
+        options={quickCheckQuestions[2].options}
+        correctIndex={quickCheckQuestions[2].correctIndex}
+        explanation={quickCheckQuestions[2].explanation}
+      />
+
+      {/* Real-World Examples */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
+          <BookOpen className="h-5 w-5" />
+          Real-World Examples
+        </h2>
+
+        <div className="space-y-3">
+          <div className="border-l-4 border-l-red-500 bg-red-500/10 rounded-r-xl p-4">
+            <h4 className="text-ios-headline text-white font-semibold mb-2">Example 1: Infinity Symbol Error</h4>
+            <p className="text-ios-callout text-white/80 mb-2">
+              Candidate recorded all insulation resistance results as "∞." Assessor marked incorrect - <strong className="text-red-400">failed paperwork section</strong>
+            </p>
+            <p className="text-ios-footnote text-elec-yellow">
+              Lesson: Always record meter limit readings like "&gt;200 MΩ" instead of infinity symbols.
+            </p>
+          </div>
+
+          <div className="border-l-4 border-l-red-500 bg-red-500/10 rounded-r-xl p-4">
+            <h4 className="text-ios-headline text-white font-semibold mb-2">Example 2: Incomplete Documentation</h4>
+            <p className="text-ios-callout text-white/80 mb-2">
+              Candidate left several boxes blank, assuming assessor wouldn't check. <strong className="text-red-400">Lost easy marks</strong>
+            </p>
+            <p className="text-ios-footnote text-elec-yellow">
+              Lesson: Every applicable section must be completed. Blanks = lost marks.
+            </p>
+          </div>
+
+          <div className="border-l-4 border-l-emerald-500 bg-emerald-500/10 rounded-r-xl p-4">
+            <h4 className="text-ios-headline text-white font-semibold mb-2">Example 3: Professional Excellence</h4>
+            <p className="text-ios-callout text-white/80 mb-2">
+              Candidate completed paperwork neatly, with realistic results matching the installation. <strong className="text-emerald-400">Passed smoothly</strong>
+            </p>
+            <p className="text-ios-footnote text-emerald-400">
+              Lesson: Professional presentation and realistic values demonstrate competence and earn full marks.
+            </p>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      {/* Section Summary */}
+      <AM2ContentCard accent>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
+          <BookOpen className="h-5 w-5" />
+          Section Summary
+        </h2>
+
+        <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
+          <h4 className="text-ios-headline text-white font-semibold mb-3">Key Takeaways:</h4>
+          <ul className="text-ios-callout text-white/80 space-y-2">
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <span>Paperwork is part of the test - not an afterthought</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <span>Complete all sections of EIC and test schedules with realistic, measured results</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <span>Record results in correct units (Ω, MΩ, V, ms) as you test</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <span>Write clearly and neatly - illegible handwriting loses marks</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+              <span>Many candidates fail from poor recording habits, not lack of testing skill</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
+          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Next Steps:</h4>
+          <p className="text-ios-callout text-white/80">
+            You're now ready to move on to Section 4, where we'll cover functional and operational testing procedures.
+          </p>
+        </div>
+      </AM2ContentCard>
+
+      {/* Quiz Section */}
+      <Quiz questions={quizQuestions} title="Recording Test Results on Certification" />
+
+      {/* Navigation Footer */}
+      <AM2NavigationFooter
+        prevHref="../section2"
+        prevLabel="Safe Use of Test Instruments"
+        nextHref="../section4"
+        nextLabel="Functional Testing"
+        currentSection={3}
+        totalSections={6}
+      />
+    </AM2SectionLayout>
   );
 };
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -251,17 +251,22 @@ export function ViewQuoteSheet({ open, onOpenChange, quote, onConvertToInvoice }
   return (
     <>
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] p-0">
+      <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-3xl">
         <div className="flex flex-col h-full">
+          {/* Native drag indicator */}
+          <div className="pt-2 pb-1 flex justify-center">
+            <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+          </div>
+
           {/* Header */}
-          <SheetHeader className="px-4 py-3 border-b border-border">
+          <SheetHeader className="px-4 pb-4 border-b border-border">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center">
                   <FileText className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div>
-                  <SheetTitle className="text-lg">{quote.quote_number}</SheetTitle>
+                  <SheetTitle className="text-lg font-semibold">{quote.quote_number}</SheetTitle>
                   <p className="text-sm text-muted-foreground">{quote.client}</p>
                 </div>
               </div>
@@ -270,7 +275,7 @@ export function ViewQuoteSheet({ open, onOpenChange, quote, onConvertToInvoice }
           </SheetHeader>
 
           {/* Content */}
-          <ScrollArea className="flex-1 px-4 py-4">
+          <ScrollArea className="flex-1 px-4 py-4 pb-48">
             <div className="space-y-4">
               {/* Client Acceptance Banner */}
               {isClientAccepted && acceptance && (
@@ -612,28 +617,28 @@ export function ViewQuoteSheet({ open, onOpenChange, quote, onConvertToInvoice }
             </div>
           </ScrollArea>
 
-          {/* Footer Actions */}
-          <SheetFooter className="px-4 py-3 border-t border-border pb-safe">
-            <div className="flex flex-col gap-2 w-full">
+          {/* Fixed Footer Actions */}
+          <div className="absolute bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border">
+            <div className="px-4 py-3 pb-safe space-y-2">
               {quote.status === "Draft" && (
-                <Button onClick={handleSend} disabled={isSending}>
+                <Button onClick={handleSend} disabled={isSending} className="w-full h-12">
                   {isSending ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
                   Send Quote to Client
                 </Button>
               )}
               {quote.status === "Sent" && (
                 <div className="flex gap-2">
-                  <Button 
-                    variant="destructive" 
-                    className="flex-1"
+                  <Button
+                    variant="destructive"
+                    className="flex-1 h-12"
                     onClick={handleReject}
                     disabled={updateQuoteMutation.isPending}
                   >
                     <X className="h-4 w-4 mr-2" />
                     Reject
                   </Button>
-                  <Button 
-                    className="flex-1"
+                  <Button
+                    className="flex-1 h-12"
                     onClick={handleApprove}
                     disabled={updateQuoteMutation.isPending}
                   >
@@ -643,19 +648,19 @@ export function ViewQuoteSheet({ open, onOpenChange, quote, onConvertToInvoice }
                 </div>
               )}
               {(quote.status === "Approved" || isClientAccepted) && (
-                <Button onClick={handleConvert} className="bg-success hover:bg-success/90">
+                <Button onClick={handleConvert} className="w-full h-12 bg-success hover:bg-success/90">
                   <FileText className="h-4 w-4 mr-2" />
                   Convert to Invoice
                 </Button>
               )}
               <div className="flex gap-2">
-                <Button variant="outline" size="sm" className="flex-1">
+                <Button variant="outline" size="sm" className="flex-1 h-10">
                   <Copy className="h-4 w-4 mr-2" />
                   Duplicate
                 </Button>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Button variant="outline" size="sm" className="flex-1 text-destructive hover:text-destructive">
+                    <Button variant="outline" size="sm" className="flex-1 h-10 text-destructive hover:text-destructive">
                       <Trash2 className="h-4 w-4 mr-2" />
                       Delete
                     </Button>
@@ -684,7 +689,7 @@ export function ViewQuoteSheet({ open, onOpenChange, quote, onConvertToInvoice }
                 </AlertDialog>
               </div>
             </div>
-          </SheetFooter>
+          </div>
         </div>
       </SheetContent>
     </Sheet>

@@ -20,7 +20,7 @@ export default function StudyCentreIndex() {
     : 0;
 
   return (
-    <div className="min-h-screen pb-24">
+    <div className="min-h-screen pb-24 overflow-y-auto momentum-scroll-y">
       {/* Premium Hero Section */}
       <div className="relative overflow-hidden">
         {/* Animated background gradient */}
@@ -68,7 +68,7 @@ export default function StudyCentreIndex() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
-            className="mt-6 grid grid-cols-4 gap-2"
+            className="mt-6 grid grid-cols-4 gap-2 touch-grid"
           >
             {[
               { value: "22", label: "Courses", icon: BookOpen, color: "from-blue-500 to-cyan-400" },
@@ -107,7 +107,7 @@ export default function StudyCentreIndex() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
           onClick={() => navigate("/study-centre/apprentice")}
-          className="group relative overflow-hidden rounded-2xl cursor-pointer active:scale-[0.98] transition-all duration-300"
+          className="group relative overflow-hidden rounded-2xl cursor-pointer active:scale-[0.98] transition-all duration-300 touch-manipulation min-h-[200px]"
         >
           {/* Multi-layer background */}
           <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-900 to-neutral-900" />
@@ -184,7 +184,7 @@ export default function StudyCentreIndex() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35 }}
           onClick={() => navigate("/study-centre/upskilling")}
-          className="group relative overflow-hidden rounded-2xl cursor-pointer active:scale-[0.98] transition-all duration-300"
+          className="group relative overflow-hidden rounded-2xl cursor-pointer active:scale-[0.98] transition-all duration-300 touch-manipulation min-h-[200px]"
         >
           {/* Multi-layer background */}
           <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900" />

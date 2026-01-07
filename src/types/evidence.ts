@@ -149,3 +149,38 @@ export const EVIDENCE_TYPE_NAMES: Record<EvidenceTypeCode, string> = {
   drawing: 'Technical Drawing',
   calculation: 'Calculation',
 };
+
+// Tutor-assigned custom requirement
+export interface TutorPortfolioRequirement {
+  id: string;
+  tutor_id: string;
+  student_id: string;
+  category_id: string | null;
+  title: string;
+  description: string | null;
+  evidence_type_codes: EvidenceTypeCode[];
+  quantity_required: number;
+  guidance: string | null;
+  is_mandatory: boolean;
+  due_date: string | null;
+  status: 'active' | 'completed' | 'cancelled';
+  completed_at: string | null;
+  created_at: string;
+}
+
+// Combined requirement (unit + tutor) for display
+export interface CombinedEvidenceRequirement {
+  id: string;
+  source: 'unit' | 'tutor';
+  title: string | null;
+  assessment_criterion: string | null;
+  assessment_criterion_text: string | null;
+  evidence_type_codes: EvidenceTypeCode[];
+  evidence_types: EvidenceType[];
+  quantity_required: number;
+  quantity_uploaded: number;
+  is_mandatory: boolean;
+  is_complete: boolean;
+  guidance: string | null;
+  due_date: string | null;
+}

@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useDashboardData } from '@/hooks/useDashboardData';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface HubConfig {
   id: string;
@@ -31,6 +32,7 @@ interface HubConfig {
   accentGradient: string;
   iconColor: string;
   iconBg: string;
+  roles: string[]; // Which user roles can see this hub
   getStat: (data: ReturnType<typeof useDashboardData>) => {
     label: string;
     value: string;
@@ -49,6 +51,7 @@ const hubsConfig: HubConfig[] = [
     accentGradient: 'from-blue-500 via-blue-400 to-cyan-400',
     iconColor: 'text-blue-400',
     iconBg: 'bg-blue-500/10 border border-blue-500/20',
+    roles: ['apprentice', 'electrician', 'college', 'admin'],
     getStat: (data) => ({
       label: 'Study streak',
       value: `${data.learning.currentStreak} days`,
@@ -65,6 +68,7 @@ const hubsConfig: HubConfig[] = [
     accentGradient: 'from-elec-yellow via-amber-400 to-orange-400',
     iconColor: 'text-elec-yellow',
     iconBg: 'bg-elec-yellow/10 border border-elec-yellow/20',
+    roles: ['electrician', 'apprentice', 'employer', 'admin'],
     getStat: (data) =>
       data.business.activeQuotes > 0
         ? {
@@ -90,7 +94,12 @@ const hubsConfig: HubConfig[] = [
     accentGradient: 'from-purple-500 via-purple-400 to-pink-400',
     iconColor: 'text-purple-400',
     iconBg: 'bg-purple-500/10 border border-purple-500/20',
-    getStat: () => null, // TODO: Add employee/job count when available
+    roles: ['electrician', 'employer', 'admin'],
+    getStat: (data) => ({
+      label: 'Active jobs',
+      value: String(data.business.activeJobs),
+      icon: Briefcase,
+    })
   },
 ];
 
@@ -264,15 +273,31 @@ function PremiumHubCard({ hub, data }: { hub: HubConfig; data: ReturnType<typeof
 
 export function PremiumHubGrid() {
   const dashboardData = useDashboardData();
+  const { profile } = useAuth();
+  const userRole = profile?.role || 'visitor';
+
+  // Filter hubs based on user role
+  const filteredHubs = hubsConfig.filter(hub => hub.roles.includes(userRole));
+
+  // Determine grid columns based on number of hubs
+  const gridCols = filteredHubs.length === 1
+    ? 'grid-cols-1'
+    : filteredHubs.length === 2
+    ? 'grid-cols-1 sm:grid-cols-2'
+    : 'grid-cols-1 sm:grid-cols-3';
+
+  if (filteredHubs.length === 0) {
+    return null;
+  }
 
   return (
     <motion.div
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4"
+      className={cn('grid gap-3 sm:gap-4', gridCols)}
     >
-      {hubsConfig.map((hub) => (
+      {filteredHubs.map((hub) => (
         <PremiumHubCard key={hub.id} hub={hub} data={dashboardData} />
       ))}
     </motion.div>

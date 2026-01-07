@@ -1,5 +1,4 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Input } from '@/components/ui/input';
@@ -99,16 +98,16 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
   };
 
   return (
-    <Card className="border border-border bg-card overflow-hidden">
+    <div className="eicr-section-card">
       <Collapsible open={isOpen} onOpenChange={onToggle}>
-        <SectionHeader 
-          title="Earthing & Bonding" 
+        <SectionHeader
+          title="Earthing & Bonding"
           icon={Zap}
           isOpen={isOpen}
           color="amber-500"
         />
         <CollapsibleContent>
-          <CardContent className="p-3 sm:p-4 md:p-6 space-y-3 sm:space-y-4">
+          <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
             {/* Earth Electrode */}
             {showEarthElectrodeResistance && (
               <div className="space-y-4">
@@ -376,10 +375,10 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                 </div>
               </div>
             </div>
-          </CardContent>
+          </div>
         </CollapsibleContent>
       </Collapsible>
-    </Card>
+    </div>
   );
 };
 

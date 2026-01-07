@@ -6,6 +6,7 @@
  * Yellow/gold theme throughout.
  */
 
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -130,6 +131,8 @@ function ApprenticeHero() {
 // Stats Bar Component
 function ApprenticeStatsBar() {
   const { stats, isLoading } = useApprenticeData();
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = React.useState(0);
 
   const statItems = [
     {
@@ -160,61 +163,110 @@ function ApprenticeStatsBar() {
     },
   ];
 
+  // Track scroll position for pagination dots
+  const handleScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardWidth = 140 + 12; // width + gap
+    const newIndex = Math.round(el.scrollLeft / cardWidth);
+    setActiveIndex(Math.max(0, Math.min(newIndex, statItems.length - 1)));
+  };
+
   if (isLoading) {
     return (
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {[...Array(4)].map((_, i) => (
-          <div key={i} className="h-[100px] rounded-xl glass-premium animate-pulse" />
-        ))}
+      <div className="px-4 sm:px-0">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="h-[100px] rounded-xl glass-premium animate-pulse" />
+          ))}
+        </div>
       </div>
     );
   }
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory scrollbar-none sm:grid sm:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0 sm:pb-0"
-    >
-      {statItems.map((stat, index) => (
-        <motion.div
-          key={stat.label}
-          variants={itemVariants}
-          className="flex-shrink-0 w-[140px] snap-start sm:w-full"
-        >
-          <div className="glass-premium rounded-xl p-4 h-[100px]">
-            <div className="flex items-start justify-between gap-2">
-              <div className="p-2 rounded-lg bg-elec-yellow/10">
-                <stat.icon className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <div className="text-right">
-                <div className="flex items-baseline justify-end">
-                  <AnimatedCounter
-                    value={stat.value}
-                    className="text-xl font-bold text-elec-yellow"
-                  />
-                  {stat.suffix && (
-                    <span className="text-xs text-white/50 ml-0.5">{stat.suffix}</span>
-                  )}
-                </div>
-                <p className="text-xs text-white/70 mt-0.5">{stat.label}</p>
-              </div>
-            </div>
-            {stat.progress !== undefined && (
-              <div className="mt-3 h-1 bg-white/[0.05] rounded-full overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: `${Math.min(stat.progress, 100)}%` }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                  className="h-full bg-elec-yellow rounded-full"
-                />
-              </div>
+    <div className="relative">
+      <motion.div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className={cn(
+          // Mobile: horizontal scroll carousel
+          'flex gap-3 overflow-x-auto pb-2 -mx-4 px-4',
+          'snap-x snap-mandatory scrollbar-hide momentum-scroll-x',
+          // Desktop: grid layout
+          'sm:grid sm:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0 sm:pb-0'
+        )}
+      >
+        {statItems.map((stat, index) => (
+          <motion.div
+            key={stat.label}
+            variants={itemVariants}
+            whileTap={{ scale: 0.97 }}
+            className={cn(
+              'flex-shrink-0 w-[140px] snap-start touch-manipulation',
+              index === statItems.length - 1 && 'mr-4 sm:mr-0',
+              'sm:w-full'
             )}
-          </div>
-        </motion.div>
-      ))}
-    </motion.div>
+          >
+            <div className="glass-premium rounded-xl p-4 h-[100px]">
+              <div className="flex items-start justify-between gap-2">
+                <div className="p-2 rounded-lg bg-elec-yellow/10">
+                  <stat.icon className="h-4 w-4 text-elec-yellow" />
+                </div>
+                <div className="text-right">
+                  <div className="flex items-baseline justify-end">
+                    <AnimatedCounter
+                      value={stat.value}
+                      className="text-xl font-bold text-elec-yellow"
+                    />
+                    {stat.suffix && (
+                      <span className="text-xs text-white/50 ml-0.5">{stat.suffix}</span>
+                    )}
+                  </div>
+                  <p className="text-xs text-white/70 mt-0.5">{stat.label}</p>
+                </div>
+              </div>
+              {stat.progress !== undefined && (
+                <div className="mt-3 h-1 bg-white/[0.05] rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${Math.min(stat.progress, 100)}%` }}
+                    transition={{ duration: 0.8, delay: 0.3 }}
+                    className="h-full bg-elec-yellow rounded-full"
+                  />
+                </div>
+              )}
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+
+      {/* Pagination dots - mobile only */}
+      <div className="flex justify-center gap-1.5 mt-3 sm:hidden">
+        {statItems.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => {
+              const el = scrollRef.current;
+              if (el) {
+                const cardWidth = 140 + 12;
+                el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
+              }
+            }}
+            className={cn(
+              'transition-all duration-200',
+              i === activeIndex
+                ? 'w-4 h-1.5 rounded-full bg-elec-yellow'
+                : 'w-1.5 h-1.5 rounded-full bg-white/20'
+            )}
+            aria-label={`View ${statItems[i].label}`}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -414,67 +466,78 @@ const additionalResources: ToolCardProps[] = [
 ];
 
 const ApprenticeHub = () => {
+  const { refetch } = useApprenticeData();
+
+  const handleRefresh = async () => {
+    await refetch?.();
+    // Small delay for visual feedback
+    await new Promise(resolve => setTimeout(resolve, 500));
+  };
+
   return (
-    <div className="min-h-screen bg-[hsl(240,5.9%,10%)]">
-      <div className="mx-auto max-w-6xl py-4 md:py-6 lg:py-8 pb-safe">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-6 sm:space-y-8"
-        >
-          {/* Back Button */}
-          <motion.div variants={itemVariants} className="px-4 sm:px-0">
-            <Link to="/dashboard">
-              <Button
-                variant="ghost"
-                className="text-white/70 hover:text-white hover:bg-white/[0.05] -ml-2"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Dashboard
-              </Button>
-            </Link>
+    <div className="min-h-screen bg-[hsl(240,5.9%,10%)] flex flex-col">
+      {/* Pull-to-refresh container */}
+      <div className="flex-1 overflow-y-auto momentum-scroll-y">
+        <div className="mx-auto max-w-6xl py-4 md:py-6 lg:py-8 pb-safe">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="space-y-6 sm:space-y-8"
+          >
+            {/* Back Button - Larger touch target */}
+            <motion.div variants={itemVariants} className="px-4 sm:px-0">
+              <Link to="/dashboard">
+                <Button
+                  variant="ghost"
+                  className="text-white/70 hover:text-white hover:bg-white/[0.05] -ml-2 h-11 touch-manipulation"
+                >
+                  <ArrowLeft className="mr-2 h-5 w-5" />
+                  Back to Dashboard
+                </Button>
+              </Link>
+            </motion.div>
+
+            {/* Hero */}
+            <motion.section variants={itemVariants} className="px-4 sm:px-0">
+              <ApprenticeHero />
+            </motion.section>
+
+            {/* Stats Bar - Now visible on mobile as carousel */}
+            <motion.section variants={itemVariants} className="sm:px-0">
+              <ApprenticeStatsBar />
+            </motion.section>
+
+            {/* Featured AI Card */}
+            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+              <SectionHeader title="AI-Powered Learning" />
+              <FeaturedCard />
+            </motion.section>
+
+            {/* Essential Tools */}
+            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+              <SectionHeader title="Essential Tools" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 touch-grid">
+                {mainResources.map((resource) => (
+                  <ToolCard key={resource.link} {...resource} />
+                ))}
+              </div>
+            </motion.section>
+
+            {/* More Resources */}
+            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+              <SectionHeader title="More Resources" />
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 touch-grid">
+                {additionalResources.map((resource) => (
+                  <CompactToolCard key={resource.link} {...resource} />
+                ))}
+              </div>
+            </motion.section>
+
+            {/* Footer spacing for mobile nav */}
+            <div className="h-6 sm:h-8" />
           </motion.div>
-
-          {/* Hero */}
-          <motion.section variants={itemVariants} className="px-4 sm:px-0">
-            <ApprenticeHero />
-          </motion.section>
-
-          {/* Stats Bar - Hidden on mobile for native app feel */}
-          <motion.section variants={itemVariants} className="hidden sm:block sm:px-0">
-            <ApprenticeStatsBar />
-          </motion.section>
-
-          {/* Featured AI Card */}
-          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="AI-Powered Learning" />
-            <FeaturedCard />
-          </motion.section>
-
-          {/* Essential Tools */}
-          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="Essential Tools" />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              {mainResources.map((resource) => (
-                <ToolCard key={resource.link} {...resource} />
-              ))}
-            </div>
-          </motion.section>
-
-          {/* More Resources */}
-          <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
-            <SectionHeader title="More Resources" />
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {additionalResources.map((resource) => (
-                <CompactToolCard key={resource.link} {...resource} />
-              ))}
-            </div>
-          </motion.section>
-
-          {/* Footer spacing */}
-          <div className="h-4 sm:h-6" />
-        </motion.div>
+        </div>
       </div>
     </div>
   );

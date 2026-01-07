@@ -353,23 +353,25 @@ const EICRInspectionChecklist = ({ formData, onUpdate, onNavigateToObservations 
   });
 
   return (
-    <div className="space-y-1 pb-20 lg:pb-4">
-      
-      <InspectionStatsSummary inspectionItems={inspectionItems} />
-      
-      <InspectionChecklistCard
-        inspectionItems={inspectionItems}
-        expandedSections={expandedSections}
-        onToggleSection={toggleSection}
-        onUpdateItem={updateInspectionItem}
-        onNavigateToObservations={handleNavigateToObservations}
-        onAutoCreateObservation={autoCreateObservation}
-        onBulkMarkSatisfactory={bulkMarkSatisfactory}
-        onBulkClearSection={bulkClearSection}
-      />
+    <div className="space-y-4 sm:space-y-6 pb-24 lg:pb-6">
+      {/* Checklist Sections */}
+      <div className="space-y-3">
+        <InspectionChecklistCard
+          inspectionItems={inspectionItems}
+          expandedSections={expandedSections}
+          onToggleSection={toggleSection}
+          onUpdateItem={updateInspectionItem}
+          onNavigateToObservations={handleNavigateToObservations}
+          onAutoCreateObservation={autoCreateObservation}
+          onBulkMarkSatisfactory={bulkMarkSatisfactory}
+          onBulkClearSection={bulkClearSection}
+        />
+      </div>
 
+      {/* Reference Guide */}
       <DefectCodesReference />
 
+      {/* Defect Observations */}
       <DefectObservationsSection
         ref={observationsRef}
         defectObservations={defectObservations}
@@ -379,7 +381,11 @@ const EICRInspectionChecklist = ({ formData, onUpdate, onNavigateToObservations 
         onRemoveObservation={removeDefectObservation}
       />
 
+      {/* Overall Assessment */}
       <OverallAssessmentCard formData={formData} onUpdate={onUpdate} />
+
+      {/* Floating Stats Pill (mobile) */}
+      <InspectionStatsSummary inspectionItems={inspectionItems} />
     </div>
   );
 };

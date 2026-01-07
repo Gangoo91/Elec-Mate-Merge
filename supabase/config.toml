@@ -250,3 +250,8 @@ timeout_sec = 30
 verify_jwt = false
 timeout_sec = 120
 
+# Elec-ID Document Verification (AI Vision OCR)
+[functions.verify-document]
+verify_jwt = false
+timeout_sec = 60
+

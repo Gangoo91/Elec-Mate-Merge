@@ -1,253 +1,232 @@
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { useState, useCallback, useMemo } from "react";
+import { Search, Filter, Plus, Receipt } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FloatingActionButton } from "@/components/ui/floating-action-button";
+import { PullToRefresh } from "@/components/ui/pull-to-refresh";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { SectionHeader } from "@/components/employer/SectionHeader";
+import { ExpenseStatsBar } from "@/components/employer/expense/ExpenseStatsBar";
+import { ExpenseCard } from "@/components/employer/expense/ExpenseCard";
+import { ExpenseTable } from "@/components/employer/expense/ExpenseTable";
+import { ExpenseFilterSheet } from "@/components/employer/expense/ExpenseFilterSheet";
+import { CreateExpenseSheet } from "@/components/employer/expense/CreateExpenseSheet";
+import { ExpenseDetailSheet } from "@/components/employer/expense/ExpenseDetailSheet";
 import {
-  Receipt,
-  Clock,
-  CheckCircle,
-  XCircle,
-  PoundSterling,
-  ChevronDown,
-  ChevronUp,
-  Image,
-  User,
-  Briefcase,
-  Plus
-} from "lucide-react";
-import { useExpenseClaims, useApproveExpense, useRejectExpense, useMarkExpensePaid } from "@/hooks/useFinance";
-import { CreateExpenseDialog } from "@/components/employer/dialogs/CreateExpenseDialog";
+  useExpenses,
+  type ExpenseFilters,
+  type ExpenseStatus,
+} from "@/hooks/useExpenses";
 import type { ExpenseClaim } from "@/services/financeService";
+import { useAuth } from "@/contexts/AuthContext";
 
-export function ExpensesSection() {
-  const [activeTab, setActiveTab] = useState("pending");
-  const [expandedClaim, setExpandedClaim] = useState<string | null>(null);
-  const [showCreateDialog, setShowCreateDialog] = useState(false);
-  
-  const { data: expenseClaims = [], isLoading } = useExpenseClaims();
-  const approveExpenseMutation = useApproveExpense();
-  const rejectExpenseMutation = useRejectExpense();
-  const markPaidMutation = useMarkExpensePaid();
+interface ExpensesSectionProps {
+  /**
+   * View mode: 'admin' for employer view (all expenses, approve/reject),
+   * 'employee' for personal view (own expenses only)
+   */
+  mode?: 'admin' | 'employee';
+  /** Employee ID for filtering in employee mode (if not using auto-detection) */
+  currentEmployeeId?: string;
+}
 
-  const pendingClaims = expenseClaims.filter(e => e.status === "Pending");
-  const approvedClaims = expenseClaims.filter(e => e.status === "Approved" || e.status === "Paid");
-  const rejectedClaims = expenseClaims.filter(e => e.status === "Rejected");
+export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProps) {
+  const { profile } = useAuth();
 
-  const totalPending = pendingClaims.reduce((sum, c) => sum + Number(c.amount), 0);
-  const totalApproved = approvedClaims.reduce((sum, c) => sum + Number(c.amount), 0);
+  // Determine if we're in employee mode based on prop or user role
+  const isEmployeeMode = useMemo(() => {
+    if (mode === 'admin') return false;
+    if (mode === 'employee') return true;
+    // Auto-detect based on role if no mode specified
+    return profile?.role === 'electrician' || profile?.role === 'apprentice';
+  }, [mode, profile?.role]);
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "Pending":
-        return <Badge className="bg-warning text-warning-foreground text-xs">{status}</Badge>;
-      case "Approved":
-        return <Badge className="bg-info text-info-foreground text-xs">{status}</Badge>;
-      case "Paid":
-        return <Badge className="bg-success text-success-foreground text-xs">{status}</Badge>;
-      case "Rejected":
-        return <Badge variant="destructive" className="text-xs">{status}</Badge>;
-      default:
-        return <Badge variant="secondary" className="text-xs">{status}</Badge>;
+  // Get employee ID for filtering (use prop or profile ID)
+  const employeeIdForFilter = currentEmployeeId || (isEmployeeMode ? profile?.id : undefined);
+  const isMobile = useIsMobile();
+
+  // State
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState<ExpenseFilters>({});
+  const [selectedExpense, setSelectedExpense] = useState<ExpenseClaim | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [sortField, setSortField] = useState<string>("submitted_date");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+
+  // Sheets state
+  const [showFilterSheet, setShowFilterSheet] = useState(false);
+  const [showCreateSheet, setShowCreateSheet] = useState(false);
+  const [showDetailSheet, setShowDetailSheet] = useState(false);
+
+  // Merge employee filter with other filters
+  const mergedFilters = useMemo(() => ({
+    ...filters,
+    ...(employeeIdForFilter ? { employeeId: employeeIdForFilter } : {}),
+  }), [filters, employeeIdForFilter]);
+
+  // Hook
+  const {
+    expenses,
+    isLoading,
+    stats,
+    refetch,
+    approveMutation,
+    rejectMutation,
+    markPaidMutation,
+    createMutation,
+    deleteMutation,
+  } = useExpenses(mergedFilters);
+
+  // Get employees for filter and create sheets
+  const employees = expenses.reduce<{ id: string; name: string }[]>((acc, expense) => {
+    if (expense.employees && !acc.find(e => e.id === expense.employee_id)) {
+      acc.push({ id: expense.employee_id, name: expense.employees.name });
     }
-  };
+    return acc;
+  }, []);
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case "Materials":
-        return "🔧";
-      case "Parking":
-        return "🅿️";
-      case "Tools":
-        return "🛠️";
-      case "Travel":
-        return "🚗";
-      case "PPE":
-        return "🦺";
+  // Filter expenses by search query
+  const filteredExpenses = expenses.filter((expense) => {
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      expense.description?.toLowerCase().includes(query) ||
+      expense.employees?.name?.toLowerCase().includes(query) ||
+      expense.category?.toLowerCase().includes(query)
+    );
+  });
+
+  // Sort expenses
+  const sortedExpenses = [...filteredExpenses].sort((a, b) => {
+    let aVal: any, bVal: any;
+    switch (sortField) {
+      case "submitted_date":
+        aVal = new Date(a.submitted_date).getTime();
+        bVal = new Date(b.submitted_date).getTime();
+        break;
+      case "employee":
+        aVal = a.employees?.name || "";
+        bVal = b.employees?.name || "";
+        break;
+      case "category":
+        aVal = a.category;
+        bVal = b.category;
+        break;
+      case "amount":
+        aVal = Number(a.amount);
+        bVal = Number(b.amount);
+        break;
+      case "status":
+        aVal = a.status;
+        bVal = b.status;
+        break;
       default:
-        return "📦";
+        return 0;
     }
-  };
+    if (sortDirection === "asc") {
+      return aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+    }
+    return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
+  });
 
-  const handleApprove = (id: string) => {
-    approveExpenseMutation.mutate({ id, approvedBy: "Admin" });
-  };
+  // Handlers
+  const handleStatusFilter = useCallback((status: ExpenseStatus | undefined) => {
+    setFilters((prev) => ({ ...prev, status }));
+  }, []);
 
-  const handleReject = (id: string) => {
-    rejectExpenseMutation.mutate({ id, approvedBy: "Admin", reason: "Not approved" });
-  };
+  const handleSort = useCallback((field: string) => {
+    if (sortField === field) {
+      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortField(field);
+      setSortDirection("desc");
+    }
+  }, [sortField]);
 
-  const handleMarkPaid = (id: string) => {
+  const handleApprove = useCallback((id: string) => {
+    approveMutation.mutate({ id, approvedBy: "Admin" });
+  }, [approveMutation]);
+
+  const handleReject = useCallback((id: string, reason?: string) => {
+    rejectMutation.mutate({ id, approvedBy: "Admin", reason: reason || "Rejected" });
+  }, [rejectMutation]);
+
+  const handleMarkPaid = useCallback((id: string) => {
     markPaidMutation.mutate(id);
-  };
+  }, [markPaidMutation]);
 
-  const renderClaimsList = (claims: ExpenseClaim[]) => (
-    <div className="space-y-3">
-      {claims.length === 0 ? (
-        <Card className="bg-elec-gray border-border">
-          <CardContent className="p-8 text-center">
-            <Receipt className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <p className="text-sm text-muted-foreground">No claims in this category</p>
-          </CardContent>
-        </Card>
-      ) : (
-        claims.map((claim) => {
-          const isExpanded = expandedClaim === claim.id;
-          const employeeName = claim.employees?.name || "Unknown";
+  const handleDelete = useCallback((id: string) => {
+    deleteMutation.mutate(id);
+  }, [deleteMutation]);
 
-          return (
-            <Card key={claim.id} className="bg-elec-gray border-border overflow-hidden">
-              <CardContent className="p-0">
-                <div 
-                  className="p-4 cursor-pointer touch-feedback"
-                  onClick={() => setExpandedClaim(isExpanded ? null : claim.id)}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-start gap-3">
-                      <div className="text-2xl">{getCategoryIcon(claim.category)}</div>
-                      <div className="min-w-0">
-                        <h3 className="font-semibold text-foreground text-sm">{claim.description}</h3>
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
-                          <User className="h-3 w-3" />
-                          <span>{employeeName}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                          <Briefcase className="h-3 w-3" />
-                          <span>{claim.category}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <p className="font-bold text-foreground">£{Number(claim.amount).toFixed(2)}</p>
-                      {getStatusBadge(claim.status)}
-                    </div>
-                  </div>
+  const handleView = useCallback((expense: ExpenseClaim) => {
+    setSelectedExpense(expense);
+    setShowDetailSheet(true);
+  }, []);
 
-                  <div className="flex items-center justify-between mt-2">
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <Clock className="h-3 w-3" />
-                      <span>{new Date(claim.submitted_date).toLocaleDateString()}</span>
-                      {claim.receipt_url && (
-                        <Badge variant="outline" className="text-xs">
-                          <Image className="h-3 w-3 mr-1" />
-                          Receipt
-                        </Badge>
-                      )}
-                    </div>
-                    {isExpanded ? (
-                      <ChevronUp className="h-4 w-4 text-muted-foreground" />
-                    ) : (
-                      <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                    )}
-                  </div>
-                </div>
+  const handleCreate = useCallback((data: any) => {
+    createMutation.mutate(data, {
+      onSuccess: () => {
+        setShowCreateSheet(false);
+      },
+    });
+  }, [createMutation]);
 
-                {isExpanded && (
-                  <div className="border-t border-border p-4 bg-muted/30 space-y-3">
-                    <div className="grid grid-cols-2 gap-2 text-sm">
-                      <div>
-                        <span className="text-muted-foreground">Category:</span>
-                        <span className="ml-2 font-medium">{claim.category}</span>
-                      </div>
-                      <div>
-                        <span className="text-muted-foreground">Claim ID:</span>
-                        <span className="ml-2 font-medium text-xs">{claim.id.slice(0, 8)}</span>
-                      </div>
-                      {claim.approved_by && (
-                        <div>
-                          <span className="text-muted-foreground">
-                            {claim.status === "Rejected" ? "Rejected by:" : "Approved by:"}
-                          </span>
-                          <span className="ml-2 font-medium">{claim.approved_by}</span>
-                        </div>
-                      )}
-                      {claim.paid_date && (
-                        <div>
-                          <span className="text-muted-foreground">Paid:</span>
-                          <span className="ml-2 font-medium">
-                            {new Date(claim.paid_date).toLocaleDateString()}
-                          </span>
-                        </div>
-                      )}
-                    </div>
+  const handleBulkApprove = useCallback(() => {
+    selectedIds.forEach((id) => {
+      const expense = expenses.find((e) => e.id === id);
+      if (expense?.status === "Pending") {
+        handleApprove(id);
+      }
+    });
+    setSelectedIds([]);
+  }, [selectedIds, expenses, handleApprove]);
 
-                    {claim.status === "Pending" && (
-                      <div className="flex gap-2">
-                        <Button 
-                          variant="destructive" 
-                          size="sm" 
-                          className="flex-1"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleReject(claim.id);
-                          }}
-                          disabled={rejectExpenseMutation.isPending}
-                        >
-                          <XCircle className="h-4 w-4 mr-2" />
-                          Reject
-                        </Button>
-                        <Button 
-                          size="sm" 
-                          className="flex-1"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleApprove(claim.id);
-                          }}
-                          disabled={approveExpenseMutation.isPending}
-                        >
-                          <CheckCircle className="h-4 w-4 mr-2" />
-                          Approve
-                        </Button>
-                      </div>
-                    )}
+  const handleBulkReject = useCallback(() => {
+    selectedIds.forEach((id) => {
+      const expense = expenses.find((e) => e.id === id);
+      if (expense?.status === "Pending") {
+        handleReject(id, "Bulk rejected");
+      }
+    });
+    setSelectedIds([]);
+  }, [selectedIds, expenses, handleReject]);
 
-                    {claim.status === "Approved" && (
-                      <Button 
-                        size="sm" 
-                        className="w-full"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleMarkPaid(claim.id);
-                        }}
-                        disabled={markPaidMutation.isPending}
-                      >
-                        <PoundSterling className="h-4 w-4 mr-2" />
-                        Mark as Paid
-                      </Button>
-                    )}
+  // Count active filters
+  const activeFilterCount = [
+    filters.status,
+    filters.category,
+    filters.employeeId,
+    filters.hasReceipt !== undefined,
+    filters.dateFrom,
+  ].filter(Boolean).length;
 
-                    {claim.receipt_url && (
-                      <Button variant="outline" size="sm" className="w-full">
-                        <Image className="h-4 w-4 mr-2" />
-                        View Receipt
-                      </Button>
-                    )}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          );
-        })
-      )}
-    </div>
-  );
+  // Dynamic titles based on mode
+  const sectionTitle = isEmployeeMode ? "My Expenses" : "Expense Claims";
+  const sectionDescription = isEmployeeMode
+    ? "Submit and track your expense claims"
+    : "Review and approve team expenses";
+  const addButtonLabel = isEmployeeMode ? "Submit Expense" : "Add Expense";
 
+  // Loading skeleton
   if (isLoading) {
     return (
       <div className="space-y-4 md:space-y-6 animate-fade-in">
-        <SectionHeader title="Expense Claims" description="Review and approve team expenses" />
-        <div className="flex gap-2 overflow-x-auto pb-1">
-          {[...Array(3)].map((_, i) => (
-            <Skeleton key={i} className="h-20 w-40 shrink-0" />
+        <SectionHeader title={sectionTitle} description={sectionDescription} />
+        <div className="flex gap-3 overflow-x-auto pb-1 -mx-4 px-4 md:mx-0 md:px-0 md:grid md:grid-cols-4">
+          {[...Array(4)].map((_, i) => (
+            <Skeleton key={i} className="h-24 w-36 md:w-auto shrink-0" />
           ))}
         </div>
-        <Skeleton className="h-10 w-full" />
-        {[...Array(3)].map((_, i) => (
-          <Skeleton key={i} className="h-32" />
+        <div className="flex gap-2">
+          <Skeleton className="h-10 flex-1" />
+          <Skeleton className="h-10 w-20" />
+        </div>
+        {[...Array(4)].map((_, i) => (
+          <Skeleton key={i} className="h-24" />
         ))}
       </div>
     );
@@ -255,79 +234,188 @@ export function ExpensesSection() {
 
   return (
     <div className="space-y-4 md:space-y-6 animate-fade-in">
+      {/* Header */}
       <SectionHeader
-        title="Expense Claims"
-        description="Review and approve team expenses"
+        title={sectionTitle}
+        description={sectionDescription}
         action={
-          <Button size="sm" className="gap-2" onClick={() => setShowCreateDialog(true)}>
+          <Button
+            size="sm"
+            className="gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            onClick={() => setShowCreateSheet(true)}
+          >
             <Plus className="h-4 w-4" />
-            <span className="hidden sm:inline">Submit Expense</span>
+            <span className="hidden sm:inline">{addButtonLabel}</span>
           </Button>
         }
       />
 
-      {/* Stats */}
-      <QuickStats
-        stats={[
-          {
-            icon: Clock,
-            value: `£${totalPending.toFixed(2)}`,
-            label: `${pendingClaims.length} Pending`,
-            color: "orange",
-            pulse: pendingClaims.length > 0,
-          },
-          {
-            icon: CheckCircle,
-            value: `£${totalApproved.toFixed(2)}`,
-            label: `${approvedClaims.length} Approved`,
-            color: "green",
-          },
-          {
-            icon: XCircle,
-            value: rejectedClaims.length,
-            label: "Rejected",
-            color: "red",
-          },
-        ]}
-      />
+      {/* Pull to Refresh wrapper for mobile */}
+      <PullToRefresh onRefresh={refetch} disabled={!isMobile}>
+        <div className="space-y-4">
+          {/* Stats Bar */}
+          <ExpenseStatsBar
+            stats={stats}
+            activeStatus={filters.status as ExpenseStatus}
+            onStatusClick={handleStatusFilter}
+          />
 
-      {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="w-full grid grid-cols-3">
-          <TabsTrigger value="pending" className="text-xs">
-            Pending ({pendingClaims.length})
-          </TabsTrigger>
-          <TabsTrigger value="approved" className="text-xs">
-            Approved ({approvedClaims.length})
-          </TabsTrigger>
-          <TabsTrigger value="rejected" className="text-xs">
-            Rejected ({rejectedClaims.length})
-          </TabsTrigger>
-        </TabsList>
+          {/* Search and Filter Bar */}
+          <div className="flex gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search expenses..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-9 h-10 bg-card border-border"
+              />
+            </div>
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-10 w-10 shrink-0 relative"
+              onClick={() => setShowFilterSheet(true)}
+            >
+              <Filter className="h-4 w-4" />
+              {activeFilterCount > 0 && (
+                <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center bg-elec-yellow text-black text-xs">
+                  {activeFilterCount}
+                </Badge>
+              )}
+            </Button>
+          </div>
 
-        <TabsContent value="pending" className="mt-4">
-          {renderClaimsList(pendingClaims)}
-        </TabsContent>
+          {/* Bulk Actions (desktop only, admin mode only) */}
+          {!isMobile && !isEmployeeMode && selectedIds.length > 0 && (
+            <div className="flex items-center gap-3 p-3 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
+              <span className="text-sm font-medium">
+                {selectedIds.length} selected
+              </span>
+              <div className="flex gap-2 ml-auto">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSelectedIds([])}
+                >
+                  Clear
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-red-500/50 text-red-500 hover:bg-red-500/10"
+                  onClick={handleBulkReject}
+                >
+                  Reject All
+                </Button>
+                <Button
+                  size="sm"
+                  className="bg-green-500 hover:bg-green-600 text-white"
+                  onClick={handleBulkApprove}
+                >
+                  Approve All
+                </Button>
+              </div>
+            </div>
+          )}
 
-        <TabsContent value="approved" className="mt-4">
-          {renderClaimsList(approvedClaims)}
-        </TabsContent>
+          {/* Expense List */}
+          {sortedExpenses.length === 0 ? (
+            <Card className="bg-card border-border">
+              <CardContent className="py-12 text-center">
+                <Receipt className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="font-semibold mb-2">No expenses found</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  {searchQuery || activeFilterCount > 0
+                    ? "Try adjusting your search or filters"
+                    : "No expense claims have been submitted yet"}
+                </p>
+                {(searchQuery || activeFilterCount > 0) && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setSearchQuery("");
+                      setFilters({});
+                    }}
+                  >
+                    Clear Filters
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
+          ) : isMobile ? (
+            // Mobile: Swipeable Cards
+            <div className="space-y-3">
+              {sortedExpenses.map((expense) => (
+                <ExpenseCard
+                  key={expense.id}
+                  expense={expense}
+                  onApprove={isEmployeeMode ? undefined : handleApprove}
+                  onReject={isEmployeeMode ? undefined : handleReject}
+                  onClick={() => handleView(expense)}
+                  showSwipeActions={!isEmployeeMode && expense.status === 'Pending'}
+                />
+              ))}
+            </div>
+          ) : (
+            // Desktop: Data Table
+            <ExpenseTable
+              expenses={sortedExpenses}
+              selectedIds={selectedIds}
+              onSelectionChange={setSelectedIds}
+              onApprove={isEmployeeMode ? undefined : handleApprove}
+              onReject={isEmployeeMode ? undefined : (id) => handleReject(id)}
+              onMarkPaid={isEmployeeMode ? undefined : handleMarkPaid}
+              onView={handleView}
+              sortField={sortField}
+              sortDirection={sortDirection}
+              onSort={handleSort}
+              readOnly={isEmployeeMode}
+            />
+          )}
+        </div>
+      </PullToRefresh>
 
-        <TabsContent value="rejected" className="mt-4">
-          {renderClaimsList(rejectedClaims)}
-        </TabsContent>
-      </Tabs>
-
+      {/* FAB for mobile */}
       <FloatingActionButton
         icon={<Plus className="h-5 w-5" />}
-        onClick={() => setShowCreateDialog(true)}
-        label="Submit Expense"
+        onClick={() => setShowCreateSheet(true)}
+        label={addButtonLabel}
       />
 
-      <CreateExpenseDialog 
-        open={showCreateDialog} 
-        onOpenChange={setShowCreateDialog} 
+      {/* Filter Sheet - hide employee filter in employee mode */}
+      <ExpenseFilterSheet
+        open={showFilterSheet}
+        onOpenChange={setShowFilterSheet}
+        filters={filters}
+        onFiltersChange={setFilters}
+        employees={isEmployeeMode ? [] : employees}
+      />
+
+      {/* Create Expense Sheet */}
+      <CreateExpenseSheet
+        open={showCreateSheet}
+        onOpenChange={setShowCreateSheet}
+        onSubmit={handleCreate}
+        employees={employees}
+        isSubmitting={createMutation.isPending}
+        employeeMode={isEmployeeMode}
+        currentEmployeeId={employeeIdForFilter}
+      />
+
+      {/* Detail Sheet - hide actions in employee mode */}
+      <ExpenseDetailSheet
+        expense={selectedExpense}
+        open={showDetailSheet}
+        onOpenChange={setShowDetailSheet}
+        onApprove={isEmployeeMode ? undefined : handleApprove}
+        onReject={isEmployeeMode ? undefined : handleReject}
+        onMarkPaid={isEmployeeMode ? undefined : handleMarkPaid}
+        onDelete={isEmployeeMode ? undefined : handleDelete}
       />
     </div>
   );
 }
+
+export default ExpensesSection;

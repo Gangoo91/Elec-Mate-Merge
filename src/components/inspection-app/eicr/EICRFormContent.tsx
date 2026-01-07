@@ -16,6 +16,7 @@ interface EICRFormContentProps {
   onCloseStartNewDialog: () => void;
   onConfirmStartNew: () => void;
   onConfirmDuplicate?: () => void;
+  onProgressChange?: (progress: number, tabLabel: string) => void;
 }
 
 const EICRFormContent: React.FC<EICRFormContentProps> = ({
@@ -29,7 +30,8 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
   showStartNewDialog,
   onCloseStartNewDialog,
   onConfirmStartNew,
-  onConfirmDuplicate
+  onConfirmDuplicate,
+  onProgressChange
 }) => {
   const handleApplyRcdPreset = (circuitIds: string[], preset: any) => {
     const currentResults = formData.testResults || [];
@@ -68,7 +70,7 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
         </div>
       )}
 
-      <EICRFormTabs formData={formData} onUpdate={onUpdate} />
+      <EICRFormTabs formData={formData} onUpdate={onUpdate} onProgressChange={onProgressChange} />
 
       <StartNewEICRDialog
         isOpen={showStartNewDialog}

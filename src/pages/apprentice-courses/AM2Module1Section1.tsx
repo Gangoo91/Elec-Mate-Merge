@@ -1,8 +1,12 @@
-import { ArrowLeft, CheckCircle, Users, Shield, Target, Award, Clock, TrendingUp, BookOpen, Zap, ArrowRight, AlertTriangle } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { CheckCircle, Users, Target, TrendingUp, AlertTriangle, Zap } from "lucide-react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
+import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
+import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
+import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
+import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
+import { AM2TestSequence } from "@/components/apprentice-courses/AM2TestSequence";
 import useSEO from "@/hooks/useSEO";
 
 const AM2Module1Section1 = () => {
@@ -50,541 +54,551 @@ const AM2Module1Section1 = () => {
     }
   ];
 
+  const assessmentSteps = [
+    {
+      title: "Safe Isolation & Risk Assessment (30 minutes)",
+      description: "Lock off and tag out procedures, prove dead testing using approved test equipment, risk assessment completion and hazard identification, safe working method statements."
+    },
+    {
+      title: "Installation Work (8 hours) - Main Component",
+      description: "Cable installation using various methods (conduit, trunking, clipping), SWA cable termination techniques, mechanical protection and support systems, accessory installation and final connections."
+    },
+    {
+      title: "Inspection & Testing (3.5 hours)",
+      description: "Complete sequence of electrical tests, earth fault loop impedance measurements, insulation resistance testing, RCD testing and verification, certificate completion."
+    },
+    {
+      title: "Fault Finding (2.5 hours)",
+      description: "Systematic fault diagnosis using test equipment, circuit analysis and problem identification, safe fault rectification procedures, verification testing after repairs."
+    },
+    {
+      title: "Online Knowledge Test (1 hour)",
+      description: "BS 7671 Wiring Regulations questions, cable calculations and protective device selection, health and safety requirements, inspection and testing procedures."
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
-      {/* Navigation */}
-      <div className="flex items-center gap-2 p-3 md:p-4 text-xs md:text-sm text-white">
-        <Link 
-          to=".." 
-          className="hover:text-elec-yellow transition-colors"
-        >
-          ← Back
-        </Link>
-        <span>/</span>
-        <span>AM2</span>
-        <span>/</span>
-        <span className="hidden sm:inline">Module 1</span>
-        <span className="sm:hidden">M1</span>
-        <span>/</span>
-        <span className="text-elec-yellow">Section 1</span>
+    <AM2SectionLayout
+      backHref=".."
+      breadcrumbs={["AM2", "Module 1", "Section 1"]}
+    >
+      {/* Hero Section */}
+      <AM2HeroSection
+        icon={Zap}
+        title="Understanding AM2 Assessment"
+        description="Learn about the AM2 practical assessment - your pathway to becoming a qualified electrician."
+        badge="Module 1 • Section 1"
+      />
+
+      {/* Statistics Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+        <AM2ContentCard className="text-center">
+          <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">15,000+</div>
+          <div className="text-ios-footnote text-white/70">Take AM2 annually</div>
+        </AM2ContentCard>
+        <AM2ContentCard className="text-center">
+          <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">2½ Days</div>
+          <div className="text-ios-footnote text-white/70">16.5 hours total</div>
+        </AM2ContentCard>
+        <AM2ContentCard className="text-center">
+          <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">£8,000</div>
+          <div className="text-ios-footnote text-white/70">Avg salary increase</div>
+        </AM2ContentCard>
+        <AM2ContentCard className="text-center">
+          <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">NVQ 3</div>
+          <div className="text-ios-footnote text-white/70">Qualification level</div>
+        </AM2ContentCard>
       </div>
 
-      <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16 py-12">
-        {/* Hero Section */}
-        <div className="mb-4 md:mb-6">
-          <Card className="bg-transparent border-elec-yellow/30">
-            <div className="p-4 md:p-6 text-center">
-              <div className="inline-flex items-center justify-center w-10 h-10 md:w-12 md:h-12 bg-elec-yellow/20 rounded-full mb-3 md:mb-4">
-                <Zap className="h-5 w-5 md:h-6 md:w-6 text-elec-yellow" />
-              </div>
-              <h1 className="text-xl sm:text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 md:mb-3">
-                Understanding AM2 Assessment
-              </h1>
-              <p className="text-white text-sm md:text-base max-w-2xl mx-auto">
-                Learn about the AM2 practical assessment - your pathway to becoming a qualified electrician.
-              </p>
+      {/* What is AM2? */}
+      <AM2ContentCard accent>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">What is AM2?</h2>
+        <p className="text-ios-body text-white/90 leading-relaxed mb-4">
+          AM2 (Achievement Measurement 2) is a 2½-day practical assessment totalling 16.5 hours for electrical workers completing their NVQ Level 3.
+          It proves your competency in electrical installation work and unlocks your ECS Gold Card.
+        </p>
+        <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
+          <p className="text-ios-callout text-white/90">
+            <strong className="text-elec-yellow">Important:</strong> This isn't just a test - it's your final step to becoming a fully qualified electrician.
+            The assessment simulates real workplace conditions and you'll be evaluated on safety, technical skill, and professional standards.
+          </p>
+        </div>
+      </AM2ContentCard>
+
+      {/* Assessment Breakdown */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">AM2 Assessment Components</h2>
+        <p className="text-ios-body text-white/90 mb-6">
+          The AM2 assessment comprises 5 distinct components totalling 16.5 hours over 2½ days.
+          Most of your time is spent on installation work, while other sections test how you finish, check, and fix your work.
+        </p>
+        <AM2TestSequence steps={assessmentSteps} />
+        <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4 mt-6">
+          <p className="text-ios-footnote text-elec-yellow font-semibold mb-1">Important Note</p>
+          <p className="text-ios-callout text-white/80">
+            These timings vary slightly by assessment centre, but the balance remains the same across all providers.
+            The installation component always takes up the majority of your time.
+          </p>
+        </div>
+      </AM2ContentCard>
+
+      {/* Assessment Criteria */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">How You'll Be Assessed</h2>
+        <p className="text-ios-body text-white/90 mb-4">
+          Assessors evaluate you across multiple criteria. Understanding these helps you prepare effectively:
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-3">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline text-white font-semibold mb-2">Safety & Compliance (30%)</h4>
+              <ul className="text-ios-callout text-white/80 space-y-1.5">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Risk assessment completion</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>PPE usage and safe working</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>BS 7671 regulation compliance</span>
+                </li>
+              </ul>
             </div>
-          </Card>
-        </div>
 
-        {/* Statistics Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4 md:mb-6">
-          <Card className="bg-transparent border-elec-yellow/30 text-center p-3 md:p-4">
-            <div className="text-lg md:text-2xl font-bold text-elec-yellow mb-1">15,000+</div>
-            <div className="text-xs text-white">Take AM2 annually</div>
-          </Card>
-          <Card className="bg-transparent border-elec-yellow/30 text-center p-3 md:p-4">
-            <div className="text-lg md:text-2xl font-bold text-elec-yellow mb-1">2½ Days</div>
-            <div className="text-xs text-white">16.5 hours total</div>
-          </Card>
-          <Card className="bg-transparent border-elec-yellow/30 text-center p-3 md:p-4">
-            <div className="text-lg md:text-2xl font-bold text-elec-yellow mb-1">£8,000</div>
-            <div className="text-xs text-white">Avg salary increase</div>
-          </Card>
-          <Card className="bg-transparent border-elec-yellow/30 text-center p-3 md:p-4">
-            <div className="text-lg md:text-2xl font-bold text-elec-yellow mb-1">NVQ 3</div>
-            <div className="text-xs text-white">Qualification level</div>
-          </Card>
-        </div>
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline text-white font-semibold mb-2">Technical Skills (40%)</h4>
+              <ul className="text-ios-callout text-white/80 space-y-1.5">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Installation techniques</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Cable selection and calculations</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Testing procedures and accuracy</span>
+                </li>
+              </ul>
+            </div>
+          </div>
 
-        {/* What is AM2? */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-4 md:mb-6">
-          <div className="p-3 md:p-4">
-            <h2 className="text-lg md:text-xl font-bold text-elec-yellow mb-2 md:mb-3">What is AM2?</h2>
-            <p className="text-white text-sm leading-relaxed max-w-3xl mb-3 md:mb-4">
-              AM2 (Achievement Measurement 2) is a 2½-day practical assessment totalling 16.5 hours for electrical workers completing their NVQ Level 3. 
-              It proves your competency in electrical installation work and unlocks your ECS Gold Card.
+          <div className="space-y-3">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline text-white font-semibold mb-2">Quality & Presentation (20%)</h4>
+              <ul className="text-ios-callout text-white/80 space-y-1.5">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Workmanship standards</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Cable management</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Professional appearance</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline text-white font-semibold mb-2">Time Management (10%)</h4>
+              <ul className="text-ios-callout text-white/80 space-y-1.5">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Task completion within timeframes</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Efficient working methods</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Planning and organisation</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck
+        id="am2-understanding"
+        question="What does AM2 stand for?"
+        options={[
+          "Apprentice Module 2",
+          "Achievement Measurement 2",
+          "Advanced Maintenance 2",
+          "Assessed Module 2"
+        ]}
+        correctIndex={1}
+        explanation="AM2 stands for Achievement Measurement 2, which is the practical assessment for electrical installation workers."
+      />
+
+      {/* Who is AM2 For? */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
+          <Users className="h-5 w-5" />
+          Who Takes AM2?
+        </h2>
+        <p className="text-ios-body text-white/90 mb-4">
+          AM2 is designed for electrical workers at the final stage of their training or those seeking formal recognition of their skills.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <h3 className="text-ios-headline text-white font-semibold mb-3">Typical Candidates</h3>
+            <ul className="space-y-2 text-ios-callout text-white/80 mb-4">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Final year electrical apprentices</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Experienced electricians needing formal qualification</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Career changers with electrical training</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>International electricians seeking UK recognition</span>
+              </li>
+            </ul>
+
+            <h3 className="text-ios-headline text-white font-semibold mb-2">Experience Level</h3>
+            <p className="text-ios-callout text-white/80">
+              Most candidates have 2-4 years of electrical installation experience and are working towards
+              completing their NVQ Level 3 qualification.
             </p>
-            <div className="bg-card/80 border border-elec-yellow/30 rounded-lg p-3 max-w-3xl">
-              <p className="text-white text-xs">
-                <strong className="text-elec-yellow">Important:</strong> This isn't just a test - it's your final step to becoming a fully qualified electrician. 
-                The assessment simulates real workplace conditions and you'll be evaluated on safety, technical skill, and professional standards.
+          </div>
+          <div>
+            <h3 className="text-ios-headline text-white font-semibold mb-3">Essential Requirements</h3>
+            <ul className="space-y-2 text-ios-callout text-white/80 mb-4">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Level 3 Electrical Installation Diploma</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>18th Edition Wiring Regulations</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Inspection & Testing qualification</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Hands-on installation experience</span>
+              </li>
+            </ul>
+
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-3">
+              <p className="text-ios-footnote text-elec-yellow font-semibold mb-1">Before You Book</p>
+              <p className="text-ios-callout text-white/80">
+                Ensure you're confident with practical installation work, testing procedures,
+                and can work independently to professional standards.
               </p>
             </div>
           </div>
-        </Card>
+        </div>
+      </AM2ContentCard>
 
-        {/* Assessment Breakdown */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-4 md:mb-6">
-          <div className="p-3 md:p-4">
-            <h2 className="text-lg md:text-xl font-bold text-elec-yellow mb-2 md:mb-3">AM2 Assessment Components</h2>
-            <div className="space-y-3 md:space-y-4 max-w-3xl">
-              <p className="text-white text-sm mb-3 md:mb-4">
-                The AM2 assessment comprises 5 distinct components totalling 16.5 hours over 2½ days. 
-                Most of your time is spent on installation work, while other sections test how you finish, check, and fix your work.
-              </p>
-              
-              <div className="border-l-4 border-elec-yellow/50 pl-3 md:pl-4">
-                <h3 className="text-white font-semibold mb-1 md:mb-2 text-sm md:text-base">Safe Isolation & Risk Assessment (30 minutes)</h3>
-                <p className="text-white text-xs md:text-sm mb-1 md:mb-2">
-                  Essential safety procedures before any electrical work begins:
-                </p>
-                <ul className="text-white text-xs md:text-sm space-y-1">
-                  <li>• Lock off and tag out procedures</li>
-                  <li>• Prove dead testing using approved test equipment</li>
-                  <li>• Risk assessment completion and hazard identification</li>
-                  <li>• Safe working method statements</li>
-                </ul>
+      {/* Preparation Guide */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
+          <Target className="h-5 w-5" />
+          How to Prepare
+        </h2>
+        <p className="text-ios-body text-white/90 mb-4">
+          Success in AM2 comes from thorough preparation. Here's your roadmap to assessment readiness:
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white font-semibold mb-3">Technical Skills</h4>
+            <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Practice conduit bending techniques</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Master SWA cable terminations</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Refresh cable calculation methods</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Practice testing sequences</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white font-semibold mb-3">Knowledge Review</h4>
+            <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Study BS 7671 key sections</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Review protective device selection</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Understand earthing systems</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Know inspection schedules</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white font-semibold mb-3">Practical Prep</h4>
+            <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Complete mock assessments</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Time yourself on installations</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Practice fault-finding scenarios</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Perfect your test procedures</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
+          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Recommended Preparation Time</h4>
+          <p className="text-ios-callout text-white/80">
+            Allow 3-6 months of focused preparation, including 40-60 hours of additional practice beyond your regular work.
+            Many training centres offer AM2 preparation courses which can significantly boost your confidence.
+          </p>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck
+        id="target-audience"
+        question="Which qualification is a prerequisite for AM2?"
+        options={[
+          "Level 2 Electrical Installation",
+          "18th Edition IET Wiring Regulations",
+          "PAT Testing Certificate",
+          "First Aid Certificate"
+        ]}
+        correctIndex={1}
+        explanation="The 18th Edition IET Wiring Regulations qualification is essential before taking AM2."
+      />
+
+      {/* Career Impact */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
+          <TrendingUp className="h-5 w-5" />
+          Why It Matters for Your Career
+        </h2>
+        <p className="text-ios-body text-white/90 mb-4">
+          Passing AM2 transforms your career prospects and opens doors that remain closed to unqualified electricians.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <h3 className="text-ios-headline text-white font-semibold mb-3">Immediate Impact</h3>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <div>
+                  <span className="text-ios-body text-white font-medium">ECS Gold Card</span>
+                  <p className="text-ios-callout text-white/70">Access to construction sites nationwide</p>
+                </div>
               </div>
-              
-              <div className="border-l-4 border-l-red-500/50 pl-3 md:pl-4">
-                <h3 className="text-white font-semibold mb-1 md:mb-2 text-sm md:text-base">Installation Work (8 hours) - Main Component</h3>
-                <p className="text-white text-xs md:text-sm mb-1 md:mb-2">
-                  The largest section where you demonstrate your core electrical installation skills:
-                </p>
-                <ul className="text-white text-xs md:text-sm space-y-1">
-                  <li>• Cable installation using various methods (conduit, trunking, clipping)</li>
-                  <li>• SWA cable termination techniques</li>
-                  <li>• Mechanical protection and support systems</li>
-                  <li>• Accessory installation and final connections</li>
-                  <li>• Professional workmanship and cable management</li>
-                </ul>
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <div>
+                  <span className="text-ios-body text-white font-medium">JIB Recognition</span>
+                  <p className="text-ios-callout text-white/70">Industry-wide acceptance of your skills</p>
+                </div>
               </div>
-              
-              <div className="border-l-4 border-elec-yellow/50 pl-3 md:pl-4">
-                <h3 className="text-white font-semibold mb-1 md:mb-2 text-sm md:text-base">Inspection & Testing (3.5 hours)</h3>
-                <p className="text-white text-xs md:text-sm mb-1 md:mb-2">
-                  Comprehensive testing to verify your installation meets regulations:
-                </p>
-                <ul className="text-white text-xs md:text-sm space-y-1">
-                  <li>• Complete sequence of electrical tests</li>
-                  <li>• Earth fault loop impedance measurements</li>
-                  <li>• Insulation resistance testing</li>
-                  <li>• RCD testing and verification</li>
-                  <li>• Certificate completion with accurate results</li>
-                </ul>
-              </div>
-              
-              <div className="border-l-4 border-elec-yellow/50 pl-3 md:pl-4">
-                <h3 className="text-white font-semibold mb-1 md:mb-2 text-sm md:text-base">Fault Finding (2.5 hours)</h3>
-                <p className="text-white text-xs md:text-sm mb-1 md:mb-2">
-                  Diagnostic skills to identify and rectify electrical faults:
-                </p>
-                <ul className="text-white text-xs md:text-sm space-y-1">
-                  <li>• Systematic fault diagnosis using test equipment</li>
-                  <li>• Circuit analysis and problem identification</li>
-                  <li>• Safe fault rectification procedures</li>
-                  <li>• Verification testing after repairs</li>
-                </ul>
-              </div>
-              
-              <div className="border-l-4 border-elec-yellow/50 pl-3 md:pl-4">
-                <h3 className="text-white font-semibold mb-1 md:mb-2 text-sm md:text-base">Online Knowledge Test (1 hour)</h3>
-                <p className="text-white text-xs md:text-sm mb-1 md:mb-2">
-                  Computer-based assessment covering theoretical knowledge:
-                </p>
-                <ul className="text-white text-xs md:text-sm space-y-1">
-                  <li>• BS 7671 Wiring Regulations questions</li>
-                  <li>• Cable calculations and protective device selection</li>
-                  <li>• Health and safety requirements</li>
-                  <li>• Inspection and testing procedures</li>
-                </ul>
-              </div>
-              
-              <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3 mt-3 md:mt-4">
-                <p className="text-elec-yellow text-xs font-semibold mb-1">Important Note:</p>
-                <p className="text-white text-xs">
-                  These timings vary slightly by assessment centre, but the balance remains the same across all providers. 
-                  The installation component always takes up the majority of your time.
-                </p>
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <div>
+                  <span className="text-ios-body text-white font-medium">Insurance Benefits</span>
+                  <p className="text-ios-callout text-white/70">Lower rates for qualified tradespeople</p>
+                </div>
               </div>
             </div>
           </div>
-        </Card>
 
-        {/* Assessment Criteria */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-4 md:mb-6">
-          <div className="p-3 md:p-4">
-            <h2 className="text-lg md:text-xl font-bold text-elec-yellow mb-2 md:mb-3">How You'll Be Assessed</h2>
-            <p className="text-white text-sm mb-3 md:mb-4 max-w-3xl">
-              Assessors evaluate you across multiple criteria. Understanding these helps you prepare effectively:
+          <div>
+            <h3 className="text-ios-headline text-white font-semibold mb-3">Long-term Opportunities</h3>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <div>
+                  <span className="text-ios-body text-white font-medium">Self-Employment</span>
+                  <p className="text-ios-callout text-white/70">Start your own electrical business</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <div>
+                  <span className="text-ios-body text-white font-medium">Management Roles</span>
+                  <p className="text-ios-callout text-white/70">Progress to supervisory positions</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <div>
+                  <span className="text-ios-body text-white font-medium">Specialist Sectors</span>
+                  <p className="text-ios-callout text-white/70">Access high-value commercial projects</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+          <h4 className="text-ios-headline text-white font-semibold mb-3">Salary Impact</h4>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+            <div>
+              <div className="text-ios-title-3 text-elec-yellow font-bold">£28-32k</div>
+              <div className="text-ios-footnote text-white/70">Newly Qualified</div>
+            </div>
+            <div>
+              <div className="text-ios-title-3 text-elec-yellow font-bold">£35-42k</div>
+              <div className="text-ios-footnote text-white/70">3-5 Years Experience</div>
+            </div>
+            <div>
+              <div className="text-ios-title-3 text-elec-yellow font-bold">£45-55k</div>
+              <div className="text-ios-footnote text-white/70">Senior/Specialist</div>
+            </div>
+            <div>
+              <div className="text-ios-title-3 text-elec-yellow font-bold">£60k+</div>
+              <div className="text-ios-footnote text-white/70">Self-Employed</div>
+            </div>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      {/* Common Challenges */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
+          <AlertTriangle className="h-5 w-5" />
+          Common Challenges & How to Overcome Them
+        </h2>
+        <p className="text-ios-body text-white/90 mb-4">
+          Understanding common pitfalls helps you prepare more effectively and avoid typical mistakes.
+        </p>
+
+        <div className="space-y-3 mb-4">
+          <AM2CriticalWarning title="Time Management Issues">
+            <p className="text-ios-callout text-white/80 mb-2">
+              Many candidates struggle to complete all tasks within the allocated timeframe.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 max-w-3xl">
-              <div className="space-y-3">
-                <div className="bg-card/80 border border-elec-yellow/30 rounded-lg p-3">
-                  <h4 className="text-white font-semibold text-sm mb-1">Safety & Compliance (30%)</h4>
-                  <ul className="text-white text-xs space-y-1">
-                    <li>• Risk assessment completion</li>
-                    <li>• PPE usage and safe working</li>
-                    <li>• BS 7671 regulation compliance</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-card/80 border border-elec-yellow/30 rounded-lg p-3">
-                  <h4 className="text-white font-semibold text-sm mb-1">Technical Skills (40%)</h4>
-                  <ul className="text-white text-xs space-y-1">
-                    <li>• Installation techniques</li>
-                    <li>• Cable selection and calculations</li>
-                    <li>• Testing procedures and accuracy</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="space-y-3">
-                <div className="bg-card/80 border border-elec-yellow/30 rounded-lg p-3">
-                  <h4 className="text-white font-semibold text-sm mb-1">Quality & Presentation (20%)</h4>
-                  <ul className="text-white text-xs space-y-1">
-                    <li>• Workmanship standards</li>
-                    <li>• Cable management</li>
-                    <li>• Professional appearance</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-card/80 border border-elec-yellow/30 rounded-lg p-3">
-                  <h4 className="text-white font-semibold text-sm mb-1">Time Management (10%)</h4>
-                  <ul className="text-white text-xs space-y-1">
-                    <li>• Task completion within timeframes</li>
-                    <li>• Efficient working methods</li>
-                    <li>• Planning and organisation</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            <p className="text-ios-callout text-white/90">
+              <strong>Solution:</strong> Practice timed installations, create a personal checklist, and prioritise safety-critical tasks first.
+            </p>
+          </AM2CriticalWarning>
+
+          <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
+            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Testing Procedure Errors</h4>
+            <p className="text-ios-callout text-white/80 mb-2">
+              Incorrect testing sequence or missed tests are common failure points.
+            </p>
+            <p className="text-ios-callout text-white/90">
+              <strong>Solution:</strong> Memorise the BS 7671 testing sequence and practice until it becomes automatic.
+            </p>
           </div>
-        </Card>
 
-        <InlineCheck
-          id="am2-understanding"
-          question="What does AM2 stand for?"
-          options={[
-            "Apprentice Module 2",
-            "Achievement Measurement 2", 
-            "Advanced Maintenance 2",
-            "Assessed Module 2"
-          ]}
-          correctIndex={1}
-          explanation="AM2 stands for Achievement Measurement 2, which is the practical assessment for electrical installation workers."
-        />
-
-        {/* Who is AM2 For? */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-4 md:mb-6">
-          <div className="p-3 md:p-4">
-            <h2 className="text-lg md:text-xl font-bold text-elec-yellow mb-2 md:mb-3">
-              <Users className="inline-block mr-2 h-4 w-4 md:h-5 md:w-5" />
-              Who Takes AM2?
-            </h2>
-            <div className="max-w-3xl">
-              <p className="text-white text-sm mb-3 md:mb-4">
-                AM2 is designed for electrical workers at the final stage of their training or those seeking formal recognition of their skills.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 text-sm">
-                <div>
-                  <h3 className="text-white font-semibold mb-2">Typical Candidates</h3>
-                  <ul className="space-y-1 text-white mb-3 md:mb-4 text-xs md:text-sm">
-                    <li>• Final year electrical apprentices</li>
-                    <li>• Experienced electricians needing formal qualification</li>
-                    <li>• Career changers with electrical training</li>
-                    <li>• International electricians seeking UK recognition</li>
-                  </ul>
-                  
-                  <h3 className="text-white font-semibold mb-2">Experience Level</h3>
-                  <p className="text-white text-xs">
-                    Most candidates have 2-4 years of electrical installation experience and are working towards 
-                    completing their NVQ Level 3 qualification.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-white font-semibold mb-2">Essential Requirements</h3>
-                  <ul className="space-y-1 text-white mb-3 md:mb-4 text-xs md:text-sm">
-                    <li>• Level 3 Electrical Installation Diploma</li>
-                    <li>• 18th Edition Wiring Regulations</li>
-                    <li>• Inspection & Testing qualification</li>
-                    <li>• Hands-on installation experience</li>
-                  </ul>
-                  
-                  <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded p-2">
-                    <p className="text-elec-yellow text-xs font-semibold mb-1">Before You Book:</p>
-                    <p className="text-white text-xs">
-                      Ensure you're confident with practical installation work, testing procedures, 
-                      and can work independently to professional standards.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Documentation Quality</h4>
+            <p className="text-ios-callout text-white/80 mb-2">
+              Poor handwriting, incomplete certificates, or calculation errors can cost marks.
+            </p>
+            <p className="text-ios-callout text-white/90">
+              <strong>Solution:</strong> Practice certificate completion and double-check all calculations and entries.
+            </p>
           </div>
-        </Card>
-
-        {/* Preparation Guide */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-4 md:mb-6">
-          <div className="p-3 md:p-4">
-            <h2 className="text-lg md:text-xl font-bold text-elec-yellow mb-2 md:mb-3">
-              <Target className="inline-block mr-2 h-4 w-4 md:h-5 md:w-5" />
-              How to Prepare
-            </h2>
-            <div className="max-w-3xl space-y-3 md:space-y-4">
-              <p className="text-white text-sm">
-                Success in AM2 comes from thorough preparation. Here's your roadmap to assessment readiness:
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
-                <div className="bg-card/80 border border-elec-yellow/30 rounded-lg p-3">
-                  <h4 className="text-white font-semibold text-sm mb-2">Technical Skills</h4>
-                  <ul className="text-white text-xs space-y-1">
-                    <li>• Practice conduit bending techniques</li>
-                    <li>• Master SWA cable terminations</li>
-                    <li>• Refresh cable calculation methods</li>
-                    <li>• Practice testing sequences</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-card/80 border border-elec-yellow/30 rounded-lg p-3">
-                  <h4 className="text-white font-semibold text-sm mb-2">Knowledge Review</h4>
-                  <ul className="text-white text-xs space-y-1">
-                    <li>• Study BS 7671 key sections</li>
-                    <li>• Review protective device selection</li>
-                    <li>• Understand earthing systems</li>
-                    <li>• Know inspection schedules</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-card/80 border border-elec-yellow/30 rounded-lg p-3">
-                  <h4 className="text-white font-semibold text-sm mb-2">Practical Prep</h4>
-                  <ul className="text-white text-xs space-y-1">
-                    <li>• Complete mock assessments</li>
-                    <li>• Time yourself on installations</li>
-                    <li>• Practice fault-finding scenarios</li>
-                    <li>• Perfect your test procedures</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3">
-                <h4 className="text-elec-yellow font-semibold text-sm mb-2">Recommended Preparation Time</h4>
-                <p className="text-white text-xs">
-                  Allow 3-6 months of focused preparation, including 40-60 hours of additional practice beyond your regular work. 
-                  Many training centres offer AM2 preparation courses which can significantly boost your confidence.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        <InlineCheck
-          id="target-audience"
-          question="Which qualification is a prerequisite for AM2?"
-          options={[
-            "Level 2 Electrical Installation",
-            "18th Edition IET Wiring Regulations",
-            "PAT Testing Certificate", 
-            "First Aid Certificate"
-          ]}
-          correctIndex={1}
-          explanation="The 18th Edition IET Wiring Regulations qualification is essential before taking AM2."
-        />
-
-        {/* Career Impact */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-4 md:mb-6">
-          <div className="p-3 md:p-4">
-            <h2 className="text-lg md:text-xl font-bold text-elec-yellow mb-2 md:mb-3">
-              <TrendingUp className="inline-block mr-2 h-4 w-4 md:h-5 md:w-5" />
-              Why It Matters for Your Career
-            </h2>
-            <div className="max-w-3xl space-y-3 md:space-y-4">
-              <p className="text-white text-sm">
-                Passing AM2 transforms your career prospects and opens doors that remain closed to unqualified electricians.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                <div>
-                  <h3 className="text-white font-semibold mb-2 text-sm">Immediate Impact</h3>
-                  <div className="space-y-2">
-                    <div className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <div>
-                        <span className="text-white text-sm font-medium">ECS Gold Card</span>
-                        <p className="text-white text-xs">Access to construction sites nationwide</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <div>
-                        <span className="text-white text-sm font-medium">JIB Recognition</span>
-                        <p className="text-white text-xs">Industry-wide acceptance of your skills</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <div>
-                        <span className="text-white text-sm font-medium">Insurance Benefits</span>
-                        <p className="text-white text-xs">Lower rates for qualified tradespeople</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h3 className="text-white font-semibold mb-2 text-sm">Long-term Opportunities</h3>
-                  <div className="space-y-2">
-                    <div className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <div>
-                        <span className="text-white text-sm font-medium">Self-Employment</span>
-                        <p className="text-white text-xs">Start your own electrical business</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <div>
-                        <span className="text-white text-sm font-medium">Management Roles</span>
-                        <p className="text-white text-xs">Progress to supervisory positions</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <div>
-                        <span className="text-white text-sm font-medium">Specialist Sectors</span>
-                        <p className="text-white text-xs">Access high-value commercial projects</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-card/80 border border-elec-yellow/30 rounded-lg p-3">
-                <h4 className="text-white font-semibold text-sm mb-2">Salary Impact</h4>
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 text-center">
-                  <div>
-                    <div className="text-elec-yellow font-bold text-sm md:text-base">£28-32k</div>
-                    <div className="text-white text-xs">Newly Qualified</div>
-                  </div>
-                  <div>
-                    <div className="text-elec-yellow font-bold text-sm md:text-base">£35-42k</div>
-                    <div className="text-white text-xs">3-5 Years Experience</div>
-                  </div>
-                  <div>
-                    <div className="text-elec-yellow font-bold text-sm md:text-base">£45-55k</div>
-                    <div className="text-white text-xs">Senior/Specialist</div>
-                  </div>
-                  <div>
-                    <div className="text-elec-yellow font-bold text-sm md:text-base">£60k+</div>
-                    <div className="text-white text-xs">Self-Employed</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* Common Challenges */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-4 md:mb-6">
-          <div className="p-3 md:p-4">
-            <h2 className="text-lg md:text-xl font-bold text-elec-yellow mb-2 md:mb-3">
-              <AlertTriangle className="inline-block mr-2 h-4 w-4 md:h-5 md:w-5" />
-              Common Challenges & How to Overcome Them
-            </h2>
-            <div className="max-w-3xl space-y-3 md:space-y-4">
-              <p className="text-white text-sm">
-                Understanding common pitfalls helps you prepare more effectively and avoid typical mistakes.
-              </p>
-              
-              <div className="grid gap-3 md:gap-4">
-                <div className="bg-transparent border border-red-500/20 rounded-lg p-3">
-                  <h4 className="text-elec-yellow font-semibold text-sm mb-2">Time Management Issues</h4>
-                  <p className="text-white text-xs mb-2">
-                    Many candidates struggle to complete all tasks within the allocated timeframe.
-                  </p>
-                  <div className="text-white text-xs">
-                    <strong>Solution:</strong> Practice timed installations, create a personal checklist, and prioritise safety-critical tasks first.
-                  </div>
-                </div>
-                
-                <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3">
-                  <h4 className="text-elec-yellow font-semibold text-sm mb-2">Testing Procedure Errors</h4>
-                  <p className="text-white text-xs mb-2">
-                    Incorrect testing sequence or missed tests are common failure points.
-                  </p>
-                  <div className="text-white text-xs">
-                    <strong>Solution:</strong> Memorise the BS 7671 testing sequence and practice until it becomes automatic.
-                  </div>
-                </div>
-                
-                <div className="bg-transparent border border-elec-yellow/20 rounded-lg p-3">
-                  <h4 className="text-elec-yellow font-semibold text-sm mb-2">Documentation Quality</h4>
-                  <p className="text-white text-xs mb-2">
-                    Poor handwriting, incomplete certificates, or calculation errors can cost marks.
-                  </p>
-                  <div className="text-white text-xs">
-                    <strong>Solution:</strong> Practice certificate completion and double-check all calculations and entries.
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3">
-                <h4 className="text-elec-yellow font-semibold text-sm mb-2">Success Tips</h4>
-                <ul className="text-white text-xs space-y-1">
-                  <li>• Arrive early and familiarise yourself with the workspace</li>
-                  <li>• Read all instructions thoroughly before starting</li>
-                  <li>• Maintain consistent safety practices throughout</li>
-                  <li>• Ask assessors for clarification if instructions are unclear</li>
-                  <li>• Keep your workspace organised and tools maintained</li>
-                  <li>• Leave time for final checks and documentation review</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        <InlineCheck
-          id="career-benefits"
-          question="What is one immediate benefit of passing AM2?"
-          options={[
-            "Automatic salary increase",
-            "ECS Gold Card eligibility",
-            "Company vehicle provision",
-            "Guaranteed job placement"
-          ]}
-          correctIndex={1}
-          explanation="Passing AM2 makes you eligible for an ECS Gold Card, essential for working on construction sites."
-        />
-
-        {/* Quiz Section */}
-        <div className="mb-6">
-          <Quiz 
-            questions={quizQuestions}
-            title="AM2 Understanding Quiz"
-          />
         </div>
 
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-between">
-          <Link 
-            to=".."
-            className="flex items-center gap-2 px-4 py-2 border border-elec-yellow/30 text-white rounded-lg hover:border-elec-yellow/50 transition-colors text-sm"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Module
-          </Link>
-          <Link 
-            to="../section2"
-            className="flex items-center gap-2 px-4 py-2 bg-elec-yellow text-black rounded-lg hover:bg-elec-yellow/90 transition-colors text-sm"
-          >
-            Continue to Section 2
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+        <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
+          <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Success Tips</h4>
+          <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow">•</span>
+              <span>Arrive early and familiarise yourself with the workspace</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow">•</span>
+              <span>Read all instructions thoroughly before starting</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow">•</span>
+              <span>Maintain consistent safety practices throughout</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow">•</span>
+              <span>Ask assessors for clarification if instructions are unclear</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow">•</span>
+              <span>Keep your workspace organised and tools maintained</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow">•</span>
+              <span>Leave time for final checks and documentation review</span>
+            </li>
+          </ul>
         </div>
-      </div>
-    </div>
+      </AM2ContentCard>
+
+      <InlineCheck
+        id="career-benefits"
+        question="What is one immediate benefit of passing AM2?"
+        options={[
+          "Automatic salary increase",
+          "ECS Gold Card eligibility",
+          "Company vehicle provision",
+          "Guaranteed job placement"
+        ]}
+        correctIndex={1}
+        explanation="Passing AM2 makes you eligible for an ECS Gold Card, essential for working on construction sites."
+      />
+
+      {/* Quiz Section */}
+      <Quiz
+        questions={quizQuestions}
+        title="AM2 Understanding Quiz"
+      />
+
+      {/* Navigation Footer */}
+      <AM2NavigationFooter
+        prevHref=".."
+        prevLabel="Back to Module"
+        nextHref="../section2"
+        nextLabel="Continue to Section 2"
+        currentSection={1}
+        totalSections={4}
+      />
+    </AM2SectionLayout>
   );
 };
 

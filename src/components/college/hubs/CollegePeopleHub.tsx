@@ -20,14 +20,14 @@ interface CollegePeopleHubProps {
 }
 
 export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
-  const { staff, students, cohorts, employers, getStudentsAtRisk, getStaffByRole } = useCollege();
+  const { staff, students, cohorts, getStudentsAtRisk, getStaffByRole } = useCollege();
 
-  const activeTutors = getStaffByRole('tutor').length;
-  const activeStudents = students.filter(s => s.status === 'Active').length;
-  const activeCohorts = cohorts.filter(c => c.status === 'Active').length;
-  const studentsAtRisk = getStudentsAtRisk().length;
-  const supportStaff = staff.filter(s => ['admin', 'support', 'assessor'].includes(s.role) && s.status === 'Active').length;
-  const activeEmployers = employers.length;
+  const activeTutors = getStaffByRole('tutor')?.length ?? 0;
+  const activeStudents = students?.filter(s => s.status === 'Active').length ?? 0;
+  const activeCohorts = cohorts?.filter(c => c.status === 'Active').length ?? 0;
+  const studentsAtRisk = getStudentsAtRisk()?.length ?? 0;
+  const supportStaff = staff?.filter(s => ['admin', 'support', 'assessor'].includes(s.role) && s.status === 'Active').length ?? 0;
+  const activeEmployers = 0; // TODO: Add employers to context when needed
 
   return (
     <div className="space-y-4 md:space-y-6 animate-fade-in">

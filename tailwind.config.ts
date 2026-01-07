@@ -338,6 +338,38 @@ export default {
 			'progress-fill': {
 				'0%': { width: '0%' },
 				'100%': { width: 'var(--progress-width)' }
+			},
+			// Native mobile UX animations
+			'header-collapse': {
+				'0%': { height: 'var(--header-max-height, 120px)' },
+				'100%': { height: 'var(--header-min-height, 56px)' }
+			},
+			'header-expand': {
+				'0%': { height: 'var(--header-min-height, 56px)' },
+				'100%': { height: 'var(--header-max-height, 120px)' }
+			},
+			'rubber-band': {
+				'0%': { transform: 'translateY(0)' },
+				'30%': { transform: 'translateY(var(--pull-distance, 80px))' },
+				'50%': { transform: 'translateY(calc(var(--pull-distance, 80px) * 0.3))' },
+				'70%': { transform: 'translateY(calc(var(--pull-distance, 80px) * 0.1))' },
+				'100%': { transform: 'translateY(0)' }
+			},
+			'swipe-out-left': {
+				'0%': { transform: 'translateX(0)', opacity: '1' },
+				'100%': { transform: 'translateX(-100%)', opacity: '0' }
+			},
+			'swipe-out-right': {
+				'0%': { transform: 'translateX(0)', opacity: '1' },
+				'100%': { transform: 'translateX(100%)', opacity: '0' }
+			},
+			'pull-refresh-spin': {
+				'0%': { transform: 'rotate(0deg)' },
+				'100%': { transform: 'rotate(360deg)' }
+			},
+			'carousel-snap': {
+				'0%': { scrollSnapAlign: 'start' },
+				'100%': { scrollSnapAlign: 'start' }
 			}
 			},
 			animation: {
@@ -365,7 +397,14 @@ export default {
 				'star-burst': 'star-burst 1s ease-out forwards',
 				'bounce-slow': 'bounce-slow 2s ease-in-out infinite',
 				'scale-bounce': 'scale-bounce 0.5s ease-out forwards',
-				'progress-fill': 'progress-fill 1s ease-out forwards'
+				'progress-fill': 'progress-fill 1s ease-out forwards',
+				// Native mobile UX animations
+				'header-collapse': 'header-collapse 0.2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards',
+				'header-expand': 'header-expand 0.2s cubic-bezier(0.25, 0.1, 0.25, 1) forwards',
+				'rubber-band': 'rubber-band 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+				'swipe-out-left': 'swipe-out-left 0.25s ease-out forwards',
+				'swipe-out-right': 'swipe-out-right 0.25s ease-out forwards',
+				'pull-refresh-spin': 'pull-refresh-spin 0.8s linear infinite'
 			}
 		}
 	},

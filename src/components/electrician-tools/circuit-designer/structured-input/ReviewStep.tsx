@@ -1,172 +1,239 @@
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, AlertCircle, Zap, Building, MapPin } from "lucide-react";
-import { CircuitInput, DesignInputs } from "@/types/installation-design";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  CheckCircle2,
+  AlertCircle,
+  Zap,
+  Building2,
+  ClipboardCheck,
+  Sparkles
+} from "lucide-react";
+import { DesignInputs } from "@/types/installation-design";
+import { cn } from "@/lib/utils";
 
 interface ReviewStepProps {
   inputs: DesignInputs;
 }
 
 export const ReviewStep = ({ inputs }: ReviewStepProps) => {
-  const hasIssues = inputs.circuits.length === 0 || 
-                     !inputs.projectName || 
+  const hasIssues = inputs.circuits.length === 0 ||
+                     !inputs.projectName ||
                      !inputs.location ||
                      inputs.circuits.some(c => !c.name || !c.loadPower);
 
   const missingData = inputs.circuits.filter(c => !c.cableLength);
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-6">
+      {/* Section Header */}
+      <div className="flex items-center gap-3">
+        <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+          <ClipboardCheck className="h-5 w-5 text-elec-yellow" />
+        </div>
+        <div>
+          <h2 className="text-lg font-semibold text-white">Review & Generate</h2>
+          <p className="text-sm text-white/50">Confirm your design parameters</p>
+        </div>
+      </div>
+
       {/* Validation Status */}
       {hasIssues ? (
-        <Alert variant="destructive" className="p-2.5 sm:p-3">
-          <AlertCircle className="h-3.5 w-3.5" />
-          <AlertDescription className="text-xs">
-            Please complete all required fields before generating the design
-          </AlertDescription>
-        </Alert>
+        <div
+          className={cn(
+            "flex items-start gap-3 p-4 rounded-xl border",
+            "bg-red-500/10 border-red-500/30"
+          )}
+        >
+          <AlertCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
+          <div>
+            <h4 className="text-sm font-semibold text-white mb-0.5">Missing Information</h4>
+            <p className="text-xs text-red-200">
+              Please complete all required fields before generating the design
+            </p>
+          </div>
+        </div>
       ) : (
-        <Alert className="bg-green-500/10 border-green-500/30 p-2.5 sm:p-3">
-          <CheckCircle2 className="h-3.5 w-3.5 text-green-400" />
-          <AlertDescription className="text-xs text-green-300">
-            All required information provided - ready to generate!
-          </AlertDescription>
-        </Alert>
+        <div
+          className={cn(
+            "flex items-start gap-3 p-4 rounded-xl border",
+            "bg-green-500/10 border-green-500/30"
+          )}
+        >
+          <CheckCircle2 className="h-5 w-5 text-green-400 shrink-0 mt-0.5" />
+          <div>
+            <h4 className="text-sm font-semibold text-white mb-0.5">Ready to Generate</h4>
+            <p className="text-xs text-green-300">
+              All required information provided
+            </p>
+          </div>
+        </div>
       )}
 
       {/* Project Summary */}
-      <Card className="p-4 sm:p-5">
-        <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-          <Building className="h-4 w-4 text-elec-yellow" />
-          Project Details
-        </h3>
-        <div className="grid gap-3 text-xs sm:text-sm">
-          <div>
-            <p className="text-muted-foreground mb-0.5">Project Name:</p>
-            <p className="font-medium text-foreground">{inputs.projectName || 'Not set'}</p>
+      <div
+        className={cn(
+          "p-4 rounded-xl",
+          "bg-white/5 backdrop-blur border border-white/10"
+        )}
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <div className="p-2 rounded-lg bg-elec-yellow/10">
+            <Building2 className="h-4 w-4 text-elec-yellow" />
           </div>
-          <div>
-            <p className="text-muted-foreground mb-0.5">Location:</p>
-            <p className="font-medium text-foreground">{inputs.location || 'Not set'}</p>
+          <h3 className="text-sm font-semibold text-white">Project Details</h3>
+        </div>
+
+        <div className="space-y-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <p className="text-xs text-white/50 mb-1">Project Name</p>
+              <p className="text-sm font-medium text-white">
+                {inputs.projectName || <span className="text-red-400">Not set</span>}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs text-white/50 mb-1">Location</p>
+              <p className="text-sm font-medium text-white">
+                {inputs.location || <span className="text-red-400">Not set</span>}
+              </p>
+            </div>
           </div>
-          <div className="pt-2 border-t border-border/20 flex items-center justify-between gap-2 flex-wrap">
-            <div className="flex items-center gap-2">
-              <span className="text-muted-foreground">Type:</span>
-              <Badge variant="secondary" className="text-xs capitalize">{inputs.propertyType}</Badge>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-muted-foreground">Supply:</span>
-              <span className="font-medium text-foreground text-xs">
-                {inputs.phases === 'single' ? 'Single' : '3-Phase'} {inputs.voltage}V
-              </span>
-            </div>
+
+          <div className="pt-3 border-t border-white/10 flex flex-wrap items-center gap-2">
+            <Badge className="bg-white/10 text-white/80 border-0 text-xs capitalize">
+              {inputs.propertyType}
+            </Badge>
+            <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 text-xs">
+              {inputs.phases === 'single' ? 'Single Phase' : '3-Phase'} {inputs.voltage}V
+            </Badge>
+            <Badge className="bg-white/10 text-white/80 border-0 text-xs">
+              {inputs.earthingSystem}
+            </Badge>
           </div>
         </div>
-      </Card>
+      </div>
 
       {/* Circuits Summary */}
-      <Card className="p-4 sm:p-5">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
-            <Zap className="h-4 w-4 text-elec-yellow" />
-            Circuits Overview
-          </h3>
-          <Badge variant="outline" className="text-xs">{inputs.circuits.length} Total</Badge>
-        </div>
-        
-      <div className="space-y-0 divide-y divide-elec-yellow/20">
-        {inputs.circuits.map((circuit, index) => (
-          <div key={circuit.id} className="py-3 first:pt-0">
-            <div className="flex items-center gap-3 mb-2">
-              <Badge variant="outline" className="text-xs shrink-0">#{index + 1}</Badge>
-              <span className="font-semibold text-base text-foreground flex-1 truncate">
-                {circuit.name || 'Unnamed Circuit'}
-              </span>
-              {!circuit.loadPower && (
-                <AlertCircle className="h-4 w-4 text-destructive shrink-0" />
-              )}
+      <div
+        className={cn(
+          "p-4 rounded-xl",
+          "bg-white/5 backdrop-blur border border-white/10"
+        )}
+      >
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <div className="p-2 rounded-lg bg-elec-yellow/10">
+              <Zap className="h-4 w-4 text-elec-yellow" />
             </div>
-            
-            <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm pl-8">
-              <div>
-                <span className="text-muted-foreground text-xs">Power:</span>
-                <span className="font-medium text-foreground ml-1.5">{circuit.loadPower}W</span>
-              </div>
-              <div>
-                <span className="text-muted-foreground text-xs">Length:</span>
-                <span className="font-medium text-foreground ml-1.5">
-                  {circuit.cableLength ? `${circuit.cableLength}m` : 'Auto'}
-                </span>
-              </div>
-              <div>
-                <span className="text-muted-foreground text-xs">Phase:</span>
-                <span className="font-medium text-foreground ml-1.5">
-                  {circuit.phases === 'single' ? 'Single' : '3-Phase'}
-                </span>
-              </div>
-              {circuit.specialLocation && circuit.specialLocation !== 'none' && (
-                <div>
-                  <span className="text-muted-foreground text-xs">Location:</span>
-                  <Badge variant="warning" className="text-xs capitalize ml-1.5">
-                    {circuit.specialLocation}
-                  </Badge>
-                </div>
-              )}
-            </div>
+            <h3 className="text-sm font-semibold text-white">Circuits Overview</h3>
           </div>
-        ))}
+          <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 text-xs">
+            {inputs.circuits.length} Circuit{inputs.circuits.length !== 1 ? 's' : ''}
+          </Badge>
+        </div>
+
+        <div className="space-y-3">
+          {inputs.circuits.map((circuit, index) => (
+            <div
+              key={circuit.id}
+              className={cn(
+                "p-3 rounded-lg",
+                "bg-white/5 border border-white/10"
+              )}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <Badge
+                  variant="outline"
+                  className="bg-white/5 text-white/60 border-white/10 text-xs px-2"
+                >
+                  #{index + 1}
+                </Badge>
+                <span className="font-semibold text-sm text-white flex-1 truncate">
+                  {circuit.name || <span className="text-red-400">Unnamed Circuit</span>}
+                </span>
+                {!circuit.loadPower && (
+                  <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />
+                )}
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                <div>
+                  <span className="text-white/50">Power:</span>
+                  <span className="ml-1.5 font-medium text-white">{circuit.loadPower}W</span>
+                </div>
+                <div>
+                  <span className="text-white/50">Length:</span>
+                  <span className="ml-1.5 font-medium text-white">
+                    {circuit.cableLength ? `${circuit.cableLength}m` : 'Auto'}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-white/50">Phase:</span>
+                  <span className="ml-1.5 font-medium text-white">
+                    {circuit.phases === 'single' ? '1Φ' : '3Φ'}
+                  </span>
+                </div>
+                {circuit.specialLocation && circuit.specialLocation !== 'none' && (
+                  <div>
+                    <Badge
+                      className="bg-amber-500/20 text-amber-300 border-0 text-xs capitalize"
+                    >
+                      {circuit.specialLocation}
+                    </Badge>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-      </Card>
 
       {/* Warnings */}
       {missingData.length > 0 && (
-        <Alert className="bg-amber-500/10 border-amber-500/30 p-2.5 sm:p-3">
-          <AlertCircle className="h-3.5 w-3.5 text-amber-400" />
-          <AlertDescription className="text-xs">
-            <span className="text-amber-300 font-medium">Note:</span> {missingData.length} circuit{missingData.length > 1 ? 's' : ''} missing cable length. 
+        <div
+          className={cn(
+            "flex items-start gap-2 p-3 rounded-xl border",
+            "bg-amber-500/10 border-amber-500/30"
+          )}
+        >
+          <AlertCircle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
+          <p className="text-xs text-amber-200">
+            <span className="font-medium text-amber-300">Note:</span> {missingData.length} circuit{missingData.length > 1 ? 's' : ''} missing cable length.
             AI will estimate based on typical installations.
-          </AlertDescription>
-        </Alert>
+          </p>
+        </div>
       )}
 
       {/* Expected Output */}
-      <Card className="p-4 sm:p-5 bg-blue-500/5 border-blue-500/20">
-        <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-          <CheckCircle2 className="h-4 w-4 text-green-400" />
-          What You'll Get
-        </h3>
-      <div className="grid gap-2.5 text-sm text-left">
-        <div className="flex items-start gap-2.5">
-          <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-          <span className="text-foreground text-left">BS 7671 compliant cable sizing for each circuit</span>
+      <div
+        className={cn(
+          "p-4 rounded-xl",
+          "bg-white/5 backdrop-blur border border-elec-yellow/20"
+        )}
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <div className="p-2 rounded-lg bg-elec-yellow/10">
+            <Sparkles className="h-4 w-4 text-elec-yellow" />
+          </div>
+          <h3 className="text-sm font-semibold text-white">What You'll Get</h3>
         </div>
-        <div className="flex items-start gap-2.5">
-          <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-          <span className="text-foreground text-left">Protection device selection (MCB/RCBO ratings and curves)</span>
-        </div>
-        <div className="flex items-start gap-2.5">
-          <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-          <span className="text-foreground text-left">Voltage drop calculations with compliance verification</span>
-        </div>
-        <div className="flex items-start gap-2.5">
-          <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-          <span className="text-foreground text-left">Earth fault loop impedance (Zs) calculations</span>
-        </div>
-        <div className="flex items-start gap-2.5">
-          <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-          <span className="text-foreground text-left">Detailed justifications referencing BS 7671 regulations</span>
-        </div>
-        <div className="flex items-start gap-2.5">
-          <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-          <span className="text-foreground text-left">Materials list with specifications</span>
-        </div>
-        <div className="flex items-start gap-2.5">
-          <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-          <span className="text-foreground text-left">Installation guidance and practical tips</span>
+
+        <div className="grid gap-2">
+          {[
+            'BS 7671 compliant cable sizing for each circuit',
+            'Protection device selection (MCB/RCBO ratings and curves)',
+            'Voltage drop calculations with compliance verification',
+            'Earth fault loop impedance (Zs) calculations',
+            'Detailed justifications referencing BS 7671 regulations',
+            'Materials list with specifications',
+            'Installation guidance and practical tips'
+          ].map((item, index) => (
+            <div key={index} className="flex items-start gap-2.5 text-sm">
+              <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+              <span className="text-white/80">{item}</span>
+            </div>
+          ))}
         </div>
       </div>
-      </Card>
     </div>
   );
 };

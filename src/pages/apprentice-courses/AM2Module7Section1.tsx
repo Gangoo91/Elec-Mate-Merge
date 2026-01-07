@@ -1,8 +1,10 @@
-import { ArrowLeft, Clock, BookOpen, AlertTriangle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Link } from "react-router-dom";
+import { Clock, BookOpen, AlertTriangle, Target, Timer, Lightbulb, CheckCircle, Brain, FileText } from "lucide-react";
+import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
+import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
+import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
+import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
+import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
+import { AM2LearningOutcomes } from "@/components/apprentice-courses/AM2LearningOutcomes";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import useSEO from "@/hooks/useSEO";
@@ -155,372 +157,482 @@ const AM2Module7Section1 = () => {
     }
   ];
 
-  return (
-    <div className="min-h-screen bg-[#1a1a1a]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 7
-            </Link>
-          </Button>
-        </div>
-      </div>
+  const learningOutcomes = [
+    "Apply effective test-taking strategies and time management techniques",
+    "Navigate different question types with confidence and accuracy",
+    "Identify and address personal knowledge gaps through targeted practice",
+    "Use feedback effectively to improve performance and understanding",
+    "Demonstrate comprehensive knowledge of key BS 7671 regulations and testing procedures",
+    "Build confidence through systematic practice and mock test experience"
+  ];
 
-      {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-6 py-12 space-y-8">
-        {/* Title Section */}
+  return (
+    <AM2SectionLayout
+      backHref="/apprentice-courses/am2/module7"
+      breadcrumbs={[
+        { label: "AM2", href: "/apprentice-courses/am2" },
+        { label: "Module 7", href: "/apprentice-courses/am2/module7" },
+        { label: "Section 1" }
+      ]}
+    >
+      {/* Hero Section */}
+      <AM2HeroSection
+        icon={BookOpen}
+        title="Knowledge Test Practice"
+        description="The knowledge test is typically the first component of AM2 assessment and sets the tone for your entire assessment. Mastering knowledge test strategies, practice questions, mock tests and exam techniques is essential for AM2 assessment success."
+        badge="Module 7 - Section 1"
+      />
+
+      {/* Critical Warning */}
+      <AM2CriticalWarning
+        title="Critical Assessment Component"
+        message="The knowledge test is typically the first component of AM2 assessment and sets the tone for your entire assessment. Poor performance here can affect confidence and momentum. You must demonstrate thorough understanding of BS 7671, testing procedures, and safety requirements. Inadequate preparation or test-taking strategy will impact your overall AM2 success."
+      />
+
+      {/* Learning Outcomes */}
+      <AM2LearningOutcomes outcomes={learningOutcomes} />
+
+      {/* Multiple-Choice Question Banks */}
+      <AM2ContentCard
+        title="1. Multiple-Choice Question Banks"
+        icon={FileText}
+        accent
+      >
         <div className="space-y-4">
-          <Badge variant="secondary" className="bg-elec-yellow text-black font-medium">
-            Module 7 – Section 1
-          </Badge>
-          <h1 className="text-3xl md:text-4xl font-bold text-white">
-            Knowledge Test Practice
-          </h1>
-          <div className="flex items-center gap-4 text-white">
-            <div className="flex items-center gap-1">
-              <Clock className="w-4 h-4" />
-              <span className="text-sm">~25 min read</span>
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3">Coverage Areas</h4>
+            <ul className="text-ios-callout text-white/70 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>BS 7671 regulations and requirements</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Testing procedures and sequences</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Health and safety legislation</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Cable selection and installation methods</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Protection and control systems</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3">Practice Strategy</h4>
+            <ul className="text-ios-callout text-white/70 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Start with topic-specific question banks</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Progress to mixed topic practice</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Focus on areas of weakness identified</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Review explanations for all questions</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
+            <p className="text-ios-callout text-white/80">
+              <strong className="text-amber-400">Key Point:</strong> Question banks should mirror the AM2 knowledge test format with similar difficulty levels and question styles.
+            </p>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck
+        id={quickCheckQuestions[0].id}
+        question={quickCheckQuestions[0].question}
+        options={quickCheckQuestions[0].options}
+        correctIndex={quickCheckQuestions[0].correctIndex}
+        explanation={quickCheckQuestions[0].explanation}
+      />
+
+      {/* Timed Mock Tests */}
+      <AM2ContentCard
+        title="2. Timed Mock Tests"
+        icon={Timer}
+      >
+        <div className="space-y-4">
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3">Test Conditions</h4>
+            <ul className="text-ios-callout text-white/70 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>60 minutes for 50-60 questions</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>No reference materials allowed</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Simulated exam environment</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Immediate scoring and feedback</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3">Benefits</h4>
+            <ul className="text-ios-callout text-white/70 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Experience time pressure of real test</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Identify pacing issues early</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Build confidence through practice</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Assess readiness for actual assessment</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck
+        id={quickCheckQuestions[1].id}
+        question={quickCheckQuestions[1].question}
+        options={quickCheckQuestions[1].options}
+        correctIndex={quickCheckQuestions[1].correctIndex}
+        explanation={quickCheckQuestions[1].explanation}
+      />
+
+      {/* Feedback and Explanations */}
+      <AM2ContentCard
+        title="3. Feedback and Explanations"
+        icon={Lightbulb}
+      >
+        <div className="space-y-4">
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3">Comprehensive Analysis</h4>
+            <ul className="text-ios-callout text-white/70 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Detailed explanations for correct answers</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Common misconceptions highlighted</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Reference to specific BS 7671 regulations</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Links to additional learning resources</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3">Performance Tracking</h4>
+            <ul className="text-ios-callout text-white/70 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Topic-by-topic performance analysis</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Progress tracking over time</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Identification of improvement areas</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Personalised study recommendations</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
+            <p className="text-ios-callout text-white/80">
+              <strong className="text-green-400">Best Practice:</strong> Review explanations even for questions answered correctly to reinforce understanding and identify any gaps.
+            </p>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck
+        id={quickCheckQuestions[2].id}
+        question={quickCheckQuestions[2].question}
+        options={quickCheckQuestions[2].options}
+        correctIndex={quickCheckQuestions[2].correctIndex}
+        explanation={quickCheckQuestions[2].explanation}
+      />
+
+      {/* Identifying Knowledge Gaps */}
+      <AM2ContentCard
+        title="4. Identifying Knowledge Gaps"
+        icon={Target}
+      >
+        <div className="space-y-4">
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3">Self-Assessment Techniques</h4>
+            <ul className="text-ios-callout text-white/70 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Topic-specific mini tests</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Confidence rating for each answer</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Error pattern analysis</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Peer discussion and comparison</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3">Common Weak Areas</h4>
+            <ul className="text-ios-callout text-white/70 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Maximum demand calculations</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Protective device coordination</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Testing sequence requirements</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Special location regulations</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3">Targeted Study Plan</h4>
+            <ul className="text-ios-callout text-white/70 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Focus 70% effort on identified weak areas</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Maintain 30% revision of strong areas</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Use spaced repetition for retention</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Regular reassessment and adjustment</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck
+        id={quickCheckQuestions[3].id}
+        question={quickCheckQuestions[3].question}
+        options={quickCheckQuestions[3].options}
+        correctIndex={quickCheckQuestions[3].correctIndex}
+        explanation={quickCheckQuestions[3].explanation}
+      />
+
+      {/* Exam Techniques and Strategies */}
+      <AM2ContentCard
+        title="5. Exam Techniques and Strategies"
+        icon={Brain}
+      >
+        <div className="space-y-4">
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3">Time Management</h4>
+            <ul className="text-ios-callout text-white/70 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Allocate roughly 1 minute per question</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Flag difficult questions for review</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Don't spend too long on any single question</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Save 5-10 minutes for final review</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3">Question Approach</h4>
+            <ul className="text-ios-callout text-white/70 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Read questions carefully and completely</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Identify key words and qualifiers</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Use elimination for uncertain answers</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Trust your first instinct if genuinely unsure</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3">Common Pitfalls</h4>
+            <ul className="text-ios-callout text-white/70 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Misreading question requirements</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Changing correct answers unnecessarily</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Running out of time on difficult questions</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Not using process of elimination</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
+            <p className="text-ios-callout text-white/80">
+              <strong className="text-elec-yellow">Strategy:</strong> Aim for 65-70% to comfortably pass. Perfect scores aren't necessary - focus on consistent accuracy.
+            </p>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck
+        id={quickCheckQuestions[4].id}
+        question={quickCheckQuestions[4].question}
+        options={quickCheckQuestions[4].options}
+        correctIndex={quickCheckQuestions[4].correctIndex}
+        explanation={quickCheckQuestions[4].explanation}
+      />
+
+      {/* Summary */}
+      <AM2ContentCard
+        title="6. Summary"
+        icon={CheckCircle}
+      >
+        <div className="space-y-4">
+          <p className="text-ios-callout text-white/80">
+            Effective knowledge test preparation requires a systematic approach combining theoretical study with practical test-taking experience. Success depends on identifying and addressing knowledge gaps while developing confidence through repeated practice under exam conditions.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
+              <h4 className="text-ios-headline text-green-400 mb-3">Key Success Factors</h4>
+              <ul className="text-ios-callout text-white/70 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">•</span>
+                  <span>Regular practice with mock tests</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">•</span>
+                  <span>Detailed review of all explanations</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">•</span>
+                  <span>Systematic approach to weak areas</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">•</span>
+                  <span>Effective time management strategies</span>
+                </li>
+              </ul>
             </div>
-            <div className="flex items-center gap-1">
-              <BookOpen className="w-4 h-4" />
-              <span className="text-sm">Assessment Level</span>
+
+            <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
+              <h4 className="text-ios-headline text-elec-yellow mb-3">Common Failures</h4>
+              <ul className="text-ios-callout text-white/70 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Inadequate practice under time pressure</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Focusing only on preferred topics</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Poor exam technique and time management</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Insufficient review of incorrect answers</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
+      </AM2ContentCard>
 
-        {/* Critical Warning */}
-        <Card className="border-red-500/50 ">
-          <CardContent className="p-6">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-6 h-6 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold text-white mb-2">Critical Assessment Component</h3>
-                <p className="text-white leading-relaxed">
-                  The knowledge test is typically the first component of AM2 assessment and sets the tone for your entire assessment. Poor performance here can affect confidence and momentum. You must demonstrate thorough understanding of BS 7671, testing procedures, and safety requirements. Inadequate preparation or test-taking strategy will impact your overall AM2 success.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Quiz */}
+      <Quiz
+        title="Knowledge Check Quiz"
+        questions={quizQuestions}
+      />
 
-        {/* Learning Outcomes */}
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-            <p className="text-white mb-4">By the end of this section, you should be able to:</p>
-            <ul className="space-y-2 text-white">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-elec-blue mt-2 flex-shrink-0"></span>
-                Apply effective test-taking strategies and time management techniques
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-elec-blue mt-2 flex-shrink-0"></span>
-                Navigate different question types with confidence and accuracy
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-elec-blue mt-2 flex-shrink-0"></span>
-                Identify and address personal knowledge gaps through targeted practice
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-elec-blue mt-2 flex-shrink-0"></span>
-                Use feedback effectively to improve performance and understanding
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-elec-blue mt-2 flex-shrink-0"></span>
-                Demonstrate comprehensive knowledge of key BS 7671 regulations and testing procedures
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-elec-blue mt-2 flex-shrink-0"></span>
-                Build confidence through systematic practice and mock test experience
-              </li>
-            </ul>
-          </CardContent>
-        </Card>
-
-        {/* Multiple-Choice Question Banks */}
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">1. Multiple-Choice Question Banks</h2>
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-medium text-white mb-2">Coverage Areas</h3>
-                <ul className="space-y-1 text-white">
-                  <li>• BS 7671 regulations and requirements</li>
-                  <li>• Testing procedures and sequences</li>
-                  <li>• Health and safety legislation</li>
-                  <li>• Cable selection and installation methods</li>
-                  <li>• Protection and control systems</li>
-                </ul>
-              </div>
-              
-              <div>
-                <h3 className="font-medium text-white mb-2">Practice Strategy</h3>
-                <ul className="space-y-1 text-white">
-                  <li>• Start with topic-specific question banks</li>
-                  <li>• Progress to mixed topic practice</li>
-                  <li>• Focus on areas of weakness identified</li>
-                  <li>• Review explanations for all questions</li>
-                </ul>
-              </div>
-
-              <div className="bg-transparent border border-amber-500/20 rounded-lg p-4">
-                <p className="text-sm text-white">
-                  <strong>Key Point:</strong> Question banks should mirror the AM2 knowledge test format with similar difficulty levels and question styles.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <InlineCheck 
-          id={quickCheckQuestions[0].id}
-          question={quickCheckQuestions[0].question}
-          options={quickCheckQuestions[0].options}
-          correctIndex={quickCheckQuestions[0].correctIndex}
-          explanation={quickCheckQuestions[0].explanation}
-        />
-
-        {/* Timed Mock Tests */}
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">2. Timed Mock Tests</h2>
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-medium text-white mb-2">Test Conditions</h3>
-                <ul className="space-y-1 text-white">
-                  <li>• 60 minutes for 50-60 questions</li>
-                  <li>• No reference materials allowed</li>
-                  <li>• Simulated exam environment</li>
-                  <li>• Immediate scoring and feedback</li>
-                </ul>
-              </div>
-              
-              <div>
-                <h3 className="font-medium text-white mb-2">Benefits</h3>
-                <ul className="space-y-1 text-white">
-                  <li>• Experience time pressure of real test</li>
-                  <li>• Identify pacing issues early</li>
-                  <li>• Build confidence through practice</li>
-                  <li>• Assess readiness for actual assessment</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <InlineCheck 
-          id={quickCheckQuestions[1].id}
-          question={quickCheckQuestions[1].question}
-          options={quickCheckQuestions[1].options}
-          correctIndex={quickCheckQuestions[1].correctIndex}
-          explanation={quickCheckQuestions[1].explanation}
-        />
-
-        {/* Feedback and Explanations */}
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">3. Feedback and Explanations</h2>
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-medium text-white mb-2">Comprehensive Analysis</h3>
-                <ul className="space-y-1 text-white">
-                  <li>• Detailed explanations for correct answers</li>
-                  <li>• Common misconceptions highlighted</li>
-                  <li>• Reference to specific BS 7671 regulations</li>
-                  <li>• Links to additional learning resources</li>
-                </ul>
-              </div>
-              
-              <div>
-                <h3 className="font-medium text-white mb-2">Performance Tracking</h3>
-                <ul className="space-y-1 text-white">
-                  <li>• Topic-by-topic performance analysis</li>
-                  <li>• Progress tracking over time</li>
-                  <li>• Identification of improvement areas</li>
-                  <li>• Personalised study recommendations</li>
-                </ul>
-              </div>
-
-              <div className="bg-transparent border border-green-500/20 rounded-lg p-4">
-                <p className="text-sm text-white">
-                  <strong>Best Practice:</strong> Review explanations even for questions answered correctly to reinforce understanding and identify any gaps.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <InlineCheck 
-          id={quickCheckQuestions[2].id}
-          question={quickCheckQuestions[2].question}
-          options={quickCheckQuestions[2].options}
-          correctIndex={quickCheckQuestions[2].correctIndex}
-          explanation={quickCheckQuestions[2].explanation}
-        />
-
-        {/* Identifying Knowledge Gaps */}
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">4. Identifying Knowledge Gaps</h2>
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-medium text-white mb-2">Self-Assessment Techniques</h3>
-                <ul className="space-y-1 text-white">
-                  <li>• Topic-specific mini tests</li>
-                  <li>• Confidence rating for each answer</li>
-                  <li>• Error pattern analysis</li>
-                  <li>• Peer discussion and comparison</li>
-                </ul>
-              </div>
-              
-              <div>
-                <h3 className="font-medium text-white mb-2">Common Weak Areas</h3>
-                <ul className="space-y-1 text-white">
-                  <li>• Maximum demand calculations</li>
-                  <li>• Protective device coordination</li>
-                  <li>• Testing sequence requirements</li>
-                  <li>• Special location regulations</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="font-medium text-white mb-2">Targeted Study Plan</h3>
-                <ul className="space-y-1 text-white">
-                  <li>• Focus 70% effort on identified weak areas</li>
-                  <li>• Maintain 30% revision of strong areas</li>
-                  <li>• Use spaced repetition for retention</li>
-                  <li>• Regular reassessment and adjustment</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <InlineCheck 
-          id={quickCheckQuestions[3].id}
-          question={quickCheckQuestions[3].question}
-          options={quickCheckQuestions[3].options}
-          correctIndex={quickCheckQuestions[3].correctIndex}
-          explanation={quickCheckQuestions[3].explanation}
-        />
-
-        {/* Exam Techniques and Strategies */}
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">5. Exam Techniques and Strategies</h2>
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-medium text-white mb-2">Time Management</h3>
-                <ul className="space-y-1 text-white">
-                  <li>• Allocate roughly 1 minute per question</li>
-                  <li>• Flag difficult questions for review</li>
-                  <li>• Don't spend too long on any single question</li>
-                  <li>• Save 5-10 minutes for final review</li>
-                </ul>
-              </div>
-              
-              <div>
-                <h3 className="font-medium text-white mb-2">Question Approach</h3>
-                <ul className="space-y-1 text-white">
-                  <li>• Read questions carefully and completely</li>
-                  <li>• Identify key words and qualifiers</li>
-                  <li>• Use elimination for uncertain answers</li>
-                  <li>• Trust your first instinct if genuinely unsure</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="font-medium text-white mb-2">Common Pitfalls</h3>
-                <ul className="space-y-1 text-white">
-                  <li>• Misreading question requirements</li>
-                  <li>• Changing correct answers unnecessarily</li>
-                  <li>• Running out of time on difficult questions</li>
-                  <li>• Not using process of elimination</li>
-                </ul>
-              </div>
-
-              <div className="bg-transparent border border-elec-yellow/20 rounded-lg p-4">
-                <p className="text-sm text-white">
-                  <strong>Strategy:</strong> Aim for 65-70% to comfortably pass. Perfect scores aren't necessary - focus on consistent accuracy.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <InlineCheck 
-          id={quickCheckQuestions[4].id}
-          question={quickCheckQuestions[4].question}
-          options={quickCheckQuestions[4].options}
-          correctIndex={quickCheckQuestions[4].correctIndex}
-          explanation={quickCheckQuestions[4].explanation}
-        />
-
-        {/* Summary */}
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
-            <div className="space-y-4">
-              <p className="text-white">
-                Effective knowledge test preparation requires a systematic approach combining theoretical study with practical test-taking experience. Success depends on identifying and addressing knowledge gaps while developing confidence through repeated practice under exam conditions.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-transparent border border-green-500/20 rounded-lg p-4">
-                  <h3 className="font-medium text-green-300 mb-2">Key Success Factors</h3>
-                  <ul className="space-y-1 text-green-300/80 text-sm">
-                    <li>• Regular practice with mock tests</li>
-                    <li>• Detailed review of all explanations</li>
-                    <li>• Systematic approach to weak areas</li>
-                    <li>• Effective time management strategies</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-transparent border border-red-500/20 rounded-lg p-4">
-                  <h3 className="font-medium text-elec-yellow mb-2">Common Failures</h3>
-                  <ul className="space-y-1 text-elec-yellow/80 text-sm">
-                    <li>• Inadequate practice under time pressure</li>
-                    <li>• Focusing only on preferred topics</li>
-                    <li>• Poor exam technique and time management</li>
-                    <li>• Insufficient review of incorrect answers</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Quiz */}
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check Quiz</h2>
-            <p className="text-white mb-6">
-              Test your understanding of knowledge test practice strategies with these questions.
-            </p>
-            <Quiz questions={quizQuestions} />
-          </CardContent>
-        </Card>
-
-        {/* Bottom Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mt-12 pt-8 border-t border-white/10">
-          <Button variant="outline" className="text-white hover:text-white w-full sm:w-auto" asChild>
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 7
-            </Link>
-          </Button>
-          <Button className="w-full sm:w-auto" asChild>
-            <Link to="../section2">
-              Continue to Section 7.2
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </div>
-      </div>
-    </div>
+      {/* Navigation Footer */}
+      <AM2NavigationFooter
+        previousHref="/apprentice-courses/am2/module6/section4"
+        previousLabel="Module 6 Section 4"
+        nextHref="../section2"
+        nextLabel="Coping with Nerves"
+        currentSection={1}
+        totalSections={4}
+      />
+    </AM2SectionLayout>
   );
 };
 

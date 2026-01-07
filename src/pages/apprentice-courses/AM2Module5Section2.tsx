@@ -1,8 +1,10 @@
-import { ArrowLeft, ArrowRight, AlertTriangle, CheckCircle, Target, Search, Lightbulb, BookOpen, Wrench, ChevronLeft, ChevronRight, Zap, Eye, Settings, Shield } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { AlertTriangle, CheckCircle, Target, Search, Lightbulb, BookOpen, Wrench, Zap, Eye, Settings, Shield } from "lucide-react";
+import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
+import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
+import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
+import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
+import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
+import { AM2LearningOutcomes } from "@/components/apprentice-courses/AM2LearningOutcomes";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import useSEO from "@/hooks/useSEO";
@@ -26,7 +28,7 @@ const AM2Module5Section2 = () => {
       options: [
         "Check test equipment calibration",
         "Apply safe isolation to prove the circuit is dead",
-        "Read the circuit documentation", 
+        "Read the circuit documentation",
         "Observe the symptoms"
       ],
       correctIndex: 1,
@@ -50,7 +52,7 @@ const AM2Module5Section2 = () => {
       options: [
         "You need to specify the cable size",
         "You need to include the test results",
-        "Because you must give type, location, and rectification — assessor needs detail",
+        "Because you must give type, location, and rectification - assessor needs detail",
         "You need to measure the exact resistance"
       ],
       correctIndex: 2,
@@ -138,503 +140,535 @@ const AM2Module5Section2 = () => {
     },
     {
       question: "Can I get marks for explaining the fault even if I don't locate it exactly?",
-      answer: "Yes — assessors credit method and reasoning. Your logical approach is as important as the final result."
+      answer: "Yes - assessors credit method and reasoning. Your logical approach is as important as the final result."
     },
     {
       question: "What happens if I guess and get it right?",
-      answer: "You won't score well — NET assesses the process, not luck. Professional electricians work systematically, not by guesswork."
+      answer: "You won't score well - NET assesses the process, not luck. Professional electricians work systematically, not by guesswork."
     },
     {
       question: "Do I have to write rectification even though I don't fix it?",
-      answer: "Yes — recording rectification is part of the assessment. It proves you understand how to make the installation safe."
+      answer: "Yes - recording rectification is part of the assessment. It proves you understand how to make the installation safe."
     },
     {
       question: "Will assessors give hints?",
-      answer: "No — they only observe. It's your job to demonstrate the logical process independently."
+      answer: "No - they only observe. It's your job to demonstrate the logical process independently."
     }
   ];
 
+  const learningOutcomes = [
+    "Follow a step-by-step diagnostic method for fault-finding in AM2",
+    "Use safe isolation before working on faulted circuits",
+    "Select and apply the correct test for the type of fault suspected",
+    "Interpret test results logically instead of guessing",
+    "Explain your reasoning clearly to the assessor"
+  ];
+
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <div className="flex items-center justify-between gap-2">
-            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-              <Link to="..">
-                <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
-                <span className="hidden xs:inline">Back to Module 5</span>
-                <span className="xs:hidden">Back</span>
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </div>
+    <AM2SectionLayout
+      backHref="/apprentice-courses/am2/module5"
+      breadcrumbs={[
+        { label: "AM2", href: "/apprentice-courses/am2" },
+        { label: "Module 5", href: "/apprentice-courses/am2/module5" },
+        { label: "Section 2" }
+      ]}
+    >
+      {/* Hero Section */}
+      <AM2HeroSection
+        icon={Search}
+        title="Logical Fault-Finding Process"
+        description="Fault diagnosis is about working systematically. In the AM2, you are being tested not only on your knowledge of electrical faults but also on your ability to think like a competent electrician."
+        badge="Module 5 - Section 2"
+      />
 
-      {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6 sm:space-y-8">
-        {/* Title Section */}
-        <div className="mb-8 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
-            <Search className="w-4 h-4" />
-            Module 5 – Section 2
-          </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
-            Logical Fault-Finding Process
-          </h1>
-          <p className="text-sm sm:text-base text-white mb-6 sm:mb-8 leading-relaxed">
-            Fault diagnosis is about working systematically. In the AM2, you are being tested not only on your knowledge of electrical faults but also on your ability to think like a competent electrician.
-          </p>
-          <p className="text-sm sm:text-base text-white leading-relaxed">
-            NET assessors are looking for method, not magic. They want to see that you can work safely, approach faults in a structured way, use test instruments properly, and state your diagnosis clearly.
-          </p>
-        </div>
+      {/* Additional Context */}
+      <p className="text-ios-body text-white/80 leading-relaxed -mt-4 mb-6">
+        NET assessors are looking for method, not magic. They want to see that you can work safely, approach faults in a structured way, use test instruments properly, and state your diagnosis clearly.
+      </p>
 
-        {/* Critical Warning */}
-        <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2 text-sm sm:text-base">
-                  CRITICAL: Safety Always Comes First
-                </h3>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow mb-3 leading-relaxed">
-                  If you forget safe isolation, it's an instant fail. Even in controlled AM2 conditions, you must demonstrate correct safety procedures — this proves to assessors that safety is always your first thought.
-                </p>
-                <p className="text-xs sm:text-sm text-red-700 dark:text-elec-yellow font-medium leading-relaxed">
-                  Every test must begin with proper isolation and proving procedures. No exceptions.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Card>
+      {/* Critical Warning */}
+      <AM2CriticalWarning
+        title="CRITICAL: Safety Always Comes First"
+        message="If you forget safe isolation, it's an instant fail. Even in controlled AM2 conditions, you must demonstrate correct safety procedures - this proves to assessors that safety is always your first thought. Every test must begin with proper isolation and proving procedures. No exceptions."
+      />
 
-        {/* Learning Outcomes */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <CheckCircle className="w-5 h-5" />
-              Learning Outcomes
-            </h2>
-            <p className="text-xs sm:text-sm text-white mb-4">
-              By the end of this section, you will be able to:
+      {/* Learning Outcomes */}
+      <AM2LearningOutcomes outcomes={learningOutcomes} />
+
+      {/* The 7-Step Process */}
+      <AM2ContentCard
+        title="1. The 7-Step Logical Process"
+        icon={Target}
+        accent
+      >
+        <div className="space-y-4">
+          <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
+            <h4 className="text-ios-headline text-red-400 mb-3 flex items-center gap-2">
+              <Shield className="w-4 h-4" />
+              Step 1: Start with Safety
+            </h4>
+            <p className="text-ios-callout text-white/70 mb-3">
+              Every fault-finding exercise begins with safe isolation. Even though the circuits are prepared by NET and under controlled conditions, you must still demonstrate correct procedure.
             </p>
-            <ul className="space-y-2 text-xs sm:text-xs sm:text-sm text-white">
+            <ul className="text-ios-callout text-white/70 space-y-1">
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Follow a step-by-step diagnostic method for fault-finding in AM2
+                <span className="text-red-400">•</span>
+                <span>Identify correct isolation point</span>
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Use safe isolation before working on faulted circuits
+                <span className="text-red-400">•</span>
+                <span>Secure isolation (lock off where possible)</span>
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Select and apply the correct test for the type of fault suspected
+                <span className="text-red-400">•</span>
+                <span>Test voltage indicator on known live source</span>
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Interpret test results logically instead of guessing
+                <span className="text-red-400">•</span>
+                <span>Test circuit to prove dead</span>
               </li>
               <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Explain your reasoning clearly to the assessor
+                <span className="text-red-400">•</span>
+                <span>Re-test voltage indicator to prove it's working</span>
               </li>
             </ul>
           </div>
-        </Card>
 
-        {/* The 7-Step Process */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Target className="w-5 h-5" />
-              1. The 7-Step Logical Process
-            </h2>
-            
-            <div className="space-y-6">
-              <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-red-800 dark:text-red-200 mb-3 flex items-center gap-2">
-                  <Shield className="w-4 h-4" />
-                  Step 1: Start with Safety
-                </h4>
-                <p className="text-sm text-red-700 dark:text-elec-yellow mb-3">
-                  Every fault-finding exercise begins with safe isolation. Even though the circuits are prepared by NET and under controlled conditions, you must still demonstrate correct procedure.
-                </p>
-                <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-1">
-                  <li>• Identify correct isolation point</li>
-                  <li>• Secure isolation (lock off where possible)</li>
-                  <li>• Test voltage indicator on known live source</li>
-                  <li>• Test circuit to prove dead</li>
-                  <li>• Re-test voltage indicator to prove it's working</li>
-                </ul>
-              </div>
-
-              <div className="border border-white/10 rounded-lg p-4">
-                <h4 className="font-medium text-white mb-3 flex items-center gap-2">
-                  <Eye className="w-4 h-4" />
-                  Step 2: Gather Information (Symptoms)
-                </h4>
-                <p className="text-sm text-white mb-3">
-                  Look at what the circuit is doing. These symptoms are clues to the type of fault:
-                </p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>• Is a socket completely dead? (Open circuit likely)</li>
-                  <li>• Does an MCB trip immediately? (Short circuit/earth fault)</li>
-                  <li>• Do lights behave oddly? (High resistance connection)</li>
-                  <li>• Does RCD trip when energised? (Earth fault)</li>
-                </ul>
-              </div>
-
-              <div className="border border-white/10 rounded-lg p-4">
-                <h4 className="font-medium text-white mb-3 flex items-center gap-2">
-                  <Settings className="w-4 h-4" />
-                  Step 3: Plan the Test Sequence
-                </h4>
-                <p className="text-sm text-white mb-3">
-                  Once you know the symptom, decide which test will prove or disprove the suspected fault:
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div className="border border-border/10 p-3 rounded">
-                    <p className="text-sm text-white">
-                      <strong>Suspected open circuit</strong><br />
-                      → Continuity test
-                    </p>
-                  </div>
-                  <div className="border border-border/10 p-3 rounded">
-                    <p className="text-sm text-white">
-                      <strong>Suspected short circuit</strong><br />
-                      → Insulation resistance test
-                    </p>
-                  </div>
-                  <div className="border border-border/10 p-3 rounded">
-                    <p className="text-sm text-white">
-                      <strong>Suspected polarity error</strong><br />
-                      → Polarity test at accessory
-                    </p>
-                  </div>
-                  <div className="border border-border/10 p-3 rounded">
-                    <p className="text-sm text-white">
-                      <strong>Suspected high resistance</strong><br />
-                      → Measure Zs or check terminations
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3 flex items-center gap-2">
+              <Eye className="w-4 h-4 text-elec-yellow" />
+              Step 2: Gather Information (Symptoms)
+            </h4>
+            <p className="text-ios-callout text-white/70 mb-3">
+              Look at what the circuit is doing. These symptoms are clues to the type of fault:
+            </p>
+            <ul className="text-ios-callout text-white/70 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Is a socket completely dead? (Open circuit likely)</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Does an MCB trip immediately? (Short circuit/earth fault)</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Do lights behave oddly? (High resistance connection)</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Does RCD trip when energised? (Earth fault)</span>
+              </li>
+            </ul>
           </div>
-        </Card>
 
-        <InlineCheck 
-          id={quickCheckQuestions[0].id}
-          question={quickCheckQuestions[0].question}
-          options={quickCheckQuestions[0].options}
-          correctIndex={quickCheckQuestions[0].correctIndex}
-          explanation={quickCheckQuestions[0].explanation}
-        />
-
-        {/* Steps 4-7 */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Zap className="w-5 h-5" />
-              2. Testing and Analysis Steps
-            </h2>
-            
-            <div className="space-y-6">
-              <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3">Step 4: Test Logically, Step by Step</h4>
-                <p className="text-sm text-purple-700 dark:text-elec-yellow mb-3">
-                  Start from the origin (CU) and work outwards. This avoids chasing faults randomly.
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3 flex items-center gap-2">
+              <Settings className="w-4 h-4 text-elec-yellow" />
+              Step 3: Plan the Test Sequence
+            </h4>
+            <p className="text-ios-callout text-white/70 mb-3">
+              Once you know the symptom, decide which test will prove or disprove the suspected fault:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="bg-white/5 border border-white/10 rounded-lg p-3">
+                <p className="text-ios-callout text-white/80">
+                  <strong className="text-white/90">Suspected open circuit</strong><br />
+                  - Continuity test
                 </p>
-                <div className="text-sm text-purple-700 dark:text-elec-yellow">
-                  <p className="font-medium mb-2">Example: Ring final circuit testing</p>
-                  <ol className="space-y-1">
-                    <li>1. Prove continuity of each conductor at the CU</li>
-                    <li>2. Cross-connect and measure at sockets</li>
-                    <li>3. Narrow down where the break or reversal occurs</li>
-                  </ol>
-                </div>
               </div>
-
-              <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-amber-800 dark:text-amber-200 mb-3">Step 5: Interpret the Result</h4>
-                <p className="text-sm text-amber-700 dark:text-amber-300 mb-3">
-                  Don't just write down numbers — explain what they mean:
+              <div className="bg-white/5 border border-white/10 rounded-lg p-3">
+                <p className="text-ios-callout text-white/80">
+                  <strong className="text-white/90">Suspected short circuit</strong><br />
+                  - Insulation resistance test
                 </p>
-                <ul className="text-sm text-amber-700 dark:text-amber-300 space-y-1">
-                  <li>• <strong>0 MΩ on insulation resistance</strong> = Short circuit or earth fault</li>
-                  <li>• <strong>Very high Zs reading</strong> = High resistance joint</li>
-                  <li>• <strong>Dead socket with no continuity on line</strong> = Open circuit</li>
-                  <li>• <strong>RCD trips at 15mA instead of 30mA</strong> = Over-sensitive RCD</li>
-                </ul>
               </div>
-
-              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Step 6: Record the Fault and Rectification</h4>
-                <p className="text-sm text-blue-700 dark:text-elec-yellow mb-3">
-                  When you find the fault, you must state clearly:
+              <div className="bg-white/5 border border-white/10 rounded-lg p-3">
+                <p className="text-ios-callout text-white/80">
+                  <strong className="text-white/90">Suspected polarity error</strong><br />
+                  - Polarity test at accessory
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  <div className="bg-white dark:bg-transparent p-3 rounded border text-center">
-                    <p className="text-sm font-medium text-blue-700 dark:text-elec-yellow">What the fault is</p>
-                    <p className="text-xs text-elec-yellow dark:text-elec-yellow">(Type)</p>
-                  </div>
-                  <div className="bg-white dark:bg-transparent p-3 rounded border text-center">
-                    <p className="text-sm font-medium text-blue-700 dark:text-elec-yellow">Where it is located</p>
-                    <p className="text-xs text-elec-yellow dark:text-elec-yellow">(Location)</p>
-                  </div>
-                  <div className="bg-white dark:bg-transparent p-3 rounded border text-center">
-                    <p className="text-sm font-medium text-blue-700 dark:text-elec-yellow">How you would rectify it</p>
-                    <p className="text-xs text-elec-yellow dark:text-elec-yellow">(Rectification)</p>
-                  </div>
-                </div>
-                <div className="mt-3 p-3 bg-white dark:bg-transparent rounded border">
-                  <p className="text-sm text-blue-700 dark:text-elec-yellow">
-                    <strong>Example:</strong> "Open CPC between CU and socket 2. Rectify by reconnecting CPC at CU terminal."
-                  </p>
-                </div>
               </div>
-
-              <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-green-800 dark:text-green-200 mb-3">Step 7: Prove Safe Afterwards</h4>
-                <p className="text-sm text-green-700 dark:text-green-300">
-                  Finally, confirm that after rectification, the circuit would be re-tested using the correct sequence. This shows you understand the importance of leaving an installation safe.
+              <div className="bg-white/5 border border-white/10 rounded-lg p-3">
+                <p className="text-ios-callout text-white/80">
+                  <strong className="text-white/90">Suspected high resistance</strong><br />
+                  - Measure Zs or check terminations
                 </p>
               </div>
             </div>
           </div>
-        </Card>
+        </div>
+      </AM2ContentCard>
 
-        <InlineCheck 
-          id={quickCheckQuestions[1].id}
-          question={quickCheckQuestions[1].question}
-          options={quickCheckQuestions[1].options}
-          correctIndex={quickCheckQuestions[1].correctIndex}
-          explanation={quickCheckQuestions[1].explanation}
-        />
+      <InlineCheck
+        id={quickCheckQuestions[0].id}
+        question={quickCheckQuestions[0].question}
+        options={quickCheckQuestions[0].options}
+        correctIndex={quickCheckQuestions[0].correctIndex}
+        explanation={quickCheckQuestions[0].explanation}
+      />
 
-        {/* Practical Guidance */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Wrench className="w-5 h-5" />
-              3. Practical Guidance for AM2 Success
-            </h2>
-            
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
-                    <h4 className="font-medium text-red-800 dark:text-red-200 mb-2 flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4" />
-                      Critical Success Factors
-                    </h4>
-                    <ul className="text-sm text-red-700 dark:text-elec-yellow space-y-1">
-                      <li>• <strong>Always think safety first</strong> — if you forget isolation, it's an instant fail</li>
-                      <li>• <strong>Talk through your logic</strong> — say what you're testing and why</li>
-                      <li>• <strong>Work methodically</strong> — don't jump between circuits or tests</li>
-                      <li>• <strong>Be precise</strong> — fault = type + location + rectification</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-lg p-4">
-                    <h4 className="font-medium text-green-800 dark:text-green-200 mb-2 flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4" />
-                      Professional Approach
-                    </h4>
-                    <ul className="text-sm text-green-700 dark:text-green-300 space-y-1">
-                      <li>• Demonstrate systematic thinking</li>
-                      <li>• Explain your reasoning clearly</li>
-                      <li>• Show confidence in your methodology</li>
-                      <li>• Avoid guessing — even if unsure, show logical process</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
-                    <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2 flex items-center gap-2">
-                      <Lightbulb className="w-4 h-4" />
-                      Time Management Tips
-                    </h4>
-                    <ul className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
-                      <li>• Plan your test sequence before starting</li>
-                      <li>• Don't waste time on obvious non-faults</li>
-                      <li>• Document findings as you go</li>
-                      <li>• Keep assessor informed of progress</li>
-                    </ul>
-                  </div>
-
-                  <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/30 rounded-lg p-4">
-                    <h4 className="font-medium text-amber-800 dark:text-amber-200 mb-2 flex items-center gap-2">
-                      <Target className="w-4 h-4" />
-                      Common Mistakes to Avoid
-                    </h4>
-                    <ul className="text-sm text-amber-700 dark:text-amber-300 space-y-1">
-                      <li>• Rushing the safety isolation</li>
-                      <li>• Testing randomly without logic</li>
-                      <li>• Not explaining your reasoning</li>
-                      <li>• Incomplete fault descriptions</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        <InlineCheck 
-          id={quickCheckQuestions[2].id}
-          question={quickCheckQuestions[2].question}
-          options={quickCheckQuestions[2].options}
-          correctIndex={quickCheckQuestions[2].correctIndex}
-          explanation={quickCheckQuestions[2].explanation}
-        />
-
-        {/* Real-World Examples */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <BookOpen className="w-5 h-5" />
-              4. Real-World Examples
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">❌ Example 1: Poor Method</h4>
-                <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
-                  <strong>Scenario:</strong> Candidate saw an RCD tripping and immediately said "earth fault."
-                </p>
-                <p className="text-sm text-red-700 dark:text-elec-yellow mb-2">
-                  <strong>Problem:</strong> Assessor asked "where exactly?" — candidate couldn't prove it.
-                </p>
-                <p className="text-sm text-red-700 dark:text-elec-yellow font-medium">
-                  <strong>Result:</strong> Marks lost for guessing instead of systematic diagnosis.
-                </p>
-              </div>
-
-              <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-green-800 dark:text-green-200 mb-3">✅ Example 2: Good Method</h4>
-                <p className="text-sm text-green-700 dark:text-green-300 mb-2">
-                  <strong>Scenario:</strong> Candidate tested continuity systematically.
-                </p>
-                <p className="text-sm text-green-700 dark:text-green-300 mb-2">
-                  <strong>Process:</strong> Narrowed down to broken CPC between CU and first socket, recorded properly.
-                </p>
-                <p className="text-sm text-green-700 dark:text-green-300 font-medium">
-                  <strong>Result:</strong> Full marks for logical method and complete diagnosis.
-                </p>
-              </div>
-
-              <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-amber-800 dark:text-amber-200 mb-3">⚠️ Example 3: Time Management Failure</h4>
-                <p className="text-sm text-amber-700 dark:text-amber-300 mb-2">
-                  <strong>Scenario:</strong> Candidate misread symptoms, tested in wrong order.
-                </p>
-                <p className="text-sm text-amber-700 dark:text-amber-300 mb-2">
-                  <strong>Problem:</strong> Wasted time on incorrect tests, ran out of time.
-                </p>
-                <p className="text-sm text-amber-700 dark:text-amber-300 font-medium">
-                  <strong>Result:</strong> Only 1 fault identified correctly → failed section.
-                </p>
-              </div>
-
-              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
-                <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">💡 Example 4: Real-World Application</h4>
-                <p className="text-sm text-blue-700 dark:text-elec-yellow mb-2">
-                  <strong>Scenario:</strong> On site, an electrician guessed at a short circuit.
-                </p>
-                <p className="text-sm text-blue-700 dark:text-elec-yellow mb-2">
-                  <strong>Problem:</strong> Replaced multiple accessories and wasted hours.
-                </p>
-                <p className="text-sm text-blue-700 dark:text-elec-yellow font-medium">
-                  <strong>Lesson:</strong> Logical testing would have found the actual loose neutral in minutes.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* FAQ Section */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Lightbulb className="w-5 h-5" />
-              5. Frequently Asked Questions
-            </h2>
-            
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index} className="border border-white/10 rounded-lg p-3 sm:p-4 ">
-                  <h4 className="font-medium text-white mb-2 text-sm sm:text-base">
-                    Q{index + 1}: {faq.question}
-                  </h4>
-                  <p className="text-xs sm:text-sm text-white leading-relaxed">
-                    {faq.answer}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Card>
-
-        {/* Summary */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-6 sm:mb-8">
-          <div className="p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <BookOpen className="w-5 h-5" />
-              6. Section Summary
-            </h2>
-            
-            <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4 mb-4">
-              <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">The Logical Fault-Finding Process:</h4>
-              <ol className="text-sm text-blue-700 dark:text-elec-yellow space-y-1">
-                <li>1. <strong>Apply safe isolation</strong></li>
-                <li>2. <strong>Observe the symptoms</strong></li>
-                <li>3. <strong>Plan the right test</strong></li>
-                <li>4. <strong>Test step by step from CU outward</strong></li>
-                <li>5. <strong>Interpret results correctly</strong></li>
-                <li>6. <strong>Record fault type, location, and rectification</strong></li>
-                <li>7. <strong>Prove the circuit safe</strong></li>
+      {/* Steps 4-7 */}
+      <AM2ContentCard
+        title="2. Testing and Analysis Steps"
+        icon={Zap}
+      >
+        <div className="space-y-4">
+          <div className="bg-white/5 border border-purple-500/30 rounded-xl p-4">
+            <h4 className="text-ios-headline text-purple-400 mb-3">Step 4: Test Logically, Step by Step</h4>
+            <p className="text-ios-callout text-white/70 mb-3">
+              Start from the origin (CU) and work outwards. This avoids chasing faults randomly.
+            </p>
+            <div className="text-ios-callout text-white/70">
+              <p className="font-medium text-white/90 mb-2">Example: Ring final circuit testing</p>
+              <ol className="space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-purple-400">1.</span>
+                  <span>Prove continuity of each conductor at the CU</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-purple-400">2.</span>
+                  <span>Cross-connect and measure at sockets</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-purple-400">3.</span>
+                  <span>Narrow down where the break or reversal occurs</span>
+                </li>
               </ol>
             </div>
-            
-            <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800/30 rounded-lg p-4">
-              <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-3">Remember:</h4>
-              <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                Following this method shows the assessor you are competent and professional, even under exam pressure. NET assessors mark the process and reasoning — not just the final answer.
+          </div>
+
+          <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
+            <h4 className="text-ios-headline text-amber-400 mb-3">Step 5: Interpret the Result</h4>
+            <p className="text-ios-callout text-white/70 mb-3">
+              Don't just write down numbers - explain what they mean:
+            </p>
+            <ul className="text-ios-callout text-white/70 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-amber-400">•</span>
+                <span><strong className="text-white/90">0 MOhm on insulation resistance</strong> = Short circuit or earth fault</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-amber-400">•</span>
+                <span><strong className="text-white/90">Very high Zs reading</strong> = High resistance joint</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-amber-400">•</span>
+                <span><strong className="text-white/90">Dead socket with no continuity on line</strong> = Open circuit</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-amber-400">•</span>
+                <span><strong className="text-white/90">RCD trips at 15mA instead of 30mA</strong> = Over-sensitive RCD</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3">Step 6: Record the Fault and Rectification</h4>
+            <p className="text-ios-callout text-white/70 mb-3">
+              When you find the fault, you must state clearly:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
+                <p className="text-ios-callout font-medium text-white/90">What the fault is</p>
+                <p className="text-ios-footnote text-elec-yellow">(Type)</p>
+              </div>
+              <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
+                <p className="text-ios-callout font-medium text-white/90">Where it is located</p>
+                <p className="text-ios-footnote text-elec-yellow">(Location)</p>
+              </div>
+              <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
+                <p className="text-ios-callout font-medium text-white/90">How you would rectify it</p>
+                <p className="text-ios-footnote text-elec-yellow">(Rectification)</p>
+              </div>
+            </div>
+            <div className="mt-3 bg-white/5 border border-white/10 rounded-lg p-3">
+              <p className="text-ios-callout text-white/80">
+                <strong className="text-white/90">Example:</strong> "Open CPC between CU and socket 2. Rectify by reconnecting CPC at CU terminal."
               </p>
             </div>
           </div>
-        </Card>
 
-        {/* Quiz Section */}
-        <div className="border-t border-white/10 pt-8">
-          <Quiz 
-            title="Test Your Knowledge: Logical Fault-Finding Process"
-            questions={quizQuestions}
-          />
+          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
+            <h4 className="text-ios-headline text-green-400 mb-3">Step 7: Prove Safe Afterwards</h4>
+            <p className="text-ios-callout text-white/70">
+              Finally, confirm that after rectification, the circuit would be re-tested using the correct sequence. This shows you understand the importance of leaving an installation safe.
+            </p>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck
+        id={quickCheckQuestions[1].id}
+        question={quickCheckQuestions[1].question}
+        options={quickCheckQuestions[1].options}
+        correctIndex={quickCheckQuestions[1].correctIndex}
+        explanation={quickCheckQuestions[1].explanation}
+      />
+
+      {/* Practical Guidance */}
+      <AM2ContentCard
+        title="3. Practical Guidance for AM2 Success"
+        icon={Wrench}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-4">
+            <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
+              <h4 className="text-ios-headline text-red-400 mb-2 flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4" />
+                Critical Success Factors
+              </h4>
+              <ul className="text-ios-callout text-white/70 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400">•</span>
+                  <span><strong className="text-white/90">Always think safety first</strong> - if you forget isolation, it's an instant fail</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400">•</span>
+                  <span><strong className="text-white/90">Talk through your logic</strong> - say what you're testing and why</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400">•</span>
+                  <span><strong className="text-white/90">Work methodically</strong> - don't jump between circuits or tests</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400">•</span>
+                  <span><strong className="text-white/90">Be precise</strong> - fault = type + location + rectification</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
+              <h4 className="text-ios-headline text-green-400 mb-2 flex items-center gap-2">
+                <CheckCircle className="w-4 h-4" />
+                Professional Approach
+              </h4>
+              <ul className="text-ios-callout text-white/70 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">•</span>
+                  <span>Demonstrate systematic thinking</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">•</span>
+                  <span>Explain your reasoning clearly</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">•</span>
+                  <span>Show confidence in your methodology</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">•</span>
+                  <span>Avoid guessing - even if unsure, show logical process</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline text-white/90 mb-2 flex items-center gap-2">
+                <Lightbulb className="w-4 h-4 text-elec-yellow" />
+                Time Management Tips
+              </h4>
+              <ul className="text-ios-callout text-white/70 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Plan your test sequence before starting</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Don't waste time on obvious non-faults</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Document findings as you go</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>Keep assessor informed of progress</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
+              <h4 className="text-ios-headline text-amber-400 mb-2 flex items-center gap-2">
+                <Target className="w-4 h-4" />
+                Common Mistakes to Avoid
+              </h4>
+              <ul className="text-ios-callout text-white/70 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400">•</span>
+                  <span>Rushing the safety isolation</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400">•</span>
+                  <span>Testing randomly without logic</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400">•</span>
+                  <span>Not explaining your reasoning</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400">•</span>
+                  <span>Incomplete fault descriptions</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck
+        id={quickCheckQuestions[2].id}
+        question={quickCheckQuestions[2].question}
+        options={quickCheckQuestions[2].options}
+        correctIndex={quickCheckQuestions[2].correctIndex}
+        explanation={quickCheckQuestions[2].explanation}
+      />
+
+      {/* Real-World Examples */}
+      <AM2ContentCard
+        title="4. Real-World Examples"
+        icon={BookOpen}
+      >
+        <div className="space-y-4">
+          <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
+            <h4 className="text-ios-headline text-red-400 mb-3">Example 1: Poor Method</h4>
+            <p className="text-ios-callout text-white/70 mb-2">
+              <strong className="text-white/90">Scenario:</strong> Candidate saw an RCD tripping and immediately said "earth fault."
+            </p>
+            <p className="text-ios-callout text-white/70 mb-2">
+              <strong className="text-white/90">Problem:</strong> Assessor asked "where exactly?" - candidate couldn't prove it.
+            </p>
+            <p className="text-ios-callout text-white/80 font-medium">
+              <strong className="text-red-400">Result:</strong> Marks lost for guessing instead of systematic diagnosis.
+            </p>
+          </div>
+
+          <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
+            <h4 className="text-ios-headline text-green-400 mb-3">Example 2: Good Method</h4>
+            <p className="text-ios-callout text-white/70 mb-2">
+              <strong className="text-white/90">Scenario:</strong> Candidate tested continuity systematically.
+            </p>
+            <p className="text-ios-callout text-white/70 mb-2">
+              <strong className="text-white/90">Process:</strong> Narrowed down to broken CPC between CU and first socket, recorded properly.
+            </p>
+            <p className="text-ios-callout text-white/80 font-medium">
+              <strong className="text-green-400">Result:</strong> Full marks for logical method and complete diagnosis.
+            </p>
+          </div>
+
+          <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
+            <h4 className="text-ios-headline text-amber-400 mb-3">Example 3: Time Management Failure</h4>
+            <p className="text-ios-callout text-white/70 mb-2">
+              <strong className="text-white/90">Scenario:</strong> Candidate misread symptoms, tested in wrong order.
+            </p>
+            <p className="text-ios-callout text-white/70 mb-2">
+              <strong className="text-white/90">Problem:</strong> Wasted time on incorrect tests, ran out of time.
+            </p>
+            <p className="text-ios-callout text-white/80 font-medium">
+              <strong className="text-amber-400">Result:</strong> Only 1 fault identified correctly - failed section.
+            </p>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h4 className="text-ios-headline text-white/90 mb-3">Example 4: Real-World Application</h4>
+            <p className="text-ios-callout text-white/70 mb-2">
+              <strong className="text-white/90">Scenario:</strong> On site, an electrician guessed at a short circuit.
+            </p>
+            <p className="text-ios-callout text-white/70 mb-2">
+              <strong className="text-white/90">Problem:</strong> Replaced multiple accessories and wasted hours.
+            </p>
+            <p className="text-ios-callout text-white/80 font-medium">
+              <strong className="text-elec-yellow">Lesson:</strong> Logical testing would have found the actual loose neutral in minutes.
+            </p>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      {/* FAQ Section */}
+      <AM2ContentCard
+        title="5. Frequently Asked Questions"
+        icon={Lightbulb}
+      >
+        <div className="space-y-4">
+          {faqs.map((faq, index) => (
+            <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
+              <h4 className="text-ios-headline text-white/90 mb-2">
+                Q{index + 1}: {faq.question}
+              </h4>
+              <p className="text-ios-callout text-white/70 leading-relaxed">
+                {faq.answer}
+              </p>
+            </div>
+          ))}
+        </div>
+      </AM2ContentCard>
+
+      {/* Summary */}
+      <AM2ContentCard
+        title="6. Section Summary"
+        icon={BookOpen}
+        accent
+      >
+        <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
+          <h4 className="text-ios-headline text-white/90 mb-3">The Logical Fault-Finding Process:</h4>
+          <ol className="text-ios-callout text-white/70 space-y-1">
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow font-bold">1.</span>
+              <span><strong className="text-white/90">Apply safe isolation</strong></span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow font-bold">2.</span>
+              <span><strong className="text-white/90">Observe the symptoms</strong></span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow font-bold">3.</span>
+              <span><strong className="text-white/90">Plan the right test</strong></span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow font-bold">4.</span>
+              <span><strong className="text-white/90">Test step by step from CU outward</strong></span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow font-bold">5.</span>
+              <span><strong className="text-white/90">Interpret results correctly</strong></span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow font-bold">6.</span>
+              <span><strong className="text-white/90">Record fault type, location, and rectification</strong></span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow font-bold">7.</span>
+              <span><strong className="text-white/90">Prove the circuit safe</strong></span>
+            </li>
+          </ol>
         </div>
 
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-white/10">
-          <Button variant="outline" className="w-full sm:w-auto" asChild>
-            <Link to="../section1">
-              <ChevronLeft className="w-4 h-4 mr-2" />
-              Previous: Typical Faults Set
-            </Link>
-          </Button>
-          <Button className="w-full sm:w-auto" asChild>
-            <Link to="../section3">
-              Next: Test Methods & Procedures
-              <ChevronRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+        <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
+          <h4 className="text-ios-headline text-elec-yellow mb-3">Remember:</h4>
+          <p className="text-ios-callout text-white/80">
+            Following this method shows the assessor you are competent and professional, even under exam pressure. NET assessors mark the process and reasoning - not just the final answer.
+          </p>
         </div>
-      </div>
-    </div>
+      </AM2ContentCard>
+
+      {/* Quiz Section */}
+      <Quiz
+        title="Test Your Knowledge: Logical Fault-Finding Process"
+        questions={quizQuestions}
+      />
+
+      {/* Navigation Footer */}
+      <AM2NavigationFooter
+        previousHref="../section1"
+        previousLabel="Typical Faults Set"
+        nextHref="../section3"
+        nextLabel="Test Methods & Procedures"
+        currentSection={2}
+        totalSections={6}
+      />
+    </AM2SectionLayout>
   );
 };
 

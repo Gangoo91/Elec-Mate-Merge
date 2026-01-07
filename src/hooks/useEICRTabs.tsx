@@ -101,7 +101,14 @@ export const useEICRTabs = (formData: any) => {
     }
   };
 
+  // Calculate overall progress based on completed tabs
   const getProgressPercentage = (): number => {
+    const completedCount = tabConfigs.filter(tab => isTabComplete(tab.id)).length;
+    return Math.round((completedCount / totalTabs) * 100);
+  };
+
+  // Get progress for current tab position (for header display)
+  const getCurrentTabProgress = (): number => {
     return Math.round(((currentTabIndex + 1) / totalTabs) * 100);
   };
 
@@ -129,6 +136,7 @@ export const useEICRTabs = (formData: any) => {
     navigateNext,
     navigatePrevious,
     getProgressPercentage,
+    getCurrentTabProgress,
     isCurrentTabComplete,
     currentTabHasRequiredFields
   };

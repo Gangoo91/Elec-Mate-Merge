@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Input } from '@/components/ui/input';
@@ -92,16 +91,16 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
   };
 
   return (
-    <Card className="border border-border bg-card overflow-hidden">
+    <div className="eicr-section-card">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <SectionHeader 
-          title="Electrical Installation Details" 
+        <SectionHeader
+          title="Electrical Installation Details"
           icon={Cable}
           isOpen={isOpen}
           color="green-500"
         />
         <CollapsibleContent>
-          <CardContent className="p-3 sm:p-4 md:p-6 space-y-3 sm:space-y-4">
+          <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
         {/* Consumer Unit Details */}
         <div className="space-y-3 sm:space-y-4">
           <h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-border pb-2 flex items-center gap-2">
@@ -261,10 +260,10 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
           </div>
         </div>
 
-          </CardContent>
+          </div>
         </CollapsibleContent>
       </Collapsible>
-    </Card>
+    </div>
   );
 };
 

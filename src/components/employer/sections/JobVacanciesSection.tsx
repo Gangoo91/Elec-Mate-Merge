@@ -1,114 +1,120 @@
 import { useState, useMemo } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter } from "@/components/ui/sheet";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { ConversationList } from "@/components/employer/vacancies/ConversationList";
-import { ChatView } from "@/components/employer/messaging/ChatView";
-import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
-import { useVacancies, useCreateVacancy, useUpdateVacancy, useDeleteVacancy, useToggleVacancyStatus } from "@/hooks/useVacancies";
-import { useVacancyApplications, useUpdateApplicationStatus } from "@/hooks/useVacancyApplications";
-import { useConversations } from "@/hooks/useConversations";
-import { Vacancy, VacancyApplication } from "@/services/vacancyService";
-import type { Conversation } from "@/services/conversationService";
-import { toast } from "@/hooks/use-toast";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Briefcase,
-  MapPin,
-  Clock,
   Users,
-  Eye,
-  ChevronDown,
-  ChevronUp,
-  Calendar,
-  PoundSterling,
-  CheckCircle,
-  XCircle,
-  UserCheck,
-  Star,
-  CreditCard,
+  MessageSquare,
+  Loader2,
+  Search,
   Filter,
   ArrowUpDown,
-  Plus,
-  Loader2,
-  Shield,
-  Award,
-  MessageSquare,
+  ChevronDown,
 } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+  SheetFooter,
+} from "@/components/ui/sheet";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
-type StatusFilter = 'all' | 'New' | 'Reviewing' | 'Shortlisted' | 'Interviewed' | 'Offered' | 'Hired' | 'Rejected';
-type SortOption = 'date-desc' | 'date-asc' | 'name';
+// Import new premium components
+import { VacanciesHeroCard } from "@/components/employer/vacancies/VacanciesHeroCard";
+import { PremiumVacancyCard } from "@/components/employer/vacancies/PremiumVacancyCard";
+import { PremiumCandidateCard } from "@/components/employer/vacancies/PremiumCandidateCard";
+import { VacancyFilterPills, candidateStatusColors } from "@/components/employer/vacancies/VacancyFilterPills";
+import { PremiumTabs } from "@/components/employer/vacancies/PremiumTabs";
+import { ConversationList } from "@/components/employer/vacancies/ConversationList";
+import { ChatView } from "@/components/employer/messaging/ChatView";
+import { VacancyFormWizard } from "@/components/employer/vacancy-form/VacancyFormWizard";
+
+// Hooks
+import { useVacancies, useToggleVacancyStatus } from "@/hooks/useVacancies";
+import { useVacancyApplications, useUpdateApplicationStatus } from "@/hooks/useVacancyApplications";
+import { useConversations } from "@/hooks/useConversations";
+import { useEmployer } from "@/contexts/EmployerContext";
+import { toast } from "@/hooks/use-toast";
+
+// Types
+import { Vacancy, VacancyApplication } from "@/services/vacancyService";
+import type { Conversation } from "@/services/conversationService";
+
+type StatusFilter = "all" | "New" | "Reviewing" | "Shortlisted" | "Interviewed" | "Offered" | "Hired" | "Rejected";
+type SortOption = "date-desc" | "date-asc" | "name";
 
 export function JobVacanciesSection() {
-  // Hooks for real data
+  // Data hooks
   const { data: vacancies = [], isLoading: vacanciesLoading } = useVacancies();
   const { data: applications = [], isLoading: applicationsLoading } = useVacancyApplications();
   const { data: conversations = [], isLoading: conversationsLoading, totalUnread } = useConversations();
-  const createVacancy = useCreateVacancy();
-  const updateVacancy = useUpdateVacancy();
   const toggleVacancyStatus = useToggleVacancyStatus();
   const updateApplicationStatus = useUpdateApplicationStatus();
+  const { employer } = useEmployer();
 
   // UI State
   const [activeTab, setActiveTab] = useState("vacancies");
-  const [expandedVacancy, setExpandedVacancy] = useState<string | null>(null);
-  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [isWizardOpen, setIsWizardOpen] = useState(false);
+  const [editingVacancy, setEditingVacancy] = useState<Vacancy | null>(null);
+  const [duplicatingVacancy, setDuplicatingVacancy] = useState<Vacancy | null>(null);
   const [viewingApplication, setViewingApplication] = useState<VacancyApplication | null>(null);
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
 
   // Filter and sort state
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
-  const [vacancyFilter, setVacancyFilter] = useState<string>('all');
-  const [sortBy, setSortBy] = useState<SortOption>('date-desc');
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  const [vacancyFilter, setVacancyFilter] = useState<string>("all");
+  const [sortBy, setSortBy] = useState<SortOption>("date-desc");
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // Form state for new vacancy
-  const [newVacancy, setNewVacancy] = useState({
-    title: '',
-    location: '',
-    type: 'Full-time' as const,
-    description: '',
-    salary_min: '',
-    salary_max: '',
-    requirements: '',
-    benefits: '',
-    closing_date: '',
-  });
-
-  // Stats
+  // Calculate stats
   const totalApplicants = applications.length;
-  const newApplicants = applications.filter(a => a.status === "New").length;
-  const openVacancies = vacancies.filter(v => v.status === "Open").length;
-  const shortlistedCount = applications.filter(a => a.status === "Shortlisted").length;
-  const interviewCount = applications.filter(a => a.status === "Interviewed").length;
+  const newApplicants = applications.filter((a) => a.status === "New").length;
+  const openVacancies = vacancies.filter((v) => v.status === "Open").length;
+  const shortlistedCount = applications.filter((a) => a.status === "Shortlisted").length;
+  const hiredCount = applications.filter((a) => a.status === "Hired").length;
+  const fillRate = totalApplicants > 0 ? Math.round((hiredCount / totalApplicants) * 100) : 0;
 
   // Filtered and sorted applications
   const filteredApplications = useMemo(() => {
     let filtered = [...applications];
 
-    if (statusFilter !== 'all') {
-      filtered = filtered.filter(a => a.status === statusFilter);
+    if (statusFilter !== "all") {
+      filtered = filtered.filter((a) => a.status === statusFilter);
     }
 
-    if (vacancyFilter !== 'all') {
-      filtered = filtered.filter(a => a.vacancy_id === vacancyFilter);
+    if (vacancyFilter !== "all") {
+      filtered = filtered.filter((a) => a.vacancy_id === vacancyFilter);
+    }
+
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (a) =>
+          a.applicant_name.toLowerCase().includes(query) ||
+          a.applicant_email?.toLowerCase().includes(query)
+      );
     }
 
     filtered.sort((a, b) => {
       switch (sortBy) {
-        case 'date-desc':
+        case "date-desc":
           return new Date(b.applied_at).getTime() - new Date(a.applied_at).getTime();
-        case 'date-asc':
+        case "date-asc":
           return new Date(a.applied_at).getTime() - new Date(b.applied_at).getTime();
-        case 'name':
+        case "name":
           return a.applicant_name.localeCompare(b.applicant_name);
         default:
           return 0;
@@ -116,50 +122,32 @@ export function JobVacanciesSection() {
     });
 
     return filtered;
-  }, [applications, statusFilter, vacancyFilter, sortBy]);
+  }, [applications, statusFilter, vacancyFilter, sortBy, searchQuery]);
 
   const getApplicationsForVacancy = (vacancyId: string) =>
-    applications.filter(a => a.vacancy_id === vacancyId);
+    applications.filter((a) => a.vacancy_id === vacancyId);
 
-  const getStatusBadge = (status: string) => {
-    const variants: Record<string, string> = {
-      "New": "bg-blue-500/10 text-blue-500 border-blue-500/20",
-      "Reviewing": "bg-amber-500/10 text-amber-500 border-amber-500/20",
-      "Shortlisted": "bg-purple-500/10 text-purple-500 border-purple-500/20",
-      "Interviewed": "bg-cyan-500/10 text-cyan-500 border-cyan-500/20",
-      "Offered": "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
-      "Hired": "bg-success/10 text-success border-success/20",
-      "Rejected": "bg-destructive/10 text-destructive border-destructive/20",
-    };
-    return (
-      <Badge variant="outline" className={`text-xs ${variants[status] || "bg-muted text-muted-foreground"}`}>
-        {status}
-      </Badge>
-    );
-  };
+  // Status filter options with colors
+  const statusFilterOptions = [
+    { value: "all" as const, label: "All", count: applications.length, color: candidateStatusColors.all },
+    { value: "New" as const, label: "New", count: newApplicants, color: candidateStatusColors.New },
+    { value: "Reviewing" as const, label: "Reviewing", count: applications.filter((a) => a.status === "Reviewing").length, color: candidateStatusColors.Reviewing },
+    { value: "Shortlisted" as const, label: "Shortlisted", count: shortlistedCount, color: candidateStatusColors.Shortlisted },
+    { value: "Interviewed" as const, label: "Interview", count: applications.filter((a) => a.status === "Interviewed").length, color: candidateStatusColors.Interviewed },
+    { value: "Offered" as const, label: "Offered", count: applications.filter((a) => a.status === "Offered").length, color: candidateStatusColors.Offered },
+    { value: "Rejected" as const, label: "Rejected", count: applications.filter((a) => a.status === "Rejected").length, color: candidateStatusColors.Rejected },
+  ];
 
-  const getTierBadge = (tier?: string) => {
-    if (!tier) return null;
-    const variants: Record<string, { bg: string; icon: typeof Shield }> = {
-      "basic": { bg: "bg-muted text-muted-foreground", icon: Shield },
-      "verified": { bg: "bg-blue-500/10 text-blue-500 border-blue-500/20", icon: Shield },
-      "premium": { bg: "bg-yellow-500/10 text-yellow-600 border-yellow-500/20", icon: Award },
-    };
-    const config = variants[tier] || variants.basic;
-    const Icon = config.icon;
-    return (
-      <Badge variant="outline" className={`text-xs ${config.bg}`}>
-        <Icon className="h-3 w-3 mr-1" />
-        {tier.charAt(0).toUpperCase() + tier.slice(1)}
-      </Badge>
-    );
-  };
-
-  const handleUpdateStatus = async (appId: string, status: VacancyApplication['status'], name: string) => {
+  // Handlers
+  const handleUpdateStatus = async (
+    appId: string,
+    status: VacancyApplication["status"],
+    name: string
+  ) => {
     try {
       await updateApplicationStatus.mutateAsync({ id: appId, status });
       toast({
-        title: `Status Updated`,
+        title: "Status Updated",
         description: `${name} has been marked as ${status}.`,
       });
     } catch (error) {
@@ -175,8 +163,8 @@ export function JobVacanciesSection() {
     try {
       await toggleVacancyStatus.mutateAsync({ id: vacancy.id, currentStatus: vacancy.status });
       toast({
-        title: vacancy.status === 'Open' ? "Vacancy Closed" : "Vacancy Reopened",
-        description: `${vacancy.title} is now ${vacancy.status === 'Open' ? 'closed' : 'open'}.`,
+        title: vacancy.status === "Open" ? "Vacancy Closed" : "Vacancy Reopened",
+        description: `${vacancy.title} is now ${vacancy.status === "Open" ? "closed" : "open"}.`,
       });
     } catch (error) {
       toast({
@@ -187,798 +175,447 @@ export function JobVacanciesSection() {
     }
   };
 
-  const handleCreateVacancy = async () => {
-    if (!newVacancy.title || !newVacancy.location) {
-      toast({
-        title: "Missing Fields",
-        description: "Please fill in the required fields.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    try {
-      await createVacancy.mutateAsync({
-        title: newVacancy.title,
-        location: newVacancy.location,
-        type: newVacancy.type,
-        status: 'Open',
-        description: newVacancy.description || null,
-        salary_min: newVacancy.salary_min ? parseFloat(newVacancy.salary_min) : null,
-        salary_max: newVacancy.salary_max ? parseFloat(newVacancy.salary_max) : null,
-        salary_period: 'per year',
-        requirements: newVacancy.requirements ? newVacancy.requirements.split(',').map(r => r.trim()) : [],
-        benefits: newVacancy.benefits ? newVacancy.benefits.split(',').map(b => b.trim()) : [],
-        closing_date: newVacancy.closing_date || null,
-      });
-
-      toast({
-        title: "Vacancy Created",
-        description: `${newVacancy.title} has been posted.`,
-      });
-
-      setIsCreateOpen(false);
-      setNewVacancy({
-        title: '',
-        location: '',
-        type: 'Full-time',
-        description: '',
-        salary_min: '',
-        salary_max: '',
-        requirements: '',
-        benefits: '',
-        closing_date: '',
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to create vacancy.",
-        variant: "destructive",
-      });
-    }
+  const handleWizardClose = () => {
+    setIsWizardOpen(false);
+    setEditingVacancy(null);
+    setDuplicatingVacancy(null);
   };
 
-  const statusFilters: { value: StatusFilter; label: string; count: number }[] = [
-    { value: 'all', label: 'All', count: applications.length },
-    { value: 'New', label: 'New', count: newApplicants },
-    { value: 'Reviewing', label: 'Reviewing', count: applications.filter(a => a.status === 'Reviewing').length },
-    { value: 'Shortlisted', label: 'Shortlisted', count: shortlistedCount },
-    { value: 'Interviewed', label: 'Interview', count: interviewCount },
-    { value: 'Offered', label: 'Offered', count: applications.filter(a => a.status === 'Offered').length },
-    { value: 'Rejected', label: 'Rejected', count: applications.filter(a => a.status === 'Rejected').length },
-  ];
+  const handleEditVacancy = (vacancy: Vacancy) => {
+    setEditingVacancy(vacancy);
+    setIsWizardOpen(true);
+  };
+
+  const handleDuplicateVacancy = (vacancy: Vacancy) => {
+    setDuplicatingVacancy(vacancy);
+    setIsWizardOpen(true);
+  };
+
+  const handleViewApplicants = (vacancyId: string) => {
+    setVacancyFilter(vacancyId);
+    setActiveTab("applications");
+  };
 
   const isLoading = vacanciesLoading || applicationsLoading;
 
-  // Handle conversation selection
-  const handleSelectConversation = (conversation: Conversation) => {
-    setSelectedConversation(conversation);
-  };
+  // Tab configuration
+  const tabs = [
+    { id: "vacancies", label: "Vacancies", count: openVacancies, icon: <Briefcase className="h-4 w-4" /> },
+    { id: "applications", label: "Candidates", count: totalApplicants, icon: <Users className="h-4 w-4" /> },
+    { id: "conversations", label: "Messages", count: totalUnread, icon: <MessageSquare className="h-4 w-4" /> },
+  ];
 
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <SectionHeader
-        title="Job Vacancies"
-        description="Post jobs and manage applications"
+    <div className="space-y-6 animate-fade-in pb-20 sm:pb-6">
+      {/* Hero Section */}
+      <VacanciesHeroCard
+        openVacancies={openVacancies}
+        totalApplicants={totalApplicants}
+        newApplicants={newApplicants}
+        fillRate={fillRate}
+        onPostVacancy={() => setIsWizardOpen(true)}
       />
-
-      {/* Stats */}
-      <QuickStats
-        stats={[
-          {
-            icon: Briefcase,
-            value: openVacancies,
-            label: "Open Roles",
-            color: "yellow",
-          },
-          {
-            icon: Users,
-            value: totalApplicants,
-            label: "Applicants",
-            color: "green",
-          },
-          {
-            icon: Clock,
-            value: newApplicants,
-            label: "New",
-            color: "blue",
-            pulse: newApplicants > 0,
-          },
-          {
-            icon: UserCheck,
-            value: shortlistedCount,
-            label: "Shortlisted",
-            color: "purple",
-          },
-          {
-            icon: MessageSquare,
-            value: totalUnread,
-            label: "Unread",
-            color: totalUnread > 0 ? "yellow" : "blue",
-            pulse: totalUnread > 0,
-          },
-        ]}
-      />
-
-      {/* Post New Button */}
-      <Button
-        className="w-full"
-        onClick={() => setIsCreateOpen(true)}
-        disabled={createVacancy.isPending}
-      >
-        {createVacancy.isPending ? (
-          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-        ) : (
-          <Plus className="h-4 w-4 mr-2" />
-        )}
-        Post New Vacancy
-      </Button>
 
       {/* Loading State */}
       {isLoading && (
-        <div className="flex items-center justify-center py-8">
+        <div className="flex items-center justify-center py-12">
           <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
         </div>
       )}
 
-      {/* Tabs */}
+      {/* Content */}
       {!isLoading && (
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="w-full md:w-auto grid grid-cols-3">
-            <TabsTrigger value="vacancies" className="text-xs md:text-sm">
-              Vacancies ({openVacancies})
-            </TabsTrigger>
-            <TabsTrigger value="applications" className="text-xs md:text-sm">
-              Candidates ({totalApplicants})
-            </TabsTrigger>
-            <TabsTrigger value="conversations" className="text-xs md:text-sm relative">
-              <MessageSquare className="h-4 w-4 mr-1" />
-              <span className="hidden sm:inline">Messages</span>
-              {totalUnread > 0 && (
-                <Badge
-                  variant="default"
-                  className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs bg-elec-yellow text-black"
-                >
-                  {totalUnread > 9 ? '9+' : totalUnread}
-                </Badge>
-              )}
-            </TabsTrigger>
-          </TabsList>
+        <>
+          {/* Premium Tabs */}
+          <PremiumTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
 
-          {/* Vacancies Tab */}
-          <TabsContent value="vacancies" className="mt-4 space-y-3">
-            {vacancies.length === 0 ? (
-              <Card className="bg-elec-gray border-border">
-                <CardContent className="p-8 text-center">
-                  <Briefcase className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                  <h3 className="font-medium text-foreground mb-2">No Vacancies Yet</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Post your first job vacancy to start receiving applications.
-                  </p>
-                  <Button onClick={() => setIsCreateOpen(true)}>
-                    <Plus className="h-4 w-4 mr-2" />
-                    Post Vacancy
-                  </Button>
-                </CardContent>
-              </Card>
-            ) : (
-              vacancies.map((vacancy) => {
-                const isExpanded = expandedVacancy === vacancy.id;
-                const apps = getApplicationsForVacancy(vacancy.id);
-
-                return (
-                  <Card
-                    key={vacancy.id}
-                    className="bg-elec-gray border-border overflow-hidden relative group transition-all duration-300 hover:border-elec-yellow/40 hover:shadow-lg hover:shadow-elec-yellow/5"
-                  >
-                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-elec-yellow rounded-l-lg" />
-
-                    <CardContent className="p-0 pl-3">
-                      <div
-                        className="p-4 cursor-pointer touch-feedback"
-                        onClick={() => setExpandedVacancy(isExpanded ? null : vacancy.id)}
-                      >
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-3 mb-2">
-                              <h3 className="font-bold text-lg text-foreground">{vacancy.title}</h3>
-                              <Badge
-                                variant={vacancy.status === "Open" ? "default" : "secondary"}
-                                className={`text-xs font-semibold px-2.5 py-0.5 ${
-                                  vacancy.status === "Open"
-                                    ? "bg-success/20 text-success border-success/30"
-                                    : "bg-muted text-muted-foreground"
-                                }`}
-                              >
-                                {vacancy.status}
-                              </Badge>
-                            </div>
-                            <div className="flex items-center flex-wrap gap-x-3 gap-y-1 text-sm text-muted-foreground mb-3">
-                              <div className="flex items-center gap-1.5">
-                                <MapPin className="h-3.5 w-3.5 text-elec-yellow/70" />
-                                <span>{vacancy.location}</span>
-                              </div>
-                              <Badge variant="outline" className="text-xs bg-surface border-border/50 font-medium">
-                                {vacancy.type}
-                              </Badge>
-                            </div>
-                            {(vacancy.salary_min || vacancy.salary_max) && (
-                              <div className="flex items-center gap-1.5 text-sm">
-                                <PoundSterling className="h-4 w-4 text-elec-yellow" />
-                                <span className="font-semibold text-foreground">
-                                  £{vacancy.salary_min?.toLocaleString() || '?'} - £{vacancy.salary_max?.toLocaleString() || '?'}
-                                </span>
-                                <span className="text-muted-foreground text-xs">{vacancy.salary_period}</span>
-                              </div>
-                            )}
-                          </div>
-                          <div className="text-right shrink-0 space-y-2">
-                            <div className="flex items-center justify-end gap-1.5 bg-elec-yellow/10 text-elec-yellow px-2.5 py-1 rounded-full">
-                              <Users className="h-3.5 w-3.5" />
-                              <span className="font-bold text-sm">{apps.length}</span>
-                            </div>
-                            <div className="flex items-center justify-end gap-1.5 text-xs text-muted-foreground">
-                              <Eye className="h-3.5 w-3.5" />
-                              <span className="font-medium">{vacancy.views}</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex justify-center mt-3 pt-2 border-t border-border/50">
-                          {isExpanded ? (
-                            <ChevronUp className="h-4 w-4 text-elec-yellow" />
-                          ) : (
-                            <ChevronDown className="h-4 w-4 text-muted-foreground group-hover:text-elec-yellow transition-colors" />
-                          )}
-                        </div>
+          {/* Tab Content */}
+          <AnimatePresence mode="wait">
+            {/* Vacancies Tab */}
+            {activeTab === "vacancies" && (
+              <motion.div
+                key="vacancies"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-4"
+              >
+                {vacancies.length === 0 ? (
+                  <Card className="bg-elec-gray/50 border-white/10">
+                    <CardContent className="p-8 text-center">
+                      <div className="w-16 h-16 mx-auto rounded-2xl bg-elec-yellow/10 flex items-center justify-center mb-4">
+                        <Briefcase className="h-8 w-8 text-elec-yellow" />
                       </div>
-
-                      {isExpanded && (
-                        <div className="border-t border-border/50 p-4 pl-6 bg-surface/50 space-y-4">
-                          {vacancy.description && (
-                            <p className="text-sm text-muted-foreground leading-relaxed">{vacancy.description}</p>
-                          )}
-
-                          {vacancy.requirements && vacancy.requirements.length > 0 && (
-                            <div className="space-y-2">
-                              <h4 className="text-sm font-semibold text-foreground">Requirements</h4>
-                              <div className="flex flex-wrap gap-1.5">
-                                {vacancy.requirements.map((req) => (
-                                  <Badge key={req} variant="outline" className="text-xs bg-elec-gray border-border/50">
-                                    {req}
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {vacancy.benefits && vacancy.benefits.length > 0 && (
-                            <div className="space-y-2">
-                              <h4 className="text-sm font-semibold text-foreground">Benefits</h4>
-                              <div className="flex flex-wrap gap-1.5">
-                                {vacancy.benefits.map((ben) => (
-                                  <Badge key={ben} variant="secondary" className="text-xs bg-success/10 text-success border-success/20">
-                                    {ben}
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground pt-2">
-                            <div className="flex items-center gap-1.5">
-                              <Calendar className="h-3.5 w-3.5 text-elec-yellow/70" />
-                              <span>Posted: {new Date(vacancy.created_at).toLocaleDateString()}</span>
-                            </div>
-                            {vacancy.closing_date && (
-                              <div className="flex items-center gap-1.5">
-                                <Clock className="h-3.5 w-3.5 text-elec-yellow/70" />
-                                <span>Closes: {new Date(vacancy.closing_date).toLocaleDateString()}</span>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="flex gap-2 pt-2">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="flex-1"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleToggleVacancy(vacancy);
-                              }}
-                            >
-                              {vacancy.status === "Open" ? "Close Vacancy" : "Reopen Vacancy"}
-                            </Button>
-                            <Button
-                              size="sm"
-                              className="flex-1"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setVacancyFilter(vacancy.id);
-                                setActiveTab("applications");
-                              }}
-                            >
-                              View Applicants ({apps.length})
-                            </Button>
-                          </div>
-                        </div>
-                      )}
+                      <h3 className="font-semibold text-white text-lg mb-2">No Vacancies Yet</h3>
+                      <p className="text-sm text-white/60 mb-6 max-w-sm mx-auto">
+                        Post your first job vacancy to start receiving applications from qualified electricians.
+                      </p>
+                      <Button
+                        onClick={() => setIsWizardOpen(true)}
+                        className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                      >
+                        Post Your First Vacancy
+                      </Button>
                     </CardContent>
                   </Card>
-                );
-              })
-            )}
-          </TabsContent>
-
-          {/* Applications/Candidates Tab */}
-          <TabsContent value="applications" className="mt-4 space-y-4">
-            {/* Filter Bar */}
-            <div className="space-y-3">
-              <ScrollArea className="w-full">
-                <div className="flex gap-2 pb-2">
-                  {statusFilters.map((filter) => (
-                    <Button
-                      key={filter.value}
-                      variant={statusFilter === filter.value ? "default" : "outline"}
-                      size="sm"
-                      className="shrink-0 text-xs"
-                      onClick={() => setStatusFilter(filter.value)}
-                    >
-                      {filter.label}
-                      {filter.count > 0 && (
-                        <Badge
-                          variant="secondary"
-                          className={`ml-1.5 text-xs ${statusFilter === filter.value ? 'bg-elec-dark/20' : ''}`}
-                        >
-                          {filter.count}
-                        </Badge>
-                      )}
-                    </Button>
-                  ))}
-                </div>
-                <ScrollBar orientation="horizontal" />
-              </ScrollArea>
-
-              <div className="flex gap-2">
-                <Select value={vacancyFilter} onValueChange={setVacancyFilter}>
-                  <SelectTrigger className="flex-1 h-9 text-xs">
-                    <Filter className="h-3 w-3 mr-2" />
-                    <SelectValue placeholder="All Jobs" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Jobs</SelectItem>
-                    {vacancies.map((v) => (
-                      <SelectItem key={v.id} value={v.id}>
-                        {v.title}
-                      </SelectItem>
+                ) : (
+                  <div className="space-y-3">
+                    {vacancies.map((vacancy) => (
+                      <PremiumVacancyCard
+                        key={vacancy.id}
+                        id={vacancy.id}
+                        title={vacancy.title}
+                        location={vacancy.location}
+                        type={vacancy.type}
+                        status={vacancy.status as "Open" | "Closed" | "Draft"}
+                        salaryMin={vacancy.salary_min || undefined}
+                        salaryMax={vacancy.salary_max || undefined}
+                        salaryPeriod={vacancy.salary_period || undefined}
+                        applicantCount={getApplicationsForVacancy(vacancy.id).length}
+                        views={vacancy.views || 0}
+                        postedAt={vacancy.created_at}
+                        closingDate={vacancy.closing_date || undefined}
+                        workArrangement={vacancy.work_arrangement}
+                        companyInitial={employer?.company_name?.charAt(0) || "E"}
+                        onEdit={() => handleEditVacancy(vacancy)}
+                        onDuplicate={() => handleDuplicateVacancy(vacancy)}
+                        onToggleStatus={() => handleToggleVacancy(vacancy)}
+                        onViewApplicants={() => handleViewApplicants(vacancy.id)}
+                      />
                     ))}
-                  </SelectContent>
-                </Select>
-
-                <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
-                  <SelectTrigger className="w-[130px] h-9 text-xs">
-                    <ArrowUpDown className="h-3 w-3 mr-2" />
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="date-desc">Newest First</SelectItem>
-                    <SelectItem value="date-asc">Oldest First</SelectItem>
-                    <SelectItem value="name">Name A-Z</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            {/* Candidate Cards */}
-            {filteredApplications.length === 0 ? (
-              <Card className="bg-elec-gray border-border">
-                <CardContent className="p-8 text-center">
-                  <Users className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                  <h3 className="font-medium text-foreground mb-2">No Candidates Found</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {statusFilter !== 'all' || vacancyFilter !== 'all'
-                      ? "Try adjusting your filters."
-                      : "Applications will appear here when candidates apply to your vacancies."}
-                  </p>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="space-y-3">
-                {filteredApplications.map((app) => {
-                  const vacancy = vacancies.find(v => v.id === app.vacancy_id);
-                  const initials = app.applicant_name.split(' ').map(n => n[0]).join('').toUpperCase();
-
-                  return (
-                    <Card
-                      key={app.id}
-                      className="bg-elec-gray border-border overflow-hidden cursor-pointer hover:bg-muted/30 transition-colors"
-                      onClick={() => setViewingApplication(app)}
-                    >
-                      <CardContent className="p-4">
-                        <div className="flex items-start gap-3">
-                          <Avatar className="w-12 h-12 shrink-0 border border-border">
-                            <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-semibold">
-                              {initials}
-                            </AvatarFallback>
-                          </Avatar>
-
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between gap-2">
-                              <div>
-                                <h3 className="font-semibold text-foreground leading-tight">{app.applicant_name}</h3>
-                                <div className="flex items-center gap-2 mt-1 flex-wrap">
-                                  {app.elec_id_profile && getTierBadge(app.elec_id_profile.verification_tier)}
-                                  {app.applicant_email && (
-                                    <span className="text-xs text-muted-foreground">
-                                      {app.applicant_email}
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                              <div className="shrink-0">
-                                {getStatusBadge(app.status)}
-                              </div>
-                            </div>
-
-                            <div className="mt-2 text-sm text-muted-foreground">
-                              <span className="flex items-center gap-1">
-                                <Briefcase className="h-3 w-3" />
-                                {vacancy?.title || 'Unknown Position'}
-                              </span>
-                            </div>
-
-                            <div className="mt-2 flex items-center justify-between gap-2">
-                              <span className="text-xs text-muted-foreground">
-                                Applied: {new Date(app.applied_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
-                              </span>
-                            </div>
-
-                            {/* Quick Actions */}
-                            <div className="mt-3 flex gap-2">
-                              {app.status === 'New' && (
-                                <>
-                                  <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="flex-1 h-8 text-xs"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      handleUpdateStatus(app.id, 'Rejected', app.applicant_name);
-                                    }}
-                                  >
-                                    <XCircle className="h-3 w-3 mr-1" />
-                                    Reject
-                                  </Button>
-                                  <Button
-                                    size="sm"
-                                    className="flex-1 h-8 text-xs"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      handleUpdateStatus(app.id, 'Shortlisted', app.applicant_name);
-                                    }}
-                                  >
-                                    <CheckCircle className="h-3 w-3 mr-1" />
-                                    Shortlist
-                                  </Button>
-                                </>
-                              )}
-                              {app.status === 'Shortlisted' && (
-                                <Button
-                                  size="sm"
-                                  className="flex-1 h-8 text-xs"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleUpdateStatus(app.id, 'Interviewed', app.applicant_name);
-                                  }}
-                                >
-                                  <Calendar className="h-3 w-3 mr-1" />
-                                  Mark Interviewed
-                                </Button>
-                              )}
-                              {app.status === 'Interviewed' && (
-                                <Button
-                                  size="sm"
-                                  className="flex-1 h-8 text-xs bg-success hover:bg-success/90"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleUpdateStatus(app.id, 'Offered', app.applicant_name);
-                                  }}
-                                >
-                                  <CheckCircle className="h-3 w-3 mr-1" />
-                                  Make Offer
-                                </Button>
-                              )}
-                              {app.status === 'Offered' && (
-                                <Button
-                                  size="sm"
-                                  className="flex-1 h-8 text-xs bg-success hover:bg-success/90"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleUpdateStatus(app.id, 'Hired', app.applicant_name);
-                                  }}
-                                >
-                                  <CheckCircle className="h-3 w-3 mr-1" />
-                                  Mark Hired
-                                </Button>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
-              </div>
+                  </div>
+                )}
+              </motion.div>
             )}
-          </TabsContent>
 
-          {/* Conversations Tab */}
-          <TabsContent value="conversations" className="mt-4">
-            <ConversationList
-              conversations={conversations}
-              isLoading={conversationsLoading}
-              onSelect={handleSelectConversation}
-              emptyMessage="Start a conversation by messaging someone from the Talent Pool, or wait for applicants to message you."
-            />
-          </TabsContent>
-        </Tabs>
+            {/* Candidates Tab */}
+            {activeTab === "applications" && (
+              <motion.div
+                key="applications"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-4"
+              >
+                {/* Filter Pills */}
+                <VacancyFilterPills
+                  options={statusFilterOptions}
+                  selected={statusFilter}
+                  onSelect={setStatusFilter}
+                />
+
+                {/* Search and additional filters */}
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                    <Input
+                      placeholder="Search candidates..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className={cn(
+                        "h-11 pl-10 bg-white/5 border-white/10 rounded-xl",
+                        "text-white placeholder:text-white/40",
+                        "focus:border-elec-yellow/60"
+                      )}
+                    />
+                  </div>
+
+                  <Select value={vacancyFilter} onValueChange={setVacancyFilter}>
+                    <SelectTrigger className="w-[140px] h-11 bg-white/5 border-white/10 rounded-xl text-white">
+                      <Filter className="h-4 w-4 mr-2 text-white/60" />
+                      <SelectValue placeholder="Job" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-gray border-white/10">
+                      <SelectItem value="all">All Jobs</SelectItem>
+                      {vacancies.map((v) => (
+                        <SelectItem key={v.id} value={v.id}>
+                          {v.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+
+                  <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
+                    <SelectTrigger className="w-[130px] h-11 bg-white/5 border-white/10 rounded-xl text-white">
+                      <ArrowUpDown className="h-4 w-4 mr-2 text-white/60" />
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-gray border-white/10">
+                      <SelectItem value="date-desc">Newest</SelectItem>
+                      <SelectItem value="date-asc">Oldest</SelectItem>
+                      <SelectItem value="name">A-Z</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Candidate Cards */}
+                {filteredApplications.length === 0 ? (
+                  <Card className="bg-elec-gray/50 border-white/10">
+                    <CardContent className="p-8 text-center">
+                      <div className="w-16 h-16 mx-auto rounded-2xl bg-white/5 flex items-center justify-center mb-4">
+                        <Users className="h-8 w-8 text-white/40" />
+                      </div>
+                      <h3 className="font-semibold text-white text-lg mb-2">No Candidates Found</h3>
+                      <p className="text-sm text-white/60">
+                        {statusFilter !== "all" || vacancyFilter !== "all" || searchQuery
+                          ? "Try adjusting your filters or search query."
+                          : "Applications will appear here when candidates apply to your vacancies."}
+                      </p>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <div className="space-y-3">
+                    {filteredApplications.map((app) => {
+                      const vacancy = vacancies.find((v) => v.id === app.vacancy_id);
+
+                      return (
+                        <PremiumCandidateCard
+                          key={app.id}
+                          id={app.id}
+                          name={app.applicant_name}
+                          email={app.applicant_email || undefined}
+                          phone={app.applicant_phone || undefined}
+                          status={app.status as any}
+                          appliedAt={app.applied_at}
+                          vacancyTitle={vacancy?.title || "Unknown Position"}
+                          elecIdTier={app.elec_id_profile?.verification_tier as any}
+                          ecsCardType={app.elec_id_profile?.ecs_card_type}
+                          onShortlist={() => handleUpdateStatus(app.id, "Shortlisted", app.applicant_name)}
+                          onReject={() => handleUpdateStatus(app.id, "Rejected", app.applicant_name)}
+                          onInterview={() => handleUpdateStatus(app.id, "Interviewed", app.applicant_name)}
+                          onOffer={() => handleUpdateStatus(app.id, "Offered", app.applicant_name)}
+                          onHire={() => handleUpdateStatus(app.id, "Hired", app.applicant_name)}
+                          onClick={() => setViewingApplication(app)}
+                        />
+                      );
+                    })}
+                  </div>
+                )}
+              </motion.div>
+            )}
+
+            {/* Conversations Tab */}
+            {activeTab === "conversations" && (
+              <motion.div
+                key="conversations"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+              >
+                <ConversationList
+                  conversations={conversations}
+                  isLoading={conversationsLoading}
+                  onSelect={setSelectedConversation}
+                  emptyMessage="Start a conversation by messaging someone from the Talent Pool, or wait for applicants to message you."
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </>
       )}
 
-      {/* Create Vacancy Sheet */}
-      <Sheet open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-        <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl">
-          <SheetHeader>
-            <SheetTitle>Post New Vacancy</SheetTitle>
-            <SheetDescription>
-              Create a new job posting to attract candidates
-            </SheetDescription>
-          </SheetHeader>
-
-          <div className="space-y-4 py-4 overflow-y-auto max-h-[calc(90vh-180px)]">
-            <div className="space-y-2">
-              <Label htmlFor="title">Job Title *</Label>
-              <Input
-                id="title"
-                placeholder="e.g. Senior Electrician"
-                value={newVacancy.title}
-                onChange={(e) => setNewVacancy({ ...newVacancy, title: e.target.value })}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="location">Location *</Label>
-              <Input
-                id="location"
-                placeholder="e.g. Manchester, UK"
-                value={newVacancy.location}
-                onChange={(e) => setNewVacancy({ ...newVacancy, location: e.target.value })}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="type">Employment Type</Label>
-              <Select
-                value={newVacancy.type}
-                onValueChange={(v) => setNewVacancy({ ...newVacancy, type: v as any })}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Full-time">Full-time</SelectItem>
-                  <SelectItem value="Part-time">Part-time</SelectItem>
-                  <SelectItem value="Contract">Contract</SelectItem>
-                  <SelectItem value="Temporary">Temporary</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="salary_min">Min Salary (£)</Label>
-                <Input
-                  id="salary_min"
-                  type="number"
-                  placeholder="30000"
-                  value={newVacancy.salary_min}
-                  onChange={(e) => setNewVacancy({ ...newVacancy, salary_min: e.target.value })}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="salary_max">Max Salary (£)</Label>
-                <Input
-                  id="salary_max"
-                  type="number"
-                  placeholder="45000"
-                  value={newVacancy.salary_max}
-                  onChange={(e) => setNewVacancy({ ...newVacancy, salary_max: e.target.value })}
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
-                placeholder="Describe the role..."
-                value={newVacancy.description}
-                onChange={(e) => setNewVacancy({ ...newVacancy, description: e.target.value })}
-                rows={4}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="requirements">Requirements (comma separated)</Label>
-              <Input
-                id="requirements"
-                placeholder="Gold Card, 18th Edition, 5 years experience"
-                value={newVacancy.requirements}
-                onChange={(e) => setNewVacancy({ ...newVacancy, requirements: e.target.value })}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="benefits">Benefits (comma separated)</Label>
-              <Input
-                id="benefits"
-                placeholder="Company van, Pension, 25 days holiday"
-                value={newVacancy.benefits}
-                onChange={(e) => setNewVacancy({ ...newVacancy, benefits: e.target.value })}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="closing_date">Closing Date</Label>
-              <Input
-                id="closing_date"
-                type="date"
-                value={newVacancy.closing_date}
-                onChange={(e) => setNewVacancy({ ...newVacancy, closing_date: e.target.value })}
-              />
-            </div>
-          </div>
-
-          <SheetFooter className="pt-4 border-t">
-            <Button variant="outline" onClick={() => setIsCreateOpen(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handleCreateVacancy} disabled={createVacancy.isPending}>
-              {createVacancy.isPending ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <Plus className="h-4 w-4 mr-2" />
-              )}
-              Post Vacancy
-            </Button>
-          </SheetFooter>
-        </SheetContent>
-      </Sheet>
+      {/* Vacancy Form Wizard */}
+      <VacancyFormWizard
+        open={isWizardOpen}
+        onOpenChange={handleWizardClose}
+        onSuccess={handleWizardClose}
+        editData={
+          editingVacancy
+            ? {
+                id: editingVacancy.id,
+                title: editingVacancy.title,
+                type: editingVacancy.type as any,
+                location: editingVacancy.location,
+                workArrangement: "On-site",
+                salaryMin: editingVacancy.salary_min || undefined,
+                salaryMax: editingVacancy.salary_max || undefined,
+                salaryPeriod: (editingVacancy.salary_period?.includes("year")
+                  ? "year"
+                  : editingVacancy.salary_period?.includes("month")
+                  ? "month"
+                  : editingVacancy.salary_period?.includes("week")
+                  ? "week"
+                  : editingVacancy.salary_period?.includes("day")
+                  ? "day"
+                  : editingVacancy.salary_period?.includes("hour")
+                  ? "hour"
+                  : "year") as any,
+                benefits: editingVacancy.benefits || [],
+                requirements: editingVacancy.requirements || [],
+                experienceLevel: "Mid",
+                description: editingVacancy.description || "",
+                closingDate: editingVacancy.closing_date || "",
+              }
+            : undefined
+        }
+        duplicateData={
+          duplicatingVacancy
+            ? {
+                title: `${duplicatingVacancy.title} (Copy)`,
+                type: duplicatingVacancy.type as any,
+                location: duplicatingVacancy.location,
+                workArrangement: "On-site",
+                salaryMin: duplicatingVacancy.salary_min || undefined,
+                salaryMax: duplicatingVacancy.salary_max || undefined,
+                salaryPeriod: (duplicatingVacancy.salary_period?.includes("year")
+                  ? "year"
+                  : duplicatingVacancy.salary_period?.includes("month")
+                  ? "month"
+                  : duplicatingVacancy.salary_period?.includes("week")
+                  ? "week"
+                  : duplicatingVacancy.salary_period?.includes("day")
+                  ? "day"
+                  : duplicatingVacancy.salary_period?.includes("hour")
+                  ? "hour"
+                  : "year") as any,
+                benefits: duplicatingVacancy.benefits || [],
+                requirements: duplicatingVacancy.requirements || [],
+                experienceLevel: "Mid",
+                description: duplicatingVacancy.description || "",
+                closingDate: "",
+              }
+            : undefined
+        }
+      />
 
       {/* View Application Sheet */}
       <Sheet open={!!viewingApplication} onOpenChange={(open) => !open && setViewingApplication(null)}>
-        <SheetContent side="bottom" className="h-[80vh] rounded-t-2xl">
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl bg-elec-gray border-white/10">
           {viewingApplication && (
             <>
-              <SheetHeader>
-                <SheetTitle>{viewingApplication.applicant_name}</SheetTitle>
-                <SheetDescription>
-                  Applied for: {vacancies.find(v => v.id === viewingApplication.vacancy_id)?.title || 'Unknown Position'}
+              <SheetHeader className="pb-4 border-b border-white/10">
+                <SheetTitle className="text-white">{viewingApplication.applicant_name}</SheetTitle>
+                <SheetDescription className="text-white/60">
+                  Applied for: {vacancies.find((v) => v.id === viewingApplication.vacancy_id)?.title || "Unknown Position"}
                 </SheetDescription>
               </SheetHeader>
 
-              <div className="space-y-4 py-4">
-                <div className="flex items-center gap-3">
-                  <Avatar className="w-16 h-16 border border-border">
-                    <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-semibold text-xl">
-                      {viewingApplication.applicant_name.split(' ').map(n => n[0]).join('').toUpperCase()}
+              <div className="space-y-6 py-6 overflow-auto">
+                {/* Avatar and contact */}
+                <div className="flex items-center gap-4">
+                  <Avatar className="w-20 h-20 border-2 border-white/10">
+                    <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-semibold text-2xl">
+                      {viewingApplication.applicant_name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <h3 className="font-semibold text-lg">{viewingApplication.applicant_name}</h3>
+                    <h3 className="font-semibold text-xl text-white">{viewingApplication.applicant_name}</h3>
                     {viewingApplication.applicant_email && (
-                      <p className="text-sm text-muted-foreground">{viewingApplication.applicant_email}</p>
+                      <p className="text-sm text-white/60">{viewingApplication.applicant_email}</p>
                     )}
                     {viewingApplication.applicant_phone && (
-                      <p className="text-sm text-muted-foreground">{viewingApplication.applicant_phone}</p>
+                      <p className="text-sm text-white/60">{viewingApplication.applicant_phone}</p>
                     )}
                   </div>
                 </div>
 
+                {/* Elec-ID Profile */}
                 {viewingApplication.elec_id_profile && (
-                  <Card className="bg-elec-gray border-border">
-                    <CardContent className="p-4">
-                      <h4 className="font-medium mb-2 flex items-center gap-2">
-                        <Shield className="h-4 w-4 text-elec-yellow" />
-                        Elec-ID Profile
-                      </h4>
-                      <div className="space-y-1 text-sm">
-                        <p>
-                          <span className="text-muted-foreground">ID:</span> {viewingApplication.elec_id_profile.elec_id_number}
-                        </p>
-                        <p>
-                          <span className="text-muted-foreground">ECS Card:</span> {viewingApplication.elec_id_profile.ecs_card_type}
-                        </p>
-                        <p>
-                          <span className="text-muted-foreground">Verification:</span> {viewingApplication.elec_id_profile.verification_tier}
-                        </p>
+                  <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-3">
+                    <h4 className="font-medium text-white flex items-center gap-2">
+                      <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+                        Elec-ID Verified
+                      </Badge>
+                    </h4>
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <p className="text-white/50">ID Number</p>
+                        <p className="text-white font-medium">{viewingApplication.elec_id_profile.elec_id_number}</p>
                       </div>
-                    </CardContent>
-                  </Card>
+                      <div>
+                        <p className="text-white/50">ECS Card</p>
+                        <p className="text-white font-medium">{viewingApplication.elec_id_profile.ecs_card_type}</p>
+                      </div>
+                      <div>
+                        <p className="text-white/50">Verification</p>
+                        <p className="text-white font-medium capitalize">{viewingApplication.elec_id_profile.verification_tier}</p>
+                      </div>
+                    </div>
+                  </div>
                 )}
 
+                {/* Cover Letter */}
                 {viewingApplication.cover_letter && (
                   <div className="space-y-2">
-                    <h4 className="font-medium">Cover Letter</h4>
-                    <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                    <h4 className="font-medium text-white">Cover Letter</h4>
+                    <p className="text-sm text-white/70 whitespace-pre-wrap leading-relaxed">
                       {viewingApplication.cover_letter}
                     </p>
                   </div>
                 )}
 
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Applied:</span>
-                  <span>{new Date(viewingApplication.applied_at).toLocaleDateString('en-GB', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                  })}</span>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Status:</span>
-                  {getStatusBadge(viewingApplication.status)}
+                {/* Application date */}
+                <div className="flex items-center justify-between text-sm pt-4 border-t border-white/10">
+                  <span className="text-white/50">Applied</span>
+                  <span className="text-white">
+                    {new Date(viewingApplication.applied_at).toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </span>
                 </div>
               </div>
 
-              <SheetFooter className="pt-4 border-t gap-2">
-                {viewingApplication.status === 'New' && (
-                  <>
+              <SheetFooter className="pt-4 border-t border-white/10">
+                {viewingApplication.status === "New" && (
+                  <div className="flex gap-3 w-full">
                     <Button
                       variant="outline"
-                      className="flex-1"
+                      className="flex-1 h-12 bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/20"
                       onClick={() => {
-                        handleUpdateStatus(viewingApplication.id, 'Rejected', viewingApplication.applicant_name);
+                        handleUpdateStatus(viewingApplication.id, "Rejected", viewingApplication.applicant_name);
                         setViewingApplication(null);
                       }}
                     >
-                      <XCircle className="h-4 w-4 mr-2" />
                       Reject
                     </Button>
                     <Button
-                      className="flex-1"
+                      className="flex-1 h-12 bg-purple-500 hover:bg-purple-500/90"
                       onClick={() => {
-                        handleUpdateStatus(viewingApplication.id, 'Shortlisted', viewingApplication.applicant_name);
+                        handleUpdateStatus(viewingApplication.id, "Shortlisted", viewingApplication.applicant_name);
                         setViewingApplication(null);
                       }}
                     >
-                      <CheckCircle className="h-4 w-4 mr-2" />
                       Shortlist
                     </Button>
-                  </>
+                  </div>
                 )}
-                {viewingApplication.status === 'Shortlisted' && (
+                {viewingApplication.status === "Shortlisted" && (
                   <Button
-                    className="flex-1"
+                    className="w-full h-12 bg-cyan-500 hover:bg-cyan-500/90"
                     onClick={() => {
-                      handleUpdateStatus(viewingApplication.id, 'Interviewed', viewingApplication.applicant_name);
+                      handleUpdateStatus(viewingApplication.id, "Interviewed", viewingApplication.applicant_name);
                       setViewingApplication(null);
                     }}
                   >
-                    <Calendar className="h-4 w-4 mr-2" />
-                    Mark Interviewed
+                    Mark as Interviewed
                   </Button>
                 )}
-                {viewingApplication.status === 'Interviewed' && (
+                {viewingApplication.status === "Interviewed" && (
                   <Button
-                    className="flex-1 bg-success hover:bg-success/90"
+                    className="w-full h-12 bg-emerald-500 hover:bg-emerald-500/90"
                     onClick={() => {
-                      handleUpdateStatus(viewingApplication.id, 'Offered', viewingApplication.applicant_name);
+                      handleUpdateStatus(viewingApplication.id, "Offered", viewingApplication.applicant_name);
                       setViewingApplication(null);
                     }}
                   >
-                    <CheckCircle className="h-4 w-4 mr-2" />
                     Make Offer
+                  </Button>
+                )}
+                {viewingApplication.status === "Offered" && (
+                  <Button
+                    className="w-full h-12 bg-green-500 hover:bg-green-500/90"
+                    onClick={() => {
+                      handleUpdateStatus(viewingApplication.id, "Hired", viewingApplication.applicant_name);
+                      setViewingApplication(null);
+                    }}
+                  >
+                    Mark as Hired
                   </Button>
                 )}
               </SheetFooter>

@@ -22,6 +22,7 @@ import { cn } from '@/lib/utils';
 import { useDashboardData } from '@/hooks/useDashboardData';
 import { StatCard, StatVariant } from './StatCard';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface StatConfig {
   id: string;
@@ -34,6 +35,7 @@ interface StatConfig {
   getSubtitle?: (data: ReturnType<typeof useDashboardData>) => string | undefined;
   formatAsCurrency?: boolean;
   path?: string;
+  roles: string[]; // Which user roles can see this stat
 }
 
 const statsConfig: StatConfig[] = [
@@ -48,6 +50,7 @@ const statsConfig: StatConfig[] = [
         ? `${data.business.pendingQuotes} awaiting response`
         : undefined,
     path: '/electrician/quotes',
+    roles: ['electrician', 'employer', 'admin'],
   },
   {
     id: 'quoteValue',
@@ -58,6 +61,7 @@ const statsConfig: StatConfig[] = [
     prefix: '£',
     formatAsCurrency: true,
     path: '/electrician/quotes',
+    roles: ['electrician', 'employer', 'admin'],
   },
   {
     id: 'streak',
@@ -69,6 +73,7 @@ const statsConfig: StatConfig[] = [
     getSubtitle: (data) =>
       data.learning.studiedToday ? 'Studied today' : 'Study to continue!',
     path: '/study-centre/apprentice',
+    roles: ['apprentice', 'electrician', 'admin'],
   },
   {
     id: 'certificates',
@@ -81,6 +86,7 @@ const statsConfig: StatConfig[] = [
         ? `${data.certificates.expiringSoon} expiring soon`
         : undefined,
     path: '/profile?tab=certificates',
+    roles: ['electrician', 'apprentice', 'admin'],
   },
   {
     id: 'overdue',
@@ -93,6 +99,7 @@ const statsConfig: StatConfig[] = [
         ? `£${data.business.overdueValue.toLocaleString()} outstanding`
         : 'All paid!',
     path: '/electrician/invoices',
+    roles: ['electrician', 'employer', 'admin'],
   },
 ];
 
@@ -124,7 +131,12 @@ const itemVariants = {
 export function LiveStatsBar() {
   const dashboardData = useDashboardData();
   const navigate = useNavigate();
+  const { profile } = useAuth();
   const { isLoading } = dashboardData;
+
+  // Filter stats based on user role
+  const userRole = profile?.role || 'visitor';
+  const filteredStats = statsConfig.filter(stat => stat.roles.includes(userRole));
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -168,7 +180,7 @@ export function LiveStatsBar() {
   if (isLoading) {
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-        {[...Array(5)].map((_, i) => (
+        {[...Array(filteredStats.length || 3)].map((_, i) => (
           <div
             key={i}
             className="h-20 sm:h-24 rounded-xl glass-premium animate-pulse"
@@ -178,13 +190,18 @@ export function LiveStatsBar() {
     );
   }
 
+  // Don't render if user has no stats to show (e.g., visitor role)
+  if (filteredStats.length === 0) {
+    return null;
+  }
+
   return (
-    <div className="hidden sm:block relative">
+    <div className="relative">
       {/* Left fade indicator - mobile only */}
       <div
         className={cn(
           'absolute left-0 top-0 bottom-0 w-8 z-10 pointer-events-none',
-          'bg-gradient-to-r from-elec-dark to-transparent',
+          'bg-gradient-to-r from-[hsl(240,5.9%,10%)] to-transparent',
           'transition-opacity duration-200 sm:hidden',
           canScrollLeft ? 'opacity-100' : 'opacity-0'
         )}
@@ -194,7 +211,7 @@ export function LiveStatsBar() {
       <div
         className={cn(
           'absolute right-0 top-0 bottom-0 w-8 z-10 pointer-events-none',
-          'bg-gradient-to-l from-elec-dark to-transparent',
+          'bg-gradient-to-l from-[hsl(240,5.9%,10%)] to-transparent',
           'transition-opacity duration-200 sm:hidden',
           canScrollRight ? 'opacity-100' : 'opacity-0'
         )}
@@ -206,16 +223,16 @@ export function LiveStatsBar() {
         initial="hidden"
         animate="visible"
         className={cn(
-          // Mobile: premium horizontal scroll
-          'flex gap-2.5 overflow-x-auto pb-1 -mx-4 px-4',
+          // Mobile: premium horizontal scroll with carousel feel
+          'flex gap-3 overflow-x-auto pb-1 -mx-4 px-4',
           'snap-x snap-mandatory scroll-smooth',
-          'scrollbar-none overscroll-x-contain',
+          'scrollbar-hide momentum-scroll-x',
           // Desktop: grid layout
           'sm:grid sm:grid-cols-3 lg:grid-cols-5 sm:gap-4',
           'sm:overflow-visible sm:mx-0 sm:px-0 sm:pb-0'
         )}
       >
-        {statsConfig.map((config, index) => {
+        {filteredStats.map((config, index) => {
           const Icon = getIcon(config);
           const variant = getVariant(config);
           const value = config.getValue(dashboardData);
@@ -225,12 +242,13 @@ export function LiveStatsBar() {
             <motion.div
               key={config.id}
               variants={itemVariants}
+              whileTap={{ scale: 0.97 }}
               className={cn(
-                // Mobile: compact cards with snap
-                'flex-shrink-0 w-[140px] snap-start',
+                // Mobile: compact cards with snap - larger touch targets
+                'flex-shrink-0 w-[130px] snap-start touch-manipulation',
                 // First/last card snap alignment
                 index === 0 && 'snap-start',
-                index === statsConfig.length - 1 && 'snap-end',
+                index === filteredStats.length - 1 && 'snap-end mr-4 sm:mr-0',
                 // Desktop: equal width columns
                 'sm:w-full sm:flex-shrink'
               )}
@@ -251,15 +269,25 @@ export function LiveStatsBar() {
         })}
       </motion.div>
 
-      {/* Scroll hint dots - mobile only */}
-      <div className="flex justify-center gap-1 mt-2 sm:hidden">
-        {statsConfig.map((_, i) => (
-          <div
+      {/* Pagination dots - mobile only */}
+      <div className="flex justify-center gap-1.5 mt-3 sm:hidden">
+        {filteredStats.map((_, i) => (
+          <button
             key={i}
+            onClick={() => {
+              const el = scrollRef.current;
+              if (el) {
+                const cardWidth = 130 + 12; // width + gap
+                el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
+              }
+            }}
             className={cn(
-              'w-1 h-1 rounded-full transition-colors',
-              i === 0 ? 'bg-elec-yellow' : 'bg-white/20'
+              'transition-all duration-200 touch-target-sm',
+              i === 0
+                ? 'w-4 h-1.5 rounded-full bg-elec-yellow'
+                : 'w-1.5 h-1.5 rounded-full bg-white/20 hover:bg-white/40'
             )}
+            aria-label={`View stat ${i + 1}`}
           />
         ))}
       </div>

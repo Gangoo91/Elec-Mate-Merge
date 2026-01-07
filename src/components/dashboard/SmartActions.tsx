@@ -21,6 +21,7 @@ import {
 import { cn } from '@/lib/utils';
 import { useDashboardData, DashboardActionItem } from '@/hooks/useDashboardData';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
 
 const typeStyles: Record<
   DashboardActionItem['type'],
@@ -166,8 +167,25 @@ function EmptyState() {
   );
 }
 
+// Define which roles can see which action types
+const actionRoleFilters: Record<string, string[]> = {
+  invoice: ['electrician', 'employer', 'admin'],
+  quote: ['electrician', 'employer', 'admin'],
+  cert: ['electrician', 'apprentice', 'admin'],
+};
+
 export function SmartActions() {
   const { actions, isLoading } = useDashboardData();
+  const { profile } = useAuth();
+  const userRole = profile?.role || 'visitor';
+
+  // Filter actions based on user role
+  const filteredActions = actions.filter(action => {
+    // Extract action type from ID (e.g., 'invoice-123' → 'invoice')
+    const actionType = action.id.split('-')[0];
+    const allowedRoles = actionRoleFilters[actionType];
+    return allowedRoles ? allowedRoles.includes(userRole) : true;
+  });
 
   if (isLoading) {
     return (
@@ -182,14 +200,14 @@ export function SmartActions() {
     );
   }
 
-  if (actions.length === 0) {
+  if (filteredActions.length === 0) {
     return <EmptyState />;
   }
 
   // Group actions by type for better organization
-  const urgentActions = actions.filter((a) => a.type === 'urgent');
-  const warningActions = actions.filter((a) => a.type === 'warning');
-  const infoActions = actions.filter((a) => a.type === 'info');
+  const urgentActions = filteredActions.filter((a) => a.type === 'urgent');
+  const warningActions = filteredActions.filter((a) => a.type === 'warning');
+  const infoActions = filteredActions.filter((a) => a.type === 'info');
 
   const sortedActions = [...urgentActions, ...warningActions, ...infoActions];
 
@@ -234,10 +252,19 @@ export function SmartActions() {
  */
 export function SmartActionsCompact() {
   const { actions } = useDashboardData();
+  const { profile } = useAuth();
   const navigate = useNavigate();
+  const userRole = profile?.role || 'visitor';
 
-  const urgentCount = actions.filter((a) => a.type === 'urgent').length;
-  const totalCount = actions.length;
+  // Filter actions based on user role
+  const filteredActions = actions.filter(action => {
+    const actionType = action.id.split('-')[0];
+    const allowedRoles = actionRoleFilters[actionType];
+    return allowedRoles ? allowedRoles.includes(userRole) : true;
+  });
+
+  const urgentCount = filteredActions.filter((a) => a.type === 'urgent').length;
+  const totalCount = filteredActions.length;
 
   if (totalCount === 0) return null;
 
@@ -245,7 +272,7 @@ export function SmartActionsCompact() {
     <button
       onClick={() => {
         // Navigate to first urgent action or first action
-        const firstAction = actions[0];
+        const firstAction = filteredActions[0];
         if (firstAction) navigate(firstAction.path);
       }}
       className={cn(

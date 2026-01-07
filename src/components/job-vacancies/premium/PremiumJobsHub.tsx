@@ -147,6 +147,9 @@ const PremiumJobsHub = () => {
   // Track if we've done an external search
   const [hasSearched, setHasSearched] = useState(false);
 
+  // Track refresh state
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   // Saved jobs hook
   const {
     savedJobs,
@@ -267,10 +270,15 @@ const PremiumJobsHub = () => {
     await searchExternalJobs(query, location);
   }, [searchExternalJobs]);
 
-  const handleRefresh = () => {
-    refetchEmployerJobs();
-    if (hasSearched && searchQuery) {
-      searchExternalJobs(searchQuery, searchLocation);
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    try {
+      await refetchEmployerJobs();
+      if (hasSearched && searchQuery) {
+        await searchExternalJobs(searchQuery, searchLocation);
+      }
+    } finally {
+      setIsRefreshing(false);
     }
   };
 

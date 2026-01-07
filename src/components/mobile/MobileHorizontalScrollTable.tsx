@@ -128,10 +128,10 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
 
   return (
     <div className="w-full">
-      {/* Table Container - No padding, edge-to-edge */}
+      {/* Table Container - Mobile optimized */}
       <div
         ref={scrollContainerRef}
-        className="w-full overflow-x-auto overflow-y-visible scrollbar-hide"
+        className="sot-mobile-wrapper"
         style={{
           WebkitOverflowScrolling: 'touch',
           scrollBehavior: 'smooth',
@@ -139,7 +139,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
           touchAction: 'pan-x',
         }}
       >
-        <Table className="relative border-collapse w-full">
+        <Table className="sot-mobile-table border-collapse">
           <MobileHorizontalScrollTableHeader 
             onFillAllRcdTestButton={handleFillAllRcdTestButton}
             onFillAllAfdd={handleFillAllAfdd}

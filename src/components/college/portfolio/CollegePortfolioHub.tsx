@@ -31,6 +31,7 @@ import PortfolioReviewQueue from './PortfolioReviewQueue';
 import SubmissionReviewPanel from './SubmissionReviewPanel';
 import IQASamplingPanel from './IQASamplingPanel';
 import EPAGatewayChecklist from './EPAGatewayChecklist';
+import StudentRequirementsPanel from './StudentRequirementsPanel';
 
 type ViewMode = 'list' | 'student-detail' | 'submission-review';
 
@@ -134,6 +135,7 @@ const CollegePortfolioHub: React.FC = () => {
           <Tabs defaultValue="coverage">
             <TabsList className="bg-white/5 border border-elec-gray/40">
               <TabsTrigger value="coverage">Coverage Matrix</TabsTrigger>
+              <TabsTrigger value="requirements">Requirements</TabsTrigger>
               <TabsTrigger value="gateway">EPA Gateway</TabsTrigger>
             </TabsList>
 
@@ -143,6 +145,13 @@ const CollegePortfolioHub: React.FC = () => {
                 ksbMappings={portfolioDetail.portfolioItems.flatMap(item => item.ksbMappings)}
                 studentName={portfolioDetail.studentName}
                 qualificationTitle={portfolioDetail.qualificationTitle}
+              />
+            </TabsContent>
+
+            <TabsContent value="requirements" className="mt-4">
+              <StudentRequirementsPanel
+                studentId={selectedStudent.id}
+                qualificationId={selectedStudent.qualificationId}
               />
             </TabsContent>
 

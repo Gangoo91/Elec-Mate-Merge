@@ -199,10 +199,10 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
             </div>
           </div>
         ) : (
-        <div className="bg-background shadow-sm border-2 border-border overflow-hidden">
-          <ScrollArea className="w-full h-[calc(100vh-140px)] enhanced-table-scroll" style={{ overscrollBehaviorX: 'contain' }}>
-            <div className="min-w-max enhanced-table-scroll">
-              <Table useWrapper={false} className="text-sm border-separate border-spacing-0 w-full">
+        <div className="sot-table-wrapper">
+          <ScrollArea className="w-full h-[calc(100vh-180px)]" style={{ overscrollBehaviorX: 'contain' }}>
+            <div className="min-w-max">
+              <Table useWrapper={false} className="text-sm border-collapse w-full">
                   <EnhancedTestResultDesktopTableHeader 
                     showRegulationStatus={showRegulationStatus}
                     collapsedGroups={collapsedGroups}

@@ -37,206 +37,184 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
   const isGroupCollapsed = (groupName: string) => collapsedGroups.has(groupName);
 
   return (
-    <TableHeader className="bg-primary/5">
+    <TableHeader>
       {/* Group Headers Row */}
-      <TableRow className="hover:bg-primary/5">
+      <TableRow className="sot-header-group hover:bg-transparent">
         {/* Circuit Number - Always visible */}
         <TableHead
           colSpan={1}
-          className="font-bold text-primary text-center bg-muted w-20 min-w-[80px] max-w-[80px]"
+          className="sot-header-group-cell w-20 min-w-[80px] max-w-[80px] bg-blue-500/10"
         >
-          Circuit #
+          <span className="text-elec-yellow font-bold">C#</span>
         </TableHead>
 
         <TableHead
           colSpan={4}
-          className="font-bold text-primary text-center bg-muted"
+          className="sot-header-group-cell bg-blue-500/5"
         >
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={() => onToggleGroup('circuit')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="sot-collapse-btn w-full justify-center"
           >
             {isGroupCollapsed('circuit') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             Circuit Details
-          </Button>
+          </button>
         </TableHead>
 
         <TableHead
           colSpan={2}
-          className="font-bold text-primary text-center bg-muted"
+          className="sot-header-group-cell bg-emerald-500/5"
         >
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={() => onToggleGroup('conductor')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="sot-collapse-btn w-full justify-center"
           >
             {isGroupCollapsed('conductor') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             Conductors
-          </Button>
+          </button>
         </TableHead>
 
         <TableHead
           colSpan={5}
-          className="font-bold text-primary text-center bg-muted"
+          className="sot-header-group-cell bg-orange-500/5"
         >
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={() => onToggleGroup('protection')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="sot-collapse-btn w-full justify-center"
           >
             {isGroupCollapsed('protection') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             Protective Device
-          </Button>
+          </button>
         </TableHead>
 
         <TableHead
           colSpan={4}
-          className="font-bold text-primary text-center bg-muted"
+          className="sot-header-group-cell bg-rose-500/5"
         >
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={() => onToggleGroup('rcdDetails')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="sot-collapse-btn w-full justify-center"
           >
             {isGroupCollapsed('rcdDetails') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             RCD Details
-          </Button>
+          </button>
         </TableHead>
 
-        <TableHead colSpan={5} className="bg-muted text-center font-bold text-xs h-10 px-2">
-          <div className="flex items-center justify-center gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => onToggleGroup('continuity')}
-              className="h-6 px-2 hover:bg-muted-foreground/20"
-            >
-              {collapsedGroups.has('continuity') ? <ChevronRight className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-            </Button>
-            <span>Continuity Tests</span>
-          </div>
+        <TableHead colSpan={5} className="sot-header-group-cell bg-violet-500/5">
+          <button
+            onClick={() => onToggleGroup('continuity')}
+            className="sot-collapse-btn w-full justify-center"
+          >
+            {collapsedGroups.has('continuity') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+            Continuity Tests
+          </button>
         </TableHead>
 
         <TableHead
           colSpan={3}
-          className="font-bold text-primary text-center bg-muted"
+          className="sot-header-group-cell bg-purple-500/5"
         >
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={() => onToggleGroup('insulation')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="sot-collapse-btn w-full justify-center"
           >
             {isGroupCollapsed('insulation') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
-            Insulation Resistance
-          </Button>
+            Insulation
+          </button>
         </TableHead>
 
         <TableHead
           colSpan={2}
-          className="font-bold text-primary text-center bg-muted"
+          className="sot-header-group-cell bg-amber-500/5"
         >
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={() => onToggleGroup('zs')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="sot-collapse-btn w-full justify-center"
           >
             {isGroupCollapsed('zs') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             Zs (Ω)
-          </Button>
+          </button>
         </TableHead>
 
         <TableHead
           colSpan={2}
-          className="font-bold text-primary text-center bg-muted"
+          className="sot-header-group-cell bg-indigo-500/5"
         >
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={() => onToggleGroup('rcd')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="sot-collapse-btn w-full justify-center"
           >
             {isGroupCollapsed('rcd') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             RCD Tests
-          </Button>
+          </button>
         </TableHead>
 
         <TableHead
           colSpan={1}
-          className="font-bold text-primary text-center bg-muted"
+          className="sot-header-group-cell bg-cyan-500/5"
         >
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={() => onToggleGroup('afdd')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="sot-collapse-btn w-full justify-center"
           >
             {isGroupCollapsed('afdd') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
             AFDD
-          </Button>
+          </button>
         </TableHead>
 
         <TableHead
           colSpan={1}
-          className="font-bold text-primary text-center bg-muted"
+          className="sot-header-group-cell bg-teal-500/5"
         >
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={() => onToggleGroup('functional')}
-            className="gap-1 h-6 px-2 w-full justify-center"
+            className="sot-collapse-btn w-full justify-center"
           >
             {isGroupCollapsed('functional') ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
-            Functional
-          </Button>
+            Func
+          </button>
         </TableHead>
 
-        <TableHead className="font-bold text-primary text-center bg-muted px-2">
-          Remarks
+        <TableHead className="sot-header-group-cell">
+          Notes
         </TableHead>
       </TableRow>
 
       {/* Individual Column Headers Row */}
-      <TableRow className="hover:bg-primary/5">
+      <TableRow className="sot-header-labels hover:bg-transparent">
         {/* Circuit Number - Always visible */}
-        <TableHead className="w-20 min-w-[80px] max-w-[80px] sticky left-0 z-40 font-semibold text-primary bg-blue-500/10 px-1 text-xs leading-tight text-center">
-          Circuit number
+        <TableHead className="sot-header-cell sot-sticky-col w-20 min-w-[80px] max-w-[80px]" data-group="circuit">
+          Circuit
         </TableHead>
 
         {/* Circuit Details */}
         {!isGroupCollapsed('circuit') && (
           <>
-            <TableHead className="min-w-[220px] max-w-[220px] sticky left-[80px] z-35 font-semibold text-primary bg-blue-500/10 px-1 text-xs leading-tight text-center">Circuit description</TableHead>
-            <TableHead className="min-w-[120px] max-w-[120px] font-semibold text-primary bg-blue-500/10 px-1 text-xs leading-tight break-words text-center">Type of wiring</TableHead>
-            <TableHead className="min-w-[100px] max-w-[100px] font-semibold text-primary bg-blue-500/10 px-1 text-xs leading-tight break-words text-center">Reference method</TableHead>
-            <TableHead className="w-16 min-w-[64px] max-w-[64px] font-semibold text-primary bg-blue-500/10 px-1 text-xs leading-tight text-center">No. of points</TableHead>
+            <TableHead className="sot-header-cell min-w-[200px] max-w-[200px] sticky left-[80px] z-35" data-group="circuit">Description</TableHead>
+            <TableHead className="sot-header-cell min-w-[110px] max-w-[110px]" data-group="circuit">Wiring Type</TableHead>
+            <TableHead className="sot-header-cell min-w-[90px] max-w-[90px]" data-group="circuit">Ref Method</TableHead>
+            <TableHead className="sot-header-cell w-16 min-w-[64px] max-w-[64px]" data-group="circuit">Points</TableHead>
           </>
         )}
 
         {/* Conductor Details */}
         {!isGroupCollapsed('conductor') && (
           <>
-            <TableHead className="w-28 min-w-[110px] max-w-[110px] font-semibold text-primary bg-green-500/10 px-1 text-xs leading-tight break-words text-center">Live (mm²)</TableHead>
-            <TableHead className="w-28 min-w-[110px] max-w-[110px] font-semibold text-primary bg-green-500/10 px-1 text-xs leading-tight break-words text-center">cpc (mm²)</TableHead>
+            <TableHead className="sot-header-cell w-24 min-w-[90px] max-w-[90px]" data-group="conductor">Live mm²</TableHead>
+            <TableHead className="sot-header-cell w-24 min-w-[90px] max-w-[90px]" data-group="conductor">CPC mm²</TableHead>
           </>
         )}
 
         {/* Protective Device */}
         {!isGroupCollapsed('protection') && (
           <>
-            <TableHead className="w-32 min-w-[120px] max-w-[120px] font-semibold text-primary bg-orange-500/10 px-1 text-xs leading-tight break-words text-center">BS (EN)</TableHead>
-            <TableHead className="w-24 min-w-[85px] max-w-[85px] font-semibold text-primary bg-orange-500/10 px-1 text-xs leading-tight text-center">Type</TableHead>
-            <TableHead className="w-24 min-w-[85px] max-w-[85px] font-semibold text-primary bg-orange-500/10 px-1 text-xs leading-tight break-words text-center">Rating (A)</TableHead>
-            <TableHead className="w-24 min-w-[90px] max-w-[90px] font-semibold text-primary bg-orange-500/10 px-1 text-xs leading-tight text-center">Breaking capacity (kA)</TableHead>
-            <TableHead className="w-28 min-w-[100px] max-w-[100px] font-semibold text-primary bg-orange-500/10 px-1 text-xs leading-tight break-words text-center">
-              <div className="flex items-center justify-center gap-1.5">
-                <span>Maximum permitted Zs (Ω)</span>
+            <TableHead className="sot-header-cell w-28 min-w-[110px] max-w-[110px]" data-group="protection">BS (EN)</TableHead>
+            <TableHead className="sot-header-cell w-20 min-w-[75px] max-w-[75px]" data-group="protection">Type</TableHead>
+            <TableHead className="sot-header-cell w-20 min-w-[75px] max-w-[75px]" data-group="protection">Rating A</TableHead>
+            <TableHead className="sot-header-cell w-20 min-w-[75px] max-w-[75px]" data-group="protection">kA</TableHead>
+            <TableHead className="sot-header-cell w-24 min-w-[90px] max-w-[90px]" data-group="protection">
+              <div className="flex items-center justify-center gap-1">
+                <span>Max Zs</span>
                 {onFillAllMaxZs && (
                   <Popover>
                     <PopoverTrigger asChild>
@@ -283,17 +261,14 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         {/* RCD Details */}
         {!isGroupCollapsed('rcdDetails') && (
           <>
-            <TableHead className="w-24 min-w-[85px] max-w-[85px] font-semibold text-primary bg-red-500/10 px-1 text-xs leading-tight break-words text-center">
-              <div className="flex items-center justify-center gap-1.5">
+            <TableHead className="sot-header-cell w-24 min-w-[85px] max-w-[85px]" data-group="rcd-details">
+              <div className="flex items-center justify-center gap-1">
                 <span>BS (EN)</span>
                 {onFillAllRcdBsStandard && (
                   <Popover open={rcdBsPopoverOpen} onOpenChange={setRcdBsPopoverOpen}>
                     <PopoverTrigger asChild>
-                      <button
-                        className="h-5 w-5 p-0 flex items-center justify-center rounded-full hover:bg-elec-yellow/20 text-elec-yellow hover:text-elec-yellow/80 transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-elec-yellow/50"
-                        title="Quick fill all RCD BS Standards"
-                      >
-                        <CheckCircle className="h-4 w-4" />
+                      <button className="sot-fill-all-btn" title="Quick fill all RCD BS Standards">
+                        <CheckCircle className="h-3.5 w-3.5" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
@@ -331,17 +306,14 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 )}
               </div>
             </TableHead>
-            <TableHead className="w-20 min-w-[70px] max-w-[70px] font-semibold text-primary bg-red-500/10 px-1 text-xs leading-tight text-center">
-              <div className="flex items-center justify-center gap-1.5">
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="rcd-details">
+              <div className="flex items-center justify-center gap-1">
                 <span>Type</span>
                 {onFillAllRcdType && (
                   <Popover open={rcdTypePopoverOpen} onOpenChange={setRcdTypePopoverOpen}>
                     <PopoverTrigger asChild>
-                      <button
-                        className="h-5 w-5 p-0 flex items-center justify-center rounded-full hover:bg-elec-yellow/20 text-elec-yellow hover:text-elec-yellow/80 transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-elec-yellow/50"
-                        title="Quick fill all RCD Types"
-                      >
-                        <CheckCircle className="h-4 w-4" />
+                      <button className="sot-fill-all-btn" title="Quick fill all RCD Types">
+                        <CheckCircle className="h-3.5 w-3.5" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
@@ -397,17 +369,14 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 )}
               </div>
             </TableHead>
-            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-semibold text-primary bg-red-500/10 px-1 text-xs leading-tight break-words text-center">
-              <div className="flex items-center justify-center gap-1.5">
-                <span>IΔn (mA)</span>
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="rcd-details">
+              <div className="flex items-center justify-center gap-1">
+                <span>mA</span>
                 {onFillAllRcdRating && (
                   <Popover open={rcdRatingPopoverOpen} onOpenChange={setRcdRatingPopoverOpen}>
                     <PopoverTrigger asChild>
-                      <button
-                        className="h-5 w-5 p-0 flex items-center justify-center rounded-full hover:bg-elec-yellow/20 text-elec-yellow hover:text-elec-yellow/80 transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-elec-yellow/50"
-                        title="Quick fill all RCD IΔn ratings"
-                      >
-                        <CheckCircle className="h-4 w-4" />
+                      <button className="sot-fill-all-btn" title="Quick fill all RCD IΔn ratings">
+                        <CheckCircle className="h-3.5 w-3.5" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
@@ -463,17 +432,14 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 )}
               </div>
             </TableHead>
-            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-semibold text-primary bg-red-500/10 px-1 text-xs leading-tight break-words text-center">
-              <div className="flex items-center justify-center gap-1.5">
-                <span>Rating (A)</span>
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="rcd-details">
+              <div className="flex items-center justify-center gap-1">
+                <span>A</span>
                 {onFillAllRcdRatingA && (
                   <Popover open={rcdRatingAPopoverOpen} onOpenChange={setRcdRatingAPopoverOpen}>
                     <PopoverTrigger asChild>
-                      <button
-                        className="h-5 w-5 p-0 flex items-center justify-center rounded-full hover:bg-elec-yellow/20 text-elec-yellow hover:text-elec-yellow/80 transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-elec-yellow/50"
-                        title="Quick fill all RCD current ratings"
-                      >
-                        <CheckCircle className="h-4 w-4" />
+                      <button className="sot-fill-all-btn" title="Quick fill all RCD current ratings">
+                        <CheckCircle className="h-3.5 w-3.5" />
                       </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
@@ -571,90 +537,78 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         {/* Continuity Tests */}
         {!isGroupCollapsed('continuity') && (
           <>
-            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-semibold text-primary bg-purple-500/10 px-1 text-xs leading-tight break-words text-center">r₁ (line) (Ω)</TableHead>
-            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-semibold text-primary bg-purple-500/10 px-1 text-xs leading-tight break-words text-center">rₙ (neutral)</TableHead>
-            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-semibold text-primary bg-purple-500/10 px-1 text-xs leading-tight break-words text-center">r₂ (cpc)</TableHead>
-            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-semibold text-primary bg-purple-500/10 px-1 text-xs leading-tight break-words text-center">(R₁ + R₂)</TableHead>
-            <TableHead className="w-20 min-w-[75px] max-w-[75px] font-semibold text-primary bg-purple-500/10 px-1 text-xs leading-tight break-words text-center">R₂</TableHead>
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="continuity">r₁</TableHead>
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="continuity">rₙ</TableHead>
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="continuity">r₂</TableHead>
+            <TableHead className="sot-header-cell w-16 min-w-[65px] max-w-[65px]" data-group="continuity">R₁+R₂</TableHead>
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="continuity">R₂</TableHead>
           </>
         )}
-        
+
         {/* Insulation Tests */}
         {!isGroupCollapsed('insulation') && (
           <>
-            <TableHead className="w-20 min-w-[80px] max-w-[80px] font-semibold text-primary bg-purple-500/10 px-1 text-center text-xs leading-tight break-words">Test voltage (V)</TableHead>
-            <TableHead className="w-20 min-w-[80px] max-w-[80px] font-semibold text-primary bg-purple-500/10 px-1 text-center text-xs leading-tight break-words">Live - Live (MΩ)</TableHead>
-            <TableHead className="w-20 min-w-[80px] max-w-[80px] font-semibold text-primary bg-purple-500/10 px-1 text-center text-xs leading-tight break-words">Live - Earth (MΩ)</TableHead>
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="insulation">V</TableHead>
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="insulation">L-L</TableHead>
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="insulation">L-E</TableHead>
           </>
         )}
-        
+
         {/* Zs (Ω) Tests */}
         {!isGroupCollapsed('zs') && (
           <>
-            <TableHead className="w-24 min-w-[90px] max-w-[90px] font-semibold text-primary bg-yellow-500/10 px-1 text-center text-xs leading-tight break-words">Polarity</TableHead>
-            <TableHead className="w-24 min-w-[85px] max-w-[85px] font-semibold text-primary bg-yellow-500/10 px-1 text-center text-xs leading-tight break-words">Maximum measured</TableHead>
+            <TableHead className="sot-header-cell w-20 min-w-[70px] max-w-[70px]" data-group="zs">Polarity</TableHead>
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="zs">Zs</TableHead>
           </>
         )}
-        
+
         {/* RCD Tests */}
         {!isGroupCollapsed('rcd') && (
           <>
-            <TableHead className="w-20 min-w-[80px] max-w-[80px] font-semibold text-primary bg-indigo-500/10 px-1 text-center text-xs leading-tight break-words">Disconnection time (ms)</TableHead>
-            <TableHead className="w-24 min-w-[90px] max-w-[90px] font-semibold text-primary bg-indigo-500/10 px-1 text-center text-xs leading-tight">
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="rcd-tests">ms</TableHead>
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="rcd-tests">
               <div className="flex items-center justify-center gap-1">
-                <span className="break-words">Test button operation</span>
+                <span>Btn</span>
                 {onFillAllRcdTestButton && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={onFillAllRcdTestButton}
-                    className="h-6 w-6 p-0 hover:bg-green-500/20 text-green-600 hover:text-green-700 transition-all hover:scale-110"
-                    title="Fill all circuits with Pass"
-                  >
-                    <CheckCircle className="h-4 w-4 transition-all" />
-                  </Button>
+                  <button onClick={onFillAllRcdTestButton} className="sot-fill-all-btn text-green-500" title="Fill all with Pass">
+                    <CheckCircle className="h-3.5 w-3.5" />
+                  </button>
                 )}
               </div>
             </TableHead>
           </>
         )}
-        
+
         {/* AFDD Test */}
         {!isGroupCollapsed('afdd') && (
-          <TableHead className="min-w-[100px] max-w-fit font-semibold text-primary bg-indigo-500/10 px-1 text-center text-xs leading-tight">
+          <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="afdd">
             <div className="flex items-center justify-center gap-1">
-              <span className="break-words">Manual test button operation</span>
+              <span>Test</span>
               {onFillAllAfdd && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={onFillAllAfdd}
-                  className="h-6 w-6 p-0 hover:bg-green-500/20 text-green-600 hover:text-green-700 flex-shrink-0 transition-all hover:scale-110"
-                  title="Fill all circuits with Pass"
-                >
-                  <CheckCircle className="h-4 w-4 transition-all" />
-                </Button>
+                <button onClick={onFillAllAfdd} className="sot-fill-all-btn text-green-500" title="Fill all with Pass">
+                  <CheckCircle className="h-3.5 w-3.5" />
+                </button>
               )}
             </div>
           </TableHead>
         )}
-        
+
         {/* Functional */}
         {!isGroupCollapsed('functional') && (
-          <TableHead className="min-w-[100px] max-w-fit font-semibold text-primary bg-cyan-500/10 px-1 text-center text-xs leading-tight break-words">Functional</TableHead>
+          <TableHead className="sot-header-cell w-16 min-w-[70px] max-w-[70px]" data-group="functional">Func</TableHead>
         )}
-        
+
         {/* Remarks Column */}
-        <TableHead className="min-w-[100px] max-w-fit font-semibold text-primary bg-muted/30 px-1 text-xs leading-tight text-center">Remarks</TableHead>
-        
+        <TableHead className="sot-header-cell min-w-[80px]">Notes</TableHead>
+
         {/* Regulation Status Column */}
         {showRegulationStatus && (
-          <TableHead className="min-w-[100px] max-w-fit font-semibold text-primary bg-muted/30 px-2 text-xs leading-tight break-words text-center">BS 7671</TableHead>
+          <TableHead className="sot-header-cell min-w-[80px]">BS 7671</TableHead>
         )}
 
         {/* Actions Column */}
-        <TableHead className="min-w-[80px] w-[80px] bg-primary/5 font-semibold text-primary px-2 text-center text-xs leading-tight">
-          Actions
+        <TableHead className="sot-header-cell min-w-[60px] w-[60px]">
+          Del
         </TableHead>
       </TableRow>
     </TableHeader>

@@ -1,8 +1,10 @@
-import { ArrowLeft, ArrowRight, Clock, BookOpen, AlertTriangle, Lightbulb, Zap, TestTube2, CircuitBoard, CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Link } from "react-router-dom";
+import { Clock, BookOpen, AlertTriangle, Lightbulb, Zap, TestTube2, CircuitBoard, CheckCircle } from "lucide-react";
+import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
+import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
+import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
+import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
+import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
+import { AM2LearningOutcomes } from "@/components/apprentice-courses/AM2LearningOutcomes";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import useSEO from "@/hooks/useSEO";
@@ -37,7 +39,7 @@ const AM2Module3Section3 = () => {
       question: "What cable is typically used for two-way strapper connections?",
       options: [
         "Single core cable",
-        "Twin & earth cable", 
+        "Twin & earth cable",
         "Three-core and earth cable",
         "Two separate single cables"
       ],
@@ -109,9 +111,9 @@ const AM2Module3Section3 = () => {
     {
       id: 7,
       question: "What is the minimum insulation resistance required for lighting circuits?",
-      options: ["0.5MΩ", "1MΩ", "2MΩ", "5MΩ"],
+      options: ["0.5MO", "1MO", "2MO", "5MO"],
       correctAnswer: 1,
-      explanation: "BS7671 requires a minimum insulation resistance of 1MΩ between live conductors when tested at 500V DC for low voltage circuits."
+      explanation: "BS7671 requires a minimum insulation resistance of 1MO between live conductors when tested at 500V DC for low voltage circuits."
     },
     {
       id: 8,
@@ -123,14 +125,14 @@ const AM2Module3Section3 = () => {
         "It isolates the earth connection"
       ],
       correctAnswer: 1,
-      explanation: "When operated, the intermediate switch crosses its internal connections (1→4, 2→3 instead of 1→3, 2→4), changing the circuit state."
+      explanation: "When operated, the intermediate switch crosses its internal connections (1-4, 2-3 instead of 1-3, 2-4), changing the circuit state."
     },
     {
       id: 9,
       question: "What is the most common cause of two-way switching circuits not working properly?",
       options: [
         "Wrong cable size used",
-        "MCB rating too high", 
+        "MCB rating too high",
         "Strappers connected to wrong terminals",
         "Neutral wire broken"
       ],
@@ -151,607 +153,565 @@ const AM2Module3Section3 = () => {
     }
   ];
 
+  const learningOutcomes = [
+    "Install one-way, two-way, and intermediate lighting circuits as per AM2 drawings and specifications",
+    "Correctly identify and terminate all conductors with appropriate sleeving",
+    "Wire switches and ceiling roses with professional workmanship standards",
+    "Carry out required electrical tests before energisation according to NET standards",
+    "Understand common candidate errors and how to avoid them",
+    "Demonstrate safe working practices and systematic fault-finding techniques"
+  ];
+
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 3
-            </Link>
-          </Button>
-        </div>
-      </div>
+    <AM2SectionLayout
+      backHref=".."
+      breadcrumbs={[
+        { label: "AM2", href: "/apprentice-courses/am2" },
+        { label: "Module 3", href: "/apprentice-courses/am2/module3" },
+        { label: "Section 3" }
+      ]}
+    >
+      {/* Hero Section */}
+      <AM2HeroSection
+        icon={Lightbulb}
+        title="Lighting Circuits - One-Way, Two-Way, Intermediate"
+        description="Master lighting circuit installation for AM2 assessment - one-way, two-way, and intermediate switching with professional workmanship standards."
+        badge="Module 3 - Section 3"
+      />
 
-      {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-6 py-12 space-y-8">
-        {/* Title Section */}
-        <div className="mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
-            <Lightbulb className="w-4 h-4" />
-            Module 3 – Section 3
-          </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Lighting Circuits – One-Way, Two-Way, Intermediate
-          </h1>
-          <p className="text-base text-white mb-8 leading-relaxed">
-            Master lighting circuit installation for AM2 assessment - one-way, two-way, and intermediate switching with professional workmanship standards.
-          </p>
-        </div>
+      {/* Critical Warning */}
+      <AM2CriticalWarning
+        title="CRITICAL: Lighting Circuits Foundation for AM2 Success"
+        message="Lighting circuits are fundamental to AM2 assessment. While they may seem simpler than power circuits, candidates frequently lose marks on conductor identification, poor workmanship, and incorrect switching arrangements. The assessor will check every connection, termination, and test result. Rushed work or poor understanding of switching principles leads to failure. Master the basics here - they're the foundation for everything else."
+      />
 
-        {/* Critical Warning */}
-        <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-8">
-          <div className="p-6">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">
-                  CRITICAL: Lighting Circuits Foundation for AM2 Success
-                </h3>
-                <p className="text-sm text-red-700 dark:text-elec-yellow mb-3">
-                  Lighting circuits are fundamental to AM2 assessment. While they may seem simpler than power circuits, candidates frequently lose marks on conductor identification, poor workmanship, and incorrect switching arrangements. The assessor will check every connection, termination, and test result.
-                </p>
-                <p className="text-sm text-red-700 dark:text-elec-yellow font-medium">
-                  Rushed work or poor understanding of switching principles leads to failure. Master the basics here - they're the foundation for everything else.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Card>
+      {/* Learning Outcomes */}
+      <AM2LearningOutcomes outcomes={learningOutcomes} />
 
-        {/* Learning Outcomes */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <CheckCircle className="w-5 h-5" />
-              Learning Outcomes
-            </h2>
-            <p className="text-sm text-white mb-4">
-              By the end of this section, you should be able to:
-            </p>
-            <ul className="space-y-2 text-xs sm:text-sm text-white">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Install one-way, two-way, and intermediate lighting circuits as per AM2 drawings and specifications
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Correctly identify and terminate all conductors with appropriate sleeving
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Wire switches and ceiling roses with professional workmanship standards
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Carry out required electrical tests before energisation according to NET standards
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Understand common candidate errors and how to avoid them
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Demonstrate safe working practices and systematic fault-finding techniques
-              </li>
-            </ul>
-          </div>
-        </Card>
-
-        {/* One-Way Switching */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Lightbulb className="w-5 h-5" />
-              1. One-Way Switching - Complete Installation Guide
-            </h2>
-            
-
-            {/* Detailed Step-by-Step Installation */}
-            <div>
-              <h3 className="font-medium text-white mb-3">Detailed Installation Steps</h3>
-              <div className="space-y-4">
-                <div className="border border-white/10 rounded-lg p-4">
-                  <h4 className="font-medium text-elec-yellow mb-2">Phase 1: Cable Installation & Preparation</h4>
-                  <ol className="space-y-2 text-sm text-white">
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
-                      <div>
-                        <strong>Route cable from consumer unit to switch position</strong>
-                        <p className="text-xs mt-1">Use 1.5mm² twin & earth cable. Ensure adequate support every 300mm horizontally, 400mm vertically. Cable must be mechanically protected where required.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
-                      <div>
-                        <strong>Continue cable from switch to ceiling rose</strong>
-                        <p className="text-xs mt-1">Maintain cable integrity. No joints in inaccessible areas. Use proper cable entry methods into back boxes and ceiling roses.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
-                      <div>
-                        <strong>Strip cable ends - Switch: 15mm, Ceiling rose: 20mm</strong>
-                        <p className="text-xs mt-1">Use proper cable strippers. No damage to conductor cores. Remove exactly the right amount of sheath - too much exposes cable, too little prevents proper termination.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
-                      <div>
-                        <strong>Apply green/yellow sleeving to CPC at both ends</strong>
-                        <p className="text-xs mt-1">Sleeving must cover all exposed copper CPC. Ensure sleeving doesn't interfere with terminations.</p>
-                      </div>
-                    </li>
-                  </ol>
-                </div>
-
-                <div className="border border-white/10 rounded-lg p-4">
-                  <h4 className="font-medium text-elec-yellow mb-2">Phase 2: Switch Connections</h4>
-                  <ol className="space-y-2 text-sm text-white" start={5}>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
-                      <div>
-                        <strong>Connect live feed (brown) to COM terminal</strong>
-                        <p className="text-xs mt-1">This is the permanent live from the consumer unit. Ensure tight connection with no exposed copper outside terminal.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">6.</span>
-                      <div>
-                        <strong>Connect switched live (brown) to L1 terminal</strong>
-                        <p className="text-xs mt-1">This feeds the light fitting when switch is closed. Apply brown identification sleeve if using different coloured conductor.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">7.</span>
-                      <div>
-                        <strong>Secure neutral and CPC in back box connector block</strong>
-                        <p className="text-xs mt-1">Neutral and CPC bypass the switch. Use proper connector block rated for the application. No joints in switch back box if possible.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">8.</span>
-                      <div>
-                        <strong>Secure switch to back box with correct screws</strong>
-                        <p className="text-xs mt-1">Switch must be level and flush. Cable must not be trapped. Ensure switch operates smoothly.</p>
-                      </div>
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-
-            {/* Common Mistakes */}
-            <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4 mt-6">
-              <h3 className="font-medium text-red-800 dark:text-red-200 mb-2">Common Installation Errors</h3>
-              <ul className="space-y-1 text-sm text-red-700 dark:text-elec-yellow">
-                <li>❌ <strong>Switching neutral instead of live</strong> - Creates dangerous live circuit when "off"</li>
-                <li>❌ <strong>Poor conductor identification</strong> - Confusion during testing and future maintenance</li>
-                <li>❌ <strong>Loose terminations</strong> - Arcing, overheating, fire risk</li>
-                <li>❌ <strong>Exposed copper at terminals</strong> - Risk of short circuit and electrocution</li>
-                <li>❌ <strong>CPC not sleeved</strong> - Identification failure, doesn't meet BS7671</li>
-                <li>❌ <strong>Cable damaged during installation</strong> - Insulation resistance failure</li>
-              </ul>
-            </div>
-            
-            <div className="bg-transparent border border-elec-yellow/20 rounded-lg p-4 mt-6">
-              <p className="text-sm text-white">
-                <strong>Key Point:</strong> In one-way switching, only the live conductor is switched. The neutral must go directly to the fitting, not through the switch terminals.
-              </p>
-            </div>
-          </div>
-        </Card>
-
-        <InlineCheck 
-          id={quickCheckQuestions[0].id}
-          question={quickCheckQuestions[0].question}
-          options={quickCheckQuestions[0].options}
-          correctIndex={quickCheckQuestions[0].correctIndex}
-          explanation={quickCheckQuestions[0].explanation}
-        />
-
-        {/* Two-Way Switching */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Zap className="w-5 h-5" />
-              2. Two-Way Switching - Complete Installation Guide
-            </h2>
-            
-
-            {/* Detailed Installation Steps */}
-            <div>
-              <h3 className="font-medium text-white mb-3">Complete Installation Process</h3>
-              <div className="space-y-4">
-                <div className="border border-white/10 rounded-lg p-4">
-                  <h4 className="font-medium text-elec-yellow mb-2">Phase 1: Cable Installation & Planning</h4>
-                  <ol className="space-y-2 text-sm text-white">
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
-                      <div>
-                        <strong>Install 1.5mm² T&E from consumer unit to Switch 1 position</strong>
-                        <p className="text-xs mt-1">This carries the permanent live feed. Ensure proper cable support and protection throughout run.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
-                      <div>
-                        <strong>Install 1.5mm² 3-core & earth from Switch 1 to Switch 2</strong>
-                        <p className="text-xs mt-1">Critical cable - carries the two strappers. Plan route carefully to avoid damage. This cable enables the two-way switching function.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
-                      <div>
-                        <strong>Install 1.5mm² T&E from Switch 2 to light fitting</strong>
-                        <p className="text-xs mt-1">Carries switched live to fitting. Neutral continues from Switch 1 position through connector blocks.</p>
-                      </div>
-                    </li>
-                  </ol>
-                </div>
-
-                <div className="border border-white/10 rounded-lg p-4">
-                  <h4 className="font-medium text-elec-yellow mb-2">Phase 2: Switch 1 Connections (Feed Point)</h4>
-                  <ol className="space-y-2 text-sm text-white" start={4}>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
-                      <div>
-                        <strong>Connect permanent live (brown) to COM terminal</strong>
-                        <p className="text-xs mt-1">This is the live feed from the consumer unit. Ensure maximum contact area and tight connection.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
-                      <div>
-                        <strong>Connect first strapper to L1 terminal</strong>
-                        <p className="text-xs mt-1">Use brown-sleeved conductor from 3-core cable. This will connect to L1 on Switch 2.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">6.</span>
-                      <div>
-                        <strong>Connect second strapper to L2 terminal</strong>
-                        <p className="text-xs mt-1">Use black-sleeved conductor from 3-core cable. This will connect to L2 on Switch 2.</p>
-                      </div>
-                    </li>
-                  </ol>
-                </div>
-
-                <div className="border border-white/10 rounded-lg p-4">
-                  <h4 className="font-medium text-elec-yellow mb-2">Phase 3: Switch 2 Connections (Load Point)</h4>
-                  <ol className="space-y-2 text-sm text-white" start={7}>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">7.</span>
-                      <div>
-                        <strong>Connect switched live (to light) to COM terminal</strong>
-                        <p className="text-xs mt-1">This feeds the light fitting. When either switch position allows continuity through strappers, light will operate.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">8.</span>
-                      <div>
-                        <strong>Connect first strapper from Switch 1 to L1</strong>
-                        <p className="text-xs mt-1">Match the conductor sleeving - brown to brown, maintaining consistent identification.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">9.</span>
-                      <div>
-                        <strong>Connect second strapper from Switch 1 to L2</strong>
-                        <p className="text-xs mt-1">Match the conductor sleeving - black to black. These connections complete the strapper circuit.</p>
-                      </div>
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-
-            {/* Critical Errors */}
-            <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4 mt-6">
-              <h3 className="font-medium text-red-800 dark:text-red-200 mb-2">Critical Two-Way Switching Errors</h3>
-              <ul className="space-y-1 text-sm text-red-700 dark:text-elec-yellow">
-                <li>❌ <strong>Incorrect strapper connections</strong> - Light operates from one switch only</li>
-                <li>❌ <strong>Using wrong cable types</strong> - Twin & earth instead of 3-core between switches</li>
-                <li>❌ <strong>Poor conductor identification</strong> - Confusion about which strapper is which</li>
-                <li>❌ <strong>Neutral through switch terminals</strong> - Dangerous and incorrect practice</li>
-                <li>❌ <strong>CPC not continuous</strong> - Safety regulation failure</li>
-                <li>❌ <strong>Mixed up COM terminals</strong> - Circuit completely non-functional</li>
-              </ul>
-            </div>
-            
-            <div className="bg-transparent border border-amber-500/20 rounded-lg p-4 mt-6">
-              <p className="text-sm text-white">
-                <strong>Common Error:</strong> Swapping L1 and L2 connections means one switch position won't work. Always check both switches operate the light in both positions.
-              </p>
-            </div>
-          </div>
-        </Card>
-
-        <InlineCheck 
-          id={quickCheckQuestions[1].id}
-          question={quickCheckQuestions[1].question}
-          options={quickCheckQuestions[1].options}
-          correctIndex={quickCheckQuestions[1].correctIndex}
-          explanation={quickCheckQuestions[1].explanation}
-        />
-
-        {/* Intermediate Switching */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <CircuitBoard className="w-5 h-5" />
-              3. Intermediate Switching - Complete Installation Guide
-            </h2>
-
-
-            {/* Detailed Installation Steps */}
-            <div>
-              <h3 className="font-medium text-white mb-3">Complete Installation Process</h3>
-              <div className="space-y-4">
-                <div className="border border-white/10 rounded-lg p-4">
-                  <h4 className="font-medium text-elec-yellow mb-2">Phase 1: Circuit Planning</h4>
-                  <ol className="space-y-2 text-sm text-white">
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
-                      <div>
-                        <strong>Install first two-way switch exactly as in two-way switching</strong>
-                        <p className="text-xs mt-1">This receives the live feed and sends out the two strappers. Install and wire completely before adding intermediate.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
-                      <div>
-                        <strong>Run 3-core & earth from first two-way to intermediate switch</strong>
-                        <p className="text-xs mt-1">Carries the two strappers from first switch. Plan cable route to avoid damage.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
-                      <div>
-                        <strong>Run 3-core & earth from intermediate to final two-way switch</strong>
-                        <p className="text-xs mt-1">Carries modified strapper signals to final switch. Multiple intermediates can be chained.</p>
-                      </div>
-                    </li>
-                  </ol>
-                </div>
-
-                <div className="border border-white/10 rounded-lg p-4">
-                  <h4 className="font-medium text-elec-yellow mb-2">Phase 2: Intermediate Switch Connections</h4>
-                  <ol className="space-y-2 text-sm text-white" start={4}>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
-                      <div>
-                        <strong>Connect first strapper from Switch 1 to Terminal 1</strong>
-                        <p className="text-xs mt-1">Input from L1 of first two-way switch. Maintains brown identification sleeving.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
-                      <div>
-                        <strong>Connect second strapper from Switch 1 to Terminal 2</strong>
-                        <p className="text-xs mt-1">Input from L2 of first two-way switch. Maintains black identification sleeving.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">6.</span>
-                      <div>
-                        <strong>Connect first strapper to Switch 2 from Terminal 3</strong>
-                        <p className="text-xs mt-1">Output to L1 of final two-way switch. Apply appropriate identification sleeving.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">7.</span>
-                      <div>
-                        <strong>Connect second strapper to Switch 2 from Terminal 4</strong>
-                        <p className="text-xs mt-1">Output to L2 of final two-way switch. Complete strapper circuit through intermediate.</p>
-                      </div>
-                    </li>
-                  </ol>
-                </div>
-
-                <div className="border border-white/10 rounded-lg p-4">
-                  <h4 className="font-medium text-elec-yellow mb-2">Phase 3: Final Two-Way Switch</h4>
-                  <ol className="space-y-2 text-sm text-white" start={8}>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">8.</span>
-                      <div>
-                        <strong>Wire final two-way switch COM to light fitting</strong>
-                        <p className="text-xs mt-1">This provides the switched live output when circuit continuity is established.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">9.</span>
-                      <div>
-                        <strong>Connect L1 and L2 to strappers from intermediate</strong>
-                        <p className="text-xs mt-1">Complete the switching circuit. Maintain consistent conductor identification throughout.</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="font-medium text-elec-yellow min-w-[20px]">10.</span>
-                      <div>
-                        <strong>Ensure neutral and CPC continuity throughout circuit</strong>
-                        <p className="text-xs mt-1">These bypass all switches and must maintain continuity from source to light fitting.</p>
-                      </div>
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-
-            {/* How It Works */}
-            <div className="bg-[#1a1a1a]/50 p-4 rounded-lg mt-6">
-              <h3 className="font-medium text-white mb-3">How Intermediate Switching Works</h3>
-              <div className="space-y-3 text-sm text-white">
-                <p>
-                  <strong>Internal Crossing:</strong> The intermediate switch internally crosses its connections when operated. This allows it to "reverse" the strapper signals between the two-way switches.
-                </p>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="font-medium text-elec-yellow text-xs mb-2">Normal Position</h4>
-                    <p className="text-xs">Terminal 1 → Terminal 3, Terminal 2 → Terminal 4. Strappers pass through unchanged.</p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-elec-yellow text-xs mb-2">Operated Position</h4>
-                    <p className="text-xs">Terminal 1 → Terminal 4, Terminal 2 → Terminal 3. Strappers are crossed, changing circuit state.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Critical Points */}
-            <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg p-4 mt-6">
-              <h3 className="font-medium text-red-800 dark:text-red-200 mb-2">Critical Installation Points</h3>
-              <ul className="space-y-1 text-sm text-red-700 dark:text-elec-yellow">
-                <li>❌ <strong>Wrong terminal connections</strong> - Circuit won't work from all positions</li>
-                <li>❌ <strong>Poor strapper identification</strong> - Impossible to trace faults</li>
-                <li>❌ <strong>Using 4-core cable</strong> - Not required, wastes conductor</li>
-                <li>❌ <strong>Neutral through intermediate</strong> - Bypass all switches completely</li>
-                <li>❌ <strong>Inconsistent sleeving</strong> - Testing and maintenance difficulties</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        <InlineCheck 
-          id={quickCheckQuestions[2].id}
-          question={quickCheckQuestions[2].question}
-          options={quickCheckQuestions[2].options}
-          correctIndex={quickCheckQuestions[2].correctIndex}
-          explanation={quickCheckQuestions[2].explanation}
-        />
-
-        {/* Testing Requirements */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <TestTube2 className="w-5 h-5" />
-              Testing and Verification
-            </h2>
-            
+      {/* One-Way Switching */}
+      <AM2ContentCard
+        title="1. One-Way Switching - Complete Installation Guide"
+        icon={Lightbulb}
+        accent
+      >
+        <div className="space-y-6 text-xs sm:text-sm text-white/80">
+          {/* Detailed Step-by-Step Installation */}
+          <div>
+            <h3 className="font-medium text-white/90 mb-3">Detailed Installation Steps</h3>
             <div className="space-y-4">
-              <div>
-                <h3 className="font-medium text-white mb-2">Required Tests Before Energisation</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-[#1a1a1a]/50 p-4 rounded-lg">
-                    <h4 className="font-medium text-elec-yellow mb-2">Continuity Tests</h4>
-                    <ul className="space-y-1 text-sm text-white">
-                      <li>• Protective conductor continuity</li>
-                      <li>• Ring final circuit continuity (if applicable)</li>
-                      <li>• Switched live continuity in all switch positions</li>
-                      <li>• Neutral conductor continuity</li>
-                    </ul>
-                  </div>
-                  <div className="bg-[#1a1a1a]/50 p-4 rounded-lg">
-                    <h4 className="font-medium text-elec-yellow mb-2">Other Required Tests</h4>
-                    <ul className="space-y-1 text-sm text-white">
-                      <li>• Insulation resistance (≥1MΩ)</li>
-                      <li>• Polarity at all relevant points</li>
-                      <li>• Earth fault loop impedance</li>
-                      <li>• RCD operation (if applicable)</li>
-                    </ul>
-                  </div>
-                </div>
+              <div className="border border-white/10 rounded-lg p-4">
+                <h4 className="font-medium text-elec-yellow mb-2">Phase 1: Cable Installation & Preparation</h4>
+                <ol className="space-y-2 text-sm text-white/80">
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
+                    <div>
+                      <strong className="text-white/90">Route cable from consumer unit to switch position</strong>
+                      <p className="text-xs mt-1 text-white/70">Use 1.5mm² twin & earth cable. Ensure adequate support every 300mm horizontally, 400mm vertically. Cable must be mechanically protected where required.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
+                    <div>
+                      <strong className="text-white/90">Continue cable from switch to ceiling rose</strong>
+                      <p className="text-xs mt-1 text-white/70">Maintain cable integrity. No joints in inaccessible areas. Use proper cable entry methods into back boxes and ceiling roses.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
+                    <div>
+                      <strong className="text-white/90">Strip cable ends - Switch: 15mm, Ceiling rose: 20mm</strong>
+                      <p className="text-xs mt-1 text-white/70">Use proper cable strippers. No damage to conductor cores. Remove exactly the right amount of sheath - too much exposes cable, too little prevents proper termination.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
+                    <div>
+                      <strong className="text-white/90">Apply green/yellow sleeving to CPC at both ends</strong>
+                      <p className="text-xs mt-1 text-white/70">Sleeving must cover all exposed copper CPC. Ensure sleeving doesn't interfere with terminations.</p>
+                    </div>
+                  </li>
+                </ol>
               </div>
 
-              <div className="bg-transparent border border-amber-500/20 rounded-lg p-4">
-                <h3 className="font-medium text-amber-800 dark:text-amber-200 mb-2">Testing Sequence for Lighting Circuits</h3>
-                <ol className="space-y-1 text-sm text-amber-700 dark:text-amber-300">
-                  <li>1. Visual inspection - Check all connections, sleeving, mechanical security</li>
-                  <li>2. Continuity of protective conductors</li>
-                  <li>3. Continuity of ring final circuit conductors (if applicable)</li>
-                  <li>4. Insulation resistance between conductors</li>
-                  <li>5. Polarity testing - Ensure switch breaks live, not neutral</li>
-                  <li>6. Earth fault loop impedance (after energisation)</li>
-                  <li>7. Functional testing - All switches operate light correctly</li>
+              <div className="border border-white/10 rounded-lg p-4">
+                <h4 className="font-medium text-elec-yellow mb-2">Phase 2: Switch Connections</h4>
+                <ol className="space-y-2 text-sm text-white/80" start={5}>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
+                    <div>
+                      <strong className="text-white/90">Connect live feed (brown) to COM terminal</strong>
+                      <p className="text-xs mt-1 text-white/70">This is the permanent live from the consumer unit. Ensure tight connection with no exposed copper outside terminal.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">6.</span>
+                    <div>
+                      <strong className="text-white/90">Connect switched live (brown) to L1 terminal</strong>
+                      <p className="text-xs mt-1 text-white/70">This feeds the light fitting when switch is closed. Apply brown identification sleeve if using different coloured conductor.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">7.</span>
+                    <div>
+                      <strong className="text-white/90">Secure neutral and CPC in back box connector block</strong>
+                      <p className="text-xs mt-1 text-white/70">Neutral and CPC bypass the switch. Use proper connector block rated for the application. No joints in switch back box if possible.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">8.</span>
+                    <div>
+                      <strong className="text-white/90">Secure switch to back box with correct screws</strong>
+                      <p className="text-xs mt-1 text-white/70">Switch must be level and flush. Cable must not be trapped. Ensure switch operates smoothly.</p>
+                    </div>
+                  </li>
                 </ol>
               </div>
             </div>
           </div>
-        </Card>
 
-        {/* Assessment Tips */}
-        <Card className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700/50 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-green-700 dark:text-green-300 mb-4 flex items-center gap-2">
-              <CheckCircle className="w-5 h-5" />
-              AM2 Assessment Tips
-            </h2>
-            
+          {/* Common Mistakes */}
+          <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
+            <h3 className="font-medium text-red-400 mb-2">Common Installation Errors</h3>
+            <ul className="space-y-1 text-sm text-white/80">
+              <li><strong className="text-red-400">Switching neutral instead of live</strong> - Creates dangerous live circuit when "off"</li>
+              <li><strong className="text-red-400">Poor conductor identification</strong> - Confusion during testing and future maintenance</li>
+              <li><strong className="text-red-400">Loose terminations</strong> - Arcing, overheating, fire risk</li>
+              <li><strong className="text-red-400">Exposed copper at terminals</strong> - Risk of short circuit and electrocution</li>
+              <li><strong className="text-red-400">CPC not sleeved</strong> - Identification failure, doesn't meet BS7671</li>
+              <li><strong className="text-red-400">Cable damaged during installation</strong> - Insulation resistance failure</li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
+            <p className="text-sm text-white/80">
+              <strong className="text-elec-yellow">Key Point:</strong> In one-way switching, only the live conductor is switched. The neutral must go directly to the fitting, not through the switch terminals.
+            </p>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck {...quickCheckQuestions[0]} />
+
+      {/* Two-Way Switching */}
+      <AM2ContentCard
+        title="2. Two-Way Switching - Complete Installation Guide"
+        icon={Zap}
+      >
+        <div className="space-y-6 text-xs sm:text-sm text-white/80">
+          {/* Detailed Installation Steps */}
+          <div>
+            <h3 className="font-medium text-white/90 mb-3">Complete Installation Process</h3>
             <div className="space-y-4">
-              <div>
-                <h3 className="font-medium text-green-700 dark:text-green-300 mb-2">Time Management</h3>
-                <ul className="space-y-1 text-sm text-green-600 dark:text-green-400">
-                  <li>• Plan cable routes before starting installation</li>
-                  <li>• Prepare all cable ends together to save time</li>
-                  <li>• Apply sleeving systematically to avoid confusion</li>
-                  <li>• Test each section as you complete it</li>
-                </ul>
+              <div className="border border-white/10 rounded-lg p-4">
+                <h4 className="font-medium text-elec-yellow mb-2">Phase 1: Cable Installation & Planning</h4>
+                <ol className="space-y-2 text-sm text-white/80">
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
+                    <div>
+                      <strong className="text-white/90">Install 1.5mm² T&E from consumer unit to Switch 1 position</strong>
+                      <p className="text-xs mt-1 text-white/70">This carries the permanent live feed. Ensure proper cable support and protection throughout run.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
+                    <div>
+                      <strong className="text-white/90">Install 1.5mm² 3-core & earth from Switch 1 to Switch 2</strong>
+                      <p className="text-xs mt-1 text-white/70">Critical cable - carries the two strappers. Plan route carefully to avoid damage. This cable enables the two-way switching function.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
+                    <div>
+                      <strong className="text-white/90">Install 1.5mm² T&E from Switch 2 to light fitting</strong>
+                      <p className="text-xs mt-1 text-white/70">Carries switched live to fitting. Neutral continues from Switch 1 position through connector blocks.</p>
+                    </div>
+                  </li>
+                </ol>
               </div>
 
-              <div>
-                <h3 className="font-medium text-green-700 dark:text-green-300 mb-2">Quality Checkpoints</h3>
-                <ul className="space-y-1 text-sm text-green-600 dark:text-green-400">
-                  <li>• All conductors properly identified and sleeved</li>
-                  <li>• No exposed copper at terminals</li>
-                  <li>• Switches and ceiling roses level and secure</li>
-                  <li>• Cable properly supported throughout run</li>
-                  <li>• All connections tight and mechanically sound</li>
-                </ul>
+              <div className="border border-white/10 rounded-lg p-4">
+                <h4 className="font-medium text-elec-yellow mb-2">Phase 2: Switch 1 Connections (Feed Point)</h4>
+                <ol className="space-y-2 text-sm text-white/80" start={4}>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
+                    <div>
+                      <strong className="text-white/90">Connect permanent live (brown) to COM terminal</strong>
+                      <p className="text-xs mt-1 text-white/70">This is the live feed from the consumer unit. Ensure maximum contact area and tight connection.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
+                    <div>
+                      <strong className="text-white/90">Connect first strapper to L1 terminal</strong>
+                      <p className="text-xs mt-1 text-white/70">Use brown-sleeved conductor from 3-core cable. This will connect to L1 on Switch 2.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">6.</span>
+                    <div>
+                      <strong className="text-white/90">Connect second strapper to L2 terminal</strong>
+                      <p className="text-xs mt-1 text-white/70">Use black-sleeved conductor from 3-core cable. This will connect to L2 on Switch 2.</p>
+                    </div>
+                  </li>
+                </ol>
               </div>
 
-              <div>
-                <h3 className="font-medium text-green-700 dark:text-green-300 mb-2">Common Candidate Failures</h3>
-                <ul className="space-y-1 text-sm text-green-600 dark:text-green-400">
-                  <li>• Energising circuits before completing all required tests</li>
-                  <li>• Poor conductor identification leading to testing difficulties</li>
-                  <li>• Incorrect switch wiring causing operational failures</li>
-                  <li>• Damaged cables causing insulation resistance failures</li>
-                  <li>• Unsafe working practices during installation</li>
+              <div className="border border-white/10 rounded-lg p-4">
+                <h4 className="font-medium text-elec-yellow mb-2">Phase 3: Switch 2 Connections (Load Point)</h4>
+                <ol className="space-y-2 text-sm text-white/80" start={7}>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">7.</span>
+                    <div>
+                      <strong className="text-white/90">Connect switched live (to light) to COM terminal</strong>
+                      <p className="text-xs mt-1 text-white/70">This feeds the light fitting. When either switch position allows continuity through strappers, light will operate.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">8.</span>
+                    <div>
+                      <strong className="text-white/90">Connect first strapper from Switch 1 to L1</strong>
+                      <p className="text-xs mt-1 text-white/70">Match the conductor sleeving - brown to brown, maintaining consistent identification.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">9.</span>
+                    <div>
+                      <strong className="text-white/90">Connect second strapper from Switch 1 to L2</strong>
+                      <p className="text-xs mt-1 text-white/70">Match the conductor sleeving - black to black. These connections complete the strapper circuit.</p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          {/* Critical Errors */}
+          <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
+            <h3 className="font-medium text-red-400 mb-2">Critical Two-Way Switching Errors</h3>
+            <ul className="space-y-1 text-sm text-white/80">
+              <li><strong className="text-red-400">Incorrect strapper connections</strong> - Light operates from one switch only</li>
+              <li><strong className="text-red-400">Using wrong cable types</strong> - Twin & earth instead of 3-core between switches</li>
+              <li><strong className="text-red-400">Poor conductor identification</strong> - Confusion about which strapper is which</li>
+              <li><strong className="text-red-400">Neutral through switch terminals</strong> - Dangerous and incorrect practice</li>
+              <li><strong className="text-red-400">CPC not continuous</strong> - Safety regulation failure</li>
+              <li><strong className="text-red-400">Mixed up COM terminals</strong> - Circuit completely non-functional</li>
+            </ul>
+          </div>
+
+          <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
+            <p className="text-sm text-white/80">
+              <strong className="text-amber-400">Common Error:</strong> Swapping L1 and L2 connections means one switch position won't work. Always check both switches operate the light in both positions.
+            </p>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck {...quickCheckQuestions[1]} />
+
+      {/* Intermediate Switching */}
+      <AM2ContentCard
+        title="3. Intermediate Switching - Complete Installation Guide"
+        icon={CircuitBoard}
+      >
+        <div className="space-y-6 text-xs sm:text-sm text-white/80">
+          {/* Detailed Installation Steps */}
+          <div>
+            <h3 className="font-medium text-white/90 mb-3">Complete Installation Process</h3>
+            <div className="space-y-4">
+              <div className="border border-white/10 rounded-lg p-4">
+                <h4 className="font-medium text-elec-yellow mb-2">Phase 1: Circuit Planning</h4>
+                <ol className="space-y-2 text-sm text-white/80">
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
+                    <div>
+                      <strong className="text-white/90">Install first two-way switch exactly as in two-way switching</strong>
+                      <p className="text-xs mt-1 text-white/70">This receives the live feed and sends out the two strappers. Install and wire completely before adding intermediate.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
+                    <div>
+                      <strong className="text-white/90">Run 3-core & earth from first two-way to intermediate switch</strong>
+                      <p className="text-xs mt-1 text-white/70">Carries the two strappers from first switch. Plan cable route to avoid damage.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
+                    <div>
+                      <strong className="text-white/90">Run 3-core & earth from intermediate to final two-way switch</strong>
+                      <p className="text-xs mt-1 text-white/70">Carries modified strapper signals to final switch. Multiple intermediates can be chained.</p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+
+              <div className="border border-white/10 rounded-lg p-4">
+                <h4 className="font-medium text-elec-yellow mb-2">Phase 2: Intermediate Switch Connections</h4>
+                <ol className="space-y-2 text-sm text-white/80" start={4}>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
+                    <div>
+                      <strong className="text-white/90">Connect first strapper from Switch 1 to Terminal 1</strong>
+                      <p className="text-xs mt-1 text-white/70">Input from L1 of first two-way switch. Maintains brown identification sleeving.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
+                    <div>
+                      <strong className="text-white/90">Connect second strapper from Switch 1 to Terminal 2</strong>
+                      <p className="text-xs mt-1 text-white/70">Input from L2 of first two-way switch. Maintains black identification sleeving.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">6.</span>
+                    <div>
+                      <strong className="text-white/90">Connect first strapper to Switch 2 from Terminal 3</strong>
+                      <p className="text-xs mt-1 text-white/70">Output to L1 of final two-way switch. Apply appropriate identification sleeving.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">7.</span>
+                    <div>
+                      <strong className="text-white/90">Connect second strapper to Switch 2 from Terminal 4</strong>
+                      <p className="text-xs mt-1 text-white/70">Output to L2 of final two-way switch. Complete strapper circuit through intermediate.</p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+
+              <div className="border border-white/10 rounded-lg p-4">
+                <h4 className="font-medium text-elec-yellow mb-2">Phase 3: Final Two-Way Switch</h4>
+                <ol className="space-y-2 text-sm text-white/80" start={8}>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">8.</span>
+                    <div>
+                      <strong className="text-white/90">Wire final two-way switch COM to light fitting</strong>
+                      <p className="text-xs mt-1 text-white/70">This provides the switched live output when circuit continuity is established.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">9.</span>
+                    <div>
+                      <strong className="text-white/90">Connect L1 and L2 to strappers from intermediate</strong>
+                      <p className="text-xs mt-1 text-white/70">Complete the switching circuit. Maintain consistent conductor identification throughout.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-medium text-elec-yellow min-w-[20px]">10.</span>
+                    <div>
+                      <strong className="text-white/90">Ensure neutral and CPC continuity throughout circuit</strong>
+                      <p className="text-xs mt-1 text-white/70">These bypass all switches and must maintain continuity from source to light fitting.</p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          {/* How It Works */}
+          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+            <h3 className="font-medium text-white/90 mb-3">How Intermediate Switching Works</h3>
+            <div className="space-y-3 text-sm text-white/80">
+              <p>
+                <strong className="text-white/90">Internal Crossing:</strong> The intermediate switch internally crosses its connections when operated. This allows it to "reverse" the strapper signals between the two-way switches.
+              </p>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <h4 className="font-medium text-elec-yellow text-xs mb-2">Normal Position</h4>
+                  <p className="text-xs text-white/70">Terminal 1 - Terminal 3, Terminal 2 - Terminal 4. Strappers pass through unchanged.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-elec-yellow text-xs mb-2">Operated Position</h4>
+                  <p className="text-xs text-white/70">Terminal 1 - Terminal 4, Terminal 2 - Terminal 3. Strappers are crossed, changing circuit state.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Critical Points */}
+          <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
+            <h3 className="font-medium text-red-400 mb-2">Critical Installation Points</h3>
+            <ul className="space-y-1 text-sm text-white/80">
+              <li><strong className="text-red-400">Wrong terminal connections</strong> - Circuit won't work from all positions</li>
+              <li><strong className="text-red-400">Poor strapper identification</strong> - Impossible to trace faults</li>
+              <li><strong className="text-red-400">Using 4-core cable</strong> - Not required, wastes conductor</li>
+              <li><strong className="text-red-400">Neutral through intermediate</strong> - Bypass all switches completely</li>
+              <li><strong className="text-red-400">Inconsistent sleeving</strong> - Testing and maintenance difficulties</li>
+            </ul>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck {...quickCheckQuestions[2]} />
+
+      {/* Testing Requirements */}
+      <AM2ContentCard
+        title="Testing and Verification"
+        icon={TestTube2}
+      >
+        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+          <div>
+            <h3 className="font-medium text-white/90 mb-2">Required Tests Before Energisation</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                <h4 className="font-medium text-elec-yellow mb-2">Continuity Tests</h4>
+                <ul className="space-y-1 text-sm text-white/70">
+                  <li className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                    Protective conductor continuity
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                    Ring final circuit continuity (if applicable)
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                    Switched live continuity in all switch positions
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                    Neutral conductor continuity
+                  </li>
+                </ul>
+              </div>
+              <div className="bg-white/5 border border-white/10 rounded-xl p-4">
+                <h4 className="font-medium text-elec-yellow mb-2">Other Required Tests</h4>
+                <ul className="space-y-1 text-sm text-white/70">
+                  <li className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                    Insulation resistance (1MO minimum)
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                    Polarity at all relevant points
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                    Earth fault loop impedance
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                    RCD operation (if applicable)
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
-        </Card>
 
-        {/* Final Quiz */}
-        <Card className="bg-transparent border-elec-yellow/30">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-6 flex items-center gap-2">
-              <BookOpen className="w-5 h-5" />
-              Section Assessment
-            </h2>
-            <Quiz 
-              questions={quizQuestions}
-              title="Lighting Circuits Knowledge Check"
-            />
+          <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
+            <h3 className="font-medium text-amber-400 mb-2">Testing Sequence for Lighting Circuits</h3>
+            <ol className="space-y-1 text-sm text-white/80">
+              <li>1. Visual inspection - Check all connections, sleeving, mechanical security</li>
+              <li>2. Continuity of protective conductors</li>
+              <li>3. Continuity of ring final circuit conductors (if applicable)</li>
+              <li>4. Insulation resistance between conductors</li>
+              <li>5. Polarity testing - Ensure switch breaks live, not neutral</li>
+              <li>6. Earth fault loop impedance (after energisation)</li>
+              <li>7. Functional testing - All switches operate light correctly</li>
+            </ol>
           </div>
-        </Card>
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
-            <Link to="../section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Cable Containment
-            </Link>
-          </Button>
-          
-          <div className="flex items-center gap-2 text-sm text-white">
-            <Clock className="w-4 h-4" />
-            Estimated reading time: 25-30 minutes
-          </div>
-          
-          <Button asChild>
-            <Link to="../section4">
-              Next: Power Circuits
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
         </div>
-      </div>
-    </div>
+      </AM2ContentCard>
+
+      {/* Assessment Tips */}
+      <AM2ContentCard
+        title="AM2 Assessment Tips"
+        icon={CheckCircle}
+        accent
+      >
+        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+          <div>
+            <h3 className="font-medium text-white/90 mb-2">Time Management</h3>
+            <ul className="space-y-1">
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                Plan cable routes before starting installation
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                Prepare all cable ends together to save time
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                Apply sleeving systematically to avoid confusion
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                Test each section as you complete it
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-medium text-white/90 mb-2">Quality Checkpoints</h3>
+            <ul className="space-y-1">
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                All conductors properly identified and sleeved
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                No exposed copper at terminals
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                Switches and ceiling roses level and secure
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                Cable properly supported throughout run
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                All connections tight and mechanically sound
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-medium text-white/90 mb-2">Common Candidate Failures</h3>
+            <ul className="space-y-1">
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                Energising circuits before completing all required tests
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                Poor conductor identification leading to testing difficulties
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                Incorrect switch wiring causing operational failures
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                Damaged cables causing insulation resistance failures
+              </li>
+              <li className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                Unsafe working practices during installation
+              </li>
+            </ul>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      {/* Final Quiz */}
+      <Quiz
+        questions={quizQuestions}
+        title="Lighting Circuits Knowledge Check"
+      />
+
+      {/* Navigation Footer */}
+      <AM2NavigationFooter
+        previousHref="../section2"
+        previousLabel="Power Circuits"
+        nextHref="../section4"
+        nextLabel="Terminations & Connections"
+        currentSection={3}
+        totalSections={6}
+      />
+    </AM2SectionLayout>
   );
 };
 

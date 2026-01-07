@@ -2,10 +2,8 @@ import React from 'react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Eye } from 'lucide-react';
+import { Camera, Eye, Check } from 'lucide-react';
 import { InspectionItem as BaseInspectionItem } from '@/data/bs7671ChecklistData';
 import EnhancedInspectionOutcomeSelect from './EnhancedInspectionOutcomeSelect';
 import { cn } from '@/lib/utils';
@@ -28,59 +26,39 @@ interface EnhancedInspectionItemRowProps {
   onNavigateToObservations?: () => void;
 }
 
-const commonNoteTemplates = [
-  'Item requires attention to comply with BS 7671 current edition',
-  'Installation not accessible for inspection',
-  'Further investigation required by qualified person',
-  'Remedial work recommended at earliest opportunity',
-  'Documentation required to verify compliance'
-];
-
-const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({ 
-  sectionItem, 
-  inspectionItem, 
-  onUpdateItem, 
+const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
+  sectionItem,
+  inspectionItem,
+  onUpdateItem,
   onOutcomeChange,
-  onNavigateToObservations 
+  onNavigateToObservations
 }) => {
-  const rowRef = React.useRef<HTMLTableRowElement>(null);
   const [localNotes, setLocalNotes] = React.useState(inspectionItem?.notes || '');
   const [debounceTimer, setDebounceTimer] = React.useState<NodeJS.Timeout | null>(null);
-  const [isFocused, setIsFocused] = React.useState(false);
-  const [showSuggestions, setShowSuggestions] = React.useState(false);
-  
+
   const currentOutcome = inspectionItem?.outcome || '';
-  const isInspected = inspectionItem?.inspected || false;
-  
+  const isCompleted = currentOutcome !== '';
+
   // Sync local notes when inspection item changes
   React.useEffect(() => {
     setLocalNotes(inspectionItem?.notes || '');
   }, [inspectionItem?.notes]);
-  
-  // Handle notes input with debouncing and smart suggestions
+
+  // Handle notes input with debouncing
   const handleNotesChange = (value: string) => {
     setLocalNotes(value);
-    
-    // Show suggestions if typing
-    setShowSuggestions(value.length > 0 && value.length < 10);
-    
+
     if (debounceTimer) {
       clearTimeout(debounceTimer);
     }
-    
+
     const newTimer = setTimeout(() => {
       onUpdateItem(sectionItem.id, 'notes', value);
     }, 300);
-    
+
     setDebounceTimer(newTimer);
   };
-  
-  const applySuggestion = (template: string) => {
-    setLocalNotes(template);
-    setShowSuggestions(false);
-    onUpdateItem(sectionItem.id, 'notes', template);
-  };
-  
+
   // Clean up timer on unmount
   React.useEffect(() => {
     return () => {
@@ -89,158 +67,112 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
       }
     };
   }, [debounceTimer]);
-  
-  const getOutcomeClass = (outcome: string) => {
-    switch (outcome) {
-      case 'satisfactory': return 'inspection-row-satisfactory';
-      case 'C1': return 'inspection-row-c1';
-      case 'C2': return 'inspection-row-c2';
-      case 'C3': return 'inspection-row-c3';
-      case 'FI': return 'inspection-row-fi';
-      case 'not-applicable': return 'inspection-row-na';
+
+  // Get row highlight color based on outcome
+  const getRowBgClass = () => {
+    switch (currentOutcome) {
+      case 'satisfactory': return 'bg-green-500/5';
+      case 'C1': return 'bg-red-500/10';
+      case 'C2': return 'bg-orange-500/10';
+      case 'C3': return 'bg-yellow-500/5';
       default: return '';
     }
   };
-  
+
   const isCriticalOutcome = ['C1', 'C2', 'C3'].includes(currentOutcome);
-  
+
   return (
     <TableRow
-      ref={rowRef}
       className={cn(
-        'group transition-all duration-200 border-b border-border/30 hover:bg-muted/30 relative h-16',
-        getOutcomeClass(currentOutcome),
-        isFocused && 'ring-2 ring-elec-yellow/20',
-        isInspected && 'border-l-4 border-l-elec-yellow'
+        "group transition-all duration-200 border-b border-white/5 hover:bg-white/5",
+        getRowBgClass()
       )}
-      onFocus={() => setIsFocused(true)}
-      onBlur={(e) => {
-        if (!rowRef.current?.contains(e.relatedTarget as Node)) {
-          setIsFocused(false);
-          setShowSuggestions(false);
-        }
-      }}
-      onMouseDown={(e) => {
-        const el = e.target as HTMLElement;
-        if (!el.closest('input, textarea, select, button, [role="button"], [role="menuitem"], .prevent-shortcuts')) {
-          rowRef.current?.focus();
-        }
-      }}
-      tabIndex={0}
-      role="row"
-      aria-label={`Inspection item: ${sectionItem.item}`}
     >
-      <TableCell className="relative text-center py-2">
-        <Checkbox
-          checked={isInspected}
-          onCheckedChange={(checked) => 
-            onUpdateItem(sectionItem.id, 'inspected', checked)
-          }
-          className="mx-auto data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 border-2 bg-card w-5 h-5"
-          aria-label={`Mark ${sectionItem.item} as inspected`}
-        />
+      {/* Status Indicator */}
+      <TableCell className="w-14 text-center py-4">
+        <div className={cn(
+          "w-7 h-7 rounded-lg flex items-center justify-center mx-auto transition-colors",
+          isCompleted ? "bg-green-500/20" : "bg-white/5 border border-white/10"
+        )}>
+          {isCompleted && (
+            <Check className="h-4 w-4 text-green-400" />
+          )}
+        </div>
       </TableCell>
-      
-      <TableCell className="max-w-xs py-2 align-middle">
+
+      {/* Item Number + Title + Clause */}
+      <TableCell className="py-4">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <p className="text-sm font-medium text-foreground truncate cursor-help">
-                {sectionItem.number}. {sectionItem.item}
-              </p>
+              <div className="space-y-1">
+                <p className="text-sm text-white leading-relaxed">
+                  <span className="text-elec-yellow font-mono font-semibold mr-2">
+                    {sectionItem.number}
+                  </span>
+                  {sectionItem.item}
+                </p>
+                {sectionItem.clause && (
+                  <p className="text-xs text-white/40 font-mono">
+                    {sectionItem.clause}
+                  </p>
+                )}
+              </div>
             </TooltipTrigger>
             {sectionItem.description && (
-              <TooltipContent className="max-w-sm">
-                <p className="text-xs">{sectionItem.description}</p>
+              <TooltipContent className="max-w-sm bg-card border-white/10">
+                <p className="text-xs text-white/80">{sectionItem.description}</p>
               </TooltipContent>
             )}
           </Tooltip>
         </TooltipProvider>
       </TableCell>
-      
-      <TableCell className="py-2 align-middle">
-        {sectionItem.clause ? (
-          <Badge 
-            variant="outline" 
-            className={`text-[11px] font-normal font-mono w-fit py-0.5 ${
-              sectionItem.clause.includes('Visual') || sectionItem.clause.includes('Reserved')
-                ? 'bg-purple-500/10 border-purple-500/30 text-purple-400'
-                : sectionItem.clause.includes('Part') || sectionItem.clause.includes('Chapter')
-                ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
-                : 'bg-muted/50'
-            }`}
-          >
-            {sectionItem.clause}
-          </Badge>
-        ) : (
-          <Badge variant="secondary" className="text-[11px] font-normal font-mono w-fit py-0.5 bg-white/5 border-white/20 text-white/70">
-            No Specific Reg
-          </Badge>
-        )}
-      </TableCell>
-      
-      <TableCell className="relative py-2 align-middle">
+
+      {/* Outcome Chips - Compact mode */}
+      <TableCell className="w-72 py-4">
         <EnhancedInspectionOutcomeSelect
           itemId={sectionItem.id}
           currentOutcome={currentOutcome}
           onOutcomeChange={onOutcomeChange}
+          compact={true}
         />
       </TableCell>
-      
-      <TableCell className="relative py-2 align-middle">
-        <div className="space-y-1">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Input
-                  placeholder="Add notes or..."
-                  value={localNotes}
-                  onChange={(e) => handleNotesChange(e.target.value)}
-                  className="text-sm bg-muted/20 border-border/50"
-                  aria-label={`Notes for ${sectionItem.item}`}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <span className="text-xs">Add inspection notes or observations</span>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          
-          {/* Smart Suggestions Dropdown */}
-          {showSuggestions && (
-            <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border border-border rounded-lg shadow-xl max-h-40 overflow-y-auto">
-              {commonNoteTemplates
-                .filter(template => 
-                  template.toLowerCase().includes(localNotes.toLowerCase())
-                )
-                .slice(0, 3)
-                .map((template, index) => (
-                  <button
-                    key={index}
-                    onClick={() => applySuggestion(template)}
-                    className="w-full text-left px-3 py-2 text-xs hover:bg-muted/50 first:rounded-t-lg last:rounded-b-lg transition-colors"
-                  >
-                    {template}
-                  </button>
-                ))
-              }
-            </div>
-          )}
-        </div>
+
+      {/* Notes */}
+      <TableCell className="py-4">
+        <Input
+          placeholder="Add notes..."
+          value={localNotes}
+          onChange={(e) => handleNotesChange(e.target.value)}
+          className="text-sm h-9 bg-white/5 border-white/10 focus:border-elec-yellow/50
+                     placeholder:text-white/30"
+        />
       </TableCell>
-      
-      <TableCell className="py-2 align-middle">
-        <div className="flex items-center gap-2">
-          {isCriticalOutcome && (
+
+      {/* Actions */}
+      <TableCell className="w-24 text-center py-4">
+        <div className="flex items-center justify-center gap-1">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 text-white/40 hover:text-white hover:bg-white/10"
+          >
+            <Camera className="h-4 w-4" />
+          </Button>
+
+          {isCriticalOutcome && onNavigateToObservations && (
             <Button
-              variant="outline"
-              size="sm"
+              variant="ghost"
+              size="icon"
               onClick={onNavigateToObservations}
-              className="text-xs h-8 bg-destructive/10 border-destructive/30 text-destructive hover:bg-destructive/20 transition-all duration-200"
-              aria-label={`View details for critical outcome ${currentOutcome}`}
+              className={cn(
+                "h-8 w-8",
+                currentOutcome === 'C1' && "text-red-400 hover:text-red-300 hover:bg-red-500/10",
+                currentOutcome === 'C2' && "text-orange-400 hover:text-orange-300 hover:bg-orange-500/10",
+                currentOutcome === 'C3' && "text-yellow-400 hover:text-yellow-300 hover:bg-yellow-500/10"
+              )}
             >
-              <Eye className="h-3 w-3 mr-1" />
-              Details
+              <Eye className="h-4 w-4" />
             </Button>
           )}
         </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -85,10 +85,15 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] p-0">
+      <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-3xl">
         <div className="flex flex-col h-full">
+          {/* Native drag indicator */}
+          <div className="pt-2 pb-1 flex justify-center">
+            <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+          </div>
+
           {/* Header */}
-          <SheetHeader className="px-4 py-3 border-b border-border">
+          <SheetHeader className="px-4 pb-4 border-b border-border">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
@@ -103,7 +108,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                   )}
                 </div>
                 <div>
-                  <SheetTitle className="text-lg">{invoice.invoice_number}</SheetTitle>
+                  <SheetTitle className="text-lg font-semibold">{invoice.invoice_number}</SheetTitle>
                   <p className="text-sm text-muted-foreground">{invoice.client}</p>
                 </div>
               </div>
@@ -112,7 +117,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
           </SheetHeader>
 
           {/* Content */}
-          <ScrollArea className="flex-1 px-4 py-4">
+          <ScrollArea className="flex-1 px-4 py-4 pb-48">
             <div className="space-y-4">
               {/* Payment Status */}
               {!isPaid && (
@@ -265,12 +270,12 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
             </div>
           </ScrollArea>
 
-          {/* Footer Actions */}
-          <SheetFooter className="px-4 py-3 border-t border-border pb-safe">
-            <div className="flex flex-col gap-2 w-full">
+          {/* Fixed Footer Actions */}
+          <div className="absolute bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border">
+            <div className="px-4 py-3 pb-safe space-y-2">
               {!isPaid && (
                 <>
-                  <Button onClick={handleMarkPaid} disabled={markPaidMutation.isPending}>
+                  <Button onClick={handleMarkPaid} disabled={markPaidMutation.isPending} className="w-full h-12">
                     {markPaidMutation.isPending ? (
                       <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                     ) : (
@@ -279,8 +284,9 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                     Mark as Paid
                   </Button>
                   <div className="grid grid-cols-2 gap-2">
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
+                      className="h-10"
                       onClick={handleSendInvoice}
                       disabled={sendInvoiceMutation.isPending}
                     >
@@ -291,8 +297,9 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                       )}
                       {isSent ? 'Resend' : 'Send Invoice'}
                     </Button>
-                    <Button 
+                    <Button
                       variant="outline"
+                      className="h-10"
                       onClick={handleDownloadPdf}
                       disabled={generatePdfMutation.isPending}
                     >
@@ -307,8 +314,9 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                 </>
               )}
               {isPaid && (
-                <Button 
+                <Button
                   variant="outline"
+                  className="w-full h-12"
                   onClick={handleDownloadPdf}
                   disabled={generatePdfMutation.isPending}
                 >
@@ -321,7 +329,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                 </Button>
               )}
             </div>
-          </SheetFooter>
+          </div>
         </div>
       </SheetContent>
     </Sheet>

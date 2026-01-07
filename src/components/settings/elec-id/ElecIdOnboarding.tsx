@@ -30,8 +30,16 @@ import {
 } from "lucide-react";
 import { ECS_CARD_TYPES, UK_JOB_TITLES } from "@/data/uk-electrician-constants";
 
+// Exported form data type for parent component
+export interface OnboardingFormData {
+  jobTitle: string;
+  ecsCardType: string;
+  ecsCardExpiry: string;
+  ecsCardNumber: string;
+}
+
 interface ElecIdOnboardingProps {
-  onComplete: () => void;
+  onComplete: (data: OnboardingFormData) => void;
   onSkip?: () => void;
 }
 
@@ -124,7 +132,7 @@ const ElecIdOnboarding = ({ onComplete, onSkip }: ElecIdOnboardingProps) => {
     if (currentStep < STEPS.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      onComplete();
+      onComplete(formData);
     }
   };
 

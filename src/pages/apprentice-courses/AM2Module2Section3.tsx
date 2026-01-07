@@ -1,9 +1,12 @@
-import { ArrowLeft, AlertTriangle, FileText, CheckSquare, Shield, Clock, Users, Eye, Ruler, Zap, BookOpen, Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Link } from "react-router-dom";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { FileText, AlertTriangle, CheckSquare, Shield, Eye, Ruler, Zap, BookOpen, Settings } from "lucide-react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { AM2SectionLayout } from "@/components/apprentice-courses/AM2SectionLayout";
+import { AM2HeroSection } from "@/components/apprentice-courses/AM2HeroSection";
+import { AM2ContentCard } from "@/components/apprentice-courses/AM2ContentCard";
+import { AM2NavigationFooter } from "@/components/apprentice-courses/AM2NavigationFooter";
+import { AM2CriticalWarning } from "@/components/apprentice-courses/AM2CriticalWarning";
+import { AM2LearningOutcomes } from "@/components/apprentice-courses/AM2LearningOutcomes";
 import useSEO from "@/hooks/useSEO";
 
 const AM2Module2Section3 = () => {
@@ -39,7 +42,7 @@ const AM2Module2Section3 = () => {
     },
     {
       id: "cable-size-compliance",
-      question: "What happens if you use 2.5mm² cable where the spec calls for 4mm²?",
+      question: "What happens if you use 2.5mm cable where the spec calls for 4mm?",
       options: [
         "No problem if it passes inspection",
         "Minor mark deduction for incorrect material",
@@ -90,7 +93,7 @@ const AM2Module2Section3 = () => {
     },
     {
       id: 2,
-      question: "If the spec calls for 4mm² cable but you install 2.5mm², what happens?",
+      question: "If the spec calls for 4mm cable but you install 2.5mm, what happens?",
       options: [
         "Warning but work continues",
         "Minor mark deduction",
@@ -212,828 +215,560 @@ const AM2Module2Section3 = () => {
       id: 12,
       question: "What tolerance do NET assessors typically allow for accessory positioning?",
       options: [
-        "±5mm tolerance for exact positioning",
-        "±20mm tolerance if professionally installed",
-        "±50mm tolerance as long as it's functional",
+        "+/-5mm tolerance for exact positioning",
+        "+/-20mm tolerance if professionally installed",
+        "+/-50mm tolerance as long as it's functional",
         "No tolerance - exact positioning required"
       ],
       correctAnswer: 0,
-      explanation: "NET assessors typically allow ±5mm tolerance for accessory positioning - beyond this results in mark deduction for specification non-compliance."
+      explanation: "NET assessors typically allow +/-5mm tolerance for accessory positioning - beyond this results in mark deduction for specification non-compliance."
     }
   ];
 
+  const learningOutcomes = [
+    "Interpret AM2 drawings and specifications correctly",
+    "Follow exact dimensions, cable types, and termination details",
+    "Recognise why deviation from drawings leads to lost marks",
+    "Apply real-world skills of reading schematics and installation specs",
+    "Avoid the typical misreads that cost candidates marks"
+  ];
+
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-card/50">
-        <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16 py-4">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <Button variant="ghost" className="min-h-[44px] p-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98] self-start" asChild>
-              <Link to="..">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Module 2
-              </Link>
-            </Button>
-            <div className="flex items-center gap-4 text-sm text-white">
-              <div className="flex items-center gap-1">
-                <Clock className="w-4 h-4" />
-                <span>20 min read</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Users className="w-4 h-4" />
-                <span>Beginner Level</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <AM2SectionLayout
+      backHref=".."
+      breadcrumbs={["AM2", "Module 2", "Section 3"]}
+    >
+      {/* Hero Section */}
+      <AM2HeroSection
+        icon={FileText}
+        title="Working with Drawings and Specifications"
+        description="Complete guide to interpreting AM2 drawings and specifications - circuit diagrams, layout plans, and compliance requirements."
+        badge="Module 2 - Section 3"
+      />
 
-      {/* Main Content */}
-      <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16 py-12">
-        {/* Title Section */}
-        <div className="mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-elec-yellow/10 text-elec-yellow text-sm font-medium rounded-full mb-4">
-            <FileText className="w-4 h-4" />
-            Module 2 – Section 3
-          </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Working with Drawings and Specifications
-          </h1>
-          <p className="text-base text-white mb-8 leading-relaxed">
-            Complete guide to interpreting AM2 drawings and specifications - circuit diagrams, layout plans, and compliance requirements.
-          </p>
-        </div>
+      {/* Critical Warning */}
+      <AM2CriticalWarning title="Drawings and Specifications Are Non-Negotiable">
+        <p className="text-ios-callout text-white/90 mb-3">
+          In the AM2 you'll be given drawings, wiring diagrams, and written specifications. These aren't suggestions -
+          they are the blueprint you must follow exactly. Many candidates fail because they think "as long as it works, it's fine."
+          Wrong. The assessor marks against compliance with the specification, not just function.
+        </p>
+        <p className="text-ios-callout text-white/90 font-medium">
+          In the real world, not following drawings and specs can mean breaching contract terms, voiding compliance certificates,
+          or creating unsafe installations. This section ensures you understand the critical importance of specification compliance.
+        </p>
+      </AM2CriticalWarning>
 
-        {/* Critical Compliance Warning */}
-        <Card className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/30 mb-8">
-          <div className="p-6">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 dark:text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold text-red-800 dark:text-red-200 mb-2">
-                  CRITICAL: Drawings and Specifications Are Non-Negotiable
-                </h3>
-                <p className="text-sm text-red-700 dark:text-elec-yellow mb-3">
-                  In the AM2 you'll be given drawings, wiring diagrams, and written specifications. These aren't suggestions — 
-                  they are the blueprint you must follow exactly. Many candidates fail because they think "as long as it works, it's fine." 
-                  Wrong. The assessor marks against compliance with the specification, not just function.
-                </p>
-                <p className="text-sm text-red-700 dark:text-elec-yellow font-medium">
-                  In the real world, not following drawings and specs can mean breaching contract terms, voiding compliance certificates, 
-                  or creating unsafe installations. This section ensures you understand the critical importance of specification compliance.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Card>
+      {/* Learning Outcomes */}
+      <AM2LearningOutcomes outcomes={learningOutcomes} />
 
-        {/* Learning Outcomes */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <CheckSquare className="w-5 h-5" />
-              Learning Outcomes
-            </h2>
-            <p className="text-sm text-white mb-4">
-              By the end of this section, you should be able to:
-            </p>
-            <ul className="space-y-2 text-xs sm:text-sm text-white">
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Interpret AM2 drawings and specifications correctly
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Follow exact dimensions, cable types, and termination details
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Recognise why deviation from drawings leads to lost marks
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Apply real-world skills of reading schematics and installation specs
-              </li>
-              <li className="flex items-start gap-2">
-                <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                Avoid the typical misreads that cost candidates marks
-              </li>
+      {/* Types of Drawings */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">1. Types of Drawings You'll See in AM2</h2>
+        <div className="space-y-6 text-ios-callout text-white/90">
+          <div>
+            <h3 className="text-ios-headline font-semibold text-white mb-2 flex items-center gap-2">
+              <Zap className="w-4 h-4 text-elec-yellow" />
+              Circuit Diagrams
+            </h3>
+            <p className="mb-2">Show electrical connections, conductor types, and protective devices.</p>
+            <ul className="space-y-1 text-white/80 ml-4">
+              <li>• Display circuit protection (MCBs, RCDs, fuses)</li>
+              <li>• Show conductor routes and connections</li>
+              <li>• Indicate cable types and sizes</li>
+              <li>• Include earthing and bonding arrangements</li>
+              <li>• Use BS 7671 standard symbols throughout</li>
             </ul>
           </div>
-        </Card>
-
-        {/* Equipment and Documentation */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
-              Equipment & Documentation Requirements
-            </h2>
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-              <div>
-                <h3 className="font-semibold text-base mb-3">Essential Documentation</h3>
-                <ul className="space-y-2 text-xs sm:text-sm text-white">
-                  <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                    Technical drawings and circuit diagrams
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                    Installation specifications and cable schedules
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                    Layout plans showing positions and dimensions
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                    Material lists and component specifications
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                    Installation method requirements
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-base mb-3">Essential Tools & References</h3>
-                <ul className="space-y-2 text-xs sm:text-sm text-white">
-                  <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                    BS 7671 symbol reference charts
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                    Measuring tools (tape measure, spirit level)
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                    Marking equipment (pencil, chalk line)
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                    Calculator for cable calculations
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                    Magnifying glass for small detail reading
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <div>
+            <h3 className="text-ios-headline font-semibold text-white mb-2 flex items-center gap-2">
+              <Ruler className="w-4 h-4 text-elec-yellow" />
+              Layout Diagrams
+            </h3>
+            <p className="mb-2">Show physical positions including socket heights and trunking routes.</p>
+            <ul className="space-y-1 text-white/80 ml-4">
+              <li>• Exact measurements for accessory positioning</li>
+              <li>• Trunking and conduit routing paths</li>
+              <li>• Clearance distances from other services</li>
+              <li>• Installation heights and depths</li>
+              <li>• Spacing between multiple accessories</li>
+            </ul>
           </div>
-        </Card>
-
-        {/* Types of Drawings Section */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
-              1. Types of Drawings You'll See in AM2
-            </h2>
-            <div className="space-y-6 text-xs sm:text-sm text-white">
-              <div>
-                <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-elec-yellow" />
-                  Circuit Diagrams
-                </h3>
-                <p className="mb-2">Show electrical connections, conductor types, and protective devices.</p>
-                <ul className="space-y-1 text-white ml-4">
-                  <li>• Display circuit protection (MCBs, RCDs, fuses)</li>
-                  <li>• Show conductor routes and connections</li>
-                  <li>• Indicate cable types and sizes</li>
-                  <li>• Include earthing and bonding arrangements</li>
-                  <li>• Use BS 7671 standard symbols throughout</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-                  <Ruler className="w-4 h-4 text-elec-yellow" />
-                  Layout Diagrams
-                </h3>
-                <p className="mb-2">Show physical positions including socket heights and trunking routes.</p>
-                <ul className="space-y-1 text-white ml-4">
-                  <li>• Exact measurements for accessory positioning</li>
-                  <li>• Trunking and conduit routing paths</li>
-                  <li>• Clearance distances from other services</li>
-                  <li>• Installation heights and depths</li>
-                  <li>• Spacing between multiple accessories</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-base mb-2 flex items-center gap-2">
-                  <BookOpen className="w-4 h-4 text-elec-yellow" />
-                  Written Specifications
-                </h3>
-                <p className="mb-2">Detailed written instructions covering all installation requirements.</p>
-                <ul className="space-y-1 text-white ml-4">
-                  <li>• Cable sizes, types, and colour requirements</li>
-                  <li>• Installation methods and techniques</li>
-                  <li>• Material specifications and standards</li>
-                  <li>• Testing and verification requirements</li>
-                  <li>• Completion and documentation standards</li>
-                </ul>
-              </div>
-            </div>
-            <InlineCheck {...quickCheckQuestions[0]} />
+          <div>
+            <h3 className="text-ios-headline font-semibold text-white mb-2 flex items-center gap-2">
+              <BookOpen className="w-4 h-4 text-elec-yellow" />
+              Written Specifications
+            </h3>
+            <p className="mb-2">Detailed written instructions covering all installation requirements.</p>
+            <ul className="space-y-1 text-white/80 ml-4">
+              <li>• Cable sizes, types, and colour requirements</li>
+              <li>• Installation methods and techniques</li>
+              <li>• Material specifications and standards</li>
+              <li>• Testing and verification requirements</li>
+              <li>• Completion and documentation standards</li>
+            </ul>
           </div>
-        </Card>
-
-        {/* Following Specifications Section */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
-              2. Following Specifications - Non-Negotiable
-            </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h3 className="font-semibold text-base mb-2">Cable Requirements</h3>
-                  <ul className="space-y-1 text-white">
-                    <li>• Sizes must match exactly (e.g., 2.5mm² for sockets, 4mm² for cooker)</li>
-                    <li>• Cable types as specified (T&E, SWA, FP200, etc.)</li>
-                    <li>• Core colours must comply with requirements</li>
-                    <li>• Conductor materials (copper/aluminium) as stated</li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-base mb-2">Installation Requirements</h3>
-                  <ul className="space-y-1 text-white">
-                    <li>• Accessories positioned exactly as per dimensions</li>
-                    <li>• Conduit/trunking routes following specified runs</li>
-                    <li>• Installation methods as detailed in specs</li>
-                    <li>• Segregation requirements strictly observed</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="mt-6 p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800/30 rounded-lg">
-                <h4 className="font-semibold text-amber-800 dark:text-amber-200 mb-2">NET Assessment Time Management</h4>
-                <p className="text-sm text-amber-700 dark:text-amber-300">
-                  Allocate 15-20 minutes to thoroughly review all drawings and specifications before starting practical work. 
-                  This review time prevents costly mistakes and mark deductions later in the assessment process.
-                </p>
-              </div>
-            </div>
-            <InlineCheck {...quickCheckQuestions[2]} />
-          </div>
-        </Card>
-
-        {/* Common Errors Section */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
-              3. Common Drawing Interpretation Errors (NET Guidance)
-            </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h3 className="font-semibold text-base mb-3 text-elec-yellow">Critical Errors That Cause Failure</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <span>Misreading symbols on circuit diagrams</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <span>Using the wrong cable size/type</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <span>Installing in wrong position (heights/distances off spec)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <span>Forgetting segregation between LV and ELV</span>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-base mb-3 text-elec-yellow">Common Mark-Losing Mistakes</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <span>Not labelling or identifying conductors</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <span>Assuming "close enough" is acceptable</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <span>Poor measurement and marking out</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
-                      <span>Not cross-referencing multiple drawings</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="mt-6 p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg">
-                <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Real AM2 Failure Examples</h4>
-                <ul className="space-y-1 text-sm text-red-700 dark:text-elec-yellow">
-                  <li>• Candidate installed all accessories neatly but put sockets 100mm too high - borderline fail</li>
-                  <li>• Candidate used 2.5mm² for a cooker radial instead of 4mm² - failed installation section</li>
-                  <li>• Mixed ELV and LV in same trunking despite specification requiring segregation - fail</li>
-                  <li>• Excellent workmanship but wrong cable type used throughout - failed on compliance</li>
-                </ul>
-              </div>
-            </div>
-            <InlineCheck {...quickCheckQuestions[1]} />
-          </div>
-        </Card>
-
-        {/* BS 7671 Symbol Recognition */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
-              4. BS 7671 Symbol Recognition Requirements
-            </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <div className="p-4 bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg">
-                <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">Essential Symbol Categories</h4>
-                <div className="grid md:grid-cols-2 gap-4 text-sm text-blue-700 dark:text-elec-yellow">
-                  <div>
-                    <h5 className="font-medium mb-2">Circuit Protection</h5>
-                    <ul className="space-y-1">
-                      <li>• MCB (Miniature Circuit Breaker)</li>
-                      <li>• RCD (Residual Current Device)</li>
-                      <li>• RCBO (Combined MCB + RCD)</li>
-                      <li>• Fuses (various types)</li>
-                      <li>• Isolators and switches</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h5 className="font-medium mb-2">Installation Components</h5>
-                    <ul className="space-y-1">
-                      <li>• Socket outlets (single, double)</li>
-                      <li>• Light fittings and switches</li>
-                      <li>• Junction boxes and connectors</li>
-                      <li>• Earth bonding points</li>
-                      <li>• Cable routes and types</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h3 className="font-semibold text-base mb-2">Symbol Fluency Requirements</h3>
-                <p className="mb-2">You must be able to instantly recognise and interpret standard BS 7671 symbols without reference materials.</p>
-                <ul className="space-y-1 text-white ml-4">
-                  <li>• Immediate recognition of all common electrical symbols</li>
-                  <li>• Understanding symbol variations and combinations</li>
-                  <li>• Ability to trace circuit paths through schematic diagrams</li>
-                  <li>• Recognition of obsolete symbols that may appear in existing installations</li>
-                </ul>
-              </div>
-            </div>
-            <InlineCheck {...quickCheckQuestions[3]} />
-          </div>
-        </Card>
-
-        {/* Strategies Section */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
-              5. Strategies to Avoid Mistakes
-            </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-                <div>
-                  <h3 className="font-semibold text-base mb-3">Pre-Work Review Process</h3>
-                  <ol className="space-y-2 text-white">
-                    <li className="flex gap-2">
-                      <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">1</span>
-                      <span>Read all drawings and specifications fully</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">2</span>
-                      <span>Cross-reference circuit and layout diagrams</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">3</span>
-                      <span>Note all cable sizes, types, and routes</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">4</span>
-                      <span>Identify all accessory positions and heights</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">5</span>
-                      <span>Check for segregation requirements</span>
-                    </li>
-                  </ol>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-base mb-3">During Installation</h3>
-                  <ul className="space-y-2 text-white">
-                    <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                      Keep specifications on hand - don't trust memory
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                      Mark out positions before drilling or fixing
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                      Double-check cable sizes before terminating
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                      Verify measurements twice before cutting
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                      Cross-check circuit connections against diagrams
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* Measurement and Marking Section */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
-              6. Measurement and Marking Techniques
-            </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <div>
-                <h3 className="font-semibold text-base mb-2">Professional Measuring Practices</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="font-medium mb-2 text-elec-yellow">Accurate Measurement</h4>
-                    <ul className="space-y-1 text-white">
-                      <li>• Use appropriate measuring tools for task</li>
-                      <li>• Measure from fixed reference points</li>
-                      <li>• Account for wall/surface variations</li>
-                      <li>• Check measurements in multiple dimensions</li>
-                      <li>• Allow for accessory box dimensions</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-2 text-elec-yellow">Marking Procedures</h4>
-                    <ul className="space-y-1 text-white">
-                      <li>• Use appropriate marking tools (pencil, chalk)</li>
-                      <li>• Mark centre points and corners clearly</li>
-                      <li>• Use spirit level for accurate horizontal/vertical</li>
-                      <li>• Mark cable entry/exit points</li>
-                      <li>• Cross-check marked positions against drawings</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4 mt-4">
-                <h3 className="font-semibold text-base mb-2 text-blue-800 dark:text-blue-200 flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
-                  NET Assessment Time Management
-                </h3>
-                <div className="space-y-2 text-sm">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <p className="font-medium text-blue-700 dark:text-elec-yellow">Pre-Work Planning (15-20 minutes)</p>
-                      <ul className="text-elec-yellow dark:text-elec-yellow text-xs mt-1">
-                        <li>• Complete drawing review</li>
-                        <li>• Material verification</li>
-                        <li>• Route planning</li>
-                        <li>• Critical dimension checks</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-medium text-blue-700 dark:text-elec-yellow">During Installation</p>
-                      <ul className="text-elec-yellow dark:text-elec-yellow text-xs mt-1">
-                        <li>• Check specifications every 30 minutes</li>
-                        <li>• Mark positions before fixing</li>
-                        <li>• Verify before permanent connections</li>
-                        <li>• Document any uncertainties</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-6 p-4 bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800/30 rounded-lg">
-                <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2">Professional Tip</h4>
-                <p className="text-sm text-green-700 dark:text-green-300">
-                  "Measure twice, cut once" applies especially to AM2. Incorrect positioning due to poor measuring loses marks 
-                  that cannot be recovered, even if the final installation is electrically sound and well-crafted.
-                </p>
-              </div>
-            </div>
-            <InlineCheck {...quickCheckQuestions[4]} />
-          </div>
-        </Card>
-
-        {/* WHAT ASSESSORS LOOK FOR - NEW SECTION */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-yellow-700 dark:text-yellow-300 mb-4 flex items-center gap-2">
-              <Shield className="w-5 h-5" />
-              7. What Assessors Look For - NET Assessment Criteria
-            </h2>
-            
-            <div className="space-y-6">
-              {/* What Gets Marks */}
-              <div className="bg-green-100 dark:bg-green-950/30 border border-green-300 dark:border-green-800/50 rounded-lg p-4">
-                <h3 className="font-semibold text-green-800 dark:text-green-200 mb-3 flex items-center gap-2">
-                  <CheckSquare className="w-4 h-4" />
-                  What Gets Marks (Pass Criteria)
-                </h3>
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="font-medium text-green-700 dark:text-green-300 mb-2">Specification Compliance (40% weighting)</p>
-                    <ul className="space-y-1 text-green-600 dark:text-green-400 text-xs">
-                      <li>• Exact cable sizes as specified</li>
-                      <li>• Correct accessory positions (± 5mm tolerance)</li>
-                      <li>• Proper segregation implementation</li>
-                      <li>• Specified installation methods followed</li>
-                      <li>• Correct protective device ratings</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium text-green-700 dark:text-green-300 mb-2">Professional Competency (35% weighting)</p>
-                    <ul className="space-y-1 text-green-600 dark:text-green-400 text-xs">
-                      <li>• Systematic verification processes</li>
-                      <li>• Accurate measurement techniques</li>
-                      <li>• Professional marking and positioning</li>
-                      <li>• BS 7671 symbol fluency demonstration</li>
-                      <li>• Clear understanding of requirements</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium text-green-700 dark:text-green-300 mb-2">Safety Implementation (15% weighting)</p>
-                    <ul className="space-y-1 text-green-600 dark:text-green-400 text-xs">
-                      <li>• Correct LV/ELV segregation</li>
-                      <li>• Proper earthing arrangements</li>
-                      <li>• Safe working methodology</li>
-                      <li>• Risk assessment compliance</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium text-green-700 dark:text-green-300 mb-2">Communication (10% weighting)</p>
-                    <ul className="space-y-1 text-green-600 dark:text-green-400 text-xs">
-                      <li>• Professional questioning approach</li>
-                      <li>• Clear understanding verification</li>
-                      <li>• Appropriate clarification requests</li>
-                      <li>• Confident explanation of methods</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* What Loses Marks */}
-              <div className="bg-red-100 dark:bg-red-950/30 border border-red-300 dark:border-red-800/50 rounded-lg p-4">
-                <h3 className="font-semibold text-red-800 dark:text-red-200 mb-3 flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4" />
-                  What Loses Marks (Deduction Criteria)
-                </h3>
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Minor Deductions (2-5 marks each)</p>
-                    <ul className="space-y-1 text-red-600 dark:text-elec-yellow text-xs">
-                      <li>• Accessory positions 10-20mm out</li>
-                      <li>• Incorrect cable colour (but correct size)</li>
-                      <li>• Poor measurement technique demonstration</li>
-                      <li>• Inadequate verification process</li>
-                      <li>• Symbol recognition hesitation</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium text-red-700 dark:text-elec-yellow mb-2">Major Deductions (5-10 marks each)</p>
-                    <ul className="space-y-1 text-red-600 dark:text-elec-yellow text-xs">
-                      <li>• Wrong cable sizes installed</li>
-                      <li>• Accessories 20mm+ from specified position</li>
-                      <li>• Incorrect installation method used</li>
-                      <li>• Poor specification compliance</li>
-                      <li>• Inadequate systematic approach</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* Instant Failure */}
-              <div className="bg-red-200 dark:bg-red-950/50 border-2 border-red-400 dark:border-red-700 rounded-lg p-4">
-                <h3 className="font-semibold text-red-900 dark:text-red-100 mb-3 flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5" />
-                  Instant Failure Scenarios
-                </h3>
-                <div className="space-y-2 text-sm">
-                  <p className="text-red-800 dark:text-red-200 font-medium mb-2">
-                    These scenarios result in immediate assessment failure regardless of other work quality:
-                  </p>
-                  <ul className="space-y-1 text-red-700 dark:text-elec-yellow text-xs">
-                    <li>• <strong>Safety segregation violations:</strong> LV and ELV cables in same containment when specification prohibits</li>
-                    <li>• <strong>Major cable size errors:</strong> Using cable insufficient for protective device rating (safety issue)</li>
-                    <li>• <strong>Specification abandonment:</strong> Deciding to "improve" the design instead of following specifications</li>
-                    <li>• <strong>Installation method breaches:</strong> Using methods that violate BS 7671 or specified requirements</li>
-                    <li>• <strong>Protective device mismatches:</strong> Installing protection that doesn't match circuit design requirements</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Assessment Focus Areas */}
-              <div className="bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4">
-                <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
-                  <Eye className="w-4 h-4" />
-                  Common NET Assessment Focus Areas
-                </h3>
-                <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs">
-                  <div>
-                    <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Drawing Interpretation (Minutes 1-20)</p>
-                    <ul className="space-y-1 text-elec-yellow dark:text-elec-yellow">
-                      <li>• Symbol recognition speed</li>
-                      <li>• Specification understanding</li>
-                      <li>• Material list accuracy</li>
-                      <li>• Route planning efficiency</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Implementation (Minutes 20-80)</p>
-                    <ul className="space-y-1 text-elec-yellow dark:text-elec-yellow">
-                      <li>• Measurement accuracy</li>
-                      <li>• Progressive compliance checks</li>
-                      <li>• Professional methodology</li>
-                      <li>• Quality verification</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium text-blue-700 dark:text-elec-yellow mb-2">Final Verification (Minutes 80-90)</p>
-                    <ul className="space-y-1 text-elec-yellow dark:text-elec-yellow">
-                      <li>• Complete specification check</li>
-                      <li>• Documentation accuracy</li>
-                      <li>• Professional presentation</li>
-                      <li>• Compliance confirmation</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* Recovery Strategies */}
-              <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800/30 rounded-lg p-4">
-                <h3 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-3 flex items-center gap-2">
-                  <Settings className="w-4 h-4" />
-                  Assessment Recovery Strategies
-                </h3>
-                <div className="space-y-3 text-sm">
-                  <div>
-                    <p className="font-medium text-yellow-700 dark:text-yellow-300 mb-1">If You Spot an Error:</p>
-                    <ul className="space-y-1 text-elec-yellow dark:text-elec-yellow text-xs">
-                      <li>• Stop immediately and assess impact</li>
-                      <li>• Document the error and proposed correction</li>
-                      <li>• Ask assessor for clarification if needed</li>
-                      <li>• Correct professionally - don't rush the fix</li>
-                      <li>• Verify correction against specification</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium text-yellow-700 dark:text-yellow-300 mb-1">Communication with Assessor:</p>
-                    <ul className="space-y-1 text-elec-yellow dark:text-elec-yellow text-xs">
-                      <li>• "I need to verify this dimension against the drawing"</li>
-                      <li>• "Could you confirm the segregation requirement here?"</li>
-                      <li>• "I want to double-check this cable specification"</li>
-                      <li>• Professional questions demonstrate competency</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* Additional InlineCheck for Assessment Understanding */}
-        <InlineCheck 
-          id="assessment-positioning"
-          question="What happens to candidates who install accessories 30mm away from the specified position?"
-          options={[
-            "No problem if the installation looks professional",
-            "Minor mark deduction for positioning error",
-            "Major mark deduction for specification non-compliance",
-            "Instant failure for not following drawings"
-          ]}
-          correctIndex={2}
-          explanation="Installing accessories significantly away from specified positions (20mm+) results in major mark deduction for specification non-compliance, as it demonstrates failure to follow drawings accurately."
-        />
-
-        {/* Real-World Examples */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
-              8. Real-World Industry Examples
-            </h2>
-            <div className="space-y-6 text-xs sm:text-sm text-white">
-              <div>
-                <h3 className="font-semibold text-base mb-3 text-elec-yellow">AM2 Assessment Failures</h3>
-                <div className="space-y-3">
-                  <div className="p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg">
-                    <h4 className="font-medium text-red-800 dark:text-red-200 mb-1">Example 1: Socket Positioning</h4>
-                    <p className="text-red-700 dark:text-elec-yellow">Candidate installed all accessories neatly but put sockets 100mm too high. Lost marks, borderline fail.</p>
-                  </div>
-                  <div className="p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg">
-                    <h4 className="font-medium text-red-800 dark:text-red-200 mb-1">Example 2: Cable Size Error</h4>
-                    <p className="text-red-700 dark:text-elec-yellow">Candidate used 2.5mm² for a cooker radial instead of 4mm². Failed installation section.</p>
-                  </div>
-                  <div className="p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/30 rounded-lg">
-                    <h4 className="font-medium text-red-800 dark:text-red-200 mb-1">Example 3: Segregation Violation</h4>
-                    <p className="text-red-700 dark:text-elec-yellow">Mixed ELV and mains in same trunking despite clear specification requiring segregation. Failed on safety compliance.</p>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h3 className="font-semibold text-base mb-3 text-elec-yellow">Industry Consequences</h3>
-                <div className="space-y-3">
-                  <div className="p-3 bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg">
-                    <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-1">Contract Breach</h4>
-                    <p className="text-orange-700 dark:text-elec-yellow">Electrician ignored drawings and ran trunking across a doorway. Site inspector rejected the work, leading to costly remedial work and contract penalties.</p>
-                  </div>
-                  <div className="p-3 bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800/30 rounded-lg">
-                    <h4 className="font-medium text-orange-800 dark:text-orange-200 mb-1">Compliance Failure</h4>
-                    <p className="text-orange-700 dark:text-elec-yellow">Installation completed to electrician's interpretation rather than specification. Failed electrical inspection and voided building regulations compliance.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* Summary */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-              <Eye className="w-5 h-5" />
-              Summary
-            </h2>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <p className="text-base font-medium">
-                Working with drawings and specifications is about precision and compliance, not interpretation or improvement.
-              </p>
-              <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-                <div>
-                  <h3 className="font-semibold text-base mb-2">Key Points</h3>
-                  <ul className="space-y-1 text-white">
-                    <li>• Drawings and specs must be followed exactly</li>
-                    <li>• BS 7671 symbol fluency is essential</li>
-                    <li>• Measurement accuracy prevents mark loss</li>
-                    <li>• Segregation requirements are non-negotiable</li>
-                    <li>• Pre-work review saves costly mistakes</li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-base mb-2">Mark-Losing Actions</h3>
-                  <ul className="space-y-1 text-white">
-                    <li>• Wrong cable sizes or types</li>
-                    <li>• Incorrect accessory positioning</li>
-                    <li>• Mixed voltage systems in same containment</li>
-                    <li>• Poor measurement and marking</li>
-                    <li>• Assuming "close enough" is acceptable</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="mt-6 p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
-                <h4 className="font-semibold text-elec-yellow mb-2">Golden Rule</h4>
-                <p className="text-white">
-                  Follow drawings and specifications exactly. AM2 assesses compliance and competency, not personal interpretation or design improvement.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* Quiz Section */}
-        <Card className="bg-transparent border-elec-yellow/30 mb-8">
-          <div className="p-6">
-            <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-4">
-              Test Your Knowledge
-            </h2>
-            <p className="text-sm text-white mb-6">
-              Complete this 10-question quiz to test your understanding of working with drawings and specifications.
-            </p>
-            <Quiz 
-              questions={quizQuestions} 
-              title="Working with Drawings and Specifications Quiz"
-            />
-          </div>
-        </Card>
-
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-between">
-          <Link 
-            to="../section2"
-            className="flex items-center gap-2 px-4 py-3 border border-elec-yellow/30 text-white rounded-lg hover:border-elec-yellow/50 transition-colors text-sm font-medium w-full sm:w-auto justify-center sm:justify-start"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Previous: Section 2
-          </Link>
-          <Link 
-            to="../section4"
-            className="flex items-center gap-2 px-4 py-3 bg-elec-yellow text-black rounded-lg hover:bg-elec-yellow/90 transition-colors text-sm font-medium w-full sm:w-auto justify-center sm:justify-start"
-          >
-            Next: Section 4
-            <ArrowLeft className="h-4 w-4 rotate-180" />
-          </Link>
         </div>
-      </div>
-    </div>
+      </AM2ContentCard>
+
+      <InlineCheck {...quickCheckQuestions[0]} />
+
+      {/* Following Specifications */}
+      <AM2ContentCard accent>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">2. Following Specifications - Non-Negotiable</h2>
+        <div className="space-y-4 text-ios-callout text-white/90">
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <h3 className="text-ios-headline font-semibold text-white mb-2">Cable Requirements</h3>
+              <ul className="space-y-1 text-white/80">
+                <li>• Sizes must match exactly (e.g., 2.5mm for sockets, 4mm for cooker)</li>
+                <li>• Cable types as specified (T&E, SWA, FP200, etc.)</li>
+                <li>• Core colours must comply with requirements</li>
+                <li>• Conductor materials (copper/aluminium) as stated</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-ios-headline font-semibold text-white mb-2">Installation Requirements</h3>
+              <ul className="space-y-1 text-white/80">
+                <li>• Accessories positioned exactly as per dimensions</li>
+                <li>• Conduit/trunking routes following specified runs</li>
+                <li>• Installation methods as detailed in specs</li>
+                <li>• Segregation requirements strictly observed</li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-6 p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl">
+            <h4 className="text-ios-headline font-semibold text-elec-yellow mb-2">NET Assessment Time Management</h4>
+            <p className="text-ios-callout text-white/80">
+              Allocate 15-20 minutes to thoroughly review all drawings and specifications before starting practical work.
+              This review time prevents costly mistakes and mark deductions later in the assessment process.
+            </p>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck {...quickCheckQuestions[2]} />
+
+      {/* Common Errors */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">3. Common Drawing Interpretation Errors (NET Guidance)</h2>
+        <div className="space-y-4 text-ios-callout text-white/90">
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <h3 className="text-ios-headline font-semibold text-elec-yellow mb-3">Critical Errors That Cause Failure</h3>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Misreading symbols on circuit diagrams</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Using the wrong cable size/type</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Installing in wrong position (heights/distances off spec)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Forgetting segregation between LV and ELV</span>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-ios-headline font-semibold text-elec-yellow mb-3">Common Mark-Losing Mistakes</h3>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Not labelling or identifying conductors</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Assuming "close enough" is acceptable</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Poor measurement and marking out</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Not cross-referencing multiple drawings</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl">
+            <h4 className="text-ios-headline font-semibold text-red-400 mb-2">Real AM2 Failure Examples</h4>
+            <ul className="space-y-1 text-ios-callout text-white/80">
+              <li>• Candidate installed all accessories neatly but put sockets 100mm too high - borderline fail</li>
+              <li>• Candidate used 2.5mm for a cooker radial instead of 4mm - failed installation section</li>
+              <li>• Mixed ELV and LV in same trunking despite specification requiring segregation - fail</li>
+              <li>• Excellent workmanship but wrong cable type used throughout - failed on compliance</li>
+            </ul>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck {...quickCheckQuestions[1]} />
+
+      {/* BS 7671 Symbol Recognition */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">4. BS 7671 Symbol Recognition Requirements</h2>
+        <div className="space-y-4 text-ios-callout text-white/90">
+          <div className="p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl">
+            <h4 className="text-ios-headline font-semibold text-elec-yellow mb-2">Essential Symbol Categories</h4>
+            <div className="grid md:grid-cols-2 gap-4 text-ios-callout text-white/80">
+              <div>
+                <h5 className="font-medium mb-2 text-white">Circuit Protection</h5>
+                <ul className="space-y-1">
+                  <li>• MCB (Miniature Circuit Breaker)</li>
+                  <li>• RCD (Residual Current Device)</li>
+                  <li>• RCBO (Combined MCB + RCD)</li>
+                  <li>• Fuses (various types)</li>
+                  <li>• Isolators and switches</li>
+                </ul>
+              </div>
+              <div>
+                <h5 className="font-medium mb-2 text-white">Installation Components</h5>
+                <ul className="space-y-1">
+                  <li>• Socket outlets (single, double)</li>
+                  <li>• Light fittings and switches</li>
+                  <li>• Junction boxes and connectors</li>
+                  <li>• Earth bonding points</li>
+                  <li>• Cable routes and types</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-ios-headline font-semibold text-white mb-2">Symbol Fluency Requirements</h3>
+            <p className="mb-2">You must be able to instantly recognise and interpret standard BS 7671 symbols without reference materials.</p>
+            <ul className="space-y-1 text-white/80 ml-4">
+              <li>• Immediate recognition of all common electrical symbols</li>
+              <li>• Understanding symbol variations and combinations</li>
+              <li>• Ability to trace circuit paths through schematic diagrams</li>
+              <li>• Recognition of obsolete symbols that may appear in existing installations</li>
+            </ul>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck {...quickCheckQuestions[3]} />
+
+      {/* Strategies */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">5. Strategies to Avoid Mistakes</h2>
+        <div className="space-y-4 text-ios-callout text-white/90">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="text-ios-headline font-semibold text-white mb-3">Pre-Work Review Process</h3>
+              <ol className="space-y-2 text-white/80">
+                <li className="flex gap-2">
+                  <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">1</span>
+                  <span>Read all drawings and specifications fully</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">2</span>
+                  <span>Cross-reference circuit and layout diagrams</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">3</span>
+                  <span>Note all cable sizes, types, and routes</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">4</span>
+                  <span>Identify all accessory positions and heights</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">5</span>
+                  <span>Check for segregation requirements</span>
+                </li>
+              </ol>
+            </div>
+            <div>
+              <h3 className="text-ios-headline font-semibold text-white mb-3">During Installation</h3>
+              <ul className="space-y-2 text-white/80">
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                  Keep specifications on hand - don't trust memory
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                  Mark out positions before drilling or fixing
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                  Double-check cable sizes before terminating
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                  Verify measurements twice before cutting
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                  Cross-check circuit connections against diagrams
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      {/* Measurement and Marking */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">6. Measurement and Marking Techniques</h2>
+        <div className="space-y-4 text-ios-callout text-white/90">
+          <div>
+            <h3 className="text-ios-headline font-semibold text-white mb-2">Professional Measuring Practices</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <h4 className="font-medium mb-2 text-elec-yellow">Accurate Measurement</h4>
+                <ul className="space-y-1 text-white/80">
+                  <li>• Use appropriate measuring tools for task</li>
+                  <li>• Measure from fixed reference points</li>
+                  <li>• Account for wall/surface variations</li>
+                  <li>• Check measurements in multiple dimensions</li>
+                  <li>• Allow for accessory box dimensions</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium mb-2 text-elec-yellow">Marking Procedures</h4>
+                <ul className="space-y-1 text-white/80">
+                  <li>• Use appropriate marking tools (pencil, chalk)</li>
+                  <li>• Mark centre points and corners clearly</li>
+                  <li>• Use spirit level for accurate horizontal/vertical</li>
+                  <li>• Mark cable entry/exit points</li>
+                  <li>• Cross-check marked positions against drawings</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 p-4 bg-green-500/10 border border-green-500/30 rounded-xl">
+            <h4 className="text-ios-headline font-semibold text-green-400 mb-2">Professional Tip</h4>
+            <p className="text-ios-callout text-white/80">
+              "Measure twice, cut once" applies especially to AM2. Incorrect positioning due to poor measuring loses marks
+              that cannot be recovered, even if the final installation is electrically sound and well-crafted.
+            </p>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      <InlineCheck {...quickCheckQuestions[4]} />
+
+      {/* What Assessors Look For */}
+      <AM2ContentCard accent>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
+          <Shield className="h-5 w-5" />
+          7. What Assessors Look For - NET Assessment Criteria
+        </h2>
+
+        <div className="space-y-6">
+          {/* What Gets Marks */}
+          <div className="p-4 bg-green-500/10 border border-green-500/30 rounded-xl">
+            <h3 className="text-ios-headline font-semibold text-green-400 mb-3 flex items-center gap-2">
+              <CheckSquare className="w-4 h-4" />
+              What Gets Marks (Pass Criteria)
+            </h3>
+            <div className="grid md:grid-cols-2 gap-4 text-ios-callout">
+              <div>
+                <p className="font-medium text-green-400 mb-2">Specification Compliance (40% weighting)</p>
+                <ul className="space-y-1 text-white/80 text-ios-footnote">
+                  <li>• Exact cable sizes as specified</li>
+                  <li>• Correct accessory positions (+/- 5mm tolerance)</li>
+                  <li>• Proper segregation implementation</li>
+                  <li>• Specified installation methods followed</li>
+                  <li>• Correct protective device ratings</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-green-400 mb-2">Professional Competency (35% weighting)</p>
+                <ul className="space-y-1 text-white/80 text-ios-footnote">
+                  <li>• Systematic verification processes</li>
+                  <li>• Accurate measurement techniques</li>
+                  <li>• Professional marking and positioning</li>
+                  <li>• BS 7671 symbol fluency demonstration</li>
+                  <li>• Clear understanding of requirements</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* What Loses Marks */}
+          <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl">
+            <h3 className="text-ios-headline font-semibold text-red-400 mb-3 flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4" />
+              What Loses Marks (Deduction Criteria)
+            </h3>
+            <div className="grid md:grid-cols-2 gap-4 text-ios-callout">
+              <div>
+                <p className="font-medium text-red-400 mb-2">Minor Deductions (2-5 marks each)</p>
+                <ul className="space-y-1 text-white/80 text-ios-footnote">
+                  <li>• Accessory positions 10-20mm out</li>
+                  <li>• Incorrect cable colour (but correct size)</li>
+                  <li>• Poor measurement technique demonstration</li>
+                  <li>• Inadequate verification process</li>
+                  <li>• Symbol recognition hesitation</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-red-400 mb-2">Major Deductions (5-10 marks each)</p>
+                <ul className="space-y-1 text-white/80 text-ios-footnote">
+                  <li>• Wrong cable sizes installed</li>
+                  <li>• Accessories 20mm+ from specified position</li>
+                  <li>• Incorrect installation method used</li>
+                  <li>• Poor specification compliance</li>
+                  <li>• Inadequate systematic approach</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Instant Failure */}
+          <div className="p-4 bg-red-500/20 border-2 border-red-500/50 rounded-xl">
+            <h3 className="text-ios-headline font-semibold text-red-400 mb-3 flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5" />
+              Instant Failure Scenarios
+            </h3>
+            <div className="space-y-2 text-ios-callout">
+              <p className="text-white/90 font-medium mb-2">
+                These scenarios result in immediate assessment failure regardless of other work quality:
+              </p>
+              <ul className="space-y-1 text-white/80 text-ios-footnote">
+                <li>• <strong>Safety segregation violations:</strong> LV and ELV cables in same containment when specification prohibits</li>
+                <li>• <strong>Major cable size errors:</strong> Using cable insufficient for protective device rating (safety issue)</li>
+                <li>• <strong>Specification abandonment:</strong> Deciding to "improve" the design instead of following specifications</li>
+                <li>• <strong>Installation method breaches:</strong> Using methods that violate BS 7671 or specified requirements</li>
+                <li>• <strong>Protective device mismatches:</strong> Installing protection that doesn't match circuit design requirements</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Recovery Strategies */}
+          <div className="p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl">
+            <h3 className="text-ios-headline font-semibold text-elec-yellow mb-3 flex items-center gap-2">
+              <Settings className="w-4 h-4" />
+              Assessment Recovery Strategies
+            </h3>
+            <div className="space-y-3 text-ios-callout">
+              <div>
+                <p className="font-medium text-elec-yellow mb-1">If You Spot an Error:</p>
+                <ul className="space-y-1 text-white/80 text-ios-footnote">
+                  <li>• Stop immediately and assess impact</li>
+                  <li>• Document the error and proposed correction</li>
+                  <li>• Ask assessor for clarification if needed</li>
+                  <li>• Correct professionally - don't rush the fix</li>
+                  <li>• Verify correction against specification</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-elec-yellow mb-1">Communication with Assessor:</p>
+                <ul className="space-y-1 text-white/80 text-ios-footnote">
+                  <li>• "I need to verify this dimension against the drawing"</li>
+                  <li>• "Could you confirm the segregation requirement here?"</li>
+                  <li>• "I want to double-check this cable specification"</li>
+                  <li>• Professional questions demonstrate competency</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      {/* Real-World Examples */}
+      <AM2ContentCard>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">8. Real-World Industry Examples</h2>
+        <div className="space-y-6 text-ios-callout text-white/90">
+          <div>
+            <h3 className="text-ios-headline font-semibold text-elec-yellow mb-3">AM2 Assessment Failures</h3>
+            <div className="space-y-3">
+              <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl">
+                <h4 className="font-medium text-red-400 mb-1">Example 1: Socket Positioning</h4>
+                <p className="text-white/80">Candidate installed all accessories neatly but put sockets 100mm too high. Lost marks, borderline fail.</p>
+              </div>
+              <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl">
+                <h4 className="font-medium text-red-400 mb-1">Example 2: Cable Size Error</h4>
+                <p className="text-white/80">Candidate used 2.5mm for a cooker radial instead of 4mm. Failed installation section.</p>
+              </div>
+              <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl">
+                <h4 className="font-medium text-red-400 mb-1">Example 3: Segregation Violation</h4>
+                <p className="text-white/80">Mixed ELV and mains in same trunking despite clear specification requiring segregation. Failed on safety compliance.</p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-ios-headline font-semibold text-elec-yellow mb-3">Industry Consequences</h3>
+            <div className="space-y-3">
+              <div className="p-3 bg-orange-500/10 border border-orange-500/30 rounded-xl">
+                <h4 className="font-medium text-orange-400 mb-1">Contract Breach</h4>
+                <p className="text-white/80">Electrician ignored drawings and ran trunking across a doorway. Site inspector rejected the work, leading to costly remedial work and contract penalties.</p>
+              </div>
+              <div className="p-3 bg-orange-500/10 border border-orange-500/30 rounded-xl">
+                <h4 className="font-medium text-orange-400 mb-1">Compliance Failure</h4>
+                <p className="text-white/80">Installation completed to electrician's interpretation rather than specification. Failed electrical inspection and voided building regulations compliance.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      {/* Summary */}
+      <AM2ContentCard accent>
+        <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3 flex items-center gap-2">
+          <Eye className="w-5 h-5" />
+          Summary
+        </h2>
+        <div className="space-y-4 text-ios-callout text-white/90">
+          <p className="text-ios-body font-medium">
+            Working with drawings and specifications is about precision and compliance, not interpretation or improvement.
+          </p>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="text-ios-headline font-semibold text-white mb-2">Key Points</h3>
+              <ul className="space-y-1 text-white/80">
+                <li>• Drawings and specs must be followed exactly</li>
+                <li>• BS 7671 symbol fluency is essential</li>
+                <li>• Measurement accuracy prevents mark loss</li>
+                <li>• Segregation requirements are non-negotiable</li>
+                <li>• Pre-work review saves costly mistakes</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-ios-headline font-semibold text-white mb-2">Mark-Losing Actions</h3>
+              <ul className="space-y-1 text-white/80">
+                <li>• Wrong cable sizes or types</li>
+                <li>• Incorrect accessory positioning</li>
+                <li>• Mixed voltage systems in same containment</li>
+                <li>• Poor measurement and marking</li>
+                <li>• Assuming "close enough" is acceptable</li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-6 p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl">
+            <h4 className="text-ios-headline font-semibold text-elec-yellow mb-2">Golden Rule</h4>
+            <p className="text-white/90">
+              Follow drawings and specifications exactly. AM2 assesses compliance and competency, not personal interpretation or design improvement.
+            </p>
+          </div>
+        </div>
+      </AM2ContentCard>
+
+      {/* Quiz Section */}
+      <Quiz
+        questions={quizQuestions}
+        title="Working with Drawings and Specifications Quiz"
+      />
+
+      {/* Navigation Footer */}
+      <AM2NavigationFooter
+        prevHref="../section2"
+        prevLabel="Previous: Section 2"
+        nextHref="../section4"
+        nextLabel="Continue to Section 4"
+        currentSection={3}
+        totalSections={8}
+      />
+    </AM2SectionLayout>
   );
 };
 

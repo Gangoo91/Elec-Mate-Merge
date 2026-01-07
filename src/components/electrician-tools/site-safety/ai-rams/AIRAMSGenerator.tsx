@@ -389,40 +389,44 @@ export const AIRAMSGenerator: React.FC = () => {
     : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-grey via-elec-dark to-elec-grey">
-      <div className="w-full px-0 py-6 sm:py-8 md:py-10 max-w-7xl mx-auto sm:px-4 md:px-6 lg:px-8">
-        <div className="mb-6 sm:mb-8 px-2 sm:px-0">
-          {/* Clean Header Card */}
-          <div className="relative overflow-hidden rounded-lg border border-elec-yellow/10 bg-elec-card/30 backdrop-blur-sm shadow-md hover:shadow-lg hover:border-elec-yellow/20 transition-all duration-300">
-            {/* Subtle accent line */}
-            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-elec-yellow/60 to-transparent" />
-            
-            <div className="p-4 sm:p-6 space-y-3">
-              {/* Centered content */}
-              <div className="flex flex-col items-center text-center space-y-3">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
-                  <span className="bg-gradient-to-r from-elec-yellow to-yellow-400 bg-clip-text text-transparent">
-                    AI RAMS Generator
-                  </span>
-                </h1>
-                <p className="text-sm sm:text-base text-muted-foreground max-w-2xl">
-                  Generate professional Risk Assessments and Method Statements in minutes using advanced AI
-                </p>
-              </div>
-              
-              {/* Clean divider */}
-              <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-            </div>
+    <div className="min-h-screen bg-elec-dark">
+      {/* Header */}
+      <header className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-lg border-b border-white/10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate(-1)}
+            className="h-10 w-10 rounded-xl hover:bg-white/10"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+          <div className="flex-1">
+            <h1 className="text-xl font-bold text-white">AI RAMS Generator</h1>
+            <p className="text-sm text-white/60">Risk Assessment & Method Statement</p>
           </div>
+          {showResults && status === 'complete' && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleStartOver}
+              className="border-elec-yellow/40 text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow"
+            >
+              <Sparkles className="h-4 w-4 mr-2" />
+              New RAMS
+            </Button>
+          )}
         </div>
+      </header>
 
-        <div className="space-y-6 md:space-y-8">
-          {!showResults ? (
-            <AIRAMSInput
-              onGenerate={handleGenerate}
-              isProcessing={!!currentJobId && (status === 'pending' || status === 'processing')}
-            />
-          ) : (
+      {/* Content */}
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {!showResults ? (
+          <AIRAMSInput
+            onGenerate={handleGenerate}
+            isProcessing={!!currentJobId && (status === 'pending' || status === 'processing')}
+          />
+        ) : (
             <>
               {/* Resuming banner */}
               {resumedJob && status !== 'complete' && (
@@ -489,7 +493,7 @@ export const AIRAMSGenerator: React.FC = () => {
               )}
 
               {ramsData && (
-                <div id="rams-results" className="px-2">
+                <div id="rams-results">
                   {/* Show warning if method data is missing */}
                   {!methodData && (
                     <div className="mb-4 p-4 bg-orange-500/10 border border-orange-500/30 rounded-lg">
@@ -557,36 +561,23 @@ export const AIRAMSGenerator: React.FC = () => {
                 </div>
               )}
 
-              {status === 'complete' && ramsData && (
-                <div className="flex justify-center pt-4 pb-8">
-                  <Button
-                    variant="outline"
-                    onClick={handleStartOver}
-                    className="border-elec-yellow/40 hover:border-elec-yellow hover:bg-elec-yellow/10 text-elec-yellow font-bold text-lg px-8 py-6 rounded-xl transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-elec-yellow/30"
-                  >
-                    <Sparkles className="h-5 w-5 mr-2" />
-                    Generate Another RAMS
-                  </Button>
-                </div>
-              )}
             </>
           )}
-        </div>
+      </main>
 
-        {/* Celebration Modal */}
-        {showCelebration && ramsData && methodData && (
-          <CompletionCelebration
-            hazardCount={hazardCount}
-            controlMeasuresCount={controlMeasuresCount}
-            methodStepsCount={methodStepsCount}
-            generationTimeSeconds={generationTimeSeconds}
-            onClose={() => {
-              setShowCelebration(false);
-              setShowResults(true);
-            }}
-          />
-        )}
-      </div>
+      {/* Celebration Modal */}
+      {showCelebration && ramsData && methodData && (
+        <CompletionCelebration
+          hazardCount={hazardCount}
+          controlMeasuresCount={controlMeasuresCount}
+          methodStepsCount={methodStepsCount}
+          generationTimeSeconds={generationTimeSeconds}
+          onClose={() => {
+            setShowCelebration(false);
+            setShowResults(true);
+          }}
+        />
+      )}
     </div>
   );
 };

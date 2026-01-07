@@ -727,56 +727,43 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       isMobile && keyboardVisible && "pb-[100px]",
       isMobile && !keyboardVisible && "pb-[100px]"
     )}>
-      <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl overflow-hidden">
-        <CardHeader className="p-4 sm:p-6 border-b border-white/10">
-          <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-foreground">
-            <div className="flex flex-col gap-2">
-              <span className="flex items-center gap-3 text-xl sm:text-2xl font-bold">
-                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl bg-elec-yellow/10 flex items-center justify-center border border-elec-yellow/20">
-                  <Edit3 className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-                </div>
-                <span className="text-white">
-                  Review & Edit
-                </span>
-              </span>
-              {lastSaved && (
-                <span className="text-xs text-white/40 ml-13">
-                  {isSaving ? 'Saving...' : `Last saved ${lastSaved.toLocaleTimeString()}`}
-                </span>
-              )}
+      <Card className="bg-elec-dark border border-white/[0.06] rounded-2xl overflow-hidden">
+        <CardHeader className="p-4 sm:p-5 border-b border-white/[0.06]">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <h2 className="text-lg sm:text-xl font-semibold text-white">
+                Review & Edit
+              </h2>
+              <Badge className="bg-green-500/10 text-green-400 border border-green-500/20 text-xs font-medium px-2 py-0.5">
+                AI Generated
+              </Badge>
             </div>
             {!isMobile && (
               <div className="flex items-center gap-2">
+                {lastSaved && (
+                  <span className="text-xs text-white/40 mr-2">
+                    {isSaving ? 'Saving...' : `Saved ${lastSaved.toLocaleTimeString()}`}
+                  </span>
+                )}
                 {onRegenerate && (
                   <Button
                     onClick={onRegenerate}
                     size="sm"
-                    variant="outline"
-                    className="border-white/10 hover:border-orange-500/50 h-9 px-4 text-sm hover:bg-orange-500/10 transition-all text-white/60 hover:text-orange-400"
+                    variant="ghost"
+                    className="h-8 px-3 text-xs text-white/50 hover:text-orange-400 hover:bg-orange-500/10"
                   >
-                    <Sparkles className="h-4 w-4 mr-2" />
+                    <Sparkles className="h-3.5 w-3.5 mr-1.5" />
                     Regenerate
                   </Button>
                 )}
-                {onSave && (
-                  <Button
-                    onClick={onSave}
-                    disabled={isSaving}
-                    size="sm"
-                    variant="outline"
-                    className="border-white/10 hover:border-elec-yellow/50 h-9 px-4 text-sm hover:bg-elec-yellow/10 transition-all text-white/60 hover:text-elec-yellow"
-                  >
-                    <Save className="h-4 w-4 mr-2" />
-                    {isSaving ? 'Saving...' : 'Save'}
-                  </Button>
-                )}
-                <Badge className="bg-green-500/10 text-green-400 border border-green-500/20 text-xs font-medium px-2 py-1 h-7 flex items-center gap-1">
-                  <CheckCircle className="h-3 w-3" />
-                  AI Generated
-                </Badge>
               </div>
             )}
-          </CardTitle>
+          </div>
+          {lastSaved && isMobile && (
+            <span className="text-xs text-white/40 mt-1">
+              {isSaving ? 'Saving...' : `Saved ${lastSaved.toLocaleTimeString()}`}
+            </span>
+          )}
         </CardHeader>
         
         {/* PHASE 4: Partial Completion Warning Banner */}
@@ -804,17 +791,33 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         
         <CardContent className="p-0">
           <Tabs defaultValue="rams" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 h-12 bg-[#1a1a1a] rounded-none p-1 gap-1">
+            <TabsList className="grid w-full grid-cols-2 h-14 bg-transparent rounded-none p-2 gap-2 border-b border-white/[0.06]">
               <TabsTrigger
                 value="rams"
-                className="text-sm font-medium data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow data-[state=inactive]:text-white/50 data-[state=active]:border data-[state=active]:border-elec-yellow/20 transition-all h-full rounded-lg flex items-center justify-center gap-2 hover:text-white/70"
+                className={cn(
+                  "h-full rounded-xl text-sm font-medium transition-all duration-200",
+                  "flex items-center justify-center gap-2",
+                  "bg-white/[0.03] border border-transparent",
+                  "data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow",
+                  "data-[state=active]:border-elec-yellow/20 data-[state=active]:shadow-sm",
+                  "data-[state=inactive]:text-white/50 data-[state=inactive]:hover:text-white/70",
+                  "data-[state=inactive]:hover:bg-white/[0.05]"
+                )}
               >
                 <Shield className="h-4 w-4" />
                 <span>Risk Assessment</span>
               </TabsTrigger>
               <TabsTrigger
                 value="method"
-                className="text-sm font-medium data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow data-[state=inactive]:text-white/50 data-[state=active]:border data-[state=active]:border-elec-yellow/20 transition-all h-full rounded-lg flex items-center justify-center gap-2 hover:text-white/70"
+                className={cn(
+                  "h-full rounded-xl text-sm font-medium transition-all duration-200",
+                  "flex items-center justify-center gap-2",
+                  "bg-white/[0.03] border border-transparent",
+                  "data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow",
+                  "data-[state=active]:border-elec-yellow/20 data-[state=active]:shadow-sm",
+                  "data-[state=inactive]:text-white/50 data-[state=inactive]:hover:text-white/70",
+                  "data-[state=inactive]:hover:bg-white/[0.05]"
+                )}
               >
                 <FileText className="h-4 w-4" />
                 <span>Method Statement</span>
@@ -1030,29 +1033,23 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
             </TabsContent>
           </Tabs>
 
-          {/* Download Buttons Section */}
-          <div className="p-4 sm:p-6 border-t border-white/10 bg-[#1a1a1a]">
-            <h4 className="text-sm font-medium text-white/40 mb-4 flex items-center gap-2">
-              <Download className="h-4 w-4" />
-              Export Options
-            </h4>
-
-            {/* Desktop View */}
-            <div className="hidden sm:flex gap-3">
+          {/* Export Section - Desktop */}
+          <div className="hidden sm:block p-4 sm:p-6 border-t border-white/[0.06] bg-white/[0.02]">
+            <div className="flex gap-3">
               <Button
                 onClick={handleSaveToLibrary}
                 disabled={isGenerating || localIsSaving}
-                className="gap-2 flex-1 h-12 bg-green-500/10 hover:bg-green-500/20 text-green-400 border border-green-500/20"
+                className="gap-2 flex-1 h-14 bg-white/[0.03] hover:bg-white/[0.06] text-white border border-white/[0.08] hover:border-white/[0.12] rounded-xl font-medium transition-all"
                 variant="outline"
               >
                 {localIsSaving ? (
                   <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <Loader2 className="h-5 w-5 animate-spin" />
                     Saving...
                   </>
                 ) : (
                   <>
-                    <FolderOpen className="h-4 w-4" />
+                    <FolderOpen className="h-5 w-5" />
                     Save to Library
                   </>
                 )}
@@ -1060,40 +1057,19 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               <Button
                 onClick={handleGenerateCombinedRAMS}
                 disabled={isGenerating}
-                className="gap-2 flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                className="gap-2 flex-1 h-14 bg-gradient-to-r from-elec-yellow to-amber-500 text-black hover:from-elec-yellow/90 hover:to-amber-500/90 rounded-xl font-semibold shadow-lg shadow-elec-yellow/20 transition-all"
               >
-                <Download className="h-4 w-4" />
-                Download PDF
-              </Button>
-            </div>
-
-            {/* Mobile View */}
-            <div className="sm:hidden flex flex-col gap-3">
-              <Button
-                onClick={handleSaveToLibrary}
-                disabled={isGenerating || localIsSaving}
-                className="w-full gap-2 h-12 bg-green-500/10 hover:bg-green-500/20 text-green-400 border border-green-500/20"
-                variant="outline"
-              >
-                {localIsSaving ? (
+                {isGenerating ? (
                   <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Saving...
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    Generating...
                   </>
                 ) : (
                   <>
-                    <FolderOpen className="h-4 w-4" />
-                    Save to Library
+                    <Download className="h-5 w-5" />
+                    Download PDF
                   </>
                 )}
-              </Button>
-              <Button
-                onClick={handleGenerateCombinedRAMS}
-                disabled={isGenerating}
-                className="w-full gap-2 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-              >
-                <Download className="h-4 w-4" />
-                Download PDF
               </Button>
             </div>
           </div>
