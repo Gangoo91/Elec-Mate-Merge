@@ -422,7 +422,7 @@
 
   /* iOS elevated card */
   .ios-card-elevated {
-    @apply bg-white/8 backdrop-blur-xl rounded-2xl border border-white/15;
+    @apply bg-white/10 backdrop-blur-xl rounded-2xl border border-white/15;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 
@@ -446,7 +446,7 @@
     @apply w-full h-[50px] px-4 py-3;
     @apply text-ios-body text-white placeholder:text-white/40;
     @apply bg-white/5 rounded-xl border-2 border-white/10;
-    @apply focus:outline-none focus:border-elec-yellow/60 focus:bg-white/8;
+    @apply focus:outline-none focus:border-elec-yellow/60 focus:bg-white/10;
     @apply transition-all duration-250 ease-ios-ease;
   }
 
@@ -1541,6 +1541,83 @@
 
   .animate-scan {
     animation: scan 2s ease-in-out infinite;
+  }
+
+  /* ===== I&T DASHBOARD PREMIUM UTILITIES ===== */
+
+  /* Glassmorphism dark header */
+  .glass-dark {
+    @apply bg-black/80 backdrop-blur-xl;
+    border-bottom: 1px solid rgba(255, 209, 0, 0.1);
+  }
+
+  /* Premium card with golden accent */
+  .card-premium-yellow {
+    @apply relative overflow-hidden;
+    background: linear-gradient(135deg,
+      hsl(47 100% 50% / 0.08) 0%,
+      hsl(240 5.9% 14% / 0.95) 30%,
+      hsl(240 5.9% 12%) 100%);
+    border: 1px solid hsl(47 100% 50% / 0.25);
+  }
+
+  .card-premium-yellow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      hsl(47 100% 50%) 50%,
+      transparent 100%);
+    opacity: 0.8;
+  }
+
+  /* Golden glow for larger elements */
+  .glow-yellow-lg {
+    box-shadow: 0 0 80px -20px hsl(47 100% 50% / 0.25),
+                0 20px 60px -15px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Card entrance animation - staggered */
+  @keyframes card-entrance {
+    0% {
+      opacity: 0;
+      transform: translateY(16px) scale(0.96);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .animate-card-entrance {
+    animation: card-entrance 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  /* Stagger delays for card grids */
+  .card-stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .card-stagger > *:nth-child(2) { animation-delay: 50ms; }
+  .card-stagger > *:nth-child(3) { animation-delay: 100ms; }
+  .card-stagger > *:nth-child(4) { animation-delay: 150ms; }
+  .card-stagger > *:nth-child(5) { animation-delay: 200ms; }
+  .card-stagger > *:nth-child(6) { animation-delay: 250ms; }
+
+  /* Premium icon container with glow */
+  .icon-glow-yellow {
+    @apply relative;
+    box-shadow: 0 0 30px -8px hsl(47 100% 50% / 0.4);
+  }
+
+  /* Subtle stat card styling */
+  .stat-card-unified {
+    @apply bg-white/5 border border-white/10 backdrop-blur-sm;
+  }
+
+  .stat-card-unified:hover {
+    @apply bg-white/10 border-elec-yellow/20;
   }
 
   /* Safe area padding for bottom action bars */
