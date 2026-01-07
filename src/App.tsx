@@ -12,6 +12,7 @@ import { queryClient } from '@/lib/queryClient';
 import ScrollToTop from '@/components/ScrollToTop';
 import { PWAUpdatePrompt } from '@/components/PWAUpdatePrompt';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Toaster />
               <PWAUpdatePrompt />
               <SpeedInsights />
+              <Analytics />
             </NotificationProvider>
           </ThemeProvider>
         </AuthProvider>
