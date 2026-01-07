@@ -5,7 +5,7 @@ import { ListOrdered, ShieldAlert } from "lucide-react";
 
 const HazardRecognition = () => {
   return (
-    <div className="border border-elec-yellow/30 rounded-lg p-4 md:p-6 space-y-4">
+    <div className="border border-elec-yellow/30 rounded-xl p-4 md:p-6 space-y-4">
       <h3 className="text-xl font-bold text-elec-yellow">Hazard Recognition and Risk Assessment</h3>
       
       <p className="text-sm md:text-base mb-4">
@@ -13,7 +13,7 @@ const HazardRecognition = () => {
         Understanding how to assess the risk level of identified hazards is crucial for prioritising control measures.
       </p>
       
-      <Card className="bg-white/10 border border-elec-yellow/20">
+      <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
         <CardHeader className="pb-2">
           <div className="flex items-center gap-2">
             <ListOrdered className="h-5 w-5 text-elec-yellow" />
@@ -22,7 +22,7 @@ const HazardRecognition = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="border-l-4 border-elec-yellow/40 pl-3 space-y-2 p-3 rounded bg-white/10">
+            <div className="border-l-4 border-elec-yellow/40 pl-3 space-y-2 p-3 rounded-lg bg-white/10">
               <h4 className="font-medium text-elec-yellow">1. Pre-Work Assessment</h4>
               <ul className="space-y-1 pl-4 text-sm list-disc">
                 <li>Review work order and scope</li>
@@ -33,7 +33,7 @@ const HazardRecognition = () => {
               </ul>
             </div>
             
-            <div className="border-l-4 border-elec-yellow/40 pl-3 space-y-2 p-3 rounded bg-white/10">
+            <div className="border-l-4 border-elec-yellow/40 pl-3 space-y-2 p-3 rounded-lg bg-white/10">
               <h4 className="font-medium text-elec-yellow">2. Active Inspection</h4>
               <ul className="space-y-1 pl-4 text-sm list-disc">
                 <li>Conduct point-of-work risk assessment</li>
@@ -44,7 +44,7 @@ const HazardRecognition = () => {
               </ul>
             </div>
             
-            <div className="border-l-4 border-elec-yellow/40 pl-3 space-y-2 p-3 rounded bg-white/10">
+            <div className="border-l-4 border-elec-yellow/40 pl-3 space-y-2 p-3 rounded-lg bg-white/10">
               <h4 className="font-medium text-elec-yellow">3. Continuous Monitoring</h4>
               <ul className="space-y-1 pl-4 text-sm list-disc">
                 <li>Remain vigilant during work</li>
@@ -59,7 +59,7 @@ const HazardRecognition = () => {
       </Card>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <Card className="bg-white/10 border border-elec-yellow/20">
+        <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
           <CardHeader className="pb-2">
             <div className="flex items-center gap-2">
               <ShieldAlert className="h-5 w-5 text-elec-yellow" />
@@ -96,7 +96,7 @@ const HazardRecognition = () => {
           </CardContent>
         </Card>
         
-        <Card className="bg-white/10 border border-elec-yellow/20">
+        <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg text-elec-yellow">Warning Signs of Electrical Hazards</CardTitle>
           </CardHeader>
@@ -104,7 +104,7 @@ const HazardRecognition = () => {
             <p className="mb-3 text-sm">Being able to recognise early warning signs can help prevent accidents:</p>
             
             <div className="grid grid-cols-1 gap-2">
-              <div className="p-3 rounded bg-white/10 border border-elec-yellow/10">
+              <div className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10">
                 <h4 className="font-medium text-elec-yellow mb-1">Physical Signs</h4>
                 <ul className="space-y-1 pl-4 text-sm list-disc">
                   <li>Unusual odours (burning smell)</li>
@@ -114,7 +114,7 @@ const HazardRecognition = () => {
                 </ul>
               </div>
               
-              <div className="p-3 rounded bg-white/10 border border-elec-yellow/10">
+              <div className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10">
                 <h4 className="font-medium text-elec-yellow mb-1">Operational Signs</h4>
                 <ul className="space-y-1 pl-4 text-sm list-disc">
                   <li>Circuit breakers that frequently trip</li>
@@ -139,7 +139,7 @@ const HazardRecognition = () => {
           <p className="mb-4 text-sm">When addressing identified hazards, follow the hierarchy of controls in this order:</p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
-            <div className="p-3 rounded bg-white/10 border border-elec-yellow/10">
+            <div className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10">
               <div className="flex items-center gap-2 mb-1">
                 <span className="bg-elec-yellow text-elec-dark rounded-full w-6 h-6 flex items-center justify-center font-bold">1</span>
                 <span className="font-medium">Elimination</span>
@@ -147,7 +147,7 @@ const HazardRecognition = () => {
               <p className="text-xs">Remove the hazard completely</p>
             </div>
             
-            <div className="p-3 rounded bg-white/10 border border-elec-yellow/10">
+            <div className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10">
               <div className="flex items-center gap-2 mb-1">
                 <span className="bg-elec-yellow text-elec-dark rounded-full w-6 h-6 flex items-center justify-center font-bold">2</span>
                 <span className="font-medium">Substitution</span>
@@ -155,7 +155,7 @@ const HazardRecognition = () => {
               <p className="text-xs">Replace with something less hazardous</p>
             </div>
             
-            <div className="p-3 rounded bg-white/10 border border-elec-yellow/10">
+            <div className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10">
               <div className="flex items-center gap-2 mb-1">
                 <span className="bg-elec-yellow text-elec-dark rounded-full w-6 h-6 flex items-center justify-center font-bold">3</span>
                 <span className="font-medium">Engineering Controls</span>
@@ -163,7 +163,7 @@ const HazardRecognition = () => {
               <p className="text-xs">Isolate people from the hazard</p>
             </div>
             
-            <div className="p-3 rounded bg-white/10 border border-elec-yellow/10">
+            <div className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10">
               <div className="flex items-center gap-2 mb-1">
                 <span className="bg-elec-yellow text-elec-dark rounded-full w-6 h-6 flex items-center justify-center font-bold">4</span>
                 <span className="font-medium">Administrative Controls</span>
@@ -171,7 +171,7 @@ const HazardRecognition = () => {
               <p className="text-xs">Change work procedures & training</p>
             </div>
             
-            <div className="p-3 rounded bg-white/10 border border-elec-yellow/10">
+            <div className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10">
               <div className="flex items-center gap-2 mb-1">
                 <span className="bg-elec-yellow text-elec-dark rounded-full w-6 h-6 flex items-center justify-center font-bold">5</span>
                 <span className="font-medium">PPE</span>

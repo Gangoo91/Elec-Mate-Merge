@@ -5,7 +5,7 @@ import { AlertTriangle, CheckCircle, XCircle } from "lucide-react";
 
 const LadderInspection = () => {
   return (
-    <Card className="border border-elec-yellow/30 bg-elec-card">
+    <Card className="border border-elec-yellow/30 bg-elec-card rounded-xl overflow-hidden">
       <CardHeader className="pb-3">
         <CardTitle className="text-xl font-bold text-elec-yellow">Ladder Inspection & Safe Use</CardTitle>
       </CardHeader>
@@ -23,7 +23,7 @@ const LadderInspection = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-          <Card className="bg-white/10 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
@@ -46,7 +46,7 @@ const LadderInspection = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-white/10 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
@@ -71,7 +71,7 @@ const LadderInspection = () => {
         </div>
         
         <div className="mt-4">
-          <Card className="bg-white/10 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg font-semibold text-elec-yellow">Formal Inspection Requirements</CardTitle>
             </CardHeader>

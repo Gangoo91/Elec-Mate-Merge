@@ -39,10 +39,10 @@ const quickCheckQuestions = [
     id: "cable-sizing-relationship",
     question: "What is the correct relationship for cable sizing under overload conditions?",
     options: [
-      "Ib > In > Iz",
+      "Ib &gt; In > Iz",
       "Ib less than or equal to In less than or equal to Iz",
       "Iz less than or equal to In less than or equal to Ib", 
-      "In > Ib > Iz"
+      "In &gt; Ib > Iz"
     ],
     correctIndex: 1,
     explanation: "The design current (Ib) must not exceed the nominal current (In) of the protective device, which must not exceed the current-carrying capacity (Iz) of the cable."

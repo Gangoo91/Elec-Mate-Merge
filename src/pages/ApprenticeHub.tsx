@@ -362,10 +362,12 @@ const mainResources: ToolCardProps[] = [
     link: '/apprentice/calculators',
   },
   {
-    title: 'Portfolio & OJT',
-    description: 'Track hours, log evidence, build your portfolio',
+    title: 'OJT Hub',
+    description: 'Track training hours, log evidence, manage goals',
     icon: Clock,
-    link: '/apprentice/ojt',
+    link: '/apprentice/ojt-hub',
+    featured: true,
+    badges: ['Time Tracking', 'Evidence', 'Goals'],
   },
   {
     title: 'Mental Health Hub',

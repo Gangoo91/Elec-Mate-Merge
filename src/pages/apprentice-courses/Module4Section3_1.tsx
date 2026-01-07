@@ -135,7 +135,7 @@ const bendTypes = [
   },
   {
     type: "Kick Bend",
-    purpose: "Small directional adjustment (usually <30 degrees)",
+    purpose: "Small directional adjustment (usually &lt;30 degrees)",
     applications: ["Final adjustment into boxes", "Minor alignment corrections"],
     considerations: "Fine-tuning tool for neat terminations",
     icon: "⤷"

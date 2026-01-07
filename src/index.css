@@ -353,6 +353,149 @@
     min-height: 44px;
     min-width: 44px;
   }
+
+  /* ========================================
+     iOS-NATIVE ANIMATION UTILITIES
+     ======================================== */
+
+  /* iOS entrance animation - scale in with spring */
+  .ios-animate-in {
+    animation: ios-scale-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  /* iOS entrance with custom delay */
+  .ios-animate-in-delayed {
+    opacity: 0;
+    animation: ios-scale-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: var(--ios-delay, 0ms);
+  }
+
+  /* iOS slide up entrance */
+  .ios-slide-in {
+    animation: ios-slide-up 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  /* Stagger children animations - iOS style */
+  .ios-stagger-children > * {
+    opacity: 0;
+    animation: ios-scale-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  .ios-stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+  .ios-stagger-children > *:nth-child(2) { animation-delay: 50ms; }
+  .ios-stagger-children > *:nth-child(3) { animation-delay: 100ms; }
+  .ios-stagger-children > *:nth-child(4) { animation-delay: 150ms; }
+  .ios-stagger-children > *:nth-child(5) { animation-delay: 200ms; }
+  .ios-stagger-children > *:nth-child(6) { animation-delay: 250ms; }
+  .ios-stagger-children > *:nth-child(7) { animation-delay: 300ms; }
+  .ios-stagger-children > *:nth-child(8) { animation-delay: 350ms; }
+
+  /* iOS button press effect */
+  .ios-pressable {
+    @apply transition-transform duration-150 ease-ios-ease touch-manipulation;
+  }
+  .ios-pressable:active {
+    transform: scale(0.97);
+  }
+
+  /* iOS card tap effect */
+  .ios-card-tap {
+    @apply transition-all duration-150 ease-ios-ease touch-manipulation;
+  }
+  .ios-card-tap:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+
+  /* iOS input focus glow */
+  .ios-input-focus {
+    @apply transition-all duration-250 ease-ios-ease;
+  }
+  .ios-input-focus:focus {
+    box-shadow: 0 0 0 4px hsl(var(--elec-yellow) / 0.15);
+  }
+
+  /* iOS card style - glassmorphism */
+  .ios-card {
+    @apply bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  /* iOS elevated card */
+  .ios-card-elevated {
+    @apply bg-white/8 backdrop-blur-xl rounded-2xl border border-white/15;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  /* iOS form spacing */
+  .ios-form-spacing {
+    @apply space-y-4;
+  }
+
+  /* iOS section spacing */
+  .ios-section-spacing {
+    @apply space-y-6;
+  }
+
+  /* iOS label style */
+  .ios-label {
+    @apply block text-ios-subhead font-medium text-white/80 mb-2;
+  }
+
+  /* iOS input base style */
+  .ios-input-base {
+    @apply w-full h-[50px] px-4 py-3;
+    @apply text-ios-body text-white placeholder:text-white/40;
+    @apply bg-white/5 rounded-xl border-2 border-white/10;
+    @apply focus:outline-none focus:border-elec-yellow/60 focus:bg-white/8;
+    @apply transition-all duration-250 ease-ios-ease;
+  }
+
+  /* iOS primary button style */
+  .ios-btn-primary {
+    @apply h-[50px] px-6 rounded-xl font-semibold;
+    @apply bg-elec-yellow text-black;
+    @apply transition-all duration-150 ease-ios-ease touch-manipulation;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  }
+  .ios-btn-primary:active {
+    transform: scale(0.97);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* iOS secondary button style */
+  .ios-btn-secondary {
+    @apply h-[50px] px-6 rounded-xl font-medium;
+    @apply bg-white/10 text-white border border-white/20;
+    @apply transition-all duration-150 ease-ios-ease touch-manipulation;
+  }
+  .ios-btn-secondary:active {
+    transform: scale(0.97);
+    @apply bg-white/15;
+  }
+
+  /* iOS ghost button */
+  .ios-btn-ghost {
+    @apply h-[50px] px-6 rounded-xl font-medium;
+    @apply text-elec-yellow bg-transparent;
+    @apply transition-all duration-150 ease-ios-ease touch-manipulation;
+  }
+  .ios-btn-ghost:active {
+    @apply bg-elec-yellow/10;
+  }
+
+  /* Safe area utilities for notched phones */
+  .safe-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+  .safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  .safe-left {
+    padding-left: max(1rem, env(safe-area-inset-left));
+  }
+  .safe-right {
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
 }
 
 /* Hide scrollbars utilities */

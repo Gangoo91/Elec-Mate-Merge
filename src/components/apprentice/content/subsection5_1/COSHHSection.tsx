@@ -5,7 +5,7 @@ import { AlertTriangle } from "lucide-react";
 
 const COSHHSection = () => {
   return (
-    <div className="border border-elec-yellow/30 rounded-lg p-4 md:p-6 space-y-4">
+    <div className="border border-elec-yellow/30 rounded-xl p-4 md:p-6 space-y-4">
       <h3 className="text-xl font-bold text-elec-yellow">COSHH - Control of Substances Hazardous to Health</h3>
       
       <p className="text-sm md:text-base mb-4">
@@ -15,7 +15,7 @@ const COSHHSection = () => {
       </p>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="bg-white/10 border border-elec-yellow/20">
+        <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
           <CardHeader className="pb-2">
             <div className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-elec-yellow" />
@@ -24,22 +24,22 @@ const COSHHSection = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="p-3 rounded bg-white/10 border border-elec-yellow/10">
+              <div className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10">
                 <h4 className="font-medium text-elec-yellow mb-1">Solvents and Cleaners</h4>
                 <p className="text-sm">Used for cleaning electrical contacts and components, can cause skin irritation and respiratory issues.</p>
               </div>
               
-              <div className="p-3 rounded bg-white/10 border border-elec-yellow/10">
+              <div className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10">
                 <h4 className="font-medium text-elec-yellow mb-1">Cable Lubricants</h4>
                 <p className="text-sm">Used to ease cable installation, may contain chemicals harmful if ingested or in contact with eyes.</p>
               </div>
               
-              <div className="p-3 rounded bg-white/10 border border-elec-yellow/10">
+              <div className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10">
                 <h4 className="font-medium text-elec-yellow mb-1">Drilling Dust</h4>
                 <p className="text-sm">Can contain silica, plaster, and other harmful particles that can damage lungs when inhaled.</p>
               </div>
               
-              <div className="p-3 rounded bg-white/10 border border-elec-yellow/10">
+              <div className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10">
                 <h4 className="font-medium text-elec-yellow mb-1">Sealants and Adhesives</h4>
                 <p className="text-sm">Often contain volatile organic compounds (VOCs) that can cause headaches and respiratory problems.</p>
               </div>
@@ -47,7 +47,7 @@ const COSHHSection = () => {
           </CardContent>
         </Card>
         
-        <Card className="bg-white/10 border border-elec-yellow/20">
+        <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
           <CardHeader className="pb-2">
             <div className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-elec-yellow" />
@@ -56,22 +56,22 @@ const COSHHSection = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="p-3 rounded bg-white/10 border border-elec-yellow/10">
+              <div className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10">
                 <h4 className="font-medium text-elec-yellow mb-1">Risk Assessment</h4>
                 <p className="text-sm">Employers must assess risks from hazardous substances before work begins.</p>
               </div>
               
-              <div className="p-3 rounded bg-white/10 border border-elec-yellow/10">
+              <div className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10">
                 <h4 className="font-medium text-elec-yellow mb-1">Control Measures</h4>
                 <p className="text-sm">Implementation of appropriate control measures to prevent or reduce exposure.</p>
               </div>
               
-              <div className="p-3 rounded bg-white/10 border border-elec-yellow/10">
+              <div className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10">
                 <h4 className="font-medium text-elec-yellow mb-1">Safety Data Sheets</h4>
                 <p className="text-sm">Manufacturers must provide these for all hazardous substances, containing vital safety information.</p>
               </div>
               
-              <div className="p-3 rounded bg-white/10 border border-elec-yellow/10">
+              <div className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10">
                 <h4 className="font-medium text-elec-yellow mb-1">Training</h4>
                 <p className="text-sm">Workers must be informed about the hazards, risks, and precautions required when working with these substances.</p>
               </div>
@@ -86,7 +86,7 @@ const COSHHSection = () => {
         </CardHeader>
         <CardContent>
           <ol className="space-y-3">
-            <li className="p-3 rounded bg-white/10 border border-elec-yellow/10 flex items-center gap-3">
+            <li className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10 flex items-center gap-3">
               <span className="bg-elec-yellow text-elec-dark rounded-full w-6 h-6 flex items-center justify-center font-bold flex-shrink-0">1</span>
               <div>
                 <h4 className="font-medium">Elimination</h4>
@@ -94,7 +94,7 @@ const COSHHSection = () => {
               </div>
             </li>
             
-            <li className="p-3 rounded bg-white/10 border border-elec-yellow/10 flex items-center gap-3">
+            <li className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10 flex items-center gap-3">
               <span className="bg-elec-yellow text-elec-dark rounded-full w-6 h-6 flex items-center justify-center font-bold flex-shrink-0">2</span>
               <div>
                 <h4 className="font-medium">Substitution</h4>
@@ -102,7 +102,7 @@ const COSHHSection = () => {
               </div>
             </li>
             
-            <li className="p-3 rounded bg-white/10 border border-elec-yellow/10 flex items-center gap-3">
+            <li className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10 flex items-center gap-3">
               <span className="bg-elec-yellow text-elec-dark rounded-full w-6 h-6 flex items-center justify-center font-bold flex-shrink-0">3</span>
               <div>
                 <h4 className="font-medium">Engineering Controls</h4>
@@ -110,7 +110,7 @@ const COSHHSection = () => {
               </div>
             </li>
             
-            <li className="p-3 rounded bg-white/10 border border-elec-yellow/10 flex items-center gap-3">
+            <li className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10 flex items-center gap-3">
               <span className="bg-elec-yellow text-elec-dark rounded-full w-6 h-6 flex items-center justify-center font-bold flex-shrink-0">4</span>
               <div>
                 <h4 className="font-medium">Administrative Controls</h4>
@@ -118,7 +118,7 @@ const COSHHSection = () => {
               </div>
             </li>
             
-            <li className="p-3 rounded bg-white/10 border border-elec-yellow/10 flex items-center gap-3">
+            <li className="p-3 rounded-lg bg-white/10 border border-elec-yellow/10 flex items-center gap-3">
               <span className="bg-elec-yellow text-elec-dark rounded-full w-6 h-6 flex items-center justify-center font-bold flex-shrink-0">5</span>
               <div>
                 <h4 className="font-medium">Personal Protective Equipment</h4>

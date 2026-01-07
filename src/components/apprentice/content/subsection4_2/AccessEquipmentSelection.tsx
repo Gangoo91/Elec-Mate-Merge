@@ -5,7 +5,7 @@ import { CheckCircle, AlertTriangle, HardHat } from "lucide-react";
 
 const AccessEquipmentSelection = () => {
   return (
-    <Card className="border border-elec-yellow/30 bg-elec-card">
+    <Card className="border border-elec-yellow/30 bg-elec-card rounded-xl overflow-hidden">
       <CardHeader className="pb-3">
         <CardTitle className="text-xl font-bold text-elec-yellow">Access Equipment Selection</CardTitle>
       </CardHeader>
@@ -29,7 +29,7 @@ const AccessEquipmentSelection = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="bg-white/10 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <HardHat className="h-5 w-5 text-elec-yellow mr-2" />
@@ -48,7 +48,7 @@ const AccessEquipmentSelection = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-white/10 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <HardHat className="h-5 w-5 text-elec-yellow mr-2" />
@@ -67,7 +67,7 @@ const AccessEquipmentSelection = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-white/10 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <div className="flex items-center">
                 <HardHat className="h-5 w-5 text-elec-yellow mr-2" />

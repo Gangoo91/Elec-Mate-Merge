@@ -2,19 +2,27 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Edit, 
-  Trash2, 
-  Eye, 
-  Calendar, 
-  Clock, 
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import {
+  Edit,
+  Trash2,
+  Eye,
+  Calendar,
+  Clock,
   FileText,
-  Star
+  Star,
+  MessageSquare
 } from "lucide-react";
 import { PortfolioEntry, PortfolioCategory } from "@/types/portfolio";
 import PortfolioEntryForm from "./PortfolioEntryForm";
 import PortfolioEntryViewDialog from "./PortfolioEntryViewDialog";
 import { usePortfolioData } from "@/hooks/portfolio/usePortfolioData";
+import { EvidenceCommentsIndicator, EvidenceComments } from "@/components/portfolio-hub/comments";
 
 interface PortfolioEntriesListProps {
   entries: PortfolioEntry[];
@@ -26,6 +34,7 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
   const { categories } = usePortfolioData();
   const [editingEntry, setEditingEntry] = useState<PortfolioEntry | null>(null);
   const [viewingEntry, setViewingEntry] = useState<PortfolioEntry | null>(null);
+  const [commentsEntry, setCommentsEntry] = useState<PortfolioEntry | null>(null);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -93,6 +102,10 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 flex-shrink-0">
+                <EvidenceCommentsIndicator
+                  evidenceId={entry.id}
+                  onClick={() => setCommentsEntry(entry)}
+                />
                 <Badge variant={getStatusColor(entry.status)} className="text-xs">
                   {getStatusText(entry.status)}
                 </Badge>
@@ -137,8 +150,8 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
             
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-2">
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 variant="outline"
                 onClick={() => setViewingEntry(entry)}
                 className="gap-1 flex-1 sm:flex-none"
@@ -146,8 +159,17 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
                 <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
                 View
               </Button>
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setCommentsEntry(entry)}
+                className="gap-1 flex-1 sm:flex-none"
+              >
+                <MessageSquare className="h-3 w-3 sm:h-4 sm:w-4" />
+                Comments
+              </Button>
+              <Button
+                size="sm"
                 variant="outline"
                 onClick={() => setEditingEntry(entry)}
                 className="gap-1 flex-1 sm:flex-none"
@@ -155,8 +177,8 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
                 <Edit className="h-3 w-3 sm:h-4 sm:w-4" />
                 Edit
               </Button>
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 variant="outline"
                 onClick={() => {
                   if (confirm('Are you sure you want to delete this portfolio entry?')) {
@@ -197,6 +219,22 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
           }}
         />
       )}
+
+      {/* Comments Sheet */}
+      <Sheet open={!!commentsEntry} onOpenChange={(open) => !open && setCommentsEntry(null)}>
+        <SheetContent side="right" className="w-full sm:max-w-lg">
+          <SheetHeader className="sr-only">
+            <SheetTitle>Evidence Comments</SheetTitle>
+          </SheetHeader>
+          {commentsEntry && (
+            <EvidenceComments
+              evidenceId={commentsEntry.id}
+              evidenceTitle={commentsEntry.title}
+              onClose={() => setCommentsEntry(null)}
+            />
+          )}
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };

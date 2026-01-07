@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 const MEWPCategories = () => {
   return (
-    <div className="border border-elec-yellow/30 rounded-lg p-4 md:p-6 space-y-4">
+    <div className="border border-elec-yellow/30 rounded-xl p-4 md:p-6 space-y-4">
       <h3 className="text-xl font-bold text-elec-yellow">MEWP Categories & Selection for Electrical Work</h3>
       
       <div className="space-y-4 md:space-y-6">
@@ -14,7 +14,7 @@ const MEWPCategories = () => {
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card className="bg-white/10 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg text-elec-yellow">MEWP Groups</CardTitle>
             </CardHeader>
@@ -41,7 +41,7 @@ const MEWPCategories = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-white/10 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg text-elec-yellow">MEWP Types</CardTitle>
             </CardHeader>
@@ -76,7 +76,7 @@ const MEWPCategories = () => {
           </Card>
         </div>
         
-        <Card className="bg-white/10 border border-elec-yellow/20">
+        <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg text-elec-yellow">Selection Criteria for Electrical Applications</CardTitle>
           </CardHeader>

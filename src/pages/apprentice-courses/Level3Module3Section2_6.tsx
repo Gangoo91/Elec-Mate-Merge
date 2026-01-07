@@ -8,7 +8,7 @@ import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 const quickCheckQuestions = [
   {
     question: "At resonance in a series RLC circuit, what is the relationship between XL and XC?",
-    options: ["XL > XC", "XL < XC", "XL = XC", "XL + XC = R"],
+    options: ["XL &gt; XC", "XL &lt; XC", "XL = XC", "XL + XC = R"],
     correctIndex: 2,
     explanation: "At resonance, inductive reactance equals capacitive reactance (XL = XC). They cancel each other out, leaving only resistance to limit current flow."
   },

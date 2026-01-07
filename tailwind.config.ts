@@ -30,6 +30,50 @@ export default {
 			fontFamily: {
 				sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
 			},
+			// iOS-native typography scale
+			fontSize: {
+				'ios-title-large': ['34px', { lineHeight: '41px', letterSpacing: '-0.01em', fontWeight: '700' }],
+				'ios-title-1': ['28px', { lineHeight: '34px', letterSpacing: '-0.01em', fontWeight: '700' }],
+				'ios-title-2': ['22px', { lineHeight: '28px', letterSpacing: '-0.01em', fontWeight: '700' }],
+				'ios-title-3': ['20px', { lineHeight: '25px', letterSpacing: '-0.01em', fontWeight: '600' }],
+				'ios-headline': ['17px', { lineHeight: '22px', letterSpacing: '-0.01em', fontWeight: '600' }],
+				'ios-body': ['17px', { lineHeight: '22px', letterSpacing: '-0.01em', fontWeight: '400' }],
+				'ios-callout': ['16px', { lineHeight: '21px', letterSpacing: '-0.01em', fontWeight: '400' }],
+				'ios-subhead': ['15px', { lineHeight: '20px', letterSpacing: '-0.01em', fontWeight: '400' }],
+				'ios-footnote': ['13px', { lineHeight: '18px', letterSpacing: '-0.01em', fontWeight: '400' }],
+				'ios-caption-1': ['12px', { lineHeight: '16px', letterSpacing: '0em', fontWeight: '400' }],
+				'ios-caption-2': ['11px', { lineHeight: '13px', letterSpacing: '0.01em', fontWeight: '400' }],
+			},
+			letterSpacing: {
+				'ios-tight': '-0.01em',
+				'ios-normal': '0em',
+				'ios-wide': '0.01em',
+			},
+			// iOS-native timing functions
+			transitionTimingFunction: {
+				'ios-ease': 'cubic-bezier(0.25, 0.1, 0.25, 1)',
+				'ios-spring': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+				'ios-bounce': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+				'ios-decel': 'cubic-bezier(0, 0, 0.2, 1)',
+				'ios-accel': 'cubic-bezier(0.4, 0, 1, 1)',
+			},
+			transitionDuration: {
+				'ios-fast': '150ms',
+				'ios-normal': '250ms',
+				'ios-slow': '400ms',
+			},
+			// iOS-native spacing (8px grid)
+			spacing: {
+				'ios-1': '4px',
+				'ios-2': '8px',
+				'ios-3': '12px',
+				'ios-4': '16px',
+				'ios-5': '20px',
+				'ios-6': '24px',
+				'ios-8': '32px',
+				'ios-10': '40px',
+				'ios-12': '48px',
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -125,6 +169,37 @@ export default {
 				'102': '1.02',
 			},
 			keyframes: {
+				// iOS-native animations
+				'ios-scale-in': {
+					'0%': { transform: 'scale(0.95)', opacity: '0' },
+					'100%': { transform: 'scale(1)', opacity: '1' }
+				},
+				'ios-slide-up': {
+					'0%': { transform: 'translateY(20px)', opacity: '0' },
+					'100%': { transform: 'translateY(0)', opacity: '1' }
+				},
+				'ios-slide-down': {
+					'0%': { transform: 'translateY(0)', opacity: '1' },
+					'100%': { transform: 'translateY(20px)', opacity: '0' }
+				},
+				'ios-fade-in': {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
+				},
+				'ios-pop': {
+					'0%': { transform: 'scale(0.9)', opacity: '0' },
+					'50%': { transform: 'scale(1.02)' },
+					'100%': { transform: 'scale(1)', opacity: '1' }
+				},
+				'ios-press': {
+					'0%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(0.97)' },
+					'100%': { transform: 'scale(1)' }
+				},
+				'ios-focus-ring': {
+					'0%': { boxShadow: '0 0 0 0 hsl(var(--elec-yellow) / 0)' },
+					'100%': { boxShadow: '0 0 0 4px hsl(var(--elec-yellow) / 0.15)' }
+				},
 				'accordion-down': {
 					from: {
 						height: '0'
@@ -266,6 +341,14 @@ export default {
 			}
 			},
 			animation: {
+				// iOS-native animations
+				'ios-scale-in': 'ios-scale-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+				'ios-slide-up': 'ios-slide-up 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+				'ios-slide-down': 'ios-slide-down 0.3s ease-out forwards',
+				'ios-fade-in': 'ios-fade-in 0.25s ease-out forwards',
+				'ios-pop': 'ios-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+				'ios-press': 'ios-press 0.15s ease-out',
+				'ios-focus-ring': 'ios-focus-ring 0.2s ease-out forwards',
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',

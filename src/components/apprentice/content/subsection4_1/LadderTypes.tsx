@@ -5,7 +5,7 @@ import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/componen
 
 const LadderTypes = () => {
   return (
-    <Card className="border border-elec-yellow/30 bg-elec-card">
+    <Card className="border border-elec-yellow/30 bg-elec-card rounded-xl overflow-hidden">
       <CardHeader className="pb-3">
         <CardTitle className="text-xl font-bold text-elec-yellow">Types of Ladders for Electrical Work</CardTitle>
       </CardHeader>
@@ -60,7 +60,7 @@ const LadderTypes = () => {
         </div>
         
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="bg-white/10 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg font-semibold text-elec-yellow">Ladder Designs for Electrical Applications</CardTitle>
             </CardHeader>
@@ -90,7 +90,7 @@ const LadderTypes = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-white/10 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg font-semibold text-elec-yellow">Classification Standards</CardTitle>
             </CardHeader>

@@ -111,7 +111,7 @@ const quizQuestions = [
       "sqrt(XL squared + XC squared)"
     ],
     correctAnswer: 1,
-    explanation: "Net reactance X = XL - XC (or XC - XL). Inductive and capacitive reactances are 180 degrees out of phase and partially cancel. If XL > XC, the circuit is net inductive; if XC > XL, it is net capacitive."
+    explanation: "Net reactance X = XL - XC (or XC - XL). Inductive and capacitive reactances are 180 degrees out of phase and partially cancel. If XL &gt; XC, the circuit is net inductive; if XC &gt; XL, it is net capacitive."
   },
   {
     id: 5,

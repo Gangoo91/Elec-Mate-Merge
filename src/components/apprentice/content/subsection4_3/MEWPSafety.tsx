@@ -5,7 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 const MEWPSafety = () => {
   return (
-    <div className="border border-elec-yellow/30 rounded-lg p-4 md:p-6 space-y-4">
+    <div className="border border-elec-yellow/30 rounded-xl p-4 md:p-6 space-y-4">
       <h3 className="text-xl font-bold text-elec-yellow">MEWP Safety for Electrical Work</h3>
       
       <div className="space-y-4 md:space-y-6">
@@ -22,7 +22,7 @@ const MEWPSafety = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card className="bg-white/10 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <div className="flex items-center gap-2">
                 <CheckCircle className="h-5 w-5 text-elec-yellow" />
@@ -44,7 +44,7 @@ const MEWPSafety = () => {
             </CardContent>
           </Card>
           
-          <Card className="bg-white/10 border border-elec-yellow/20">
+          <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
             <CardHeader className="pb-2">
               <div className="flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5 text-elec-yellow" />
@@ -65,7 +65,7 @@ const MEWPSafety = () => {
           </Card>
         </div>
         
-        <Card className="bg-white/10 border border-elec-yellow/20">
+        <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
           <CardHeader className="pb-2">
             <div className="flex items-center gap-2">
               <Shield className="h-5 w-5 text-elec-yellow" />
@@ -94,7 +94,7 @@ const MEWPSafety = () => {
           </CardContent>
         </Card>
         
-        <Card className="bg-white/10 border border-elec-yellow/20">
+        <Card className="bg-white/10 border border-elec-yellow/20 rounded-xl overflow-hidden">
           <CardHeader className="pb-2">
             <CardTitle className="text-base text-elec-yellow">Emergency Rescue Planning</CardTitle>
           </CardHeader>
