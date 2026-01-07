@@ -19,7 +19,7 @@ const Module4Section7 = () => {
         <Link to="../module-4">
           <Button
             variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 4
@@ -59,19 +59,19 @@ const Module4Section7 = () => {
       <footer className="px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8">
         <div>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
-            <Link to="module-4/section-6" className="w-full sm:w-auto">
-              <Button 
-                variant="outline" 
-                className="w-full sm:w-auto bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-200 py-3 px-4"
+            <Link to="../module-4/section-6" className="w-full sm:w-auto">
+              <Button
+                variant="outline"
+                className="w-full sm:w-auto bg-transparent border-elec-yellow text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 py-3 px-4 min-h-[48px]"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous: Test Methods
               </Button>
             </Link>
-            
+
             <Link to="../module-5" className="w-full sm:w-auto">
-              <Button 
-                className="w-full sm:w-auto bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200 py-3 px-4"
+              <Button
+                className="w-full sm:w-auto bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-all duration-200 py-3 px-4 min-h-[48px]"
               >
                 Next Module: Polarity Testing
                 <ArrowRight className="ml-2 h-4 w-4" />

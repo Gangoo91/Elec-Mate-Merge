@@ -59,6 +59,55 @@ const FireAlarmModule3Section2 = () => {
       options: ['Always', 'Where noise/accessibility demands visual warning', 'Never', 'Only outdoors'],
       correctAnswer: 1,
       explanation: 'Use VADs for noisy spaces and to support accessibility—choose the correct category/placement.'
+    },
+    {
+      id: 6,
+      question: 'What type of coverage does an L4 system provide?',
+      options: ['Full building detection', 'Escape route circulation spaces only', 'Defined high-risk areas only', 'Property protection throughout'],
+      correctAnswer: 1,
+      explanation: 'L4 systems cover escape route circulation spaces only—more limited than L3 which covers all escape routes including corridors and lobbies.'
+    },
+    {
+      id: 7,
+      question: 'What is the primary purpose of an L5 system?',
+      options: ['Complete property protection', 'Full life safety throughout building', 'Localised objectives for particular risks or process areas', 'Escape routes plus high-risk areas'],
+      correctAnswer: 2,
+      explanation: 'L5 is designed for specific localised objectives, such as protecting particular processes, equipment, or defined risk areas rather than general building coverage.'
+    },
+    {
+      id: 8,
+      question: 'What audibility level is typically required in sleeping areas?',
+      options: ['55 dB(A)', '65 dB(A)', '75 dB(A) at the bedhead with doors closed', '85 dB(A) throughout'],
+      correctAnswer: 2,
+      explanation: 'Sleeping risk areas typically require 75 dB(A) at the bedhead with bedroom doors closed to ensure occupants are awakened.'
+    },
+    {
+      id: 9,
+      question: 'What is a P2 system designed for?',
+      options: ['Complete building property protection', 'Detection in defined high-risk areas only', 'Life safety in escape routes', 'Voice alarm coverage'],
+      correctAnswer: 1,
+      explanation: 'P2 provides property protection detection only in defined high-risk areas, rather than throughout the entire building like P1.'
+    },
+    {
+      id: 10,
+      question: 'Why should voice alarm systems prioritise intelligibility over loudness?',
+      options: ['To save power', 'Clear messages are essential for occupant understanding and appropriate response', 'Loudness is never important', 'To reduce equipment costs'],
+      correctAnswer: 1,
+      explanation: 'Intelligibility (measured by STI) ensures occupants can understand evacuation instructions; excessive loudness without clarity can cause confusion and poor reverberation management.'
+    },
+    {
+      id: 11,
+      question: 'Which system category would typically be specified for a residential care home?',
+      options: ['L5 - localised coverage only', 'L3 - escape routes only', 'L1 - complete building coverage', 'P2 - high-risk areas only'],
+      correctAnswer: 2,
+      explanation: 'Care homes typically require L1 coverage due to sleeping risk, vulnerability of occupants, and the need for early detection throughout to support progressive horizontal evacuation strategies.'
+    },
+    {
+      id: 12,
+      question: 'What must be considered when specifying detection for plant rooms under L2?',
+      options: ['Plant rooms never need detection', 'Only manual call points are sufficient', 'Appropriate detector types for the specific hazards (e.g., heat for boiler rooms)', 'Always use smoke detectors regardless of conditions'],
+      correctAnswer: 2,
+      explanation: 'Plant rooms under L2 must have detection suited to the specific environment—heat detectors for high-temperature areas, consideration of dust/fumes, and appropriate device selection for the risk.'
     }
   ], []);
 

@@ -24,7 +24,7 @@ const FireAlarmModule2Section2 = () => {
     if (meta) meta.content = desc;
   }, []);
 
-  // Quiz Data (5 questions)
+  // Quiz Data (11 questions)
   const questions: QuizQuestion[] = useMemo(() => [
     {
       id: 1,
@@ -60,6 +60,48 @@ const FireAlarmModule2Section2 = () => {
       options: ['Every day', 'Every week', 'Every month', 'Every 6 months'],
       correctAnswer: 1,
       explanation: 'Weekly user tests normally activate a different MCP each time with records in the logbook.'
+    },
+    {
+      id: 6,
+      question: 'What colour should a manual call point typically be?',
+      options: ['Yellow', 'Green', 'Red', 'Blue'],
+      correctAnswer: 2,
+      explanation: 'Manual call points should be red to ensure high visibility and immediate recognition as a fire safety device.'
+    },
+    {
+      id: 7,
+      question: 'What should be done with a manual call point after it has been activated?',
+      options: ['It resets automatically', 'It must be manually reset using a key or tool', 'It should be replaced', 'Nothing, it stays activated'],
+      correctAnswer: 1,
+      explanation: 'MCPs latch when activated and must be manually reset using a key or tool to prevent accidental reactivation and confirm investigation.'
+    },
+    {
+      id: 8,
+      question: 'Why is the travel distance to MCPs reduced in high-risk or unfamiliar environments?',
+      options: ['To save on installation costs', 'People may be less familiar with escape routes and need faster alarm activation', 'MCPs are cheaper in bulk', 'It looks better aesthetically'],
+      correctAnswer: 1,
+      explanation: 'In high-risk or unfamiliar buildings, reduced travel distances ensure occupants can quickly raise the alarm even if unfamiliar with the layout.'
+    },
+    {
+      id: 9,
+      question: 'What type of protective cover might be used on MCPs in vandal-prone areas?',
+      options: ['Metal cage that prevents operation', 'Transparent cover that does not impede operation', 'Thick padding', 'No cover should be used'],
+      correctAnswer: 1,
+      explanation: 'Protective covers should not prevent or significantly delay operation. Transparent covers provide protection while maintaining accessibility.'
+    },
+    {
+      id: 10,
+      question: 'What is the purpose of signage near manual call points?',
+      options: ['Decoration only', 'To indicate the MCP location if not immediately obvious', 'Required by law in all cases', 'To advertise the manufacturer'],
+      correctAnswer: 1,
+      explanation: 'Signage helps identify MCP locations where visibility might be limited or the MCP is not immediately obvious to building users.'
+    },
+    {
+      id: 11,
+      question: 'In outdoor or harsh environments, what special consideration is needed for MCPs?',
+      options: ['They should not be installed', 'Use standard indoor MCPs', 'Use weatherproof MCPs rated for the environment', 'Paint them a different colour'],
+      correctAnswer: 2,
+      explanation: 'Outdoor or harsh environment MCPs must be weatherproof and protected against physical damage, moisture, and temperature extremes.'
     }
   ], []);
 

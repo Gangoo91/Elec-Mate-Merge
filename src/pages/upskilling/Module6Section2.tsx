@@ -58,7 +58,7 @@ const RCDTypesQuiz = () => {
             </div>
             <div className="text-white">Score: {percentage}%</div>
           </div>
-          <Button onClick={() => window.location.reload()} className="bg-elec-yellow text-black hover:bg-elec-yellow">
+          <Button onClick={() => window.location.reload()} className="bg-elec-yellow text-black hover:bg-elec-yellow min-h-[48px]">
             <RotateCcw className="mr-2 h-4 w-4" />
             Restart Quiz
           </Button>
@@ -129,10 +129,10 @@ const RCDTypesQuiz = () => {
           <div className="text-sm text-white">Question {currentQuestion + 1} of {rcdTypesQuizData.length}</div>
           <div className="space-x-2">
             {!showResult && isAnswered && (
-              <Button onClick={handleSubmitAnswer} className="bg-elec-yellow text-black hover:bg-elec-yellow">Submit Answer</Button>
+              <Button onClick={handleSubmitAnswer} className="bg-elec-yellow text-black hover:bg-elec-yellow min-h-[48px]">Submit Answer</Button>
             )}
             {showResult && (
-              <Button onClick={handleNextQuestion} className="bg-elec-yellow text-black hover:bg-elec-yellow">
+              <Button onClick={handleNextQuestion} className="bg-elec-yellow text-black hover:bg-elec-yellow min-h-[48px]">
                 {currentQuestion < rcdTypesQuizData.length - 1 ? 'Next Question' : 'Complete Quiz'}
               </Button>
             )}
@@ -148,7 +148,7 @@ const Module6Section2 = () => {
     <div className="min-h-screen bg-[#1a1a1a]">
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
         <Link to="../module-6">
-          <Button variant="ghost" className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md">
+          <Button variant="ghost" className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 6
           </Button>
@@ -176,14 +176,14 @@ const Module6Section2 = () => {
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
         <div>
           <div className="flex justify-between items-center">
-            <Link to="module-6/section-1">
-              <Button variant="outline" className="bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-200">
+            <Link to="../module-6/section-1">
+              <Button variant="outline" className="bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-200 min-h-[48px]">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous: RCD Fundamentals
               </Button>
             </Link>
-            <Link to="module-6/section-3">
-              <Button className="bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200">
+            <Link to="../module-6/section-3">
+              <Button className="bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200 min-h-[48px]">
                 Next: Testing Procedures
                 <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
               </Button>

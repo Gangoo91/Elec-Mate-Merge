@@ -64,7 +64,7 @@ const BreathingExercise = () => {
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
         <CardTitle className="text-elec-yellow">4-4-6 Breathing Exercise</CardTitle>
-        <p className="text-sm text-white/80">
+        <p className="text-sm text-white">
           A calming technique to reduce stress and anxiety
         </p>
       </CardHeader>
@@ -77,7 +77,7 @@ const BreathingExercise = () => {
             >
               <div className="text-center">
                 <div className="text-2xl font-bold text-elec-yellow">{timeLeft}</div>
-                <div className="text-xs text-white/80">seconds</div>
+                <div className="text-xs text-white">seconds</div>
               </div>
             </div>
           </div>
@@ -86,7 +86,7 @@ const BreathingExercise = () => {
             <h3 className="text-lg font-medium text-foreground">
               {phases[phase].instruction}
             </h3>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               Cycle {cycle} • {phase.charAt(0).toUpperCase() + phase.slice(1)} phase
             </p>
           </div>
@@ -124,13 +124,13 @@ const BreathingExercise = () => {
 
         <div className="text-center space-y-2 pt-4 border-t border-elec-yellow/20">
           <h4 className="font-semibold text-foreground">How it works:</h4>
-          <div className="grid grid-cols-2 gap-2 text-sm text-white/80">
+          <div className="grid grid-cols-2 gap-2 text-sm text-white">
             <div>• Inhale for 4 seconds</div>
             <div>• Hold for 4 seconds</div>
             <div>• Exhale for 6 seconds</div>
             <div>• Pause for 2 seconds</div>
           </div>
-          <p className="text-xs text-white/80 pt-2">
+          <p className="text-xs text-white pt-2">
             Aim for 5-10 cycles for maximum benefit
           </p>
         </div>

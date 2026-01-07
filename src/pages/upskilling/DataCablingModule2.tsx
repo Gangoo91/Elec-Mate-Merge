@@ -56,17 +56,17 @@ const DataCablingModule2 = () => {
             <h1 className="text-2xl md:text-3xl font-bold text-white mb-4">
               Module 2: Copper Cabling Standards (Cat5e, Cat6, etc.)
             </h1>
-            <p className="text-base md:text-lg text-gray-400 mb-6">
+            <p className="text-base md:text-lg text-white mb-6">
               Copper cable types, standards, and performance characteristics
             </p>
             <div className="flex gap-4">
               <Badge variant="secondary" className="bg-yellow-400 text-black">
                 Module 2
               </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
+              <Badge variant="outline" className="border-gray-600 text-white">
                 5 Sections
               </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
+              <Badge variant="outline" className="border-gray-600 text-white">
                 55 minutes
               </Badge>
             </div>
@@ -79,8 +79,8 @@ const DataCablingModule2 = () => {
                 to={`../data-cabling-module-2-section-${section.id}`}
                 className="h-full"
               >
-                <Card className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col">
-                  <CardContent className="text-center space-y-3 p-4 flex-grow flex flex-col justify-center">
+                <Card className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col min-h-[48px]">
+                  <CardContent className="text-center space-y-3 p-4 flex-grow flex flex-col justify-center min-h-[48px]">
                     <div className="flex justify-center">
                       <section.icon className="h-8 w-8 text-yellow-400" strokeWidth={2.5} />
                     </div>

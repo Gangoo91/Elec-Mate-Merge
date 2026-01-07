@@ -20,7 +20,7 @@ const TalkToSomeone = () => {
     <Card className="border-purple-500/20 bg-elec-gray">
       <CardContent className="p-4 flex flex-col h-full">
         <h3 className="text-lg font-medium mb-3">Talk to Someone</h3>
-        <p className="text-sm text-white/80 mb-4">
+        <p className="text-sm text-white mb-4">
           Need someone to talk to? Connect with a mental health mate, professional counselor, or immediate support line.
         </p>
         <div className="space-y-3 mt-auto">

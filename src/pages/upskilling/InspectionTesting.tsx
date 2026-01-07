@@ -66,7 +66,7 @@ const InspectionTesting = () => {
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Back Button */}
       <Link to="/electrician/upskilling">
-        <Button variant="ghost" className="text-muted-foreground hover:text-foreground transition-colors p-0 h-auto">
+        <Button variant="ghost" className="text-white hover:text-foreground transition-colors p-0 h-auto min-h-[48px]">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Study Centre
         </Button>
@@ -74,10 +74,10 @@ const InspectionTesting = () => {
 
       {/* Header */}
       <div className="space-y-1">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight">
           Inspection & Testing
         </h1>
-        <p className="text-sm sm:text-base text-muted-foreground">
+        <p className="text-sm sm:text-base text-white">
           Electrical inspection, testing and certification procedures
         </p>
       </div>
@@ -88,8 +88,8 @@ const InspectionTesting = () => {
             const IconComponent = module.icon;
             return (
               <Link key={module.id} to={module.link} className="block h-full">
-                <div className="bg-card/50 rounded-lg active:scale-[0.98] active:bg-card/70 transition-all duration-200 cursor-pointer h-full flex flex-col">
-                  <div className="text-center p-3 sm:p-4 flex-grow flex flex-col justify-center">
+                <div className="bg-card/50 rounded-lg active:scale-[0.98] active:bg-card/70 transition-all duration-200 cursor-pointer h-full flex flex-col min-h-[48px]">
+                  <div className="text-center p-3 sm:p-4 flex-grow flex flex-col justify-center min-h-[48px]">
                     <div className="flex justify-center mb-2 sm:mb-3">
                       <div className="p-2 sm:p-2.5 rounded-lg bg-primary/10">
                         <IconComponent className="h-4 w-4 sm:h-5 sm:w-5 text-primary" strokeWidth={2} />
@@ -100,11 +100,11 @@ const InspectionTesting = () => {
                       Module {module.id}
                     </span>
 
-                    <h3 className="text-sm sm:text-base font-semibold text-foreground leading-tight mb-1 line-clamp-2">
+                    <h3 className="text-sm sm:text-base font-semibold text-white leading-tight mb-1 line-clamp-2">
                       {module.title}
                     </h3>
 
-                    <p className="text-muted-foreground text-[10px] sm:text-xs line-clamp-2 hidden sm:block">
+                    <p className="text-white text-[10px] sm:text-xs line-clamp-2 hidden sm:block">
                       {module.description}
                     </p>
                   </div>

@@ -131,7 +131,7 @@ const SleepTracker = () => {
             <ChevronLeft className="h-4 w-4 mr-1" />
             Back
           </Button>
-          <span className="text-sm text-white/80">Sleep History</span>
+          <span className="text-sm text-white">Sleep History</span>
           <div className="w-16" />
         </div>
 
@@ -141,7 +141,7 @@ const SleepTracker = () => {
             <CardContent className="p-3 text-center">
               <Clock className="h-5 w-5 text-indigo-400 mx-auto mb-1" />
               <div className="text-2xl font-bold text-foreground">{weeklyAvg}h</div>
-              <div className="text-[10px] text-white/80">Weekly Average</div>
+              <div className="text-[10px] text-white">Weekly Average</div>
             </CardContent>
           </Card>
           <Card className="border-purple-500/20 bg-purple-500/5">
@@ -150,7 +150,7 @@ const SleepTracker = () => {
               <div className="text-2xl font-bold text-foreground">
                 {qualityTrend > 0 ? '+' : ''}{qualityTrend.toFixed(1)}
               </div>
-              <div className="text-[10px] text-white/80">Quality Trend</div>
+              <div className="text-[10px] text-white">Quality Trend</div>
             </CardContent>
           </Card>
         </div>
@@ -171,14 +171,14 @@ const SleepTracker = () => {
                           <div className="text-sm font-medium text-foreground">
                             {date.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}
                           </div>
-                          <div className="text-xs text-white/80">
+                          <div className="text-xs text-white">
                             {entry.bed_time} - {entry.wake_time}
                           </div>
                         </div>
                       </div>
                       <div className="text-right">
                         <div className="text-lg font-bold text-indigo-400">{entry.hours}h</div>
-                        <div className="text-xs text-white/80">{q?.label}</div>
+                        <div className="text-xs text-white">{q?.label}</div>
                       </div>
                     </div>
                     {entry.notes && entry.notes.length > 0 && (
@@ -197,8 +197,8 @@ const SleepTracker = () => {
           ) : (
             <Card className="border-white/10 bg-white/5">
               <CardContent className="text-center py-8">
-                <Moon className="h-10 w-10 text-white/80 mx-auto mb-3" />
-                <p className="text-sm text-white/80">No sleep data yet</p>
+                <Moon className="h-10 w-10 text-white mx-auto mb-3" />
+                <p className="text-sm text-white">No sleep data yet</p>
                 <Button size="sm" className="mt-3" onClick={() => setView('log')}>
                   Log Your Sleep
                 </Button>
@@ -229,7 +229,7 @@ const SleepTracker = () => {
           <Moon className="h-6 w-6 text-indigo-400" />
         </div>
         <h2 className="text-xl font-bold text-foreground mb-1">Sleep Tracker</h2>
-        <p className="text-sm text-white/80">
+        <p className="text-sm text-white">
           Track your sleep for better mental health
         </p>
       </div>
@@ -242,7 +242,7 @@ const SleepTracker = () => {
             Synced to cloud
           </span>
         ) : (
-          <span className="flex items-center gap-1 text-white/80">
+          <span className="flex items-center gap-1 text-white">
             <CloudOff className="h-3 w-3" />
             Local only - sign in to sync
           </span>
@@ -257,7 +257,7 @@ const SleepTracker = () => {
             History
           </Button>
           <div className="text-right">
-            <div className="text-xs text-white/80">Weekly avg</div>
+            <div className="text-xs text-white">Weekly avg</div>
             <div className="text-sm font-bold text-indigo-400">{getWeeklyAverage()}h</div>
           </div>
         </div>
@@ -270,7 +270,7 @@ const SleepTracker = () => {
             <Check className="h-5 w-5 text-green-400" />
             <div className="flex-1">
               <p className="text-sm text-foreground">Logged today: {todaysEntry.hours}h</p>
-              <p className="text-xs text-white/80">You can update your entry below</p>
+              <p className="text-xs text-white">You can update your entry below</p>
             </div>
           </CardContent>
         </Card>
@@ -281,7 +281,7 @@ const SleepTracker = () => {
         <CardContent className="p-4 space-y-4">
           {/* Bed Time */}
           <div>
-            <label className="flex items-center gap-2 text-sm text-white/80 mb-2">
+            <label className="flex items-center gap-2 text-sm text-white mb-2">
               <BedDouble className="h-4 w-4 text-indigo-400" />
               Went to bed
             </label>
@@ -295,7 +295,7 @@ const SleepTracker = () => {
 
           {/* Wake Time */}
           <div>
-            <label className="flex items-center gap-2 text-sm text-white/80 mb-2">
+            <label className="flex items-center gap-2 text-sm text-white mb-2">
               <Sun className="h-4 w-4 text-amber-400" />
               Woke up
             </label>
@@ -310,7 +310,7 @@ const SleepTracker = () => {
           {/* Sleep Duration Display */}
           <div className="text-center py-3 rounded-xl bg-white/5">
             <div className="text-4xl font-bold text-indigo-400">{sleepHours}h</div>
-            <div className="text-sm text-white/80">sleep duration</div>
+            <div className="text-sm text-white">sleep duration</div>
             <div className={`text-xs mt-1 ${
               sleepHours < 6 ? 'text-red-400' :
               sleepHours < 7 ? 'text-orange-400' :
@@ -342,7 +342,7 @@ const SleepTracker = () => {
                 }`}
               >
                 <span className="text-2xl">{q.emoji}</span>
-                <span className="text-[10px] text-white/80">{q.label}</span>
+                <span className="text-[10px] text-white">{q.label}</span>
               </button>
             ))}
           </div>
@@ -402,7 +402,7 @@ const SleepTracker = () => {
               <p className="text-sm text-blue-200">
                 <strong className="text-blue-400">Why track sleep?</strong>
               </p>
-              <p className="text-xs text-white/80 mt-1">
+              <p className="text-xs text-white mt-1">
                 Poor sleep affects mood, concentration, and decision-making - all crucial
                 for safety on site. Tracking helps identify patterns and improve quality.
               </p>

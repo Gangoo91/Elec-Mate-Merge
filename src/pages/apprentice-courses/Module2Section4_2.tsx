@@ -111,7 +111,7 @@ const faqs = [
   },
   {
     question: "What level of ripple is acceptable for LEDs/electronics?",
-    answer: "Most LED drivers tolerate <5% ripple, but check manufacturer specs. Some electronics require <1% ripple. Poor filtering can cause visible flicker or premature failure."
+    answer: "Most LED drivers tolerate <5% ripple, but check manufacturer specs. Some electronics require &lt;1% ripple. Poor filtering can cause visible flicker or premature failure."
   },
   {
     question: "Which RCD types are compatible with inverters/EV/PV?",

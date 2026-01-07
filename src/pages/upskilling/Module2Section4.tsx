@@ -178,7 +178,7 @@ const Module2Section4 = () => {
         <Link to="../module-2">
           <Button
             variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 2
@@ -652,6 +652,15 @@ const Module2Section4 = () => {
                     <div className="mt-3 text-white text-sm">
                       <p>Non-trip testing allows measurement of earth fault loop impedance on RCD-protected circuits without causing the RCD to operate, enabling testing without disrupting the installation.</p>
                     </div>
+                  </details>
+                </div>
+
+                <div className="border border-gray-600 rounded-lg p-4">
+                  <details className="group">
+                    <summary className="cursor-pointer text-elec-yellow font-semibold flex items-center gap-2">
+                      <span className="group-open:rotate-90 transition-transform">▶</span>
+                      What is the purpose of non-trip loop testing?
+                    </summary>
                   </details>
                 </div>
               </div>

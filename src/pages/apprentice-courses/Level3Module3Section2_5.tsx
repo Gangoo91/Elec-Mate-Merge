@@ -91,7 +91,7 @@ const quizQuestions = [
     question: "If a circuit has R = 30 ohms and XL = 40 ohms, what is the power factor?",
     options: ["0.6 lagging", "0.8 lagging", "0.6 leading", "0.75 lagging"],
     correctIndex: 0,
-    explanation: "Z = sqrt(R squared + XL squared) = sqrt(900 + 1600) = 50 ohms. Power factor = R/Z = 30/50 = 0.6. Since XL > 0 (inductive), it's lagging."
+    explanation: "Z = sqrt(R squared + XL squared) = sqrt(900 + 1600) = 50 ohms. Power factor = R/Z = 30/50 = 0.6. Since XL &gt; 0 (inductive), it's lagging."
   },
   {
     question: "What is the relationship between kW, kVA and kVAR?",

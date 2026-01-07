@@ -52,7 +52,7 @@ const EnergyEfficiencyCourse = () => {
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Back Button */}
       <Link to="/electrician/upskilling">
-        <Button variant="ghost" className="text-muted-foreground hover:text-foreground transition-colors p-0 h-auto">
+        <Button variant="ghost" className="text-white hover:text-foreground transition-colors min-h-[48px] px-4">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Courses
         </Button>
@@ -60,10 +60,10 @@ const EnergyEfficiencyCourse = () => {
 
       {/* Header */}
       <div className="space-y-1">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight">
           Energy Efficiency & Management
         </h1>
-        <p className="text-sm sm:text-base text-muted-foreground">
+        <p className="text-sm sm:text-base text-white">
           Power quality analysis, energy auditing, and optimisation strategies
         </p>
       </div>
@@ -88,11 +88,11 @@ const EnergyEfficiencyCourse = () => {
                     Module {module.id}
                   </span>
 
-                  <h3 className="text-sm sm:text-base font-semibold text-foreground leading-tight mb-1 line-clamp-2">
+                  <h3 className="text-sm sm:text-base font-semibold text-white leading-tight mb-1 line-clamp-2">
                     {module.title}
                   </h3>
 
-                  <p className="text-muted-foreground text-[10px] sm:text-xs">
+                  <p className="text-white text-[10px] sm:text-xs">
                     {module.duration}
                   </p>
                 </div>

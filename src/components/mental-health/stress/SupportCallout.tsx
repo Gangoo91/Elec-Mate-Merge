@@ -15,7 +15,7 @@ const SupportCallout = () => {
       <CardContent className="p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <h3 className="text-lg font-medium mb-1">Need immediate support?</h3>
-          <p className="text-sm text-white/80">Talk to someone who understands workplace stress</p>
+          <p className="text-sm text-white">Talk to someone who understands workplace stress</p>
         </div>
         <a href="tel:116123" onClick={handleCallSupport}>
           <Button className="bg-elec-yellow hover:bg-elec-yellow/90 text-black flex items-center gap-2">

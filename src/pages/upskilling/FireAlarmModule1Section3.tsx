@@ -22,7 +22,7 @@ const FireAlarmModule1Section3 = () => {
     if (meta) meta.content = desc;
   }, []);
 
-  // Quiz Data (5 questions)
+  // Quiz Data
   const questions: QuizQuestion[] = useMemo(() => [
     {
       id: 1,
@@ -43,7 +43,7 @@ const FireAlarmModule1Section3 = () => {
         'Weekly test logbook',
         'Cause-and-effect matrix aligned to fire strategy',
         'As-fitted drawings only',
-        'Manufacturer’s data sheet'
+        "Manufacturer's data sheet"
       ],
       correctAnswer: 1,
       explanation: 'Cause-and-effect documents required outputs/logic and should be agreed with stakeholders per BS 5839-1.'
@@ -78,11 +78,95 @@ const FireAlarmModule1Section3 = () => {
       options: [
         'Risk assessment only',
         'Design, Installation, Commissioning and Handover certificates',
-        'Competent person’s ID card only',
+        "Competent person's ID card only",
         'None—certification is optional'
       ],
       correctAnswer: 1,
       explanation: 'BS 5839-1 expects issue and retention of the full certificate set along with as-fitted drawings and zoning diagram.'
+    },
+    {
+      id: 6,
+      question: 'What does the RRFSO require regarding fire risk assessments?',
+      options: [
+        'They must be completed by the fire brigade',
+        'They must be suitable and sufficient for the premises',
+        'They are only required for buildings over 5 storeys',
+        'They are optional if insurance is in place'
+      ],
+      correctAnswer: 1,
+      explanation: 'The RRFSO requires the Responsible Person to carry out a suitable and sufficient fire risk assessment and implement its findings.'
+    },
+    {
+      id: 7,
+      question: 'Which standard defines the product requirements for fire alarm equipment components?',
+      options: [
+        'BS 5839-1',
+        'BS 7671',
+        'EN 54 series',
+        'Building Regulations Approved Document B'
+      ],
+      correctAnswer: 2,
+      explanation: 'EN 54 series standards specify product performance requirements for fire detection and alarm system components including panels, detectors, and sounders.'
+    },
+    {
+      id: 8,
+      question: 'What is the role of Approved Document B in fire alarm provision?',
+      options: [
+        'It provides detailed wiring diagrams',
+        'It sets performance requirements for means of warning and escape in new builds',
+        'It replaces BS 5839-1 entirely',
+        'It is only applicable to domestic properties'
+      ],
+      correctAnswer: 1,
+      explanation: 'Approved Document B provides Building Regulations guidance on fire safety including performance requirements for means of warning and escape, particularly for new buildings and major alterations.'
+    },
+    {
+      id: 9,
+      question: 'What is a key requirement for the electrical supply to a fire alarm panel under BS 7671?',
+      options: [
+        'It can share circuits with general lighting',
+        'It must be a dedicated circuit with appropriate protection and clear labelling',
+        'Standard extension leads are acceptable',
+        'No specific requirements apply'
+      ],
+      correctAnswer: 1,
+      explanation: 'BS 7671 requires a dedicated, correctly protected supply to the fire alarm panel with proper isolation, labelling, and segregation from other services.'
+    },
+    {
+      id: 10,
+      question: 'Why do insurers often require third-party certificated contractors?',
+      options: [
+        'To reduce installation costs',
+        'To ensure quality, competence and reduce risk of improper installation',
+        'It is a legal requirement under RRFSO',
+        'To avoid the need for maintenance'
+      ],
+      correctAnswer: 1,
+      explanation: 'Insurers require third-party certification (such as BAFE or LPCB) to ensure contractors meet quality and competence standards, reducing risk and protecting their investment.'
+    },
+    {
+      id: 11,
+      question: 'What must be maintained in the fire alarm logbook?',
+      options: [
+        'Only detector locations',
+        'Weekly tests, faults, false alarms, maintenance records and system changes',
+        'Insurance policy details only',
+        'Staff contact information'
+      ],
+      correctAnswer: 1,
+      explanation: 'The logbook must record weekly tests, any faults, false alarms, maintenance visits, and changes to the premises or system to maintain a complete history.'
+    },
+    {
+      id: 12,
+      question: 'Which of the following is a key difference between BS 5839-1 and BS 7671?',
+      options: [
+        'BS 5839-1 covers fire alarm system design; BS 7671 covers electrical installation requirements',
+        'BS 7671 only applies to domestic installations',
+        'BS 5839-1 replaces all electrical regulations',
+        'They cover identical subject matter'
+      ],
+      correctAnswer: 0,
+      explanation: 'BS 5839-1 provides recommendations for fire detection and alarm systems, while BS 7671 covers the electrical installation requirements including supplies, protection and cabling—both standards work together.'
     }
   ], []);
 

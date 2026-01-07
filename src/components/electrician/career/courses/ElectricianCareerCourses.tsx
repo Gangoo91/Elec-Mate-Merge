@@ -1,49 +1,75 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { BookOpen, ArrowLeft, PoundSterling, Calculator, RefreshCw, Loader2, AlertCircle } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import ModernCoursesHero from "./ModernCoursesHero";
-import ModernCoursesFeaturedCarousel from "./ModernCoursesFeaturedCarousel";
 import ModernCoursesGrid from "./ModernCoursesGrid";
 import ModernCoursesFilters, { CourseFilters } from "./ModernCoursesFilters";
 import ModernCoursesDetailsModal from "./ModernCoursesDetailsModal";
 import FundingCalculator from "../../../apprentice/career/education/FundingCalculator";
-import { 
-  enhancedCareerCourses, 
-  EnhancedCareerCourse 
+import {
+  enhancedCareerCourses,
+  EnhancedCareerCourse
 } from "@/components/apprentice/career/courses/enhancedCoursesData";
 import { generateCoursesAnalytics } from "./coursesAnalyticsHelper";
 import { useLiveCourses, LiveCourse } from "@/hooks/useLiveCourses";
 import { isValidUrl } from "@/utils/urlUtils";
 
 const ElectricianCareerCourses = () => {
-  const [allCourses, setAllCourses] = useState<EnhancedCareerCourse[]>([]);
-  const [filteredCourses, setFilteredCourses] = useState<EnhancedCareerCourse[]>([]);
+  // State
+  const [allCourses, setAllCourses] = useState<EnhancedCareerCourse[]>(enhancedCareerCourses);
   const [selectedCourse, setSelectedCourse] = useState<EnhancedCareerCourse | null>(null);
   const [viewMode, setViewMode] = useState<"grid" | "funding">("grid");
   const [modalOpen, setModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState<CourseFilters>({
+    searchTerm: "",
+    category: "",
+    level: "",
+    format: "",
+    location: "",
+    sortBy: "rating"
+  });
 
-  // Live courses functionality
+  // Live courses hook
   const { fetchLiveCourses, isLoading: isRefreshing, lastUpdated } = useLiveCourses();
 
-  // Generate analytics from courses data
-  const analytics = generateCoursesAnalytics(allCourses);
+  // Transform live course to enhanced course format
+  const transformLiveCourse = useCallback((liveCourse: LiveCourse): EnhancedCareerCourse => ({
+    ...liveCourse,
+    rating: liveCourse.rating ?? 4.0,
+    external_url: liveCourse.visitLink,
+    image_url: liveCourse.image_url,
+    futureProofing: liveCourse.futureProofing === 'Excellent' ? 5 : 4,
+    accreditation: [liveCourse.accreditation],
+    employerSupport: liveCourse.employerSupport === 'High'
+  }), []);
 
+  // Fetch live courses on mount
   useEffect(() => {
-    setFilteredCourses(allCourses);
-    // Auto-fetch live data on mount if no courses available
-    if (allCourses.length === 0) {
-      handleRefreshData();
-    }
-  }, [allCourses]);
+    const fetchData = async () => {
+      const result = await fetchLiveCourses();
+      if (result?.success && result.data && result.data.length > 0) {
+        const transformedLiveCourses = result.data
+          .filter(course => isValidUrl(course.visitLink))
+          .map(transformLiveCourse);
 
-  const handleFiltersChange = (filters: CourseFilters) => {
-    let filtered = allCourses;
+        if (transformedLiveCourses.length > 0) {
+          setAllCourses(transformedLiveCourses);
+        }
+      }
+    };
+    fetchData();
+  }, [fetchLiveCourses, transformLiveCourse]);
 
-    // Apply search term filter
-    if (filters.searchTerm) {
-      const searchLower = filters.searchTerm.toLowerCase();
-      filtered = filtered.filter(course => 
+  // Filter and sort courses
+  const filteredCourses = useMemo(() => {
+    let result = [...allCourses];
+
+    // Apply search query from hero
+    const searchTerm = searchQuery || filters.searchTerm;
+    if (searchTerm) {
+      const searchLower = searchTerm.toLowerCase();
+      result = result.filter(course =>
         course.title.toLowerCase().includes(searchLower) ||
         course.provider.toLowerCase().includes(searchLower) ||
         course.description.toLowerCase().includes(searchLower) ||
@@ -54,52 +80,49 @@ const ElectricianCareerCourses = () => {
 
     // Apply category filter
     if (filters.category) {
-      filtered = filtered.filter(course => course.category === filters.category);
+      result = result.filter(course => course.category === filters.category);
     }
 
     // Apply level filter
     if (filters.level) {
-      filtered = filtered.filter(course => course.level === filters.level);
+      result = result.filter(course => course.level === filters.level);
     }
 
     // Apply format filter
     if (filters.format) {
-      filtered = filtered.filter(course => 
+      result = result.filter(course =>
         course.format.toLowerCase().includes(filters.format.toLowerCase())
       );
     }
 
-    // Apply location filter
+    // Apply demand filter (using location field for demand)
     if (filters.location) {
-      const locationLower = filters.location.toLowerCase();
-      filtered = filtered.filter(course => 
-        course.locations.some(loc => loc.toLowerCase().includes(locationLower))
-      );
+      result = result.filter(course => course.industryDemand === filters.location);
     }
 
     // Apply sorting
     switch (filters.sortBy) {
       case "rating":
-        filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+        result.sort((a, b) => (b.rating || 0) - (a.rating || 0));
         break;
       case "demand":
-        filtered.sort((a, b) => {
+        result.sort((a, b) => {
           const demandOrder = { "High": 3, "Medium": 2, "Low": 1 };
           return demandOrder[b.industryDemand] - demandOrder[a.industryDemand];
         });
         break;
       case "title":
-        filtered.sort((a, b) => a.title.localeCompare(b.title));
+        result.sort((a, b) => a.title.localeCompare(b.title));
         break;
       case "duration":
-        filtered.sort((a, b) => {
+        result.sort((a, b) => {
           const aDuration = parseInt(a.duration.match(/\d+/)?.[0] || "0");
           const bDuration = parseInt(b.duration.match(/\d+/)?.[0] || "0");
           return aDuration - bDuration;
         });
         break;
       case "price":
-        filtered.sort((a, b) => {
+        result.sort((a, b) => {
           const aPrice = parseInt(a.price.replace(/[^\d]/g, "") || "0");
           const bPrice = parseInt(b.price.replace(/[^\d]/g, "") || "0");
           return aPrice - bPrice;
@@ -107,231 +130,103 @@ const ElectricianCareerCourses = () => {
         break;
     }
 
-    setFilteredCourses(filtered);
-  };
+    return result;
+  }, [allCourses, searchQuery, filters]);
 
-  const handleReset = () => {
-    setFilteredCourses(allCourses);
-  };
+  // Generate analytics
+  const analytics = useMemo(() => generateCoursesAnalytics(allCourses), [allCourses]);
 
-  const handleViewDetails = (course: EnhancedCareerCourse) => {
+  // Handlers
+  const handleFiltersChange = useCallback((newFilters: CourseFilters) => {
+    setFilters(newFilters);
+  }, []);
+
+  const handleReset = useCallback(() => {
+    setFilters({
+      searchTerm: "",
+      category: "",
+      level: "",
+      format: "",
+      location: "",
+      sortBy: "rating"
+    });
+    setSearchQuery("");
+  }, []);
+
+  const handleViewDetails = useCallback((course: EnhancedCareerCourse) => {
     setSelectedCourse(course);
     setModalOpen(true);
-  };
+  }, []);
 
-  const handleBackToGrid = () => {
-    setSelectedCourse(null);
-    setViewMode("grid");
-  };
-
-  const handleShowFundingCalculator = () => {
+  const handleShowFundingCalculator = useCallback(() => {
     setViewMode("funding");
-  };
+  }, []);
 
-  // Transform live course to enhanced course format
-  const transformLiveCourse = (liveCourse: LiveCourse): EnhancedCareerCourse => ({
-    ...liveCourse,
-    rating: liveCourse.rating ?? 4.0, // Default rating when null
-    external_url: liveCourse.visitLink, // Map visitLink to external_url for navigation
-    image_url: liveCourse.image_url, // Map image_url from live course data
-    futureProofing: liveCourse.futureProofing === 'Excellent' ? 5 : 4,
-    accreditation: [liveCourse.accreditation],
-    employerSupport: liveCourse.employerSupport === 'High'
-  });
+  const handleBackToGrid = useCallback(() => {
+    setViewMode("grid");
+  }, []);
 
-  const handleRefreshData = async () => {
+  const handleRefreshData = useCallback(async () => {
     const result = await fetchLiveCourses();
-    if (result?.success && result.data) {
-      // Transform live courses to match EnhancedCareerCourse format and filter out invalid URLs
+    if (result?.success && result.data && result.data.length > 0) {
       const transformedLiveCourses = result.data
         .filter(course => isValidUrl(course.visitLink))
         .map(transformLiveCourse);
-      
-      // Only show live courses data
-      setAllCourses(transformedLiveCourses);
-    }
-  };
 
+      if (transformedLiveCourses.length > 0) {
+        setAllCourses(transformedLiveCourses);
+      }
+    }
+  }, [fetchLiveCourses, transformLiveCourse]);
+
+  const handleSearchChange = useCallback((query: string) => {
+    setSearchQuery(query);
+  }, []);
+
+  // Funding Calculator View
   if (viewMode === "funding") {
     return (
       <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <Button variant="outline" onClick={handleBackToGrid}>
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Courses
-          </Button>
-        </div>
+        <Button
+          variant="outline"
+          onClick={handleBackToGrid}
+          className="bg-white/5 border-white/10 text-white hover:text-white hover:bg-white/10 gap-2"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Courses
+        </Button>
         <FundingCalculator />
       </div>
     );
   }
 
-  // Get featured courses (top 6 highest rated or high demand)
-  const featuredCourses = filteredCourses
-    .filter(course => (course.rating || 0) >= 4.0 || course.industryDemand === "High")
-    .slice(0, 6);
-  
-  // Get remaining courses for grid
-  const gridCourses = filteredCourses.filter(course => 
-    !featuredCourses.find(featured => featured.id === course.id)
-  );
-
   return (
-    <div className="space-y-8">
-      {/* Hero Section */}
-      <ModernCoursesHero 
+    <div className="space-y-6">
+      {/* Hero with Search */}
+      <ModernCoursesHero
         analytics={analytics}
+        searchQuery={searchQuery}
+        onSearchChange={handleSearchChange}
         onFundingCalculator={handleShowFundingCalculator}
         onRefreshData={handleRefreshData}
         isRefreshing={isRefreshing}
-        lastUpdated={lastUpdated}
       />
 
-      {/* Modern Filters */}
-      <div id="courses-filters">
-        <ModernCoursesFilters
-          courses={allCourses}
-          onFiltersChange={handleFiltersChange}
-          onReset={handleReset}
-          resultCount={filteredCourses.length}
-        />
-      </div>
+      {/* Filters with Category Pills */}
+      <ModernCoursesFilters
+        courses={allCourses}
+        filters={filters}
+        onFiltersChange={handleFiltersChange}
+        onReset={handleReset}
+        resultCount={filteredCourses.length}
+      />
 
-      {/* Results Section */}
-      {filteredCourses.length === 0 ? (
-        <Card>
-          <CardContent className="p-8 text-center">
-            <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-3">No live courses available</h3>
-            <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-              Refresh to fetch the latest courses from training providers, or try adjusting your search criteria.
-            </p>
-            <Button variant="outline" onClick={handleReset}>
-              Reset Filters
-            </Button>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="space-y-8">
-          {/* Featured Carousel */}
-          {featuredCourses.length > 0 && (
-            <div className="transform transition-all duration-300">
-              <ModernCoursesFeaturedCarousel 
-                courses={featuredCourses}
-                onCourseClick={handleViewDetails}
-              />
-            </div>
-          )}
-
-          {/* Remaining Courses Grid */}
-          {gridCourses.length > 0 && (
-            <div className="space-y-6">
-              <div className="flex items-center gap-3">
-                <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
-                <h3 className="text-xl font-semibold text-foreground px-4">
-                  {featuredCourses.length > 0 ? 'More Courses' : 'All Courses'}
-                </h3>
-                <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
-              </div>
-              <div className="transform transition-all duration-300">
-                <ModernCoursesGrid 
-                  courses={gridCourses}
-                  onCourseClick={handleViewDetails}
-                />
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Course Funding Information */}
-      <Card className="bg-gradient-to-br from-elec-card to-elec-card/80 border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-3">
-            <div className="p-2 rounded-full bg-elec-yellow/10">
-              <PoundSterling className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-            </div>
-            UK Course Funding Options
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Government & Public Funding */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                <h4 className="font-semibold text-elec-yellow">Government & Public Funding</h4>
-              </div>
-              <div className="space-y-4">
-                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                    Skills Bootcamp
-                  </h5>
-                  <p className="text-foreground/80 text-sm leading-relaxed">
-                    Free skills training for adults. Available for digital, technical, and green skills including electrical courses.
-                  </p>
-                </div>
-                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                    Adult Education Budget
-                  </h5>
-                  <p className="text-foreground/80 text-sm leading-relaxed">
-                    Funding for Level 2 qualifications and below for adults without these qualifications. Covers essential electrical training.
-                  </p>
-                </div>
-                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                    Construction Industry Levy
-                  </h5>
-                  <p className="text-foreground/80 text-sm leading-relaxed">
-                    CITB funding available for electrical installation training. Grants up to £2,000 for eligible courses.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Industry & Employer Support */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                <h4 className="font-semibold text-elec-yellow">Industry & Employer Support</h4>
-              </div>
-              <div className="space-y-4">
-                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                    Employer Funding
-                  </h5>
-                  <p className="text-foreground/80 text-sm leading-relaxed">
-                    Many employers fund training for employees. Check with your employer about professional development budgets.
-                  </p>
-                </div>
-                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                    Professional Body Grants
-                  </h5>
-                  <p className="text-foreground/80 text-sm leading-relaxed">
-                    IET, ECA, and NECA offer grants and bursaries for electrical training and continuing professional development.
-                  </p>
-                </div>
-                <div className="bg-background/30 rounded-lg p-4 border border-elec-yellow/10">
-                  <h5 className="font-semibold text-foreground text-sm mb-2 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                    Tax Relief & Deductions
-                  </h5>
-                  <p className="text-foreground/80 text-sm leading-relaxed">
-                    Self-employed electricians can claim training costs as business expenses. Employed staff may qualify for tax relief.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Course Grid */}
+      <ModernCoursesGrid
+        courses={filteredCourses}
+        onCourseClick={handleViewDetails}
+        isLoading={isRefreshing && allCourses.length === 0}
+      />
 
       {/* Course Details Modal */}
       <ModernCoursesDetailsModal

@@ -81,7 +81,7 @@ const EmergencyLightingCourse = () => {
           {modules.map((module) => (
             <Link
               key={module.id}
-              to={module.isExam ? `../emergency-lighting-mock-exam` : `../emergency-lighting-module-${module.id}`}
+              to={module.isExam ? `/electrician/upskilling/emergency-lighting-mock-exam` : `/electrician/upskilling/emergency-lighting-module-${module.id}`}
               className="block h-full"
             >
               <div className={`bg-card/50 rounded-lg active:scale-[0.98] active:bg-card/70 transition-all duration-200 cursor-pointer h-full flex flex-col ${module.isExam ? 'ring-2 ring-primary/30' : ''}`}>

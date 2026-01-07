@@ -67,7 +67,7 @@ const EVChargingCourse = () => {
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Back Button */}
       <Link to="/electrician/upskilling">
-        <Button variant="ghost" className="text-muted-foreground hover:text-foreground transition-colors p-0 h-auto">
+        <Button variant="ghost" className="text-muted-foreground hover:text-foreground transition-colors p-0 min-h-[48px]">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Courses
         </Button>
@@ -91,8 +91,8 @@ const EVChargingCourse = () => {
               to={module.isExam ? "../ev-charging-mock-exam" : `../ev-charging-module-${module.id}`}
               className="block h-full"
             >
-              <div className={`bg-card/50 rounded-lg active:scale-[0.98] active:bg-card/70 transition-all duration-200 cursor-pointer h-full flex flex-col ${module.isExam ? 'ring-2 ring-primary/30' : ''}`}>
-                <div className="text-center p-3 sm:p-4 flex-grow flex flex-col justify-center">
+              <div className={`bg-card/50 rounded-lg active:scale-[0.98] active:bg-card/70 transition-all duration-200 cursor-pointer h-full flex flex-col min-h-[48px] ${module.isExam ? 'ring-2 ring-primary/30' : ''}`}>
+                <div className="text-center p-3 sm:p-4 flex-grow flex flex-col justify-center min-h-[48px]">
                   <div className="flex justify-center mb-2 sm:mb-3">
                     <div className="p-2 sm:p-2.5 rounded-lg bg-primary/10">
                       <module.icon className="h-4 w-4 sm:h-5 sm:w-5 text-primary" strokeWidth={2} />

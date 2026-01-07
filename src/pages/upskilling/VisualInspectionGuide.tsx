@@ -472,7 +472,7 @@ const VisualInspectionGuide = () => {
         <Link to="module-8/section-3">
           <Button
             variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Practical Assessment
@@ -703,7 +703,7 @@ const VisualInspectionGuide = () => {
                   <CardContent>
                     <ul className="space-y-2">
                       {reg.requirements.map((req, reqIndex) => (
-                        <li key={reqIndex} className="text-gray-300 text-sm flex items-start gap-2">
+                        <li key={reqIndex} className="text-white text-sm flex items-start gap-2">
                           <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                           {req}
                         </li>

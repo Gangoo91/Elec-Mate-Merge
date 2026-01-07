@@ -11,7 +11,7 @@ const RCDTestingGuide = () => {
         <Link to="module-8/section-3">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8"
+            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Practical Assessment

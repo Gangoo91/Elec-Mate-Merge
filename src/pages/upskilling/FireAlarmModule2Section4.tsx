@@ -23,7 +23,7 @@ const FireAlarmModule2Section4 = () => {
     if (meta) meta.content = desc;
   }, []);
 
-  // Quiz
+  // Quiz (11 questions)
   const questions: QuizQuestion[] = useMemo(() => [
     {
       id: 1,
@@ -59,6 +59,48 @@ const FireAlarmModule2Section4 = () => {
       options: ['Verbal description only', 'Unmarked floor plans', 'Marked drawings, schedules, and access notes', 'Photos only'],
       correctAnswer: 2,
       explanation: 'Provide documentation: drawings with types/addresses/heights plus maintenance access notes.'
+    },
+    {
+      id: 6,
+      question: 'What is the typical maximum coverage radius for a heat detector (Class A1R)?',
+      options: ['3.0 m', '5.0 m', '7.5 m', '10.0 m'],
+      correctAnswer: 1,
+      explanation: 'Class A1R heat detectors typically have a maximum coverage radius of 5.0 m, though manufacturer data should always be checked.'
+    },
+    {
+      id: 7,
+      question: 'Where should detectors be mounted on sloped or pitched ceilings?',
+      options: ['At the lowest point', 'At the highest point where smoke naturally collects', 'In the middle only', 'On the walls instead'],
+      correctAnswer: 1,
+      explanation: 'Smoke rises to the highest points on sloped ceilings, so detectors should be positioned at peaks and high points.'
+    },
+    {
+      id: 8,
+      question: 'What is a key consideration for detectors in ceiling voids?',
+      options: ['They are never needed', 'Access for maintenance and testing must be provided', 'They should be painted to match the ceiling', 'Only wireless detectors can be used'],
+      correctAnswer: 1,
+      explanation: 'If ceiling voids require protection, adequate access panels and safe access routes must be provided for maintenance and testing.'
+    },
+    {
+      id: 9,
+      question: 'How does seasonal HVAC operation affect detector design?',
+      options: ['It has no effect', 'Airflow patterns and temperatures change, affecting smoke movement', 'Only affects heat detectors', 'Only matters in summer'],
+      correctAnswer: 1,
+      explanation: 'HVAC modes affect airflow patterns, temperature gradients, and smoke movement, all of which should be considered during design.'
+    },
+    {
+      id: 10,
+      question: 'What minimum mounting height below the ceiling apex is recommended for detectors on pitched roofs?',
+      options: ['10-50 mm', '25-150 mm', '200-300 mm', '500 mm'],
+      correctAnswer: 1,
+      explanation: 'Detectors on pitched roofs should typically be mounted 25-150 mm below the apex to avoid dead air spaces while remaining in the smoke layer.'
+    },
+    {
+      id: 11,
+      question: 'Why might aspirating smoke detection (ASD) be preferred in cold stores or freezers?',
+      options: ['They are cheaper', 'Point detectors may not function properly in extreme temperatures', 'They look better', 'No special consideration is needed'],
+      correctAnswer: 1,
+      explanation: 'Extreme cold can affect point detector operation. ASD systems can sample at the ceiling while processing occurs in a temperature-controlled environment.'
     }
   ], []);
 

@@ -12,3 +12,8 @@ export * from './useCollegeILP';
 export * from './useCollegeEPA';
 export * from './useCollegeLessonPlans';
 export * from './useCollegeActivity';
+export * from './useCollegePortfolios';
+export * from './usePortfolioSubmissions';
+export * from './useAssessorActions';
+export * from './useIQASampling';
+export * from './useEPAGateway';

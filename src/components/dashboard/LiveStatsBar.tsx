@@ -179,7 +179,7 @@ export function LiveStatsBar() {
   }
 
   return (
-    <div className="relative">
+    <div className="hidden sm:block relative">
       {/* Left fade indicator - mobile only */}
       <div
         className={cn(

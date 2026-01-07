@@ -160,7 +160,7 @@ const QuickCopingToolkit = () => {
             <ChevronLeft className="h-4 w-4 mr-1" />
             Back
           </Button>
-          <div className="flex items-center gap-1 text-xs text-white/80">
+          <div className="flex items-center gap-1 text-xs text-white">
             <Clock className="h-3 w-3" />
             {selectedTechnique.duration}
           </div>
@@ -172,7 +172,7 @@ const QuickCopingToolkit = () => {
             <Icon className={`h-7 w-7 ${colors.text}`} />
           </div>
           <h2 className="text-xl font-bold text-foreground">{selectedTechnique.name}</h2>
-          <p className="text-sm text-white/80">{selectedTechnique.description}</p>
+          <p className="text-sm text-white">{selectedTechnique.description}</p>
         </div>
 
         {/* Fast Track Toggle */}
@@ -234,7 +234,7 @@ const QuickCopingToolkit = () => {
                 <CardContent className="p-6 text-center">
                   <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-3" />
                   <h3 className="text-lg font-bold text-foreground mb-2">Well done!</h3>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     How do you feel now? Remember you can use this anytime.
                   </p>
                 </CardContent>
@@ -282,7 +282,7 @@ const QuickCopingToolkit = () => {
           <Zap className="h-6 w-6 text-yellow-400" />
         </div>
         <h2 className="text-xl font-bold text-foreground mb-1">Quick Coping Toolkit</h2>
-        <p className="text-sm text-white/80">
+        <p className="text-sm text-white">
           Fast techniques for difficult moments
         </p>
       </div>
@@ -294,7 +294,7 @@ const QuickCopingToolkit = () => {
             <Phone className="h-5 w-5 text-red-400" />
             <div className="flex-1">
               <p className="text-sm text-foreground font-medium">Need to talk right now?</p>
-              <p className="text-xs text-white/80">Samaritans: 116 123 (free, 24/7)</p>
+              <p className="text-xs text-white">Samaritans: 116 123 (free, 24/7)</p>
             </div>
             <a
               href="tel:116123"
@@ -330,9 +330,9 @@ const QuickCopingToolkit = () => {
                         {technique.duration}
                       </span>
                     </div>
-                    <p className="text-xs text-white/80 truncate">{technique.description}</p>
+                    <p className="text-xs text-white truncate">{technique.description}</p>
                   </div>
-                  <ChevronLeft className="h-5 w-5 text-white/80 rotate-180 flex-shrink-0" />
+                  <ChevronLeft className="h-5 w-5 text-white rotate-180 flex-shrink-0" />
                 </div>
               </CardContent>
             </Card>

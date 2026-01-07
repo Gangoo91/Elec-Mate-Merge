@@ -13,7 +13,7 @@ const StressTechnique = ({ title, description, icon }: StressTechniqueProps) => 
       <div className="mt-1">{icon}</div>
       <div>
         <h4 className="font-medium text-sm">{title}</h4>
-        <p className="text-xs text-white/80">{description}</p>
+        <p className="text-xs text-white">{description}</p>
       </div>
     </div>
   );

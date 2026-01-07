@@ -11,7 +11,7 @@ const Module8Section2Part5 = () => {
         <Link to="module-8/section-2">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Hints & Tips
@@ -309,7 +309,7 @@ const Module8Section2Part5 = () => {
                   <div className="bg-card p-3 rounded border border-gray-600">
                     <p className="text-white text-sm"><strong>Question:</strong> "Can a plastic consumer unit be installed in a garage?"</p>
                     <p className="text-yellow-400 text-sm mt-2"><strong>Regulatory Answer:</strong></p>
-                    <p className="text-gray-300 text-sm italic">"Regulation 421.1.201 requires consumer units in domestic premises to have enclosures manufactured from non-combustible material or enclosed in a cabinet constructed of non-combustible material. This applies to all consumer units within domestic premises, including garages integral to the dwelling."</p>
+                    <p className="text-white text-sm italic">"Regulation 421.1.201 requires consumer units in domestic premises to have enclosures manufactured from non-combustible material or enclosed in a cabinet constructed of non-combustible material. This applies to all consumer units within domestic premises, including garages integral to the dwelling."</p>
                   </div>
                 </div>
               </div>
@@ -323,7 +323,7 @@ const Module8Section2Part5 = () => {
             <CardContent className="space-y-4">
               <div className="bg-card p-4 rounded-lg border border-gray-600">
                 <p className="text-yellow-400 font-semibold mb-3">Professional Certification Phrases:</p>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li><strong>"I certify that the work for which I have been responsible..."</strong></li>
                   <li><strong>"...has been designed, constructed, inspected and tested..."</strong></li>
                   <li><strong>"...in accordance with BS 7671:2018+A2:2022..."</strong></li>
@@ -333,7 +333,7 @@ const Module8Section2Part5 = () => {
               </div>
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-orange-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300"><strong>Legal significance:</strong> These phrases carry legal weight - understand their implications</span>
+                <span className="text-white"><strong>Legal significance:</strong> These phrases carry legal weight - understand their implications</span>
               </div>
             </CardContent>
           </Card>
@@ -345,15 +345,15 @@ const Module8Section2Part5 = () => {
             <CardContent className="space-y-4">
               <div className="bg-card p-4 rounded-lg border border-gray-600">
                 <p className="text-yellow-400 font-semibold mb-2">For High Zs Values:</p>
-                <p className="text-gray-300 text-sm italic">"This exceeds the maximum Zs value permitted for this type of protective device. The circuit may not disconnect within the required time under fault conditions and would be classified as C2."</p>
+                <p className="text-white text-sm italic">"This exceeds the maximum Zs value permitted for this type of protective device. The circuit may not disconnect within the required time under fault conditions and would be classified as C2."</p>
               </div>
               <div className="bg-card p-4 rounded-lg border border-gray-600">
                 <p className="text-yellow-400 font-semibold mb-2">For Missing Earthing:</p>
-                <p className="text-gray-300 text-sm italic">"The absence of protective conductor connectivity presents a danger as exposed metalwork could become live under fault conditions. This requires immediate attention - C1 classification."</p>
+                <p className="text-white text-sm italic">"The absence of protective conductor connectivity presents a danger as exposed metalwork could become live under fault conditions. This requires immediate attention - C1 classification."</p>
               </div>
               <div className="bg-card p-4 rounded-lg border border-gray-600">
                 <p className="text-yellow-400 font-semibold mb-2">For RCD Issues:</p>
-                <p className="text-gray-300 text-sm italic">"Additional protection by RCD is required for this circuit type under current BS 7671 requirements. Failure to provide this protection would result in C2 classification."</p>
+                <p className="text-white text-sm italic">"Additional protection by RCD is required for this circuit type under current BS 7671 requirements. Failure to provide this protection would result in C2 classification."</p>
               </div>
             </CardContent>
           </Card>
@@ -362,7 +362,7 @@ const Module8Section2Part5 = () => {
             <CardHeader>
               <CardTitle className="text-white">Extended Scenario</CardTitle>
             </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
+            <CardContent className="text-white space-y-4">
               <div>
                 <p className="font-semibold text-white mb-2">The Zs Value Question</p>
                 <p className="mb-3">You're asked about an incorrect Zs value. You don't know the exact maximum permitted value. Instead of guessing, you write:</p>
@@ -378,20 +378,20 @@ const Module8Section2Part5 = () => {
             <CardHeader>
               <CardTitle className="text-white">One-liner</CardTitle>
             </CardHeader>
-            <CardContent className="text-gray-300">
+            <CardContent className="text-white">
               <p className="font-semibold text-yellow-400">Even when unsure, talk like someone who's read the regs — it's often enough to pass the question.</p>
             </CardContent>
           </Card>
 
           <div className="flex justify-between">
-            <Link to="module-8/section-2/part-4">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
+            <Link to="../module-8/section-2/part-4">
+              <Button variant="outline" className="border-gray-600 text-white hover:bg-card min-h-[48px]">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous: Key Values
               </Button>
             </Link>
-            <Link to="module-8/section-2">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
+            <Link to="../module-8/section-2">
+              <Button className="bg-yellow-400 text-black hover:bg-yellow-600 min-h-[48px]">
                 Back to Overview
                 <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
               </Button>

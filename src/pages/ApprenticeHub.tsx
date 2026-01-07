@@ -92,7 +92,8 @@ function ApprenticeHero() {
             </div>
 
             <h1 className="text-xl sm:text-2xl font-semibold text-white leading-tight">
-              {getGreeting()}, <span className="text-elec-yellow">{user.firstName}</span>
+              <span className="hidden sm:inline">{getGreeting()}, </span>
+              <span className="text-elec-yellow">{user.firstName}</span>
             </h1>
 
             <p className="text-sm text-white/70 mt-1">
@@ -438,8 +439,8 @@ const ApprenticeHub = () => {
             <ApprenticeHero />
           </motion.section>
 
-          {/* Stats Bar */}
-          <motion.section variants={itemVariants} className="sm:px-0">
+          {/* Stats Bar - Hidden on mobile for native app feel */}
+          <motion.section variants={itemVariants} className="hidden sm:block sm:px-0">
             <ApprenticeStatsBar />
           </motion.section>
 

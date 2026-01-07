@@ -12,7 +12,7 @@ interface BalanceInfoCardProps {
 const BalanceInfoCard = ({ title, description, tips, icon }: BalanceInfoCardProps) => {
   return (
     <InfoBox title={title} icon={icon}>
-      <p className="text-sm text-white/80 mb-2">{description}</p>
+      <p className="text-sm text-white mb-2">{description}</p>
       <ul className="text-sm space-y-2">
         {tips.map((tip, index) => (
           <li key={index} className="flex items-start">

@@ -53,7 +53,7 @@ const quizQuestions = [
     question: "Which bend is typically less than 30 degrees and used for fine alignment?",
     options: ["90-degree bend", "Offset bend", "Kick bend", "Saddle bend"],
     correctAnswer: 2,
-    explanation: "A kick bend provides a small directional adjustment (usually <30 degrees) for final alignment into boxes or accessories."
+    explanation: "A kick bend provides a small directional adjustment (usually &lt;30 degrees) for final alignment into boxes or accessories."
   },
   {
     id: 7,
@@ -85,7 +85,7 @@ const quickCheckQuestions = [
     question: "What's the main purpose of a kick bend?",
     options: ["Pass over obstacles", "Provide small directional adjustment for final alignment", "Make sharp turns", "Connect multiple conduits"],
     correctIndex: 1,
-    explanation: "A kick bend provides a small directional adjustment (usually <30 degrees) for final alignment into boxes or accessories."
+    explanation: "A kick bend provides a small directional adjustment (usually &lt;30 degrees) for final alignment into boxes or accessories."
   },
   {
     id: 3,

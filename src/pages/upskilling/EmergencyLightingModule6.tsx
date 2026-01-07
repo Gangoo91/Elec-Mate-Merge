@@ -35,10 +35,10 @@ const EmergencyLightingModule6 = () => {
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <div className="px-8 pt-8 pb-12">
-        <Link to="../emergency-lighting-course">
+        <Link to="/electrician/upskilling/emergency-lighting-course">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Emergency Lighting Course
@@ -50,17 +50,17 @@ const EmergencyLightingModule6 = () => {
             <h1 className="text-2xl font-bold text-white mb-4">
               Module 6: Regulatory Compliance and BS 5266
             </h1>
-            <p className="text-lg text-gray-400 mb-6">
+            <p className="text-lg text-white mb-6">
               Standards compliance and regulatory documentation
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 auto-rows-fr">
             {sections.map((section) => (
-              <Link 
-                key={section.id} 
-                to={`../emergency-lighting-module-6-section-${section.id}`}
-                className="h-full"
+              <Link
+                key={section.id}
+                to={`/electrician/upskilling/emergency-lighting-module-6-section-${section.id}`}
+                className="h-full min-h-[48px]"
               >
                 <Card className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col">
                   <CardContent className="text-center space-y-3 p-4 flex-grow flex flex-col justify-center">
@@ -73,7 +73,7 @@ const EmergencyLightingModule6 = () => {
                       {section.title}
                     </h3>
                     
-                    <p className="text-gray-400 text-xs leading-relaxed">
+                    <p className="text-white text-xs leading-relaxed">
                       {section.description}
                     </p>
                   </CardContent>

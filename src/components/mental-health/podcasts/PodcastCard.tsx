@@ -132,7 +132,7 @@ const PodcastCard = ({ podcast }: PodcastCardProps) => {
         </div>
 
         {/* Description */}
-        <p className="text-sm text-white/70 leading-relaxed line-clamp-3">
+        <p className="text-sm text-white leading-relaxed line-clamp-3">
           {podcast.description}
         </p>
 

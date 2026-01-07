@@ -195,7 +195,7 @@ const quizQuestions = [
       "Recalibrate the instrument"
     ],
     correctAnswer: 2,
-    explanation: "An infinity reading indicates the insulation resistance exceeds the instrument's measuring range - typically greater than 200 megohms or 999 megohms depending on the instrument. This is the best possible result, indicating excellent insulation condition. Record as >200 megohms (or instrument maximum)."
+    explanation: "An infinity reading indicates the insulation resistance exceeds the instrument's measuring range - typically greater than 200 megohms or 999 megohms depending on the instrument. This is the best possible result, indicating excellent insulation condition. Record as &gt;200 megohms (or instrument maximum)."
   },
   {
     id: 12,

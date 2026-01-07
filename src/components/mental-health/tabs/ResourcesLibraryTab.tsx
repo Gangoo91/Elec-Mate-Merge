@@ -165,14 +165,14 @@ const ResourcesLibraryTab = () => {
           <BookOpen className="h-6 w-6 text-blue-400" />
         </div>
         <h2 className="text-xl font-bold text-foreground mb-1">Resources Library</h2>
-        <p className="text-sm text-white/80">
+        <p className="text-sm text-white">
           Evidence-based guides and videos for your wellbeing
         </p>
       </div>
 
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/80" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
         <Input
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -231,7 +231,7 @@ const ResourcesLibraryTab = () => {
                       <div className={`w-6 h-6 rounded ${typeStyles.bg} flex items-center justify-center`}>
                         <TypeIcon className={`h-3 w-3 ${typeStyles.text}`} />
                       </div>
-                      <span className="text-xs text-white/80">{resource.source}</span>
+                      <span className="text-xs text-white">{resource.source}</span>
                     </div>
                     <h4 className="text-sm font-medium text-foreground line-clamp-2">{resource.title}</h4>
                   </a>
@@ -245,7 +245,7 @@ const ResourcesLibraryTab = () => {
       {/* Resources List */}
       <div className="space-y-2">
         {filteredResources.length > 0 && (
-          <p className="text-xs text-white/80">
+          <p className="text-xs text-white">
             {filteredResources.length} resource{filteredResources.length !== 1 ? 's' : ''} found
           </p>
         )}
@@ -267,7 +267,7 @@ const ResourcesLibraryTab = () => {
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <h4 className="font-medium text-foreground text-sm leading-tight">{resource.title}</h4>
-                        <p className="text-xs text-white/80 mt-0.5 line-clamp-1">{resource.description}</p>
+                        <p className="text-xs text-white mt-0.5 line-clamp-1">{resource.description}</p>
                       </div>
                       <button
                         onClick={(e) => {
@@ -291,7 +291,7 @@ const ResourcesLibraryTab = () => {
                         <Badge className={`${typeStyles.bg} ${typeStyles.text} text-[10px] px-1.5 py-0`}>
                           {resource.type}
                         </Badge>
-                        <span className="text-[10px] text-white/80">{resource.source}</span>
+                        <span className="text-[10px] text-white">{resource.source}</span>
                       </div>
                       <Button size="sm" className="h-7 px-3 text-xs" asChild>
                         <a href={resource.url} target="_blank" rel="noopener noreferrer">
@@ -312,9 +312,9 @@ const ResourcesLibraryTab = () => {
       {filteredResources.length === 0 && (
         <Card className="border-white/10 bg-white/5">
           <CardContent className="text-center py-8">
-            <Search className="h-10 w-10 text-white/80 mx-auto mb-3" />
+            <Search className="h-10 w-10 text-white mx-auto mb-3" />
             <h3 className="font-medium text-foreground mb-1">No resources found</h3>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Try different search terms or categories
             </p>
             <Button

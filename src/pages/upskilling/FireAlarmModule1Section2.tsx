@@ -65,7 +65,7 @@ const FireAlarmModule1Section2 = () => {
       id: 4,
       question: 'What document should define interfacing such as smoke control, lifts, sprinklers, or gas shutoff?',
       options: [
-        'Manufacturer’s installation manual',
+        "Manufacturer's installation manual",
         'Cause-and-effect matrix aligned with the fire strategy',
         'As-fitted drawings only',
         'Weekly test log book'
@@ -84,6 +84,90 @@ const FireAlarmModule1Section2 = () => {
       ],
       correctAnswer: 2,
       explanation: 'Sleeping risk usually requires enhanced coverage (L2 or L1) to ensure early warning in rooms and escape routes.'
+    },
+    {
+      id: 6,
+      question: 'Why are heat detectors preferred over smoke detectors in kitchen environments?',
+      options: [
+        'Heat detectors are cheaper',
+        'To minimise unwanted alarms from cooking fumes and steam',
+        'Heat detectors provide faster response',
+        'Smoke detectors are not approved for use in kitchens'
+      ],
+      correctAnswer: 1,
+      explanation: 'Heat detectors (rate-of-rise or fixed temperature) are used in kitchens to avoid false alarms from cooking fumes and steam that would trigger smoke detectors.'
+    },
+    {
+      id: 7,
+      question: 'What is the primary advantage of aspirating smoke detection (ASD)?',
+      options: [
+        'Lower installation cost',
+        'Very early warning and high sensitivity detection',
+        'No maintenance required',
+        'Suitable for outdoor use only'
+      ],
+      correctAnswer: 1,
+      explanation: 'ASD provides very early warning by continuously sampling air through a pipe network, detecting smoke at incipient stages before conventional detectors would activate.'
+    },
+    {
+      id: 8,
+      question: 'In a simultaneous evacuation strategy, how do occupants respond to the alarm?',
+      options: [
+        'Only fire wardens evacuate',
+        'All occupants evacuate immediately upon alarm activation',
+        'Evacuation proceeds floor by floor',
+        'Only the fire floor evacuates'
+      ],
+      correctAnswer: 1,
+      explanation: 'Simultaneous evacuation means all occupants evacuate at the same time when the alarm sounds, typical for smaller or simpler buildings.'
+    },
+    {
+      id: 9,
+      question: 'What are Visual Alarm Devices (VADs) designed to provide?',
+      options: [
+        'Decorative lighting in corridors',
+        'Visual warning signals for hearing-impaired occupants',
+        'Emergency lighting during power failures',
+        'Status indication at the fire panel only'
+      ],
+      correctAnswer: 1,
+      explanation: 'VADs provide visual warning through flashing lights to alert hearing-impaired occupants and supplement audible alarms where required by accessibility needs.'
+    },
+    {
+      id: 10,
+      question: 'Which detector type uses algorithms to analyse multiple sensors and reduce false alarms?',
+      options: [
+        'Single-sensor ionisation detector',
+        'Multi-sensor detector',
+        'Manual call point',
+        'Conventional heat detector'
+      ],
+      correctAnswer: 1,
+      explanation: 'Multi-sensor detectors combine smoke, heat and sometimes CO sensing with intelligent algorithms to distinguish real fires from false alarm sources.'
+    },
+    {
+      id: 11,
+      question: 'What is an investigation delay in fire alarm systems?',
+      options: [
+        'The time taken for fire brigade attendance',
+        'A short period allowing staff to investigate before full alarm evacuation',
+        'The detector response time',
+        'The time to reset the system after a fault'
+      ],
+      correctAnswer: 1,
+      explanation: 'Investigation delays (where permitted and documented) allow trained staff a short time to investigate an alarm signal before full evacuation, helping to manage false alarms while maintaining safety.'
+    },
+    {
+      id: 12,
+      question: 'When selecting detectors for a dusty industrial environment, what should be considered?',
+      options: [
+        'Standard optical smoke detectors are always suitable',
+        'Heat detectors or aspirating detection with appropriate filtration may be more suitable',
+        'Manual call points should be omitted',
+        'Detection is not required in industrial environments'
+      ],
+      correctAnswer: 1,
+      explanation: 'Dusty or harsh environments can cause false alarms with standard smoke detectors; heat detectors or ASD with suitable filtration are often more appropriate choices.'
     }
   ], []);
 

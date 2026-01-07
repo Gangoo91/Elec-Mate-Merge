@@ -59,6 +59,55 @@ const FireAlarmModule3Section3 = () => {
       options: ['Hidden behind pillars', 'Anywhere on the ceiling', 'With line‑of‑sight to occupied areas per category/coverage', 'Only near the panel'],
       correctAnswer: 2,
       explanation: 'Place VADs with line‑of‑sight to occupants; select category to suit room size/geometry.'
+    },
+    {
+      id: 6,
+      question: 'What is the typical coverage radius for a point smoke detector on a flat ceiling?',
+      options: ['3.5 m', '7.5 m', '15 m', '30 m'],
+      correctAnswer: 1,
+      explanation: 'Point detectors typically cover a radius of approximately 7.5 m, though this varies with ceiling height and manufacturer specifications.'
+    },
+    {
+      id: 7,
+      question: 'How should detectors be positioned near prominent beams or bulkheads?',
+      options: ['Place directly on beams', 'Keep at least 500 mm away to avoid dead-air pockets', 'Beams have no effect on placement', 'Only place detectors in beam channels'],
+      correctAnswer: 1,
+      explanation: 'Beams and bulkheads can create dead-air spaces; detectors should be kept at least 500 mm away or additional devices added to ensure coverage.'
+    },
+    {
+      id: 8,
+      question: 'What detector type is typically preferred in areas with steam or cooking aerosols?',
+      options: ['Optical smoke detectors', 'Heat detectors or multisensor devices', 'Ionisation smoke detectors', 'Beam detectors only'],
+      correctAnswer: 1,
+      explanation: 'Heat detectors or multisensor devices are preferred in areas with steam or aerosols to avoid false alarms from smoke detectors responding to non-fire particles.'
+    },
+    {
+      id: 9,
+      question: 'What special consideration is needed for detector placement in high spaces like atriums?',
+      options: ['Use standard ceiling-mount detectors', 'Consider beam or aspirating detection and plan safe maintenance access', 'Detection not required in high spaces', 'Only use sounders, no detectors'],
+      correctAnswer: 1,
+      explanation: 'High spaces require special detection methods (beam/aspirating) suitable for the height, with careful planning for maintenance access and testing.'
+    },
+    {
+      id: 10,
+      question: 'How does ceiling height affect detector spacing?',
+      options: ['Ceiling height has no effect', 'Higher ceilings may require reduced spacing or specialist detection', 'Higher ceilings allow wider spacing', 'Only affects sounders, not detectors'],
+      correctAnswer: 1,
+      explanation: 'As ceiling height increases, smoke/heat dispersion changes; spacing may need to be reduced and specialist detection (beam/aspirating) may be needed above certain heights.'
+    },
+    {
+      id: 11,
+      question: 'What should be considered regarding HVAC when placing detectors?',
+      options: ['HVAC has no effect on detection', 'Review seasonal modes and normal door states during design', 'Only place detectors in HVAC ducts', 'Turn off HVAC permanently'],
+      correctAnswer: 1,
+      explanation: 'HVAC operation affects smoke/heat movement; designers must review seasonal modes, airflow patterns, and normal door states to ensure effective detection.'
+    },
+    {
+      id: 12,
+      question: 'When should detection be provided in ceiling voids?',
+      options: ['Never provide void detection', 'Always in every void regardless of risk', 'Where risk warrants it or significant cabling exists, ensuring maintenance access', 'Only if specifically requested by client'],
+      correctAnswer: 2,
+      explanation: 'Ceiling voids should be protected where fire risk exists, where significant cabling is present, or where voids form protected spaces—always ensuring safe maintenance access.'
     }
   ], []);
 

@@ -78,13 +78,13 @@ const MoodTracker = () => {
               Today's mood: {moodOptions.find(m => m.value === todayEntry.mood)?.label}
             </p>
             {todayEntry.notes && (
-              <p className="text-sm text-white/80 mt-2">"{todayEntry.notes}"</p>
+              <p className="text-sm text-white mt-2">"{todayEntry.notes}"</p>
             )}
           </div>
         ) : (
           <div className="space-y-4">
             <div>
-              <p className="text-sm text-white/80 mb-3">How are you feeling today?</p>
+              <p className="text-sm text-white mb-3">How are you feeling today?</p>
               <div className="grid grid-cols-5 gap-2">
                 {moodOptions.map((mood) => (
                   <Button
@@ -103,7 +103,7 @@ const MoodTracker = () => {
             </div>
 
             <div>
-              <label className="text-sm text-white/80">Notes (optional)</label>
+              <label className="text-sm text-white">Notes (optional)</label>
               <Textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
@@ -128,11 +128,11 @@ const MoodTracker = () => {
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
                 <div className="text-lg font-semibold text-foreground">{moodHistory.length}</div>
-                <div className="text-xs text-white/80">Days tracked</div>
+                <div className="text-xs text-white">Days tracked</div>
               </div>
               <div>
                 <div className="text-lg font-semibold text-foreground">{getAverageMood()}</div>
-                <div className="text-xs text-white/80">Average mood</div>
+                <div className="text-xs text-white">Average mood</div>
               </div>
               <div>
                 <div className="flex items-center justify-center">
@@ -149,7 +149,7 @@ const MoodTracker = () => {
                     <Badge className="bg-blue-500/20 text-blue-400">Stable</Badge>
                   )}
                   {!getWeeklyTrend() && (
-                    <div className="text-xs text-white/80">Track more for trends</div>
+                    <div className="text-xs text-white">Track more for trends</div>
                   )}
                 </div>
               </div>

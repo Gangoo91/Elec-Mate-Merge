@@ -134,7 +134,8 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
           <div className="flex items-start justify-between">
             <div>
               <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-                {getGreeting()}
+                <span className="hidden sm:inline">{getGreeting()}</span>
+                <span className="sm:hidden">Dashboard</span>
               </h1>
               <div className="flex items-center gap-2 mt-1.5">
                 <Calendar className="h-3.5 w-3.5 text-muted-foreground" />
@@ -150,8 +151,8 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
         </div>
       </div>
 
-      {/* Quick Stats - Centered Grid */}
-      <div className="grid grid-cols-4 gap-2 md:gap-3">
+      {/* Quick Stats - Hidden on mobile for native app feel */}
+      <div className="hidden sm:grid grid-cols-4 gap-2 md:gap-3">
         {statsConfig.map((stat, index) => {
           const Icon = stat.icon;
           return (

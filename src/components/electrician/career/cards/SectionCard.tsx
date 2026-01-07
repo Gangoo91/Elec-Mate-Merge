@@ -121,21 +121,21 @@ const SectionCard = ({
         <div className={cn("p-3 rounded-xl", colors.bg)}>
           <Icon className={cn("h-6 w-6", colors.icon)} />
         </div>
-        <ChevronRight className="h-5 w-5 text-white/30 group-hover:text-white/60 group-hover:translate-x-1 transition-all" />
+        <ChevronRight className="h-5 w-5 text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all" />
       </div>
 
       {/* Title & Description */}
       <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-white/90 transition-colors">
         {title}
       </h3>
-      <p className="text-sm text-white/60 leading-relaxed mb-4 line-clamp-2">
+      <p className="text-sm text-white leading-relaxed mb-4 line-clamp-2">
         {description}
       </p>
 
       {/* Stat Preview */}
       <div className={cn("pt-3 border-t border-white/10")}>
         <div className={cn("text-xl font-bold", colors.stat)}>{previewStat}</div>
-        <div className="text-xs text-white/50">{statLabel}</div>
+        <div className="text-xs text-white">{statLabel}</div>
       </div>
     </motion.div>
   );

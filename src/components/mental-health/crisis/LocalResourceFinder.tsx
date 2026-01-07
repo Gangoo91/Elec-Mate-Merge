@@ -91,12 +91,12 @@ const LocalResourceFinder = () => {
                     {resource.type}
                   </Badge>
                 </div>
-                <div className="text-xs text-white/80 whitespace-nowrap">
+                <div className="text-xs text-white whitespace-nowrap">
                   {resource.distance}
                 </div>
               </div>
 
-              <p className="text-xs text-white/80 mb-2 line-clamp-1">{resource.address}</p>
+              <p className="text-xs text-white mb-2 line-clamp-1">{resource.address}</p>
 
               <div className="flex flex-wrap gap-1 mb-3">
                 {resource.services.map((service: string, serviceIndex: number) => (
@@ -132,21 +132,21 @@ const LocalResourceFinder = () => {
       {searchResults.length === 0 && !isLoading && (
         <div className="text-center py-4">
           <MapPin className="h-10 w-10 text-green-400/50 mx-auto mb-3" />
-          <p className="text-sm text-white/80 mb-3">
+          <p className="text-sm text-white mb-3">
             Enter your postcode to find local services
           </p>
           <div className="grid grid-cols-3 gap-2 text-xs">
             <div className="p-2 rounded bg-green-500/5 border border-green-500/20">
               <div className="text-green-400 font-medium">NHS</div>
-              <div className="text-white/80 text-[10px]">Mental health trusts</div>
+              <div className="text-white text-[10px]">Mental health trusts</div>
             </div>
             <div className="p-2 rounded bg-green-500/5 border border-green-500/20">
               <div className="text-green-400 font-medium">Charities</div>
-              <div className="text-white/80 text-[10px]">Mind, Samaritans</div>
+              <div className="text-white text-[10px]">Mind, Samaritans</div>
             </div>
             <div className="p-2 rounded bg-green-500/5 border border-green-500/20">
               <div className="text-green-400 font-medium">Crisis</div>
-              <div className="text-white/80 text-[10px]">24/7 support</div>
+              <div className="text-white text-[10px]">24/7 support</div>
             </div>
           </div>
         </div>

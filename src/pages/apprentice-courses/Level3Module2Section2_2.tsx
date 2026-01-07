@@ -215,7 +215,7 @@ const faqs = [
   },
   {
     question: "Can LED lighting cause power factor problems?",
-    answer: "LED drivers with poor power factor can reduce overall site power factor, though the effect is usually smaller than large motors. Quality LED drivers typically have power factor >0.9. Check specifications when specifying large lighting installations."
+    answer: "LED drivers with poor power factor can reduce overall site power factor, though the effect is usually smaller than large motors. Quality LED drivers typically have power factor &gt; 0.9. Check specifications when specifying large lighting installations."
   },
   {
     question: "What is the relationship between power factor and harmonics?",

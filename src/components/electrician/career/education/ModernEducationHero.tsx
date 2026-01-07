@@ -40,7 +40,7 @@ const ModernEducationHero = ({
               <h1 className="text-xl sm:text-2xl font-bold text-white">
                 Further <span className="text-purple-400">Education</span>
               </h1>
-              <p className="text-sm text-white/60 mt-1">
+              <p className="text-sm text-white mt-1">
                 HNC, HND, degrees & apprenticeship pathways
               </p>
             </div>
@@ -51,7 +51,7 @@ const ModernEducationHero = ({
               disabled={isRefreshing}
               size="sm"
               variant="ghost"
-              className="text-white/60 hover:text-white hover:bg-white/10"
+              className="text-white hover:text-white hover:bg-white/10"
             >
               <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
             </Button>
@@ -59,7 +59,7 @@ const ModernEducationHero = ({
 
           {/* Live Data Indicator */}
           {isFromCache && lastUpdated && (
-            <div className="flex items-center gap-2 mt-3 text-xs text-white/50">
+            <div className="flex items-center gap-2 mt-3 text-xs text-white">
               <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
               <span>Live data • Updated {new Date(lastUpdated).toLocaleDateString()}</span>
             </div>
@@ -71,22 +71,22 @@ const ModernEducationHero = ({
               <div className="bg-white/5 rounded-xl p-3 text-center">
                 <BookOpen className="h-5 w-5 text-purple-400 mx-auto mb-1" />
                 <div className="text-lg font-bold text-white">{analytics.totalCourses}</div>
-                <div className="text-[10px] text-white/50">Programmes</div>
+                <div className="text-[10px] text-white">Programmes</div>
               </div>
               <div className="bg-white/5 rounded-xl p-3 text-center">
                 <Users className="h-5 w-5 text-green-400 mx-auto mb-1" />
                 <div className="text-lg font-bold text-white">{analytics.totalProviders}</div>
-                <div className="text-[10px] text-white/50">Providers</div>
+                <div className="text-[10px] text-white">Providers</div>
               </div>
               <div className="bg-white/5 rounded-xl p-3 text-center">
                 <Star className="h-5 w-5 text-elec-yellow mx-auto mb-1" />
                 <div className="text-lg font-bold text-white">{analytics.averageRating.toFixed(1)}</div>
-                <div className="text-[10px] text-white/50">Avg Rating</div>
+                <div className="text-[10px] text-white">Avg Rating</div>
               </div>
               <div className="bg-white/5 rounded-xl p-3 text-center">
                 <TrendingUp className="h-5 w-5 text-blue-400 mx-auto mb-1" />
                 <div className="text-lg font-bold text-white">{(analytics.averageEmploymentRate || 0).toFixed(0)}%</div>
-                <div className="text-[10px] text-white/50">Employment</div>
+                <div className="text-[10px] text-white">Employment</div>
               </div>
             </div>
           )}
@@ -102,7 +102,7 @@ const ModernEducationHero = ({
             </Button>
             <Button
               variant="outline"
-              className="border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 flex-1 sm:flex-none"
+              className="border-white/20 text-white hover:text-white hover:bg-white/10 gap-2 flex-1 sm:flex-none"
               onClick={() => {
                 const filterSection = document.getElementById("education-filters");
                 filterSection?.scrollIntoView({ behavior: "smooth" });
@@ -123,13 +123,13 @@ const ModernEducationHero = ({
           transition={{ delay: 0.1 }}
           className="bg-elec-gray/50 border border-white/10 rounded-xl p-4"
         >
-          <h3 className="text-sm font-medium text-white/70 mb-3">Popular Categories</h3>
+          <h3 className="text-sm font-medium text-white mb-3">Popular Categories</h3>
           <div className="flex flex-wrap gap-2">
             {analytics.topCategories.slice(0, 6).map((category) => (
               <Badge
                 key={category.name}
                 variant="secondary"
-                className="bg-white/10 text-white/80 border-white/10 hover:bg-purple-500/20 hover:text-purple-300 transition-colors cursor-pointer"
+                className="bg-white/10 text-white border-white/10 hover:bg-purple-500/20 hover:text-purple-300 transition-colors cursor-pointer"
               >
                 {category.name} ({category.count})
               </Badge>

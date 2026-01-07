@@ -69,11 +69,11 @@ const BMSModule6 = () => {
               <Badge variant="secondary" className="bg-yellow-400 text-black">
                 Module 6
               </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
+              <Badge variant="outline" className="border-gray-600 text-white">
                 6 Sections
               </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                60 minutes
+              <Badge variant="outline" className="border-gray-600 text-white">
+                45 minutes
               </Badge>
             </div>
           </div>
@@ -85,8 +85,8 @@ const BMSModule6 = () => {
                 to={`../bms-module-6-section-${section.id}`}
                 className="h-full"
               >
-                <Card className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col">
-                  <CardContent className="text-center space-y-3 p-4 flex-grow flex flex-col justify-center">
+                <Card className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col min-h-[48px]">
+                  <CardContent className="text-center space-y-3 p-4 flex-grow flex flex-col justify-center min-h-[48px]">
                     <div className="flex justify-center">
                       <section.icon className="h-8 w-8 text-yellow-400" strokeWidth={2.5} />
                     </div>

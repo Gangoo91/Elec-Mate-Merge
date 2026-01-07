@@ -75,7 +75,7 @@ const BS7671Course = () => {
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Back Button */}
       <Link to="/electrician/upskilling">
-        <Button variant="ghost" className="text-muted-foreground hover:text-foreground transition-colors p-0 h-auto">
+        <Button variant="ghost" className="text-white hover:text-foreground transition-colors p-0 min-h-[48px]">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Courses
         </Button>
@@ -94,8 +94,8 @@ const BS7671Course = () => {
       {/* Module Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
           {modules.map((module) => (
-            <Link key={module.id} to={`../bs7671-module-${module.id}`} className="block h-full">
-              <div className="bg-card/50 rounded-lg active:scale-[0.98] active:bg-card/70 transition-all duration-200 cursor-pointer h-full flex flex-col">
+            <Link key={module.id} to={`bs7671-module-${module.id}`} className="block h-full">
+              <div className="bg-card/50 rounded-lg active:scale-[0.98] active:bg-card/70 transition-all duration-200 cursor-pointer h-full flex flex-col min-h-[48px]">
                 <div className="text-center p-3 sm:p-4 flex-grow flex flex-col justify-center">
                   <div className="flex justify-center mb-2 sm:mb-3">
                     <div className="p-2 sm:p-2.5 rounded-lg bg-primary/10">

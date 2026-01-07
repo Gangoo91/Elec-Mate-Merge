@@ -604,7 +604,8 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                           <p className="font-medium text-base truncate">{item.description}</p>
                           <div className="flex items-center gap-3 mt-2">
                             <Input
-                              type="number"
+                              type="text"
+                              inputMode="decimal"
                               value={labourHoursInputs[item.id] ?? String(item.hours)}
                               onChange={(e) => setLabourHoursInputs(prev => ({ ...prev, [item.id]: e.target.value }))}
                               onBlur={(e) => {
@@ -613,8 +614,6 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                                 setLabourHoursInputs(prev => ({ ...prev, [item.id]: String(val) }));
                               }}
                               className="w-20 h-12 text-base text-center"
-                              min={0.5}
-                              step={0.5}
                             />
                             <span className="text-sm text-muted-foreground">hrs</span>
                             <span className="text-sm text-muted-foreground">× £{item.hourlyRate.toFixed(2)}/hr</span>
@@ -678,24 +677,22 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                   <div className="space-y-2">
                     <Label className="text-xs text-muted-foreground">Hours</Label>
                     <Input
-                      type="number"
+                      type="text"
+                      inputMode="decimal"
                       placeholder="8"
                       value={newLabour.hours}
                       onChange={(e) => setNewLabour({ ...newLabour, hours: e.target.value })}
-                      min={0.5}
-                      step={0.5}
                       className="h-12 text-base text-center"
                     />
                   </div>
                   <div className="space-y-2">
                     <Label className="text-xs text-muted-foreground">Rate £/hr</Label>
                     <Input
-                      type="number"
+                      type="text"
+                      inputMode="decimal"
                       placeholder="45"
                       value={newLabour.hourlyRate}
                       onChange={(e) => setNewLabour({ ...newLabour, hourlyRate: e.target.value })}
-                      min={0}
-                      step={0.5}
                       className="h-12 text-base text-center"
                     />
                   </div>
@@ -735,7 +732,8 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                           <p className="font-medium text-base truncate">{item.description}</p>
                           <div className="flex items-center gap-3 mt-2">
                             <Input
-                              type="number"
+                              type="text"
+                              inputMode="decimal"
                               value={itemQuantityInputs[item.id] ?? String(item.quantity)}
                               onChange={(e) => setItemQuantityInputs(prev => ({ ...prev, [item.id]: e.target.value }))}
                               onBlur={(e) => {
@@ -744,7 +742,6 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                                 setItemQuantityInputs(prev => ({ ...prev, [item.id]: String(val) }));
                               }}
                               className="w-20 h-12 text-base text-center"
-                              min={1}
                             />
                             <span className="text-sm text-muted-foreground">{item.unit}</span>
                             <span className="text-sm text-muted-foreground">× £{item.unitPrice.toFixed(2)}</span>
@@ -810,18 +807,18 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                   <div className="space-y-2">
                     <Label className="text-xs text-muted-foreground">Qty</Label>
                     <Input
-                      type="number"
+                      type="text"
+                      inputMode="decimal"
                       placeholder="1"
                       value={newItem.quantity}
                       onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })}
-                      min={1}
                       className="h-12 text-base text-center"
                     />
                   </div>
                   <div className="space-y-2">
                     <Label className="text-xs text-muted-foreground">Unit</Label>
-                    <Select 
-                      value={newItem.unit} 
+                    <Select
+                      value={newItem.unit}
                       onValueChange={(v) => setNewItem({ ...newItem, unit: v })}
                     >
                       <SelectTrigger className="h-12 text-base">
@@ -840,12 +837,11 @@ export function CreateQuoteDialog({ open, onOpenChange, prefillClient, prefillAm
                   <div className="space-y-2">
                     <Label className="text-xs text-muted-foreground">Price £</Label>
                     <Input
-                      type="number"
+                      type="text"
+                      inputMode="decimal"
                       placeholder="0"
                       value={newItem.unitPrice}
                       onChange={(e) => setNewItem({ ...newItem, unitPrice: e.target.value })}
-                      min={0}
-                      step={0.01}
                       className="h-12 text-base text-center"
                     />
                   </div>

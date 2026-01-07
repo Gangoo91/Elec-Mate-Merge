@@ -24,7 +24,7 @@ const FireAlarmModule2Section1 = () => {
     if (meta) meta.content = desc;
   }, []);
 
-  // Quiz Data (5 questions)
+  // Quiz Data (12 questions)
   const questions: QuizQuestion[] = useMemo(() => [
     {
       id: 1,
@@ -60,6 +60,55 @@ const FireAlarmModule2Section1 = () => {
       options: ['Optical (Photoelectric)', 'Ionisation', 'Multisensor', 'Beam'],
       correctAnswer: 1,
       explanation: 'Ionisation detectors are more susceptible to nuisance from cooking fumes and steam.'
+    },
+    {
+      id: 6,
+      question: 'What is the typical maximum coverage radius for a smoke detector in a flat ceiling?',
+      options: ['5.0 m', '7.5 m', '10.0 m', '12.5 m'],
+      correctAnswer: 1,
+      explanation: 'BS 5839 typically specifies 7.5 m radius coverage for smoke detectors, though this should be reduced for obstructions and room geometry.'
+    },
+    {
+      id: 7,
+      question: 'Which detector type should be avoided in dusty environments?',
+      options: ['Fixed temperature heat detector', 'Ionisation smoke detector', 'Rate-of-rise heat detector', 'Both ionisation and optical smoke detectors'],
+      correctAnswer: 3,
+      explanation: 'Both ionisation and optical smoke detectors can be affected by dust, leading to false alarms. Heat detectors are preferred in dusty environments.'
+    },
+    {
+      id: 8,
+      question: 'What is a key consideration when positioning beam detectors?',
+      options: ['They must be mounted horizontally only', 'Alignment and regular maintenance to prevent false alarms', 'They can only be used outdoors', 'They require mains power only'],
+      correctAnswer: 1,
+      explanation: 'Beam detectors require precise alignment between transmitter and receiver, and regular cleaning to prevent dust or misalignment causing false alarms.'
+    },
+    {
+      id: 9,
+      question: 'Which detector classification indicates a rate-of-rise heat detector?',
+      options: ['A1S', 'A1R', 'CS', 'BR'],
+      correctAnswer: 1,
+      explanation: 'A1R indicates a Class A1 rate-of-rise heat detector. The "R" suffix denotes rate-of-rise functionality.'
+    },
+    {
+      id: 10,
+      question: 'What is thermal stratification and why does it matter for detector placement?',
+      options: ['Hot air rises and can prevent smoke reaching ceiling detectors', 'Cold air sinking improves detector response', 'A method of cooling detectors', 'The way heat detectors are manufactured'],
+      correctAnswer: 0,
+      explanation: 'Thermal stratification occurs when hot air forms a layer below the ceiling, preventing smoke from reaching detectors. This is particularly important in high spaces.'
+    },
+    {
+      id: 11,
+      question: 'What minimum distance should detectors be mounted from walls and beams?',
+      options: ['100 mm', '300 mm', '600 mm', '1000 mm'],
+      correctAnswer: 2,
+      explanation: 'BS 5839 recommends detectors should be at least 600 mm from walls, beams, and light fittings to avoid dead air spaces.'
+    },
+    {
+      id: 12,
+      question: 'In a sleeping risk area, which detector type is most appropriate?',
+      options: ['Heat detector (fixed temperature)', 'Optical smoke detector', 'Ionisation smoke detector', 'Beam detector'],
+      correctAnswer: 1,
+      explanation: 'Optical smoke detectors provide the fastest response to smouldering fires common in bedrooms (e.g., cigarettes, bedding) and are recommended for sleeping risk areas.'
     }
   ], []);
 

@@ -136,7 +136,8 @@ export function HeroWelcome() {
             </div>
 
             <h1 className="text-lg sm:text-xl md:text-2xl font-semibold text-white leading-tight">
-              {greeting}, <span className="text-elec-yellow">{firstName}</span>
+              <span className="hidden sm:inline">{greeting}, </span>
+              <span className="text-elec-yellow">{firstName}</span>
             </h1>
 
             <p className="text-xs sm:text-sm text-white/40 mt-0.5 line-clamp-1">

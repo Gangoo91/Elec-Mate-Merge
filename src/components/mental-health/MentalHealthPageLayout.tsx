@@ -37,7 +37,7 @@ const MentalHealthPageLayout = ({
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-3">
           {title}
         </h1>
-        <p className="text-white/80 max-w-2xl mb-4 text-sm sm:text-base">
+        <p className="text-white max-w-2xl mb-4 text-sm sm:text-base">
           {description}
         </p>
         <SmartBackButton />
@@ -50,7 +50,7 @@ const MentalHealthPageLayout = ({
             {icon}
             <div>
               <CardTitle className="text-lg sm:text-xl text-white">{title}</CardTitle>
-              <CardDescription className="text-sm text-white/70">
+              <CardDescription className="text-sm text-white">
                 {description}
               </CardDescription>
             </div>

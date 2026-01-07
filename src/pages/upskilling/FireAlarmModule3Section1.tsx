@@ -56,9 +56,51 @@ const FireAlarmModule3Section1 = () => {
     {
       id: 5,
       question: 'What must be provided at the CIE relating to zones?',
-      options: ['A random sketch', 'No drawing is needed', 'A clear zone plan with “You are here”, orientation and boundaries', 'Only a device list'],
+      options: ['A random sketch', 'No drawing is needed', 'A clear zone plan with "You are here", orientation and boundaries', 'Only a device list'],
       correctAnswer: 2,
       explanation: 'Provide a legible, oriented zone plan located at the control and indicating equipment.'
+    },
+    {
+      id: 6,
+      question: 'What is the minimum general recommendation for zones per storey?',
+      options: ['No zoning required', 'At least one zone per floor', 'Multiple storeys can share one zone', 'Only ground floor needs zones'],
+      correctAnswer: 1,
+      explanation: 'BS 5839-1 generally recommends at least one zone per storey as a minimum, with large floors subdivided further.'
+    },
+    {
+      id: 7,
+      question: 'Why should plant rooms typically be separate zones?',
+      options: ['To save money', 'They are low risk areas', 'To enable quick identification of high-risk areas requiring immediate attention', 'Plant rooms don\'t need detection'],
+      correctAnswer: 2,
+      explanation: 'Plant rooms often contain high-risk equipment and warrant separate zoning for rapid response and clear indication.'
+    },
+    {
+      id: 8,
+      question: 'What should happen to zone plans after building alterations?',
+      options: ['Leave them unchanged', 'Update them and record changes in the logbook', 'Remove them entirely', 'Only update every 5 years'],
+      correctAnswer: 1,
+      explanation: 'Zone plans must be kept up to date after alterations, with changes recorded in the system logbook for compliance and safety.'
+    },
+    {
+      id: 9,
+      question: 'How should zone identification labels be chosen?',
+      options: ['Random numbers', 'Cryptic codes only the installer knows', 'Clear names matching drawings and signage (e.g., Floor 03 – East Office)', 'Leave them as factory defaults'],
+      correctAnswer: 2,
+      explanation: 'Zone labels must be clear and consistent across panel displays, drawings, and site signage so responders instantly understand locations.'
+    },
+    {
+      id: 10,
+      question: 'What is a key problem with zones that cross fire compartment boundaries?',
+      options: ['It saves cable runs', 'It confuses responders and undermines compartmentation strategy', 'It increases device count', 'It improves aesthetics'],
+      correctAnswer: 1,
+      explanation: 'Zones crossing compartment boundaries create confusion about fire location and undermine the building\'s fire containment strategy.'
+    },
+    {
+      id: 11,
+      question: 'How should ceiling voids typically be zoned?',
+      options: ['Never zone voids', 'Zone where protected or where significant risk/cabling exists', 'Always combine with room below', 'Use one zone for entire building voids'],
+      correctAnswer: 1,
+      explanation: 'Ceiling voids should be zoned where they are protected spaces or contain significant fire risk or cabling, ensuring indications make sense to responders.'
     }
   ], []);
 

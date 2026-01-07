@@ -59,6 +59,55 @@ const FireAlarmModule3Section4 = () => {
       options: ['Combined into adjacent zones', 'Left without detection', 'Provided with dedicated detection zones and robust notification', 'Protected by VADs only'],
       correctAnswer: 2,
       explanation: 'Stairs are critical escape routes and often zoned separately with clear indication and reliable warning.'
+    },
+    {
+      id: 6,
+      question: 'What does EN 54-23 specify for VADs?',
+      options: ['Detector spacing only', 'Categories (W, C, O) for coverage volume and mounting requirements', 'Cable specifications', 'Battery capacity'],
+      correctAnswer: 1,
+      explanation: 'EN 54-23 defines VAD categories: W (wall-mounted), C (ceiling-mounted), O (open area), each with specific coverage volumes and installation requirements.'
+    },
+    {
+      id: 7,
+      question: 'What is the purpose of Emergency Voice Communication (EVC) systems?',
+      options: ['Playing background music', 'Two-way communication between refuge areas and a control point', 'Only for false alarm announcements', 'Replacing manual call points'],
+      correctAnswer: 1,
+      explanation: 'EVC provides two-way communication between refuge points and control locations, allowing occupants to report status and receive instructions during evacuation.'
+    },
+    {
+      id: 8,
+      question: 'How should reverberation be managed in voice alarm systems?',
+      options: ['Reverberation improves intelligibility', 'Control through acoustic treatment and speaker placement to maintain clear speech transmission', 'Ignore reverberation effects', 'Only relevant for music systems'],
+      correctAnswer: 1,
+      explanation: 'Excessive reverberation degrades speech intelligibility; acoustic treatment, careful speaker selection and placement are essential to maintain clear evacuation messages.'
+    },
+    {
+      id: 9,
+      question: 'What coordination is needed between fire alarm systems and door hold-open devices?',
+      options: ['No coordination required', 'Fire alarm must release electromagnetic hold-opens on activation to close fire doors', 'Doors should remain open during fire', 'Only manual release is acceptable'],
+      correctAnswer: 1,
+      explanation: 'Fire alarm systems must automatically release electromagnetic door hold-opens to allow fire doors to close, maintaining compartmentation during evacuation.'
+    },
+    {
+      id: 10,
+      question: 'Why should protected stair cores have separate detection zones?',
+      options: ['To reduce costs', 'They are low-risk areas', 'To provide clear indication of fire in critical escape routes and enable rapid response', 'Stair cores never need detection'],
+      correctAnswer: 2,
+      explanation: 'Protected stairs are critical escape routes; separate zoning provides clear indication if fire enters the stairwell, enabling immediate response to protect evacuating occupants.'
+    },
+    {
+      id: 11,
+      question: 'What is meant by phased evacuation in accessible design?',
+      options: ['Everyone evacuates at once', 'Staged evacuation by floor or zone with distinct alert/evacuate signals', 'No evacuation occurs', 'Only disabled people evacuate first'],
+      correctAnswer: 1,
+      explanation: 'Phased evacuation sequences occupant movement by floor/zone using distinct alert (standby) and evacuate signals, preventing stair congestion and supporting assisted escape.'
+    },
+    {
+      id: 12,
+      question: 'What additional warning devices might be needed for specific accessibility requirements?',
+      options: ['No additional devices are ever needed', 'Paging/vibrating devices for certain user groups where appropriate', 'Only sounders are acceptable', 'Visual devices are never required'],
+      correctAnswer: 1,
+      explanation: 'Some occupants may require paging, vibrating, or other specialized alerting devices in addition to standard sounders and VADs to ensure effective warning.'
     }
   ], []);
 

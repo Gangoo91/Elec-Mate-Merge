@@ -38,10 +38,10 @@ const EventsList = ({ events }: EventsListProps) => {
               <Calendar className="h-5 w-5 text-purple-400 mt-1 flex-shrink-0" />
               <div>
                 <h4 className="font-medium text-sm">{event.name}</h4>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   {event.date} • {event.time}
                 </p>
-                <p className="text-xs text-white/80">{event.location}</p>
+                <p className="text-xs text-white">{event.location}</p>
               </div>
             </div>
             <Button 

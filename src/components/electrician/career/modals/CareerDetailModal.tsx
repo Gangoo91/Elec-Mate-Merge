@@ -199,15 +199,15 @@ const CareerDetailModal = ({
       return (
         <ul className="space-y-2">
           {content.map((item, idx) => (
-            <li key={idx} className="flex items-start gap-2 text-sm text-white/70">
-              <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0 mt-0.5" />
+            <li key={idx} className="flex items-start gap-2 text-sm text-white">
+              <ChevronRight className="h-4 w-4 text-white/60 flex-shrink-0 mt-0.5" />
               <span>{item}</span>
             </li>
           ))}
         </ul>
       );
     }
-    return <p className="text-sm text-white/70 leading-relaxed">{content}</p>;
+    return <p className="text-sm text-white leading-relaxed">{content}</p>;
   };
 
   return (
@@ -255,7 +255,7 @@ const CareerDetailModal = ({
                   variant="ghost"
                   size="icon"
                   onClick={onClose}
-                  className="h-9 w-9 text-white/60 hover:text-white hover:bg-white/10 flex-shrink-0"
+                  className="h-9 w-9 text-white hover:text-white hover:bg-white/10 flex-shrink-0"
                 >
                   <X className="h-5 w-5" />
                 </Button>
@@ -267,7 +267,7 @@ const CareerDetailModal = ({
               <div className="p-4 space-y-6 pb-24">
                 {/* Overview */}
                 <motion.div custom={0} variants={contentVariants} initial="hidden" animate="visible">
-                  <p className="text-sm text-white/80 leading-relaxed">{content.overview}</p>
+                  <p className="text-sm text-white leading-relaxed">{content.overview}</p>
                 </motion.div>
 
                 {/* Sections */}
@@ -302,7 +302,7 @@ const CareerDetailModal = ({
                     <h3 className="font-semibold text-white text-sm mb-3">Pro Tips</h3>
                     <ul className="space-y-2">
                       {content.tips.map((tip, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm text-white/70">
+                        <li key={idx} className="flex items-start gap-2 text-sm text-white">
                           <span className={cn("text-xs font-bold mt-0.5", colors.accentText)}>
                             {idx + 1}.
                           </span>
@@ -336,10 +336,10 @@ const CareerDetailModal = ({
                               {resource.title}
                             </div>
                             {resource.description && (
-                              <div className="text-xs text-white/50">{resource.description}</div>
+                              <div className="text-xs text-white">{resource.description}</div>
                             )}
                           </div>
-                          <ExternalLink className="h-4 w-4 text-white/40 group-hover:text-white/60" />
+                          <ExternalLink className="h-4 w-4 text-white/60 group-hover:text-white" />
                         </a>
                       ))}
                     </div>
@@ -380,7 +380,7 @@ const CareerDetailModal = ({
                     <div className="flex-1 min-w-0">
                       <h2 className="text-xl font-semibold text-white">{title}</h2>
                       {description && (
-                        <p className="text-sm text-white/60 mt-1">{description}</p>
+                        <p className="text-sm text-white mt-1">{description}</p>
                       )}
                       {badge && (
                         <Badge variant="outline" className={cn("text-xs mt-2", colors.badge)}>
@@ -393,7 +393,7 @@ const CareerDetailModal = ({
                     variant="ghost"
                     size="icon"
                     onClick={onClose}
-                    className="h-10 w-10 text-white/60 hover:text-white hover:bg-white/10 flex-shrink-0"
+                    className="h-10 w-10 text-white hover:text-white hover:bg-white/10 flex-shrink-0"
                   >
                     <X className="h-5 w-5" />
                   </Button>
@@ -405,7 +405,7 @@ const CareerDetailModal = ({
                 <div className="p-5 space-y-6">
                   {/* Overview */}
                   <motion.div custom={0} variants={contentVariants} initial="hidden" animate="visible">
-                    <p className="text-white/80 leading-relaxed">{content.overview}</p>
+                    <p className="text-white leading-relaxed">{content.overview}</p>
                   </motion.div>
 
                   {/* Sections Grid */}
@@ -447,7 +447,7 @@ const CareerDetailModal = ({
                       <h3 className="font-semibold text-white mb-3">Pro Tips</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {content.tips.map((tip, idx) => (
-                          <div key={idx} className="flex items-start gap-2 text-sm text-white/70">
+                          <div key={idx} className="flex items-start gap-2 text-sm text-white">
                             <span className={cn("text-xs font-bold mt-0.5", colors.accentText)}>
                               {idx + 1}.
                             </span>
@@ -481,10 +481,10 @@ const CareerDetailModal = ({
                                 {resource.title}
                               </div>
                               {resource.description && (
-                                <div className="text-xs text-white/50">{resource.description}</div>
+                                <div className="text-xs text-white">{resource.description}</div>
                               )}
                             </div>
-                            <ExternalLink className="h-4 w-4 text-white/40 group-hover:text-white/60" />
+                            <ExternalLink className="h-4 w-4 text-white/60 group-hover:text-white" />
                           </a>
                         ))}
                       </div>

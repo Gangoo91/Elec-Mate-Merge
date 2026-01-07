@@ -18,7 +18,7 @@ const quickCheckQuestions = [
     question: "What does a resistance reading of >999 MΩ on insulation testing typically indicate?",
     options: ["Poor insulation", "Good insulation", "Test fault", "Earth fault"],
     correctIndex: 1,
-    explanation: ">999 MΩ indicates excellent insulation resistance, well above minimum requirements."
+    explanation: "&gt;999 MΩ indicates excellent insulation resistance, well above minimum requirements."
   },
   {
     id: 2,

@@ -88,7 +88,7 @@ const FeaturedPodcastHero = ({ podcast }: FeaturedPodcastHeroProps) => {
               </p>
             </div>
 
-            <p className="text-white/80 text-base sm:text-lg leading-relaxed max-w-2xl">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl">
               {podcast.description}
             </p>
 

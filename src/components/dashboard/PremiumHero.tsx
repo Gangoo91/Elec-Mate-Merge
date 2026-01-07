@@ -218,14 +218,15 @@ export function PremiumHero() {
                 </span>
               </motion.div>
 
-              {/* Greeting */}
+              {/* Greeting - hidden on mobile for native app feel */}
               <motion.h1
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
                 className="text-lg sm:text-xl md:text-2xl font-semibold text-white leading-tight"
               >
-                {greeting}, <span className="text-elec-yellow">{userData.firstName}</span>
+                <span className="hidden sm:inline">{greeting}, </span>
+                <span className="text-elec-yellow">{userData.firstName}</span>
               </motion.h1>
 
               <motion.p

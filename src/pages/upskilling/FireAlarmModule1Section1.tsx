@@ -84,6 +84,90 @@ const FireAlarmModule1Section1 = () => {
       ],
       correctAnswer: 2,
       explanation: 'L2 provides detection in escape routes and in specified high-risk rooms that open onto them.'
+    },
+    {
+      id: 6,
+      question: 'An L4 system provides detection in which areas?',
+      options: [
+        'Throughout all areas of the building',
+        'Escape routes only',
+        'High-risk rooms only',
+        'Property protection areas only'
+      ],
+      correctAnswer: 1,
+      explanation: 'L4 systems provide automatic detection on escape routes only, offering basic life safety coverage.'
+    },
+    {
+      id: 7,
+      question: 'What is the key characteristic of an L5 system?',
+      options: [
+        'Detection throughout the entire building',
+        'Manual call points only',
+        'Localised detection in specific areas to satisfy a particular objective',
+        'Detection in escape routes and all adjoining rooms'
+      ],
+      correctAnswer: 2,
+      explanation: 'L5 is a bespoke category providing localised protection engineered to meet a specific need or objective.'
+    },
+    {
+      id: 8,
+      question: 'Which building type would most likely require an L1 system?',
+      options: [
+        'Small single-storey office',
+        'Care home with sleeping accommodation',
+        'Retail unit with constant supervision',
+        'Industrial warehouse'
+      ],
+      correctAnswer: 1,
+      explanation: 'Care homes and premises with sleeping risk typically require L1 for maximum early warning and life safety.'
+    },
+    {
+      id: 9,
+      question: 'What is the minimum routine servicing interval recommended by BS 5839-1?',
+      options: [
+        'Monthly',
+        'Quarterly',
+        'Six-monthly',
+        'Annually'
+      ],
+      correctAnswer: 2,
+      explanation: 'BS 5839-1 recommends routine servicing by a competent person at intervals not exceeding six months.'
+    },
+    {
+      id: 10,
+      question: 'Which category would be appropriate for a data centre prioritising asset protection?',
+      options: [
+        'M only',
+        'L4',
+        'P1 or P2 depending on risk assessment',
+        'L5'
+      ],
+      correctAnswer: 2,
+      explanation: 'Data centres typically require P1 (full coverage) or P2 (targeted) property protection systems to safeguard valuable assets and ensure business continuity.'
+    },
+    {
+      id: 11,
+      question: 'What is the purpose of the weekly user test required by BS 5839-1?',
+      options: [
+        'To test all detectors individually',
+        'To verify system functionality by testing at least one call point',
+        'To replace system batteries',
+        'To update system software'
+      ],
+      correctAnswer: 1,
+      explanation: 'Users should test at least one manual call point weekly and rotate through different MCPs to verify the system is operational, recording results in the logbook.'
+    },
+    {
+      id: 12,
+      question: 'Which statement about L3 systems is correct?',
+      options: [
+        'L3 includes detection in all high-risk rooms',
+        'L3 provides detection on escape routes and rooms opening directly onto them',
+        'L3 is suitable for property protection only',
+        'L3 requires manual call points to be omitted'
+      ],
+      correctAnswer: 1,
+      explanation: 'L3 systems provide automatic detection on escape routes plus rooms that open directly onto those escape routes.'
     }
   ], []);
 

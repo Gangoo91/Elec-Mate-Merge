@@ -11,7 +11,7 @@ const Module8Section2Part3 = () => {
         <Link to="module-8/section-2">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Hints & Tips
@@ -317,7 +317,7 @@ const Module8Section2Part3 = () => {
               </div>
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-orange-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300"><strong>Negative questions:</strong> "Which is NOT required" or "Incorrect procedure" - easy to miss the negative</span>
+                <span className="text-white"><strong>Negative questions:</strong> "Which is NOT required" or "Incorrect procedure" - easy to miss the negative</span>
               </div>
             </CardContent>
           </Card>
@@ -329,7 +329,7 @@ const Module8Section2Part3 = () => {
             <CardContent className="space-y-4">
               <div className="bg-card p-4 rounded-lg border border-gray-600">
                 <p className="text-yellow-400 font-semibold mb-3">When You Hit a Mental Block:</p>
-                <ol className="list-decimal list-inside space-y-1 text-gray-300 text-sm">
+                <ol className="list-decimal list-inside space-y-1 text-white text-sm">
                   <li>Stop writing, put pen down</li>
                   <li>Take three slow, deep breaths</li>
                   <li>Re-read the question slowly</li>
@@ -341,11 +341,11 @@ const Module8Section2Part3 = () => {
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
                   <Lightbulb className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300"><strong>Confidence building:</strong> Answer easier questions first to build momentum and confidence</span>
+                  <span className="text-white"><strong>Confidence building:</strong> Answer easier questions first to build momentum and confidence</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300"><strong>Perspective reminder:</strong> One difficult question won't fail you - keep going</span>
+                  <span className="text-white"><strong>Perspective reminder:</strong> One difficult question won't fail you - keep going</span>
                 </div>
               </div>
             </CardContent>
@@ -355,7 +355,7 @@ const Module8Section2Part3 = () => {
             <CardHeader>
               <CardTitle className="text-white">Extended Practice Scenarios</CardTitle>
             </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
+            <CardContent className="text-white space-y-4">
               <div>
                 <p className="font-semibold text-white mb-2">Scenario 4: The Trick Question</p>
                 <p className="italic mb-2">"Which cable is suitable for this installation?" You see familiar cable types but notice "outdoor" in the scenario. Stop - check if UV resistance is mentioned. Details matter.</p>
@@ -379,20 +379,20 @@ const Module8Section2Part3 = () => {
             <CardHeader>
               <CardTitle className="text-white">One-liner</CardTitle>
             </CardHeader>
-            <CardContent className="text-gray-300">
+            <CardContent className="text-white">
               <p className="font-semibold text-yellow-400">Answering smart is as important as answering right — don't just write, think first.</p>
             </CardContent>
           </Card>
 
           <div className="flex justify-between">
-            <Link to="module-8/section-2/part-2">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
+            <Link to="../module-8/section-2/part-2">
+              <Button variant="outline" className="border-gray-600 text-white hover:bg-card min-h-[48px]">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous: Common Mistakes
               </Button>
             </Link>
-            <Link to="module-8/section-2/part-4">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
+            <Link to="../module-8/section-2/part-4">
+              <Button className="bg-yellow-400 text-black hover:bg-yellow-600 min-h-[48px]">
                 Next: Key Values
                 <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
               </Button>

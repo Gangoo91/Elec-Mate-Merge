@@ -45,7 +45,10 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
   const [notes, setNotes] = useState("");
   const [lineItems, setLineItems] = useState<LineItem[]>([]);
   const [selectedQuoteId, setSelectedQuoteId] = useState<string | null>(null);
-  const [newItem, setNewItem] = useState({ description: "", quantity: 1, unit: "each", unitPrice: 0 });
+  // Use strings for inputs to allow empty fields and smooth typing
+  const [newItem, setNewItem] = useState({ description: "", quantity: "", unit: "each", unitPrice: "" });
+  // Track string values for existing line item quantities
+  const [itemQuantityInputs, setItemQuantityInputs] = useState<Record<string, string>>({});
 
   const { data: invoiceNumber } = useNextInvoiceNumber();
   const { data: quotes = [] } = useQuotes();
@@ -146,25 +149,31 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
 
   const addLineItem = () => {
     if (!newItem.description) return;
+    const qty = Number(newItem.quantity) || 1;
+    const price = Number(newItem.unitPrice) || 0;
     const item: LineItem = {
       id: crypto.randomUUID(),
       description: newItem.description,
-      quantity: newItem.quantity,
+      quantity: qty,
       unit: newItem.unit,
-      unitPrice: newItem.unitPrice,
-      total: newItem.quantity * newItem.unitPrice
+      unitPrice: price,
+      total: qty * price
     };
     setLineItems([...lineItems, item]);
-    setNewItem({ description: "", quantity: 1, unit: "each", unitPrice: 0 });
+    setNewItem({ description: "", quantity: "", unit: "each", unitPrice: "" });
   };
 
   const removeLineItem = (id: string) => {
     setLineItems(lineItems.filter(item => item.id !== id));
+    setItemQuantityInputs(prev => {
+      const { [id]: _, ...rest } = prev;
+      return rest;
+    });
   };
 
   const updateQuantity = (id: string, quantity: number) => {
-    setLineItems(lineItems.map(item => 
-      item.id === id 
+    setLineItems(lineItems.map(item =>
+      item.id === id
         ? { ...item, quantity, total: quantity * item.unitPrice }
         : item
     ));
@@ -201,6 +210,8 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
     setNotes("");
     setLineItems([]);
     setSelectedQuoteId(null);
+    setNewItem({ description: "", quantity: "", unit: "each", unitPrice: "" });
+    setItemQuantityInputs({});
   };
 
   const canProceed = () => {
@@ -237,20 +248,20 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
           {/* Content */}
           <ScrollArea className="flex-1 px-4 py-4">
             {step === 1 && (
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {/* Create from Quote */}
                 {approvedQuotes.length > 0 && (
                   <div className="space-y-2">
-                    <Label className="flex items-center gap-2">
+                    <Label className="flex items-center gap-2 text-sm font-medium">
                       <FileText className="h-4 w-4" />
                       Create from Approved Quote
                     </Label>
-                    <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar">
+                    <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar -mx-1 px-1">
                       {approvedQuotes.map((quote) => (
                         <Badge
                           key={quote.id}
                           variant={selectedQuoteId === quote.id ? "default" : "outline"}
-                          className="shrink-0 cursor-pointer touch-feedback"
+                          className="shrink-0 cursor-pointer active:scale-95 transition-transform min-h-[44px] flex items-center px-4"
                           onClick={() => loadFromQuote(quote.id)}
                         >
                           {quote.quote_number} - {quote.client}
@@ -261,27 +272,30 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                 )}
 
                 <div className="space-y-2">
-                  <Label>Client Name *</Label>
+                  <Label className="text-sm font-medium">Client Name <span className="text-destructive">*</span></Label>
                   <Input
                     placeholder="Enter client name"
                     value={client}
                     onChange={(e) => setClient(e.target.value)}
-                    className="text-base"
+                    className="h-14 text-base"
+                    autoComplete="off"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>Project / Reference</Label>
+                  <Label className="text-sm font-medium">Project / Reference</Label>
                   <Input
                     placeholder="Project name or reference"
                     value={project}
                     onChange={(e) => setProject(e.target.value)}
+                    className="h-14 text-base"
+                    autoComplete="off"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label>Payment Terms</Label>
+                    <Label className="text-sm font-medium">Payment Terms</Label>
                     <Select value={paymentTerms} onValueChange={setPaymentTerms}>
-                      <SelectTrigger>
+                      <SelectTrigger className="h-14 text-base">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -294,9 +308,9 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label>VAT Rate</Label>
+                    <Label className="text-sm font-medium">VAT Rate</Label>
                     <Select value={vatRate} onValueChange={setVatRate}>
-                      <SelectTrigger>
+                      <SelectTrigger className="h-14 text-base">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -311,37 +325,43 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
             )}
 
             {step === 2 && (
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {/* Line Items */}
                 {lineItems.length > 0 && (
-                  <div className="space-y-2">
+                  <div className="space-y-3">
+                    <Label className="text-sm font-medium">Line Items Added</Label>
                     {lineItems.map((item) => (
-                      <Card key={item.id} className="bg-elec-gray">
-                        <CardContent className="p-3">
-                          <div className="flex items-start justify-between gap-2">
+                      <Card key={item.id} className="bg-elec-gray border-border">
+                        <CardContent className="p-4">
+                          <div className="flex items-start justify-between gap-3">
                             <div className="flex-1 min-w-0">
-                              <p className="font-medium text-sm truncate">{item.description}</p>
-                              <div className="flex items-center gap-2 mt-1">
+                              <p className="font-medium text-base truncate">{item.description}</p>
+                              <div className="flex items-center gap-3 mt-2">
                                 <Input
-                                  type="number"
-                                  value={item.quantity}
-                                  onChange={(e) => updateQuantity(item.id, Number(e.target.value))}
-                                  className="w-16 h-8 text-sm"
-                                  min={1}
+                                  type="text"
+                                  inputMode="decimal"
+                                  value={itemQuantityInputs[item.id] ?? String(item.quantity)}
+                                  onChange={(e) => setItemQuantityInputs(prev => ({ ...prev, [item.id]: e.target.value }))}
+                                  onBlur={(e) => {
+                                    const val = Number(e.target.value) || 1;
+                                    updateQuantity(item.id, val);
+                                    setItemQuantityInputs(prev => ({ ...prev, [item.id]: String(val) }));
+                                  }}
+                                  className="w-20 h-12 text-base text-center"
                                 />
-                                <span className="text-xs text-muted-foreground">{item.unit}</span>
-                                <span className="text-xs text-muted-foreground">× £{item.unitPrice.toFixed(2)}</span>
+                                <span className="text-sm text-muted-foreground">{item.unit}</span>
+                                <span className="text-sm text-muted-foreground">× £{item.unitPrice.toFixed(2)}</span>
                               </div>
                             </div>
                             <div className="text-right shrink-0">
-                              <p className="font-bold text-elec-yellow">£{item.total.toFixed(2)}</p>
-                              <Button 
-                                variant="ghost" 
-                                size="sm" 
-                                className="h-6 w-6 p-0 mt-1"
+                              <p className="text-lg font-bold text-elec-yellow">£{item.total.toFixed(2)}</p>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-10 w-10 p-0 mt-1"
                                 onClick={() => removeLineItem(item.id)}
                               >
-                                <Trash2 className="h-3 w-3 text-destructive" />
+                                <Trash2 className="h-4 w-4 text-destructive" />
                               </Button>
                             </div>
                           </div>
@@ -352,31 +372,35 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                 )}
 
                 {/* Custom Item */}
-                <Card className="bg-muted/30">
-                  <CardContent className="p-3 space-y-3">
-                    <Label className="text-sm">Add Line Item</Label>
+                <Card className="bg-muted/30 border-dashed">
+                  <CardContent className="p-4 space-y-4">
+                    <Label className="text-sm font-medium">Add Line Item</Label>
                     <Input
-                      placeholder="Description"
+                      placeholder="Item description"
                       value={newItem.description}
                       onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
+                      className="h-14 text-base"
+                      autoComplete="off"
                     />
-                    <div className="grid grid-cols-3 gap-2">
-                      <div>
-                        <Label className="text-xs">Qty</Label>
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="space-y-2">
+                        <Label className="text-xs text-muted-foreground">Qty</Label>
                         <Input
-                          type="number"
+                          type="text"
+                          inputMode="decimal"
+                          placeholder="1"
                           value={newItem.quantity}
-                          onChange={(e) => setNewItem({ ...newItem, quantity: Number(e.target.value) })}
-                          min={1}
+                          onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })}
+                          className="h-12 text-base text-center"
                         />
                       </div>
-                      <div>
-                        <Label className="text-xs">Unit</Label>
-                        <Select 
-                          value={newItem.unit} 
+                      <div className="space-y-2">
+                        <Label className="text-xs text-muted-foreground">Unit</Label>
+                        <Select
+                          value={newItem.unit}
                           onValueChange={(v) => setNewItem({ ...newItem, unit: v })}
                         >
-                          <SelectTrigger>
+                          <SelectTrigger className="h-12 text-base">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
@@ -389,21 +413,21 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                           </SelectContent>
                         </Select>
                       </div>
-                      <div>
-                        <Label className="text-xs">Price</Label>
+                      <div className="space-y-2">
+                        <Label className="text-xs text-muted-foreground">Price £</Label>
                         <Input
-                          type="number"
+                          type="text"
+                          inputMode="decimal"
+                          placeholder="0"
                           value={newItem.unitPrice}
-                          onChange={(e) => setNewItem({ ...newItem, unitPrice: Number(e.target.value) })}
-                          min={0}
-                          step={0.01}
+                          onChange={(e) => setNewItem({ ...newItem, unitPrice: e.target.value })}
+                          className="h-12 text-base text-center"
                         />
                       </div>
                     </div>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="w-full"
+                    <Button
+                      variant="outline"
+                      className="w-full h-12"
                       onClick={addLineItem}
                       disabled={!newItem.description}
                     >
@@ -412,42 +436,48 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                     </Button>
                   </CardContent>
                 </Card>
+
+                {lineItems.length === 0 && (
+                  <p className="text-sm text-muted-foreground text-center py-2">
+                    Add at least one line item to continue.
+                  </p>
+                )}
               </div>
             )}
 
             {step === 3 && (
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {/* Summary */}
-                <Card className="bg-elec-gray">
-                  <CardContent className="p-4 space-y-3">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Client</span>
+                <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-elec-yellow/20">
+                  <CardContent className="p-4 space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Client</span>
                       <span className="font-medium">{client}</span>
                     </div>
                     {project && (
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Project</span>
-                        <span className="font-medium">{project}</span>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">Project</span>
+                        <span className="font-medium text-sm">{project}</span>
                       </div>
                     )}
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Payment Terms</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Payment Terms</span>
                       <span className="font-medium">
                         {paymentTerms === "0" ? "Due on Receipt" : `Net ${paymentTerms}`}
                       </span>
                     </div>
-                    <div className="border-t border-border pt-3 space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Subtotal</span>
-                        <span>£{subtotal.toFixed(2)}</span>
+                    <div className="border-t border-border pt-4 space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Subtotal</span>
+                        <span className="text-sm">£{subtotal.toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">VAT ({vatRate}%)</span>
-                        <span>£{vatAmount.toFixed(2)}</span>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">VAT ({vatRate}%)</span>
+                        <span className="text-sm">£{vatAmount.toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between text-lg font-bold pt-2 border-t border-border">
-                        <span>Total Due</span>
-                        <span className="text-elec-yellow">£{total.toFixed(2)}</span>
+                      <div className="flex justify-between pt-2 border-t border-border">
+                        <span className="text-lg font-bold">Total Due</span>
+                        <span className="text-2xl font-bold text-elec-yellow">£{total.toFixed(2)}</span>
                       </div>
                     </div>
                   </CardContent>
@@ -455,24 +485,30 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
 
                 {/* Notes */}
                 <div className="space-y-2">
-                  <Label>Notes / Payment Details</Label>
+                  <Label className="text-sm font-medium">Notes / Payment Details</Label>
                   <Textarea
                     placeholder="Bank details, payment instructions, etc."
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    className="min-h-[80px]"
+                    className="min-h-[100px] text-base"
                   />
                 </div>
 
                 {/* Line Items Preview */}
-                <div className="space-y-2">
-                  <Label>Line Items</Label>
-                  {lineItems.map((item, idx) => (
-                    <div key={item.id} className="flex justify-between text-sm py-1 border-b border-border/50">
-                      <span className="text-muted-foreground">{idx + 1}. {item.description}</span>
-                      <span>£{item.total.toFixed(2)}</span>
-                    </div>
-                  ))}
+                <div className="space-y-3">
+                  <Label className="text-sm font-medium">Line Items</Label>
+                  <div className="space-y-2">
+                    {lineItems.map((item, idx) => (
+                      <div key={item.id} className="flex justify-between items-center py-2 px-3 bg-muted/30 rounded-lg">
+                        <div className="flex-1 min-w-0">
+                          <span className="text-sm text-muted-foreground mr-2">{idx + 1}.</span>
+                          <span className="text-sm">{item.description}</span>
+                          <span className="text-xs text-muted-foreground ml-2">× {item.quantity}</span>
+                        </div>
+                        <span className="font-medium shrink-0">£{item.total.toFixed(2)}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -491,41 +527,45 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
 
           {/* Footer */}
           <SheetFooter className="px-4 py-3 border-t border-border pb-safe">
-            <div className="flex gap-2 w-full">
-              {step > 1 && (
-                <Button variant="outline" onClick={() => setStep(step - 1)} className="flex-1">
+            <div className="flex gap-3 w-full">
+              {step > 1 ? (
+                <Button variant="outline" onClick={() => setStep(step - 1)} className="flex-1 h-12">
                   <ChevronLeft className="h-4 w-4 mr-1" />
                   Back
                 </Button>
+              ) : (
+                <Button variant="outline" onClick={() => onOpenChange(false)} className="flex-1 h-12">
+                  Cancel
+                </Button>
               )}
               {step < 3 ? (
-                <Button 
-                  onClick={() => setStep(step + 1)} 
+                <Button
+                  onClick={() => setStep(step + 1)}
                   disabled={!canProceed()}
-                  className="flex-1"
+                  className="flex-1 h-12"
                 >
                   Next
                   <ChevronRight className="h-4 w-4 ml-1" />
                 </Button>
               ) : (
-                <>
-                  <Button 
+                <div className="flex gap-2 flex-1">
+                  <Button
                     variant="outline"
-                    onClick={() => handleSubmit(false)} 
+                    onClick={() => handleSubmit(false)}
                     disabled={createInvoiceMutation.isPending}
-                    className="flex-1"
+                    className="flex-1 h-12"
                   >
                     Save Draft
                   </Button>
-                  <Button 
-                    onClick={() => handleSubmit(true)} 
+                  <Button
+                    onClick={() => handleSubmit(true)}
                     disabled={createInvoiceMutation.isPending}
-                    className="flex-1"
+                    className="flex-1 h-12"
                   >
-                    <Send className="h-4 w-4 mr-2" />
-                    Send Invoice
+                    <Send className="h-4 w-4 mr-1" />
+                    Send
                   </Button>
-                </>
+                </div>
               )}
             </div>
           </SheetFooter>

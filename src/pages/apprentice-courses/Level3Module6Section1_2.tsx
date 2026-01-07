@@ -31,7 +31,7 @@ const quickCheckQuestions = [
       "Only work carried out by non-qualified persons"
     ],
     correctIndex: 2,
-    explanation: "Building Regulations Part P requires notification of new circuits, consumer unit work, work in special locations (bathrooms, kitchens with <50mm from sinks), and other specified work. Minor additions to existing circuits don't require notification."
+    explanation: "Building Regulations Part P requires notification of new circuits, consumer unit work, work in special locations (bathrooms, kitchens with &lt;50mm from sinks), and other specified work. Minor additions to existing circuits don't require notification."
   },
   {
     id: "check-3",

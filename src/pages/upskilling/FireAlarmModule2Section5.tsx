@@ -23,7 +23,7 @@ const FireAlarmModule2Section5 = () => {
     if (meta) meta.content = desc;
   }, []);
 
-  // Quiz
+  // Quiz (13 questions)
   const questions: QuizQuestion[] = useMemo(() => [
     {
       id: 1,
@@ -59,6 +59,62 @@ const FireAlarmModule2Section5 = () => {
       options: ['Decoration only', 'Reduces photosensitive risk and improves perception', 'Saves cabling', 'Required for sounders'],
       correctAnswer: 1,
       explanation: 'Synchronous flashing reduces photosensitive risk and provides a clearer signal.'
+    },
+    {
+      id: 6,
+      question: 'What is the primary benefit of using multisensor detectors in areas prone to false alarms?',
+      options: ['They are cheaper', 'They combine multiple sensing technologies with algorithms to reduce false alarms', 'They look better', 'They require no maintenance'],
+      correctAnswer: 1,
+      explanation: 'Multisensor detectors combine smoke and heat detection with intelligent algorithms to differentiate between real fires and false alarm sources.'
+    },
+    {
+      id: 7,
+      question: 'What is a common cause of false alarms in new buildings?',
+      options: ['Too many detectors', 'Construction dust and debris during fit-out', 'Excessive testing', 'Cold weather'],
+      correctAnswer: 1,
+      explanation: 'Construction dust, paint fumes, and aerosols during building fit-out are major sources of false alarms. Proper protection or temporary isolation may be needed.'
+    },
+    {
+      id: 8,
+      question: 'How should detector sensitivity drift be managed?',
+      options: ['Ignore it until false alarms occur', 'Regular maintenance with cleaning and testing; replace contaminated detectors', 'Increase alarm thresholds permanently', 'Remove the detector'],
+      correctAnswer: 1,
+      explanation: 'Regular maintenance including cleaning, testing, and replacement of contaminated or drifting detectors prevents false alarms while maintaining protection.'
+    },
+    {
+      id: 9,
+      question: 'What should be included in a false alarm incident log?',
+      options: ['Only the date', 'Date, time, location, suspected cause, and actions taken', 'Nothing - logs are not required', 'Only detector type'],
+      correctAnswer: 1,
+      explanation: 'Comprehensive logging including date, time, location, cause, and actions enables trend analysis and targeted improvements.'
+    },
+    {
+      id: 10,
+      question: 'Why might time-of-day sensitivity adjustments be useful?',
+      options: ['To save power at night', 'Different activities at different times may require different detection sensitivity', 'To confuse intruders', 'They are never useful'],
+      correctAnswer: 1,
+      explanation: 'Some advanced systems allow sensitivity adjustments based on time-of-day to account for varying activities, such as cleaning or cooking during specific hours.'
+    },
+    {
+      id: 11,
+      question: 'What is the risk of using investigation delays inappropriately?',
+      options: ['No risk at all', 'Delayed evacuation in a real fire, potentially costing lives', 'Saves money', 'Improves system reliability'],
+      correctAnswer: 1,
+      explanation: 'Investigation delays must only be used where risk-assessed and with trained staff. Inappropriate use can delay evacuation in real emergencies.'
+    },
+    {
+      id: 12,
+      question: 'How should detector zoning help with false alarm management?',
+      options: ['It does not help', 'Separate zones for high-nuisance areas enable targeted investigation and response', 'All zones must be identical', 'Zoning is only for large buildings'],
+      correctAnswer: 1,
+      explanation: 'Proper zoning allows high-risk nuisance areas to be identified quickly and investigated without unnecessarily alarming the entire building.'
+    },
+    {
+      id: 13,
+      question: 'What should happen after a pattern of false alarms is identified?',
+      options: ['Disconnect the affected detectors', 'Analyse the root cause and implement targeted design or operational improvements', 'Ignore it', 'Increase detector sensitivity'],
+      correctAnswer: 1,
+      explanation: 'Trend analysis should identify root causes, leading to targeted improvements such as detector relocation, type changes, or procedural updates.'
     }
   ], []);
 

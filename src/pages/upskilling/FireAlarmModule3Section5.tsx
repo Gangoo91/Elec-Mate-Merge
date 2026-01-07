@@ -83,9 +83,65 @@ const FireAlarmModule3Section5 = () => {
     {
       id: 5,
       question: 'Cause and effect should be documented as:',
-      options: ['A verbal description only', 'A formal matrix with inputs, logic and outputs', 'Hidden in panel code', 'Left to the installer’s memory'],
+      options: ['A verbal description only', 'A formal matrix with inputs, logic and outputs', 'Hidden in panel code', "Left to the installer's memory"],
       correctAnswer: 1,
       explanation: 'Clear matrices and schedules are essential for commissioning, testing and maintenance.'
+    },
+    {
+      id: 6,
+      question: 'Why should manual call points typically override investigation delays?',
+      options: ['They should not override delays', 'Manual activation indicates confirmed emergency requiring immediate evacuation', 'To test the delay function', 'MCPs are less important than detectors'],
+      correctAnswer: 1,
+      explanation: 'Manual call point operation indicates a person has confirmed an emergency situation, warranting immediate full evacuation without delay.'
+    },
+    {
+      id: 7,
+      question: 'What must be ensured when programming coincidence logic?',
+      options: ['Use the same detector twice', 'Ensure independence of the two triggers to avoid common-mode failure', 'Coincidence can use any devices', 'Only one detector is needed'],
+      correctAnswer: 1,
+      explanation: 'Coincidence requires two independent triggers; using devices that could fail together (common-mode) undermines the safety benefit of requiring two inputs.'
+    },
+    {
+      id: 8,
+      question: 'How should lift interfaces typically respond to fire alarm activation?',
+      options: ['Send lifts to top floor', 'Keep operating normally', 'Recall lifts to designated floor (usually ground) and disable call buttons', 'Trap occupants inside'],
+      correctAnswer: 2,
+      explanation: 'Fire alarm activation should recall lifts to a safe floor (typically ground level) and disable call buttons to prevent use during evacuation, except for firefighting lifts.'
+    },
+    {
+      id: 9,
+      question: 'What should happen to interfaces during power loss to ensure fail-safe operation?',
+      options: ['All outputs remain unchanged', 'Interfaces should fail to a safe state (e.g., doors released, plant shut down)', 'System should lock all doors', 'Ignore power loss scenarios'],
+      correctAnswer: 1,
+      explanation: 'Fail-safe design ensures interfaces move to safe states on power loss: fire doors close (hold-opens release), essential plant shuts down, access control releases.'
+    },
+    {
+      id: 10,
+      question: 'Why must interface circuits be monitored?',
+      options: ['Monitoring is not required', 'To detect open/short circuit faults ensuring interface reliability before emergency', 'Only to count operations', 'For power consumption measurement only'],
+      correctAnswer: 1,
+      explanation: 'Interface monitoring detects wiring faults (open/short circuits) before an emergency, ensuring critical functions like door release and HVAC shutdown will operate when needed.'
+    },
+    {
+      id: 11,
+      question: 'What test frequency is typically recommended for manual call points?',
+      options: ['Annually only', 'Weekly—operate at least one MCP', 'Every 5 years', 'Never test MCPs'],
+      correctAnswer: 1,
+      explanation: 'BS 5839-1 recommends weekly testing of at least one manual call point on a rotational basis to verify system operation and occupant familiarity.'
+    },
+    {
+      id: 12,
+      question: 'How should class change or test modes be distinguished from actual alarms?',
+      options: ['They should sound identical', 'Use clearly distinguishable tones/messages that cannot be confused with fire alarms', 'Visual indication only with no sound', 'No distinction is needed'],
+      correctAnswer: 1,
+      explanation: 'Test and class change signals must be clearly distinguishable from actual fire alarms to prevent confusion, inappropriate evacuation, or complacency among occupants.'
+    },
+    {
+      id: 13,
+      question: 'What should be included in cause and effect commissioning documentation?',
+      options: ['Verbal description only', 'As-fitted drawings, C&E matrix, test results, and interface verification records', 'Nothing—installers remember everything', 'Only the panel serial number'],
+      correctAnswer: 1,
+      explanation: 'Comprehensive commissioning records include as-fitted drawings, detailed C&E matrices with all inputs/outputs, test results, and interface fail-safe verification—essential for maintenance and modifications.'
     }
   ], []);
 

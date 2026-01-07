@@ -36,11 +36,11 @@ const PodcastsTab = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
             Mental Health Podcasts
           </h1>
-          <p className="text-white/80 mt-1 max-w-md mx-auto text-sm sm:text-base">
+          <p className="text-white mt-1 max-w-md mx-auto text-sm sm:text-base">
             Curated podcasts for tradespeople and anyone seeking wellbeing support
           </p>
         </div>
-        <div className="flex items-center justify-center gap-2 text-xs text-white/70">
+        <div className="flex items-center justify-center gap-2 text-xs text-white">
           <span className="px-2 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-300">
             {podcasts.length} Podcasts
           </span>
@@ -65,11 +65,11 @@ const PodcastsTab = () => {
       {/* Podcasts Grid */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-sm font-medium text-white/80 uppercase tracking-wide flex items-center gap-2">
+          <h2 className="text-sm font-medium text-white uppercase tracking-wide flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-orange-400" />
             {selectedCategory === 'all' ? 'All Podcasts' : `${selectedCategory.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}`}
           </h2>
-          <span className="text-xs text-white/70">{filteredPodcasts.length} results</span>
+          <span className="text-xs text-white">{filteredPodcasts.length} results</span>
         </div>
 
         {filteredPodcasts.length > 0 ? (
@@ -84,7 +84,7 @@ const PodcastsTab = () => {
               <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/5 flex items-center justify-center">
                 <Headphones className="h-8 w-8 text-white/20" />
               </div>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 No podcasts in this category yet. Check back soon!
               </p>
             </CardContent>
@@ -104,7 +104,7 @@ const PodcastsTab = () => {
               <h3 className="font-semibold text-white text-sm sm:text-base mb-1">
                 Know a great podcast?
               </h3>
-              <p className="text-xs sm:text-sm text-white/80">
+              <p className="text-xs sm:text-sm text-white">
                 We're always looking for quality mental health content. Let us know through the feedback section if there's a podcast we should include.
               </p>
             </div>

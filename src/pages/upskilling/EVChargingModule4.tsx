@@ -44,7 +44,7 @@ const EVChargingModule4 = () => {
         <Link to="../ev-charging-course">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to EV Charging Course
@@ -73,15 +73,8 @@ const EVChargingModule4 = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 auto-rows-fr">
-            {sections.map((section) => {
-              const sectionPath = section.id === 1 ? "/ev-charging-module-4-section-1" : 
-                                  section.id === 2 ? "/ev-charging-module-4-section-2" :
-                                  section.id === 3 ? "/ev-charging-module-4-section-3" :
-                                  section.id === 4 ? "/ev-charging-module-4-section-4" :
-                                  section.id === 5 ? "/ev-charging-module-4-section-5" : "#";
-              
-              return (
-                <Link key={section.id} to={sectionPath}>
+            {sections.map((section) => (
+              <Link key={section.id} to={`../ev-charging-module-4-section-${section.id}`}>
                   <Card 
                     className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col"
                   >
@@ -109,8 +102,7 @@ const EVChargingModule4 = () => {
                     </CardContent>
                   </Card>
                 </Link>
-              );
-            })}
+            ))}
           </div>
         </div>
       </div>

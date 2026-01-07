@@ -115,7 +115,7 @@ const quizQuestions = [
       "IP68"
     ],
     correctAnswer: 1,
-    explanation: "BS 7671 typically requires IP44 as a minimum for outdoor socket outlets (protected against solid objects >1mm and water splashing from all directions). Higher ratings may be needed in more exposed locations."
+    explanation: "BS 7671 typically requires IP44 as a minimum for outdoor socket outlets (protected against solid objects &gt;1mm and water splashing from all directions). Higher ratings may be needed in more exposed locations."
   },
   {
     id: 6,

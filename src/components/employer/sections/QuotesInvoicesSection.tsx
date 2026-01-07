@@ -44,15 +44,15 @@ export function QuotesInvoicesSection() {
   };
 
   const filteredQuotes = quotes.filter(q =>
-    q.client.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (q.client?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
     (q.description?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-    q.quote_number.toLowerCase().includes(searchQuery.toLowerCase())
+    (q.quote_number?.toLowerCase() || '').includes(searchQuery.toLowerCase())
   );
 
   const filteredInvoices = invoices.filter(inv =>
-    inv.client.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (inv.client?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
     (inv.project?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-    inv.invoice_number.toLowerCase().includes(searchQuery.toLowerCase())
+    (inv.invoice_number?.toLowerCase() || '').includes(searchQuery.toLowerCase())
   );
 
   // Stats calculations
@@ -265,17 +265,17 @@ export function QuotesInvoicesSection() {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex gap-2">
-        <Button 
-          variant="outline" 
-          className="flex-1 h-11 gap-2"
+      <div className="flex gap-3">
+        <Button
+          variant="outline"
+          className="flex-1 h-12 gap-2 active:scale-[0.98] transition-transform"
           onClick={() => setShowCreateQuote(true)}
         >
           <FileText className="h-4 w-4" />
           New Quote
         </Button>
-        <Button 
-          className="flex-1 h-11 gap-2"
+        <Button
+          className="flex-1 h-12 gap-2 active:scale-[0.98] transition-transform"
           onClick={() => setShowCreateInvoice(true)}
         >
           <Plus className="h-4 w-4" />
@@ -394,7 +394,7 @@ export function QuotesInvoicesSection() {
                 <FileText className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
                 <p className="text-muted-foreground font-medium">No quotes found</p>
                 <p className="text-sm text-muted-foreground mt-1">Create your first quote to get started</p>
-                <Button className="mt-4" onClick={() => setShowCreateQuote(true)}>
+                <Button className="mt-4 h-12 px-6" onClick={() => setShowCreateQuote(true)}>
                   <Plus className="h-4 w-4 mr-2" />
                   New Quote
                 </Button>
@@ -428,7 +428,7 @@ export function QuotesInvoicesSection() {
                 <Receipt className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
                 <p className="text-muted-foreground font-medium">No invoices found</p>
                 <p className="text-sm text-muted-foreground mt-1">Create your first invoice to get started</p>
-                <Button className="mt-4" onClick={() => setShowCreateInvoice(true)}>
+                <Button className="mt-4 h-12 px-6" onClick={() => setShowCreateInvoice(true)}>
                   <Plus className="h-4 w-4 mr-2" />
                   Create Invoice
                 </Button>

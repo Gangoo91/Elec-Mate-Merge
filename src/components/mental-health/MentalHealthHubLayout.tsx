@@ -59,7 +59,7 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
             <Heart className="h-8 w-8 text-elec-yellow" />
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Mental Health Hub</h1>
-              <p className="text-sm sm:text-base text-white/80">
+              <p className="text-sm sm:text-base text-white">
                 Your wellbeing matters - find support, resources, and community here
               </p>
             </div>
@@ -112,7 +112,7 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
                 </div>
               </CardHeader>
               <CardContent className="pt-0">
-                <p className="text-xs text-white/80">{card.description}</p>
+                <p className="text-xs text-white">{card.description}</p>
               </CardContent>
             </Card>
           </Link>

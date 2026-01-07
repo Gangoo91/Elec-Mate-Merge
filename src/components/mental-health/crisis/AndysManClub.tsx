@@ -20,7 +20,7 @@ const AndysManClub = () => {
             </div>
             <div className="text-sm">
               <p>Free, peer-to-peer support group for men - #ITSOKAYTOTALK</p>
-              <p className="text-xs text-white/80 mt-1">
+              <p className="text-xs text-white mt-1">
                 Groups meet every Monday at 7pm (excluding bank holidays)
               </p>
             </div>

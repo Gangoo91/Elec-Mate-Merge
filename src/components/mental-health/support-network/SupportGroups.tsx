@@ -45,7 +45,7 @@ const SupportGroups = ({ groups }: SupportGroupsProps) => {
                 {group.members} members
               </span>
             </div>
-            <div className="flex items-center justify-between text-xs text-white/80">
+            <div className="flex items-center justify-between text-xs text-white">
               <span>Meetings: {group.meetings}</span>
               <span>Format: {group.format}</span>
             </div>

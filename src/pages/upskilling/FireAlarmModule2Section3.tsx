@@ -22,7 +22,7 @@ const FireAlarmModule2Section3 = () => {
     if (meta) meta.content = desc;
   }, []);
 
-  // Quiz Data
+  // Quiz Data (12 questions)
   const questions: QuizQuestion[] = useMemo(() => [
     {
       id: 1,
@@ -58,6 +58,55 @@ const FireAlarmModule2Section3 = () => {
       options: ['Only mains rating', 'Standby and alarm current draw vs panel capacity', 'Just cable CSA', 'Only battery colour'],
       correctAnswer: 1,
       explanation: 'Allow for standby and alarm loads; verify current draw against panel capacity.'
+    },
+    {
+      id: 6,
+      question: 'What is the typical audibility level required at the bedhead in sleeping risk areas?',
+      options: ['55 dB(A)', '65 dB(A)', '75 dB(A)', '85 dB(A)'],
+      correctAnswer: 2,
+      explanation: 'BS 5839-1 typically requires 75 dB(A) at the bedhead in sleeping risk areas to ensure occupants are awakened by the alarm.'
+    },
+    {
+      id: 7,
+      question: 'What does VAD stand for in fire alarm terminology?',
+      options: ['Voice Activation Device', 'Visual Alarm Device', 'Voltage Adjustment Device', 'Variable Alert Display'],
+      correctAnswer: 1,
+      explanation: 'VAD stands for Visual Alarm Device, providing visual indication of a fire alarm through flashing lights or beacons.'
+    },
+    {
+      id: 8,
+      question: 'Why might sounders alone be insufficient in certain environments?',
+      options: ['They are too expensive', 'High ambient noise levels may prevent people hearing them', 'They look unattractive', 'They consume too much power'],
+      correctAnswer: 1,
+      explanation: 'In noisy industrial or commercial environments, high ambient noise can mask audible alarms, requiring visual alarm devices.'
+    },
+    {
+      id: 9,
+      question: 'What is a key design consideration for voice alarm loudspeaker placement?',
+      options: ['Maximum volume output', 'Room acoustics and reverberation management', 'Loudspeaker colour', 'Brand preference'],
+      correctAnswer: 1,
+      explanation: 'Voice alarm systems must prioritise speech intelligibility. Room acoustics, reverberation, and loudspeaker positioning all affect message clarity.'
+    },
+    {
+      id: 10,
+      question: 'What should be avoided when positioning visual alarm devices?',
+      options: ['Direct glare into occupant sight lines', 'Mounting on walls', 'Using red lenses', 'Multiple devices per zone'],
+      correctAnswer: 0,
+      explanation: 'VADs should avoid causing direct glare that could temporarily blind or distract occupants, while maintaining line of sight visibility.'
+    },
+    {
+      id: 11,
+      question: 'What is the purpose of phased evacuation in voice alarm systems?',
+      options: ['To confuse occupants', 'To control evacuation sequentially and prevent overcrowding', 'To save power', 'To test the system'],
+      correctAnswer: 1,
+      explanation: 'Phased evacuation uses voice alarm messages to control the order of evacuation, preventing congestion in escape routes, particularly in tall buildings.'
+    },
+    {
+      id: 12,
+      question: 'What factors affect the required number of sounders in a building?',
+      options: ['Only the floor area', 'Room geometry, partitions, ambient noise, and door closers', 'Only the ceiling height', 'The colour of the walls'],
+      correctAnswer: 1,
+      explanation: 'Sounder coverage is affected by room layout, partitions, furnishings, ambient noise levels, and sound attenuation from doors and walls.'
     }
   ], []);
 

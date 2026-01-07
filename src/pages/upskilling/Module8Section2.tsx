@@ -44,7 +44,7 @@ const Module8Section2 = () => {
         <Link to="../module-8">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 8
@@ -81,7 +81,7 @@ const Module8Section2 = () => {
                 to={`../module-8/section-2/part-${section.id}`}
                 className="h-full touch-manipulation"
               >
-                <Card 
+                <Card
                   className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col min-h-[200px] active:scale-95"
                 >
                   <CardContent className="text-center space-y-4 p-6 flex-shrink-0">
@@ -112,8 +112,8 @@ const Module8Section2 = () => {
           </div>
 
           <div className="flex justify-between mt-8">
-            <Link to="module-8/section-1">
-              <Button variant="outline" className="border-gray-600 text-white hover:bg-card">
+            <Link to="../module-8/section-1">
+              <Button variant="outline" className="border-gray-600 text-white hover:bg-card min-h-[48px]">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous Section
               </Button>

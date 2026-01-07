@@ -11,7 +11,7 @@ const Module8Section2Part4 = () => {
         <Link to="module-8/section-2">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Hints & Tips
@@ -320,7 +320,7 @@ const Module8Section2Part4 = () => {
               </div>
               <div className="bg-card p-4 rounded-lg border border-gray-600">
                 <p className="text-yellow-400 font-semibold mb-3">Retention Techniques:</p>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li><strong>Spaced repetition:</strong> Review values at increasing intervals</li>
                   <li><strong>Active recall:</strong> Test yourself without looking</li>
                   <li><strong>Visual association:</strong> Create mental images for numbers</li>
@@ -335,7 +335,7 @@ const Module8Section2Part4 = () => {
             <CardHeader>
               <CardTitle className="text-white">Extended Practice Scenarios</CardTitle>
             </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
+            <CardContent className="text-white space-y-4">
               <div>
                 <p className="font-semibold text-white mb-2">Scenario 4: The Mixed Board Test</p>
                 <p className="italic mb-2">You're testing a consumer unit with mixed Type B and Type C MCBs. Quick - what's the 80% test limit for a 20A Type C? Answer: 0.87Ω (80% of 1.09Ω). If you had to think about it, drill more.</p>
@@ -362,23 +362,23 @@ const Module8Section2Part4 = () => {
             <CardContent className="space-y-4">
               <div className="flex items-start gap-3">
                 <Lightbulb className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300"><strong>Use flashcards</strong> — physical cards work better than apps for most people</span>
+                <span className="text-white"><strong>Use flashcards</strong> — physical cards work better than apps for most people</span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300"><strong>Voice recordings</strong> — record yourself saying values, play back while driving</span>
+                <span className="text-white"><strong>Voice recordings</strong> — record yourself saying values, play back while driving</span>
               </div>
               <div className="flex items-start gap-3">
                 <Lightbulb className="h-5 w-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300"><strong>Create associations</strong> — 32A/1.37Ω = "32 year old weighs 137 pounds"</span>
+                <span className="text-white"><strong>Create associations</strong> — 32A/1.37Ω = "32 year old weighs 137 pounds"</span>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300"><strong>Practice daily</strong> — 5 minutes every morning with coffee</span>
+                <span className="text-white"><strong>Practice daily</strong> — 5 minutes every morning with coffee</span>
               </div>
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-orange-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-300"><strong>Don't mix up R1 + R2 with Zs</strong> — they're different tests measuring different things</span>
+                <span className="text-white"><strong>Don't mix up R1 + R2 with Zs</strong> — they're different tests measuring different things</span>
               </div>
             </CardContent>
           </Card>
@@ -387,7 +387,7 @@ const Module8Section2Part4 = () => {
             <CardHeader>
               <CardTitle className="text-white">Detailed Scenarios</CardTitle>
             </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
+            <CardContent className="text-white space-y-4">
               <div>
                 <p className="font-semibold text-white mb-2">Scenario 1: The Pressure Moment</p>
                 <p className="italic mb-2">You're mid-test and can't remember the RCD time. You've drilled it: 40 milliseconds at 5x. You write it confidently. That's a mark saved.</p>
@@ -407,20 +407,20 @@ const Module8Section2Part4 = () => {
             <CardHeader>
               <CardTitle className="text-white">One-liner</CardTitle>
             </CardHeader>
-            <CardContent className="text-gray-300">
+            <CardContent className="text-white">
               <p className="font-semibold text-yellow-400">When you're tired, stressed, or unsure — drilled facts carry you through.</p>
             </CardContent>
           </Card>
 
           <div className="flex justify-between">
-            <Link to="module-8/section-2/part-3">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
+            <Link to="../module-8/section-2/part-3">
+              <Button variant="outline" className="border-gray-600 text-white hover:bg-card min-h-[48px]">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous: Smart Techniques
               </Button>
             </Link>
-            <Link to="module-8/section-2/part-5">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
+            <Link to="../module-8/section-2/part-5">
+              <Button className="bg-yellow-400 text-black hover:bg-yellow-600 min-h-[48px]">
                 Next: Using Regulations
                 <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
               </Button>

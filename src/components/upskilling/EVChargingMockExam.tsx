@@ -198,10 +198,10 @@ const EVChargingMockExam = () => {
         <div className="container mx-auto px-4 py-8">
           {/* Back to Course Button */}
           <div className="mb-6">
-            <Link to="/ev-charging-course">
+            <Link to="../ev-charging-course">
               <Button
                 variant="ghost"
-                className="bg-elec-gray text-foreground hover:bg-[#323232] hover:text-elec-yellow transition-all duration-200 px-4 py-2 rounded-md"
+                className="bg-elec-gray text-white hover:bg-[#323232] hover:text-elec-yellow transition-all duration-200 px-4 py-2 rounded-md min-h-[48px]"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Course
@@ -265,7 +265,7 @@ const EVChargingMockExam = () => {
                 <div className="text-center pt-4">
                   <Button
                     onClick={startExam}
-                    className="bg-elec-yellow text-black hover:bg-yellow-400 px-8 py-3 text-lg font-semibold"
+                    className="bg-elec-yellow text-black hover:bg-yellow-400 px-8 py-3 text-lg font-semibold min-h-[48px]"
                   >
                     <Award className="mr-2 h-5 w-5" />
                     Begin EV Charging Examination
@@ -309,7 +309,7 @@ const EVChargingMockExam = () => {
             <Button
               onClick={resetExam}
               variant="ghost"
-              className="bg-elec-gray text-foreground hover:bg-[#323232] hover:text-elec-yellow transition-all duration-200 px-4 py-2 rounded-md"
+              className="bg-elec-gray text-white hover:bg-[#323232] hover:text-elec-yellow transition-all duration-200 px-4 py-2 rounded-md min-h-[48px]"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Start
@@ -508,15 +508,15 @@ const EVChargingMockExam = () => {
                 <div className="flex justify-center space-x-4 mt-6">
                   <Button
                     onClick={resetExam}
-                    className="bg-elec-yellow text-black hover:bg-yellow-400 px-6 py-2 font-semibold"
+                    className="bg-elec-yellow text-black hover:bg-yellow-400 px-6 py-2 font-semibold min-h-[48px]"
                   >
                     <RotateCcw className="w-4 h-4 mr-2" />
                     Take Another Exam
                   </Button>
-                  <Link to="/ev-charging-course">
+                  <Link to="../ev-charging-course">
                     <Button
                       variant="outline"
-                      className="border-gray-600 text-foreground hover:bg-elec-gray hover:text-elec-yellow px-6 py-2"
+                      className="border-gray-600 text-white hover:bg-elec-gray hover:text-elec-yellow px-6 py-2 min-h-[48px]"
                     >
                       <Home className="w-4 h-4 mr-2" />
                       Back to Course
@@ -546,7 +546,7 @@ const EVChargingMockExam = () => {
             <Button
               onClick={resetExam}
               variant="ghost"
-              className="bg-elec-gray text-foreground hover:bg-[#323232] hover:text-elec-yellow transition-all duration-200 px-4 py-2 rounded-md"
+              className="bg-elec-gray text-white hover:bg-[#323232] hover:text-elec-yellow transition-all duration-200 px-4 py-2 rounded-md min-h-[48px]"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Start
@@ -594,9 +594,9 @@ const EVChargingMockExam = () => {
                     variant="ghost"
                     size="sm"
                     className={cn(
-                      "flex-shrink-0",
-                      flaggedQuestions.includes(currentQ.id) 
-                        ? "text-yellow-400 hover:text-yellow-300" 
+                      "flex-shrink-0 min-h-[48px]",
+                      flaggedQuestions.includes(currentQ.id)
+                        ? "text-yellow-400 hover:text-yellow-300"
                         : "text-gray-500 hover:text-gray-400"
                     )}
                   >
@@ -609,10 +609,10 @@ const EVChargingMockExam = () => {
                   <button
                     key={index}
                     onClick={() => handleAnswerSelect(index)}
-                    className={`w-full text-left p-4 rounded-lg border transition-all duration-200 ${
+                    className={`w-full text-left p-4 rounded-lg border transition-all duration-200 min-h-[48px] ${
                       selectedAnswer === index
-                        ? 'border-elec-yellow bg-elec-yellow/20 text-foreground'
-                        : 'border-gray-600 bg-elec-dark text-gray-300 hover:border-gray-500 hover:bg-elec-gray'
+                        ? 'border-elec-yellow bg-elec-yellow/20 text-white'
+                        : 'border-gray-600 bg-elec-dark text-white hover:border-gray-500 hover:bg-elec-gray'
                     }`}
                   >
                     <div className="flex items-center gap-3">
@@ -640,7 +640,7 @@ const EVChargingMockExam = () => {
                     onClick={previousQuestion}
                     disabled={currentQuestion === 0}
                     variant="outline"
-                    className="border-gray-600 text-gray-300 hover:bg-[#323232] hover:text-foreground disabled:opacity-50"
+                    className="border-gray-600 text-white hover:bg-[#323232] hover:text-white disabled:opacity-50 min-h-[48px]"
                   >
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Previous
@@ -650,14 +650,14 @@ const EVChargingMockExam = () => {
                     {currentQuestion === examQuestions.length - 1 ? (
                       <Button
                         onClick={finishExam}
-                        className="bg-elec-yellow text-black hover:bg-yellow-400 font-semibold"
+                        className="bg-elec-yellow text-black hover:bg-yellow-400 font-semibold min-h-[48px]"
                       >
                         Finish Exam
                       </Button>
                     ) : (
                       <Button
                         onClick={nextQuestion}
-                        className="bg-elec-yellow text-black hover:bg-yellow-400 font-semibold"
+                        className="bg-elec-yellow text-black hover:bg-yellow-400 font-semibold min-h-[48px]"
                       >
                         Next
                         <ArrowRight className="w-4 h-4 ml-2" />
@@ -683,11 +683,11 @@ const EVChargingMockExam = () => {
                         key={q.id}
                         onClick={() => setCurrentQuestion(idx)}
                         className={cn(
-                          "relative w-10 h-10 rounded-full border-2 flex items-center justify-center text-xs font-semibold transition-all",
+                          "relative w-10 h-10 min-h-[48px] rounded-full border-2 flex items-center justify-center text-xs font-semibold transition-all",
                           current && "ring-2 ring-elec-yellow ring-offset-2 ring-offset-elec-dark",
-                          answered 
-                            ? "bg-elec-yellow text-black border-elec-yellow" 
-                            : "bg-transparent text-foreground border-gray-600 hover:border-gray-500"
+                          answered
+                            ? "bg-elec-yellow text-black border-elec-yellow"
+                            : "bg-transparent text-white border-gray-600 hover:border-gray-500"
                         )}
                       >
                         {idx + 1}

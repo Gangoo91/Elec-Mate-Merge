@@ -58,7 +58,7 @@ const Module3 = () => {
         <Link to="../inspection-testing">
           <Button
             variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Inspection & Testing
@@ -84,32 +84,32 @@ const Module3 = () => {
               const IconComponent = section.icon;
               
               const cardContent = (
-                <Card 
-                  className="bg-transparent border-transparent hover:border-elec-yellow/30 transition-all duration-300 hover:bg-transparent/80 cursor-pointer group"
+                <Card
+                  className="bg-transparent border-transparent hover:border-elec-yellow/30 transition-all duration-300 hover:bg-transparent/80 cursor-pointer group min-h-[48px]"
                 >
                   <CardHeader className="text-center space-y-3 pb-2 p-4">
                     {/* Icon */}
                     <div className="flex justify-center">
                       <IconComponent className="h-8 w-8 text-elec-yellow" strokeWidth={1.5} />
                     </div>
-                    
+
                     {/* Section Badge */}
                     <div className="flex justify-center">
-                      <Badge 
-                        variant="secondary" 
+                      <Badge
+                        variant="secondary"
                         className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-xs px-3 py-1 border-0"
                       >
                         Section {section.id}
                       </Badge>
                     </div>
                   </CardHeader>
-                  
+
                   <CardContent className="text-center space-y-2 pt-0 p-4">
                     {/* Title */}
                     <h3 className="text-lg font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors duration-300">
                       {section.title}
                     </h3>
-                    
+
                     {/* Description */}
                     <p className="text-white text-xs leading-relaxed">
                       {section.description}

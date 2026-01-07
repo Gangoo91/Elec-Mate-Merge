@@ -363,7 +363,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
           </div>
         </div>
         <h2 className="text-xl font-bold text-foreground mb-1">Mental Health Mate</h2>
-        <p className="text-sm text-white/80">
+        <p className="text-sm text-white">
           Your 24/7 AI companion - here to listen, support, and guide
         </p>
       </div>
@@ -375,14 +375,14 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
           <div className="p-3 border-b border-purple-500/20 flex items-center justify-between bg-purple-500/5">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-xs text-white/80">AI Mate is online</span>
+              <span className="text-xs text-white">AI Mate is online</span>
             </div>
             {chatMessages.length > 0 && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={clearChat}
-                className="h-7 px-2 text-xs text-white/80 hover:text-foreground"
+                className="h-7 px-2 text-xs text-white hover:text-foreground"
               >
                 <RefreshCw className="h-3 w-3 mr-1" />
                 New chat
@@ -407,7 +407,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
                       <p className="text-sm text-foreground/80 mt-2 leading-relaxed">
                         Whether you're stressed, anxious, or just need someone to talk to, I'm here 24/7. Everything you share stays private.
                       </p>
-                      <p className="text-xs text-white/80 mt-3">
+                      <p className="text-xs text-white mt-3">
                         What would you like to talk about?
                       </p>
                     </div>
@@ -578,7 +578,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
             </div>
             <div className="text-left">
               <h3 className="font-semibold text-foreground text-sm">Talk to a Real Person</h3>
-              <p className="text-xs text-white/80">Connect with trained peer supporters</p>
+              <p className="text-xs text-white">Connect with trained peer supporters</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -589,7 +589,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
                 </div>
               ))}
             </div>
-            <ChevronDown className={`h-5 w-5 text-white/80 transition-transform ${showPeers ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`h-5 w-5 text-white transition-transform ${showPeers ? 'rotate-180' : ''}`} />
           </div>
         </button>
 
@@ -622,7 +622,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-white/80">{mate.role}</p>
+                      <p className="text-xs text-white">{mate.role}</p>
                     </div>
                   </div>
                   <MessageCircle className="h-5 w-5 text-green-400" />
@@ -642,7 +642,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
                   <UserPlus className="h-6 w-6 text-purple-400" />
                 </div>
                 <span className="font-medium text-purple-300">Become a Mental Health Mate</span>
-                <span className="text-xs text-white/80 text-center">
+                <span className="text-xs text-white text-center">
                   Volunteer to support fellow electricians
                 </span>
               </button>
@@ -651,7 +651,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
                 <div className="flex flex-col items-center gap-2">
                   <Heart className="h-6 w-6 text-green-400 fill-current" />
                   <span className="font-medium text-green-400">You're a Mental Health Mate</span>
-                  <span className="text-xs text-white/80">Thank you for supporting others</span>
+                  <span className="text-xs text-white">Thank you for supporting others</span>
                 </div>
               </div>
             )}
@@ -660,7 +660,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
       </Card>
 
       {/* Features Hint */}
-      <div className="flex items-center justify-center gap-4 text-xs text-white/80">
+      <div className="flex items-center justify-center gap-4 text-xs text-white">
         <div className="flex items-center gap-1">
           <Lightbulb className="h-3 w-3" />
           <span>AI learns your preferences</span>

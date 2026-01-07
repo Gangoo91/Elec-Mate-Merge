@@ -218,9 +218,9 @@ const EmergencyLightingMockExam = () => {
     return (
       <div className="max-w-4xl mx-auto">
         <Button
-          onClick={() => navigate('/emergency-lighting-course')}
+          onClick={() => navigate('/electrician/upskilling/emergency-lighting-course')}
           variant="outline"
-          className="mb-4 border-border bg-card text-foreground hover:bg-accent"
+          className="mb-4 border-border bg-card text-white hover:bg-accent min-h-[48px]"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Course
@@ -228,12 +228,12 @@ const EmergencyLightingMockExam = () => {
         
         <Card className="bg-card border-border">
           <CardHeader>
-            <CardTitle className="text-foreground text-center text-2xl">Emergency Lighting Mock Examination</CardTitle>
+            <CardTitle className="text-white text-center text-2xl">Emergency Lighting Mock Examination</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="text-center space-y-6">
               <FileCheck className="h-16 w-16 text-primary mx-auto" />
-              <p className="text-muted-foreground text-lg">
+              <p className="text-white text-lg">
                 Test your knowledge with 30 comprehensive questions covering emergency lighting design, installation, testing, and BS 5266 compliance
               </p>
             </div>
@@ -241,21 +241,21 @@ const EmergencyLightingMockExam = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="bg-background border border-border rounded-lg p-4 text-center">
                 <div className="text-2xl font-bold text-primary">30</div>
-                <div className="text-sm text-muted-foreground">Questions</div>
+                <div className="text-sm text-white">Questions</div>
               </div>
               <div className="bg-background border border-border rounded-lg p-4 text-center">
                 <div className="text-2xl font-bold text-primary">45</div>
-                <div className="text-sm text-muted-foreground">Minutes</div>
+                <div className="text-sm text-white">Minutes</div>
               </div>
               <div className="bg-background border border-border rounded-lg p-4 text-center">
                 <div className="text-2xl font-bold text-primary">60%</div>
-                <div className="text-sm text-muted-foreground">Pass Mark</div>
+                <div className="text-sm text-white">Pass Mark</div>
               </div>
             </div>
 
             <div className="bg-background border border-border rounded-lg p-4">
-              <h3 className="text-foreground font-semibold mb-3">Examination Instructions</h3>
-              <ul className="text-muted-foreground text-sm space-y-2">
+              <h3 className="text-white font-semibold mb-3">Examination Instructions</h3>
+              <ul className="text-white text-sm space-y-2">
                 <li>• Answer all 30 questions to complete the examination</li>
                 <li>• You have 45 minutes to complete the exam</li>
                 <li>• You can flag questions for review</li>
@@ -267,9 +267,9 @@ const EmergencyLightingMockExam = () => {
             </div>
 
             <div className="text-center pt-4">
-              <Button 
+              <Button
                 onClick={handleStartExam}
-                className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-3 text-lg font-semibold"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-3 text-lg font-semibold min-h-[48px]"
                 size="lg"
               >
                 <FileCheck className="mr-2 h-5 w-5" />
@@ -305,9 +305,9 @@ const EmergencyLightingMockExam = () => {
     return (
       <div className="space-y-6">
         <Button
-          onClick={() => navigate('/emergency-lighting-course')}
+          onClick={() => navigate('/electrician/upskilling/emergency-lighting-course')}
           variant="outline"
-          className="border-border bg-card text-foreground hover:bg-accent"
+          className="border-border bg-card text-white hover:bg-accent min-h-[48px]"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Course
@@ -315,33 +315,33 @@ const EmergencyLightingMockExam = () => {
         
         <Card className="bg-card border-border">
           <CardHeader>
-            <CardTitle className="text-foreground text-center text-2xl">Examination Results</CardTitle>
+            <CardTitle className="text-white text-center text-2xl">Examination Results</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Score Summary */}
             <div className="text-center space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-background border border-border rounded-lg p-4">
-                  <h3 className="text-muted-foreground text-sm">Score</h3>
+                  <h3 className="text-white text-sm">Score</h3>
                   <div className="text-3xl font-bold text-primary">
                     {score} / {examQuestions.length}
                   </div>
-                  <div className="text-foreground text-sm">
+                  <div className="text-white text-sm">
                     {Math.round((score / examQuestions.length) * 100)}%
                   </div>
                 </div>
                 <div className="bg-background border border-border rounded-lg p-4">
-                  <h3 className="text-muted-foreground text-sm">Grade</h3>
+                  <h3 className="text-white text-sm">Grade</h3>
                   <div className={`text-3xl font-bold ${gradeInfo.color}`}>
                     {gradeInfo.grade}
                   </div>
                 </div>
                 <div className="bg-background border border-border rounded-lg p-4">
-                  <h3 className="text-muted-foreground text-sm">Duration</h3>
-                  <div className="text-3xl font-bold text-foreground">
+                  <h3 className="text-white text-sm">Duration</h3>
+                  <div className="text-3xl font-bold text-white">
                     {duration}
                   </div>
-                  <div className="text-muted-foreground text-sm">minutes</div>
+                  <div className="text-white text-sm">minutes</div>
                 </div>
               </div>
               
@@ -354,14 +354,14 @@ const EmergencyLightingMockExam = () => {
 
             {/* Performance Breakdown */}
             <div className="bg-background border border-border rounded-lg p-4">
-              <h3 className="text-foreground font-semibold mb-4">Performance Breakdown</h3>
+              <h3 className="text-white font-semibold mb-4">Performance Breakdown</h3>
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
                   <div className="flex-1">
                     <div className="flex justify-between mb-1">
-                      <span className="text-sm text-muted-foreground">Correct</span>
-                      <span className="text-sm font-medium text-foreground">{correctCount} ({Math.round((correctCount / examQuestions.length) * 100)}%)</span>
+                      <span className="text-sm text-white">Correct</span>
+                      <span className="text-sm font-medium text-white">{correctCount} ({Math.round((correctCount / examQuestions.length) * 100)}%)</span>
                     </div>
                     <Progress value={(correctCount / examQuestions.length) * 100} className="h-2" />
                   </div>
@@ -370,8 +370,8 @@ const EmergencyLightingMockExam = () => {
                   <XCircle className="h-5 w-5 text-red-400 flex-shrink-0" />
                   <div className="flex-1">
                     <div className="flex justify-between mb-1">
-                      <span className="text-sm text-muted-foreground">Incorrect</span>
-                      <span className="text-sm font-medium text-foreground">{incorrectCount} ({Math.round((incorrectCount / examQuestions.length) * 100)}%)</span>
+                      <span className="text-sm text-white">Incorrect</span>
+                      <span className="text-sm font-medium text-white">{incorrectCount} ({Math.round((incorrectCount / examQuestions.length) * 100)}%)</span>
                     </div>
                     <Progress value={(incorrectCount / examQuestions.length) * 100} className="h-2 [&>div]:bg-red-500" />
                   </div>
@@ -381,8 +381,8 @@ const EmergencyLightingMockExam = () => {
                     <Flag className="h-5 w-5 text-primary flex-shrink-0" />
                     <div className="flex-1">
                       <div className="flex justify-between mb-1">
-                        <span className="text-sm text-muted-foreground">Flagged for Review</span>
-                        <span className="text-sm font-medium text-foreground">{flaggedCount} ({Math.round((flaggedCount / examQuestions.length) * 100)}%)</span>
+                        <span className="text-sm text-white">Flagged for Review</span>
+                        <span className="text-sm font-medium text-white">{flaggedCount} ({Math.round((flaggedCount / examQuestions.length) * 100)}%)</span>
                       </div>
                       <Progress value={(flaggedCount / examQuestions.length) * 100} className="h-2" />
                     </div>
@@ -393,15 +393,15 @@ const EmergencyLightingMockExam = () => {
 
             {/* Module Performance */}
             <div className="bg-background border border-border rounded-lg p-4">
-              <h3 className="text-foreground font-semibold mb-4">Module Performance</h3>
+              <h3 className="text-white font-semibold mb-4">Module Performance</h3>
               <div className="space-y-3">
                 {Object.entries(modulePerformance).map(([moduleId, stats]) => {
                   const percentage = (stats.correct / stats.total) * 100;
                   return (
                     <div key={moduleId}>
                       <div className="flex justify-between mb-1">
-                        <span className="text-sm text-muted-foreground">{moduleNames[parseInt(moduleId)] || `Module ${moduleId}`}</span>
-                        <span className="text-sm font-medium text-foreground">{stats.correct}/{stats.total} ({Math.round(percentage)}%)</span>
+                        <span className="text-sm text-white">{moduleNames[parseInt(moduleId)] || `Module ${moduleId}`}</span>
+                        <span className="text-sm font-medium text-white">{stats.correct}/{stats.total} ({Math.round(percentage)}%)</span>
                       </div>
                       <Progress value={percentage} className="h-2" />
                     </div>
@@ -412,19 +412,19 @@ const EmergencyLightingMockExam = () => {
 
             {/* Time Analytics */}
             <div className="bg-background border border-border rounded-lg p-4">
-              <h3 className="text-foreground font-semibold mb-4">Time Analytics</h3>
+              <h3 className="text-white font-semibold mb-4">Time Analytics</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <div className="text-sm text-muted-foreground">Time Taken</div>
-                  <div className="text-2xl font-bold text-foreground">{duration} min</div>
+                  <div className="text-sm text-white">Time Taken</div>
+                  <div className="text-2xl font-bold text-white">{duration} min</div>
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground">Time Allowed</div>
-                  <div className="text-2xl font-bold text-foreground">45 min</div>
+                  <div className="text-sm text-white">Time Allowed</div>
+                  <div className="text-2xl font-bold text-white">45 min</div>
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground">Efficiency</div>
-                  <div className="text-2xl font-bold text-foreground">{Math.round((duration / 45) * 100)}%</div>
+                  <div className="text-sm text-white">Efficiency</div>
+                  <div className="text-2xl font-bold text-white">{Math.round((duration / 45) * 100)}%</div>
                 </div>
               </div>
             </div>
@@ -432,7 +432,7 @@ const EmergencyLightingMockExam = () => {
             {/* Question Review with Filters */}
             <div className="space-y-4">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <h3 className="text-foreground font-semibold">Question Review</h3>
+                <h3 className="text-white font-semibold">Question Review</h3>
                 <Tabs value={reviewFilter} onValueChange={(value) => setReviewFilter(value as typeof reviewFilter)} className="w-full sm:w-auto">
                   <TabsList className="grid w-full grid-cols-4 sm:w-auto">
                     <TabsTrigger value="all" className="text-xs sm:text-sm">All ({examQuestions.length})</TabsTrigger>
@@ -444,7 +444,7 @@ const EmergencyLightingMockExam = () => {
               </div>
 
               {filteredQuestions.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">
+                <div className="text-center py-8 text-white">
                   No questions match this filter
                 </div>
               ) : (
@@ -468,22 +468,22 @@ const EmergencyLightingMockExam = () => {
                           )}
                           <div className="flex-1">
                             <div className="flex items-start justify-between gap-2">
-                              <p className="text-foreground font-medium text-sm mb-2">
+                              <p className="text-white font-medium text-sm mb-2">
                                 Q{originalIndex + 1}: {question.question}
                               </p>
                               {isFlagged && (
                                 <Flag className="h-4 w-4 text-primary fill-primary flex-shrink-0 mt-1" />
                               )}
                             </div>
-                            <p className="text-muted-foreground text-xs mb-2">
+                            <p className="text-white text-xs mb-2">
                               <strong>Your answer:</strong> {question.options[userAnswer]}
                             </p>
                             {!isCorrect && (
-                              <p className="text-muted-foreground text-xs mb-2">
+                              <p className="text-white text-xs mb-2">
                                 <strong>Correct answer:</strong> {question.options[question.correctAnswer]}
                               </p>
                             )}
-                            <p className="text-muted-foreground text-xs">
+                            <p className="text-white text-xs">
                               <strong>Explanation:</strong> {question.explanation}
                             </p>
                           </div>
@@ -496,17 +496,17 @@ const EmergencyLightingMockExam = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button 
-                onClick={() => navigate('/emergency-lighting-course')}
+              <Button
+                onClick={() => navigate('/electrician/upskilling/emergency-lighting-course')}
                 variant="outline"
-                className="border-border bg-card text-foreground hover:bg-accent"
+                className="border-border bg-card text-white hover:bg-accent min-h-[48px]"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Course
               </Button>
-              <Button 
+              <Button
                 onClick={handleRestart}
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 min-h-[48px]"
               >
                 <RefreshCw className="mr-2 h-4 w-4" />
                 Try Again
@@ -528,9 +528,9 @@ const EmergencyLightingMockExam = () => {
       {/* Back Button and Timer */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <Button
-          onClick={() => navigate('/emergency-lighting-course')}
+          onClick={() => navigate('/electrician/upskilling/emergency-lighting-course')}
           variant="outline"
-          className="border-border bg-card text-foreground hover:bg-accent"
+          className="border-border bg-card text-white hover:bg-accent min-h-[48px]"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           <span className="hidden sm:inline">Back to Course</span>
@@ -554,7 +554,7 @@ const EmergencyLightingMockExam = () => {
       {flagCount > 0 && (
         <div className="flex items-center justify-center gap-2 text-sm">
           <Flag className="h-4 w-4 text-primary fill-primary" />
-          <span className="text-muted-foreground">
+          <span className="text-white">
             {flagCount} question{flagCount !== 1 ? 's' : ''} flagged for review
           </span>
         </div>

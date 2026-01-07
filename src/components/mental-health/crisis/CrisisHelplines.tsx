@@ -23,7 +23,7 @@ const CrisisHelplines = ({ emergencyContacts }: CrisisHelplinesProps) => {
       case 'crisis': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
       case 'support': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
       case 'specialty': return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
-      default: return 'bg-gray-500/20 text-white/70 border-gray-500/30';
+      default: return 'bg-gray-500/20 text-white border-gray-500/30';
     }
   };
 
@@ -62,14 +62,14 @@ const CrisisHelplines = ({ emergencyContacts }: CrisisHelplinesProps) => {
                     <span className="text-lg">{getTypeIcon(contact.type)}</span>
                     <h4 className="font-semibold text-foreground">{contact.name}</h4>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">{contact.description}</p>
+                  <p className="text-sm text-white mb-2">{contact.description}</p>
                   
                   <div className="flex items-center gap-3 text-sm">
                     <div className="flex items-center gap-1 text-elec-yellow">
                       <Phone className="h-3 w-3" />
                       <span className="font-mono font-semibold">{contact.phone}</span>
                     </div>
-                    <div className="flex items-center gap-1 text-white/80">
+                    <div className="flex items-center gap-1 text-white">
                       <Clock className="h-3 w-3" />
                       <span>{contact.hours}</span>
                     </div>
@@ -109,11 +109,11 @@ const CrisisHelplines = ({ emergencyContacts }: CrisisHelplinesProps) => {
           <h4 className="font-medium text-blue-300 mb-2">Text Support Options</h4>
           <div className="space-y-2 text-sm">
             <div className="flex items-center justify-between">
-              <span className="text-white/80">Text SHOUT to 85258</span>
+              <span className="text-white">Text SHOUT to 85258</span>
               <Badge className="bg-blue-500/20 text-blue-400">Free 24/7</Badge>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-white/80">Crisis Text Line - trained volunteers</span>
+              <span className="text-white">Crisis Text Line - trained volunteers</span>
               <Badge className="bg-green-500/20 text-green-400">Confidential</Badge>
             </div>
           </div>

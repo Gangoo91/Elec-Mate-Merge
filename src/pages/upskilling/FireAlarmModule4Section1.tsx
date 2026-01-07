@@ -121,6 +121,41 @@ const FireAlarmModule4Section1 = () => {
       options: ['Not required', 'Per BS 7671 and manufacturer instructions to manage EMC and safety', 'Always bond to data screens only', 'Bond neutral and earth together'],
       correctAnswer: 1,
       explanation: 'Follow BS 7671 earthing/bonding and manufacturer EMC practices; never link N‑E.'
+    },
+    {
+      id: 11,
+      question: 'What is the typical standby autonomy period required for a Category L system in a building with phased evacuation?',
+      options: ['12 hours', '24 hours', '48 hours', '72 hours'],
+      correctAnswer: 1,
+      explanation: 'BS 5839-1 typically requires 24 hours standby plus 30 minutes alarm for most Category L systems, though the fire strategy may specify different requirements.'
+    },
+    {
+      id: 12,
+      question: 'When calculating load for multiple sounders, you should use:',
+      options: ['Average operating current', 'Peak inrush current for all devices simultaneously', 'Minimum rated current', 'Current at 12V only'],
+      correctAnswer: 1,
+      explanation: 'Calculate using worst-case peak inrush current at minimum supply voltage to ensure adequate PSU capacity during alarm activation.'
+    },
+    {
+      id: 13,
+      question: 'RCD protection on fire alarm mains supply should be:',
+      options: ['Always fitted', 'Avoided or coordinated per BS 5839-1 to prevent nuisance disconnection', 'Set to 10mA', 'Required by BS 7671 in all cases'],
+      correctAnswer: 1,
+      explanation: 'BS 5839-1 advises avoiding RCD protection where possible, or using time-delayed types to prevent unwanted tripping affecting life safety systems.'
+    },
+    {
+      id: 14,
+      question: 'The fire alarm supply isolation device should be located:',
+      options: ['In a public area for easy access', 'In a secure location accessible only to authorised persons', 'Hidden with no identification', 'Outside the building'],
+      correctAnswer: 1,
+      explanation: 'Secure location prevents unauthorised isolation while ensuring authorised maintenance personnel can safely isolate when required.'
+    },
+    {
+      id: 15,
+      question: 'When verifying PSU capacity during commissioning, you should measure:',
+      options: ['Mains voltage only', 'Standby current and full alarm current with all devices operating', 'Battery voltage only', 'Cable resistance only'],
+      correctAnswer: 1,
+      explanation: 'Practical verification involves measuring actual currents in both standby and full alarm conditions to confirm calculations and PSU adequacy.'
     }
   ], []);
 

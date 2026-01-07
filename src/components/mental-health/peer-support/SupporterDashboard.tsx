@@ -82,11 +82,11 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2">
             <div className={`p-2 rounded-lg ${profile.is_available ? 'bg-green-500/20' : 'bg-white/10'}`}>
-              <Power className={`h-5 w-5 ${profile.is_available ? 'text-green-400' : 'text-white/70'}`} />
+              <Power className={`h-5 w-5 ${profile.is_available ? 'text-green-400' : 'text-white'}`} />
             </div>
             <div>
               <CardTitle className="text-base">Your Status</CardTitle>
-              <p className={`text-sm ${profile.is_available ? 'text-green-400' : 'text-white/80'}`}>
+              <p className={`text-sm ${profile.is_available ? 'text-green-400' : 'text-white'}`}>
                 {profile.is_available ? 'Available to help' : 'Currently offline'}
               </p>
             </div>
@@ -95,7 +95,7 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
           {/* Availability Toggle */}
           <div className="flex items-center gap-3">
             {isToggling ? (
-              <Loader2 className="w-5 h-5 animate-spin text-white/70" />
+              <Loader2 className="w-5 h-5 animate-spin text-white" />
             ) : (
               <Switch
                 checked={profile.is_available}
@@ -139,7 +139,7 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
               variant="ghost"
               size="icon"
               onClick={onEditProfile}
-              className="text-white/70 hover:text-white"
+              className="text-white hover:text-white"
             >
               <Edit2 className="w-4 h-4" />
             </Button>
@@ -149,14 +149,14 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
         {/* Bio */}
         {profile.bio && (
           <div className="p-3 rounded-lg bg-white/5">
-            <p className="text-sm text-white/80 italic">"{profile.bio}"</p>
+            <p className="text-sm text-white italic">"{profile.bio}"</p>
           </div>
         )}
 
         {/* Topics */}
         {profile.topics_comfortable_with && profile.topics_comfortable_with.length > 0 && (
           <div className="space-y-2">
-            <p className="text-xs text-white/70 uppercase tracking-wide">Comfortable discussing</p>
+            <p className="text-xs text-white uppercase tracking-wide">Comfortable discussing</p>
             <div className="flex flex-wrap gap-1.5">
               {profile.topics_comfortable_with.map((topic, idx) => (
                 <span
@@ -176,14 +176,14 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
             <MessageCircle className="w-4 h-4 text-purple-400" />
             <div>
               <p className="text-lg font-bold text-white">{profile.total_conversations}</p>
-              <p className="text-xs text-white/80">Total chats</p>
+              <p className="text-xs text-white">Total chats</p>
             </div>
           </div>
           <div className="flex items-center gap-2 p-3 rounded-lg bg-white/5">
             <Clock className="w-4 h-4 text-blue-400" />
             <div>
               <p className="text-sm font-medium text-white">{lastActive}</p>
-              <p className="text-xs text-white/80">Last active</p>
+              <p className="text-xs text-white">Last active</p>
             </div>
           </div>
         </div>
@@ -205,8 +205,8 @@ const SupporterDashboard: React.FC<SupporterDashboardProps> = ({
             </>
           ) : (
             <>
-              <Settings className="w-4 h-4 text-white/70" />
-              <p className="text-sm text-white/80">
+              <Settings className="w-4 h-4 text-white" />
+              <p className="text-sm text-white">
                 Toggle on when you're ready to receive connections
               </p>
             </>

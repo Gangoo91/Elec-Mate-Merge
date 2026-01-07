@@ -99,7 +99,8 @@ function CollegeHero({ studentCount, pendingCount }: { studentCount: number; pen
             </div>
 
             <h1 className="text-xl sm:text-2xl font-semibold text-white leading-tight">
-              {getGreeting()}, <span className="text-elec-yellow">{firstName}</span>
+              <span className="hidden sm:inline">{getGreeting()}, </span>
+              <span className="text-elec-yellow">{firstName}</span>
             </h1>
 
             <p className="text-sm text-white/70 mt-1">
@@ -405,8 +406,8 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
         <CollegeHero studentCount={activeStudents} pendingCount={pendingAssessments} />
       </motion.section>
 
-      {/* Stats Bar */}
-      <motion.section variants={itemVariants}>
+      {/* Stats Bar - Hidden on mobile for native app feel */}
+      <motion.section variants={itemVariants} className="hidden sm:block">
         <CollegeStatsBar
           students={activeStudents}
           tutors={activeTutors}

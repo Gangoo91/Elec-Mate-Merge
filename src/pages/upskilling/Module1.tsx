@@ -12,56 +12,56 @@ const Module1 = () => {
       title: "What Is Inspection & Testing?",
       description: "Fundamental definition and purpose of electrical inspection and testing in accordance with BS 7671",
       icon: BookOpen,
-      link: "section-1",
+      link: "../module-1/section-1",
     },
     {
       id: 2,
       title: "Legal & Regulatory Framework",
       description: "Statutory requirements, Building Regulations Part P and legal obligations for electrical installations",
       icon: FileText,
-      link: "section-2",
+      link: "../module-1/section-2",
     },
     {
       id: 3,
       title: "When Is Inspection & Testing Required?",
       description: "Circumstances and timescales requiring electrical inspection and testing procedures",
       icon: Shield,
-      link: "section-3",
+      link: "../module-1/section-3",
     },
     {
       id: 4,
       title: "Types of Testing (Overview)",
       description: "Introduction to different categories of electrical testing and their specific applications",
       icon: Eye,
-      link: "section-4",
+      link: "../module-1/section-4",
     },
     {
       id: 5,
       title: "Responsibilities & Competency",
       description: "Professional responsibilities and competency requirements for inspection and testing personnel",
       icon: Zap,
-      link: "section-5",
+      link: "../module-1/section-5",
     },
     {
       id: 6,
       title: "Overview of Test Documentation",
       description: "Essential documentation requirements and certification procedures for electrical installations",
       icon: Check,
-      link: "section-6",
+      link: "../module-1/section-6",
     },
     {
       id: 7,
       title: "Summary & Key Takeaways",
       description: "Consolidation of essential knowledge and fundamental principles for inspection and testing",
       icon: Flag,
-      link: "section-7",
+      link: "../module-1/section-7",
     },
     {
       id: 8,
       title: "Terminology Refresher",
       description: "Key electrical terminology and definitions used in inspection and testing procedures",
       icon: Info,
-      link: "section-8",
+      link: "../module-1/section-8",
     }
   ];
 
@@ -72,7 +72,7 @@ const Module1 = () => {
         <Link to="../inspection-testing">
           <Button
             variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Inspection & Testing
@@ -98,8 +98,8 @@ const Module1 = () => {
               const IconComponent = section.icon;
               
               const cardContent = (
-                <Card 
-                  className="bg-transparent border-transparent hover:border-elec-yellow/30 transition-all duration-300 hover:bg-transparent/80 cursor-pointer group"
+                <Card
+                  className="bg-transparent border-transparent hover:border-elec-yellow/30 transition-all duration-300 hover:bg-transparent/80 cursor-pointer group min-h-[48px]"
                 >
                   <CardHeader className="text-center space-y-3 pb-2 p-4">
                     {/* Icon */}

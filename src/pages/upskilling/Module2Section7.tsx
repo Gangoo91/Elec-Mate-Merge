@@ -14,7 +14,7 @@ const Module2Section7 = () => {
         <Link to="../module-2">
           <Button
             variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 2
@@ -425,10 +425,10 @@ const Module2Section7 = () => {
 
           {/* Navigation */}
           <div className="flex justify-between items-center pt-8">
-            <Link to="module-2/section-6">
+            <Link to="../module-2/section-6">
               <Button
                 variant="outline"
-                className="border-gray-600 text-white hover:bg-gradient-to-r hover:from-gray-700/30 hover:to-gray-800/30 hover:text-white"
+                className="border-gray-600 text-white hover:bg-gradient-to-r hover:from-gray-700/30 hover:to-gray-800/30 hover:text-white min-h-[48px]"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous: Environmental & Site-Specific Hazards
@@ -437,7 +437,7 @@ const Module2Section7 = () => {
             
             <Link to="../module-2">
               <Button
-                className="bg-gradient-to-r from-elec-yellow to-yellow-500 text-black hover:from-elec-yellow hover:to-elec-yellow font-semibold"
+                className="bg-gradient-to-r from-elec-yellow to-yellow-500 text-black hover:from-elec-yellow hover:to-elec-yellow font-semibold min-h-[48px]"
               >
                 Module 2 Overview
                 <ArrowRight className="ml-2 h-4 w-4" />

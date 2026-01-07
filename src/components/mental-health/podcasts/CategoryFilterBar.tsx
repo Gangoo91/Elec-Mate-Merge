@@ -95,7 +95,7 @@ const CategoryFilterBar = ({ selectedCategory, onCategoryChange, podcastCounts }
               variant="ghost"
               size="icon"
               onClick={() => scroll('left')}
-              className="h-8 w-8 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white"
+              className="h-8 w-8 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-white"
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
@@ -124,17 +124,17 @@ const CategoryFilterBar = ({ selectedCategory, onCategoryChange, podcastCounts }
                 touch-manipulation active:scale-95
                 ${isSelected
                   ? `${category.bgColor} ${category.color} shadow-lg`
-                  : 'bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:border-white/20'
+                  : 'bg-white/5 border-white/10 text-white hover:bg-white/10 hover:border-white/20'
                 }
               `}
             >
               {/* Icon */}
-              <span className={isSelected ? category.color : 'text-white/70'}>
+              <span className={isSelected ? category.color : 'text-white'}>
                 {category.icon}
               </span>
 
               {/* Label */}
-              <span className={`text-sm font-medium ${isSelected ? '' : 'text-white/80'}`}>
+              <span className={`text-sm font-medium ${isSelected ? '' : 'text-white'}`}>
                 {category.label}
               </span>
 
@@ -144,7 +144,7 @@ const CategoryFilterBar = ({ selectedCategory, onCategoryChange, podcastCounts }
                   text-xs px-1.5 py-0.5 rounded-full
                   ${isSelected
                     ? 'bg-white/20 text-white'
-                    : 'bg-white/10 text-white/80'
+                    : 'bg-white/10 text-white'
                   }
                 `}>
                   {count}
@@ -168,7 +168,7 @@ const CategoryFilterBar = ({ selectedCategory, onCategoryChange, podcastCounts }
               variant="ghost"
               size="icon"
               onClick={() => scroll('right')}
-              className="h-8 w-8 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white"
+              className="h-8 w-8 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-white"
             >
               <ChevronRight className="h-4 w-4" />
             </Button>

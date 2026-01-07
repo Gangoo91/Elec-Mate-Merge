@@ -22,7 +22,7 @@ const FireAlarmModule1Section4 = () => {
     if (meta) meta.content = desc;
   }, []);
 
-  // Quiz Data (5 questions)
+  // Quiz Data
   const questions: QuizQuestion[] = useMemo(() => [
     {
       id: 1,
@@ -83,6 +83,90 @@ const FireAlarmModule1Section4 = () => {
       ],
       correctAnswer: 1,
       explanation: 'L3 (life safety) for escape routes, plus P2 for high‑value/high‑risk rooms is a typical balanced approach.'
+    },
+    {
+      id: 6,
+      question: 'What is the typical coverage radius for point detectors under standard ceilings?',
+      options: [
+        'Up to 3 metres',
+        'Up to 7.5 metres',
+        'Up to 15 metres',
+        'Unlimited coverage'
+      ],
+      correctAnswer: 1,
+      explanation: 'Point detectors typically provide up to 7.5m radius coverage under standard ceilings, subject to BS 5839-1 spacing rules and environmental conditions.'
+    },
+    {
+      id: 7,
+      question: 'For a hotel with sleeping accommodation, which system category is most appropriate?',
+      options: [
+        'M only',
+        'L4',
+        'L1 or L2 depending on risk and layout',
+        'P2 only'
+      ],
+      correctAnswer: 2,
+      explanation: 'Hotels require enhanced life safety protection due to sleeping risk, typically L1 for comprehensive coverage or L2 where justified by the fire strategy.'
+    },
+    {
+      id: 8,
+      question: 'What does P2 category protection provide?',
+      options: [
+        'Detection throughout all areas',
+        'Detection on escape routes only',
+        'Detection in defined high-value or high-risk areas only',
+        'Manual call points only'
+      ],
+      correctAnswer: 2,
+      explanation: 'P2 provides targeted property protection to defined high-value or high-risk areas such as server rooms, plant rooms, or valuable storage.'
+    },
+    {
+      id: 9,
+      question: 'Which building scenario would typically use L2 category?',
+      options: [
+        'Small single-room workshop',
+        'Office building with plant rooms and risk areas off escape routes',
+        'Unmanned warehouse',
+        'Single-storey retail unit with no back areas'
+      ],
+      correctAnswer: 1,
+      explanation: 'L2 is common in offices and schools where detection is needed on escape routes plus in specified high-risk rooms like plant rooms, kitchens, or storage areas.'
+    },
+    {
+      id: 10,
+      question: 'Why might a warehouse require both L3 and P1 categories?',
+      options: [
+        'L3 for life safety on escape routes; P1 for comprehensive property protection',
+        'This combination is not permitted',
+        'L3 and P1 are the same thing',
+        'To avoid the need for manual call points'
+      ],
+      correctAnswer: 0,
+      explanation: 'Mixed categories address multiple objectives—L3 ensures life safety on escape routes while P1 provides comprehensive property protection for goods and assets throughout.'
+    },
+    {
+      id: 11,
+      question: 'What must justify the final selection of fire alarm category?',
+      options: [
+        'Cost considerations only',
+        'The fire risk assessment and fire strategy',
+        'Personal preference of the installer',
+        'The age of the building'
+      ],
+      correctAnswer: 1,
+      explanation: 'System category selection must be justified by the fire risk assessment and fire strategy, taking into account occupancy, risk, building layout, and evacuation method.'
+    },
+    {
+      id: 12,
+      question: 'For a school with science laboratories, which system is most appropriate?',
+      options: [
+        'M only throughout',
+        'L2 with targeted coverage in labs and high-risk areas, plus escape routes',
+        'No fire alarm required',
+        'P1 property protection only'
+      ],
+      correctAnswer: 1,
+      explanation: 'Schools typically require L2 to provide life safety coverage on escape routes plus enhanced detection in high-risk areas such as science labs, workshops, and kitchens.'
     }
   ], []);
 

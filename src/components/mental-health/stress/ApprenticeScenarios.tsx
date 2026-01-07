@@ -88,7 +88,7 @@ const ApprenticeScenarios = () => {
           <Lightbulb className="h-6 w-6" />
           Real Apprentice Scenarios
         </CardTitle>
-        <p className="text-sm text-white/80">
+        <p className="text-sm text-white">
           Learn from common situations and proven coping strategies
         </p>
       </CardHeader>
@@ -148,14 +148,14 @@ const ApprenticeScenarios = () => {
                   <div className="space-y-4">
                     <div className="border border-elec-yellow/20 rounded-lg p-4">
                       <h4 className="font-semibold text-foreground mb-2">The Situation</h4>
-                      <p className="text-sm text-white/80">{scenario.situation}</p>
+                      <p className="text-sm text-white">{scenario.situation}</p>
                     </div>
 
                     <div className="border border-red-500/20 rounded-lg p-4 bg-red-500/5">
                       <h4 className="font-semibold text-foreground mb-2">Stress Factors</h4>
                       <ul className="space-y-1">
                         {scenario.stressors.map((stressor, index) => (
-                          <li key={index} className="flex items-center gap-2 text-sm text-white/80">
+                          <li key={index} className="flex items-center gap-2 text-sm text-white">
                             <div className="h-1.5 w-1.5 rounded-full bg-red-400" />
                             {stressor}
                           </li>
@@ -167,7 +167,7 @@ const ApprenticeScenarios = () => {
                       <h4 className="font-semibold text-foreground mb-2">Effective Strategies</h4>
                       <ul className="space-y-2">
                         {scenario.strategies.map((strategy, index) => (
-                          <li key={index} className="flex items-start gap-2 text-sm text-white/80">
+                          <li key={index} className="flex items-start gap-2 text-sm text-white">
                             <div className="h-1.5 w-1.5 rounded-full bg-green-400 mt-2 flex-shrink-0" />
                             {strategy}
                           </li>
@@ -177,7 +177,7 @@ const ApprenticeScenarios = () => {
 
                     <div className="border border-elec-yellow/20 rounded-lg p-4">
                       <h4 className="font-semibold text-foreground mb-2">Positive Outcome</h4>
-                      <p className="text-sm text-white/80">{scenario.outcome}</p>
+                      <p className="text-sm text-white">{scenario.outcome}</p>
                     </div>
                   </div>
                 </>

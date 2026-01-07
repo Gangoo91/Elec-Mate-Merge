@@ -70,7 +70,7 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
           </Badge>
 
           {/* Stats */}
-          <div className="flex items-center gap-3 mt-2 text-xs text-white/80">
+          <div className="flex items-center gap-3 mt-2 text-xs text-white">
             <span className="flex items-center gap-1">
               <MessageCircle className="w-3.5 h-3.5" />
               {supporter.total_conversations} chats
@@ -85,7 +85,7 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
 
       {/* Bio */}
       {supporter.bio && (
-        <p className="text-sm text-white/80 mt-4 line-clamp-2 leading-relaxed">
+        <p className="text-sm text-white mt-4 line-clamp-2 leading-relaxed">
           "{supporter.bio}"
         </p>
       )}
@@ -102,7 +102,7 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
             </span>
           ))}
           {supporter.topics_comfortable_with.length > 4 && (
-            <span className="text-xs px-2 py-0.5 text-white/70">
+            <span className="text-xs px-2 py-0.5 text-white">
               +{supporter.topics_comfortable_with.length - 4} more
             </span>
           )}
@@ -116,7 +116,7 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
             variant="ghost"
             size="sm"
             onClick={() => onViewProfile(supporter)}
-            className="flex-1 text-white/70 hover:text-white hover:bg-white/10"
+            className="flex-1 text-white hover:text-white hover:bg-white/10"
           >
             View Profile
           </Button>

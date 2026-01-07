@@ -101,7 +101,7 @@ const Module8Section3 = () => {
         <Link to="../module-8">
           <Button
             variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 8
@@ -129,8 +129,8 @@ const Module8Section3 = () => {
               
               return (
                 <Link key={test.id} to={testUrl}>
-                  <Card 
-                    className="bg-transparent border-transparent hover:border-elec-yellow/30 transition-all duration-300 hover:bg-transparent/80 cursor-pointer group h-full flex flex-col"
+                  <Card
+                    className="bg-transparent border-transparent hover:border-elec-yellow/30 transition-all duration-300 hover:bg-transparent/80 cursor-pointer group h-full flex flex-col min-h-[48px]"
                   >
                     <CardContent className="text-center space-y-3 pb-2 p-4 flex-shrink-0">
                       <div className="flex justify-center">

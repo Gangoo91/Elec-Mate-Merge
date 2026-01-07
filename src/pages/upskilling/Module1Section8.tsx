@@ -252,7 +252,7 @@ const Module1Section8 = () => {
         <Link to="../module-1">
           <Button
             variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 1
@@ -767,9 +767,9 @@ const Module1Section8 = () => {
                   <p className="text-gray-300">
                     Test your knowledge of the terminology covered in this section.
                   </p>
-                  <Button 
+                  <Button
                     onClick={startQuiz}
-                    className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
+                    className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2 min-h-[48px]"
                   >
                     Start Quiz
                   </Button>
@@ -827,9 +827,9 @@ const Module1Section8 = () => {
                   </div>
 
                   <div className="flex justify-center">
-                    <Button 
+                    <Button
                       onClick={resetQuiz}
-                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-6 py-2"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-6 py-2 min-h-[48px]"
                     >
                       Retake Quiz
                     </Button>
@@ -882,15 +882,15 @@ const Module1Section8 = () => {
                       onClick={handlePrevious}
                       disabled={currentQuestionIndex === 0}
                       variant="outline"
-                      className="bg-transparent border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white disabled:opacity-50"
+                      className="bg-transparent border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white disabled:opacity-50 min-h-[48px]"
                     >
                       Previous
                     </Button>
-                    
+
                     <Button
                       onClick={handleNext}
                       disabled={selectedAnswers[currentQuestionIndex] === undefined}
-                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold disabled:opacity-50"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold disabled:opacity-50 min-h-[48px]"
                     >
                       {currentQuestionIndex === quizQuestions.length - 1 ? 'Finish Quiz' : 'Next'}
                     </Button>

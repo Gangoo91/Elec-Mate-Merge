@@ -106,7 +106,7 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
                 <Sparkles className="h-8 w-8 text-amber-400" />
               </div>
               <h2 className="text-2xl font-bold text-foreground mb-2">Gratitude Journal</h2>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 {todayEntry ? "Edit your gratitude list" : "What are you grateful for today?"}
               </p>
             </div>
@@ -115,7 +115,7 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
             <div className="space-y-4">
               {currentItems.map((item, index) => (
                 <div key={index} className="space-y-1">
-                  <label className="text-xs text-white/80">
+                  <label className="text-xs text-white">
                     {prompts[index]}
                   </label>
                   <div className="relative">
@@ -139,7 +139,7 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
               <Button
                 variant="ghost"
                 onClick={() => setCurrentItems([...currentItems, ''])}
-                className="w-full text-white/80"
+                className="w-full text-white"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Another
@@ -160,7 +160,7 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
             {entries.length > 0 && !todayEntry && (
               <Card className="border-white/10 bg-white/5">
                 <CardContent className="p-4">
-                  <div className="flex items-center gap-2 text-sm text-white/80 mb-2">
+                  <div className="flex items-center gap-2 text-sm text-white mb-2">
                     <Calendar className="h-4 w-4" />
                     Yesterday's gratitude
                   </div>
@@ -186,7 +186,7 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
 
             <div className="text-center">
               <h2 className="text-2xl font-bold text-foreground mb-2">Gratitude Saved!</h2>
-              <p className="text-white/80">
+              <p className="text-white">
                 Practicing gratitude rewires your brain for positivity.
               </p>
             </div>
@@ -196,13 +196,13 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
               <Card className="border-amber-500/20 bg-amber-500/5">
                 <CardContent className="p-4 text-center">
                   <div className="text-3xl font-bold text-amber-400">{getStreak()}</div>
-                  <div className="text-xs text-white/80">Day Streak</div>
+                  <div className="text-xs text-white">Day Streak</div>
                 </CardContent>
               </Card>
               <Card className="border-amber-500/20 bg-amber-500/5">
                 <CardContent className="p-4 text-center">
                   <div className="text-3xl font-bold text-amber-400">{entries.length}</div>
-                  <div className="text-xs text-white/80">Total Days</div>
+                  <div className="text-xs text-white">Total Days</div>
                 </CardContent>
               </Card>
             </div>
@@ -210,7 +210,7 @@ const GratitudeJournal = ({ onClose }: GratitudeJournalProps) => {
             {/* Today's Items */}
             <Card className="w-full max-w-sm border-white/10 bg-white/5">
               <CardContent className="p-4">
-                <div className="text-xs text-white/80 mb-3">Today's Gratitude</div>
+                <div className="text-xs text-white mb-3">Today's Gratitude</div>
                 <ul className="space-y-2">
                   {todayEntry?.items.map((item, i) => (
                     <li key={i} className="flex items-start gap-2">

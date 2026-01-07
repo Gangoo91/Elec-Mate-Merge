@@ -97,7 +97,7 @@ const quizQuestions = [
       "Electric toothbrush charger"
     ],
     correctAnswer: 1,
-    explanation: "Set-top boxes and satellite receivers often have significant standby consumption (5-15W) as they may be updating programme guides or maintaining connections. Modern phone chargers typically use <0.5W when not charging."
+    explanation: "Set-top boxes and satellite receivers often have significant standby consumption (5-15W) as they may be updating programme guides or maintaining connections. Modern phone chargers typically use &lt;0.5W when not charging."
   },
   {
     id: 3,
@@ -207,7 +207,7 @@ const faqs = [
   },
   {
     question: "Should I unplug phone chargers when not in use?",
-    answer: "Modern phone chargers meeting EU regulations consume <0.5W when idle - minimal cost. However, older chargers may use more. Unplugging eliminates any consumption and reduces fire risk from faulty equipment left energised."
+    answer: "Modern phone chargers meeting EU regulations consume &lt;0.5W when idle - minimal cost. However, older chargers may use more. Unplugging eliminates any consumption and reduces fire risk from faulty equipment left energised."
   },
   {
     question: "How can building design reduce standby consumption?",

@@ -50,17 +50,17 @@ const FiberOpticsModule1 = () => {
             <h1 className="text-4xl font-bold text-white mb-4">
               Module 1: Introduction to Fibre Optics
             </h1>
-            <p className="text-xl text-gray-400 mb-6">
+            <p className="text-xl text-white mb-6">
               Fundamentals of fiber optic technology and applications
             </p>
             <div className="flex gap-4">
               <Badge variant="secondary" className="bg-yellow-400 text-black">
                 Module 1
               </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
+              <Badge variant="outline" className="border-gray-600 text-white">
                 4 Sections
               </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
+              <Badge variant="outline" className="border-gray-600 text-white">
                 45 minutes
               </Badge>
             </div>
@@ -73,8 +73,8 @@ const FiberOpticsModule1 = () => {
                 to={`../fiber-optics-module-1-section-${section.id}`}
                 className="h-full"
               >
-                <Card className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col">
-                  <CardContent className="text-center space-y-3 p-4 flex-grow flex flex-col justify-center">
+                <Card className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col min-h-[48px]">
+                  <CardContent className="text-center space-y-3 p-4 flex-grow flex flex-col justify-center min-h-[48px]">
                     <div className="flex justify-center">
                       <section.icon className="h-8 w-8 text-yellow-400" strokeWidth={2.5} />
                     </div>

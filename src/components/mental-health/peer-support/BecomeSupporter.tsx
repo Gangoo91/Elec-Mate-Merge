@@ -80,7 +80,7 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
         </Button>
         <div>
           <h2 className="text-xl font-bold text-white">Become a Mental Health Mate</h2>
-          <p className="text-sm text-white/80">Help others by being there to listen</p>
+          <p className="text-sm text-white">Help others by being there to listen</p>
         </div>
       </div>
 
@@ -93,7 +93,7 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
             </div>
             <div className="space-y-1">
               <h4 className="font-medium text-white">What is a Mental Health Mate?</h4>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Mental Health Mates are fellow tradespeople who volunteer their time to listen
                 and chat with others who might be struggling. You don't need to be a professional -
                 just someone who cares.
@@ -124,7 +124,7 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
                 className="bg-white/5 border-white/20"
                 maxLength={50}
               />
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 Use your first name or a nickname - whatever you're comfortable with
               </p>
             </div>
@@ -140,7 +140,7 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
                 className="bg-white/5 border-white/20 min-h-[100px]"
                 maxLength={300}
               />
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 {bio.length}/300 characters
               </p>
             </div>
@@ -173,7 +173,7 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
                   </SelectItem>
                 </SelectContent>
               </Select>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 MHFA = Mental Health First Aid certification
               </p>
             </div>
@@ -181,7 +181,7 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
             {/* Topics */}
             <div className="space-y-3">
               <Label>Topics you're comfortable discussing</Label>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 Select any topics you feel able to chat about (optional)
               </p>
               <div className="flex flex-wrap gap-2">
@@ -196,7 +196,7 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
                         px-3 py-1.5 rounded-full text-sm border transition-all
                         ${isSelected
                           ? 'bg-purple-500/30 border-purple-500/50 text-purple-200'
-                          : 'bg-white/5 border-white/20 text-white/80 hover:bg-white/10'
+                          : 'bg-white/5 border-white/20 text-white hover:bg-white/10'
                         }
                       `}
                     >
@@ -215,7 +215,7 @@ const BecomeSupporter: React.FC<BecomeSupporterProps> = ({ onSuccess, onBack }) 
                   <Shield className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <div className="space-y-2 text-sm">
                     <p className="font-medium text-amber-300">Important Guidelines</p>
-                    <ul className="text-white/80 space-y-1 list-disc list-inside">
+                    <ul className="text-white space-y-1 list-disc list-inside">
                       <li>You're here to listen, not to give professional advice</li>
                       <li>If someone is in crisis, direct them to professional help</li>
                       <li>Keep conversations confidential</li>

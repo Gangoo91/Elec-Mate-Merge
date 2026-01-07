@@ -93,7 +93,7 @@ const AM2Module4Section3 = () => {
         "Nothing wrong with it"
       ],
       correctAnswer: 1,
-      explanation: "Instead of infinity symbols, record the actual meter limit reading such as '>200 MΩ' to show the measured value."
+      explanation: "Instead of infinity symbols, record the actual meter limit reading such as '&gt;200 MΩ' to show the measured value."
     },
     {
       id: 4,
@@ -124,7 +124,7 @@ const AM2Module4Section3 = () => {
         "Leave blank"
       ],
       correctAnswer: 1,
-      explanation: "Record the actual meter limit reading (e.g. '>200 MΩ') rather than infinity symbols or vague descriptions."
+      explanation: "Record the actual meter limit reading (e.g. '&gt;200 MΩ') rather than infinity symbols or vague descriptions."
     },
     {
       id: 7,

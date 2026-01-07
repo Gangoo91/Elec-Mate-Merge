@@ -77,7 +77,7 @@ const CrisisResourcesTab = () => {
             <div className="text-xl font-bold text-blue-400">116 123</div>
           </div>
           <div className="text-sm font-medium text-foreground">Samaritans</div>
-          <div className="text-xs text-white/80">Free 24/7 support</div>
+          <div className="text-xs text-white">Free 24/7 support</div>
         </a>
 
         <a
@@ -92,7 +92,7 @@ const CrisisResourcesTab = () => {
             <div className="text-xl font-bold text-green-400">85258</div>
           </div>
           <div className="text-sm font-medium text-foreground">Text SHOUT</div>
-          <div className="text-xs text-white/80">Free text support</div>
+          <div className="text-xs text-white">Free text support</div>
         </a>
       </div>
 
@@ -110,13 +110,13 @@ const CrisisResourcesTab = () => {
               </div>
               <div className="text-left">
                 <h3 className="font-semibold text-foreground">Crisis Helplines</h3>
-                <p className="text-xs text-white/80">{emergencyContacts.length} support lines available</p>
+                <p className="text-xs text-white">{emergencyContacts.length} support lines available</p>
               </div>
             </div>
             {expandedSection === "helplines" ? (
-              <ChevronUp className="h-5 w-5 text-white/80" />
+              <ChevronUp className="h-5 w-5 text-white" />
             ) : (
-              <ChevronDown className="h-5 w-5 text-white/80" />
+              <ChevronDown className="h-5 w-5 text-white" />
             )}
           </button>
 
@@ -136,10 +136,10 @@ const CrisisResourcesTab = () => {
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium text-foreground text-sm">{contact.name}</h4>
-                      <p className="text-xs text-white/80 line-clamp-2 mb-2">{contact.description}</p>
+                      <p className="text-xs text-white line-clamp-2 mb-2">{contact.description}</p>
                       <div className="flex items-center gap-3 text-xs">
                         <span className="text-yellow-400 font-mono font-bold">{contact.phone}</span>
-                        <span className="text-white/80 flex items-center gap-1">
+                        <span className="text-white flex items-center gap-1">
                           <Clock className="h-3 w-3" />
                           {contact.hours}
                         </span>
@@ -168,10 +168,10 @@ const CrisisResourcesTab = () => {
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium text-foreground text-sm">{contact.name}</h4>
-                      <p className="text-xs text-white/80 line-clamp-2 mb-2">{contact.description}</p>
+                      <p className="text-xs text-white line-clamp-2 mb-2">{contact.description}</p>
                       <div className="flex items-center gap-3 text-xs">
                         <span className="text-blue-400 font-mono">{contact.phone}</span>
-                        <span className="text-white/80">{contact.hours}</span>
+                        <span className="text-white">{contact.hours}</span>
                       </div>
                     </div>
                     <Button size="sm" variant="outline" asChild>
@@ -198,13 +198,13 @@ const CrisisResourcesTab = () => {
               </div>
               <div className="text-left">
                 <h3 className="font-semibold text-foreground">Find Local Support</h3>
-                <p className="text-xs text-white/80">NHS services near you</p>
+                <p className="text-xs text-white">NHS services near you</p>
               </div>
             </div>
             {expandedSection === "local" ? (
-              <ChevronUp className="h-5 w-5 text-white/80" />
+              <ChevronUp className="h-5 w-5 text-white" />
             ) : (
-              <ChevronDown className="h-5 w-5 text-white/80" />
+              <ChevronDown className="h-5 w-5 text-white" />
             )}
           </button>
 
@@ -227,13 +227,13 @@ const CrisisResourcesTab = () => {
               </div>
               <div className="text-left">
                 <h3 className="font-semibold text-foreground">Peer Support Groups</h3>
-                <p className="text-xs text-white/80">Connect with others who understand</p>
+                <p className="text-xs text-white">Connect with others who understand</p>
               </div>
             </div>
             {expandedSection === "peer" ? (
-              <ChevronUp className="h-5 w-5 text-white/80" />
+              <ChevronUp className="h-5 w-5 text-white" />
             ) : (
-              <ChevronDown className="h-5 w-5 text-white/80" />
+              <ChevronDown className="h-5 w-5 text-white" />
             )}
           </button>
 
@@ -247,7 +247,7 @@ const CrisisResourcesTab = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground">Andy's Man Club</h4>
-                    <p className="text-xs text-white/80">#ITSOKAYTOTALK</p>
+                    <p className="text-xs text-white">#ITSOKAYTOTALK</p>
                   </div>
                 </div>
                 <p className="text-sm text-foreground/80 mb-3">
@@ -277,7 +277,7 @@ const CrisisResourcesTab = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground">CALM</h4>
-                    <p className="text-xs text-white/80">Campaign Against Living Miserably</p>
+                    <p className="text-xs text-white">Campaign Against Living Miserably</p>
                   </div>
                 </div>
                 <p className="text-sm text-foreground/80 mb-3">
@@ -307,7 +307,7 @@ const CrisisResourcesTab = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground">Mates in Mind</h4>
-                    <p className="text-xs text-white/80">Construction Industry Support</p>
+                    <p className="text-xs text-white">Construction Industry Support</p>
                   </div>
                 </div>
                 <p className="text-sm text-foreground/80 mb-3">
@@ -337,13 +337,13 @@ const CrisisResourcesTab = () => {
               </div>
               <div className="text-left">
                 <h3 className="font-semibold text-foreground">Online Resources</h3>
-                <p className="text-xs text-white/80">{onlineResources.length} helpful websites</p>
+                <p className="text-xs text-white">{onlineResources.length} helpful websites</p>
               </div>
             </div>
             {expandedSection === "online" ? (
-              <ChevronUp className="h-5 w-5 text-white/80" />
+              <ChevronUp className="h-5 w-5 text-white" />
             ) : (
-              <ChevronDown className="h-5 w-5 text-white/80" />
+              <ChevronDown className="h-5 w-5 text-white" />
             )}
           </button>
 
@@ -361,7 +361,7 @@ const CrisisResourcesTab = () => {
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium text-foreground text-sm">{resource.title}</h4>
-                      <p className="text-xs text-white/80 line-clamp-2">{resource.description}</p>
+                      <p className="text-xs text-white line-clamp-2">{resource.description}</p>
                     </div>
                     <ExternalLink className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
                   </div>

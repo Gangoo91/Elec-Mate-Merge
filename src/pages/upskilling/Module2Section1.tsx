@@ -196,7 +196,7 @@ const Module2Section1 = () => {
         <Link to="../module-2">
           <Button
             variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 2
@@ -582,7 +582,7 @@ const Module2Section1 = () => {
                         <li>• Earth to L2 (E-L2)</li>
                         <li>• Earth to L3 (E-L3)</li>
                       </ul>
-                      <p className="text-gray-400 text-sm mt-2 italic">
+                      <p className="text-white text-sm mt-2 italic">
                         Testing to earth first ensures safe potential difference before phase-to-phase testing
                       </p>
                     </div>
@@ -594,7 +594,7 @@ const Module2Section1 = () => {
                         <li>• L2 to L3</li>
                         <li>• L3 to L1</li>
                       </ul>
-                      <p className="text-gray-400 text-sm mt-2 italic">
+                      <p className="text-white text-sm mt-2 italic">
                         Only test phase-to-phase after confirming all phases are dead to earth
                       </p>
                     </div>
@@ -1026,9 +1026,9 @@ const Module2Section1 = () => {
                   <p className="text-white">
                     Test your understanding of safe isolation procedures.
                   </p>
-                  <Button 
+                  <Button
                     onClick={startQuiz}
-                    className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
+                    className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2 min-h-[48px]"
                   >
                     Start Quiz
                   </Button>
@@ -1074,7 +1074,7 @@ const Module2Section1 = () => {
                                 </p>
                               )}
                               {question.explanation && (
-                                <p className="text-gray-400 text-sm mt-2 italic">
+                                <p className="text-white text-sm mt-2 italic">
                                   {question.explanation}
                                 </p>
                               )}
@@ -1086,9 +1086,9 @@ const Module2Section1 = () => {
                   </div>
 
                   <div className="flex justify-center">
-                    <Button 
+                    <Button
                       onClick={resetQuiz}
-                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-6 py-2"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-6 py-2 min-h-[48px]"
                     >
                       Retake Quiz
                     </Button>
@@ -1097,7 +1097,7 @@ const Module2Section1 = () => {
               ) : (
                 <div className="space-y-6">
                   {/* Progress */}
-                  <div className="flex justify-between items-center text-sm text-gray-400">
+                  <div className="flex justify-between items-center text-sm text-white">
                     <span>Question {currentQuestionIndex + 1} of {quizQuestions.length}</span>
                     <span>{Math.round(((currentQuestionIndex + 1) / quizQuestions.length) * 100)}% Complete</span>
                   </div>
@@ -1137,7 +1137,7 @@ const Module2Section1 = () => {
                     <Button
                       onClick={handlePrevious}
                       disabled={currentQuestionIndex === 0}
-                      className="bg-gray-600 text-white hover:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed px-6 py-2"
+                      className="bg-gray-600 text-white hover:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed px-6 py-2 min-h-[48px]"
                     >
                       Previous
                     </Button>
@@ -1145,7 +1145,7 @@ const Module2Section1 = () => {
                     <Button
                       onClick={handleNext}
                       disabled={selectedAnswers[currentQuestionIndex] === undefined}
-                      className="bg-elec-yellow text-black hover:bg-elec-yellow disabled:opacity-50 disabled:cursor-not-allowed px-6 py-2"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow disabled:opacity-50 disabled:cursor-not-allowed px-6 py-2 min-h-[48px]"
                     >
                       {currentQuestionIndex === quizQuestions.length - 1 ? 'Finish' : 'Next'}
                     </Button>
@@ -1161,8 +1161,8 @@ const Module2Section1 = () => {
       {/* Footer Navigation */}
       <div className="px-4 sm:px-6 lg:px-8 pb-8">
         <div className="max-w-4xl mx-auto flex justify-center">
-          <Link to="module-2/section-2">
-            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-3 text-lg">
+          <Link to="../module-2/section-2">
+            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-3 text-lg min-h-[48px]">
               Next Section: RAMS →
             </Button>
           </Link>

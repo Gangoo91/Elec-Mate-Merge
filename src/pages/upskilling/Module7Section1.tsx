@@ -12,7 +12,7 @@ const Module7Section1 = () => {
     <div className="min-h-screen bg-[#1a1a1a]">
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
         <Link to="../module-7">
-          <Button variant="ghost" className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md">
+          <Button variant="ghost" className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 7
           </Button>
@@ -41,8 +41,8 @@ const Module7Section1 = () => {
         <div>
           <div className="flex flex-col sm:flex-row gap-3 sm:justify-between sm:items-center">
             <div className="order-2 sm:order-1"></div>
-            <Link to="module-7/section-2" className="order-1 sm:order-2 w-full sm:w-auto">
-              <Button className="bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200 w-full sm:w-auto h-12 text-sm sm:text-base">
+            <Link to="../module-7/section-2" className="order-1 sm:order-2 w-full sm:w-auto">
+              <Button className="bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200 w-full sm:w-auto min-h-[48px] text-sm sm:text-base">
                 <span className="hidden sm:inline">Next: Electrical Installation Certificate</span>
                 <span className="sm:hidden">Next: EIC</span>
                 <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />

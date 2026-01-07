@@ -15,7 +15,7 @@ const StressProgressBar = () => {
           <span>Advanced</span>
         </div>
         <Progress value={progressValue} className="h-2" />
-        <p className="text-sm text-white/80">
+        <p className="text-sm text-white">
           You've completed {progressValue}% of stress management techniques
         </p>
       </div>
