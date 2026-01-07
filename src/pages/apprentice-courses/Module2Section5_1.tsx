@@ -253,7 +253,7 @@ const Module2Section5_1 = () => {
                     <Zap className="w-4 h-4" />
                     Conductors - Low Resistivity Materials
                   </h4>
-                  <div className="space-y-2 text-blue-200 text-sm">
+                  <div className="space-y-2 text-white text-sm">
                     <div>
                       <p><strong>Copper (Cu):</strong> ρ ≈ 17.2 nΩ·m at 20°C</p>
                       <ul className="list-disc pl-4 space-y-1">
@@ -288,7 +288,7 @@ const Module2Section5_1 = () => {
                     <Shield className="w-4 h-4" />
                     Insulators - High Resistivity Materials
                   </h4>
-                  <div className="space-y-2 text-purple-200 text-sm">
+                  <div className="space-y-2 text-white text-sm">
                     <div>
                       <p><strong>PVC (Polyvinyl Chloride):</strong></p>
                       <ul className="list-disc pl-4 space-y-1">
@@ -460,7 +460,7 @@ const Module2Section5_1 = () => {
 
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Worked Example: Temperature Correction</h4>
-                  <div className="text-orange-200 text-sm space-y-2">
+                  <div className="text-white text-sm space-y-2">
                     <p><strong>Scenario:</strong> 2.5mm² T&E cable in 40°C ambient, grouped with 5 other circuits</p>
                     <div className="bg-orange-600/20 p-3 rounded space-y-1">
                       <p><strong>Step 1:</strong> Base rating (Reference Method C) = 27A</p>
@@ -513,7 +513,7 @@ const Module2Section5_1 = () => {
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">Electrical Requirements</h5>
-                      <div className="space-y-2 text-purple-200 text-sm">
+                      <div className="space-y-2 text-white text-sm">
                         <p><strong>Load Analysis:</strong></p>
                         <ul className="list-disc pl-4 space-y-1">
                           <li>Maximum demand calculations</li>
@@ -532,7 +532,7 @@ const Module2Section5_1 = () => {
                     
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">Environmental Assessment</h5>
-                      <div className="space-y-2 text-purple-200 text-sm">
+                      <div className="space-y-2 text-white text-sm">
                         <p><strong>External Influences (BS 7671 Appendix 5):</strong></p>
                         <ul className="list-disc pl-4 space-y-1">
                           <li>Ambient temperature range</li>
@@ -556,7 +556,7 @@ const Module2Section5_1 = () => {
                   <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">Mechanical Protection</h5>
-                      <div className="text-purple-200 text-sm space-y-1">
+                      <div className="text-white text-sm space-y-1">
                         <p><strong>Bending Radii:</strong></p>
                         <ul className="list-disc pl-4 space-y-1">
                           <li>Single-core: 20× cable diameter</li>
@@ -574,7 +574,7 @@ const Module2Section5_1 = () => {
                     
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">Termination Quality</h5>
-                      <div className="text-purple-200 text-sm space-y-1">
+                      <div className="text-white text-sm space-y-1">
                         <p><strong>Connection Integrity:</strong></p>
                         <ul className="list-disc pl-4 space-y-1">
                           <li>Correct terminal selection</li>
@@ -593,7 +593,7 @@ const Module2Section5_1 = () => {
                     
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">Testing and Verification</h5>
-                      <div className="text-purple-200 text-sm space-y-1">
+                      <div className="text-white text-sm space-y-1">
                         <p><strong>Initial Verification Tests:</strong></p>
                         <ul className="list-disc pl-4 space-y-1">
                           <li>Continuity of protective conductors</li>
@@ -614,7 +614,7 @@ const Module2Section5_1 = () => {
 
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Case Study: Office Building Feeder Selection</h4>
-                  <div className="text-blue-200 text-sm space-y-2">
+                  <div className="text-white text-sm space-y-2">
                     <p><strong>Requirements:</strong> 63A three-phase feeder, 80m run, 35°C plant room</p>
                     <div className="bg-elec-yellow/20 p-3 rounded space-y-1">
                       <p><strong>Option 1 - Copper:</strong> 16mm² SWA, higher cost but compact</p>
@@ -645,7 +645,7 @@ const Module2Section5_1 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Cable Markings</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-blue-200">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>Check conductor material (Cu/Al) and CSA</li>
                     <li>Identify insulation type (PVC/XLPE/LSF)</li>
                     <li>Note temperature ratings and standards</li>
@@ -667,7 +667,7 @@ const Module2Section5_1 = () => {
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">Common Mistakes to Avoid</h3>
               <div className="bg-card border border-border/30 p-4 rounded-lg">
-                <ul className="list-disc pl-4 space-y-2 text-sm text-red-200">
+                <ul className="list-disc pl-4 space-y-2 text-sm text-white">
                   <li><strong>Wrong material selection:</strong> Not considering environment or application requirements</li>
                   <li><strong>Inadequate protection:</strong> Exposing cables to mechanical damage or unsuitable conditions</li>
                   <li><strong>Poor terminations:</strong> Incorrect connectors, insufficient torque, or mixed materials</li>
@@ -727,7 +727,7 @@ const Module2Section5_1 = () => {
                     <Zap className="w-4 h-4" />
                     Common Conductors
                   </h4>
-                  <ul className="space-y-1 text-blue-200 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>• <strong>Copper:</strong> Low ρ, easy termination, T&E/flex</li>
                     <li>• <strong>Aluminium:</strong> Light, cheap, needs larger CSA</li>
                     <li>• <strong>Steel:</strong> SWA armour, earthing, not live conductors</li>
@@ -740,7 +740,7 @@ const Module2Section5_1 = () => {
                     <Shield className="w-4 h-4" />
                     Common Insulators
                   </h4>
-                  <ul className="space-y-1 text-purple-200 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>• <strong>PVC:</strong> 70°C rating, T&E sheathing</li>
                     <li>• <strong>XLPE:</strong> 90°C rating, SWA insulation</li>
                     <li>• <strong>LSF/LSZH:</strong> Low smoke, fire performance</li>
@@ -766,7 +766,7 @@ const Module2Section5_1 = () => {
                     <AlertTriangle className="w-4 h-4" />
                     Safety Reminders
                   </h4>
-                  <ul className="space-y-1 text-red-200 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>• <strong>Isolation:</strong> Lock-off before conductor work</li>
                     <li>• <strong>Damage:</strong> Replace, don't tape fix insulation</li>
                     <li>• <strong>Mixed materials:</strong> Use bimetallic connectors</li>

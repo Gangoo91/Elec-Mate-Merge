@@ -284,7 +284,7 @@ const Module2Section2_2: React.FC = () => {
                 </div>
               </div>
               <div className="bg-slate-700/50 border border-slate-600 p-4 rounded-lg">
-                <p className="text-sm text-slate-200"><strong>Memory tip:</strong> V always goes at the top. I and R share the bottom. Cover what you need to find!</p>
+                <p className="text-sm text-white"><strong>Memory tip:</strong> V always goes at the top. I and R share the bottom. Cover what you need to find!</p>
               </div>
             </div>
           </div>

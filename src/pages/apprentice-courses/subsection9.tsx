@@ -173,7 +173,7 @@ const Section2_5: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -201,7 +201,7 @@ const Section2_5: React.FC = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             Slip, Trip and Manual Handling Risks
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white/80">
             Preventing the most common workplace injuries in electrical work. Manual Handling Operations Regulations 1992 and workplace safety standards.
           </p>
         </header>

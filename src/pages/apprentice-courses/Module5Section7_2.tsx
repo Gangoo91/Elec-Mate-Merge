@@ -452,12 +452,12 @@ const Module5Section7_2 = () => {
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-medium text-amber-800 dark:text-amber-200 mb-2">Poor Labelling Causes Costly Downtime</h3>
+                <h3 className="font-medium text-amber-800 dark:text-white mb-2">Poor Labelling Causes Costly Downtime</h3>
                 <p className="text-base text-white mb-3">
                   On a large industrial project, multiple electricians are working on separate circuits from the same distribution board. Some circuits are not labelled, and another team accidentally isolates the wrong breaker during testing. This causes downtime across the site, costing thousands of pounds in lost productivity.
                 </p>
                 <div className="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-lg mb-3">
-                  <p className="font-medium text-amber-800 dark:text-amber-200">What went wrong:</p>
+                  <p className="font-medium text-amber-800 dark:text-white">What went wrong:</p>
                   <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                     <li>Incomplete circuit labelling at distribution board</li>
                     <li>No circuit schedule available for reference</li>
@@ -466,7 +466,7 @@ const Module5Section7_2 = () => {
                   </ul>
                 </div>
                 <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg">
-                  <p className="font-medium text-green-800 dark:text-green-200">Prevention measures:</p>
+                  <p className="font-medium text-green-800 dark:text-white">Prevention measures:</p>
                   <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                     <li>Complete circuit labelling before energisation</li>
                     <li>Provide detailed circuit schedules at each distribution board</li>
@@ -475,7 +475,7 @@ const Module5Section7_2 = () => {
                   </ul>
                 </div>
                 <div className="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-lg mt-3">
-                  <p className="font-medium text-amber-800 dark:text-amber-200">Lesson:</p>
+                  <p className="font-medium text-amber-800 dark:text-white">Lesson:</p>
                   <p className="text-base text-white">
                     Clear, consistent labelling would have prevented confusion and avoided costly mistakes. The few minutes spent on proper labelling saves hours of downtime and potential safety hazards.
                   </p>
@@ -489,14 +489,14 @@ const Module5Section7_2 = () => {
             <h3 className="font-medium text-white">Common Labelling Mistakes</h3>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800">
-                <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">Faded Labels</h4>
+                <h4 className="font-medium text-red-800 dark:text-white mb-2">Faded Labels</h4>
                 <p className="text-xs sm:text-sm text-white mb-2">
                   Paper labels in a plant room fade due to heat and humidity. During an emergency, maintenance staff cannot identify the correct circuit, leading to extended downtime and safety risks.
                 </p>
                 <p className="text-xs text-white font-medium">Solution: Use heat-resistant, durable labels</p>
               </div>
               <div className="rounded-lg p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800">
-                <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">Inconsistent Numbering</h4>
+                <h4 className="font-medium text-red-800 dark:text-white mb-2">Inconsistent Numbering</h4>
                 <p className="text-xs sm:text-sm text-white mb-2">
                   Different electricians use different numbering systems. When fault-finding, circuits cannot be matched between distribution boards and the electrical drawings, causing confusion and delays.
                 </p>
@@ -511,7 +511,7 @@ const Module5Section7_2 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
           <div className="grid md:grid-cols-2 gap-4 mb-6">
             <div className="rounded-lg p-4 bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800">
-              <h3 className="font-medium text-green-800 dark:text-green-200 mb-3 flex items-center gap-2">
+              <h3 className="font-medium text-green-800 dark:text-white mb-3 flex items-center gap-2">
                 <CheckCircle className="w-4 h-4" />
                 Best Practices
               </h3>
@@ -527,7 +527,7 @@ const Module5Section7_2 = () => {
               </ul>
             </div>
             <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800">
-              <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
+              <h3 className="font-medium text-blue-800 dark:text-white mb-3 flex items-center gap-2">
                 <Target className="w-4 h-4" />
                 Key Actions
               </h3>

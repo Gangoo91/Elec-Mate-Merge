@@ -15,7 +15,7 @@ const Level2Module8Section2Section3 = () => {
         <div className="flex items-center gap-3 mb-4 sm:mb-6">
           <Link 
             to=".." 
-            className="inline-flex items-center text-muted-foreground hover:text-elec-yellow transition-colors text-sm sm:text-base touch-target"
+            className="inline-flex items-center text-white/80 hover:text-elec-yellow transition-colors text-sm sm:text-base touch-target"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             <span className="hidden sm:inline">Back to How to Pass Exams</span>
@@ -31,7 +31,7 @@ const Level2Module8Section2Section3 = () => {
           <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 sm:mb-3 leading-tight">
             Exam Day Preparation
           </h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed text-sm sm:text-base px-2">
+          <p className="text-white/80 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base px-2">
             Complete preparation guide for your Level 2 electrical installation examination day. 
             From equipment checklists to mental preparation strategies - everything you need for success.
           </p>
@@ -41,15 +41,15 @@ const Level2Module8Section2Section3 = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-3 sm:p-4 text-center">
             <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">24 hours</div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Preparation window</div>
+            <div className="text-xs sm:text-sm text-white/80">Preparation window</div>
           </div>
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-3 sm:p-4 text-center">
             <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">30 mins</div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Early arrival time</div>
+            <div className="text-xs sm:text-sm text-white/80">Early arrival time</div>
           </div>
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-3 sm:p-4 text-center">
             <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">95%</div>
-            <div className="text-xs sm:text-sm text-muted-foreground">Success with good prep</div>
+            <div className="text-xs sm:text-sm text-white/80">Success with good prep</div>
           </div>
         </div>
 
@@ -72,7 +72,7 @@ const Level2Module8Section2Section3 = () => {
                   <div className="space-y-3">
                     <div className="p-3 sm:p-4 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
                       <div className="font-medium text-elec-yellow text-sm sm:text-base">Calculation Tools (CRITICAL)</div>
-                      <div className="text-sm sm:text-sm text-muted-foreground space-y-2 mt-2">
+                      <div className="text-sm sm:text-sm text-white/80 space-y-2 mt-2">
                         <div className="flex items-start gap-2 sm:gap-3">
                           <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
                           <span className="text-sm leading-relaxed">Scientific calculator (non-programmable) - Bring TWO identical units</span>
@@ -93,7 +93,7 @@ const Level2Module8Section2Section3 = () => {
                     </div>
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
                       <div className="font-medium text-elec-yellow text-sm">BS7671 Wiring Regulations</div>
-                      <div className="text-xs text-muted-foreground space-y-1 mt-2">
+                      <div className="text-xs text-white/80 space-y-1 mt-2">
                         <div className="flex items-center gap-2">
                           <CheckCircle className="h-3 w-3 text-green-400" />
                           <span>Current edition (18th Edition) in good condition</span>
@@ -114,7 +114,7 @@ const Level2Module8Section2Section3 = () => {
                     </div>
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-purple-500">
                       <div className="font-medium text-elec-yellow text-sm">Writing & Identification</div>
-                      <div className="text-xs text-muted-foreground space-y-1 mt-2">
+                      <div className="text-xs text-white/80 space-y-1 mt-2">
                         <div className="flex items-center gap-2">
                           <CheckCircle className="h-3 w-3 text-green-400" />
                           <span>Multiple black/blue pens (minimum 3)</span>
@@ -170,7 +170,7 @@ const Level2Module8Section2Section3 = () => {
                   
                   <div className="mt-4 p-3 bg-card rounded-lg border border-green-500/30">
                     <h5 className="font-semibold text-green-400 mb-2">24-Hour Countdown Checklist</h5>
-                    <div className="text-xs text-muted-foreground space-y-1">
+                    <div className="text-xs text-white/80 space-y-1">
                       <div>✓ Confirm exam location and arrival time</div>
                       <div>✓ Plan route and transport method</div>
                       <div>✓ Pack equipment bag and check everything twice</div>
@@ -186,10 +186,10 @@ const Level2Module8Section2Section3 = () => {
 
               <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border border-elec-yellow/30">
                 <h5 className="font-semibold text-elec-yellow mb-2">Pro Tip: The Night Before Protocol</h5>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-white/80 mb-3">
                   Avoid last-minute cramming! Instead, focus on confidence-building activities and practical preparation.
                 </p>
-                <div className="text-xs text-muted-foreground space-y-1">
+                <div className="text-xs text-white/80 space-y-1">
                   <div><strong>6:00 PM:</strong> Light revision of key formulas and regulation numbers only</div>
                   <div><strong>7:00 PM:</strong> Equipment check and bag packing</div>
                   <div><strong>8:00 PM:</strong> Relaxing dinner with family/friends</div>
@@ -221,7 +221,7 @@ const Level2Module8Section2Section3 = () => {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                           <div className="mb-4 sm:mb-0">
                             <h6 className="text-sm font-medium text-elec-yellow mb-2">PHYSICAL PREPARATION:</h6>
-                            <div className="space-y-1.5 text-sm text-muted-foreground">
+                            <div className="space-y-1.5 text-sm text-white/80">
                               <div>• Wake up naturally - avoid rushing</div>
                               <div>• Shower and dress in comfortable layers</div>
                               <div>• Light breakfast: protein + complex carbs</div>
@@ -231,7 +231,7 @@ const Level2Module8Section2Section3 = () => {
                           </div>
                           <div>
                             <h6 className="text-sm font-medium text-elec-yellow mb-2">MENTAL PREPARATION:</h6>
-                            <div className="space-y-1.5 text-sm text-muted-foreground">
+                            <div className="space-y-1.5 text-sm text-white/80">
                               <div>• 5-minute breathing exercise</div>
                               <div>• Quick review of key formulas only</div>
                               <div>• Positive self-talk and affirmations</div>
@@ -251,7 +251,7 @@ const Level2Module8Section2Section3 = () => {
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">TRAVEL CHECKLIST:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Allow 2x normal travel time</div>
                             <div>• Alternative route planned</div>
                             <div>• Emergency contact numbers saved</div>
@@ -261,7 +261,7 @@ const Level2Module8Section2Section3 = () => {
                         </div>
                         <div>
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">FINAL BAG CHECK:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Photo ID and exam documentation</div>
                             <div>• Calculators + spare batteries</div>
                             <div>• BS7671 + index tabs</div>
@@ -277,7 +277,7 @@ const Level2Module8Section2Section3 = () => {
                     <div className="absolute top-3 left-3 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center font-bold text-sm">9AM</div>
                     <div className="ml-12">
                       <h5 className="font-medium text-green-400 text-lg mb-2">Venue Arrival & Setup (30 mins early)</h5>
-                      <div className="text-sm text-muted-foreground mb-3">
+                      <div className="text-sm text-white/80 mb-3">
                         Use this time to acclimatise to the environment and complete all administrative requirements.
                       </div>
                       <div className="space-y-2">
@@ -298,10 +298,10 @@ const Level2Module8Section2Section3 = () => {
 
               <div className="bg-gradient-to-r from-purple-500/10 to-transparent p-4 rounded-lg border border-border/30">
                 <h5 className="font-semibold text-elec-yellow mb-2">Venue Familiarisation Checklist</h5>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-white/80 mb-3">
                   Getting comfortable with your environment reduces anxiety and improves focus.
                 </p>
-                <div className="grid md:grid-cols-2 gap-3 text-xs text-muted-foreground">
+                <div className="grid md:grid-cols-2 gap-3 text-xs text-white/80">
                   <div>
                     <div className="space-y-1">
                       <div>✓ Locate toilets and water fountains</div>
@@ -341,7 +341,7 @@ const Level2Module8Section2Section3 = () => {
                   <div className="space-y-3">
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
                       <div className="font-medium text-elec-yellow text-sm">Temperature Management</div>
-                      <div className="text-xs text-muted-foreground space-y-1 mt-2">
+                      <div className="text-xs text-white/80 space-y-1 mt-2">
                         <div>• Layer clothing for easy adjustment</div>
                         <div>• Request seating change if too hot/cold</div>
                         <div>• Use deep breathing to regulate body temperature</div>
@@ -350,7 +350,7 @@ const Level2Module8Section2Section3 = () => {
                     </div>
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-green-500">
                       <div className="font-medium text-green-400 text-sm">Lighting & Vision Comfort</div>
-                      <div className="text-xs text-muted-foreground space-y-1 mt-2">
+                      <div className="text-xs text-white/80 space-y-1 mt-2">
                         <div>• Position to minimise glare on screen/paper</div>
                         <div>• Blink regularly to prevent eye strain</div>
                         <div>• Look away from work every 20 minutes</div>
@@ -359,7 +359,7 @@ const Level2Module8Section2Section3 = () => {
                     </div>
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-purple-500">
                       <div className="font-medium text-elec-yellow text-sm">Noise & Distraction Control</div>
-                      <div className="text-xs text-muted-foreground space-y-1 mt-2">
+                      <div className="text-xs text-white/80 space-y-1 mt-2">
                         <div>• Focus on your own workspace only</div>
                         <div>• Use controlled breathing to filter distractions</div>
                         <div>• Don't be concerned by others' pace</div>
@@ -404,7 +404,7 @@ const Level2Module8Section2Section3 = () => {
                   <div className="mt-4 space-y-3">
                     <div className="p-3 bg-card rounded-lg border border-border/30">
                       <h5 className="font-semibold text-elec-yellow mb-2">Panic Attack Protocol</h5>
-                      <div className="text-xs text-muted-foreground space-y-1">
+                      <div className="text-xs text-white/80 space-y-1">
                         <div><strong>Step 1:</strong> Stop what you're doing, don't try to continue</div>
                         <div><strong>Step 2:</strong> Focus on slow, deep breathing</div>
                         <div><strong>Step 3:</strong> Ground yourself: feel chair, desk, floor</div>
@@ -416,7 +416,7 @@ const Level2Module8Section2Section3 = () => {
                     
                     <div className="p-3 bg-card rounded-lg border border-border/30">
                       <h5 className="font-semibold text-elec-yellow mb-2">Mid-Exam Energy Management</h5>
-                      <div className="text-xs text-muted-foreground space-y-1">
+                      <div className="text-xs text-white/80 space-y-1">
                         <div>• Stand and stretch during natural breaks</div>
                         <div>• Drink water in small sips regularly</div>
                         <div>• Eat glucose tablets if allowed (energy boost)</div>
@@ -430,10 +430,10 @@ const Level2Module8Section2Section3 = () => {
 
               <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border border-elec-yellow/30">
                 <h5 className="font-semibold text-elec-yellow mb-2">Pro Tip: The 90-Minute Reset Strategy</h5>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-white/80 mb-3">
                   Human concentration naturally cycles every 90 minutes. Use this knowledge to maintain peak performance.
                 </p>
-                <div className="text-xs text-muted-foreground space-y-1">
+                <div className="text-xs text-white/80 space-y-1">
                   <div><strong>Minutes 0-30:</strong> Peak alertness - tackle difficult questions</div>
                   <div><strong>Minutes 30-60:</strong> Good focus - continue with moderate difficulty</div>
                   <div><strong>Minutes 60-90:</strong> Declining focus - easier questions and review</div>
@@ -462,7 +462,7 @@ const Level2Module8Section2Section3 = () => {
                   <div className="space-y-3">
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
                       <div className="font-medium text-elec-yellow text-sm">BS7671 Optimisation Techniques</div>
-                      <div className="text-xs text-muted-foreground space-y-1 mt-2">
+                      <div className="text-xs text-white/80 space-y-1 mt-2">
                         <div>• Tab system: Use different colours for each Part (1-7)</div>
                         <div>• Index bookmarks for Appendices 1-15</div>
                         <div>• Sticky notes for most-referenced tables</div>
@@ -473,7 +473,7 @@ const Level2Module8Section2Section3 = () => {
                     </div>
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-green-500">
                       <div className="font-medium text-green-400 text-sm">Quick Reference Sheets (if allowed)</div>
-                      <div className="text-xs text-muted-foreground space-y-1 mt-2">
+                      <div className="text-xs text-white/80 space-y-1 mt-2">
                         <div>• Ohm's law triangle and power formulas</div>
                         <div>• Common cable sizes and current ratings</div>
                         <div>• Standard protection device ratings</div>
@@ -484,7 +484,7 @@ const Level2Module8Section2Section3 = () => {
                     </div>
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-purple-500">
                       <div className="font-medium text-elec-yellow text-sm">Calculator Programming (if permitted)</div>
-                      <div className="text-xs text-muted-foreground space-y-1 mt-2">
+                      <div className="text-xs text-white/80 space-y-1 mt-2">
                         <div>• Store frequently used constants (√3 = 1.732)</div>
                         <div>• Program common formulas if calculator allows</div>
                         <div>• Set up memory banks for multi-step calculations</div>
@@ -529,7 +529,7 @@ const Level2Module8Section2Section3 = () => {
                   
                   <div className="mt-4 p-3 bg-card rounded-lg border border-border/30">
                     <h5 className="font-semibold text-elec-yellow mb-2">Week Before Exam Schedule</h5>
-                    <div className="text-xs text-muted-foreground space-y-1">
+                    <div className="text-xs text-white/80 space-y-1">
                       <div><strong>7 days:</strong> Final comprehensive review - identify weak areas</div>
                       <div><strong>6 days:</strong> Focus on identified weak topics only</div>
                       <div><strong>5 days:</strong> Practice exam under timed conditions</div>
@@ -542,7 +542,7 @@ const Level2Module8Section2Section3 = () => {
                   
                   <div className="mt-4 p-3 bg-card rounded-lg border border-border/30">
                     <h5 className="font-semibold text-elec-yellow mb-2">Peak Performance Nutrition</h5>
-                    <div className="text-xs text-muted-foreground space-y-1">
+                    <div className="text-xs text-white/80 space-y-1">
                       <div><strong>Breakfast:</strong> Porridge with berries (slow-release energy)</div>
                       <div><strong>Pre-exam snack:</strong> Banana or handful of nuts</div>
                       <div><strong>Hydration:</strong> 500ml water 2 hours before exam</div>
@@ -555,11 +555,11 @@ const Level2Module8Section2Section3 = () => {
 
               <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border border-elec-yellow/30">
                 <h5 className="font-semibold text-elec-yellow mb-2">Pro Tip: The Confidence Anchor Technique</h5>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-white/80 mb-3">
                   Create a physical gesture or mental phrase that you associate with successful practice sessions. 
                   Use this "anchor" during the exam to trigger confident, focused thinking.
                 </p>
-                <div className="text-xs text-muted-foreground space-y-1">
+                <div className="text-xs text-white/80 space-y-1">
                   <div><strong>Physical anchor:</strong> Touch your watch or tap your pen three times</div>
                   <div><strong>Mental anchor:</strong> "I know this material and I am prepared"</div>
                   <div><strong>Breathing anchor:</strong> Three deep breaths with specific count pattern</div>
@@ -588,7 +588,7 @@ const Level2Module8Section2Section3 = () => {
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">ROUTE PLANNING:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Drive/walk the route at same time as exam day</div>
                             <div>• Identify alternative routes for traffic delays</div>
                             <div>• Locate nearest car parks and costs</div>
@@ -598,7 +598,7 @@ const Level2Module8Section2Section3 = () => {
                         </div>
                         <div>
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">FACILITY ASSESSMENT:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Main entrance and registration procedures</div>
                             <div>• Toilet locations and queue patterns</div>
                             <div>• Food/drink facilities nearby</div>
@@ -617,7 +617,7 @@ const Level2Module8Section2Section3 = () => {
                       <div className="space-y-3">
                         <div className="p-3 bg-green-500/20 rounded-lg">
                           <h6 className="font-medium text-green-400 text-sm mb-2">Seating Strategy</h6>
-                          <div className="text-xs text-muted-foreground space-y-1">
+                          <div className="text-xs text-white/80 space-y-1">
                             <div>• Request seat away from high-traffic areas</div>
                             <div>• Avoid seats near doors or toilets (distractions)</div>
                             <div>• Prefer seats with wall behind (psychological security)</div>
@@ -627,7 +627,7 @@ const Level2Module8Section2Section3 = () => {
                         </div>
                         <div className="p-3 bg-green-500/20 rounded-lg">
                           <h6 className="font-medium text-green-400 text-sm mb-2">Climate Control Assessment</h6>
-                          <div className="text-xs text-muted-foreground space-y-1">
+                          <div className="text-xs text-white/80 space-y-1">
                             <div>• Note air conditioning/heating effectiveness</div>
                             <div>• Identify seats near/away from vents</div>
                             <div>• Check window positions for glare issues</div>
@@ -643,10 +643,10 @@ const Level2Module8Section2Section3 = () => {
 
               <div className="bg-gradient-to-r from-purple-500/10 to-transparent p-4 rounded-lg border border-border/30">
                 <h5 className="font-semibold text-elec-yellow mb-2">Environmental Adaptation Strategies</h5>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-white/80 mb-3">
                   Every exam environment presents unique challenges. Prepare for common scenarios:
                 </p>
-                <div className="grid md:grid-cols-2 gap-3 text-xs text-muted-foreground">
+                <div className="grid md:grid-cols-2 gap-3 text-xs text-white/80">
                   <div>
                     <h6 className="font-medium text-elec-yellow mb-1">COMMON CHALLENGES:</h6>
                     <div className="space-y-1">
@@ -691,7 +691,7 @@ const Level2Module8Section2Section3 = () => {
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">CALCULATOR PROBLEMS:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Immediately switch to backup calculator</div>
                             <div>• Signal invigilator for replacement if needed</div>
                             <div>• Continue with mental calculation if possible</div>
@@ -701,7 +701,7 @@ const Level2Module8Section2Section3 = () => {
                         </div>
                         <div>
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">COMPUTER/SYSTEM ISSUES:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Raise hand immediately - don't try to fix</div>
                             <div>• Note exact time and question number</div>
                             <div>• Continue on paper if possible</div>
@@ -723,7 +723,7 @@ const Level2Module8Section2Section3 = () => {
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">SUDDEN ILLNESS:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Signal invigilator immediately</div>
                             <div>• Don't leave seat without permission</div>
                             <div>• Medical conditions are grounds for special consideration</div>
@@ -733,7 +733,7 @@ const Level2Module8Section2Section3 = () => {
                         </div>
                         <div>
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">ANXIETY/PANIC ATTACKS:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Use breathing techniques learned</div>
                             <div>• Signal for assistance if severe</div>
                             <div>• Fresh air break may be permitted</div>
@@ -757,13 +757,13 @@ const Level2Module8Section2Section3 = () => {
                     <div className="absolute top-3 left-3 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center font-bold text-sm">T</div>
                     <div className="ml-12">
                       <h5 className="font-medium text-elec-yellow text-lg mb-2">Travel & Timing Emergencies</h5>
-                      <div className="text-sm text-muted-foreground mb-3">
+                      <div className="text-sm text-white/80 mb-3">
                         Transport delays and unexpected events can happen. Preparation minimises impact.
                       </div>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">LATE ARRIVAL:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Call exam centre immediately</div>
                             <div>• Explain reason for delay</div>
                             <div>• May be admitted up to 30 minutes late</div>
@@ -773,7 +773,7 @@ const Level2Module8Section2Section3 = () => {
                         </div>
                         <div>
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">TRANSPORT FAILURE:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Use pre-planned alternative route</div>
                             <div>• Call taxi service as backup</div>
                             <div>• Contact centre to explain situation</div>
@@ -792,7 +792,7 @@ const Level2Module8Section2Section3 = () => {
                       <div className="space-y-3">
                         <div className="p-3 bg-purple-500/20 rounded-lg">
                           <h6 className="font-medium text-elec-yellow text-sm mb-2">Essential Contact Numbers</h6>
-                          <div className="text-xs text-muted-foreground space-y-1">
+                          <div className="text-xs text-white/80 space-y-1">
                             <div>• Exam centre main number</div>
                             <div>• Emergency transport services</div>
                             <div>• Family/emergency contact</div>
@@ -802,7 +802,7 @@ const Level2Module8Section2Section3 = () => {
                         </div>
                         <div className="p-3 bg-purple-500/20 rounded-lg">
                           <h6 className="font-medium text-elec-yellow text-sm mb-2">Communication Protocol</h6>
-                          <div className="text-xs text-muted-foreground space-y-1">
+                          <div className="text-xs text-white/80 space-y-1">
                             <div>• Always speak to invigilator first</div>
                             <div>• Be clear and specific about the problem</div>
                             <div>• Ask for written confirmation of any decisions</div>
@@ -818,10 +818,10 @@ const Level2Module8Section2Section3 = () => {
 
               <div className="bg-gradient-to-r from-green-500/10 to-transparent p-4 rounded-lg border border-green-500/30">
                 <h5 className="font-semibold text-green-400 mb-2">Recovery Strategies: When Things Go Wrong</h5>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-white/80 mb-3">
                   Even with the best preparation, unexpected situations can arise. These strategies help you recover and succeed.
                 </p>
-                <div className="grid md:grid-cols-2 gap-3 text-xs text-muted-foreground">
+                <div className="grid md:grid-cols-2 gap-3 text-xs text-white/80">
                   <div>
                     <h6 className="font-medium text-green-400 mb-1">MENTAL RECOVERY:</h6>
                     <div className="space-y-1">
@@ -863,7 +863,7 @@ const Level2Module8Section2Section3 = () => {
                   <div className="space-y-3">
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-green-500">
                       <div className="font-medium text-green-400 text-sm">First 30 Minutes After Submission</div>
-                      <div className="text-xs text-muted-foreground space-y-1 mt-2">
+                      <div className="text-xs text-white/80 space-y-1 mt-2">
                         <div>• Don't discuss answers with other candidates</div>
                         <div>• Avoid immediate post-mortem analysis</div>
                         <div>• Focus on positive aspects of performance</div>
@@ -874,7 +874,7 @@ const Level2Module8Section2Section3 = () => {
                     </div>
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
                       <div className="font-medium text-elec-yellow text-sm">Administrative Completion</div>
-                      <div className="text-xs text-muted-foreground space-y-1 mt-2">
+                      <div className="text-xs text-white/80 space-y-1 mt-2">
                         <div>• Ensure all required documentation submitted</div>
                         <div>• Confirm contact details for results notification</div>
                         <div>• Keep copy of exam booking reference</div>
@@ -915,7 +915,7 @@ const Level2Module8Section2Section3 = () => {
                   
                   <div className="mt-4 p-3 bg-card rounded-lg border border-green-500/30">
                     <h5 className="font-semibold text-green-400 mb-2">Results Waiting Strategy</h5>
-                    <div className="text-xs text-muted-foreground space-y-1">
+                    <div className="text-xs text-white/80 space-y-1">
                       <div>• Understand typical results timescales (2-4 weeks)</div>
                       <div>• Set up email notifications if available</div>
                       <div>• Plan constructive activities during waiting period</div>
@@ -928,10 +928,10 @@ const Level2Module8Section2Section3 = () => {
 
               <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border border-elec-yellow/30">
                 <h5 className="font-semibold text-elec-yellow mb-2">Pro Tip: Learning from the Experience</h5>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-white/80 mb-3">
                   Regardless of results, every exam is a learning opportunity. Document insights while they're fresh.
                 </p>
-                <div className="text-xs text-muted-foreground space-y-1">
+                <div className="text-xs text-white/80 space-y-1">
                   <div><strong>What worked well:</strong> Note successful strategies for future use</div>
                   <div><strong>What to improve:</strong> Identify areas for development without self-criticism</div>
                   <div><strong>Unexpected challenges:</strong> Record solutions for similar future situations</div>

@@ -354,7 +354,7 @@ const Module5Section5_3 = () => {
 
                 <div className="bg-orange-50 dark:bg-orange-950/30 p-4 rounded-lg border border-orange-200 dark:border-orange-800">
                   <h4 className="font-semibold text-orange-900 dark:text-orange-100 mb-2">Real-World Scheduling Example:</h4>
-                  <p className="text-orange-800 dark:text-orange-200 text-sm">
+                  <p className="text-orange-800 dark:text-white text-sm">
                     On a typical office fit-out, electricians install cable containment in weeks 3-4, plumbers install heating pipes in weeks 4-5, 
                     and plasterers start in week 7. This overlap requires daily coordination to prevent the electrical trunking blocking 
                     access to plumbing isolators or pipe joints.
@@ -390,7 +390,7 @@ const Module5Section5_3 = () => {
                   <AlertTriangle className="w-4 h-4" />
                   Critical Communication Requirements
                 </h4>
-                <div className="space-y-2 text-red-800 dark:text-red-200">
+                <div className="space-y-2 text-red-800 dark:text-white">
                   <p>• Always inform other trades before starting work that affects them</p>
                   <p>• Mark out electrical positions clearly using spray markers or tape</p>
                   <p>• Check site programmes to understand other trades' schedules</p>
@@ -501,7 +501,7 @@ const Module5Section5_3 = () => {
 
               <div className="bg-amber-50 dark:bg-amber-950/30 p-4 rounded-lg border border-amber-200 dark:border-amber-800">
                 <h4 className="font-semibold text-amber-900 dark:text-amber-100 mb-2">Professional Benefits:</h4>
-                <ul className="list-disc pl-6 space-y-1 text-amber-800 dark:text-amber-200">
+                <ul className="list-disc pl-6 space-y-1 text-amber-800 dark:text-white">
                   <li>Builds positive working relationships for future projects</li>
                   <li>Creates collaborative problem-solving opportunities</li>
                   <li>Reduces site conflicts and tension</li>
@@ -535,7 +535,7 @@ const Module5Section5_3 = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3 text-amber-800 dark:text-amber-200">
+            <div className="space-y-3 text-amber-800 dark:text-white">
               <p className="font-medium">The Cable Tray Clash Crisis</p>
               <p>
                 On a new office building project, an apprentice electrician installed a large cable tray across 
@@ -591,7 +591,7 @@ const Module5Section5_3 = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid md:grid-cols-2 gap-4 text-green-800 dark:text-green-200">
+            <div className="grid md:grid-cols-2 gap-4 text-green-800 dark:text-white">
               <div className="space-y-2">
                 <p>✓ Know the construction sequence and your place in it</p>
                 <p>✓ Mark electrical positions clearly before other trades start</p>

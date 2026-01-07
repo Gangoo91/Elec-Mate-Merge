@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
@@ -10,10 +9,9 @@ const corsHeaders = {
 };
 
 interface WelcomeEmailRequest {
-  userId: string;
+  userId?: string;
   email: string;
   fullName: string;
-  confirmationUrl?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -25,11 +23,6 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const supabaseAdmin = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
-    );
-
     // Parse request - can come from webhook or direct call
     let payload: WelcomeEmailRequest;
 
@@ -48,7 +41,7 @@ const handler = async (req: Request): Promise<Response> => {
       payload = body;
     }
 
-    const { userId, email, fullName } = payload;
+    const { email, fullName } = payload;
 
     if (!email) {
       throw new Error('Email is required');
@@ -56,33 +49,17 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`📧 Sending welcome email to: ${email}`);
 
-    // Generate confirmation link using Supabase Admin API
-    const { data: linkData, error: linkError } = await supabaseAdmin.auth.admin.generateLink({
-      type: 'signup',
-      email: email,
-      options: {
-        redirectTo: `${Deno.env.get('SITE_URL') || 'https://elec-mate.com'}/auth/signin?confirmed=true`,
-      }
-    });
+    const siteUrl = Deno.env.get('SITE_URL') || 'https://elec-mate.com';
+    const loginUrl = `${siteUrl}/auth/signin`;
 
-    let confirmationUrl = linkData?.properties?.action_link;
-
-    if (linkError) {
-      console.warn('Could not generate confirmation link:', linkError.message);
-      // Fallback to sign-in page
-      confirmationUrl = `${Deno.env.get('SITE_URL') || 'https://elec-mate.com'}/auth/signin`;
-    }
-
-    console.log('Confirmation URL generated');
-
-    // Generate professional HTML email
-    const emailHtml = generateWelcomeEmailHTML(fullName, confirmationUrl || '');
+    // Generate professional HTML email (no confirmation needed - instant access)
+    const emailHtml = generateWelcomeEmailHTML(fullName, loginUrl);
 
     // Send email via Resend
     const { data: emailData, error: emailError } = await resend.emails.send({
       from: 'Elec-Mate <founder@elec-mate.com>',
       to: [email],
-      subject: 'Welcome to Elec-Mate - Please Confirm Your Email',
+      subject: 'Welcome to Elec-Mate! Your 7-Day Trial is Ready',
       html: emailHtml,
     });
 
@@ -112,7 +89,7 @@ const handler = async (req: Request): Promise<Response> => {
   }
 };
 
-function generateWelcomeEmailHTML(fullName: string, confirmationUrl: string): string {
+function generateWelcomeEmailHTML(fullName: string, loginUrl: string): string {
   const firstName = fullName.split(' ')[0] || 'there';
 
   return `
@@ -153,7 +130,7 @@ function generateWelcomeEmailHTML(fullName: string, confirmationUrl: string): st
             </td>
           </tr>
 
-          <!-- Confirmation Section -->
+          <!-- Welcome Section -->
           <tr>
             <td style="padding: 0 40px 32px;">
               <div style="background-color: #262626; border-radius: 12px; padding: 24px; border: 1px solid #404040;">
@@ -161,24 +138,19 @@ function generateWelcomeEmailHTML(fullName: string, confirmationUrl: string): st
                   Hi ${firstName},
                 </p>
                 <p style="margin: 0 0 20px; font-size: 15px; color: #a3a3a3; line-height: 1.6;">
-                  Thanks for signing up! Please confirm your email address to get started with your <strong style="color: #22c55e;">7-day free trial</strong>.
+                  Your account is ready! You now have <strong style="color: #22c55e;">7 days of full access</strong> to explore everything Elec-Mate has to offer.
                 </p>
 
-                <!-- Confirm Button -->
+                <!-- Get Started Button -->
                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                   <tr>
                     <td style="text-align: center;">
-                      <a href="${confirmationUrl}" style="display: inline-block; padding: 14px 32px; background-color: #fbbf24; color: #0a0a0a; text-decoration: none; font-size: 15px; font-weight: 600; border-radius: 8px; transition: background-color 0.2s;">
-                        Confirm Email Address
+                      <a href="${loginUrl}" style="display: inline-block; padding: 14px 32px; background-color: #fbbf24; color: #0a0a0a; text-decoration: none; font-size: 15px; font-weight: 600; border-radius: 8px;">
+                        Get Started
                       </a>
                     </td>
                   </tr>
                 </table>
-
-                <p style="margin: 20px 0 0; font-size: 12px; color: #737373; text-align: center;">
-                  Button not working? Copy this link:<br>
-                  <a href="${confirmationUrl}" style="color: #fbbf24; word-break: break-all;">${confirmationUrl}</a>
-                </p>
               </div>
             </td>
           </tr>

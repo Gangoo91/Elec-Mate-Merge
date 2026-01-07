@@ -185,7 +185,7 @@ const Section5_4 = () => {
       {/* Top header bar */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 5
@@ -209,7 +209,7 @@ const Section5_4 = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             Lockout/Tagout and Permit-to-Work Systems
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white/80">
             Master formal safety systems for electrical isolation, including LOTO procedures and permit-to-work systems.
           </p>
         </header>
@@ -450,9 +450,9 @@ const Section5_4 = () => {
               <details key={index} className="group border border-border/20 rounded-lg">
                 <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors">
                   <span className="font-medium text-foreground">{faq.question}</span>
-                  <HelpCircle className="w-5 h-5 text-muted-foreground group-open:rotate-180 transition-transform" />
+                  <HelpCircle className="w-5 h-5 text-white/80 group-open:rotate-180 transition-transform" />
                 </summary>
-                <div className="px-4 pb-4 text-muted-foreground border-t border-border/20 pt-4">
+                <div className="px-4 pb-4 text-white/80 border-t border-border/20 pt-4">
                   {faq.answer}
                 </div>
               </details>

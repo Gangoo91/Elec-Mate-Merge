@@ -1,300 +1,235 @@
 import { useMemo, useState } from "react";
-import { useParams, Link, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Wrench, ArrowLeft, Filter, RefreshCw, Loader2, Search, Scale, TrendingUp, Calculator, AlertTriangle, Brain, ChevronDown } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-
-import { useIsMobile } from "@/hooks/use-mobile";
-import ToolCard from "@/components/electrician-tools/ToolCard";
-import AIEnhancedToolPriceComparison from "@/components/electrician-tools/AIEnhancedToolPriceComparison";
-import BulkToolPricingCalculator from "@/components/electrician-tools/BulkToolPricingCalculator";
-import ToolPriceHistoryAlerts from "@/components/electrician-tools/ToolPriceHistoryAlerts";
-import { ToolAIInsights } from "./ToolAIInsights";
 
 import { useToolsData, type ToolItem } from "@/hooks/useToolsData";
 
-// New enhanced components
-import DealsOfTheDayBanner from "./DealsOfTheDayBanner";
-import TopDiscountsStrip from "./TopDiscountsStrip";
-import SmartSearchBar from "./SmartSearchBar";
-import ProductFilters, { FilterState, ProductFiltersContent } from "./ProductFilters";
-import MoreToolsDropdown from "./MoreToolsDropdown";
-import EnhancedProductGrid from "./EnhancedProductGrid";
+// New premium components
+import PremiumToolPageHeader from "./PremiumToolPageHeader";
+import SlideOutFilters, { type FilterState } from "./SlideOutFilters";
 import CategoryToolsCarousel from "./CategoryToolsCarousel";
-
-// Hand Tools specific components
-import ToolComparison from "./ToolComparison";
+import EnhancedProductGrid from "./EnhancedProductGrid";
+import InlineCompareSection from "./InlineCompareSection";
+import InlineAIInsightsSection from "./InlineAIInsightsSection";
 import ProfessionalTips from "./ProfessionalTips";
 
-import QuickToolFinder from "./QuickToolFinder";
-
+// Category metadata
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
   "test-equipment": {
     title: "Test Equipment",
-    description: "Multimeters, socket testers, insulation testers and PAT equipment"
+    description: "Multimeters, socket testers, insulation testers and PAT equipment",
   },
   "safety-tools": {
     title: "Safety Tools",
-    description: "PPE, safety equipment and protective devices"
+    description: "PPE, safety equipment and protective devices",
   },
   "power-tools": {
     title: "Power Tools",
-    description: "Drills, saws, grinders and cordless tool systems"
+    description: "Drills, saws, grinders and cordless tool systems",
   },
   "hand-tools": {
     title: "Hand Tools",
-    description: "Screwdrivers, pliers, strippers and manual tools"
+    description: "Screwdrivers, pliers, strippers and manual tools",
   },
   "installation-tools": {
     title: "Installation Tools",
-    description: "Cable management, conduit, trunking and installation accessories"
+    description: "Cable management, conduit, trunking and installation accessories",
   },
   "cable-wiring": {
     title: "Cable & Wiring",
-    description: "Cables, wires, cable rods and wiring accessories"
+    description: "Cables, wires, cable rods and wiring accessories",
   },
   "electrical-components": {
     title: "Electrical Components",
-    description: "Switches, sockets, outlets and electrical fittings"
+    description: "Switches, sockets, outlets and electrical fittings",
   },
-  "lighting": {
+  lighting: {
     title: "Lighting",
-    description: "LED lights, fittings, downlights and lighting accessories"
+    description: "LED lights, fittings, downlights and lighting accessories",
   },
   "access-tools": {
     title: "Access Tools & Equipment",
-    description: "Ladders, steps, access platforms and safety equipment"
+    description: "Ladders, steps, access platforms and safety equipment",
   },
   "tool-storage": {
     title: "Tool Storage",
-    description: "Tool bags, cases, vans racking and storage solutions"
+    description: "Tool bags, cases, vans racking and storage solutions",
   },
   "specialist-tools": {
     title: "Specialist Tools",
-    description: "Cable tools, crimpers, benders and specialised equipment"
-  }
+    description: "Cable tools, crimpers, benders and specialised equipment",
+  },
 };
 
 interface EnhancedToolCategoryDisplayProps {
   categoryName: string;
 }
 
-const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDisplayProps) => {
-  const categoryKey = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '');
-  const meta = CATEGORY_META[categoryKey] || { title: categoryName, description: "Browse curated tools by category" };
-  
-  // Use comprehensive tools data
-  const { data: allTools, isLoading, error, refetch } = useToolsData();
+const EnhancedToolCategoryDisplay = ({
+  categoryName,
+}: EnhancedToolCategoryDisplayProps) => {
+  // Get category metadata
+  const categoryKey = categoryName.toLowerCase().replace(/\s+/g, "-").replace(/&/g, "");
+  const meta = CATEGORY_META[categoryKey] || {
+    title: categoryName,
+    description: "Browse curated tools by category",
+  };
 
-  // Enhanced state management
+  // Fetch tools data
+  const { data: allTools, isLoading } = useToolsData();
+
+  // State
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeTab, setActiveTab] = useState("browse");
-  const [selectedItems, setSelectedItems] = useState<ToolItem[]>([]);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [filters, setFilters] = useState<FilterState>({
     brands: [],
     priceRanges: [],
     availability: [],
-    suppliers: []
+    suppliers: [],
   });
-  const [isFiltersExpanded, setIsFiltersExpanded] = useState(false);
-  const isMobile = useIsMobile();
-  
-  // Comprehensive category mapping function
+  const [selectedItems, setSelectedItems] = useState<ToolItem[]>([]);
+
+  // Category mapping for filtering
   const getCategoryMappings = (frontendCategory: string): string[] => {
     const mappings: Record<string, string[]> = {
-      'Test Equipment': ['Test Equipment', 'Testing Equipment', 'Test & Measurement', 'Testers'],
-      'Safety Tools': ['Safety Tools', 'Safety Equipment', 'PPE', 'Personal Protective Equipment'],
-      'Power Tools': ['Power Tools', 'Electric Tools', 'Cordless Tools', 'Battery Tools'],
-      'Hand Tools': ['Hand Tools', 'Manual Tools', 'Basic Tools', 'Cable Rods', 'Cable Rod Sets', 'Fish Tape'],
-      'Installation Tools': ['Installation Tools', 'Cable Ties', 'Cable Clips', 'Conduit', 'Mini Trunking', 'Trunking', 'Accessories'],
-      'Cable & Wiring': ['Cable & Wiring', 'Hook Up Wire', 'Cable', 'Power Cable', 'Control Cable', 'Ethernet Cable', 'Coaxial Cable', 'SWA Cable', 'Fire Alarm Cable'],
-      'Electrical Components': ['Electrical Components', 'Switches', 'Sockets', 'Outlets', 'Light Switches', 'Dimmers', 'Electrical Accessories', 'Wiring Accessories', 'Plugs & Sockets', 'Junction Boxes', 'Consumer Units', 'Distribution', 'RCDs', 'MCBs', 'Fuses', 'Isolators'],
-      'Lighting': ['Lighting', 'LED Lighting', 'Light Fittings', 'Downlights', 'Emergency Lighting', 'Commercial Lighting', 'Outdoor Lighting'],
-      'Access Tools & Equipment': ['Access Tools & Equipment', 'Access Equipment', 'Ladders & Steps', 'Access'],
-      'Tool Storage': ['Tool Storage', 'Storage', 'Tool Bags', 'Cases & Bags'],
-      'Specialist Tools': ['Specialist Tools', 'Electrical Tools', 'Cable Tools', 'Wiring Tools']
+      "Test Equipment": ["Test Equipment", "Testing Equipment", "Test & Measurement", "Testers"],
+      "Safety Tools": ["Safety Tools", "Safety Equipment", "PPE", "Personal Protective Equipment"],
+      "Power Tools": ["Power Tools", "Electric Tools", "Cordless Tools", "Battery Tools"],
+      "Hand Tools": ["Hand Tools", "Manual Tools", "Basic Tools", "Cable Rods", "Cable Rod Sets"],
+      "Installation Tools": ["Installation Tools", "Cable Ties", "Cable Clips", "Conduit", "Trunking"],
+      "Cable & Wiring": ["Cable & Wiring", "Hook Up Wire", "Cable", "Power Cable", "Control Cable"],
+      "Electrical Components": ["Electrical Components", "Switches", "Sockets", "Outlets", "Consumer Units"],
+      Lighting: ["Lighting", "LED Lighting", "Light Fittings", "Downlights", "Emergency Lighting"],
+      "Access Tools & Equipment": ["Access Tools & Equipment", "Access Equipment", "Ladders & Steps"],
+      "Tool Storage": ["Tool Storage", "Storage", "Tool Bags", "Cases & Bags"],
+      "Specialist Tools": ["Specialist Tools", "Electrical Tools", "Cable Tools", "Wiring Tools"],
     };
-    
     return mappings[frontendCategory] || [frontendCategory];
   };
 
-  // Get keywords for category fallback searches
-  const getCategoryKeywords = (category: string): string[] => {
-    const keywordMap: Record<string, string[]> = {
-      'Test Equipment': ['multimeter', 'tester', 'meter', 'clamp', 'voltage', 'continuity', 'insulation'],
-      'Safety Tools': ['helmet', 'gloves', 'glasses', 'boots', 'harness', 'vest', 'safety'],
-      'Power Tools': ['drill', 'cordless', '18v', '12v', 'grinder', 'saw', 'impact', 'sds', 'battery'],
-      'Hand Tools': ['screwdriver', 'pliers', 'wire stripper', 'cable cutter', 'crimping', 'spanner'],
-      'Measuring Tools': ['level', 'tape measure', 'ruler', 'detector', 'spirit level', 'laser'],
-      'Cable Tools': ['cable', 'wire', 'stripper', 'cutter', 'puller', 'crimper'],
-      'Lighting Tools': ['torch', 'light', 'led', 'inspection', 'headlamp', 'work light']
-    };
-    
-    return keywordMap[category] || [category.toLowerCase()];
-  };
-
-  // Filter and search the tools by exact category match
-  const filteredTools = useMemo(() => {
+  // Filter tools by category
+  const categoryTools = useMemo(() => {
     if (!allTools) return [];
-    
-    // Get valid category mappings for this frontend category
     const validCategories = getCategoryMappings(categoryName);
-    
-    // Direct category match based on intelligent categorization from edge function
-    const categoryFiltered = allTools.filter(tool => {
-      const toolCategory = tool.category;
-      
-      // Check if tool's category matches any of the valid mapped categories
-      return validCategories.includes(toolCategory);
-    });
-    
-    return categoryFiltered;
+    return allTools.filter((tool) => validCategories.includes(tool.category));
   }, [allTools, categoryName]);
 
-  // Get deals for the banner and strip
-  const dealsData = useMemo(() => {
-    const deals = filteredTools.filter(tool => tool.isOnSale && tool.salePrice);
-    const topDeal = deals.length > 0 ? deals[0] : undefined;
-    return { deals, topDeal };
-  }, [filteredTools]);
+  // Apply search and filters
+  const filteredTools = useMemo(() => {
+    let result = categoryTools;
 
+    // Search filter
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      result = result.filter(
+        (tool) =>
+          tool.name?.toLowerCase().includes(term) ||
+          tool.supplier?.toLowerCase().includes(term) ||
+          tool.brand?.toLowerCase().includes(term)
+      );
+    }
 
-  const pageTitle = `${meta.title} | ElecMate Professional Tools`;
-  const pageDescription = `${meta.title} for UK electricians — ${meta.description}. BS 7671 18th Edition compliant guidance.`.slice(0, 160);
+    // Brand filter
+    if (filters.brands.length > 0) {
+      result = result.filter((tool) => {
+        const brand = tool.brand || tool.name?.split(" ")[0];
+        return filters.brands.includes(brand);
+      });
+    }
 
+    // Price range filter
+    if (filters.priceRanges.length > 0) {
+      result = result.filter((tool) => {
+        const priceMatch = tool.price?.match(/£([\d,]+\.?\d*)/);
+        if (!priceMatch) return false;
+        const price = parseFloat(priceMatch[1].replace(",", ""));
+
+        return filters.priceRanges.some((range) => {
+          switch (range) {
+            case "Under £25": return price < 25;
+            case "£25 - £50": return price >= 25 && price <= 50;
+            case "£50 - £100": return price >= 50 && price <= 100;
+            case "£100 - £250": return price >= 100 && price <= 250;
+            case "£250 - £500": return price >= 250 && price <= 500;
+            case "Over £500": return price > 500;
+            default: return false;
+          }
+        });
+      });
+    }
+
+    // Availability filter
+    if (filters.availability.length > 0) {
+      result = result.filter(
+        (tool) => tool.stockStatus && filters.availability.includes(tool.stockStatus)
+      );
+    }
+
+    // Supplier filter
+    if (filters.suppliers.length > 0) {
+      result = result.filter(
+        (tool) => tool.supplier && filters.suppliers.includes(tool.supplier)
+      );
+    }
+
+    return result;
+  }, [categoryTools, searchTerm, filters]);
+
+  // Compare handlers
   const handleAddToCompare = (item: ToolItem) => {
     if (selectedItems.length >= 3) return;
-    if (!selectedItems.find(selected => selected.id === item.id)) {
-      setSelectedItems(prev => [...prev, item]);
+    if (!selectedItems.find((s) => s.id === item.id)) {
+      setSelectedItems((prev) => [...prev, item]);
     }
   };
 
   const handleRemoveFromCompare = (itemId: string) => {
-    setSelectedItems(prev => prev.filter(item => String(item.id) !== itemId));
+    setSelectedItems((prev) => prev.filter((item) => String(item.id) !== itemId));
   };
 
   const clearComparison = () => {
     setSelectedItems([]);
   };
 
-  if (error) {
-    return (
-      <main className="space-y-6 animate-fade-in">
-        <Helmet>
-          <title>{pageTitle}</title>
-          <meta name="description" content={pageDescription} />
-        </Helmet>
-        
-        <div className="text-center space-y-4">
-          <p className="text-red-400">Failed to load tools data</p>
-          <Button 
-            variant="outline" 
-            onClick={() => refetch()}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-            ) : (
-              <RefreshCw className="h-4 w-4 mr-2" />
-            )}
-            Try Again
-          </Button>
-        </div>
-      </main>
-    );
-  }
+  // Active filters count
+  const activeFiltersCount =
+    filters.brands.length +
+    filters.priceRanges.length +
+    filters.availability.length +
+    filters.suppliers.length;
+
+  // SEO metadata
+  const pageTitle = `${meta.title} | ElecMate Professional Tools`;
+  const pageDescription = `${meta.title} for UK electricians — ${meta.description}. BS 7671 18th Edition compliant.`;
 
   return (
-    <main className="mobile-container mobile-safe-area pt-6">
+    <div className="min-h-screen bg-background">
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
-        <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : ''} />
       </Helmet>
 
-      <header className="mobile-section-spacing">
-        <div className="flex flex-nowrap items-center justify-between gap-4 mb-6">
-          <Link to="/electrician/tools">
-            <Button variant="outline" size="sm" className="touch-target mobile-interactive bg-elec-gray/50 border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10">
-              <ArrowLeft className="h-4 w-4" /> Back to Tools
-            </Button>
-          </Link>
-          <div className="flex items-center gap-3">
-            <MoreToolsDropdown 
-              onTabChange={setActiveTab}
-              selectedItemsCount={selectedItems.length}
-            />
-          </div>
-        </div>
-        <div className="space-y-3">
-          <h1 className="mobile-heading font-bold tracking-tight flex items-center gap-3">
-            <Wrench className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-elec-yellow flex-shrink-0" />
-            <span className="min-w-0 text-elec-light">{meta.title}</span>
-          </h1>
-          <p className="mobile-text text-text-muted leading-relaxed pl-9 sm:pl-10 lg:pl-11 pb-4">{meta.description}</p>
-        </div>
-      </header>
+      {/* Premium Sticky Header with Search */}
+      <PremiumToolPageHeader
+        categoryName={categoryName}
+        toolCount={filteredTools.length}
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        onFilterToggle={() => setFiltersOpen(true)}
+        activeFiltersCount={activeFiltersCount}
+      />
 
-      {/* Enhanced Content Section */}
-      {activeTab === "browse" ? (
-        <section className="space-y-6">
-          {/* SECTION A: QUICK DISCOVERY */}
-          {/* Deals of the Day Banner */}
-          {dealsData.topDeal && (
-            <DealsOfTheDayBanner deal={dealsData.topDeal} />
-          )}
-
-          {/* Top Discounts Strip */}
-          {dealsData.deals.length > 1 && (
-            <TopDiscountsStrip deals={dealsData.deals} />
-          )}
-
-          {/* Top 6 Category Products Carousel */}
-          <CategoryToolsCarousel 
-            tools={filteredTools} 
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8 sm:space-y-10">
+        {/* Featured Carousel */}
+        {categoryTools.length > 0 && (
+          <CategoryToolsCarousel
+            tools={categoryTools}
             categoryName={categoryName}
-            className="mobile-section-spacing"
           />
+        )}
 
-          {/* Smart Search Bar with Filter Button */}
-          <div className="space-y-4">
-            <div className="flex gap-3 items-center">
-              <div className="flex-1">
-                <SmartSearchBar
-                  value={searchTerm}
-                  onChange={setSearchTerm}
-                  tools={filteredTools}
-                  placeholder="Search tools, brands, suppliers..."
-                />
-              </div>
-              
-              {/* Filter Button */}
-              <ProductFilters
-                tools={filteredTools}
-                filters={filters}
-                onFiltersChange={setFilters}
-                isExpanded={isFiltersExpanded}
-                setIsExpanded={setIsFiltersExpanded}
-              />
-            </div>
-
-            {/* Expanded Filter Section */}
-            {isFiltersExpanded && (
-              <ProductFiltersContent
-                tools={filteredTools}
-                filters={filters}
-                onFiltersChange={setFilters}
-              />
-            )}
-          </div>
-
-          {/* SECTION B: BROWSE & FILTER */}
-
-          {/* Enhanced Product Grid */}
+        {/* Product Grid */}
+        <section>
           <EnhancedProductGrid
             tools={filteredTools}
             searchTerm={searchTerm}
@@ -305,184 +240,36 @@ const EnhancedToolCategoryDisplay = ({ categoryName }: EnhancedToolCategoryDispl
             selectedItems={selectedItems}
             isCompareDisabled={selectedItems.length >= 3}
           />
-
-          {/* SECTION C: RECOMMENDATIONS & TOOLS */}
-          {/* Section Divider */}
-          <div className="flex items-center gap-3 py-6">
-            <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
-            <h3 className="text-xl font-semibold text-elec-light px-4">
-              Tools & Recommendations
-            </h3>
-            <div className="h-px bg-gradient-to-r from-transparent via-elec-yellow/30 to-transparent flex-1" />
-          </div>
-
-          {/* Quick Tool Finder - Available for all categories */}
-          <QuickToolFinder />
-          
-          {/* Professional Tips - Available for all categories */}
-          <ProfessionalTips />
-
-          {/* Hand Tools specific Tool Comparison */}
-          {categoryName.toLowerCase() === "hand tools" && (
-            <ToolComparison tools={filteredTools} />
-          )}
         </section>
-      ) : (
-        <section className="mobile-section-spacing relative z-10">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full relative">
 
-          {/* Quick Compare Bar */}
-          {selectedItems.length > 0 && (
-            <Card className="mobile-card bg-elec-yellow/10 border-elec-yellow/30 mt-4">
-              <CardContent className="p-4">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <Scale className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-                    <span className="mobile-text font-medium text-elec-light">
-                      {selectedItems.length}/3 tools selected for comparison
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 w-full sm:w-auto">
-                    <Button
-                      size="sm"
-                      onClick={() => setActiveTab("compare")}
-                      variant="gold"
-                      className="touch-target mobile-interactive flex-1 sm:flex-none"
-                    >
-                      Compare Now
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={clearComparison}
-                      className="touch-target mobile-interactive bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20 flex-1 sm:flex-none"
-                    >
-                      Clear
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
+        {/* Inline Compare Section */}
+        {selectedItems.length > 0 && (
+          <InlineCompareSection
+            items={selectedItems}
+            onRemoveItem={handleRemoveFromCompare}
+            onClearAll={clearComparison}
+          />
+        )}
 
-          {/* Tab Content */}
-          <TabsContent value="browse" className="mobile-section-spacing mt-6">
-            {/* Loading state */}
-            {isLoading && (
-              <Card className="mobile-card bg-elec-card/30 border-elec-yellow/20">
-                <CardContent className="p-6 text-center space-y-4">
-                  <div className="flex items-center justify-center gap-3">
-                    <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
-                    <p className="mobile-text text-elec-yellow font-medium">Loading {meta.title.toLowerCase()}...</p>
-                  </div>
-                  <p className="mobile-small-text text-text-muted">
-                    Fetching data from comprehensive tools database
-                  </p>
-                </CardContent>
-              </Card>
-            )}
+        {/* AI Insights Section */}
+        <InlineAIInsightsSection
+          tools={categoryTools}
+          categoryName={categoryName}
+        />
 
-            {/* Tools grid */}
-            {!isLoading && (
-              <>
-                {filteredTools.length === 0 ? (
-                  <Card className="mobile-card bg-elec-card/30 border-elec-yellow/20">
-                    <CardContent className="p-6 text-center mobile-card-spacing">
-                      <div className="space-y-4">
-                        <p className="mobile-text text-text-muted mb-4">
-                          {searchTerm ? 
-                            `No tools found matching "${searchTerm}"` :
-                            `No ${meta.title.toLowerCase()} available in our current database`
-                          }
-                        </p>
-                        <p className="mobile-small-text text-text-muted">
-                          {categoryName === 'Power Tools' 
-                            ? "Power Tools data is being collected. Try browsing Hand Tools or search for specific items like 'drill' or '18V'."
-                            : `${categoryName} data is being updated. Try searching for specific tools or browse available categories.`
-                          }
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                          {categoryName === 'Power Tools' && (
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => setSearchTerm("drill")}
-                              className="touch-target mobile-interactive bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20"
-                            >
-                              Search Drills
-                            </Button>
-                          )}
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => {
-                              setSearchTerm("");
-                              window.location.href = "/electrician/tools?category=Hand Tools";
-                            }}
-                            className="touch-target mobile-interactive bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20"
-                          >
-                            Browse Hand Tools
-                          </Button>
-                          {searchTerm && (
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => setSearchTerm("")}
-                              className="touch-target mobile-interactive bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20"
-                            >
-                              Clear search
-                            </Button>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ) : (
-                  <section aria-label={`${meta.title} products`} className="mobile-section-spacing">
-                    <div className="mobile-grid-responsive md:grid-cols-2 pb-6">
-                      {filteredTools.map((item, index) => (
-                        <ToolCard 
-                          key={item.id || `${item.supplier}-${item.name}-${index}`} 
-                          item={item}
-                          onAddToCompare={handleAddToCompare}
-                          onRemoveFromCompare={handleRemoveFromCompare}
-                          isSelected={selectedItems.some(selected => selected.id === item.id)}
-                          isCompareDisabled={selectedItems.length >= 3 && !selectedItems.some(selected => selected.id === item.id)}
-                        />
-                      ))}
-                    </div>
-                  </section>
-                )}
-              </>
-            )}
-          </TabsContent>
+        {/* Professional Tips */}
+        <ProfessionalTips />
+      </main>
 
-          <TabsContent value="compare" className="space-y-6 mt-6">
-            <AIEnhancedToolPriceComparison 
-              initialQuery={categoryName}
-              selectedItems={selectedItems}
-              onClearSelection={clearComparison}
-            />
-          </TabsContent>
-
-          <TabsContent value="bulk" className="space-y-6 mt-6">
-            <BulkToolPricingCalculator categoryName={categoryName} tools={filteredTools} />
-          </TabsContent>
-
-          <TabsContent value="alerts" className="space-y-6 mt-6">
-            <ToolPriceHistoryAlerts categoryName={categoryName} />
-          </TabsContent>
-
-          <TabsContent value="ai" className="space-y-6 mt-6">
-            <ToolAIInsights 
-              tools={filteredTools} 
-              searchQuery={searchTerm || categoryName}
-            />
-          </TabsContent>
-        </Tabs>
-      </section>
-      )}
-    </main>
+      {/* Slide-out Filter Panel */}
+      <SlideOutFilters
+        isOpen={filtersOpen}
+        onClose={() => setFiltersOpen(false)}
+        filters={filters}
+        onFiltersChange={setFilters}
+        tools={categoryTools}
+      />
+    </div>
   );
 };
 

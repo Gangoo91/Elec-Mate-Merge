@@ -253,7 +253,7 @@ const ApprenticeToolbox = () => {
               <Wrench className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+              <h1 className="text-xl sm:text-3xl font-bold tracking-tight text-white">
                 Apprentice Guidance Area
               </h1>
               <p className="text-sm text-white/70 mt-0.5 hidden sm:block">
@@ -261,15 +261,15 @@ const ApprenticeToolbox = () => {
               </p>
             </div>
           </div>
-          <p className="text-sm sm:text-base text-white/70 mt-2 sm:mt-0 sm:ml-[72px]">
+          <p className="hidden sm:block text-base text-white/70 sm:ml-[72px]">
             Essential resources, skills development, and support for UK electrical apprentices
           </p>
         </div>
         <SmartBackButton className="flex-shrink-0 w-full sm:w-auto" />
       </div>
 
-      {/* Quick Stats Banner */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
+      {/* Quick Stats Banner - Hidden on mobile */}
+      <div className="hidden sm:grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
         <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
           <CardContent className="p-3 sm:p-4">
             <div className="flex items-start gap-2 sm:gap-3">

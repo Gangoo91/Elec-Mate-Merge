@@ -135,7 +135,7 @@ const Section5_5 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 5
@@ -157,7 +157,7 @@ const Section5_5 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Common Mistakes and How to Avoid Them
               </h1>
-              <p className="text-xl text-gray-300">
+              <p className="text-xl text-white">
                 Learning from common isolation failures to prevent accidents
               </p>
             </div>
@@ -170,7 +170,7 @@ const Section5_5 = () => {
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
               <h3 className="font-semibold text-white mb-3">In 30 seconds</h3>
-              <ul className="space-y-1 text-sm text-gray-300">
+              <ul className="space-y-1 text-sm text-white">
                 <li>• Most electrical accidents are preventable</li>
                 <li>• Common mistakes result from rushing or cutting corners</li>
                 <li>• Following proper procedures saves lives</li>
@@ -179,7 +179,7 @@ const Section5_5 = () => {
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-card border border-elec-yellow/30">
               <h3 className="font-semibold text-white mb-3">Spot it / Use it</h3>
-              <ul className="space-y-1 text-sm text-gray-300">
+              <ul className="space-y-1 text-sm text-white">
                 <li>• Not using lock-off devices</li>
                 <li>• Wrong test equipment being used</li>
                 <li>• Shared keys or shortcuts taken</li>
@@ -195,19 +195,19 @@ const Section5_5 = () => {
           <ul className="space-y-3">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Identify frequent mistakes made during isolation</span>
+              <span className="text-white">Identify frequent mistakes made during isolation</span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Understand the consequences of incorrect procedures</span>
+              <span className="text-white">Understand the consequences of incorrect procedures</span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Learn how to prevent errors through habits, training, and checks</span>
+              <span className="text-white">Learn how to prevent errors through habits, training, and checks</span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Develop professional discipline and safety awareness</span>
+              <span className="text-white">Develop professional discipline and safety awareness</span>
             </li>
           </ul>
         </Card>
@@ -220,13 +220,13 @@ const Section5_5 = () => {
           </div>
           
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
-            <p className="text-gray-300 mb-4">
+            <p className="text-white mb-4">
               <strong>The mistake:</strong> Just switching off the breaker or isolator without applying a physical lock.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h4 className="font-medium text-white mb-2">❌ Why it's dangerous</h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Someone else could easily switch it back on</li>
                   <li>• No physical barrier prevents re-energising</li>
                   <li>• Relies on trust rather than proven safety</li>
@@ -234,7 +234,7 @@ const Section5_5 = () => {
               </div>
               <div>
                 <h4 className="font-medium text-white mb-2">✅ The solution</h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Always use a lock-off device and padlock</li>
                   <li>• Apply your own personal lock every time</li>
                   <li>• Never rely on switches alone</li>
@@ -266,13 +266,13 @@ const Section5_5 = () => {
           </div>
           
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
-            <p className="text-gray-300 mb-4">
+            <p className="text-white mb-4">
               <strong>The mistake:</strong> Using multimeters or non-compliant testers for proving dead.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h4 className="font-medium text-white mb-2">❌ Why it's dangerous</h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Multimeters aren't designed for safe isolation</li>
                   <li>• May not detect all dangerous voltages</li>
                   <li>• Can give false readings</li>
@@ -280,7 +280,7 @@ const Section5_5 = () => {
               </div>
               <div>
                 <h4 className="font-medium text-white mb-2">✅ The solution</h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Only use GS38-compliant two-pole voltage testers</li>
                   <li>• Test the tester before and after use</li>
                   <li>• Keep proving units for verification</li>
@@ -298,13 +298,13 @@ const Section5_5 = () => {
           </div>
           
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
-            <p className="text-gray-300 mb-4">
+            <p className="text-white mb-4">
               <strong>The mistake:</strong> Trusting labels, switch positions, or someone's word without testing.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h4 className="font-medium text-white mb-2">❌ Why it's dangerous</h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Circuits may be mislabelled</li>
                   <li>• Wiring could be incorrect</li>
                   <li>• Switches can fail or be bypassed</li>
@@ -312,7 +312,7 @@ const Section5_5 = () => {
               </div>
               <div>
                 <h4 className="font-medium text-white mb-2">✅ The solution</h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Always test all conductors</li>
                   <li>• Test line, neutral, and earth</li>
                   <li>• Verify circuit identity before isolation</li>
@@ -330,13 +330,13 @@ const Section5_5 = () => {
           </div>
           
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
-            <p className="text-gray-300 mb-4">
+            <p className="text-white mb-4">
               <strong>The mistake:</strong> Multiple workers sharing a single padlock key or using communal locks.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h4 className="font-medium text-white mb-2">❌ Why it's dangerous</h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Breaks chain of individual accountability</li>
                   <li>• Work can continue without everyone present</li>
                   <li>• No personal control over safety</li>
@@ -344,7 +344,7 @@ const Section5_5 = () => {
               </div>
               <div>
                 <h4 className="font-medium text-white mb-2">✅ The solution</h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Each person must have own lock and key</li>
                   <li>• Use group lock boxes for multi-worker jobs</li>
                   <li>• Never share or lend keys</li>
@@ -362,13 +362,13 @@ const Section5_5 = () => {
           </div>
           
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
-            <p className="text-gray-300 mb-4">
+            <p className="text-white mb-4">
               <strong>The mistake:</strong> Not retesting the voltage tester after proving dead.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h4 className="font-medium text-white mb-2">❌ Why it's dangerous</h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Tester may have failed during testing</li>
                   <li>• Could have given false 'dead' readings</li>
                   <li>• No way to verify tester integrity</li>
@@ -376,7 +376,7 @@ const Section5_5 = () => {
               </div>
               <div>
                 <h4 className="font-medium text-white mb-2">✅ The solution</h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Always retest tester after use</li>
                   <li>• Use proving unit for verification</li>
                   <li>• Replace faulty testers immediately</li>
@@ -394,13 +394,13 @@ const Section5_5 = () => {
           </div>
           
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
-            <p className="text-gray-300 mb-4">
+            <p className="text-white mb-4">
               <strong>The mistake:</strong> Isolating the wrong circuit due to poor labelling or circuit identification.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h4 className="font-medium text-white mb-2">❌ Why it happens</h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Incorrect or outdated circuit labels</li>
                   <li>• Complex installations with poor documentation</li>
                   <li>• Assuming labels are accurate</li>
@@ -409,7 +409,7 @@ const Section5_5 = () => {
               </div>
               <div>
                 <h4 className="font-medium text-white mb-2">✅ The solution</h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Visually trace circuits where possible</li>
                   <li>• Use circuit tracers and identification tools</li>
                   <li>• Verify by testing at the work location</li>
@@ -428,13 +428,13 @@ const Section5_5 = () => {
           </div>
           
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
-            <p className="text-gray-300 mb-4">
+            <p className="text-white mb-4">
               <strong>The mistake:</strong> Skipping steps or rushing through isolation due to time pressure.
             </p>
             <div className="space-y-4">
               <div>
                 <h4 className="font-medium text-white mb-2">Common shortcuts taken</h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Skipping the "test-lock-test" sequence</li>
                   <li>• Not testing all conductors thoroughly</li>
                   <li>• Inadequate proving unit checks</li>
@@ -459,13 +459,13 @@ const Section5_5 = () => {
           </div>
           
           <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
-            <p className="text-gray-300 mb-4">
+            <p className="text-white mb-4">
               <strong>The mistake:</strong> Failing to properly communicate isolation status to others on site.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h4 className="font-medium text-white mb-2">Communication failures</h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• No warning signs at isolation points</li>
                   <li>• Poor handover between shifts</li>
                   <li>• Inadequate permit-to-work procedures</li>
@@ -474,7 +474,7 @@ const Section5_5 = () => {
               </div>
               <div>
                 <h4 className="font-medium text-white mb-2">Best practice communication</h4>
-                <ul className="space-y-1 text-sm text-gray-300">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Clear, visible warning signs</li>
                   <li>• Proper permit documentation</li>
                   <li>• Shift handover procedures</li>
@@ -496,7 +496,7 @@ const Section5_5 = () => {
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-medium text-white mb-3">Personal Impact</h4>
-                <ul className="space-y-2 text-sm text-gray-300">
+                <ul className="space-y-2 text-sm text-white">
                   <li>• Electric shock and burns</li>
                   <li>• Hospital treatment required</li>
                   <li>• Permanent disability risk</li>
@@ -507,7 +507,7 @@ const Section5_5 = () => {
               </div>
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-medium text-white mb-3">Professional Impact</h4>
-                <ul className="space-y-2 text-sm text-gray-300">
+                <ul className="space-y-2 text-sm text-white">
                   <li>• Loss of professional qualifications</li>
                   <li>• Industry reputation damage</li>
                   <li>• Legal prosecution possible</li>
@@ -518,7 +518,7 @@ const Section5_5 = () => {
               </div>
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-medium text-white mb-3">Workplace Impact</h4>
-                <ul className="space-y-2 text-sm text-gray-300">
+                <ul className="space-y-2 text-sm text-white">
                   <li>• HSE investigation and fines</li>
                   <li>• Work stoppages and delays</li>
                   <li>• Increased insurance costs</li>
@@ -558,7 +558,7 @@ const Section5_5 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h5 className="font-medium text-white mb-2">Daily practices</h5>
-                  <ul className="space-y-1 text-sm text-gray-300">
+                  <ul className="space-y-1 text-sm text-white">
                     <li>• Start each job with safety planning</li>
                     <li>• Check equipment before each use</li>
                     <li>• Follow procedures consistently</li>
@@ -567,7 +567,7 @@ const Section5_5 = () => {
                 </div>
                 <div>
                   <h5 className="font-medium text-white mb-2">Continuous improvement</h5>
-                  <ul className="space-y-1 text-sm text-gray-300">
+                  <ul className="space-y-1 text-sm text-white">
                     <li>• Attend regular safety training</li>
                     <li>• Learn from incident reports</li>
                     <li>• Share knowledge with colleagues</li>
@@ -579,7 +579,7 @@ const Section5_5 = () => {
 
             <div className="bg-green-500/20 border border-green-400/30 rounded-lg p-4">
               <h4 className="font-medium text-white mb-3">Creating a positive safety culture</h4>
-              <ul className="space-y-2 text-sm text-gray-300">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-3">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>Speak up when you see unsafe practices - it could save a life</span>
@@ -610,7 +610,7 @@ const Section5_5 = () => {
           
           <div className="space-y-6">
             <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <p className="text-gray-300 mb-4">
+              <p className="text-white mb-4">
                 <strong>Case Study 1: The Wrong Circuit</strong><br/>
                 An experienced electrician was replacing a faulty switch in an office block. He isolated what he believed was the correct MCB based on the consumer unit labels. However, the office had been rewired years earlier, and the labels were never updated. When he removed the switch, he received a 230V shock from the live conductor.
               </p>
@@ -624,7 +624,7 @@ const Section5_5 = () => {
             </div>
 
             <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <p className="text-gray-300 mb-4">
+              <p className="text-white mb-4">
                 <strong>Case Study 2: Shared Key Incident</strong><br/>
                 Three electricians were working on different lighting circuits in a warehouse. They used a single shared lock to save time. When one electrician finished early and left with the key, another team member arrived and assumed all work was complete. He restored power while the remaining electrician was still working, resulting in a serious electrical burn.
               </p>
@@ -638,7 +638,7 @@ const Section5_5 = () => {
             </div>
 
             <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <p className="text-gray-300 mb-4">
+              <p className="text-white mb-4">
                 <strong>Case Study 3: The Faulty Tester</strong><br/>
                 During routine maintenance, an electrician tested a circuit and confirmed it was dead using his voltage tester. However, he didn't retest the tester after use. Unknown to him, the tester had failed during the testing process due to an internal fault. He proceeded to work on what he thought was a dead circuit but received a severe shock when he touched the live conductor.
               </p>
@@ -669,19 +669,19 @@ const Section5_5 = () => {
                   <ul className="space-y-2">
                     <li className="flex items-start gap-3">
                       <div className="w-4 h-4 border border-gray-400 rounded mt-0.5 flex-shrink-0"></div>
-                      <span className="text-sm text-gray-300">GS38-compliant voltage tester</span>
+                      <span className="text-sm text-white">GS38-compliant voltage tester</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-4 h-4 border border-gray-400 rounded mt-0.5 flex-shrink-0"></div>
-                      <span className="text-sm text-gray-300">Proving unit functioning correctly</span>
+                      <span className="text-sm text-white">Proving unit functioning correctly</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-4 h-4 border border-gray-400 rounded mt-0.5 flex-shrink-0"></div>
-                      <span className="text-sm text-gray-300">Lock-off devices and personal padlock</span>
+                      <span className="text-sm text-white">Lock-off devices and personal padlock</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-4 h-4 border border-gray-400 rounded mt-0.5 flex-shrink-0"></div>
-                      <span className="text-sm text-gray-300">Warning signs and tags ready</span>
+                      <span className="text-sm text-white">Warning signs and tags ready</span>
                     </li>
                   </ul>
                 </div>
@@ -690,19 +690,19 @@ const Section5_5 = () => {
                   <ul className="space-y-2">
                     <li className="flex items-start gap-3">
                       <div className="w-4 h-4 border border-gray-400 rounded mt-0.5 flex-shrink-0"></div>
-                      <span className="text-sm text-gray-300">Circuit identification verified</span>
+                      <span className="text-sm text-white">Circuit identification verified</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-4 h-4 border border-gray-400 rounded mt-0.5 flex-shrink-0"></div>
-                      <span className="text-sm text-gray-300">Site team informed of work</span>
+                      <span className="text-sm text-white">Site team informed of work</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-4 h-4 border border-gray-400 rounded mt-0.5 flex-shrink-0"></div>
-                      <span className="text-sm text-gray-300">Permit-to-work completed if required</span>
+                      <span className="text-sm text-white">Permit-to-work completed if required</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-4 h-4 border border-gray-400 rounded mt-0.5 flex-shrink-0"></div>
-                      <span className="text-sm text-gray-300">Emergency contacts available</span>
+                      <span className="text-sm text-white">Emergency contacts available</span>
                     </li>
                   </ul>
                 </div>
@@ -711,10 +711,10 @@ const Section5_5 = () => {
 
             <div className="bg-elec-yellow/20 border border-border/30 rounded-lg p-4">
               <h4 className="font-medium text-white mb-3">The professional approach</h4>
-              <p className="text-blue-200 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 True electrical professionals understand that safety procedures aren't bureaucratic obstacles - they're life-saving protocols developed from decades of industry experience and accident analysis.
               </p>
-              <ul className="space-y-2 text-sm text-blue-200">
+              <ul className="space-y-2 text-sm text-white">
                 <li>• Quality over speed - every time</li>
                 <li>• Procedures exist to protect you and others</li>
                 <li>• Your reputation depends on consistent safety practices</li>
@@ -732,7 +732,7 @@ const Section5_5 = () => {
           </div>
           
           <div className="bg-slate-50 dark:bg-slate-950/30 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
-            <p className="text-gray-300 mb-6">
+            <p className="text-white mb-6">
               Electrical isolation failures are almost always preventable human errors. Professional discipline, proper procedures, and consistent safety practices eliminate these risks and save lives.
             </p>
             
@@ -742,19 +742,19 @@ const Section5_5 = () => {
                 <ul className="space-y-2">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">Never skip steps in the isolation process</span>
+                    <span className="text-white text-sm">Never skip steps in the isolation process</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">Use only proper, calibrated test equipment</span>
+                    <span className="text-white text-sm">Use only proper, calibrated test equipment</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">Maintain individual lock and key control</span>
+                    <span className="text-white text-sm">Maintain individual lock and key control</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">Verify circuit identity before isolation</span>
+                    <span className="text-white text-sm">Verify circuit identity before isolation</span>
                   </li>
                 </ul>
               </div>
@@ -763,19 +763,19 @@ const Section5_5 = () => {
                 <ul className="space-y-2">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">Time pressure never justifies cutting corners</span>
+                    <span className="text-white text-sm">Time pressure never justifies cutting corners</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">Communicate clearly with all site personnel</span>
+                    <span className="text-white text-sm">Communicate clearly with all site personnel</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">Report near-misses to prevent future incidents</span>
+                    <span className="text-white text-sm">Report near-misses to prevent future incidents</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">Lead by example in safety practices</span>
+                    <span className="text-white text-sm">Lead by example in safety practices</span>
                   </li>
                 </ul>
               </div>

@@ -253,7 +253,7 @@ const Module2Section4_4 = () => {
                         loading="lazy"
                         className="w-full rounded-lg mb-4"
                       />
-                      <p className="text-blue-200 text-sm mb-2"><strong>Basic Relationships:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Basic Relationships:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-blue-100">
                         <li><strong>Frequency (f):</strong> Number of complete cycles per second (Hz)</li>
                         <li><strong>Period (T):</strong> Time for one complete cycle (seconds)</li>
@@ -264,7 +264,7 @@ const Module2Section4_4 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Grid Frequency Control:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Grid Frequency Control:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>Target:</strong> 50.00Hz but ±1% variation normal</li>
                         <li><strong>Typical range:</strong> 49.5Hz to 50.5Hz during normal operation</li>
@@ -280,7 +280,7 @@ const Module2Section4_4 = () => {
                   <h3 className="text-lg font-semibold text-elec-yellow mb-3">Practical Calculations</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
-                      <p className="text-blue-200 text-sm mb-2"><strong>Worked Examples:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Worked Examples:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-blue-100">
                         <li><strong>25Hz period:</strong> T = 1/25 = 0.04s = 40ms (half of 50Hz period)</li>
                         <li><strong>5ms period frequency:</strong> f = 1/0.005s = 200Hz (4x mains frequency)</li>
@@ -335,7 +335,7 @@ const Module2Section4_4 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Standard 50Hz Synchronous Speeds:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Standard 50Hz Synchronous Speeds:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>2-pole:</strong> 120 × 50 ÷ 2 = 3000 rpm (high speed applications)</li>
                         <li><strong>4-pole:</strong> 120 × 50 ÷ 4 = 1500 rpm (most common industrial)</li>
@@ -361,7 +361,7 @@ const Module2Section4_4 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Factors Affecting Slip:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Factors Affecting Slip:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>Load torque:</strong> Higher load = higher slip</li>
                         <li><strong>Voltage:</strong> Low voltage increases slip</li>
@@ -405,7 +405,7 @@ const Module2Section4_4 = () => {
                   <h3 className="text-lg font-semibold text-teal-300 mb-3">Measurement Equipment and Safety</h3>
                   <div className="space-y-3">
                     <div className="bg-teal-500/10 border border-teal-400/30 p-4 rounded-lg">
-                      <p className="text-teal-200 text-sm mb-2"><strong>Suitable Instruments:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Suitable Instruments:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-teal-100">
                         <li><strong>Digital multimeters:</strong> Hz function with appropriate CAT rating</li>
                         <li><strong>Power quality analyzers:</strong> For detailed analysis and logging</li>
@@ -416,7 +416,7 @@ const Module2Section4_4 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Safety Requirements:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Safety Requirements:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>CAT rating:</strong> CAT III 600V minimum for distribution boards</li>
                         <li><strong>CAT IV rating:</strong> Required for service entrance measurements</li>
@@ -432,7 +432,7 @@ const Module2Section4_4 = () => {
                   <h3 className="text-lg font-semibold text-teal-300 mb-3">Normal Variations and Limits</h3>
                   <div className="space-y-3">
                     <div className="bg-teal-500/10 border border-teal-400/30 p-4 rounded-lg">
-                      <p className="text-teal-200 text-sm mb-2"><strong>Expected Frequency Ranges:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Expected Frequency Ranges:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-teal-100">
                         <li><strong>Normal operation:</strong> 49.5Hz to 50.5Hz typical daily range</li>
                         <li><strong>Statutory limits:</strong> ±1% (49.5Hz to 50.5Hz) for public supply</li>
@@ -443,7 +443,7 @@ const Module2Section4_4 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>When to Investigate Further:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>When to Investigate Further:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>Persistent low frequency:</strong> Below 49.5Hz for extended periods</li>
                         <li><strong>Rapid fluctuations:</strong> Frequency changing rapidly or erratically</li>
@@ -482,7 +482,7 @@ const Module2Section4_4 = () => {
                   <h3 className="text-lg font-semibold text-amber-300 mb-3">50Hz vs 60Hz Equipment</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-amber-400/30 p-4 rounded-lg">
-                      <p className="text-amber-200 text-sm mb-2"><strong>Equipment Categories:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Equipment Categories:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-amber-100">
                         <li><strong>Universal (50/60Hz):</strong> Most modern SMPS, electronics, many motors</li>
                         <li><strong>Frequency-specific:</strong> Some transformers, older motors, timing equipment</li>
@@ -493,7 +493,7 @@ const Module2Section4_4 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Nameplate Identification:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Nameplate Identification:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>Check ratings:</strong> Look for "50Hz", "60Hz", or "50/60Hz" markings</li>
                         <li><strong>CE marking:</strong> European equipment typically 50/60Hz compatible</li>
@@ -508,7 +508,7 @@ const Module2Section4_4 = () => {
                   <h3 className="text-lg font-semibold text-amber-300 mb-3">Timing and Control Applications</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-amber-400/30 p-4 rounded-lg">
-                      <p className="text-amber-200 text-sm mb-2"><strong>Frequency-Dependent Systems:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Frequency-Dependent Systems:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-amber-100">
                         <li><strong>Synchronous clocks:</strong> Directly depend on mains frequency for timekeeping</li>
                         <li><strong>Motor-driven timers:</strong> Speed and timing vary with frequency</li>
@@ -524,7 +524,7 @@ const Module2Section4_4 = () => {
                   <h3 className="text-lg font-semibold text-amber-300 mb-3">Modern Drive and Control Systems</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-amber-400/30 p-4 rounded-lg">
-                      <p className="text-amber-200 text-sm mb-2"><strong>Variable Frequency Drives:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Variable Frequency Drives:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-amber-100">
                         <li><strong>Input frequency:</strong> Typically accepts 50Hz ±5% without issues</li>
                         <li><strong>Output control:</strong> Can generate any frequency from DC to rated maximum</li>

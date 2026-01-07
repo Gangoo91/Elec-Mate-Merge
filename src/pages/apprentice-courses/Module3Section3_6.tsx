@@ -309,8 +309,8 @@ const Module3Section3_6: React.FC = () => {
                   <p className="font-medium mb-2">Head Protection</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Purpose & Function</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Purpose & Function</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Protects from falling objects and tool drops</li>
                         <li>Guards against impact with overhead structures</li>
                         <li>Prevents electrical shock in some applications</li>
@@ -318,8 +318,8 @@ const Module3Section3_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Types Available</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Types Available</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Hard hats (Class E for electrical work)</li>
                         <li>Bump caps for low-risk environments</li>
                         <li>Climbing helmets for rope access work</li>
@@ -327,8 +327,8 @@ const Module3Section3_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">When to Use</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">When to Use</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>All construction site work</li>
                         <li>Overhead cable installation</li>
                         <li>Working under scaffolding or structures</li>
@@ -342,8 +342,8 @@ const Module3Section3_6: React.FC = () => {
                   <p className="font-medium mb-2">Eye and Face Protection</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Purpose & Function</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Purpose & Function</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Shields against dust, sparks, and flying debris</li>
                         <li>Protects from chemical splashes and UV radiation</li>
                         <li>Prevents eye injuries from metal fragments</li>
@@ -351,8 +351,8 @@ const Module3Section3_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Types Available</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Types Available</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Safety glasses (side shields recommended)</li>
                         <li>Goggles for dust and chemical protection</li>
                         <li>Face shields for grinding and welding</li>
@@ -360,8 +360,8 @@ const Module3Section3_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-green-200 mb-1">When to Use</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">When to Use</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Drilling masonry or metal</li>
                         <li>Cutting conduit or trunking</li>
                         <li>Stripping cable with splinter risk</li>
@@ -389,8 +389,8 @@ const Module3Section3_6: React.FC = () => {
                   <p className="font-medium mb-2">Hearing Protection</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-red-200 mb-1">Purpose & Function</p>
-                      <ul className="list-disc pl-4 space-y-1 text-red-200">
+                      <p className="font-medium text-white mb-1">Purpose & Function</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Reduces risk of noise-induced hearing loss</li>
                         <li>Prevents tinnitus from prolonged exposure</li>
                         <li>Required for noise levels above 85dB(A)</li>
@@ -398,8 +398,8 @@ const Module3Section3_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-red-200 mb-1">Types Available</p>
-                      <ul className="list-disc pl-4 space-y-1 text-red-200">
+                      <p className="font-medium text-white mb-1">Types Available</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Ear defenders (over-ear protection)</li>
                         <li>Earplugs (foam, silicone, or custom-fit)</li>
                         <li>Electronic defenders with communication</li>
@@ -407,8 +407,8 @@ const Module3Section3_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-red-200 mb-1">When to Use</p>
-                      <ul className="list-disc pl-4 space-y-1 text-red-200">
+                      <p className="font-medium text-white mb-1">When to Use</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Prolonged use of hammer drills or SDS drills</li>
                         <li>Angle grinding operations</li>
                         <li>Demolition or breaking work</li>
@@ -422,8 +422,8 @@ const Module3Section3_6: React.FC = () => {
                   <p className="font-medium mb-2">Hand Protection</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Purpose & Function</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Purpose & Function</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Prevents cuts, abrasions, and burns</li>
                         <li>Protects against electric shock (when rated)</li>
                         <li>Improves grip in wet or oily conditions</li>
@@ -431,8 +431,8 @@ const Module3Section3_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Types Available</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Types Available</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>General work gloves (cut-resistant for metal)</li>
                         <li>Insulated gloves (voltage-rated for electrical)</li>
                         <li>Disposable nitrile for contamination protection</li>
@@ -440,8 +440,8 @@ const Module3Section3_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">When to Use</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">When to Use</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Handling sharp metal trunking or SWA cable</li>
                         <li>Live electrical testing (voltage-rated gloves)</li>
                         <li>Chemical handling or contaminated environments</li>
@@ -469,8 +469,8 @@ const Module3Section3_6: React.FC = () => {
                   <p className="font-medium mb-2">Respiratory Protection</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-amber-200 mb-1">Purpose & Function</p>
-                      <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                      <p className="font-medium text-white mb-1">Purpose & Function</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Filters dust, fumes, and airborne contaminants</li>
                         <li>Prevents respiratory diseases and lung damage</li>
                         <li>Essential in dusty or confined environments</li>
@@ -478,8 +478,8 @@ const Module3Section3_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-amber-200 mb-1">Types Available</p>
-                      <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                      <p className="font-medium text-white mb-1">Types Available</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Disposable dust masks (FFP1, FFP2, FFP3)</li>
                         <li>Half-face respirators with replaceable filters</li>
                         <li>Full-face respirators for eye protection too</li>
@@ -487,8 +487,8 @@ const Module3Section3_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-amber-200 mb-1">When to Use</p>
-                      <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                      <p className="font-medium text-white mb-1">When to Use</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Drilling into masonry or concrete</li>
                         <li>Cutting MDF or other composite materials</li>
                         <li>Working in dusty loft spaces</li>
@@ -502,8 +502,8 @@ const Module3Section3_6: React.FC = () => {
                   <p className="font-medium mb-2">Foot Protection</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-cyan-200 mb-1">Purpose & Function</p>
-                      <ul className="list-disc pl-4 space-y-1 text-cyan-200">
+                      <p className="font-medium text-white mb-1">Purpose & Function</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Prevents injury from dropped tools and materials</li>
                         <li>Protects against sharp debris and nails</li>
                         <li>Provides slip resistance on various surfaces</li>
@@ -511,8 +511,8 @@ const Module3Section3_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-cyan-200 mb-1">Types Available</p>
-                      <ul className="list-disc pl-4 space-y-1 text-cyan-200">
+                      <p className="font-medium text-white mb-1">Types Available</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Safety boots with steel or composite toe caps</li>
                         <li>Anti-slip soles for wet or oily surfaces</li>
                         <li>Electrical hazard (EH) rated footwear</li>
@@ -520,8 +520,8 @@ const Module3Section3_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-cyan-200 mb-1">When to Use</p>
-                      <ul className="list-disc pl-4 space-y-1 text-cyan-200">
+                      <p className="font-medium text-white mb-1">When to Use</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>All site work - mandatory in construction</li>
                         <li>Industrial environments with heavy machinery</li>
                         <li>Areas with potential electrical hazards</li>
@@ -601,7 +601,7 @@ const Module3Section3_6: React.FC = () => {
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
-              <ul className="list-disc pl-6 space-y-1 text-red-200">
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li><strong>Wrong glove type for electrical work</strong> - Risk of electric shock with non-insulated gloves</li>
                 <li><strong>Damaged or expired PPE use</strong> - Compromised protection leading to injury</li>
                 <li><strong>Removing PPE in hazardous areas</strong> - Exposure to risks during "quick tasks"</li>
@@ -610,7 +610,7 @@ const Module3Section3_6: React.FC = () => {
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Compliance Issues</p>
-              <ul className="list-disc pl-6 space-y-1 text-orange-200">
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li><strong>Inadequate hazard assessment</strong> - Missing PPE requirements for specific tasks</li>
                 <li><strong>Poor maintenance records</strong> - Cannot demonstrate PPE fitness for use</li>
                 <li><strong>No replacement schedule</strong> - Using PPE beyond recommended service life</li>
@@ -664,7 +664,7 @@ const Module3Section3_6: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="font-medium text-elec-yellow mb-1">Consequences</p>
-                <ul className="list-disc pl-4 space-y-1 text-red-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Personal injury requiring medical treatment</li>
                   <li>Time off work and lost productivity</li>
                   <li>Potential for permanent vision damage</li>
@@ -673,7 +673,7 @@ const Module3Section3_6: React.FC = () => {
               </div>
               <div>
                 <p className="font-medium text-green-300 mb-1">Prevention Implementation</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Mandatory eye protection policy introduced</li>
                   <li>Toolbox talks on PPE importance</li>
                   <li>Site supervision to ensure compliance</li>
@@ -711,7 +711,7 @@ const Module3Section3_6: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-300 mb-2">Key Benefits</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Significantly reduces injury severity and frequency</li>
                   <li>Ensures compliance with legal requirements</li>
                   <li>Demonstrates professional safety awareness</li>
@@ -720,7 +720,7 @@ const Module3Section3_6: React.FC = () => {
               </div>
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-elec-yellow mb-2">Essential Points</p>
-                <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Match PPE type to specific hazards present</li>
                   <li>Inspect before use and maintain properly</li>
                   <li>Replace when damaged or beyond service life</li>
@@ -741,7 +741,7 @@ const Module3Section3_6: React.FC = () => {
               <p className="font-medium text-green-300 mb-3 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4" /> DO
               </p>
-              <ul className="space-y-2 text-sm text-green-200">
+              <ul className="space-y-2 text-sm text-white">
                 <li>✓ Assess hazards before selecting PPE</li>
                 <li>✓ Inspect PPE before each use</li>
                 <li>✓ Use task-specific protection (insulated gloves for electrical)</li>
@@ -754,7 +754,7 @@ const Module3Section3_6: React.FC = () => {
               <p className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" /> DON'T
               </p>
-              <ul className="space-y-2 text-sm text-red-200">
+              <ul className="space-y-2 text-sm text-white">
                 <li>✗ Use general gloves for electrical testing</li>
                 <li>✗ Work without appropriate eye protection</li>
                 <li>✗ Continue using damaged PPE</li>

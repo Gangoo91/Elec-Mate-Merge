@@ -449,7 +449,7 @@ const Module4Section2_2 = () => {
 
         {/* Real-World Example */}
         <Card className="mb-8 p-6 bg-elec-yellow/5 dark:bg-elec-yellow/10 border-blue-200 dark:border-blue-800">
-          <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
+          <h3 className="font-semibold text-blue-800 dark:text-white mb-3 flex items-center gap-2">
             <Eye className="w-5 h-5" />
             Real-World Example
           </h3>
@@ -458,7 +458,7 @@ const Module4Section2_2 = () => {
             several trunking runs clashed with HVAC systems and had to be re-routed at extra cost.
           </p>
           <div className="bg-blue-100 dark:bg-blue-900/30 border border-blue-300 dark:border-blue-700 rounded p-3">
-            <p className="text-xs text-blue-800 dark:text-blue-200">
+            <p className="text-xs text-blue-800 dark:text-white">
               <strong>Lesson:</strong> Pre-installation checks would have prevented this costly mistake. 
               Always verify site conditions and check for services before setting out.
             </p>

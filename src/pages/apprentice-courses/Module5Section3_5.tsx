@@ -313,7 +313,7 @@ const Module5Section3_5 = () => {
             <div className="space-y-4">
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                 <div className="rounded-lg p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-                  <h4 className="font-medium text-green-800 dark:text-green-200 mb-3">Minor Variations</h4>
+                  <h4 className="font-medium text-green-800 dark:text-white mb-3">Minor Variations</h4>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Single socket additions</li>
                     <li>Switch position adjustments</li>
@@ -335,7 +335,7 @@ const Module5Section3_5 = () => {
                 </div>
 
                 <div className="rounded-lg p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-                  <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">Major Variations</h4>
+                  <h4 className="font-medium text-red-800 dark:text-white mb-3">Major Variations</h4>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Complete system redesign</li>
                     <li>Additional building areas</li>
@@ -734,10 +734,10 @@ const Module5Section3_5 = () => {
             </div>
 
             <div className="rounded-lg p-4 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-              <h3 className="font-medium text-purple-800 dark:text-purple-200 mb-3">Risk Management Strategies</h3>
+              <h3 className="font-medium text-purple-800 dark:text-white mb-3">Risk Management Strategies</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <p className="font-medium text-purple-800 dark:text-purple-200 mb-2">Proactive Risk Identification:</p>
+                  <p className="font-medium text-purple-800 dark:text-white mb-2">Proactive Risk Identification:</p>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Regular site condition assessments</li>
                     <li>Early supplier communication for long-lead items</li>
@@ -746,7 +746,7 @@ const Module5Section3_5 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-purple-800 dark:text-purple-200 mb-2">Reactive Response Planning:</p>
+                  <p className="font-medium text-purple-800 dark:text-white mb-2">Reactive Response Planning:</p>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Pre-agreed alternative suppliers and materials</li>
                     <li>Flexible resource allocation strategies</li>
@@ -765,12 +765,12 @@ const Module5Section3_5 = () => {
           
           <div className="space-y-6">
             <div className="rounded-lg p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-              <h3 className="font-semibold text-red-800 dark:text-red-200 mb-3">Case Study 1: Unauthorised Structural Modification</h3>
+              <h3 className="font-semibold text-red-800 dark:text-white mb-3">Case Study 1: Unauthorised Structural Modification</h3>
               <p className="text-red-700 text-elec-yellow mb-3">
                 On a commercial project, electricians discovered steel beams obstructing the planned cable route. Instead of stopping and reporting, they improvised by drilling through the beam, creating a serious safety risk. The work had to be removed and redone, and the contractor faced penalties. Correct action would have been to report the issue, seek design approval, and reroute safely.
               </p>
               <div className="bg-red-100 dark:bg-red-900/40 p-3 rounded">
-                <p className="font-medium text-red-800 dark:text-red-200 mb-1">Lessons Learned:</p>
+                <p className="font-medium text-red-800 dark:text-white mb-1">Lessons Learned:</p>
                 <ul className="list-disc pl-5 text-sm text-red-700 text-elec-yellow">
                   <li>Never make structural modifications without engineering approval</li>
                   <li>Stop work immediately when unexpected conditions are encountered</li>
@@ -781,12 +781,12 @@ const Module5Section3_5 = () => {
             </div>
 
             <div className="rounded-lg p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-              <h3 className="font-semibold text-green-800 dark:text-green-200 mb-3">Case Study 2: Proactive Material Shortage Management</h3>
+              <h3 className="font-semibold text-green-800 dark:text-white mb-3">Case Study 2: Proactive Material Shortage Management</h3>
               <p className="text-green-700 dark:text-green-300 mb-3">
                 During a hospital project, the electrical contractor identified potential delays in specialist fire-rated cable delivery. They immediately raised a variation to use alternative approved products, maintaining the project schedule while ensuring full compliance with fire safety requirements.
               </p>
               <div className="bg-green-100 dark:bg-green-900/40 p-3 rounded">
-                <p className="font-medium text-green-800 dark:text-green-200 mb-1">Success Factors:</p>
+                <p className="font-medium text-green-800 dark:text-white mb-1">Success Factors:</p>
                 <ul className="list-disc pl-5 text-sm text-green-700 dark:text-green-300">
                   <li>Early identification of potential supply chain issues</li>
                   <li>Proactive communication with design team and client</li>
@@ -797,12 +797,12 @@ const Module5Section3_5 = () => {
             </div>
 
             <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-              <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3">Case Study 3: Client-Driven Variation Management</h3>
+              <h3 className="font-semibold text-blue-800 dark:text-white mb-3">Case Study 3: Client-Driven Variation Management</h3>
               <p className="text-blue-700 text-elec-yellow mb-3">
                 A retail fit-out project experienced multiple client-requested changes to lighting layouts. The electrical contractor implemented a systematic variation management process, with regular client meetings and clear cost implications for each change. The project completed successfully with full client satisfaction and profitable variation recovery.
               </p>
               <div className="bg-blue-100 dark:bg-blue-900/40 p-3 rounded">
-                <p className="font-medium text-blue-800 dark:text-blue-200 mb-1">Key Strategies:</p>
+                <p className="font-medium text-blue-800 dark:text-white mb-1">Key Strategies:</p>
                 <ul className="list-disc pl-5 text-sm text-blue-700 text-elec-yellow">
                   <li>Structured variation approval process with clear pricing</li>
                   <li>Regular client communication to manage expectations</li>

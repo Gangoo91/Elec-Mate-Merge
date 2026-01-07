@@ -150,7 +150,7 @@ const Section6_6 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" asChild className="text-gray-300 hover:text-white">
+          <Button variant="ghost" asChild className="text-white hover:text-white">
             <Link to=".." className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               Back to Section 6
@@ -170,7 +170,7 @@ const Section6_6 = () => {
             <h1 className="text-4xl font-bold text-white mb-4">
               Final Summary and Key Safety Principles
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-white">
               Reinforcing core safety concepts and building lifelong safe working habits
             </p>
           </div>
@@ -181,13 +181,13 @@ const Section6_6 = () => {
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <h2 className="text-lg font-semibold text-white mb-3">In 30 seconds</h2>
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 You've completed Module 1 on Health and Safety. These aren't just rules for assessments — they're the foundation for working safely and professionally on any job. Master these principles and they'll serve you throughout your electrical career.
               </p>
             </div>
             <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
               <h3 className="text-elec-yellow font-semibold mb-2 text-sm">Spot it / Use it</h3>
-              <div className="space-y-2 text-gray-300 text-sm">
+              <div className="space-y-2 text-white text-sm">
                 <p><span className="text-elec-yellow">Spot:</span> Personal responsibility, live working risks, safe isolation needs, PPE requirements, housekeeping issues</p>
                 <p><span className="text-elec-yellow">Use:</span> Apply safety principles consistently, take responsibility, follow procedures, report incidents, stay competent</p>
               </div>
@@ -201,19 +201,19 @@ const Section6_6 = () => {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Reinforce the core safety concepts covered in Module 1</span>
+              <span className="text-white">Reinforce the core safety concepts covered in Module 1</span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Summarise the responsibilities of electricians regarding safety</span>
+              <span className="text-white">Summarise the responsibilities of electricians regarding safety</span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Prepare learners for real-world site behaviour</span>
+              <span className="text-white">Prepare learners for real-world site behaviour</span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Encourage the development of lifelong safe working habits</span>
+              <span className="text-white">Encourage the development of lifelong safe working habits</span>
             </div>
           </div>
         </Card>
@@ -226,7 +226,7 @@ const Section6_6 = () => {
             </div>
             <div className="flex-1">
               <h2 className="text-xl font-bold text-white mb-4">Essential Safety Principles</h2>
-              <p className="text-gray-300 mb-6">
+              <p className="text-white mb-6">
                 These five principles form the foundation of electrical safety. Master them and apply them consistently.
               </p>
 
@@ -237,35 +237,35 @@ const Section6_6 = () => {
                     <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
                     <div>
                       <p className="text-white font-medium">Personal Responsibility</p>
-                      <p className="text-gray-300 text-sm">You are responsible for your safety — and for the safety of others affected by your work</p>
+                      <p className="text-white text-sm">You are responsible for your safety — and for the safety of others affected by your work</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
                     <div>
                       <p className="text-white font-medium">Live Working</p>
-                      <p className="text-gray-300 text-sm">Never work on live circuits unless absolutely necessary — and only with the right training and controls</p>
+                      <p className="text-white text-sm">Never work on live circuits unless absolutely necessary — and only with the right training and controls</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
                     <div>
                       <p className="text-white font-medium">Safe Isolation</p>
-                      <p className="text-gray-300 text-sm">Always use safe isolation procedures — isolate, lock off, and prove dead</p>
+                      <p className="text-white text-sm">Always use safe isolation procedures — isolate, lock off, and prove dead</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">4</div>
                     <div>
                       <p className="text-white font-medium">PPE Usage</p>
-                      <p className="text-gray-300 text-sm">Wear and maintain PPE — it's your last line of defence, not your first</p>
+                      <p className="text-white text-sm">Wear and maintain PPE — it's your last line of defence, not your first</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">5</div>
                     <div>
                       <p className="text-white font-medium">Tool Safety</p>
-                      <p className="text-gray-300 text-sm">Use the correct tools for the job — and inspect them regularly</p>
+                      <p className="text-white text-sm">Use the correct tools for the job — and inspect them regularly</p>
                     </div>
                   </div>
                 </div>
@@ -273,7 +273,7 @@ const Section6_6 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">Critical Point</h3>
-                <p className="text-gray-300 text-sm">
+                <p className="text-white text-sm">
                   These aren't suggestions — they're requirements for safe electrical work. Your life and others depend on following them consistently.
                 </p>
               </div>
@@ -289,14 +289,14 @@ const Section6_6 = () => {
             </div>
             <div className="flex-1">
               <h2 className="text-xl font-bold text-white mb-4">Additional Professional Principles</h2>
-              <p className="text-gray-300 mb-6">
+              <p className="text-white mb-6">
                 Beyond the core five, these principles complete your professional safety foundation.
               </p>
 
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-4">
                 <div className="bg-muted/50 border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-white mb-3">Workplace Habits</h3>
-                  <ul className="space-y-2 text-gray-300 text-sm">
+                  <ul className="space-y-2 text-white text-sm">
                     <li>• Keep your work area clean and organised</li>
                     <li>• Communicate clearly with your team</li>
                     <li>• Report all incidents and near misses</li>
@@ -306,7 +306,7 @@ const Section6_6 = () => {
                 </div>
                 <div className="bg-muted/50 border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-white mb-3">Legal & Professional</h3>
-                  <ul className="space-y-2 text-gray-300 text-sm">
+                  <ul className="space-y-2 text-white text-sm">
                     <li>• Understand RIDDOR, EAWR, HASAWA, PUWER and COSHH</li>
                     <li>• Work to BS7671 requirements</li>
                     <li>• Only work within your skill level</li>
@@ -318,7 +318,7 @@ const Section6_6 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">Professional Standard</h3>
-                <p className="text-gray-300 text-sm">
+                <p className="text-white text-sm">
                   Being qualified means more than passing exams — it means working safely, consistently, and professionally every day.
                 </p>
               </div>
@@ -345,14 +345,14 @@ const Section6_6 = () => {
             </div>
             <div className="flex-1">
               <h2 className="text-xl font-bold text-white mb-4">Developing Professional Mindset</h2>
-              <p className="text-gray-300 mb-6">
+              <p className="text-white mb-6">
                 Electricians are trusted to work with systems that could kill. The best ones respect that responsibility every day.
               </p>
 
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-4">
                 <div className="bg-muted/50 border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-white mb-3">Professional Habits</h3>
-                  <ul className="space-y-2 text-gray-300 text-sm">
+                  <ul className="space-y-2 text-white text-sm">
                     <li>• Always follow procedures, even under pressure</li>
                     <li>• Question anything that seems unsafe</li>
                     <li>• Learn from mistakes and near misses</li>
@@ -362,7 +362,7 @@ const Section6_6 = () => {
                 </div>
                 <div className="bg-muted/50 border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-white mb-3">Career Development</h3>
-                  <ul className="space-y-2 text-gray-300 text-sm">
+                  <ul className="space-y-2 text-white text-sm">
                     <li>• Seek out additional training opportunities</li>
                     <li>• Stay current with regulations and standards</li>
                     <li>• Develop leadership skills in safety</li>
@@ -374,7 +374,7 @@ const Section6_6 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">Key Message</h3>
-                <p className="text-gray-300 text-sm">
+                <p className="text-white text-sm">
                   On your first day on site — and your thousandth — these rules still apply. Safety is not something you grow out of.
                 </p>
               </div>
@@ -390,14 +390,14 @@ const Section6_6 = () => {
             </div>
             <div className="flex-1">
               <h2 className="text-xl font-bold text-white mb-4">The Complete Electrical Professional</h2>
-              <p className="text-gray-300 mb-6">
+              <p className="text-white mb-6">
                 Success in the electrical industry requires three skill sets working together: technical, safety, and professional.
               </p>
 
               <div className="grid md:grid-cols-3 gap-6 mb-4">
                 <div className="bg-muted/50 border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-white mb-3">Technical Skills</h3>
-                  <ul className="space-y-2 text-gray-300 text-sm">
+                  <ul className="space-y-2 text-white text-sm">
                     <li>• Circuit design and installation</li>
                     <li>• Testing and inspection</li>
                     <li>• Fault finding and repair</li>
@@ -407,7 +407,7 @@ const Section6_6 = () => {
                 </div>
                 <div className="bg-muted/50 border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-white mb-3">Safety Skills</h3>
-                  <ul className="space-y-2 text-gray-300 text-sm">
+                  <ul className="space-y-2 text-white text-sm">
                     <li>• Risk assessment</li>
                     <li>• Safe isolation procedures</li>
                     <li>• PPE selection and use</li>
@@ -417,7 +417,7 @@ const Section6_6 = () => {
                 </div>
                 <div className="bg-muted/50 border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-white mb-3">Professional Skills</h3>
-                  <ul className="space-y-2 text-gray-300 text-sm">
+                  <ul className="space-y-2 text-white text-sm">
                     <li>• Communication</li>
                     <li>• Time management</li>
                     <li>• Customer service</li>
@@ -429,7 +429,7 @@ const Section6_6 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">Integration</h3>
-                <p className="text-gray-300 text-sm">
+                <p className="text-white text-sm">
                   All three skill areas must work together. Technical skill without safety awareness is dangerous. Safety knowledge without professional skills limits career growth.
                 </p>
               </div>
@@ -445,13 +445,13 @@ const Section6_6 = () => {
             </div>
             <div className="flex-1">
               <h2 className="text-xl font-bold text-white mb-4">Your Safety Legacy</h2>
-              <p className="text-gray-300 mb-6">
+              <p className="text-white mb-6">
                 The choices you make about safety don't just affect you — they impact your family, colleagues, and the entire electrical industry.
               </p>
 
               <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
                 <h3 className="font-semibold text-white mb-3">Remember Always</h3>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li>• No job is so urgent that safety can be compromised</li>
                   <li>• Your family wants you home safe every day</li>
                   <li>• Good electricians earn respect through consistent safe practice</li>
@@ -462,7 +462,7 @@ const Section6_6 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">Final Thought</h3>
-                <p className="text-gray-300 text-sm">
+                <p className="text-white text-sm">
                   Electricity won't give you a second chance. Procedures, PPE, and risk assessments aren't red tape — they're there because someone before you was injured or killed. Be the person who breaks the cycle, not the next example.
                 </p>
               </div>
@@ -505,27 +505,27 @@ const Section6_6 = () => {
           <div className="space-y-4">
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">Will following safety procedures make me slower than other electricians?</h3>
-              <p className="text-gray-300 text-sm">Initially perhaps, but safe workers avoid rework, injuries, and accidents that cost far more time. Speed comes with practice, safety must be consistent.</p>
+              <p className="text-white text-sm">Initially perhaps, but safe workers avoid rework, injuries, and accidents that cost far more time. Speed comes with practice, safety must be consistent.</p>
             </div>
             <div className="border-l-4 border-green-500 pl-4">
               <h3 className="font-semibold text-white mb-1">What if experienced workers tell me safety rules don't matter?</h3>
-              <p className="text-gray-300 text-sm">Some experienced workers have developed bad habits. Follow regulations and procedures regardless. Your career and life are worth more than fitting in.</p>
+              <p className="text-white text-sm">Some experienced workers have developed bad habits. Follow regulations and procedures regardless. Your career and life are worth more than fitting in.</p>
             </div>
             <div className="border-l-4 border-orange-500 pl-4">
               <h3 className="font-semibold text-white mb-1">How do I stay motivated to follow safety procedures every day?</h3>
-              <p className="text-gray-300 text-sm">Remember that consistency builds habits. Think about your family, colleagues, and career. One mistake can change everything permanently.</p>
+              <p className="text-white text-sm">Remember that consistency builds habits. Think about your family, colleagues, and career. One mistake can change everything permanently.</p>
             </div>
             <div className="border-l-4 border-purple-500 pl-4">
               <h3 className="font-semibold text-white mb-1">What's the most important safety habit to develop first?</h3>
-              <p className="text-gray-300 text-sm">Taking personal responsibility. When you truly accept that safety is your responsibility, all other good habits follow naturally.</p>
+              <p className="text-white text-sm">Taking personal responsibility. When you truly accept that safety is your responsibility, all other good habits follow naturally.</p>
             </div>
             <div className="border-l-4 border-red-500 pl-4">
               <h3 className="font-semibold text-white mb-1">How do I keep learning about safety throughout my career?</h3>
-              <p className="text-gray-300 text-sm">Attend refresher training, read incident reports, learn from near misses, stay updated with regulations, and always ask questions when unsure.</p>
+              <p className="text-white text-sm">Attend refresher training, read incident reports, learn from near misses, stay updated with regulations, and always ask questions when unsure.</p>
             </div>
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">What advice would you give to someone starting their electrical career?</h3>
-              <p className="text-gray-300 text-sm">Build safety habits from day one. They're easier to develop than to change later. Your future self will thank you for the foundation you build now.</p>
+              <p className="text-white text-sm">Build safety habits from day one. They're easier to develop than to change later. Your future self will thank you for the foundation you build now.</p>
             </div>
           </div>
         </Card>

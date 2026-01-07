@@ -181,7 +181,7 @@ const Section1_3 = () => {
       {/* Top header bar */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 1
@@ -205,7 +205,7 @@ const Section1_3 = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             RIDDOR, PUWER & COSHH
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white/80">
             Master essential UK safety regulations for electrical work. Learn incident reporting, equipment safety, and hazardous substance controls.
           </p>
         </header>

@@ -366,7 +366,7 @@ const Module5Section1_4 = () => {
                   <AlertTriangle className="w-4 h-4" />
                   Critical Safety Requirements
                 </h4>
-                <div className="space-y-2 text-red-800 dark:text-red-200">
+                <div className="space-y-2 text-red-800 dark:text-white">
                   <p>• Cable routes must follow designated safe zones</p>
                   <p>• Vertical and horizontal routes must comply with BS 7671</p>
                   <p>• Proper protection required outside safe zones</p>
@@ -476,7 +476,7 @@ const Module5Section1_4 = () => {
 
               <div className="bg-amber-50 dark:bg-amber-950/30 p-4 rounded-lg border border-amber-200 dark:border-amber-800">
                 <h4 className="font-semibold text-amber-900 dark:text-amber-100 mb-2">Coordination Benefits:</h4>
-                <ul className="list-disc pl-6 space-y-1 text-amber-800 dark:text-amber-200">
+                <ul className="list-disc pl-6 space-y-1 text-amber-800 dark:text-white">
                   <li>Prevents costly clashes and rework</li>
                   <li>Ensures efficient use of space</li>
                   <li>Maintains project timelines</li>
@@ -509,7 +509,7 @@ const Module5Section1_4 = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3 text-amber-800 dark:text-amber-200">
+            <div className="space-y-3 text-amber-800 dark:text-white">
               <p className="font-medium">Housing Development Safe Zone Violation</p>
               <p>
                 In a new housing project, cables were run outside of designated safe zones shown in the drawings. 
@@ -575,7 +575,7 @@ const Module5Section1_4 = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid md:grid-cols-2 gap-4 text-green-800 dark:text-green-200">
+            <div className="grid md:grid-cols-2 gap-4 text-green-800 dark:text-white">
               <div className="space-y-2">
                 <p>✓ Always match drawings to site conditions</p>
                 <p>✓ Use safe zones for all cable routes</p>

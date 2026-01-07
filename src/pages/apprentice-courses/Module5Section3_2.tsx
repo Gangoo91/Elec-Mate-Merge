@@ -445,7 +445,7 @@ const Module5Section3_2 = () => {
 
         {/* Real-World Example */}
         <Card className="mb-8 p-6 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-          <h2 className="text-lg sm:text-xl font-semibold text-amber-800 dark:text-amber-200 mb-4">Real-World Example</h2>
+          <h2 className="text-lg sm:text-xl font-semibold text-amber-800 dark:text-white mb-4">Real-World Example</h2>
           <p className="text-amber-700 dark:text-amber-300">
             On a commercial office installation, the supervisor set an unrealistic deadline for cable pulling, giving only two days instead of the required four. The team rushed the job, leading to damaged cables and rework. The rework caused a week's delay, which could have been avoided by setting a realistic timescale.
           </p>

@@ -134,7 +134,7 @@ const Section5_2 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 5
@@ -155,7 +155,7 @@ const Section5_2 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 Equipment Required for Isolation
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white/80 max-w-3xl mt-2">
                 Essential tools and equipment for safe isolation procedures
               </p>
             </div>
@@ -190,7 +190,7 @@ const Section5_2 = () => {
         {/* Learning Outcomes */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
+          <p className="text-white/80 mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -220,7 +220,7 @@ const Section5_2 = () => {
           
           <div className="space-y-6">
             <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-              <p className="font-medium text-blue-800 dark:text-blue-200 mb-3">
+              <p className="font-medium text-blue-800 dark:text-white mb-3">
                 To carry out safe isolation correctly, electricians need the right tools and equipment. Each item plays a vital role in keeping you and others protected from electric shock and accidental energising.
               </p>
             </div>
@@ -232,7 +232,7 @@ const Section5_2 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">1</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Lock-Off Kit</h5>
-                    <p className="text-muted-foreground text-sm">Selection of lock-off devices, padlocks with unique keys, warning tags and labels</p>
+                    <p className="text-white/80 text-sm">Selection of lock-off devices, padlocks with unique keys, warning tags and labels</p>
                   </div>
                 </div>
                 
@@ -240,7 +240,7 @@ const Section5_2 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">2</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Proving Unit</h5>
-                    <p className="text-muted-foreground text-sm">Battery-powered device providing known voltage to test your tester before and after use</p>
+                    <p className="text-white/80 text-sm">Battery-powered device providing known voltage to test your tester before and after use</p>
                   </div>
                 </div>
                 
@@ -248,7 +248,7 @@ const Section5_2 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">3</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Voltage Indicator (GS38 Compliant)</h5>
-                    <p className="text-muted-foreground text-sm">Two-pole voltage tester rated for system voltage - NOT a multimeter</p>
+                    <p className="text-white/80 text-sm">Two-pole voltage tester rated for system voltage - NOT a multimeter</p>
                   </div>
                 </div>
                 
@@ -256,7 +256,7 @@ const Section5_2 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">4</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Warning Notices</h5>
-                    <p className="text-muted-foreground text-sm">"Do Not Operate" or "Danger: Electrician Working" labels placed at isolation points</p>
+                    <p className="text-white/80 text-sm">"Do Not Operate" or "Danger: Electrician Working" labels placed at isolation points</p>
                   </div>
                 </div>
               </div>
@@ -309,7 +309,7 @@ const Section5_2 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">1</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Test Your Tester</h5>
-                    <p className="text-muted-foreground text-sm">Use the proving unit to check your voltage tester is working (before use)</p>
+                    <p className="text-white/80 text-sm">Use the proving unit to check your voltage tester is working (before use)</p>
                   </div>
                 </div>
                 
@@ -317,7 +317,7 @@ const Section5_2 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">2</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Isolate the Circuit</h5>
-                    <p className="text-muted-foreground text-sm">Switch off using the correct MCB, fuse, or isolator</p>
+                    <p className="text-white/80 text-sm">Switch off using the correct MCB, fuse, or isolator</p>
                   </div>
                 </div>
                 
@@ -325,7 +325,7 @@ const Section5_2 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">3</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Apply Lock-Off Device</h5>
-                    <p className="text-muted-foreground text-sm">Secure with padlock and keep the key with you</p>
+                    <p className="text-white/80 text-sm">Secure with padlock and keep the key with you</p>
                   </div>
                 </div>
                 
@@ -333,7 +333,7 @@ const Section5_2 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">4</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Place Warning Tag</h5>
-                    <p className="text-muted-foreground text-sm">Attach warning notice to the isolation device</p>
+                    <p className="text-white/80 text-sm">Attach warning notice to the isolation device</p>
                   </div>
                 </div>
                 
@@ -341,7 +341,7 @@ const Section5_2 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">5</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Test the Circuit</h5>
-                    <p className="text-muted-foreground text-sm">Check all conductors: line to neutral, line to earth, neutral to earth</p>
+                    <p className="text-white/80 text-sm">Check all conductors: line to neutral, line to earth, neutral to earth</p>
                   </div>
                 </div>
                 
@@ -349,7 +349,7 @@ const Section5_2 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">6</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Retest Your Tester</h5>
-                    <p className="text-muted-foreground text-sm">Use proving unit again to confirm tester is still working correctly</p>
+                    <p className="text-white/80 text-sm">Use proving unit again to confirm tester is still working correctly</p>
                   </div>
                 </div>
               </div>
@@ -375,7 +375,7 @@ const Section5_2 = () => {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <h4 className="font-semibold mb-2 text-foreground">Visual Inspections</h4>
-                  <ul className="space-y-1 text-muted-foreground text-sm">
+                  <ul className="space-y-1 text-white/80 text-sm">
                     <li>• Inspect leads and probes for damage</li>
                     <li>• Check for cracked or worn insulation</li>
                     <li>• Look for bent or damaged probe tips</li>
@@ -385,7 +385,7 @@ const Section5_2 = () => {
 
                 <div>
                   <h4 className="font-semibold mb-2 text-foreground">Standards Compliance</h4>
-                  <ul className="space-y-1 text-muted-foreground text-sm">
+                  <ul className="space-y-1 text-white/80 text-sm">
                     <li>• Voltage testers must be GS38 compliant</li>
                     <li>• Check calibration dates and certificates</li>
                     <li>• Verify voltage ratings match system voltage</li>
@@ -395,7 +395,7 @@ const Section5_2 = () => {
 
                 <div>
                   <h4 className="font-semibold mb-2 text-foreground">Replacement Schedule</h4>
-                  <ul className="space-y-1 text-muted-foreground text-sm">
+                  <ul className="space-y-1 text-white/80 text-sm">
                     <li>• Replace any worn or expired proving units</li>
                     <li>• Update damaged lock-off devices</li>
                     <li>• Replace torn or faded warning labels</li>
@@ -405,7 +405,7 @@ const Section5_2 = () => {
 
                 <div>
                   <h4 className="font-semibold mb-2 text-foreground">Storage and Care</h4>
-                  <ul className="space-y-1 text-muted-foreground text-sm">
+                  <ul className="space-y-1 text-white/80 text-sm">
                     <li>• Keep lock-off devices clean, dry, and secure</li>
                     <li>• Store testers in protective cases</li>
                     <li>• Avoid extreme temperatures</li>
@@ -472,7 +472,7 @@ const Section5_2 = () => {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground">Voltage Tester Selection</h4>
-                  <ul className="space-y-2 text-muted-foreground text-sm">
+                  <ul className="space-y-2 text-white/80 text-sm">
                     <li>• Choose dual-voltage testers (230V/400V) for versatility</li>
                     <li>• Look for LED and audible indication - easier in noisy environments</li>
                     <li>• Ensure CAT III rating minimum for installation work</li>
@@ -483,7 +483,7 @@ const Section5_2 = () => {
 
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground">Lock-off Kit Essentials</h4>
-                  <ul className="space-y-2 text-muted-foreground text-sm">
+                  <ul className="space-y-2 text-white/80 text-sm">
                     <li>• Universal MCB lockouts - fit most common brands</li>
                     <li>• Different sizes for 1-pole, 2-pole, 3-pole breakers</li>
                     <li>• Isolator lockouts for rotary switches</li>
@@ -494,7 +494,7 @@ const Section5_2 = () => {
 
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground">Proving Unit Features</h4>
-                  <ul className="space-y-2 text-muted-foreground text-sm">
+                  <ul className="space-y-2 text-white/80 text-sm">
                     <li>• Auto-off function saves battery life</li>
                     <li>• Dual voltage output (50V and 250V) tests tester range</li>
                     <li>• Robust case - equipment gets dropped on site</li>
@@ -505,7 +505,7 @@ const Section5_2 = () => {
 
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground">Warning Labels Best Practice</h4>
-                  <ul className="space-y-2 text-muted-foreground text-sm">
+                  <ul className="space-y-2 text-white/80 text-sm">
                     <li>• Pre-printed tags are clearer than handwritten</li>
                     <li>• Include mobile number for urgent contact</li>
                     <li>• Date and time prevent confusion on long jobs</li>
@@ -538,8 +538,8 @@ const Section5_2 = () => {
                   <h4 className="font-semibold mb-2 text-foreground">Problem: "My voltage tester keeps giving inconsistent readings"</h4>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h5 className="font-medium text-muted-foreground mb-1">Likely Causes:</h5>
-                      <ul className="text-sm text-muted-foreground space-y-1">
+                      <h5 className="font-medium text-white/80 mb-1">Likely Causes:</h5>
+                      <ul className="text-sm text-white/80 space-y-1">
                         <li>• Dirty or corroded probe tips</li>
                         <li>• Loose internal connections</li>
                         <li>• Low battery affecting sensitivity</li>
@@ -547,8 +547,8 @@ const Section5_2 = () => {
                       </ul>
                     </div>
                     <div>
-                      <h5 className="font-medium text-muted-foreground mb-1">Solutions:</h5>
-                      <ul className="text-sm text-muted-foreground space-y-1">
+                      <h5 className="font-medium text-white/80 mb-1">Solutions:</h5>
+                      <ul className="text-sm text-white/80 space-y-1">
                         <li>• Clean probes with fine emery cloth</li>
                         <li>• Replace if internal damage suspected</li>
                         <li>• Always check battery before use</li>
@@ -562,8 +562,8 @@ const Section5_2 = () => {
                   <h4 className="font-semibold mb-2 text-foreground">Problem: "Lock-off device won't fit the isolator properly"</h4>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h5 className="font-medium text-muted-foreground mb-1">Likely Causes:</h5>
-                      <ul className="text-sm text-muted-foreground space-y-1">
+                      <h5 className="font-medium text-white/80 mb-1">Likely Causes:</h5>
+                      <ul className="text-sm text-white/80 space-y-1">
                         <li>• Wrong size for breaker type</li>
                         <li>• Non-standard isolator design</li>
                         <li>• Worn or damaged lock-off device</li>
@@ -571,8 +571,8 @@ const Section5_2 = () => {
                       </ul>
                     </div>
                     <div>
-                      <h5 className="font-medium text-muted-foreground mb-1">Solutions:</h5>
-                      <ul className="text-sm text-muted-foreground space-y-1">
+                      <h5 className="font-medium text-white/80 mb-1">Solutions:</h5>
+                      <ul className="text-sm text-white/80 space-y-1">
                         <li>• Carry variety of lock-off types</li>
                         <li>• Custom solutions for unusual equipment</li>
                         <li>• Regular inspection and replacement</li>
@@ -586,8 +586,8 @@ const Section5_2 = () => {
                   <h4 className="font-semibold mb-2 text-foreground">Problem: "Proving unit won't turn on when I need it"</h4>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h5 className="font-medium text-muted-foreground mb-1">Likely Causes:</h5>
-                      <ul className="text-sm text-muted-foreground space-y-1">
+                      <h5 className="font-medium text-white/80 mb-1">Likely Causes:</h5>
+                      <ul className="text-sm text-white/80 space-y-1">
                         <li>• Dead or low batteries</li>
                         <li>• Corroded battery contacts</li>
                         <li>• Internal component failure</li>
@@ -595,8 +595,8 @@ const Section5_2 = () => {
                       </ul>
                     </div>
                     <div>
-                      <h5 className="font-medium text-muted-foreground mb-1">Solutions:</h5>
-                      <ul className="text-sm text-muted-foreground space-y-1">
+                      <h5 className="font-medium text-white/80 mb-1">Solutions:</h5>
+                      <ul className="text-sm text-white/80 space-y-1">
                         <li>• Always carry spare batteries</li>
                         <li>• Clean contacts with isopropyl alcohol</li>
                         <li>• Replace unit immediately if faulty</li>
@@ -630,21 +630,21 @@ const Section5_2 = () => {
                   <h4 className="font-semibold mb-2 text-foreground">Case Study 1: The Faulty Tester</h4>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h5 className="font-medium text-muted-foreground mb-2">The Incident:</h5>
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <h5 className="font-medium text-white/80 mb-2">The Incident:</h5>
+                      <p className="text-sm text-white/80 mb-2">
                         Electrician working on 400V sub-main in factory. Voltage tester gave "dead" reading, but circuit was still live. 
                         Fortunately discovered when another electrician double-checked with different tester.
                       </p>
-                      <h5 className="font-medium text-muted-foreground mb-1">What Went Wrong:</h5>
-                      <ul className="text-sm text-muted-foreground space-y-1">
+                      <h5 className="font-medium text-white/80 mb-1">What Went Wrong:</h5>
+                      <ul className="text-sm text-white/80 space-y-1">
                         <li>• No proving unit check before testing</li>
                         <li>• Tester had internal failure</li>
                         <li>• Relied on single test method</li>
                       </ul>
                     </div>
                     <div>
-                      <h5 className="font-medium text-muted-foreground mb-1">Lessons Learned:</h5>
-                      <ul className="text-sm text-muted-foreground space-y-1">
+                      <h5 className="font-medium text-white/80 mb-1">Lessons Learned:</h5>
+                      <ul className="text-sm text-white/80 space-y-1">
                         <li>• Always prove-test-prove sequence</li>
                         <li>• Cross-check with colleague when possible</li>
                         <li>• Replace equipment at first sign of trouble</li>
@@ -662,21 +662,21 @@ const Section5_2 = () => {
                   <h4 className="font-semibold mb-2 text-foreground">Case Study 2: The Missing Lock-off</h4>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h5 className="font-medium text-muted-foreground mb-2">The Incident:</h5>
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <h5 className="font-medium text-white/80 mb-2">The Incident:</h5>
+                      <p className="text-sm text-white/80 mb-2">
                         Apprentice working on lighting circuit. Switched off at distribution board but didn't lock off. 
                         Cleaner switched lights back on while apprentice had hands in ceiling void.
                       </p>
-                      <h5 className="font-medium text-muted-foreground mb-1">What Went Wrong:</h5>
-                      <ul className="text-sm text-muted-foreground space-y-1">
+                      <h5 className="font-medium text-white/80 mb-1">What Went Wrong:</h5>
+                      <ul className="text-sm text-white/80 space-y-1">
                         <li>• No lock-off device used</li>
                         <li>• No warning sign displayed</li>
                         <li>• Poor communication with other site users</li>
                       </ul>
                     </div>
                     <div>
-                      <h5 className="font-medium text-muted-foreground mb-1">Lessons Learned:</h5>
-                      <ul className="text-sm text-muted-foreground space-y-1">
+                      <h5 className="font-medium text-white/80 mb-1">Lessons Learned:</h5>
+                      <ul className="text-sm text-white/80 space-y-1">
                         <li>• Lock-off is not optional - it's essential</li>
                         <li>• Clear warning signs prevent misunderstandings</li>
                         <li>• Brief all site personnel before starting work</li>
@@ -694,21 +694,21 @@ const Section5_2 = () => {
                   <h4 className="font-semibold mb-2 text-foreground">Case Study 3: The Equipment That Saved Lives</h4>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <h5 className="font-medium text-muted-foreground mb-2">The Incident:</h5>
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <h5 className="font-medium text-white/80 mb-2">The Incident:</h5>
+                      <p className="text-sm text-white/80 mb-2">
                         Major switchboard upgrade in hospital. Multiple isolations required. One circuit unexpectedly had 
                         backfeed from UPS system. Proper isolation equipment detected the voltage.
                       </p>
-                      <h5 className="font-medium text-muted-foreground mb-1">What Went Right:</h5>
-                      <ul className="text-sm text-muted-foreground space-y-1">
+                      <h5 className="font-medium text-white/80 mb-1">What Went Right:</h5>
+                      <ul className="text-sm text-white/80 space-y-1">
                         <li>• Comprehensive testing of all conductors</li>
                         <li>• High-quality GS38 tester detected UPS backfeed</li>
                         <li>• Multiple isolation points properly locked off</li>
                       </ul>
                     </div>
                     <div>
-                      <h5 className="font-medium text-muted-foreground mb-1">Success Factors:</h5>
-                      <ul className="text-sm text-muted-foreground space-y-1">
+                      <h5 className="font-medium text-white/80 mb-1">Success Factors:</h5>
+                      <ul className="text-sm text-white/80 space-y-1">
                         <li>• Thorough isolation procedure followed</li>
                         <li>• Quality equipment revealed hidden danger</li>
                         <li>• Team worked systematically through checklist</li>

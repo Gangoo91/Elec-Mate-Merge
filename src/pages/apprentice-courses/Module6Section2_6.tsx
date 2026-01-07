@@ -574,7 +574,7 @@ const Module6Section2_6 = () => {
               On a warehouse project, an inspector relied on memory instead of a checklist. They missed checking bonding to exposed structural steelwork. Weeks later, during fault conditions, the lack of bonding caused a dangerous potential difference across metalwork. This highlighted the importance of systematic checklists and proper record-keeping.
             </p>
             <div className="mt-4 p-3 bg-amber-100 dark:bg-amber-900/40 rounded border-l-4 border-l-amber-500">
-              <p className="font-medium text-amber-800 dark:text-amber-200 mb-1">Key Learning Point</p>
+              <p className="font-medium text-amber-800 dark:text-white mb-1">Key Learning Point</p>
               <p className="text-xs sm:text-sm text-white">
                 Memory-based inspections create unacceptable safety risks. Systematic checklists and documentation prevent potentially fatal oversights.
               </p>

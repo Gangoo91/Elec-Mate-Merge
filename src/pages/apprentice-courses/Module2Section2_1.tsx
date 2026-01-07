@@ -241,7 +241,7 @@ const Module2Section2_1: React.FC = () => {
                 </div>
               </div>
               <div className="bg-slate-700/50 border border-slate-600 p-4 rounded-lg">
-                <p className="text-sm text-slate-200"><strong className="text-white">Memory tip:</strong> Cover what you need to find, and read the remaining formula from the triangle.</p>
+                <p className="text-sm text-white"><strong className="text-white">Memory tip:</strong> Cover what you need to find, and read the remaining formula from the triangle.</p>
               </div>
             </div>
           </div>

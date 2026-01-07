@@ -15,7 +15,7 @@ const Level2Module8Section2Section1 = () => {
         <div className="flex items-center gap-4 mb-6">
           <Link 
             to=".." 
-            className="inline-flex items-center text-muted-foreground hover:text-elec-yellow transition-colors"
+            className="inline-flex items-center text-white/80 hover:text-elec-yellow transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to How to Pass Exams
@@ -30,7 +30,7 @@ const Level2Module8Section2Section1 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3">
             Time Management Mastery
           </h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
+          <p className="text-white/80 max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
             Master the essential time management strategies that separate successful candidates from the rest. 
             These proven techniques will help you excel in both written and practical electrical installation examinations.
           </p>
@@ -40,15 +40,15 @@ const Level2Module8Section2Section1 = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 text-center">
             <div className="text-2xl font-bold text-elec-yellow mb-1">2 mins</div>
-            <div className="text-sm text-muted-foreground">Average per question</div>
+            <div className="text-sm text-white/80">Average per question</div>
           </div>
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 text-center">
             <div className="text-2xl font-bold text-elec-yellow mb-1">85%</div>
-            <div className="text-sm text-muted-foreground">Pass rate with good timing</div>
+            <div className="text-sm text-white/80">Pass rate with good timing</div>
           </div>
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 text-center">
             <div className="text-2xl font-bold text-elec-yellow mb-1">15 mins</div>
-            <div className="text-sm text-muted-foreground">Reserve for final review</div>
+            <div className="text-sm text-white/80">Reserve for final review</div>
           </div>
         </div>
 
@@ -71,8 +71,8 @@ const Level2Module8Section2Section1 = () => {
                   <div className="space-y-3">
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
                       <div className="font-medium text-elec-yellow text-sm">Written Exam (C&G 2365-02)</div>
-                      <div className="text-sm text-muted-foreground mb-2">2 hours • 60 questions • 2 minutes per question</div>
-                      <div className="text-xs text-muted-foreground space-y-1">
+                      <div className="text-sm text-white/80 mb-2">2 hours • 60 questions • 2 minutes per question</div>
+                      <div className="text-xs text-white/80 space-y-1">
                         <div>• Multiple choice format with 4 options per question</div>
                         <div>• Covers all units: Health & Safety, Electrical Science, Installation Technology</div>
                         <div>• Pass mark: 60% (36 correct answers minimum)</div>
@@ -82,8 +82,8 @@ const Level2Module8Section2Section1 = () => {
                     </div>
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
                       <div className="font-medium text-elec-yellow text-sm">Practical Assessment (C&G 2365-03)</div>
-                      <div className="text-sm text-muted-foreground mb-2">5-6 hours • Multiple tasks • Skill demonstration</div>
-                      <div className="text-xs text-muted-foreground space-y-1">
+                      <div className="text-sm text-white/80 mb-2">5-6 hours • Multiple tasks • Skill demonstration</div>
+                      <div className="text-xs text-white/80 space-y-1">
                         <div>• Circuit installation (ring final, radial, lighting circuits)</div>
                         <div>• Testing and inspection procedures</div>
                         <div>• Fault finding and diagnosis</div>
@@ -94,8 +94,8 @@ const Level2Module8Section2Section1 = () => {
                     </div>
                     <div className="p-3 bg-muted/50 rounded-lg border-l-4 border-elec-yellow">
                       <div className="font-medium text-elec-yellow text-sm">Online Exam Environment</div>
-                      <div className="text-sm text-muted-foreground mb-2">Timer on screen • Instant feedback • No going back</div>
-                      <div className="text-xs text-muted-foreground space-y-1">
+                      <div className="text-sm text-white/80 mb-2">Timer on screen • Instant feedback • No going back</div>
+                      <div className="text-xs text-white/80 space-y-1">
                         <div>• Questions appear one at a time in some formats</div>
                         <div>• Can't return to previous questions once submitted</div>
                         <div>• Timer counts down visibly - use this advantage</div>
@@ -140,7 +140,7 @@ const Level2Module8Section2Section1 = () => {
                   
                   <div className="mt-4 p-3 bg-card rounded-lg border border-border/30">
                     <h5 className="font-semibold text-elec-yellow mb-2">Time Allocation Calculator</h5>
-                    <div className="text-sm text-muted-foreground space-y-1">
+                    <div className="text-sm text-white/80 space-y-1">
                       <div>Question 1-15: 22.5 minutes (1.5 min each - easy wins)</div>
                       <div>Question 16-30: 30 minutes (2 min each - moderate difficulty)</div>
                       <div>Question 31-45: 37.5 minutes (2.5 min each - complex calculations)</div>
@@ -152,11 +152,11 @@ const Level2Module8Section2Section1 = () => {
 
               <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 rounded-lg border border-elec-yellow/30">
                 <h5 className="font-semibold text-elec-yellow mb-2">Pro Tip: The 25% Rule & Elimination Strategy</h5>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-white/80 mb-3">
                   If you can eliminate just one wrong answer from a 4-option multiple choice question, 
                   your chances improve from 25% to 33% - that's a significant advantage over random guessing!
                 </p>
-                <div className="text-xs text-muted-foreground space-y-1">
+                <div className="text-xs text-white/80 space-y-1">
                   <div><strong>Level 1 Elimination:</strong> Remove obviously wrong answers (safety violations, impossible values)</div>
                   <div><strong>Level 2 Elimination:</strong> Use BS7671 knowledge to eliminate non-compliant options</div>
                   <div><strong>Level 3 Elimination:</strong> Apply practical experience to identify impractical solutions</div>
@@ -166,10 +166,10 @@ const Level2Module8Section2Section1 = () => {
               
               <div className="bg-gradient-to-r from-green-500/10 to-transparent p-4 rounded-lg border border-green-500/30">
                 <h5 className="font-semibold text-green-400 mb-2">Question Pattern Recognition</h5>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-white/80 mb-3">
                   C&G exams follow predictable patterns. Learning these can save precious seconds:
                 </p>
-                <div className="text-xs text-muted-foreground space-y-2">
+                <div className="text-xs text-white/80 space-y-2">
                   <div><strong>Safety Questions (15-20%):</strong> Usually have obvious correct answers - answer quickly</div>
                   <div><strong>Calculation Questions (20-25%):</strong> Often involve Ohm's law, power formulas, or cable sizing</div>
                   <div><strong>BS7671 Regulation Questions (30-35%):</strong> Direct references to specific regulation numbers</div>
@@ -196,13 +196,13 @@ const Level2Module8Section2Section1 = () => {
                     <div className="absolute top-3 left-3 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center font-bold text-sm">1</div>
                     <div className="ml-12">
                       <h5 className="font-medium text-green-400 text-lg mb-2">Pass 1: Quick Wins (45-50 minutes)</h5>
-                      <p className="text-sm text-muted-foreground mb-3">
+                      <p className="text-sm text-white/80 mb-3">
                         Answer all questions you know immediately. This builds confidence and secures easy marks.
                       </p>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
                           <h6 className="text-xs font-medium text-green-400 mb-1">TARGET QUESTIONS:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Basic safety regulations (Part 1 BS7671)</div>
                             <div>• Simple Ohm's law calculations</div>
                             <div>• Standard cable colour codes</div>
@@ -213,7 +213,7 @@ const Level2Module8Section2Section1 = () => {
                         </div>
                         <div>
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">SKIP FOR NOW:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Complex cable calculations</div>
                             <div>• Voltage drop scenarios</div>
                             <div>• Discrimination calculations</div>
@@ -232,13 +232,13 @@ const Level2Module8Section2Section1 = () => {
                     <div className="absolute top-3 left-3 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-sm">2</div>
                     <div className="ml-12">
                       <h5 className="font-medium text-elec-yellow text-lg mb-2">Pass 2: Calculated Answers (45-50 minutes)</h5>
-                      <p className="text-sm text-muted-foreground mb-3">
+                      <p className="text-sm text-white/80 mb-3">
                         Return to skipped questions requiring calculations and BS7671 references.
                       </p>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">CALCULATION PRIORITIES:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Cable current-carrying capacity (Appendix 4)</div>
                             <div>• Voltage drop calculations (Appendix 4)</div>
                             <div>• Circuit protection coordination</div>
@@ -248,7 +248,7 @@ const Level2Module8Section2Section1 = () => {
                         </div>
                         <div>
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">BS7671 QUICK FINDS:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Part 4: Protection for safety</div>
                             <div>• Part 5: Selection & erection</div>
                             <div>• Part 6: Inspection & testing</div>
@@ -271,13 +271,13 @@ const Level2Module8Section2Section1 = () => {
                     <div className="absolute top-3 left-3 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center font-bold text-sm">3</div>
                     <div className="ml-12">
                       <h5 className="font-medium text-elec-yellow text-lg mb-2">Pass 3: Review & Strategic Guessing (15-20 minutes)</h5>
-                      <p className="text-sm text-muted-foreground mb-3">
+                      <p className="text-sm text-white/80 mb-3">
                         Review all answers, ensure no blanks, make educated guesses using elimination.
                       </p>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">REVIEW CHECKLIST:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Check for mathematical errors</div>
                             <div>• Verify units in calculations (mm², A, V, Ω)</div>
                             <div>• Look for reversed safety logic</div>
@@ -287,7 +287,7 @@ const Level2Module8Section2Section1 = () => {
                         </div>
                         <div>
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">GUESSING STRATEGY:</h6>
-                          <div className="space-y-1 text-xs text-muted-foreground">
+                          <div className="space-y-1 text-xs text-white/80">
                             <div>• Eliminate obviously dangerous options</div>
                             <div>• Choose compliant BS7671 answers</div>
                             <div>• Select conservative safety margins</div>
@@ -359,8 +359,8 @@ const Level2Module8Section2Section1 = () => {
                   <div className="space-y-3">
                     <div className="p-4 bg-gradient-to-r from-green-500/10 to-transparent rounded-lg border border-green-500/30">
                       <h5 className="font-medium text-green-400 mb-2">Tier 1: Critical Foundation Tasks</h5>
-                      <p className="text-sm text-muted-foreground mb-2">High marks, essential for progression - complete first</p>
-                      <div className="text-xs text-muted-foreground space-y-1">
+                      <p className="text-sm text-white/80 mb-2">High marks, essential for progression - complete first</p>
+                      <div className="text-xs text-white/80 space-y-1">
                         <div>• <strong>Consumer unit installation:</strong> 15-20 marks typically</div>
                         <div>• <strong>Main earthing connections:</strong> 10-15 marks + safety critical</div>
                         <div>• <strong>Basic circuit wiring:</strong> Core competency demonstration</div>
@@ -369,8 +369,8 @@ const Level2Module8Section2Section1 = () => {
                     </div>
                     <div className="p-4 bg-gradient-to-r from-elec-yellow/10 to-transparent rounded-lg border border-border/30">
                       <h5 className="font-medium text-elec-yellow mb-2">Tier 2: Major Circuit Work</h5>
-                      <p className="text-sm text-muted-foreground mb-2">Substantial marks but time-intensive</p>
-                      <div className="text-xs text-muted-foreground space-y-1">
+                      <p className="text-sm text-white/80 mb-2">Substantial marks but time-intensive</p>
+                      <div className="text-xs text-white/80 space-y-1">
                         <div>• <strong>Ring final circuit:</strong> 20-25 marks, needs careful testing</div>
                         <div>• <strong>Radial circuits:</strong> 15-20 marks, simpler but still crucial</div>
                         <div>• <strong>Lighting circuits:</strong> 15-20 marks, multiple connection points</div>
@@ -379,8 +379,8 @@ const Level2Module8Section2Section1 = () => {
                     </div>
                     <div className="p-4 bg-gradient-to-r from-orange-500/10 to-transparent rounded-lg border border-border/30">
                       <h5 className="font-medium text-elec-yellow mb-2">Tier 3: Testing & Verification</h5>
-                      <p className="text-sm text-muted-foreground mb-2">Essential but can be done efficiently</p>
-                      <div className="text-xs text-muted-foreground space-y-1">
+                      <p className="text-sm text-white/80 mb-2">Essential but can be done efficiently</p>
+                      <div className="text-xs text-white/80 space-y-1">
                         <div>• <strong>Dead testing sequence:</strong> 10-15 marks, methodical approach</div>
                         <div>• <strong>Live testing procedures:</strong> 10-15 marks, safety critical</div>
                         <div>• <strong>Earth fault loop impedance:</strong> 5-10 marks per circuit</div>
@@ -389,8 +389,8 @@ const Level2Module8Section2Section1 = () => {
                     </div>
                     <div className="p-4 bg-gradient-to-r from-purple-500/10 to-transparent rounded-lg border border-border/30">
                       <h5 className="font-medium text-elec-yellow mb-2">Tier 4: Documentation & Finishing</h5>
-                      <p className="text-sm text-muted-foreground mb-2">Important for completion but lower individual marks</p>
-                      <div className="text-xs text-muted-foreground space-y-1">
+                      <p className="text-sm text-white/80 mb-2">Important for completion but lower individual marks</p>
+                      <div className="text-xs text-white/80 space-y-1">
                         <div>• <strong>Electrical Installation Certificate:</strong> 5-10 marks</div>
                         <div>• <strong>Schedule of test results:</strong> 5-10 marks</div>
                         <div>• <strong>Cable labelling:</strong> 2-5 marks, easy wins</div>
@@ -469,7 +469,7 @@ const Level2Module8Section2Section1 = () => {
                         <div className="w-full bg-muted rounded-full h-3 mb-1">
                           <div className={`h-3 ${item.color} rounded-full`} style={{width: item.percentage}}></div>
                         </div>
-                        <div className="text-xs text-muted-foreground mb-2">{item.details}</div>
+                        <div className="text-xs text-white/80 mb-2">{item.details}</div>
                       </div>
                     ))}
                   </div>
@@ -481,11 +481,11 @@ const Level2Module8Section2Section1 = () => {
                   <TrendingUp className="h-4 w-4" />
                   Time Boxing Technique
                 </h5>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-sm text-white/80 mb-3">
                   Allocate specific time slots to each task. Set timers and stick to them. If running over, 
                   move on and return if time permits. This prevents one task from consuming your entire assessment time.
                 </p>
-                <div className="text-xs text-muted-foreground">
+                <div className="text-xs text-white/80">
                   Example: "I will spend exactly 45 minutes on the ring final circuit installation, then move to testing regardless of completion status."
                 </div>
               </div>
@@ -540,14 +540,14 @@ const Level2Module8Section2Section1 = () => {
                       <div key={index} className={`p-3 rounded-lg border ${item.color} mb-3`}>
                         <div className="font-medium text-xs mb-1">{item.priority} PRIORITY</div>
                         <div className="text-sm font-medium mb-1">{item.action}</div>
-                        <div className="text-xs text-muted-foreground">{item.detail}</div>
+                        <div className="text-xs text-white/80">{item.detail}</div>
                       </div>
                     ))}
                   </div>
                   
                   <div className="mt-4 p-3 bg-card rounded-lg border border-border/30">
                     <h5 className="font-semibold text-elec-yellow mb-2">Last 30 Minutes Protocol</h5>
-                    <div className="text-xs text-muted-foreground space-y-1">
+                    <div className="text-xs text-white/80 space-y-1">
                       <div>• Stop all new installation work</div>
                       <div>• Complete basic testing on installed circuits</div>
                       <div>• Fill out certificates with available data</div>
@@ -560,12 +560,12 @@ const Level2Module8Section2Section1 = () => {
 
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground">Advanced BS7671 Navigation</h4>
-                  <p className="text-sm text-muted-foreground mb-3">Master these shortcuts for lightning-fast regulation access:</p>
+                  <p className="text-sm text-white/80 mb-3">Master these shortcuts for lightning-fast regulation access:</p>
                   
                   <div className="space-y-3">
                     <div className="p-3 bg-card rounded-lg border border-border/30">
                       <h5 className="font-medium text-elec-yellow mb-2">Essential Bookmark Tabs</h5>
-                      <div className="space-y-1 text-xs text-muted-foreground">
+                      <div className="space-y-1 text-xs text-white/80">
                         <div><strong>Red Tab:</strong> Appendix 4 (Current-carrying capacity)</div>
                         <div><strong>Orange Tab:</strong> Section 433 (Overload protection)</div>
                         <div><strong>Yellow Tab:</strong> Section 411 (Protective measures)</div>
@@ -603,7 +603,7 @@ const Level2Module8Section2Section1 = () => {
                     
                     <div className="p-3 bg-card rounded-lg border border-border/30">
                       <h5 className="font-medium text-elec-yellow mb-2">Quick Calculation Formulas</h5>
-                      <div className="space-y-1 text-xs text-muted-foreground">
+                      <div className="space-y-1 text-xs text-white/80">
                         <div><strong>Voltage drop:</strong> (mV/A/m × Ib × L) ÷ 1000</div>
                         <div><strong>Earth fault loop:</strong> Zs = Ze + R1 + R2</div>
                         <div><strong>Ring final R1+R2:</strong> (R1+R2)/4 at midpoint</div>
@@ -632,7 +632,7 @@ const Level2Module8Section2Section1 = () => {
                   <div className="space-y-3">
                     <div className="p-3 bg-muted/30 rounded-lg">
                       <h5 className="font-medium text-elec-yellow mb-2">Progressive Training Method</h5>
-                      <div className="text-sm text-muted-foreground space-y-1">
+                      <div className="text-sm text-white/80 space-y-1">
                         <div>Week 1: Untimed practice (focus on accuracy)</div>
                         <div>Week 2: 2.5 hour limit (more time than real exam)</div>
                         <div>Week 3: 2 hour limit (exact exam time)</div>
@@ -665,7 +665,7 @@ const Level2Module8Section2Section1 = () => {
                   <div className="space-y-3">
                     <div className="p-3 bg-card rounded-lg border border-border/30">
                       <h5 className="font-medium text-elec-yellow mb-2">Structure Mastery</h5>
-                      <div className="text-sm text-muted-foreground">
+                      <div className="text-sm text-white/80">
                         Learn the logical flow: Parts → Chapters → Sections → Regulations
                       </div>
                     </div>
@@ -699,7 +699,7 @@ const Level2Module8Section2Section1 = () => {
                       <Users className="h-4 w-4" />
                       Before Exam
                     </h5>
-                    <div className="text-sm text-muted-foreground space-y-1">
+                    <div className="text-sm text-white/80 space-y-1">
                       <div>• Arrive 15-20 minutes early</div>
                       <div>• Bring reliable backup watch</div>
                       <div>• Review time allocation plan</div>
@@ -712,7 +712,7 @@ const Level2Module8Section2Section1 = () => {
                       <Clock className="h-4 w-4" />
                       During Exam
                     </h5>
-                    <div className="text-sm text-muted-foreground space-y-1">
+                    <div className="text-sm text-white/80 space-y-1">
                       <div>• Check time every 15 questions</div>
                       <div>• Practice deep breathing if stressed</div>
                       <div>• Trust your preparation</div>
@@ -725,7 +725,7 @@ const Level2Module8Section2Section1 = () => {
                       <CheckCircle className="h-4 w-4" />
                       Mindset
                     </h5>
-                    <div className="text-sm text-muted-foreground space-y-1">
+                    <div className="text-sm text-white/80 space-y-1">
                       <div>• Progress over perfection</div>
                       <div>• Partial marks count</div>
                       <div>• Every question matters</div>
@@ -787,7 +787,7 @@ const Level2Module8Section2Section1 = () => {
               
               <div className="mt-6 p-4 bg-gradient-to-r from-elec-yellow/20 to-transparent rounded-lg border border-elec-yellow/50 text-center">
                 <p className="font-medium text-elec-yellow mb-2">Remember: Time management is a skill that improves with practice</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   The difference between a pass and fail often comes down to effective time allocation, 
                   not just knowledge. Master these techniques and you'll significantly improve your chances of success.
                 </p>

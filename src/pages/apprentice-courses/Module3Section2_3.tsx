@@ -302,8 +302,8 @@ const Module3Section2_3: React.FC = () => {
                   <p className="font-medium mb-2">Plastic (PVC) Trunking</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Material Characteristics</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Material Characteristics</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Rigid PVC construction with snap-on or clip-on lids</li>
                         <li>Available profiles: mini, standard, maxi, skirting, dado</li>
                         <li>Standard colours: white, ivory, brown, grey</li>
@@ -311,8 +311,8 @@ const Module3Section2_3: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Key Advantages</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Key Advantages</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Lightweight - easy to handle and install</li>
                         <li>Simple cutting with hacksaw or PVC cutter</li>
                         <li>Non-conductive - no earthing requirements</li>
@@ -322,8 +322,8 @@ const Module3Section2_3: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Limitations</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Limitations</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Limited mechanical strength against impacts</li>
                         <li>UV degradation without stabilisers</li>
                         <li>Can warp under excessive heat (&gt;70°C)</li>
@@ -331,8 +331,8 @@ const Module3Section2_3: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Best Applications</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Best Applications</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Domestic installations - living areas</li>
                         <li>Office environments - desk and dado height</li>
                         <li>Retail spaces - customer areas</li>
@@ -346,8 +346,8 @@ const Module3Section2_3: React.FC = () => {
                   <p className="font-medium mb-2">Steel Trunking</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-red-200 mb-1">Material Characteristics</p>
-                      <ul className="list-disc pl-4 space-y-1 text-red-200">
+                      <p className="font-medium text-white mb-1">Material Characteristics</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Galvanised or powder-coated steel construction</li>
                         <li>Bolted or clip-on steel lids with gasket seals</li>
                         <li>Heavy-duty profiles from 50x50mm to 300x100mm</li>
@@ -355,8 +355,8 @@ const Module3Section2_3: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-red-200 mb-1">Key Advantages</p>
-                      <ul className="list-disc pl-4 space-y-1 text-red-200">
+                      <p className="font-medium text-white mb-1">Key Advantages</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Excellent mechanical protection against impacts</li>
                         <li>Fire resistant - will not melt or burn</li>
                         <li>Can serve as protective conductor (earth path)</li>
@@ -366,8 +366,8 @@ const Module3Section2_3: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-red-200 mb-1">Limitations</p>
-                      <ul className="list-disc pl-4 space-y-1 text-red-200">
+                      <p className="font-medium text-white mb-1">Limitations</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Heavier and more labour-intensive to install</li>
                         <li>Higher material costs than PVC</li>
                         <li>Requires earthing and continuity testing</li>
@@ -375,8 +375,8 @@ const Module3Section2_3: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-red-200 mb-1">Best Applications</p>
-                      <ul className="list-disc pl-4 space-y-1 text-red-200">
+                      <p className="font-medium text-white mb-1">Best Applications</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Industrial workshops and factories</li>
                         <li>Plant and machinery rooms</li>
                         <li>High-traffic or vandal-prone areas</li>
@@ -403,8 +403,8 @@ const Module3Section2_3: React.FC = () => {
                 <p className="font-medium mb-2">Route Planning and Support</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Route Planning</p>
-                    <ul className="list-disc pl-4 space-y-1 text-green-200">
+                    <p className="font-medium text-white mb-1">Route Planning</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Minimise bends and junctions for easier cable pulling</li>
                       <li>Plan for future expansion and cable additions</li>
                       <li>Avoid areas with excessive heat or moisture</li>
@@ -413,8 +413,8 @@ const Module3Section2_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Support Requirements</p>
-                    <ul className="list-disc pl-4 space-y-1 text-green-200">
+                    <p className="font-medium text-white mb-1">Support Requirements</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>PVC: maximum 500mm spacing for small profiles</li>
                       <li>Steel: maximum 1200mm spacing for standard sizes</li>
                       <li>Additional support at changes of direction</li>
@@ -429,8 +429,8 @@ const Module3Section2_3: React.FC = () => {
                 <p className="font-medium mb-2">Cable Management and Fill Factors</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="font-medium text-purple-200 mb-1">Fill Factor Calculations</p>
-                    <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                    <p className="font-medium text-white mb-1">Fill Factor Calculations</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Maximum 45% of internal cross-sectional area</li>
                       <li>Calculate total cable areas including insulation</li>
                       <li>Allow space for heat dissipation</li>
@@ -439,8 +439,8 @@ const Module3Section2_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-purple-200 mb-1">Cable Organisation</p>
-                    <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                    <p className="font-medium text-white mb-1">Cable Organisation</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Group similar cable types together</li>
                       <li>Use cable ties at regular intervals</li>
                       <li>Label cables clearly at access points</li>
@@ -455,8 +455,8 @@ const Module3Section2_3: React.FC = () => {
                 <p className="font-medium mb-2">Segregation and Barriers</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="font-medium text-amber-200 mb-1">Segregation Requirements</p>
-                    <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                    <p className="font-medium text-white mb-1">Segregation Requirements</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Separate power and data cables with barriers</li>
                       <li>Use different compartments for different voltages</li>
                       <li>Maintain minimum separation distances per BS 7671</li>
@@ -465,8 +465,8 @@ const Module3Section2_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-amber-200 mb-1">Barrier Installation</p>
-                    <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                    <p className="font-medium text-white mb-1">Barrier Installation</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Fit rigid barriers between compartments</li>
                       <li>Ensure barriers extend full length of run</li>
                       <li>Seal barrier joints to prevent crossover</li>
@@ -493,8 +493,8 @@ const Module3Section2_3: React.FC = () => {
                 <p className="font-medium mb-2">Earthing Requirements</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="font-medium text-orange-200 mb-1">Installation Requirements</p>
-                    <ul className="list-disc pl-4 space-y-1 text-orange-200">
+                    <p className="font-medium text-white mb-1">Installation Requirements</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>All joints must be electrically continuous</li>
                       <li>Clean mating surfaces before assembly</li>
                       <li>Use star washers or serrated nuts at connections</li>
@@ -503,8 +503,8 @@ const Module3Section2_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-orange-200 mb-1">Testing and Verification</p>
-                    <ul className="list-disc pl-4 space-y-1 text-orange-200">
+                    <p className="font-medium text-white mb-1">Testing and Verification</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Test continuity between all sections</li>
                       <li>Maximum resistance: 0.05Ω per joint</li>
                       <li>Verify earth connection to main earthing terminal</li>
@@ -529,7 +529,7 @@ const Module3Section2_3: React.FC = () => {
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Overfilling trunking beyond capacity</p>
-              <ul className="list-disc pl-4 space-y-1 text-red-200">
+              <ul className="list-disc pl-4 space-y-1 text-white">
                 <li>Exceeding 45% fill factor causing overheating and difficult access</li>
                 <li>Not allowing for future cable additions</li>
                 <li><strong>Solution:</strong> Calculate cable cross-sectional areas properly, plan for 25% future expansion</li>
@@ -538,7 +538,7 @@ const Module3Section2_3: React.FC = () => {
 
             <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
               <p className="font-medium mb-2 text-amber-300">Poor segregation of different services</p>
-              <ul className="list-disc pl-4 space-y-1 text-amber-200">
+              <ul className="list-disc pl-4 space-y-1 text-white">
                 <li>Mixing power and data cables without barriers</li>
                 <li>Electromagnetic interference affecting sensitive circuits</li>
                 <li><strong>Solution:</strong> Install proper barriers, use separate compartments, follow segregation guidelines</li>
@@ -547,7 +547,7 @@ const Module3Section2_3: React.FC = () => {
 
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Inadequate support spacing</p>
-              <ul className="list-disc pl-4 space-y-1 text-orange-200">
+              <ul className="list-disc pl-4 space-y-1 text-white">
                 <li>Trunking sagging due to excessive support intervals</li>
                 <li>Lids becoming difficult to remove or replace</li>
                 <li><strong>Solution:</strong> Follow manufacturer guidelines, add supports at changes of direction</li>
@@ -556,7 +556,7 @@ const Module3Section2_3: React.FC = () => {
 
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Steel trunking earthing failures</p>
-              <ul className="list-disc pl-4 space-y-1 text-purple-200">
+              <ul className="list-disc pl-4 space-y-1 text-white">
                 <li>Poor electrical continuity through painted or corroded joints</li>
                 <li>Missing earth bonds at main positions</li>
                 <li><strong>Solution:</strong> Clean all mating surfaces, use star washers, test continuity, bond to main earth</li>
@@ -606,7 +606,7 @@ const Module3Section2_3: React.FC = () => {
           <div className="p-4 border-l-4 border-elec-yellow bg-elec-yellow/5 rounded-r-lg mb-4">
             <div className="flex items-start gap-3">
               <Building className="w-6 h-6 text-elec-yellow mt-1 flex-shrink-0" />
-              <div className="text-blue-200">
+              <div className="text-white">
                 <p className="font-medium mb-2">The Project</p>
                 <p className="text-sm leading-relaxed">
                   A modern office complex required comprehensive electrical and data infrastructure across 5 floors. 
@@ -625,7 +625,7 @@ const Module3Section2_3: React.FC = () => {
           <div className="grid md:grid-cols-2 gap-4 mb-4">
             <div className="rounded-lg p-3 border border-green-400/30">
               <p className="font-medium text-green-300 mb-2">Smart Trunking Strategy</p>
-              <ul className="list-disc pl-4 space-y-1 text-green-200 text-sm">
+              <ul className="list-disc pl-4 space-y-1 text-white text-sm">
                 <li>Office areas: Dado-height PVC trunking with twin compartments</li>
                 <li>Power compartment: 13A sockets every 2 metres</li>
                 <li>Data compartment: Cat6 outlets with future capacity</li>
@@ -647,7 +647,7 @@ const Module3Section2_3: React.FC = () => {
 
           <div className="bg-teal-500/10 border border-teal-400/30 rounded-lg p-3">
             <p className="font-medium text-teal-300 mb-1">Future-Proofing Success</p>
-            <p className="text-teal-200 text-sm">
+            <p className="text-white text-sm">
               After 3 years, the installation has supported major IT upgrades, office reconfigurations, and 40% staff growth 
               without requiring additional trunking - demonstrating excellent planning and specification.
             </p>

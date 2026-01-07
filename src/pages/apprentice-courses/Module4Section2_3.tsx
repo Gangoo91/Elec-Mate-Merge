@@ -500,7 +500,7 @@ const Module4Section2_3 = () => {
 
         {/* Real-World Example */}
         <Card className="mb-8 p-6 bg-elec-yellow/5 dark:bg-elec-yellow/10 border-blue-200 dark:border-blue-800">
-          <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
+          <h3 className="font-semibold text-blue-800 dark:text-white mb-3 flex items-center gap-2">
             <Eye className="w-5 h-5" />
             Real-World Example
           </h3>
@@ -509,7 +509,7 @@ const Module4Section2_3 = () => {
             The deviation broke compliance with accessibility requirements, leading to all the outlets being reinstalled at additional cost.
           </p>
           <div className="bg-blue-100 dark:bg-blue-900/30 border border-blue-300 dark:border-blue-700 rounded p-3">
-            <p className="text-xs text-blue-800 dark:text-blue-200">
+            <p className="text-xs text-blue-800 dark:text-white">
               <strong>Lesson:</strong> Even small deviations can have serious consequences. 
               Always work within specified tolerances and verify measurements before installation.
             </p>

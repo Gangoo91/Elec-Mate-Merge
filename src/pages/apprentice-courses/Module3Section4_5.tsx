@@ -277,24 +277,24 @@ export default function Module3Section4_5() {
             </h3>
             <div className="grid gap-4 text-sm">
               <div className="p-4 bg-transparent border border-border/30 rounded-lg">
-                <h4 className="font-medium mb-1 text-blue-200">Clips</h4>
-                <p className="text-blue-200">Flat twin clips for T&E, round clips for circular cables.</p>
+                <h4 className="font-medium mb-1 text-white">Clips</h4>
+                <p className="text-white">Flat twin clips for T&E, round clips for circular cables.</p>
               </div>
               <div className="p-4 bg-transparent border border-green-400/30 rounded-lg">
-                <h4 className="font-medium mb-1 text-green-200">Cleats</h4>
-                <p className="text-green-200">Heavy-duty fixings for SWA cables, metal or high-strength polymer.</p>
+                <h4 className="font-medium mb-1 text-white">Cleats</h4>
+                <p className="text-white">Heavy-duty fixings for SWA cables, metal or high-strength polymer.</p>
               </div>
               <div className="p-4 bg-transparent border border-border/30 rounded-lg">
-                <h4 className="font-medium mb-1 text-purple-200">Cable Ties</h4>
-                <p className="text-purple-200">Grouping cables; stainless steel for fire-resistant applications.</p>
+                <h4 className="font-medium mb-1 text-white">Cable Ties</h4>
+                <p className="text-white">Grouping cables; stainless steel for fire-resistant applications.</p>
               </div>
               <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg">
-                <h4 className="font-medium mb-1 text-amber-200">Saddles and Brackets</h4>
-                <p className="text-amber-200">Securing conduit or trunking carrying cables.</p>
+                <h4 className="font-medium mb-1 text-white">Saddles and Brackets</h4>
+                <p className="text-white">Securing conduit or trunking carrying cables.</p>
               </div>
               <div className="p-4 bg-teal-500/10 border border-teal-400/30 rounded-lg">
-                <h4 className="font-medium mb-1 text-teal-200">Cable Trays and Baskets</h4>
-                <p className="text-teal-200">Provide continuous support for multiple cables.</p>
+                <h4 className="font-medium mb-1 text-white">Cable Trays and Baskets</h4>
+                <p className="text-white">Provide continuous support for multiple cables.</p>
               </div>
             </div>
           </section>

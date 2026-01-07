@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { SortAsc, SortDesc, Grid, List, Loader2 } from "lucide-react";
-import MaterialCard from "./MaterialCard";
+import PremiumMaterialCard from "./PremiumMaterialCard";
 import MaterialListCard from "./MaterialListCard";
 import { MaterialFilterState } from "./MaterialFilters";
 import { MaterialItem } from "@/hooks/useToolsForMaterials";
@@ -246,23 +246,28 @@ const EnhancedMaterialsGrid = ({
         </Card>
       ) : (
         <>
-          <div className={viewMode === "grid" 
+          <div className={viewMode === "grid"
             ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
             : "space-y-4"
           }>
             {currentMaterials.map((material, index) => (
               viewMode === "grid" ? (
-                <MaterialCard
+                <div
                   key={`${material.id || material.name}-${material.supplier}-${index}`}
-                  item={material}
-                  onAddToCompare={onAddToCompare}
-                  onRemoveFromCompare={onRemoveFromCompare}
-                  isSelected={selectedItems.some(item => 
-                    (item.id && material.id && item.id === material.id) ||
-                    (item.name === material.name && !item.id && !material.id)
-                  )}
-                  isCompareDisabled={isCompareDisabled}
-                />
+                  className="stagger-enter"
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  <PremiumMaterialCard
+                    item={material}
+                    onAddToCompare={onAddToCompare}
+                    onRemoveFromCompare={onRemoveFromCompare}
+                    isSelected={selectedItems.some(item =>
+                      (item.id && material.id && item.id === material.id) ||
+                      (item.name === material.name && !item.id && !material.id)
+                    )}
+                    isCompareDisabled={isCompareDisabled}
+                  />
+                </div>
               ) : (
                 <MaterialListCard
                   key={`${material.id || material.name}-${material.supplier}-${index}`}

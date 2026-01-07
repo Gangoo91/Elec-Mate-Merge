@@ -184,7 +184,7 @@ const Section2_4 = () => {
       {/* Top header bar */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2
@@ -208,7 +208,7 @@ const Section2_4 = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             Working at Height and Confined Spaces
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white/80">
             Essential safety requirements and procedures for electrical work at height and in confined spaces. Work at Height Regulations 2005 and Confined Spaces Regulations 1997.
           </p>
         </header>
@@ -395,7 +395,7 @@ const Section2_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-border/30 pb-4 last:border-b-0">
                 <h4 className="text-foreground font-semibold mb-2">{faq.question}</h4>
-                <p className="text-muted-foreground leading-relaxed">{faq.answer}</p>
+                <p className="text-white/80 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -469,7 +469,7 @@ const Section2_4 = () => {
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
                 <h5 className="text-foreground font-semibold mb-2">Height Work Checklist:</h5>
-                <ul className="text-muted-foreground space-y-1">
+                <ul className="text-white/80 space-y-1">
                   <li>□ Risk assessment completed</li>
                   <li>□ Appropriate access equipment selected</li>
                   <li>□ Equipment inspected and safe</li>
@@ -480,7 +480,7 @@ const Section2_4 = () => {
               </div>
               <div>
                 <h5 className="text-foreground font-semibold mb-2">Confined Space Checklist:</h5>
-                <ul className="text-muted-foreground space-y-1">
+                <ul className="text-white/80 space-y-1">
                   <li>□ Permit-to-work obtained</li>
                   <li>□ Atmosphere tested (O₂, toxic, explosive)</li>
                   <li>□ Ventilation provided where possible</li>

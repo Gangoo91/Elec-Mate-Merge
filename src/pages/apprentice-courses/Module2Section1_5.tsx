@@ -306,7 +306,7 @@ const Module2Section1_5 = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-white">Digital Multimeters (DMM)</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
-                    <ul className="text-blue-200 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• <strong>LCD Display:</strong> Clear numerical readings</li>
                       <li>• <strong>High Accuracy:</strong> Typically 0.1% to 0.5%</li>
                       <li>• <strong>Auto-ranging:</strong> Automatically selects best scale</li>
@@ -319,7 +319,7 @@ const Module2Section1_5 = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-white">Analogue Multimeters</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
-                    <ul className="text-orange-200 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• <strong>Moving Coil Display:</strong> Needle and scale</li>
                       <li>• <strong>Good for Trends:</strong> Shows changing values clearly</li>
                       <li>• <strong>No Battery:</strong> For basic voltage/current (not resistance)</li>
@@ -335,7 +335,7 @@ const Module2Section1_5 = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
                     <h4 className="text-elec-yellow font-medium mb-2">Display & Resolution</h4>
-                    <ul className="text-purple-200 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• <strong>3½ digit:</strong> 1999 count (basic)</li>
                       <li>• <strong>4½ digit:</strong> 19,999 count (precise)</li>
                       <li>• <strong>True RMS:</strong> Accurate AC measurement</li>
@@ -343,7 +343,7 @@ const Module2Section1_5 = () => {
                   </div>
                   <div className="bg-card border border-green-400/30 p-4 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-2">Safety Ratings</h4>
-                    <ul className="text-green-200 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• <strong>CAT II:</strong> Appliances, portable equipment</li>
                       <li>• <strong>CAT III:</strong> Fixed installations (preferred)</li>
                       <li>• <strong>CAT IV:</strong> Service entrance, utility level</li>
@@ -426,7 +426,7 @@ const Module2Section1_5 = () => {
               
               <div className="bg-card border border-border/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Pro Tip: Pre-use Checks</h3>
-                <ul className="text-orange-200 space-y-1 text-sm">
+                <ul className="text-white space-y-1 text-sm">
                   <li>• Check test lead condition - cracked insulation is dangerous</li>
                   <li>• Verify lead ratings match your working voltage</li>
                   <li>• Test continuity function on a known short circuit</li>
@@ -469,7 +469,7 @@ const Module2Section1_5 = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-white">Expected Values</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
-                    <ul className="text-blue-200 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• <strong>UK Mains:</strong> 230V AC (±10%)</li>
                       <li>• <strong>Car Battery:</strong> 12V DC (charged: 12.6V)</li>
                       <li>• <strong>Three-phase:</strong> 400V AC line-to-line</li>
@@ -482,7 +482,7 @@ const Module2Section1_5 = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-white">Common Mistakes</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
-                    <ul className="text-red-200 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• Using DC setting on AC supply (reads low/zero)</li>
                       <li>• Wrong range selection (overload or poor resolution)</li>
                       <li>• Poor probe contact (intermittent readings)</li>
@@ -514,7 +514,7 @@ const Module2Section1_5 = () => {
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-white">Essential Safety Steps</h3>
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <ol className="text-red-200 space-y-2 text-sm">
+                  <ol className="text-white space-y-2 text-sm">
                     <li><strong>1.</strong> Isolate circuit - switch off, lock off, tag out</li>
                     <li><strong>2.</strong> Prove dead - test between all conductors and earth</li>
                     <li><strong>3.</strong> Remove parallel paths - disconnect one end if needed</li>
@@ -529,7 +529,7 @@ const Module2Section1_5 = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-white">Resistance Testing</h3>
                   <div className="bg-card border border-green-400/30 p-4 rounded-lg">
-                    <ul className="text-green-200 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• <strong>Cable Resistance:</strong> Should be very low (mΩ range)</li>
                       <li>• <strong>Heating Elements:</strong> Calculate from P = V²/R</li>
                       <li>• <strong>Insulation:</strong> Should be {'>'}1MΩ (BS 7671)</li>
@@ -542,7 +542,7 @@ const Module2Section1_5 = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-white">Continuity Testing</h3>
                   <div className="bg-card border border-cyan-400/30 p-4 rounded-lg">
-                    <ul className="text-cyan-200 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• <strong>Beep Function:</strong> Sounds below ~50Ω threshold</li>
                       <li>• <strong>Cable Testing:</strong> End-to-end continuity checks</li>
                       <li>• <strong>Switch Testing:</strong> Open/closed operation</li>
@@ -587,7 +587,7 @@ const Module2Section1_5 = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-white">Jack Selection</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
-                    <ul className="text-blue-200 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• <strong>mA Jack:</strong> Up to 200-400mA (fused)</li>
                       <li>• <strong>A Jack:</strong> Higher currents to 10A (may be unfused)</li>
                       <li>• <strong>Fuse Protection:</strong> mA circuit usually has ceramic fuse</li>
@@ -600,7 +600,7 @@ const Module2Section1_5 = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-white">When to Use Clamp Meter</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
-                    <ul className="text-purple-200 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• <strong>High Currents:</strong> Above 10A safely</li>
                       <li>• <strong>Live Testing:</strong> No circuit breaking required</li>
                       <li>• <strong>Motor Currents:</strong> Start-up and running values</li>
@@ -633,7 +633,7 @@ const Module2Section1_5 = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-white">AC Measurement (V~, A~)</h3>
                   <div className="bg-card border border-cyan-400/30 p-4 rounded-lg">
-                    <ul className="text-cyan-200 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• <strong>Symbol:</strong> ~ (sine wave) for alternating</li>
                       <li>• <strong>UK Frequency:</strong> 50Hz (50 cycles per second)</li>
                       <li>• <strong>RMS Values:</strong> Effective heating value</li>
@@ -646,7 +646,7 @@ const Module2Section1_5 = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-white">DC Measurement (V⎓, A⎓)</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
-                    <ul className="text-orange-200 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• <strong>Symbol:</strong> ⎓ (straight lines) for direct</li>
                       <li>• <strong>Constant Value:</strong> Doesn't change polarity</li>
                       <li>• <strong>Polarity Matters:</strong> Shows + or - reading</li>
@@ -690,7 +690,7 @@ const Module2Section1_5 = () => {
                   <AlertTriangle className="h-5 w-5" />
                   Critical Safety Mistakes
                 </h3>
-                <ul className="text-red-200 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li>• <strong>Current Mode Across Voltage:</strong> Blows fuse instantly, can cause arc flash</li>
                   <li>• <strong>Wrong CAT Rating:</strong> Meter not rated for installation voltage</li>
                   <li>• <strong>Damaged Test Leads:</strong> Cracked insulation = shock risk</li>
@@ -704,7 +704,7 @@ const Module2Section1_5 = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-white">Before You Measure</h3>
                   <div className="bg-card border border-green-400/30 p-4 rounded-lg">
-                    <ul className="text-green-200 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li>✓ Check meter CAT rating matches work</li>
                       <li>✓ Inspect test leads for damage</li>
                       <li>✓ Verify meter function on known source</li>
@@ -718,7 +718,7 @@ const Module2Section1_5 = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold text-white">Common Reading Errors</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
-                    <ul className="text-blue-200 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li>• Ghost voltages on high-impedance inputs</li>
                       <li>• Loading effect on high-resistance circuits</li>
                       <li>• Temperature effects on accuracy</li>

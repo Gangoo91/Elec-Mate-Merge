@@ -112,6 +112,7 @@ const ProgrammeCard = ({
 }: ProgrammeCardProps) => {
   const isHighDemand = (programme.employmentRate || 0) >= 90;
   const isTopRated = (programme.rating || 0) >= 4.5;
+  const isFunded = programme.fundingOptions?.some(f => f.toLowerCase().includes('funded') || f.toLowerCase().includes('levy'));
 
   const cardContent = (
     <motion.div
@@ -119,31 +120,39 @@ const ProgrammeCard = ({
       whileTap={cardPressSubtleVariants.tap}
       onClick={() => onSelect(programme)}
       className={cn(
-        "bg-gradient-to-br from-white/10 via-white/5 to-transparent",
-        "rounded-xl border border-white/10 overflow-hidden cursor-pointer",
-        "hover:border-purple-500/30 transition-all duration-300",
-        "hover:shadow-xl hover:shadow-purple-500/10",
-        "active:scale-[0.99]",
+        "group relative bg-card/80 backdrop-blur-sm",
+        "rounded-2xl border border-white/10 overflow-hidden cursor-pointer",
+        "hover:border-purple-500/40 transition-all duration-300",
+        "hover:shadow-2xl hover:shadow-purple-500/20",
+        "hover:-translate-y-1",
+        "active:scale-[0.98]",
         className
       )}
     >
+      {/* Subtle gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+
       {/* Image section */}
-      <div className="relative h-36 overflow-hidden">
+      <div className="relative h-40 overflow-hidden">
         <img
           src={programme.imageUrl || getCategoryImage(programme.category)}
           alt={programme.title}
           loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           onError={(e) => {
             e.currentTarget.src = getCategoryImage(programme.category);
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        {/* Premium gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+
+        {/* Glowing accent line at top */}
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
         {/* Category badge - top left */}
         <Badge
           className={cn(
-            "absolute top-2 left-2 text-xs font-medium",
+            "absolute top-3 left-3 text-[11px] font-semibold backdrop-blur-md",
             getCategoryColor(programme.category)
           )}
         >
@@ -153,7 +162,7 @@ const ProgrammeCard = ({
         {/* Level badge - top right */}
         <Badge
           className={cn(
-            "absolute top-2 right-2 text-xs font-medium",
+            "absolute top-3 right-3 text-[11px] font-semibold backdrop-blur-md",
             getLevelColor(programme.level)
           )}
         >
@@ -161,97 +170,105 @@ const ProgrammeCard = ({
         </Badge>
 
         {/* Special indicators - bottom left */}
-        <div className="absolute bottom-2 left-2 flex gap-1.5">
+        <div className="absolute bottom-3 left-3 flex gap-2">
           {isHighDemand && (
-            <Badge className="bg-elec-yellow/20 border-elec-yellow/30 text-elec-yellow text-xs">
+            <Badge className="bg-gradient-to-r from-amber-500/30 to-orange-500/30 border-amber-400/40 text-amber-300 text-[10px] font-semibold backdrop-blur-sm">
               <TrendingUp className="h-3 w-3 mr-1" />
               High Demand
             </Badge>
           )}
           {isTopRated && !isHighDemand && (
-            <Badge className="bg-green-500/20 border-green-500/30 text-green-300 text-xs">
+            <Badge className="bg-gradient-to-r from-emerald-500/30 to-green-500/30 border-emerald-400/40 text-emerald-300 text-[10px] font-semibold backdrop-blur-sm">
               <Star className="h-3 w-3 mr-1 fill-current" />
               Top Rated
+            </Badge>
+          )}
+          {isFunded && !isHighDemand && !isTopRated && (
+            <Badge className="bg-gradient-to-r from-blue-500/30 to-cyan-500/30 border-blue-400/40 text-blue-300 text-[10px] font-semibold backdrop-blur-sm">
+              Funding Available
             </Badge>
           )}
         </div>
 
         {/* Bookmark indicator - bottom right */}
         {isBookmarked && (
-          <div className="absolute bottom-2 right-2">
-            <div className="w-7 h-7 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-              <Bookmark className="h-4 w-4 text-elec-yellow fill-current" />
+          <div className="absolute bottom-3 right-3">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center shadow-lg shadow-amber-500/30">
+              <Bookmark className="h-4 w-4 text-white fill-current" />
             </div>
           </div>
         )}
       </div>
 
       {/* Content section */}
-      <div className="p-4 space-y-3">
-        {/* Stats row */}
-        <div className="flex items-center justify-between text-xs text-muted-foreground">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1">
-              <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-              {(programme.rating || 0).toFixed(1)}
-            </span>
-            <span className="flex items-center gap-1">
-              <GraduationCap className="h-3 w-3" />
-              {programme.employmentRate || 0}%
-            </span>
+      <div className="relative p-4 space-y-3">
+        {/* Stats row - premium styled */}
+        <div className="flex items-center gap-4 text-xs">
+          <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-amber-500/10">
+            <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+            <span className="font-semibold text-amber-300">{(programme.rating || 0).toFixed(1)}</span>
           </div>
-          <span className="flex items-center gap-1">
-            <Clock className="h-3 w-3" />
-            {formatDuration(programme.duration)}
-          </span>
+          <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-emerald-500/10">
+            <TrendingUp className="h-3.5 w-3.5 text-emerald-400" />
+            <span className="font-semibold text-emerald-300">{programme.employmentRate || 0}%</span>
+          </div>
+          <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-white/5 ml-auto">
+            <Clock className="h-3.5 w-3.5 text-white/60" />
+            <span className="text-white/70">{formatDuration(programme.duration)}</span>
+          </div>
         </div>
 
         {/* Title */}
-        <h3 className="font-semibold text-foreground line-clamp-2 leading-tight text-sm sm:text-base">
+        <h3 className="font-bold text-white line-clamp-2 leading-snug text-base group-hover:text-purple-200 transition-colors">
           {programme.title}
         </h3>
 
-        {/* Institution */}
-        <p className="text-elec-yellow text-sm font-medium line-clamp-1">
-          {programme.institution}
-        </p>
+        {/* Institution with icon */}
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+            <GraduationCap className="h-3.5 w-3.5 text-purple-400" />
+          </div>
+          <p className="text-purple-400 text-sm font-medium line-clamp-1">
+            {programme.institution}
+          </p>
+        </div>
 
         {/* Study details */}
-        <div className="text-muted-foreground text-xs space-y-1">
-          <div className="flex items-center justify-between">
-            <span>{programme.studyMode}</span>
-            {programme.locations.length > 0 && (
-              <span className="flex items-center gap-1">
-                <MapPin className="h-3 w-3" />
-                <span className="line-clamp-1 max-w-[120px]">
-                  {programme.locations[0]}
-                </span>
-                {programme.locations.length > 1 && (
-                  <span className="text-purple-400">
-                    +{programme.locations.length - 1}
-                  </span>
-                )}
+        <div className="flex items-center justify-between text-xs text-white/50">
+          <span className="bg-white/5 px-2 py-1 rounded">{programme.studyMode}</span>
+          {programme.locations.length > 0 && (
+            <span className="flex items-center gap-1">
+              <MapPin className="h-3 w-3" />
+              <span className="line-clamp-1 max-w-[100px]">
+                {programme.locations[0]}
               </span>
-            )}
-          </div>
+              {programme.locations.length > 1 && (
+                <span className="text-purple-400 font-medium">
+                  +{programme.locations.length - 1}
+                </span>
+              )}
+            </span>
+          )}
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-3 border-t border-white/10">
-          <span className="text-sm font-medium text-foreground">
-            {programme.tuitionFees}
-          </span>
+        <div className="flex items-center justify-between pt-3 border-t border-white/5">
+          <div>
+            <span className="text-xs text-white/40 block">From</span>
+            <span className="text-base font-bold text-white">
+              {programme.tuitionFees}
+            </span>
+          </div>
           <Button
             size="sm"
-            variant="ghost"
-            className="h-8 px-3 text-purple-400 hover:bg-purple-500/10 hover:text-purple-300"
+            className="h-9 px-4 bg-purple-500 hover:bg-purple-400 text-white font-medium shadow-lg shadow-purple-500/25 group-hover:shadow-purple-500/40 transition-all"
             onClick={(e) => {
               e.stopPropagation();
               onSelect(programme);
             }}
           >
-            <span className="text-xs">View</span>
-            <ChevronRight className="h-4 w-4 ml-1" />
+            <span className="text-sm">View Details</span>
+            <ChevronRight className="h-4 w-4 ml-1 group-hover:translate-x-0.5 transition-transform" />
           </Button>
         </div>
       </div>

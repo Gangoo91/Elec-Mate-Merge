@@ -505,7 +505,7 @@ const Module4Section2_4 = () => {
 
         {/* Real-World Example */}
         <Card className="mb-8 p-6 bg-elec-yellow/5 dark:bg-elec-yellow/10 border-blue-200 dark:border-blue-800">
-          <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
+          <h3 className="font-semibold text-blue-800 dark:text-white mb-3 flex items-center gap-2">
             <Eye className="w-5 h-5" />
             Real-World Example
           </h3>
@@ -514,7 +514,7 @@ const Module4Section2_4 = () => {
             When the flooring was installed, all sockets ended up 50 mm too low, requiring them to be removed and repositioned at a significant cost.
           </p>
           <div className="bg-blue-100 dark:bg-blue-900/30 border border-blue-300 dark:border-blue-700 rounded p-3">
-            <p className="text-xs text-blue-800 dark:text-blue-200">
+            <p className="text-xs text-blue-800 dark:text-white">
               <strong>Lesson:</strong> Always confirm reference points from drawings and verify with site conditions. 
               Using the wrong datum point can cause systematic errors affecting the entire installation.
             </p>

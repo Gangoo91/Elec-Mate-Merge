@@ -151,7 +151,7 @@ const Section6_5 = () => {
       {/* Navigation Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6
@@ -174,7 +174,7 @@ const Section6_5 = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             Near Miss Reporting
           </h1>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-white/80 text-lg">
             Learn how near miss reporting prevents serious incidents and improves workplace safety in electrical environments.
           </p>
         </header>
@@ -287,14 +287,14 @@ const Section6_5 = () => {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-base text-muted-foreground">
+            <p className="text-base text-white/80">
               Near miss reporting is one of the most effective ways to prevent serious accidents. It helps identify hidden hazards and system weaknesses before someone gets hurt.
             </p>
 
             <div className="grid gap-4">
               <div className="bg-muted/50 p-4 rounded-lg">
                 <h4 className="font-medium text-sm text-orange-600 mb-2">Safety Benefits</h4>
-                <ul className="text-sm text-muted-foreground space-y-1 list-disc ml-4">
+                <ul className="text-sm text-white/80 space-y-1 list-disc ml-4">
                   <li>Identifies unseen hazards</li>
                   <li>Prevents future accidents</li>
                   <li>Allows fixes before someone gets hurt</li>
@@ -305,7 +305,7 @@ const Section6_5 = () => {
 
               <div className="bg-muted/50 p-4 rounded-lg">
                 <h4 className="font-medium text-sm text-green-600 mb-2">Cultural Benefits</h4>
-                <ul className="text-sm text-muted-foreground space-y-1 list-disc ml-4">
+                <ul className="text-sm text-white/80 space-y-1 list-disc ml-4">
                   <li>Promotes openness and learning</li>
                   <li>Shows safety is taken seriously</li>
                   <li>Encourages proactive thinking</li>
@@ -348,21 +348,21 @@ const Section6_5 = () => {
                         <div className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
                         <div>
                           <p className="text-foreground font-medium">Tell your supervisor immediately</p>
-                          <p className="text-muted-foreground text-sm">Don't wait - report as soon as possible while details are fresh</p>
+                          <p className="text-white/80 text-sm">Don't wait - report as soon as possible while details are fresh</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
                         <div>
                           <p className="text-foreground font-medium">Fill in a near miss report form</p>
-                          <p className="text-muted-foreground text-sm">Use the site's formal reporting system if available</p>
+                          <p className="text-white/80 text-sm">Use the site's formal reporting system if available</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
                         <div>
                           <p className="text-foreground font-medium">Include all relevant details</p>
-                          <p className="text-muted-foreground text-sm">Date, time, location, what happened, and contributing factors</p>
+                          <p className="text-white/80 text-sm">Date, time, location, what happened, and contributing factors</p>
                         </div>
                       </div>
                     </div>
@@ -406,14 +406,14 @@ const Section6_5 = () => {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-base text-muted-foreground">
+            <p className="text-base text-white/80">
               Understanding the investigation process helps you see why near miss reporting is valuable and how it leads to improvements.
             </p>
 
             <div className="grid gap-4">
               <div className="bg-muted/50 p-4 rounded-lg">
                 <h4 className="font-medium text-sm text-purple-600 mb-2">Investigation Process</h4>
-                <ul className="text-sm text-muted-foreground space-y-1 list-disc ml-4">
+                <ul className="text-sm text-white/80 space-y-1 list-disc ml-4">
                   <li>Supervisor conducts investigation</li>
                   <li>Root cause analysis performed</li>
                   <li>Risk assessment reviewed</li>
@@ -424,7 +424,7 @@ const Section6_5 = () => {
 
               <div className="bg-muted/50 p-4 rounded-lg">
                 <h4 className="font-medium text-sm text-elec-yellow mb-2">Improvements Made</h4>
-                <ul className="text-sm text-muted-foreground space-y-1 list-disc ml-4">
+                <ul className="text-sm text-white/80 space-y-1 list-disc ml-4">
                   <li>Control measures added or changed</li>
                   <li>Training or signage improved</li>
                   <li>Procedures updated</li>
@@ -500,19 +500,19 @@ const Section6_5 = () => {
           <div className="space-y-4">
             <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
               <h3 className="font-semibold text-foreground mb-2">The Scenario</h3>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white/80 text-sm">
                 An apprentice almost drilled into a live cable hidden behind plaster. He stopped after a flash appeared through the drill hole. He reported it, and a scan of the wall showed more poorly routed cables.
               </p>
             </div>
             <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
               <h3 className="font-semibold text-foreground mb-2">What Happened Next</h3>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white/80 text-sm">
                 The site added mandatory cable detection before drilling anywhere — potentially preventing multiple injuries.
               </p>
             </div>
             <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
               <h3 className="font-semibold text-foreground mb-2">Why It Mattered</h3>
-              <ul className="space-y-1 text-muted-foreground text-sm list-disc ml-4">
+              <ul className="space-y-1 text-white/80 text-sm list-disc ml-4">
                 <li>One person's honesty protected the whole team</li>
                 <li>The near miss revealed a systemic problem</li>
                 <li>Simple reporting led to better procedures</li>
@@ -528,27 +528,27 @@ const Section6_5 = () => {
           <div className="space-y-4">
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-foreground mb-1">Will I get in trouble for reporting a near miss?</h3>
-              <p className="text-muted-foreground text-sm">No. Near miss reporting is about learning and improvement, not blame. Most companies have policies protecting those who report safety concerns.</p>
+              <p className="text-white/80 text-sm">No. Near miss reporting is about learning and improvement, not blame. Most companies have policies protecting those who report safety concerns.</p>
             </div>
             <div className="border-l-4 border-green-500 pl-4">
               <h3 className="font-semibold text-foreground mb-1">What if it was my mistake that caused the near miss?</h3>
-              <p className="text-muted-foreground text-sm">Still report it. Honest reporting helps identify training needs or system improvements. The focus is on preventing future incidents.</p>
+              <p className="text-white/80 text-sm">Still report it. Honest reporting helps identify training needs or system improvements. The focus is on preventing future incidents.</p>
             </div>
             <div className="border-l-4 border-orange-500 pl-4">
               <h3 className="font-semibold text-foreground mb-1">Should I report near misses that seem minor?</h3>
-              <p className="text-muted-foreground text-sm">Yes. Even minor near misses can reveal important patterns. What seems small to you might be part of a bigger safety issue.</p>
+              <p className="text-white/80 text-sm">Yes. Even minor near misses can reveal important patterns. What seems small to you might be part of a bigger safety issue.</p>
             </div>
             <div className="border-l-4 border-purple-500 pl-4">
               <h3 className="font-semibold text-foreground mb-1">How long do I have to report a near miss?</h3>
-              <p className="text-muted-foreground text-sm">Report immediately if possible, or by the end of your shift at the latest. Quick reporting allows faster action to prevent similar incidents.</p>
+              <p className="text-white/80 text-sm">Report immediately if possible, or by the end of your shift at the latest. Quick reporting allows faster action to prevent similar incidents.</p>
             </div>
             <div className="border-l-4 border-red-500 pl-4">
               <h3 className="font-semibold text-foreground mb-1">What if I witness someone else's near miss?</h3>
-              <p className="text-muted-foreground text-sm">Encourage them to report it, and if they won't, you should report it yourself. Safety is everyone's responsibility.</p>
+              <p className="text-white/80 text-sm">Encourage them to report it, and if they won't, you should report it yourself. Safety is everyone's responsibility.</p>
             </div>
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-foreground mb-1">Do near miss reports affect safety statistics?</h3>
-              <p className="text-muted-foreground text-sm">Near misses are typically recorded separately from accidents. High near miss reporting often indicates a positive safety culture.</p>
+              <p className="text-white/80 text-sm">Near misses are typically recorded separately from accidents. High near miss reporting often indicates a positive safety culture.</p>
             </div>
           </div>
         </Card>

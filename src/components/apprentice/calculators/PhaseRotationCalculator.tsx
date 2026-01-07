@@ -104,7 +104,7 @@ const PhaseRotationCalculator = () => {
                     <MobileSelectTrigger label="Select Testing Method">
                       <MobileSelectValue placeholder="Choose test method" />
                     </MobileSelectTrigger>
-                    <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
+                    <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
                       <MobileSelectItem value="phase-rotation-meter">Phase Rotation Meter</MobileSelectItem>
                       <MobileSelectItem value="voltage-measurement">Voltage Measurement</MobileSelectItem>
                       <MobileSelectItem value="motor-behaviour">Motor Rotation Test</MobileSelectItem>
@@ -129,7 +129,7 @@ const PhaseRotationCalculator = () => {
                         <MobileSelectTrigger label="Meter Indication">
                           <MobileSelectValue placeholder="Select meter reading" />
                         </MobileSelectTrigger>
-                        <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
+                        <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
                           <MobileSelectItem value="l1-l2-l3">L1-L2-L3 (Clockwise)</MobileSelectItem>
                           <MobileSelectItem value="l1-l3-l2">L1-L3-L2 (Anti-clockwise)</MobileSelectItem>
                         </MobileSelectContent>
@@ -204,7 +204,7 @@ const PhaseRotationCalculator = () => {
                         <MobileSelectTrigger label="Observed Motor Rotation">
                           <MobileSelectValue placeholder="Select rotation direction" />
                         </MobileSelectTrigger>
-                        <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
+                        <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
                           <MobileSelectItem value="clockwise">Clockwise (Expected for standard motors)</MobileSelectItem>
                           <MobileSelectItem value="anticlockwise">Anti-clockwise (Reversed sequence)</MobileSelectItem>
                         </MobileSelectContent>

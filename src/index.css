@@ -1276,6 +1276,249 @@
     @apply bg-blue-500/20 text-blue-400 border-blue-500/30;
   }
 
+  /* ===== PREMIUM TOOLS PAGE UTILITIES ===== */
+
+  /* Premium Category Card - Main Tools Page */
+  .category-card-premium {
+    @apply relative overflow-hidden rounded-2xl
+           bg-gradient-to-br from-elec-gray via-elec-card to-elec-gray
+           border border-border/30
+           transition-all duration-300 ease-ios-spring
+           cursor-pointer touch-manipulation
+           hover:scale-[1.02] hover:shadow-2xl active:scale-[0.98];
+  }
+
+  .category-card-premium:hover {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Category-specific glow effects */
+  .category-glow {
+    @apply absolute rounded-full blur-3xl pointer-events-none opacity-40 transition-opacity duration-300;
+  }
+
+  .category-card-premium:hover .category-glow {
+    @apply opacity-60;
+  }
+
+  /* Category color schemes */
+  .category-blue { --category-color: 217 91% 60%; }
+  .category-orange { --category-color: 24 95% 53%; }
+  .category-green { --category-color: 142 76% 36%; }
+  .category-amber { --category-color: 38 92% 50%; }
+  .category-red { --category-color: 0 84% 60%; }
+  .category-purple { --category-color: 271 81% 56%; }
+  .category-cyan { --category-color: 189 94% 43%; }
+  .category-indigo { --category-color: 239 84% 67%; }
+
+  /* Premium Product Card - Category Pages */
+  .product-card-premium {
+    @apply bg-gradient-to-br from-elec-gray to-elec-card
+           border border-border/50 rounded-2xl overflow-hidden
+           transition-all duration-300 ease-ios-ease
+           hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10
+           hover:-translate-y-1 cursor-pointer touch-manipulation;
+  }
+
+  /* Product image container */
+  .product-image-container {
+    @apply relative bg-white overflow-hidden;
+    height: 200px;
+  }
+
+  .product-image-container-compact {
+    @apply relative bg-white overflow-hidden;
+    height: 150px;
+  }
+
+  .product-image-container img {
+    @apply w-full h-full object-contain p-4 transition-transform duration-500;
+  }
+
+  .product-card-premium:hover .product-image-container img {
+    @apply scale-105;
+  }
+
+  /* Sale ribbon - angular design */
+  .sale-ribbon {
+    @apply absolute top-0 right-0 z-10 bg-destructive text-destructive-foreground
+           px-3 py-1 text-xs font-bold;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 10% 100%);
+  }
+
+  /* Supplier badge */
+  .supplier-badge {
+    @apply absolute top-3 left-3 z-10 px-2.5 py-1 rounded-lg
+           bg-background/90 backdrop-blur-sm border border-border/50
+           text-xs font-medium text-foreground shadow-lg;
+  }
+
+  /* Trust badge strip */
+  .trust-badge-strip {
+    @apply flex flex-wrap items-center gap-2 py-2 border-t border-border/30;
+  }
+
+  .trust-badge {
+    @apply inline-flex items-center gap-1 text-xs text-muted-foreground;
+  }
+
+  .trust-badge-success {
+    @apply text-success;
+  }
+
+  .trust-badge-primary {
+    @apply text-primary;
+  }
+
+  /* Price styling - Amazon-inspired */
+  .price-block {
+    @apply space-y-1;
+  }
+
+  .price-primary {
+    @apply text-2xl font-bold text-primary;
+  }
+
+  .price-original {
+    @apply text-sm text-muted-foreground line-through;
+  }
+
+  .price-savings {
+    @apply text-sm font-semibold text-success;
+  }
+
+  .price-vat {
+    @apply text-xs text-muted-foreground;
+  }
+
+  /* Metrics grid for category cards */
+  .metrics-grid {
+    @apply grid grid-cols-2 gap-2;
+  }
+
+  .metric-box {
+    @apply flex items-center gap-2 p-2.5 rounded-xl
+           bg-white/5 border border-white/10
+           transition-colors duration-200;
+  }
+
+  .category-card-premium:hover .metric-box {
+    @apply bg-white/10 border-white/20;
+  }
+
+  .metric-box-highlight {
+    @apply bg-primary/10 border-primary/20;
+  }
+
+  /* Star rating display */
+  .star-rating {
+    @apply flex items-center gap-1;
+  }
+
+  .star-rating .star-filled {
+    @apply fill-yellow-400 text-yellow-400;
+  }
+
+  .star-rating .star-empty {
+    @apply text-muted-foreground/30;
+  }
+
+  /* Product features list */
+  .product-features {
+    @apply space-y-1.5;
+  }
+
+  .product-feature {
+    @apply flex items-center gap-2 text-xs text-muted-foreground;
+  }
+
+  .product-feature-icon {
+    @apply h-3 w-3 text-success shrink-0;
+  }
+
+  /* Premium action buttons */
+  .btn-buy-now {
+    @apply flex-1 h-11 rounded-xl font-semibold
+           bg-primary text-primary-foreground
+           hover:bg-primary/90 hover:shadow-lg hover:scale-[1.02]
+           active:scale-[0.98] transition-all duration-200;
+  }
+
+  .btn-compare {
+    @apply h-11 w-11 rounded-xl border border-border/50
+           hover:bg-accent hover:border-primary/30 hover:scale-105
+           active:scale-95 transition-all duration-200;
+  }
+
+  /* Progressive disclosure - description reveal */
+  .reveal-on-hover {
+    @apply opacity-0 transform translate-y-2
+           transition-all duration-300;
+  }
+
+  .category-card-premium:hover .reveal-on-hover {
+    @apply opacity-100 translate-y-0;
+  }
+
+  /* Arrow reveal on hover */
+  .arrow-reveal {
+    @apply opacity-0 transform translate-x-0
+           transition-all duration-300;
+  }
+
+  .category-card-premium:hover .arrow-reveal {
+    @apply opacity-100 translate-x-1;
+  }
+
+  /* Icon float animation */
+  @keyframes icon-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  .icon-float-on-hover {
+    @apply transition-transform duration-300;
+  }
+
+  .category-card-premium:hover .icon-float-on-hover {
+    animation: icon-float 2s ease-in-out infinite;
+  }
+
+  /* Staggered entrance for cards */
+  .stagger-enter > * {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    animation: stagger-fade-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .stagger-enter > *:nth-child(1) { animation-delay: 0ms; }
+  .stagger-enter > *:nth-child(2) { animation-delay: 50ms; }
+  .stagger-enter > *:nth-child(3) { animation-delay: 100ms; }
+  .stagger-enter > *:nth-child(4) { animation-delay: 150ms; }
+  .stagger-enter > *:nth-child(5) { animation-delay: 200ms; }
+  .stagger-enter > *:nth-child(6) { animation-delay: 250ms; }
+  .stagger-enter > *:nth-child(7) { animation-delay: 300ms; }
+  .stagger-enter > *:nth-child(8) { animation-delay: 350ms; }
+
+  @keyframes stagger-fade-in {
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Category icon container */
+  .category-icon-container {
+    @apply p-3 sm:p-4 rounded-2xl
+           bg-white/5 border border-white/10
+           transition-all duration-300;
+  }
+
+  .category-card-premium:hover .category-icon-container {
+    @apply bg-white/10 border-white/20;
+    box-shadow: 0 0 30px -5px hsl(var(--category-color, var(--elec-yellow)) / 0.3);
+  }
+
   /* ===== ELEC-ID ANIMATIONS ===== */
 
   /* Scanning line animation for OCR */

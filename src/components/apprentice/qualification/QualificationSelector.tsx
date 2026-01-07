@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { DropdownTabs } from '@/components/ui/dropdown-tabs';
-import { CalendarDays, GraduationCap, Award, BookOpen } from 'lucide-react';
+import { CalendarDays, GraduationCap, Award, ChevronRight, Loader2 } from 'lucide-react';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
 import { Qualification } from '@/types/qualification';
 import { toast } from 'sonner';
 import QualificationConfirmationDialog from './QualificationConfirmationDialog';
+import PortfolioSetupAnimation from './PortfolioSetupAnimation';
+import { cn } from '@/lib/utils';
 
 const QualificationSelector = () => {
   const { awardingBodies, categories, loading, selectQualification, userSelection } = useQualifications();
   const [selectedQualification, setSelectedQualification] = useState<Qualification | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [isSettingUp, setIsSettingUp] = useState(false);
 
   const awardingBodyIcons = {
     'EAL': Award,
@@ -27,57 +29,109 @@ const QualificationSelector = () => {
   const handleConfirmSelection = async (targetDate?: string) => {
     if (!selectedQualification) return;
 
-    await selectQualification(selectedQualification.id, targetDate);
-    toast.success('Qualification selected successfully! Your portfolio is now being set up.');
-    setSelectedQualification(null);
+    // Close dialog and show animation
+    setShowConfirmDialog(false);
+    setIsSettingUp(true);
+
+    try {
+      await selectQualification(selectedQualification.id, targetDate);
+    } catch (error) {
+      setIsSettingUp(false);
+      toast.error('Failed to set up portfolio. Please try again.');
+    }
   };
 
-  const selectedQualificationCategories = selectedQualification 
+  const handleSetupComplete = () => {
+    setIsSettingUp(false);
+    setSelectedQualification(null);
+    toast.success('Your portfolio is ready!');
+  };
+
+  const selectedQualificationCategories = selectedQualification
     ? categories.filter(cat => cat.qualification_id === selectedQualification.id)
     : [];
 
+  // Loading state with skeleton cards
   if (loading) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Loading Qualifications...</CardTitle>
+      <Card className="bg-card border-border">
+        <CardHeader className="pb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-elec-yellow/10">
+              <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
+            </div>
+            <div>
+              <CardTitle className="text-lg">Loading Qualifications</CardTitle>
+              <CardDescription className="text-sm">
+                Fetching available courses...
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
+        <CardContent className="space-y-3">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="animate-pulse">
+              <div className="h-20 bg-muted rounded-xl" />
+            </div>
+          ))}
+        </CardContent>
       </Card>
     );
   }
 
+  // Already selected state
   if (userSelection) {
     return (
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Award className="h-5 w-5" />
-            Current Qualification
-          </CardTitle>
-          <CardDescription>
-            You have selected your qualification. Your portfolio is now tailored to meet these requirements.
-          </CardDescription>
+      <Card className="bg-card border-border overflow-hidden">
+        {/* Header with gradient accent */}
+        <div className="h-1 bg-gradient-to-r from-elec-yellow via-elec-yellow/80 to-orange-500" />
+        <CardHeader className="pb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+              <Award className="h-5 w-5 text-elec-yellow" />
+            </div>
+            <div className="flex-1">
+              <CardTitle className="text-lg">Current Qualification</CardTitle>
+              <CardDescription className="text-sm">
+                Your portfolio is tailored to these requirements
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-                <Badge variant="secondary" className="border-elec-yellow/50 bg-elec-yellow/20 text-elec-yellow mb-2 sm:hidden">
-                  {userSelection.progress_percentage}% Complete
-                </Badge>
-                <h3 className="font-semibold">{userSelection.qualification?.title}</h3>
-                <p className="text-sm text-white">
-                  {userSelection.qualification?.awarding_body} • {userSelection.qualification?.level}
+          <div className="p-4 rounded-xl bg-muted/50 border border-border space-y-3">
+            <div className="flex items-start justify-between gap-3">
+              <div className="space-y-1 flex-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Badge className="bg-elec-yellow text-black font-semibold text-xs">
+                    {userSelection.qualification?.level}
+                  </Badge>
+                  <span className="text-xs text-muted-foreground">
+                    {userSelection.qualification?.awarding_body}
+                  </span>
+                </div>
+                <h3 className="font-semibold text-foreground leading-tight">
+                  {userSelection.qualification?.title}
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  Code: {userSelection.qualification?.code}
                 </p>
               </div>
-              <Badge variant="secondary" className="border-elec-yellow/50 bg-elec-yellow/20 text-elec-yellow hidden sm:block">
-                {userSelection.progress_percentage}% Complete
-              </Badge>
+              <div className="text-right">
+                <div className="text-2xl font-bold text-elec-yellow">
+                  {userSelection.progress_percentage}%
+                </div>
+                <span className="text-xs text-muted-foreground">Complete</span>
+              </div>
             </div>
             {userSelection.target_completion_date && (
-              <div className="flex items-center gap-2 text-sm text-white">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2 border-t border-border">
                 <CalendarDays className="h-4 w-4" />
-                Target completion: {new Date(userSelection.target_completion_date).toLocaleDateString()}
+                Target: {new Date(userSelection.target_completion_date).toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric'
+                })}
               </div>
             )}
           </div>
@@ -86,13 +140,23 @@ const QualificationSelector = () => {
     );
   }
 
+  // Selection state
   return (
-    <Card className="border-elec-yellow/20 bg-white/5">
-      <CardHeader>
-        <CardTitle>Select Your Qualification</CardTitle>
-        <CardDescription>
-          Choose your awarding body and qualification to get a tailored portfolio experience with specific requirements and guidance.
-        </CardDescription>
+    <Card className="bg-card border-border overflow-hidden">
+      {/* Header with gradient accent */}
+      <div className="h-1 bg-gradient-to-r from-elec-yellow via-elec-yellow/80 to-orange-500" />
+      <CardHeader className="pb-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+            <GraduationCap className="h-5 w-5 text-elec-yellow" />
+          </div>
+          <div>
+            <CardTitle className="text-lg">Select Your Qualification</CardTitle>
+            <CardDescription className="text-sm">
+              Choose your course to get a tailored portfolio experience
+            </CardDescription>
+          </div>
+        </div>
       </CardHeader>
       <CardContent>
         <DropdownTabs
@@ -105,34 +169,49 @@ const QualificationSelector = () => {
               label: body,
               icon: Icon,
               content: (
-                <div className="grid gap-4 mt-4">
+                <div className="space-y-3 mt-4">
                   {qualifications.map((qualification) => (
-                    <Card
+                    <button
                       key={qualification.id}
-                      className={`cursor-pointer transition-all hover:shadow-md border-elec-yellow/20 bg-white/10 ${
-                        selectedQualification?.id === qualification.id ? 'ring-2 ring-elec-yellow' : ''
-                      }`}
                       onClick={() => handleSelectQualification(qualification)}
+                      className={cn(
+                        'w-full text-left p-4 rounded-xl',
+                        'bg-muted/50 border border-border',
+                        'hover:border-elec-yellow/50 hover:bg-muted/80',
+                        'active:scale-[0.98] transition-all duration-200',
+                        'focus:outline-none focus:ring-2 focus:ring-elec-yellow/50',
+                        selectedQualification?.id === qualification.id && 'ring-2 ring-elec-yellow border-elec-yellow/50'
+                      )}
                     >
-                     <CardContent className="p-4">
-                       <div className="space-y-3">
-                         <div className="flex flex-col items-center gap-3 sm:gap-2">
-                           <Badge variant="outline" className="border-elec-yellow bg-elec-yellow text-elec-dark font-semibold">
-                             {qualification.level}
-                           </Badge>
-                           <h3 className="font-semibold text-lg leading-tight text-center">{qualification.title}</h3>
-                         </div>
-                         <div className="space-y-2 text-center">
-                           <p className="text-sm text-white">
-                             {qualification.description}
-                           </p>
-                           <p className="text-xs text-white">
-                             Code: {qualification.code}
-                           </p>
-                         </div>
-                       </div>
-                     </CardContent>
-                    </Card>
+                      <div className="flex items-center gap-3">
+                        {/* Level Badge */}
+                        <div className="flex-shrink-0">
+                          <Badge className="bg-elec-yellow text-black font-semibold text-xs px-2.5 py-1">
+                            {qualification.level}
+                          </Badge>
+                        </div>
+
+                        {/* Content */}
+                        <div className="flex-1 min-w-0 space-y-1">
+                          <h3 className="font-semibold text-foreground leading-tight line-clamp-2">
+                            {qualification.title}
+                          </h3>
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <span>{qualification.awarding_body}</span>
+                            <span className="text-border">•</span>
+                            <span>{qualification.code}</span>
+                          </div>
+                          {qualification.description && (
+                            <p className="text-xs text-muted-foreground line-clamp-1">
+                              {qualification.description}
+                            </p>
+                          )}
+                        </div>
+
+                        {/* Arrow */}
+                        <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                      </div>
+                    </button>
                   ))}
                 </div>
               )
@@ -146,6 +225,12 @@ const QualificationSelector = () => {
           qualification={selectedQualification}
           categories={selectedQualificationCategories}
           onConfirm={handleConfirmSelection}
+        />
+
+        <PortfolioSetupAnimation
+          isVisible={isSettingUp}
+          onComplete={handleSetupComplete}
+          qualificationTitle={selectedQualification?.title}
         />
       </CardContent>
     </Card>

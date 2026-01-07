@@ -360,7 +360,7 @@ const Module2Section3_6 = () => {
                 <h3 className="text-lg font-semibold text-teal-300">Typical Installation Patterns</h3>
                 
                 <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                  <h4 className="font-bold text-slate-200 mb-3">Domestic Installations</h4>
+                  <h4 className="font-bold text-white mb-3">Domestic Installations</h4>
                   <div className="grid md:grid-cols-2 gap-4 text-sm text-slate-300">
                     <div>
                       <p className="font-medium mb-2">Common Parallel Circuits:</p>
@@ -384,7 +384,7 @@ const Module2Section3_6 = () => {
                 </div>
 
                 <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                  <h4 className="font-bold text-slate-200 mb-3">Commercial/Industrial Patterns</h4>
+                  <h4 className="font-bold text-white mb-3">Commercial/Industrial Patterns</h4>
                   <div className="text-sm text-slate-300">
                     <ul className="list-disc pl-6 space-y-1">
                       <li><strong>Distribution boards:</strong> Always radial feeds from main panels</li>
@@ -478,7 +478,7 @@ const Module2Section3_6 = () => {
                 </h3>
                 <div className="bg-card border border-border/30 p-3 rounded">
                   <p className="font-medium text-elec-yellow mb-2">Look For:</p>
-                  <ul className="list-disc pl-4 space-y-1 text-blue-200 text-xs">
+                  <ul className="list-disc pl-4 space-y-1 text-white text-xs">
                     <li>Single cable in/out at each point</li>
                     <li>No junction boxes</li>
                     <li>All fail together</li>
@@ -510,7 +510,7 @@ const Module2Section3_6 = () => {
                 </h3>
                 <div className="bg-card border border-amber-400/30 p-3 rounded">
                   <p className="font-medium text-amber-300 mb-2">Look For:</p>
-                  <ul className="list-disc pl-4 space-y-1 text-amber-200 text-xs">
+                  <ul className="list-disc pl-4 space-y-1 text-white text-xs">
                     <li>Two conductors at MCB</li>
                     <li>Loop back to CU</li>
                     <li>Low end-to-end resistance</li>

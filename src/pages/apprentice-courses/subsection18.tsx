@@ -75,7 +75,7 @@ const Section5_1 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 5
@@ -96,7 +96,7 @@ const Section5_1 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 Why Safe Isolation is Essential
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white/80 max-w-3xl mt-2">
                 Understanding the critical importance of safe isolation procedures
               </p>
             </div>
@@ -131,7 +131,7 @@ const Section5_1 = () => {
         {/* Learning Outcomes */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
+          <p className="text-white/80 mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -165,7 +165,7 @@ const Section5_1 = () => {
           
           <div className="space-y-6">
             <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-              <p className="font-medium text-blue-800 dark:text-blue-200 mb-3">
+              <p className="font-medium text-blue-800 dark:text-white mb-3">
                 Safe isolation is the process of making an electrical system completely dead, locking it off to prevent re-energising, and proving that no voltage is present before starting work.
               </p>
             </div>
@@ -177,7 +177,7 @@ const Section5_1 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">1</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Isolating the supply</h5>
-                    <p className="text-muted-foreground text-sm">Turn off the circuit using the appropriate isolator or MCB</p>
+                    <p className="text-white/80 text-sm">Turn off the circuit using the appropriate isolator or MCB</p>
                   </div>
                 </div>
                 
@@ -185,7 +185,7 @@ const Section5_1 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">2</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Locking off the supply</h5>
-                    <p className="text-muted-foreground text-sm">Prevent re-energising by others using locks and warning labels</p>
+                    <p className="text-white/80 text-sm">Prevent re-energising by others using locks and warning labels</p>
                   </div>
                 </div>
                 
@@ -193,7 +193,7 @@ const Section5_1 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">3</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Testing the circuit</h5>
-                    <p className="text-muted-foreground text-sm">Prove it is dead using an approved voltage tester</p>
+                    <p className="text-white/80 text-sm">Prove it is dead using an approved voltage tester</p>
                   </div>
                 </div>
                 
@@ -201,7 +201,7 @@ const Section5_1 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">4</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Displaying warning signage</h5>
-                    <p className="text-muted-foreground text-sm">Place warning labels or signs to inform others</p>
+                    <p className="text-white/80 text-sm">Place warning labels or signs to inform others</p>
                   </div>
                 </div>
               </div>
@@ -236,7 +236,7 @@ const Section5_1 = () => {
                   <UserX className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold text-foreground">Electricity is Invisible</h4>
-                    <p className="text-muted-foreground text-sm mt-1">You can't tell by looking if something is live - there are no visible signs of danger</p>
+                    <p className="text-white/80 text-sm mt-1">You can't tell by looking if something is live - there are no visible signs of danger</p>
                   </div>
                 </div>
               </div>
@@ -246,7 +246,7 @@ const Section5_1 = () => {
                   <AlertTriangle className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold text-foreground">Severe Consequences</h4>
-                    <p className="text-muted-foreground text-sm mt-1">Touching live parts can cause electric shock, severe burns, or death</p>
+                    <p className="text-white/80 text-sm mt-1">Touching live parts can cause electric shock, severe burns, or death</p>
                   </div>
                 </div>
               </div>
@@ -256,7 +256,7 @@ const Section5_1 = () => {
                   <XCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold text-foreground">Accidental Re-energising</h4>
-                    <p className="text-muted-foreground text-sm mt-1">Without proper lock-off, someone could switch the circuit back on while you're working</p>
+                    <p className="text-white/80 text-sm mt-1">Without proper lock-off, someone could switch the circuit back on while you're working</p>
                   </div>
                 </div>
               </div>
@@ -266,7 +266,7 @@ const Section5_1 = () => {
                   <FileCheck className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                   <div>
                     <h4 className="font-semibold text-foreground">Legal Requirement</h4>
-                    <p className="text-muted-foreground text-sm mt-1">Mandated under the Electricity at Work Regulations 1989</p>
+                    <p className="text-white/80 text-sm mt-1">Mandated under the Electricity at Work Regulations 1989</p>
                   </div>
                 </div>
               </div>
@@ -342,7 +342,7 @@ const Section5_1 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-foreground">Training Requirements</h4>
-                <ul className="space-y-1 text-muted-foreground text-sm">
+                <ul className="space-y-1 text-white/80 text-sm">
                   <li>• City & Guilds Level 2 & 3 courses</li>
                   <li>• EAL electrical qualifications</li>
                   <li>• ECS card schemes</li>
@@ -352,7 +352,7 @@ const Section5_1 = () => {
 
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h4 className="font-semibold mb-2 text-foreground">Industry Standards</h4>
-                <ul className="space-y-1 text-muted-foreground text-sm">
+                <ul className="space-y-1 text-white/80 text-sm">
                   <li>• BS 7671 Wiring Regulations</li>
                   <li>• IET Guidance Note 3</li>
                   <li>• HSE guidance HSG85</li>
@@ -392,7 +392,7 @@ const Section5_1 = () => {
             
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h4 className="font-semibold text-foreground mb-3">What Went Wrong:</h4>
-              <ul className="space-y-2 text-muted-foreground text-sm">
+              <ul className="space-y-2 text-white/80 text-sm">
                 <li>• Assumption that the switch position indicated isolation</li>
                 <li>• No proper isolation at the MCB or fuse</li>
                 <li>• No testing to prove the circuit was dead</li>
@@ -423,19 +423,19 @@ const Section5_1 = () => {
           <div className="space-y-4">
             <div className="border-b border-border/20 pb-4">
               <h4 className="font-semibold text-elec-yellow mb-2">Can I rely on a circuit breaker being "off" to confirm isolation?</h4>
-              <p className="text-muted-foreground text-sm">No. Circuit breakers can fail or be switched back on by others. Always use proper test equipment to prove dead and apply lock-off procedures.</p>
+              <p className="text-white/80 text-sm">No. Circuit breakers can fail or be switched back on by others. Always use proper test equipment to prove dead and apply lock-off procedures.</p>
             </div>
             <div className="border-b border-border/20 pb-4">
               <h4 className="font-semibold text-elec-yellow mb-2">What if I'm only doing a quick job?</h4>
-              <p className="text-muted-foreground text-sm">There are no exceptions. Safe isolation must be followed for every job, regardless of duration. Most accidents happen during 'quick jobs'.</p>
+              <p className="text-white/80 text-sm">There are no exceptions. Safe isolation must be followed for every job, regardless of duration. Most accidents happen during 'quick jobs'.</p>
             </div>
             <div className="border-b border-border/20 pb-4">
               <h4 className="font-semibold text-elec-yellow mb-2">Who can remove my lock-off?</h4>
-              <p className="text-muted-foreground text-sm">Only the person who applied it, except in genuine emergencies with proper authorisation procedures.</p>
+              <p className="text-white/80 text-sm">Only the person who applied it, except in genuine emergencies with proper authorisation procedures.</p>
             </div>
             <div>
               <h4 className="font-semibold text-elec-yellow mb-2">What test equipment should I use?</h4>
-              <p className="text-muted-foreground text-sm">Use approved voltage testers to GS38 standards. Always prove the tester is working before and after use.</p>
+              <p className="text-white/80 text-sm">Use approved voltage testers to GS38 standards. Always prove the tester is working before and after use.</p>
             </div>
           </div>
         </Card>
@@ -452,19 +452,19 @@ const Section5_1 = () => {
               <div className="text-center p-4 bg-muted/50 rounded-lg">
                 <Lock className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
                 <h4 className="font-semibold text-foreground text-sm">ISOLATE</h4>
-                <p className="text-muted-foreground text-xs">Switch off at source</p>
+                <p className="text-white/80 text-xs">Switch off at source</p>
               </div>
               
               <div className="text-center p-4 bg-muted/50 rounded-lg">
                 <Shield className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
                 <h4 className="font-semibold text-foreground text-sm">LOCK OFF</h4>
-                <p className="text-muted-foreground text-xs">Prevent re-energising</p>
+                <p className="text-white/80 text-xs">Prevent re-energising</p>
               </div>
               
               <div className="text-center p-4 bg-muted/50 rounded-lg">
                 <CheckCircle className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
                 <h4 className="font-semibold text-foreground text-sm">PROVE DEAD</h4>
-                <p className="text-muted-foreground text-xs">Test with approved equipment</p>
+                <p className="text-white/80 text-xs">Test with approved equipment</p>
               </div>
             </div>
           </div>

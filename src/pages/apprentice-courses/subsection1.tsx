@@ -161,7 +161,7 @@ const Section1_1 = () => {
       {/* Top header bar */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 1
@@ -185,7 +185,7 @@ const Section1_1 = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             The Health and Safety at Work etc. Act 1974 (HASAWA)
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white/80">
             Master the legal framework for health, safety and welfare in UK workplaces. Essential knowledge for electrical apprentices.
           </p>
         </header>
@@ -456,7 +456,7 @@ const Section1_1 = () => {
               <p className="text-xs sm:text-sm text-foreground mb-2">
                 <strong>HASAWA Application:</strong> Attend site induction covering hazards, emergency procedures, and welfare facilities. Review RAMS for your specific tasks. Ensure you have appropriate PPE and understand isolation procedures.
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/80">
                 This demonstrates employer duties (providing information and training) and employee duties (cooperating with safety procedures).
               </p>
             </div>
@@ -469,7 +469,7 @@ const Section1_1 = () => {
               <p className="text-xs sm:text-sm text-foreground mb-2">
                 <strong>HASAWA Application:</strong> Refuse to perform unsafe work. Explain the need for proper isolation. Request that correct procedures be followed. Document your concerns if necessary.
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/80">
                 HASAWA protects employees who raise genuine safety concerns and refuse to perform unsafe work.
               </p>
             </div>
@@ -482,7 +482,7 @@ const Section1_1 = () => {
               <p className="text-xs sm:text-sm text-foreground mb-2">
                 <strong>HASAWA Application:</strong> Immediately stop using the equipment. Remove it from service and mark as defective. Report the defect to your supervisor. Complete an incident report if required.
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/80">
                 This demonstrates taking reasonable care for safety and cooperating with employer safety systems.
               </p>
             </div>
@@ -547,7 +547,7 @@ const Section1_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-l-4 border-l-muted pl-4">
                 <h3 className="font-medium text-foreground mb-2">Q: {faq.question}</h3>
-                <p className="text-sm text-muted-foreground">A: {faq.answer}</p>
+                <p className="text-sm text-white/80">A: {faq.answer}</p>
               </div>
             ))}
           </div>

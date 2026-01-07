@@ -305,8 +305,8 @@ const Module3Section3_3: React.FC = () => {
                 <p className="font-medium mb-2">Universal Measuring Instrument</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Purpose & Function</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">Purpose & Function</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Measures voltage, current, and resistance in circuits</li>
                       <li>Provides accurate readings for troubleshooting</li>
                       <li>Verifies supply conditions and component values</li>
@@ -314,8 +314,8 @@ const Module3Section3_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Types Available</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">Types Available</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Digital multimeters (DMMs) - high accuracy, easy reading</li>
                       <li>Analogue multimeters - less common in modern work</li>
                       <li>Auto-ranging models for simplified operation</li>
@@ -323,8 +323,8 @@ const Module3Section3_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Best Practice</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">Best Practice</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Select correct range before measurement</li>
                       <li>Confirm leads are in the right input sockets</li>
                       <li>Never measure current on a voltage setting</li>
@@ -350,8 +350,8 @@ const Module3Section3_3: React.FC = () => {
                 <p className="font-medium mb-2">Insulation Quality Testing</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-red-200 mb-1">Purpose & Function</p>
-                    <ul className="list-disc pl-4 space-y-1 text-red-200">
+                    <p className="font-medium text-white mb-1">Purpose & Function</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Tests insulation quality between conductors and earth</li>
                       <li>Applies high test voltage (typically 500V DC)</li>
                       <li>Detects insulation breakdown before energising</li>
@@ -359,8 +359,8 @@ const Module3Section3_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-red-200 mb-1">How It Works</p>
-                    <ul className="list-disc pl-4 space-y-1 text-red-200">
+                    <p className="font-medium text-white mb-1">How It Works</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Generates high DC test voltage internally</li>
                       <li>Measures resistance of insulation path</li>
                       <li>Results typically in megaohms (MΩ)</li>
@@ -368,8 +368,8 @@ const Module3Section3_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-red-200 mb-1">Best Practice</p>
-                    <ul className="list-disc pl-4 space-y-1 text-red-200">
+                    <p className="font-medium text-white mb-1">Best Practice</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Ensure circuit is completely de-energised</li>
                       <li>Disconnect sensitive equipment before testing</li>
                       <li>Check for minimum values per BS 7671</li>
@@ -396,24 +396,24 @@ const Module3Section3_3: React.FC = () => {
                   <p className="font-medium mb-2">Continuity Tester</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Purpose</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Purpose</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Checks conductors are continuous end-to-end</li>
                         <li>Verifies no breaks in electrical paths</li>
                         <li>Essential for earth continuity testing</li>
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Applications</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Applications</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Earth continuity verification</li>
                         <li>Ring final circuit testing</li>
                         <li>Bonding conductor checks</li>
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Best Practice</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Best Practice</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Use low-resistance tester for accuracy</li>
                         <li>Zero the leads before testing</li>
                         <li>Check connections are secure</li>
@@ -426,24 +426,24 @@ const Module3Section3_3: React.FC = () => {
                   <p className="font-medium mb-2">Voltage Indicator (Two-Pole)</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Purpose</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Purpose</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Confirms whether circuit is live or dead</li>
                         <li>Essential for safe isolation procedures</li>
                         <li>Simple presence/absence indication</li>
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Applications</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Applications</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Pre-work safety confirmation</li>
                         <li>Isolation verification</li>
                         <li>Quick voltage presence checks</li>
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Best Practice</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Best Practice</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Always prove before and after use</li>
                         <li>Test on known live source first</li>
                         <li>Replace batteries regularly</li>
@@ -469,8 +469,8 @@ const Module3Section3_3: React.FC = () => {
                 <p className="font-medium mb-2">RCD Performance Verification</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-amber-200 mb-1">Purpose & Function</p>
-                    <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                    <p className="font-medium text-white mb-1">Purpose & Function</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Measures RCD trip time and trip current accurately</li>
                       <li>Verifies operation within BS 7671 limits</li>
                       <li>Tests at different current levels for full verification</li>
@@ -478,8 +478,8 @@ const Module3Section3_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-amber-200 mb-1">Test Parameters</p>
-                    <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                    <p className="font-medium text-white mb-1">Test Parameters</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Trip current measurement (typically 30mA for general use)</li>
                       <li>Trip time at rated current (≤300ms for 30mA RCDs)</li>
                       <li>Trip time at 5× rated current (≤40ms)</li>
@@ -487,8 +487,8 @@ const Module3Section3_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-amber-200 mb-1">Best Practice</p>
-                    <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                    <p className="font-medium text-white mb-1">Best Practice</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Record all test results for certification</li>
                       <li>Test at rated and 5× rated current</li>
                       <li>Check mechanical operation manually</li>
@@ -567,7 +567,7 @@ const Module3Section3_3: React.FC = () => {
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
-              <ul className="list-disc pl-6 space-y-1 text-red-200">
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li><strong>Using uncalibrated equipment</strong> - Inaccurate results, compliance failures</li>
                 <li><strong>Testing live circuits with insulation tester</strong> - Equipment damage, safety risk</li>
                 <li><strong>Not proving voltage indicators</strong> - False confidence in dead circuits</li>
@@ -576,7 +576,7 @@ const Module3Section3_3: React.FC = () => {
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Quality Issues</p>
-              <ul className="list-disc pl-6 space-y-1 text-orange-200">
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li><strong>Inadequate record keeping</strong> - Compliance problems, traceability issues</li>
                 <li><strong>Skipping continuity tests</strong> - Undetected earth faults, safety risks</li>
                 <li><strong>Wrong test voltage selection</strong> - Inappropriate stress on insulation</li>
@@ -628,7 +628,7 @@ const Module3Section3_3: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="font-medium text-green-300 mb-1">Testing Benefits</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Identified hidden damage before energisation</li>
                   <li>Prevented circuit breaker tripping and investigation</li>
                   <li>Avoided potential fire or safety hazard</li>
@@ -637,7 +637,7 @@ const Module3Section3_3: React.FC = () => {
               </div>
               <div>
                 <p className="font-medium text-elec-yellow mb-1">Professional Practice</p>
-                <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Systematic testing approach identified issue</li>
                   <li>Problem resolved during installation phase</li>
                   <li>Client confidence maintained through quality work</li>
@@ -675,7 +675,7 @@ const Module3Section3_3: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-300 mb-2">Key Benefits</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Verifies installation safety before energisation</li>
                   <li>Ensures compliance with BS 7671 requirements</li>
                   <li>Identifies problems early in installation process</li>
@@ -684,7 +684,7 @@ const Module3Section3_3: React.FC = () => {
               </div>
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-elec-yellow mb-2">Essential Points</p>
-                <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Different testers for different applications</li>
                   <li>Calibration essential for accurate results</li>
                   <li>Safety procedures critical for all testing</li>
@@ -705,7 +705,7 @@ const Module3Section3_3: React.FC = () => {
               <p className="font-medium text-green-300 mb-3 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4" /> DO
               </p>
-              <ul className="space-y-2 text-sm text-green-200">
+              <ul className="space-y-2 text-sm text-white">
                 <li>✓ Check calibration certificates before testing</li>
                 <li>✓ Prove voltage indicators before and after use</li>
                 <li>✓ Record all test results immediately</li>
@@ -718,7 +718,7 @@ const Module3Section3_3: React.FC = () => {
               <p className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" /> DON'T
               </p>
-              <ul className="space-y-2 text-sm text-red-200">
+              <ul className="space-y-2 text-sm text-white">
                 <li>✗ Use uncalibrated or damaged test equipment</li>
                 <li>✗ Test live circuits with insulation testers</li>
                 <li>✗ Skip continuity tests to save time</li>

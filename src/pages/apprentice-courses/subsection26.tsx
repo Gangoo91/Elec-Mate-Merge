@@ -135,7 +135,7 @@ const Section6_4 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" asChild className="text-gray-300 hover:text-white">
+          <Button variant="ghost" asChild className="text-white hover:text-white">
             <Link to=".." className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               Back to Section 6
@@ -155,7 +155,7 @@ const Section6_4 = () => {
             <h1 className="text-4xl font-bold text-white mb-4">
               Emergency Procedures and Evacuation Plans
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-white">
               Understanding legal first aid provision and emergency response procedures
             </p>
           </div>
@@ -166,13 +166,13 @@ const Section6_4 = () => {
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <h2 className="text-lg font-semibold text-white mb-3">In 30 seconds</h2>
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Site emergencies like fire, electric shock, and gas leaks can happen without warning. When they do, lives depend on following emergency procedures immediately. This covers alarm responses, evacuation routes, key roles (fire wardens, first aiders), and post-incident actions including roll calls and reporting.
               </p>
             </div>
             <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
               <h3 className="text-elec-yellow font-semibold mb-2 text-sm">Spot it / Use it</h3>
-              <div className="space-y-2 text-gray-300 text-sm">
+              <div className="space-y-2 text-white text-sm">
                 <p><span className="text-elec-yellow">Spot:</span> Alarm types, exit signage, assembly point, fire wardens/first aiders</p>
                 <p><span className="text-elec-yellow">Use:</span> Stop work, evacuate via nearest exit, no lifts/no belongings, go to assembly point, wait for roll call</p>
               </div>
@@ -186,19 +186,19 @@ const Section6_4 = () => {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Understand emergency procedure content and legal expectations</span>
+              <span className="text-white">Understand emergency procedure content and legal expectations</span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Follow evacuation routes and roles (fire wardens, roll call)</span>
+              <span className="text-white">Follow evacuation routes and roles (fire wardens, roll call)</span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Respond correctly to fire, electrical, and gas incidents</span>
+              <span className="text-white">Respond correctly to fire, electrical, and gas incidents</span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Complete post-incident actions (roll call, preserve scene, reporting/RIDDOR)</span>
+              <span className="text-white">Complete post-incident actions (roll call, preserve scene, reporting/RIDDOR)</span>
             </div>
           </div>
         </Card>
@@ -214,14 +214,14 @@ const Section6_4 = () => {
             </div>
           </div>
           <div className="ml-12 space-y-4">
-            <p className="text-gray-300">
+            <p className="text-white">
               Emergency procedures are written plans that specify actions to take during site emergencies. They exist to protect life, minimise harm, ensure swift professional help, and maintain accountability for all personnel.
             </p>
             
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">It covers:</h3>
-                <ul className="text-gray-300 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Alarm raising procedures</li>
                   <li>• Emergency contacts and communication</li>
                   <li>• Evacuation routes and assembly points</li>
@@ -232,7 +232,7 @@ const Section6_4 = () => {
               </div>
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">The aim is to:</h3>
-                <ul className="text-gray-300 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Protect life above all else</li>
                   <li>• Prevent incidents from escalating</li>
                   <li>• Ensure orderly evacuation if needed</li>
@@ -262,7 +262,7 @@ const Section6_4 = () => {
             </div>
             <div>
               <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">Evacuation Planning & Roles</h2>
-              <p className="text-gray-300">
+              <p className="text-white">
                 Effective evacuation requires clear routes, visible signage, designated assembly points, and trained personnel with specific roles. Personal Emergency Evacuation Plans (PEEPs) may be needed for individuals with mobility limitations.
               </p>
             </div>
@@ -271,7 +271,7 @@ const Section6_4 = () => {
           <div className="grid md:grid-cols-3 gap-6 mb-6">
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Responsibilities</h3>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li>• <strong>Fire wardens:</strong> Lead evacuation, check areas</li>
                 <li>• <strong>Marshals:</strong> Guide people to assembly points</li>
                 <li>• <strong>First aiders:</strong> Assist injured during evacuation</li>
@@ -280,7 +280,7 @@ const Section6_4 = () => {
             </div>
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Essentials</h3>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li>• Clear, illuminated exit signs</li>
                 <li>• Unobstructed escape routes</li>
                 <li>• Designated assembly points</li>
@@ -290,7 +290,7 @@ const Section6_4 = () => {
             </div>
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Never do</h3>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li>• Use lifts during evacuation</li>
                 <li>• Collect personal belongings</li>
                 <li>• Re-enter the building</li>
@@ -309,7 +309,7 @@ const Section6_4 = () => {
             </div>
             <div>
               <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">Incident Response Basics (Electrical/Fire/Gas)</h2>
-              <p className="text-gray-300">
+              <p className="text-white">
                 Different emergency types require specific response procedures. Knowing how to respond safely to fire, electrical incidents, and gas leaks can save lives and prevent further escalation.
               </p>
             </div>
@@ -318,7 +318,7 @@ const Section6_4 = () => {
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Fire Response</h3>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li>• Raise the alarm immediately</li>
                 <li>• Evacuate the area quickly</li>
                 <li>• Only use extinguishers if trained and safe exit available</li>
@@ -328,7 +328,7 @@ const Section6_4 = () => {
             </div>
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Electric Shock/Arc</h3>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li>• Isolate power if safe to do so</li>
                 <li>• Never touch casualty until isolated</li>
                 <li>• Use insulated tools if available</li>
@@ -338,7 +338,7 @@ const Section6_4 = () => {
             </div>
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Gas Leak</h3>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li>• Stop all ignition sources immediately</li>
                 <li>• Ventilate area if safe to do so</li>
                 <li>• Evacuate to upwind location</li>
@@ -357,7 +357,7 @@ const Section6_4 = () => {
             </div>
             <div>
               <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">Alarms, Communication & Drills</h2>
-              <p className="text-gray-300">
+              <p className="text-white">
                 Effective emergency response relies on clear alarm systems, reliable communication methods, accurate muster procedures, and regular practice through drills that help identify areas for improvement.
               </p>
             </div>
@@ -366,7 +366,7 @@ const Section6_4 = () => {
           <div className="space-y-6">
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Alarm Types & Communication</h3>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li>• <strong>Fire alarms:</strong> Continuous siren or bells</li>
                 <li>• <strong>Gas alarms:</strong> Often different tone/pattern from fire</li>
                 <li>• <strong>Tannoy/Radio:</strong> Clear instructions and updates</li>
@@ -377,7 +377,7 @@ const Section6_4 = () => {
             
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Muster & Roll Call</h3>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li>• All personnel report to designated assembly points</li>
                 <li>• Fire wardens conduct headcounts using visitor books/sign-in sheets</li>
                 <li>• Contractor and visitor accountability systems</li>
@@ -388,7 +388,7 @@ const Section6_4 = () => {
             
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Drills & Continuous Improvement</h3>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li>• Regular evacuation drills (typically quarterly)</li>
                 <li>• Timing and observation of evacuation effectiveness</li>
                 <li>• Identifying and addressing procedural gaps</li>
@@ -407,7 +407,7 @@ const Section6_4 = () => {
             </div>
             <div>
               <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">Records, Reporting, and Good Practice</h2>
-              <p className="text-gray-300">
+              <p className="text-white">
                 Post-incident actions ensure accountability, preserve evidence for investigation, maintain legal compliance, and help prevent similar occurrences. Proper record-keeping and reporting are essential legal requirements.
               </p>
             </div>
@@ -416,7 +416,7 @@ const Section6_4 = () => {
           <div className="space-y-6">
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Immediate Post-Incident Actions</h3>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li>• Complete roll call to confirm all personnel accounted for</li>
                 <li>• Preserve the incident scene where safe to do so</li>
                 <li>• Notify site management and relevant authorities</li>
@@ -427,7 +427,7 @@ const Section6_4 = () => {
             
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Legal Record-Keeping (3 Years Minimum)</h3>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li>• Accident book entries and witness statements</li>
                 <li>• Emergency drill records and timing data</li>
                 <li>• Training records for emergency procedures</li>
@@ -438,7 +438,7 @@ const Section6_4 = () => {
             
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Good Practice Checklist</h3>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li>• Regular review and update of emergency procedures</li>
                 <li>• Clear signage and unobstructed escape routes</li>
                 <li>• Induction training for all new personnel and visitors</li>
@@ -454,14 +454,14 @@ const Section6_4 = () => {
           <h2 className="text-2xl font-bold text-white mb-6">Real World Scenario</h2>
           <div className="bg-card border border-amber-400/30 rounded-lg p-6 mb-6">
             <h3 className="font-semibold text-white mb-3">Scenario: Electrical Panel Smoke Detection</h3>
-            <p className="text-gray-300 mb-4">
+            <p className="text-white mb-4">
               During routine electrical work on a commercial site, a worker noticed smoke coming from a main distribution panel. The fire alarm was triggered, and emergency procedures were activated immediately.
             </p>
           </div>
 
           <div className="space-y-4 mb-6">
             <h4 className="font-semibold text-white">What happened next:</h4>
-            <ul className="space-y-2 text-gray-300 text-sm">
+            <ul className="space-y-2 text-white text-sm">
               <li>• All electrical work stopped immediately across the site</li>
               <li>• Workers evacuated using the nearest marked exits</li>
               <li>• Fire wardens conducted systematic area checks</li>
@@ -476,7 +476,7 @@ const Section6_4 = () => {
 
           <div className="bg-card border border-green-400/30 rounded-lg p-4">
             <h4 className="font-semibold text-white mb-2">Why this mattered:</h4>
-            <p className="text-gray-300 text-sm">
+            <p className="text-white text-sm">
               Quick evacuation prevented potential injuries from electrical fire or explosion. Clear role assignments ensured systematic area checking and accurate roll call. Proper electrical isolation by a competent person prevented escalation. The incident demonstrated that well-practiced procedures save lives when every second counts.
             </p>
           </div>
@@ -488,27 +488,27 @@ const Section6_4 = () => {
           <div className="space-y-6">
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">Can I grab my personal items during evacuation?</h3>
-              <p className="text-gray-300 text-sm">No. Never delay evacuation to collect personal belongings, tools, or equipment. Lives are more important than possessions, and these can be replaced. Every second counts in an emergency.</p>
+              <p className="text-white text-sm">No. Never delay evacuation to collect personal belongings, tools, or equipment. Lives are more important than possessions, and these can be replaced. Every second counts in an emergency.</p>
             </div>
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">Can I use the lift during evacuation?</h3>
-              <p className="text-gray-300 text-sm">Never use lifts during emergency evacuation. Power failures can trap people, and lifts may automatically return to ground floor in fire mode. Always use stairs, even if it takes longer.</p>
+              <p className="text-white text-sm">Never use lifts during emergency evacuation. Power failures can trap people, and lifts may automatically return to ground floor in fire mode. Always use stairs, even if it takes longer.</p>
             </div>
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">When can we re-enter the building?</h3>
-              <p className="text-gray-300 text-sm">Only when the incident commander (usually fire service or senior site management) gives the "all clear." Never re-enter before official authorisation, even if the alarm stops.</p>
+              <p className="text-white text-sm">Only when the incident commander (usually fire service or senior site management) gives the "all clear." Never re-enter before official authorisation, even if the alarm stops.</p>
             </div>
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">How are visitors accounted for during evacuation?</h3>
-              <p className="text-gray-300 text-sm">Sites must maintain visitor sign-in/out books or electronic systems. Fire wardens use these to account for visitors during roll call. Visitors should be inducted on emergency procedures upon arrival.</p>
+              <p className="text-white text-sm">Sites must maintain visitor sign-in/out books or electronic systems. Fire wardens use these to account for visitors during roll call. Visitors should be inducted on emergency procedures upon arrival.</p>
             </div>
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">What if someone is missing at roll call?</h3>
-              <p className="text-gray-300 text-sm">Report missing persons immediately to the incident commander. Provide last known location and any relevant medical information. Never re-enter to search - this is a job for emergency services with proper equipment.</p>
+              <p className="text-white text-sm">Report missing persons immediately to the incident commander. Provide last known location and any relevant medical information. Never re-enter to search - this is a job for emergency services with proper equipment.</p>
             </div>
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">Do evacuation drills count as real training records?</h3>
-              <p className="text-gray-300 text-sm">Yes, but separate formal training should also be provided. Drills are practical exercises, while training covers procedures, responsibilities, and emergency response theory. Both are important for compliance.</p>
+              <p className="text-white text-sm">Yes, but separate formal training should also be provided. Drills are practical exercises, while training covers procedures, responsibilities, and emergency response theory. Both are important for compliance.</p>
             </div>
           </div>
         </Card>

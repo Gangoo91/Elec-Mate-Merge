@@ -658,7 +658,7 @@ const Module5Section5_2 = () => {
               <Lightbulb className="w-6 h-6 text-white" />
             </div>
             <div className="flex-1">
-              <h2 className="text-lg sm:text-xl font-semibold text-amber-800 dark:text-amber-200 mb-3">Real-World Example</h2>
+              <h2 className="text-lg sm:text-xl font-semibold text-amber-800 dark:text-white mb-3">Real-World Example</h2>
               <div className="bg-white/50 dark:bg-black/20 p-4 rounded-lg border border-amber-200 dark:border-amber-700">
                 <p className="text-base text-white leading-relaxed">
                   <strong>The Situation:</strong> On a refurbishment project, an apprentice misheard the instruction to "terminate at DB2" and instead wired into DB1. 
@@ -695,7 +695,7 @@ const Module5Section5_2 = () => {
 
         {/* Pocket Guide */}
         <Card className="mb-8 p-4 sm:p-6 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 border-green-200 dark:border-green-800">
-          <h2 className="text-lg sm:text-xl font-semibold text-green-800 dark:text-green-200 mb-4">Pocket Guide</h2>
+          <h2 className="text-lg sm:text-xl font-semibold text-green-800 dark:text-white mb-4">Pocket Guide</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {pocketGuide.map((item, index) => (
               <div key={index} className="flex items-center gap-3 p-3 bg-white/50 dark:bg-black/20 rounded-lg border border-green-200 dark:border-green-700">

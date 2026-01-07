@@ -308,8 +308,8 @@ const Module3Section2_5: React.FC = () => {
                   <p className="font-medium mb-2">Underfloor Trunking Systems</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Construction & Applications</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Construction & Applications</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Installed beneath raised access floors</li>
                         <li>Compartmented for power and data segregation</li>
                         <li>Galvanised steel or PVC construction</li>
@@ -317,8 +317,8 @@ const Module3Section2_5: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Key Features</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Key Features</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Hidden installation maintains clean aesthetics</li>
                         <li>Flexible outlet positioning</li>
                         <li>Easy reconfiguration for office changes</li>
@@ -326,8 +326,8 @@ const Module3Section2_5: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Installation Requirements</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Installation Requirements</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Support spacing: 600mm centres maximum</li>
                         <li>Access covers: Every 3-4 metres</li>
                         <li>Fire barriers: Every 15m maximum</li>
@@ -341,8 +341,8 @@ const Module3Section2_5: React.FC = () => {
                   <p className="font-medium mb-2">Dado Trunking Systems</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Construction & Applications</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Construction & Applications</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Wall-mounted horizontal distribution</li>
                         <li>Typically 100-200mm wide systems</li>
                         <li>Steel or PVC with snap-on covers</li>
@@ -350,8 +350,8 @@ const Module3Section2_5: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Key Features</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Key Features</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Easy access for maintenance and additions</li>
                         <li>Multiple outlet configurations available</li>
                         <li>Can incorporate switches and sockets</li>
@@ -359,8 +359,8 @@ const Module3Section2_5: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Installation Requirements</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Installation Requirements</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Height: 150-300mm above worktop level</li>
                         <li>Support spacing: 750mm centres maximum</li>
                         <li>Level installation within ±2mm over 3m</li>
@@ -384,8 +384,8 @@ const Module3Section2_5: React.FC = () => {
 
             <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-orange-200 mb-2">Load calculations and sizing</p>
-                <ul className="list-disc pl-4 space-y-1 text-orange-200">
+                <p className="font-medium text-white mb-2">Load calculations and sizing</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Calculate total cable cross-sectional area including separators and barriers</li>
                   <li>Apply diversity factors: 0.8 for office loads, 1.0 for critical equipment</li>
                   <li>Allow 25% spare capacity for future installations and modifications</li>
@@ -395,8 +395,8 @@ const Module3Section2_5: React.FC = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
-                <p className="font-medium text-cyan-200 mb-2">Segregation and compartmentation</p>
-                <ul className="list-disc pl-4 space-y-1 text-cyan-200">
+                <p className="font-medium text-white mb-2">Segregation and compartmentation</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Power circuits: Band I (up to 50V), Band II (over 50V) separation required</li>
                   <li>Data circuits: Cat5e/6/6A require separate compartments from power cables</li>
                   <li>Fire barriers: Must maintain compartmentation integrity across trunking runs</li>
@@ -469,8 +469,8 @@ const Module3Section2_5: React.FC = () => {
 
             <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-red-200 mb-2">Installation errors</p>
-                <ul className="list-disc pl-4 space-y-1 text-red-200">
+                <p className="font-medium text-white mb-2">Installation errors</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li><strong>Overfilling trunking:</strong> Exceeding 45% fill factor causes overheating and installation difficulties</li>
                   <li><strong>Inadequate segregation:</strong> Mixing power and data cables without proper barriers</li>
                   <li><strong>Poor support spacing:</strong> Excessive spans causing sagging and stress on cable insulation</li>
@@ -480,8 +480,8 @@ const Module3Section2_5: React.FC = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
-                <p className="font-medium text-amber-200 mb-2">Planning and design oversights</p>
-                <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                <p className="font-medium text-white mb-2">Planning and design oversights</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li><strong>Insufficient access provision:</strong> Poor access cover placement making maintenance difficult</li>
                   <li><strong>Ignoring future expansion:</strong> Not allowing adequate spare capacity for modifications</li>
                   <li><strong>Poor coordination:</strong> Conflicts with other building services and structural elements</li>
@@ -502,8 +502,8 @@ const Module3Section2_5: React.FC = () => {
 
             <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-blue-200 mb-2">Key standards and regulations</p>
-                <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                <p className="font-medium text-white mb-2">Key standards and regulations</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li><strong>BS EN 50085:</strong> Cable trunking and ducting systems for electrical installations</li>
                   <li><strong>BS 7671 Section 521:</strong> Selection and erection of wiring systems - trunking</li>
                   <li><strong>521.8:</strong> Requirements for cable trunking and ducting systems</li>
@@ -513,8 +513,8 @@ const Module3Section2_5: React.FC = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                <p className="font-medium text-green-200 mb-2">Segregation and compatibility requirements</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <p className="font-medium text-white mb-2">Segregation and compatibility requirements</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Band I circuits (ELV): Up to 50V including telecommunications and control</li>
                   <li>Band II circuits: Over 50V including power distribution circuits</li>
                   <li>Physical segregation: Separate compartments or 50mm minimum air gap</li>
@@ -524,8 +524,8 @@ const Module3Section2_5: React.FC = () => {
               </div>
 
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-purple-200 mb-2">Testing and compliance verification</p>
-                <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                <p className="font-medium text-white mb-2">Testing and compliance verification</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Earth continuity: &lt;0.05Ω between all metallic sections</li>
                   <li>Insulation resistance: Minimum 1MΩ between segregated compartments</li>
                   <li>Fill factor verification: Measure and document actual vs. calculated values</li>
@@ -543,15 +543,15 @@ const Module3Section2_5: React.FC = () => {
             <Building className="w-5 h-5" /> Real-world Scenario
           </h2>
           <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
-            <h3 className="font-medium text-slate-200 mb-2">Open-plan office electrical distribution</h3>
-            <p className="text-slate-200 text-sm mb-3">
+            <h3 className="font-medium text-white mb-2">Open-plan office electrical distribution</h3>
+            <p className="text-white text-sm mb-3">
               A financial services company requires electrical distribution for a new 800m² trading floor
               with 60 workstations, each requiring power and dual data connections.
             </p>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="font-medium text-slate-200 mb-2">Underfloor power distribution</p>
-                <ul className="list-disc pl-4 space-y-1 text-slate-200">
+                <p className="font-medium text-white mb-2">Underfloor power distribution</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Compartmented trunking: 150 × 100mm steel construction</li>
                   <li>Power compartment: 32A radial circuits using 4mm² T&E</li>
                   <li>Support spacing: 600mm centres due to 25kg/m load</li>
@@ -559,8 +559,8 @@ const Module3Section2_5: React.FC = () => {
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-slate-200 mb-2">Data distribution system</p>
-                <ul className="list-disc pl-4 space-y-1 text-slate-200">
+                <p className="font-medium text-white mb-2">Data distribution system</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Separate compartment: Cat6A cabling for high-speed trading</li>
                   <li>120 data points: Dual connections per workstation</li>
                   <li>Access covers: Every 3m for flexible outlet positioning</li>
@@ -610,8 +610,8 @@ const Module3Section2_5: React.FC = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Apprentice Do's and Don'ts</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
             <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-              <h3 className="font-medium text-green-200 mb-3">✓ DO</h3>
-              <ul className="space-y-2 text-green-200">
+              <h3 className="font-medium text-white mb-3">✓ DO</h3>
+              <ul className="space-y-2 text-white">
                 <li>• Calculate cable cross-sectional areas and ensure 45% maximum fill</li>
                 <li>• Maintain 50mm minimum segregation between power and data</li>
                 <li>• Install support brackets at 600mm centres maximum</li>
@@ -623,8 +623,8 @@ const Module3Section2_5: React.FC = () => {
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <h3 className="font-medium text-red-200 mb-3">✗ DON'T</h3>
-              <ul className="space-y-2 text-red-200">
+              <h3 className="font-medium text-white mb-3">✗ DON'T</h3>
+              <ul className="space-y-2 text-white">
                 <li>• Exceed 45% fill factor - causes overheating risks</li>
                 <li>• Mix power and data cables without proper segregation</li>
                 <li>• Install with excessive support spacing causing sagging</li>
@@ -643,8 +643,8 @@ const Module3Section2_5: React.FC = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Card: Trunking Installation Quick Reference</h2>
           <div className="grid md:grid-cols-2 gap-4 text-xs">
             <div className="rounded-lg p-3 border border-border/30">
-              <h4 className="font-medium text-blue-200 mb-2">Underfloor Trunking</h4>
-              <ul className="space-y-1 text-blue-200">
+              <h4 className="font-medium text-white mb-2">Underfloor Trunking</h4>
+              <ul className="space-y-1 text-white">
                 <li>• Support spacing: 600mm max</li>
                 <li>• Fire barriers: Every 15m</li>
                 <li>• Access covers: Every 3-4m</li>
@@ -654,8 +654,8 @@ const Module3Section2_5: React.FC = () => {
               </ul>
             </div>
             <div className="rounded-lg p-3 border border-green-400/30">
-              <h4 className="font-medium text-green-200 mb-2">Dado Trunking</h4>
-              <ul className="space-y-1 text-green-200">
+              <h4 className="font-medium text-white mb-2">Dado Trunking</h4>
+              <ul className="space-y-1 text-white">
                 <li>• Support spacing: 750mm max</li>
                 <li>• Height: 150-300mm above desk</li>
                 <li>• Level tolerance: ±2mm/3m</li>

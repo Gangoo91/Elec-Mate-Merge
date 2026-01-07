@@ -304,8 +304,8 @@ const Module3Section3_2: React.FC = () => {
                 <p className="font-medium mb-2">Purpose & Applications</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Primary Uses</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">Primary Uses</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>General drilling for fixing holes in wood, plastic, and light masonry</li>
                       <li>Screw driving with appropriate bits</li>
                       <li>Hole preparation for cable routes in timber</li>
@@ -313,8 +313,8 @@ const Module3Section3_2: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Key Features</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">Key Features</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Variable speed control for different materials</li>
                       <li>Forward/reverse action for drilling and screw removal</li>
                       <li>Keyless or keyed chucks for bit retention</li>
@@ -322,8 +322,8 @@ const Module3Section3_2: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Best Practice</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">Best Practice</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Use sharp drill bits suitable for the material</li>
                       <li>Keep the drill aligned to avoid oval holes</li>
                       <li>Always secure the workpiece before drilling</li>
@@ -349,8 +349,8 @@ const Module3Section3_2: React.FC = () => {
                 <p className="font-medium mb-2">Heavy-Duty Masonry Drilling</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-red-200 mb-1">Purpose & Function</p>
-                    <ul className="list-disc pl-4 space-y-1 text-red-200">
+                    <p className="font-medium text-white mb-1">Purpose & Function</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Heavy-duty drilling in concrete, stone, and brick</li>
                       <li>Superior hammer action for rapid masonry penetration</li>
                       <li>Chiselling and light demolition work</li>
@@ -358,8 +358,8 @@ const Module3Section3_2: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-red-200 mb-1">Key Features</p>
-                    <ul className="list-disc pl-4 space-y-1 text-red-200">
+                    <p className="font-medium text-white mb-1">Key Features</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>SDS chuck system for quick bit changes without tools</li>
                       <li>Higher impact force than standard hammer drills</li>
                       <li>Multiple modes: drill, hammer drill, chisel</li>
@@ -367,8 +367,8 @@ const Module3Section3_2: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-red-200 mb-1">Best Practice</p>
-                    <ul className="list-disc pl-4 space-y-1 text-red-200">
+                    <p className="font-medium text-white mb-1">Best Practice</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Use SDS-rated masonry bits only</li>
                       <li>Avoid applying excessive force — let the hammer action work</li>
                       <li>Maintain a firm grip with both hands to control torque</li>
@@ -394,8 +394,8 @@ const Module3Section3_2: React.FC = () => {
                 <p className="font-medium mb-2">Precision Cutting Tool</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Purpose & Applications</p>
-                    <ul className="list-disc pl-4 space-y-1 text-green-200">
+                    <p className="font-medium text-white mb-1">Purpose & Applications</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Cutting curves, shapes, and openings in wood, plastic, and sheet metal</li>
                       <li>Creating access holes for cable entry</li>
                       <li>Trimming timber supports and backing boards</li>
@@ -403,8 +403,8 @@ const Module3Section3_2: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Key Features</p>
-                    <ul className="list-disc pl-4 space-y-1 text-green-200">
+                    <p className="font-medium text-white mb-1">Key Features</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Reciprocating blade action for controlled cutting</li>
                       <li>Adjustable speed settings for different materials</li>
                       <li>Base plate angle adjustment for bevel cuts</li>
@@ -412,8 +412,8 @@ const Module3Section3_2: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Best Practice</p>
-                    <ul className="list-disc pl-4 space-y-1 text-green-200">
+                    <p className="font-medium text-white mb-1">Best Practice</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Use the correct blade type for the material</li>
                       <li>Clamp the material securely before cutting</li>
                       <li>Allow the blade to reach full speed before contact</li>
@@ -492,7 +492,7 @@ const Module3Section3_2: React.FC = () => {
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
-              <ul className="list-disc pl-6 space-y-1 text-red-200">
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li><strong>Using damaged tools</strong> - Risk of electric shock, injury, or tool failure</li>
                 <li><strong>Wrong blade/bit selection</strong> - Tool damage, poor results, safety hazards</li>
                 <li><strong>Inadequate workpiece securing</strong> - Material movement causing injury or damage</li>
@@ -501,7 +501,7 @@ const Module3Section3_2: React.FC = () => {
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Efficiency Issues</p>
-              <ul className="list-disc pl-6 space-y-1 text-orange-200">
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li><strong>Standard drill for masonry</strong> - Slow progress, overheating, bit wear</li>
                 <li><strong>Dull blades/bits</strong> - Increased effort, poor finish, potential binding</li>
                 <li><strong>Incorrect speed settings</strong> - Material damage or inefficient cutting</li>
@@ -555,7 +555,7 @@ const Module3Section3_2: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="font-medium text-green-300 mb-1">Lessons Learned</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Tool selection dramatically affects productivity</li>
                   <li>Right tool prevents overheating and bit damage</li>
                   <li>Time savings justify tool investment</li>
@@ -564,7 +564,7 @@ const Module3Section3_2: React.FC = () => {
               </div>
               <div>
                 <p className="font-medium text-elec-yellow mb-1">Best Practice Applied</p>
-                <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Assess material before starting work</li>
                   <li>Use SDS drills for all masonry work</li>
                   <li>Plan tool requirements in advance</li>
@@ -602,7 +602,7 @@ const Module3Section3_2: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-300 mb-2">Key Benefits</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Dramatic productivity improvements with right tool selection</li>
                   <li>Professional finish quality with proper techniques</li>
                   <li>Reduced material waste and rework</li>
@@ -611,7 +611,7 @@ const Module3Section3_2: React.FC = () => {
               </div>
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-elec-yellow mb-2">Essential Points</p>
-                <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>SDS drills essential for any masonry work</li>
                   <li>Blade/bit selection critical for results</li>
                   <li>Safety inspection before every use</li>
@@ -632,7 +632,7 @@ const Module3Section3_2: React.FC = () => {
               <p className="font-medium text-green-300 mb-3 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4" /> DO
               </p>
-              <ul className="space-y-2 text-sm text-green-200">
+              <ul className="space-y-2 text-sm text-white">
                 <li>✓ Use SDS drills for all masonry drilling</li>
                 <li>✓ Inspect tools before each use</li>
                 <li>✓ Secure workpieces before cutting or drilling</li>
@@ -645,7 +645,7 @@ const Module3Section3_2: React.FC = () => {
               <p className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" /> DON'T
               </p>
-              <ul className="space-y-2 text-sm text-red-200">
+              <ul className="space-y-2 text-sm text-white">
                 <li>✗ Use standard drills for heavy masonry work</li>
                 <li>✗ Force tools beyond their design capacity</li>
                 <li>✗ Use damaged or worn blades/bits</li>

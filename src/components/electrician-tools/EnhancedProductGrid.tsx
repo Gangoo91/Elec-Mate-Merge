@@ -2,9 +2,9 @@ import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
-import { SortAsc, SortDesc, Grid, List, Loader2 } from "lucide-react";
+import { SortAsc, SortDesc, Grid, List, Loader2, Package } from "lucide-react";
 import { ToolItem } from "@/hooks/useToolsData";
-import ToolCard from "./ToolCard";
+import PremiumToolCard from "./PremiumToolCard";
 import ToolDetailModal from "./ToolDetailModal";
 import { FilterState } from "./ProductFilters";
 import { usePagination } from "@/hooks/usePagination";
@@ -163,9 +163,14 @@ const EnhancedProductGrid = ({
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-        <span className="ml-2 text-elec-light">Loading tools...</span>
+      <div className="flex flex-col items-center justify-center py-16 space-y-4">
+        <div className="p-4 rounded-full bg-primary/10 border border-primary/20">
+          <Package className="h-8 w-8 text-primary animate-pulse" />
+        </div>
+        <div className="text-center">
+          <p className="text-white font-medium">Loading tools...</p>
+          <p className="text-muted-foreground text-sm">Fetching products from suppliers</p>
+        </div>
       </div>
     );
   }
@@ -253,12 +258,12 @@ const EnhancedProductGrid = ({
         </Card>
       ) : (
         <>
-          <div className={viewMode === "grid" 
-            ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6"
-            : "space-y-4"
+          <div className={viewMode === "grid"
+            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 stagger-enter"
+            : "space-y-4 stagger-enter"
           }>
             {currentTools.map((tool) => (
-              <ToolCard
+              <PremiumToolCard
                 key={tool.id || tool.name}
                 item={tool}
                 onAddToCompare={onAddToCompare}
@@ -266,6 +271,7 @@ const EnhancedProductGrid = ({
                 isSelected={selectedItems.some(item => item.id === tool.id)}
                 isCompareDisabled={isCompareDisabled}
                 onCardClick={handleCardClick}
+                variant="default"
               />
             ))}
           </div>

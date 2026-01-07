@@ -181,7 +181,7 @@ const Section1_4 = () => {
       {/* Top header bar */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 1
@@ -205,7 +205,7 @@ const Section1_4 = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             The Role of Regulatory Bodies
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white/80">
             Understand how regulatory bodies enforce electrical safety law, their powers, and your responsibilities for compliance.
           </p>
         </header>
@@ -440,7 +440,7 @@ const Section1_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="space-y-2">
                 <h3 className="font-medium text-foreground">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
                 {index < faqs.length - 1 && <Separator className="mt-4" />}
               </div>
             ))}

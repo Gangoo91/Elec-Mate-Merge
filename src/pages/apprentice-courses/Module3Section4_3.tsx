@@ -268,20 +268,20 @@ const Module3Section4_3: React.FC = () => {
                 <p className="font-medium mb-2">Purpose & Materials</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Primary Purpose</p>
-                    <p className="text-blue-200">Provides identification and insulation for exposed conductors at termination points</p>
+                    <p className="font-medium text-white mb-1">Primary Purpose</p>
+                    <p className="text-white">Provides identification and insulation for exposed conductors at termination points</p>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Materials Available</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">Materials Available</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>PVC sleeving - most common, various colours</li>
                       <li>Heat-shrink tubing - self-sealing when heated</li>
                       <li>Silicone sleeving - high temperature applications</li>
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Common Applications</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">Common Applications</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Earth conductors - green/yellow identification</li>
                       <li>Neutral conductors - blue identification</li>
                       <li>Phase conductors - brown identification</li>
@@ -289,8 +289,8 @@ const Module3Section4_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Installation Best Practice</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">Installation Best Practice</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Select correct size for snug fit without slipping</li>
                       <li>Slide sleeving on before making connections</li>
                       <li>Ensure full coverage of exposed copper</li>
@@ -315,12 +315,12 @@ const Module3Section4_3: React.FC = () => {
                 <p className="font-medium mb-2">Purpose & Construction</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Primary Purpose</p>
-                    <p className="text-green-200">Prevents conductor strand splay and ensures reliable connection in screw or clamp terminals</p>
+                    <p className="font-medium text-white mb-1">Primary Purpose</p>
+                    <p className="text-white">Prevents conductor strand splay and ensures reliable connection in screw or clamp terminals</p>
                   </div>
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Construction</p>
-                    <ul className="list-disc pl-4 space-y-1 text-green-200">
+                    <p className="font-medium text-white mb-1">Construction</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Tin-plated copper tube for conductivity</li>
                       <li>Plastic collar for insulation (insulated types)</li>
                       <li>Colour-coded plastic for easy size identification</li>
@@ -328,8 +328,8 @@ const Module3Section4_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Applications</p>
-                    <ul className="list-disc pl-4 space-y-1 text-green-200">
+                    <p className="font-medium text-white mb-1">Applications</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Multi-stranded flexible conductors</li>
                       <li>Control panels and distribution boards</li>
                       <li>Modular equipment connections</li>
@@ -337,8 +337,8 @@ const Module3Section4_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Installation Technique</p>
-                    <ul className="list-disc pl-4 space-y-1 text-green-200">
+                    <p className="font-medium text-white mb-1">Installation Technique</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Cut conductor cleanly with proper strippers</li>
                       <li>Strip correct amount of insulation (ferrule length)</li>
                       <li>Insert conductor fully into ferrule</li>
@@ -364,32 +364,32 @@ const Module3Section4_3: React.FC = () => {
                 <p className="font-medium mb-2">Types & Applications</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-purple-200 mb-1">Ring Terminals</p>
-                    <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                    <p className="font-medium text-white mb-1">Ring Terminals</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>For bolted connections - completely encircles bolt</li>
                       <li>Most secure connection for high-current applications</li>
                       <li>Cannot be removed without unbolting</li>
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-purple-200 mb-1">Spade Terminals</p>
-                    <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                    <p className="font-medium text-white mb-1">Spade Terminals</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>For quick connection and disconnection</li>
                       <li>Easy maintenance access</li>
                       <li>Can be removed without full disconnection</li>
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-purple-200 mb-1">Butt Connectors</p>
-                    <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                    <p className="font-medium text-white mb-1">Butt Connectors</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>For joining two conductors inline</li>
                       <li>Extends cable runs or repairs damaged sections</li>
                       <li>Maintains conductor integrity</li>
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-purple-200 mb-1">Installation Process</p>
-                    <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                    <p className="font-medium text-white mb-1">Installation Process</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Select correct crimp size for conductor CSA</li>
                       <li>Use ratchet crimping tool for consistent pressure</li>
                       <li>Position conductor in crimp barrel properly</li>

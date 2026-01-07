@@ -393,7 +393,7 @@ const Module4Section3_1 = () => {
 
         {/* Real-world example */}
         <Card className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border-blue-200 dark:border-blue-800">
-          <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
+          <h3 className="font-semibold text-blue-800 dark:text-white mb-3 flex items-center gap-2">
             <Eye className="w-5 h-5" />
             Real-World Example
           </h3>

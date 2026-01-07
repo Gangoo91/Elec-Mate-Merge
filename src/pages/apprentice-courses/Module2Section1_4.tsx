@@ -255,7 +255,7 @@ const Module2Section1_4 = () => {
               
               <div className="bg-card border border-border/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Why SI Prefixes Matter in Electrical Work</h3>
-                <ul className="text-orange-200 space-y-1 text-sm">
+                <ul className="text-white space-y-1 text-sm">
                   <li>• <strong>Safety:</strong> Wrong units can lead to equipment damage or personal injury</li>
                   <li>• <strong>Precision:</strong> Electrical measurements often span many orders of magnitude</li>
                   <li>• <strong>Standards:</strong> BS 7671 and IET regulations use consistent SI notation</li>
@@ -344,7 +344,7 @@ const Module2Section1_4 = () => {
                   <h3 className="text-lg font-semibold text-white">Converting to Larger Units</h3>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
                     <p className="text-elec-yellow font-medium mb-2">Rule: Divide by the multiplier</p>
-                    <div className="space-y-2 text-blue-200">
+                    <div className="space-y-2 text-white">
                       <p>• 5,000 W → 5 kW (÷ 1,000)</p>
                       <p>• 2,000,000 Ω → 2 MΩ (÷ 1,000,000)</p>
                       <p>• 500 mA → 0.5 A (÷ 1,000)</p>
@@ -356,7 +356,7 @@ const Module2Section1_4 = () => {
                   <h3 className="text-lg font-semibold text-white">Converting to Smaller Units</h3>
                   <div className="bg-card border border-green-400/30 p-4 rounded-lg">
                     <p className="text-green-300 font-medium mb-2">Rule: Multiply by the multiplier</p>
-                    <div className="space-y-2 text-green-200">
+                    <div className="space-y-2 text-white">
                       <p>• 3 kV → 3,000 V (× 1,000)</p>
                       <p>• 1.5 MΩ → 1,500,000 Ω (× 1,000,000)</p>
                       <p>• 0.25 A → 250 mA (× 1,000)</p>
@@ -430,7 +430,7 @@ const Module2Section1_4 = () => {
               
               <div className="bg-card border border-border/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Common Conversion Mistakes to Avoid</h3>
-                <div className="grid md:grid-cols-2 gap-4 text-red-200 text-sm">
+                <div className="grid md:grid-cols-2 gap-4 text-white text-sm">
                   <div>
                     <p className="font-medium mb-1">Wrong Direction:</p>
                     <p>• 5 kW ≠ 5,000 mW (should be 5,000,000 mW)</p>

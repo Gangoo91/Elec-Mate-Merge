@@ -244,7 +244,7 @@ const Module6Section5_4 = () => {
                       </p>
                       
                       <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
-                        <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Critical Failure Thresholds:</h4>
+                        <h4 className="font-semibold text-red-800 dark:text-white mb-2">Critical Failure Thresholds:</h4>
                         <ul className="text-sm space-y-1 text-red-700 text-elec-yellow">
                           <li>• <strong>≤ 1 MΩ:</strong> Automatic failure - circuit must not be energised</li>
                           <li>• <strong>0.5 - 1 MΩ:</strong> Serious insulation breakdown requiring immediate investigation</li>
@@ -253,7 +253,7 @@ const Module6Section5_4 = () => {
                       </div>
 
                       <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3">
-                        <h4 className="font-semibold text-amber-800 dark:text-amber-200 mb-2">Investigation Thresholds:</h4>
+                        <h4 className="font-semibold text-amber-800 dark:text-white mb-2">Investigation Thresholds:</h4>
                         <ul className="text-sm space-y-1 text-amber-700 dark:text-amber-300">
                           <li>• <strong>1.1 - 2 MΩ:</strong> Requires investigation before energising</li>
                           <li>• <strong>2.1 - 5 MΩ:</strong> Monitor closely, consider environmental factors</li>
@@ -294,7 +294,7 @@ const Module6Section5_4 = () => {
                       </p>
 
                       <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3">
-                        <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2">High Resistance Readings (Good Condition):</h4>
+                        <h4 className="font-semibold text-green-800 dark:text-white mb-2">High Resistance Readings (Good Condition):</h4>
                         <ul className="text-sm space-y-1 text-green-700 dark:text-green-300">
                           <li>• <strong>10-50 MΩ:</strong> Excellent condition, new or well-maintained cables</li>
                           <li>• <strong>5-10 MΩ:</strong> Very good condition, suitable for energising</li>
@@ -303,7 +303,7 @@ const Module6Section5_4 = () => {
                       </div>
 
                       <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3">
-                        <h4 className="font-semibold text-amber-800 dark:text-amber-200 mb-2">Borderline Readings (Requires Investigation):</h4>
+                        <h4 className="font-semibold text-amber-800 dark:text-white mb-2">Borderline Readings (Requires Investigation):</h4>
                         <ul className="text-sm space-y-1 text-amber-700 dark:text-amber-300">
                           <li>• <strong>1.5-2 MΩ:</strong> May indicate ageing, moisture, or contamination</li>
                           <li>• <strong>1.1-1.5 MΩ:</strong> Strong indication of developing problems</li>
@@ -312,7 +312,7 @@ const Module6Section5_4 = () => {
                       </div>
 
                       <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
-                        <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Low Readings (Failure Conditions):</h4>
+                        <h4 className="font-semibold text-red-800 dark:text-white mb-2">Low Readings (Failure Conditions):</h4>
                         <ul className="text-sm space-y-1 text-red-700 text-elec-yellow">
                           <li>• <strong>0.8-1 MΩ:</strong> Insulation breakdown, investigate immediately</li>
                           <li>• <strong>0.3-0.8 MΩ:</strong> Significant deterioration, likely moisture/damage</li>
@@ -353,7 +353,7 @@ const Module6Section5_4 = () => {
                       </p>
 
                       <div className="bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
-                        <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">Environmental Factors:</h4>
+                        <h4 className="font-semibold text-blue-800 dark:text-white mb-2">Environmental Factors:</h4>
                         <ul className="text-sm space-y-1 text-blue-700 text-elec-yellow">
                           <li>• <strong>Temperature:</strong> Higher temps reduce readings by ~2% per °C above 20°C</li>
                           <li>• <strong>Humidity:</strong> &gt;80% relative humidity can halve resistance values</li>
@@ -363,7 +363,7 @@ const Module6Section5_4 = () => {
                       </div>
 
                       <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-3">
-                        <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">Cable Age and Condition:</h4>
+                        <h4 className="font-semibold text-purple-800 dark:text-white mb-2">Cable Age and Condition:</h4>
                         <ul className="text-sm space-y-1 text-purple-700 text-elec-yellow">
                           <li>• <strong>New cables (0-5 years):</strong> Typically 20-100 MΩ+</li>
                           <li>• <strong>Mature cables (5-15 years):</strong> Usually 5-20 MΩ in good condition</li>
@@ -374,7 +374,7 @@ const Module6Section5_4 = () => {
                       </div>
 
                       <div className="bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-800 rounded-lg p-3">
-                        <h4 className="font-semibold text-cyan-800 dark:text-cyan-200 mb-2">Installation Factors:</h4>
+                        <h4 className="font-semibold text-cyan-800 dark:text-white mb-2">Installation Factors:</h4>
                         <ul className="text-sm space-y-1 text-cyan-700 dark:text-cyan-300">
                           <li>• <strong>Cable length:</strong> Longer runs may show slightly lower readings</li>
                           <li>• <strong>Cable type:</strong> PVC degrades faster than XLPE in heat/UV</li>
@@ -417,7 +417,7 @@ const Module6Section5_4 = () => {
                       </p>
 
                       <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3">
-                        <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Immediate Action Required (Do NOT Energise):</h4>
+                        <h4 className="font-semibold text-red-800 dark:text-white mb-2">Immediate Action Required (Do NOT Energise):</h4>
                         <ul className="text-sm space-y-1 text-red-700 text-elec-yellow">
                           <li>• Any reading ≤ 1 MΩ - automatic failure requiring fault investigation</li>
                           <li>• Significant reading variation between repeat tests</li>
@@ -427,7 +427,7 @@ const Module6Section5_4 = () => {
                       </div>
 
                       <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3">
-                        <h4 className="font-semibold text-amber-800 dark:text-amber-200 mb-2">Investigation Before Energising (1.1-2 MΩ):</h4>
+                        <h4 className="font-semibold text-amber-800 dark:text-white mb-2">Investigation Before Energising (1.1-2 MΩ):</h4>
                         <ul className="text-sm space-y-1 text-amber-700 dark:text-amber-300">
                           <li>• Check environmental conditions (temperature, humidity)</li>
                           <li>• Verify proper isolation and test setup</li>
@@ -438,7 +438,7 @@ const Module6Section5_4 = () => {
                       </div>
 
                       <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3">
-                        <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2">Generally Safe to Energise (&gt; 2 MΩ):</h4>
+                        <h4 className="font-semibold text-green-800 dark:text-white mb-2">Generally Safe to Energise (&gt; 2 MΩ):</h4>
                         <ul className="text-sm space-y-1 text-green-700 dark:text-green-300">
                           <li>• High confidence in circuit safety</li>
                           <li>• Still monitor future test trends</li>
@@ -448,7 +448,7 @@ const Module6Section5_4 = () => {
                       </div>
 
                       <div className="bg-slate-50 dark:bg-[#121212]/20 border border-slate-200 dark:border-slate-800 rounded-lg p-3">
-                        <h4 className="font-semibold text-slate-800 dark:text-slate-200 mb-2">Professional Decision Matrix:</h4>
+                        <h4 className="font-semibold text-slate-800 dark:text-white mb-2">Professional Decision Matrix:</h4>
                         <div className="text-sm space-y-2 text-slate-700 dark:text-slate-300">
                           <p><strong>Consider these factors together:</strong></p>
                           <ul className="space-y-1 ml-4">
@@ -463,7 +463,7 @@ const Module6Section5_4 = () => {
                       </div>
 
                       <div className="bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
-                        <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">Documentation Requirements:</h4>
+                        <h4 className="font-semibold text-blue-800 dark:text-white mb-2">Documentation Requirements:</h4>
                         <ul className="text-sm space-y-1 text-blue-700 text-elec-yellow">
                           <li>• Always record actual readings, not just "PASS/FAIL"</li>
                           <li>• Note environmental conditions during testing</li>

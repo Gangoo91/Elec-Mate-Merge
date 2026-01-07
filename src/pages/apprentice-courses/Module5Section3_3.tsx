@@ -608,7 +608,7 @@ const Module5Section3_3 = () => {
                 </div>
 
                 <div className="rounded-lg p-4 bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800">
-                  <h4 className="font-medium text-teal-800 dark:text-teal-200 mb-3">Ground Conditions</h4>
+                  <h4 className="font-medium text-teal-800 dark:text-white mb-3">Ground Conditions</h4>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li><strong>Stability:</strong> Soft ground, excavations, underground services</li>
                     <li><strong>Level:</strong> Slopes affecting equipment setup</li>
@@ -858,10 +858,10 @@ const Module5Section3_3 = () => {
             </div>
 
             <div className="rounded-lg p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-              <h3 className="font-medium text-amber-800 dark:text-amber-200 mb-3">Common Mistakes to Avoid</h3>
+              <h3 className="font-medium text-amber-800 dark:text-white mb-3">Common Mistakes to Avoid</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <p className="font-medium text-amber-800 dark:text-amber-200 mb-2">Equipment Selection:</p>
+                  <p className="font-medium text-amber-800 dark:text-white mb-2">Equipment Selection:</p>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Using step ladders for extended tasks</li>
                     <li>Overloading platforms beyond safe limits</li>
@@ -870,7 +870,7 @@ const Module5Section3_3 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-amber-800 dark:text-amber-200 mb-2">Setup Errors:</p>
+                  <p className="font-medium text-amber-800 dark:text-white mb-2">Setup Errors:</p>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Inadequate ground preparation or assessment</li>
                     <li>Blocking emergency routes or exits</li>
@@ -907,12 +907,12 @@ const Module5Section3_3 = () => {
           
           <div className="space-y-6">
             <div className="rounded-lg p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-              <h3 className="font-semibold text-amber-800 dark:text-amber-200 mb-3">Case Study 1: Warehouse Project Incident</h3>
+              <h3 className="font-semibold text-amber-800 dark:text-white mb-3">Case Study 1: Warehouse Project Incident</h3>
               <p className="text-amber-700 dark:text-amber-300 mb-3">
                 On a warehouse project, electricians used step ladders for extended cable installation at high level. The ladders were unstable, and one worker fell, injuring his arm. After review, podium steps and a scaffold tower were introduced, improving safety and efficiency.
               </p>
               <div className="bg-amber-100 dark:bg-amber-900/40 p-3 rounded">
-                <p className="font-medium text-amber-800 dark:text-amber-200 mb-1">Lessons Learned:</p>
+                <p className="font-medium text-amber-800 dark:text-white mb-1">Lessons Learned:</p>
                 <ul className="list-disc pl-5 text-sm text-amber-700 dark:text-amber-300">
                   <li>Risk assessment identified inappropriate equipment selection</li>
                   <li>Proper platform selection improved both safety and productivity</li>
@@ -923,12 +923,12 @@ const Module5Section3_3 = () => {
             </div>
 
             <div className="rounded-lg p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-              <h3 className="font-semibold text-green-800 dark:text-green-200 mb-3">Case Study 2: Office Complex Success</h3>
+              <h3 className="font-semibold text-green-800 dark:text-white mb-3">Case Study 2: Office Complex Success</h3>
               <p className="text-green-700 dark:text-green-300 mb-3">
                 A 12-story office complex electrical installation used comprehensive access planning with coordinated scaffold systems, MEWPs, and podium steps. The project completed 2 weeks ahead of schedule with zero height-related incidents.
               </p>
               <div className="bg-green-100 dark:bg-green-900/40 p-3 rounded">
-                <p className="font-medium text-green-800 dark:text-green-200 mb-1">Success Factors:</p>
+                <p className="font-medium text-green-800 dark:text-white mb-1">Success Factors:</p>
                 <ul className="list-disc pl-5 text-sm text-green-700 dark:text-green-300">
                   <li>Early planning phase included access strategy</li>
                   <li>Regular coordination meetings with all trades</li>
@@ -939,12 +939,12 @@ const Module5Section3_3 = () => {
             </div>
 
             <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-              <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3">Case Study 3: Hospital Renovation Challenges</h3>
+              <h3 className="font-semibold text-blue-800 dark:text-white mb-3">Case Study 3: Hospital Renovation Challenges</h3>
               <p className="text-blue-700 text-elec-yellow mb-3">
                 Hospital electrical work required 24/7 access planning due to critical operations. Mobile platforms and carefully planned access routes maintained patient safety while enabling complex electrical installations.
               </p>
               <div className="bg-blue-100 dark:bg-blue-900/40 p-3 rounded">
-                <p className="font-medium text-blue-800 dark:text-blue-200 mb-1">Key Strategies:</p>
+                <p className="font-medium text-blue-800 dark:text-white mb-1">Key Strategies:</p>
                 <ul className="list-disc pl-5 text-sm text-blue-700 text-elec-yellow">
                   <li>Quiet, compact equipment to minimize disruption</li>
                   <li>Emergency response integration with hospital systems</li>

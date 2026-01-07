@@ -107,11 +107,11 @@ const OnJobTools = () => {
                 <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
                   <Sparkles className="h-6 w-6 text-elec-yellow" />
                 </div>
-                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                <h1 className="text-xl sm:text-3xl font-bold tracking-tight text-white">
                   On the Job <span className="text-elec-yellow">Tools</span>
                 </h1>
               </div>
-              <p className="text-white/70 max-w-xl text-sm sm:text-base">
+              <p className="hidden sm:block text-white/70 max-w-xl text-base">
                 Everything you need on site - from safety checklists to quick-reference guides.
                 Built by electricians, for apprentices.
               </p>
@@ -120,8 +120,8 @@ const OnJobTools = () => {
           </div>
         </div>
 
-        {/* Quick Stats Row */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        {/* Quick Stats Row - Hidden on mobile */}
+        <div className="hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <Card className="bg-gradient-to-br from-white/5 to-white/3 border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
             <CardContent className="p-4 sm:p-5">
               <div className="flex items-center gap-3">

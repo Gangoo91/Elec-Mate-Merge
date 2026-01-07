@@ -125,7 +125,7 @@ const Section4_1 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4
@@ -146,7 +146,7 @@ const Section4_1 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 Personal Protective Equipment (PPE)
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white/80 max-w-3xl mt-2">
                 Understanding PPE selection, use, and maintenance for electrical safety
               </p>
             </div>
@@ -181,7 +181,7 @@ const Section4_1 = () => {
         {/* Learning Outcomes */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
+          <p className="text-white/80 mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -215,13 +215,13 @@ const Section4_1 = () => {
           
           <div className="space-y-4">
             <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-              <p className="text-blue-800 dark:text-blue-200 font-medium">
+              <p className="text-blue-800 dark:text-white font-medium">
                 Personal Protective Equipment (PPE) is specialised clothing or equipment worn by individuals to protect against safety and health risks. 
                 In electrical work, PPE serves as the last line of defence when other safety measures cannot completely eliminate risks.
               </p>
             </div>
             
-            <p className="text-muted-foreground">
+            <p className="text-white/80">
               PPE should never be the first choice for risk control. According to the hierarchy of control, you should first try to eliminate, 
               substitute, or engineer out the hazard. PPE is used when these primary methods cannot adequately reduce the risk to an acceptable level.
             </p>
@@ -261,10 +261,10 @@ const Section4_1 = () => {
                   <HardHat className="h-4 w-4 text-elec-yellow" />
                   Safety Helmet/Hard Hat
                 </h4>
-                <p className="text-sm text-muted-foreground mb-2">
+                <p className="text-sm text-white/80 mb-2">
                   Protects against falling objects and impact injuries.
                 </p>
-                <ul className="text-xs text-muted-foreground space-y-1">
+                <ul className="text-xs text-white/80 space-y-1">
                   <li>• Must comply with BS EN 397</li>
                   <li>• Check for cracks before each use</li>
                   <li>• Replace every 3-5 years or after impact</li>
@@ -276,10 +276,10 @@ const Section4_1 = () => {
                   <Eye className="h-4 w-4 text-elec-yellow" />
                   Safety Glasses/Goggles
                 </h4>
-                <p className="text-sm text-muted-foreground mb-2">
+                <p className="text-sm text-white/80 mb-2">
                   Protects eyes from arc flash, debris, and chemical splashes.
                 </p>
-                <ul className="text-xs text-muted-foreground space-y-1">
+                <ul className="text-xs text-white/80 space-y-1">
                   <li>• Must comply with BS EN 166</li>
                   <li>• Side protection recommended</li>
                   <li>• Anti-fog coating for comfort</li>
@@ -291,10 +291,10 @@ const Section4_1 = () => {
                   <Wrench className="h-4 w-4 text-elec-yellow" />
                   Insulating Gloves
                 </h4>
-                <p className="text-sm text-muted-foreground mb-2">
+                <p className="text-sm text-white/80 mb-2">
                   Essential for live work and protection against electric shock.
                 </p>
-                <ul className="text-xs text-muted-foreground space-y-1">
+                <ul className="text-xs text-white/80 space-y-1">
                   <li>• Must comply with BS EN 60903</li>
                   <li>• Class 0: Up to 1kV AC / 1.5kV DC</li>
                   <li>• Test every 6 months</li>
@@ -306,10 +306,10 @@ const Section4_1 = () => {
                   <Shield className="h-4 w-4 text-elec-yellow" />
                   Safety Footwear
                 </h4>
-                <p className="text-sm text-muted-foreground mb-2">
+                <p className="text-sm text-white/80 mb-2">
                   Provides electrical insulation and protection from falling objects.
                 </p>
-                <ul className="text-xs text-muted-foreground space-y-1">
+                <ul className="text-xs text-white/80 space-y-1">
                   <li>• Must comply with BS EN 50321</li>
                   <li>• 18kV electrical resistance minimum</li>
                   <li>• Composite toe caps for live work</li>
@@ -486,17 +486,17 @@ const Section4_1 = () => {
           </div>
           
           <div className="space-y-4">
-            <p className="text-muted-foreground">
+            <p className="text-white/80">
               <strong>Scenario:</strong> An electrician was called to fault-find on a commercial lighting circuit. 
               The circuit kept tripping the RCD, and the client was pressuring for a quick fix as it was affecting their business.
             </p>
             
-            <p className="text-muted-foreground">
+            <p className="text-white/80">
               <strong>The Problem:</strong> The electrician wore his regular work gloves instead of Class 0 insulating gloves, 
               thinking the circuit was isolated. When testing revealed the circuit was still live, he received a shock through his non-insulating gloves.
             </p>
             
-            <p className="text-muted-foreground">
+            <p className="text-white/80">
               <strong>The Learning:</strong> Always assume circuits are live until proven otherwise. The right PPE (insulating gloves) 
               would have prevented this incident. PPE standards exist for a reason - they are the minimum requirement, not the maximum.
             </p>
@@ -520,7 +520,7 @@ const Section4_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-border pb-4 last:border-b-0">
                 <h4 className="font-semibold mb-2 text-elec-yellow">{faq.question}</h4>
-                <p className="text-muted-foreground text-sm">{faq.answer}</p>
+                <p className="text-white/80 text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

@@ -199,7 +199,7 @@ const SignUp = () => {
           </div>
           <h1 className="text-ios-title-1 text-white mb-2">Welcome to Elec-Mate!</h1>
           <p className="text-ios-body text-white/60 mb-8">
-            Check your email to verify your account.
+            Your account is ready. Let's get started!
           </p>
 
           <Card variant="ios" className="mb-4">

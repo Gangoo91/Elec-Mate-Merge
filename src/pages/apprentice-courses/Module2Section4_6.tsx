@@ -359,7 +359,7 @@ const Module2Section4_6 = () => {
 
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">CAT Rating Guide</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-purple-200">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li><strong>CAT III:</strong> Distribution boards, fixed equipment - most electrical work</li>
                     <li><strong>CAT IV:</strong> Supply side, meters, primary equipment - higher energy systems</li>
                     <li><strong>Voltage Rating:</strong> Must exceed maximum system voltage (e.g. 1000V for PV)</li>
@@ -389,7 +389,7 @@ const Module2Section4_6 = () => {
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">PV Systems (712)</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-orange-200">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>High DC voltages (up to 1000V+)</li>
                     <li>Always live during daylight</li>
                     <li>DC isolation required</li>
@@ -398,7 +398,7 @@ const Module2Section4_6 = () => {
                 </div>
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">EV Charging (722)</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-orange-200">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>DC residual components possible</li>
                     <li>RCD type selection critical</li>
                     <li>High power DC charging</li>
@@ -407,7 +407,7 @@ const Module2Section4_6 = () => {
                 </div>
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Battery Storage</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-orange-200">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>High prospective DC currents</li>
                     <li>Multiple energy sources</li>
                     <li>Ventilation requirements</li>
@@ -438,7 +438,7 @@ const Module2Section4_6 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Before Testing</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-blue-200">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>Check instrument calibration dates and condition</li>
                     <li>Verify CAT rating suitable for the system</li>
                     <li>Prove instruments on known live source</li>
@@ -460,7 +460,7 @@ const Module2Section4_6 = () => {
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">Common Mistakes to Avoid</h3>
               <div className="bg-card border border-border/30 p-4 rounded-lg">
-                <ul className="list-disc pl-4 space-y-2 text-sm text-red-200">
+                <ul className="list-disc pl-4 space-y-2 text-sm text-white">
                   <li><strong>Wrong instrument type:</strong> Using AC instruments on DC systems or vice versa</li>
                   <li><strong>Inadequate CAT rating:</strong> Using instruments not rated for the system voltage</li>
                   <li><strong>Skipping proving:</strong> Not proving instruments dead before and after testing</li>
@@ -520,7 +520,7 @@ const Module2Section4_6 = () => {
                     <TestTube className="w-4 h-4" />
                     AC System Tests
                   </h4>
-                  <ul className="space-y-1 text-blue-200 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>• Continuity (L/N/PE connections)</li>
                     <li>• Insulation resistance (DC test set)</li>
                     <li>• Loop impedance (Zs/Ze) for ADS</li>
@@ -534,7 +534,7 @@ const Module2Section4_6 = () => {
                     <Battery className="w-4 h-4" />
                     DC System Tests
                   </h4>
-                  <ul className="space-y-1 text-orange-200 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>• Continuity (+/−/PE connections)</li>
                     <li>• Insulation resistance (specified voltage)</li>
                     <li>• No direct Zs testing applicable</li>
@@ -561,7 +561,7 @@ const Module2Section4_6 = () => {
                     <AlertTriangle className="w-4 h-4" />
                     Special Systems
                   </h4>
-                  <ul className="space-y-1 text-red-200 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>• <strong>PV (712):</strong> High DC volts, always live</li>
                     <li>• <strong>EV (722):</strong> DC components, RCD type</li>
                     <li>• <strong>BESS:</strong> High current, ventilation</li>

@@ -188,7 +188,7 @@ const Level2Module6Section6_3 = () => {
       {/* Top header bar */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground p-0 text-sm sm:text-base" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground p-0 text-sm sm:text-base" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6
@@ -212,7 +212,7 @@ const Level2Module6Section6_3 = () => {
           <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             Identifying Common Electrical Installation Defects
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-white/80 text-sm sm:text-base">
             Recognition and analysis of common faults found during electrical testing
           </p>
         </header>
@@ -482,37 +482,37 @@ const Level2Module6Section6_3 = () => {
           <div className="space-y-4 text-sm sm:text-base">
             <div>
               <h4 className="font-semibold text-foreground mb-2">Situation</h4>
-              <p className="text-muted-foreground">
+              <p className="text-white/80">
                 During periodic inspection of a 10-year-old office building, an electrician found several lighting circuits with insulation resistance readings of 0.8 MΩ, well below the 1 MΩ minimum requirement. Additionally, three socket circuits showed high earth loop impedance readings exceeding BS 7671 limits.
               </p>
             </div>
             <div>
               <h4 className="font-semibold text-foreground mb-2">Investigation</h4>
-              <p className="text-muted-foreground">
+              <p className="text-white/80">
                 Visual inspection revealed water stains around ceiling light fittings where roof leaks had occurred during winter storms. The building's flat roof had developed several leaks that allowed water to penetrate into the ceiling void. Further testing showed loose earth connections in several distribution boards.
               </p>
             </div>
             <div>
               <h4 className="font-semibold text-foreground mb-2">Root Cause</h4>
-              <p className="text-muted-foreground">
+              <p className="text-white/80">
                 Water had entered junction boxes and cable entries, contaminating the cable insulation. Several cables had been damaged during roof repair work, with insulation nicked by roofing tools. Additionally, vibration from HVAC equipment had loosened earth terminal connections over time.
               </p>
             </div>
             <div>
               <h4 className="font-semibold text-foreground mb-2">Immediate Defects Found</h4>
-              <p className="text-muted-foreground">
+              <p className="text-white/80">
                 Testing revealed multiple installation defects: moisture-damaged insulation (0.8 MΩ readings), loose protective conductor connections (high Zs values), and one circuit with reversed polarity that had gone unnoticed for years, leaving light switches permanently live.
               </p>
             </div>
             <div>
               <h4 className="font-semibold text-foreground mb-2">Consequences</h4>
-              <p className="text-muted-foreground">
+              <p className="text-white/80">
                 Three circuits had to be isolated immediately due to safety concerns. Emergency lighting failed to operate correctly due to earth leakage, and several light switches showed signs of overheating from leakage currents. The polarity error created a serious shock hazard for maintenance staff.
               </p>
             </div>
             <div>
               <h4 className="font-semibold text-foreground mb-2">Resolution</h4>
-              <p className="text-muted-foreground">
+              <p className="text-white/80">
                 Complete rewiring of affected circuits was required, along with roof repairs and improved waterproofing. All earth connections were checked and retightened. The polarity error was corrected. Total remedial costs exceeded £15,000, far more than preventive measures would have cost.
               </p>
             </div>
@@ -532,15 +532,15 @@ const Level2Module6Section6_3 = () => {
           <CardContent className="space-y-4">
             <div>
               <h4 className="font-semibold mb-2">Q: What is the most common installation defect found during testing?</h4>
-              <p className="text-muted-foreground">A: Loose or poor connections.</p>
+              <p className="text-white/80">A: Loose or poor connections.</p>
             </div>
             <div>
               <h4 className="font-semibold mb-2">Q: Can insulation resistance testing identify all insulation faults?</h4>
-              <p className="text-muted-foreground">A: No. It identifies most issues, but some may only appear under load or over time.</p>
+              <p className="text-white/80">A: No. It identifies most issues, but some may only appear under load or over time.</p>
             </div>
             <div>
               <h4 className="font-semibold mb-2">Q: Why must polarity always be tested even on new installations?</h4>
-              <p className="text-muted-foreground">A: Because wiring errors can happen at any stage, and polarity faults are dangerous if left undetected.</p>
+              <p className="text-white/80">A: Because wiring errors can happen at any stage, and polarity faults are dangerous if left undetected.</p>
             </div>
           </CardContent>
         </Card>
@@ -560,7 +560,7 @@ const Level2Module6Section6_3 = () => {
                 <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Common Defects</p>
-                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">Insulation failures, continuity problems, polarity errors and RCD defects</p>
+                  <p className="text-xs sm:text-sm text-white/80 mt-1">Insulation failures, continuity problems, polarity errors and RCD defects</p>
                 </div>
               </div>
               
@@ -568,7 +568,7 @@ const Level2Module6Section6_3 = () => {
                 <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Systematic Testing</p>
-                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">Reveals defects that visual inspection alone cannot detect</p>
+                  <p className="text-xs sm:text-sm text-white/80 mt-1">Reveals defects that visual inspection alone cannot detect</p>
                 </div>
               </div>
             </div>
@@ -578,7 +578,7 @@ const Level2Module6Section6_3 = () => {
                 <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Pattern Recognition</p>
-                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">Understanding defect patterns helps target testing and corrective action</p>
+                  <p className="text-xs sm:text-sm text-white/80 mt-1">Understanding defect patterns helps target testing and corrective action</p>
                 </div>
               </div>
               
@@ -586,7 +586,7 @@ const Level2Module6Section6_3 = () => {
                 <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Safety Priority</p>
-                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">Defects must be identified and rectified to ensure electrical safety</p>
+                  <p className="text-xs sm:text-sm text-white/80 mt-1">Defects must be identified and rectified to ensure electrical safety</p>
                 </div>
               </div>
             </div>

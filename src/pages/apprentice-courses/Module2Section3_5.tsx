@@ -360,7 +360,7 @@ const Module2Section3_5 = () => {
                 <h3 className="text-lg font-semibold text-teal-300">Real-World Impact Assessment</h3>
                 
                 <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                  <h4 className="font-bold text-slate-200 mb-3">Customer Satisfaction Analysis</h4>
+                  <h4 className="font-bold text-white mb-3">Customer Satisfaction Analysis</h4>
                   <div className="grid md:grid-cols-2 gap-4 text-sm text-slate-300">
                     <div>
                       <p className="font-medium mb-2">Series Circuit Issues:</p>
@@ -384,7 +384,7 @@ const Module2Section3_5 = () => {
                 </div>
 
                 <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                  <h4 className="font-bold text-slate-200 mb-3">Installation Planning Considerations</h4>
+                  <h4 className="font-bold text-white mb-3">Installation Planning Considerations</h4>
                   <div className="text-sm text-slate-300">
                     <p className="mb-3">When planning circuit configurations, consider:</p>
                     <ul className="list-disc pl-6 space-y-1">
@@ -465,7 +465,7 @@ const Module2Section3_5 = () => {
                 </h3>
                 <div className="bg-card border border-border/30 p-3 rounded">
                   <p className="font-medium text-elec-yellow mb-2">Use When:</p>
-                  <ul className="list-disc pl-4 space-y-1 text-blue-200 text-xs">
+                  <ul className="list-disc pl-4 space-y-1 text-white text-xs">
                     <li>Decorative lighting chains</li>
                     <li>Voltage division needed</li>
                     <li>Current limiting required</li>
@@ -497,7 +497,7 @@ const Module2Section3_5 = () => {
                 </h3>
                 <div className="bg-card border border-amber-400/30 p-3 rounded">
                   <p className="font-medium text-amber-300 mb-2">Ask Yourself:</p>
-                  <ul className="list-disc pl-4 space-y-1 text-amber-200 text-xs">
+                  <ul className="list-disc pl-4 space-y-1 text-white text-xs">
                     <li>Fault tolerance critical?</li>
                     <li>Individual control needed?</li>
                     <li>Full voltage required?</li>

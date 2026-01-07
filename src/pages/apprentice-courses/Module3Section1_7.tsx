@@ -59,11 +59,11 @@ const ScenarioCard = ({
               selectedOption === index
                 ? showAnswer
                   ? index === correctAnswer
-                    ? 'bg-green-500/20 border-green-400/50 text-green-800 dark:text-green-200'
-                    : 'bg-red-500/20 border-red-400/50 text-red-800 dark:text-red-200'
-                  : 'bg-elec-yellow/20 border-elec-yellow/20 text-blue-800 dark:text-blue-200'
+                    ? 'bg-green-500/20 border-green-400/50 text-green-800 dark:text-white'
+                    : 'bg-red-500/20 border-red-400/50 text-red-800 dark:text-white'
+                  : 'bg-elec-yellow/20 border-elec-yellow/20 text-blue-800 dark:text-white'
                 : showAnswer && index === correctAnswer
-                ? 'bg-green-500/20 border-green-400/50 text-green-800 dark:text-green-200'
+                ? 'bg-green-500/20 border-green-400/50 text-green-800 dark:text-white'
                 : 'bg-white dark:bg-card border-gray-300 dark:border-gray-600 hover:border-blue-300 dark:hover:border-elec-yellow text-gray-900 dark:text-gray-100'
             }`}
           >

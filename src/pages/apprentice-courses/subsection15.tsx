@@ -125,7 +125,7 @@ const Section4_2 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4
@@ -146,7 +146,7 @@ const Section4_2 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 PPE Selection, Maintenance and Inspection
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white/80 max-w-3xl mt-2">
                 Ensuring PPE effectiveness through proper selection, care, and regular inspection
               </p>
             </div>
@@ -181,7 +181,7 @@ const Section4_2 = () => {
         {/* Learning Outcomes */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
+          <p className="text-white/80 mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -215,7 +215,7 @@ const Section4_2 = () => {
           
           <div className="space-y-6">
             <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-              <p className="font-medium text-blue-800 dark:text-blue-200 mb-3">
+              <p className="font-medium text-blue-800 dark:text-white mb-3">
                 Selecting the right PPE requires careful analysis of the work environment, tasks, and potential hazards. 
                 The selection must be based on a thorough risk assessment.
               </p>
@@ -227,7 +227,7 @@ const Section4_2 = () => {
                   <AlertTriangle className="h-4 w-4 text-elec-yellow" />
                   Risk Assessment Factors
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Voltage levels and arc flash potential</li>
                   <li>• Environmental conditions (wet, confined spaces)</li>
                   <li>• Duration and frequency of exposure</li>
@@ -241,7 +241,7 @@ const Section4_2 = () => {
                   <Users className="h-4 w-4 text-elec-yellow" />
                   Personal Factors
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Individual fit and comfort</li>
                   <li>• Medical conditions or allergies</li>
                   <li>• Training and competence level</li>
@@ -288,7 +288,7 @@ const Section4_2 = () => {
                   <Eye className="h-4 w-4 text-elec-yellow" />
                   Daily Inspection
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Check for visible damage or wear</li>
                   <li>• Ensure proper fit and function</li>
                   <li>• Look for contamination or degradation</li>
@@ -301,7 +301,7 @@ const Section4_2 = () => {
                   <Calendar className="h-4 w-4 text-elec-yellow" />
                   Periodic Inspection
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Formal inspection per manufacturer schedule</li>
                   <li>• Electrical testing for insulating equipment</li>
                   <li>• Documentation of inspection results</li>
@@ -314,7 +314,7 @@ const Section4_2 = () => {
                   <RefreshCw className="h-4 w-4 text-elec-yellow" />
                   Cleaning & Care
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Follow manufacturer cleaning instructions</li>
                   <li>• Use appropriate cleaning materials only</li>
                   <li>• Allow complete drying before storage</li>
@@ -327,7 +327,7 @@ const Section4_2 = () => {
                   <Settings className="h-4 w-4 text-elec-yellow" />
                   Storage Requirements
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Store in clean, dry conditions</li>
                   <li>• Protect from UV light and ozone</li>
                   <li>• Avoid extreme temperatures</li>
@@ -387,7 +387,7 @@ const Section4_2 = () => {
           <div className="space-y-6">
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                <h4 className="font-semibold mb-2 text-blue-800 dark:text-blue-200">Employer Responsibilities</h4>
+                <h4 className="font-semibold mb-2 text-blue-800 dark:text-white">Employer Responsibilities</h4>
                 <ul className="text-blue-700 dark:text-elec-yellow text-sm space-y-1">
                   <li>• Provide suitable PPE free of charge</li>
                   <li>• Ensure PPE meets relevant standards</li>
@@ -486,17 +486,17 @@ const Section4_2 = () => {
           </div>
           
           <div className="space-y-4">
-            <p className="text-muted-foreground">
+            <p className="text-white/80">
               <strong>Scenario:</strong> A maintenance electrician had been using the same pair of insulating gloves for over a year. 
               The gloves looked fine and felt comfortable, so he saw no reason to replace them.
             </p>
             
-            <p className="text-muted-foreground">
+            <p className="text-white/80">
               <strong>The Problem:</strong> During a routine safety audit, it was discovered that the gloves were three months overdue for their 
               6-monthly electrical test. When finally tested, they failed the dielectric test, showing they provided no electrical protection.
             </p>
             
-            <p className="text-muted-foreground">
+            <p className="text-white/80">
               <strong>The Learning:</strong> The electrician had been working on live circuits with no protection for months without realising it. 
               Visual inspection alone is not sufficient for electrical PPE - formal testing is essential to verify continued protection.
             </p>
@@ -520,7 +520,7 @@ const Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-border pb-4 last:border-b-0">
                 <h4 className="font-semibold mb-2 text-elec-yellow">{faq.question}</h4>
-                <p className="text-muted-foreground text-sm">{faq.answer}</p>
+                <p className="text-white/80 text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

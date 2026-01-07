@@ -53,6 +53,19 @@ export interface CashFlowState {
   monthlyLoanRepayments: number; // fixed monthly loan payment
 }
 
+export interface FinancialMetrics {
+  totalIncome: number;
+  totalExpenses: number;
+  netProfit: number;
+  avgMonthlyIncome: number;
+  avgMonthlyExpenses: number;
+  minBalance: number;
+  maxBalance: number;
+  cashRunway: number;
+  profitMargin: number;
+  breakEvenMonth: number;
+}
+
 const defaultScenarios: Scenario[] = [
   { id: 'pessimistic', name: 'Conservative', multiplier: 0.8, description: 'Cautious outlook with reduced income' },
   { id: 'realistic', name: 'Realistic', multiplier: 1.0, description: 'Expected business performance' },

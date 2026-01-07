@@ -263,7 +263,7 @@ const Module2Section5_2 = () => {
                       <Zap className="w-4 h-4" />
                       Copper - The Standard Choice
                     </h4>
-                    <div className="space-y-2 text-blue-200 text-sm">
+                    <div className="space-y-2 text-white text-sm">
                       <div>
                         <p><strong>Physical Properties:</strong></p>
                         <ul className="list-disc pl-4 space-y-1">
@@ -299,7 +299,7 @@ const Module2Section5_2 = () => {
                       <Battery className="w-4 h-4" />
                       Aluminium - The Efficient Alternative
                     </h4>
-                    <div className="space-y-2 text-amber-200 text-sm">
+                    <div className="space-y-2 text-white text-sm">
                       <div>
                         <p><strong>Physical Properties:</strong></p>
                         <ul className="list-disc pl-4 space-y-1">
@@ -333,7 +333,7 @@ const Module2Section5_2 = () => {
 
                 <div className="bg-teal-500/10 border border-teal-400/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-teal-300 mb-2">Detailed Comparison Analysis</h4>
-                  <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-teal-200 text-sm">
+                  <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-white text-sm">
                     <div>
                       <p><strong>Electrical Performance:</strong></p>
                       <ul className="list-disc pl-4 space-y-1">
@@ -425,7 +425,7 @@ const Module2Section5_2 = () => {
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">PVC / LSF</h4>
-                  <ul className="space-y-1 text-purple-200 text-sm">
+                  <ul className="space-y-1 text-white text-sm">
                     <li>• <strong>Rating:</strong> Typically 70°C</li>
                     <li>• <strong>Uses:</strong> T&E, flex, general wiring</li>
                     <li>• <strong>LSF:</strong> Low smoke properties</li>
@@ -496,7 +496,7 @@ const Module2Section5_2 = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
                     <h4 className="font-semibold text-elec-yellow mb-2">Copper Terminations</h4>
-                    <ul className="list-disc pl-4 space-y-1 text-sm text-purple-200">
+                    <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                       <li>Standard copper-rated terminals</li>
                       <li>Stable connections, minimal maintenance</li>
                       <li>Good resistance to corrosion</li>
@@ -505,7 +505,7 @@ const Module2Section5_2 = () => {
                   </div>
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
                     <h4 className="font-semibold text-elec-yellow mb-2">Aluminium Terminations</h4>
-                    <ul className="list-disc pl-4 space-y-1 text-sm text-purple-200">
+                    <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                       <li>Al-rated or bimetallic lugs required</li>
                       <li>Anti-oxidant compound where specified</li>
                       <li>Regular inspection and re-torque schedule</li>
@@ -529,7 +529,7 @@ const Module2Section5_2 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Assessment Criteria</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-blue-200">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>Current requirements and load calculations</li>
                     <li>Environmental conditions and temperature</li>
                     <li>Installation method and accessibility</li>
@@ -564,7 +564,7 @@ const Module2Section5_2 = () => {
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">Common Problems and Solutions</h3>
               <div className="bg-card border border-border/30 p-4 rounded-lg">
-                <div className="space-y-3 text-sm text-red-200">
+                <div className="space-y-3 text-sm text-white">
                   <div>
                     <p className="font-semibold">Loose Aluminium Connections:</p>
                     <p>Caused by creep and oxidation. Use Al-rated terminals, apply anti-oxidant, follow re-torque schedules.</p>
@@ -618,7 +618,7 @@ const Module2Section5_2 = () => {
                     <Zap className="w-4 h-4" />
                     Conductor Comparison
                   </h4>
-                  <ul className="space-y-1 text-blue-200 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>• <strong>Copper:</strong> 17.2 nΩ·m, easy termination</li>
                     <li>• <strong>Aluminium:</strong> 28.2 nΩ·m, 60% lighter</li>
                     <li>• <strong>CSA rule:</strong> Al needs ~1.6× Cu area</li>
@@ -631,7 +631,7 @@ const Module2Section5_2 = () => {
                     <Shield className="w-4 h-4" />
                     Insulation Types
                   </h4>
-                  <ul className="space-y-1 text-purple-200 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>• <strong>PVC:</strong> 70°C, T&E, economical</li>
                     <li>• <strong>XLPE:</strong> 90°C, SWA, higher capacity</li>
                     <li>• <strong>LSF/LSZH:</strong> Fire performance</li>
@@ -657,7 +657,7 @@ const Module2Section5_2 = () => {
                     <AlertTriangle className="w-4 h-4" />
                     Termination Safety
                   </h4>
-                  <ul className="space-y-1 text-red-200 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>• <strong>Al terminals:</strong> Use bimetallic or Al-rated</li>
                     <li>• <strong>Torque:</strong> Follow manufacturer specs exactly</li>
                     <li>• <strong>Maintenance:</strong> Re-torque Al connections</li>

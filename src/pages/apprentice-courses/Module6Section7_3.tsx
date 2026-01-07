@@ -225,7 +225,7 @@ const Module6Section7_3 = () => {
                         </h4>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm">
                           <div>
-                            <strong className="text-blue-900 dark:text-blue-200 block mb-2">Document Structure:</strong>
+                            <strong className="text-blue-900 dark:text-white block mb-2">Document Structure:</strong>
                             <ul className="space-y-1 text-blue-800 text-elec-yellow">
                               <li className="flex items-start gap-2">
                                 <span className="text-elec-yellow mt-1">•</span>
@@ -246,7 +246,7 @@ const Module6Section7_3 = () => {
                             </ul>
                           </div>
                           <div>
-                            <strong className="text-blue-900 dark:text-blue-200 block mb-2">Legal Status:</strong>
+                            <strong className="text-blue-900 dark:text-white block mb-2">Legal Status:</strong>
                             <ul className="space-y-1 text-blue-800 text-elec-yellow">
                               <li className="flex items-start gap-2">
                                 <span className="text-elec-yellow mt-1">•</span>
@@ -278,7 +278,7 @@ const Module6Section7_3 = () => {
                           <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
                           When MWC is NOT Suitable
                         </h4>
-                        <ul className="space-y-2 text-amber-800 dark:text-amber-200">
+                        <ul className="space-y-2 text-amber-800 dark:text-white">
                           <li className="flex items-start gap-3">
                             <span className="text-amber-500 mt-1">⚠️</span>
                             <span>Installing complete new circuits from the consumer unit</span>
@@ -339,7 +339,7 @@ const Module6Section7_3 = () => {
                         </h4>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm">
                           <div>
-                            <strong className="text-green-900 dark:text-green-200 block mb-2">Typical Domestic Work:</strong>
+                            <strong className="text-green-900 dark:text-white block mb-2">Typical Domestic Work:</strong>
                             <ul className="space-y-1 text-green-800 dark:text-green-300">
                               <li className="flex items-start gap-2">
                                 <span className="text-green-500 mt-1">✓</span>
@@ -360,7 +360,7 @@ const Module6Section7_3 = () => {
                             </ul>
                           </div>
                           <div>
-                            <strong className="text-green-900 dark:text-green-200 block mb-2">Small Commercial Additions:</strong>
+                            <strong className="text-green-900 dark:text-white block mb-2">Small Commercial Additions:</strong>
                             <ul className="space-y-1 text-green-800 dark:text-green-300">
                               <li className="flex items-start gap-2">
                                 <span className="text-green-500 mt-1">✓</span>
@@ -392,7 +392,7 @@ const Module6Section7_3 = () => {
                           <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                           Decision Guide - MWC vs EIC
                         </h4>
-                        <p className="font-medium text-blue-900 dark:text-blue-200 mb-3">Ask yourself:</p>
+                        <p className="font-medium text-blue-900 dark:text-white mb-3">Ask yourself:</p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3 text-sm">
                           <div className="flex items-center gap-2 text-blue-800 text-elec-yellow">
                             <span className="text-elec-yellow">🔍</span>
@@ -412,7 +412,7 @@ const Module6Section7_3 = () => {
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-green-100 to-blue-100 dark:from-green-900/30 dark:to-blue-900/30 rounded-lg p-3 border border-green-200 dark:border-green-700">
-                          <p className="font-semibold text-center text-green-800 dark:text-green-200">
+                          <p className="font-semibold text-center text-green-800 dark:text-white">
                             If all answers are "Yes" → use MWC | If any answer is "No" → use EIC
                           </p>
                         </div>
@@ -460,7 +460,7 @@ const Module6Section7_3 = () => {
                         </h4>
                         <div className="space-y-3 text-sm">
                           <div>
-                            <strong className="text-purple-900 dark:text-purple-200 block mb-2 flex items-center gap-2">
+                            <strong className="text-purple-900 dark:text-white block mb-2 flex items-center gap-2">
                               <span className="text-elec-yellow">1️⃣</span>
                               Installation Details:
                             </strong>
@@ -484,7 +484,7 @@ const Module6Section7_3 = () => {
                             </ul>
                           </div>
                           <div>
-                            <strong className="text-purple-900 dark:text-purple-200 block mb-2 flex items-center gap-2">
+                            <strong className="text-purple-900 dark:text-white block mb-2 flex items-center gap-2">
                               <span className="text-elec-yellow">2️⃣</span>
                               Work Description:
                             </strong>
@@ -508,7 +508,7 @@ const Module6Section7_3 = () => {
                             </ul>
                           </div>
                           <div>
-                            <strong className="text-purple-900 dark:text-purple-200 block mb-2 flex items-center gap-2">
+                            <strong className="text-purple-900 dark:text-white block mb-2 flex items-center gap-2">
                               <span className="text-elec-yellow">3️⃣</span>
                               Essential Test Results:
                             </strong>

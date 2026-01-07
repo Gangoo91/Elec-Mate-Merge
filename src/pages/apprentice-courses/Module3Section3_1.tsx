@@ -305,24 +305,24 @@ const Module3Section3_1: React.FC = () => {
                   <p className="font-medium mb-2">Cable Strippers</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Purpose & Function</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Purpose & Function</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Remove insulation from conductors without damage</li>
                         <li>Precise control over strip length</li>
                         <li>Clean cuts with minimal conductor distortion</li>
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Types Available</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Types Available</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Adjustable manual strippers (most common)</li>
                         <li>Automatic strippers for high-volume work</li>
                         <li>Coaxial/data cable strippers for specialist cables</li>
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Best Practice</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Best Practice</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Set tool to match insulation thickness exactly</li>
                         <li>Avoid cutting into copper conductors</li>
                         <li>Check stripped end for damage before termination</li>
@@ -335,24 +335,24 @@ const Module3Section3_1: React.FC = () => {
                   <p className="font-medium mb-2">Cable Cutters</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Purpose & Function</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Purpose & Function</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Cut cables cleanly without crushing conductors</li>
                         <li>Maintain conductor shape and integrity</li>
                         <li>Prevent fraying of stranded conductors</li>
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Types Available</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Types Available</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Side cutters for small conductors (up to 6mm²)</li>
                         <li>Ratchet cutters for larger cables (up to 50mm²)</li>
                         <li>Specialist SWA cutters for armoured cables</li>
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Best Practice</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Best Practice</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Use correct cutter for cable size and type</li>
                         <li>Never use side cutters on steel wire armour</li>
                         <li>Use hacksaw for SWA unless specialist cutter available</li>
@@ -379,16 +379,16 @@ const Module3Section3_1: React.FC = () => {
                   <p className="font-medium mb-2">Screwdrivers</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-red-200 mb-1">VDE-Rated Requirements</p>
-                      <ul className="list-disc pl-4 space-y-1 text-red-200">
+                      <p className="font-medium text-white mb-1">VDE-Rated Requirements</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Insulated to 1,000V for electrical safety</li>
                         <li>Two-layer insulation system with colour coding</li>
                         <li>Regular testing and inspection required</li>
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-red-200 mb-1">Common Types</p>
-                      <ul className="list-disc pl-4 space-y-1 text-red-200">
+                      <p className="font-medium text-white mb-1">Common Types</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Slotted (flat blade) - most common in electrical</li>
                         <li>Phillips and Pozidriv for cross-head screws</li>
                         <li>Torx for specialist applications</li>
@@ -396,8 +396,8 @@ const Module3Section3_1: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-red-200 mb-1">Best Practice</p>
-                      <ul className="list-disc pl-4 space-y-1 text-red-200">
+                      <p className="font-medium text-white mb-1">Best Practice</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Select correct size/type for screw head</li>
                         <li>Avoid using as levers or chisels</li>
                         <li>Check insulation integrity before each use</li>
@@ -410,24 +410,24 @@ const Module3Section3_1: React.FC = () => {
                   <p className="font-medium mb-2">Pliers</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Primary Functions</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Primary Functions</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Grip components and conductors securely</li>
                         <li>Twist conductors for connections</li>
                         <li>Bend and shape cables and components</li>
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Essential Types</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Essential Types</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Combination pliers - general purpose gripping</li>
                         <li>Long-nose pliers - precision work in tight spaces</li>
                         <li>Water pump pliers - gripping conduit fittings</li>
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Best Practice</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Best Practice</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Keep jaws clean for maximum grip</li>
                         <li>Don't use in place of proper spanners</li>
                         <li>Choose appropriate size for component</li>
@@ -452,16 +452,16 @@ const Module3Section3_1: React.FC = () => {
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="font-medium text-slate-200 mb-2">Support Tools</p>
-                    <ul className="list-disc pl-4 space-y-1 text-slate-200">
+                    <p className="font-medium text-white mb-2">Support Tools</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li><strong>Adjustable Spanners:</strong> Tightening cable glands and fixing bolts</li>
                       <li><strong>Hacksaws:</strong> Cutting conduit, trunking, and armoured cables</li>
                       <li><strong>Files:</strong> Smoothing cut edges and removing burrs</li>
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-slate-200 mb-2">Measuring & Marking</p>
-                    <ul className="list-disc pl-4 space-y-1 text-slate-200">
+                    <p className="font-medium text-white mb-2">Measuring & Marking</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li><strong>Tape Measures:</strong> Accurate layout and cable length measurement</li>
                       <li><strong>Spirit Levels:</strong> Ensuring level installation of equipment</li>
                       <li><strong>Permanent Markers:</strong> Cable identification and equipment labelling</li>
@@ -539,7 +539,7 @@ const Module3Section3_1: React.FC = () => {
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
-              <ul className="list-disc pl-6 space-y-1 text-red-200">
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li><strong>Using non-VDE tools on live circuits</strong> - Risk of electric shock or electrocution</li>
                 <li><strong>Wrong size screwdrivers</strong> - Damages screw heads and reduces connection security</li>
                 <li><strong>Side cutters on SWA cables</strong> - Tool damage and poor cuts</li>
@@ -548,7 +548,7 @@ const Module3Section3_1: React.FC = () => {
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Quality Issues</p>
-              <ul className="list-disc pl-6 space-y-1 text-orange-200">
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li><strong>Blunt cutting tools</strong> - Crush conductors and create poor connections</li>
                 <li><strong>Dirty plier jaws</strong> - Poor grip leads to slipping and component damage</li>
                 <li><strong>Using pliers as spanners</strong> - Rounds off nuts and damages surfaces</li>
@@ -602,7 +602,7 @@ const Module3Section3_1: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="font-medium text-green-300 mb-1">Prevention Measures</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Always use VDE-rated tools for electrical work</li>
                   <li>Test tool insulation regularly</li>
                   <li>Follow safe isolation procedures</li>
@@ -611,7 +611,7 @@ const Module3Section3_1: React.FC = () => {
               </div>
               <div>
                 <p className="font-medium text-elec-yellow mb-1">Consequences Avoided</p>
-                <ul className="list-disc pl-4 space-y-1 text-red-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Serious electric shock or electrocution</li>
                   <li>Equipment damage and downtime</li>
                   <li>Health and safety investigation</li>
@@ -649,7 +649,7 @@ const Module3Section3_1: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-300 mb-2">Key Benefits</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Safe working with VDE-rated insulated tools</li>
                   <li>Professional quality connections and installations</li>
                   <li>Efficient work with proper tool selection</li>
@@ -658,7 +658,7 @@ const Module3Section3_1: React.FC = () => {
               </div>
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-elec-yellow mb-2">Essential Points</p>
-                <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Match tool to task - don't compromise on quality</li>
                   <li>Regular maintenance keeps tools safe and effective</li>
                   <li>Proper technique prevents damage and injury</li>
@@ -679,7 +679,7 @@ const Module3Section3_1: React.FC = () => {
               <p className="font-medium text-green-300 mb-3 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4" /> DO
               </p>
-              <ul className="space-y-2 text-sm text-green-200">
+              <ul className="space-y-2 text-sm text-white">
                 <li>✓ Always use VDE-rated tools for electrical work</li>
                 <li>✓ Check tool condition before each use</li>
                 <li>✓ Select the correct size and type for each task</li>
@@ -692,7 +692,7 @@ const Module3Section3_1: React.FC = () => {
               <p className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" /> DON'T
               </p>
-              <ul className="space-y-2 text-sm text-red-200">
+              <ul className="space-y-2 text-sm text-white">
                 <li>✗ Use non-insulated tools on live circuits</li>
                 <li>✗ Force wrong-sized tools onto components</li>
                 <li>✗ Use damaged or worn cutting tools</li>

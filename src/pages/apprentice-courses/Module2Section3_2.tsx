@@ -325,9 +325,9 @@ const Module2Section3_2 = () => {
                 <h3 className="text-lg font-semibold text-teal-300">Worked Examples</h3>
                 
                 <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                  <h4 className="font-bold text-slate-200 mb-2">Example 1: Three Resistor Series Circuit</h4>
+                  <h4 className="font-bold text-white mb-2">Example 1: Three Resistor Series Circuit</h4>
                   <p className="text-slate-300 text-sm mb-2">Given: 12V supply, R₁ = 100Ω, R₂ = 200Ω, R₃ = 300Ω</p>
-                  <div className="space-y-1 text-sm text-slate-200">
+                  <div className="space-y-1 text-sm text-white">
                     <p><strong>Step 1:</strong> Rt = 100 + 200 + 300 = 600Ω</p>
                     <p><strong>Step 2:</strong> I = 12V ÷ 600Ω = 0.02A (20mA)</p>
                     <p><strong>Step 3:</strong> V₁ = 0.02A × 100Ω = 2V</p>
@@ -338,9 +338,9 @@ const Module2Section3_2 = () => {
                 </div>
 
                 <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                  <h4 className="font-bold text-slate-200 mb-2">Example 2: LED String Calculation</h4>
+                  <h4 className="font-bold text-white mb-2">Example 2: LED String Calculation</h4>
                   <p className="text-slate-300 text-sm mb-2">Given: 24V supply, 8 identical LEDs each needing 2.5V, 20mA</p>
-                  <div className="space-y-1 text-sm text-slate-200">
+                  <div className="space-y-1 text-sm text-white">
                     <p><strong>Analysis:</strong> 8 × 2.5V = 20V (4V remaining for current limiting resistor)</p>
                     <p><strong>Required resistor:</strong> R = 4V ÷ 0.02A = 200Ω</p>
                     <p><strong>Power rating:</strong> P = 4V × 0.02A = 0.08W (use 0.25W resistor)</p>
@@ -384,7 +384,7 @@ const Module2Section3_2 = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-card border border-border/30 p-4 rounded-lg">
                     <h4 className="font-bold text-elec-yellow mb-2">When values are missing:</h4>
-                    <ul className="list-disc pl-6 space-y-1 text-sm text-blue-200">
+                    <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                       <li>Use Ohm's Law: V = I × R</li>
                       <li>Apply voltage divider rule</li>
                       <li>Remember: voltages must sum to supply</li>
@@ -393,7 +393,7 @@ const Module2Section3_2 = () => {
                   </div>
                   <div className="bg-card border border-green-400/30 p-4 rounded-lg">
                     <h4 className="font-bold text-green-300 mb-2">Fault finding approach:</h4>
-                    <ul className="list-disc pl-6 space-y-1 text-sm text-green-200">
+                    <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                       <li>No current = open circuit somewhere</li>
                       <li>Measure voltage across each component</li>
                       <li>Full supply voltage across one = it's open</li>
@@ -408,7 +408,7 @@ const Module2Section3_2 = () => {
                 <h3 className="text-lg font-semibold text-teal-300">Practice Problems</h3>
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-bold text-elec-yellow mb-2">Try these calculations:</h4>
-                  <div className="space-y-2 text-sm text-orange-200">
+                  <div className="space-y-2 text-sm text-white">
                     <p><strong>Problem 1:</strong> 9V battery, three 1kΩ resistors in series. Find current and voltage across each.</p>
                     <p><strong>Problem 2:</strong> 230V supply, R₁ = 50Ω, R₂ = 100Ω, current = 1.5A. What's the third resistor R₃?</p>
                     <p><strong>Problem 3:</strong> LED needs 2.1V at 15mA, supply is 12V. Calculate limiting resistor value and power.</p>
@@ -444,7 +444,7 @@ const Module2Section3_2 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-card border border-amber-400/30 p-4 rounded-lg space-y-2">
                   <h3 className="text-amber-300 font-semibold">Where you'll find series circuits</h3>
-                  <ul className="text-amber-200 text-sm list-disc pl-6 space-y-1">
+                  <ul className="text-white text-sm list-disc pl-6 space-y-1">
                     <li>LED strings and strips</li>
                     <li>Christmas lights (older types)</li>
                     <li>Sensor voltage dividers</li>
@@ -453,7 +453,7 @@ const Module2Section3_2 = () => {
                 </div>
                 <div className="bg-card border border-amber-400/30 p-4 rounded-lg space-y-2">
                   <h3 className="text-amber-300 font-semibold">BS 7671 considerations</h3>
-                  <ul className="text-amber-200 text-sm list-disc pl-6 space-y-1">
+                  <ul className="text-white text-sm list-disc pl-6 space-y-1">
                     <li>Voltage drop calculations</li>
                     <li>Component ratings and limits</li>
                     <li>Fault loop impedance</li>
@@ -464,7 +464,7 @@ const Module2Section3_2 = () => {
 
               <div className="bg-card border border-border/30 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-semibold">Real-world example: LED string installation</h3>
-                <p className="text-orange-200 text-sm mt-2">
+                <p className="text-white text-sm mt-2">
                   LED tape with series segments must respect driver voltage/current limits. 
                   If one segment fails open, the whole string stops. Calculate total current with I = V/Rt 
                   and check cable voltage drop. Always follow manufacturer wiring guidance and verify polarity before energising.
@@ -510,7 +510,7 @@ const Module2Section3_2 = () => {
             <div className="space-y-3">
               <h4 className="font-bold text-elec-yellow">Essential Rules</h4>
               <div className="bg-card border border-border/30 p-4 rounded-lg">
-                <ul className="text-blue-200 space-y-1">
+                <ul className="text-white space-y-1">
                   <li>• Current: Same everywhere (I₁ = I₂ = I₃)</li>
                   <li>• Voltage: Divides (V₁ + V₂ + V₃ = Vs)</li>
                   <li>• Resistance: Adds (Rt = R₁ + R₂ + R₃)</li>

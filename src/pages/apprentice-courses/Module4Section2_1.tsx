@@ -468,7 +468,7 @@ const Module4Section2_1 = () => {
 
         {/* Real-World Example */}
         <Card className="mb-8 p-6 bg-elec-yellow/5 dark:bg-elec-yellow/10 border-blue-200 dark:border-blue-800">
-          <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
+          <h3 className="font-semibold text-blue-800 dark:text-white mb-3 flex items-center gap-2">
             <Eye className="w-5 h-5" />
             Real-World Example
           </h3>
@@ -478,7 +478,7 @@ const Module4Section2_1 = () => {
             leading to a full day of rework.
           </p>
           <div className="bg-blue-100 dark:bg-blue-900/30 border border-blue-300 dark:border-blue-700 rounded p-3">
-            <p className="text-xs text-blue-800 dark:text-blue-200">
+            <p className="text-xs text-blue-800 dark:text-white">
               <strong>Lesson:</strong> Accurate marking from the start would have prevented the problem. 
               The cost of proper measurement tools and techniques is minimal compared to rework expenses.
             </p>

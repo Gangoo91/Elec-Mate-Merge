@@ -670,7 +670,7 @@ const Module6Section3_1 = () => {
             </div>
 
             <div className="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-lg border border-amber-200 dark:border-amber-700">
-              <h3 className="font-semibold text-amber-800 dark:text-amber-200 mb-3">Safety Critical Reminders</h3>
+              <h3 className="font-semibold text-amber-800 dark:text-white mb-3">Safety Critical Reminders</h3>
               <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
                 <li>Never exceed instrument CAT ratings - voltage category and maximum voltage must not be exceeded</li>
                 <li>Always verify instrument functionality with known sources before and after testing</li>
@@ -692,20 +692,20 @@ const Module6Section3_1 = () => {
             </p>
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4 mt-4">
               <div className="p-3 bg-amber-100 dark:bg-amber-900/40 rounded border-l-4 border-l-amber-500">
-                <p className="font-medium text-amber-800 dark:text-amber-200 mb-1">Continuity Testing</p>
+                <p className="font-medium text-amber-800 dark:text-white mb-1">Continuity Testing</p>
                 <p className="text-xs sm:text-sm text-white">Verified complete ring integrity and correct polarity using systematic R1+R2 method</p>
               </div>
               <div className="p-3 bg-amber-100 dark:bg-amber-900/40 rounded border-l-4 border-l-amber-500">
-                <p className="font-medium text-amber-800 dark:text-amber-200 mb-1">Insulation Testing</p>
+                <p className="font-medium text-amber-800 dark:text-white mb-1">Insulation Testing</p>
                 <p className="text-xs sm:text-sm text-white">Confirmed insulation quality &gt;1 MΩ using 500V DC appropriate for 230V circuit</p>
               </div>
               <div className="p-3 bg-amber-100 dark:bg-amber-900/40 rounded border-l-4 border-l-amber-500">
-                <p className="font-medium text-amber-800 dark:text-amber-200 mb-1">Final Verification</p>
+                <p className="font-medium text-amber-800 dark:text-white mb-1">Final Verification</p>
                 <p className="text-xs sm:text-sm text-white">Voltage and polarity confirmation using multimeter before energisation</p>
               </div>
             </div>
             <div className="mt-4 p-3 bg-amber-100 dark:bg-amber-900/40 rounded border-l-4 border-l-amber-500">
-              <p className="font-medium text-amber-800 dark:text-amber-200 mb-1">Professional Insight</p>
+              <p className="font-medium text-amber-800 dark:text-white mb-1">Professional Insight</p>
               <p className="text-xs sm:text-sm text-white">
                 This systematic approach demonstrates how different instruments serve specific purposes in electrical verification. The sequence ensures safety, compliance, and proper circuit operation before handover to the client.
               </p>

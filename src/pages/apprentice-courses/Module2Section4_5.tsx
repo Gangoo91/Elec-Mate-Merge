@@ -347,7 +347,7 @@ const Module2Section4_5 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">AC to DC Conversion</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-purple-200">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li><strong>Rectifiers:</strong> Convert AC mains to DC supply</li>
                     <li><strong>Phone chargers:</strong> 230V AC to low voltage DC</li>
                     <li><strong>DC power supplies:</strong> For electronic equipment</li>
@@ -356,7 +356,7 @@ const Module2Section4_5 = () => {
                 </div>
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">DC to AC Conversion</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-purple-200">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li><strong>Solar inverters:</strong> PV DC to mains AC</li>
                     <li><strong>UPS systems:</strong> Battery DC to load AC</li>
                     <li><strong>VFDs:</strong> AC→DC→variable frequency AC</li>
@@ -435,7 +435,7 @@ const Module2Section4_5 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">When Installing AC Systems</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-blue-200">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>Check supply characteristics (230V/400V, TN/TT system)</li>
                     <li>Consider three-phase balance for motor loads</li>
                     <li>Account for power factor and harmonics</li>
@@ -457,7 +457,7 @@ const Module2Section4_5 = () => {
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">Common Mistakes to Avoid</h3>
               <div className="bg-card border border-border/30 p-4 rounded-lg">
-                <ul className="list-disc pl-4 space-y-2 text-sm text-red-200">
+                <ul className="list-disc pl-4 space-y-2 text-sm text-white">
                   <li><strong>Assuming all loads are AC:</strong> Always check equipment nameplates</li>
                   <li><strong>Mixing circuits incorrectly:</strong> Don't combine ELV with LV without barriers</li>
                   <li><strong>Wrong RCD selection:</strong> Consider DC components when selecting type A/F/B</li>
@@ -517,7 +517,7 @@ const Module2Section4_5 = () => {
                     <Plug className="w-4 h-4" />
                     Typical AC Uses
                   </h4>
-                  <ul className="space-y-1 text-blue-200 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>• 230V sockets, lighting, small appliances</li>
                     <li>• 400V motors, HVAC, industrial equipment</li>
                     <li>• Generator backup systems</li>
@@ -531,7 +531,7 @@ const Module2Section4_5 = () => {
                     <Battery className="w-4 h-4" />
                     Typical DC Uses
                   </h4>
-                  <ul className="space-y-1 text-orange-200 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>• 24V PLC/BMS control circuits</li>
                     <li>• Fire/security alarm systems</li>
                     <li>• PV strings (before inverter)</li>
@@ -559,7 +559,7 @@ const Module2Section4_5 = () => {
                     <AlertTriangle className="w-4 h-4" />
                     Safety Reminders
                   </h4>
-                  <ul className="space-y-1 text-red-200 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>• DC can sustain arcs - use DC-rated MCBs</li>
                     <li>• Segregate ELV/SELV from LV circuits</li>
                     <li>• Label all sources (PV/Battery/Mains)</li>

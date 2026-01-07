@@ -211,22 +211,22 @@ const Module3Section4_4 = () => {
                   <p className="font-medium mb-2">Common Methods</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Mechanical</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Mechanical</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Screw terminals/connector blocks (enclosed)</li>
                         <li>WAGO/lever type connectors (rated enclosure)</li>
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Crimped</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Crimped</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Butt crimps for inline joints</li>
                         <li>Correct die size and ratchet tool mandatory</li>
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Resin/Heat-shrink Kits</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Resin/Heat-shrink Kits</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Outdoor/underground environmental sealing</li>
                         <li>Permanent once cured (record location)</li>
                       </ul>
@@ -238,16 +238,16 @@ const Module3Section4_4 = () => {
                   <p className="font-medium mb-2">Best Practice</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Preparation</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Preparation</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Strip insulation without nicking conductors</li>
                         <li>Match conductor sizes and ferrule where required</li>
                         <li>Maintain polarity and identification</li>
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Protection</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Protection</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Insulate with heat-shrink; use rated enclosures</li>
                         <li>Support to prevent strain on the joint</li>
                         <li>Keep moisture and dust out (IP as required)</li>
@@ -563,7 +563,7 @@ const Module3Section4_4 = () => {
                 <p className="font-medium mb-3">Preparation & Assembly</p>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Cable Preparation</p>
+                    <p className="font-medium text-white mb-1">Cable Preparation</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Strip conductors to exact joint kit specifications</li>
                       <li>Clean conductors with wire brush or abrasive</li>
@@ -571,7 +571,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Joint Assembly</p>
+                    <p className="font-medium text-white mb-1">Joint Assembly</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Insert conductors into crimp connectors</li>
                       <li>Crimp with correct die size and ratchet tool</li>
@@ -579,7 +579,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Mould Installation</p>
+                    <p className="font-medium text-white mb-1">Mould Installation</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Position mould halves around joint</li>
                       <li>Seal mould completely (no resin leakage)</li>
@@ -593,19 +593,19 @@ const Module3Section4_4 = () => {
                 <p className="font-medium mb-3">Critical Points</p>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <p className="font-medium text-red-200 mb-1">⚠️ Temperature</p>
+                    <p className="font-medium text-white mb-1">⚠️ Temperature</p>
                     <p>Ambient temp 5-35°C. Below 5°C: joint may not cure. Above 35°C: rapid cure time.</p>
                   </div>
                   <div>
-                    <p className="font-medium text-red-200 mb-1">⚠️ Mixing Ratios</p>
+                    <p className="font-medium text-white mb-1">⚠️ Mixing Ratios</p>
                     <p>Exact resin:hardener ratio critical. Use graduated mixing cups, not guesswork.</p>
                   </div>
                   <div>
-                    <p className="font-medium text-red-200 mb-1">⚠️ Working Time</p>
+                    <p className="font-medium text-white mb-1">⚠️ Working Time</p>
                     <p>Typically 10-15 minutes after mixing. Plan sequence beforehand.</p>
                   </div>
                   <div>
-                    <p className="font-medium text-red-200 mb-1">⚠️ Curing Time</p>
+                    <p className="font-medium text-white mb-1">⚠️ Curing Time</p>
                     <p>24 hours minimum before burial. 7 days full cure in cold weather.</p>
                   </div>
                 </div>
@@ -634,7 +634,7 @@ const Module3Section4_4 = () => {
                 <p className="font-medium mb-3">Installation Process</p>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <p className="font-medium text-purple-200 mb-1">1. Conductor Prep</p>
+                    <p className="font-medium text-white mb-1">1. Conductor Prep</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Strip to crimp connector length + 2mm</li>
                       <li>No nicks or cuts in conductor strands</li>
@@ -642,7 +642,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-purple-200 mb-1">2. Crimping</p>
+                    <p className="font-medium text-white mb-1">2. Crimping</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Select correct die size for conductor CSA</li>
                       <li>Full ratchet cycle (no partial crimps)</li>
@@ -650,7 +650,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-purple-200 mb-1">3. Heat-shrink Application</p>
+                    <p className="font-medium text-white mb-1">3. Heat-shrink Application</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Slide tubing over joint before heating</li>
                       <li>Heat evenly from centre outwards</li>
@@ -720,7 +720,7 @@ const Module3Section4_4 = () => {
                 <p className="font-medium mb-3">Scenario: External SWA Joint Failure</p>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <p className="font-medium text-red-200 mb-1">Symptoms</p>
+                    <p className="font-medium text-white mb-1">Symptoms</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>RCD tripping under load</li>
                       <li>Insulation resistance: 0.8 MΩ (should be &gt;1 MΩ)</li>
@@ -729,7 +729,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-red-200 mb-1">Investigation</p>
+                    <p className="font-medium text-white mb-1">Investigation</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Joint box opened: water present in bottom</li>
                       <li>Joint wrapped in PVC tape only (not suitable)</li>
@@ -744,7 +744,7 @@ const Module3Section4_4 = () => {
                 <p className="font-medium mb-3">Diagnostic Tests & Repair</p>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <p className="font-medium text-cyan-200 mb-1">Tests Performed</p>
+                    <p className="font-medium text-white mb-1">Tests Performed</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>IR Test:</strong> 0.8 MΩ (L-E), 2.1 MΩ (N-E), 5.2 MΩ (L-N)</li>
                       <li><strong>Continuity:</strong> L & N good, CPC 0.15Ω increase</li>
@@ -753,7 +753,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-cyan-200 mb-1">Repair Solution</p>
+                    <p className="font-medium text-white mb-1">Repair Solution</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Cut out corroded section (300mm either side)</li>
                       <li>Install resin-filled joint kit (IP68 rated)</li>
@@ -762,7 +762,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-cyan-200 mb-1">Final Verification</p>
+                    <p className="font-medium text-white mb-1">Final Verification</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>IR Test:</strong> &gt;999 MΩ all combinations</li>
                       <li><strong>RCD Test:</strong> Normal operation restored</li>
@@ -908,7 +908,7 @@ const Module3Section4_4 = () => {
                 <p className="font-medium mb-3">Material Specifications</p>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Brass Glands (Standard)</p>
+                    <p className="font-medium text-white mb-1">Brass Glands (Standard)</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>CW617N brass (60% copper, 40% zinc)</li>
                       <li>Nickel plated finish for corrosion resistance</li>
@@ -917,7 +917,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Stainless Steel (Marine/Chemical)</p>
+                    <p className="font-medium text-white mb-1">Stainless Steel (Marine/Chemical)</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>316L stainless steel construction</li>
                       <li>Superior corrosion resistance</li>
@@ -926,7 +926,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Polyamide (Plastic)</p>
+                    <p className="font-medium text-white mb-1">Polyamide (Plastic)</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>PA6 or PA66 nylon construction</li>
                       <li>UV stabilised, halogen-free</li>
@@ -941,7 +941,7 @@ const Module3Section4_4 = () => {
                 <p className="font-medium mb-3">Performance Ratings</p>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <p className="font-medium text-green-200 mb-1">IP Protection Classes</p>
+                    <p className="font-medium text-white mb-1">IP Protection Classes</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>IP54:</strong> Dust protected, splash resistant</li>
                       <li><strong>IP66:</strong> Dust tight, powerful water jets</li>
@@ -950,7 +950,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Mechanical Properties</p>
+                    <p className="font-medium text-white mb-1">Mechanical Properties</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Tensile strength: 250-400 N/mm²</li>
                       <li>Impact resistance: IK08 (5 Joules)</li>
@@ -959,7 +959,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Electrical Properties</p>
+                    <p className="font-medium text-white mb-1">Electrical Properties</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Earth continuity: &lt;0.1Ω resistance</li>
                       <li>Insulation resistance: &gt;100MΩ</li>
@@ -1047,7 +1047,7 @@ const Module3Section4_4 = () => {
                   <p className="font-medium mb-3">Low Voltage (230V-1000V)</p>
                   <div className="space-y-2 text-sm">
                     <div>
-                      <p className="font-medium text-cyan-200 mb-1">Permitted Methods</p>
+                      <p className="font-medium text-white mb-1">Permitted Methods</p>
                       <ul className="list-disc pl-4 space-y-1">
                         <li>Screw terminals in IP-rated enclosure</li>
                         <li>Maintenance-free connectors (WAGO type)</li>
@@ -1056,7 +1056,7 @@ const Module3Section4_4 = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-cyan-200 mb-1">Key Requirements</p>
+                      <p className="font-medium text-white mb-1">Key Requirements</p>
                       <ul className="list-disc pl-4 space-y-1">
                         <li>Accessible for inspection (except resin)</li>
                         <li>Enclosed to prevent accidental contact</li>
@@ -1071,7 +1071,7 @@ const Module3Section4_4 = () => {
                   <p className="font-medium mb-3">Extra Low Voltage (SELV/PELV)</p>
                   <div className="space-y-2 text-sm">
                     <div>
-                      <p className="font-medium text-orange-200 mb-1">Simplified Requirements</p>
+                      <p className="font-medium text-white mb-1">Simplified Requirements</p>
                       <ul className="list-disc pl-4 space-y-1">
                         <li>Basic protection against accidental contact</li>
                         <li>Twist and tape acceptable in dry locations</li>
@@ -1080,7 +1080,7 @@ const Module3Section4_4 = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-orange-200 mb-1">Good Practice</p>
+                      <p className="font-medium text-white mb-1">Good Practice</p>
                       <ul className="list-disc pl-4 space-y-1">
                         <li>Use proper connector blocks</li>
                         <li>Maintain IP rating of equipment</li>
@@ -1117,7 +1117,7 @@ const Module3Section4_4 = () => {
                 <p className="font-medium mb-3">Aggressive Environments</p>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <p className="font-medium text-red-200 mb-2">Chemical Plants</p>
+                    <p className="font-medium text-white mb-2">Chemical Plants</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>316L stainless steel glands mandatory</li>
                       <li>PTFE seals for chemical resistance</li>
@@ -1126,7 +1126,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-red-200 mb-2">Marine Environments</p>
+                    <p className="font-medium text-white mb-2">Marine Environments</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>316L stainless steel or polyamide</li>
                       <li>IP68 rating minimum requirement</li>
@@ -1135,7 +1135,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-red-200 mb-2">High Temperature</p>
+                    <p className="font-medium text-white mb-2">High Temperature</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Check temperature rating vs ambient</li>
                       <li>Consider cable heat generation</li>
@@ -1144,7 +1144,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-red-200 mb-2">Underground/Buried</p>
+                    <p className="font-medium text-white mb-2">Underground/Buried</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>IP68 rated resin-filled joints</li>
                       <li>Cathodic protection compatibility</li>
@@ -1159,7 +1159,7 @@ const Module3Section4_4 = () => {
                 <p className="font-medium mb-3">Installation Environment Assessment</p>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Pre-Installation Checklist</p>
+                    <p className="font-medium text-white mb-1">Pre-Installation Checklist</p>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
@@ -1327,7 +1327,7 @@ const Module3Section4_4 = () => {
                 <p className="font-medium mb-3">🔧 Fault 1: High Earth Loop Impedance</p>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <p className="font-medium text-red-200 mb-2">Symptoms</p>
+                    <p className="font-medium text-white mb-2">Symptoms</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Zs reading above maximum permitted (1.44Ω for B32 MCB)</li>
                       <li>RCD may still operate correctly</li>
@@ -1336,7 +1336,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-red-200 mb-2">Investigation Steps</p>
+                    <p className="font-medium text-white mb-2">Investigation Steps</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Check R1+R2 values for circuit</li>
                       <li>Measure Ze at origin (should be &lt;0.8Ω typical)</li>
@@ -1348,7 +1348,7 @@ const Module3Section4_4 = () => {
                   </div>
                 </div>
                 <div className="mt-3 p-3 bg-red-400/20 rounded">
-                  <p className="font-medium text-red-200 mb-1">Common Causes</p>
+                  <p className="font-medium text-white mb-1">Common Causes</p>
                   <p className="text-sm">Poor gland earth connections, corroded armour, loose earth tags, inadequate bonding at joints, high source impedance.</p>
                 </div>
               </div>
@@ -1357,7 +1357,7 @@ const Module3Section4_4 = () => {
                 <p className="font-medium mb-3">🔧 Fault 2: Intermittent RCD Tripping</p>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <p className="font-medium text-orange-200 mb-2">Symptoms</p>
+                    <p className="font-medium text-white mb-2">Symptoms</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Random RCD trips, often under load</li>
                       <li>Insulation resistance borderline (1-10MΩ)</li>
@@ -1366,7 +1366,7 @@ const Module3Section4_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-orange-200 mb-2">Diagnostic Process</p>
+                    <p className="font-medium text-white mb-2">Diagnostic Process</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>IR test at 500V DC (minimum values)</li>
                       <li>Check readings L-E, N-E, L-N separately</li>
@@ -1378,7 +1378,7 @@ const Module3Section4_4 = () => {
                   </div>
                 </div>
                 <div className="mt-3 p-3 bg-orange-400/20 rounded">
-                  <p className="font-medium text-orange-200 mb-1">Investigation Tools</p>
+                  <p className="font-medium text-white mb-1">Investigation Tools</p>
                   <p className="text-sm">IR tester, clamp-on leakage meter, thermal imaging camera, moisture meter, cable fault locator.</p>
                 </div>
               </div>

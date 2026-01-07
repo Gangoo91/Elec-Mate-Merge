@@ -155,7 +155,7 @@ const Section6_2 = () => {
             <h1 className="text-4xl font-bold text-white mb-4">
               RIDDOR: What Must Be Reported
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-white">
               Legal requirements for reporting workplace incidents and injuries
             </p>
           </div>
@@ -166,7 +166,7 @@ const Section6_2 = () => {
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div className="p-4 bg-card border border-border/20 rounded-lg">
               <h3 className="text-lg font-semibold text-white mb-3">In 30 seconds</h3>
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 RIDDOR legally requires reporting of serious workplace incidents to the HSE. 
                 This includes deaths, major injuries, over-7-day injuries, occupational diseases, 
                 dangerous occurrences, and gas incidents. Employers and responsible persons must report 
@@ -175,7 +175,7 @@ const Section6_2 = () => {
             </div>
             <div className="p-4 bg-card border border-elec-yellow/30 rounded-lg">
               <h3 className="text-lg font-semibold text-white mb-3">Spot it / Use it</h3>
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 <strong>Spot:</strong> Unconsciousness from shock, fractures, burns needing hospital treatment, dangerous near-misses.
                 <br />
                 <strong>Use:</strong> Report immediately for fatal/major injuries, within 15 days for over-7-day injuries. Keep records for 3 years minimum.
@@ -190,19 +190,19 @@ const Section6_2 = () => {
           <div className="space-y-4">
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Understand what RIDDOR is and why it matters</span>
+              <span className="text-white">Understand what RIDDOR is and why it matters</span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Know what must be reported (major injuries, over-7-day injuries, diseases, dangerous occurrences, gas incidents)</span>
+              <span className="text-white">Know what must be reported (major injuries, over-7-day injuries, diseases, dangerous occurrences, gas incidents)</span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Identify who reports and timeframes</span>
+              <span className="text-white">Identify who reports and timeframes</span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Apply good reporting and evidence-preservation practice</span>
+              <span className="text-white">Apply good reporting and evidence-preservation practice</span>
             </div>
           </div>
         </Card>
@@ -216,13 +216,13 @@ const Section6_2 = () => {
             <h2 className="text-lg sm:text-xl font-semibold text-white">RIDDOR Overview: What and Why</h2>
           </div>
           <div className="ml-12">
-            <p className="text-gray-300 mb-6">
+            <p className="text-white mb-6">
               RIDDOR is a legal requirement under UK law to report certain workplace incidents to the HSE or local authority.
             </p>
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-3">It covers:</h3>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li>• Serious injuries</li>
                   <li>• Work-related diseases</li>
                   <li>• Dangerous occurrences (near misses)</li>
@@ -231,7 +231,7 @@ const Section6_2 = () => {
               </div>
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-3">The aim is to:</h3>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li>• Help monitor accident trends</li>
                   <li>• Improve workplace safety</li>
                   <li>• Allow enforcement action when necessary</li>
@@ -265,8 +265,8 @@ const Section6_2 = () => {
           </div>
           <div className="ml-12">
             <div className="bg-muted/50 border border-border rounded-lg p-4 mb-6">
-              <p className="text-gray-300 mb-3 font-medium">Death or Major Injury - Must be reported immediately:</p>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <p className="text-white mb-3 font-medium">Death or Major Injury - Must be reported immediately:</p>
+              <ul className="space-y-2 text-white text-sm">
                 <li>• Deaths on site</li>
                 <li>• Fractures (except fingers, thumbs, toes)</li>
                 <li>• Amputations</li>
@@ -276,8 +276,8 @@ const Section6_2 = () => {
               </ul>
             </div>
             <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <p className="text-gray-300 mb-3 font-medium">Over-Seven-Day Injuries - Report within 15 days:</p>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white mb-3 font-medium">Over-Seven-Day Injuries - Report within 15 days:</p>
+              <p className="text-white text-sm">
                 Injuries where someone is unable to perform their normal work for 7+ consecutive days must be reported within 15 days of the incident.
               </p>
             </div>
@@ -294,8 +294,8 @@ const Section6_2 = () => {
           </div>
           <div className="ml-12">
             <div className="bg-muted/50 border border-border rounded-lg p-4 mb-6">
-              <p className="text-gray-300 mb-3 font-medium">Occupational Diseases - conditions reportable when diagnosed:</p>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <p className="text-white mb-3 font-medium">Occupational Diseases - conditions reportable when diagnosed:</p>
+              <ul className="space-y-2 text-white text-sm">
                 <li>• Hand-arm vibration syndrome</li>
                 <li>• Occupational dermatitis</li>
                 <li>• Carpal tunnel syndrome</li>
@@ -303,8 +303,8 @@ const Section6_2 = () => {
               </ul>
             </div>
             <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <p className="text-gray-300 mb-3 font-medium">Gas Incidents - must be reported:</p>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white mb-3 font-medium">Gas Incidents - must be reported:</p>
+              <p className="text-white text-sm">
                 Gas leaks or faulty appliances that could cause injury or death must be reported.
               </p>
             </div>
@@ -321,8 +321,8 @@ const Section6_2 = () => {
           </div>
           <div className="ml-12">
             <div className="bg-muted/50 border border-border rounded-lg p-4 mb-6">
-              <p className="text-gray-300 mb-3 font-medium">Dangerous Occurrences - Electrical work examples:</p>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <p className="text-white mb-3 font-medium">Dangerous Occurrences - Electrical work examples:</p>
+              <ul className="space-y-2 text-white text-sm">
                 <li>• Electrical short circuit causing explosion or fire</li>
                 <li>• Arc flash incident (even if no injury)</li>
                 <li>• Overhead line contact with vehicle/equipment</li>
@@ -332,8 +332,8 @@ const Section6_2 = () => {
             </div>
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
-                <p className="text-gray-300 mb-3 font-medium">Must report:</p>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <p className="text-white mb-3 font-medium">Must report:</p>
+                <ul className="space-y-2 text-white text-sm">
                   <li>• Broken wrist (fracture)</li>
                   <li>• Burns needing hospital treatment</li>
                   <li>• Unconsciousness from electric shock</li>
@@ -341,8 +341,8 @@ const Section6_2 = () => {
                 </ul>
               </div>
               <div className="bg-muted/50 border border-border rounded-lg p-4">
-                <p className="text-gray-300 mb-3 font-medium">Not major injuries:</p>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <p className="text-white mb-3 font-medium">Not major injuries:</p>
+                <ul className="space-y-2 text-white text-sm">
                   <li>• Broken finger or toe</li>
                   <li>• Minor cuts or bruises</li>
                   <li>• Minor burns (no hospital)</li>
@@ -363,43 +363,43 @@ const Section6_2 = () => {
           </div>
           <div className="ml-12">
             <div className="bg-muted/50 border border-border rounded-lg p-4 mb-6">
-              <p className="text-gray-300 mb-3 font-medium">Who Reports?</p>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <p className="text-white mb-3 font-medium">Who Reports?</p>
+              <ul className="space-y-2 text-white text-sm">
                 <li>• Employers or the responsible person (e.g. site manager, contractor)</li>
                 <li>• Self-employed persons must report their own incidents</li>
                 <li>• Reports are made via the HSE's online portal</li>
               </ul>
             </div>
             <div className="bg-muted/50 border border-border rounded-lg p-4 mb-6">
-              <p className="text-gray-300 mb-3 font-medium">Timeframes:</p>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <p className="text-white mb-3 font-medium">Timeframes:</p>
+              <ul className="space-y-2 text-white text-sm">
                 <li>• <strong>Fatal or major injuries:</strong> reported immediately</li>
                 <li>• <strong>Over-7-day injuries:</strong> reported within 15 days</li>
                 <li>• <strong>Records:</strong> must be kept for at least 3 years</li>
               </ul>
             </div>
             <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <p className="text-gray-300 mb-3 font-medium">Good Reporting Practice:</p>
+              <p className="text-white mb-3 font-medium">Good Reporting Practice:</p>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">Preserve the scene and gather evidence</span>
+                  <span className="text-white text-sm">Preserve the scene and gather evidence</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">Provide immediate first aid and ensure safety</span>
+                  <span className="text-white text-sm">Provide immediate first aid and ensure safety</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">Notify relevant parties promptly</span>
+                  <span className="text-white text-sm">Notify relevant parties promptly</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">Record facts only, avoid speculation</span>
+                  <span className="text-white text-sm">Record facts only, avoid speculation</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">Maintain confidentiality and dignity</span>
+                  <span className="text-white text-sm">Maintain confidentiality and dignity</span>
                 </div>
               </div>
             </div>
@@ -411,7 +411,7 @@ const Section6_2 = () => {
           <h2 className="text-2xl font-bold text-white mb-6">Real World Scenario</h2>
           <div className="bg-card border border-amber-400/30 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-white mb-4">Scenario: Arc Flash Incident</h3>
-            <div className="space-y-4 text-gray-300 text-sm">
+            <div className="space-y-4 text-white text-sm">
               <p>
                 <strong>The Situation:</strong> During routine maintenance at a commercial building, electrician Sarah opens a distribution panel to check connections. A loose terminal causes an arc flash, creating a bright flash and loud bang. Sarah instinctively steps back and isn't injured, but her safety glasses are cracked from debris, and the incident could have caused serious burns or eye damage.
               </p>
@@ -457,42 +457,42 @@ const Section6_2 = () => {
             
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">Do I need to report minor injuries that require first aid?</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 No, minor injuries requiring only basic first aid don't need RIDDOR reporting. However, if the injury prevents someone from working for 7+ consecutive days, it becomes reportable as an "over-7-day injury."
               </p>
             </div>
 
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">What if I'm not sure whether something is reportable?</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 When in doubt, consult the HSE guidance or speak to your safety officer. It's better to report something that turns out not to be required than to miss a reportable incident. The HSE provides detailed guidance and a helpline for clarification.
               </p>
             </div>
 
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">Can I report incidents online outside normal working hours?</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Yes, the HSE online reporting system is available 24/7. For fatal or major injuries, you should report immediately regardless of the time. Phone reporting is also available for urgent cases outside office hours.
               </p>
             </div>
 
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">What happens after I submit a RIDDOR report?</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 You'll receive a confirmation with a reference number. Keep this for your records. The HSE may follow up with questions or decide to investigate. In some cases, they may visit the site to examine the circumstances and ensure proper safety measures are in place.
               </p>
             </div>
 
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">Do subcontractors need to report their own incidents?</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Self-employed persons and subcontractors are responsible for reporting their own incidents. However, if you're the main contractor or responsible person, you should ensure they understand their obligations and assist with reporting if needed.
               </p>
             </div>
 
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-2">What's the penalty for not reporting a RIDDOR incident?</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Failure to report can result in prosecution, unlimited fines, and enforcement action. The HSE takes non-compliance seriously as it prevents them from monitoring workplace safety trends and taking appropriate action to protect workers.
               </p>
             </div>

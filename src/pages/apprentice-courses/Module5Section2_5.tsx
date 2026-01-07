@@ -737,7 +737,7 @@ const Module5Section2_5 = () => {
         <Card className="mb-8 p-6 bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800">
           <div className="flex items-center gap-3 mb-4">
             <Lightbulb className="w-6 h-6 text-elec-yellow" />
-            <h2 className="text-lg sm:text-xl font-semibold text-blue-800 dark:text-blue-200">Practical Guidance</h2>
+            <h2 className="text-lg sm:text-xl font-semibold text-blue-800 dark:text-white">Practical Guidance</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div>
@@ -765,11 +765,11 @@ const Module5Section2_5 = () => {
 
         {/* Multiple Real-World Examples */}
         <Card className="mb-8 p-6 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800">
-          <h2 className="text-lg sm:text-xl font-semibold text-amber-800 dark:text-amber-200 mb-4">Real-World Examples</h2>
+          <h2 className="text-lg sm:text-xl font-semibold text-amber-800 dark:text-white mb-4">Real-World Examples</h2>
           
           <div className="space-y-6">
             <div className="border-l-4 border-l-orange-400 pl-4">
-              <p className="font-medium text-amber-800 dark:text-amber-200 mb-2">Example 1: Commercial Office Retrofit</p>
+              <p className="font-medium text-amber-800 dark:text-white mb-2">Example 1: Commercial Office Retrofit</p>
               <p className="text-amber-700 dark:text-amber-300 text-sm italic">
                 A commercial office was designed with no spare ways in the distribution board. Two years later, the client 
                 requested EV charging points, but there was no capacity. The entire board had to be replaced at great cost, 
@@ -778,7 +778,7 @@ const Module5Section2_5 = () => {
             </div>
             
             <div className="border-l-4 border-l-orange-400 pl-4">
-              <p className="font-medium text-amber-800 dark:text-amber-200 mb-2">Example 2: Accessible Housing Design</p>
+              <p className="font-medium text-amber-800 dark:text-white mb-2">Example 2: Accessible Housing Design</p>
               <p className="text-amber-700 dark:text-amber-300 text-sm italic">
                 A new housing development initially had standard socket heights (150mm above skirting). Following Part M 
                 requirements, sockets were repositioned to 600mm height. This simple change eliminated the need for costly 
@@ -787,7 +787,7 @@ const Module5Section2_5 = () => {
             </div>
             
             <div className="border-l-4 border-l-orange-400 pl-4">
-              <p className="font-medium text-amber-800 dark:text-amber-200 mb-2">Example 3: Industrial Maintenance Access</p>
+              <p className="font-medium text-amber-800 dark:text-white mb-2">Example 3: Industrial Maintenance Access</p>
               <p className="text-amber-700 dark:text-amber-300 text-sm italic">
                 A factory installation placed the main distribution board 3 meters high with no platform access. During an 
                 emergency shutdown, maintenance staff could not safely reach the isolators. The installation was non-compliant 
@@ -847,7 +847,7 @@ const Module5Section2_5 = () => {
         {/* Pocket Guide */}
         <Card className="bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 border-2 border-slate-300 dark:border-slate-600">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-slate-800 dark:text-slate-200">
+            <CardTitle className="flex items-center gap-2 text-slate-800 dark:text-white">
               <Calculator className="w-5 h-5" />
               Pocket Guide – Expansion, Maintenance & Accessibility
             </CardTitle>
@@ -856,7 +856,7 @@ const Module5Section2_5 = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Expansion Planning */}
               <div className="space-y-4">
-                <h4 className="font-semibold text-slate-800 dark:text-slate-200 text-sm border-b border-slate-300 dark:border-slate-600 pb-1">
+                <h4 className="font-semibold text-slate-800 dark:text-white text-sm border-b border-slate-300 dark:border-slate-600 pb-1">
                   EXPANSION PLANNING
                 </h4>
                 <div className="space-y-3">
@@ -890,7 +890,7 @@ const Module5Section2_5 = () => {
 
               {/* Maintenance Access */}
               <div className="space-y-4">
-                <h4 className="font-semibold text-slate-800 dark:text-slate-200 text-sm border-b border-slate-300 dark:border-slate-600 pb-1">
+                <h4 className="font-semibold text-slate-800 dark:text-white text-sm border-b border-slate-300 dark:border-slate-600 pb-1">
                   MAINTENANCE ACCESS
                 </h4>
                 <div className="space-y-3">
@@ -925,7 +925,7 @@ const Module5Section2_5 = () => {
 
               {/* Accessibility Compliance */}
               <div className="space-y-4">
-                <h4 className="font-semibold text-slate-800 dark:text-slate-200 text-sm border-b border-slate-300 dark:border-slate-600 pb-1">
+                <h4 className="font-semibold text-slate-800 dark:text-white text-sm border-b border-slate-300 dark:border-slate-600 pb-1">
                   ACCESSIBILITY (PART M)
                 </h4>
                 <div className="space-y-3">
@@ -963,7 +963,7 @@ const Module5Section2_5 = () => {
             <div className="mt-6 pt-4 border-t border-slate-300 dark:border-slate-600">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-elec-yellow/5 dark:bg-blue-950/30 p-4 rounded border border-blue-200 dark:border-blue-800">
-                  <h5 className="font-semibold text-sm text-blue-800 dark:text-blue-200 mb-2">Key BS 7671 Regulations</h5>
+                  <h5 className="font-semibold text-sm text-blue-800 dark:text-white mb-2">Key BS 7671 Regulations</h5>
                   <div className="text-xs text-blue-700 text-elec-yellow space-y-1">
                     <p><strong>132.9:</strong> Safe operation, maintenance & repair</p>
                     <p><strong>132.12:</strong> Accessibility for operation</p>
@@ -973,7 +973,7 @@ const Module5Section2_5 = () => {
                   </div>
                 </div>
                 <div className="bg-purple-50 dark:bg-purple-950/30 p-4 rounded border border-purple-200 dark:border-purple-800">
-                  <h5 className="font-semibold text-sm text-purple-800 dark:text-purple-200 mb-2">Building Categories (Part M)</h5>
+                  <h5 className="font-semibold text-sm text-purple-800 dark:text-white mb-2">Building Categories (Part M)</h5>
                   <div className="text-xs text-purple-700 text-elec-yellow space-y-1">
                     <p><strong>Category 1:</strong> Basic accessibility (visitable)</p>
                     <p><strong>Category 2:</strong> Enhanced accessibility (adaptable)</p>
@@ -987,7 +987,7 @@ const Module5Section2_5 = () => {
 
             {/* Emergency Quick Actions */}
             <div className="mt-6 pt-4 border-t border-slate-300 dark:border-slate-600">
-              <h5 className="font-semibold text-sm text-slate-800 dark:text-slate-200 mb-3">Design Review Checklist ✓</h5>
+              <h5 className="font-semibold text-sm text-slate-800 dark:text-white mb-3">Design Review Checklist ✓</h5>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
                 <div>
                   <p className="font-medium text-slate-700 dark:text-slate-300 mb-1">Expansion Ready?</p>

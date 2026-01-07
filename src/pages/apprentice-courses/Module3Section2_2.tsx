@@ -303,8 +303,8 @@ const Module3Section2_2: React.FC = () => {
                   <p className="font-medium mb-2">PVC Conduit Systems</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Material & Construction</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Material & Construction</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Rigid PVC (polyvinyl chloride) - non-metallic</li>
                         <li>Available in 16mm, 20mm, 25mm, 32mm diameters</li>
                         <li>Standard 3m lengths with coupling joints</li>
@@ -312,8 +312,8 @@ const Module3Section2_2: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Key Advantages</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Key Advantages</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Easy cutting with hacksaw or PVC cutter</li>
                         <li>Simple solvent-welded joints</li>
                         <li>Corrosion resistant in damp conditions</li>
@@ -322,8 +322,8 @@ const Module3Section2_2: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Limitations</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Limitations</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Lower impact resistance than steel</li>
                         <li>Can soften and distort under heat (&gt;70°C)</li>
                         <li>UV degradation without stabilisers</li>
@@ -337,8 +337,8 @@ const Module3Section2_2: React.FC = () => {
                   <p className="font-medium mb-2">Metal Conduit Systems (Steel)</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-red-200 mb-1">Material & Construction</p>
-                      <ul className="list-disc pl-4 space-y-1 text-red-200">
+                      <p className="font-medium text-white mb-1">Material & Construction</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Galvanised or enamel-coated steel tubes</li>
                         <li>Sizes: 16mm, 20mm, 25mm, 32mm, 40mm, 50mm</li>
                         <li>Threaded ends with steel couplings</li>
@@ -346,8 +346,8 @@ const Module3Section2_2: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-red-200 mb-1">Key Advantages</p>
-                      <ul className="list-disc pl-4 space-y-1 text-red-200">
+                      <p className="font-medium text-white mb-1">Key Advantages</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Excellent mechanical protection against impact</li>
                         <li>Can serve as protective conductor (earth path)</li>
                         <li>Fire resistant - won't melt or burn</li>
@@ -356,8 +356,8 @@ const Module3Section2_2: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-red-200 mb-1">Limitations</p>
-                      <ul className="list-disc pl-4 space-y-1 text-red-200">
+                      <p className="font-medium text-white mb-1">Limitations</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Heavier and more labour intensive</li>
                         <li>Requires threading, bending and coupling skills</li>
                         <li>Corrosion risk in very damp conditions</li>
@@ -385,8 +385,8 @@ const Module3Section2_2: React.FC = () => {
                   <p className="font-medium mb-2">Surface-Mounted Installation</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Characteristics</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Characteristics</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Conduit visible on wall/ceiling surfaces</li>
                         <li>Fixed with clips, brackets or saddles</li>
                         <li>Quick installation with standard fixings</li>
@@ -394,8 +394,8 @@ const Module3Section2_2: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Best Applications</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Best Applications</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Industrial workshops and factories</li>
                         <li>Plant rooms and service areas</li>
                         <li>Retrofit installations</li>
@@ -403,8 +403,8 @@ const Module3Section2_2: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Support Requirements</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Support Requirements</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>PVC: 750mm horizontal, 1000mm vertical</li>
                         <li>Steel: 1000mm horizontal, 1500mm vertical</li>
                         <li>Additional support near bends and junctions</li>
@@ -417,8 +417,8 @@ const Module3Section2_2: React.FC = () => {
                   <p className="font-medium mb-2">Recessed (Flush) Installation</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Characteristics</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Characteristics</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Conduit hidden within wall chases</li>
                         <li>Plastered over for invisible finish</li>
                         <li>Requires careful planning and marking out</li>
@@ -426,8 +426,8 @@ const Module3Section2_2: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Best Applications</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Best Applications</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Domestic installations (living areas)</li>
                         <li>Offices and commercial interiors</li>
                         <li>Hotels and retail spaces</li>
@@ -435,8 +435,8 @@ const Module3Section2_2: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Installation Considerations</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Installation Considerations</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Chase depth: 1/3 wall thickness maximum</li>
                         <li>Protect conduit during plastering</li>
                         <li>Mark positions before covering</li>
@@ -463,8 +463,8 @@ const Module3Section2_2: React.FC = () => {
                 <p className="font-medium mb-2">PVC Conduit Installation</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="font-medium text-amber-200 mb-1">Cutting and Joining</p>
-                    <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                    <p className="font-medium text-white mb-1">Cutting and Joining</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Use fine-tooth hacksaw or PVC pipe cutter</li>
                       <li>Deburr cut ends with file or knife</li>
                       <li>Clean surfaces before solvent welding</li>
@@ -473,8 +473,8 @@ const Module3Section2_2: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-amber-200 mb-1">Bending and Routing</p>
-                    <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                    <p className="font-medium text-white mb-1">Bending and Routing</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Use purpose-made bends rather than site bending</li>
                       <li>Maximum 4 x 90° bends between draw points</li>
                       <li>Maintain 6 x diameter minimum bend radius</li>
@@ -489,8 +489,8 @@ const Module3Section2_2: React.FC = () => {
                 <p className="font-medium mb-2">Steel Conduit Installation</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="font-medium text-orange-200 mb-1">Threading and Coupling</p>
-                    <ul className="list-disc pl-4 space-y-1 text-orange-200">
+                    <p className="font-medium text-white mb-1">Threading and Coupling</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Cut square with hacksaw or pipe cutter</li>
                       <li>Remove sharp edges and burrs</li>
                       <li>Thread ends using stocks and dies</li>
@@ -499,8 +499,8 @@ const Module3Section2_2: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-orange-200 mb-1">Bending and Earthing</p>
-                    <ul className="list-disc pl-4 space-y-1 text-orange-200">
+                    <p className="font-medium text-white mb-1">Bending and Earthing</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Use conduit bender for smooth radius bends</li>
                       <li>Test electrical continuity at all joints</li>
                       <li>Bond earth terminal at main positions</li>
@@ -515,8 +515,8 @@ const Module3Section2_2: React.FC = () => {
                 <p className="font-medium mb-2">Cable Installation Best Practices</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="font-medium text-teal-200 mb-1">Cable Pulling Techniques</p>
-                    <ul className="list-disc pl-4 space-y-1 text-teal-200">
+                    <p className="font-medium text-white mb-1">Cable Pulling Techniques</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Use draw wire or tape for cable pulling</li>
                       <li>Apply pulling compound on long runs</li>
                       <li>Pull steadily - avoid jerky movements</li>
@@ -525,8 +525,8 @@ const Module3Section2_2: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-teal-200 mb-1">Protection and Termination</p>
-                    <ul className="list-disc pl-4 space-y-1 text-teal-200">
+                    <p className="font-medium text-white mb-1">Protection and Termination</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Fit bushes or grommets at all entry points</li>
                       <li>Ensure adequate cable identification</li>
                       <li>Leave service loops at termination points</li>
@@ -551,7 +551,7 @@ const Module3Section2_2: React.FC = () => {
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Excessive bends between draw points</p>
-              <ul className="list-disc pl-4 space-y-1 text-red-200">
+              <ul className="list-disc pl-4 space-y-1 text-white">
                 <li>More than 4 x 90° bends making cable pulling impossible</li>
                 <li>Tight radius bends damaging cables during installation</li>
                 <li><strong>Solution:</strong> Plan routes carefully, use inspection boxes every 4 bends, maintain proper bend radius</li>
@@ -560,7 +560,7 @@ const Module3Section2_2: React.FC = () => {
 
             <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
               <p className="font-medium mb-2 text-amber-300">Poor support and fixing</p>
-              <ul className="list-disc pl-4 space-y-1 text-amber-200">
+              <ul className="list-disc pl-4 space-y-1 text-white">
                 <li>Inadequate support spacing causing conduit sag</li>
                 <li>Using incorrect fixings for wall type</li>
                 <li><strong>Solution:</strong> Follow manufacturer's support spacing guidelines, use appropriate fixings for substrate</li>
@@ -569,7 +569,7 @@ const Module3Section2_2: React.FC = () => {
 
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Steel conduit earthing failures</p>
-              <ul className="list-disc pl-4 space-y-1 text-orange-200">
+              <ul className="list-disc pl-4 space-y-1 text-white">
                 <li>Poor electrical continuity through joints</li>
                 <li>Relying on paint or corrosion-compromised connections</li>
                 <li><strong>Solution:</strong> Clean threads, use jointing compound, test continuity, install supplementary earth if needed</li>
@@ -578,7 +578,7 @@ const Module3Section2_2: React.FC = () => {
 
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Inadequate cable protection</p>
-              <ul className="list-disc pl-4 space-y-1 text-purple-200">
+              <ul className="list-disc pl-4 space-y-1 text-white">
                 <li>Missing bushes allowing cable insulation damage</li>
                 <li>Sharp edges not removed from cut conduit</li>
                 <li><strong>Solution:</strong> Always fit protective bushes, deburr all cut ends, inspect before cable installation</li>
@@ -628,7 +628,7 @@ const Module3Section2_2: React.FC = () => {
           <div className="p-4 border-l-4 border-elec-yellow bg-elec-yellow/5 rounded-r-lg mb-4">
             <div className="flex items-start gap-3">
               <Building className="w-6 h-6 text-elec-yellow mt-1 flex-shrink-0" />
-              <div className="text-blue-200">
+              <div className="text-white">
                 <p className="font-medium mb-2">The Challenge</p>
                 <p className="text-sm leading-relaxed">
                   A high-end clothing retailer needed complete rewiring during renovation. The customer area required 
@@ -647,7 +647,7 @@ const Module3Section2_2: React.FC = () => {
           <div className="grid md:grid-cols-2 gap-4 mb-4">
             <div className="rounded-lg p-3 border border-green-400/30">
               <p className="font-medium text-green-300 mb-2">Solution: Mixed Approach</p>
-              <ul className="list-disc pl-4 space-y-1 text-green-200 text-sm">
+              <ul className="list-disc pl-4 space-y-1 text-white text-sm">
                 <li>Sales areas: 20mm PVC recessed in walls, oval conduit to minimise chases</li>
                 <li>Stockroom: 25mm steel surface-mounted at 3m height</li>
                 <li>Changing rooms: 16mm PVC recessed with careful waterproofing</li>

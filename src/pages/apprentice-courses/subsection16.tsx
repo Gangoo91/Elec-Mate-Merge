@@ -121,7 +121,7 @@ const Section4_3 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4
@@ -142,7 +142,7 @@ const Section4_3 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 Site Housekeeping and Safety Signage
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white/80 max-w-3xl mt-2">
                 Maintaining clean, organised worksites and understanding safety signage
               </p>
             </div>
@@ -177,7 +177,7 @@ const Section4_3 = () => {
         {/* Learning Outcomes */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
+          <p className="text-white/80 mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -207,7 +207,7 @@ const Section4_3 = () => {
           
           <div className="space-y-6">
             <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-              <p className="font-medium text-blue-800 dark:text-blue-200 mb-3">
+              <p className="font-medium text-blue-800 dark:text-white mb-3">
                 Housekeeping refers to how clean, tidy, and organised a worksite is — including how tools, materials, waste, and equipment are stored or managed.
               </p>
             </div>
@@ -247,7 +247,7 @@ const Section4_3 = () => {
                   <CheckCircle className="h-4 w-4 text-elec-yellow" />
                   Daily Practices
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Tidy as you go — don't wait until the end of the job</li>
                   <li>• Coil cables neatly and keep them off walkways</li>
                   <li>• Store materials in designated areas</li>
@@ -260,7 +260,7 @@ const Section4_3 = () => {
                   <Settings className="h-4 w-4 text-elec-yellow" />
                   Tool Management
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Keep tools stored properly when not in use</li>
                   <li>• Use tool bags or pouches to organise equipment</li>
                   <li>• Account for all tools at end of shift</li>
@@ -273,7 +273,7 @@ const Section4_3 = () => {
                   <Shield className="h-4 w-4 text-elec-yellow" />
                   Safety Considerations
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Make sure exit routes are always clear</li>
                   <li>• Keep fire extinguisher access unobstructed</li>
                   <li>• Secure loose materials that could fall</li>
@@ -286,7 +286,7 @@ const Section4_3 = () => {
                   <Trash2 className="h-4 w-4 text-elec-yellow" />
                   Waste Management
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Label and segregate waste types</li>
                   <li>• Dispose of hazardous waste properly</li>
                   <li>• Use designated waste containers</li>
@@ -318,7 +318,7 @@ const Section4_3 = () => {
               </div>
 
               <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                <h4 className="font-semibold mb-2 text-blue-800 dark:text-blue-200">Mandatory Signs</h4>
+                <h4 className="font-semibold mb-2 text-blue-800 dark:text-white">Mandatory Signs</h4>
                 <p className="text-blue-700 dark:text-elec-yellow text-sm">Blue with white symbol - Action required</p>
               </div>
 
@@ -363,7 +363,7 @@ const Section4_3 = () => {
                   <AlertTriangle className="h-4 w-4 text-elec-yellow" />
                   Cable Management Issues
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Extension leads left across walkways</li>
                   <li>• Coiled cables creating trip hazards</li>
                   <li>• Temporary wiring not secured properly</li>
@@ -376,7 +376,7 @@ const Section4_3 = () => {
                   <Trash2 className="h-4 w-4 text-elec-yellow" />
                   Waste Accumulation
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Cable off-cuts left on floors</li>
                   <li>• Packaging materials not removed</li>
                   <li>• Metal shavings from drilling operations</li>
@@ -389,7 +389,7 @@ const Section4_3 = () => {
                   <Settings className="h-4 w-4 text-elec-yellow" />
                   Tool and Equipment Storage
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Tools left on ladders or scaffolding</li>
                   <li>• Equipment blocking access routes</li>
                   <li>• Loose screws and fixings on surfaces</li>
@@ -420,7 +420,7 @@ const Section4_3 = () => {
                   <ClipboardList className="h-4 w-4 text-elec-yellow" />
                   Start of Day
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Check work area is clear and clean</li>
                   <li>• Identify material storage locations</li>
                   <li>• Locate nearest waste disposal points</li>
@@ -434,7 +434,7 @@ const Section4_3 = () => {
                   <Eye className="h-4 w-4 text-elec-yellow" />
                   During Work
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Clean up spills immediately</li>
                   <li>• Keep walkways clear at all times</li>
                   <li>• Dispose of waste in correct containers</li>
@@ -448,7 +448,7 @@ const Section4_3 = () => {
                   <MapPin className="h-4 w-4 text-elec-yellow" />
                   End of Day
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Account for all tools and equipment</li>
                   <li>• Remove all temporary installations</li>
                   <li>• Clear work area of all materials</li>
@@ -462,7 +462,7 @@ const Section4_3 = () => {
                   <CheckCircle className="h-4 w-4 text-elec-yellow" />
                   Weekly Review
                 </h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
+                <ul className="text-sm text-white/80 space-y-1">
                   <li>• Assess overall site organisation</li>
                   <li>• Check storage area efficiency</li>
                   <li>• Review waste disposal methods</li>
@@ -500,7 +500,7 @@ const Section4_3 = () => {
               </div>
 
               <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                <h4 className="font-semibold mb-2 text-blue-800 dark:text-blue-200">PPE Requirement Signs</h4>
+                <h4 className="font-semibold mb-2 text-blue-800 dark:text-white">PPE Requirement Signs</h4>
                 <ul className="text-blue-700 dark:text-elec-yellow text-sm space-y-1">
                   <li>• Hard hat required in designated areas</li>
                   <li>• Safety glasses must be worn</li>
@@ -548,13 +548,13 @@ const Section4_3 = () => {
 
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h4 className="font-semibold mb-2">The Situation</h4>
-              <p className="text-sm text-muted-foreground mb-3">
+              <p className="text-sm text-white/80 mb-3">
                 A team was rewiring a busy office building over weekends. The work involved running new cables 
                 through ceiling spaces and installing new distribution boards in several locations.
               </p>
               
               <h4 className="font-semibold mb-2">Housekeeping Challenges</h4>
-              <ul className="text-sm text-muted-foreground space-y-1 mb-3">
+              <ul className="text-sm text-white/80 space-y-1 mb-3">
                 <li>• 500m of old cable needed removal</li>
                 <li>• Ceiling tiles and debris accumulating</li>
                 <li>• New equipment stored in corridors</li>
@@ -562,7 +562,7 @@ const Section4_3 = () => {
               </ul>
 
               <h4 className="font-semibold mb-2">Solutions Implemented</h4>
-              <ul className="text-sm text-muted-foreground space-y-1 mb-3">
+              <ul className="text-sm text-white/80 space-y-1 mb-3">
                 <li>• Designated waste skips positioned strategically</li>
                 <li>• "Tidy as you go" policy enforced</li>
                 <li>• Clear signage for work areas and diversions</li>
@@ -571,7 +571,7 @@ const Section4_3 = () => {
               </ul>
 
               <h4 className="font-semibold mb-2">Results</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white/80">
                 Zero accidents occurred during the 6-week project. Client praised the team's professionalism 
                 and cleanliness. Work completed on schedule with no delays due to lost tools or blocked access.
               </p>
@@ -589,7 +589,7 @@ const Section4_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-border pb-4 last:border-b-0">
                 <h3 className="font-semibold mb-2 text-elec-yellow">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm">{faq.answer}</p>
+                <p className="text-white/80 text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

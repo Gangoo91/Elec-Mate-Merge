@@ -1,7 +1,5 @@
 import { useMemo } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
@@ -9,8 +7,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { ExternalLink, Star, TrendingUp, Check, CheckCircle } from "lucide-react";
+import { TrendingUp, Sparkles } from "lucide-react";
 import { type ToolItem } from "@/hooks/useToolsData";
+import PremiumToolCard from "./PremiumToolCard";
 
 interface CategoryToolsCarouselProps {
   tools: ToolItem[];
@@ -42,131 +41,53 @@ const CategoryToolsCarousel = ({ tools, categoryName, className = "" }: Category
     return sortedTools.slice(0, 6);
   }, [tools]);
 
-  // Generate product URL with fallbacks
-  const getProductUrl = (tool: ToolItem): string => {
-    if (tool.productUrl || tool.view_product_url) {
-      return tool.productUrl || tool.view_product_url || '';
-    }
-    
-    // Fallback URLs based on supplier
-    const supplier = tool.supplier?.toLowerCase() || '';
-    const searchTerm = encodeURIComponent(tool.name || '');
-    
-    if (supplier.includes('screwfix')) {
-      return `https://www.screwfix.com/search?term=${searchTerm}`;
-    } else if (supplier.includes('toolstation')) {
-      return `https://www.toolstation.com/search?q=${searchTerm}`;
-    } else if (supplier.includes('city electrical')) {
-      return `https://www.cef.co.uk/catalogue/search?query=${searchTerm}`;
-    }
-    
-    return `https://www.google.com/search?q=${searchTerm}+${supplier}+buy`;
-  };
-
   if (top6Tools.length === 0) {
     return null;
   }
 
   return (
-    <section className={`space-y-4 ${className}`}>
+    <section className={`space-y-4 sm:space-y-5 ${className}`}>
       {/* Section Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between px-1">
         <div className="flex items-center gap-3">
-          <TrendingUp className="h-5 w-5 text-elec-yellow" />
-          <h2 className="text-xl font-semibold text-elec-light">
-            Top 6 {categoryName}
-          </h2>
+          <div className="p-2 rounded-xl bg-primary/10 border border-primary/20">
+            <Sparkles className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <h2 className="text-lg sm:text-xl font-bold text-white">
+              Featured {categoryName}
+            </h2>
+            <p className="text-xs text-muted-foreground">
+              Top picks from trusted suppliers
+            </p>
+          </div>
         </div>
-        <Badge variant="outline" className="text-xs">
+        <Badge
+          variant="outline"
+          className="bg-primary/10 text-primary border-primary/30 text-xs"
+        >
+          <TrendingUp className="h-3 w-3 mr-1" />
           {top6Tools.length} Featured
         </Badge>
       </div>
 
-      {/* Carousel */}
+      {/* Premium Carousel */}
       <Carousel className="w-full">
-        <CarouselContent className="px-4">
+        <CarouselContent className="-ml-2 sm:-ml-4">
           {top6Tools.map((tool, index) => (
-            <CarouselItem key={tool.id || index} className="p-1 basis-[200px] md:basis-[220px] overflow-y-visible">
-              <Card className="h-full bg-transparent bg-gradient-to-br from-white/10 via-white/5 to-transparent border-white/10 hover:border-elec-yellow/30 hover:shadow-lg hover:shadow-elec-yellow/5 hover:scale-[1.02] transition-all duration-300 rounded-lg group">
-                {/* Compact Image section */}
-                <div className="relative overflow-hidden rounded-t-lg">
-                  <div className="h-32 overflow-hidden">
-                    <img
-                      src={tool.image || '/placeholder.svg'}
-                      alt={tool.name || 'Tool'}
-                      className="object-cover w-full h-full transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-105"
-                      onError={(e) => {
-                        e.currentTarget.src = '/placeholder.svg';
-                      }}
-                    />
-                  </div>
-                  
-                  {/* Compact badges */}
-                  <div className="absolute top-1.5 left-1.5 right-1.5 flex items-start justify-between">
-                    <Badge className="bg-background/90 text-foreground border-border text-[10px] px-1.5 py-0.5">
-                      {tool.category || 'Tools'}
-                    </Badge>
-                    {tool.isOnSale && (
-                      <Badge className="bg-destructive text-destructive-foreground text-[10px] px-1.5 py-0.5 font-bold">
-                        SALE
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-
-                <CardContent className="p-2.5 flex-grow flex flex-col">
-                  {/* Compact supplier and rating */}
-                  <div className="flex items-center justify-between text-xs mb-2">
-                    <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 bg-elec-yellow" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
-                      <span className="font-medium text-foreground text-[10px]">{tool.supplier || 'Screwfix'}</span>
-                    </div>
-                  </div>
-
-                  {/* Compact title */}
-                  <h3 className="text-xs font-semibold line-clamp-2 mb-2 text-foreground leading-tight">
-                    {tool.name || 'Unknown Tool'}
-                  </h3>
-
-                  {/* Compact price section */}
-                  <div className="pt-2 border-t border-white/10 mt-auto">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex flex-col">
-                        {tool.isOnSale && tool.salePrice ? (
-                          <>
-                            <span className="text-sm font-bold text-elec-yellow leading-none">
-                              {tool.salePrice}
-                            </span>
-                            <span className="text-[9px] text-muted-foreground line-through">
-                              {tool.price}
-                            </span>
-                          </>
-                        ) : (
-                          <span className="text-sm font-bold text-elec-yellow leading-none">
-                            {tool.price}
-                          </span>
-                        )}
-                        <span className="text-[9px] text-muted-foreground">inc. VAT</span>
-                      </div>
-                    </div>
-
-                    {/* Compact button */}
-                    <Button 
-                      size="sm" 
-                      onClick={() => window.open(getProductUrl(tool), '_blank')}
-                      className="w-full h-7 text-[10px] border border-elec-yellow text-elec-yellow bg-transparent hover:bg-elec-yellow hover:text-background transition-colors px-2"
-                    >
-                      <ExternalLink className="w-2.5 h-2.5 mr-1" />
-                      View
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+            <CarouselItem
+              key={tool.id || index}
+              className="pl-2 sm:pl-4 basis-[260px] sm:basis-[280px] md:basis-[300px]"
+            >
+              <PremiumToolCard
+                item={tool}
+                variant="compact"
+              />
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden md:flex -left-4 bg-elec-card/80 border-white/10 text-elec-light hover:bg-elec-yellow/10 hover:text-elec-yellow" />
-        <CarouselNext className="hidden md:flex -right-4 bg-elec-card/80 border-white/10 text-elec-light hover:bg-elec-yellow/10 hover:text-elec-yellow" />
+        <CarouselPrevious className="hidden md:flex -left-4 bg-background/90 backdrop-blur-sm border-border/50 text-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all" />
+        <CarouselNext className="hidden md:flex -right-4 bg-background/90 backdrop-blur-sm border-border/50 text-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all" />
       </Carousel>
     </section>
   );

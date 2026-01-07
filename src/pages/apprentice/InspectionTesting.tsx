@@ -92,18 +92,18 @@ const InspectionTesting = () => {
                     <CheckSquare className="h-8 w-8 text-elec-yellow" />
                   </div>
                   <div className="space-y-2">
-                    <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+                    <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
                       BS7671 Inspection & Testing
                     </h1>
-                    <p className="text-base sm:text-lg text-white/80 max-w-2xl leading-relaxed">
+                    <p className="hidden sm:block text-lg text-white/80 max-w-2xl leading-relaxed">
                       Master the essential procedures for electrical inspection and testing with comprehensive learning materials
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* Safety Notices - Integrated with subtle design */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+              {/* Safety Notices - Hidden on mobile */}
+              <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
                 {/* Safety Notice */}
                 <div className="bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/20 rounded-xl p-4 backdrop-blur-sm">
                   <div className="flex items-start gap-3">

@@ -5,6 +5,27 @@ import { useToast } from '@/components/ui/use-toast';
 export function useAuthentication() {
   const { toast } = useToast();
 
+  // Helper to make error messages user-friendly
+  const getFriendlyErrorMessage = (errorMessage: string): string => {
+    const lowerMessage = errorMessage.toLowerCase();
+    if (lowerMessage.includes('invalid login credentials') || lowerMessage.includes('invalid credentials')) {
+      return 'Incorrect email or password. Please try again.';
+    }
+    if (lowerMessage.includes('user already registered') || lowerMessage.includes('already been registered')) {
+      return 'This email is already registered. Try signing in instead.';
+    }
+    if (lowerMessage.includes('password') && lowerMessage.includes('weak')) {
+      return 'Password is too weak. Please use at least 6 characters.';
+    }
+    if (lowerMessage.includes('rate limit') || lowerMessage.includes('too many')) {
+      return 'Too many attempts. Please wait a moment and try again.';
+    }
+    if (lowerMessage.includes('network') || lowerMessage.includes('fetch')) {
+      return 'Connection error. Please check your internet and try again.';
+    }
+    return errorMessage;
+  };
+
   const signIn = async (email: string, password: string) => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -15,7 +36,7 @@ export function useAuthentication() {
       if (error) {
         toast({
           title: 'Login Failed',
-          description: error.message,
+          description: getFriendlyErrorMessage(error.message),
           variant: 'destructive',
         });
         return { error };
@@ -82,45 +103,38 @@ export function useAuthentication() {
       if (error) {
         toast({
           title: 'Signup Failed',
-          description: error.message,
+          description: getFriendlyErrorMessage(error.message),
           variant: 'destructive',
         });
         return { error };
       }
 
-      // Send branded welcome email via Resend
+      // Send branded welcome email in background (fire and forget - non-blocking)
       if (data?.user) {
-        try {
-          const { error: emailError } = await supabase.functions.invoke('send-welcome-email', {
-            body: {
-              userId: data.user.id,
-              email: email,
-              fullName: fullName,
-            },
-          });
-
-          if (emailError) {
-            console.warn('Welcome email failed to send:', emailError);
-            // Don't fail signup if email fails - it's not critical
-          } else {
-            console.log('Welcome email sent successfully');
-          }
-        } catch (emailErr) {
-          console.warn('Error sending welcome email:', emailErr);
-        }
+        supabase.functions.invoke('send-welcome-email', {
+          body: {
+            userId: data.user.id,
+            email: email,
+            fullName: fullName,
+          },
+        }).then(() => {
+          console.log('Welcome email sent');
+        }).catch((emailErr) => {
+          console.warn('Welcome email failed (non-critical):', emailErr);
+        });
       }
 
-      // Success toast
+      // Success toast - instant access!
       toast({
-        title: 'Signup Successful',
-        description: 'Your account has been created successfully. You now have a 7-day free trial!',
+        title: 'Welcome to Elec-Mate!',
+        description: 'Your account is ready. Enjoy your 7-day free trial!',
       });
 
-      return { error: null };
+      return { error: null, user: data?.user };
     } catch (error: any) {
       toast({
         title: 'Signup Error',
-        description: error.message || 'An unexpected error occurred',
+        description: getFriendlyErrorMessage(error.message || 'An unexpected error occurred'),
         variant: 'destructive',
       });
       return { error };

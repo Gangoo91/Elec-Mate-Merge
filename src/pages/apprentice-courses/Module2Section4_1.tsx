@@ -258,7 +258,7 @@ const Module2Section4_1 = () => {
                   <h3 className="text-lg font-semibold text-elec-yellow mb-3">Current Direction and Flow</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
-                      <p className="text-blue-200 text-sm mb-2"><strong>AC (Alternating Current):</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>AC (Alternating Current):</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-blue-100">
                         <li>Changes direction 100 times per second (50 Hz in UK)</li>
                         <li>Each complete cycle takes 20 milliseconds</li>
@@ -268,7 +268,7 @@ const Module2Section4_1 = () => {
                       </ul>
                     </div>
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>DC (Direct Current):</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>DC (Direct Current):</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li>Flows in one direction only (0 Hz - no frequency)</li>
                         <li>Steady voltage level (though may have ripple from rectification)</li>
@@ -378,7 +378,7 @@ const Module2Section4_1 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Connector and Cable Clues:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Connector and Cable Clues:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>AC connectors:</strong> Standard BS 1363 plugs, IEC C13/C14, CEE form</li>
                         <li><strong>DC connectors:</strong> Often polarised (keyed), barrel jacks, terminal blocks</li>
@@ -404,7 +404,7 @@ const Module2Section4_1 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Oscilloscope Analysis:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Oscilloscope Analysis:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>AC waveform:</strong> Sinusoidal, square, or complex periodic pattern</li>
                         <li><strong>DC waveform:</strong> Straight horizontal line (pure DC) or line with ripple</li>
@@ -429,7 +429,7 @@ const Module2Section4_1 = () => {
                       </ul>
                     </div>
                     <div className="bg-slate-700/30 border border-slate-600/30 p-3 rounded">
-                      <p className="text-slate-200 font-medium mb-2">Typical DC Locations:</p>
+                      <p className="text-white font-medium mb-2">Typical DC Locations:</p>
                       <ul className="list-disc pl-4 space-y-1 text-xs text-slate-100">
                         <li>LED driver outputs and strips</li>
                         <li>Control panel power supplies</li>
@@ -499,7 +499,7 @@ const Module2Section4_1 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>BS 7671 Requirements (Section 531.3):</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>BS 7671 Requirements (Section 531.3):</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li>Type AC: Basic residential circuits with simple loads</li>
                         <li>Type A: Circuits with single-phase rectified loads</li>
@@ -515,7 +515,7 @@ const Module2Section4_1 = () => {
                   <div className="space-y-3">
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="bg-teal-500/10 border border-teal-400/30 p-3 rounded">
-                        <p className="text-teal-200 font-medium mb-2">AC Earth Fault Protection:</p>
+                        <p className="text-white font-medium mb-2">AC Earth Fault Protection:</p>
                         <ul className="list-disc pl-4 space-y-1 text-xs text-teal-100">
                           <li>RCD detects imbalance between L and N</li>
                           <li>Zs (earth fault loop impedance) testing</li>
@@ -524,7 +524,7 @@ const Module2Section4_1 = () => {
                         </ul>
                       </div>
                       <div className="bg-slate-700/30 border border-slate-600/30 p-3 rounded">
-                        <p className="text-slate-200 font-medium mb-2">DC Earth Fault Protection:</p>
+                        <p className="text-white font-medium mb-2">DC Earth Fault Protection:</p>
                         <ul className="list-disc pl-4 space-y-1 text-xs text-slate-100">
                           <li>May use residual current monitoring</li>
                           <li>Insulation monitoring systems (IMS)</li>
@@ -540,7 +540,7 @@ const Module2Section4_1 = () => {
                   <h3 className="text-lg font-semibold text-teal-300 mb-3">Testing Procedures and Safety</h3>
                   <div className="space-y-4">
                     <div className="bg-teal-500/10 border border-teal-400/30 p-4 rounded-lg">
-                      <p className="text-teal-200 text-sm mb-2"><strong>AC Testing Protocol:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>AC Testing Protocol:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-teal-100">
                         <li><strong>Safe isolation:</strong> Switch off, lock off, test for dead on all poles</li>
                         <li><strong>Insulation resistance:</strong> Standard 500V DC test between conductors and earth</li>
@@ -552,7 +552,7 @@ const Module2Section4_1 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>DC Testing Protocol:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>DC Testing Protocol:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>Safe isolation:</strong> Isolate both poles, discharge stored energy, lock off</li>
                         <li><strong>Polarity verification:</strong> Absolutely critical - use DC voltmeter</li>
@@ -603,7 +603,7 @@ const Module2Section4_1 = () => {
                   <h3 className="text-lg font-semibold text-amber-300 mb-3">Critical Mistakes to Avoid</h3>
                   <div className="space-y-4">
                     <div className="bg-card border border-amber-400/30 p-4 rounded-lg">
-                      <p className="text-amber-200 text-sm mb-2"><strong>RCD Type Selection Errors:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>RCD Type Selection Errors:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-amber-100">
                         <li><strong>Using Type AC with EV chargers:</strong> May not detect smooth DC fault currents</li>
                         <li><strong>Ignoring manufacturer guidance:</strong> Always check equipment RCD requirements</li>
@@ -613,7 +613,7 @@ const Module2Section4_1 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Polarity and Connection Errors:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Polarity and Connection Errors:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>DC polarity reversal:</strong> Can destroy LEDs, electronics, and polarised components</li>
                         <li><strong>AC neutral switching:</strong> Dangerous - always switch live conductor</li>
@@ -628,7 +628,7 @@ const Module2Section4_1 = () => {
                   <h3 className="text-lg font-semibold text-amber-300 mb-3">Measurement and Testing Errors</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-amber-400/30 p-4 rounded-lg">
-                      <p className="text-amber-200 text-sm mb-2"><strong>Meter Selection Problems:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Meter Selection Problems:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-amber-100">
                         <li><strong>Average-responding on distorted AC:</strong> Under-reads by 10-40% on non-sinusoidal waveforms</li>
                         <li><strong>Wrong voltage category:</strong> Using CAT II meter on CAT III/IV installations</li>
@@ -638,7 +638,7 @@ const Module2Section4_1 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Testing Procedure Errors:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Testing Procedure Errors:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>Inadequate discharge time:</strong> DC systems may retain dangerous voltages</li>
                         <li><strong>Single-pole isolation on DC:</strong> Both positive and negative must be isolated</li>
@@ -676,7 +676,7 @@ const Module2Section4_1 = () => {
                   <h3 className="text-lg font-semibold text-amber-300 mb-3">Emergency Response and Troubleshooting</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-amber-400/30 p-4 rounded-lg">
-                      <p className="text-amber-200 text-sm mb-2"><strong>Common Fault Scenarios:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Common Fault Scenarios:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-amber-100">
                         <li><strong>RCD nuisance tripping:</strong> Check for DC components, harmonics, or leakage currents</li>
                         <li><strong>Equipment not functioning:</strong> Verify polarity on DC supplies, L/N on AC</li>
@@ -686,10 +686,10 @@ const Module2Section4_1 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Quick Diagnostic Steps:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Quick Diagnostic Steps:</strong></p>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
-                          <p className="text-slate-200 font-medium mb-1">AC Issues:</p>
+                          <p className="text-white font-medium mb-1">AC Issues:</p>
                           <ul className="list-disc pl-4 space-y-1 text-xs text-slate-100">
                             <li>Check RCD type vs load requirements</li>
                             <li>Verify L/N connections and polarity</li>
@@ -698,7 +698,7 @@ const Module2Section4_1 = () => {
                           </ul>
                         </div>
                         <div>
-                          <p className="text-slate-200 font-medium mb-1">DC Issues:</p>
+                          <p className="text-white font-medium mb-1">DC Issues:</p>
                           <ul className="list-disc pl-4 space-y-1 text-xs text-slate-100">
                             <li>Verify positive/negative polarity</li>
                             <li>Check for stored energy discharge</li>
@@ -742,9 +742,9 @@ const Module2Section4_1 = () => {
           
           <div className="space-y-6">
             <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-              <h3 className="font-bold text-slate-200 mb-2">Example 1: EV Charger Protection</h3>
+              <h3 className="font-bold text-white mb-2">Example 1: EV Charger Protection</h3>
               <p className="text-slate-300 text-sm mb-2">Issue: EV charger with power electronics trips Type A RCD unpredictably</p>
-              <div className="space-y-1 text-sm text-slate-200">
+              <div className="space-y-1 text-sm text-white">
                 <p><strong>Investigation:</strong> Smooth DC residual currents from rectifier/inverter stages</p>
                 <p><strong>Solution:</strong> Upgrade to Type B RCD per manufacturer instructions and BS 7671</p>
                 <p><strong>Verification:</strong> Check RCD test function, verify proper operation</p>
@@ -752,9 +752,9 @@ const Module2Section4_1 = () => {
             </div>
 
             <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-              <h3 className="font-bold text-slate-200 mb-2">Example 2: LED Strip Installation</h3>
+              <h3 className="font-bold text-white mb-2">Example 2: LED Strip Installation</h3>
               <p className="text-slate-300 text-sm mb-2">Problem: LED strip not working after installation</p>
-              <div className="space-y-1 text-sm text-slate-200">
+              <div className="space-y-1 text-sm text-white">
                 <p><strong>Check:</strong> Verify DC supply polarity matches LED strip markings</p>
                 <p><strong>Resolution:</strong> Reverse polarity connections (+/- correct orientation)</p>
                 <p><strong>Testing:</strong> Confirm voltage and current within LED specifications</p>

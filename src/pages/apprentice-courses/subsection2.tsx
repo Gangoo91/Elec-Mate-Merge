@@ -168,7 +168,7 @@ const Section1_2 = () => {
       {/* Navigation Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 1
@@ -191,7 +191,7 @@ const Section1_2 = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             Electricity at Work Regulations 1989 (EAWR)
           </h1>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-white/80 text-lg">
             Master the essential UK legal requirements for electrical safety. Learn safe isolation, live working, and EAWR compliance.
           </p>
         </header>
@@ -314,34 +314,34 @@ const Section1_2 = () => {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-base text-muted-foreground">
+            <p className="text-base text-white/80">
               While EAWR contains 33 regulations, certain ones are particularly relevant to apprentice electricians and day-to-day electrical work.
             </p>
 
             <div className="grid gap-4">
               <div className="bg-muted/50 p-4 rounded-lg">
                 <h4 className="font-medium text-sm text-elec-yellow mb-2">Regulation 4 - Construction & Maintenance</h4>
-                <p className="text-sm text-muted-foreground">Systems must be constructed and maintained to prevent danger. This covers design, installation, and ongoing maintenance.</p>
+                <p className="text-sm text-white/80">Systems must be constructed and maintained to prevent danger. This covers design, installation, and ongoing maintenance.</p>
               </div>
 
               <div className="bg-muted/50 p-4 rounded-lg">
                 <h4 className="font-medium text-sm text-green-600 mb-2">Regulation 12 - Means of Cutting Off Supply</h4>
-                <p className="text-sm text-muted-foreground">Suitable means must be available for cutting off electrical supply and isolation where necessary.</p>
+                <p className="text-sm text-white/80">Suitable means must be available for cutting off electrical supply and isolation where necessary.</p>
               </div>
 
               <div className="bg-muted/50 p-4 rounded-lg">
                 <h4 className="font-medium text-sm text-orange-600 mb-2">Regulation 13 - Precautions for Work on Dead Systems</h4>
-                <p className="text-sm text-muted-foreground">Adequate precautions must be taken to prevent electrical equipment becoming live while work is carried out.</p>
+                <p className="text-sm text-white/80">Adequate precautions must be taken to prevent electrical equipment becoming live while work is carried out.</p>
               </div>
 
               <div className="bg-muted/50 p-4 rounded-lg">
                 <h4 className="font-medium text-sm text-red-600 mb-2">Regulation 14 - Work on or Near Live Conductors</h4>
-                <p className="text-sm text-muted-foreground">No work on or near live conductors unless it's unreasonable to work dead and suitable precautions are taken.</p>
+                <p className="text-sm text-white/80">No work on or near live conductors unless it's unreasonable to work dead and suitable precautions are taken.</p>
               </div>
 
               <div className="bg-muted/50 p-4 rounded-lg">
                 <h4 className="font-medium text-sm text-purple-600 mb-2">Regulation 16 - Persons to be Competent</h4>
-                <p className="text-sm text-muted-foreground">No person shall undertake electrical work unless competent or under supervision of a competent person.</p>
+                <p className="text-sm text-white/80">No person shall undertake electrical work unless competent or under supervision of a competent person.</p>
               </div>
             </div>
 
@@ -371,7 +371,7 @@ const Section1_2 = () => {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-base text-muted-foreground">
+            <p className="text-base text-white/80">
               Safe isolation is fundamental to electrical safety and required by EAWR. It ensures electrical equipment cannot become live while work is carried out.
             </p>
 
@@ -425,13 +425,13 @@ const Section1_2 = () => {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-base text-muted-foreground">
+            <p className="text-base text-white/80">
               EAWR Regulation 14 permits live working only under specific circumstances. As an apprentice, you must understand when this might be justified and what precautions are required.
             </p>
 
             <div className="bg-muted/50 p-4 rounded-lg">
               <h4 className="font-medium mb-2 text-sm">Live Work Decision Process:</h4>
-              <ol className="space-y-2 text-sm text-muted-foreground">
+              <ol className="space-y-2 text-sm text-white/80">
                 <li><strong>1.</strong> Default position: Plan to work dead</li>
                 <li><strong>2.</strong> Is it unreasonable to work dead? (Consider disruption, safety, etc.)</li>
                 <li><strong>3.</strong> If yes, identify all risks and select appropriate precautions</li>
@@ -488,13 +488,13 @@ const Section1_2 = () => {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-base text-muted-foreground">
+            <p className="text-base text-white/80">
               EAWR Regulation 16 requires that electrical work is only undertaken by competent persons or those under supervision. Understanding what constitutes competence is crucial for apprentices.
             </p>
 
             <div className="bg-muted/50 p-4 rounded-lg">
               <h4 className="font-medium mb-2 text-sm">Elements of Competence:</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="space-y-2 text-sm text-white/80">
                 <li><strong>Knowledge:</strong> Understanding of electrical principles, hazards, and safety procedures</li>
                 <li><strong>Skills:</strong> Practical ability to carry out the work safely and correctly</li>
                 <li><strong>Experience:</strong> Sufficient exposure to similar work and situations</li>
@@ -550,13 +550,13 @@ const Section1_2 = () => {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-base text-muted-foreground">
+            <p className="text-base text-white/80">
               Understanding how EAWR relates to BS 7671 is essential. EAWR sets legal duties, while BS 7671 provides technical methods to achieve compliance.
             </p>
 
             <div className="bg-muted/50 p-4 rounded-lg">
               <h4 className="font-medium mb-2 text-sm">The Relationship:</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="space-y-2 text-sm text-white/80">
                 <li><strong>EAWR:</strong> Legal statute requiring prevention of danger</li>
                 <li><strong>BS 7671:</strong> Technical standard providing methods to prevent danger</li>
                 <li><strong>Compliance:</strong> Following BS 7671 helps demonstrate EAWR compliance</li>
@@ -635,7 +635,7 @@ const Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
                 <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                <p className="text-sm text-muted-foreground">{faq.answer}</p>
+                <p className="text-sm text-white/80">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -694,7 +694,7 @@ const Section1_2 = () => {
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
             <div>
               <h3 className="font-medium text-foreground mb-2">Key Regulations:</h3>
-              <ul className="space-y-1 text-muted-foreground">
+              <ul className="space-y-1 text-white/80">
                 <li>• Reg 4: Systems prevent danger</li>
                 <li>• Reg 12: Isolation means available</li>
                 <li>• Reg 13: Work dead precautions</li>
@@ -704,7 +704,7 @@ const Section1_2 = () => {
             </div>
             <div>
               <h3 className="font-medium text-foreground mb-2">Safe Isolation Steps:</h3>
-              <ol className="space-y-1 text-muted-foreground">
+              <ol className="space-y-1 text-white/80">
                 <li>1. Prove tester on known source</li>
                 <li>2. Isolate correct circuit</li>
                 <li>3. Lock off and label</li>

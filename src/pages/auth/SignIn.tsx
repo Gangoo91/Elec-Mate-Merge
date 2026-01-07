@@ -4,19 +4,15 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { IOSInput } from '@/components/ui/ios-input';
-import { Loader2, AlertTriangle, Zap, Mail, Lock, ArrowRight, CheckCircle2, RefreshCw, ChevronLeft } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Loader2, AlertTriangle, Zap, Mail, Lock, ArrowRight, CheckCircle2, ChevronLeft } from 'lucide-react';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isResending, setIsResending] = useState(false);
-  const [resendSuccess, setResendSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isEmailNotConfirmedError, setIsEmailNotConfirmedError] = useState(false);
 
-  const { signIn, resendConfirmationEmail } = useAuth();
+  const { signIn } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -24,23 +20,18 @@ const SignIn = () => {
 
     if (!email || !password) {
       setError('Please fill in all fields');
-      setIsEmailNotConfirmedError(false);
       return;
     }
 
     setError(null);
-    setIsEmailNotConfirmedError(false);
     setIsSubmitting(true);
 
     try {
       const { error } = await signIn(email, password);
 
       if (error) {
-        if (error.message && error.message.toLowerCase().includes('email not confirmed')) {
-          setIsEmailNotConfirmedError(true);
-        } else {
-          setError(error.message);
-        }
+        // Error message is already user-friendly from useAuthentication
+        setError(error.message);
       } else {
         navigate('/dashboard');
       }
@@ -48,25 +39,6 @@ const SignIn = () => {
       setError(err.message || 'An error occurred during sign in');
     } finally {
       setIsSubmitting(false);
-    }
-  };
-
-  const handleResendConfirmation = async () => {
-    if (!email) {
-      setError('Please enter your email address first');
-      return;
-    }
-
-    setIsResending(true);
-    setResendSuccess(false);
-
-    try {
-      const { error } = await resendConfirmationEmail(email);
-      if (!error) {
-        setResendSuccess(true);
-      }
-    } finally {
-      setIsResending(false);
     }
   };
 
@@ -111,49 +83,8 @@ const SignIn = () => {
           {/* Form card - iOS elevated style */}
           <Card variant="ios-elevated" className="p-6">
             <CardContent className="p-0">
-              {/* Error states */}
-              {isEmailNotConfirmedError && (
-                <div className="mb-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 animate-ios-scale-in">
-                  <div className="flex gap-3">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-amber-500/20 flex-shrink-0">
-                      <AlertTriangle className="h-5 w-5 text-amber-400" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-semibold text-amber-400 text-ios-subhead">Email not confirmed</p>
-                      <p className="text-ios-caption-1 text-white/50 mt-1 mb-3">
-                        Check your inbox and click the confirmation link.
-                      </p>
-                      {resendSuccess ? (
-                        <p className="text-ios-caption-1 text-green-400 flex items-center gap-2">
-                          <CheckCircle2 className="h-4 w-4" />
-                          Confirmation email sent!
-                        </p>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={handleResendConfirmation}
-                          disabled={isResending}
-                          className="text-ios-caption-1 text-elec-yellow flex items-center gap-2 disabled:opacity-50 font-medium ios-pressable"
-                        >
-                          {isResending ? (
-                            <>
-                              <Loader2 className="h-4 w-4 animate-spin" />
-                              Sending...
-                            </>
-                          ) : (
-                            <>
-                              <RefreshCw className="h-4 w-4" />
-                              Resend confirmation
-                            </>
-                          )}
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {error && !isEmailNotConfirmedError && (
+              {/* Error state */}
+              {error && (
                 <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 animate-ios-scale-in">
                   <div className="flex gap-3 items-center">
                     <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-red-500/20 flex-shrink-0">

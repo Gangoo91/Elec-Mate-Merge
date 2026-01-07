@@ -46,7 +46,7 @@ const Level2Module8Section2 = () => {
         <div className="flex items-center gap-4 mb-8">
           <Link 
             to=".." 
-            className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center text-white/80 hover:text-foreground transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Module 8
@@ -57,7 +57,7 @@ const Level2Module8Section2 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4">
             How to Pass Exams – Tips and Techniques
           </h1>
-          <p className="text-muted-foreground text-lg max-w-3xl">
+          <p className="text-white/80 text-lg max-w-3xl">
             Master the essential strategies and techniques needed to excel in your Level 2 electrical installation examinations. 
             Learn proven methods for time management, question analysis, and exam preparation that will maximise your performance and confidence.
           </p>

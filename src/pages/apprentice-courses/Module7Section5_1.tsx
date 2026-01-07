@@ -508,7 +508,7 @@ const Module7Section5_1 = () => {
                 </div>
                 
                 <div className="bg-red-100 dark:bg-red-900/20 p-3 rounded border border-red-300 dark:border-red-700">
-                  <p className="font-medium text-red-800 dark:text-red-200 mb-1">Lesson Learned:</p>
+                  <p className="font-medium text-red-800 dark:text-white mb-1">Lesson Learned:</p>
                   <p className="text-red-700 text-elec-yellow">Use the correct instrument mode for each diagnostic requirement. Isolating subcircuits during testing helps pinpoint moisture-related insulation breakdown that standard multimeters cannot detect.</p>
                 </div>
               </div>

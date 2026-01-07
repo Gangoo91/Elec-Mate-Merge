@@ -84,7 +84,7 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
                 <MobileSelectTrigger label="Cable Type">
                   <MobileSelectValue placeholder="Select cable type" />
                 </MobileSelectTrigger>
-                <MobileSelectContent className="bg-white/10 border-elec-yellow/20">
+                <MobileSelectContent className="bg-elec-dark border-elec-yellow/20">
                   <MobileSelectItem value="2.5mm-twin">2.5mm² Twin & Earth</MobileSelectItem>
                   <MobileSelectItem value="4mm-twin">4.0mm² Twin & Earth</MobileSelectItem>
                   <MobileSelectItem value="6mm-twin">6.0mm² Twin & Earth</MobileSelectItem>

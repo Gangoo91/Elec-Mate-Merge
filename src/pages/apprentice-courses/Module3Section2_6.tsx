@@ -305,8 +305,8 @@ const Module3Section2_6: React.FC = () => {
                   <p className="font-medium mb-2">Cable Clips</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Types and Applications</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Types and Applications</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Flat twin clips: Designed for T&E cable profile</li>
                         <li>Round clips: For circular cables (1.5-25mm diameter)</li>
                         <li>Specialist profiles: Oval, figure-8, multi-gang</li>
@@ -314,8 +314,8 @@ const Module3Section2_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Installation Considerations</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Installation Considerations</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Spacing: 400mm horizontal, 600mm vertical typical</li>
                         <li>Avoid over-compression of cable insulation</li>
                         <li>Use appropriate wall plugs for substrate type</li>
@@ -329,8 +329,8 @@ const Module3Section2_6: React.FC = () => {
                   <p className="font-medium mb-2">Saddles and Cleats</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Heavy-Duty Applications</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Heavy-Duty Applications</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>SWA cable support up to 95mm diameter</li>
                         <li>Metal construction: galvanised or stainless steel</li>
                         <li>Heavy-duty plastic for indoor light loads</li>
@@ -338,8 +338,8 @@ const Module3Section2_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Spacing and Loading</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Spacing and Loading</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Spacing per cable weight and manufacturer tables</li>
                         <li>Additional support at direction changes</li>
                         <li>Consider cable thermal expansion effects</li>
@@ -355,8 +355,8 @@ const Module3Section2_6: React.FC = () => {
                   <p className="font-medium mb-2">Cable Ties</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Types and Materials</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Types and Materials</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Nylon: Standard indoor applications (-40°C to +85°C)</li>
                         <li>Stainless steel: High temperature and fire resistance</li>
                         <li>Coated variants: UV resistance for outdoor use</li>
@@ -364,8 +364,8 @@ const Module3Section2_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Application Guidelines</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Application Guidelines</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Bundle sizing: Leave 10-15% expansion space</li>
                         <li>Tension: Firm but not cutting into cable sheath</li>
                         <li>Fire areas: Use metal ties or fire-resistant types</li>
@@ -379,8 +379,8 @@ const Module3Section2_6: React.FC = () => {
                   <p className="font-medium mb-2">Containment Fixings</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-orange-200 mb-1">Conduit and Trunking Support</p>
-                      <ul className="list-disc pl-4 space-y-1 text-orange-200">
+                      <p className="font-medium text-white mb-1">Conduit and Trunking Support</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Saddles: Most common for round conduit</li>
                         <li>Brackets: L-shaped for trunking systems</li>
                         <li>Spacer bars: Multiple parallel runs</li>
@@ -388,8 +388,8 @@ const Module3Section2_6: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-orange-200 mb-1">Installation Standards</p>
-                      <ul className="list-disc pl-4 space-y-1 text-orange-200">
+                      <p className="font-medium text-white mb-1">Installation Standards</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Spacing per BS 7671 and manufacturer guidance</li>
                         <li>Load calculations include contained cables</li>
                         <li>Thermal expansion allowances required</li>
@@ -413,8 +413,8 @@ const Module3Section2_6: React.FC = () => {
 
             <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-orange-200 mb-2">Fire-resistant support requirements (BS 7671 18th Edition)</p>
-                <ul className="list-disc pl-4 space-y-1 text-orange-200">
+                <p className="font-medium text-white mb-2">Fire-resistant support requirements (BS 7671 18th Edition)</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>All wiring systems in escape routes must use non-combustible fixings</li>
                   <li>Plastic clips and ties alone are not acceptable in these critical areas</li>
                   <li>Metal clips, steel cable ties or combined fixings with fire-resistant anchors required</li>
@@ -424,8 +424,8 @@ const Module3Section2_6: React.FC = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
-                <p className="font-medium text-cyan-200 mb-2">Environmental selection criteria</p>
-                <ul className="list-disc pl-4 space-y-1 text-cyan-200">
+                <p className="font-medium text-white mb-2">Environmental selection criteria</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Indoor standard: Nylon or PVC suitable for most applications</li>
                   <li>Outdoor/UV exposure: Use UV-stabilised materials or metal fixings</li>
                   <li>Corrosive environments: Stainless steel (316 grade) for chemical resistance</li>
@@ -492,8 +492,8 @@ const Module3Section2_6: React.FC = () => {
 
             <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-red-200 mb-2">Installation errors</p>
-                <ul className="list-disc pl-4 space-y-1 text-red-200">
+                <p className="font-medium text-white mb-2">Installation errors</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li><strong>Over-tightening fixings:</strong> Compressing cable insulation causing potential failure points</li>
                   <li><strong>Incorrect spacing:</strong> Too wide spacing allowing cable sag and potential damage</li>
                   <li><strong>Wrong clip size:</strong> Using clips too small or large for cable diameter</li>
@@ -503,8 +503,8 @@ const Module3Section2_6: React.FC = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
-                <p className="font-medium text-amber-200 mb-2">Compliance and safety oversights</p>
-                <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                <p className="font-medium text-white mb-2">Compliance and safety oversights</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li><strong>Fire regulation non-compliance:</strong> Using plastic-only fixings in escape routes</li>
                   <li><strong>Environmental unsuitability:</strong> Standard fixings in corrosive or outdoor environments</li>
                   <li><strong>Inadequate support:</strong> Insufficient fixings for cable weight and span requirements</li>
@@ -525,8 +525,8 @@ const Module3Section2_6: React.FC = () => {
 
             <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-blue-200 mb-2">18th Edition fire-resistant requirements</p>
-                <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                <p className="font-medium text-white mb-2">18th Edition fire-resistant requirements</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li><strong>521.10.201:</strong> Cable supports in escape routes must be fire-resistant</li>
                   <li><strong>521.10.202:</strong> Non-combustible materials required for support systems</li>
                   <li><strong>Definition of escape routes:</strong> Corridors, stairwells, designated emergency egress</li>
@@ -536,8 +536,8 @@ const Module3Section2_6: React.FC = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                <p className="font-medium text-green-200 mb-2">Cable support spacing requirements</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <p className="font-medium text-white mb-2">Cable support spacing requirements</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Table 4A3: Support spacing for cables not in conduit or trunking</li>
                   <li>Horizontal runs: Maximum spacing based on cable diameter and type</li>
                   <li>Vertical runs: Closer spacing to prevent cable weight stress</li>
@@ -547,8 +547,8 @@ const Module3Section2_6: React.FC = () => {
               </div>
 
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-purple-200 mb-2">Material and environmental standards</p>
-                <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                <p className="font-medium text-white mb-2">Material and environmental standards</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>BS EN 61537: Cable management systems including support requirements</li>
                   <li>IP ratings: Protection levels for different environmental exposures</li>
                   <li>Material certifications: Fire resistance ratings and temperature limitations</li>
@@ -566,16 +566,16 @@ const Module3Section2_6: React.FC = () => {
             <Building className="w-5 h-5" /> Real-world Scenario
           </h2>
           <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
-            <h3 className="font-medium text-slate-200 mb-2">Post-fire inspection compliance failure</h3>
-            <p className="text-slate-200 text-sm mb-3">
+            <h3 className="font-medium text-white mb-2">Post-fire inspection compliance failure</h3>
+            <p className="text-white text-sm mb-3">
               During a post-fire inspection of an apartment block, it was found that plastic-only cable fixings 
               in escape routes had melted, causing cables to hang down and obstruct stairs, creating hazards 
               for both residents and emergency responders.
             </p>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="font-medium text-slate-200 mb-2">Original installation problems</p>
-                <ul className="list-disc pl-4 space-y-1 text-slate-200">
+                <p className="font-medium text-white mb-2">Original installation problems</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Standard plastic clips used throughout building</li>
                   <li>No differentiation between escape routes and other areas</li>
                   <li>Cables collapsed blocking stairwell access</li>
@@ -583,8 +583,8 @@ const Module3Section2_6: React.FC = () => {
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-slate-200 mb-2">Compliant replacement solution</p>
-                <ul className="list-disc pl-4 space-y-1 text-slate-200">
+                <p className="font-medium text-white mb-2">Compliant replacement solution</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Metal cable clips throughout escape routes</li>
                   <li>Stainless steel cable ties for bundled cables</li>
                   <li>Fire-resistant anchoring systems used</li>
@@ -634,8 +634,8 @@ const Module3Section2_6: React.FC = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Apprentice Do's and Don'ts</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
             <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-              <h3 className="font-medium text-green-200 mb-3">✓ DO</h3>
-              <ul className="space-y-2 text-green-200">
+              <h3 className="font-medium text-white mb-3">✓ DO</h3>
+              <ul className="space-y-2 text-white">
                 <li>• Use non-combustible fixings in escape routes and fire-rated areas</li>
                 <li>• Select materials appropriate for environmental conditions</li>
                 <li>• Follow manufacturer's spacing recommendations and BS 7671 guidance</li>
@@ -647,8 +647,8 @@ const Module3Section2_6: React.FC = () => {
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <h3 className="font-medium text-red-200 mb-3">✗ DON'T</h3>
-              <ul className="space-y-2 text-red-200">
+              <h3 className="font-medium text-white mb-3">✗ DON'T</h3>
+              <ul className="space-y-2 text-white">
                 <li>• Use plastic-only fixings in escape routes or fire areas</li>
                 <li>• Over-tighten clips or ties that compress cable insulation</li>
                 <li>• Exceed recommended spacing intervals for cable support</li>
@@ -667,8 +667,8 @@ const Module3Section2_6: React.FC = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Card: Cable Fixing Quick Reference</h2>
           <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs">
             <div className="rounded-lg p-3 border border-border/30">
-              <h4 className="font-medium text-blue-200 mb-2">Standard Clips</h4>
-              <ul className="space-y-1 text-blue-200">
+              <h4 className="font-medium text-white mb-2">Standard Clips</h4>
+              <ul className="space-y-1 text-white">
                 <li>• T&E: Flat twin clips</li>
                 <li>• Round: Circular clips</li>
                 <li>• Spacing: 400mm horiz, 600mm vert</li>
@@ -676,8 +676,8 @@ const Module3Section2_6: React.FC = () => {
               </ul>
             </div>
             <div className="rounded-lg p-3 border border-green-400/30">
-              <h4 className="font-medium text-green-200 mb-2">Heavy Duty</h4>
-              <ul className="space-y-1 text-green-200">
+              <h4 className="font-medium text-white mb-2">Heavy Duty</h4>
+              <ul className="space-y-1 text-white">
                 <li>• SWA: Cable cleats/saddles</li>
                 <li>• Metal construction preferred</li>
                 <li>• Load rated fixings essential</li>
@@ -685,8 +685,8 @@ const Module3Section2_6: React.FC = () => {
               </ul>
             </div>
             <div className="rounded-lg p-3 border border-border/30">
-              <h4 className="font-medium text-purple-200 mb-2">Fire Areas</h4>
-              <ul className="space-y-1 text-purple-200">
+              <h4 className="font-medium text-white mb-2">Fire Areas</h4>
+              <ul className="space-y-1 text-white">
                 <li>• Non-combustible fixings only</li>
                 <li>• Metal clips/stainless ties</li>
                 <li>• Escape routes critical</li>

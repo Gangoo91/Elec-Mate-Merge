@@ -307,8 +307,8 @@ const Module3Section3_4: React.FC = () => {
                   <p className="font-medium mb-2">Hand Tools</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Visual Checks</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Visual Checks</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Check for cracked or split handles</li>
                         <li>Inspect cutting edges for wear or chips</li>
                         <li>Look for rust or corrosion on metal parts</li>
@@ -316,8 +316,8 @@ const Module3Section3_4: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Insulated Tools</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Insulated Tools</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Check insulation for nicks, cuts, or wear</li>
                         <li>Ensure VDE markings are visible and intact</li>
                         <li>Look for discolouration indicating heat damage</li>
@@ -331,8 +331,8 @@ const Module3Section3_4: React.FC = () => {
                   <p className="font-medium mb-2">Power Tools</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-red-200 mb-1">Casing & Mechanical</p>
-                      <ul className="list-disc pl-4 space-y-1 text-red-200">
+                      <p className="font-medium text-white mb-1">Casing & Mechanical</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Check casings for cracks or loose fittings</li>
                         <li>Ensure guards and safety features operate</li>
                         <li>Test switches function correctly</li>
@@ -340,8 +340,8 @@ const Module3Section3_4: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-red-200 mb-1">Electrical Safety</p>
-                      <ul className="list-disc pl-4 space-y-1 text-red-200">
+                      <p className="font-medium text-white mb-1">Electrical Safety</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Inspect cables for cuts, fraying, or burn marks</li>
                         <li>Check plugs are intact and pins not bent</li>
                         <li>Ensure cable strain relief is working</li>
@@ -368,8 +368,8 @@ const Module3Section3_4: React.FC = () => {
                 <p className="font-medium mb-2">Common Warning Signs</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="font-medium text-orange-200 mb-1">Performance Issues</p>
-                    <ul className="list-disc pl-4 space-y-1 text-orange-200">
+                    <p className="font-medium text-white mb-1">Performance Issues</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Blunt cutting edges or worn bits</li>
                       <li>Loose joints affecting accuracy</li>
                       <li>Reduced power or efficiency</li>
@@ -377,8 +377,8 @@ const Module3Section3_4: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-orange-200 mb-1">Safety Concerns</p>
-                    <ul className="list-disc pl-4 space-y-1 text-orange-200">
+                    <p className="font-medium text-white mb-1">Safety Concerns</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Rust or corrosion on metal parts</li>
                       <li>Damaged insulation or cables</li>
                       <li>Cracked or split components</li>
@@ -414,8 +414,8 @@ const Module3Section3_4: React.FC = () => {
                   <p className="font-medium mb-2">Regular Cleaning</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-green-200 mb-1">After Each Use</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">After Each Use</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Remove dust, dirt, and debris</li>
                         <li>Clean air vents on power tools</li>
                         <li>Wipe down handles and casings</li>
@@ -423,8 +423,8 @@ const Module3Section3_4: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Deep Cleaning</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Deep Cleaning</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Disassemble where appropriate</li>
                         <li>Clean internal components safely</li>
                         <li>Use compressed air for dust removal</li>
@@ -438,8 +438,8 @@ const Module3Section3_4: React.FC = () => {
                   <p className="font-medium mb-2">Mechanical Maintenance</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Lubrication</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Lubrication</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Oil moving parts per manufacturer specs</li>
                         <li>Use correct lubricant type and quantity</li>
                         <li>Avoid over-lubrication attracting dirt</li>
@@ -447,8 +447,8 @@ const Module3Section3_4: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Sharpening & Adjustment</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Sharpening & Adjustment</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Maintain cutting edges on blades and chisels</li>
                         <li>Replace worn bits and blades promptly</li>
                         <li>Adjust tool settings for optimal performance</li>
@@ -528,7 +528,7 @@ const Module3Section3_4: React.FC = () => {
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
-              <ul className="list-disc pl-6 space-y-1 text-red-200">
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li><strong>Using damaged insulated tools</strong> - Electric shock risk from compromised insulation</li>
                 <li><strong>Continuing with cracked casings</strong> - Exposes internal wiring, creates shock hazard</li>
                 <li><strong>Ignoring frayed cables</strong> - Risk of electrocution and tool failure</li>
@@ -537,7 +537,7 @@ const Module3Section3_4: React.FC = () => {
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Performance Issues</p>
-              <ul className="list-disc pl-6 space-y-1 text-orange-200">
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li><strong>Poor storage conditions</strong> - Accelerated corrosion, premature failure</li>
                 <li><strong>Inadequate cleaning</strong> - Dust buildup causes overheating and wear</li>
                 <li><strong>Using blunt tools</strong> - Poor results, increased effort, safety risks</li>
@@ -591,7 +591,7 @@ const Module3Section3_4: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="font-medium text-elec-yellow mb-1">Consequences</p>
-                <ul className="list-disc pl-4 space-y-1 text-red-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Site safety shutdown and investigation</li>
                   <li>Potential injury to the electrician</li>
                   <li>Lost productivity and project delays</li>
@@ -600,7 +600,7 @@ const Module3Section3_4: React.FC = () => {
               </div>
               <div>
                 <p className="font-medium text-green-300 mb-1">Prevention Measures</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Daily visual inspection before use</li>
                   <li>Immediate removal of damaged tools</li>
                   <li>Proper defect reporting systems</li>
@@ -639,7 +639,7 @@ const Module3Section3_4: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-300 mb-2">Key Benefits</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Prevents accidents and ensures electrical safety</li>
                   <li>Maintains tool performance and extends service life</li>
                   <li>Ensures compliance with PUWER regulations</li>
@@ -648,7 +648,7 @@ const Module3Section3_4: React.FC = () => {
               </div>
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-elec-yellow mb-2">Essential Points</p>
-                <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Inspect before each use and at formal intervals</li>
                   <li>Remove damaged tools from service immediately</li>
                   <li>Maintain records for compliance and tracking</li>
@@ -669,7 +669,7 @@ const Module3Section3_4: React.FC = () => {
               <p className="font-medium text-green-300 mb-3 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4" /> DO
               </p>
-              <ul className="space-y-2 text-sm text-green-200">
+              <ul className="space-y-2 text-sm text-white">
                 <li>✓ Inspect tools before each use</li>
                 <li>✓ Clean tools after every work session</li>
                 <li>✓ Store tools in dry, organised conditions</li>
@@ -682,7 +682,7 @@ const Module3Section3_4: React.FC = () => {
               <p className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" /> DON'T
               </p>
-              <ul className="space-y-2 text-sm text-red-200">
+              <ul className="space-y-2 text-sm text-white">
                 <li>✗ Use tools with damaged insulation</li>
                 <li>✗ Continue using visibly damaged tools</li>
                 <li>✗ Skip cleaning to save time</li>

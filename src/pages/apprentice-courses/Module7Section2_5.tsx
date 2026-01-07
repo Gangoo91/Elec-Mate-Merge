@@ -220,7 +220,7 @@ const Module7Section2_5 = () => {
               </p>
 
               <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800 mb-4">
-                <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">Key Polarity Requirements:</h4>
+                <h4 className="font-semibold text-blue-800 dark:text-white mb-2">Key Polarity Requirements:</h4>
                 <ul className="text-sm text-blue-700 text-elec-yellow space-y-1">
                   <li>• Single-pole switches and protective devices must be in the line conductor</li>
                   <li>• Edison screw lampholders must have the centre contact connected to line</li>
@@ -230,7 +230,7 @@ const Module7Section2_5 = () => {
               </div>
 
               <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
-                <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Critical Safety Point:</h4>
+                <h4 className="font-semibold text-red-800 dark:text-white mb-2">Critical Safety Point:</h4>
                 <p className="text-sm text-red-700 text-elec-yellow">
                   With incorrect polarity, equipment may function normally but remain live when switched off, creating unexpected shock hazards during maintenance or bulb changes.
                 </p>
@@ -264,7 +264,7 @@ const Module7Section2_5 = () => {
 
               <div className="grid gap-4 md:grid-cols-2 mb-4">
                 <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-                  <h4 className="font-semibold text-orange-800 dark:text-orange-200 mb-2">Installation Errors:</h4>
+                  <h4 className="font-semibold text-orange-800 dark:text-white mb-2">Installation Errors:</h4>
                   <ul className="text-sm text-orange-700 text-elec-yellow space-y-1">
                     <li>• Misidentification of conductors</li>
                     <li>• Careless or rushed wiring</li>
@@ -274,7 +274,7 @@ const Module7Section2_5 = () => {
                 </div>
                 
                 <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-                  <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">Human Factors:</h4>
+                  <h4 className="font-semibold text-purple-800 dark:text-white mb-2">Human Factors:</h4>
                   <ul className="text-sm text-purple-700 text-elec-yellow space-y-1">
                     <li>• Poor training or supervision</li>
                     <li>• Time pressure on installations</li>
@@ -353,7 +353,7 @@ const Module7Section2_5 = () => {
 
               <div className="grid gap-4 md:grid-cols-2 mb-4">
                 <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
-                  <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2">Testing Methods:</h4>
+                  <h4 className="font-semibold text-green-800 dark:text-white mb-2">Testing Methods:</h4>
                   <ul className="text-sm text-green-700 dark:text-green-300 space-y-1">
                     <li>• Plug-in polarity testers for socket outlets</li>
                     <li>• Continuity testing with test meters</li>
@@ -374,7 +374,7 @@ const Module7Section2_5 = () => {
               </div>
 
               <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
-                <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">Important:</h4>
+                <h4 className="font-semibold text-red-800 dark:text-white mb-2">Important:</h4>
                 <p className="text-sm text-red-700 text-elec-yellow">
                   Never energise a circuit with suspected polarity faults. All corrections must be verified through retesting before the installation can be considered safe for use.
                 </p>
@@ -427,14 +427,14 @@ const Module7Section2_5 = () => {
               <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
                 <div className="space-y-4">
                   <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
-                    <h3 className="font-semibold text-red-800 dark:text-red-200 mb-3 text-sm sm:text-base">The Incident:</h3>
+                    <h3 className="font-semibold text-red-800 dark:text-white mb-3 text-sm sm:text-base">The Incident:</h3>
                     <p className="text-xs sm:text-sm text-red-700 text-elec-yellow leading-relaxed">
                       During a domestic lighting installation, an apprentice electrician incorrectly wired a bedroom light switch into the neutral conductor instead of the line. The installation was completed and commissioned without proper polarity testing.
                     </p>
                   </div>
                   
                   <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-                    <h3 className="font-semibold text-orange-800 dark:text-orange-200 mb-3 text-sm sm:text-base">What Happened:</h3>
+                    <h3 className="font-semibold text-orange-800 dark:text-white mb-3 text-sm sm:text-base">What Happened:</h3>
                     <ul className="text-xs sm:text-sm text-orange-700 text-elec-yellow space-y-1">
                       <li>• Lights operated normally when switched on/off</li>
                       <li>• No immediate signs of fault detected</li>
@@ -446,7 +446,7 @@ const Module7Section2_5 = () => {
                 
                 <div className="space-y-4">
                   <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3 text-sm sm:text-base">Investigation Revealed:</h3>
+                    <h3 className="font-semibold text-blue-800 dark:text-white mb-3 text-sm sm:text-base">Investigation Revealed:</h3>
                     <ul className="text-xs sm:text-sm text-blue-700 text-elec-yellow space-y-1">
                       <li>• Switch wired in neutral conductor</li>
                       <li>• Line remained connected to lamp holder</li>
@@ -456,7 +456,7 @@ const Module7Section2_5 = () => {
                   </div>
                   
                   <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-                    <h3 className="font-semibold text-purple-800 dark:text-purple-200 mb-3 text-sm sm:text-base">Consequences:</h3>
+                    <h3 className="font-semibold text-purple-800 dark:text-white mb-3 text-sm sm:text-base">Consequences:</h3>
                     <ul className="text-xs sm:text-sm text-purple-700 text-elec-yellow space-y-1">
                       <li>• Minor shock injury to homeowner</li>
                       <li>• Complete rewiring of lighting circuit</li>
@@ -523,14 +523,14 @@ const Module7Section2_5 = () => {
               <div className="grid gap-4 sm:gap-6 lg:grid-cols-2 mb-6">
                 <div className="space-y-4">
                   <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3 text-sm sm:text-base">What is Incorrect Polarity?</h3>
+                    <h3 className="font-semibold text-blue-800 dark:text-white mb-3 text-sm sm:text-base">What is Incorrect Polarity?</h3>
                     <p className="text-xs sm:text-sm text-blue-700 text-elec-yellow leading-relaxed">
                       Line and neutral conductors swapped, or switches/protective devices connected in wrong conductor, creating hidden shock hazards.
                     </p>
                   </div>
                   
                   <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
-                    <h3 className="font-semibold text-red-800 dark:text-red-200 mb-3 text-sm sm:text-base">Why It&apos;s Dangerous:</h3>
+                    <h3 className="font-semibold text-red-800 dark:text-white mb-3 text-sm sm:text-base">Why It&apos;s Dangerous:</h3>
                     <p className="text-xs sm:text-sm text-red-700 text-elec-yellow leading-relaxed">
                       Equipment functions normally but remains live when switched off, creating unexpected shock risks during maintenance.
                     </p>
@@ -539,14 +539,14 @@ const Module7Section2_5 = () => {
                 
                 <div className="space-y-4">
                   <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-                    <h3 className="font-semibold text-orange-800 dark:text-orange-200 mb-3 text-sm sm:text-base">Common Causes:</h3>
+                    <h3 className="font-semibold text-orange-800 dark:text-white mb-3 text-sm sm:text-base">Common Causes:</h3>
                     <p className="text-xs sm:text-sm text-orange-700 text-elec-yellow leading-relaxed">
                       Poor workmanship, misidentification of conductors, rushed installations, and inadequate supervision.
                     </p>
                   </div>
                   
                   <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
-                    <h3 className="font-semibold text-green-800 dark:text-green-200 mb-3 text-sm sm:text-base">Prevention & Testing:</h3>
+                    <h3 className="font-semibold text-green-800 dark:text-white mb-3 text-sm sm:text-base">Prevention & Testing:</h3>
                     <p className="text-xs sm:text-sm text-green-700 dark:text-green-300 leading-relaxed">
                       Systematic conductor identification, proper testing procedures, and thorough verification before energising.
                     </p>

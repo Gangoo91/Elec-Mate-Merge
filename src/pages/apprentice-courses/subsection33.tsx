@@ -54,7 +54,7 @@ const Module2Section2_4 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2
@@ -69,7 +69,7 @@ const Module2Section2_4 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Section 2.4 – AC and DC Supply
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-white/80 max-w-3xl">
             Understanding alternating and direct current characteristics, waveforms, and applications
           </p>
         </div>

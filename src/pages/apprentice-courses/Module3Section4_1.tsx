@@ -309,8 +309,8 @@ const Module3Section4_1: React.FC = () => {
                 <p className="font-medium mb-2">Description & Methods</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Installation Characteristics</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">Installation Characteristics</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Cables or conduit fixed directly to surface of walls/ceilings</li>
                       <li>Uses cable clips, trunking, PVC conduit, or steel conduit</li>
                       <li>No chasing or embedding required in building structure</li>
@@ -318,8 +318,8 @@ const Module3Section4_1: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Key Advantages</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">Key Advantages</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Easier and faster installation process</li>
                       <li>Easy access for inspection, testing, and repairs</li>
                       <li>Lower labour costs and installation time</li>
@@ -327,8 +327,8 @@ const Module3Section4_1: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Disadvantages</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">Disadvantages</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Less visually appealing in finished spaces</li>
                       <li>Higher risk of accidental damage unless protected</li>
                       <li>May require more robust containment for safety</li>
@@ -336,8 +336,8 @@ const Module3Section4_1: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Common Applications</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">Common Applications</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Industrial sites and manufacturing facilities</li>
                       <li>Utility rooms and plant areas</li>
                       <li>Temporary installations and site accommodation</li>
@@ -363,8 +363,8 @@ const Module3Section4_1: React.FC = () => {
                 <p className="font-medium mb-2">Description & Methods</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Installation Characteristics</p>
-                    <ul className="list-disc pl-4 space-y-1 text-green-200">
+                    <p className="font-medium text-white mb-1">Installation Characteristics</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Cables hidden inside walls, floors, or ceilings</li>
                       <li>Often in recessed conduit or trunking systems</li>
                       <li>Requires chasing or routing through building structure</li>
@@ -372,8 +372,8 @@ const Module3Section4_1: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Installation Methods</p>
-                    <ul className="list-disc pl-4 space-y-1 text-green-200">
+                    <p className="font-medium text-white mb-1">Installation Methods</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Chasing walls to embed conduit or trunking</li>
                       <li>Routing above ceilings or within stud partitions</li>
                       <li>Installing in service ducts or floor voids</li>
@@ -381,8 +381,8 @@ const Module3Section4_1: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Key Advantages</p>
-                    <ul className="list-disc pl-4 space-y-1 text-green-200">
+                    <p className="font-medium text-white mb-1">Key Advantages</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Neater finish with no visible cables or conduit</li>
                       <li>Reduced risk of accidental damage</li>
                       <li>Preferred for aesthetic appeal in finished spaces</li>
@@ -390,8 +390,8 @@ const Module3Section4_1: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Disadvantages</p>
-                    <ul className="list-disc pl-4 space-y-1 text-green-200">
+                    <p className="font-medium text-white mb-1">Disadvantages</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>More time-consuming and labour-intensive</li>
                       <li>Higher cost due to chasing and finishing work</li>
                       <li>Difficult to modify after installation</li>
@@ -399,8 +399,8 @@ const Module3Section4_1: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-green-200 mb-1">Common Applications</p>
-                    <ul className="list-disc pl-4 space-y-1 text-green-200">
+                    <p className="font-medium text-white mb-1">Common Applications</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Domestic properties and residential buildings</li>
                       <li>Offices and commercial interiors</li>
                       <li>Hotels and hospitality venues</li>
@@ -427,8 +427,8 @@ const Module3Section4_1: React.FC = () => {
                   <p className="font-medium mb-2">Primary Factors</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-amber-200 mb-1">Environment Type</p>
-                      <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                      <p className="font-medium text-white mb-1">Environment Type</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Industrial: Surface preferred for accessibility</li>
                         <li>Commercial: Mixed approach based on areas</li>
                         <li>Domestic: Concealed preferred for aesthetics</li>
@@ -436,8 +436,8 @@ const Module3Section4_1: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-amber-200 mb-1">Budget Considerations</p>
-                      <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                      <p className="font-medium text-white mb-1">Budget Considerations</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Surface: Lower initial cost and faster install</li>
                         <li>Concealed: Higher cost but better long-term value</li>
                         <li>Consider lifecycle costs including maintenance</li>
@@ -451,8 +451,8 @@ const Module3Section4_1: React.FC = () => {
                   <p className="font-medium mb-2">Practical Considerations</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Aesthetic Requirements</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Aesthetic Requirements</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Client expectations for finished appearance</li>
                         <li>Interior design coordination requirements</li>
                         <li>Building use and visitor expectations</li>
@@ -460,8 +460,8 @@ const Module3Section4_1: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Future Access Needs</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Future Access Needs</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Likelihood of circuit modifications</li>
                         <li>Frequency of maintenance requirements</li>
                         <li>Building use change potential</li>
@@ -541,7 +541,7 @@ const Module3Section4_1: React.FC = () => {
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
-              <ul className="list-disc pl-6 space-y-1 text-red-200">
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li><strong>Ignoring safe zones for concealed wiring</strong> - Risk of cable damage during future work</li>
                 <li><strong>Inadequate mechanical protection</strong> - Cables vulnerable to damage from nails/screws</li>
                 <li><strong>No access points for concealed systems</strong> - Cannot inspect or test installations</li>
@@ -550,7 +550,7 @@ const Module3Section4_1: React.FC = () => {
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Quality Issues</p>
-              <ul className="list-disc pl-6 space-y-1 text-orange-200">
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li><strong>Inconsistent surface mounting</strong> - Unprofessional appearance affecting client satisfaction</li>
                 <li><strong>Poor chasing technique</strong> - Structural damage or inadequate cable protection</li>
                 <li><strong>Mixing methods inappropriately</strong> - Aesthetically poor transitions between surface and concealed</li>
@@ -604,7 +604,7 @@ const Module3Section4_1: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="font-medium text-elec-yellow mb-1">Classroom Approach (Surface)</p>
-                <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Fast installation during school holidays</li>
                   <li>Easy access for frequent technology updates</li>
                   <li>Cost-effective approach for educational budget</li>
@@ -613,7 +613,7 @@ const Module3Section4_1: React.FC = () => {
               </div>
               <div>
                 <p className="font-medium text-green-300 mb-1">Office Approach (Concealed)</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Professional appearance for client meetings</li>
                   <li>Clean lines complement modern office design</li>
                   <li>Reduced maintenance and cleaning requirements</li>
@@ -652,7 +652,7 @@ const Module3Section4_1: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-300 mb-2">Key Benefits</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Clear understanding enables appropriate method selection</li>
                   <li>Proper installation ensures compliance and safety</li>
                   <li>Cost-effective approach balances budget and requirements</li>
@@ -661,7 +661,7 @@ const Module3Section4_1: React.FC = () => {
               </div>
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-elec-yellow mb-2">Essential Points</p>
-                <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Environment and use determine appropriate method</li>
                   <li>BS 7671 compliance essential for both approaches</li>
                   <li>Access and maintenance needs influence selection</li>
@@ -682,7 +682,7 @@ const Module3Section4_1: React.FC = () => {
               <p className="font-medium text-green-300 mb-3 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4" /> DO
               </p>
-              <ul className="space-y-2 text-sm text-green-200">
+              <ul className="space-y-2 text-sm text-white">
                 <li>✓ Consider all factors before choosing installation method</li>
                 <li>✓ Follow prescribed safe zones for concealed wiring</li>
                 <li>✓ Provide adequate access points for future inspection</li>
@@ -695,7 +695,7 @@ const Module3Section4_1: React.FC = () => {
               <p className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" /> DON'T
               </p>
-              <ul className="space-y-2 text-sm text-red-200">
+              <ul className="space-y-2 text-sm text-white">
                 <li>✗ Install concealed cables outside safe zones without protection</li>
                 <li>✗ Compromise structural integrity when chasing</li>
                 <li>✗ Create concealed installations without access points</li>

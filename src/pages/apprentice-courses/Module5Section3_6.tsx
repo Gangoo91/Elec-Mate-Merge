@@ -302,7 +302,7 @@ const Module5Section3_6 = () => {
             <div className="space-y-4">
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                 <div className="rounded-lg p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-                  <h4 className="font-medium text-green-800 dark:text-green-200 mb-3">Financial Benefits</h4>
+                  <h4 className="font-medium text-green-800 dark:text-white mb-3">Financial Benefits</h4>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Reduced insurance premiums</li>
                     <li>Lower accident costs</li>
@@ -314,7 +314,7 @@ const Module5Section3_6 = () => {
                 </div>
 
                 <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                  <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Operational Benefits</h4>
+                  <h4 className="font-medium text-blue-800 dark:text-white mb-3">Operational Benefits</h4>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Improved productivity</li>
                     <li>Better quality work</li>
@@ -326,7 +326,7 @@ const Module5Section3_6 = () => {
                 </div>
 
                 <div className="rounded-lg p-4 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-                  <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3">Strategic Benefits</h4>
+                  <h4 className="font-medium text-purple-800 dark:text-white mb-3">Strategic Benefits</h4>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Enhanced reputation</li>
                     <li>Competitive advantage</li>
@@ -536,7 +536,7 @@ const Module5Section3_6 = () => {
             <div className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                  <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Protection Principles</h4>
+                  <h4 className="font-medium text-blue-800 dark:text-white mb-3">Protection Principles</h4>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Protection against electric shock</li>
                     <li>Protection against thermal effects</li>
@@ -547,7 +547,7 @@ const Module5Section3_6 = () => {
                 </div>
 
                 <div className="rounded-lg p-4 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-                  <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-3">Safety Measures</h4>
+                  <h4 className="font-medium text-purple-800 dark:text-white mb-3">Safety Measures</h4>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Proper earthing and bonding</li>
                     <li>RCD protection requirements</li>
@@ -647,7 +647,7 @@ const Module5Section3_6 = () => {
             <div className="space-y-4">
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                 <div className="rounded-lg p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-                  <h4 className="font-medium text-red-800 dark:text-red-200 mb-3">High Risk Activities</h4>
+                  <h4 className="font-medium text-red-800 dark:text-white mb-3">High Risk Activities</h4>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Ladder work</li>
                     <li>Roof installations</li>
@@ -673,7 +673,7 @@ const Module5Section3_6 = () => {
                 </div>
 
                 <div className="rounded-lg p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-                  <h4 className="font-medium text-green-800 dark:text-green-200 mb-3">Control Measures</h4>
+                  <h4 className="font-medium text-green-800 dark:text-white mb-3">Control Measures</h4>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Collective protection first</li>
                     <li>Proper access equipment</li>
@@ -835,7 +835,7 @@ const Module5Section3_6 = () => {
             
             <div className="space-y-4">
               <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-3">Essential Components of Method Statements</h4>
+                <h4 className="font-medium text-blue-800 dark:text-white mb-3">Essential Components of Method Statements</h4>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-xs sm:text-sm text-white mb-2"><strong>Work Description:</strong></p>
@@ -913,14 +913,14 @@ const Module5Section3_6 = () => {
 
         {/* Real-World Example */}
         <Card className="mb-8 p-6 bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800">
-          <h2 className="text-lg sm:text-xl font-semibold text-amber-800 dark:text-amber-200 mb-4">Real-World Example</h2>
+          <h2 className="text-lg sm:text-xl font-semibold text-amber-800 dark:text-white mb-4">Real-World Example</h2>
           <div className="space-y-4">
             <p className="text-base text-white">
               <strong>Scenario:</strong> On a commercial site, electricians began work on a distribution board without isolating it first, as planning documents hadn't highlighted the risk. A worker received an electric shock, and the HSE issued a fine.
             </p>
             
             <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded border border-red-200 dark:border-red-800">
-              <h3 className="font-medium text-red-800 dark:text-red-200 mb-2">What Went Wrong:</h3>
+              <h3 className="font-medium text-red-800 dark:text-white mb-2">What Went Wrong:</h3>
               <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                 <li>Inadequate risk assessment failed to identify live working hazard</li>
                 <li>No isolation procedure in place</li>
@@ -931,7 +931,7 @@ const Module5Section3_6 = () => {
             </div>
             
             <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded border border-green-200 dark:border-green-800">
-              <h3 className="font-medium text-green-800 dark:text-green-200 mb-2">Correct Approach:</h3>
+              <h3 className="font-medium text-green-800 dark:text-white mb-2">Correct Approach:</h3>
               <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                 <li>Comprehensive risk assessment identifying electrical hazards</li>
                 <li>Method statement detailing safe isolation procedure</li>
@@ -962,7 +962,7 @@ const Module5Section3_6 = () => {
 
         {/* Pocket Guide */}
         <Card className="mb-8 p-6 bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800">
-          <h2 className="text-lg sm:text-xl font-semibold text-green-800 dark:text-green-200 mb-4">Pocket Guide</h2>
+          <h2 className="text-lg sm:text-xl font-semibold text-green-800 dark:text-white mb-4">Pocket Guide</h2>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <ul className="space-y-2 text-xs sm:text-sm text-white">

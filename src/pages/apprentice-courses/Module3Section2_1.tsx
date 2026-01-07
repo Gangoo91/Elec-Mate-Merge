@@ -347,7 +347,7 @@ const Module3Section2_1: React.FC = () => {
                   <Building className="w-5 h-5 text-elec-yellow" />
                   <span className="font-medium text-elec-yellow">Public spaces</span>
                 </div>
-                <p className="text-blue-200">Prevents tampering or accidental damage.</p>
+                <p className="text-white">Prevents tampering or accidental damage.</p>
               </div>
 
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
@@ -355,7 +355,7 @@ const Module3Section2_1: React.FC = () => {
                   <Factory className="w-5 h-5 text-green-300" />
                   <span className="font-medium text-green-300">Industrial environments</span>
                 </div>
-                <p className="text-green-200">Protection against mechanical hazards.</p>
+                <p className="text-white">Protection against mechanical hazards.</p>
               </div>
 
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
@@ -363,7 +363,7 @@ const Module3Section2_1: React.FC = () => {
                   <Home className="w-5 h-5 text-elec-yellow" />
                   <span className="font-medium text-elec-yellow">Outdoor runs</span>
                 </div>
-                <p className="text-purple-200">Protection from weather and UV light.</p>
+                <p className="text-white">Protection from weather and UV light.</p>
               </div>
 
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
@@ -371,7 +371,7 @@ const Module3Section2_1: React.FC = () => {
                   <Zap className="w-5 h-5 text-elec-yellow" />
                   <span className="font-medium text-elec-yellow">Power and data</span>
                 </div>
-                <p className="text-orange-200">Segregation to reduce electromagnetic interference.</p>
+                <p className="text-white">Segregation to reduce electromagnetic interference.</p>
               </div>
             </div>
           </section>
@@ -391,7 +391,7 @@ const Module3Section2_1: React.FC = () => {
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Poor segregation of power and data cables</p>
-              <ul className="list-disc pl-4 space-y-1 text-red-200">
+              <ul className="list-disc pl-4 space-y-1 text-white">
                 <li>Running power and data cables in the same containment without barriers</li>
                 <li>Causes electromagnetic interference affecting data transmission</li>
                 <li><strong>Solution:</strong> Use separate compartments or maintain minimum separation distances per BS 7671</li>
@@ -400,7 +400,7 @@ const Module3Section2_1: React.FC = () => {
 
             <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
               <p className="font-medium mb-2 text-amber-300">Insufficient support and fixings</p>
-              <ul className="list-disc pl-4 space-y-1 text-amber-200">
+              <ul className="list-disc pl-4 space-y-1 text-white">
                 <li>Containment sagging due to inadequate support spacing</li>
                 <li>Risk of premature collapse during fire conditions</li>
                 <li><strong>Solution:</strong> Follow manufacturer guidelines for maximum support intervals (typically 1.2m for steel trunking)</li>
@@ -409,7 +409,7 @@ const Module3Section2_1: React.FC = () => {
 
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Overfilling containment systems</p>
-              <ul className="list-disc pl-4 space-y-1 text-orange-200">
+              <ul className="list-disc pl-4 space-y-1 text-white">
                 <li>Exceeding 45% fill factor causing overheating and difficult cable pulling</li>
                 <li>Poor heat dissipation leading to cable derating</li>
                 <li><strong>Solution:</strong> Calculate cable cross-sectional areas and plan for future additions</li>
@@ -418,7 +418,7 @@ const Module3Section2_1: React.FC = () => {
 
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Wrong material selection for environment</p>
-              <ul className="list-disc pl-4 space-y-1 text-purple-200">
+              <ul className="list-disc pl-4 space-y-1 text-white">
                 <li>Using standard PVC outdoors without UV stabilisation</li>
                 <li>Non-weatherproof fittings in wet locations</li>
                 <li><strong>Solution:</strong> Select containment with appropriate IP ratings and environmental resistance</li>
@@ -467,7 +467,7 @@ const Module3Section2_1: React.FC = () => {
           <div className="p-4 border-l-4 border-elec-yellow bg-elec-yellow/5 rounded-r-lg mb-4">
             <div className="flex items-start gap-3">
               <Factory className="w-6 h-6 text-elec-yellow mt-1 flex-shrink-0" />
-              <div className="text-blue-200">
+              <div className="text-white">
                 <p className="font-medium mb-2">The Problem</p>
                 <p className="text-sm leading-relaxed">
                   A food processing warehouse had power and lighting circuits surface-clipped along walls at 2.5m height. 
@@ -486,7 +486,7 @@ const Module3Section2_1: React.FC = () => {
           <div className="grid md:grid-cols-2 gap-4 mb-4">
             <div className="rounded-lg p-3 border border-green-400/30">
               <p className="font-medium text-green-300 mb-2">Solution Implemented</p>
-              <ul className="list-disc pl-4 space-y-1 text-green-200 text-sm">
+              <ul className="list-disc pl-4 space-y-1 text-white text-sm">
                 <li>Steel trunking installed at 4.5m height</li>
                 <li>Segregated compartments for power and data</li>
                 <li>IP54 rating for washdown resistance</li>

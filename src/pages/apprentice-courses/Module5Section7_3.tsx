@@ -487,14 +487,14 @@ export default function Module5Section7_3() {
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Scenario</h2>
           <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg p-6">
-            <h3 className="font-semibold text-amber-800 dark:text-amber-200 mb-3">
+            <h3 className="font-semibold text-amber-800 dark:text-white mb-3">
               Case Study: The Missing Handover
             </h3>
             <p className="text-white mb-4">
               On a commercial installation, the day shift completed containment and partially wired lighting circuits but failed to record which circuits were live and which were still isolated. The night shift, unaware of this, attempted to energise a circuit that was incomplete, causing an electrical fault and damaging equipment.
             </p>
             <div className="bg-amber-100 dark:bg-amber-900/50 rounded-lg p-4">
-              <p className="font-medium text-amber-800 dark:text-amber-200 mb-2">Consequences:</p>
+              <p className="font-medium text-amber-800 dark:text-white mb-2">Consequences:</p>
               <ul className="text-sm text-amber-700 dark:text-amber-300 list-disc pl-5 space-y-1">
                 <li>£15,000 equipment damage</li>
                 <li>12-hour project delay</li>
@@ -503,7 +503,7 @@ export default function Module5Section7_3() {
               </ul>
             </div>
             <div className="mt-4 p-4 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg">
-              <p className="font-medium text-green-800 dark:text-green-200 mb-2">Lesson Learned:</p>
+              <p className="font-medium text-green-800 dark:text-white mb-2">Lesson Learned:</p>
               <p className="text-green-700 dark:text-green-300 text-sm">
                 Proper handover notes identifying circuit status would have prevented the fault and ensured a safe, smooth transition between shifts.
               </p>

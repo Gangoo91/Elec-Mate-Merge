@@ -80,7 +80,7 @@ const CareerProgression = () => {
               <GraduationCap className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+              <h1 className="text-xl sm:text-3xl font-bold tracking-tight text-white">
                 Career Progression
               </h1>
               <p className="text-sm text-white/70 mt-0.5 hidden sm:block">
@@ -88,7 +88,7 @@ const CareerProgression = () => {
               </p>
             </div>
           </div>
-          <p className="text-sm sm:text-base text-white/70 mt-2 sm:mt-0 sm:ml-[76px]">
+          <p className="hidden sm:block text-base text-white/70 sm:ml-[76px]">
             Explore career paths, find courses, track your CPD and build your professional future
           </p>
         </div>
@@ -105,8 +105,8 @@ const CareerProgression = () => {
 
       {activeSection === null ? (
         <>
-          {/* Industry Stats Banner */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {/* Industry Stats Banner - Hidden on mobile */}
+          <div className="hidden sm:grid grid-cols-2 sm:grid-cols-4 gap-3">
             {quickFacts.map((fact, index) => {
               const colors = [
                 { bg: "bg-gradient-to-br from-elec-gray to-yellow-950/20", border: "border-elec-yellow/20", icon: "text-elec-yellow", glow: "bg-elec-yellow/10" },
@@ -143,8 +143,8 @@ const CareerProgression = () => {
             })}
           </div>
 
-          {/* Hero Welcome Section */}
-          <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/30 overflow-hidden relative">
+          {/* Hero Welcome Section - Hidden on mobile */}
+          <Card className="hidden sm:block bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/30 overflow-hidden relative">
             <div className="absolute top-0 right-0 w-64 h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
             <CardContent className="p-4 sm:p-6 relative">
               <div className="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6">

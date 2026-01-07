@@ -306,8 +306,8 @@ const Module3Section2_7: React.FC = () => {
                   <p className="font-medium mb-2">Pre-Installation Planning</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Site Assessment</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Site Assessment</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Survey building structure and existing services</li>
                         <li>Identify potential conflicts with other trades</li>
                         <li>Assess environmental conditions and constraints</li>
@@ -315,8 +315,8 @@ const Module3Section2_7: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-blue-200 mb-1">Route Planning</p>
-                      <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                      <p className="font-medium text-white mb-1">Route Planning</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Establish logical cable routes minimising length</li>
                         <li>Avoid areas prone to damage or access difficulties</li>
                         <li>Plan for thermal considerations and heat sources</li>
@@ -330,8 +330,8 @@ const Module3Section2_7: React.FC = () => {
                   <p className="font-medium mb-2">Capacity and Future-Proofing</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Spare Capacity Planning</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Spare Capacity Planning</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Allow 25-30% spare capacity for future cables</li>
                         <li>Consider growth in data and communication requirements</li>
                         <li>Plan for technology upgrades and system changes</li>
@@ -339,8 +339,8 @@ const Module3Section2_7: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Expansion Considerations</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Expansion Considerations</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Design modular systems allowing easy extension</li>
                         <li>Position junction points for future branch circuits</li>
                         <li>Avoid permanent sealing except where required</li>
@@ -364,8 +364,8 @@ const Module3Section2_7: React.FC = () => {
 
             <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-orange-200 mb-2">Professional installation standards</p>
-                <ul className="list-disc pl-4 space-y-1 text-orange-200">
+                <p className="font-medium text-white mb-2">Professional installation standards</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Quality reflects competency - poor containment indicates poor electrical work</li>
                   <li>Client confidence increases with neat, well-organised installations</li>
                   <li>Inspection passes more easily when work appears professional and considered</li>
@@ -375,8 +375,8 @@ const Module3Section2_7: React.FC = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
-                <p className="font-medium text-cyan-200 mb-2">Coordination with other trades</p>
-                <ul className="list-disc pl-4 space-y-1 text-cyan-200">
+                <p className="font-medium text-white mb-2">Coordination with other trades</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Plumbing: Avoid conflicts and maintain clearances from water services</li>
                   <li>HVAC: Consider thermal effects and maintain access to ductwork</li>
                   <li>IT/Data: Plan segregation and coordinate cable routing requirements</li>
@@ -442,8 +442,8 @@ const Module3Section2_7: React.FC = () => {
 
             <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-red-200 mb-2">Planning and design failures</p>
-                <ul className="list-disc pl-4 space-y-1 text-red-200">
+                <p className="font-medium text-white mb-2">Planning and design failures</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li><strong>Inadequate capacity planning:</strong> Sizing containment too small for future needs</li>
                   <li><strong>Poor route selection:</strong> Creating unnecessarily long or difficult cable runs</li>
                   <li><strong>Ignoring other trades:</strong> Creating conflicts requiring expensive rectification</li>
@@ -453,8 +453,8 @@ const Module3Section2_7: React.FC = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
-                <p className="font-medium text-amber-200 mb-2">Installation quality issues</p>
-                <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                <p className="font-medium text-white mb-2">Installation quality issues</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li><strong>Poor alignment:</strong> Crooked or sagging containment creating unprofessional appearance</li>
                   <li><strong>Incorrect spacing:</strong> Inadequate support leading to stress and potential failure</li>
                   <li><strong>Missing protection:</strong> Sharp edges damaging cables during installation or service</li>
@@ -475,8 +475,8 @@ const Module3Section2_7: React.FC = () => {
 
             <div className="space-y-4 text-xs sm:text-sm text-white">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-blue-200 mb-2">Regulatory requirements</p>
-                <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                <p className="font-medium text-white mb-2">Regulatory requirements</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li><strong>Section 521:</strong> Selection and erection of wiring systems</li>
                   <li><strong>521.10:</strong> Cable support and spacing requirements</li>
                   <li><strong>528:</strong> Proximity of wiring systems to other services</li>
@@ -486,8 +486,8 @@ const Module3Section2_7: React.FC = () => {
               </div>
 
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                <p className="font-medium text-green-200 mb-2">Professional standards and best practice</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <p className="font-medium text-white mb-2">Professional standards and best practice</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Quality workmanship reflects professional competency and attention to detail</li>
                   <li>Compliance demonstrates understanding of safety and regulatory requirements</li>
                   <li>Future-proofing shows consideration for client needs and system evolution</li>
@@ -497,8 +497,8 @@ const Module3Section2_7: React.FC = () => {
               </div>
 
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-purple-200 mb-2">Inspection and testing considerations</p>
-                <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                <p className="font-medium text-white mb-2">Inspection and testing considerations</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Visual inspection easier when installation is neat and well-organised</li>
                   <li>Testing access provided through removable covers and accessible routing</li>
                   <li>Cable identification simplified through logical grouping and labelling</li>
@@ -516,16 +516,16 @@ const Module3Section2_7: React.FC = () => {
             <Building className="w-5 h-5" /> Real-world Scenario
           </h2>
           <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
-            <h3 className="font-medium text-slate-200 mb-2">Office fit-out capacity planning failure</h3>
-            <p className="text-slate-200 text-sm mb-3">
+            <h3 className="font-medium text-white mb-2">Office fit-out capacity planning failure</h3>
+            <p className="text-white text-sm mb-3">
               In a large office fit-out, the initial installation used trunking that was filled to maximum 
               capacity on day one. Six months later, adding new data cabling required an expensive and 
               disruptive full replacement of the trunking system.
             </p>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="font-medium text-slate-200 mb-2">Original installation problems</p>
-                <ul className="list-disc pl-4 space-y-1 text-slate-200">
+                <p className="font-medium text-white mb-2">Original installation problems</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Trunking sized exactly for initial cable count</li>
                   <li>No consideration for future expansion requirements</li>
                   <li>Cables at 100% fill capacity restricting heat dissipation</li>
@@ -533,8 +533,8 @@ const Module3Section2_7: React.FC = () => {
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-slate-200 mb-2">Improved approach on next project</p>
-                <ul className="list-disc pl-4 space-y-1 text-slate-200">
+                <p className="font-medium text-white mb-2">Improved approach on next project</p>
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>30% spare capacity allowed for future installations</li>
                   <li>Modular design enabling easy system extension</li>
                   <li>Quick, inexpensive additions without disruption</li>
@@ -584,8 +584,8 @@ const Module3Section2_7: React.FC = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Apprentice Do's and Don'ts</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
             <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-              <h3 className="font-medium text-green-200 mb-3">✓ DO</h3>
-              <ul className="space-y-2 text-green-200">
+              <h3 className="font-medium text-white mb-3">✓ DO</h3>
+              <ul className="space-y-2 text-white">
                 <li>• Plan cable routes and assess site constraints before starting</li>
                 <li>• Allow 25-30% spare capacity for future cable additions</li>
                 <li>• Maintain straight, level runs with consistent spacing</li>
@@ -597,8 +597,8 @@ const Module3Section2_7: React.FC = () => {
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <h3 className="font-medium text-red-200 mb-3">✗ DON'T</h3>
-              <ul className="space-y-2 text-red-200">
+              <h3 className="font-medium text-white mb-3">✗ DON'T</h3>
+              <ul className="space-y-2 text-white">
                 <li>• Size containment exactly for initial cable requirements</li>
                 <li>• Install crooked or poorly aligned containment runs</li>
                 <li>• Overfill containment beyond recommended capacity</li>
@@ -617,8 +617,8 @@ const Module3Section2_7: React.FC = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Card: Good Practice Installation Quick Reference</h2>
           <div className="grid md:grid-cols-2 gap-4 text-xs">
             <div className="rounded-lg p-3 border border-border/30">
-              <h4 className="font-medium text-blue-200 mb-2">Planning Essentials</h4>
-              <ul className="space-y-1 text-blue-200">
+              <h4 className="font-medium text-white mb-2">Planning Essentials</h4>
+              <ul className="space-y-1 text-white">
                 <li>• Survey site and existing services</li>
                 <li>• Plan logical cable routes</li>
                 <li>• Allow 25-30% spare capacity</li>
@@ -628,8 +628,8 @@ const Module3Section2_7: React.FC = () => {
               </ul>
             </div>
             <div className="rounded-lg p-3 border border-green-400/30">
-              <h4 className="font-medium text-green-200 mb-2">Installation Quality</h4>
-              <ul className="space-y-1 text-green-200">
+              <h4 className="font-medium text-white mb-2">Installation Quality</h4>
+              <ul className="space-y-1 text-white">
                 <li>• Straight, level alignment (±2mm/3m)</li>
                 <li>• Consistent support spacing</li>
                 <li>• Separate power/data cables</li>

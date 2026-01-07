@@ -520,12 +520,12 @@ const Module5Section7_1 = () => {
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-medium text-amber-800 dark:text-amber-200 mb-2">Missing Records Lead to Project Delays</h3>
+                <h3 className="font-medium text-amber-800 dark:text-white mb-2">Missing Records Lead to Project Delays</h3>
                 <p className="text-base text-white mb-3">
                   You are working on a new office installation. Halfway through the project, a different team takes over the lighting circuits. Without proper records, they don't know which circuits have been tested or which cables serve which areas. This results in duplicated testing, wasted time, and eventually a missed fault on one circuit. The client fails their compliance audit, and the contractor faces costly delays.
                 </p>
                 <div className="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-lg mb-3">
-                  <p className="font-medium text-amber-800 dark:text-amber-200">What went wrong:</p>
+                  <p className="font-medium text-amber-800 dark:text-white">What went wrong:</p>
                   <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                     <li>No handover documentation between teams</li>
                     <li>Test results not recorded or shared</li>
@@ -534,7 +534,7 @@ const Module5Section7_1 = () => {
                   </ul>
                 </div>
                 <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg">
-                  <p className="font-medium text-green-800 dark:text-green-200">Prevention measures:</p>
+                  <p className="font-medium text-green-800 dark:text-white">Prevention measures:</p>
                   <ul className="text-xs sm:text-sm text-white list-disc ml-4 space-y-1">
                     <li>Daily progress logs with circuit completion status</li>
                     <li>Test certificate completion before handover</li>
@@ -543,7 +543,7 @@ const Module5Section7_1 = () => {
                   </ul>
                 </div>
                 <div className="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-lg mt-3">
-                  <p className="font-medium text-amber-800 dark:text-amber-200">Lesson:</p>
+                  <p className="font-medium text-amber-800 dark:text-white">Lesson:</p>
                   <p className="text-base text-white">
                     Accurate, up-to-date records would have prevented errors, saved time, and avoided compliance issues. The cost of maintaining proper records is always less than the cost of the problems they prevent.
                   </p>
@@ -557,14 +557,14 @@ const Module5Section7_1 = () => {
             <h3 className="font-medium text-white">Common Record-Keeping Failures</h3>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800">
-                <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">Incomplete Test Records</h4>
+                <h4 className="font-medium text-red-800 dark:text-white mb-2">Incomplete Test Records</h4>
                 <p className="text-xs sm:text-sm text-white mb-2">
                   An apprentice fails to record RCD test results. Six months later, an electrical incident occurs and the insurance company refuses the claim because compliance cannot be proven.
                 </p>
                 <p className="text-xs text-white font-medium">Impact: £50,000+ claim rejection</p>
               </div>
               <div className="rounded-lg p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800">
-                <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">Missing Risk Assessments</h4>
+                <h4 className="font-medium text-red-800 dark:text-white mb-2">Missing Risk Assessments</h4>
                 <p className="text-xs sm:text-sm text-white mb-2">
                   A contractor starts work without completing RAMS documentation. An accident occurs and HSE investigation reveals poor planning. Result: prosecution and £75,000 fine.
                 </p>
@@ -579,7 +579,7 @@ const Module5Section7_1 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
           <div className="grid md:grid-cols-2 gap-4 mb-6">
             <div className="rounded-lg p-4 bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800">
-              <h3 className="font-medium text-green-800 dark:text-green-200 mb-3 flex items-center gap-2">
+              <h3 className="font-medium text-green-800 dark:text-white mb-3 flex items-center gap-2">
                 <CheckCircle className="w-4 h-4" />
                 Best Practices
               </h3>
@@ -595,7 +595,7 @@ const Module5Section7_1 = () => {
               </ul>
             </div>
             <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-elec-yellow/10 border border-blue-200 dark:border-blue-800">
-              <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
+              <h3 className="font-medium text-blue-800 dark:text-white mb-3 flex items-center gap-2">
                 <Target className="w-4 h-4" />
                 Key Actions
               </h3>

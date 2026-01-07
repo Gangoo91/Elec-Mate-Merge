@@ -161,7 +161,7 @@ const Section6_1 = () => {
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
                 Types of Workplace Accidents
               </h1>
-              <p className="text-lg text-gray-300 mt-2">
+              <p className="text-lg text-white mt-2">
                 Understanding common accident types in electrical work environments
               </p>
             </div>
@@ -173,13 +173,13 @@ const Section6_1 = () => {
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div className="bg-card border border-border/20 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">In 30 seconds</h3>
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Electrical work presents multiple accident risks - from electric shock and burns to slips, falls, and manual handling injuries. Understanding these common accident types, their causes, and prevention methods is essential for maintaining a safe working environment and protecting yourself and colleagues.
               </p>
             </div>
             <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Spot it / Use it</h3>
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 <strong>Spot:</strong> Trailing cables, poor lighting, damaged tools, rushed work practices.<br/>
                 <strong>Use:</strong> Proper isolation procedures, good housekeeping, correct access equipment, and emergency response knowledge.
               </p>
@@ -193,19 +193,19 @@ const Section6_1 = () => {
           <ul className="space-y-3">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Identify common accident types (shock, burns, slips/trips/falls, manual handling, cuts/impact, vehicle incidents)</span>
+              <span className="text-white">Identify common accident types (shock, burns, slips/trips/falls, manual handling, cuts/impact, vehicle incidents)</span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Understand causes and risk factors</span>
+              <span className="text-white">Understand causes and risk factors</span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Know prevention and control measures</span>
+              <span className="text-white">Know prevention and control measures</span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Understand reporting and response basics</span>
+              <span className="text-white">Understand reporting and response basics</span>
             </li>
           </ul>
         </Card>
@@ -223,7 +223,7 @@ const Section6_1 = () => {
                 <div>
                   <h3 className="font-medium text-white mb-3">❌ Dangers</h3>
                   <div className="bg-muted/50 border border-border rounded-lg p-4">
-                    <ul className="space-y-2 text-gray-300 text-sm">
+                    <ul className="space-y-2 text-white text-sm">
                       <li>• Burns at entry and exit points</li>
                       <li>• Muscle injury and contractions</li>
                       <li>• Cardiac arrest or arrhythmia</li>
@@ -236,7 +236,7 @@ const Section6_1 = () => {
                 <div>
                   <h3 className="font-medium text-white mb-3">✅ Prevention</h3>
                   <div className="bg-muted/50 border border-border rounded-lg p-4">
-                    <ul className="space-y-2 text-gray-300 text-sm">
+                    <ul className="space-y-2 text-white text-sm">
                       <li>• Proper isolation procedures</li>
                       <li>• Test before touch principle</li>
                       <li>• Use of appropriate PPE</li>
@@ -277,7 +277,7 @@ const Section6_1 = () => {
                 <div>
                   <h3 className="font-medium text-white mb-3">Arc Flash Burns</h3>
                   <div className="bg-muted/50 border border-border rounded-lg p-4">
-                    <ul className="space-y-2 text-gray-300 text-sm">
+                    <ul className="space-y-2 text-white text-sm">
                       <li>• Temperatures up to 20,000°C</li>
                       <li>• Third-degree burns in milliseconds</li>
                       <li>• Caused by short circuits or faults</li>
@@ -289,7 +289,7 @@ const Section6_1 = () => {
                 <div>
                   <h3 className="font-medium text-white mb-3">Contact Burns</h3>
                   <div className="bg-muted/50 border border-border rounded-lg p-4">
-                    <ul className="space-y-2 text-gray-300 text-sm">
+                    <ul className="space-y-2 text-white text-sm">
                       <li>• Direct contact with live parts</li>
                       <li>• Often deep and not immediately visible</li>
                       <li>• Entry and exit wound burns</li>
@@ -313,7 +313,7 @@ const Section6_1 = () => {
               
               <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
                 <h3 className="font-medium text-white mb-3">Common Causes</h3>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li>• Trailing cables and extension leads</li>
                   <li>• Poor housekeeping and debris</li>
                   <li>• Wet or contaminated floors</li>
@@ -324,7 +324,7 @@ const Section6_1 = () => {
               
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-medium text-white mb-3">Prevention Measures</h3>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li>• Route cables overhead where possible</li>
                   <li>• Use cable covers and ramps</li>
                   <li>• Maintain good housekeeping</li>
@@ -347,7 +347,7 @@ const Section6_1 = () => {
               
               <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
                 <h3 className="font-medium text-white mb-3">Access Planning</h3>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li>• Use proper access equipment (towers, platforms)</li>
                   <li>• Maintain 3 points of contact on ladders</li>
                   <li>• Never overreach - move the equipment</li>
@@ -372,7 +372,7 @@ const Section6_1 = () => {
                 <div>
                   <h3 className="font-medium text-white mb-3">Common Injuries</h3>
                   <div className="bg-muted/50 border border-border rounded-lg p-4">
-                    <ul className="space-y-2 text-gray-300 text-sm">
+                    <ul className="space-y-2 text-white text-sm">
                       <li>• Back strain and disc problems</li>
                       <li>• Muscle tears and sprains</li>
                       <li>• Hernia development</li>
@@ -384,7 +384,7 @@ const Section6_1 = () => {
                 <div>
                   <h3 className="font-medium text-white mb-3">Safe Techniques</h3>
                   <div className="bg-muted/50 border border-border rounded-lg p-4">
-                    <ul className="space-y-2 text-gray-300 text-sm">
+                    <ul className="space-y-2 text-white text-sm">
                       <li>• Bend knees, keep back straight</li>
                       <li>• Get a good grip with both hands</li>
                       <li>• Lift smoothly without jerking</li>
@@ -409,7 +409,7 @@ const Section6_1 = () => {
               
               <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
                 <h3 className="font-medium text-white mb-3">Common Scenarios</h3>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li>• Handling sharp-edged conduit and trunking</li>
                   <li>• Using cutting tools and hand tools</li>
                   <li>• Working with metal cable trays</li>
@@ -420,7 +420,7 @@ const Section6_1 = () => {
               
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-medium text-white mb-3">Prevention</h3>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li>• Use appropriate cut-resistant gloves</li>
                   <li>• Keep tools sharp and well-maintained</li>
                   <li>• Handle materials carefully</li>
@@ -443,7 +443,7 @@ const Section6_1 = () => {
               
               <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
                 <h3 className="font-medium text-white mb-3">Risk Areas</h3>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li>• Delivery areas and loading bays</li>
                   <li>• Shared pedestrian/vehicle routes</li>
                   <li>• Reversing and manoeuvring areas</li>
@@ -454,7 +454,7 @@ const Section6_1 = () => {
               
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-medium text-white mb-3">Control Measures</h3>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li>• Segregate pedestrians and vehicles</li>
                   <li>• Use banksman for reversing</li>
                   <li>• Implement speed limits</li>
@@ -479,7 +479,7 @@ const Section6_1 = () => {
                 <div>
                   <h3 className="font-medium text-white mb-3">Human Factors</h3>
                   <div className="bg-muted/50 border border-border rounded-lg p-4">
-                    <ul className="space-y-2 text-gray-300 text-sm">
+                    <ul className="space-y-2 text-white text-sm">
                       <li>• Rushing or time pressure</li>
                       <li>• Fatigue and stress</li>
                       <li>• Overconfidence and complacency</li>
@@ -492,7 +492,7 @@ const Section6_1 = () => {
                 <div>
                   <h3 className="font-medium text-white mb-3">System Factors</h3>
                   <div className="bg-muted/50 border border-border rounded-lg p-4">
-                    <ul className="space-y-2 text-gray-300 text-sm">
+                    <ul className="space-y-2 text-white text-sm">
                       <li>• Inadequate procedures</li>
                       <li>• Poor supervision</li>
                       <li>• Unsafe tools or conditions</li>
@@ -518,7 +518,7 @@ const Section6_1 = () => {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-6">
                 <div className="bg-muted/50 border border-border rounded-lg p-4">
                   <h3 className="font-medium text-white mb-3">UK Electrical Industry Facts</h3>
-                  <ul className="space-y-2 text-gray-300 text-sm">
+                  <ul className="space-y-2 text-white text-sm">
                     <li>• ~1,000 electrical accidents reported annually</li>
                     <li>• 4-6 workplace deaths per year from electric shock</li>
                     <li>• Burns: 25% of electrical injuries</li>
@@ -529,7 +529,7 @@ const Section6_1 = () => {
                 
                 <div className="bg-muted/50 border border-border rounded-lg p-4">
                   <h3 className="font-medium text-white mb-3">Cost of Accidents</h3>
-                  <ul className="space-y-2 text-gray-300 text-sm">
+                  <ul className="space-y-2 text-white text-sm">
                     <li>• Average major injury cost: £18,000</li>
                     <li>• Lost time: 28 days average</li>
                     <li>• Legal costs and fines: up to £500,000</li>
@@ -541,7 +541,7 @@ const Section6_1 = () => {
               
               <div className="bg-card border border-border/30 rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">Key Insight:</h3>
-                <p className="text-gray-300 text-sm">
+                <p className="text-white text-sm">
                   For every major injury reported, there are typically 10 minor injuries and 300 near misses that go unreported. Prevention at all levels is crucial.
                 </p>
               </div>
@@ -563,23 +563,23 @@ const Section6_1 = () => {
                 <ul className="space-y-2">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">Complete proper isolation and testing before work</span>
+                    <span className="text-white text-sm">Complete proper isolation and testing before work</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">Maintain good housekeeping and cable management</span>
+                    <span className="text-white text-sm">Maintain good housekeeping and cable management</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">Use appropriate access equipment for height work</span>
+                    <span className="text-white text-sm">Use appropriate access equipment for height work</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">Wear correct PPE and use proper manual handling techniques</span>
+                    <span className="text-white text-sm">Wear correct PPE and use proper manual handling techniques</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">Report accidents, near misses, and unsafe conditions</span>
+                    <span className="text-white text-sm">Report accidents, near misses, and unsafe conditions</span>
                   </li>
                 </ul>
               </div>

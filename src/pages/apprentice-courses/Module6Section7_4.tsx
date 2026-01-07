@@ -225,7 +225,7 @@ const Module6Section7_4 = () => {
                         </h4>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm">
                           <div>
-                            <strong className="text-blue-900 dark:text-blue-200 block mb-2">Qualifications Needed:</strong>
+                            <strong className="text-blue-900 dark:text-white block mb-2">Qualifications Needed:</strong>
                             <ul className="space-y-1 text-blue-800 text-elec-yellow">
                               <li className="flex items-start gap-2">
                                 <span className="text-elec-yellow mt-1">•</span>
@@ -246,7 +246,7 @@ const Module6Section7_4 = () => {
                             </ul>
                           </div>
                           <div>
-                            <strong className="text-blue-900 dark:text-blue-200 block mb-2">Experience Requirements:</strong>
+                            <strong className="text-blue-900 dark:text-white block mb-2">Experience Requirements:</strong>
                             <ul className="space-y-1 text-blue-800 text-elec-yellow">
                               <li className="flex items-start gap-2">
                                 <span className="text-elec-yellow mt-1">•</span>
@@ -278,7 +278,7 @@ const Module6Section7_4 = () => {
                           <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
                           Professional Standards
                         </h4>
-                        <ul className="space-y-2 text-amber-800 dark:text-amber-200">
+                        <ul className="space-y-2 text-amber-800 dark:text-white">
                           <li className="flex items-start gap-3">
                             <span className="text-amber-500 mt-1">✓</span>
                             <span>Must be registered with an approved scheme (NICEIC, NAPIT, etc.)</span>
@@ -338,19 +338,19 @@ const Module6Section7_4 = () => {
                         </h4>
                         <div className="space-y-3 text-sm">
                           <div>
-                            <strong className="text-green-900 dark:text-green-200 block mb-2">Personal Liability:</strong>
+                            <strong className="text-green-900 dark:text-white block mb-2">Personal Liability:</strong>
                             <p className="text-green-800 dark:text-green-300">The signatory becomes personally liable for the accuracy of the certificate and the safety of the installation.</p>
                           </div>
                           <div>
-                            <strong className="text-green-900 dark:text-green-200 block mb-2">Professional Standards:</strong>
+                            <strong className="text-green-900 dark:text-white block mb-2">Professional Standards:</strong>
                             <p className="text-green-800 dark:text-green-300">Signing confirms adherence to professional codes of practice and industry standards.</p>
                           </div>
                           <div>
-                            <strong className="text-green-900 dark:text-green-200 block mb-2">Insurance Coverage:</strong>
+                            <strong className="text-green-900 dark:text-white block mb-2">Insurance Coverage:</strong>
                             <p className="text-green-800 dark:text-green-300">Professional indemnity insurance relies on proper certification and competent practice.</p>
                           </div>
                           <div>
-                            <strong className="text-green-900 dark:text-green-200 block mb-2">Regulatory Compliance:</strong>
+                            <strong className="text-green-900 dark:text-white block mb-2">Regulatory Compliance:</strong>
                             <p className="text-green-800 dark:text-green-300">Ensures work meets Building Regulations and Electricity at Work Regulations requirements.</p>
                           </div>
                         </div>
@@ -365,7 +365,7 @@ const Module6Section7_4 = () => {
                           <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                           Potential Consequences of Poor Practice
                         </h4>
-                        <ul className="space-y-2 text-red-800 dark:text-red-200">
+                        <ul className="space-y-2 text-red-800 dark:text-white">
                           <li className="flex items-start gap-3">
                             <span className="text-elec-yellow mt-1">⚠️</span>
                             <span>Criminal prosecution under Health and Safety legislation</span>
@@ -425,7 +425,7 @@ const Module6Section7_4 = () => {
                         </h4>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm">
                           <div>
-                            <strong className="text-purple-900 dark:text-purple-200 block mb-2">Testing Activities:</strong>
+                            <strong className="text-purple-900 dark:text-white block mb-2">Testing Activities:</strong>
                             <ul className="space-y-1 text-purple-800 text-elec-yellow">
                               <li className="flex items-start gap-2">
                                 <span className="text-elec-yellow mt-1">✓</span>
@@ -446,7 +446,7 @@ const Module6Section7_4 = () => {
                             </ul>
                           </div>
                           <div>
-                            <strong className="text-purple-900 dark:text-purple-200 block mb-2">Documentation Support:</strong>
+                            <strong className="text-purple-900 dark:text-white block mb-2">Documentation Support:</strong>
                             <ul className="space-y-1 text-purple-800 text-elec-yellow">
                               <li className="flex items-start gap-2">
                                 <span className="text-elec-yellow mt-1">✓</span>

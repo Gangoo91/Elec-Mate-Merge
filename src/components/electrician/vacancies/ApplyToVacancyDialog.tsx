@@ -21,10 +21,19 @@ import {
   Briefcase,
   CheckCircle2,
   AlertCircle,
+  Shield,
+  Award,
+  Clock,
+  Wrench,
+  CreditCard,
+  BadgeCheck,
+  ChevronDown,
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useApplyToVacancy } from "@/hooks/useInternalVacancies";
 import { useElecIdProfile } from "@/hooks/useElecIdProfile";
 import { toast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 import type { InternalVacancy } from "./InternalVacancyCard";
 
 interface ApplyToVacancyDialogProps {
@@ -33,6 +42,24 @@ interface ApplyToVacancyDialogProps {
   vacancy: InternalVacancy | null;
   onSuccess?: () => void;
 }
+
+// Verification tier badge component
+const VerificationBadge = ({ tier }: { tier: string }) => {
+  const tierConfig: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
+    basic: { label: "Basic", color: "bg-slate-500/20 text-slate-300 border-slate-500/30", icon: <Shield className="h-3 w-3" /> },
+    verified: { label: "Verified", color: "bg-blue-500/20 text-blue-300 border-blue-500/30", icon: <BadgeCheck className="h-3 w-3" /> },
+    premium: { label: "Premium", color: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30", icon: <Award className="h-3 w-3" /> },
+  };
+
+  const config = tierConfig[tier] || tierConfig.basic;
+
+  return (
+    <Badge className={cn("text-xs", config.color)}>
+      {config.icon}
+      <span className="ml-1">{config.label}</span>
+    </Badge>
+  );
+};
 
 export function ApplyToVacancyDialog({
   open,
@@ -43,6 +70,7 @@ export function ApplyToVacancyDialog({
   const { profile: elecIdProfile, isLoading: profileLoading } = useElecIdProfile();
   const [coverLetter, setCoverLetter] = useState("");
   const [shareProfile, setShareProfile] = useState(true);
+  const [showProfilePreview, setShowProfilePreview] = useState(false);
 
   const applyMutation = useApplyToVacancy();
 
@@ -159,30 +187,139 @@ export function ApplyToVacancyDialog({
             </CardContent>
           </Card>
 
-          {/* Profile Status */}
+          {/* Elec-ID Profile Preview */}
           {profileLoading ? (
             <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
               <Loader2 className="h-4 w-4 animate-spin" />
-              <span className="text-sm">Checking your profile...</span>
+              <span className="text-sm">Loading your Elec-ID...</span>
             </div>
           ) : elecIdProfile ? (
-            <div className="flex gap-2 p-3 bg-green-500/10 rounded-lg text-sm">
-              <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0 mt-0.5" />
-              <div>
-                <p className="font-medium text-foreground">Profile Ready</p>
-                <p className="text-muted-foreground">
-                  Your Elec-ID ({elecIdProfile.elec_id_number}) will be shared with the employer.
-                </p>
+            <div className="space-y-3">
+              {/* Profile Header */}
+              <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+                      <Shield className="h-6 w-6 text-emerald-400" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <p className="font-semibold text-foreground">Elec-ID</p>
+                        <VerificationBadge tier={elecIdProfile.verification_tier} />
+                      </div>
+                      <p className="text-sm text-emerald-400 font-mono">
+                        {elecIdProfile.elec_id_number}
+                      </p>
+                    </div>
+                  </div>
+                  <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                </div>
+
+                {/* Toggle to show preview */}
+                <button
+                  type="button"
+                  onClick={() => setShowProfilePreview(!showProfilePreview)}
+                  className="mt-3 w-full flex items-center justify-between text-sm text-emerald-300 hover:text-emerald-200 transition-colors"
+                >
+                  <span>What will be shared with employer</span>
+                  <ChevronDown className={cn(
+                    "h-4 w-4 transition-transform",
+                    showProfilePreview && "rotate-180"
+                  )} />
+                </button>
+
+                {/* Profile Preview */}
+                <AnimatePresence>
+                  {showProfilePreview && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="mt-3 pt-3 border-t border-emerald-500/20 space-y-2">
+                        {/* ECS Card */}
+                        {elecIdProfile.ecs_card_type && (
+                          <div className="flex items-center gap-2 text-sm">
+                            <CreditCard className="h-4 w-4 text-emerald-400" />
+                            <span className="text-muted-foreground">ECS Card:</span>
+                            <span className="text-foreground font-medium">{elecIdProfile.ecs_card_type}</span>
+                            {elecIdProfile.ecs_expiry_date && (
+                              <span className="text-xs text-muted-foreground">
+                                (Expires: {new Date(elecIdProfile.ecs_expiry_date).toLocaleDateString()})
+                              </span>
+                            )}
+                          </div>
+                        )}
+
+                        {/* Specialisations */}
+                        {elecIdProfile.specialisations && elecIdProfile.specialisations.length > 0 && (
+                          <div className="flex items-start gap-2 text-sm">
+                            <Wrench className="h-4 w-4 text-emerald-400 mt-0.5" />
+                            <div>
+                              <span className="text-muted-foreground">Specialisations:</span>
+                              <div className="flex flex-wrap gap-1 mt-1">
+                                {elecIdProfile.specialisations.slice(0, 4).map((spec, i) => (
+                                  <Badge key={i} variant="outline" className="text-xs">
+                                    {spec}
+                                  </Badge>
+                                ))}
+                                {elecIdProfile.specialisations.length > 4 && (
+                                  <Badge variant="outline" className="text-xs">
+                                    +{elecIdProfile.specialisations.length - 4} more
+                                  </Badge>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Bio */}
+                        {elecIdProfile.bio && (
+                          <div className="flex items-start gap-2 text-sm">
+                            <Briefcase className="h-4 w-4 text-emerald-400 mt-0.5" />
+                            <div>
+                              <span className="text-muted-foreground">Bio:</span>
+                              <p className="text-foreground line-clamp-2 mt-0.5">{elecIdProfile.bio}</p>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* What's included */}
+                        <div className="mt-2 pt-2 border-t border-emerald-500/10">
+                          <p className="text-xs text-muted-foreground mb-2">Also includes:</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            <Badge variant="outline" className="text-xs bg-background/50">
+                              <Award className="h-3 w-3 mr-1" />
+                              Qualifications
+                            </Badge>
+                            <Badge variant="outline" className="text-xs bg-background/50">
+                              <Clock className="h-3 w-3 mr-1" />
+                              Work History
+                            </Badge>
+                            <Badge variant="outline" className="text-xs bg-background/50">
+                              <Wrench className="h-3 w-3 mr-1" />
+                              Skills
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
           ) : (
-            <div className="flex gap-2 p-3 bg-destructive/10 rounded-lg text-sm">
-              <AlertCircle className="h-4 w-4 text-destructive shrink-0 mt-0.5" />
-              <div>
-                <p className="font-medium text-destructive">Profile Required</p>
-                <p className="text-muted-foreground">
-                  Please complete your Elec-ID profile before applying to vacancies.
-                </p>
+            <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-xl">
+              <div className="flex gap-3">
+                <AlertCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-semibold text-destructive">Elec-ID Required</p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Please complete your Elec-ID profile before applying. Your profile helps employers verify your credentials.
+                  </p>
+                </div>
               </div>
             </div>
           )}
@@ -231,19 +368,19 @@ export function ApplyToVacancyDialog({
               Cancel
             </Button>
             <Button
-              className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              className="flex-1 h-11 bg-emerald-500 hover:bg-emerald-400 text-white"
               onClick={handleApply}
               disabled={applyMutation.isPending || !elecIdProfile || !shareProfile}
             >
               {applyMutation.isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Submitting...
+                  Applying...
                 </>
               ) : (
                 <>
                   <Send className="h-4 w-4 mr-2" />
-                  Submit Application
+                  Apply with Elec-ID
                 </>
               )}
             </Button>

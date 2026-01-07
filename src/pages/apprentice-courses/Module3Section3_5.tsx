@@ -307,8 +307,8 @@ const Module3Section3_5: React.FC = () => {
                 <p className="font-medium mb-2">Operational Safety Principles</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Pre-Use Preparation</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">Pre-Use Preparation</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Always follow manufacturer's instructions for operation</li>
                       <li>Select the right tool for the job - avoid improvisation</li>
                       <li>Ensure adequate lighting and clear work area</li>
@@ -316,8 +316,8 @@ const Module3Section3_5: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">PPE Requirements</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">PPE Requirements</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Safety glasses for all cutting and drilling operations</li>
                       <li>Gloves appropriate for the tool and material</li>
                       <li>Hearing protection for extended power tool use</li>
@@ -325,8 +325,8 @@ const Module3Section3_5: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-blue-200 mb-1">Safe Operation</p>
-                    <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                    <p className="font-medium text-white mb-1">Safe Operation</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Maintain firm, stable position to avoid slips</li>
                       <li>Disconnect power before changing bits or blades</li>
                       <li>Keep work areas free from trip hazards</li>
@@ -353,8 +353,8 @@ const Module3Section3_5: React.FC = () => {
                   <p className="font-medium mb-2">Personal Transport</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Carrying Methods</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Carrying Methods</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Use toolboxes, bags, or cases for secure transport</li>
                         <li>Never carry sharp tools loose in pockets</li>
                         <li>Tool belts for frequently used hand tools</li>
@@ -362,8 +362,8 @@ const Module3Section3_5: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-green-200 mb-1">Height Work Precautions</p>
-                      <ul className="list-disc pl-4 space-y-1 text-green-200">
+                      <p className="font-medium text-white mb-1">Height Work Precautions</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Tool lanyards mandatory when working above ground</li>
                         <li>Secure storage containers on scaffolds</li>
                         <li>Pass tools up/down in containers, not thrown</li>
@@ -377,8 +377,8 @@ const Module3Section3_5: React.FC = () => {
                   <p className="font-medium mb-2">Vehicle Transport</p>
                   <div className="space-y-3">
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Power Tool Preparation</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Power Tool Preparation</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Remove batteries or unplug before transport</li>
                         <li>Secure loose accessories and attachments</li>
                         <li>Protect displays and delicate components</li>
@@ -386,8 +386,8 @@ const Module3Section3_5: React.FC = () => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-medium text-purple-200 mb-1">Securing Methods</p>
-                      <ul className="list-disc pl-4 space-y-1 text-purple-200">
+                      <p className="font-medium text-white mb-1">Securing Methods</p>
+                      <ul className="list-disc pl-4 space-y-1 text-white">
                         <li>Use tie-down straps or secured compartments</li>
                         <li>Prevent movement during acceleration/braking</li>
                         <li>Heavy tools in lower storage areas</li>
@@ -414,8 +414,8 @@ const Module3Section3_5: React.FC = () => {
                 <p className="font-medium mb-2">Storage Environment & Organisation</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-amber-200 mb-1">Environmental Controls</p>
-                    <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                    <p className="font-medium text-white mb-1">Environmental Controls</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Store in dry, secure areas to prevent corrosion and theft</li>
                       <li>Avoid extreme temperatures that can damage batteries</li>
                       <li>Ensure adequate ventilation to prevent moisture buildup</li>
@@ -423,8 +423,8 @@ const Module3Section3_5: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-amber-200 mb-1">Organisation Systems</p>
-                    <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                    <p className="font-medium text-white mb-1">Organisation Systems</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Arrange tools for easy location and access</li>
                       <li>Use racks, wall mounts, or foam inserts</li>
                       <li>Prevent tools from rubbing or knocking together</li>
@@ -432,8 +432,8 @@ const Module3Section3_5: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-amber-200 mb-1">Special Considerations</p>
-                    <ul className="list-disc pl-4 space-y-1 text-amber-200">
+                    <p className="font-medium text-white mb-1">Special Considerations</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Keep insulated tools separate from non-insulated</li>
                       <li>Follow battery charging and storage guidelines</li>
                       <li>Restricted access for dangerous specialist tools</li>
@@ -512,7 +512,7 @@ const Module3Section3_5: React.FC = () => {
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Dangerous Practices</p>
-              <ul className="list-disc pl-6 space-y-1 text-red-200">
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li><strong>Carrying sharp tools loose</strong> - Risk of cuts and puncture wounds</li>
                 <li><strong>No lanyards at height</strong> - Potential for serious head injuries from dropped tools</li>
                 <li><strong>Unsecured transport</strong> - Tool damage and vehicle safety hazards</li>
@@ -521,7 +521,7 @@ const Module3Section3_5: React.FC = () => {
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
               <p className="font-medium mb-2 text-elec-yellow">Equipment Issues</p>
-              <ul className="list-disc pl-6 space-y-1 text-orange-200">
+              <ul className="list-disc pl-6 space-y-1 text-white">
                 <li><strong>Poor storage conditions</strong> - Accelerated corrosion and premature failure</li>
                 <li><strong>Batteries left in tools</strong> - Accidental activation during transport</li>
                 <li><strong>No protective covers</strong> - Damaged cutting edges and safety hazards</li>
@@ -575,7 +575,7 @@ const Module3Section3_5: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="font-medium text-elec-yellow mb-1">Potential Consequences</p>
-                <ul className="list-disc pl-4 space-y-1 text-red-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Serious head injury or fatality</li>
                   <li>HSE investigation and prosecution</li>
                   <li>Site shutdown and project delays</li>
@@ -584,7 +584,7 @@ const Module3Section3_5: React.FC = () => {
               </div>
               <div>
                 <p className="font-medium text-green-300 mb-1">Prevention Measures Implemented</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Mandatory tool lanyards for height work</li>
                   <li>Designated tool storage racks on scaffolds</li>
                   <li>Regular toolbox talks on dropped objects</li>
@@ -622,7 +622,7 @@ const Module3Section3_5: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-300 mb-2">Key Benefits</p>
-                <ul className="list-disc pl-4 space-y-1 text-green-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Prevents accidents and reduces injury risks</li>
                   <li>Protects tools from damage and extends service life</li>
                   <li>Ensures compliance with safety regulations</li>
@@ -631,7 +631,7 @@ const Module3Section3_5: React.FC = () => {
               </div>
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium text-elec-yellow mb-2">Essential Points</p>
-                <ul className="list-disc pl-4 space-y-1 text-blue-200">
+                <ul className="list-disc pl-4 space-y-1 text-white">
                   <li>Always use appropriate PPE for each tool</li>
                   <li>Secure tools during transport and at height</li>
                   <li>Organise storage to prevent damage and confusion</li>
@@ -652,7 +652,7 @@ const Module3Section3_5: React.FC = () => {
               <p className="font-medium text-green-300 mb-3 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4" /> DO
               </p>
-              <ul className="space-y-2 text-sm text-green-200">
+              <ul className="space-y-2 text-sm text-white">
                 <li>✓ Use tool lanyards when working at height</li>
                 <li>✓ Secure tools in proper containers during transport</li>
                 <li>✓ Store insulated tools separately</li>
@@ -665,7 +665,7 @@ const Module3Section3_5: React.FC = () => {
               <p className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" /> DON'T
               </p>
-              <ul className="space-y-2 text-sm text-red-200">
+              <ul className="space-y-2 text-sm text-white">
                 <li>✗ Carry sharp tools loose in pockets</li>
                 <li>✗ Leave tools unsecured at height</li>
                 <li>✗ Store tools in damp conditions</li>

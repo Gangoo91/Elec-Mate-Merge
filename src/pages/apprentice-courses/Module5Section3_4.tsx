@@ -560,7 +560,7 @@ const Module5Section3_4 = () => {
                 </div>
 
                 <div className="rounded-lg p-4 bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800">
-                  <h4 className="font-medium text-teal-800 dark:text-teal-200 mb-3">Handover Protocols</h4>
+                  <h4 className="font-medium text-teal-800 dark:text-white mb-3">Handover Protocols</h4>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li><strong>Quality Checks:</strong> Complete inspection before handover</li>
                     <li><strong>Documentation:</strong> Provide as-built information</li>
@@ -731,10 +731,10 @@ const Module5Section3_4 = () => {
             </div>
 
             <div className="rounded-lg p-4 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-              <h3 className="font-medium text-purple-800 dark:text-purple-200 mb-3">Quality Assurance in Multi-Trade Environments</h3>
+              <h3 className="font-medium text-purple-800 dark:text-white mb-3">Quality Assurance in Multi-Trade Environments</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <p className="font-medium text-purple-800 dark:text-purple-200 mb-2">Inspection Protocols:</p>
+                  <p className="font-medium text-purple-800 dark:text-white mb-2">Inspection Protocols:</p>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Joint inspections with other trades</li>
                     <li>Photographic records of completed work</li>
@@ -743,7 +743,7 @@ const Module5Section3_4 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-purple-800 dark:text-purple-200 mb-2">Protection Maintenance:</p>
+                  <p className="font-medium text-purple-800 dark:text-white mb-2">Protection Maintenance:</p>
                   <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
                     <li>Regular checks of protective systems</li>
                     <li>Replacement of damaged protection</li>
@@ -762,12 +762,12 @@ const Module5Section3_4 = () => {
           
           <div className="space-y-6">
             <div className="rounded-lg p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-              <h3 className="font-semibold text-amber-800 dark:text-amber-200 mb-3">Case Study 1: Housing Site Protection Failure</h3>
+              <h3 className="font-semibold text-amber-800 dark:text-white mb-3">Case Study 1: Housing Site Protection Failure</h3>
               <p className="text-amber-700 dark:text-amber-300 mb-3">
                 On a housing site, electricians installed socket boxes before plastering without protective covers. Plasterers filled in the boxes, requiring electricians to dig them out later. This wasted hours of work and created friction between trades. Proper coordination and use of protective covers would have prevented the issue.
               </p>
               <div className="bg-amber-100 dark:bg-amber-900/40 p-3 rounded">
-                <p className="font-medium text-amber-800 dark:text-amber-200 mb-1">Lessons Learned:</p>
+                <p className="font-medium text-amber-800 dark:text-white mb-1">Lessons Learned:</p>
                 <ul className="list-disc pl-5 text-sm text-amber-700 dark:text-amber-300">
                   <li>Always use appropriate protective covers for electrical boxes</li>
                   <li>Clear communication needed about protection requirements</li>
@@ -778,12 +778,12 @@ const Module5Section3_4 = () => {
             </div>
 
             <div className="rounded-lg p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-              <h3 className="font-semibold text-green-800 dark:text-green-200 mb-3">Case Study 2: Commercial Office Coordination Success</h3>
+              <h3 className="font-semibold text-green-800 dark:text-white mb-3">Case Study 2: Commercial Office Coordination Success</h3>
               <p className="text-green-700 dark:text-green-300 mb-3">
                 A large commercial office project implemented weekly coordination meetings and shared digital planning tools. All trades worked from synchronized schedules with clear handover points. The project completed on time with minimal rework and excellent relationships between all trades.
               </p>
               <div className="bg-green-100 dark:bg-green-900/40 p-3 rounded">
-                <p className="font-medium text-green-800 dark:text-green-200 mb-1">Success Factors:</p>
+                <p className="font-medium text-green-800 dark:text-white mb-1">Success Factors:</p>
                 <ul className="list-disc pl-5 text-sm text-green-700 dark:text-green-300">
                   <li>Regular formal coordination meetings</li>
                   <li>Shared digital tools for real-time updates</li>
@@ -794,12 +794,12 @@ const Module5Section3_4 = () => {
             </div>
 
             <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-              <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-3">Case Study 3: Hospital Renovation Multi-Trade Challenge</h3>
+              <h3 className="font-semibold text-blue-800 dark:text-white mb-3">Case Study 3: Hospital Renovation Multi-Trade Challenge</h3>
               <p className="text-blue-700 text-elec-yellow mb-3">
                 During a hospital renovation, electrical, mechanical, and decoration trades needed to work simultaneously in occupied areas. Detailed hour-by-hour scheduling and noise control measures enabled work to continue without disrupting patient care or creating conflicts.
               </p>
               <div className="bg-blue-100 dark:bg-blue-900/40 p-3 rounded">
-                <p className="font-medium text-blue-800 dark:text-blue-200 mb-1">Key Strategies:</p>
+                <p className="font-medium text-blue-800 dark:text-white mb-1">Key Strategies:</p>
                 <ul className="list-disc pl-5 text-sm text-blue-700 text-elec-yellow">
                   <li>Hour-by-hour detailed scheduling coordination</li>
                   <li>Noise and disruption control measures</li>

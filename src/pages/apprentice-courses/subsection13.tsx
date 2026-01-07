@@ -214,7 +214,7 @@ const Section3_4 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3
@@ -235,7 +235,7 @@ const Section3_4 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 Control Measures and the Hierarchy of Control
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white/80 max-w-3xl mt-2">
                 Ranking safety controls by effectiveness to choose the best protection for electrical work
               </p>
             </div>
@@ -270,7 +270,7 @@ const Section3_4 = () => {
         {/* Learning Outcomes */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
+          <p className="text-white/80 mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -304,13 +304,13 @@ const Section3_4 = () => {
           
           <div className="space-y-4">
             <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-              <p className="text-blue-800 dark:text-blue-200 font-medium">
+              <p className="text-blue-800 dark:text-white font-medium">
                 A control measure is anything you do to remove or reduce a hazard. The right control measures 
                 reduce the likelihood of an accident and/or reduce the severity if something does go wrong.
               </p>
             </div>
             
-            <p className="text-muted-foreground">
+            <p className="text-white/80">
               In electrical work, control measures might include switching off the power, using insulated tools, 
               wearing protective equipment, or following specific procedures. The key is choosing the most 
               effective controls for each situation.
@@ -392,9 +392,9 @@ const Section3_4 = () => {
                   <span className="bg-elec-yellow text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold flex-shrink-0">2</span>
                   <div className="flex-1">
                     <h4 className="text-lg sm:text-xl font-semibold text-blue-700 dark:text-elec-yellow mb-2">Substitute the Hazard</h4>
-                    <p className="text-blue-800 dark:text-blue-200 mb-3">Replace the hazard with something less dangerous.</p>
+                    <p className="text-blue-800 dark:text-white mb-3">Replace the hazard with something less dangerous.</p>
                     <div className="bg-blue-200 dark:bg-blue-800/50 rounded-lg p-3">
-                      <p className="text-sm text-blue-800 dark:text-blue-200">
+                      <p className="text-sm text-blue-800 dark:text-white">
                         <strong>Electrical Example:</strong> Use 110V or battery-powered tools instead of 230V mains power, 
                         or use insulated tools instead of standard ones.
                       </p>
@@ -577,7 +577,7 @@ const Section3_4 = () => {
           </div>
           
           <div className="space-y-4">
-            <p className="text-muted-foreground">
+            <p className="text-white/80">
               The most effective approach often involves using multiple control measures together. 
               This is called "defence in depth" - if one control fails, others remain in place.
             </p>
@@ -645,7 +645,7 @@ const Section3_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
                 <h4 className="font-semibold mb-2">{faq.question}</h4>
-                <p className="text-sm text-muted-foreground">{faq.answer}</p>
+                <p className="text-sm text-white/80">{faq.answer}</p>
               </div>
             ))}
           </div>

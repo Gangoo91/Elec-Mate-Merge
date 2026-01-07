@@ -135,7 +135,7 @@ const Section5_3 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 5
@@ -156,7 +156,7 @@ const Section5_3 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 The Safe Isolation Process – Step by Step
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white/80 max-w-3xl mt-2">
                 A comprehensive guide to the complete safe isolation procedure
               </p>
             </div>
@@ -191,7 +191,7 @@ const Section5_3 = () => {
         {/* Learning Outcomes */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
+          <p className="text-white/80 mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -225,7 +225,7 @@ const Section5_3 = () => {
           
           <div className="space-y-6">
             <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-              <p className="font-medium text-blue-800 dark:text-blue-200 mb-3">
+              <p className="font-medium text-blue-800 dark:text-white mb-3">
                 The 7-step safe isolation process must be followed systematically every time. Each step is designed to build on the previous one, creating multiple layers of protection.
               </p>
             </div>
@@ -237,7 +237,7 @@ const Section5_3 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">1</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Identify the Circuit</h5>
-                    <p className="text-muted-foreground text-sm">Use circuit schedules, labels, and confirm with others</p>
+                    <p className="text-white/80 text-sm">Use circuit schedules, labels, and confirm with others</p>
                   </div>
                 </div>
                 
@@ -245,7 +245,7 @@ const Section5_3 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">2</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Switch Off and Isolate</h5>
-                    <p className="text-muted-foreground text-sm">Turn off the correct isolator or MCB</p>
+                    <p className="text-white/80 text-sm">Turn off the correct isolator or MCB</p>
                   </div>
                 </div>
                 
@@ -253,7 +253,7 @@ const Section5_3 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">3</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Secure and Lock Off</h5>
-                    <p className="text-muted-foreground text-sm">Apply lock-off device and retain the key</p>
+                    <p className="text-white/80 text-sm">Apply lock-off device and retain the key</p>
                   </div>
                 </div>
                 
@@ -261,7 +261,7 @@ const Section5_3 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">4</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Post Warning Notices</h5>
-                    <p className="text-muted-foreground text-sm">Attach "Do Not Operate" tags at isolation points</p>
+                    <p className="text-white/80 text-sm">Attach "Do Not Operate" tags at isolation points</p>
                   </div>
                 </div>
                 
@@ -269,7 +269,7 @@ const Section5_3 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">5</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Prove Tester Before Use</h5>
-                    <p className="text-muted-foreground text-sm">Test voltage tester on proving unit or known live supply</p>
+                    <p className="text-white/80 text-sm">Test voltage tester on proving unit or known live supply</p>
                   </div>
                 </div>
                 
@@ -277,7 +277,7 @@ const Section5_3 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">6</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Test for Dead</h5>
-                    <p className="text-muted-foreground text-sm">Test all conductor combinations: L-N, L-E, N-E</p>
+                    <p className="text-white/80 text-sm">Test all conductor combinations: L-N, L-E, N-E</p>
                   </div>
                 </div>
                 
@@ -285,7 +285,7 @@ const Section5_3 = () => {
                   <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">7</div>
                   <div>
                     <h5 className="font-semibold text-foreground">Re-prove Tester After Use</h5>
-                    <p className="text-muted-foreground text-sm">Confirm tester still works on proving unit</p>
+                    <p className="text-white/80 text-sm">Confirm tester still works on proving unit</p>
                   </div>
                 </div>
               </div>
@@ -329,19 +329,19 @@ const Section5_3 = () => {
                 <div className="text-center">
                   <div className="bg-muted/50 border border-border rounded-lg p-3">
                     <p className="font-medium">Line ↔ Neutral</p>
-                    <p className="text-sm text-muted-foreground">Test 1</p>
+                    <p className="text-sm text-white/80">Test 1</p>
                   </div>
                 </div>
                 <div className="text-center">
                   <div className="bg-muted/50 border border-border rounded-lg p-3">
                     <p className="font-medium">Line ↔ Earth</p>
-                    <p className="text-sm text-muted-foreground">Test 2</p>
+                    <p className="text-sm text-white/80">Test 2</p>
                   </div>
                 </div>
                 <div className="text-center">
                   <div className="bg-muted/50 border border-border rounded-lg p-3">
                     <p className="font-medium">Neutral ↔ Earth</p>
-                    <p className="text-sm text-muted-foreground">Test 3</p>
+                    <p className="text-sm text-white/80">Test 3</p>
                   </div>
                 </div>
               </div>
@@ -349,7 +349,7 @@ const Section5_3 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h5 className="font-semibold text-foreground mb-2">Three-Phase Systems:</h5>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
+                  <ul className="space-y-1 text-sm text-white/80">
                     <li>• Test all six phase combinations (L1-L2, L1-L3, L2-L3)</li>
                     <li>• Include neutral where present (L1-N, L2-N, L3-N)</li>
                     <li>• Test each phase to earth (L1-E, L2-E, L3-E)</li>
@@ -358,7 +358,7 @@ const Section5_3 = () => {
                 </div>
                 <div>
                   <h5 className="font-semibold text-foreground mb-2">Prove Protocol:</h5>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
+                  <ul className="space-y-1 text-sm text-white/80">
                     <li>• Prove tester works on known live supply</li>
                     <li>• Perform all required dead tests</li>
                     <li>• Re-prove tester on same known supply</li>
@@ -388,7 +388,7 @@ const Section5_3 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="font-semibold text-foreground mb-2">Common Backfeed Sources:</h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
+                  <ul className="space-y-1 text-sm text-white/80">
                     <li>• Borrowed neutrals from other circuits</li>
                     <li>• Solar PV installations</li>
                     <li>• UPS systems and emergency supplies</li>
@@ -398,7 +398,7 @@ const Section5_3 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground mb-2">Detection Methods:</h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
+                  <ul className="space-y-1 text-sm text-white/80">
                     <li>• Test all conductor combinations</li>
                     <li>• Check circuit drawings carefully</li>
                     <li>• Look for emergency supplies</li>
@@ -443,7 +443,7 @@ const Section5_3 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="font-semibold text-foreground mb-2">Essential Documentation:</h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
+                  <ul className="space-y-1 text-sm text-white/80">
                     <li>• Circuit reference and description</li>
                     <li>• Isolator location and type</li>
                     <li>• Test results for all conductors</li>
@@ -453,7 +453,7 @@ const Section5_3 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground mb-2">Permit-to-Work Content:</h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
+                  <ul className="space-y-1 text-sm text-white/80">
                     <li>• Work description and location</li>
                     <li>• Hazards identified and controls</li>
                     <li>• Personnel authorised to work</li>
@@ -484,7 +484,7 @@ const Section5_3 = () => {
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div>
                   <h4 className="font-semibold text-foreground mb-2">Work Sequencing:</h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
+                  <ul className="space-y-1 text-sm text-white/80">
                     <li>• Plan isolation sequence in advance</li>
                     <li>• Consider impact on other workers</li>
                     <li>• Coordinate with site activities</li>
@@ -494,7 +494,7 @@ const Section5_3 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground mb-2">Handling Interruptions:</h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
+                  <ul className="space-y-1 text-sm text-white/80">
                     <li>• Complete isolation before stopping</li>
                     <li>• Secure work area if leaving</li>
                     <li>• Brief replacement personnel</li>
@@ -509,7 +509,7 @@ const Section5_3 = () => {
                 <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                   <div>
                     <p className="text-sm font-medium">Setup Phase:</p>
-                    <ul className="text-xs text-muted-foreground">
+                    <ul className="text-xs text-white/80">
                       <li>• Appointed person controls box</li>
                       <li>• Each worker adds own lock</li>
                       <li>• Master key secured in box</li>
@@ -517,7 +517,7 @@ const Section5_3 = () => {
                   </div>
                   <div>
                     <p className="text-sm font-medium">During Work:</p>
-                    <ul className="text-xs text-muted-foreground">
+                    <ul className="text-xs text-white/80">
                       <li>• No one can remove master key</li>
                       <li>• Individual responsibility maintained</li>
                       <li>• Clear communication essential</li>
@@ -525,7 +525,7 @@ const Section5_3 = () => {
                   </div>
                   <div>
                     <p className="text-sm font-medium">Completion:</p>
-                    <ul className="text-xs text-muted-foreground">
+                    <ul className="text-xs text-white/80">
                       <li>• Each person removes own lock</li>
                       <li>• Last person gets master key</li>
                       <li>• System can be re-energised</li>
@@ -609,14 +609,14 @@ const Section5_3 = () => {
               <div className="space-y-4">
                 <div className="bg-slate-50 dark:bg-slate-950/30 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
                   <h4 className="font-semibold text-foreground mb-2">Case 1: Office Refurbishment</h4>
-                  <p className="text-sm text-muted-foreground mb-3">
+                  <p className="text-sm text-white/80 mb-3">
                     Electrician working on lighting circuit in office building. Circuit schedule showed 
                     simple radial circuit, but emergency lighting shared the same neutral.
                   </p>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm font-medium">What Went Wrong:</p>
-                      <ul className="text-xs text-muted-foreground">
+                      <ul className="text-xs text-white/80">
                         <li>• Only tested line to neutral</li>
                         <li>• Didn't test neutral to earth</li>
                         <li>• Emergency supply created neutral voltage</li>
@@ -632,14 +632,14 @@ const Section5_3 = () => {
 
                 <div className="bg-slate-50 dark:bg-slate-950/30 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
                   <h4 className="font-semibold text-foreground mb-2">Case 2: Factory Maintenance</h4>
-                  <p className="text-sm text-muted-foreground mb-3">
+                  <p className="text-sm text-white/80 mb-3">
                     Team working on conveyor system. Used group lock-off box but one electrician 
                     removed his lock early to get tools from van.
                   </p>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm font-medium">What Went Wrong:</p>
-                      <ul className="text-xs text-muted-foreground">
+                      <ul className="text-xs text-white/80">
                         <li>• Early lock removal compromised system</li>
                         <li>• Another electrician still working</li>
                         <li>• Supervisor re-energised thinking work complete</li>
@@ -655,14 +655,14 @@ const Section5_3 = () => {
 
                 <div className="bg-slate-50 dark:bg-slate-950/30 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
                   <h4 className="font-semibold text-foreground mb-2">Case 3: Solar PV Installation</h4>
-                  <p className="text-sm text-muted-foreground mb-3">
+                  <p className="text-sm text-white/80 mb-3">
                     Electrician testing consumer unit circuits during solar PV maintenance. 
                     Forgot to isolate DC side of inverter system.
                   </p>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm font-medium">What Went Wrong:</p>
-                      <ul className="text-xs text-muted-foreground">
+                      <ul className="text-xs text-white/80">
                         <li>• AC isolator switched off only</li>
                         <li>• DC supply still feeding inverter</li>
                         <li>• Inverter created AC backfeed</li>
@@ -692,7 +692,7 @@ const Section5_3 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="font-semibold text-foreground mb-2">Key Takeaways:</h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
+                  <ul className="space-y-1 text-sm text-white/80">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Safe isolation is a systematic 7-step process</span>
@@ -717,7 +717,7 @@ const Section5_3 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground mb-2">Remember Always:</h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
+                  <ul className="space-y-1 text-sm text-white/80">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Identify circuit correctly using multiple methods</span>

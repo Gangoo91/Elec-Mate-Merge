@@ -253,7 +253,7 @@ const Module2Section4_3 = () => {
                   <h3 className="text-lg font-semibold text-elec-yellow mb-3">Sine Waves - The Standard</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
-                      <p className="text-blue-200 text-sm mb-2"><strong>UK Mains Characteristics:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>UK Mains Characteristics:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-blue-100">
                         <li><strong>RMS:</strong> 230V (effective value for power calculation)</li>
                         <li><strong>Peak:</strong> ~325V (Vp = Vrms × √2 ≈ 230 × 1.414)</li>
@@ -264,7 +264,7 @@ const Module2Section4_3 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Measurement and Safety:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Measurement and Safety:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>Standard meters:</strong> Average-responding meters work correctly</li>
                         <li><strong>Peak considerations:</strong> Insulation must withstand 325V, not just 230V</li>
@@ -279,7 +279,7 @@ const Module2Section4_3 = () => {
                   <h3 className="text-lg font-semibold text-elec-yellow mb-3">Square and Triangle Waves</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
-                      <p className="text-blue-200 text-sm mb-2"><strong>Common Sources:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Common Sources:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-blue-100">
                         <li><strong>Variable frequency drives:</strong> PWM outputs create quasi-square waves</li>
                         <li><strong>Switching power supplies:</strong> High-frequency switching patterns</li>
@@ -290,7 +290,7 @@ const Module2Section4_3 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>RMS Relationships:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>RMS Relationships:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>Square wave:</strong> RMS equals amplitude (not peak/√2)</li>
                         <li><strong>Triangle wave:</strong> RMS = peak/√3 ≈ 0.577 × peak</li>
@@ -345,7 +345,7 @@ const Module2Section4_3 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Practical Applications:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Practical Applications:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>Motor nameplates:</strong> Voltage and current ratings are RMS</li>
                         <li><strong>Cable sizing:</strong> Based on RMS current carrying capacity</li>
@@ -404,7 +404,7 @@ const Module2Section4_3 = () => {
                   <h3 className="text-lg font-semibold text-teal-300 mb-3">Average-Responding vs True-RMS</h3>
                   <div className="space-y-3">
                     <div className="bg-teal-500/10 border border-teal-400/30 p-4 rounded-lg">
-                      <p className="text-teal-200 text-sm mb-2"><strong>Average-Responding Meters:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Average-Responding Meters:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-teal-100">
                         <li><strong>How they work:</strong> Measure average then apply sine wave correction factor</li>
                         <li><strong>Accurate for:</strong> Pure sine waves only</li>
@@ -415,7 +415,7 @@ const Module2Section4_3 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>True-RMS Meters:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>True-RMS Meters:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>How they work:</strong> Calculate actual RMS value mathematically</li>
                         <li><strong>Accurate for:</strong> Any waveform shape within bandwidth limits</li>
@@ -431,7 +431,7 @@ const Module2Section4_3 = () => {
                   <h3 className="text-lg font-semibold text-teal-300 mb-3">When to Use True-RMS</h3>
                   <div className="space-y-3">
                     <div className="bg-teal-500/10 border border-teal-400/30 p-4 rounded-lg">
-                      <p className="text-teal-200 text-sm mb-2"><strong>Always Required For:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Always Required For:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-teal-100">
                         <li><strong>VFD outputs:</strong> PWM waveforms from variable frequency drives</li>
                         <li><strong>LED lighting:</strong> PWM dimming and switching driver outputs</li>
@@ -464,7 +464,7 @@ const Module2Section4_3 = () => {
                   <h3 className="text-lg font-semibold text-amber-300 mb-3">Installation Considerations</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-amber-400/30 p-4 rounded-lg">
-                      <p className="text-amber-200 text-sm mb-2"><strong>Insulation and Clearances:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Insulation and Clearances:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-amber-100">
                         <li><strong>Design for peak:</strong> Insulation must withstand peak voltage, not just RMS</li>
                         <li><strong>Air gaps:</strong> Minimum clearances based on peak working voltage</li>
@@ -475,7 +475,7 @@ const Module2Section4_3 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Protection Device Selection:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Protection Device Selection:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>RCD selection:</strong> Type AC suitable for sine waves only</li>
                         <li><strong>Type A RCDs:</strong> Handle pulsating DC from rectifiers</li>
@@ -490,7 +490,7 @@ const Module2Section4_3 = () => {
                   <h3 className="text-lg font-semibold text-amber-300 mb-3">Troubleshooting and Testing</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-amber-400/30 p-4 rounded-lg">
-                      <p className="text-amber-200 text-sm mb-2"><strong>Common Issues:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Common Issues:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-amber-100">
                         <li><strong>Drive problems:</strong> Distorted output waveforms affecting motor performance</li>
                         <li><strong>LED flicker:</strong> Poor driver design causing visible modulation</li>

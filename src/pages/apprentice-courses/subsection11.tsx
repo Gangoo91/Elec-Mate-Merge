@@ -162,7 +162,7 @@ const Section3_2 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3
@@ -183,7 +183,7 @@ const Section3_2 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 The Five Steps of Risk Assessment
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mt-2">
+              <p className="text-xl text-white/80 max-w-3xl mt-2">
                 HSE's systematic approach to identifying and controlling electrical hazards
               </p>
             </div>
@@ -218,7 +218,7 @@ const Section3_2 = () => {
         {/* Learning Outcomes */}
         <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Learning Outcomes</h2>
-          <p className="text-muted-foreground mb-4">By the end of this section, you'll be able to:</p>
+          <p className="text-white/80 mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -625,7 +625,7 @@ const Section3_2 = () => {
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-3">
               <h3 className="font-semibold text-foreground">Essential Process Points</h3>
-              <ul className="space-y-2 text-muted-foreground text-sm">
+              <ul className="space-y-2 text-white/80 text-sm">
                 <li>• Follow the five steps systematically in order</li>
                 <li>• Involve competent people with practical experience</li>
                 <li>• Use risk matrices to prioritise control measures</li>
@@ -634,7 +634,7 @@ const Section3_2 = () => {
             </div>
             <div className="space-y-3">
               <h3 className="font-semibold text-foreground">Best Practices</h3>
-              <ul className="space-y-2 text-muted-foreground text-sm">
+              <ul className="space-y-2 text-white/80 text-sm">
                 <li>• Keep assessments proportionate to the risk</li>
                 <li>• Document decisions and reasoning clearly</li>
                 <li>• Communicate findings to all affected people</li>
@@ -655,70 +655,70 @@ const Section3_2 = () => {
               
               <div>
                 <h3 className="font-bold text-foreground mb-2">Q: Do I need to complete a formal risk assessment for every electrical task?</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   A: Not necessarily. For routine, low-risk tasks with established procedures, a simple mental check may suffice. However, formal written assessments are required for complex work, high-risk activities, or when employing 5 or more people. The key is ensuring the assessment is 'suitable and sufficient' for the level of risk involved.
                 </p>
               </div>
 
               <div>
                 <h3 className="font-bold text-foreground mb-2">Q: Who is qualified to conduct electrical risk assessments?</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   A: Competent persons with sufficient knowledge, experience, and training to understand the electrical hazards and appropriate control measures. This could include qualified electricians, electrical engineers, safety professionals, or experienced supervisors. The level of competence should match the complexity and risk level of the work.
                 </p>
               </div>
 
               <div>
                 <h3 className="font-bold text-foreground mb-2">Q: How often should risk assessments be reviewed?</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   A: There's no fixed legal requirement, but best practice suggests annual reviews as a minimum. However, you must review immediately when there are significant changes to work processes, equipment, personnel, or following incidents. High-risk activities may require more frequent reviews.
                 </p>
               </div>
 
               <div>
                 <h3 className="font-bold text-foreground mb-2">Q: What's the difference between a risk assessment and a method statement?</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   A: A risk assessment identifies hazards and evaluates risks, while a method statement describes how work will be carried out safely. The risk assessment informs the method statement - you assess the risks first, then write procedures to control those risks. Both documents should work together as part of your safety management system.
                 </p>
               </div>
 
               <div>
                 <h3 className="font-bold text-foreground mb-2">Q: Can I use generic risk assessments for electrical work?</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   A: Generic assessments can provide a good starting point, but they must be adapted to your specific workplace, equipment, and circumstances. Simply copying generic assessments without considering site-specific factors is unlikely to meet the 'suitable and sufficient' test. Always customise assessments to reflect actual working conditions.
                 </p>
               </div>
 
               <div>
                 <h3 className="font-bold text-foreground mb-2">Q: What should I do if I identify a high-risk scenario during the assessment?</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   A: Stop work immediately if there's imminent danger. For high-risk scenarios (scores 15-25 on the risk matrix), implement immediate temporary controls to reduce risk, then develop and implement permanent control measures. Document your actions and ensure all personnel are informed of the risks and controls.
                 </p>
               </div>
 
               <div>
                 <h3 className="font-bold text-foreground mb-2">Q: Do I need separate assessments for each voltage level?</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   A: Yes, different voltage levels present different risks and require different control measures. Low voltage (LV), high voltage (HV), and extra high voltage (EHV) systems all have distinct hazards and safety requirements. Your assessment should clearly identify voltage levels and appropriate safety procedures for each.
                 </p>
               </div>
 
               <div>
                 <h3 className="font-bold text-foreground mb-2">Q: How detailed should my risk assessment documentation be?</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   A: Documentation should be proportionate to the risk level and complexity of work. Simple, routine tasks may only need basic records, while complex or high-risk work requires detailed documentation. Include enough information so that someone else could understand the hazards, risks, and control measures without needing additional explanation.
                 </p>
               </div>
 
               <div>
                 <h3 className="font-bold text-foreground mb-2">Q: What role do workers play in the risk assessment process?</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   A: Workers should be actively involved as they have practical knowledge of hazards and work processes. Consult them during the assessment process, listen to their concerns, and involve them in developing practical control measures. Their input is valuable for identifying real-world risks that might not be obvious from technical specifications alone.
                 </p>
               </div>
 
               <div>
                 <h3 className="font-bold text-foreground mb-2">Q: Can environmental factors affect my electrical risk assessment?</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/80">
                   A: Absolutely. Weather conditions (rain, wind, temperature), location factors (confined spaces, height, proximity to public areas), and time constraints can all significantly affect electrical risks. Your assessment must consider these environmental factors and how they might increase likelihood or consequences of electrical hazards.
                 </p>
               </div>

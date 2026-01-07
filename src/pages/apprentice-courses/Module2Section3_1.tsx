@@ -408,7 +408,7 @@ const Module2Section3_1 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">When Designing Circuits</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-blue-200">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>Use parallel for independence and full voltage supply</li>
                     <li>Consider total current when adding parallel loads</li>
                     <li>Remember voltage drop increases with circuit length</li>
@@ -430,7 +430,7 @@ const Module2Section3_1 = () => {
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">Common Mistakes to Avoid</h3>
               <div className="bg-card border border-border/30 p-4 rounded-lg">
-                <ul className="list-disc pl-4 space-y-2 text-sm text-red-200">
+                <ul className="list-disc pl-4 space-y-2 text-sm text-white">
                   <li><strong>Confusing voltage and current behaviour:</strong> Remember voltage divides in series, current divides in parallel</li>
                   <li><strong>Wrong resistance calculations:</strong> Series adds directly, parallel uses reciprocals</li>
                   <li><strong>Ignoring cable resistance:</strong> Long cable runs add series resistance</li>

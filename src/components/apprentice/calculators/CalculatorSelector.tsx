@@ -129,7 +129,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
             >
               <SelectValue placeholder="Choose a calculator" />
             </SelectTrigger>
-            <SelectContent className="bg-white/10 border-elec-yellow/20 max-h-80 w-full">
+            <SelectContent className="bg-elec-dark border-elec-yellow/20 max-h-80 w-full">
               {categoryOrder.map((category) => {
                 const calcs = groupedCalculators[category];
                 if (!calcs) return null;

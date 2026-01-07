@@ -130,7 +130,7 @@ const Section6_3 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" asChild className="text-gray-300 hover:text-white">
+          <Button variant="ghost" asChild className="text-white hover:text-white">
             <Link to=".." className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               Back to Section 6
@@ -150,7 +150,7 @@ const Section6_3 = () => {
             <h1 className="text-4xl font-bold text-white mb-4">
               First Aid Requirements on Site
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-white">
               Understanding legal first aid provision and emergency response procedures
             </p>
           </div>
@@ -161,7 +161,7 @@ const Section6_3 = () => {
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <h2 className="text-lg font-semibold text-white mb-3">In 30 seconds</h2>
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 UK law requires adequate first aid provision on all sites. This means proper equipment, 
                 trained personnel (appointed person or first aider), clear signage, and emergency communication. 
                 For electrical workers, knowing how to respond safely to electric shock and arc burns is critical.
@@ -169,7 +169,7 @@ const Section6_3 = () => {
             </div>
             <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
               <h3 className="text-elec-yellow font-semibold mb-2 text-sm">Spot it / Use it</h3>
-              <div className="space-y-2 text-gray-300 text-sm">
+              <div className="space-y-2 text-white text-sm">
                 <p><span className="text-elec-yellow">Spot:</span> First aid box location, trained first aider names, emergency contact numbers</p>
                 <p><span className="text-elec-yellow">Use:</span> Isolate power first, assess safety, provide aid within your training, call 999 when needed</p>
               </div>
@@ -183,19 +183,19 @@ const Section6_3 = () => {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Understand legal first aid requirements on electrical sites</span>
+              <span className="text-white">Understand legal first aid requirements on electrical sites</span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Identify site provision: kits, appointed person vs trained first aider</span>
+              <span className="text-white">Identify site provision: kits, appointed person vs trained first aider</span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Respond to incidents safely with electrical-specific knowledge</span>
+              <span className="text-white">Respond to incidents safely with electrical-specific knowledge</span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300">Record incidents and know when RIDDOR applies</span>
+              <span className="text-white">Record incidents and know when RIDDOR applies</span>
             </div>
           </div>
         </Card>
@@ -211,7 +211,7 @@ const Section6_3 = () => {
             </div>
           </div>
           <div className="ml-12 space-y-4">
-            <p className="text-gray-300">
+            <p className="text-white">
               The Health and Safety (First-Aid) Regulations 1981 place a legal duty on employers to provide adequate 
               and appropriate first aid equipment, facilities, and personnel to ensure employees receive immediate attention if injured or taken ill at work.
             </p>
@@ -219,7 +219,7 @@ const Section6_3 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">It covers:</h3>
-                <ul className="text-gray-300 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Adequate first aid equipment</li>
                   <li>• Trained personnel availability</li>
                   <li>• Clear information and signage</li>
@@ -228,7 +228,7 @@ const Section6_3 = () => {
               </div>
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">The aim is to:</h3>
-                <ul className="text-gray-300 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Preserve life in emergencies</li>
                   <li>• Prevent conditions worsening</li>
                   <li>• Promote recovery from injury/illness</li>
@@ -259,7 +259,7 @@ const Section6_3 = () => {
             </div>
           </div>
           <div className="ml-12 space-y-4">
-            <p className="text-gray-300">
+            <p className="text-white">
               The level of first aid provision depends on site size, risk level, and nature of work. 
               Electrical sites often require enhanced provision due to specific hazards like electric shock and arc flash.
             </p>
@@ -267,7 +267,7 @@ const Section6_3 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">Essentials for all sites:</h3>
-                <ul className="text-gray-300 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• First aid box (clean, accessible, marked)</li>
                   <li>• Appointed person or trained first aider</li>
                   <li>• Clear signage showing locations/names</li>
@@ -277,7 +277,7 @@ const Section6_3 = () => {
               </div>
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">Appointed person vs First aider:</h3>
-                <ul className="text-gray-300 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• <strong>Appointed:</strong> Manages equipment, calls 999</li>
                   <li>• <strong>Appointed:</strong> No formal training required (low risk)</li>
                   <li>• <strong>First aider:</strong> Can perform CPR, treat injuries</li>
@@ -299,14 +299,14 @@ const Section6_3 = () => {
             </div>
           </div>
           <div className="ml-12 space-y-4">
-            <p className="text-gray-300">
+            <p className="text-white">
               Electrical emergencies require specific safety considerations. Never touch someone still in contact with electricity. 
               Follow the DR ABC approach: Danger, Response, Airway, Breathing, Circulation.
             </p>
             
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h3 className="font-semibold text-white mb-2">Emergency response sequence:</h3>
-              <ol className="text-gray-300 text-sm space-y-1 list-decimal list-inside">
+              <ol className="text-white text-sm space-y-1 list-decimal list-inside">
                 <li>Assess danger - isolate power source if safe to do so</li>
                 <li>Check response - speak loudly, tap shoulders</li>
                 <li>Open airway - tilt head back, lift chin</li>
@@ -318,7 +318,7 @@ const Section6_3 = () => {
             
             <div className="bg-muted/50 border border-border rounded-lg p-4">
               <h3 className="font-semibold text-white mb-2">When calling 999, provide:</h3>
-              <ul className="text-gray-300 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>• <strong>Location:</strong> Full address with access details</li>
                 <li>• <strong>Nature:</strong> What happened, how many injured</li>
                 <li>• <strong>Condition:</strong> Conscious/unconscious, breathing status</li>
@@ -340,7 +340,7 @@ const Section6_3 = () => {
             </div>
           </div>
           <div className="ml-12 space-y-4">
-            <p className="text-gray-300">
+            <p className="text-white">
               Electrical work presents specific injury risks. Quick, appropriate response can prevent serious complications 
               and save lives. Always prioritise safety and call emergency services for serious incidents.
             </p>
@@ -349,21 +349,21 @@ const Section6_3 = () => {
               <div className="space-y-3">
                 <div className="bg-muted/50 border border-border rounded-lg p-3">
                   <h4 className="font-semibold text-white text-sm mb-1">Electric Shock:</h4>
-                  <p className="text-gray-300 text-xs">Isolate power, check breathing, begin CPR if trained, call 999</p>
+                  <p className="text-white text-xs">Isolate power, check breathing, begin CPR if trained, call 999</p>
                 </div>
                 <div className="bg-muted/50 border border-border rounded-lg p-3">
                   <h4 className="font-semibold text-white text-sm mb-1">Arc Burns:</h4>
-                  <p className="text-gray-300 text-xs">Cool with water 20min, sterile dressing, no creams, seek medical attention</p>
+                  <p className="text-white text-xs">Cool with water 20min, sterile dressing, no creams, seek medical attention</p>
                 </div>
               </div>
               <div className="space-y-3">
                 <div className="bg-muted/50 border border-border rounded-lg p-3">
                   <h4 className="font-semibold text-white text-sm mb-1">Tool Cuts:</h4>
-                  <p className="text-gray-300 text-xs">Direct pressure, elevate limb, sterile dressing, don't remove embedded objects</p>
+                  <p className="text-white text-xs">Direct pressure, elevate limb, sterile dressing, don't remove embedded objects</p>
                 </div>
                 <div className="bg-muted/50 border border-border rounded-lg p-3">
                   <h4 className="font-semibold text-white text-sm mb-1">Falls:</h4>
-                  <p className="text-gray-300 text-xs">Don't move victim, check spinal injury signs, maintain airway, call 999</p>
+                  <p className="text-white text-xs">Don't move victim, check spinal injury signs, maintain airway, call 999</p>
                 </div>
               </div>
             </div>
@@ -381,7 +381,7 @@ const Section6_3 = () => {
             </div>
           </div>
           <div className="ml-12 space-y-4">
-            <p className="text-gray-300">
+            <p className="text-white">
               Proper record-keeping is legally required and helps identify trends to prevent future incidents. 
               All workplace accidents must be recorded in the accident book (BI 510).
             </p>
@@ -389,7 +389,7 @@ const Section6_3 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">Accident book essentials:</h3>
-                <ul className="text-gray-300 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Date, time, and location of incident</li>
                   <li>• Details of injured person and witnesses</li>
                   <li>• Nature of injury and treatment given</li>
@@ -400,7 +400,7 @@ const Section6_3 = () => {
               </div>
               <div className="bg-muted/50 border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">Good practice includes:</h3>
-                <ul className="text-gray-300 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Regular first aid kit checks and restocking</li>
                   <li>• Clear, visible signage for kits and personnel</li>
                   <li>• Practice emergency procedures</li>
@@ -419,7 +419,7 @@ const Section6_3 = () => {
           <div className="space-y-4">
             <div className="bg-card border border-amber-400/30 rounded-lg p-4">
               <h3 className="text-amber-400 font-semibold mb-2">Arc Flash Incident During Panel Work</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 An electrician suffered arc burns to hands and face while working on a distribution panel. 
                 A colleague witnessed the flash and immediately responded.
               </p>
@@ -427,7 +427,7 @@ const Section6_3 = () => {
             
             <div>
               <h4 className="font-semibold text-white mb-3">What happened next:</h4>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li className="flex gap-2">
                   <span className="text-elec-yellow">•</span>
                   Colleague immediately isolated the power supply to ensure scene safety
@@ -457,7 +457,7 @@ const Section6_3 = () => {
             
             <div className="bg-card border border-green-400/30 rounded-lg p-4">
               <h4 className="text-green-400 font-semibold mb-1">Why this mattered</h4>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Quick isolation prevented further injury. Immediate cooling reduced burn severity. 
                 Proper first aid and quick medical response prevented complications and scarring. 
                 The incident led to improved arc flash PPE procedures site-wide.
@@ -472,7 +472,7 @@ const Section6_3 = () => {
           <div className="space-y-4">
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">Do we always need a trained first aider or is an appointed person enough?</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 It depends on site size and risk. Small, low-risk sites may only need an appointed person. 
                 Larger sites or those with higher risks (like electrical work) typically require trained first aiders. 
                 HSE guidance recommends at least one first aider for 50+ employees or high-risk environments.
@@ -481,7 +481,7 @@ const Section6_3 = () => {
             
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">Are medications allowed in first aid kits?</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 No. Standard workplace first aid kits cannot contain medications like paracetamol, aspirin, 
                 or antiseptic creams due to allergy risks and legal liability. Only basic items like dressings, 
                 bandages, and eye wash are permitted.
@@ -490,7 +490,7 @@ const Section6_3 = () => {
             
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">How often should first aid kits be checked and restocked?</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Monthly checks are recommended to ensure contents are in date, undamaged, and complete. 
                 After any use, kits should be immediately restocked. The appointed person or first aider 
                 is typically responsible for maintenance.
@@ -499,7 +499,7 @@ const Section6_3 = () => {
             
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">Where should first aid information be displayed?</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Clear signage must show the location of first aid equipment and the names of trained personnel. 
                 This should be at main entrances, mess rooms, and key work areas. Emergency contact numbers 
                 should also be prominently displayed.
@@ -508,7 +508,7 @@ const Section6_3 = () => {
             
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">Who can use an AED (defibrillator) on site? Is training required?</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Modern AEDs are designed for use by anyone - they provide voice prompts and won't deliver 
                 a shock unless needed. However, training greatly improves confidence and effectiveness. 
                 Many first aid courses now include AED training.
@@ -517,7 +517,7 @@ const Section6_3 = () => {
             
             <div className="border-l-4 border-elec-yellow pl-4">
               <h3 className="font-semibold text-white mb-1">How do first aid records relate to RIDDOR reporting?</h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 All incidents must be recorded in the accident book. RIDDOR applies to serious injuries, 
                 dangerous occurrences, and over-7-day injuries. First aid records provide the detail needed 
                 for RIDDOR reports and help identify trends to prevent future incidents.
@@ -530,14 +530,14 @@ const Section6_3 = () => {
         <Card className="p-6 bg-card border-border/20 mb-8">
           <h2 className="text-2xl font-bold text-white mb-6">Summary</h2>
           <div className="space-y-4">
-            <p className="text-gray-300">
+            <p className="text-white">
               Effective first aid provision saves lives and reduces injury severity. Every electrical worker should know their 
               site's arrangements, understand electrical-specific risks, and be prepared to respond safely in emergencies.
             </p>
             
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <h3 className="text-elec-yellow font-semibold mb-3">Key Takeaways</h3>
-              <ul className="space-y-2 text-gray-300 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li className="flex gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   Know your site's first aid arrangements - where kits are and who's trained

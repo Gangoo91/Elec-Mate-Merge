@@ -237,7 +237,7 @@ const Module2Section4_2 = () => {
                   <h3 className="text-lg font-semibold text-elec-yellow mb-3">DNO Mains Supply Characteristics</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
-                      <p className="text-blue-200 text-sm mb-2"><strong>UK Standard Supply Parameters:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>UK Standard Supply Parameters:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-blue-100">
                         <li><strong>Single-phase:</strong> 230V RMS ±10% at 50Hz ±1% (BS EN 50160)</li>
                         <li><strong>Three-phase:</strong> 400V line-to-line, 230V line-to-neutral</li>
@@ -248,7 +248,7 @@ const Module2Section4_2 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Regional Variations and Considerations:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Regional Variations and Considerations:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>Urban areas:</strong> Generally more stable supply, lower impedance</li>
                         <li><strong>Rural areas:</strong> Higher impedance, voltage variations more common</li>
@@ -263,7 +263,7 @@ const Module2Section4_2 = () => {
                   <h3 className="text-lg font-semibold text-elec-yellow mb-3">Generators and Alternators</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
-                      <p className="text-blue-200 text-sm mb-2"><strong>Portable and Standby Sets:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Portable and Standby Sets:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-blue-100">
                         <li><strong>AVR (Automatic Voltage Regulation):</strong> Maintains stable output voltage</li>
                         <li><strong>Governor control:</strong> Keeps frequency stable under varying loads</li>
@@ -274,7 +274,7 @@ const Module2Section4_2 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Installation Requirements:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Installation Requirements:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>Ventilation:</strong> Adequate airflow for cooling and exhaust management</li>
                         <li><strong>Fuel supply:</strong> Safe storage and handling per regulations</li>
@@ -289,7 +289,7 @@ const Module2Section4_2 = () => {
                   <h3 className="text-lg font-semibold text-elec-yellow mb-3">Transformers and Voltage Conversion</h3>
                   <div className="space-y-3">
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
-                      <p className="text-blue-200 text-sm mb-2"><strong>Transformer Principles and Applications:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Transformer Principles and Applications:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-blue-100">
                         <li><strong>Step-down transformers:</strong> 400V to 230V, 230V to 110V for tools</li>
                         <li><strong>Isolation transformers:</strong> Provide galvanic separation for safety</li>
@@ -300,7 +300,7 @@ const Module2Section4_2 = () => {
                     </div>
                     
                     <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                      <p className="text-slate-200 text-sm mb-2"><strong>Safety and Installation Notes:</strong></p>
+                      <p className="text-white text-sm mb-2"><strong>Safety and Installation Notes:</strong></p>
                       <ul className="list-disc pl-6 space-y-1 text-sm text-slate-100">
                         <li><strong>Temperature rating:</strong> Consider ambient conditions and loading</li>
                         <li><strong>Overcurrent protection:</strong> Required on both primary and secondary</li>
@@ -410,8 +410,8 @@ const Module2Section4_2 = () => {
                 <h3 className="text-lg font-semibold text-teal-300">UPS Topologies</h3>
                 
                 <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                  <h4 className="font-bold text-slate-200 mb-2">Offline/Standby UPS</h4>
-                  <ul className="space-y-1 text-sm text-slate-200">
+                  <h4 className="font-bold text-white mb-2">Offline/Standby UPS</h4>
+                  <ul className="space-y-1 text-sm text-white">
                     <li>• Mains normally feeds load directly</li>
                     <li>• Battery/inverter activate on mains failure</li>
                     <li>• Brief transfer time (~5-10ms)</li>
@@ -420,8 +420,8 @@ const Module2Section4_2 = () => {
                 </div>
 
                 <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                  <h4 className="font-bold text-slate-200 mb-2">Line-Interactive UPS</h4>
-                  <ul className="space-y-1 text-sm text-slate-200">
+                  <h4 className="font-bold text-white mb-2">Line-Interactive UPS</h4>
+                  <ul className="space-y-1 text-sm text-white">
                     <li>• Voltage regulation during normal operation</li>
                     <li>• Battery backup for outages</li>
                     <li>• Good for voltage fluctuation areas</li>
@@ -430,8 +430,8 @@ const Module2Section4_2 = () => {
                 </div>
 
                 <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                  <h4 className="font-bold text-slate-200 mb-2">Online/Double-Conversion UPS</h4>
-                  <ul className="space-y-1 text-sm text-slate-200">
+                  <h4 className="font-bold text-white mb-2">Online/Double-Conversion UPS</h4>
+                  <ul className="space-y-1 text-sm text-white">
                     <li>• Continuous AC→DC→AC conversion</li>
                     <li>• Complete isolation from mains disturbances</li>
                     <li>• Zero transfer time (already on inverter)</li>
@@ -469,7 +469,7 @@ const Module2Section4_2 = () => {
                 <h3 className="text-lg font-semibold text-amber-300">Isolation and Discharge Procedures</h3>
                 
                 <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                  <div className="space-y-2 text-sm text-slate-200">
+                  <div className="space-y-2 text-sm text-white">
                     <p><strong>1. AC sources:</strong> Standard isolation, test for dead, lock off procedures</p>
                     <p><strong>2. DC sources:</strong> Isolate both poles, discharge capacitors, verify zero energy</p>
                     <p><strong>3. PV systems:</strong> Follow Section 712 - DC isolators first, wait for discharge</p>
@@ -488,9 +488,9 @@ const Module2Section4_2 = () => {
           
           <div className="space-y-6">
             <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-              <h3 className="font-bold text-slate-200 mb-2">Example 1: LED PSU Sizing</h3>
+              <h3 className="font-bold text-white mb-2">Example 1: LED PSU Sizing</h3>
               <p className="text-slate-300 text-sm mb-2">Requirement: 12V LED strip drawing 2.4A continuous</p>
-              <div className="space-y-1 text-sm text-slate-200">
+              <div className="space-y-1 text-sm text-white">
                 <p><strong>Calculation:</strong> 2.4A + 25% headroom = 3.0A minimum PSU rating</p>
                 <p><strong>Selection:</strong> Choose 12V, 3A+ PSU with appropriate IP rating</p>
                 <p><strong>Checks:</strong> Verify polarity marking, ripple specs, RCD compatibility</p>
@@ -499,9 +499,9 @@ const Module2Section4_2 = () => {
             </div>
 
             <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-              <h3 className="font-bold text-slate-200 mb-2">Example 2: Small PV-Hybrid System Isolation</h3>
+              <h3 className="font-bold text-white mb-2">Example 2: Small PV-Hybrid System Isolation</h3>
               <p className="text-slate-300 text-sm mb-2">Task: Safe isolation of PV array with battery storage for maintenance</p>
-              <div className="space-y-1 text-sm text-slate-200">
+              <div className="space-y-1 text-sm text-white">
                 <p><strong>Step 1:</strong> Isolate DC from PV array (Section 712 procedures)</p>
                 <p><strong>Step 2:</strong> Isolate battery DC connections</p>
                 <p><strong>Step 3:</strong> Allow capacitor discharge time per manufacturer instructions</p>

@@ -40,7 +40,7 @@ const Section1 = () => {
       {/* Header */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
+          <Button variant="ghost" className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 1
@@ -55,7 +55,7 @@ const Section1 = () => {
           <h1 className="text-xl sm:text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-6">
             Section 1: UK Health & Safety Legislation
           </h1>
-          <p className="text-base sm:text-xl text-muted-foreground max-w-3xl">
+          <p className="text-base sm:text-xl text-white/80 max-w-3xl">
             Essential legislation and regulations governing electrical work safety
           </p>
         </div>
