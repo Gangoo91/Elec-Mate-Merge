@@ -1,7 +1,7 @@
 
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { X, Zap } from "lucide-react";
+import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import SidebarNavSection from "./SidebarNavSection";
@@ -73,8 +73,12 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
             className="flex items-center gap-2 group"
             onClick={() => setOpen(false)}
           >
-            <div className="p-2 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-transparent border border-elec-yellow/20 group-hover:border-elec-yellow/40 transition-all duration-200 shadow-lg shadow-elec-yellow/5">
-              <Zap className="h-5 w-5 text-elec-yellow" />
+            <div className="rounded-xl overflow-hidden border border-elec-yellow/20 group-hover:border-elec-yellow/40 transition-all duration-200 shadow-lg shadow-elec-yellow/5">
+              <img
+                src="/logo.jpg"
+                alt="Elec-Mate"
+                className="h-10 w-10 object-cover"
+              />
             </div>
             <span className="font-bold text-lg">
               <span className="bg-gradient-to-r from-elec-yellow to-amber-400 bg-clip-text text-transparent">Elec</span>

@@ -129,8 +129,8 @@ const LandingPage = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-lg bg-yellow-400 flex items-center justify-center transition-transform group-hover:scale-105">
-              <Zap className="h-5 w-5 text-black" />
+            <div className="w-9 h-9 rounded-lg overflow-hidden transition-transform group-hover:scale-105">
+              <img src="/logo.jpg" alt="Elec-Mate" className="w-full h-full object-cover" />
             </div>
             <span className="text-lg font-bold">
               Elec-<span className="text-yellow-400">Mate</span>

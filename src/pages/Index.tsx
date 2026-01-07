@@ -88,8 +88,8 @@ const Index = () => {
           {/* Logo - iOS centered */}
           <div className="flex justify-center mb-8 ios-animate-in">
             <Link to="/" className="flex items-center gap-2.5">
-              <div className="w-12 h-12 rounded-2xl bg-elec-yellow flex items-center justify-center shadow-[0_4px_20px_rgba(255,209,0,0.25)]">
-                <Zap className="h-6 w-6 text-black" />
+              <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(255,209,0,0.25)]">
+                <img src="/logo.jpg" alt="Elec-Mate" className="w-full h-full object-cover" />
               </div>
               <span className="text-ios-title-3 font-bold">
                 Elec-<span className="text-elec-yellow">Mate</span>

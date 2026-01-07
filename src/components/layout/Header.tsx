@@ -1,5 +1,5 @@
 
-import { Menu, Zap } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import RecordingIndicator from "../apprentice/timer/RecordingIndicator";
@@ -122,13 +122,16 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           <div className="flex items-center gap-1.5 sm:gap-3">
             <motion.div
               className={cn(
-                "p-1 sm:p-2 rounded-lg sm:rounded-xl",
-                "bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5",
+                "rounded-lg sm:rounded-xl overflow-hidden",
                 "border border-elec-yellow/30"
               )}
               whileTap={{ scale: 0.95 }}
             >
-              <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
+              <img
+                src="/logo.jpg"
+                alt="Elec-Mate"
+                className="h-8 w-8 sm:h-10 sm:w-10 object-cover"
+              />
             </motion.div>
             <div className="flex items-center">
               <h1 className="text-base sm:text-xl md:text-2xl font-bold tracking-tight">
