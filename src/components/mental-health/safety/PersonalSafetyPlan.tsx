@@ -461,7 +461,7 @@ const PersonalSafetyPlan = () => {
           return (
             <Card
               key={section.id}
-              className={`${colors.border} cursor-pointer active:scale-[0.99] transition-transform`}
+              className={`${colors.border} cursor-pointer touch-manipulation active:scale-[0.99] transition-transform`}
               onClick={() => setActiveSection(section.id)}
             >
               <CardContent className="p-3">

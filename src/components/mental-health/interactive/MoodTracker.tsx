@@ -85,18 +85,18 @@ const MoodTracker = () => {
           <div className="space-y-4">
             <div>
               <p className="text-sm text-white mb-3">How are you feeling today?</p>
-              <div className="grid grid-cols-5 gap-2">
+              <div className="grid grid-cols-5 gap-1 sm:gap-2">
                 {moodOptions.map((mood) => (
                   <Button
                     key={mood.value}
                     variant={selectedMood === mood.value ? "default" : "outline"}
-                    className={`flex flex-col p-3 h-auto ${
+                    className={`flex flex-col p-2 sm:p-3 h-auto min-h-[72px] touch-manipulation active:scale-[0.95] transition-all ${
                       selectedMood === mood.value ? mood.color : ""
                     }`}
                     onClick={() => setSelectedMood(mood.value)}
                   >
-                    <span className="text-xl mb-1">{mood.emoji}</span>
-                    <span className="text-xs">{mood.label}</span>
+                    <span className="text-2xl sm:text-xl mb-1">{mood.emoji}</span>
+                    <span className="text-[10px] sm:text-xs">{mood.label}</span>
                   </Button>
                 ))}
               </div>
@@ -108,15 +108,15 @@ const MoodTracker = () => {
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="What's influencing your mood today?"
-                className="mt-1"
+                className="mt-1 text-base touch-manipulation"
                 rows={2}
               />
             </div>
 
-            <Button 
+            <Button
               onClick={handleSaveMood}
               disabled={selectedMood === null}
-              className="w-full"
+              className="w-full h-12 text-base touch-manipulation active:scale-[0.98] transition-all"
             >
               Save Today's Mood
             </Button>

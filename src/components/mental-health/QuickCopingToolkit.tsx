@@ -153,16 +153,22 @@ const QuickCopingToolkit = () => {
     const Icon = selectedTechnique.icon;
 
     return (
-      <div className="space-y-4">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <Button variant="ghost" size="sm" onClick={resetTechnique}>
-            <ChevronLeft className="h-4 w-4 mr-1" />
-            Back
-          </Button>
-          <div className="flex items-center gap-1 text-xs text-white">
-            <Clock className="h-3 w-3" />
-            {selectedTechnique.duration}
+      <div className="space-y-4 pb-24 sm:pb-4">
+        {/* Sticky Header */}
+        <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10 -mx-4 px-4 py-3 mb-2">
+          <div className="flex items-center justify-between">
+            <Button
+              variant="ghost"
+              onClick={resetTechnique}
+              className="h-11 touch-manipulation active:scale-[0.98] transition-all"
+            >
+              <ChevronLeft className="h-5 w-5 mr-1" />
+              Back
+            </Button>
+            <div className="flex items-center gap-1 text-xs text-white">
+              <Clock className="h-3 w-3" />
+              {selectedTechnique.duration}
+            </div>
           </div>
         </div>
 
@@ -241,29 +247,34 @@ const QuickCopingToolkit = () => {
               </Card>
             )}
 
-            {/* Navigation */}
+            {/* Sticky Navigation */}
             {currentStep < selectedTechnique.steps.length && (
-              <div className="flex gap-2">
-                {currentStep > 0 && (
+              <div className="fixed bottom-0 left-0 right-0 z-50 p-4 pb-6 bg-background/95 backdrop-blur-xl border-t border-white/10 sm:static sm:bg-transparent sm:border-none sm:p-0">
+                <div className="flex gap-2">
+                  {currentStep > 0 && (
+                    <Button
+                      variant="outline"
+                      className="flex-1 h-12 text-base touch-manipulation active:scale-[0.98] transition-all"
+                      onClick={() => setCurrentStep(currentStep - 1)}
+                    >
+                      Previous
+                    </Button>
+                  )}
                   <Button
-                    variant="outline"
-                    className="flex-1"
-                    onClick={() => setCurrentStep(currentStep - 1)}
+                    className={`flex-1 h-12 text-base ${colors.bg} ${colors.text} hover:opacity-90 touch-manipulation active:scale-[0.98] transition-all`}
+                    onClick={() => setCurrentStep(currentStep + 1)}
                   >
-                    Previous
+                    {currentStep + 1 >= selectedTechnique.steps.length ? 'Finish' : 'Next'}
                   </Button>
-                )}
-                <Button
-                  className={`flex-1 ${colors.bg} ${colors.text} hover:opacity-90`}
-                  onClick={() => setCurrentStep(currentStep + 1)}
-                >
-                  {currentStep + 1 >= selectedTechnique.steps.length ? 'Finish' : 'Next'}
-                </Button>
+                </div>
               </div>
             )}
 
             {currentStep >= selectedTechnique.steps.length && (
-              <Button className="w-full" onClick={resetTechnique}>
+              <Button
+                className="w-full h-12 text-base touch-manipulation active:scale-[0.98] transition-all"
+                onClick={resetTechnique}
+              >
                 Back to Toolkit
               </Button>
             )}
@@ -315,13 +326,13 @@ const QuickCopingToolkit = () => {
           return (
             <Card
               key={technique.id}
-              className={`${colors.border} cursor-pointer active:scale-[0.99] transition-transform`}
+              className={`${colors.border} cursor-pointer touch-manipulation active:scale-[0.99] transition-transform`}
               onClick={() => setSelectedTechnique(technique)}
             >
-              <CardContent className="p-3">
-                <div className="flex items-center gap-3">
-                  <div className={`w-11 h-11 rounded-xl ${colors.bg} flex items-center justify-center flex-shrink-0`}>
-                    <Icon className={`h-5 w-5 ${colors.text}`} />
+              <CardContent className="p-3 min-h-[72px] flex items-center">
+                <div className="flex items-center gap-3 w-full">
+                  <div className={`w-12 h-12 rounded-xl ${colors.bg} flex items-center justify-center flex-shrink-0`}>
+                    <Icon className={`h-6 w-6 ${colors.text}`} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">

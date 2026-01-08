@@ -92,17 +92,17 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
 
       {/* Topics */}
       {supporter.topics_comfortable_with && supporter.topics_comfortable_with.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mt-4">
+        <div className="flex flex-wrap gap-2 mt-4">
           {supporter.topics_comfortable_with.slice(0, 4).map((topic, idx) => (
             <span
               key={idx}
-              className="text-xs px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20"
+              className="text-xs px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20"
             >
               {topic}
             </span>
           ))}
           {supporter.topics_comfortable_with.length > 4 && (
-            <span className="text-xs px-2 py-0.5 text-white">
+            <span className="text-xs px-3 py-1.5 text-white">
               +{supporter.topics_comfortable_with.length - 4} more
             </span>
           )}
@@ -114,18 +114,16 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
         {onViewProfile && (
           <Button
             variant="ghost"
-            size="sm"
             onClick={() => onViewProfile(supporter)}
-            className="flex-1 text-white hover:text-white hover:bg-white/10"
+            className="flex-1 h-11 text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-all"
           >
             View Profile
           </Button>
         )}
         <Button
-          size="sm"
           onClick={() => onConnect(supporter.id)}
           disabled={isConnecting}
-          className="flex-1 bg-purple-500 hover:bg-purple-600 text-white gap-2 shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30 transition-all"
+          className="flex-1 h-11 bg-purple-500 hover:bg-purple-600 text-white gap-2 shadow-lg shadow-purple-500/20 hover:shadow-purple-500/30 touch-manipulation active:scale-[0.98] transition-all"
         >
           <MessageCircle className="w-4 h-4" />
           {isConnecting ? 'Connecting...' : 'Connect'}

@@ -113,11 +113,10 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
         </div>
         <Button
           variant="ghost"
-          size="sm"
           onClick={loadSupporters}
-          className="gap-1.5 text-white hover:text-white"
+          className="h-11 gap-1.5 text-white hover:text-white touch-manipulation active:scale-[0.98] transition-all"
         >
-          <RefreshCw className="w-3.5 h-3.5" />
+          <RefreshCw className="w-4 h-4" />
           Refresh
         </Button>
       </div>

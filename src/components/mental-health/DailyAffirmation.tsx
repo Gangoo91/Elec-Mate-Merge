@@ -183,28 +183,25 @@ const DailyAffirmation = () => {
         <div className="flex items-center justify-end gap-1 mt-3">
           <Button
             variant="ghost"
-            size="sm"
             onClick={handleLike}
-            className={`h-8 w-8 p-0 ${isLiked ? 'text-pink-400' : 'text-white'}`}
+            className={`h-11 w-11 p-0 touch-manipulation active:scale-[0.95] transition-all ${isLiked ? 'text-pink-400' : 'text-white'}`}
           >
-            <Heart className={`h-4 w-4 ${isLiked ? 'fill-current' : ''}`} />
+            <Heart className={`h-5 w-5 ${isLiked ? 'fill-current' : ''}`} />
           </Button>
           <Button
             variant="ghost"
-            size="sm"
             onClick={handleShare}
-            className="h-8 w-8 p-0 text-white"
+            className="h-11 w-11 p-0 text-white touch-manipulation active:scale-[0.95] transition-all"
           >
-            <Share2 className="h-4 w-4" />
+            <Share2 className="h-5 w-5" />
           </Button>
           <Button
             variant="ghost"
-            size="sm"
             onClick={handleRefresh}
-            className="h-8 w-8 p-0 text-white"
+            className="h-11 w-11 p-0 text-white touch-manipulation active:scale-[0.95] transition-all"
             disabled={isRefreshing}
           >
-            <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`h-5 w-5 ${isRefreshing ? 'animate-spin' : ''}`} />
           </Button>
         </div>
       </CardContent>

@@ -125,14 +125,20 @@ const SleepTracker = () => {
 
     return (
       <div className="space-y-4">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <Button variant="ghost" size="sm" onClick={() => setView('log')}>
-            <ChevronLeft className="h-4 w-4 mr-1" />
-            Back
-          </Button>
-          <span className="text-sm text-white">Sleep History</span>
-          <div className="w-16" />
+        {/* Sticky Header */}
+        <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10 -mx-4 px-4 py-3 mb-2">
+          <div className="flex items-center justify-between">
+            <Button
+              variant="ghost"
+              onClick={() => setView('log')}
+              className="h-11 touch-manipulation active:scale-[0.98] transition-all"
+            >
+              <ChevronLeft className="h-5 w-5 mr-1" />
+              Back
+            </Button>
+            <span className="text-sm text-white font-medium">Sleep History</span>
+            <div className="w-16" />
+          </div>
         </div>
 
         {/* Stats */}
@@ -222,7 +228,7 @@ const SleepTracker = () => {
 
   // Log view
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 pb-24 sm:pb-4">
       {/* Header */}
       <div className="text-center py-2">
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20 mb-3">
@@ -330,12 +336,12 @@ const SleepTracker = () => {
       <Card className="border-purple-500/20 bg-white/5">
         <CardContent className="p-4">
           <h3 className="text-sm font-medium text-foreground mb-3">How well did you sleep?</h3>
-          <div className="flex justify-between">
+          <div className="flex justify-between gap-1">
             {qualityLabels.map(q => (
               <button
                 key={q.value}
                 onClick={() => setQuality(q.value)}
-                className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all ${
+                className={`flex flex-col items-center gap-1 p-2 sm:p-3 rounded-xl transition-all min-h-[72px] min-w-[56px] touch-manipulation active:scale-[0.95] ${
                   quality === q.value
                     ? `${q.color}/20 ring-2 ring-white/50`
                     : 'hover:bg-white/10'
@@ -358,7 +364,7 @@ const SleepTracker = () => {
               <button
                 key={factor}
                 onClick={() => toggleFactor(factor)}
-                className={`px-3 py-1.5 rounded-full text-xs transition-all ${
+                className={`px-4 py-2.5 rounded-full text-sm transition-all min-h-[40px] touch-manipulation active:scale-[0.95] ${
                   selectedFactors.includes(factor)
                     ? 'bg-indigo-500 text-foreground'
                     : 'bg-white/10 text-foreground/60 hover:bg-white/20'
@@ -371,27 +377,29 @@ const SleepTracker = () => {
         </CardContent>
       </Card>
 
-      {/* Save Button */}
-      <Button
-        className={`w-full h-12 transition-all ${
-          saved
-            ? 'bg-green-500 hover:bg-green-500'
-            : 'bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600'
-        }`}
-        onClick={handleSaveSleep}
-      >
-        {saved ? (
-          <>
-            <Check className="h-5 w-5 mr-2" />
-            Saved!
-          </>
-        ) : (
-          <>
-            <Moon className="h-5 w-5 mr-2" />
-            {todaysEntry ? 'Update Sleep Log' : 'Save Sleep Log'}
-          </>
-        )}
-      </Button>
+      {/* Sticky Save Button */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 p-4 pb-6 bg-background/95 backdrop-blur-xl border-t border-white/10 sm:static sm:bg-transparent sm:border-none sm:p-0">
+        <Button
+          className={`w-full h-14 text-base transition-all touch-manipulation active:scale-[0.98] ${
+            saved
+              ? 'bg-green-500 hover:bg-green-500'
+              : 'bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600'
+          }`}
+          onClick={handleSaveSleep}
+        >
+          {saved ? (
+            <>
+              <Check className="h-5 w-5 mr-2" />
+              Saved!
+            </>
+          ) : (
+            <>
+              <Moon className="h-5 w-5 mr-2" />
+              {todaysEntry ? 'Update Sleep Log' : 'Save Sleep Log'}
+            </>
+          )}
+        </Button>
+      </div>
 
       {/* Info Card */}
       <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-indigo-500/5">
