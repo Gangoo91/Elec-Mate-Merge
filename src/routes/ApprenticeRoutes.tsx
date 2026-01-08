@@ -50,6 +50,8 @@ const Year4 = lazy(() => import("@/pages/apprentice/toolbox/apprenticeship-expec
 const InspectionTesting = lazy(() => import("@/pages/apprentice/InspectionTesting"));
 const InspectionTestingHubPage = lazy(() => import("@/pages/apprentice/LearningHubPage"));
 const UnifiedApprenticeHub = lazy(() => import("@/pages/apprentice/UnifiedApprenticeHub"));
+const PortfolioHub = lazy(() => import("@/pages/apprentice/portfolio-hub/PortfolioHub"));
+const OJTHub = lazy(() => import("@/pages/apprentice/ojt-hub/OJTHub"));
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -102,6 +104,8 @@ const ApprenticeRoutes = () => (
     <Route path="inspection-testing" element={<LazyRoute><InspectionTesting /></LazyRoute>} />
     <Route path="inspection-testing-hub" element={<LazyRoute><InspectionTestingHubPage /></LazyRoute>} />
     <Route path="hub" element={<LazyRoute><UnifiedApprenticeHub /></LazyRoute>} />
+    <Route path="portfolio-hub/*" element={<LazyRoute><PortfolioHub /></LazyRoute>} />
+    <Route path="ojt-hub/*" element={<LazyRoute><OJTHub /></LazyRoute>} />
   </Routes>
 );
 

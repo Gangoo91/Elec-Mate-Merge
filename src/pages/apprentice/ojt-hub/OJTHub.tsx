@@ -208,8 +208,8 @@ export default function OJTHub() {
 
       {/* Quick Log Sheet */}
       <Sheet open={showQuickLog} onOpenChange={setShowQuickLog}>
-        <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl">
-          <div className="w-12 h-1 bg-muted rounded-full mx-auto mb-4" />
+        <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl safe-bottom">
+          <div className="w-12 h-1 bg-muted rounded-full mx-auto mb-4 touch-manipulation" />
           <SheetHeader>
             <SheetTitle>Quick Log</SheetTitle>
             <SheetDescription>
@@ -253,6 +253,7 @@ export default function OJTHub() {
                 onChange={(e) =>
                   setQuickLogData({ ...quickLogData, activity: e.target.value })
                 }
+                className="h-11 touch-manipulation"
               />
             </div>
 
@@ -269,6 +270,7 @@ export default function OJTHub() {
                   onChange={(e) =>
                     setQuickLogData({ ...quickLogData, duration: e.target.value })
                   }
+                  className="h-11 touch-manipulation"
                 />
               </div>
               <div className="space-y-2">
@@ -279,6 +281,7 @@ export default function OJTHub() {
                   onChange={(e) =>
                     setQuickLogData({ ...quickLogData, date: e.target.value })
                   }
+                  className="h-11 touch-manipulation"
                 />
               </div>
             </div>
@@ -293,6 +296,7 @@ export default function OJTHub() {
                   setQuickLogData({ ...quickLogData, notes: e.target.value })
                 }
                 rows={2}
+                className="touch-manipulation"
               />
             </div>
 
@@ -301,13 +305,13 @@ export default function OJTHub() {
               <Button
                 variant="outline"
                 onClick={() => setShowQuickLog(false)}
-                className="flex-1 h-12"
+                className="flex-1 h-12 touch-manipulation"
               >
                 Cancel
               </Button>
               <Button
                 onClick={handleSubmitQuickLog}
-                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
               >
                 Log Time
               </Button>

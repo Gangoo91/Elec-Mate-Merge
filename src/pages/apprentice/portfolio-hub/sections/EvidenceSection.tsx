@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Camera, Filter, Search, Grid, List, Plus, Sparkles, X, Brain } from 'lucide-react';
+import { Camera, Filter, Search, Grid, List, Plus, Sparkles, X, Brain, CheckCircle2, Clock, Edit } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetDescription,
 } from '@/components/ui/sheet';
 import { useUltraFastPortfolio } from '@/hooks/portfolio/useUltraFastPortfolio';
 import PortfolioEntriesList from '@/components/apprentice/portfolio/PortfolioEntriesList';
@@ -30,21 +31,35 @@ interface EvidenceSectionProps {
  * - Advanced filtering by category and status
  * - Visual grid and list views
  */
+// Status filter options
+const STATUS_OPTIONS = [
+  { value: 'all', label: 'All', icon: null },
+  { value: 'draft', label: 'Draft', icon: Edit },
+  { value: 'pending', label: 'Pending Review', icon: Clock },
+  { value: 'reviewed', label: 'Reviewed', icon: CheckCircle2 },
+  { value: 'completed', label: 'Completed', icon: CheckCircle2 },
+];
+
 export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
   const { entries, categories, updateEntry, deleteEntry, isLoading, addEntry } = useUltraFastPortfolio();
   const { toast } = useToast();
   const [showCaptureSheet, setShowCaptureSheet] = useState(false);
   const [showKSBAssistant, setShowKSBAssistant] = useState(false);
+  const [showFilterSheet, setShowFilterSheet] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+
+  // Count active filters
+  const activeFilterCount = (selectedCategory ? 1 : 0) + (selectedStatus !== 'all' ? 1 : 0);
 
   // Get all KSBs that have been completed/evidenced
   const completedKSBs = entries
     .filter(e => e.status === 'completed' || e.status === 'reviewed')
     .flatMap(e => e.assessmentCriteria || []);
 
-  // Filter entries based on search and category
+  // Filter entries based on search, category, and status
   const filteredEntries = entries.filter(entry => {
     const matchesSearch = searchTerm === '' ||
       entry.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -52,8 +67,16 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
 
     const matchesCategory = !selectedCategory || entry.category?.id === selectedCategory;
 
-    return matchesSearch && matchesCategory;
+    const matchesStatus = selectedStatus === 'all' || entry.status === selectedStatus;
+
+    return matchesSearch && matchesCategory && matchesStatus;
   });
+
+  const handleClearFilters = () => {
+    setSelectedCategory(null);
+    setSelectedStatus('all');
+    setShowFilterSheet(false);
+  };
 
   const handleCaptureComplete = async (data: any) => {
     try {
@@ -158,8 +181,21 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
               className="pl-9 bg-card border-border"
             />
           </div>
-          <Button variant="outline" size="icon" className="border-border shrink-0">
+          <Button
+            variant="outline"
+            size="icon"
+            className={cn(
+              "border-border shrink-0 relative touch-manipulation",
+              activeFilterCount > 0 && "border-elec-yellow/50 bg-elec-yellow/10"
+            )}
+            onClick={() => setShowFilterSheet(true)}
+          >
             <Filter className="h-4 w-4" />
+            {activeFilterCount > 0 && (
+              <span className="absolute -top-1 -right-1 h-4 w-4 bg-elec-yellow text-black text-[10px] font-bold rounded-full flex items-center justify-center">
+                {activeFilterCount}
+              </span>
+            )}
           </Button>
           <Button
             variant="outline"
@@ -269,6 +305,98 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
               completedKSBs={completedKSBs}
               selectedKSBs={[]}
             />
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Filter Sheet */}
+      <Sheet open={showFilterSheet} onOpenChange={setShowFilterSheet}>
+        <SheetContent side="bottom" className="h-[70vh] rounded-t-3xl">
+          <div className="w-12 h-1 bg-muted rounded-full mx-auto mb-4" />
+          <SheetHeader>
+            <SheetTitle>Filter Evidence</SheetTitle>
+            <SheetDescription>
+              Narrow down your portfolio entries
+            </SheetDescription>
+          </SheetHeader>
+
+          <div className="space-y-6 mt-6">
+            {/* Status Filter */}
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-foreground">Status</label>
+              <div className="grid grid-cols-2 gap-2">
+                {STATUS_OPTIONS.map((status) => (
+                  <button
+                    key={status.value}
+                    onClick={() => setSelectedStatus(status.value)}
+                    className={cn(
+                      "flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-all touch-manipulation",
+                      selectedStatus === status.value
+                        ? "bg-elec-yellow text-black"
+                        : "bg-muted text-muted-foreground hover:bg-muted/80"
+                    )}
+                  >
+                    {status.icon && <status.icon className="h-4 w-4" />}
+                    {status.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Category Filter */}
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-foreground">Category</label>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setSelectedCategory(null)}
+                  className={cn(
+                    "px-4 py-2.5 rounded-full text-sm font-medium transition-all touch-manipulation",
+                    !selectedCategory
+                      ? "bg-elec-yellow text-black"
+                      : "bg-muted text-muted-foreground hover:bg-muted/80"
+                  )}
+                >
+                  All Categories
+                </button>
+                {categories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    className={cn(
+                      "px-4 py-2.5 rounded-full text-sm font-medium transition-all touch-manipulation",
+                      selectedCategory === cat.id
+                        ? "bg-elec-yellow text-black"
+                        : "bg-muted text-muted-foreground hover:bg-muted/80"
+                    )}
+                  >
+                    {cat.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Results count */}
+            <div className="py-2 text-center text-sm text-muted-foreground">
+              {filteredEntries.length} {filteredEntries.length === 1 ? 'result' : 'results'} found
+            </div>
+
+            {/* Action buttons */}
+            <div className="flex gap-3 pt-4 pb-8">
+              <Button
+                variant="outline"
+                onClick={handleClearFilters}
+                className="flex-1 h-12 touch-manipulation"
+                disabled={activeFilterCount === 0}
+              >
+                Clear All
+              </Button>
+              <Button
+                onClick={() => setShowFilterSheet(false)}
+                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
+              >
+                Apply Filters
+              </Button>
+            </div>
           </div>
         </SheetContent>
       </Sheet>

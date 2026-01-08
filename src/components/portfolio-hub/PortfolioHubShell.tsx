@@ -1,13 +1,17 @@
 import { useState, ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { PortfolioHubNav, NavSection } from './PortfolioHubNav';
 import { QuickCaptureButton } from './QuickCaptureButton';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, FolderOpen, Plus } from 'lucide-react';
 
 interface PortfolioHubShellProps {
   children: ReactNode;
   activeSection: NavSection;
   onSectionChange: (section: NavSection) => void;
   showQuickCapture?: boolean;
+  onQuickCapture?: () => void;
 }
 
 /**
@@ -23,11 +27,50 @@ export function PortfolioHubShell({
   showQuickCapture = true,
 }: PortfolioHubShellProps) {
   const [isQuickCaptureOpen, setIsQuickCaptureOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/apprentice');
+  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col lg:flex-row">
+      {/* Mobile Header - Hidden on desktop */}
+      <header className="sticky top-0 z-40 lg:hidden bg-background/95 backdrop-blur-lg border-b border-border">
+        <div className="flex items-center justify-between px-4 h-14">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleBack}
+            className="gap-1.5 -ml-2 text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back
+          </Button>
+          <div className="flex items-center gap-2">
+            <div className="h-7 w-7 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
+              <FolderOpen className="h-4 w-4 text-elec-yellow" />
+            </div>
+            <span className="font-semibold text-sm text-foreground">Portfolio Hub</span>
+          </div>
+          <div className="w-16" /> {/* Spacer for balance */}
+        </div>
+      </header>
+
       {/* Desktop Sidebar - Hidden on mobile */}
       <aside className="hidden lg:flex lg:flex-col lg:w-64 xl:w-72 border-r border-border bg-card/50 sticky top-0 h-screen">
+        {/* Desktop Back Button */}
+        <div className="p-3 border-b border-border">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleBack}
+            className="gap-2 text-muted-foreground hover:text-foreground w-full justify-start"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Apprentice Hub
+          </Button>
+        </div>
         <div className="p-4 border-b border-border">
           <h1 className="text-lg font-bold text-foreground flex items-center gap-2">
             <span className="h-8 w-8 rounded-lg bg-elec-yellow flex items-center justify-center">
