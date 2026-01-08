@@ -1,37 +1,50 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Separator } from "@/components/ui/separator";
-import { CreditCard, AlertTriangle, Clock, PoundSterling, FileText, RefreshCw, Shield } from "lucide-react";
+import { IOSInput } from "@/components/ui/ios-input";
+import { Switch } from "@/components/ui/switch";
+import {
+  ChevronLeft,
+  RotateCcw,
+  CreditCard,
+  AlertTriangle,
+  Clock,
+  PoundSterling,
+  FileText,
+  Shield,
+  Users,
+  TrendingDown,
+  Gavel,
+  Mail,
+  CheckCircle2,
+  XCircle,
+  ArrowRight,
+  Percent
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface DebtInputs {
-  // Outstanding Debts
   totalOutstanding: number;
   numberOfDebtors: number;
   averageDebtAge: number;
   largestSingleDebt: number;
-  
-  // Recovery Costs
   adminCosts: number;
   legalFees: number;
   collectionAgencyFees: number;
   courtCosts: number;
-  
-  // Business Impact
   monthlyRevenue: number;
   creditTerms: number;
   badDebtProvision: number;
-  
-  // Recovery Strategies
   earlySettlementDiscount: number;
   paymentPlanOption: boolean;
   collectionAgencyRate: number;
 }
 
+type TabType = "overview" | "recovery" | "prevention";
+
 const DebtRecoveryCalculator = () => {
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<TabType>("overview");
   const [inputs, setInputs] = useState<DebtInputs>({
     totalOutstanding: 25000,
     numberOfDebtors: 8,
@@ -73,424 +86,617 @@ const DebtRecoveryCalculator = () => {
   };
 
   // Calculations
-  const averageDebtSize = inputs.totalOutstanding / inputs.numberOfDebtors;
-  const debtToRevenueRatio = (inputs.totalOutstanding / (inputs.monthlyRevenue * 12)) * 100;
+  const averageDebtSize = inputs.numberOfDebtors > 0 ? inputs.totalOutstanding / inputs.numberOfDebtors : 0;
+  const debtToRevenueRatio = inputs.monthlyRevenue > 0 ? (inputs.totalOutstanding / (inputs.monthlyRevenue * 12)) * 100 : 0;
   const totalRecoveryCosts = inputs.adminCosts + inputs.legalFees + inputs.collectionAgencyFees + inputs.courtCosts;
-  
+
   // Recovery scenarios
   const earlySettlementAmount = inputs.totalOutstanding * (1 - inputs.earlySettlementDiscount / 100);
   const collectionAgencyRecovery = inputs.totalOutstanding * (1 - inputs.collectionAgencyRate / 100);
   const expectedRecoveryRate = inputs.averageDebtAge > 90 ? 0.4 : inputs.averageDebtAge > 60 ? 0.6 : 0.8;
   const likelyRecoveryAmount = inputs.totalOutstanding * expectedRecoveryRate;
-  
-  // Cost-benefit analysis
+
+  // Net calculations
   const netRecoveryAfterCosts = likelyRecoveryAmount - totalRecoveryCosts;
-  const recoveryROI = ((netRecoveryAfterCosts - inputs.totalOutstanding) / inputs.totalOutstanding) * 100;
-  
-  // Cash flow impact
-  const daysInDebt = inputs.averageDebtAge;
-  const cashFlowImpact = (inputs.totalOutstanding / inputs.monthlyRevenue) * 30; // Days of revenue tied up
+  const cashFlowImpact = inputs.monthlyRevenue > 0 ? (inputs.totalOutstanding / inputs.monthlyRevenue) * 30 : 0;
   const annualBadDebtWriteOff = (inputs.monthlyRevenue * 12) * (inputs.badDebtProvision / 100);
 
+  // Status
+  const getStatus = () => {
+    if (debtToRevenueRatio > 15) return { color: "red", icon: XCircle, text: "Critical debt level" };
+    if (debtToRevenueRatio > 10) return { color: "amber", icon: AlertTriangle, text: "High debt exposure" };
+    return { color: "green", icon: CheckCircle2, text: "Manageable debt" };
+  };
+  const status = getStatus();
+
+  // Recovery timeline stages
+  const recoveryStages = [
+    { days: 7, label: "Reminder", icon: Mail, action: "Friendly reminder call/email" },
+    { days: 14, label: "Formal", icon: FileText, action: "Formal demand letter" },
+    { days: 30, label: "Escalate", icon: AlertTriangle, action: "Final warning before action" },
+    { days: 45, label: "Legal", icon: Gavel, action: "Letter before action" },
+    { days: 60, label: "Court", icon: Shield, action: "Court proceedings" }
+  ];
+
+  const tabs = [
+    { id: "overview" as TabType, label: "Overview" },
+    { id: "recovery" as TabType, label: "Recovery" },
+    { id: "prevention" as TabType, label: "Prevention" }
+  ];
+
   return (
-    <div className="min-h-screen bg-elec-dark text-foreground">
-      <div className="container mx-auto p-6 space-y-6">
-        <div className="text-center space-y-4">
-          <div className="flex items-center justify-center gap-3">
-            <CreditCard className="h-8 w-8 text-elec-yellow" />
-            <h1 className="text-3xl font-bold">Debt Recovery & Non-Payers Calculator</h1>
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark to-black">
+      {/* Sticky Header */}
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-black/80 border-b border-white/10">
+        <div className="px-4 py-3 flex items-center justify-between max-w-2xl mx-auto">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate(-1)}
+            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </Button>
+          <h1 className="text-ios-headline text-white font-semibold">Debt Recovery</h1>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={resetCalculator}
+            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+          >
+            <RotateCcw className="h-5 w-5" />
+          </Button>
+        </div>
+      </header>
+
+      <main className="px-4 py-6 space-y-6 pb-32 sm:pb-6 max-w-2xl mx-auto">
+        {/* Hero Result */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-br from-red-500/20 via-orange-500/15 to-amber-500/10
+                     backdrop-blur-xl border border-red-500/30 rounded-3xl p-6 relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/10 rounded-full blur-3xl" />
+          <div className="relative space-y-4">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">Outstanding Debt</p>
+                <p className="text-3xl sm:text-4xl font-bold text-white mt-1 tabular-nums">
+                  £{inputs.totalOutstanding.toLocaleString()}
+                </p>
+              </div>
+              <div className={`p-3 rounded-2xl bg-${status.color}-500/20 border border-${status.color}-500/30`}>
+                <status.icon className={`h-6 w-6 text-${status.color}-400`} />
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className={`text-ios-footnote ${
+                netRecoveryAfterCosts >= 0 ? "text-green-400" : "text-red-400"
+              }`}>
+                Expected recovery: £{netRecoveryAfterCosts.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+              </span>
+            </div>
           </div>
-          <p className="text-gray-300 max-w-2xl mx-auto">
-            Analyse outstanding debts, calculate recovery costs, and develop strategies to minimise bad debt impact on your business.
-          </p>
+        </motion.div>
+
+        {/* Summary Stats */}
+        <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+          <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[110px] border border-white/10">
+            <p className="text-ios-caption-1 text-white/50">Debtors</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">{inputs.numberOfDebtors}</p>
+          </div>
+          <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[110px] border border-white/10">
+            <p className="text-ios-caption-1 text-white/50">Avg Age</p>
+            <p className={`text-ios-title-3 font-semibold mt-1 ${
+              inputs.averageDebtAge > 90 ? "text-red-400" :
+              inputs.averageDebtAge > 60 ? "text-amber-400" : "text-white"
+            }`}>{inputs.averageDebtAge}d</p>
+          </div>
+          <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[110px] border border-white/10">
+            <p className="text-ios-caption-1 text-white/50">Recovery</p>
+            <p className="text-ios-title-3 font-semibold text-green-400 mt-1">{(expectedRecoveryRate * 100).toFixed(0)}%</p>
+          </div>
+          <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[110px] border border-white/10">
+            <p className="text-ios-caption-1 text-white/50">Cash Impact</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">{cashFlowImpact.toFixed(0)}d</p>
+          </div>
         </div>
 
-        <Tabs defaultValue="debts" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 bg-elec-gray">
-            <TabsTrigger value="debts">Outstanding Debts</TabsTrigger>
-            <TabsTrigger value="recovery">Recovery Options</TabsTrigger>
-            <TabsTrigger value="analysis">Cost Analysis</TabsTrigger>
-            <TabsTrigger value="prevention">Prevention Strategy</TabsTrigger>
-          </TabsList>
+        {/* iOS Segmented Control */}
+        <div className="bg-white/10 rounded-xl p-1 flex relative">
+          <motion.div
+            className="absolute top-1 bottom-1 bg-elec-yellow rounded-lg"
+            initial={false}
+            animate={{
+              left: activeTab === "overview" ? "4px" : activeTab === "recovery" ? "calc(33.33% + 2px)" : "calc(66.66% + 2px)",
+              width: "calc(33.33% - 4px)"
+            }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          />
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`relative z-10 flex-1 py-2.5 text-ios-subhead font-medium transition-colors touch-manipulation ${
+                activeTab === tab.id ? "text-black" : "text-white/70"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
-          <TabsContent value="debts" className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <FileText className="h-5 w-5 text-elec-yellow" />
-                    Current Debt Position
-                  </CardTitle>
-                  <CardDescription>Overview of outstanding customer debts</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="totalOutstanding">Total Outstanding Debt (£)</Label>
-                    <Input
-                      id="totalOutstanding"
-                      type="text"
-                      inputMode="decimal"
-                      value={inputs.totalOutstanding ?? ''}
-                      onChange={(e) => updateInput('totalOutstanding', Number(e.target.value) || 0)}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="numberOfDebtors">Number of Debtors</Label>
-                    <Input
-                      id="numberOfDebtors"
-                      type="text"
-                      inputMode="numeric"
-                      value={inputs.numberOfDebtors ?? ''}
-                      onChange={(e) => updateInput('numberOfDebtors', Number(e.target.value) || 0)}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="averageDebtAge">Average Debt Age (days)</Label>
-                    <Input
-                      id="averageDebtAge"
-                      type="text"
-                      inputMode="numeric"
-                      value={inputs.averageDebtAge ?? ''}
-                      onChange={(e) => updateInput('averageDebtAge', Number(e.target.value) || 0)}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="largestSingleDebt">Largest Single Debt (£)</Label>
-                    <Input
-                      id="largestSingleDebt"
-                      type="text"
-                      inputMode="decimal"
-                      value={inputs.largestSingleDebt ?? ''}
-                      onChange={(e) => updateInput('largestSingleDebt', Number(e.target.value) || 0)}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
+        {/* Tab Content */}
+        <AnimatePresence mode="wait">
+          {activeTab === "overview" && (
+            <motion.div
+              key="overview"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.2 }}
+              className="space-y-6"
+            >
+              {/* Debt Position */}
+              <section>
+                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                  Current Debt Position
+                </p>
+                <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
+                  <IOSInput
+                    label="Total Outstanding"
+                    icon={<PoundSterling className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.totalOutstanding || ""}
+                    onChange={(e) => updateInput("totalOutstanding", parseFloat(e.target.value) || 0)}
+                    hint="Total owed"
+                  />
+                  <IOSInput
+                    label="Number of Debtors"
+                    icon={<Users className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.numberOfDebtors || ""}
+                    onChange={(e) => updateInput("numberOfDebtors", parseFloat(e.target.value) || 0)}
+                    hint="How many owe"
+                  />
+                  <IOSInput
+                    label="Average Debt Age"
+                    icon={<Clock className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.averageDebtAge || ""}
+                    onChange={(e) => updateInput("averageDebtAge", parseFloat(e.target.value) || 0)}
+                    hint="Days overdue"
+                  />
+                  <IOSInput
+                    label="Largest Single Debt"
+                    icon={<TrendingDown className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.largestSingleDebt || ""}
+                    onChange={(e) => updateInput("largestSingleDebt", parseFloat(e.target.value) || 0)}
+                    hint="Biggest debtor"
+                  />
+                </div>
+              </section>
 
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <PoundSterling className="h-5 w-5 text-elec-yellow" />
-                    Business Context
-                  </CardTitle>
-                  <CardDescription>Your business financial context</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="monthlyRevenue">Monthly Revenue (£)</Label>
-                    <Input
-                      id="monthlyRevenue"
-                      type="text"
-                      inputMode="decimal"
-                      value={inputs.monthlyRevenue ?? ''}
-                      onChange={(e) => updateInput('monthlyRevenue', Number(e.target.value) || 0)}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="creditTerms">Standard Credit Terms (days)</Label>
-                    <Input
-                      id="creditTerms"
-                      type="text"
-                      inputMode="numeric"
-                      value={inputs.creditTerms ?? ''}
-                      onChange={(e) => updateInput('creditTerms', Number(e.target.value) || 0)}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="badDebtProvision">Bad Debt Provision (%)</Label>
-                    <Input
-                      id="badDebtProvision"
-                      type="text"
-                      inputMode="decimal"
-                      step="0.1"
-                      value={inputs.badDebtProvision ?? ''}
-                      onChange={(e) => updateInput('badDebtProvision', Number(e.target.value) || 0)}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
+              {/* Business Context */}
+              <section>
+                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                  Business Context
+                </p>
+                <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
+                  <IOSInput
+                    label="Monthly Revenue"
+                    icon={<PoundSterling className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.monthlyRevenue || ""}
+                    onChange={(e) => updateInput("monthlyRevenue", parseFloat(e.target.value) || 0)}
+                    hint="Average monthly"
+                  />
+                  <IOSInput
+                    label="Credit Terms"
+                    icon={<Clock className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.creditTerms || ""}
+                    onChange={(e) => updateInput("creditTerms", parseFloat(e.target.value) || 0)}
+                    hint="Days allowed"
+                  />
+                  <IOSInput
+                    label="Bad Debt Provision"
+                    icon={<Percent className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.badDebtProvision || ""}
+                    onChange={(e) => updateInput("badDebtProvision", parseFloat(e.target.value) || 0)}
+                    hint="Annual %"
+                  />
+                </div>
+              </section>
 
-          <TabsContent value="recovery" className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Clock className="h-5 w-5 text-elec-yellow" />
-                    Recovery Costs
-                  </CardTitle>
-                  <CardDescription>Estimate costs for different recovery methods</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="adminCosts">Internal Admin Costs (£)</Label>
-                    <Input
-                      id="adminCosts"
-                      type="text"
-                      inputMode="decimal"
-                      value={inputs.adminCosts ?? ''}
-                      onChange={(e) => updateInput('adminCosts', Number(e.target.value) || 0)}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
+              {/* Debt Analysis */}
+              <section>
+                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                  Analysis
+                </p>
+                <div className="bg-white/5 rounded-2xl border border-white/10 p-4 space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-ios-body text-white/70">Average Debt Size</span>
+                    <span className="text-ios-body font-medium text-white tabular-nums">
+                      £{averageDebtSize.toFixed(0)}
+                    </span>
                   </div>
-                  
-                  <div>
-                    <Label htmlFor="legalFees">Legal Fees (£)</Label>
-                    <Input
-                      id="legalFees"
-                      type="text"
-                      inputMode="decimal"
-                      value={inputs.legalFees ?? ''}
-                      onChange={(e) => updateInput('legalFees', Number(e.target.value) || 0)}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="collectionAgencyFees">Collection Agency Fees (£)</Label>
-                    <Input
-                      id="collectionAgencyFees"
-                      type="text"
-                      inputMode="decimal"
-                      value={inputs.collectionAgencyFees ?? ''}
-                      onChange={(e) => updateInput('collectionAgencyFees', Number(e.target.value) || 0)}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="courtCosts">Court Costs (£)</Label>
-                    <Input
-                      id="courtCosts"
-                      type="text"
-                      inputMode="decimal"
-                      value={inputs.courtCosts ?? ''}
-                      onChange={(e) => updateInput('courtCosts', Number(e.target.value) || 0)}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-elec-yellow" />
-                    Recovery Strategies
-                  </CardTitle>
-                  <CardDescription>Configure your recovery approach</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="earlySettlementDiscount">Early Settlement Discount (%)</Label>
-                    <Input
-                      id="earlySettlementDiscount"
-                      type="text"
-                      inputMode="decimal"
-                      value={inputs.earlySettlementDiscount ?? ''}
-                      onChange={(e) => updateInput('earlySettlementDiscount', Number(e.target.value) || 0)}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="collectionAgencyRate">Collection Agency Commission (%)</Label>
-                    <Input
-                      id="collectionAgencyRate"
-                      type="text"
-                      inputMode="decimal"
-                      value={inputs.collectionAgencyRate ?? ''}
-                      onChange={(e) => updateInput('collectionAgencyRate', Number(e.target.value) || 0)}
-                      className="bg-elec-dark border-elec-yellow/30"
-                    />
-                  </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <input
-                      id="paymentPlanOption"
-                      type="checkbox"
-                      checked={inputs.paymentPlanOption}
-                      onChange={(e) => updateInput('paymentPlanOption', e.target.checked)}
-                      className="rounded border-elec-yellow/30"
-                    />
-                    <Label htmlFor="paymentPlanOption">Offer Payment Plans</Label>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="analysis" className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <AlertTriangle className="h-5 w-5 text-elec-yellow" />
-                    Debt Analysis
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Average Debt Size:</span>
-                    <span className="font-medium">£{averageDebtSize.toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Debt to Revenue Ratio:</span>
-                    <span className={`font-medium ${debtToRevenueRatio > 15 ? 'text-red-400' : debtToRevenueRatio > 10 ? 'text-yellow-400' : 'text-green-400'}`}>
+                  <div className="h-px bg-white/10" />
+                  <div className="flex justify-between items-center">
+                    <span className="text-ios-body text-white/70">Debt/Revenue Ratio</span>
+                    <span className={`text-ios-body font-medium tabular-nums ${
+                      debtToRevenueRatio > 15 ? "text-red-400" :
+                      debtToRevenueRatio > 10 ? "text-amber-400" : "text-green-400"
+                    }`}>
                       {debtToRevenueRatio.toFixed(1)}%
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Cash Flow Impact:</span>
-                    <span className="font-medium">{cashFlowImpact.toFixed(0)} days revenue</span>
-                  </div>
-                  <Separator />
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Expected Recovery Rate:</span>
-                    <span className="font-medium">{(expectedRecoveryRate * 100).toFixed(0)}%</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Likely Recovery Amount:</span>
-                    <span className="font-medium">£{likelyRecoveryAmount.toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Total Recovery Costs:</span>
-                    <span className="font-medium">£{totalRecoveryCosts.toFixed(2)}</span>
-                  </div>
-                  <Separator />
-                  <div className="flex justify-between font-bold">
-                    <span>Net Recovery:</span>
-                    <span className={netRecoveryAfterCosts > 0 ? 'text-green-400' : 'text-red-400'}>
-                      £{netRecoveryAfterCosts.toFixed(2)}
+                  <div className="h-px bg-white/10" />
+                  <div className="flex justify-between items-center">
+                    <span className="text-ios-body text-white/70">Annual Write-off</span>
+                    <span className="text-ios-body font-medium text-white tabular-nums">
+                      £{annualBadDebtWriteOff.toFixed(0)}
                     </span>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </section>
+            </motion.div>
+          )}
 
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle>Recovery Scenarios</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="p-3 bg-elec-dark rounded">
-                    <div className="font-medium text-blue-400 mb-1">Early Settlement Option</div>
-                    <div className="text-sm text-muted-foreground">
-                      {inputs.earlySettlementDiscount}% discount offered
-                    </div>
-                    <div className="font-medium">£{earlySettlementAmount.toFixed(2)}</div>
-                  </div>
-                  
-                  <div className="p-3 bg-elec-dark rounded">
-                    <div className="font-medium text-yellow-400 mb-1">Collection Agency</div>
-                    <div className="text-sm text-muted-foreground">
-                      {inputs.collectionAgencyRate}% commission
-                    </div>
-                    <div className="font-medium">£{collectionAgencyRecovery.toFixed(2)}</div>
-                  </div>
-                  
-                  <div className="p-3 bg-elec-dark rounded">
-                    <div className="font-medium text-green-400 mb-1">Full Legal Action</div>
-                    <div className="text-sm text-muted-foreground">
-                      Court proceedings + costs
-                    </div>
-                    <div className="font-medium">£{(likelyRecoveryAmount - totalRecoveryCosts).toFixed(2)}</div>
-                  </div>
-                  
-                  <div className="p-3 bg-elec-dark rounded">
-                    <div className="font-medium text-red-400 mb-1">Write-off Provision</div>
-                    <div className="text-sm text-muted-foreground">
-                      Annual provision based on {inputs.badDebtProvision}%
-                    </div>
-                    <div className="font-medium">£{annualBadDebtWriteOff.toFixed(2)}</div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
+          {activeTab === "recovery" && (
+            <motion.div
+              key="recovery"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.2 }}
+              className="space-y-6"
+            >
+              {/* Recovery Timeline */}
+              <section>
+                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                  Recovery Timeline
+                </p>
+                <div className="space-y-3">
+                  {recoveryStages.map((stage, index) => {
+                    const isActive = inputs.averageDebtAge >= stage.days;
+                    const isPast = inputs.averageDebtAge > (recoveryStages[index + 1]?.days ?? 999);
+                    return (
+                      <motion.div
+                        key={stage.days}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        className={`relative flex items-center gap-4 p-4 rounded-2xl border ${
+                          isActive && !isPast
+                            ? "bg-elec-yellow/10 border-elec-yellow/30"
+                            : isPast
+                            ? "bg-green-500/10 border-green-500/30"
+                            : "bg-white/5 border-white/10"
+                        }`}
+                      >
+                        <div className={`p-2.5 rounded-xl ${
+                          isActive && !isPast
+                            ? "bg-elec-yellow/20"
+                            : isPast
+                            ? "bg-green-500/20"
+                            : "bg-white/10"
+                        }`}>
+                          <stage.icon className={`h-5 w-5 ${
+                            isActive && !isPast
+                              ? "text-elec-yellow"
+                              : isPast
+                              ? "text-green-400"
+                              : "text-white/50"
+                          }`} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className={`text-ios-subhead font-medium ${
+                              isActive ? "text-white" : "text-white/50"
+                            }`}>
+                              {stage.label}
+                            </span>
+                            <span className={`text-ios-caption-2 ${
+                              isActive && !isPast ? "text-elec-yellow" : "text-white/40"
+                            }`}>
+                              Day {stage.days}
+                            </span>
+                          </div>
+                          <p className="text-ios-caption-1 text-white/50 truncate">
+                            {stage.action}
+                          </p>
+                        </div>
+                        {isPast && (
+                          <CheckCircle2 className="h-5 w-5 text-green-400 flex-shrink-0" />
+                        )}
+                        {isActive && !isPast && (
+                          <ArrowRight className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+                        )}
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </section>
 
-          <TabsContent value="prevention" className="space-y-6">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-elec-yellow" />
-                  Prevention Strategy & Best Practices
-                </CardTitle>
-                <CardDescription>Strategies to minimise future bad debt</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-medium text-elec-yellow mb-3">Credit Control Measures</h4>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>• Credit checks for new customers</li>
-                      <li>• Clear payment terms on invoices</li>
-                      <li>• Regular debt aging reports</li>
-                      <li>• Automated reminder systems</li>
-                      <li>• Retention of title clauses</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-medium text-elec-yellow mb-3">Payment Security</h4>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>• Request deposits on large jobs</li>
-                      <li>• Stage payments for major projects</li>
-                      <li>• Direct debit arrangements</li>
-                      <li>• Personal guarantees where appropriate</li>
-                      <li>• Trade credit insurance</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-medium text-elec-yellow mb-3">Early Warning Signs</h4>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>• Payments becoming consistently late</li>
-                      <li>• Partial payments without explanation</li>
-                      <li>• Difficulty contacting customer</li>
-                      <li>• Changes in payment method</li>
-                      <li>• Complaints about work quality (delaying tactics)</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-medium text-elec-yellow mb-3">Recovery Actions</h4>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>• Contact within 7 days of due date</li>
-                      <li>• Formal demand after 14 days</li>
-                      <li>• Consider early settlement discount</li>
-                      <li>• Legal letter before action</li>
-                      <li>• Court proceedings if economical</li>
-                    </ul>
+              {/* Recovery Costs */}
+              <section>
+                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                  Recovery Costs
+                </p>
+                <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
+                  <IOSInput
+                    label="Admin Costs"
+                    icon={<FileText className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.adminCosts || ""}
+                    onChange={(e) => updateInput("adminCosts", parseFloat(e.target.value) || 0)}
+                    hint="Internal time"
+                  />
+                  <IOSInput
+                    label="Legal Fees"
+                    icon={<Gavel className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.legalFees || ""}
+                    onChange={(e) => updateInput("legalFees", parseFloat(e.target.value) || 0)}
+                    hint="Solicitor costs"
+                  />
+                  <IOSInput
+                    label="Collection Agency"
+                    icon={<Users className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.collectionAgencyFees || ""}
+                    onChange={(e) => updateInput("collectionAgencyFees", parseFloat(e.target.value) || 0)}
+                    hint="Agency fees"
+                  />
+                  <IOSInput
+                    label="Court Costs"
+                    icon={<Shield className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.courtCosts || ""}
+                    onChange={(e) => updateInput("courtCosts", parseFloat(e.target.value) || 0)}
+                    hint="Filing fees"
+                  />
+                </div>
+                <div className="mt-3 bg-white/5 rounded-2xl border border-white/10 p-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-ios-body text-white/70">Total Recovery Costs</span>
+                    <span className="text-ios-headline font-semibold text-red-400 tabular-nums">
+                      £{totalRecoveryCosts.toFixed(0)}
+                    </span>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+              </section>
 
-        <div className="flex justify-center">
+              {/* Recovery Strategies */}
+              <section>
+                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                  Strategy Options
+                </p>
+                <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
+                  <IOSInput
+                    label="Early Settlement Discount"
+                    icon={<Percent className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.earlySettlementDiscount || ""}
+                    onChange={(e) => updateInput("earlySettlementDiscount", parseFloat(e.target.value) || 0)}
+                    hint="Discount offered"
+                  />
+                  <IOSInput
+                    label="Agency Commission"
+                    icon={<Percent className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.collectionAgencyRate || ""}
+                    onChange={(e) => updateInput("collectionAgencyRate", parseFloat(e.target.value) || 0)}
+                    hint="Collection %"
+                  />
+                  <div className="flex items-center justify-between px-4 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="text-white/50">
+                        <CreditCard className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="text-ios-body font-medium text-white">Payment Plans</p>
+                        <p className="text-ios-caption-1 text-white/50">Offer instalments</p>
+                      </div>
+                    </div>
+                    <Switch
+                      checked={inputs.paymentPlanOption}
+                      onCheckedChange={(checked) => updateInput("paymentPlanOption", checked)}
+                      className="data-[state=checked]:bg-elec-yellow"
+                    />
+                  </div>
+                </div>
+              </section>
+
+              {/* Scenario Comparison */}
+              <section>
+                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                  Recovery Scenarios
+                </p>
+                <div className="grid gap-3">
+                  <div className="bg-blue-500/10 border border-blue-500/30 rounded-2xl p-4">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="p-2 bg-blue-500/20 rounded-xl">
+                        <Mail className="h-4 w-4 text-blue-400" />
+                      </div>
+                      <span className="text-ios-subhead font-medium text-blue-300">Early Settlement</span>
+                    </div>
+                    <p className="text-ios-caption-1 text-blue-200/70">{inputs.earlySettlementDiscount}% discount offered</p>
+                    <p className="text-xl font-bold text-white mt-1 tabular-nums">
+                      £{earlySettlementAmount.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                    </p>
+                  </div>
+
+                  <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="p-2 bg-amber-500/20 rounded-xl">
+                        <Users className="h-4 w-4 text-amber-400" />
+                      </div>
+                      <span className="text-ios-subhead font-medium text-amber-300">Collection Agency</span>
+                    </div>
+                    <p className="text-ios-caption-1 text-amber-200/70">{inputs.collectionAgencyRate}% commission</p>
+                    <p className="text-xl font-bold text-white mt-1 tabular-nums">
+                      £{collectionAgencyRecovery.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                    </p>
+                  </div>
+
+                  <div className="bg-green-500/10 border border-green-500/30 rounded-2xl p-4">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="p-2 bg-green-500/20 rounded-xl">
+                        <Gavel className="h-4 w-4 text-green-400" />
+                      </div>
+                      <span className="text-ios-subhead font-medium text-green-300">Legal Action</span>
+                    </div>
+                    <p className="text-ios-caption-1 text-green-200/70">Court + costs ({(expectedRecoveryRate * 100).toFixed(0)}% recovery)</p>
+                    <p className="text-xl font-bold text-white mt-1 tabular-nums">
+                      £{netRecoveryAfterCosts.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                    </p>
+                  </div>
+                </div>
+              </section>
+            </motion.div>
+          )}
+
+          {activeTab === "prevention" && (
+            <motion.div
+              key="prevention"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.2 }}
+              className="space-y-6"
+            >
+              {/* Credit Control */}
+              <section>
+                <div className="bg-blue-500/10 border border-blue-500/30 rounded-2xl p-4">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 bg-blue-500/20 rounded-xl">
+                      <Shield className="h-5 w-5 text-blue-400" />
+                    </div>
+                    <span className="text-ios-headline font-semibold text-blue-300">Credit Control</span>
+                  </div>
+                  <ul className="space-y-2">
+                    {[
+                      "Credit checks for new customers",
+                      "Clear payment terms on invoices",
+                      "Regular debt aging reports",
+                      "Automated reminder systems",
+                      "Retention of title clauses"
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-ios-body text-blue-200/80">
+                        <CheckCircle2 className="h-4 w-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </section>
+
+              {/* Payment Security */}
+              <section>
+                <div className="bg-green-500/10 border border-green-500/30 rounded-2xl p-4">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 bg-green-500/20 rounded-xl">
+                      <PoundSterling className="h-5 w-5 text-green-400" />
+                    </div>
+                    <span className="text-ios-headline font-semibold text-green-300">Payment Security</span>
+                  </div>
+                  <ul className="space-y-2">
+                    {[
+                      "Request deposits on large jobs",
+                      "Stage payments for major projects",
+                      "Direct debit arrangements",
+                      "Personal guarantees where appropriate",
+                      "Trade credit insurance"
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-ios-body text-green-200/80">
+                        <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </section>
+
+              {/* Warning Signs */}
+              <section>
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 bg-amber-500/20 rounded-xl">
+                      <AlertTriangle className="h-5 w-5 text-amber-400" />
+                    </div>
+                    <span className="text-ios-headline font-semibold text-amber-300">Early Warning Signs</span>
+                  </div>
+                  <ul className="space-y-2">
+                    {[
+                      "Payments becoming consistently late",
+                      "Partial payments without explanation",
+                      "Difficulty contacting customer",
+                      "Changes in payment method",
+                      "Complaints about work quality (delaying tactics)"
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-ios-body text-amber-200/80">
+                        <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </section>
+
+              {/* Recovery Actions */}
+              <section>
+                <div className="bg-red-500/10 border border-red-500/30 rounded-2xl p-4">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 bg-red-500/20 rounded-xl">
+                      <Gavel className="h-5 w-5 text-red-400" />
+                    </div>
+                    <span className="text-ios-headline font-semibold text-red-300">Recovery Actions</span>
+                  </div>
+                  <ul className="space-y-2">
+                    {[
+                      "Contact within 7 days of due date",
+                      "Formal demand after 14 days",
+                      "Consider early settlement discount",
+                      "Legal letter before action",
+                      "Court proceedings if economical"
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-ios-body text-red-200/80">
+                        <ArrowRight className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </section>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Desktop Reset */}
+        <div className="hidden sm:block">
           <Button
             onClick={resetCalculator}
             variant="outline"
-            className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark"
+            className="w-full h-12 border-white/20 text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
-            <RefreshCw className="h-4 w-4 mr-2" />
             Reset Calculator
           </Button>
         </div>
+      </main>
+
+      {/* Bottom Action Bar - Mobile */}
+      <div className="fixed bottom-0 left-0 right-0 sm:hidden bg-black/90 backdrop-blur-xl border-t border-white/10 p-4 pb-safe">
+        <Button
+          onClick={resetCalculator}
+          className="w-full h-14 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-ios-body active:scale-[0.98] touch-manipulation"
+        >
+          Reset Calculator
+        </Button>
       </div>
     </div>
   );

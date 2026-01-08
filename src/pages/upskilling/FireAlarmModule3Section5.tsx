@@ -1,403 +1,564 @@
-import { useEffect, useMemo } from 'react';
-import { ArrowLeft, ArrowRight, Settings } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { ArrowLeft, ArrowRight, Wrench, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { AccentPanel } from '@/components/upskilling/design/AccentPanel';
+import useSEO from '@/hooks/useSEO';
+import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
 import type { QuizQuestion } from '@/types/quiz';
 
+const TITLE = "Special Applications - Fire Alarm Course";
+const DESCRIPTION = "BS 5839-1 special applications: aspirating detection, flame detectors, duct detection, special environments, and heritage building considerations.";
+
 const FireAlarmModule3Section5 = () => {
-  // SEO
-  useEffect(() => {
-    const title = 'Cause & Effect Programming (BS 5839) | Module 3 Sec 5';
-    document.title = title;
-    const desc = 'Cause/effect logic: alert/evacuate, delays, coincidence, interfaces (HVAC, lifts, doors), testing, documentation and pitfalls for BS 5839-1.';
-    let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.name = 'description';
-      document.head.appendChild(meta);
-    }
-    if (meta) meta.content = desc;
+  useSEO({ title: TITLE, description: DESCRIPTION });
 
-    // Canonical tag
-    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.rel = 'canonical';
-      document.head.appendChild(canonical);
-    }
-    if (canonical) canonical.href = window.location.href;
-
-    // Structured data (Article)
-    const ld = {
-      '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: 'Cause & Effect Programming (BS 5839)',
-      description: desc,
-      about: ['Fire alarm cause and effect', 'BS 5839-1', 'Delays', 'Coincidence', 'Interfaces'],
-      author: { '@type': 'Organization', name: 'Training Module' }
-    };
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(ld);
-    document.head.appendChild(script);
-
-    return () => {
-      if (script && script.parentNode) script.parentNode.removeChild(script);
-    };
-  }, []);
-
-  // Quiz
   const questions: QuizQuestion[] = useMemo(() => [
     {
       id: 1,
-      question: 'An investigation delay (where permitted) is used to:',
-      options: ['Speed up evacuation', 'Allow brief checking before full evacuation', 'Silence faults', 'Reduce detector sensitivity'],
+      question: 'What is the primary advantage of aspirating smoke detection (ASD)?',
+      options: ['Lower cost than point detectors', 'Very early warning through continuous air sampling and high sensitivity', 'No maintenance required', 'Works without power'],
       correctAnswer: 1,
-      explanation: 'An investigation delay can allow staff to check the source before full evacuation, where the fire strategy permits.'
+      explanation: 'ASD provides very early warning by continuously sampling air through a pipe network and detecting smoke at much lower concentrations than point detectors.'
     },
     {
       id: 2,
-      question: 'Coincidence (double knock) typically means:',
-      options: ['Any single device triggers evacuation', 'Two independent triggers are required to progress actions', 'No alarm is raised', 'Only manual call points operate'],
+      question: 'When are flame detectors typically used?',
+      options: ['In all buildings', 'In environments where smoke may not be present or where very fast fire development is expected', 'Only outdoors', 'Never in the UK'],
       correctAnswer: 1,
-      explanation: 'Two separate inputs may be required to trigger specific outputs, subject to the agreed strategy and risk profile.'
+      explanation: 'Flame detectors are used for fast-developing fires involving flammable liquids/gases, or where smoke may dissipate before reaching conventional detectors (e.g., outdoor or high-airflow areas).'
     },
     {
       id: 3,
-      question: 'Which of the following is a common interface action?',
-      options: ['Start HVAC fans on fire', 'Release electromagnetic door hold‑opens', 'Disable all lighting', 'Start lifts to top floor with doors open'],
+      question: 'What is the purpose of duct smoke detection?',
+      options: ['Detect smoke outside the building', 'Detect smoke being distributed through HVAC systems before it spreads to occupied areas', 'Replace room detectors', 'Monitor outdoor air quality'],
       correctAnswer: 1,
-      explanation: 'Door hold‑opens are typically released; lift homing, HVAC shutdown and smoke control are also common interfaces.'
+      explanation: 'Duct detectors identify smoke being transported through HVAC systems, enabling early shutdown or smoke control before contamination spreads to occupied areas.'
     },
     {
       id: 4,
-      question: 'Alert/Evacuate in phased evacuation usually means:',
-      options: ['Same tone everywhere', 'Different tones/messages for standby vs leave phases', 'No message at all', 'Only strobes are used'],
+      question: 'What special consideration applies to detection in dusty environments?',
+      options: ['Standard smoke detectors work fine', 'Use detectors designed for harsh environments with appropriate filtration or technology', 'Detection is not required', 'Only heat detectors are permitted'],
       correctAnswer: 1,
-      explanation: 'A distinct alert signal prepares adjacent areas while evacuation signal instructs to leave.'
+      explanation: 'Dusty environments require detectors with appropriate filtration, shielding, or alternative technologies (e.g., beam detectors, heat detectors) to prevent false alarms and ensure reliable detection.'
     },
     {
       id: 5,
-      question: 'Cause and effect should be documented as:',
-      options: ['A verbal description only', 'A formal matrix with inputs, logic and outputs', 'Hidden in panel code', "Left to the installer's memory"],
+      question: 'Why might heritage buildings require special detection approaches?',
+      options: ['They do not need fire detection', 'Conservation requirements may limit visible equipment and cable routes', 'Only wireless systems are permitted', 'BS 5839-1 does not apply'],
       correctAnswer: 1,
-      explanation: 'Clear matrices and schedules are essential for commissioning, testing and maintenance.'
+      explanation: 'Heritage buildings often have conservation restrictions limiting visible cables and equipment; discrete mounting, wireless systems, or concealed detection may be needed.'
     },
     {
       id: 6,
-      question: 'Why should manual call points typically override investigation delays?',
-      options: ['They should not override delays', 'Manual activation indicates confirmed emergency requiring immediate evacuation', 'To test the delay function', 'MCPs are less important than detectors'],
+      question: 'What type of detection is often used in clean rooms and data centres?',
+      options: ['Standard point smoke detectors only', 'Aspirating smoke detection for very early warning without false alarms', 'Heat detectors only', 'No detection required'],
       correctAnswer: 1,
-      explanation: 'Manual call point operation indicates a person has confirmed an emergency situation, warranting immediate full evacuation without delay.'
+      explanation: 'ASD is commonly used in clean rooms and data centres for very early warning while maintaining clean room standards and minimising false alarm risk.'
     },
     {
       id: 7,
-      question: 'What must be ensured when programming coincidence logic?',
-      options: ['Use the same detector twice', 'Ensure independence of the two triggers to avoid common-mode failure', 'Coincidence can use any devices', 'Only one detector is needed'],
+      question: 'How do optical beam detectors work?',
+      options: ['Detecting heat only', 'Transmitting an infrared beam between transmitter and receiver; smoke reduces received signal', 'Using radioactive sources', 'Sampling air through pipes'],
       correctAnswer: 1,
-      explanation: 'Coincidence requires two independent triggers; using devices that could fail together (common-mode) undermines the safety benefit of requiring two inputs.'
+      explanation: 'Beam detectors transmit an infrared beam between a transmitter and receiver; smoke particles scatter or absorb light, reducing the received signal and triggering an alarm.'
     },
     {
       id: 8,
-      question: 'How should lift interfaces typically respond to fire alarm activation?',
-      options: ['Send lifts to top floor', 'Keep operating normally', 'Recall lifts to designated floor (usually ground) and disable call buttons', 'Trap occupants inside'],
-      correctAnswer: 2,
-      explanation: 'Fire alarm activation should recall lifts to a safe floor (typically ground level) and disable call buttons to prevent use during evacuation, except for firefighting lifts.'
+      question: 'What factor is critical when installing aspirating detection sampling pipes?',
+      options: ['Pipe colour matching decor', 'Correct sampling hole size and spacing to ensure representative air sampling', 'Only vertical runs are permitted', 'Pipes must be visible'],
+      correctAnswer: 1,
+      explanation: 'Sampling hole size and spacing determine airflow balance and detection sensitivity; incorrect design leads to uneven sampling and missed or delayed detection.'
     },
     {
       id: 9,
-      question: 'What should happen to interfaces during power loss to ensure fail-safe operation?',
-      options: ['All outputs remain unchanged', 'Interfaces should fail to a safe state (e.g., doors released, plant shut down)', 'System should lock all doors', 'Ignore power loss scenarios'],
+      question: 'When might linear heat detection (LHD) be used?',
+      options: ['Only in cold stores', 'Along cable runs, conveyors, or where detection over a linear path is more practical than point detection', 'Only outdoors', 'Never in modern buildings'],
       correctAnswer: 1,
-      explanation: 'Fail-safe design ensures interfaces move to safe states on power loss: fire doors close (hold-opens release), essential plant shuts down, access control releases.'
+      explanation: 'Linear heat detection is well-suited to protecting cable trays, conveyors, tunnels, and other linear risks where discrete detection along the full length is needed.'
     },
     {
       id: 10,
-      question: 'Why must interface circuits be monitored?',
-      options: ['Monitoring is not required', 'To detect open/short circuit faults ensuring interface reliability before emergency', 'Only to count operations', 'For power consumption measurement only'],
+      question: 'What challenge do high-airflow environments present for smoke detection?',
+      options: ['No challenges exist', 'Smoke dilution may prevent detection or delay alarm significantly', 'Only flame detectors work', 'Heat detectors are faster in airflow'],
       correctAnswer: 1,
-      explanation: 'Interface monitoring detects wiring faults (open/short circuits) before an emergency, ensuring critical functions like door release and HVAC shutdown will operate when needed.'
-    },
-    {
-      id: 11,
-      question: 'What test frequency is typically recommended for manual call points?',
-      options: ['Annually only', 'Weekly—operate at least one MCP', 'Every 5 years', 'Never test MCPs'],
-      correctAnswer: 1,
-      explanation: 'BS 5839-1 recommends weekly testing of at least one manual call point on a rotational basis to verify system operation and occupant familiarity.'
-    },
-    {
-      id: 12,
-      question: 'How should class change or test modes be distinguished from actual alarms?',
-      options: ['They should sound identical', 'Use clearly distinguishable tones/messages that cannot be confused with fire alarms', 'Visual indication only with no sound', 'No distinction is needed'],
-      correctAnswer: 1,
-      explanation: 'Test and class change signals must be clearly distinguishable from actual fire alarms to prevent confusion, inappropriate evacuation, or complacency among occupants.'
-    },
-    {
-      id: 13,
-      question: 'What should be included in cause and effect commissioning documentation?',
-      options: ['Verbal description only', 'As-fitted drawings, C&E matrix, test results, and interface verification records', 'Nothing—installers remember everything', 'Only the panel serial number'],
-      correctAnswer: 1,
-      explanation: 'Comprehensive commissioning records include as-fitted drawings, detailed C&E matrices with all inputs/outputs, test results, and interface fail-safe verification—essential for maintenance and modifications.'
+      explanation: 'High airflow dilutes smoke, potentially preventing it from reaching detectors or significantly delaying alarm. Duct detection, ASD, or closer detector spacing may be needed.'
     }
   ], []);
 
-  const sequentialQuestions = useMemo(
-    () => questions.map(q => ({ id: q.id, question: q.question, options: q.options, correct: q.correctAnswer, explanation: q.explanation })),
-    [questions]
-  );
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(Array(questions.length).fill(-1));
+  const [showResults, setShowResults] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
+
+  const handleAnswerSelect = (answerIndex: number) => {
+    const updated = [...selectedAnswers];
+    updated[currentQuestion] = answerIndex;
+    setSelectedAnswers(updated);
+  };
+
+  const handleNext = () => {
+    if (currentQuestion < questions.length - 1) setCurrentQuestion((q) => q + 1);
+    else setShowResults(true);
+  };
+
+  const handlePrevious = () => setCurrentQuestion((q) => Math.max(0, q - 1));
+
+  const resetQuiz = () => {
+    setCurrentQuestion(0);
+    setSelectedAnswers(Array(questions.length).fill(-1));
+    setShowResults(false);
+  };
+
+  const calculateScore = () =>
+    selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="../fire-alarm-module-3">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 3
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* iOS Header */}
+      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center h-[56px] px-4 max-w-4xl mx-auto">
+          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
+            <Link to="../module-3">
+              <ArrowLeft className="h-5 w-5" />
+              <span className="hidden sm:inline">Module 3</span>
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-6 max-w-5xl mx-auto">
-          {/* Header */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <Settings className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-3xl font-bold text-white">Cause and Effect Programming Basics</h1>
-                <p className="text-lg text-gray-400">Programming cause and effect relationships in fire alarm systems</p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">Section 3.5</Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">C&amp;E Programming</Badge>
-            </div>
-          </div>
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Introduction</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 text-gray-300">
-              <p>Cause and effect (C&amp;E) defines how system inputs produce outputs, including alert/evacuate signalling, delays, coincidences and interfaces with other building systems. Robust, documented C&amp;E enables safe and predictable responses aligned with the fire strategy.</p>
-            </CardContent>
-          </Card>
-
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Learning Objectives</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>Explain alert/evacuate signalling and phased strategies.</li>
-                  <li>Configure investigation delays and coincidence where permitted.</li>
-                  <li>Integrate interfaces: lifts, doors, smoke control, HVAC, plant shutdown.</li>
-                  <li>Produce clear C&amp;E matrices and test/maintenance procedures.</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Programming Concepts */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Programming Concepts</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6 text-gray-300">
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-400 mb-2">Signals & Phasing</h3>
-                <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li>Distinct tones/messages: <span className="font-semibold">Alert</span> (standby) and <span className="font-semibold">Evacuate</span> (leave now).</li>
-                    <li>Phased evacuation by floor/zone to avoid congestion and protect stair cores.</li>
-                    <li>Class change and test modes must be clearly distinguishable from alarms.</li>
-                  </ul>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-400 mb-2">Delays & Coincidence</h3>
-                <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li>Investigation delays may be used where allowed by the fire strategy; keep periods short and indicated at the CIE.</li>
-                    <li>Coincidence (double knock) can reduce unwanted evacuations in complex spaces; ensure independence of triggers.</li>
-                    <li>Manual call points often override delays to trigger immediate evacuation.</li>
-                  </ul>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-400 mb-2">Interfaces & Interlocks</h3>
-                <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li>Door hold‑open release, access control fail‑safe, and fire curtain deployment.</li>
-                    <li>Lift homing/recall and shutdown of non‑essential plant.</li>
-                    <li>HVAC shutdown/smoke control, AOVs and pressurisation control as designed.</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Highlights */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">BS 5839‑1 Highlights</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <AccentPanel tone="amber" variant="subtle">
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>Document C&amp;E in a clear <span className="font-semibold">matrix</span> with inputs, logic and outputs.</li>
-                  <li>Ensure interfaces are fail‑safe and monitored; avoid single points of failure.</li>
-                  <li>Provide explicit test procedures and commissioning evidence.</li>
-                </ul>
-              </AccentPanel>
-            </CardContent>
-          </Card>
-
-          {/* Common Mistakes */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Common Mistakes</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>Unclear or undocumented logic leading to unsafe behaviours.</li>
-                  <li>Overuse of long delays or complex coincidences without justification.</li>
-                  <li>Poorly monitored interfaces causing silent failures.</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Design & Documentation Workflow */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Design & Documentation Workflow</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                <ol className="list-decimal pl-6 space-y-2">
-                  <li>Confirm fire strategy, evacuation method (phased/all‑out) and management capabilities.</li>
-                  <li>Define zones, alarm areas and required interfaces (doors, lifts, HVAC, AOVs, plant).</li>
-                  <li>Agree any <span className="font-semibold">investigation delays</span> and <span className="font-semibold">coincidence</span> with stakeholders; ensure MCPs override delays.</li>
-                  <li>Draft the C&amp;E <span className="font-semibold">matrix</span> (inputs → logic → outputs) with clear identifiers.</li>
-                  <li>Validate fail‑safe behaviour, input/output monitoring and loss‑of‑power responses.</li>
-                  <li>Commission against the matrix; record results and as‑fitted variations.</li>
-                  <li>Produce maintenance/test procedures and train responsible persons.</li>
-                </ol>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Worked Example */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Worked Example: Small Office (Two Floors)</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 text-gray-300">
-              <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                <h3 className="text-yellow-400 font-semibold mb-2">Inputs</h3>
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>MCPS: GF‑MCP‑01..03, 1F‑MCP‑01..02 (immediate evacuate).</li>
-                  <li>Detectors: GF‑SD‑01..04 (open plan), 1F‑SD‑01..03, Comms‑HD‑01.</li>
-                </ul>
-              </div>
-              <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                <h3 className="text-yellow-400 font-semibold mb-2">Logic</h3>
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>MCP or heat detector → immediate <span className="font-semibold">Evacuate</span> both floors.</li>
-                  <li>Single smoke detector in open plan → 120 s <span className="font-semibold">investigation delay</span> (indicated at CIE). Second alarm during delay → immediate evacuate.</li>
-                  <li>Coincidence in comms room (smoke + heat) before releasing gas suppression.</li>
-                </ul>
-              </div>
-              <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                <h3 className="text-yellow-400 font-semibold mb-2">Outputs</h3>
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>Sounders/VADs: Alert on adjacent floor for 60 s, then Evacuate both floors.</li>
-                  <li>Release door hold‑opens and fail‑safe access control on both floors.</li>
-                  <li>Lift recall to ground and disable calls; HVAC shutdown; close fire/smoke dampers as designed.</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Testing & Maintenance */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Testing & Maintenance Procedures</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                <ul className="list-disc pl-6 space-y-2">
-                  <li><span className="font-semibold">Weekly</span>: Operate at least one MCP; confirm correct alert/evacuate signalling and output actions.</li>
-                  <li><span className="font-semibold">Quarterly</span>: Test a proportion of devices; verify delays/coincidence and interface monitoring.</li>
-                  <li><span className="font-semibold">Annually</span>: 100% device test; confirm fail‑safe behaviour on power loss and interface faults; update C&amp;E matrix if altered.</li>
-                  <li>Record all results; ensure site staff understand investigation delay indications and overrides.</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Commissioning Checklist */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Commissioning Checklist</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>All inputs/outputs labelled to drawings; addresses match matrix.</li>
-                  <li>Delays, coincidence and MCP overrides demonstrated and recorded.</li>
-                  <li>Interfaces fail‑safe and monitored; simulate open‑circuit/short faults.</li>
-                  <li>Distinct alert vs evacuate audibles/messages verified across areas.</li>
-                  <li>Documentation: as‑fitted drawings, C&amp;E matrix, test schedules, user guidance.</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <AccentPanel tone="green" variant="subtle">
-                <p>Well‑designed, documented C&amp;E aligns with the fire strategy, integrates building systems safely, and supports clear testing and maintenance.</p>
-              </AccentPanel>
-            </CardContent>
-          </Card>
-
-          <SingleQuestionQuiz
-            questions={sequentialQuestions}
-            title="Knowledge Check: Cause & Effect Programming"
-          />
-
-          {/* Nav */}
-          <div className="flex justify-between mt-8">
-            <Link to="../fire-alarm-module-3-section-4">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../fire-alarm-module-3-section-6">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
+          <span className="flex-1 text-center text-[17px] font-semibold text-white">Section 5</span>
+          <div className="w-[60px]" />
         </div>
-      </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="px-4 pt-8 pb-6 max-w-4xl mx-auto">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20">
+            <Wrench className="h-7 w-7 text-amber-400" />
+          </div>
+          <span className="text-[11px] font-medium text-amber-400 uppercase tracking-wide">
+            Section 5 of 6
+          </span>
+        </div>
+        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
+          Special Applications
+        </h1>
+        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
+          Specialist detection technologies and challenging environments including ASD, flame detectors, and heritage buildings.
+        </p>
+        <div className="flex items-center gap-4 text-[13px] text-white/50">
+          <span className="flex items-center gap-1">
+            <Target className="h-4 w-4" />
+            6 learning outcomes
+          </span>
+          <span className="flex items-center gap-1">
+            <Clock className="h-4 w-4" />
+            25-30 mins
+          </span>
+        </div>
+      </section>
+
+      {/* In 30 Seconds Card */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-[15px] font-semibold text-amber-400 flex items-center gap-2">
+              <Lightbulb className="h-4 w-4" />
+              In 30 Seconds
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-[15px] text-white/80">
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+              <span><strong>Aspirating detection (ASD)</strong> provides very early warning for high-value assets and critical infrastructure</span>
+            </p>
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+              <span><strong>Specialist detectors</strong> (flame, beam, LHD) address specific hazards and environments</span>
+            </p>
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+              <span><strong>Heritage and harsh environments</strong> require careful technology selection and installation methods</span>
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Learning Outcomes */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            "Explain aspirating smoke detection principles and applications",
+            "Select appropriate detection for special hazards (flame, beam, LHD)",
+            "Design for challenging environments (dusty, cold, high-airflow)",
+            "Address heritage building detection requirements",
+            "Apply duct detection for HVAC smoke control",
+            "Integrate specialist detection with conventional systems"
+          ].map((outcome, i) => (
+            <Card key={i} variant="ios" className="p-3">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                  <span className="text-[11px] font-bold text-amber-400">{i + 1}</span>
+                </div>
+                <p className="text-[13px] text-white/80">{outcome}</p>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto space-y-6">
+        {/* Section 01 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-1 rounded">01</span>
+              <h3 className="text-[17px] font-semibold text-white">Aspirating Smoke Detection (ASD)</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>ASD continuously samples air through a pipe network, providing very early warning of fire development:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">ASD Characteristics:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Very early warning:</strong> detects smoke at much lower concentrations than point detectors</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Sampling network:</strong> pipes with calibrated holes draw air to central detector</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>High-value protection:</strong> data centres, clean rooms, heritage buildings</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>EN 54-20:</strong> specifies sensitivity classes (A, B, C) for different applications</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 02 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-1 rounded">02</span>
+              <h3 className="text-[17px] font-semibold text-white">Flame Detectors</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Flame detectors respond to the electromagnetic radiation from flames:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Flame Detector Types:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>IR (Infrared):</strong> detects infrared radiation from flames</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>UV (Ultraviolet):</strong> responds to UV radiation from flames</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Multi-spectrum:</strong> combines IR and UV for reduced false alarms</li>
+                </ul>
+              </div>
+              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
+                <p className="text-[13px] text-amber-300 flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  Flame detectors require line-of-sight to the fire location and are suited to fast-developing fires involving flammable liquids/gases.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 03 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-1 rounded">03</span>
+              <h3 className="text-[17px] font-semibold text-white">Optical Beam Detectors</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Beam detectors use infrared beams to detect smoke across large areas:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Beam Detector Applications:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>High ceilings:</strong> warehouses, atriums, churches</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Large open areas:</strong> exhibition halls, sports facilities</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Maintenance access:</strong> easier than point detectors at height</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Mounting:</strong> requires stable mounting to prevent drift</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Inline Check 1 */}
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <HelpCircle className="h-5 w-5 text-amber-400" />
+              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
+            </div>
+            <p className="text-[15px] text-white/80 mb-3">A data centre requires very early warning of incipient fire to allow pre-action response. Which detection technology is most appropriate?</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Aspirating smoke detection (ASD) is the most appropriate choice. It provides very early warning at the incipient stage, allows air sampling from under-floor voids and ceiling spaces, and can be designed to avoid false alarms while maintaining high sensitivity.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 04 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-1 rounded">04</span>
+              <h3 className="text-[17px] font-semibold text-white">Linear Heat Detection (LHD)</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>LHD uses continuous sensing cables to detect heat along their length:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">LHD Applications:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Cable trays:</strong> protecting cable routes from fire spread</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Conveyors:</strong> industrial process monitoring</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Tunnels:</strong> road and rail tunnel protection</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Cold stores:</strong> withstands low temperatures where point detectors may fail</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 05 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-1 rounded">05</span>
+              <h3 className="text-[17px] font-semibold text-white">Duct Smoke Detection</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Duct detectors monitor HVAC systems to prevent smoke distribution:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Duct Detection Considerations:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Sampling tubes:</strong> extend across duct cross-section</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Airflow:</strong> minimum and maximum airflow rates apply</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Actions:</strong> HVAC shutdown, damper closure, or smoke control mode</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Access:</strong> ensure maintenance access for testing</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Inline Check 2 */}
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <HelpCircle className="h-5 w-5 text-amber-400" />
+              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
+            </div>
+            <p className="text-[15px] text-white/80 mb-3">A Grade I listed building needs fire detection but the conservation officer has restricted visible cables and devices. What approaches might be suitable?</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Consider aspirating detection with concealed sampling pipes, wireless detection systems, or discrete mounting with colour-matched devices. Coordinate with the conservation officer early in design to agree acceptable approaches that meet both fire safety and conservation requirements.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 06 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-1 rounded">06</span>
+              <h3 className="text-[17px] font-semibold text-white">Challenging Environments</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Special consideration is needed for harsh or unusual conditions:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Environment Solutions:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Dusty:</strong> filtered detectors, beam detectors, or heat detection</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Cold stores:</strong> LHD or specially rated detectors</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>High-airflow:</strong> duct detection, ASD, or increased detector density</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Outdoor:</strong> weatherproof housings, flame detectors, or beam detectors</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Explosive:</strong> ATEX/IECEx rated equipment for hazardous areas</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Practical Guidance */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
+
+        <div className="space-y-3">
+          <Card variant="ios" className="border-green-500/20">
+            <CardContent className="p-4">
+              <h4 className="text-[15px] font-semibold text-green-400 mb-2">Pro Tips</h4>
+              <ul className="space-y-2 text-[13px] text-white/70">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  For ASD, involve the manufacturer early to ensure correct pipe design and sensitivity settings
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Engage conservation officers early for heritage buildings to agree detection approach
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Document special detector justifications and maintenance requirements clearly
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card variant="ios" className="border-red-500/20">
+            <CardContent className="p-4">
+              <h4 className="text-[15px] font-semibold text-red-400 mb-2">Common Mistakes</h4>
+              <ul className="space-y-2 text-[13px] text-white/70">
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Specifying ASD without proper pipe network design calculations
+                </li>
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Forgetting maintenance access for duct detectors in ceiling voids
+                </li>
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Using standard detectors in environments requiring specialist solutions
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* FAQs */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
+        <div className="space-y-3">
+          {[
+            { q: "Can ASD replace conventional point detection?", a: "Yes - ASD can provide equivalent or superior coverage. Design must follow EN 54-20 and manufacturer guidance. A single ASD unit can replace multiple point detectors in appropriate applications." },
+            { q: "Do flame detectors work in all fire scenarios?", a: "No - flame detectors require line-of-sight and are best suited to fast-developing fires with visible flames. They may not detect smouldering fires before visible flame develops." },
+            { q: "How often should ASD be maintained?", a: "Follow manufacturer guidance and BS 5839-1 recommendations. Typically annual service with periodic filter replacement and flow verification." },
+            { q: "Can wireless detectors be used in heritage buildings?", a: "Yes - wireless systems can reduce visible cabling. Ensure adequate radio coverage and follow manufacturer guidance for battery replacement and signal monitoring." },
+            { q: "What testing is needed for duct detectors?", a: "Regular functional testing using approved test methods (smoke simulation or detector removal for test). Verify HVAC interface actions operate correctly." },
+            { q: "How do I specify detection for a cold store?", a: "Consider LHD rated for low temperatures, or point detectors rated for the temperature range. Standard smoke detectors may not function reliably at very low temperatures." }
+          ].map((faq, i) => (
+            <Card key={i} variant="ios">
+              <CardContent className="p-4">
+                <p className="text-[15px] font-semibold text-white mb-2">{faq.q}</p>
+                <p className="text-[13px] text-white/70">{faq.a}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
+              <BookOpen className="h-5 w-5 text-amber-400" />
+              Knowledge Check
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {!showQuiz ? (
+              <div className="text-center py-6">
+                <p className="text-[15px] text-white/70 mb-4">Test your understanding of special applications with 10 questions.</p>
+                <Button variant="ios-primary" onClick={() => setShowQuiz(true)}>
+                  Start Quiz
+                </Button>
+              </div>
+            ) : showResults ? (
+              <div className="space-y-6">
+                <div className="text-center py-4">
+                  <p className="text-[34px] font-bold text-amber-400">{calculateScore()}/{questions.length}</p>
+                  <p className="text-[15px] text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
+                </div>
+
+                <div className="space-y-4">
+                  {questions.map((q, i) => {
+                    const correct = selectedAnswers[i] === q.correctAnswer;
+                    return (
+                      <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
+                        <p className="text-[15px] font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
+                        <p className={`text-[13px] ${correct ? 'text-green-400' : 'text-red-400'}`}>
+                          Your answer: {q.options[selectedAnswers[i]] ?? 'Not answered'} {correct ? '' : ''}
+                        </p>
+                        {!correct && (
+                          <p className="text-[13px] text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
+                        )}
+                        <p className="text-[13px] text-white/70 mt-2">{q.explanation}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <Button variant="ios-secondary" onClick={resetQuiz} className="w-full gap-2">
+                  <RotateCcw className="h-4 w-4" />
+                  Restart Quiz
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+
+                <div>
+                  <p className="text-[17px] font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
+                  <div className="space-y-2">
+                    {questions[currentQuestion].options.map((opt, idx) => {
+                      const selected = selectedAnswers[currentQuestion] === idx;
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => handleAnswerSelect(idx)}
+                          className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
+                            selected
+                              ? 'bg-amber-500/20 border-amber-500/50 text-white'
+                              : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                          }`}
+                        >
+                          {opt}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between gap-3">
+                  <Button
+                    variant="ios-secondary"
+                    onClick={handlePrevious}
+                    disabled={currentQuestion === 0}
+                    className="flex-1"
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    variant="ios-primary"
+                    onClick={handleNext}
+                    disabled={selectedAnswers[currentQuestion] === -1}
+                    className="flex-1"
+                  >
+                    {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Navigation Footer */}
+      <section className="px-4 pb-safe max-w-4xl mx-auto">
+        <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
+          <Button variant="ios-secondary" asChild className="flex-1">
+            <Link to="../module-3/section-4">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button variant="ios-primary" asChild className="flex-1">
+            <Link to="../module-3/section-6">
+              Next Section
+              <ArrowRight className="h-4 w-4 ml-2" />
+            </Link>
+          </Button>
+        </div>
+      </section>
     </div>
   );
 };

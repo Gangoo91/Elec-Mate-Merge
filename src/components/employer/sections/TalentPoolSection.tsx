@@ -10,7 +10,7 @@ import { BookLabourBankDialog } from "@/components/employer/dialogs/BookLabourBa
 import { SparkProfileSheet, type EnhancedElectrician, type VerificationTier } from "@/components/employer/SparkProfileSheet";
 import { TalentMapView } from "@/components/employer/TalentMapView";
 import { AvailabilityCalendar } from "@/components/employer/AvailabilityCalendar";
-import { TalentProfileCard } from "@/components/employer/talent-pool/TalentProfileCard";
+import { PremiumTalentCard } from "@/components/employer/talent-pool/PremiumTalentCard";
 import { TalentProfileCardSkeletonGrid } from "@/components/employer/talent-pool/TalentProfileCardSkeleton";
 import { MessageDialog } from "@/components/employer/talent-pool/MessageDialog";
 import { InviteToApplyDialog } from "@/components/employer/talent-pool/InviteToApplyDialog";
@@ -458,7 +458,7 @@ export function TalentPoolSection() {
             const isInLabourBank = !!labourBankRate;
 
             return (
-              <TalentProfileCard
+              <PremiumTalentCard
                 key={electrician.id}
                 id={electrician.id}
                 elecIdProfileId={(electrician as any).elecIdProfileId}
@@ -473,6 +473,9 @@ export function TalentPoolSection() {
                 availability={electrician.availability}
                 verifiedDocsCount={(electrician as any).verifiedDocsCount || 0}
                 specialisms={electrician.specialisms}
+                qualifications={electrician.qualifications}
+                completedJobs={electrician.completedJobs}
+                elecIdNumber={(electrician as any).elecIdNumber}
                 isSaved={isSaved}
                 isInLabourBank={isInLabourBank}
                 labourBankRate={labourBankRate?.agreedDayRate}

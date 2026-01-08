@@ -1,9 +1,23 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { IOSInput } from "@/components/ui/ios-input";
+import {
+  ChevronLeft,
+  RotateCcw,
+  PoundSterling,
+  Building2,
+  Wrench,
+  Shield,
+  Car,
+  GraduationCap,
+  Clock,
+  Calendar,
+  TrendingUp,
+  CheckCircle2,
+  AlertTriangle
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 interface BusinessInputs {
   annualSalary: number;
@@ -18,6 +32,7 @@ interface BusinessInputs {
 }
 
 const HourlyRateCalculator = () => {
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState<BusinessInputs>({
     annualSalary: 35000,
     annualOverheads: 8000,
@@ -49,210 +64,263 @@ const HourlyRateCalculator = () => {
   };
 
   // Calculations
-  const totalAnnualCosts = inputs.annualSalary + inputs.annualOverheads + inputs.toolsAndEquipment + 
+  const totalAnnualCosts = inputs.annualSalary + inputs.annualOverheads + inputs.toolsAndEquipment +
                           inputs.insurance + inputs.vehicleCosts + inputs.training;
   const totalBillableHours = inputs.billableHoursPerWeek * inputs.weeksWorkedPerYear;
   const breakEvenRate = totalBillableHours > 0 ? totalAnnualCosts / totalBillableHours : 0;
   const recommendedRate = breakEvenRate * (1 + inputs.desiredProfitMargin / 100);
-  
+
   // Market comparison rates
   const traineeRate = 25;
   const qualifiedRate = 45;
   const experiencedRate = 65;
 
+  const isCompetitive = recommendedRate <= experiencedRate;
+
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <div className="text-center space-y-2">
-        <h1 className="text-2xl font-bold text-foreground">Hourly Rate Calculator</h1>
-        <p className="text-muted-foreground">
-          Calculate your optimal hourly rate based on business costs and profit targets
-        </p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark to-black">
+      {/* Sticky Header - iOS Navigation Bar */}
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-black/80 border-b border-white/10">
+        <div className="px-4 py-3 flex items-center justify-between max-w-2xl mx-auto">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate(-1)}
+            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </Button>
+          <h1 className="text-ios-headline text-white font-semibold">Hourly Rate</h1>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={resetCalculator}
+            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+          >
+            <RotateCcw className="h-5 w-5" />
+          </Button>
+        </div>
+      </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Input Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Business Costs & Targets</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="annualSalary">Annual Salary/Drawings (£)</Label>
-              <Input
-                id="annualSalary"
-                type="number"
-                value={inputs.annualSalary || ""}
-                onChange={(e) => updateInput("annualSalary", parseFloat(e.target.value) || 0)}
-                placeholder="Enter annual salary target"
-              />
+      {/* Main Content */}
+      <main className="px-4 py-6 space-y-6 pb-32 sm:pb-6 max-w-2xl mx-auto">
+
+        {/* Hero Result Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="bg-gradient-to-br from-elec-yellow/20 via-amber-500/15 to-orange-500/10
+                     backdrop-blur-xl border border-elec-yellow/30 rounded-3xl p-6 relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/10 rounded-full blur-3xl" />
+          <div className="relative">
+            <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">Recommended Rate</p>
+            <p className="text-4xl sm:text-5xl font-bold text-elec-yellow mt-1 tabular-nums">
+              £{recommendedRate.toFixed(2)}
+              <span className="text-lg text-white/50 font-normal">/hour</span>
+            </p>
+            <div className="flex items-center gap-2 mt-3">
+              {isCompetitive ? (
+                <>
+                  <CheckCircle2 className="h-4 w-4 text-green-400" />
+                  <span className="text-ios-footnote text-green-400">Competitive with market</span>
+                </>
+              ) : (
+                <>
+                  <AlertTriangle className="h-4 w-4 text-amber-400" />
+                  <span className="text-ios-footnote text-amber-400">Above market average</span>
+                </>
+              )}
             </div>
+          </div>
+        </motion.div>
 
-            <div className="space-y-2">
-              <Label htmlFor="annualOverheads">Annual Overheads (£)</Label>
-              <Input
-                id="annualOverheads"
-                type="number"
-                value={inputs.annualOverheads || ""}
-                onChange={(e) => updateInput("annualOverheads", parseFloat(e.target.value) || 0)}
-                placeholder="Office, utilities, admin costs"
-              />
+        {/* Summary Stats - Horizontal Scroll */}
+        <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1 }}
+            className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[140px] border border-white/10"
+          >
+            <p className="text-ios-caption-1 text-white/50">Annual Costs</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">£{totalAnnualCosts.toLocaleString()}</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.15 }}
+            className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[140px] border border-white/10"
+          >
+            <p className="text-ios-caption-1 text-white/50">Billable Hours</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">{totalBillableHours.toLocaleString()}</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+            className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[140px] border border-white/10"
+          >
+            <p className="text-ios-caption-1 text-white/50">Break-Even</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">£{breakEvenRate.toFixed(2)}</p>
+          </motion.div>
+        </div>
+
+        {/* Income Section */}
+        <section>
+          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+            Income Target
+          </p>
+          <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10">
+            <IOSInput
+              label="Annual Salary/Drawings"
+              icon={<PoundSterling className="h-5 w-5" />}
+              type="number"
+              value={inputs.annualSalary || ""}
+              onChange={(e) => updateInput("annualSalary", parseFloat(e.target.value) || 0)}
+              hint="Your target annual income"
+            />
+          </div>
+        </section>
+
+        {/* Business Costs Section */}
+        <section>
+          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+            Business Costs (Annual)
+          </p>
+          <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
+            <IOSInput
+              label="Overheads"
+              icon={<Building2 className="h-5 w-5" />}
+              type="number"
+              value={inputs.annualOverheads || ""}
+              onChange={(e) => updateInput("annualOverheads", parseFloat(e.target.value) || 0)}
+              hint="Office, utilities, admin"
+            />
+            <IOSInput
+              label="Tools & Equipment"
+              icon={<Wrench className="h-5 w-5" />}
+              type="number"
+              value={inputs.toolsAndEquipment || ""}
+              onChange={(e) => updateInput("toolsAndEquipment", parseFloat(e.target.value) || 0)}
+              hint="Annual replacements"
+            />
+            <IOSInput
+              label="Insurance"
+              icon={<Shield className="h-5 w-5" />}
+              type="number"
+              value={inputs.insurance || ""}
+              onChange={(e) => updateInput("insurance", parseFloat(e.target.value) || 0)}
+              hint="Public liability, tools"
+            />
+            <IOSInput
+              label="Vehicle Costs"
+              icon={<Car className="h-5 w-5" />}
+              type="number"
+              value={inputs.vehicleCosts || ""}
+              onChange={(e) => updateInput("vehicleCosts", parseFloat(e.target.value) || 0)}
+              hint="Fuel, maintenance"
+            />
+            <IOSInput
+              label="Training & CPD"
+              icon={<GraduationCap className="h-5 w-5" />}
+              type="number"
+              value={inputs.training || ""}
+              onChange={(e) => updateInput("training", parseFloat(e.target.value) || 0)}
+              hint="Courses, certifications"
+            />
+          </div>
+        </section>
+
+        {/* Working Hours Section */}
+        <section>
+          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+            Working Hours
+          </p>
+          <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
+            <IOSInput
+              label="Billable Hours/Week"
+              icon={<Clock className="h-5 w-5" />}
+              type="number"
+              value={inputs.billableHoursPerWeek || ""}
+              onChange={(e) => updateInput("billableHoursPerWeek", parseFloat(e.target.value) || 0)}
+              hint="Hours you can charge"
+            />
+            <IOSInput
+              label="Weeks Worked/Year"
+              icon={<Calendar className="h-5 w-5" />}
+              type="number"
+              value={inputs.weeksWorkedPerYear || ""}
+              onChange={(e) => updateInput("weeksWorkedPerYear", parseFloat(e.target.value) || 0)}
+              hint="Typically 48-50 weeks"
+            />
+          </div>
+        </section>
+
+        {/* Profit Target Section */}
+        <section>
+          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+            Profit Target
+          </p>
+          <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10">
+            <IOSInput
+              label="Profit Margin %"
+              icon={<TrendingUp className="h-5 w-5" />}
+              type="number"
+              value={inputs.desiredProfitMargin || ""}
+              onChange={(e) => updateInput("desiredProfitMargin", parseFloat(e.target.value) || 0)}
+              hint="Target profit percentage"
+            />
+          </div>
+        </section>
+
+        {/* Market Comparison */}
+        <section>
+          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+            UK Market Rates
+          </p>
+          <div className="bg-white/5 rounded-2xl border border-white/10 p-4 space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-ios-body text-white/70">Trainee</span>
+              <span className="text-ios-body font-medium text-white">£{traineeRate}/hr</span>
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="toolsAndEquipment">Tools & Equipment (£/year)</Label>
-              <Input
-                id="toolsAndEquipment"
-                type="number"
-                value={inputs.toolsAndEquipment || ""}
-                onChange={(e) => updateInput("toolsAndEquipment", parseFloat(e.target.value) || 0)}
-                placeholder="Annual tool costs and replacements"
-              />
+            <div className="h-px bg-white/10" />
+            <div className="flex justify-between items-center">
+              <span className="text-ios-body text-white/70">Qualified</span>
+              <span className="text-ios-body font-medium text-white">£{qualifiedRate}/hr</span>
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="insurance">Insurance (£/year)</Label>
-              <Input
-                id="insurance"
-                type="number"
-                value={inputs.insurance || ""}
-                onChange={(e) => updateInput("insurance", parseFloat(e.target.value) || 0)}
-                placeholder="Public liability, tools insurance"
-              />
+            <div className="h-px bg-white/10" />
+            <div className="flex justify-between items-center">
+              <span className="text-ios-body text-white/70">Experienced</span>
+              <span className="text-ios-body font-medium text-white">£{experiencedRate}/hr</span>
             </div>
+          </div>
+          <p className="text-ios-caption-2 text-white/40 mt-2 px-1">
+            Indicative UK averages. Adjust for your location and specialisation.
+          </p>
+        </section>
 
-            <div className="space-y-2">
-              <Label htmlFor="vehicleCosts">Vehicle Costs (£/year)</Label>
-              <Input
-                id="vehicleCosts"
-                type="number"
-                value={inputs.vehicleCosts || ""}
-                onChange={(e) => updateInput("vehicleCosts", parseFloat(e.target.value) || 0)}
-                placeholder="Fuel, maintenance, insurance"
-              />
-            </div>
+        {/* Desktop Reset Button */}
+        <div className="hidden sm:block">
+          <Button
+            onClick={resetCalculator}
+            variant="outline"
+            className="w-full h-12 border-white/20 text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+          >
+            Reset Calculator
+          </Button>
+        </div>
+      </main>
 
-            <div className="space-y-2">
-              <Label htmlFor="training">Training & Certification (£/year)</Label>
-              <Input
-                id="training"
-                type="number"
-                value={inputs.training || ""}
-                onChange={(e) => updateInput("training", parseFloat(e.target.value) || 0)}
-                placeholder="Courses, certifications, CPD"
-              />
-            </div>
-
-            <Separator />
-
-            <div className="space-y-2">
-              <Label htmlFor="billableHoursPerWeek">Billable Hours Per Week</Label>
-              <Input
-                id="billableHoursPerWeek"
-                type="number"
-                value={inputs.billableHoursPerWeek || ""}
-                onChange={(e) => updateInput("billableHoursPerWeek", parseFloat(e.target.value) || 0)}
-                placeholder="Hours you can charge for"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="weeksWorkedPerYear">Weeks Worked Per Year</Label>
-              <Input
-                id="weeksWorkedPerYear"
-                type="number"
-                value={inputs.weeksWorkedPerYear || ""}
-                onChange={(e) => updateInput("weeksWorkedPerYear", parseFloat(e.target.value) || 0)}
-                placeholder="Typically 48-50 weeks"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="desiredProfitMargin">Desired Profit Margin (%)</Label>
-              <Input
-                id="desiredProfitMargin"
-                type="number"
-                value={inputs.desiredProfitMargin || ""}
-                onChange={(e) => updateInput("desiredProfitMargin", parseFloat(e.target.value) || 0)}
-                placeholder="Target profit percentage"
-              />
-            </div>
-
-            <Button onClick={resetCalculator} variant="outline" className="w-full">
-              Reset Calculator
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Results Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Rate Analysis</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Total Annual Costs:</span>
-                <span className="font-medium">£{totalAnnualCosts.toLocaleString()}</span>
-              </div>
-              
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Total Billable Hours:</span>
-                <span className="font-medium">{totalBillableHours.toLocaleString()} hours</span>
-              </div>
-              
-              <Separator />
-              
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Break-Even Rate:</span>
-                <span className="font-medium">£{breakEvenRate.toFixed(2)}/hour</span>
-              </div>
-              
-              <div className="flex justify-between font-semibold text-elec-yellow text-lg">
-                <span>Recommended Rate:</span>
-                <span>£{recommendedRate.toFixed(2)}/hour</span>
-              </div>
-            </div>
-
-            <Separator />
-
-            <div className="space-y-3">
-              <h3 className="font-semibold text-foreground">Market Comparison</h3>
-              
-              <div className="space-y-2">
-                <div className="flex justify-between p-2 rounded-lg bg-muted/50">
-                  <span className="text-sm">Trainee Electrician:</span>
-                  <span className="text-sm font-medium">£{traineeRate}/hour</span>
-                </div>
-                
-                <div className="flex justify-between p-2 rounded-lg bg-muted/50">
-                  <span className="text-sm">Qualified Electrician:</span>
-                  <span className="text-sm font-medium">£{qualifiedRate}/hour</span>
-                </div>
-                
-                <div className="flex justify-between p-2 rounded-lg bg-muted/50">
-                  <span className="text-sm">Experienced Electrician:</span>
-                  <span className="text-sm font-medium">£{experiencedRate}/hour</span>
-                </div>
-              </div>
-            </div>
-
-            <div className={`p-3 rounded-lg ${
-              recommendedRate <= experiencedRate 
-                ? 'bg-green-50 text-green-800 border border-green-200' 
-                : 'bg-yellow-50 text-yellow-800 border border-yellow-200'
-            }`}>
-              {recommendedRate <= experiencedRate 
-                ? '✅ Your rate is competitive with market standards' 
-                : '⚠️ Your rate is above typical market rates - ensure you can justify the premium'
-              }
-            </div>
-
-            <div className="text-xs text-muted-foreground">
-              * Market rates are indicative averages for the UK. Adjust based on your location, 
-              specialisation, and local market conditions.
-            </div>
-          </CardContent>
-        </Card>
+      {/* Bottom Action Bar - Mobile Only */}
+      <div className="fixed bottom-0 left-0 right-0 sm:hidden bg-black/90 backdrop-blur-xl border-t border-white/10 p-4 pb-safe">
+        <Button
+          onClick={resetCalculator}
+          className="w-full h-14 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-ios-body active:scale-[0.98] touch-manipulation"
+        >
+          Reset Calculator
+        </Button>
       </div>
     </div>
   );

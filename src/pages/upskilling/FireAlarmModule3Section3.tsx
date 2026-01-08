@@ -1,298 +1,563 @@
-import { useEffect, useMemo } from 'react';
-import { ArrowLeft, ArrowRight, MapPin } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { ArrowLeft, ArrowRight, Volume2, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { AccentPanel } from '@/components/upskilling/design/AccentPanel';
+import useSEO from '@/hooks/useSEO';
+import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
 import type { QuizQuestion } from '@/types/quiz';
 
-const FireAlarmModule3Section3 = () => {
-  // SEO
-  useEffect(() => {
-    const title = 'Detector & Sounder Placement Rules | Module 3 Sec 3';
-    document.title = title;
-    const desc = 'Detailed rules for detector spacing, wall/apex distances, airflows/obstructions, sounder audibility and VAD placement with checklists and quiz.';
-    let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.name = 'description';
-      document.head.appendChild(meta);
-    }
-    if (meta) meta.content = desc;
-  }, []);
+const TITLE = "Sounder Zones - Fire Alarm Course";
+const DESCRIPTION = "BS 5839-1 sounder zone design: audibility requirements, alarm signals, voice alarm systems, VADs, and phased evacuation considerations.";
 
-  // Quiz
+const FireAlarmModule3Section3 = () => {
+  useSEO({ title: TITLE, description: DESCRIPTION });
+
   const questions: QuizQuestion[] = useMemo(() => [
     {
       id: 1,
-      question: 'What minimum distance from walls is commonly applied for point detectors?',
-      options: ['100 mm', '300 mm', '500 mm', '1000 mm'],
-      correctAnswer: 2,
-      explanation: 'Keeping detectors at least ~500 mm from walls helps avoid dead air spaces.'
+      question: 'What is the general audibility target for fire alarm sounders in most occupied areas?',
+      options: ['55 dB(A)', '65 dB(A) or 5 dB above ambient', '75 dB(A) everywhere', '85 dB(A)'],
+      correctAnswer: 1,
+      explanation: 'BS 5839-1 specifies 65 dB(A) or 5 dB above ambient noise - whichever is greater.'
     },
     {
       id: 2,
-      question: 'General audibility target for most spaces is often:',
-      options: ['55 dB(A)', '65 dB(A) or 5 dB above ambient', '75 dB(A) everywhere', '85 dB(A) at the panel'],
-      correctAnswer: 1,
-      explanation: 'Aim for 65 dB(A) or 5 dB above ambient—whichever is greater; sleeping risks typically 75 dB(A) at bedhead.'
+      question: 'What audibility level is required at the bedhead in sleeping accommodation?',
+      options: ['55 dB(A)', '65 dB(A)', '75 dB(A) with doors closed', '85 dB(A)'],
+      correctAnswer: 2,
+      explanation: 'Sleeping areas require 75 dB(A) at the bedhead with bedroom doors closed to ensure occupants are awakened.'
     },
     {
       id: 3,
-      question: 'Why should detectors be kept clear of diffusers/high‑velocity air?',
-      options: ['Aesthetics only', 'Air can dilute/deflect smoke or heat away from sensor', 'To save energy', 'For EMC'],
+      question: 'Why should multiple visual alarm devices (VADs) be synchronised?',
+      options: ['To save power', 'To reduce photosensitive risk and provide clear, unified signalling', 'For aesthetic reasons', 'It is not required'],
       correctAnswer: 1,
-      explanation: 'Strong airflow can delay or prevent correct sensing of smoke/heat.'
+      explanation: 'Synchronised VADs reduce photosensitive risk and provide clearer, more recognisable warning signals.'
     },
     {
       id: 4,
-      question: 'Why synchronise multiple beacons (VADs)?',
-      options: ['Looks better', 'Reduces photosensitive risk and improves perception', 'Increases battery life', 'Required for heat detectors'],
+      question: 'What distinguishes an "alert" signal from an "evacuate" signal in phased evacuation?',
+      options: ['Volume only', 'Alert prepares occupants to standby; evacuate instructs immediate departure', 'They are identical', 'Alert is visual only'],
       correctAnswer: 1,
-      explanation: 'Synchronous flashing reduces photosensitive risk and provides a clearer, unified signal.'
+      explanation: 'Alert signals prepare occupants in adjacent areas while evacuate signals instruct immediate departure from the affected zone.'
     },
     {
       id: 5,
-      question: 'Where should VADs be placed for effectiveness?',
-      options: ['Hidden behind pillars', 'Anywhere on the ceiling', 'With line‑of‑sight to occupied areas per category/coverage', 'Only near the panel'],
-      correctAnswer: 2,
-      explanation: 'Place VADs with line‑of‑sight to occupants; select category to suit room size/geometry.'
+      question: 'For voice alarm systems, what is more important than maximum loudness?',
+      options: ['Lowest cost', 'Intelligibility (speech transmission index)', 'Number of speakers', 'Aesthetic appearance'],
+      correctAnswer: 1,
+      explanation: 'Speech intelligibility (measured by STI) is critical - occupants must understand evacuation instructions clearly.'
     },
     {
       id: 6,
-      question: 'What is the typical coverage radius for a point smoke detector on a flat ceiling?',
-      options: ['3.5 m', '7.5 m', '15 m', '30 m'],
+      question: 'What is the primary purpose of sounder zones in fire alarm design?',
+      options: ['Reduce equipment costs', 'Enable selective alerting based on fire location and evacuation strategy', 'Simplify wiring', 'Meet aesthetic requirements'],
       correctAnswer: 1,
-      explanation: 'Point detectors typically cover a radius of approximately 7.5 m, though this varies with ceiling height and manufacturer specifications.'
+      explanation: 'Sounder zones enable selective alerting, supporting phased evacuation and preventing unnecessary building-wide alarm.'
     },
     {
       id: 7,
-      question: 'How should detectors be positioned near prominent beams or bulkheads?',
-      options: ['Place directly on beams', 'Keep at least 500 mm away to avoid dead-air pockets', 'Beams have no effect on placement', 'Only place detectors in beam channels'],
+      question: 'When should different alarm tones be used within the same building?',
+      options: ['Never - one tone throughout', 'To distinguish different alarm types (e.g., fire vs. gas)', 'Based on occupant preferences', 'Only in hospitals'],
       correctAnswer: 1,
-      explanation: 'Beams and bulkheads can create dead-air spaces; detectors should be kept at least 500 mm away or additional devices added to ensure coverage.'
+      explanation: 'Different tones can distinguish alarm types (fire, gas, security) but must be clearly recognisable and documented in fire procedures.'
     },
     {
       id: 8,
-      question: 'What detector type is typically preferred in areas with steam or cooking aerosols?',
-      options: ['Optical smoke detectors', 'Heat detectors or multisensor devices', 'Ionisation smoke detectors', 'Beam detectors only'],
+      question: 'What consideration is needed for sounder placement in high-ceiling areas?',
+      options: ['Ceiling height has no effect', 'Sound may need to be supplemented or speakers angled to maintain audibility at occupant level', 'Only VADs are needed', 'Use louder sounders automatically'],
       correctAnswer: 1,
-      explanation: 'Heat detectors or multisensor devices are preferred in areas with steam or aerosols to avoid false alarms from smoke detectors responding to non-fire particles.'
+      explanation: 'High ceilings can affect sound distribution; supplementary wall-mounted sounders or angled speakers may be needed to maintain audibility at floor level.'
     },
     {
       id: 9,
-      question: 'What special consideration is needed for detector placement in high spaces like atriums?',
-      options: ['Use standard ceiling-mount detectors', 'Consider beam or aspirating detection and plan safe maintenance access', 'Detection not required in high spaces', 'Only use sounders, no detectors'],
+      question: 'How should class change or test signals differ from fire alarms?',
+      options: ['They should sound identical', 'Clearly distinguishable tones to prevent confusion or inappropriate response', 'No signal should be used', 'Visual only'],
       correctAnswer: 1,
-      explanation: 'High spaces require special detection methods (beam/aspirating) suitable for the height, with careful planning for maintenance access and testing.'
+      explanation: 'Test and class change signals must be clearly distinguishable from fire alarms to prevent confusion and maintain appropriate response to actual fire signals.'
     },
     {
       id: 10,
-      question: 'How does ceiling height affect detector spacing?',
-      options: ['Ceiling height has no effect', 'Higher ceilings may require reduced spacing or specialist detection', 'Higher ceilings allow wider spacing', 'Only affects sounders, not detectors'],
+      question: 'What documentation should specify sounder zone arrangements?',
+      options: ['No documentation needed', 'Cause and effect matrix and zone drawings', 'Only verbal instructions', 'Manufacturer catalogues only'],
       correctAnswer: 1,
-      explanation: 'As ceiling height increases, smoke/heat dispersion changes; spacing may need to be reduced and specialist detection (beam/aspirating) may be needed above certain heights.'
-    },
-    {
-      id: 11,
-      question: 'What should be considered regarding HVAC when placing detectors?',
-      options: ['HVAC has no effect on detection', 'Review seasonal modes and normal door states during design', 'Only place detectors in HVAC ducts', 'Turn off HVAC permanently'],
-      correctAnswer: 1,
-      explanation: 'HVAC operation affects smoke/heat movement; designers must review seasonal modes, airflow patterns, and normal door states to ensure effective detection.'
-    },
-    {
-      id: 12,
-      question: 'When should detection be provided in ceiling voids?',
-      options: ['Never provide void detection', 'Always in every void regardless of risk', 'Where risk warrants it or significant cabling exists, ensuring maintenance access', 'Only if specifically requested by client'],
-      correctAnswer: 2,
-      explanation: 'Ceiling voids should be protected where fire risk exists, where significant cabling is present, or where voids form protected spaces—always ensuring safe maintenance access.'
+      explanation: 'Cause and effect documentation and zone drawings must clearly specify which sounders operate for each detection zone and scenario.'
     }
   ], []);
 
-  const sequentialQuestions = useMemo(
-    () => questions.map(q => ({ id: q.id, question: q.question, options: q.options, correct: q.correctAnswer, explanation: q.explanation })),
-    [questions]
-  );
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(Array(questions.length).fill(-1));
+  const [showResults, setShowResults] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
+
+  const handleAnswerSelect = (answerIndex: number) => {
+    const updated = [...selectedAnswers];
+    updated[currentQuestion] = answerIndex;
+    setSelectedAnswers(updated);
+  };
+
+  const handleNext = () => {
+    if (currentQuestion < questions.length - 1) setCurrentQuestion((q) => q + 1);
+    else setShowResults(true);
+  };
+
+  const handlePrevious = () => setCurrentQuestion((q) => Math.max(0, q - 1));
+
+  const resetQuiz = () => {
+    setCurrentQuestion(0);
+    setSelectedAnswers(Array(questions.length).fill(-1));
+    setShowResults(false);
+  };
+
+  const calculateScore = () =>
+    selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="../fire-alarm-module-3">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 3
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* iOS Header */}
+      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center h-[56px] px-4 max-w-4xl mx-auto">
+          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
+            <Link to="../module-3">
+              <ArrowLeft className="h-5 w-5" />
+              <span className="hidden sm:inline">Module 3</span>
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-6 max-w-5xl mx-auto">
-          {/* Header */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <MapPin className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-3xl font-bold text-white">Detector and Sounder Placement Rules</h1>
-                <p className="text-lg text-gray-400">Device positioning guidelines and placement standards</p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">Section 3.3</Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">Device Placement</Badge>
-            </div>
-          </div>
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Introduction</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-3">
-              <p>Accurate placement of detectors and notification devices is essential for timely detection and clear warning. The following rules support practical, compliant layouts.</p>
-            </CardContent>
-          </Card>
-
-          {/* Learning Objectives (neutral) */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Learning Objectives</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>Apply spacing and proximity rules for point detectors.</li>
-                  <li>Account for obstructions, airflow and ceiling form.</li>
-                  <li>Achieve audibility/intelligibility and correct VAD coverage.</li>
-                  <li>Document placement with clear schedules/drawings.</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Detector Placement */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Detector Placement</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6 text-gray-300">
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-400 mb-2">Spacing & Proximities</h3>
-                <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li>Typical point detector coverage radius ~7.5 m (ceiling height dependent).</li>
-                    <li>Keep detectors at least ~<span className="font-semibold">500 mm</span> from walls and prominent beams.</li>
-                    <li>Near apex/peaked ceilings, consult manufacturer data; smoke flows toward the high point.</li>
-                  </ul>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-400 mb-2">Obstructions & Airflows</h3>
-                <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li>Avoid high‑velocity air from diffusers; it can dilute smoke/heat at the sensor.</li>
-                    <li>Assess beams/bulkheads/shelving for dead‑air pockets; add devices or reposition.</li>
-                    <li>Review seasonal HVAC modes and normal door states during design.</li>
-                  </ul>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-400 mb-2">Special Cases</h3>
-                <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li>Steam/aerosol areas: prefer heat or multisensor; avoid smoke directly over sources.</li>
-                    <li>High spaces/atriums: consider beam or aspirating detection; plan safe access.</li>
-                    <li>Voids: protect where risk or cabling warrants; ensure access for maintenance.</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Sounders & VADs */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Sounders & Visual Alarm Devices</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>Audibility: aim for <span className="font-semibold">65 dB(A)</span> or 5 dB above ambient; <span className="font-semibold">75 dB(A)</span> at bedhead for sleeping risk.</li>
-                  <li>Voice: prioritise intelligibility; address reverberation and background noise.</li>
-                  <li>VADs: ensure line‑of‑sight; select category for the room size/geometry; synchronise flashing.</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Key Rules Snapshot (subtle accent) */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Key Rules Snapshot</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <AccentPanel tone="amber" variant="subtle">
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>≥ 500 mm from walls; avoid dead‑air zones and strong airflows.</li>
-                  <li>Check ceiling height and form; adapt device types and spacing accordingly.</li>
-                  <li>Meet audibility/visibility/intelligibility aims for occupant warning.</li>
-                </ul>
-              </AccentPanel>
-            </CardContent>
-          </Card>
-
-          {/* Common Mistakes */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Common Mistakes</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>Mounting detectors in airflow streams or too close to walls/obstructions.</li>
-                  <li>Ignoring sleeping risk audibility or VAD needs in noisy spaces.</li>
-                  <li>Failing to coordinate device layout with room use and furniture.</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <AccentPanel tone="green" variant="subtle">
-                <p>Place detectors and notification devices to avoid dead‑air and airflow issues, meet signalling aims, and support safe, rapid response.</p>
-              </AccentPanel>
-            </CardContent>
-          </Card>
-
-          <SingleQuestionQuiz
-            questions={sequentialQuestions}
-            title="Knowledge Check: Device Placement"
-          />
-
-          {/* Nav */}
-          <div className="flex justify-between mt-8">
-            <Link to="../fire-alarm-module-3-section-2">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../fire-alarm-module-3-section-4">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
+          <span className="flex-1 text-center text-[17px] font-semibold text-white">Section 3</span>
+          <div className="w-[60px]" />
         </div>
-      </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="px-4 pt-8 pb-6 max-w-4xl mx-auto">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20">
+            <Volume2 className="h-7 w-7 text-amber-400" />
+          </div>
+          <span className="text-[11px] font-medium text-amber-400 uppercase tracking-wide">
+            Section 3 of 6
+          </span>
+        </div>
+        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
+          Sounder Zones
+        </h1>
+        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
+          Designing effective alarm signalling with audibility, voice alarm, VADs, and phased evacuation support.
+        </p>
+        <div className="flex items-center gap-4 text-[13px] text-white/50">
+          <span className="flex items-center gap-1">
+            <Target className="h-4 w-4" />
+            6 learning outcomes
+          </span>
+          <span className="flex items-center gap-1">
+            <Clock className="h-4 w-4" />
+            20-25 mins
+          </span>
+        </div>
+      </section>
+
+      {/* In 30 Seconds Card */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-[15px] font-semibold text-amber-400 flex items-center gap-2">
+              <Lightbulb className="h-4 w-4" />
+              In 30 Seconds
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-[15px] text-white/80">
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+              <span><strong>Audibility targets:</strong> 65 dB(A) or +5 dB general areas; 75 dB(A) at bedhead for sleeping risk</span>
+            </p>
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+              <span><strong>Sounder zones</strong> enable selective alerting and support phased evacuation strategies</span>
+            </p>
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
+              <span><strong>Voice alarm</strong> prioritises intelligibility; <strong>VADs</strong> support hearing-impaired and noisy areas</span>
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Learning Outcomes */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            "Apply BS 5839-1 audibility requirements for general and sleeping areas",
+            "Design sounder zones to support evacuation strategy",
+            "Specify voice alarm systems with appropriate intelligibility",
+            "Select and position VADs for effective visual warning",
+            "Understand alert vs evacuate signalling for phased evacuation",
+            "Coordinate sounder zones with cause and effect programming"
+          ].map((outcome, i) => (
+            <Card key={i} variant="ios" className="p-3">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                  <span className="text-[11px] font-bold text-amber-400">{i + 1}</span>
+                </div>
+                <p className="text-[13px] text-white/80">{outcome}</p>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto space-y-6">
+        {/* Section 01 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-1 rounded">01</span>
+              <h3 className="text-[17px] font-semibold text-white">Audibility Requirements</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Fire alarm sounders must provide adequate warning throughout all occupied areas:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">BS 5839-1 Audibility Targets:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>General areas:</strong> 65 dB(A) or 5 dB above ambient (whichever greater)</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Sleeping areas:</strong> 75 dB(A) at the bedhead with doors closed</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Noisy environments:</strong> consider ambient noise levels during occupied hours</li>
+                </ul>
+              </div>
+              <p className="text-[13px] text-white/60 italic">Sound level calculations should account for absorption, distance, and intervening barriers.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 02 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-1 rounded">02</span>
+              <h3 className="text-[17px] font-semibold text-white">Sounder Zone Design</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Sounder zones enable <strong className="text-white">selective alerting</strong> based on fire location and evacuation strategy:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Zone Design Principles:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" />Align sounder zones with evacuation strategy (phased/simultaneous)</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" />Consider floor-by-floor or area-based zoning for phased evacuation</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" />Protected stairs may have separate sounder arrangements</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" />Coordinate with cause and effect matrix for each detection zone</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 03 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-1 rounded">03</span>
+              <h3 className="text-[17px] font-semibold text-white">Alert and Evacuate Signals</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Phased evacuation uses distinct signals to control occupant movement:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Signal Types:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-amber-400 mt-1" /><span><strong className="text-amber-400">Alert:</strong> Intermittent tone or message - prepare to leave, await further instruction</span></li>
+                  <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-amber-400 mt-1" /><span><strong className="text-amber-400">Evacuate:</strong> Continuous tone or urgent message - leave immediately</span></li>
+                </ul>
+              </div>
+              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
+                <p className="text-[13px] text-amber-300 flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  Fire floor and floor above typically receive immediate evacuate signal; other floors receive alert.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Inline Check 1 */}
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <HelpCircle className="h-5 w-5 text-amber-400" />
+              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
+            </div>
+            <p className="text-[15px] text-white/80 mb-3">A hotel has noisy plant on the ground floor with ambient levels around 70 dB(A). What sounder level is required?</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Sounders must achieve 75 dB(A) (5 dB above the 70 dB(A) ambient). Additionally, as a hotel with sleeping risk, bedrooms require 75 dB(A) at bedhead regardless of ambient levels.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 04 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-1 rounded">04</span>
+              <h3 className="text-[17px] font-semibold text-white">Voice Alarm Systems</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Voice alarm provides clear spoken instructions rather than tones alone:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Voice Alarm Considerations:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Intelligibility:</strong> Prioritise STI (Speech Transmission Index) over loudness</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Reverberation:</strong> Control acoustic environment to maintain clarity</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Messages:</strong> Pre-recorded and live announcement capability</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Zoning:</strong> Enable targeted messages per zone or floor</li>
+                </ul>
+              </div>
+              <p className="text-[13px] text-white/60 italic">Voice alarm is particularly valuable for phased evacuation, multilingual environments, and complex buildings.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 05 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-1 rounded">05</span>
+              <h3 className="text-[17px] font-semibold text-white">Visual Alarm Devices (VADs)</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>VADs provide visual warning for hearing-impaired occupants and noisy environments:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">EN 54-23 Requirements:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Category W:</strong> Wall-mounted - coverage specified in height x width</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Category C:</strong> Ceiling-mounted - circular coverage pattern</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Category O:</strong> Open area - large space coverage</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" /><strong>Synchronisation:</strong> Required where multiple VADs are visible</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Inline Check 2 */}
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <HelpCircle className="h-5 w-5 text-amber-400" />
+              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
+            </div>
+            <p className="text-[15px] text-white/80 mb-3">Why must VADs be synchronised when multiple devices are visible from the same location?</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Synchronisation reduces photosensitive epilepsy risk and provides a clearer, more recognisable warning signal. Unsynchronised flashing can cause disorientation and discomfort.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 06 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-1 rounded">06</span>
+              <h3 className="text-[17px] font-semibold text-white">Sounder Placement Considerations</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Effective sounder placement ensures audibility throughout the protected area:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Placement Factors:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" />Account for room acoustics, absorption, and barriers</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" />High ceilings may require wall-mounted or angled speakers</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" />Open-plan areas need distributed coverage</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-amber-400" />Avoid excessive loudness causing masking or distress</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Practical Guidance */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
+
+        <div className="space-y-3">
+          <Card variant="ios" className="border-green-500/20">
+            <CardContent className="p-4">
+              <h4 className="text-[15px] font-semibold text-green-400 mb-2">Pro Tips</h4>
+              <ul className="space-y-2 text-[13px] text-white/70">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Measure ambient noise during typical occupied hours, not when the building is empty
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Consider future use changes - plant rooms may become occupied spaces
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Document sounder zones clearly in cause and effect matrix for commissioning
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card variant="ios" className="border-red-500/20">
+            <CardContent className="p-4">
+              <h4 className="text-[15px] font-semibold text-red-400 mb-2">Common Mistakes</h4>
+              <ul className="space-y-2 text-[13px] text-white/70">
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Ignoring sleeping risk audibility requirements (75 dB(A) at bedhead)
+                </li>
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Omitting VADs in noisy areas or accessibility-critical spaces
+                </li>
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Unsynchronised VADs where multiple devices are visible
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* FAQs */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
+        <div className="space-y-3">
+          {[
+            { q: "Can sounder zones differ from detection zones?", a: "Yes - sounder zones are designed around evacuation strategy and may not match detection zones exactly. The cause and effect matrix defines how detection zones trigger sounder zones." },
+            { q: "Is voice alarm always required?", a: "No - voice alarm is beneficial for complex buildings, phased evacuation, and multilingual environments but is not mandatory for all premises." },
+            { q: "How do I calculate required sounder coverage?", a: "Use manufacturer data for sounder output and coverage patterns. Account for distance attenuation, absorption, and barriers. Verify with commissioning measurements." },
+            { q: "Do VADs replace sounders?", a: "No - VADs supplement sounders. They provide visual warning for hearing-impaired occupants and noisy areas but do not replace audible warning." },
+            { q: "What about test and class change signals?", a: "These must be clearly distinguishable from fire alarms. Use different tones, patterns, or pre-announcements to prevent confusion." },
+            { q: "How should sounders operate during a fire drill?", a: "Fire drills should use the same signals as actual fire conditions to ensure familiarity. Brief occupants beforehand and record the drill in the logbook." }
+          ].map((faq, i) => (
+            <Card key={i} variant="ios">
+              <CardContent className="p-4">
+                <p className="text-[15px] font-semibold text-white mb-2">{faq.q}</p>
+                <p className="text-[13px] text-white/70">{faq.a}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
+              <BookOpen className="h-5 w-5 text-amber-400" />
+              Knowledge Check
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {!showQuiz ? (
+              <div className="text-center py-6">
+                <p className="text-[15px] text-white/70 mb-4">Test your understanding of sounder zones with 10 questions.</p>
+                <Button variant="ios-primary" onClick={() => setShowQuiz(true)}>
+                  Start Quiz
+                </Button>
+              </div>
+            ) : showResults ? (
+              <div className="space-y-6">
+                <div className="text-center py-4">
+                  <p className="text-[34px] font-bold text-amber-400">{calculateScore()}/{questions.length}</p>
+                  <p className="text-[15px] text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
+                </div>
+
+                <div className="space-y-4">
+                  {questions.map((q, i) => {
+                    const correct = selectedAnswers[i] === q.correctAnswer;
+                    return (
+                      <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
+                        <p className="text-[15px] font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
+                        <p className={`text-[13px] ${correct ? 'text-green-400' : 'text-red-400'}`}>
+                          Your answer: {q.options[selectedAnswers[i]] ?? 'Not answered'} {correct ? '' : ''}
+                        </p>
+                        {!correct && (
+                          <p className="text-[13px] text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
+                        )}
+                        <p className="text-[13px] text-white/70 mt-2">{q.explanation}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <Button variant="ios-secondary" onClick={resetQuiz} className="w-full gap-2">
+                  <RotateCcw className="h-4 w-4" />
+                  Restart Quiz
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+
+                <div>
+                  <p className="text-[17px] font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
+                  <div className="space-y-2">
+                    {questions[currentQuestion].options.map((opt, idx) => {
+                      const selected = selectedAnswers[currentQuestion] === idx;
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => handleAnswerSelect(idx)}
+                          className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
+                            selected
+                              ? 'bg-amber-500/20 border-amber-500/50 text-white'
+                              : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                          }`}
+                        >
+                          {opt}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between gap-3">
+                  <Button
+                    variant="ios-secondary"
+                    onClick={handlePrevious}
+                    disabled={currentQuestion === 0}
+                    className="flex-1"
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    variant="ios-primary"
+                    onClick={handleNext}
+                    disabled={selectedAnswers[currentQuestion] === -1}
+                    className="flex-1"
+                  >
+                    {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Navigation Footer */}
+      <section className="px-4 pb-safe max-w-4xl mx-auto">
+        <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
+          <Button variant="ios-secondary" asChild className="flex-1">
+            <Link to="../module-3/section-2">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button variant="ios-primary" asChild className="flex-1">
+            <Link to="../module-3/section-4">
+              Next Section
+              <ArrowRight className="h-4 w-4 ml-2" />
+            </Link>
+          </Button>
+        </div>
+      </section>
     </div>
   );
 };

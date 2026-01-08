@@ -1,699 +1,669 @@
-import { ArrowLeft, ArrowRight, BookOpen, CheckCircle } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { ArrowLeft, ArrowRight, Scale, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { useMemo } from 'react';
+import useSEO from '@/hooks/useSEO';
+import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
+import type { QuizQuestion } from '@/types/quiz';
+
+const TITLE = "Fire Safety Legislation - Fire Alarm Course";
+const DESCRIPTION = "Understand the Regulatory Reform (Fire Safety) Order 2005, responsible person duties, fire risk assessments and enforcement powers.";
 
 const FireAlarmModule7Section1 = () => {
-  // Quiz Data
-  const questions = useMemo(() => [
+  useSEO({ title: TITLE, description: DESCRIPTION });
+
+  const questions: QuizQuestion[] = useMemo(() => [
     {
       id: 1,
-      question: "Which BS 5839-1 system category provides complete building coverage for maximum life safety protection?",
+      question: 'When did the Regulatory Reform (Fire Safety) Order 2005 come into force?',
       options: [
-        "L1 system",
-        "L2 system", 
-        "L3 system",
-        "P1 system"
+        '1 January 2005',
+        '1 October 2006',
+        '1 April 2007',
+        '1 January 2008'
       ],
-      correct: 0,
-      explanation: "L1 systems provide complete building coverage including all rooms and areas, offering the highest level of life safety protection under BS 5839-1."
+      correctAnswer: 1,
+      explanation: 'The RR(FS)O 2005 came into force on 1 October 2006, replacing previous fire safety legislation with a risk-based approach.'
     },
     {
       id: 2,
-      question: "What is the primary difference between Grade A and Grade B domestic fire alarm systems?",
+      question: 'Who is defined as the "Responsible Person" under the RR(FS)O 2005?',
       options: [
-        "Power supply type only",
-        "Grade A requires a control panel, Grade B does not",
-        "Number of detectors allowed",
-        "Installation complexity only"
+        'Only the fire and rescue service',
+        'The building owner or employer with control of the premises',
+        'The local authority building control officer',
+        'Any employee working in the building'
       ],
-      correct: 1,
-      explanation: "Grade A systems require control and indicating equipment with zone indication capabilities, while Grade B systems are interconnected devices without a central control panel."
+      correctAnswer: 1,
+      explanation: 'The Responsible Person is typically the employer, building owner, landlord or anyone with control of the premises.'
     },
     {
       id: 3,
-      question: "Which BS EN 54 standard covers fire alarm control and indicating equipment?",
+      question: 'What is the primary legal document that replaced fire certificates?',
       options: [
-        "BS EN 54-2",
-        "BS EN 54-3",
-        "BS EN 54-5", 
-        "BS EN 54-7"
+        'Building Regulations Part B',
+        'BS 5839-1',
+        'Fire Risk Assessment',
+        'Fire Safety Certificate'
       ],
-      correct: 0,
-      explanation: "BS EN 54-2 specifies requirements for control and indicating equipment used in fire detection and alarm systems, covering panels and their functions."
+      correctAnswer: 2,
+      explanation: 'The RR(FS)O 2005 abolished fire certificates and replaced them with a requirement for fire risk assessments.'
     },
     {
       id: 4,
-      question: "What is the maximum voltage drop permitted to the furthest device in a Grade A domestic system?",
+      question: 'Which premises are NOT covered by the Regulatory Reform (Fire Safety) Order 2005?',
       options: [
-        "1.0V",
-        "1.5V",
-        "2.0V",
-        "2.5V"
+        'Offices and shops',
+        'Single private dwellings',
+        'Hotels and hostels',
+        'Factories and warehouses'
       ],
-      correct: 1,
-      explanation: "BS 5839-6 specifies a maximum voltage drop of 1.5V to the furthest device in Grade A systems to ensure reliable operation of all components."
+      correctAnswer: 1,
+      explanation: 'Single private dwellings are excluded from the RR(FS)O 2005 - they are covered by other regulations including Building Regulations.'
     },
     {
       id: 5,
-      question: "Which of the following is NOT a Category P system application?",
+      question: 'How often should a fire risk assessment be reviewed?',
       options: [
-        "High-value property protection",
-        "Complete building coverage for property",
-        "Life safety in escape routes",
-        "Defined building areas based on risk"
+        'Every 5 years',
+        'Only when the fire service requests it',
+        'Regularly, and when there are significant changes',
+        'Once at initial occupation only'
       ],
-      correct: 2,
-      explanation: "Life safety in escape routes is a Category L system application. Category P systems are specifically for property protection, not life safety."
+      correctAnswer: 2,
+      explanation: 'Fire risk assessments must be reviewed regularly and particularly when there are significant changes to the premises, occupancy or use.'
+    },
+    {
+      id: 6,
+      question: 'What is an Alterations Notice under the RR(FS)O 2005?',
+      options: [
+        'A requirement to demolish a building',
+        'A notice requiring the fire authority to be notified before making certain changes',
+        'Permission to alter fire alarm systems',
+        'A building control notification'
+      ],
+      correctAnswer: 1,
+      explanation: 'An Alterations Notice requires the Responsible Person to notify the fire authority before making changes that could increase fire risk.'
+    },
+    {
+      id: 7,
+      question: 'What is the maximum penalty for failure to comply with an Enforcement Notice?',
+      options: [
+        'A written warning only',
+        'A fine only',
+        'Up to 2 years imprisonment and/or unlimited fine',
+        'Closure of the business for 1 month'
+      ],
+      correctAnswer: 2,
+      explanation: 'Failure to comply with an Enforcement Notice can result in up to 2 years imprisonment and/or an unlimited fine on conviction.'
+    },
+    {
+      id: 8,
+      question: 'What is Article 17 of the RR(FS)O concerned with?',
+      options: [
+        'Fire detection and warning systems',
+        'Maintenance of firefighting equipment',
+        'Emergency routes and exits',
+        'Fire safety training'
+      ],
+      correctAnswer: 0,
+      explanation: 'Article 17 specifically deals with fire detection and warning requirements in regulated premises.'
+    },
+    {
+      id: 9,
+      question: 'Who enforces the Regulatory Reform (Fire Safety) Order 2005?',
+      options: [
+        'Local Authority Building Control',
+        'Health and Safety Executive only',
+        'Fire and Rescue Authority',
+        'The Police'
+      ],
+      correctAnswer: 2,
+      explanation: 'The Fire and Rescue Authority is the primary enforcing authority for the RR(FS)O 2005 in most premises.'
+    },
+    {
+      id: 10,
+      question: 'What must a fire risk assessment identify?',
+      options: [
+        'Only the location of fire extinguishers',
+        'Fire hazards, people at risk and appropriate fire safety measures',
+        'The cost of fire alarm systems',
+        'Insurance requirements only'
+      ],
+      correctAnswer: 1,
+      explanation: 'A fire risk assessment must identify fire hazards, people at risk, evaluate the risks and determine appropriate preventive and protective measures.'
     }
   ], []);
 
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(Array(questions.length).fill(-1));
+  const [showResults, setShowResults] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
+
+  const handleAnswerSelect = (answerIndex: number) => {
+    const updated = [...selectedAnswers];
+    updated[currentQuestion] = answerIndex;
+    setSelectedAnswers(updated);
+  };
+
+  const handleNext = () => {
+    if (currentQuestion < questions.length - 1) setCurrentQuestion((q) => q + 1);
+    else setShowResults(true);
+  };
+
+  const handlePrevious = () => setCurrentQuestion((q) => Math.max(0, q - 1));
+
+  const resetQuiz = () => {
+    setCurrentQuestion(0);
+    setSelectedAnswers(Array(questions.length).fill(-1));
+    setShowResults(false);
+  };
+
+  const calculateScore = () =>
+    selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
+
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="../fire-alarm-module-7">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 7
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* iOS Header */}
+      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center h-[56px] px-4 max-w-4xl mx-auto">
+          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
+            <Link to="../module-7">
+              <ArrowLeft className="h-5 w-5" />
+              <span className="hidden sm:inline">Module 7</span>
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-6">
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <BookOpen className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-4xl font-bold text-white">
-                  BS 5839 Parts 1 & 6: The Complete Standard
-                </h1>
-                <p className="text-xl text-gray-400">
-                  Comprehensive guide to British Standards for fire detection and alarm systems
+          <span className="flex-1 text-center text-[17px] font-semibold text-white">Section 1</span>
+          <div className="w-[60px]" />
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="px-4 pt-8 pb-6 max-w-4xl mx-auto">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/20">
+            <Scale className="h-7 w-7 text-rose-400" />
+          </div>
+          <span className="text-[11px] font-medium text-rose-400 uppercase tracking-wide">
+            Section 1 of 4
+          </span>
+        </div>
+        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
+          Fire Safety Legislation
+        </h1>
+        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
+          Understanding the Regulatory Reform (Fire Safety) Order 2005 and the legal framework for fire safety in England and Wales.
+        </p>
+        <div className="flex items-center gap-4 text-[13px] text-white/50">
+          <span className="flex items-center gap-1">
+            <Target className="h-4 w-4" />
+            6 learning outcomes
+          </span>
+          <span className="flex items-center gap-1">
+            <Clock className="h-4 w-4" />
+            25-30 mins
+          </span>
+        </div>
+      </section>
+
+      {/* In 30 Seconds Card */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <Card variant="ios-elevated" className="border-rose-500/20">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-[15px] font-semibold text-rose-400 flex items-center gap-2">
+              <Lightbulb className="h-4 w-4" />
+              In 30 Seconds
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-[15px] text-white/80">
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
+              <span><strong>RR(FS)O 2005</strong> replaced fire certificates with a risk-based approach from 1 October 2006</span>
+            </p>
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
+              <span><strong>Responsible Person</strong> must conduct and maintain a suitable fire risk assessment</span>
+            </p>
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
+              <span><strong>Enforcement</strong> by Fire and Rescue Authority with powers including prohibition notices</span>
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Learning Outcomes */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            "Explain the purpose and scope of the RR(FS)O 2005",
+            "Identify who qualifies as the Responsible Person",
+            "Describe the five-step fire risk assessment process",
+            "Understand enforcement powers and penalties",
+            "Explain Articles 8-22 fire safety duties",
+            "Apply legislation requirements to workplace scenarios"
+          ].map((outcome, i) => (
+            <Card key={i} variant="ios" className="p-3">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-rose-500/20 flex items-center justify-center flex-shrink-0">
+                  <span className="text-[11px] font-bold text-rose-400">{i + 1}</span>
+                </div>
+                <p className="text-[13px] text-white/80">{outcome}</p>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto space-y-6">
+        {/* Section 01 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">01</span>
+              <h3 className="text-[17px] font-semibold text-white">The Regulatory Reform (Fire Safety) Order 2005</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>The <strong className="text-white">Regulatory Reform (Fire Safety) Order 2005</strong> (commonly known as the RR(FS)O or Fire Safety Order) came into force on <strong className="text-rose-400">1 October 2006</strong>. It applies to England and Wales.</p>
+              <p>This legislation replaced over 70 pieces of previous fire safety law with a single, risk-based approach. It abolished the old fire certificate system and placed responsibility directly on those who control premises.</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Key Legislation Replaced:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Fire Precautions Act 1971</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Fire Precautions (Workplace) Regulations 1997</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Fire Certificates (Special Premises) Regulations 1976</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Various sector-specific fire regulations</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 02 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">02</span>
+              <h3 className="text-[17px] font-semibold text-white">The Responsible Person</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>The <strong className="text-rose-400">Responsible Person</strong> is the individual or organisation with ultimate responsibility for fire safety in regulated premises. This is defined in Article 3 of the Order.</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">The Responsible Person May Be:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />The employer (for workplaces)</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />The person with control of the premises</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />The owner of the building</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />The landlord (for common areas of residential buildings)</li>
+                </ul>
+              </div>
+              <p>Where multiple people share control of premises, they must cooperate and coordinate their fire safety arrangements. Each person is responsible for the parts they control.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 03 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">03</span>
+              <h3 className="text-[17px] font-semibold text-white">Fire Risk Assessment Requirements</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Article 9 requires the Responsible Person to carry out a <strong className="text-white">suitable and sufficient fire risk assessment</strong>. This replaced the old fire certificate system.</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Five Steps of Fire Risk Assessment:</p>
+                <ul className="space-y-2 text-[13px]">
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 rounded-full bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">1</span>
+                    <span><strong className="text-white">Identify fire hazards</strong> - sources of ignition, fuel and oxygen</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 rounded-full bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">2</span>
+                    <span><strong className="text-white">Identify people at risk</strong> - employees, visitors, vulnerable persons</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 rounded-full bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">3</span>
+                    <span><strong className="text-white">Evaluate risks</strong> - remove/reduce hazards, protect people</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 rounded-full bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">4</span>
+                    <span><strong className="text-white">Record findings</strong> - document significant findings and actions</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 rounded-full bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">5</span>
+                    <span><strong className="text-white">Review regularly</strong> - keep assessment up to date</span>
+                  </li>
+                </ul>
+              </div>
+              <p className="text-[13px] text-white/60 italic">For premises with 5 or more employees, the significant findings must be recorded in writing.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Quick Check 1 */}
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <HelpCircle className="h-5 w-5 text-amber-400" />
+              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
+            </div>
+            <p className="text-[15px] text-white/80 mb-3">A small business has 3 employees. Must they record their fire risk assessment in writing?</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Technically, written recording is only legally required for premises with 5+ employees. However, it is strongly recommended to record all fire risk assessments as evidence of compliance and for review purposes.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 04 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">04</span>
+              <h3 className="text-[17px] font-semibold text-white">General Fire Precautions (Articles 8-22)</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>The Order specifies <strong className="text-white">general fire precautions</strong> that the Responsible Person must implement based on the fire risk assessment.</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Key Articles:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-start gap-2"><span className="text-rose-400 font-semibold">Art.14:</span> Emergency routes and exits - adequate, kept clear, illuminated</li>
+                  <li className="flex items-start gap-2"><span className="text-rose-400 font-semibold">Art.17:</span> Fire detection and warning - appropriate detection and alarm systems</li>
+                  <li className="flex items-start gap-2"><span className="text-rose-400 font-semibold">Art.13:</span> Firefighting equipment - appropriate and accessible</li>
+                  <li className="flex items-start gap-2"><span className="text-rose-400 font-semibold">Art.21:</span> Training - employees receive adequate instruction</li>
+                  <li className="flex items-start gap-2"><span className="text-rose-400 font-semibold">Art.22:</span> Cooperation - duty to cooperate with others sharing premises</li>
+                </ul>
+              </div>
+              <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
+                <p className="text-[13px] text-rose-300 flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  Article 17 specifically requires fire detection and warning systems appropriate to the risk - this directly links to fire alarm requirements.
                 </p>
               </div>
             </div>
-          </div>
+          </CardContent>
+        </Card>
 
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-3">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
-                  <span className="text-sm">Understand the structure and scope of BS 5839 Part 1</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
-                  <span className="text-sm">Learn the applications of BS 5839 Part 6</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
-                  <span className="text-sm">Identify system categories and their requirements</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
-                  <span className="text-sm">Understand design principles and documentation</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
-                  <span className="text-sm">Learn about testing and commissioning requirements</span>
-                </div>
+        {/* Section 05 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">05</span>
+              <h3 className="text-[17px] font-semibold text-white">Enforcement and Penalties</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>The <strong className="text-rose-400">Fire and Rescue Authority</strong> is the enforcing authority for most premises. They have extensive powers to ensure compliance.</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Enforcement Options:</p>
+                <ul className="space-y-2 text-[13px]">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-3 w-3 text-rose-400 mt-0.5" />
+                    <span><strong className="text-white">Informal advice</strong> - guidance to improve compliance</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-3 w-3 text-rose-400 mt-0.5" />
+                    <span><strong className="text-white">Enforcement Notice</strong> - formal requirement to take action within specified timeframe</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-3 w-3 text-rose-400 mt-0.5" />
+                    <span><strong className="text-white">Prohibition Notice</strong> - immediate restriction or closure where serious risk exists</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-3 w-3 text-rose-400 mt-0.5" />
+                    <span><strong className="text-white">Alterations Notice</strong> - requirement to notify before making specified changes</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-3 w-3 text-rose-400 mt-0.5" />
+                    <span><strong className="text-white">Prosecution</strong> - criminal proceedings for serious breaches</span>
+                  </li>
+                </ul>
               </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Quick Check 2 */}
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <HelpCircle className="h-5 w-5 text-amber-400" />
+              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
+            </div>
+            <p className="text-[15px] text-white/80 mb-3">A fire inspector issues a Prohibition Notice on a nightclub. Can the club continue operating?</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> No. A Prohibition Notice takes immediate effect and prohibits or restricts use of the premises until the serious fire risk is remedied. Operating in breach is a criminal offence.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 06 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">06</span>
+              <h3 className="text-[17px] font-semibold text-white">Penalties and Criminal Liability</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Failure to comply with the RR(FS)O 2005 can result in <strong className="text-white">criminal prosecution</strong> with significant penalties.</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Maximum Penalties (On Indictment):</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Failure to comply with duty:</strong> Unlimited fine</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Failure to comply with Enforcement Notice:</strong> 2 years imprisonment and/or unlimited fine</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Failure to comply with Prohibition Notice:</strong> 2 years imprisonment and/or unlimited fine</li>
+                </ul>
+              </div>
+              <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
+                <p className="text-[13px] text-rose-300 flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  Following the Grenfell Tower tragedy, the Fire Safety Act 2021 amended the RR(FS)O to clarify that it applies to the structure, external walls and flat entrance doors of multi-occupied residential buildings.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Quick Check 3 */}
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <HelpCircle className="h-5 w-5 text-amber-400" />
+              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
+            </div>
+            <p className="text-[15px] text-white/80 mb-3">Which Article of the RR(FS)O 2005 relates specifically to fire detection and warning systems?</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Article 17 deals with fire detection and fire warning. It requires the Responsible Person to ensure premises are equipped with appropriate fire detection and alarm systems.</p>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Practical Guidance */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
+
+        <div className="space-y-3">
+          <Card variant="ios" className="border-green-500/20">
+            <CardContent className="p-4">
+              <h4 className="text-[15px] font-semibold text-green-400 mb-2">Pro Tips</h4>
+              <ul className="space-y-2 text-[13px] text-white/70">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Always check who the Responsible Person is before starting any fire alarm work - they authorise changes
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Fire risk assessments should inform fire alarm specification - reference them in design documentation
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Keep records of all fire alarm work - these form part of the fire safety documentation
+                </li>
+              </ul>
             </CardContent>
           </Card>
 
-          {/* BS 5839 Overview and Legal Framework */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">BS 5839: Legal Framework and Application</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                BS 5839 is the primary British Standard for fire detection and alarm systems, providing comprehensive 
-                guidance that underpins UK fire safety legislation and building regulations compliance.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-red-600/10 border border-red-600/20 rounded-md p-4">
-                  <h4 className="text-red-400 font-semibold mb-2">Legal Status and Enforcement:</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm">
-                    <li>Referenced in Building Regulations Approved Document B</li>
-                    <li>Regulatory Reform (Fire Safety) Order 2005 compliance</li>
-                    <li>Insurance industry standard for risk assessment</li>
-                    <li>Duty holder responsibilities under Fire Safety Act 2021</li>
-                    <li>Planning condition requirements for new developments</li>
-                  </ul>
-                </div>
-                <div className="bg-yellow-400/10 border border-blue-600/20 rounded-md p-4">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Professional Competence Requirements:</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm">
-                    <li>Third-party certification scheme membership</li>
-                    <li>FIA (Fire Industry Association) accreditation</li>
-                    <li>BAFE (British Approvals for Fire Equipment) registration</li>
-                    <li>Continuing professional development obligations</li>
-                    <li>Professional indemnity insurance requirements</li>
-                  </ul>
-                </div>
-              </div>
+          <Card variant="ios" className="border-red-500/20">
+            <CardContent className="p-4">
+              <h4 className="text-[15px] font-semibold text-red-400 mb-2">Common Mistakes</h4>
+              <ul className="space-y-2 text-[13px] text-white/70">
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Assuming building management handles all fire safety - everyone has duties
+                </li>
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Treating fire risk assessment as a one-off exercise - it must be reviewed regularly
+                </li>
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Ignoring the need to notify the fire authority before changes in premises with Alterations Notices
+                </li>
+              </ul>
             </CardContent>
           </Card>
-
-          {/* BS 5839 Part 1 Overview */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">BS 5839-1: Commercial and Non-Domestic Systems</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                BS 5839-1 provides the code of practice for the design, installation, commissioning and maintenance 
-                of fire detection and fire alarm systems in commercial and non-domestic buildings.
-              </p>
-              <div className="space-y-4">
-                <div className="bg-green-600/10 border border-green-600/20 rounded-md p-4">
-                  <h4 className="text-green-400 font-semibold mb-2">Scope and Application:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li>Commercial and industrial premises</li>
-                      <li>Educational establishments and healthcare facilities</li>
-                      <li>Hotels, guest houses, and boarding houses</li>
-                      <li>Residential care homes and sheltered housing</li>
-                      <li>Entertainment venues and sports facilities</li>
-                    </ul>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li>Shopping centres and retail premises</li>
-                      <li>Transport terminals and car parks</li>
-                      <li>Heritage buildings and places of worship</li>
-                      <li>High-rise residential buildings (common areas)</li>
-                      <li>Mixed-use developments and complexes</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="bg-yellow-400/10 border border-blue-600/20 rounded-md p-4">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Technical Standards Compliance:</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm">
-                    <li>BS EN 54 series component specifications</li>
-                    <li>Environmental and electromagnetic compatibility</li>
-                    <li>Seismic and vibration resistance requirements</li>
-                    <li>IP rating specifications for harsh environments</li>
-                    <li>ATEX compliance for hazardous area applications</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* System Categories */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Fire Alarm System Categories (BS 5839-1)</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-red-600/10 border border-red-600/20 rounded-md p-4">
-                  <h4 className="text-red-400 font-semibold mb-2">Category L Systems</h4>
-                  <p className="text-sm mb-2">Life safety systems for protecting people</p>
-                  <ul className="list-disc list-inside space-y-1 text-xs">
-                    <li><strong>L1:</strong> Complete building coverage including all rooms and areas</li>
-                    <li><strong>L2:</strong> Escape routes plus areas of high fire risk or rapid fire spread</li>
-                    <li><strong>L3:</strong> Escape routes only including corridors, stairways, and lobbies</li>
-                    <li><strong>L4:</strong> Escape routes within fire compartment of origin only</li>
-                    <li><strong>L5:</strong> Localised application to protect specific high-risk areas</li>
-                  </ul>
-                </div>
-                <div className="bg-yellow-400/10 border border-blue-600/20 rounded-md p-4">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Category P Systems</h4>
-                  <p className="text-sm mb-2">Property protection systems for buildings and contents</p>
-                  <ul className="list-disc list-inside space-y-1 text-xs">
-                    <li><strong>P1:</strong> Complete building coverage for maximum property protection</li>
-                    <li><strong>P2:</strong> Defined parts of building based on risk assessment</li>
-                  </ul>
-                  <div className="mt-3 bg-card border border-yellow-400/30 rounded p-2">
-                    <p className="text-xs"><strong>Note:</strong> P systems may incorporate L system features</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* BS 5839 Part 1 Detailed Structure */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">BS 5839-1 Detailed Structure and Scope</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-green-600/10 border border-green-600/20 rounded-md p-4">
-                  <h4 className="text-green-400 font-semibold mb-2">Part 1 - Sections Overview:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Section 0:</strong> Introduction and general principles</li>
-                      <li><strong>Section 1:</strong> Scope and definitions</li>
-                      <li><strong>Section 2:</strong> Normative references</li>
-                      <li><strong>Section 3:</strong> Terms and definitions</li>
-                      <li><strong>Section 4:</strong> Management of fire safety</li>
-                    </ul>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Section 5:</strong> System design principles</li>
-                      <li><strong>Section 6:</strong> System components</li>
-                      <li><strong>Section 7:</strong> Control and indicating equipment</li>
-                      <li><strong>Section 8:</strong> Power supplies</li>
-                      <li><strong>Section 9:</strong> Cables and wiring</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="bg-yellow-400/10 border border-blue-600/20 rounded-md p-4">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Additional Sections:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Section 10:</strong> Planning the system</li>
-                      <li><strong>Section 11:</strong> Installation</li>
-                      <li><strong>Section 12:</strong> Commissioning</li>
-                      <li><strong>Section 13:</strong> Acceptance</li>
-                    </ul>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Section 14:</strong> Verification of system performance</li>
-                      <li><strong>Section 15:</strong> Maintenance</li>
-                      <li><strong>Section 16:</strong> Records</li>
-                      <li><strong>Annexes:</strong> Technical guidance and examples</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* BS 5839 Part 6 Detailed Coverage */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">BS 5839-6 Comprehensive Coverage</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                BS 5839-6 provides detailed guidance for fire detection and alarm systems in domestic premises, 
-                addressing the unique challenges of residential environments.
-              </p>
-              <div className="space-y-4">
-                <div className="bg-purple-600/10 border border-purple-600/20 rounded-md p-4">
-                  <h4 className="text-purple-400 font-semibold mb-2">Domestic System Types:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div>
-                      <h5 className="text-white font-medium mb-2">Grade A Systems:</h5>
-                      <ul className="list-disc list-inside space-y-1 text-xs">
-                        <li>Mains powered with standby battery</li>
-                        <li>Control and indicating equipment required</li>
-                        <li>Zone indication capabilities</li>
-                        <li>Remote monitoring possible</li>
-                        <li>Professional installation required</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="text-white font-medium mb-2">Grade B Systems:</h5>
-                      <ul className="list-disc list-inside space-y-1 text-xs">
-                        <li>Mains powered with battery backup</li>
-                        <li>No control panel required</li>
-                        <li>Interconnected alarm devices</li>
-                        <li>Suitable for most domestic properties</li>
-                        <li>Competent person installation acceptable</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-orange-600/10 border border-orange-600/20 rounded-md p-3">
-                    <h5 className="text-orange-400 font-medium mb-2">Grade C Systems:</h5>
-                    <ul className="list-disc list-inside space-y-1 text-xs">
-                      <li>Mains powered systems only</li>
-                      <li>No battery backup provision</li>
-                      <li>Limited application and reliability</li>
-                      <li>Not recommended for new installations</li>
-                      <li>May be acceptable for low-risk scenarios</li>
-                    </ul>
-                  </div>
-                  <div className="bg-amber-600/10 border border-amber-600/20 rounded-md p-3">
-                    <h5 className="text-amber-400 font-medium mb-2">Grade D Systems:</h5>
-                    <ul className="list-disc list-inside space-y-1 text-xs">
-                      <li>Battery powered detectors only</li>
-                      <li>10-year sealed battery recommended</li>
-                      <li>Minimum acceptable standard</li>
-                      <li>Simple installation and maintenance</li>
-                      <li>Suitable for basic protection needs</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* System Selection Criteria */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">System Selection Criteria and Risk Assessment</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-red-600/10 border border-red-600/20 rounded-md p-4">
-                  <h4 className="text-red-400 font-semibold mb-2">Risk Factors for System Selection:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li>Building height and floor area</li>
-                      <li>Occupancy type and vulnerability</li>
-                      <li>Fire load and ignition sources</li>
-                      <li>Construction materials and methods</li>
-                      <li>Escape route configuration</li>
-                    </ul>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li>Sleeping accommodation presence</li>
-                      <li>Disabled persons evacuation needs</li>
-                      <li>Automatic suppression systems</li>
-                      <li>Fire brigade access and response</li>
-                      <li>Insurance and legal requirements</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="bg-yellow-400/10 border border-blue-600/20 rounded-md p-4">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Category Selection Matrix:</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
-                      <thead>
-                        <tr className="border-b border-yellow-400/30">
-                          <th className="text-left p-2">Building Type</th>
-                          <th className="text-left p-2">Minimum Category</th>
-                          <th className="text-left p-2">Recommended</th>
-                        </tr>
-                      </thead>
-                      <tbody className="space-y-1">
-                        <tr className="border-b border-yellow-400/30">
-                          <td className="p-2">Small single-storey office</td>
-                          <td className="p-2">M (Manual only)</td>
-                          <td className="p-2">L3 or L4</td>
-                        </tr>
-                        <tr className="border-b border-yellow-400/30">
-                          <td className="p-2">Multi-storey office</td>
-                          <td className="p-2">L3</td>
-                          <td className="p-2">L2</td>
-                        </tr>
-                        <tr className="border-b border-yellow-400/30">
-                          <td className="p-2">Hotel/residential care</td>
-                          <td className="p-2">L2</td>
-                          <td className="p-2">L1</td>
-                        </tr>
-                        <tr>
-                          <td className="p-2">High-value property</td>
-                          <td className="p-2">P2</td>
-                          <td className="p-2">P1</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Design Principles */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Design Principles and Documentation</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-3">
-                <div>
-                  <h4 className="text-white font-semibold mb-2">Essential Design Considerations:</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm">
-                    <li>Risk assessment and system category selection</li>
-                    <li>Zone planning and detector positioning</li>
-                    <li>Cable routing and fire resistance requirements</li>
-                    <li>Power supply and standby provisions</li>
-                    <li>Integration with building services</li>
-                  </ul>
-                </div>
-                <div className="bg-amber-600/10 border border-amber-600/20 rounded-md p-4">
-                  <h4 className="text-amber-400 font-semibold mb-2">Required Documentation:</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm">
-                    <li>Fire strategy and cause and effect matrix</li>
-                    <li>System schematic and zone plans</li>
-                    <li>Equipment schedules and specifications</li>
-                    <li>Installation and commissioning certificates</li>
-                    <li>Operation and maintenance manuals</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Detailed Technical Requirements */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Technical Implementation Requirements</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-cyan-600/10 border border-cyan-600/20 rounded-md p-4">
-                  <h4 className="text-cyan-400 font-semibold mb-2">Component Specifications (BS EN 54 Series):</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>BS EN 54-2:</strong> Control and indicating equipment</li>
-                      <li><strong>BS EN 54-3:</strong> Fire alarm sounders</li>
-                      <li><strong>BS EN 54-4:</strong> Power supply equipment</li>
-                      <li><strong>BS EN 54-5:</strong> Heat detectors</li>
-                      <li><strong>BS EN 54-7:</strong> Smoke detectors</li>
-                    </ul>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>BS EN 54-11:</strong> Manual call points</li>
-                      <li><strong>BS EN 54-12:</strong> Smoke detector line equipment</li>
-                      <li><strong>BS EN 54-17:</strong> Short circuit isolators</li>
-                      <li><strong>BS EN 54-20:</strong> Aspirating smoke detectors</li>
-                      <li><strong>BS EN 54-23:</strong> Visual alarm devices</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="bg-indigo-600/10 border border-indigo-600/20 rounded-md p-4">
-                  <h4 className="text-indigo-400 font-semibold mb-2">Installation Standards and Practices:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li>Cable fire resistance: 30, 60, 90, or 120 minutes</li>
-                      <li>Maximum circuit resistance and voltage drop</li>
-                      <li>Earthing and electrical separation requirements</li>
-                      <li>EMC compliance and interference immunity</li>
-                      <li>Environmental protection (IP ratings)</li>
-                    </ul>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li>Detector spacing and positioning criteria</li>
-                      <li>Zone boundaries and compartmentation</li>
-                      <li>Access for maintenance and testing</li>
-                      <li>Integration with building management systems</li>
-                      <li>Cause and effect programming</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* BS 5839-6 Detailed Requirements */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">BS 5839-6: Domestic Systems - Detailed Requirements</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-violet-600/10 border border-violet-600/20 rounded-md p-4">
-                  <h4 className="text-violet-400 font-semibold mb-2">Grade A System Requirements:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="space-y-2">
-                      <h5 className="text-white font-medium">Design Criteria:</h5>
-                      <ul className="list-disc list-inside space-y-1 text-xs">
-                        <li>Professional design required with risk assessment</li>
-                        <li>Minimum 30V standby battery capacity</li>
-                        <li>Control panel with zone indication (max 32 zones)</li>
-                        <li>Fault monitoring and indication</li>
-                        <li>Interface capability for transmission equipment</li>
-                        <li>Test facilities for all functions</li>
-                      </ul>
-                    </div>
-                    <div className="space-y-2">
-                      <h5 className="text-white font-medium">Installation Standards:</h5>
-                      <ul className="list-disc list-inside space-y-1 text-xs">
-                        <li>Fire-resistant cables (FP200 or equivalent)</li>
-                        <li>Maximum 1.5V voltage drop to furthest device</li>
-                        <li>Short circuit isolation within 100m</li>
-                        <li>Minimum IP20 protection for indoor devices</li>
-                        <li>Professional commissioning certificate required</li>
-                        <li>Annual maintenance by competent person</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-teal-600/10 border border-teal-600/20 rounded-md p-4">
-                  <h4 className="text-teal-400 font-semibold mb-2">Grade B System Implementation:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="space-y-2">
-                      <h5 className="text-white font-medium">Technical Specifications:</h5>
-                      <ul className="list-disc list-inside space-y-1 text-xs">
-                        <li>Mains supply with integral battery backup</li>
-                        <li>Interconnection via hard wiring or radio frequency</li>
-                        <li>Maximum 40 interconnected devices per system</li>
-                        <li>Automatic battery testing with low battery warning</li>
-                        <li>Silence/test button on each detector</li>
-                        <li>Hush feature for nuisance alarm management</li>
-                      </ul>
-                    </div>
-                    <div className="space-y-2">
-                      <h5 className="text-white font-medium">Coverage Requirements:</h5>
-                      <ul className="list-disc list-inside space-y-1 text-xs">
-                        <li>All circulation spaces (hallways, stairs, landings)</li>
-                        <li>All rooms except bathrooms under 10m²</li>
-                        <li>Heat detectors in kitchens and garages</li>
-                        <li>Optical smoke detectors in living areas</li>
-                        <li>Multi-sensor detectors for versatile protection</li>
-                        <li>Carbon monoxide detection where applicable</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Maintenance and Compliance */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Maintenance Schedules and Compliance Verification</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-emerald-600/10 border border-emerald-600/20 rounded-md p-4">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Routine Maintenance Requirements:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <div>
-                      <h5 className="text-white font-medium mb-2">Daily (Automatic):</h5>
-                      <ul className="list-disc list-inside space-y-1 text-xs">
-                        <li>System self-monitoring</li>
-                        <li>Battery condition checks</li>
-                        <li>Fault signal verification</li>
-                        <li>Power supply monitoring</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="text-white font-medium mb-2">Weekly:</h5>
-                      <ul className="list-disc list-inside space-y-1 text-xs">
-                        <li>Visual inspection of panel</li>
-                        <li>Log book entries review</li>
-                        <li>Manual call point test (rotating basis)</li>
-                        <li>Sounder test verification</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="text-white font-medium mb-2">Monthly:</h5>
-                      <ul className="list-disc list-inside space-y-1 text-xs">
-                        <li>Full system function test</li>
-                        <li>All manual call points tested</li>
-                        <li>Battery standby test</li>
-                        <li>Documentation updates</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-rose-600/10 border border-rose-600/20 rounded-md p-4">
-                  <h4 className="text-rose-400 font-semibold mb-2">Annual Comprehensive Inspection:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li>Complete system performance verification</li>
-                      <li>All detector sensitivity testing</li>
-                      <li>Cable insulation resistance testing</li>
-                      <li>Earth fault loop impedance verification</li>
-                      <li>Battery capacity and autonomy testing</li>
-                    </ul>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li>Cause and effect programming verification</li>
-                      <li>Integration system testing</li>
-                      <li>Environmental condition assessment</li>
-                      <li>Documentation and certification updates</li>
-                      <li>Competent person signed certificate</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Testing and Commissioning */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Commissioning and Acceptance Testing</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="text-white font-semibold mb-2">Pre-Commissioning Checks:</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm">
-                    <li>Visual inspection of all equipment</li>
-                    <li>Cable termination and labelling verification</li>
-                    <li>Power supply connections and earthing</li>
-                    <li>Device addressing and zone configuration</li>
-                    <li>Documentation review and compliance check</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="text-white font-semibold mb-2">Commissioning Test Sequence:</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm">
-                    <li>Power supply and battery autonomy tests</li>
-                    <li>All detector functional verification</li>
-                    <li>Manual call point operation tests</li>
-                    <li>Sounder and beacon operation verification</li>
-                    <li>Fault monitoring and isolation testing</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="text-white font-semibold mb-2">Acceptance Criteria:</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm">
-                    <li>100% device response within specified time</li>
-                    <li>No spurious alarms during testing period</li>
-                    <li>All fault conditions properly indicated</li>
-                    <li>System meets design specification</li>
-                    <li>Documentation complete and accurate</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="text-white font-semibold mb-2">Handover Requirements:</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm">
-                    <li>Commissioning certificate issued</li>
-                    <li>Operation and maintenance manuals provided</li>
-                    <li>User training completed and documented</li>
-                    <li>Maintenance contract arrangements confirmed</li>
-                    <li>Building owner acceptance signature obtained</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <SingleQuestionQuiz 
-            questions={questions} 
-            title="Test Your Knowledge: BS 5839 Parts 1 & 6" 
-          />
-
-          <div className="flex justify-between">
-            <div></div>
-            <Link to="../fire-alarm-module-7-section-2">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
-      </div>
+      </section>
+
+      {/* FAQs */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
+        <div className="space-y-3">
+          {[
+            { q: "Does the RR(FS)O 2005 apply to Scotland and Northern Ireland?", a: "No. Scotland has the Fire (Scotland) Act 2005 and Fire Safety (Scotland) Regulations 2006. Northern Ireland has the Fire and Rescue Services (Northern Ireland) Order 2006." },
+            { q: "Who should carry out the fire risk assessment?", a: "The Responsible Person can do it themselves if competent, or appoint a competent person. For complex premises, a qualified fire risk assessor is recommended." },
+            { q: "How often must fire risk assessments be reviewed?", a: "There is no fixed period - review should be regular and triggered by significant changes such as alterations, changes in occupancy, or after a fire incident." },
+            { q: "Does the Order apply to domestic premises?", a: "Single private dwellings are excluded. However, common areas of blocks of flats, HMOs and similar residential buildings are covered." },
+            { q: "What happens if there are multiple Responsible Persons?", a: "Article 22 requires them to cooperate and coordinate. Each remains responsible for their area of control, but they must work together." },
+            { q: "Can I appeal against an Enforcement Notice?", a: "Yes. Appeals are made to the Magistrates' Court (or in Scotland, the Sheriff Court) within 21 days of the notice being served." }
+          ].map((faq, i) => (
+            <Card key={i} variant="ios">
+              <CardContent className="p-4">
+                <p className="text-[15px] font-semibold text-white mb-2">{faq.q}</p>
+                <p className="text-[13px] text-white/70">{faq.a}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <Card variant="ios-elevated" className="border-rose-500/20">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
+              <BookOpen className="h-5 w-5 text-rose-400" />
+              Knowledge Check
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {!showQuiz ? (
+              <div className="text-center py-6">
+                <p className="text-[15px] text-white/70 mb-4">Test your understanding of fire safety legislation with 10 questions.</p>
+                <Button variant="ios-primary" onClick={() => setShowQuiz(true)}>
+                  Start Quiz
+                </Button>
+              </div>
+            ) : showResults ? (
+              <div className="space-y-6">
+                <div className="text-center py-4">
+                  <p className="text-[34px] font-bold text-rose-400">{calculateScore()}/{questions.length}</p>
+                  <p className="text-[15px] text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
+                </div>
+
+                <div className="space-y-4">
+                  {questions.map((q, i) => {
+                    const correct = selectedAnswers[i] === q.correctAnswer;
+                    return (
+                      <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
+                        <p className="text-[15px] font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
+                        <p className={`text-[13px] ${correct ? 'text-green-400' : 'text-red-400'}`}>
+                          Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
+                        </p>
+                        {!correct && (
+                          <p className="text-[13px] text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
+                        )}
+                        <p className="text-[13px] text-white/70 mt-2">{q.explanation}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <Button variant="ios-secondary" onClick={resetQuiz} className="w-full gap-2">
+                  <RotateCcw className="h-4 w-4" />
+                  Restart Quiz
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+
+                <div>
+                  <p className="text-[17px] font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
+                  <div className="space-y-2">
+                    {questions[currentQuestion].options.map((opt, idx) => {
+                      const selected = selectedAnswers[currentQuestion] === idx;
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => handleAnswerSelect(idx)}
+                          className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
+                            selected
+                              ? 'bg-rose-500/20 border-rose-500/50 text-white'
+                              : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                          }`}
+                        >
+                          {opt}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between gap-3">
+                  <Button
+                    variant="ios-secondary"
+                    onClick={handlePrevious}
+                    disabled={currentQuestion === 0}
+                    className="flex-1"
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    variant="ios-primary"
+                    onClick={handleNext}
+                    disabled={selectedAnswers[currentQuestion] === -1}
+                    className="flex-1"
+                  >
+                    {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Navigation Footer */}
+      <section className="px-4 pb-safe max-w-4xl mx-auto">
+        <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
+          <Button variant="ios-secondary" asChild className="flex-1">
+            <Link to="../module-7">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Module Overview
+            </Link>
+          </Button>
+          <Button variant="ios-primary" asChild className="flex-1">
+            <Link to="../module-7/section-2">
+              Next Section
+              <ArrowRight className="h-4 w-4 ml-2" />
+            </Link>
+          </Button>
+        </div>
+      </section>
     </div>
   );
 };

@@ -96,20 +96,26 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
 
   return (
     <div className="min-h-[80vh] flex flex-col">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <Button variant="ghost" onClick={onClose} className="gap-2">
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setSoundEnabled(!soundEnabled)}
-          className="text-white"
-        >
-          {soundEnabled ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
-        </Button>
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10 px-4 py-3 -mx-4 mb-4">
+        <div className="flex items-center justify-between">
+          <Button
+            variant="ghost"
+            onClick={onClose}
+            className="h-11 gap-2 touch-manipulation active:scale-[0.98] transition-all"
+          >
+            <ArrowLeft className="h-5 w-5" />
+            Back
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setSoundEnabled(!soundEnabled)}
+            className="h-11 w-11 text-white touch-manipulation active:scale-[0.98] transition-all"
+          >
+            {soundEnabled ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
+          </Button>
+        </div>
       </div>
 
       {/* Main Content */}
@@ -130,11 +136,18 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
               </p>
             </div>
             <div className="flex gap-3 justify-center">
-              <Button onClick={reset} variant="outline">
-                <RotateCcw className="h-4 w-4 mr-2" />
+              <Button
+                onClick={reset}
+                variant="outline"
+                className="h-12 px-6 text-base touch-manipulation active:scale-[0.98] transition-all"
+              >
+                <RotateCcw className="h-5 w-5 mr-2" />
                 Again
               </Button>
-              <Button onClick={onClose}>
+              <Button
+                onClick={onClose}
+                className="h-12 px-6 text-base touch-manipulation active:scale-[0.98] transition-all"
+              >
                 Done
               </Button>
             </div>
@@ -149,14 +162,14 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
               </p>
             </div>
 
-            {/* Breathing Circle */}
-            <div className="relative w-64 h-64 mb-8">
+            {/* Breathing Circle - Responsive for mobile */}
+            <div className="relative w-[min(16rem,80vw)] h-[min(16rem,80vw)] mb-8">
               {/* Outer ring */}
               <div className="absolute inset-0 rounded-full border-4 border-white/10" />
 
               {/* Progress ring */}
               {phase !== 'ready' && (
-                <svg className="absolute inset-0 w-full h-full -rotate-90">
+                <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 256 256">
                   <circle
                     cx="128"
                     cy="128"
@@ -183,7 +196,7 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
                     <div className="text-lg font-medium">Ready?</div>
                   ) : (
                     <>
-                      <div className="text-5xl font-bold mb-1">{timeLeft}</div>
+                      <div className="text-4xl sm:text-5xl font-bold mb-1">{timeLeft}</div>
                       <div className="text-sm font-medium opacity-90">
                         {phaseConfig[phase as keyof typeof phaseConfig]?.instruction}
                       </div>
@@ -195,11 +208,11 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
 
             {/* Phase Indicators */}
             {phase !== 'ready' && (
-              <div className="flex gap-4 mb-8">
+              <div className="flex gap-3 mb-8">
                 {['inhale', 'hold', 'exhale'].map((p) => (
                   <div
                     key={p}
-                    className={`text-xs px-3 py-1.5 rounded-full transition-all ${
+                    className={`text-sm px-4 py-2 rounded-full transition-all ${
                       phase === p
                         ? 'bg-white text-black font-medium'
                         : 'bg-white/10 text-foreground/60'
@@ -217,9 +230,9 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
                 <Button
                   onClick={startExercise}
                   size="lg"
-                  className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-foreground px-8"
+                  className="h-14 px-8 text-base bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-foreground touch-manipulation active:scale-[0.98] transition-all"
                 >
-                  <Play className="h-5 w-5 mr-2" />
+                  <Play className="h-6 w-6 mr-2" />
                   Start
                 </Button>
               ) : (
@@ -228,7 +241,7 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
                     onClick={togglePause}
                     size="lg"
                     variant="outline"
-                    className="px-6"
+                    className="h-14 px-6 text-base touch-manipulation active:scale-[0.98] transition-all"
                   >
                     {isActive ? (
                       <>
@@ -246,7 +259,7 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
                     onClick={reset}
                     size="lg"
                     variant="ghost"
-                    className="px-4"
+                    className="h-14 w-14 touch-manipulation active:scale-[0.98] transition-all"
                   >
                     <RotateCcw className="h-5 w-5" />
                   </Button>

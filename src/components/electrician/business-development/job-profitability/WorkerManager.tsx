@@ -1,11 +1,21 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { Plus, Trash2, Users, Clock } from "lucide-react";
+import { IOSInput } from "@/components/ui/ios-input";
+import {
+  Plus,
+  Trash2,
+  Users,
+  Clock,
+  PoundSterling,
+  ChevronDown,
+  CheckCircle,
+  GraduationCap,
+  Award,
+  Briefcase,
+  Star
+} from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { motion, AnimatePresence } from "framer-motion";
 
 export interface Worker {
   id: string;
@@ -15,15 +25,24 @@ export interface Worker {
   skillLevel: 'apprentice-1st' | 'apprentice-2nd' | 'apprentice-3rd' | 'apprentice-4th' | 'qualified' | 'senior' | 'supervisor' | 'specialist';
 }
 
-const workerRoleOptions = [
-  { value: "apprentice-1st", label: "Apprentice (1st Year) - £15/hour", rate: 15 },
-  { value: "apprentice-2nd", label: "Apprentice (2nd Year) - £18/hour", rate: 18 },
-  { value: "apprentice-3rd", label: "Apprentice (3rd Year) - £22/hour", rate: 22 },
-  { value: "apprentice-4th", label: "Apprentice (4th Year) - £25/hour", rate: 25 },
-  { value: "qualified", label: "Qualified Electrician - £45/hour", rate: 45 },
-  { value: "senior", label: "Senior Electrician - £55/hour", rate: 55 },
-  { value: "supervisor", label: "Supervisor/Foreman - £65/hour", rate: 65 },
-  { value: "specialist", label: "Specialist/Consultant - £75/hour", rate: 75 },
+interface RoleOption {
+  value: Worker['skillLevel'];
+  label: string;
+  shortLabel: string;
+  rate: number;
+  icon: typeof Users;
+  color: string;
+}
+
+const workerRoleOptions: RoleOption[] = [
+  { value: "apprentice-1st", label: "1st Year Apprentice", shortLabel: "1st Yr", rate: 15, icon: GraduationCap, color: "blue" },
+  { value: "apprentice-2nd", label: "2nd Year Apprentice", shortLabel: "2nd Yr", rate: 18, icon: GraduationCap, color: "blue" },
+  { value: "apprentice-3rd", label: "3rd Year Apprentice", shortLabel: "3rd Yr", rate: 22, icon: GraduationCap, color: "blue" },
+  { value: "apprentice-4th", label: "4th Year Apprentice", shortLabel: "4th Yr", rate: 25, icon: GraduationCap, color: "blue" },
+  { value: "qualified", label: "Qualified Electrician", shortLabel: "Qualified", rate: 45, icon: Award, color: "green" },
+  { value: "senior", label: "Senior Electrician", shortLabel: "Senior", rate: 55, icon: Star, color: "amber" },
+  { value: "supervisor", label: "Supervisor/Foreman", shortLabel: "Supervisor", rate: 65, icon: Briefcase, color: "purple" },
+  { value: "specialist", label: "Specialist/Consultant", shortLabel: "Specialist", rate: 75, icon: Star, color: "red" },
 ];
 
 interface WorkerManagerProps {
@@ -34,14 +53,15 @@ interface WorkerManagerProps {
   isVisible: boolean;
 }
 
-export const WorkerManager = ({ 
-  workers, 
-  onWorkersChange, 
-  totalLabourHours, 
+export const WorkerManager = ({
+  workers,
+  onWorkersChange,
+  totalLabourHours,
   totalLabourCost,
-  isVisible 
+  isVisible
 }: WorkerManagerProps) => {
   const { toast } = useToast();
+  const [expandedWorker, setExpandedWorker] = useState<string | null>(workers[0]?.id || null);
 
   const addWorker = () => {
     const newWorker: Worker = {
@@ -51,8 +71,9 @@ export const WorkerManager = ({
       hourlyRate: 45,
       skillLevel: 'qualified'
     };
-    
+
     onWorkersChange([...workers, newWorker]);
+    setExpandedWorker(newWorker.id);
     toast({
       title: "Worker Added",
       description: "New worker added to the team.",
@@ -64,12 +85,12 @@ export const WorkerManager = ({
     if (workers.length === 1) {
       toast({
         title: "Cannot Remove",
-        description: "At least one worker is required for the job.",
+        description: "At least one worker is required.",
         variant: "destructive"
       });
       return;
     }
-    
+
     onWorkersChange(workers.filter(w => w.id !== workerId));
     toast({
       title: "Worker Removed",
@@ -86,7 +107,7 @@ export const WorkerManager = ({
           return {
             ...worker,
             [field]: value,
-            role: roleOption?.label.split(' - ')[0] || worker.role,
+            role: roleOption?.label || worker.role,
             hourlyRate: roleOption?.rate || worker.hourlyRate
           };
         }
@@ -101,131 +122,209 @@ export const WorkerManager = ({
   if (!isVisible) return null;
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-card">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-foreground flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <Users className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-            <span className="text-base sm:text-lg">
-              Team Management ({workers.length} worker{workers.length !== 1 ? 's' : ''})
-            </span>
+    <div className="space-y-4">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-elec-yellow/20 rounded-xl">
+            <Users className="h-5 w-5 text-elec-yellow" />
           </div>
-          <Button
-            onClick={addWorker}
-            size="sm"
-            className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80 w-full sm:w-auto min-h-[44px] touch-manipulation"
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            Add Worker
-          </Button>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4 px-4 sm:px-6">
-        {/* Team Summary - Mobile Optimized */}
-        <div className="bg-elec-dark/50 rounded-lg p-3 sm:p-4 space-y-3">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="flex justify-between sm:flex-col sm:items-start items-center">
-              <span className="text-xs sm:text-sm text-muted-foreground">Total Labour Hours</span>
-              <Badge variant="secondary" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 min-h-[32px] px-3">
-                <Clock className="h-3 w-3 mr-1" />
-                {totalLabourHours.toFixed(1)}h
-              </Badge>
-            </div>
-            <div className="flex justify-between sm:flex-col sm:items-start items-center">
-              <span className="text-xs sm:text-sm text-muted-foreground">Blended Rate</span>
-              <Badge variant="secondary" className="bg-green-500/10 text-green-400 border-green-500/20 min-h-[32px] px-3">
-                £{blendedHourlyRate.toFixed(2)}/hr
-              </Badge>
-            </div>
-            <div className="flex justify-between sm:flex-col sm:items-start items-center">
-              <span className="text-xs sm:text-sm text-muted-foreground">Total Cost</span>
-              <Badge variant="secondary" className="bg-blue-500/10 text-blue-400 border-blue-500/20 min-h-[32px] px-3">
-                £{totalLabourCost.toFixed(2)}
-              </Badge>
-            </div>
+          <div>
+            <h3 className="text-ios-headline font-semibold text-white">Team</h3>
+            <p className="text-ios-caption-1 text-white/50">{workers.length} worker{workers.length !== 1 ? 's' : ''}</p>
           </div>
         </div>
+        <Button
+          onClick={addWorker}
+          className="h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium text-ios-subhead active:scale-[0.98] touch-manipulation"
+        >
+          <Plus className="h-4 w-4 mr-1" />
+          Add
+        </Button>
+      </div>
 
-        {/* Worker Cards - Mobile Optimized */}
-        <div className="space-y-3">
-          {workers.map((worker, index) => (
-            <Card key={worker.id} className="bg-elec-dark/30 border-elec-yellow/10">
-              <CardContent className="p-3 sm:p-4 space-y-4">
-                {/* Worker Header */}
-                <div className="flex items-center justify-between">
-                  <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30 text-xs sm:text-sm">
-                    Worker {index + 1}
-                  </Badge>
-                  {workers.length > 1 && (
-                    <Button
-                      onClick={() => removeWorker(worker.id)}
-                      size="sm"
-                      variant="destructive"
-                      className="h-10 w-10 p-0 touch-manipulation"
-                      aria-label="Remove worker"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  )}
-                </div>
+      {/* Team Summary Stats */}
+      <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
+        <div className="flex-shrink-0 bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-3 min-w-[100px]">
+          <div className="flex items-center gap-1 mb-1">
+            <Clock className="h-3 w-3 text-elec-yellow" />
+            <span className="text-ios-caption-2 text-elec-yellow">Hours</span>
+          </div>
+          <p className="text-ios-title-3 font-semibold text-white tabular-nums">{totalLabourHours.toFixed(1)}h</p>
+        </div>
+        <div className="flex-shrink-0 bg-green-500/10 border border-green-500/30 rounded-xl p-3 min-w-[100px]">
+          <div className="flex items-center gap-1 mb-1">
+            <PoundSterling className="h-3 w-3 text-green-400" />
+            <span className="text-ios-caption-2 text-green-400">Blended</span>
+          </div>
+          <p className="text-ios-title-3 font-semibold text-white tabular-nums">£{blendedHourlyRate.toFixed(0)}/hr</p>
+        </div>
+        <div className="flex-shrink-0 bg-blue-500/10 border border-blue-500/30 rounded-xl p-3 min-w-[100px]">
+          <div className="flex items-center gap-1 mb-1">
+            <PoundSterling className="h-3 w-3 text-blue-400" />
+            <span className="text-ios-caption-2 text-blue-400">Total</span>
+          </div>
+          <p className="text-ios-title-3 font-semibold text-white tabular-nums">£{totalLabourCost.toFixed(0)}</p>
+        </div>
+      </div>
 
-                {/* Worker Role Selection - Mobile Optimized */}
-                <div className="space-y-2">
-                  <MobileSelectWrapper
-                    label="Worker Role & Rate"
-                    value={worker.skillLevel}
-                    onValueChange={(value) => updateWorker(worker.id, 'skillLevel', value as Worker['skillLevel'])}
-                    options={workerRoleOptions}
-                    placeholder="Select worker role..."
-                  />
-                </div>
+      {/* Worker Cards */}
+      <div className="space-y-2">
+        <AnimatePresence>
+          {workers.map((worker, index) => {
+            const roleOption = workerRoleOptions.find(r => r.value === worker.skillLevel);
+            const RoleIcon = roleOption?.icon || Users;
+            const isExpanded = expandedWorker === worker.id;
+            const workerCost = worker.hours * worker.hourlyRate;
 
-                {/* Hours and Rate Inputs - Mobile Optimized Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                  <MobileInput
-                    label="Hours"
-                    type="number"
-                    value={worker.hours || ""}
-                    onChange={(e) => updateWorker(worker.id, 'hours', parseFloat(e.target.value) || 0)}
-                    unit="hrs"
-                    min={0}
-                    step={0.5}
-                    className="min-h-[56px]"
-                  />
-                  <MobileInput
-                    label="Hourly Rate"
-                    type="number"
-                    value={worker.hourlyRate || ""}
-                    onChange={(e) => updateWorker(worker.id, 'hourlyRate', parseFloat(e.target.value) || 0)}
-                    unit="£"
-                    min={0}
-                    step={1}
-                    className="min-h-[56px]"
-                  />
-                </div>
-
-                {/* Worker Cost Summary - Mobile Optimized */}
-                <div className="bg-elec-yellow/5 rounded-lg p-3 border border-elec-yellow/10">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Worker Cost:</span>
-                    <span className="text-elec-yellow font-semibold text-lg">
-                      £{(worker.hours * worker.hourlyRate).toFixed(2)}
+            return (
+              <motion.div
+                key={worker.id}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, height: 0 }}
+                className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden"
+              >
+                {/* Worker Header (always visible) */}
+                <button
+                  onClick={() => setExpandedWorker(isExpanded ? null : worker.id)}
+                  className="w-full flex items-center justify-between p-4 touch-manipulation"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`p-2 rounded-xl bg-${roleOption?.color || 'white'}-500/20`}>
+                      <RoleIcon className={`h-4 w-4 text-${roleOption?.color || 'white'}-400`} />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-ios-subhead font-medium text-white">
+                        {roleOption?.shortLabel || worker.role}
+                      </p>
+                      <p className="text-ios-caption-2 text-white/50">
+                        {worker.hours}h × £{worker.hourlyRate} = £{workerCost.toFixed(0)}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-ios-subhead font-semibold text-elec-yellow tabular-nums">
+                      £{workerCost.toFixed(0)}
                     </span>
+                    <motion.div animate={{ rotate: isExpanded ? 180 : 0 }}>
+                      <ChevronDown className="h-5 w-5 text-white/40" />
+                    </motion.div>
                   </div>
-                  <div className="mt-1 text-xs text-muted-foreground">
-                    {worker.hours}h × £{worker.hourlyRate}/hr
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                </button>
 
-        {/* Mobile Helper Text */}
-        <div className="text-xs text-muted-foreground text-center p-2 bg-elec-dark/20 rounded-lg sm:hidden">
-          💡 Tap "Add Worker" to include additional team members in your job calculation
-        </div>
-      </CardContent>
-    </Card>
+                {/* Expanded Content */}
+                <AnimatePresence>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="border-t border-white/10"
+                    >
+                      <div className="p-4 space-y-4">
+                        {/* Role Selection */}
+                        <div>
+                          <p className="text-ios-caption-1 text-white/50 mb-2">Role & Rate</p>
+                          <div className="grid grid-cols-2 gap-2">
+                            {workerRoleOptions.map((option) => {
+                              const isSelected = worker.skillLevel === option.value;
+                              const Icon = option.icon;
+                              return (
+                                <button
+                                  key={option.value}
+                                  onClick={() => updateWorker(worker.id, 'skillLevel', option.value)}
+                                  className={`p-2.5 rounded-xl border text-left transition-all touch-manipulation active:scale-[0.98] ${
+                                    isSelected
+                                      ? "bg-elec-yellow/20 border-elec-yellow/50"
+                                      : "bg-white/5 border-white/10"
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-2">
+                                    {isSelected && <CheckCircle className="h-3 w-3 text-elec-yellow" />}
+                                    <Icon className={`h-3 w-3 ${isSelected ? "text-elec-yellow" : "text-white/50"}`} />
+                                    <span className={`text-ios-caption-1 font-medium ${isSelected ? "text-elec-yellow" : "text-white"}`}>
+                                      {option.shortLabel}
+                                    </span>
+                                  </div>
+                                  <p className="text-ios-caption-2 text-white/40 mt-0.5">£{option.rate}/hr</p>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        {/* Hours & Rate Inputs */}
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden">
+                            <IOSInput
+                              label="Hours"
+                              icon={<Clock className="h-4 w-4" />}
+                              type="number"
+                              value={worker.hours || ""}
+                              onChange={(e) => updateWorker(worker.id, 'hours', parseFloat(e.target.value) || 0)}
+                              hint="Time on job"
+                            />
+                          </div>
+                          <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden">
+                            <IOSInput
+                              label="Rate"
+                              icon={<PoundSterling className="h-4 w-4" />}
+                              type="number"
+                              value={worker.hourlyRate || ""}
+                              onChange={(e) => updateWorker(worker.id, 'hourlyRate', parseFloat(e.target.value) || 0)}
+                              hint="Per hour"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Remove Button */}
+                        {workers.length > 1 && (
+                          <Button
+                            onClick={() => removeWorker(worker.id)}
+                            variant="outline"
+                            className="w-full h-11 border-red-500/30 text-red-400 hover:bg-red-500/10 active:scale-[0.98] touch-manipulation"
+                          >
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            Remove Worker
+                          </Button>
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
+      </div>
+
+      {/* Quick Add Buttons */}
+      <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
+        {[
+          { level: "apprentice-1st" as const, label: "+Apprentice", rate: 15 },
+          { level: "qualified" as const, label: "+Qualified", rate: 45 },
+          { level: "senior" as const, label: "+Senior", rate: 55 }
+        ].map((quick) => (
+          <button
+            key={quick.level}
+            onClick={() => {
+              const newWorker: Worker = {
+                id: Date.now().toString(),
+                role: workerRoleOptions.find(r => r.value === quick.level)?.label || "",
+                hours: 8,
+                hourlyRate: quick.rate,
+                skillLevel: quick.level
+              };
+              onWorkersChange([...workers, newWorker]);
+              setExpandedWorker(newWorker.id);
+            }}
+            className="flex-shrink-0 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-ios-caption-1 text-white/70 hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+          >
+            {quick.label}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 };

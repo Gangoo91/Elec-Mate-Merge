@@ -1,312 +1,629 @@
-import { useEffect, useMemo, useState } from 'react';
-import { ArrowLeft, ArrowRight, Hand } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { ArrowLeft, ArrowRight, Thermometer, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { AccentPanel } from '@/components/upskilling/design/AccentPanel';
-
+import useSEO from '@/hooks/useSEO';
+import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
 import type { QuizQuestion } from '@/types/quiz';
 
-const FireAlarmModule2Section2 = () => {
-  // SEO
-  useEffect(() => {
-    const title = 'Manual Call Points: Locations & Operation | Module 2 Sec 2';
-    document.title = title;
-    const desc = 'Learn BS 5839-1 recommendations for manual call points: positioning, mounting height, identification, testing, and practical application with quiz.';
-    let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.name = 'description';
-      document.head.appendChild(meta);
-    }
-    if (meta) meta.content = desc;
-  }, []);
+const TITLE = "Heat Detectors - Fire Alarm Course Module 2";
+const DESCRIPTION = "Learn about fixed temperature and rate-of-rise heat detectors, BS 5839-1 classifications, siting requirements, and appropriate applications.";
 
-  // Quiz Data (11 questions)
+const FireAlarmModule2Section2 = () => {
+  useSEO({ title: TITLE, description: DESCRIPTION });
+
+  // Quiz Data - 10 questions
   const questions: QuizQuestion[] = useMemo(() => [
     {
       id: 1,
-      question: 'What is the recommended mounting height for a manual call point according to BS 5839?',
-      options: ['1.0 m ±100 mm', '1.4 m ±200 mm', '1.6 m ±200 mm', '1.2 m ±100 mm'],
+      question: 'Where would you typically use a rate-of-rise heat detector?',
+      options: ['Office', 'Kitchen', 'Escape route', 'Hotel bedroom'],
       correctAnswer: 1,
-      explanation: 'BS 5839 recommends MCP centres at 1.4 m above finished floor level with a tolerance of ±200 mm for accessibility.'
+      explanation: 'Rate-of-rise heat detectors suit kitchens and similar areas where smoke detection would cause false alarms from cooking fumes.'
     },
     {
       id: 2,
-      question: 'What is the maximum travel distance to a manual call point in a normal risk environment?',
-      options: ['25 m', '30 m', '45 m', '60 m'],
-      correctAnswer: 2,
-      explanation: 'Typical maximum travel distance is 45 m in normal risk; reduce (e.g., ~25 m) in higher‑risk or unfamiliar premises.'
+      question: 'Which detector classification indicates a rate-of-rise heat detector?',
+      options: ['A1S', 'A1R', 'CS', 'BR'],
+      correctAnswer: 1,
+      explanation: 'A1R indicates a Class A1 rate-of-rise heat detector. The "R" suffix denotes rate-of-rise functionality.'
     },
     {
       id: 3,
-      question: 'Where must manual call points be positioned?',
-      options: ['At all final exits only', 'At storey exits, final exits, and along escape routes', 'Next to fire extinguishers only', 'In plant rooms only'],
+      question: 'What is the typical maximum coverage radius for a heat detector (Class A1)?',
+      options: ['3.0 m', '5.3 m', '7.5 m', '10.0 m'],
       correctAnswer: 1,
-      explanation: 'Place MCPs at storey exits, final exits and along escape routes so occupants can raise the alarm quickly while evacuating.'
+      explanation: 'Class A1 heat detectors typically have a maximum coverage radius of 5.3 m under BS 5839-1, compared to 7.5 m for smoke detectors.'
     },
     {
       id: 4,
-      question: 'True or False: Manual call points must be visible and unobstructed.',
-      options: ['True', 'False'],
-      correctAnswer: 0,
-      explanation: 'They should be clearly visible (usually red) with signage where necessary and free from obstructions.'
+      question: 'What is the primary disadvantage of heat detectors compared to smoke detectors?',
+      options: [
+        'Higher cost',
+        'Slower response time - fire must be more developed',
+        'More prone to false alarms',
+        'Require more maintenance'
+      ],
+      correctAnswer: 1,
+      explanation: 'Heat detectors only respond once significant heat is generated, meaning the fire must be more developed before detection occurs.'
     },
     {
       id: 5,
-      question: 'How often should each MCP be tested according to BS 5839 recommendations?',
-      options: ['Every day', 'Every week', 'Every month', 'Every 6 months'],
+      question: 'At what temperature does a typical fixed temperature heat detector activate?',
+      options: ['47°C', '57°C', '67°C', '77°C'],
       correctAnswer: 1,
-      explanation: 'Weekly user tests normally activate a different MCP each time with records in the logbook.'
+      explanation: 'Most fixed temperature heat detectors activate at around 57°C, though higher ratings are available for warmer environments.'
     },
     {
       id: 6,
-      question: 'What colour should a manual call point typically be?',
-      options: ['Yellow', 'Green', 'Red', 'Blue'],
-      correctAnswer: 2,
-      explanation: 'Manual call points should be red to ensure high visibility and immediate recognition as a fire safety device.'
+      question: 'Why should heat detectors NOT be used in sleeping accommodation?',
+      options: [
+        'They are too expensive',
+        'They respond too slowly to provide adequate warning time',
+        'They cause false alarms',
+        'BS 5839-1 prohibits their use'
+      ],
+      correctAnswer: 1,
+      explanation: 'Heat detectors respond later than smoke detectors, potentially not providing enough warning time for sleeping occupants to evacuate safely.'
     },
     {
       id: 7,
-      question: 'What should be done with a manual call point after it has been activated?',
-      options: ['It resets automatically', 'It must be manually reset using a key or tool', 'It should be replaced', 'Nothing, it stays activated'],
+      question: 'What does the "S" suffix indicate in heat detector classification (e.g., A1S)?',
+      options: [
+        'Special application',
+        'Static/fixed temperature only',
+        'High sensitivity',
+        'Standard rating'
+      ],
       correctAnswer: 1,
-      explanation: 'MCPs latch when activated and must be manually reset using a key or tool to prevent accidental reactivation and confirm investigation.'
+      explanation: 'The "S" suffix indicates a static (fixed temperature) heat detector that activates at a set threshold temperature.'
     },
     {
       id: 8,
-      question: 'Why is the travel distance to MCPs reduced in high-risk or unfamiliar environments?',
-      options: ['To save on installation costs', 'People may be less familiar with escape routes and need faster alarm activation', 'MCPs are cheaper in bulk', 'It looks better aesthetically'],
-      correctAnswer: 1,
-      explanation: 'In high-risk or unfamiliar buildings, reduced travel distances ensure occupants can quickly raise the alarm even if unfamiliar with the layout.'
+      question: 'Which heat detector type combines both fixed temperature and rate-of-rise sensing?',
+      options: [
+        'Class A1S',
+        'Class A1R',
+        'Combined A1S/A1R',
+        'Multisensor'
+      ],
+      correctAnswer: 2,
+      explanation: 'Combined detectors (A1S/A1R) incorporate both sensing methods, providing both rate-of-rise and fixed maximum temperature activation.'
     },
     {
       id: 9,
-      question: 'What type of protective cover might be used on MCPs in vandal-prone areas?',
-      options: ['Metal cage that prevents operation', 'Transparent cover that does not impede operation', 'Thick padding', 'No cover should be used'],
+      question: 'In which environment would a higher temperature rating heat detector be appropriate?',
+      options: [
+        'Office space',
+        'Boiler room',
+        'Corridor',
+        'Bedroom'
+      ],
       correctAnswer: 1,
-      explanation: 'Protective covers should not prevent or significantly delay operation. Transparent covers provide protection while maintaining accessibility.'
+      explanation: 'Boiler rooms and similar hot environments require higher temperature rating detectors to avoid false alarms from normal ambient temperatures.'
     },
     {
       id: 10,
-      question: 'What is the purpose of signage near manual call points?',
-      options: ['Decoration only', 'To indicate the MCP location if not immediately obvious', 'Required by law in all cases', 'To advertise the manufacturer'],
+      question: 'What is a key advantage of heat detectors over smoke detectors?',
+      options: [
+        'Faster response time',
+        'Not affected by dust, steam, or fumes',
+        'Greater coverage area',
+        'Lower installation cost'
+      ],
       correctAnswer: 1,
-      explanation: 'Signage helps identify MCP locations where visibility might be limited or the MCP is not immediately obvious to building users.'
-    },
-    {
-      id: 11,
-      question: 'In outdoor or harsh environments, what special consideration is needed for MCPs?',
-      options: ['They should not be installed', 'Use standard indoor MCPs', 'Use weatherproof MCPs rated for the environment', 'Paint them a different colour'],
-      correctAnswer: 2,
-      explanation: 'Outdoor or harsh environment MCPs must be weatherproof and protected against physical damage, moisture, and temperature extremes.'
+      explanation: 'Heat detectors are unaffected by dust, steam, aerosols, and fumes that would cause false alarms with smoke detectors.'
     }
   ], []);
 
-const sequentialQuestions = useMemo(
-  () => questions.map(q => ({
-    id: q.id,
-    question: q.question,
-    options: q.options,
-    correct: q.correctAnswer,
-    explanation: q.explanation
-  })),
-  [questions]
-);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(Array(questions.length).fill(-1));
+  const [showResults, setShowResults] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
+
+  const handleAnswerSelect = (answerIndex: number) => {
+    const updated = [...selectedAnswers];
+    updated[currentQuestion] = answerIndex;
+    setSelectedAnswers(updated);
+  };
+
+  const handleNext = () => {
+    if (currentQuestion < questions.length - 1) setCurrentQuestion((q) => q + 1);
+    else setShowResults(true);
+  };
+
+  const handlePrevious = () => setCurrentQuestion((q) => Math.max(0, q - 1));
+
+  const resetQuiz = () => {
+    setCurrentQuestion(0);
+    setSelectedAnswers(Array(questions.length).fill(-1));
+    setShowResults(false);
+  };
+
+  const calculateScore = () =>
+    selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div>
-        <Link to="../fire-alarm-module-2">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 2
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* iOS Header */}
+      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center h-[56px] px-4 max-w-4xl mx-auto">
+          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
+            <Link to="../module-2">
+              <ArrowLeft className="h-5 w-5" />
+              <span className="hidden sm:inline">Module 2</span>
+            </Link>
           </Button>
-        </Link>
-        
-          <div className="space-y-4 sm:space-y-6">
-          {/* Header */}
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <Hand className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-3xl sm:text-4xl font-bold text-white">Manual Call Points: Locations and Operation</h1>
-                <p className="text-lg sm:text-xl text-gray-400">Positioning, mounting, identification and testing</p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">Section 2.2</Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">30 minutes</Badge>
-            </div>
-          </div>
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Introduction & Why It Matters</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-3">
-              <div className="space-y-3">
-                <p>Manual Call Points (MCPs) are a critical part of a fire detection and alarm system, allowing any building occupant to trigger an alarm quickly in the event of a fire. They provide a human‑activated safety mechanism that complements the automatic detection devices such as smoke, heat, or multisensor detectors.</p>
-                <p>Under BS 5839, MCPs must be easily accessible, visible, and installed in the right locations to ensure rapid activation during an emergency. Poor placement, incorrect mounting heights, or obstruction can significantly delay alarm initiation — costing valuable seconds in evacuation time.</p>
-                <p>MCPs are not just a compliance requirement; they are a life‑saving tool. Understanding where and how to install them correctly ensures that anyone, whether a trained staff member or a visitor, can raise the alarm without hesitation.</p>
-              </div>
-            </CardContent>
-          </Card>
-
-           {/* Learning Objectives */}
-           <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Learning Objectives</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <div>
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>Identify the correct mounting height for MCPs according to BS 5839.</li>
-                  <li>Explain the maximum travel distances to MCPs in different risk categories.</li>
-                  <li>Recognise key positioning requirements to ensure MCP accessibility.</li>
-                  <li>Understand operational considerations for MCPs, including testing and resetting.</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-           {/* Manual Call Point Requirements (BS 5839) */}
-           <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Manual Call Point Requirements (BS 5839)</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 text-gray-300">
-              <div className="grid md:grid-cols-2 gap-4">
-                <AccentPanel tone="amber" variant="subtle">
-                  <h3 className="text-lg font-semibold mb-2">Mounting Height</h3>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li>MCPs should be mounted so that the centre of the operating element is <span className="font-semibold">1.4 m</span> above finished floor level, with a tolerance of <span className="font-semibold">±200 mm</span>.</li>
-                    <li>This height allows access for both standing adults and wheelchair users.</li>
-                  </ul>
-                </AccentPanel>
-
-                <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                  <h3 className="text-lg font-semibold mb-2">Positioning</h3>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li>MCPs must be located on escape routes, at storey exits, and at all final exits from a building.</li>
-                    <li>In normal risk areas, no one should have to travel more than <span className="font-semibold">45 m</span> to reach the nearest MCP.</li>
-                    <li>In higher‑risk or unfamiliar environments, reduce travel distances to around <span className="font-semibold">25 m</span> or less.</li>
-                  </ul>
-                </div>
-
-                <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                  <h3 className="text-lg font-semibold mb-2">Visibility & Accessibility</h3>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li>MCPs should be highly visible (typically red) with appropriate signage if not immediately obvious.</li>
-                    <li>They must not be obstructed by doors, furniture, or stored items.</li>
-                    <li>In areas with limited visibility, consider illuminated call points or additional signage.</li>
-                  </ul>
-                </div>
-
-                <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                  <h3 className="text-lg font-semibold mb-2">Environmental Considerations</h3>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li>For outdoor or harsh locations, MCPs must be weatherproof and protected against physical damage.</li>
-                    <li>In vandal‑prone areas, fit protective covers that do not impede operation.</li>
-                  </ul>
-                </div>
-
-                <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                  <h3 className="text-lg font-semibold mb-2">Operation</h3>
-                  <ul className="list-disc pl-6 space-y-1">
-                    <li>MCPs are activated by pressing or breaking the frangible element; modern designs often use plastic frangible elements.</li>
-                    <li>Once activated, MCPs latch until manually reset using a key or tool.</li>
-                    <li>Regular testing is required — typically a different MCP each week per BS 5839 user testing practices.</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-           {/* BS 7671 Coordination */}
-           <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">BS 7671 Coordination: Wiring, Segregation and Labelling</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <AccentPanel tone="amber" variant="subtle">
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>Route and segregate fire alarm circuits away from LV power and data per BS 7671 and manufacturer guidance.</li>
-                  <li>Use fire‑resistant cables with correct supports; avoid plastic fixings alone on escape routes.</li>
-                  <li>Identify isolators and control circuits; provide diagrams and labels at the panel and distribution boards.</li>
-                  <li>Maintain earthing and bonding continuity when interfacing; document interfaces in the cause‑and‑effect.</li>
-                </ul>
-              </AccentPanel>
-            </CardContent>
-          </Card>
-
-           {/* Real World Scenario */}
-           <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Real‑World Example</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                <p>A three‑storey office building had MCPs installed only at final exits on the ground floor. In a fire drill, staff on the third floor had to run down two flights of stairs to raise the alarm, losing around 40 seconds before the system was triggered. This installation was non‑compliant and increased risk. Correct placement would require MCPs at each storey exit and along escape routes.</p>
-              </div>
-            </CardContent>
-          </Card>
-
-           {/* Common Mistakes to Avoid */}
-           <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Common Mistakes to Avoid</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>Installing MCPs behind opening doors, making them inaccessible.</li>
-                  <li>Mounting MCPs too high or too low, making them difficult to use.</li>
-                  <li>Not providing a call point at every storey exit.</li>
-                  <li>Failing to consider reduced travel distances for high‑risk areas.</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-           {/* Summary */}
-           <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <AccentPanel tone="green" variant="subtle">
-                <p>MCPs must be easy to find and operate, sited on escape routes, mounted at accessible height, uniquely identified and routinely tested—with cabling and segregation coordinated to BS 7671.</p>
-              </AccentPanel>
-            </CardContent>
-          </Card>
-
-<SingleQuestionQuiz
-  questions={sequentialQuestions}
-  title="Knowledge Check: Manual Call Points"
-/>
-          <div className="flex justify-between mt-8">
-            <Link to="../fire-alarm-module-2-section-1">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../fire-alarm-module-2-section-3">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
+          <span className="flex-1 text-center text-[17px] font-semibold text-white">Section 2</span>
+          <div className="w-[60px]" />
         </div>
-      </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="px-4 pt-8 pb-6 max-w-4xl mx-auto">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-3 rounded-2xl bg-green-500/10 border border-green-500/20">
+            <Thermometer className="h-7 w-7 text-green-400" />
+          </div>
+          <span className="text-[11px] font-medium text-green-400 uppercase tracking-wide">
+            Section 2 of 5
+          </span>
+        </div>
+        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
+          Heat Detectors
+        </h1>
+        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
+          Understanding fixed temperature and rate-of-rise heat detector technologies, classifications, and correct application per BS 5839-1.
+        </p>
+        <div className="flex items-center gap-4 text-[13px] text-white/50">
+          <span className="flex items-center gap-1">
+            <Target className="h-4 w-4" />
+            6 learning outcomes
+          </span>
+          <span className="flex items-center gap-1">
+            <Clock className="h-4 w-4" />
+            20-25 mins
+          </span>
+        </div>
+      </section>
+
+      {/* In 30 Seconds Card */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <Card variant="ios-elevated" className="border-green-500/20">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-[15px] font-semibold text-green-400 flex items-center gap-2">
+              <Lightbulb className="h-4 w-4" />
+              In 30 Seconds
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-[15px] text-white/80">
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+              <span><strong>Fixed temperature (S)</strong> - activates at set threshold (typically 57°C)</span>
+            </p>
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+              <span><strong>Rate-of-rise (R)</strong> - activates on rapid temperature increase (6-8°C/min)</span>
+            </p>
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+              <span><strong>Best for kitchens, boiler rooms, dusty areas</strong> - immune to smoke/steam false alarms</span>
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Learning Outcomes */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            "Explain how fixed temperature heat detectors work",
+            "Explain how rate-of-rise heat detectors work",
+            "Interpret BS 5839-1 heat detector classifications",
+            "Apply heat detector siting and spacing requirements",
+            "Select appropriate heat detector types for different environments",
+            "Understand limitations compared to smoke detection"
+          ].map((outcome, i) => (
+            <Card key={i} variant="ios" className="p-3">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                  <span className="text-[11px] font-bold text-green-400">{i + 1}</span>
+                </div>
+                <p className="text-[13px] text-white/80">{outcome}</p>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto space-y-6">
+        {/* Section 01 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-green-400 bg-green-500/10 px-2 py-1 rounded">01</span>
+              <h3 className="text-[17px] font-semibold text-white">Introduction to Heat Detection</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Heat detectors respond to <strong className="text-white">elevated temperatures</strong> rather than smoke particles. They are ideal for environments where smoke detectors would cause false alarms, such as kitchens, boiler rooms, and dusty workshops.</p>
+              <p>The key trade-off is <strong className="text-white">response time</strong> - a fire must be more developed to generate sufficient heat, meaning heat detectors provide less early warning than smoke detectors.</p>
+              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
+                <p className="text-[13px] text-amber-300 flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  Heat detectors should NOT be used as the primary detection in sleeping accommodation due to slower response.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 02 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-green-400 bg-green-500/10 px-2 py-1 rounded">02</span>
+              <h3 className="text-[17px] font-semibold text-white">Fixed Temperature (Static) Detectors</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p><strong className="text-green-400">Operating Principle:</strong> Activates when the surrounding air temperature reaches a predetermined threshold. The most common rating is <strong className="text-white">57°C</strong>, though higher ratings (e.g., 78°C, 90°C) are available for warmer environments.</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Classification Suffix: S (Static)</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" />A1S - Class A1 fixed temperature</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" />A2S - Class A2 fixed temperature</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" />BS, CS, DS - Other classes with varying response</li>
+                </ul>
+              </div>
+              <p className="text-[13px] text-white/60 italic">Typical applications: Boiler rooms, laundries, areas with normally elevated temperatures.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 03 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-green-400 bg-green-500/10 px-2 py-1 rounded">03</span>
+              <h3 className="text-[17px] font-semibold text-white">Rate-of-Rise Detectors</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p><strong className="text-green-400">Operating Principle:</strong> Activates when temperature increases rapidly - typically <strong className="text-white">6-8°C per minute</strong>. This responds faster than fixed temperature detection to developing fires.</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Classification Suffix: R (Rate-of-rise)</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" />A1R - Class A1 rate-of-rise</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" />Responds to rapid temperature changes</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" />Faster response than fixed temperature in most fires</li>
+                </ul>
+              </div>
+              <p className="text-[13px] text-white/60 italic">Typical applications: Kitchens, garages, workshops - where temperature normally remains stable.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Inline Check 1 */}
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <HelpCircle className="h-5 w-5 text-amber-400" />
+              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
+            </div>
+            <p className="text-[15px] text-white/80 mb-3">A commercial kitchen requires fire detection but smoke detectors cause constant false alarms. What detector type should you specify?</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Rate-of-rise heat detector (A1R) - responds to rapid temperature increases from fire but is unaffected by cooking fumes and steam.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 04 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-green-400 bg-green-500/10 px-2 py-1 rounded">04</span>
+              <h3 className="text-[17px] font-semibold text-white">BS 5839-1 Classifications</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Heat detectors are classified by their response characteristics under BS EN 54-5.</p>
+              <div className="overflow-x-auto">
+                <table className="w-full text-[13px]">
+                  <thead>
+                    <tr className="border-b border-white/20">
+                      <th className="text-left py-2 pr-4 text-white">Class</th>
+                      <th className="text-left py-2 pr-4 text-white/70">Response Time</th>
+                      <th className="text-left py-2 text-white/70">Coverage Radius</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-white/5">
+                      <td className="py-2 pr-4 text-green-400 font-medium">A1</td>
+                      <td className="py-2 pr-4">Fastest</td>
+                      <td className="py-2">5.3 m</td>
+                    </tr>
+                    <tr className="border-b border-white/5">
+                      <td className="py-2 pr-4 text-green-400 font-medium">A2</td>
+                      <td className="py-2 pr-4">Very fast</td>
+                      <td className="py-2">5.3 m</td>
+                    </tr>
+                    <tr className="border-b border-white/5">
+                      <td className="py-2 pr-4 text-green-400 font-medium">B</td>
+                      <td className="py-2 pr-4">Fast</td>
+                      <td className="py-2">5.3 m</td>
+                    </tr>
+                    <tr className="border-b border-white/5">
+                      <td className="py-2 pr-4 text-green-400 font-medium">C</td>
+                      <td className="py-2 pr-4">Standard</td>
+                      <td className="py-2">5.3 m</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 pr-4 text-green-400 font-medium">D, E, F, G</td>
+                      <td className="py-2 pr-4">Slower (special use)</td>
+                      <td className="py-2">Varies</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-[13px] text-white/60 italic">Note: Class A1 and A2 are most commonly specified for fire alarm systems.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 05 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-green-400 bg-green-500/10 px-2 py-1 rounded">05</span>
+              <h3 className="text-[17px] font-semibold text-white">Siting and Spacing Requirements</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Heat detectors have smaller coverage areas than smoke detectors due to their sensing method.</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Key Requirements (BS 5839-1):</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /><strong>Coverage radius:</strong> 5.3 m for Class A1/A2 (flat ceiling)</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /><strong>Distance from walls:</strong> Minimum 500 mm</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /><strong>Ceiling mounting:</strong> 25-150 mm below apex for pitched roofs</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /><strong>Temperature rating:</strong> Select appropriate for ambient conditions</li>
+                </ul>
+              </div>
+              <p className="text-[13px] text-white/60 italic">Choose detector temperature rating at least 25°C above maximum expected ambient temperature.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 06 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-green-400 bg-green-500/10 px-2 py-1 rounded">06</span>
+              <h3 className="text-[17px] font-semibold text-white">Application Guidelines</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Selecting between fixed temperature and rate-of-rise depends on the environment characteristics.</p>
+              <div className="grid sm:grid-cols-2 gap-3">
+                <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
+                  <p className="text-[13px] font-semibold text-green-400 mb-2">Rate-of-Rise (A1R)</p>
+                  <ul className="space-y-1 text-[13px]">
+                    <li>Kitchens and cooking areas</li>
+                    <li>Garages and vehicle areas</li>
+                    <li>Workshops (stable temperature)</li>
+                    <li>Storage areas</li>
+                  </ul>
+                </div>
+                <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
+                  <p className="text-[13px] font-semibold text-orange-400 mb-2">Fixed Temperature (A1S)</p>
+                  <ul className="space-y-1 text-[13px]">
+                    <li>Boiler rooms</li>
+                    <li>Laundries</li>
+                    <li>Areas with fluctuating temperatures</li>
+                    <li>Hot process environments</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Inline Check 2 */}
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <HelpCircle className="h-5 w-5 text-amber-400" />
+              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
+            </div>
+            <p className="text-[15px] text-white/80 mb-3">A boiler room has ambient temperatures up to 45°C. What detector type and rating would you specify?</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Fixed temperature heat detector (A1S) with 78°C rating - at least 25°C above maximum ambient. Rate-of-rise could false alarm from normal boiler cycling.</p>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Practical Guidance */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
+
+        <div className="space-y-3">
+          <Card variant="ios" className="border-green-500/20">
+            <CardContent className="p-4">
+              <h4 className="text-[15px] font-semibold text-green-400 mb-2">Pro Tips</h4>
+              <ul className="space-y-2 text-[13px] text-white/70">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Combined detectors (A1S/A1R) provide both rate-of-rise response and fixed temperature backup
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Always document the rationale for heat detector selection over smoke detection
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Consider multisensor detectors as an alternative where both types might be appropriate
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card variant="ios" className="border-red-500/20">
+            <CardContent className="p-4">
+              <h4 className="text-[15px] font-semibold text-red-400 mb-2">Common Mistakes</h4>
+              <ul className="space-y-2 text-[13px] text-white/70">
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Using heat detectors where fast detection is critical (sleeping accommodation)
+                </li>
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Selecting temperature rating too close to ambient - causes false alarms
+                </li>
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Using rate-of-rise in areas with rapid legitimate temperature changes
+                </li>
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* FAQs */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
+        <div className="space-y-3">
+          {[
+            { q: "Can I use heat detectors in escape routes?", a: "Generally no - smoke detectors are required on escape routes for early warning. Heat detectors may supplement but not replace smoke detection." },
+            { q: "What if a kitchen opens directly onto a corridor?", a: "Use heat detection in the kitchen and smoke detection in the corridor. Consider a multisensor at the transition point." },
+            { q: "How do I choose between A1 and A2 class?", a: "A1 is the fastest response and most commonly specified. A2 may be used where slightly slower response is acceptable." },
+            { q: "Can heat detectors be used with addressable systems?", a: "Yes - addressable heat detectors are available and recommended for larger installations to identify exact device locations." },
+            { q: "Do heat detectors require regular testing?", a: "Yes - weekly functional testing on rotation and annual servicing including thermal response testing per BS 5839-1." },
+            { q: "What is the maximum ceiling height for heat detectors?", a: "BS 5839-1 recommends Class A1/A2 heat detectors up to 9 m ceiling height. Above this, consider linear heat detection or other solutions." }
+          ].map((faq, i) => (
+            <Card key={i} variant="ios">
+              <CardContent className="p-4">
+                <p className="text-[15px] font-semibold text-white mb-2">{faq.q}</p>
+                <p className="text-[13px] text-white/70">{faq.a}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <Card variant="ios-elevated" className="border-green-500/20">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
+              <BookOpen className="h-5 w-5 text-green-400" />
+              Knowledge Check
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {!showQuiz ? (
+              <div className="text-center py-6">
+                <p className="text-[15px] text-white/70 mb-4">Test your understanding of heat detectors with 10 questions.</p>
+                <Button variant="ios-primary" onClick={() => setShowQuiz(true)}>
+                  Start Quiz
+                </Button>
+              </div>
+            ) : showResults ? (
+              <div className="space-y-6">
+                <div className="text-center py-4">
+                  <p className="text-[34px] font-bold text-green-400">{calculateScore()}/{questions.length}</p>
+                  <p className="text-[15px] text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
+                </div>
+
+                <div className="space-y-4">
+                  {questions.map((q, i) => {
+                    const correct = selectedAnswers[i] === q.correctAnswer;
+                    return (
+                      <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
+                        <p className="text-[15px] font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
+                        <p className={`text-[13px] ${correct ? 'text-green-400' : 'text-red-400'}`}>
+                          Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
+                        </p>
+                        {!correct && (
+                          <p className="text-[13px] text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
+                        )}
+                        <p className="text-[13px] text-white/70 mt-2">{q.explanation}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <Button variant="ios-secondary" onClick={resetQuiz} className="w-full gap-2">
+                  <RotateCcw className="h-4 w-4" />
+                  Restart Quiz
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+
+                <div>
+                  <p className="text-[17px] font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
+                  <div className="space-y-2">
+                    {questions[currentQuestion].options.map((opt, idx) => {
+                      const selected = selectedAnswers[currentQuestion] === idx;
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => handleAnswerSelect(idx)}
+                          className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
+                            selected
+                              ? 'bg-green-500/20 border-green-500/50 text-white'
+                              : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                          }`}
+                        >
+                          {opt}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between gap-3">
+                  <Button
+                    variant="ios-secondary"
+                    onClick={handlePrevious}
+                    disabled={currentQuestion === 0}
+                    className="flex-1"
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    variant="ios-primary"
+                    onClick={handleNext}
+                    disabled={selectedAnswers[currentQuestion] === -1}
+                    className="flex-1"
+                  >
+                    {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Navigation Footer */}
+      <section className="px-4 pb-safe max-w-4xl mx-auto">
+        <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
+          <Button variant="ios-secondary" asChild className="flex-1">
+            <Link to="../module-2/section-1">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button variant="ios-primary" asChild className="flex-1">
+            <Link to="../module-2/section-3">
+              Next Section
+              <ArrowRight className="h-4 w-4 ml-2" />
+            </Link>
+          </Button>
+        </div>
+      </section>
     </div>
   );
 };

@@ -188,21 +188,26 @@ const PersonalSafetyPlan = () => {
     const items = plan[activeSection as keyof SafetyPlan] || [];
 
     return (
-      <div className="space-y-4">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <Button variant="ghost" size="sm" onClick={() => setActiveSection(null)}>
-            <ChevronLeft className="h-4 w-4 mr-1" />
-            Back
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsEditing(!isEditing)}
-            className={isEditing ? "text-green-400" : ""}
-          >
-            {isEditing ? <CheckCircle className="h-4 w-4" /> : <Edit2 className="h-4 w-4" />}
-          </Button>
+      <div className="space-y-4 pb-24 sm:pb-4">
+        {/* Sticky Header */}
+        <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10 -mx-4 px-4 py-3 mb-2">
+          <div className="flex items-center justify-between">
+            <Button
+              variant="ghost"
+              onClick={() => setActiveSection(null)}
+              className="h-11 touch-manipulation active:scale-[0.98] transition-all"
+            >
+              <ChevronLeft className="h-5 w-5 mr-1" />
+              Back
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => setIsEditing(!isEditing)}
+              className={`h-11 w-11 touch-manipulation active:scale-[0.98] transition-all ${isEditing ? "text-green-400" : ""}`}
+            >
+              {isEditing ? <CheckCircle className="h-5 w-5" /> : <Edit2 className="h-5 w-5" />}
+            </Button>
+          </div>
         </div>
 
         {/* Section Header */}
@@ -266,25 +271,24 @@ const PersonalSafetyPlan = () => {
                     value={newContact.name}
                     onChange={(e) => setNewContact({ ...newContact, name: e.target.value })}
                     placeholder="Name"
-                    className="h-9"
+                    className="h-11 text-base touch-manipulation"
                   />
                   <Input
                     value={newContact.phone}
                     onChange={(e) => setNewContact({ ...newContact, phone: e.target.value })}
                     placeholder="Phone number"
-                    className="h-9"
+                    className="h-11 text-base touch-manipulation"
                   />
                   {section.hasRole && (
                     <Input
                       value={newContact.role}
                       onChange={(e) => setNewContact({ ...newContact, role: e.target.value })}
                       placeholder="Role (e.g., GP, Therapist)"
-                      className="h-9"
+                      className="h-11 text-base touch-manipulation"
                     />
                   )}
                   <Button
-                    size="sm"
-                    className={`w-full ${colors.bg} ${colors.text} hover:opacity-80`}
+                    className={`w-full h-11 ${colors.bg} ${colors.text} hover:opacity-80 touch-manipulation active:scale-[0.98] transition-all`}
                     onClick={() => addContact(activeSection, !!section.hasRole)}
                     disabled={!newContact.name.trim()}
                   >
@@ -342,14 +346,14 @@ const PersonalSafetyPlan = () => {
                   onChange={(e) => setNewItem(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && addItem(activeSection)}
                   placeholder={section.placeholder}
-                  className="flex-1"
+                  className="flex-1 h-11 text-base touch-manipulation"
                 />
                 <Button
                   onClick={() => addItem(activeSection)}
                   disabled={!newItem.trim()}
-                  className={`${colors.bg} ${colors.text}`}
+                  className={`h-11 w-11 ${colors.bg} ${colors.text} touch-manipulation active:scale-[0.98] transition-all`}
                 >
-                  <Plus className="h-4 w-4" />
+                  <Plus className="h-5 w-5" />
                 </Button>
               </div>
             )}
@@ -369,15 +373,17 @@ const PersonalSafetyPlan = () => {
           </div>
         )}
 
-        {/* Save Changes */}
+        {/* Sticky Save Button */}
         {isEditing && (
-          <Button
-            className="w-full bg-green-500 hover:bg-green-600"
-            onClick={() => setIsEditing(false)}
-          >
-            <Save className="h-4 w-4 mr-2" />
-            Done Editing
-          </Button>
+          <div className="fixed bottom-0 left-0 right-0 z-50 p-4 pb-6 bg-background/95 backdrop-blur-xl border-t border-white/10 sm:static sm:bg-transparent sm:border-none sm:p-0">
+            <Button
+              className="w-full h-12 text-base bg-green-500 hover:bg-green-600 touch-manipulation active:scale-[0.98] transition-all"
+              onClick={() => setIsEditing(false)}
+            >
+              <Save className="h-5 w-5 mr-2" />
+              Done Editing
+            </Button>
+          </div>
         )}
       </div>
     );

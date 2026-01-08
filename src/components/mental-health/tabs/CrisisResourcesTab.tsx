@@ -68,11 +68,11 @@ const CrisisResourcesTab = () => {
         <a
           href="tel:116123"
           className="p-4 rounded-xl border border-blue-500/30 bg-gradient-to-br from-blue-500/20 to-blue-600/10
-            active:scale-[0.98] transition-all"
+            touch-manipulation active:scale-[0.98] transition-all min-h-[100px]"
         >
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-full bg-blue-500/30 flex items-center justify-center">
-              <Phone className="h-5 w-5 text-blue-400" />
+            <div className="w-12 h-12 rounded-full bg-blue-500/30 flex items-center justify-center">
+              <Phone className="h-6 w-6 text-blue-400" />
             </div>
             <div className="text-xl font-bold text-blue-400">116 123</div>
           </div>
@@ -83,11 +83,11 @@ const CrisisResourcesTab = () => {
         <a
           href="sms:85258?body=SHOUT"
           className="p-4 rounded-xl border border-green-500/30 bg-gradient-to-br from-green-500/20 to-green-600/10
-            active:scale-[0.98] transition-all"
+            touch-manipulation active:scale-[0.98] transition-all min-h-[100px]"
         >
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-full bg-green-500/30 flex items-center justify-center">
-              <MessageSquare className="h-5 w-5 text-green-400" />
+            <div className="w-12 h-12 rounded-full bg-green-500/30 flex items-center justify-center">
+              <MessageSquare className="h-6 w-6 text-green-400" />
             </div>
             <div className="text-xl font-bold text-green-400">85258</div>
           </div>
@@ -102,7 +102,7 @@ const CrisisResourcesTab = () => {
         <Card className="border-red-500/20 overflow-hidden">
           <button
             onClick={() => toggleSection("helplines")}
-            className="w-full p-4 flex items-center justify-between bg-gradient-to-r from-red-500/10 to-transparent"
+            className="w-full p-4 flex items-center justify-between bg-gradient-to-r from-red-500/10 to-transparent min-h-[72px] touch-manipulation active:bg-red-500/20 transition-colors"
           >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center">
@@ -190,7 +190,7 @@ const CrisisResourcesTab = () => {
         <Card className="border-green-500/20 overflow-hidden">
           <button
             onClick={() => toggleSection("local")}
-            className="w-full p-4 flex items-center justify-between bg-gradient-to-r from-green-500/10 to-transparent"
+            className="w-full p-4 flex items-center justify-between bg-gradient-to-r from-green-500/10 to-transparent min-h-[72px] touch-manipulation active:bg-green-500/20 transition-colors"
           >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
@@ -219,7 +219,7 @@ const CrisisResourcesTab = () => {
         <Card className="border-purple-500/20 overflow-hidden">
           <button
             onClick={() => toggleSection("peer")}
-            className="w-full p-4 flex items-center justify-between bg-gradient-to-r from-purple-500/10 to-transparent"
+            className="w-full p-4 flex items-center justify-between bg-gradient-to-r from-purple-500/10 to-transparent min-h-[72px] touch-manipulation active:bg-purple-500/20 transition-colors"
           >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center">
@@ -329,7 +329,7 @@ const CrisisResourcesTab = () => {
         <Card className="border-blue-500/20 overflow-hidden">
           <button
             onClick={() => toggleSection("online")}
-            className="w-full p-4 flex items-center justify-between bg-gradient-to-r from-blue-500/10 to-transparent"
+            className="w-full p-4 flex items-center justify-between bg-gradient-to-r from-blue-500/10 to-transparent min-h-[72px] touch-manipulation active:bg-blue-500/20 transition-colors"
           >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center">

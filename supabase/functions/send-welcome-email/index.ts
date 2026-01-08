@@ -91,6 +91,7 @@ const handler = async (req: Request): Promise<Response> => {
 
 function generateWelcomeEmailHTML(fullName: string, loginUrl: string): string {
   const firstName = fullName.split(' ')[0] || 'there';
+  const logoUrl = 'https://elec-mate.com/logo.jpg';
 
   return `
 <!DOCTYPE html>
@@ -105,48 +106,58 @@ function generateWelcomeEmailHTML(fullName: string, loginUrl: string): string {
     body, table, td {font-family: Arial, sans-serif !important;}
   </style>
   <![endif]-->
+  <style>
+    @media only screen and (max-width: 480px) {
+      .main-container { padding: 16px !important; }
+      .content-padding { padding: 24px 20px !important; }
+      .cta-button { padding: 16px 24px !important; }
+    }
+  </style>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background-color: #0a0a0a; -webkit-font-smoothing: antialiased;">
 
   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #0a0a0a;">
     <tr>
-      <td style="padding: 40px 20px;">
+      <td class="main-container" style="padding: 32px 16px;">
 
-        <!-- Main Container -->
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 560px; margin: 0 auto; background-color: #171717; border-radius: 16px; overflow: hidden;">
+        <!-- Main Container - Mobile optimised 480px max -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 480px; margin: 0 auto; background: linear-gradient(180deg, #1a1a1a 0%, #141414 100%); border-radius: 24px; overflow: hidden; border: 1px solid #2a2a2a;">
 
           <!-- Header with Logo -->
           <tr>
-            <td style="padding: 40px 40px 32px; text-align: center; background: linear-gradient(135deg, #171717 0%, #1a1a1a 100%);">
-              <div style="display: inline-block; padding: 16px 20px; background-color: #fbbf24; border-radius: 12px; margin-bottom: 24px;">
-                <span style="font-size: 28px; line-height: 1;">&#9889;</span>
-              </div>
-              <h1 style="margin: 0; font-size: 28px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px;">
-                Welcome to <span style="color: #fbbf24;">Elec-Mate</span>
+            <td class="content-padding" style="padding: 32px 24px 24px; text-align: center;">
+              <!-- Logo Image -->
+              <img src="${logoUrl}"
+                   alt="Elec-Mate"
+                   width="80"
+                   height="80"
+                   style="display: block; margin: 0 auto 20px; border-radius: 16px; box-shadow: 0 8px 24px rgba(251, 191, 36, 0.15);" />
+              <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px;">
+                Welcome to Elec-Mate
               </h1>
-              <p style="margin: 12px 0 0; font-size: 15px; color: #a3a3a3;">
-                The UK's smartest platform for electrical professionals
+              <p style="margin: 8px 0 0; font-size: 15px; color: #888888; line-height: 1.5;">
+                The UK's platform for electrical professionals
               </p>
             </td>
           </tr>
 
-          <!-- Welcome Section -->
+          <!-- Welcome Message -->
           <tr>
-            <td style="padding: 0 40px 32px;">
-              <div style="background-color: #262626; border-radius: 12px; padding: 24px; border: 1px solid #404040;">
-                <p style="margin: 0 0 16px; font-size: 15px; color: #e5e5e5; line-height: 1.6;">
+            <td class="content-padding" style="padding: 0 24px 24px;">
+              <div style="background: linear-gradient(135deg, #1e1e1e 0%, #1a1a1a 100%); border-radius: 16px; padding: 24px; border: 1px solid #333333;">
+                <p style="margin: 0 0 12px; font-size: 16px; color: #ffffff; line-height: 1.5;">
                   Hi ${firstName},
                 </p>
-                <p style="margin: 0 0 20px; font-size: 15px; color: #a3a3a3; line-height: 1.6;">
+                <p style="margin: 0 0 24px; font-size: 15px; color: #a3a3a3; line-height: 1.6;">
                   Your account is ready! You now have <strong style="color: #22c55e;">7 days of full access</strong> to explore everything Elec-Mate has to offer.
                 </p>
 
-                <!-- Get Started Button -->
+                <!-- CTA Button - Large touch target -->
                 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                   <tr>
-                    <td style="text-align: center;">
-                      <a href="${loginUrl}" style="display: inline-block; padding: 14px 32px; background-color: #fbbf24; color: #0a0a0a; text-decoration: none; font-size: 15px; font-weight: 600; border-radius: 8px;">
-                        Get Started
+                    <td>
+                      <a href="${loginUrl}" class="cta-button" style="display: block; padding: 18px 32px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0a0a0a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center; box-shadow: 0 4px 16px rgba(251, 191, 36, 0.3);">
+                        Open Elec-Mate
                       </a>
                     </td>
                   </tr>
@@ -155,87 +166,89 @@ function generateWelcomeEmailHTML(fullName: string, loginUrl: string): string {
             </td>
           </tr>
 
-          <!-- Trial Benefits -->
+          <!-- Trial Benefits - Compact -->
           <tr>
-            <td style="padding: 0 40px 32px;">
-              <p style="margin: 0 0 16px; font-size: 13px; font-weight: 600; color: #a3a3a3; text-transform: uppercase; letter-spacing: 0.5px;">
-                What's included in your free trial
+            <td class="content-padding" style="padding: 0 24px 24px;">
+              <p style="margin: 0 0 16px; font-size: 12px; font-weight: 600; color: #666666; text-transform: uppercase; letter-spacing: 0.5px;">
+                Included in your trial
               </p>
 
-              <!-- Feature 1 -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 12px;">
+              <!-- Features Grid -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
-                  <td style="width: 40px; vertical-align: top;">
-                    <div style="width: 32px; height: 32px; background-color: #22c55e20; border-radius: 8px; text-align: center; line-height: 32px;">
-                      <span style="color: #22c55e; font-size: 16px;">&#10003;</span>
-                    </div>
+                  <td style="padding: 12px 16px; background-color: #1a1a1a; border-radius: 12px; margin-bottom: 8px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="width: 44px; vertical-align: middle;">
+                          <div style="width: 40px; height: 40px; background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%); border-radius: 10px; text-align: center; line-height: 40px;">
+                            <span style="color: #22c55e; font-size: 18px;">&#10003;</span>
+                          </div>
+                        </td>
+                        <td style="padding-left: 14px; vertical-align: middle;">
+                          <p style="margin: 0; font-size: 14px; font-weight: 600; color: #ffffff;">All AI Tools Unlocked</p>
+                          <p style="margin: 2px 0 0; font-size: 13px; color: #888888;">Calculators, agents & assistants</p>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
-                  <td style="vertical-align: top; padding-left: 12px;">
-                    <p style="margin: 0 0 4px; font-size: 14px; font-weight: 600; color: #ffffff;">Full Platform Access</p>
-                    <p style="margin: 0; font-size: 13px; color: #a3a3a3;">All calculators, AI agents, and tools unlocked</p>
+                </tr>
+                <tr><td style="height: 8px;"></td></tr>
+                <tr>
+                  <td style="padding: 12px 16px; background-color: #1a1a1a; border-radius: 12px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="width: 44px; vertical-align: middle;">
+                          <div style="width: 40px; height: 40px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%); border-radius: 10px; text-align: center; line-height: 40px;">
+                            <span style="color: #3b82f6; font-size: 18px;">&#128218;</span>
+                          </div>
+                        </td>
+                        <td style="padding-left: 14px; vertical-align: middle;">
+                          <p style="margin: 0; font-size: 14px; font-weight: 600; color: #ffffff;">BS7671 AI Assistant</p>
+                          <p style="margin: 2px 0 0; font-size: 13px; color: #888888;">Instant regulation answers</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr><td style="height: 8px;"></td></tr>
+                <tr>
+                  <td style="padding: 12px 16px; background-color: #1a1a1a; border-radius: 12px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="width: 44px; vertical-align: middle;">
+                          <div style="width: 40px; height: 40px; background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%); border-radius: 10px; text-align: center; line-height: 40px;">
+                            <span style="color: #fbbf24; font-size: 18px;">&#128179;</span>
+                          </div>
+                        </td>
+                        <td style="padding-left: 14px; vertical-align: middle;">
+                          <p style="margin: 0; font-size: 14px; font-weight: 600; color: #ffffff;">No Card Required</p>
+                          <p style="margin: 2px 0 0; font-size: 13px; color: #888888;">7 days completely free</p>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                 </tr>
               </table>
-
-              <!-- Feature 2 -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 12px;">
-                <tr>
-                  <td style="width: 40px; vertical-align: top;">
-                    <div style="width: 32px; height: 32px; background-color: #22c55e20; border-radius: 8px; text-align: center; line-height: 32px;">
-                      <span style="color: #22c55e; font-size: 16px;">&#10003;</span>
-                    </div>
-                  </td>
-                  <td style="vertical-align: top; padding-left: 12px;">
-                    <p style="margin: 0 0 4px; font-size: 14px; font-weight: 600; color: #ffffff;">BS7671 AI Assistant</p>
-                    <p style="margin: 0; font-size: 13px; color: #a3a3a3;">Ask anything about electrical regulations</p>
-                  </td>
-                </tr>
-              </table>
-
-              <!-- Feature 3 -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 12px;">
-                <tr>
-                  <td style="width: 40px; vertical-align: top;">
-                    <div style="width: 32px; height: 32px; background-color: #22c55e20; border-radius: 8px; text-align: center; line-height: 32px;">
-                      <span style="color: #22c55e; font-size: 16px;">&#10003;</span>
-                    </div>
-                  </td>
-                  <td style="vertical-align: top; padding-left: 12px;">
-                    <p style="margin: 0 0 4px; font-size: 14px; font-weight: 600; color: #ffffff;">No Credit Card Required</p>
-                    <p style="margin: 0; font-size: 13px; color: #a3a3a3;">Try everything risk-free for 7 days</p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Divider -->
-          <tr>
-            <td style="padding: 0 40px;">
-              <div style="height: 1px; background-color: #404040;"></div>
             </td>
           </tr>
 
           <!-- Help Section -->
           <tr>
-            <td style="padding: 32px 40px;">
-              <p style="margin: 0 0 8px; font-size: 14px; color: #a3a3a3;">
-                Need help getting started?
+            <td class="content-padding" style="padding: 24px; background-color: #111111; border-top: 1px solid #222222;">
+              <p style="margin: 0 0 4px; font-size: 13px; color: #666666;">
+                Questions? Reply to this email or contact
               </p>
-              <p style="margin: 0; font-size: 14px; color: #e5e5e5;">
-                Reply to this email or reach us at <a href="mailto:founder@elec-mate.com" style="color: #fbbf24; text-decoration: none;">founder@elec-mate.com</a>
-              </p>
+              <a href="mailto:founder@elec-mate.com" style="font-size: 14px; color: #fbbf24; text-decoration: none; font-weight: 500;">
+                founder@elec-mate.com
+              </a>
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
-            <td style="padding: 24px 40px; background-color: #0a0a0a; text-align: center;">
-              <p style="margin: 0 0 8px; font-size: 12px; color: #737373;">
-                &copy; ${new Date().getFullYear()} Elec-Mate. All rights reserved.
-              </p>
-              <p style="margin: 0; font-size: 11px; color: #525252;">
-                You're receiving this because you signed up at elec-mate.com
+            <td style="padding: 20px 24px; text-align: center; background-color: #0a0a0a;">
+              <p style="margin: 0; font-size: 12px; color: #525252;">
+                &copy; ${new Date().getFullYear()} Elec-Mate &middot; Made in the UK
               </p>
             </td>
           </tr>

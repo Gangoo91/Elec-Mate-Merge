@@ -1,603 +1,690 @@
-import { ArrowLeft, GraduationCap, CheckCircle } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { ArrowLeft, ArrowRight, Home, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { useMemo } from 'react';
+import useSEO from '@/hooks/useSEO';
+import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
+import type { QuizQuestion } from '@/types/quiz';
+
+const TITLE = "BS 5839-6 Requirements - Fire Alarm Course";
+const DESCRIPTION = "Master BS 5839-6 for domestic fire detection systems including grades A-F, LD categories and requirements for dwelling houses and flats.";
 
 const FireAlarmModule7Section4 = () => {
-  // Quiz Data
-  const questions = useMemo(() => [
+  useSEO({ title: TITLE, description: DESCRIPTION });
+
+  const questions: QuizQuestion[] = useMemo(() => [
     {
       id: 1,
-      question: "What is the minimum annual CPD requirement for BAFE SP203-1 certified professionals?",
+      question: 'What is the primary difference between BS 5839-1 and BS 5839-6?',
       options: [
-        "20 hours",
-        "25 hours", 
-        "35 hours structured CPD",
-        "40 hours"
+        'BS 5839-6 is for larger buildings',
+        'BS 5839-6 covers domestic dwellings only',
+        'BS 5839-1 is the newer standard',
+        'There is no difference'
       ],
-      correct: 2,
-      explanation: "BAFE SP203-1 requires 35 hours of structured CPD annually to maintain certification and demonstrate ongoing competence in fire detection and alarm systems."
+      correctAnswer: 1,
+      explanation: 'BS 5839-6 specifically covers fire detection and fire alarm systems in domestic premises (dwellings), whilst BS 5839-1 covers non-domestic premises.'
     },
     {
       id: 2,
-      question: "Who must conduct a fire risk assessment under the Regulatory Reform (Fire Safety) Order 2005?",
+      question: 'What does Grade D refer to in BS 5839-6?',
       options: [
-        "Fire and rescue service only",
-        "The responsible person",
-        "Building control officer",
-        "Insurance company assessor"
+        'Battery-powered detectors only',
+        'Mains-powered alarms with integral standby supply',
+        'Panel-based system with dedicated wiring',
+        'Wireless interconnected system'
       ],
-      correct: 1,
-      explanation: "The responsible person (typically the employer or person in control of premises) has the legal duty to conduct fire risk assessments under the RRO."
+      correctAnswer: 1,
+      explanation: 'Grade D systems use mains-powered smoke/heat alarms with an integral standby power supply (typically a battery). This is the most common grade for new-build houses.'
     },
     {
       id: 3,
-      question: "What are the five steps of a comprehensive fire risk assessment?",
+      question: 'Which category provides detection throughout all rooms of a dwelling?',
       options: [
-        "Identify hazards, people at risk, evaluate measures, record findings, review regularly",
-        "Design, install, test, maintain, certify", 
-        "Plan, implement, check, act, improve",
-        "Assess, control, monitor, review, update"
+        'LD1',
+        'LD2',
+        'LD3',
+        'PD1'
       ],
-      correct: 0,
-      explanation: "The five steps are: 1) Identify fire hazards, 2) Identify people at risk, 3) Evaluate existing measures, 4) Record findings and action plan, 5) Review regularly."
+      correctAnswer: 0,
+      explanation: 'LD1 provides full coverage throughout the dwelling - all circulation spaces (hallways, landings) plus all rooms where a fire might start.'
     },
     {
       id: 4,
-      question: "What is the primary benefit of ISO 9001 certification for fire safety contractors?",
+      question: 'What minimum protection does LD3 provide?',
       options: [
-        "Reduced insurance premiums only",
-        "Marketing advantage only",
-        "Systematic quality management approach",
-        "Legal compliance guarantee"
+        'All rooms including bathrooms',
+        'Escape routes only (halls, stairs, landings)',
+        'Bedrooms and living rooms only',
+        'Kitchen and garage only'
       ],
-      correct: 2,
-      explanation: "ISO 9001 provides a systematic quality management approach that improves processes, customer satisfaction, and business performance through structured methodology."
+      correctAnswer: 1,
+      explanation: 'LD3 provides the minimum coverage for life safety - detection in circulation spaces (escape routes) only, such as hallways, stairs and landings.'
     },
     {
       id: 5,
-      question: "Which professional development activity provides the most structured learning for fire safety professionals?",
+      question: 'What type of detector should be installed in kitchens?',
       options: [
-        "Reading technical magazines",
-        "Networking events",
-        "Accredited training courses with assessment",
-        "Site visits and observations"
+        'Optical smoke detector',
+        'Ionisation smoke detector',
+        'Heat detector',
+        'No detector is required in kitchens'
       ],
-      correct: 2,
-      explanation: "Accredited training courses with assessment provide structured learning with verified outcomes, formal recognition, and quality-assured content delivery."
+      correctAnswer: 2,
+      explanation: 'Heat detectors should be used in kitchens to avoid false alarms from cooking. Smoke detectors are not suitable due to cooking fumes.'
+    },
+    {
+      id: 6,
+      question: 'In a Grade A system, what does the control equipment comprise?',
+      options: [
+        'Individual battery-powered alarms',
+        'A fire alarm control panel with separate power supply',
+        'Mains-powered alarms linked by radio',
+        'A simple junction box'
+      ],
+      correctAnswer: 1,
+      explanation: 'Grade A is the highest grade, comprising a fire alarm control and indicating panel (CIE) with a separate power supply, similar to commercial systems.'
+    },
+    {
+      id: 7,
+      question: 'What is the minimum requirement for a new-build house under Building Regulations?',
+      options: [
+        'Grade F, Category LD3',
+        'Grade D, Category LD2',
+        'Grade A, Category LD1',
+        'Grade E, Category LD3'
+      ],
+      correctAnswer: 1,
+      explanation: 'Building Regulations typically require Grade D (mains with battery backup) at Category LD2 (circulation spaces plus high-risk rooms like kitchens) as a minimum for new houses.'
+    },
+    {
+      id: 8,
+      question: 'What interconnection requirement applies to Grade D systems?',
+      options: [
+        'No interconnection required',
+        'Wired or wireless interconnection so all alarms sound together',
+        'Only hardwired interconnection is acceptable',
+        'Only the hall alarm needs to sound'
+      ],
+      correctAnswer: 1,
+      explanation: 'Grade D systems require interlinked alarms so that when one detector operates, all alarms in the dwelling sound. This can be achieved by hardwired or radio interconnection.'
+    },
+    {
+      id: 9,
+      question: 'Where should a smoke detector be positioned in relation to a bedroom door?',
+      options: [
+        'Inside the bedroom only',
+        'At least 3 metres from the door',
+        'Within 3 metres of the bedroom door in the circulation space',
+        'The position does not matter'
+      ],
+      correctAnswer: 2,
+      explanation: 'Smoke detectors on escape routes should be positioned within 3 metres of bedroom doors to provide early warning to sleeping occupants.'
+    },
+    {
+      id: 10,
+      question: 'What is the minimum standby duration for a Grade D alarm battery?',
+      options: [
+        '24 hours',
+        '72 hours',
+        '1 week',
+        'No minimum specified'
+      ],
+      correctAnswer: 1,
+      explanation: 'Grade D alarms with integral standby supply should maintain protection for at least 72 hours after mains failure, followed by a 4-minute alarm signal.'
     }
   ], []);
 
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(Array(questions.length).fill(-1));
+  const [showResults, setShowResults] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
+
+  const handleAnswerSelect = (answerIndex: number) => {
+    const updated = [...selectedAnswers];
+    updated[currentQuestion] = answerIndex;
+    setSelectedAnswers(updated);
+  };
+
+  const handleNext = () => {
+    if (currentQuestion < questions.length - 1) setCurrentQuestion((q) => q + 1);
+    else setShowResults(true);
+  };
+
+  const handlePrevious = () => setCurrentQuestion((q) => Math.max(0, q - 1));
+
+  const resetQuiz = () => {
+    setCurrentQuestion(0);
+    setSelectedAnswers(Array(questions.length).fill(-1));
+    setShowResults(false);
+  };
+
+  const calculateScore = () =>
+    selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
+
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="../fire-alarm-module-7">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 7
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* iOS Header */}
+      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center h-[56px] px-4 max-w-4xl mx-auto">
+          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
+            <Link to="../module-7">
+              <ArrowLeft className="h-5 w-5" />
+              <span className="hidden sm:inline">Module 7</span>
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-6">
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <GraduationCap className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-4xl font-bold text-white">
-                  Competence, Risk Assessments, and CPD Requirements
-                </h1>
-                <p className="text-xl text-gray-400">
-                  Professional competence and development requirements
+          <span className="flex-1 text-center text-[17px] font-semibold text-white">Section 4</span>
+          <div className="w-[60px]" />
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="px-4 pt-8 pb-6 max-w-4xl mx-auto">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/20">
+            <Home className="h-7 w-7 text-rose-400" />
+          </div>
+          <span className="text-[11px] font-medium text-rose-400 uppercase tracking-wide">
+            Section 4 of 4
+          </span>
+        </div>
+        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
+          BS 5839-6 Requirements
+        </h1>
+        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
+          Domestic fire detection and alarm systems: grades, LD categories and requirements for dwellings.
+        </p>
+        <div className="flex items-center gap-4 text-[13px] text-white/50">
+          <span className="flex items-center gap-1">
+            <Target className="h-4 w-4" />
+            6 learning outcomes
+          </span>
+          <span className="flex items-center gap-1">
+            <Clock className="h-4 w-4" />
+            30-35 mins
+          </span>
+        </div>
+      </section>
+
+      {/* In 30 Seconds Card */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <Card variant="ios-elevated" className="border-rose-500/20">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-[15px] font-semibold text-rose-400 flex items-center gap-2">
+              <Lightbulb className="h-4 w-4" />
+              In 30 Seconds
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-[15px] text-white/80">
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
+              <span><strong>Grades A-F</strong> define system components and power arrangements</span>
+            </p>
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
+              <span><strong>LD categories</strong> (LD1-LD3) define extent of detection coverage</span>
+            </p>
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
+              <span><strong>New-build houses</strong> typically require Grade D, Category LD2 minimum</span>
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Learning Outcomes */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            "Explain the difference between system grades A-F",
+            "Identify appropriate LD categories for different dwellings",
+            "Understand positioning requirements for domestic detectors",
+            "Describe interconnection and power supply requirements",
+            "Apply BS 5839-6 requirements to domestic installations",
+            "Select appropriate detector types for different rooms"
+          ].map((outcome, i) => (
+            <Card key={i} variant="ios" className="p-3">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-rose-500/20 flex items-center justify-center flex-shrink-0">
+                  <span className="text-[11px] font-bold text-rose-400">{i + 1}</span>
+                </div>
+                <p className="text-[13px] text-white/80">{outcome}</p>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto space-y-6">
+        {/* Section 01 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">01</span>
+              <h3 className="text-[17px] font-semibold text-white">Introduction to BS 5839-6</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p><strong className="text-white">BS 5839-6</strong> is the code of practice for fire detection and fire alarm systems in <strong className="text-rose-400">domestic premises</strong>. It applies to dwelling houses, flats, maisonettes and similar residential properties.</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Key Scope of BS 5839-6:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Individual dwelling houses (detached, semi-detached, terraced)</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Individual flats and maisonettes</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Sheltered housing individual units</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Houses in Multiple Occupation (HMOs) - individual units</li>
+                </ul>
+              </div>
+              <p className="text-[13px] text-white/60 italic">Common areas of blocks of flats are covered by BS 5839-1, not BS 5839-6.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 02 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">02</span>
+              <h3 className="text-[17px] font-semibold text-white">System Grades (A-F)</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p><strong className="text-rose-400">Grades</strong> define the <strong className="text-white">type of system components</strong> and how they are powered and interconnected.</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Grade Definitions:</p>
+                <ul className="space-y-2 text-[13px]">
+                  <li className="flex items-start gap-2">
+                    <span className="w-6 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">A</span>
+                    <span><strong className="text-white">Control panel system:</strong> CIE panel + separate PSU + Category L type detectors (highest grade)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-6 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">B</span>
+                    <span><strong className="text-white">Panel with mains alarms:</strong> Control panel + mains-powered domestic alarms with standby</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-6 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">C</span>
+                    <span><strong className="text-white">Mains + central PSU:</strong> Mains-powered alarms connected to common central PSU</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-6 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">D</span>
+                    <span><strong className="text-white">Mains + integral standby:</strong> Mains-powered alarms with built-in battery backup (most common)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-6 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">E</span>
+                    <span><strong className="text-white">Mains only:</strong> Mains-powered alarms without standby supply</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-6 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">F</span>
+                    <span><strong className="text-white">Battery only:</strong> Battery-powered alarms with no mains connection (lowest grade)</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 03 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">03</span>
+              <h3 className="text-[17px] font-semibold text-white">LD Categories (Coverage)</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p><strong className="text-rose-400">LD categories</strong> define the <strong className="text-white">extent of detection coverage</strong> within the dwelling. LD stands for "Life safety Detection".</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">LD Category Definitions:</p>
+                <ul className="space-y-2 text-[13px]">
+                  <li className="flex items-start gap-2">
+                    <span className="w-7 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">LD1</span>
+                    <span><strong className="text-white">Full coverage:</strong> Detection in all circulation spaces AND all rooms where fire could start (excluding bathrooms/WCs)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-7 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">LD2</span>
+                    <span><strong className="text-white">Circulation + high risk:</strong> All circulation spaces plus specified high-risk rooms (kitchens, main living room)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-7 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">LD3</span>
+                    <span><strong className="text-white">Circulation only:</strong> Detection in escape routes only - hallways, stairs and landings (minimum protection)</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
+                <p className="text-[13px] text-rose-300 flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  LD3 is the minimum acceptable level for life safety. A dwelling should never have less protection than LD3.
                 </p>
               </div>
             </div>
-          </div>
+          </CardContent>
+        </Card>
 
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-3">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
-                  <span className="text-sm">Understand professional competence requirements</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
-                  <span className="text-sm">Learn fire risk assessment principles</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
-                  <span className="text-sm">Identify CPD obligations and opportunities</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
-                  <span className="text-sm">Understand industry standards and best practices</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2"></div>
-                  <span className="text-sm">Learn about certification and accreditation schemes</span>
-                </div>
+        {/* Quick Check 1 */}
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <HelpCircle className="h-5 w-5 text-amber-400" />
+              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
+            </div>
+            <p className="text-[15px] text-white/80 mb-3">A new three-bedroom house is being built. What minimum grade and category is required by Building Regulations?</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Grade D (mains with integral standby battery) at Category LD2 (smoke alarms in hallway, landing and principal habitable room, plus heat alarm in kitchen). All alarms must be interlinked.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 04 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">04</span>
+              <h3 className="text-[17px] font-semibold text-white">Detector Selection and Positioning</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Correct <strong className="text-white">detector selection and positioning</strong> is critical for effective protection without excessive false alarms.</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Detector Type by Location:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Hallways/Landings:</strong> Optical or ionisation smoke detectors</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Living rooms:</strong> Optical smoke detectors (less affected by dust)</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Kitchens:</strong> Heat detectors only (to avoid cooking alarms)</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Bedrooms:</strong> Optical smoke detectors if LD1/LD2 coverage</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Garages:</strong> Heat detectors (petrol fumes can affect smoke detectors)</li>
+                </ul>
               </div>
+              <div className="bg-white/5 rounded-lg p-3 mt-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Key Positioning Requirements:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />On ceiling, at least 300mm from walls/light fittings</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Within 3 metres of bedroom doors (on landing)</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Within 7.5 metres of any part of the room</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Maximum 10.6m between smoke detectors on same level</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 05 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">05</span>
+              <h3 className="text-[17px] font-semibold text-white">Interconnection and Power Supply</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>All fire alarms in a dwelling must be <strong className="text-rose-400">interconnected</strong> so that when one activates, all alarms sound throughout the property.</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Interconnection Methods:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Hardwired:</strong> Dedicated interconnection cable (3-core + earth typically)</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Wireless/Radio:</strong> RF link between compatible alarms</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Mixed:</strong> Some hardwired with radio-linked extensions</li>
+                </ul>
+              </div>
+              <div className="bg-white/5 rounded-lg p-3 mt-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Grade D Power Requirements:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Mains supply via dedicated circuit or lighting circuit</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Integral battery standby (typically lithium 10-year or replaceable)</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Minimum 72-hour standby after mains failure</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />4-minute alarm signal at end of standby period</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Quick Check 2 */}
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <HelpCircle className="h-5 w-5 text-amber-400" />
+              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
+            </div>
+            <p className="text-[15px] text-white/80 mb-3">Why should a heat detector rather than smoke detector be used in a kitchen?</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Smoke detectors in kitchens cause frequent false alarms from cooking fumes and steam. Heat detectors respond to temperature rise and are not affected by normal cooking activities, reducing nuisance alarms whilst still providing fire protection.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 06 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">06</span>
+              <h3 className="text-[17px] font-semibold text-white">Special Situations and HMOs</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Some dwellings have <strong className="text-white">special requirements</strong> beyond the standard Building Regulations minimum.</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Houses in Multiple Occupation (HMOs):</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Higher risk due to multiple independent occupants</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Grade A or B system often required (fire alarm panel)</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />LD1 or LD2 coverage typically required</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Common areas may need BS 5839-1 system</li>
+                </ul>
+              </div>
+              <div className="bg-white/5 rounded-lg p-3 mt-3">
+                <p className="text-[13px] font-semibold text-white mb-2">Sheltered Housing and Care:</p>
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />May require Grade A/B with remote monitoring</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Consideration for vulnerable/mobility-impaired occupants</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Visual alarm devices for hearing-impaired residents</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Link to warden/monitoring centre typically required</li>
+                </ul>
+              </div>
+              <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
+                <p className="text-[13px] text-rose-300 flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  HMO licensing often requires specific fire detection standards - always check local authority requirements.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Quick Check 3 */}
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <HelpCircle className="h-5 w-5 text-amber-400" />
+              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
+            </div>
+            <p className="text-[15px] text-white/80 mb-3">What is the key difference between Grade D and Grade F systems?</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Grade D uses mains power with integral battery backup, providing reliable power with automatic standby. Grade F is battery-only with no mains connection, relying entirely on batteries which must be replaced periodically and offer less reliable long-term protection.</p>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Practical Guidance */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
+
+        <div className="space-y-3">
+          <Card variant="ios" className="border-green-500/20">
+            <CardContent className="p-4">
+              <h4 className="text-[15px] font-semibold text-green-400 mb-2">Pro Tips</h4>
+              <ul className="space-y-2 text-[13px] text-white/70">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Always recommend 10-year sealed battery alarms for Grade D - eliminates battery replacement issues
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Test interconnection during installation - activate each alarm and verify all others sound
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Leave clear written instructions for the householder including test procedures and replacement intervals
+                </li>
+              </ul>
             </CardContent>
           </Card>
 
-          {/* Professional Competence Framework */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Professional Competence Framework and Standards</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Professional competence in fire safety requires a structured approach to knowledge, skills, 
-                experience, and ongoing development to ensure safe and compliant installations throughout careers.
-              </p>
-              <div className="space-y-4">
-                <div className="bg-yellow-400/10 border border-blue-600/20 rounded-md p-4">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Core Competence Framework Areas:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Legal Knowledge:</strong> Fire safety legislation, regulations, and duties</li>
-                      <li><strong>Technical Standards:</strong> BS 5839 series, EN standards, and codes</li>
-                      <li><strong>System Design:</strong> Risk assessment, specification, and planning</li>
-                      <li><strong>Installation Practice:</strong> Safe working, cable installation, commissioning</li>
-                      <li><strong>Testing Procedures:</strong> Functional testing, certification, documentation</li>
-                    </ul>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Maintenance Systems:</strong> Preventive and corrective maintenance regimes</li>
-                      <li><strong>Fault Diagnosis:</strong> Systematic troubleshooting and repair techniques</li>
-                      <li><strong>Health and Safety:</strong> Risk assessment, safe working practices</li>
-                      <li><strong>Customer Relations:</strong> Communication, education, and service delivery</li>
-                      <li><strong>Business Management:</strong> Quality systems, project management, compliance</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="bg-green-600/10 border border-green-600/20 rounded-md p-4">
-                  <h4 className="text-green-400 font-semibold mb-2">Competence Development Levels:</h4>
-                  <div className="space-y-3">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="text-white font-medium mb-2">1. Awareness Level:</h5>
-                        <ul className="list-disc list-inside space-y-1 text-xs">
-                          <li>Basic understanding of fire safety principles</li>
-                          <li>Recognition of key legislation and standards</li>
-                          <li>Awareness of system types and applications</li>
-                          <li>Understanding of health and safety requirements</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-white font-medium mb-2">2. Supervised Practice:</h5>
-                        <ul className="list-disc list-inside space-y-1 text-xs">
-                          <li>Practical work under experienced guidance</li>
-                          <li>Participation in installation and testing</li>
-                          <li>Development of practical skills and knowledge</li>
-                          <li>Gradual increase in responsibility and scope</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-white font-medium mb-2">3. Independent Competence:</h5>
-                        <ul className="list-disc list-inside space-y-1 text-xs">
-                          <li>Independent work within defined scope</li>
-                          <li>Responsibility for own work quality and safety</li>
-                          <li>Ability to train and supervise others</li>
-                          <li>Recognition of limits of competence</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="text-white font-medium mb-2">4. Expert Level:</h5>
-                        <ul className="list-disc list-inside space-y-1 text-xs">
-                          <li>Advanced technical knowledge and skills</li>
-                          <li>Ability to design complex systems</li>
-                          <li>Training and mentoring capability</li>
-                          <li>Industry leadership and development</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <Card variant="ios" className="border-red-500/20">
+            <CardContent className="p-4">
+              <h4 className="text-[15px] font-semibold text-red-400 mb-2">Common Mistakes</h4>
+              <ul className="space-y-2 text-[13px] text-white/70">
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Installing smoke detectors in kitchens - always use heat detectors to avoid nuisance alarms
+                </li>
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Placing detectors too close to walls or light fittings where dead air affects performance
+                </li>
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Forgetting to test interconnection - each alarm must be tested to confirm all units sound
+                </li>
+              </ul>
             </CardContent>
           </Card>
-
-          {/* Fire Risk Assessment Comprehensive */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Fire Risk Assessment - Comprehensive Methodology</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Fire risk assessments form the foundation of fire safety management, requiring systematic 
-                evaluation of hazards, people at risk, and effectiveness of existing measures.
-              </p>
-              <div className="space-y-4">
-                <div className="bg-red-600/10 border border-red-600/20 rounded-md p-4">
-                  <h4 className="text-red-400 font-semibold mb-2">Comprehensive Five-Step Process:</h4>
-                  <div className="space-y-3">
-                    <div>
-                      <h5 className="text-white font-medium mb-2">Step 1: Identify Fire Hazards</h5>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <ul className="list-disc list-inside space-y-1 text-xs">
-                          <li>Ignition sources: electrical equipment, heating, hot work</li>
-                          <li>Fuel sources: flammable materials, furnishings, storage</li>
-                          <li>Oxygen sources: ventilation systems, compressed gases</li>
-                          <li>Heat sources: industrial processes, cooking equipment</li>
-                        </ul>
-                        <ul className="list-disc list-inside space-y-1 text-xs">
-                          <li>Arson potential: security measures, access control</li>
-                          <li>Lightning protection: building height, location exposure</li>
-                          <li>Adjacent risks: neighbouring buildings, external threats</li>
-                          <li>Process hazards: chemical reactions, dust explosions</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div>
-                      <h5 className="text-white font-medium mb-2">Step 2: People at Risk Assessment</h5>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <ul className="list-disc list-inside space-y-1 text-xs">
-                          <li>Employees: permanent, temporary, visiting workers</li>
-                          <li>Public: customers, patients, students, residents</li>
-                          <li>Vulnerable persons: disabled, elderly, children</li>
-                          <li>Sleeping occupants: hospitals, hotels, care homes</li>
-                        </ul>
-                        <ul className="list-disc list-inside space-y-1 text-xs">
-                          <li>Lone workers: security guards, cleaners, maintenance</li>
-                          <li>Remote locations: basement areas, plant rooms</li>
-                          <li>High-risk activities: construction, hot work permits</li>
-                          <li>Emergency responders: fire service, first aiders</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-orange-600/10 border border-orange-600/20 rounded-md p-4">
-                  <h4 className="text-orange-400 font-semibold mb-2">Risk Evaluation Matrix:</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
-                      <thead>
-                        <tr className="border-b border-orange-500/20">
-                          <th className="text-left p-2">Likelihood</th>
-                          <th className="text-left p-2">Low Consequence</th>
-                          <th className="text-left p-2">Medium Consequence</th>
-                          <th className="text-left p-2">High Consequence</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="border-b border-orange-500/10">
-                          <td className="p-2 font-medium">High</td>
-                          <td className="p-2 bg-yellow-600/20">Medium Risk</td>
-                          <td className="p-2 bg-red-600/20">High Risk</td>
-                          <td className="p-2 bg-red-600/30">Very High Risk</td>
-                        </tr>
-                        <tr className="border-b border-orange-500/10">
-                          <td className="p-2 font-medium">Medium</td>
-                          <td className="p-2 bg-green-600/20">Low Risk</td>
-                          <td className="p-2 bg-yellow-600/20">Medium Risk</td>
-                          <td className="p-2 bg-red-600/20">High Risk</td>
-                        </tr>
-                        <tr>
-                          <td className="p-2 font-medium">Low</td>
-                          <td className="p-2 bg-green-600/20">Very Low Risk</td>
-                          <td className="p-2 bg-green-600/20">Low Risk</td>
-                          <td className="p-2 bg-yellow-600/20">Medium Risk</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div className="bg-purple-600/10 border border-purple-600/20 rounded-md p-4">
-                  <h4 className="text-purple-400 font-semibold mb-2">Assessment Documentation Requirements:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li>Building plans and occupancy details</li>
-                      <li>Hazard identification and risk ratings</li>
-                      <li>Existing fire precautions assessment</li>
-                      <li>Action plan with priorities and timescales</li>
-                    </ul>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li>Emergency procedures and training records</li>
-                      <li>Review schedule and trigger points</li>
-                      <li>Competent person details and qualifications</li>
-                      <li>Consultation records with employees/residents</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* CPD Requirements Expanded */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Continuing Professional Development - Strategic Approach</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-amber-600/10 border border-amber-600/20 rounded-md p-4">
-                  <h4 className="text-amber-400 font-semibold mb-2">Strategic Importance of CPD:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Regulatory Evolution:</strong> Standards and regulations continuously develop</li>
-                      <li><strong>Technology Advancement:</strong> New products and systems emerge regularly</li>
-                      <li><strong>Legal Compliance:</strong> Professional competence requirements increase</li>
-                      <li><strong>Insurance Requirements:</strong> Insurers demand demonstrated competence</li>
-                    </ul>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Career Development:</strong> Advancement requires current knowledge</li>
-                      <li><strong>Risk Management:</strong> Competence reduces liability exposure</li>
-                      <li><strong>Quality Assurance:</strong> Better outcomes from informed practice</li>
-                      <li><strong>Professional Recognition:</strong> Industry standing and credibility</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="bg-yellow-400/10 border border-blue-600/20 rounded-md p-4">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Comprehensive CPD Activity Types:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <h5 className="text-white font-medium mb-2">Formal Learning:</h5>
-                      <ul className="list-disc list-inside space-y-1 text-xs">
-                        <li>Accredited training courses and qualifications</li>
-                        <li>Professional conferences and seminars</li>
-                        <li>Manufacturer technical training programmes</li>
-                        <li>University and college course modules</li>
-                        <li>Online learning platforms and webinars</li>
-                        <li>Professional body events and presentations</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="text-white font-medium mb-2">Informal Learning:</h5>
-                      <ul className="list-disc list-inside space-y-1 text-xs">
-                        <li>Technical reading and research activities</li>
-                        <li>Peer learning and discussion groups</li>
-                        <li>Mentoring others and being mentored</li>
-                        <li>Site visits and installation observations</li>
-                        <li>Industry networking and knowledge sharing</li>
-                        <li>Reflective practice and case study analysis</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-green-600/10 border border-green-600/20 rounded-md p-4">
-                  <h4 className="text-green-400 font-semibold mb-2">Effective CPD Recording and Management:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Learning Objectives:</strong> Clear goals for each activity</li>
-                      <li><strong>Activity Details:</strong> Date, duration, provider, content</li>
-                      <li><strong>Outcomes Achieved:</strong> Knowledge and skills gained</li>
-                      <li><strong>Application Evidence:</strong> How learning was applied</li>
-                    </ul>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Supporting Evidence:</strong> Certificates, photos, notes</li>
-                      <li><strong>Reflection Notes:</strong> Personal insights and development</li>
-                      <li><strong>Annual Planning:</strong> Strategic CPD planning process</li>
-                      <li><strong>Portfolio Management:</strong> Organised evidence collection</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="bg-purple-600/10 border border-purple-600/20 rounded-md p-4">
-                  <h4 className="text-purple-400 font-semibold mb-2">Annual CPD Requirements by Organisation:</h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
-                      <thead>
-                        <tr className="border-b border-purple-500/20">
-                          <th className="text-left p-2">Organisation</th>
-                          <th className="text-left p-2">Annual Requirement</th>
-                          <th className="text-left p-2">Evidence Required</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="border-b border-purple-500/10">
-                          <td className="p-2">Engineering Council</td>
-                          <td className="p-2">30 hours minimum</td>
-                          <td className="p-2">Annual CPD report</td>
-                        </tr>
-                        <tr className="border-b border-purple-500/10">
-                          <td className="p-2">BAFE SP203-1</td>
-                          <td className="p-2">35 hours structured</td>
-                          <td className="p-2">Detailed activity log</td>
-                        </tr>
-                        <tr className="border-b border-purple-500/10">
-                          <td className="p-2">FIA Membership</td>
-                          <td className="p-2">20 hours technical</td>
-                          <td className="p-2">CPD certificate submission</td>
-                        </tr>
-                        <tr>
-                          <td className="p-2">NICEIC Approved</td>
-                          <td className="p-2">Industry updates</td>
-                          <td className="p-2">Annual assessment review</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Industry Standards and Certification Expanded */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Industry Standards and Certification Schemes - Complete Guide</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-green-600/10 border border-green-600/20 rounded-md p-4">
-                  <h4 className="text-green-400 font-semibold mb-2">Major Third-Party Certification Schemes:</h4>
-                  <div className="space-y-3">
-                    <div>
-                      <h5 className="text-white font-medium mb-2">BAFE (British Approval for Fire Equipment):</h5>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <ul className="list-disc list-inside space-y-1 text-xs">
-                          <li><strong>SP203-1:</strong> Fire detection and alarm systems</li>
-                          <li><strong>SP101:</strong> Portable fire extinguishers</li>
-                          <li><strong>SP104:</strong> Fixed fire suppression systems</li>
-                          <li><strong>SP203-3:</strong> Emergency lighting systems</li>
-                        </ul>
-                        <ul className="list-disc list-inside space-y-1 text-xs">
-                          <li>Annual assessment and surveillance</li>
-                          <li>Competent persons register</li>
-                          <li>Quality management system requirements</li>
-                          <li>Insurance recognition and benefits</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div>
-                      <h5 className="text-white font-medium mb-2">FIA (Fire Industry Association):</h5>
-                      <ul className="list-disc list-inside space-y-1 text-xs">
-                        <li>Technical guidance and standards development</li>
-                        <li>Professional development and training</li>
-                        <li>Industry advocacy and representation</li>
-                        <li>Quality contractor recognition schemes</li>
-                        <li>Technical helpline and support services</li>
-                        <li>Regular technical bulletins and updates</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-yellow-400/10 border border-blue-600/20 rounded-md p-4">
-                  <h4 className="text-yellow-400 font-semibold mb-2">Electrical Industry Certification:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div>
-                      <h5 className="text-white font-medium mb-2">NICEIC (National Inspection Council):</h5>
-                      <ul className="list-disc list-inside space-y-1 text-xs">
-                        <li>Electrical installation certification</li>
-                        <li>Fire alarm specialist registration</li>
-                        <li>Annual assessment and inspection</li>
-                        <li>Technical support and guidance</li>
-                        <li>Insurance-backed warranties</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="text-white font-medium mb-2">ECA (Electrical Contractors Association):</h5>
-                      <ul className="list-disc list-inside space-y-1 text-xs">
-                        <li>Trade association membership benefits</li>
-                        <li>Technical training and development</li>
-                        <li>Industry standards and best practice</li>
-                        <li>Advocacy and representation</li>
-                        <li>Networking and business development</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-purple-600/10 border border-purple-600/20 rounded-md p-4">
-                  <h4 className="text-purple-400 font-semibold mb-2">Certification Benefits and Value:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Market Credibility:</strong> Independent verification of competence</li>
-                      <li><strong>Insurance Benefits:</strong> Reduced premiums and enhanced cover</li>
-                      <li><strong>Warranty Protection:</strong> Insurance-backed guarantees available</li>
-                      <li><strong>Technical Support:</strong> Access to expert guidance and helplines</li>
-                    </ul>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Training Access:</strong> Subsidised or exclusive training opportunities</li>
-                      <li><strong>Regulatory Compliance:</strong> Assurance of meeting standards</li>
-                      <li><strong>Business Development:</strong> Networking and referral opportunities</li>
-                      <li><strong>Quality Assurance:</strong> Systematic approach to excellence</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quality Management Comprehensive */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Quality Management Systems and Professional Excellence</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-purple-600/10 border border-purple-600/20 rounded-md p-4">
-                  <h4 className="text-purple-400 font-semibold mb-2">ISO 9001 Quality Management System:</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Process Approach:</strong> Systematic workflow documentation</li>
-                      <li><strong>Customer Focus:</strong> Understanding and meeting requirements</li>
-                      <li><strong>Leadership:</strong> Management commitment and direction</li>
-                      <li><strong>Employee Engagement:</strong> Competence and empowerment</li>
-                    </ul>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Continuous Improvement:</strong> Regular review and enhancement</li>
-                      <li><strong>Evidence-based Decisions:</strong> Data analysis and monitoring</li>
-                      <li><strong>Relationship Management:</strong> Supplier and partner coordination</li>
-                      <li><strong>Risk-based Thinking:</strong> Preventive action and planning</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="bg-red-600/10 border border-red-600/20 rounded-md p-4">
-                  <h4 className="text-red-400 font-semibold mb-2">Health and Safety Management (ISO 45001):</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Hazard Identification:</strong> Systematic risk assessment processes</li>
-                      <li><strong>Legal Compliance:</strong> Monitoring regulatory requirements</li>
-                      <li><strong>Safe Work Procedures:</strong> Method statements and controls</li>
-                      <li><strong>Emergency Preparedness:</strong> Response procedures and training</li>
-                    </ul>
-                    <ul className="list-disc list-inside space-y-1 text-sm">
-                      <li><strong>Incident Investigation:</strong> Root cause analysis and prevention</li>
-                      <li><strong>Performance Monitoring:</strong> KPIs and improvement targets</li>
-                      <li><strong>Competence Management:</strong> Training and development systems</li>
-                      <li><strong>Consultation:</strong> Worker participation and communication</li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="bg-amber-600/10 border border-amber-600/20 rounded-md p-4">
-                  <h4 className="text-amber-400 font-semibold mb-2">Professional Responsibility and Ethics:</h4>
-                  <div className="space-y-2">
-                    <p className="text-sm">
-                      Fire safety professionals carry significant responsibility for public safety and must 
-                      maintain the highest standards of professional conduct and technical competence.
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <ul className="list-disc list-inside space-y-1 text-sm">
-                        <li>Duty of care to public safety and welfare</li>
-                        <li>Professional integrity and honest dealing</li>
-                        <li>Competent practice within scope of knowledge</li>
-                        <li>Continuing professional development obligation</li>
-                      </ul>
-                      <ul className="list-disc list-inside space-y-1 text-sm">
-                        <li>Environmental responsibility and sustainability</li>
-                        <li>Confidentiality and data protection compliance</li>
-                        <li>Fair dealing with clients, suppliers, and competitors</li>
-                        <li>Professional development of others in industry</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <SingleQuestionQuiz 
-            questions={questions} 
-            title="Test Your Knowledge: Professional Competence & CPD" 
-          />
-
-          <div className="flex justify-between">
-            <Link to="../fire-alarm-module-7-section-3">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="../fire-alarm-course">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Course Complete
-              </Button>
-            </Link>
-          </div>
         </div>
-      </div>
+      </section>
+
+      {/* FAQs */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
+        <div className="space-y-3">
+          {[
+            { q: "Can I use Grade F (battery-only) alarms in a new-build house?", a: "No - Building Regulations require Grade D minimum for new-build houses. Grade F is only acceptable as a temporary measure or in existing properties where mains installation is not reasonably practicable." },
+            { q: "What is the difference between LD2 and LD3?", a: "LD3 covers circulation spaces only (halls, landings, stairs). LD2 adds coverage in principal rooms - typically the main living room and kitchen (with heat detector). LD2 provides earlier warning." },
+            { q: "How often should domestic fire alarms be tested?", a: "Alarms should be tested weekly using the test button. Batteries (if replaceable) should be replaced annually or as indicated by the low battery warning. Alarms should be replaced every 10 years." },
+            { q: "Do I need a carbon monoxide alarm as well as smoke alarms?", a: "Yes - since October 2022, Building Regulations require CO alarms in rooms containing fixed combustion appliances (boilers, fires, stoves) except gas cookers." },
+            { q: "Can I install wireless alarms in a new-build?", a: "Yes - wireless (radio-linked) interconnection is acceptable for Grade D systems provided the alarms meet the relevant product standards and provide reliable interconnection." },
+            { q: "What documentation should I provide after installing a domestic system?", a: "Provide an installation certificate, system layout drawing showing detector locations, operating and maintenance instructions, and details of the system grade and category installed." }
+          ].map((faq, i) => (
+            <Card key={i} variant="ios">
+              <CardContent className="p-4">
+                <p className="text-[15px] font-semibold text-white mb-2">{faq.q}</p>
+                <p className="text-[13px] text-white/70">{faq.a}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <Card variant="ios-elevated" className="border-rose-500/20">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
+              <BookOpen className="h-5 w-5 text-rose-400" />
+              Knowledge Check
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {!showQuiz ? (
+              <div className="text-center py-6">
+                <p className="text-[15px] text-white/70 mb-4">Test your understanding of BS 5839-6 with 10 questions.</p>
+                <Button variant="ios-primary" onClick={() => setShowQuiz(true)}>
+                  Start Quiz
+                </Button>
+              </div>
+            ) : showResults ? (
+              <div className="space-y-6">
+                <div className="text-center py-4">
+                  <p className="text-[34px] font-bold text-rose-400">{calculateScore()}/{questions.length}</p>
+                  <p className="text-[15px] text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
+                </div>
+
+                <div className="space-y-4">
+                  {questions.map((q, i) => {
+                    const correct = selectedAnswers[i] === q.correctAnswer;
+                    return (
+                      <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
+                        <p className="text-[15px] font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
+                        <p className={`text-[13px] ${correct ? 'text-green-400' : 'text-red-400'}`}>
+                          Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
+                        </p>
+                        {!correct && (
+                          <p className="text-[13px] text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
+                        )}
+                        <p className="text-[13px] text-white/70 mt-2">{q.explanation}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <Button variant="ios-secondary" onClick={resetQuiz} className="w-full gap-2">
+                  <RotateCcw className="h-4 w-4" />
+                  Restart Quiz
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+
+                <div>
+                  <p className="text-[17px] font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
+                  <div className="space-y-2">
+                    {questions[currentQuestion].options.map((opt, idx) => {
+                      const selected = selectedAnswers[currentQuestion] === idx;
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => handleAnswerSelect(idx)}
+                          className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
+                            selected
+                              ? 'bg-rose-500/20 border-rose-500/50 text-white'
+                              : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                          }`}
+                        >
+                          {opt}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between gap-3">
+                  <Button
+                    variant="ios-secondary"
+                    onClick={handlePrevious}
+                    disabled={currentQuestion === 0}
+                    className="flex-1"
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    variant="ios-primary"
+                    onClick={handleNext}
+                    disabled={selectedAnswers[currentQuestion] === -1}
+                    className="flex-1"
+                  >
+                    {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Navigation Footer */}
+      <section className="px-4 pb-safe max-w-4xl mx-auto">
+        <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
+          <Button variant="ios-secondary" asChild className="flex-1">
+            <Link to="../module-7/section-3">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button variant="ios-primary" asChild className="flex-1">
+            <Link to="../fire-alarm-course/mock-exam">
+              Mock Exam
+              <ArrowRight className="h-4 w-4 ml-2" />
+            </Link>
+          </Button>
+        </div>
+      </section>
     </div>
   );
 };

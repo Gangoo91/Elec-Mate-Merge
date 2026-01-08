@@ -10,7 +10,9 @@ import {
   deleteVacancy,
   getVacancyStats,
   Vacancy,
+  VacancyStatus,
 } from '@/services/vacancyService';
+import type { VacancyFormData } from '@/components/employer/vacancy-form/schema';
 
 // Query keys
 const VACANCIES_KEY = ['vacancies'];
@@ -70,8 +72,23 @@ export const useCreateVacancy = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (vacancy: Omit<Vacancy, 'id' | 'created_at' | 'updated_at' | 'views' | 'applications_count'>) =>
-      createVacancy(vacancy),
+    mutationFn: (formData: VacancyFormData) => {
+      // Transform camelCase form data to snake_case database format
+      const vacancy = {
+        title: formData.title,
+        location: formData.location,
+        type: formData.type as Vacancy['type'],
+        status: 'Open' as VacancyStatus,
+        salary_min: formData.salaryMin || null,
+        salary_max: formData.salaryMax || null,
+        salary_period: formData.salaryPeriod || 'year',
+        description: formData.description || null,
+        requirements: formData.requirements || [],
+        benefits: formData.benefits || [],
+        closing_date: formData.closingDate || null,
+      };
+      return createVacancy(vacancy);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: VACANCIES_KEY });
       queryClient.invalidateQueries({ queryKey: VACANCY_STATS_KEY });
@@ -83,8 +100,23 @@ export const useUpdateVacancy = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, updates }: { id: string; updates: Partial<Vacancy> }) =>
-      updateVacancy(id, updates),
+    mutationFn: ({ id, updates }: { id: string; updates: Partial<VacancyFormData> }) => {
+      // Transform camelCase form data to snake_case database format
+      const dbUpdates: Partial<Vacancy> = {};
+
+      if (updates.title !== undefined) dbUpdates.title = updates.title;
+      if (updates.location !== undefined) dbUpdates.location = updates.location;
+      if (updates.type !== undefined) dbUpdates.type = updates.type as Vacancy['type'];
+      if (updates.salaryMin !== undefined) dbUpdates.salary_min = updates.salaryMin || null;
+      if (updates.salaryMax !== undefined) dbUpdates.salary_max = updates.salaryMax || null;
+      if (updates.salaryPeriod !== undefined) dbUpdates.salary_period = updates.salaryPeriod;
+      if (updates.description !== undefined) dbUpdates.description = updates.description || null;
+      if (updates.requirements !== undefined) dbUpdates.requirements = updates.requirements;
+      if (updates.benefits !== undefined) dbUpdates.benefits = updates.benefits;
+      if (updates.closingDate !== undefined) dbUpdates.closing_date = updates.closingDate || null;
+
+      return updateVacancy(id, dbUpdates);
+    },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: VACANCIES_KEY });
       queryClient.invalidateQueries({ queryKey: [...VACANCIES_KEY, variables.id] });

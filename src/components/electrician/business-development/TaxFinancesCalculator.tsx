@@ -1,31 +1,42 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Calculator, AlertTriangle, PiggyBank, TrendingUp, RefreshCw, Lightbulb } from "lucide-react";
+import { IOSInput } from "@/components/ui/ios-input";
+import { Switch } from "@/components/ui/switch";
+import {
+  ChevronLeft,
+  RotateCcw,
+  ChevronDown,
+  TrendingUp,
+  Package,
+  Car,
+  Wrench,
+  Shield,
+  Briefcase,
+  Building2,
+  PiggyBank,
+  Target,
+  Lightbulb,
+  AlertTriangle,
+  Calendar
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface TaxInputs {
-  // Income & Revenue
   annualRevenue: number;
   materialCosts: number;
   vehicleExpenses: number;
   toolsEquipment: number;
   insuranceCosts: number;
   professionalFees: number;
-  
-  // Business Structure
   businessType: string;
   vatRegistered: boolean;
-  
-  // Personal Finances
-  personalAllowance: number;
   pensionContributions: number;
   savingsGoal: number;
 }
 
 const TaxFinancesCalculator = () => {
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState<TaxInputs>({
     annualRevenue: 180000,
     materialCosts: 36000,
@@ -35,19 +46,22 @@ const TaxFinancesCalculator = () => {
     professionalFees: 1800,
     businessType: "sole_trader",
     vatRegistered: true,
-    personalAllowance: 12570,
     pensionContributions: 0,
     savingsGoal: 10000
   });
 
-  const [showResults, setShowResults] = useState(false);
+  const [expandedSections, setExpandedSections] = useState({
+    expenses: true,
+    setup: false,
+    insights: false
+  });
+
+  const toggleSection = (section: keyof typeof expandedSections) => {
+    setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
+  };
 
   const updateInput = (field: keyof TaxInputs, value: number | string | boolean) => {
     setInputs(prev => ({ ...prev, [field]: value }));
-  };
-
-  const calculateTax = () => {
-    setShowResults(true);
   };
 
   const resetCalculator = () => {
@@ -60,407 +74,421 @@ const TaxFinancesCalculator = () => {
       professionalFees: 1800,
       businessType: "sole_trader",
       vatRegistered: true,
-      personalAllowance: 12570,
       pensionContributions: 0,
       savingsGoal: 10000
     });
-    setShowResults(false);
   };
 
-  // Tax Calculations
+  // Calculations
   const totalExpenses = inputs.materialCosts + inputs.vehicleExpenses + inputs.toolsEquipment + inputs.insuranceCosts + inputs.professionalFees;
   const taxableProfit = inputs.annualRevenue - totalExpenses;
-  
-  // Income Tax calculation (2024/25 rates)
+  const personalAllowance = 12570;
+
   const calculateIncomeTax = () => {
-    const taxableIncome = Math.max(0, taxableProfit - inputs.personalAllowance);
+    const taxableIncome = Math.max(0, taxableProfit - personalAllowance);
     let incomeTax = 0;
-    
     if (taxableIncome > 50270) {
-      incomeTax += (taxableIncome - 50270) * 0.40; // Higher rate
-      incomeTax += (50270 - inputs.personalAllowance) * 0.20; // Basic rate
+      incomeTax += (taxableIncome - 50270) * 0.40;
+      incomeTax += (50270 - personalAllowance) * 0.20;
     } else if (taxableIncome > 0) {
-      incomeTax += taxableIncome * 0.20; // Basic rate
+      incomeTax += taxableIncome * 0.20;
     }
-    
     return incomeTax;
   };
 
-  // National Insurance calculation
   const calculateNationalInsurance = () => {
     const niableProfit = Math.max(0, taxableProfit - 6515);
-    let nationalInsurance = 0;
-    
-    if (taxableProfit > 6515) {
-      nationalInsurance += 180; // Annual Class 2 NI
-    }
-    
+    let ni = 0;
+    if (taxableProfit > 6515) ni += 180;
     if (niableProfit > 12570) {
       const class4Profit = Math.min(niableProfit - 12570, 50270 - 12570);
-      nationalInsurance += class4Profit * 0.09;
-      
-      if (niableProfit > 50270) {
-        nationalInsurance += (niableProfit - 50270) * 0.02;
-      }
+      ni += class4Profit * 0.09;
+      if (niableProfit > 50270) ni += (niableProfit - 50270) * 0.02;
     }
-    
-    return nationalInsurance;
+    return ni;
   };
 
   const vatDue = inputs.vatRegistered ? (inputs.annualRevenue * 0.20) - (totalExpenses * 0.20) : 0;
   const incomeTax = calculateIncomeTax();
   const nationalInsurance = calculateNationalInsurance();
-  const totalTaxLiability = incomeTax + nationalInsurance + (inputs.vatRegistered ? vatDue : 0);
-  const netIncome = taxableProfit - totalTaxLiability;
-  const monthlyNetIncome = netIncome / 12;
-  const monthlySavingsRate = inputs.savingsGoal / 12;
-  const savingsPercentage = (monthlySavingsRate / monthlyNetIncome) * 100;
+  const totalTax = incomeTax + nationalInsurance + (inputs.vatRegistered ? vatDue : 0);
+  const netIncome = taxableProfit - totalTax;
+  const monthlyNet = netIncome / 12;
+  const savingsRate = monthlyNet > 0 ? ((inputs.savingsGoal / 12) / monthlyNet) * 100 : 0;
+
+  const businessTypes = [
+    { value: "sole_trader", label: "Sole Trader" },
+    { value: "limited_company", label: "Limited Company" },
+    { value: "partnership", label: "Partnership" }
+  ];
 
   return (
-    <div className="min-h-screen bg-elec-dark text-foreground">
-      <div className="container mx-auto p-6 space-y-6">
-        <div className="text-center space-y-4">
-          <div className="flex items-center justify-center gap-3">
-            <Calculator className="h-8 w-8 text-elec-yellow" />
-            <h1 className="text-3xl font-bold">Tax & Finances Calculator</h1>
-          </div>
-          <p className="text-gray-300 max-w-2xl mx-auto">
-            Enter your business details below to calculate your tax liabilities and plan your finances effectively.
-          </p>
-        </div>
-
-        {/* Input Section */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-elec-yellow" />
-                Revenue & Income
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="annualRevenue">Annual Revenue (£)</Label>
-                <Input
-                  id="annualRevenue"
-                  type="text"
-                  inputMode="decimal"
-                  value={inputs.annualRevenue ?? ''}
-                  onChange={(e) => updateInput("annualRevenue", Number(e.target.value) || 0)}
-                  className="bg-elec-dark border-elec-yellow/30"
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Business Expenses</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="materialCosts">Materials & Stock (£)</Label>
-                <Input
-                  id="materialCosts"
-                  type="text"
-                  inputMode="decimal"
-                  value={inputs.materialCosts ?? ''}
-                  onChange={(e) => updateInput("materialCosts", Number(e.target.value) || 0)}
-                  className="bg-elec-dark border-elec-yellow/30"
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="vehicleExpenses">Vehicle Expenses (£)</Label>
-                <Input
-                  id="vehicleExpenses"
-                  type="text"
-                  inputMode="decimal"
-                  value={inputs.vehicleExpenses ?? ''}
-                  onChange={(e) => updateInput("vehicleExpenses", Number(e.target.value) || 0)}
-                  className="bg-elec-dark border-elec-yellow/30"
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="toolsEquipment">Tools & Equipment (£)</Label>
-                <Input
-                  id="toolsEquipment"
-                  type="text"
-                  inputMode="decimal"
-                  value={inputs.toolsEquipment ?? ''}
-                  onChange={(e) => updateInput("toolsEquipment", Number(e.target.value) || 0)}
-                  className="bg-elec-dark border-elec-yellow/30"
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="insuranceCosts">Insurance (£)</Label>
-                <Input
-                  id="insuranceCosts"
-                  type="text"
-                  inputMode="decimal"
-                  value={inputs.insuranceCosts ?? ''}
-                  onChange={(e) => updateInput("insuranceCosts", Number(e.target.value) || 0)}
-                  className="bg-elec-dark border-elec-yellow/30"
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="professionalFees">Professional Fees (£)</Label>
-                <Input
-                  id="professionalFees"
-                  type="text"
-                  inputMode="decimal"
-                  value={inputs.professionalFees ?? ''}
-                  onChange={(e) => updateInput("professionalFees", Number(e.target.value) || 0)}
-                  className="bg-elec-dark border-elec-yellow/30"
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Business Setup & Goals</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="businessType">Business Type</Label>
-                <select
-                  id="businessType"
-                  value={inputs.businessType}
-                  onChange={(e) => updateInput("businessType", e.target.value)}
-                  className="w-full mt-1 p-2 bg-elec-dark border border-elec-yellow/30 rounded-md text-foreground"
-                >
-                  <option value="sole_trader">Sole Trader</option>
-                  <option value="limited_company">Limited Company</option>
-                  <option value="partnership">Partnership</option>
-                </select>
-              </div>
-              
-              <div className="flex items-center space-x-2">
-                <input
-                  id="vatRegistered"
-                  type="checkbox"
-                  checked={inputs.vatRegistered}
-                  onChange={(e) => updateInput("vatRegistered", e.target.checked)}
-                  className="rounded border-elec-yellow/30"
-                />
-                <Label htmlFor="vatRegistered">VAT Registered</Label>
-              </div>
-
-              <div>
-                <Label htmlFor="pensionContributions">Annual Pension Contributions (£)</Label>
-                <Input
-                  id="pensionContributions"
-                  type="text"
-                  inputMode="decimal"
-                  value={inputs.pensionContributions ?? ''}
-                  onChange={(e) => updateInput("pensionContributions", Number(e.target.value) || 0)}
-                  className="bg-elec-dark border-elec-yellow/30"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="savingsGoal">Annual Savings Goal (£)</Label>
-                <Input
-                  id="savingsGoal"
-                  type="text"
-                  inputMode="decimal"
-                  value={inputs.savingsGoal ?? ''}
-                  onChange={(e) => updateInput("savingsGoal", Number(e.target.value) || 0)}
-                  className="bg-elec-dark border-elec-yellow/30"
-                />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Calculate Button */}
-        <div className="flex justify-center gap-4">
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark to-black">
+      {/* Sticky Header */}
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-black/80 border-b border-white/10">
+        <div className="px-4 py-3 flex items-center justify-between max-w-2xl mx-auto">
           <Button
-            onClick={calculateTax}
-            className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 px-8 py-3 text-lg font-medium"
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate(-1)}
+            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
-            <Calculator className="h-5 w-5 mr-2" />
-            Calculate Tax & Finances
+            <ChevronLeft className="h-6 w-6" />
           </Button>
-          
+          <h1 className="text-ios-headline text-white font-semibold">Tax & Finances</h1>
           <Button
+            variant="ghost"
+            size="icon"
             onClick={resetCalculator}
-            variant="outline"
-            className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark"
+            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Reset
+            <RotateCcw className="h-5 w-5" />
           </Button>
         </div>
+      </header>
 
-        {/* Results Section */}
-        {showResults && (
-          <>
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Calculator className="h-5 w-5 text-elec-yellow" />
-                    Your Tax Breakdown
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Annual Revenue:</span>
-                    <span className="font-medium">£{inputs.annualRevenue.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Total Expenses:</span>
-                    <span className="font-medium">£{totalExpenses.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Taxable Profit:</span>
-                    <span className="font-medium">£{taxableProfit.toLocaleString()}</span>
-                  </div>
-                  <Separator />
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Income Tax:</span>
-                    <span className="font-medium">£{incomeTax.toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">National Insurance:</span>
-                    <span className="font-medium">£{nationalInsurance.toFixed(2)}</span>
-                  </div>
-                  {inputs.vatRegistered && (
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">VAT Due:</span>
-                      <span className="font-medium">£{vatDue.toFixed(2)}</span>
-                    </div>
-                  )}
-                  <Separator />
-                  <div className="flex justify-between font-bold text-lg">
-                    <span>Total Tax Liability:</span>
-                    <span className="text-red-400">£{totalTaxLiability.toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between font-bold text-lg">
-                    <span>Net Income:</span>
-                    <span className="text-green-400">£{netIncome.toFixed(2)}</span>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <PiggyBank className="h-5 w-5 text-elec-yellow" />
-                    Financial Planning
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4 text-center">
-                    <div className="p-3 bg-elec-dark rounded">
-                      <div className="text-sm text-muted-foreground">Monthly Net Income</div>
-                      <div className="text-xl font-bold text-green-400">£{monthlyNetIncome.toFixed(0)}</div>
-                    </div>
-                    
-                    <div className="p-3 bg-elec-dark rounded">
-                      <div className="text-sm text-muted-foreground">Monthly Savings Needed</div>
-                      <div className="text-xl font-bold text-blue-400">£{monthlySavingsRate.toFixed(0)}</div>
-                    </div>
-                  </div>
-                  
-                  <div className="p-4 bg-elec-dark rounded text-center">
-                    <div className="text-sm text-muted-foreground">Savings Rate</div>
-                    <div className={`text-2xl font-bold ${savingsPercentage > 20 ? "text-green-400" : savingsPercentage > 10 ? "text-yellow-400" : "text-red-400"}`}>
-                      {savingsPercentage.toFixed(1)}%
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-1">
-                      {savingsPercentage > 20 ? "Excellent savings rate!" : 
-                       savingsPercentage > 10 ? "Good savings rate" : 
-                       "Consider increasing savings"}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+      <main className="px-4 py-6 space-y-6 pb-32 sm:pb-6 max-w-2xl mx-auto">
+        {/* Hero Results - Always Visible */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-br from-elec-yellow/20 via-amber-500/15 to-orange-500/10
+                     backdrop-blur-xl border border-elec-yellow/30 rounded-3xl p-6 relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/10 rounded-full blur-3xl" />
+          <div className="relative space-y-4">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">Net Income</p>
+                <p className="text-3xl sm:text-4xl font-bold text-green-400 mt-1 tabular-nums">
+                  £{netIncome.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">Total Tax</p>
+                <p className="text-2xl font-bold text-red-400 mt-1 tabular-nums">
+                  £{totalTax.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                </p>
+              </div>
             </div>
+            <div className="grid grid-cols-3 gap-2 pt-2">
+              <div className="bg-white/10 rounded-xl p-2 text-center">
+                <p className="text-ios-caption-2 text-white/50">Monthly</p>
+                <p className="text-ios-body font-semibold text-white">£{monthlyNet.toFixed(0)}</p>
+              </div>
+              <div className="bg-white/10 rounded-xl p-2 text-center">
+                <p className="text-ios-caption-2 text-white/50">Expenses</p>
+                <p className="text-ios-body font-semibold text-white">£{totalExpenses.toLocaleString()}</p>
+              </div>
+              <div className="bg-white/10 rounded-xl p-2 text-center">
+                <p className="text-ios-caption-2 text-white/50">Profit</p>
+                <p className="text-ios-body font-semibold text-white">£{taxableProfit.toLocaleString()}</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
-            {/* Learning & Scenarios Section */}
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Lightbulb className="h-5 w-5 text-elec-yellow" />
-                  Real-World Insights & Tips
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-medium text-elec-yellow mb-3">Tax Efficiency Tips</h4>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>• <strong>Pension Contributions:</strong> You could save £{(incomeTax * 0.2).toFixed(0)} in tax by contributing more to pension</li>
-                      <li>• <strong>Equipment Purchases:</strong> Buy tools before tax year end for immediate relief</li>
-                      <li>• <strong>Business Structure:</strong> {inputs.businessType === "sole_trader" && taxableProfit > 100000 ? "Consider limited company structure for tax efficiency" : "Current structure looks appropriate"}</li>
-                      <li>• <strong>VAT Planning:</strong> {inputs.vatRegistered ? "Monitor VAT threshold if revenue decreases" : taxableProfit > 85000 ? "Consider VAT registration - you may be close to threshold" : "VAT registration not required yet"}</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-medium text-elec-yellow mb-3">Scenario Planning</h4>
-                    <div className="space-y-3 text-sm">
-                      <div className="p-3 bg-elec-dark rounded">
-                        <div className="font-medium text-blue-400">If Revenue Increases 20%:</div>
-                        <div>Net Income: £{((taxableProfit * 1.2) - (totalTaxLiability * 1.3)).toFixed(0)}</div>
-                        <div className="text-xs text-muted-foreground">Higher rate tax may apply</div>
-                      </div>
-                      
-                      <div className="p-3 bg-elec-dark rounded">
-                        <div className="font-medium text-yellow-400">Emergency Fund Needed:</div>
-                        <div>3 months expenses: £{(monthlyNetIncome * 3).toFixed(0)}</div>
-                        <div className="text-xs text-muted-foreground">Recommended business safety net</div>
-                      </div>
-                      
-                      <div className="p-3 bg-elec-dark rounded">
-                        <div className="font-medium text-green-400">Retirement Planning:</div>
-                        <div>Annual pension target: £{(netIncome * 0.15).toFixed(0)}</div>
-                        <div className="text-xs text-muted-foreground">15% of net income recommended</div>
-                      </div>
-                    </div>
+        {/* Tax Breakdown Stats */}
+        <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+          <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[120px] border border-white/10">
+            <p className="text-ios-caption-1 text-white/50">Income Tax</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">£{incomeTax.toFixed(0)}</p>
+          </div>
+          <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[120px] border border-white/10">
+            <p className="text-ios-caption-1 text-white/50">NI</p>
+            <p className="text-ios-title-3 font-semibold text-white mt-1">£{nationalInsurance.toFixed(0)}</p>
+          </div>
+          {inputs.vatRegistered && (
+            <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[120px] border border-white/10">
+              <p className="text-ios-caption-1 text-white/50">VAT Due</p>
+              <p className="text-ios-title-3 font-semibold text-white mt-1">£{vatDue.toFixed(0)}</p>
+            </div>
+          )}
+          <div className={`flex-shrink-0 rounded-2xl p-4 min-w-[120px] border ${
+            savingsRate > 20 ? "bg-green-500/10 border-green-500/30" :
+            savingsRate > 10 ? "bg-amber-500/10 border-amber-500/30" :
+            "bg-red-500/10 border-red-500/30"
+          }`}>
+            <p className="text-ios-caption-1 text-white/50">Save Rate</p>
+            <p className={`text-ios-title-3 font-semibold mt-1 ${
+              savingsRate > 20 ? "text-green-400" : savingsRate > 10 ? "text-amber-400" : "text-red-400"
+            }`}>{savingsRate.toFixed(0)}%</p>
+          </div>
+        </div>
+
+        {/* Revenue Input */}
+        <section>
+          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+            Revenue
+          </p>
+          <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10">
+            <IOSInput
+              label="Annual Revenue"
+              icon={<TrendingUp className="h-5 w-5" />}
+              type="number"
+              value={inputs.annualRevenue || ""}
+              onChange={(e) => updateInput("annualRevenue", Number(e.target.value) || 0)}
+              hint="Total income before expenses"
+            />
+          </div>
+        </section>
+
+        {/* Expenses Section - Collapsible */}
+        <section>
+          <button
+            onClick={() => toggleSection("expenses")}
+            className="w-full flex items-center justify-between px-1 mb-3 touch-manipulation active:scale-[0.99]"
+          >
+            <p className="text-ios-footnote text-white/50 uppercase tracking-wide">
+              Business Expenses
+            </p>
+            <motion.div
+              animate={{ rotate: expandedSections.expenses ? 180 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ChevronDown className="h-4 w-4 text-white/50" />
+            </motion.div>
+          </button>
+          <AnimatePresence>
+            {expandedSections.expenses && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
+                  <IOSInput
+                    label="Materials & Stock"
+                    icon={<Package className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.materialCosts || ""}
+                    onChange={(e) => updateInput("materialCosts", Number(e.target.value) || 0)}
+                  />
+                  <IOSInput
+                    label="Vehicle Expenses"
+                    icon={<Car className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.vehicleExpenses || ""}
+                    onChange={(e) => updateInput("vehicleExpenses", Number(e.target.value) || 0)}
+                  />
+                  <IOSInput
+                    label="Tools & Equipment"
+                    icon={<Wrench className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.toolsEquipment || ""}
+                    onChange={(e) => updateInput("toolsEquipment", Number(e.target.value) || 0)}
+                  />
+                  <IOSInput
+                    label="Insurance"
+                    icon={<Shield className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.insuranceCosts || ""}
+                    onChange={(e) => updateInput("insuranceCosts", Number(e.target.value) || 0)}
+                  />
+                  <IOSInput
+                    label="Professional Fees"
+                    icon={<Briefcase className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.professionalFees || ""}
+                    onChange={(e) => updateInput("professionalFees", Number(e.target.value) || 0)}
+                  />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </section>
+
+        {/* Business Setup - Collapsible */}
+        <section>
+          <button
+            onClick={() => toggleSection("setup")}
+            className="w-full flex items-center justify-between px-1 mb-3 touch-manipulation active:scale-[0.99]"
+          >
+            <p className="text-ios-footnote text-white/50 uppercase tracking-wide">
+              Business Setup & Goals
+            </p>
+            <motion.div
+              animate={{ rotate: expandedSections.setup ? 180 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ChevronDown className="h-4 w-4 text-white/50" />
+            </motion.div>
+          </button>
+          <AnimatePresence>
+            {expandedSections.setup && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-4"
+              >
+                {/* Business Type */}
+                <div className="bg-white/5 rounded-2xl border border-white/10 p-4">
+                  <p className="text-ios-subhead font-medium text-white mb-3">Business Type</p>
+                  <div className="grid grid-cols-3 gap-2">
+                    {businessTypes.map((type) => (
+                      <button
+                        key={type.value}
+                        onClick={() => updateInput("businessType", type.value)}
+                        className={`p-3 rounded-xl border text-center transition-all touch-manipulation active:scale-[0.98] ${
+                          inputs.businessType === type.value
+                            ? "bg-elec-yellow/20 border-elec-yellow/50"
+                            : "bg-white/5 border-white/10"
+                        }`}
+                      >
+                        <Building2 className={`h-5 w-5 mx-auto mb-1 ${
+                          inputs.businessType === type.value ? "text-elec-yellow" : "text-white/50"
+                        }`} />
+                        <p className={`text-ios-caption-1 ${
+                          inputs.businessType === type.value ? "text-elec-yellow" : "text-white/70"
+                        }`}>{type.label}</p>
+                      </button>
+                    ))}
                   </div>
                 </div>
 
-                <Card className="border-yellow-500/20 bg-yellow-500/5">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="flex items-center gap-2 text-yellow-400">
-                      <AlertTriangle className="h-5 w-5" />
-                      Important Reminders
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <h5 className="font-medium mb-2">Key Dates:</h5>
-                        <ul className="space-y-1 text-muted-foreground">
-                          <li>• Self-assessment deadline: 31 January</li>
-                          <li>• Payment on account: 31 Jan & 31 Jul</li>
-                          <li>• VAT returns: Quarterly deadlines</li>
-                          <li>• Corporation tax: 9 months after year end</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="font-medium mb-2">Record Keeping:</h5>
-                        <ul className="space-y-1 text-muted-foreground">
-                          <li>• Keep receipts for 6 years minimum</li>
-                          <li>• Digital records are acceptable</li>
-                          <li>• Separate business and personal expenses</li>
-                          <li>• Consider cloud-based accounting software</li>
-                        </ul>
-                      </div>
+                {/* VAT Toggle */}
+                <div className="bg-white/5 rounded-2xl border border-white/10 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-ios-body font-medium text-white">VAT Registered</p>
+                      <p className="text-ios-caption-1 text-white/50">Turnover &gt;£85,000</p>
                     </div>
-                  </CardContent>
-                </Card>
-              </CardContent>
-            </Card>
-          </>
-        )}
+                    <Switch
+                      checked={inputs.vatRegistered}
+                      onCheckedChange={(checked) => updateInput("vatRegistered", checked)}
+                      className="data-[state=checked]:bg-elec-yellow"
+                    />
+                  </div>
+                </div>
+
+                {/* Goals */}
+                <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
+                  <IOSInput
+                    label="Annual Pension"
+                    icon={<PiggyBank className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.pensionContributions || ""}
+                    onChange={(e) => updateInput("pensionContributions", Number(e.target.value) || 0)}
+                    hint="Tax-efficient savings"
+                  />
+                  <IOSInput
+                    label="Savings Goal"
+                    icon={<Target className="h-5 w-5" />}
+                    type="number"
+                    value={inputs.savingsGoal || ""}
+                    onChange={(e) => updateInput("savingsGoal", Number(e.target.value) || 0)}
+                    hint="Annual target"
+                  />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </section>
+
+        {/* Insights - Collapsible */}
+        <section>
+          <button
+            onClick={() => toggleSection("insights")}
+            className="w-full flex items-center justify-between px-1 mb-3 touch-manipulation active:scale-[0.99]"
+          >
+            <p className="text-ios-footnote text-white/50 uppercase tracking-wide flex items-center gap-2">
+              <Lightbulb className="h-4 w-4" />
+              Tax Tips & Insights
+            </p>
+            <motion.div
+              animate={{ rotate: expandedSections.insights ? 180 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ChevronDown className="h-4 w-4 text-white/50" />
+            </motion.div>
+          </button>
+          <AnimatePresence>
+            {expandedSections.insights && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-4"
+              >
+                {/* Quick Tip Cards */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-blue-500/10 border border-blue-500/30 rounded-2xl p-4">
+                    <p className="text-ios-caption-1 text-blue-400">Pension Savings</p>
+                    <p className="text-ios-title-3 font-semibold text-white mt-1">
+                      £{(incomeTax * 0.2).toFixed(0)}
+                    </p>
+                    <p className="text-ios-caption-2 text-white/50 mt-1">Potential tax saved</p>
+                  </div>
+                  <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4">
+                    <p className="text-ios-caption-1 text-amber-400">Emergency Fund</p>
+                    <p className="text-ios-title-3 font-semibold text-white mt-1">
+                      £{(monthlyNet * 3).toFixed(0)}
+                    </p>
+                    <p className="text-ios-caption-2 text-white/50 mt-1">3 months target</p>
+                  </div>
+                </div>
+
+                {/* Key Dates */}
+                <div className="bg-white/5 rounded-2xl border border-white/10 p-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Calendar className="h-4 w-4 text-elec-yellow" />
+                    <p className="text-ios-subhead font-medium text-white">Key Tax Dates</p>
+                  </div>
+                  <div className="space-y-2">
+                    {[
+                      { date: "31 Jan", event: "Self-assessment deadline" },
+                      { date: "31 Jul", event: "Payment on account" },
+                      { date: "Quarterly", event: "VAT returns due" }
+                    ].map((item, i) => (
+                      <div key={i} className="flex justify-between items-center">
+                        <span className="text-ios-caption-1 text-white/70">{item.event}</span>
+                        <span className="text-ios-caption-1 font-medium text-elec-yellow">{item.date}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Warning */}
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4">
+                  <div className="flex items-start gap-3">
+                    <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-ios-subhead font-medium text-amber-300">Reminder</p>
+                      <p className="text-ios-caption-1 text-amber-200/70 mt-1">
+                        Keep receipts for 6 years. This calculator provides estimates only - consult an accountant for tax advice.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </section>
+
+        {/* Desktop Reset */}
+        <div className="hidden sm:block">
+          <Button
+            onClick={resetCalculator}
+            variant="outline"
+            className="w-full h-12 border-white/20 text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+          >
+            Reset Calculator
+          </Button>
+        </div>
+      </main>
+
+      {/* Bottom Action Bar - Mobile */}
+      <div className="fixed bottom-0 left-0 right-0 sm:hidden bg-black/90 backdrop-blur-xl border-t border-white/10 p-4 pb-safe">
+        <Button
+          onClick={resetCalculator}
+          className="w-full h-14 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-ios-body active:scale-[0.98] touch-manipulation"
+        >
+          Reset Calculator
+        </Button>
       </div>
     </div>
   );

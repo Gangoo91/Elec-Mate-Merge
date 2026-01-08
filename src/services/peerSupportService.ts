@@ -147,7 +147,7 @@ export const peerSupporterService = {
         avatar_url: input.avatar_url || null,
         training_level: input.training_level || 'peer',
         topics_comfortable_with: input.topics_comfortable_with || [],
-        is_available: false,
+        is_available: true,
         is_active: true,
       })
       .select()

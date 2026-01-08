@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -178,15 +178,21 @@ const SignUp = () => {
         consent_timestamp: consentWithTimestamp.timestamp
       });
 
-      // If user opted for Elec-ID, try to generate it now (will be created on first login if profile not ready)
+      // If user opted for Elec-ID, try to generate it now
       if (profile.createElecId && data?.user?.id) {
         try {
-          await supabase.functions.invoke('generate-elec-id', {
+          const { data: elecIdData, error: elecIdError } = await supabase.functions.invoke('generate-elec-id', {
             body: {
               user_id: data.user.id,
               ecs_card_type: profile.ecsCardType || null
             }
           });
+          if (elecIdData?.elec_id_number) {
+            console.log('Elec-ID generated:', elecIdData.elec_id_number);
+          }
+          if (elecIdError) {
+            console.warn('Elec-ID generation returned error:', elecIdError);
+          }
         } catch (elecIdError) {
           // Store intent for later - will be picked up on first login
           localStorage.setItem('elec-mate-pending-elecid', JSON.stringify({
@@ -197,6 +203,14 @@ const SignUp = () => {
         }
       }
 
+      // AUTO-LOGIN: If session exists, go straight to dashboard
+      if (data?.session) {
+        console.log('Session active - redirecting to dashboard');
+        navigate('/dashboard');
+        return;
+      }
+
+      // Fallback: If no session (email confirmation required), show completion
       setStep('complete');
     } catch (err: any) {
       setError(err.message || 'An error occurred');
@@ -260,6 +274,16 @@ const SignUp = () => {
       transition: { duration: 0.5 }
     }
   };
+
+  // Auto-redirect on completion screen (fallback if session wasn't immediate)
+  useEffect(() => {
+    if (step === 'complete') {
+      const timer = setTimeout(() => {
+        navigate('/dashboard');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [step, navigate]);
 
   // Completion screen
   if (step === 'complete') {
@@ -334,7 +358,7 @@ const SignUp = () => {
             Welcome to Elec-Mate!
           </motion.h1>
           <motion.p variants={itemVariants} className="text-ios-body text-white/60 mb-8">
-            Your account is ready. Let's get started!
+            Taking you to your dashboard...
           </motion.p>
 
           <motion.div variants={itemVariants}>
@@ -378,13 +402,23 @@ const SignUp = () => {
           )}
 
           <motion.div variants={itemVariants}>
-            <Button asChild variant="ios-primary" size="ios-large" className="w-full h-[56px] shadow-lg shadow-elec-yellow/20">
-              <Link to="/auth/signin">
-                Continue to Sign In
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+            <Button
+              variant="ios-primary"
+              size="ios-large"
+              className="w-full h-[56px] shadow-lg shadow-elec-yellow/20"
+              onClick={() => navigate('/dashboard')}
+            >
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+              Loading Dashboard...
             </Button>
           </motion.div>
+
+          <motion.p
+            variants={itemVariants}
+            className="text-ios-caption-1 text-white/40 mt-4 text-center"
+          >
+            Redirecting automatically in 3 seconds
+          </motion.p>
         </motion.div>
       </div>
     );

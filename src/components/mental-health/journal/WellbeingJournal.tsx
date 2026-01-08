@@ -272,7 +272,7 @@ const WellbeingJournal = () => {
         {/* New Entry Button */}
         <Button
           onClick={startNewEntry}
-          className="w-full h-14 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold text-lg rounded-xl shadow-lg shadow-purple-500/25 transition-all duration-200 active:scale-[0.98]"
+          className="w-full h-14 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold text-lg rounded-xl shadow-lg shadow-purple-500/25 transition-all duration-200 touch-manipulation active:scale-[0.98]"
         >
           <Plus className="h-5 w-5 mr-2" />
           Write New Entry
@@ -340,7 +340,7 @@ const WellbeingJournal = () => {
               return (
                 <Card
                   key={entry.id}
-                  className="border-white/10 bg-white/5 cursor-pointer active:scale-[0.98] transition-all"
+                  className="border-white/10 bg-white/5 cursor-pointer touch-manipulation active:scale-[0.98] transition-all"
                   onClick={() => { setSelectedEntry(entry); setView('entry'); }}
                 >
                   <CardContent className="p-4">
@@ -451,38 +451,44 @@ const WellbeingJournal = () => {
   // Write View
   if (view === 'write') {
     return (
-      <div className="space-y-4">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <Button variant="ghost" size="sm" onClick={() => setView('list')} className="h-12">
-            <ChevronLeft className="h-4 w-4 mr-1" />
-            Back
-          </Button>
-          <span className="text-sm text-white font-medium">
-            {new Date().toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}
-          </span>
-          <div className="w-20"></div>
+      <div className="space-y-4 pb-28 sm:pb-4">
+        {/* Sticky Header */}
+        <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10 -mx-4 px-4 py-3 mb-2">
+          <div className="flex items-center justify-between">
+            <Button
+              variant="ghost"
+              onClick={() => setView('list')}
+              className="h-11 touch-manipulation active:scale-[0.98] transition-all"
+            >
+              <ChevronLeft className="h-5 w-5 mr-1" />
+              Back
+            </Button>
+            <span className="text-sm text-white font-medium">
+              {new Date().toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}
+            </span>
+            <div className="w-20"></div>
+          </div>
         </div>
 
-        {/* Mood Selection - LARGER for easier mobile tapping */}
+        {/* Mood Selection - Larger for mobile */}
         <Card className="border-white/10 bg-white/5">
           <CardContent className="p-4">
             <h3 className="text-sm font-medium text-white mb-3">How are you feeling?</h3>
-            <div className="grid grid-cols-5 gap-2">
+            <div className="grid grid-cols-5 gap-1 sm:gap-2">
               {moodOptions.map(mood => (
                 <button
                   key={mood.value}
                   onClick={() => setCurrentEntry({ ...currentEntry, mood: mood.value, moodLabel: mood.label })}
                   className={cn(
-                    "flex flex-col items-center p-3 rounded-xl transition-all",
-                    "border-2",
+                    "flex flex-col items-center p-2 sm:p-3 rounded-xl transition-all min-h-[72px]",
+                    "border-2 touch-manipulation active:scale-[0.95]",
                     currentEntry.mood === mood.value
                       ? "bg-white/10 border-white/30 scale-105"
                       : "border-transparent hover:bg-white/5"
                   )}
                 >
-                  <span className="text-3xl mb-1">{mood.emoji}</span>
-                  <span className="text-xs text-white font-medium">{mood.label}</span>
+                  <span className="text-2xl sm:text-3xl mb-1">{mood.emoji}</span>
+                  <span className="text-[10px] sm:text-xs text-white font-medium">{mood.label}</span>
                 </button>
               ))}
             </div>
@@ -512,7 +518,7 @@ const WellbeingJournal = () => {
               value={currentEntry.content || ""}
               onChange={(e) => setCurrentEntry({ ...currentEntry, content: e.target.value })}
               placeholder="Write your thoughts, feelings, reflections..."
-              className="min-h-[150px] resize-none"
+              className="min-h-[150px] resize-none text-base touch-manipulation"
             />
           </CardContent>
         </Card>
@@ -600,7 +606,7 @@ const WellbeingJournal = () => {
                   key={tag}
                   onClick={() => toggleTag(tag)}
                   className={cn(
-                    "px-3 py-2 rounded-full text-xs transition-all min-h-[32px]",
+                    "px-4 py-2.5 rounded-full text-sm transition-all min-h-[40px] touch-manipulation active:scale-[0.95]",
                     currentEntry.tags?.includes(tag)
                       ? 'bg-purple-500 text-white'
                       : 'bg-white/10 text-white hover:bg-white/20'
@@ -613,20 +619,22 @@ const WellbeingJournal = () => {
           </CardContent>
         </Card>
 
-        {/* PREMIUM SAVE BUTTON */}
-        <Button
-          onClick={saveEntry}
-          disabled={!currentEntry.content?.trim() && !currentEntry.gratitude?.length}
-          className="w-full h-14 bg-gradient-to-r from-pink-500 to-purple-500
-                     hover:from-pink-600 hover:to-purple-600
-                     text-white font-semibold text-lg
-                     rounded-xl shadow-lg shadow-pink-500/25
-                     transition-all duration-200
-                     active:scale-[0.98]"
-        >
-          <Save className="mr-2 h-5 w-5" />
-          Save Journal Entry
-        </Button>
+        {/* Sticky Save Button */}
+        <div className="fixed bottom-0 left-0 right-0 z-50 p-4 pb-6 bg-background/95 backdrop-blur-xl border-t border-white/10 sm:static sm:bg-transparent sm:border-none sm:p-0">
+          <Button
+            onClick={saveEntry}
+            disabled={!currentEntry.content?.trim() && !currentEntry.gratitude?.length}
+            className="w-full h-14 bg-gradient-to-r from-pink-500 to-purple-500
+                       hover:from-pink-600 hover:to-purple-600
+                       text-white font-semibold text-lg
+                       rounded-xl shadow-lg shadow-pink-500/25
+                       transition-all duration-200
+                       touch-manipulation active:scale-[0.98]"
+          >
+            <Save className="mr-2 h-5 w-5" />
+            Save Journal Entry
+          </Button>
+        </div>
       </div>
     );
   }
@@ -636,20 +644,25 @@ const WellbeingJournal = () => {
     const mood = moodOptions.find(m => m.value === selectedEntry.mood);
     return (
       <div className="space-y-4">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <Button variant="ghost" size="sm" onClick={() => { setSelectedEntry(null); setView('list'); }} className="h-12">
-            <ChevronLeft className="h-4 w-4 mr-1" />
-            Back
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => deleteEntry(selectedEntry.id)}
-            className="text-red-400 hover:text-red-300 hover:bg-red-500/10 h-12"
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
+        {/* Sticky Header */}
+        <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10 -mx-4 px-4 py-3 mb-2">
+          <div className="flex items-center justify-between">
+            <Button
+              variant="ghost"
+              onClick={() => { setSelectedEntry(null); setView('list'); }}
+              className="h-11 touch-manipulation active:scale-[0.98] transition-all"
+            >
+              <ChevronLeft className="h-5 w-5 mr-1" />
+              Back
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => deleteEntry(selectedEntry.id)}
+              className="h-11 w-11 text-red-400 hover:text-red-300 hover:bg-red-500/10 touch-manipulation active:scale-[0.98] transition-all"
+            >
+              <Trash2 className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
 
         {/* Entry Header */}

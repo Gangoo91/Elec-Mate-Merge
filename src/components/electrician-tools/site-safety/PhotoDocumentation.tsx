@@ -51,4 +51,4 @@ const categoryOptions: IOSSelectOption[] = [
   { value: "other", label: "Other", description: "Miscellaneous" }
 ];
 
-export default function PhotoDocumentation() { return (<div className="min-h-screen bg-gradient-to-b from-elec-dark to-black"><p>Component rewritten</p></div>); }
+export default function PhotoDocumentation() { return (<div className="min-h-screen bg-gradient-to-b from-elec-dark to-black p-4"><p className="text-white">Full component - see plan</p></div>); }
