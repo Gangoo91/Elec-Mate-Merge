@@ -411,16 +411,11 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
         </CardContent>
       </Card>
 
-      {/* Loading Overlay */}
+      {/* Loading indicator - subtle, non-blocking */}
       {isLoading && (
-        <div className="fixed inset-0 bg-background/80 backdrop-blur-md flex items-center justify-center z-50">
-          <div className="flex flex-col items-center gap-4 bg-card p-6 rounded-2xl border-2 border-elec-yellow/20 shadow-2xl">
-            <div className="relative">
-              <div className="absolute inset-0 bg-elec-yellow/20 rounded-full blur-xl animate-pulse" />
-              <Loader2 className="relative h-8 w-8 animate-spin text-elec-yellow" />
-            </div>
-            <span className="text-sm font-medium">Loading dashboard...</span>
-          </div>
+        <div className="flex items-center justify-center gap-2 py-2 text-muted-foreground">
+          <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
+          <span className="text-xs">Syncing...</span>
         </div>
       )}
     </div>

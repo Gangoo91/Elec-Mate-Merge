@@ -69,6 +69,12 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
     setIsLoading(true);
     setError(null);
 
+    // Timeout to prevent infinite loading on slow mobile networks
+    const timeoutId = setTimeout(() => {
+      setIsLoading(false);
+      console.warn('Employer dashboard stats timed out after 8s');
+    }, 8000);
+
     try {
       const now = new Date();
       const thirtyDaysFromNow = addDays(now, 30);
@@ -236,6 +242,7 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
       console.error("Error fetching employer dashboard stats:", err);
       setError("Failed to load dashboard statistics");
     } finally {
+      clearTimeout(timeoutId);
       setIsLoading(false);
     }
   }, []);

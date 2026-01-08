@@ -1,183 +1,150 @@
-import { useEffect, useMemo, useState } from 'react';
-import { ArrowLeft, FileText } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { ArrowLeft, ArrowRight, Hand, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
 import type { QuizQuestion } from '@/types/quiz';
 
-const FireAlarmModule1Section3 = () => {
-  // SEO
-  useEffect(() => {
-    const title = 'Fire Alarm: Legal & Insurance | Module 1 Sec 3';
-    document.title = title;
-    const desc = 'UK legal drivers (RRFSO), Building Regulations (ADB), BS 5839-1/BS 7671 links, insurer expectations, and documentation—with quiz.';
-    let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.name = 'description';
-      document.head.appendChild(meta);
-    }
-    if (meta) meta.content = desc;
-  }, []);
+const TITLE = "M Category Systems (Manual) - Fire Alarm Course";
+const DESCRIPTION = "Learn about BS 5839-1 M category manual fire alarm systems: when they are appropriate, limitations, and compliance requirements.";
 
-  // Quiz Data
+const FireAlarmModule1Section3 = () => {
+  useSEO({ title: TITLE, description: DESCRIPTION });
+
   const questions: QuizQuestion[] = useMemo(() => [
     {
       id: 1,
-      question: 'Under the RRFSO, who is primarily responsible for ensuring adequate fire precautions?',
+      question: 'What does an M category fire alarm system consist of?',
       options: [
-        'The fire alarm manufacturer',
-        'The Responsible Person for the premises',
-        'The local fire and rescue service',
-        'The insurance assessor'
+        'Automatic smoke detectors throughout',
+        'Manual call points and alarm sounders only',
+        'Heat detectors on escape routes',
+        'Beam detectors in open spaces'
       ],
       correctAnswer: 1,
-      explanation: 'RRFSO places duties on the Responsible Person to ensure adequate fire precautions based on a suitable and sufficient fire risk assessment.'
+      explanation: 'M category systems rely on manual call points (MCPs) and sounders only, with no automatic detection.'
     },
     {
       id: 2,
-      question: 'Which document typically defines interfaces (e.g. smoke control, lifts, gas shutoff)?',
+      question: 'In which type of premises might M category be acceptable?',
       options: [
-        'Weekly test logbook',
-        'Cause-and-effect matrix aligned to fire strategy',
-        'As-fitted drawings only',
-        "Manufacturer's data sheet"
+        'Hotels with sleeping accommodation',
+        'Continuously occupied, low-risk, small premises',
+        'Large warehouses with high-value stock',
+        'Care homes with vulnerable occupants'
       ],
       correctAnswer: 1,
-      explanation: 'Cause-and-effect documents required outputs/logic and should be agreed with stakeholders per BS 5839-1.'
+      explanation: 'M category may be suitable where risk is low, space is continuously occupied, and occupants can quickly raise the alarm.'
     },
     {
       id: 3,
-      question: 'BS 7671 is most relevant to which aspect of fire alarm systems?',
+      question: 'M category is NOT suitable where:',
       options: [
-        'Audibility levels of sounders',
-        'Electrical supply, protection, segregation and cabling to the fire alarm',
-        'Detector spacing rules',
-        'Evacuation signage colours'
+        'Occupants are continuously present',
+        'The fire risk is low',
+        'Sleeping accommodation exists',
+        'The building is single-storey'
       ],
-      correctAnswer: 1,
-      explanation: 'BS 7671 covers electrical installation requirements including dedicated supplies, protection and segregation.'
+      correctAnswer: 2,
+      explanation: 'Sleeping risk requires automatic detection as occupants may not be awake to discover and report a fire.'
     },
     {
       id: 4,
-      question: 'Insurers most commonly specify which category for property protection?',
+      question: 'What is the main limitation of M category systems?',
       options: [
-        'L3',
-        'M',
-        'P1 or targeted P2 depending on risk',
-        'L5 only'
+        'Too expensive to install',
+        'Relies on human detection and action to raise alarm',
+        'Cannot include sounders',
+        'Not permitted under Building Regulations'
       ],
-      correctAnswer: 2,
-      explanation: 'Insurers often require P1 for wide coverage or P2 to protect high‑value/high‑risk areas, sometimes via certified companies.'
+      correctAnswer: 1,
+      explanation: 'M systems depend entirely on humans noticing a fire and activating a call point, delaying warning until discovery.'
     },
     {
       id: 5,
-      question: 'Which certificates should be issued and retained under BS 5839-1?',
+      question: 'Manual call points in M systems should be located:',
       options: [
-        'Risk assessment only',
-        'Design, Installation, Commissioning and Handover certificates',
-        "Competent person's ID card only",
-        'None—certification is optional'
+        'Only at the main entrance',
+        'On escape routes, especially near exits and floor landings',
+        'In plant rooms only',
+        'Outside the building'
       ],
       correctAnswer: 1,
-      explanation: 'BS 5839-1 expects issue and retention of the full certificate set along with as-fitted drawings and zoning diagram.'
+      explanation: 'MCPs should be positioned on escape routes so occupants can raise the alarm while evacuating.'
     },
     {
       id: 6,
-      question: 'What does the RRFSO require regarding fire risk assessments?',
+      question: 'What maximum travel distance to a call point does BS 5839-1 recommend?',
       options: [
-        'They must be completed by the fire brigade',
-        'They must be suitable and sufficient for the premises',
-        'They are only required for buildings over 5 storeys',
-        'They are optional if insurance is in place'
+        '15 metres',
+        '30 metres',
+        '45 metres',
+        '60 metres'
       ],
-      correctAnswer: 1,
-      explanation: 'The RRFSO requires the Responsible Person to carry out a suitable and sufficient fire risk assessment and implement its findings.'
+      correctAnswer: 2,
+      explanation: 'BS 5839-1 recommends MCPs be positioned so that no one needs to travel more than 45m to reach one.'
     },
     {
       id: 7,
-      question: 'Which standard defines the product requirements for fire alarm equipment components?',
+      question: 'For M category, what audibility level should sounders achieve?',
       options: [
-        'BS 5839-1',
-        'BS 7671',
-        'EN 54 series',
-        'Building Regulations Approved Document B'
+        '55 dB(A)',
+        '60 dB(A)',
+        '65 dB(A) minimum, 75 dB(A) for sleeping risk',
+        'No specific requirement'
       ],
       correctAnswer: 2,
-      explanation: 'EN 54 series standards specify product performance requirements for fire detection and alarm system components including panels, detectors, and sounders.'
+      explanation: 'Sounders must achieve 65 dB(A) minimum throughout, or 75 dB(A) at bed head level where sleeping risk exists.'
     },
     {
       id: 8,
-      question: 'What is the role of Approved Document B in fire alarm provision?',
+      question: 'Can M category be combined with other categories?',
       options: [
-        'It provides detailed wiring diagrams',
-        'It sets performance requirements for means of warning and escape in new builds',
-        'It replaces BS 5839-1 entirely',
-        'It is only applicable to domestic properties'
+        'No, M must be used alone',
+        'Yes, often combined with L or P for additional automatic detection',
+        'Only with P1',
+        'Only in industrial premises'
       ],
       correctAnswer: 1,
-      explanation: 'Approved Document B provides Building Regulations guidance on fire safety including performance requirements for means of warning and escape, particularly for new buildings and major alterations.'
+      explanation: 'M is often combined with L or P categories - MCPs supplement automatic detection for manual alarm raising.'
     },
     {
       id: 9,
-      question: 'What is a key requirement for the electrical supply to a fire alarm panel under BS 7671?',
+      question: 'Weekly testing of M category systems should include:',
       options: [
-        'It can share circuits with general lighting',
-        'It must be a dedicated circuit with appropriate protection and clear labelling',
-        'Standard extension leads are acceptable',
-        'No specific requirements apply'
+        'Testing all call points at once',
+        'Testing at least one different call point each week on rotation',
+        'No testing is required',
+        'Only testing sounders'
       ],
       correctAnswer: 1,
-      explanation: 'BS 7671 requires a dedicated, correctly protected supply to the fire alarm panel with proper isolation, labelling, and segregation from other services.'
+      explanation: 'At least one MCP should be tested weekly, rotating through all call points over time.'
     },
     {
       id: 10,
-      question: 'Why do insurers often require third-party certificated contractors?',
+      question: 'If a building currently has M category but changes to sleeping use, what is required?',
       options: [
-        'To reduce installation costs',
-        'To ensure quality, competence and reduce risk of improper installation',
-        'It is a legal requirement under RRFSO',
-        'To avoid the need for maintenance'
+        'No change needed',
+        'Upgrade to an appropriate L category with automatic detection',
+        'Add more call points only',
+        'Remove the system entirely'
       ],
       correctAnswer: 1,
-      explanation: 'Insurers require third-party certification (such as BAFE or LPCB) to ensure contractors meet quality and competence standards, reducing risk and protecting their investment.'
-    },
-    {
-      id: 11,
-      question: 'What must be maintained in the fire alarm logbook?',
-      options: [
-        'Only detector locations',
-        'Weekly tests, faults, false alarms, maintenance records and system changes',
-        'Insurance policy details only',
-        'Staff contact information'
-      ],
-      correctAnswer: 1,
-      explanation: 'The logbook must record weekly tests, any faults, false alarms, maintenance visits, and changes to the premises or system to maintain a complete history.'
-    },
-    {
-      id: 12,
-      question: 'Which of the following is a key difference between BS 5839-1 and BS 7671?',
-      options: [
-        'BS 5839-1 covers fire alarm system design; BS 7671 covers electrical installation requirements',
-        'BS 7671 only applies to domestic installations',
-        'BS 5839-1 replaces all electrical regulations',
-        'They cover identical subject matter'
-      ],
-      correctAnswer: 0,
-      explanation: 'BS 5839-1 provides recommendations for fire detection and alarm systems, while BS 7671 covers the electrical installation requirements including supplies, protection and cabling—both standards work together.'
+      explanation: 'Sleeping accommodation requires automatic detection - the system must be upgraded to L1, L2, or appropriate L category.'
     }
   ], []);
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(Array(questions.length).fill(undefined as unknown as number));
+  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(Array(questions.length).fill(-1));
   const [showResults, setShowResults] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
 
-  const handleAnswerSelect = (idx: number) => {
-    const next = [...selectedAnswers];
-    next[currentQuestion] = idx;
-    setSelectedAnswers(next);
+  const handleAnswerSelect = (answerIndex: number) => {
+    const updated = [...selectedAnswers];
+    updated[currentQuestion] = answerIndex;
+    setSelectedAnswers(updated);
   };
 
   const handleNext = () => {
@@ -186,236 +153,469 @@ const FireAlarmModule1Section3 = () => {
   };
 
   const handlePrevious = () => setCurrentQuestion((q) => Math.max(0, q - 1));
+
   const resetQuiz = () => {
     setCurrentQuestion(0);
-    setSelectedAnswers(Array(questions.length).fill(undefined as unknown as number));
+    setSelectedAnswers(Array(questions.length).fill(-1));
     setShowResults(false);
   };
 
-  const score = selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
+  const calculateScore = () =>
+    selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="../fire-alarm-module-1">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 1
+    <div className="min-h-screen bg-[#0a0a0a]">
+      {/* iOS Header */}
+      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center h-[56px] px-4 max-w-4xl mx-auto">
+          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
+            <Link to="../module-1">
+              <ArrowLeft className="h-5 w-5" />
+              <span className="hidden sm:inline">Module 1</span>
+            </Link>
           </Button>
-        </Link>
+          <span className="flex-1 text-center text-[17px] font-semibold text-white">Section 3</span>
+          <div className="w-[60px]" />
+        </div>
+      </header>
 
-        <div className="space-y-6">
-          {/* Header */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <FileText className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-3xl font-bold text-white">Legal and Insurance Drivers</h1>
-                <p className="text-lg text-gray-400">Regulatory requirements and insurance considerations</p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">Section 1.3</Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">Compliance</Badge>
-            </div>
+      {/* Hero Section */}
+      <section className="px-4 pt-8 pb-6 max-w-4xl mx-auto">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20">
+            <Hand className="h-7 w-7 text-blue-400" />
           </div>
+          <span className="text-[11px] font-medium text-blue-400 uppercase tracking-wide">
+            Section 3 of 4
+          </span>
+        </div>
+        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
+          M Category Systems (Manual)
+        </h1>
+        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
+          Understanding when manual-only fire alarm systems are appropriate and their limitations.
+        </p>
+        <div className="flex items-center gap-4 text-[13px] text-white/50">
+          <span className="flex items-center gap-1">
+            <Target className="h-4 w-4" />
+            6 learning outcomes
+          </span>
+          <span className="flex items-center gap-1">
+            <Clock className="h-4 w-4" />
+            15-20 mins
+          </span>
+        </div>
+      </section>
 
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Introduction</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-3">
-              <p>Fire alarm provision in the UK is driven by the Regulatory Reform (Fire Safety) Order 2005 (RRFSO), Building Regulations (Approved Document B), and standards such as BS 5839-1. Electrical integration must align with BS 7671. Insurers may impose additional requirements to reduce loss and downtime.</p>
-              <p>This section outlines the legal framework, insurer expectations, documentation, and the links between BS 5839‑1 and BS 7671 for safe, compliant installations.</p>
-            </CardContent>
-          </Card>
+      {/* In 30 Seconds Card */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <Card variant="ios-elevated" className="border-blue-500/20">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-[15px] font-semibold text-blue-400 flex items-center gap-2">
+              <Lightbulb className="h-4 w-4" />
+              In 30 Seconds
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-[15px] text-white/80">
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+              <span><strong>M category</strong> = manual call points + sounders only, no automatic detection</span>
+            </p>
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+              <span><strong>Suitable only</strong> for low-risk, continuously occupied premises without sleeping</span>
+            </p>
+            <p className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+              <span><strong>Relies on humans</strong> to discover fire and activate call point - slower response</span>
+            </p>
+          </CardContent>
+        </Card>
+      </section>
 
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Learning Objectives</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <ul className="list-disc pl-6 space-y-2">
-                <li>Explain the duties of the Responsible Person under the RRFSO.</li>
-                <li>Describe Building Regulations triggers and the role of the fire strategy.</li>
-                <li>Relate BS 5839-1 recommendations to BS 7671 electrical requirements.</li>
-                <li>Identify insurer expectations and essential certification/documentation.</li>
+      {/* Learning Outcomes */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            "Define the components of an M category system",
+            "Identify when M category is appropriate",
+            "Explain the limitations of manual-only systems",
+            "Understand MCP positioning requirements",
+            "Apply sounder audibility requirements",
+            "Recognise when M must be upgraded to L category"
+          ].map((outcome, i) => (
+            <Card key={i} variant="ios" className="p-3">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                  <span className="text-[11px] font-bold text-blue-400">{i + 1}</span>
+                </div>
+                <p className="text-[13px] text-white/80">{outcome}</p>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto space-y-6">
+        {/* Section 01 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">01</span>
+              <h3 className="text-[17px] font-semibold text-white">What Is M Category?</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p><strong className="text-blue-400">M category</strong> is a <strong className="text-white">manual-only</strong> fire alarm system consisting of:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <ul className="space-y-1 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Manual Call Points (MCPs) - break glass units</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Alarm sounders throughout the building</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Fire alarm control panel</li>
+                  <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />NO automatic detection (smoke/heat detectors)</li>
+                </ul>
+              </div>
+              <p>The system relies entirely on <strong className="text-white">human detection</strong> - someone must see, smell, or otherwise notice a fire and then manually activate a call point.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 02 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">02</span>
+              <h3 className="text-[17px] font-semibold text-white">When Is M Category Appropriate?</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>M category may be acceptable where <strong className="text-white">all</strong> of the following apply:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <ul className="space-y-2 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" /><strong>Low fire risk</strong> - minimal fire load and ignition sources</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" /><strong>Continuously occupied</strong> - people present to detect fire</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" /><strong>Simple layout</strong> - fire visible from occupied areas</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" /><strong>No sleeping</strong> - occupants awake and alert</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" /><strong>Trained occupants</strong> - know how to raise alarm</li>
+                </ul>
+              </div>
+              <p className="text-[13px] text-white/60 italic">Typical examples: Small single-storey offices with open plan layout and constant staff presence.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Warning Card */}
+        <Card variant="ios" className="border-red-500/30 bg-red-500/5">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <AlertTriangle className="h-5 w-5 text-red-400" />
+              <h3 className="text-[17px] font-semibold text-red-400">M Category Is NOT Suitable When:</h3>
+            </div>
+            <ul className="space-y-2 text-[13px] text-white/70">
+              <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-red-400" />Sleeping accommodation exists (hotels, care homes, HMOs)</li>
+              <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-red-400" />Premises are unoccupied for periods</li>
+              <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-red-400" />High fire risk areas are not visible</li>
+              <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-red-400" />Phased evacuation is required</li>
+              <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-red-400" />Vulnerable occupants who need early warning</li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        {/* Section 03 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">03</span>
+              <h3 className="text-[17px] font-semibold text-white">MCP Positioning Requirements</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Manual call points must be positioned so occupants can <strong className="text-white">easily reach one while evacuating</strong>:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <ul className="space-y-2 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Maximum <strong>45m travel distance</strong> to nearest MCP</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />At each <strong>final exit</strong> from the building</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />At each <strong>floor level landing</strong> of stairways</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Mounted at <strong>1.4m height</strong> (centre of device)</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Clearly <strong>visible and accessible</strong></li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Inline Check 1 */}
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <HelpCircle className="h-5 w-5 text-amber-400" />
+              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
+            </div>
+            <p className="text-[15px] text-white/80 mb-3">A small office has 6 staff working 9-5 in an open-plan layout. At night and weekends the office is empty. Is M category appropriate?</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> M alone may not be appropriate as the premises are unoccupied outside working hours. An L category with automatic detection would provide protection when the building is empty.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 04 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">04</span>
+              <h3 className="text-[17px] font-semibold text-white">Sounder Audibility Requirements</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>Alarm sounders must achieve <strong className="text-white">adequate sound levels</strong> throughout the building:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <ul className="space-y-2 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" /><strong>65 dB(A)</strong> minimum throughout occupied areas</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" /><strong>75 dB(A)</strong> at bed head level (sleeping risk)</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />5 dB above ambient background noise</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />VADs for hearing-impaired where required</li>
+                </ul>
+              </div>
+              <p className="text-[13px] text-white/60">Note: Even M systems with no sleeping risk must achieve 65 dB(A) minimum throughout.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 05 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">05</span>
+              <h3 className="text-[17px] font-semibold text-white">Testing and Maintenance</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>M systems require <strong className="text-white">regular testing</strong> like all fire alarm systems:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <ul className="space-y-2 text-[13px]">
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" /><strong>Weekly test</strong> - activate one MCP (rotate through all)</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" /><strong>Record in logbook</strong> - date, time, MCP tested, result</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" /><strong>6-monthly service</strong> by competent person</li>
+                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" /><strong>Annual inspection</strong> of all components</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Section 06 */}
+        <Card variant="ios">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">06</span>
+              <h3 className="text-[17px] font-semibold text-white">When M Must Be Upgraded</h3>
+            </div>
+            <div className="space-y-3 text-[15px] text-white/70">
+              <p>M category must be <strong className="text-white">upgraded to an L category</strong> when:</p>
+              <div className="bg-white/5 rounded-lg p-3">
+                <ul className="space-y-2 text-[13px]">
+                  <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Building use changes to include sleeping</li>
+                  <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Risk assessment identifies higher fire risk</li>
+                  <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Premises become unoccupied for periods</li>
+                  <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Building layout changes with hidden fire risks</li>
+                  <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Fire strategy or insurer requires automatic detection</li>
+                </ul>
+              </div>
+              <p>Any upgrade must be formally designed, certified, and documented.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Inline Check 2 */}
+        <Card variant="ios-elevated" className="border-amber-500/20">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <HelpCircle className="h-5 w-5 text-amber-400" />
+              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
+            </div>
+            <p className="text-[15px] text-white/80 mb-3">An office with M category is converting to a boutique hotel with 8 bedrooms. What action is required?</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> The M system must be upgraded to at least L2 (probably L1) to provide automatic detection for sleeping accommodation. The existing MCPs can remain as part of the upgraded system.</p>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Practical Guidance */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
+        <div className="space-y-3">
+          <Card variant="ios" className="border-green-500/20">
+            <CardContent className="p-4">
+              <h4 className="text-[15px] font-semibold text-green-400 mb-2">Pro Tips</h4>
+              <ul className="space-y-2 text-[13px] text-white/70">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Always question whether M is truly appropriate - err on the side of automatic detection
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Document the justification for M category clearly in design documentation
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Review M category suitability whenever building use or occupancy changes
+                </li>
               </ul>
             </CardContent>
           </Card>
 
-          {/* Content */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Content</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6 text-gray-300">
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-400 mb-2">Regulatory Reform (Fire Safety) Order 2005 (RRFSO)</h3>
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>Requires a suitable and sufficient fire risk assessment; implement findings.</li>
-                  <li>Mandates maintenance of fire detection and alarm systems where identified.</li>
-                  <li>Applies to most non‑domestic premises in England and Wales.</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-400 mb-2">Building Regulations (Approved Document B)</h3>
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>Sets performance requirements for means of warning and escape.</li>
-                  <li>New builds/alterations must satisfy ADB via the fire strategy and design team.</li>
-                  <li>Alarm provision determined by use, occupancy and evacuation strategy.</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-400 mb-2">British Standards</h3>
-                <ul className="list-disc pl-6 space-y-1">
-                  <li><span className="font-medium">BS 5839‑1</span>: Design, installation, commissioning and maintenance recommendations.</li>
-                  <li><span className="font-medium">BS 7671</span>: Supplies, circuit protection, segregation and cabling to the fire alarm system.</li>
-                  <li><span className="font-medium">EN 54</span>: Product standards for panels, detectors, sounders, etc.</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-400 mb-2">Roles and Competence</h3>
-                <ul className="list-disc pl-6 space-y-1">
-                  <li><span className="font-medium">Responsible Person</span>: ensures provision, maintenance and record keeping.</li>
-                  <li><span className="font-medium">Competent Persons</span>: design/install/maintain; third‑party certification recommended.</li>
-                  <li>Logbook and prompt action on faults and false alarm trends are essential.</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-400 mb-2">Insurer Expectations</h3>
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>May require P1/P2 property protection and third‑party certificated firms (e.g. LPCB/BAFE).</li>
-                  <li>Expect EN 54 equipment and clear cause‑and‑effect documentation.</li>
-                  <li>Maintenance and false alarm management can affect cover/claims.</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-400 mb-2">Certificates and Records</h3>
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>Issue Design, Installation, Commissioning and Handover certificates.</li>
-                  <li>Provide as‑fitted drawings, zoning diagram and cause‑and‑effect matrix.</li>
-                  <li>Maintain a logbook; implement periodic inspection and testing.</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold text-yellow-400 mb-2">Electrical Integration (BS 7671)</h3>
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>Dedicated, correctly protected supply with isolation and labelling.</li>
-                  <li>Segregate from other services; use fire‑resistant cabling as recommended in BS 5839‑1.</li>
-                  <li>Consider standby capacity and discrimination to maintain integrity.</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real World Scenario */}
-          <Card className="border border-blue-600/30 bg-yellow-400/10">
-            <CardHeader>
-              <CardTitle className="text-white">Real World Scenario: Office Refurbishment</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-2">
-              <p>A four‑storey office undergoes refurbishment with a new server room and reception layout. The risk assessment and fire strategy call for <span className="text-yellow-400 font-semibold">L2</span> life safety coverage with <span className="text-yellow-400 font-semibold">P2</span> protection to the server room. Insurers require third‑party certificated contractors and a tested cause‑and‑effect.</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Document interfaces to access control and AHU shutdown in the cause‑and‑effect.</li>
-                <li>Provide a dedicated labelled supply to the panel per BS 7671 with correct isolation.</li>
-                <li>Issue full certification set and update the fire safety manual and logbook.</li>
+          <Card variant="ios" className="border-red-500/20">
+            <CardContent className="p-4">
+              <h4 className="text-[15px] font-semibold text-red-400 mb-2">Common Mistakes</h4>
+              <ul className="space-y-2 text-[13px] text-white/70">
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Specifying M to save cost when automatic detection is needed
+                </li>
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Not upgrading when building use changes to include sleeping
+                </li>
+                <li className="flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  Assuming "small" or "simple" automatically means M is suitable
+                </li>
               </ul>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <p>Compliance blends RRFSO duties, Building Regulations, BS 5839‑1 recommendations and BS 7671 electrical safety, often alongside insurer requirements. Clear documentation and competent practice underpin safety and insurability.</p>
-            </CardContent>
-          </Card>
-
-          {/* Quiz */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Knowledge Check: Legal & Insurance</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              {showResults ? (
-                <div className="space-y-6">
-                  <div className="flex items-baseline gap-3">
-                    <p className="text-2xl font-bold text-yellow-400">Score: {score} / {questions.length}</p>
-                    <p className="text-gray-400">({Math.round((score / questions.length) * 100)}%)</p>
-                  </div>
-
-                  <div className="space-y-4">
-                    {questions.map((q, i) => {
-                      const correct = selectedAnswers[i] === q.correctAnswer;
-                      return (
-                        <div key={q.id} className="p-4 rounded-md border border-gray-700">
-                          <p className="font-semibold text-white">Q{i + 1}. {q.question}</p>
-                          <p className={correct ? 'text-green-400' : 'text-red-400'}>
-                            Your answer: {q.options[selectedAnswers[i] ?? 0] ?? '—'} {correct ? '(Correct)' : '(Incorrect)'}
-                          </p>
-                          {!correct && (
-                            <p className="text-gray-400">Correct: {q.options[q.correctAnswer]}</p>
-                          )}
-                          <p className="text-gray-300 mt-1">Explanation: {q.explanation}</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  <div className="flex justify-end">
-                    <Button onClick={resetQuiz} className="bg-yellow-400 text-black hover:bg-yellow-400">Restart Quiz</Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
-
-                  <div>
-                    <p className="text-lg font-semibold text-white mb-2">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
-                    <div className="space-y-2">
-                      {questions[currentQuestion].options.map((opt, idx) => {
-                        const selected = selectedAnswers[currentQuestion] === idx;
-                        return (
-                          <button
-                            key={idx}
-                            onClick={() => handleAnswerSelect(idx)}
-                            className={`w-full text-left p-3 rounded-md border transition-colors ${
-                              selected ? 'bg-yellow-400 text-black border-yellow-400' : 'border-gray-700 hover:bg-card'
-                            }`}
-                          >
-                            {opt}
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    <div className="mt-4 flex items-center justify-between">
-                      <Button variant="outline" onClick={handlePrevious} disabled={currentQuestion === 0}>Previous</Button>
-                      <Button onClick={handleNext} className="bg-yellow-400 text-black hover:bg-yellow-400">
-                        {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              )}
             </CardContent>
           </Card>
         </div>
-      </div>
+      </section>
+
+      {/* FAQs */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
+        <div className="space-y-3">
+          {[
+            { q: "Is M category ever used on its own in modern buildings?", a: "Rarely - most buildings now require some automatic detection. M is often combined with L or P categories." },
+            { q: "Can I add a few smoke detectors to an M system?", a: "Yes - this would make it a combined category. Document clearly which areas have automatic detection." },
+            { q: "Do MCPs need to be glass break type?", a: "Not necessarily - resettable MCPs are available. Glass break remains common and familiar to users." },
+            { q: "What's the minimum number of MCPs for M category?", a: "No fixed minimum - positioning is based on travel distance (45m max) and exit/landing locations." },
+            { q: "If my building is M category, does weekly testing apply?", a: "Yes - all fire alarm categories require weekly testing of at least one call point." },
+            { q: "Can B&B accommodation use M category?", a: "No - any sleeping accommodation requires automatic detection (L category)." }
+          ].map((faq, i) => (
+            <Card key={i} variant="ios">
+              <CardContent className="p-4">
+                <p className="text-[15px] font-semibold text-white mb-2">{faq.q}</p>
+                <p className="text-[13px] text-white/70">{faq.a}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Quiz Section */}
+      <section className="px-4 pb-6 max-w-4xl mx-auto">
+        <Card variant="ios-elevated" className="border-blue-500/20">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
+              <BookOpen className="h-5 w-5 text-blue-400" />
+              Knowledge Check
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {!showQuiz ? (
+              <div className="text-center py-6">
+                <p className="text-[15px] text-white/70 mb-4">Test your understanding of M category fire alarm systems with 10 questions.</p>
+                <Button variant="ios-primary" onClick={() => setShowQuiz(true)}>
+                  Start Quiz
+                </Button>
+              </div>
+            ) : showResults ? (
+              <div className="space-y-6">
+                <div className="text-center py-4">
+                  <p className="text-[34px] font-bold text-blue-400">{calculateScore()}/{questions.length}</p>
+                  <p className="text-[15px] text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
+                </div>
+                <div className="space-y-4">
+                  {questions.map((q, i) => {
+                    const correct = selectedAnswers[i] === q.correctAnswer;
+                    return (
+                      <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
+                        <p className="text-[15px] font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
+                        <p className={`text-[13px] ${correct ? 'text-green-400' : 'text-red-400'}`}>
+                          Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
+                        </p>
+                        {!correct && (
+                          <p className="text-[13px] text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
+                        )}
+                        <p className="text-[13px] text-white/70 mt-2">{q.explanation}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+                <Button variant="ios-secondary" onClick={resetQuiz} className="w-full gap-2">
+                  <RotateCcw className="h-4 w-4" />
+                  Restart Quiz
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+                <div>
+                  <p className="text-[17px] font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
+                  <div className="space-y-2">
+                    {questions[currentQuestion].options.map((opt, idx) => {
+                      const selected = selectedAnswers[currentQuestion] === idx;
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => handleAnswerSelect(idx)}
+                          className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
+                            selected
+                              ? 'bg-blue-500/20 border-blue-500/50 text-white'
+                              : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                          }`}
+                        >
+                          {opt}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="flex items-center justify-between gap-3">
+                  <Button
+                    variant="ios-secondary"
+                    onClick={handlePrevious}
+                    disabled={currentQuestion === 0}
+                    className="flex-1"
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    variant="ios-primary"
+                    onClick={handleNext}
+                    disabled={selectedAnswers[currentQuestion] === -1}
+                    className="flex-1"
+                  >
+                    {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Navigation Footer */}
+      <section className="px-4 pb-safe max-w-4xl mx-auto">
+        <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
+          <Button variant="ios-secondary" asChild className="flex-1">
+            <Link to="../module-1/section-2">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button variant="ios-primary" asChild className="flex-1">
+            <Link to="../module-1/section-4">
+              Next Section
+              <ArrowRight className="h-4 w-4 ml-2" />
+            </Link>
+          </Button>
+        </div>
+      </section>
     </div>
   );
 };
