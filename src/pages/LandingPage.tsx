@@ -526,15 +526,15 @@ const LandingPage = () => {
             Simple, Transparent Pricing
           </h2>
           <p className="text-white/70 text-lg mb-10 max-w-2xl mx-auto">
-            Start with a 7-day free trial. Plans from £6.99/month for individuals,
-            £29.99/month for teams.
+            Start with a 7-day free trial. Plans from £4.99/month for apprentices,
+            £9.99/month for electricians.
           </p>
 
           <div className="grid sm:grid-cols-3 gap-5 mb-10">
             {[
-              { name: "Electrician", price: "£6.99", desc: "Individual professionals", features: ["All calculators", "Study Centre", "Quote builder", "Inspection tools"] },
-              { name: "Employer", price: "£29.99", desc: "Teams up to 5", features: ["Everything in Electrician", "Team management", "GPS tracking", "RAMS generator"], popular: true },
-              { name: "Enterprise", price: "Custom", desc: "Unlimited team", features: ["Everything in Employer", "Unlimited users", "API access", "Dedicated support"] }
+              { name: "Apprentice", price: "£4.99", desc: "Training & exam prep", features: ["2,000+ questions", "Study Centre", "OJT tracking", "50+ calculators"] },
+              { name: "Electrician", price: "£9.99", desc: "Professional tools", features: ["Everything in Apprentice", "8 AI Agents", "Quote builder", "Inspection tools"], popular: true },
+              { name: "Employer", price: "£29.99", desc: "Teams up to 5", features: ["Everything in Electrician", "Team management", "GPS tracking", "RAMS generator"] }
             ].map((plan, i) => (
               <Card key={i} className={`border-white/10 ${plan.popular ? 'bg-gradient-to-b from-yellow-500/10 to-neutral-900 border-yellow-400/30' : 'bg-neutral-900/50'} transition-all hover:-translate-y-1`}>
                 <CardContent className="p-6">
