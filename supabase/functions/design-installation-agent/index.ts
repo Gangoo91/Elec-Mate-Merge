@@ -859,33 +859,59 @@ ${isDomestic ? `
 
   const userPrompt = `Generate detailed installation guidance for this single ${cableSpec} circuit using UK English.`;
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${OPENAI_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'gpt-5-mini-2025-08-07',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt }
-      ],
-      response_format: { type: 'json_object' },
-      max_completion_tokens: 8000  // Reduced from 12000 to 8000 for 30% faster generation while maintaining comprehensive guidance
-    }),
-  });
+  // Create AbortController for 3-minute timeout per circuit
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 180000); // 3 minutes
+
+  let response;
+  try {
+    response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-5-mini-2025-08-07',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        response_format: { type: 'json_object' },
+        max_completion_tokens: 8000  // Reduced from 12000 to 8000 for 30% faster generation while maintaining comprehensive guidance
+      }),
+      signal: controller.signal
+    });
+  } catch (fetchError: any) {
+    clearTimeout(timeoutId);
+    if (fetchError.name === 'AbortError') {
+      console.error(`⏱️ Circuit ${circuitIndex + 1} TIMEOUT after 3 minutes`);
+      throw new Error(`Circuit ${circuitIndex + 1} installation guidance timed out after 3 minutes. OpenAI API may be slow or unresponsive.`);
+    }
+    console.error(`❌ Circuit ${circuitIndex + 1} fetch failed:`, fetchError.message);
+    throw new Error(`Circuit ${circuitIndex + 1} fetch failed: ${fetchError.message}`);
+  }
+
+  clearTimeout(timeoutId);
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`OpenAI API failed for circuit ${circuitIndex + 1}: ${response.status} ${errorText}`);
+    const errorMsg = `OpenAI API failed for circuit ${circuitIndex + 1}: ${response.status} ${errorText}`;
+    console.error(`❌ ${errorMsg}`);
+
+    // Check for rate limiting
+    if (response.status === 429) {
+      throw new Error(`Circuit ${circuitIndex + 1} hit OpenAI rate limit. Please try again in a moment.`);
+    }
+
+    throw new Error(errorMsg);
   }
 
   const aiResponse = await response.json();
   const finishReason = aiResponse.choices[0].finish_reason;
   const completionTokens = aiResponse.usage?.completion_tokens || 0;
-  
-  console.log(`📊 Circuit ${circuitIndex + 1} response: ${completionTokens} tokens, finish_reason: ${finishReason}`);
+
+  console.log(`✅ Circuit ${circuitIndex + 1} response: ${completionTokens} tokens, finish_reason: ${finishReason}`);
   
   // Check for truncation
   if (finishReason === 'length') {
