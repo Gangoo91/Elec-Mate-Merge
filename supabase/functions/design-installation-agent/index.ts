@@ -872,7 +872,7 @@ ${isDomestic ? `
         { role: 'user', content: userPrompt }
       ],
       response_format: { type: 'json_object' },
-      max_completion_tokens: 12000  // Reduced from 16000 for faster response times
+      max_completion_tokens: 8000  // Reduced from 12000 to 8000 for 30% faster generation while maintaining comprehensive guidance
     }),
   });
 
