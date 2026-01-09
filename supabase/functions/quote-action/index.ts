@@ -310,7 +310,8 @@ async function sendEmailNotification(
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: 'ElecMate <onboarding@resend.dev>',
+      from: 'ElecMate <Founder@elec-mate.com>',
+      replyTo: clientEmail || 'support@elec-mate.com',
       to: [toEmail],
       subject: subject,
       html: html,

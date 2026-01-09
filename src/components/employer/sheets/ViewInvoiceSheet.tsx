@@ -295,7 +295,7 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
                       ) : (
                         <Send className="h-4 w-4 mr-2" />
                       )}
-                      {isSent ? 'Resend' : 'Send Invoice'}
+                      Send Email
                     </Button>
                     <Button
                       variant="outline"
