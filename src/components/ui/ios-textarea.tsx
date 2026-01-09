@@ -63,11 +63,11 @@ const IOSTextarea = React.forwardRef<HTMLTextAreaElement, IOSTextareaProps>(
               // Typography - iOS body style
               "text-ios-body text-white placeholder:text-white/40",
               // Background & border - iOS style rounded rect
-              "bg-white/5 rounded-xl border-2",
+              "bg-white/10 rounded-xl border-2",
               "border-white/10",
               // Focus state
               "focus:outline-none focus:border-elec-yellow/60",
-              "focus:bg-white/8",
+              "focus:bg-white/[0.15]",
               "focus:shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.1)]",
               // Animation
               "transition-all duration-ios-normal ease-ios-ease",
