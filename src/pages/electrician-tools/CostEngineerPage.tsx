@@ -10,7 +10,7 @@ const CostEngineerPage = () => {
   const backLabel = fromAgentSelector ? "Agents" : "Hub";
 
   return (
-    <div className="min-h-screen bg-black flex flex-col safe-top safe-bottom">
+    <div className="min-h-screen bg-background flex flex-col safe-top safe-bottom">
       {/* Background gradient */}
       <div className="fixed inset-0 bg-gradient-to-b from-elec-yellow/5 via-transparent to-transparent pointer-events-none" />
 

@@ -623,7 +623,7 @@ export function ViewQuoteSheet({ open, onOpenChange, quote, onConvertToInvoice }
               {quote.status === "Draft" && (
                 <Button onClick={handleSend} disabled={isSending} className="w-full h-12">
                   {isSending ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
-                  Send Quote to Client
+                  Send Email
                 </Button>
               )}
               {quote.status === "Sent" && (
@@ -717,12 +717,12 @@ export function ViewQuoteSheet({ open, onOpenChange, quote, onConvertToInvoice }
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => setShowEmailDialog(false)}>Cancel</Button>
-          <Button 
-            onClick={() => handleSendEmail()} 
+          <Button
+            onClick={() => handleSendEmail()}
             disabled={!recipientEmail || isSending}
           >
             {isSending ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
-            Send Quote
+            Send Email
           </Button>
         </DialogFooter>
       </DialogContent>

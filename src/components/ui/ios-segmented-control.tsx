@@ -28,7 +28,7 @@ function IOSSegmentedControl<T extends string>({
   return (
     <div
       className={cn(
-        "relative flex rounded-xl bg-white/5 p-1",
+        "relative flex rounded-xl bg-white/10 p-1",
         "border border-white/10",
         className
       )}

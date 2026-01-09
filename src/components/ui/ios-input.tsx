@@ -142,10 +142,10 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
                 // Typography - iOS body style
                 "text-ios-body text-white placeholder:text-white/40",
                 // Background & border - premium rounded
-                "bg-white/[0.03] rounded-2xl border-2 border-transparent",
+                "bg-white/10 rounded-2xl border-2 border-transparent",
                 // Focus state - handled by motion wrapper
                 "focus:outline-none",
-                "focus:bg-white/[0.06]",
+                "focus:bg-white/[0.15]",
                 // Animation
                 "transition-colors duration-200",
                 // Touch optimization
@@ -153,8 +153,8 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
                 // Selection
                 "selection:bg-elec-yellow/20",
                 // Autofill styling
-                "[&:-webkit-autofill]:bg-white/[0.03]",
-                "[&:-webkit-autofill]:shadow-[0_0_0_30px_rgba(255,255,255,0.03)_inset]",
+                "[&:-webkit-autofill]:bg-white/10",
+                "[&:-webkit-autofill]:shadow-[0_0_0_30px_rgba(255,255,255,0.1)_inset]",
                 "[&:-webkit-autofill]:[-webkit-text-fill-color:white]",
                 className
               )}
