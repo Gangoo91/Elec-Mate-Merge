@@ -26,8 +26,8 @@ const cardVariants = cva(
         subtle: "bg-muted/30 border-border/20",
         highlight: "bg-gradient-to-br from-elec-yellow/10 to-orange-500/5 border-elec-yellow/30",
         // iOS-native glassmorphism cards
-        ios: "bg-white/5 backdrop-blur-xl rounded-2xl border-white/10 shadow-[0_2px_16px_rgba(0,0,0,0.2)]",
-        "ios-elevated": "bg-white/8 backdrop-blur-xl rounded-2xl border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.3)]",
+        ios: "bg-white/10 backdrop-blur-xl rounded-2xl border-white/10 shadow-[0_2px_16px_rgba(0,0,0,0.2)]",
+        "ios-elevated": "bg-white/[0.12] backdrop-blur-xl rounded-2xl border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.3)]",
       },
       interactive: {
         true: "cursor-pointer hover:border-elec-yellow/40 hover:bg-muted/50 active:scale-[0.99] active:opacity-95",

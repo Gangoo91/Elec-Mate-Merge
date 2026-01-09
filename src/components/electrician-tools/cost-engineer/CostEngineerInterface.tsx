@@ -411,7 +411,7 @@ const CostEngineerInterface = () => {
       </div>
 
       {/* Sticky Generate Button */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 safe-bottom bg-gradient-to-t from-black via-black/95 to-transparent z-40">
+      <div className="fixed bottom-0 left-0 right-0 p-4 safe-bottom bg-gradient-to-t from-background via-background/95 to-transparent z-40">
         <div className="max-w-md mx-auto">
           <Button
             variant="ios-primary"
