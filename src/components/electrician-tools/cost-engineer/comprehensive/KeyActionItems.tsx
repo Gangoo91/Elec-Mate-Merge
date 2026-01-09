@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { CheckSquare, AlertCircle, Clock, ListChecks } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -62,50 +61,48 @@ const KeyActionItems = ({ structuredData }: KeyActionItemsProps) => {
   };
 
   return (
-    <Card variant="ios" className="overflow-hidden">
-      <CardContent className="p-0">
-        {/* Header */}
-        <div className="p-4 border-b border-white/5">
-          <div className="flex items-center gap-3">
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center"
-            >
-              <ListChecks className="h-5 w-5 text-elec-yellow" />
-            </motion.div>
-            <div>
-              <h3 className="text-ios-headline text-white font-semibold">Key Action Items</h3>
-              <p className="text-ios-caption-1 text-white/50">Priority tasks before starting</p>
-            </div>
+    <div className="bg-gradient-to-br from-white/[0.08] to-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-xl">
+      {/* Header */}
+      <div className="p-4 sm:p-5 border-b border-white/5">
+        <div className="flex items-center gap-3">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center shadow-md"
+          >
+            <ListChecks className="h-5 w-5 text-elec-yellow" />
+          </motion.div>
+          <div>
+            <h3 className="text-base sm:text-lg text-white font-bold">Key Action Items</h3>
+            <p className="text-xs sm:text-sm text-white/60">Priority tasks before starting</p>
           </div>
         </div>
+      </div>
 
-        {/* Actions */}
-        <div className="p-4 space-y-3">
-          {actions.map((action, idx) => {
-            const Icon = action.icon;
-            const style = getPriorityStyle(action.priority);
-            return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                className={`p-4 rounded-xl border ${style.bg} ${style.border}`}
-              >
-                <div className="flex items-start gap-3">
-                  <div className={`flex-shrink-0 mt-0.5 ${style.icon}`}>
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <span className="text-ios-body text-white/90 leading-relaxed">{action.text}</span>
+      {/* Actions */}
+      <div className="p-4 sm:p-5 space-y-3">
+        {actions.map((action, idx) => {
+          const Icon = action.icon;
+          const style = getPriorityStyle(action.priority);
+          return (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              className={`p-4 rounded-xl border ${style.bg} ${style.border}`}
+            >
+              <div className="flex items-start gap-3">
+                <div className={`flex-shrink-0 mt-0.5 ${style.icon}`}>
+                  <Icon className="h-5 w-5" />
                 </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </CardContent>
-    </Card>
+                <span className="text-sm sm:text-base text-white leading-relaxed">{action.text}</span>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
   );
 };
 

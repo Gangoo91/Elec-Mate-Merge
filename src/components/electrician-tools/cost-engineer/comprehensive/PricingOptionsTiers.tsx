@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, Coins } from "lucide-react";
 import { motion } from "framer-motion";
@@ -146,22 +145,21 @@ const PricingOptionsTiers = ({
   const busy = calculateTierMetrics(busyPrice);
 
   return (
-    <Card variant="ios" className="overflow-hidden">
-      <CardContent className="p-0">
-        {/* Header */}
-        <div className="p-4 border-b border-white/5">
-          <div className="flex items-center gap-3">
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center"
-            >
-              <Coins className="h-5 w-5 text-elec-yellow" />
-            </motion.div>
-            <div>
-              <h3 className="text-ios-headline text-white font-semibold">Pricing Options</h3>
+    <div className="bg-gradient-to-br from-white/[0.08] to-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-xl">
+      {/* Header */}
+      <div className="p-4 sm:p-5 border-b border-white/5">
+        <div className="flex items-center gap-3">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center shadow-md"
+          >
+            <Coins className="h-5 w-5 text-elec-yellow" />
+          </motion.div>
+          <div>
+              <h3 className="text-base sm:text-lg text-white font-semibold">Pricing Options</h3>
               {explanation && (
-                <p className="text-ios-caption-1 text-white/50">{explanation}</p>
+                <p className="text-xs sm:text-sm text-white/50">{explanation}</p>
               )}
             </div>
           </div>
@@ -172,16 +170,16 @@ const PricingOptionsTiers = ({
           <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <TrendingUp className="h-4 w-4 text-blue-400" />
-              <span className="text-ios-subhead font-semibold text-white">Industry Benchmark</span>
+              <span className="text-sm sm:text-base font-semibold text-white">Industry Benchmark</span>
             </div>
             <div className="space-y-3">
               <div>
-                <span className="text-ios-caption-1 text-white/50">{benchmark.name} typical range:</span>
-                <div className="text-ios-body font-medium text-white">{benchmark.range}</div>
+                <span className="text-xs sm:text-sm text-white/50">{benchmark.name} typical range:</span>
+                <div className="text-sm sm:text-base font-medium text-white">{benchmark.range}</div>
               </div>
               <div>
-                <span className="text-ios-caption-1 text-white/50">This quote (Standard tier):</span>
-                <div className={`text-ios-body font-bold ${
+                <span className="text-xs sm:text-sm text-white/50">This quote (Standard tier):</span>
+                <div className={`text-sm sm:text-base font-bold ${
                   standardPrice < benchmark.min ? 'text-red-400' :
                   standardPrice > benchmark.max ? 'text-red-400' :
                   'text-emerald-400'
@@ -213,19 +211,19 @@ const PricingOptionsTiers = ({
                   Standard 20%
                 </Badge>
                 <div className="text-3xl font-bold text-elec-yellow">£{standardPrice.toFixed(0)}</div>
-                <div className="text-ios-caption-1 text-white/50 mt-1">Business margin</div>
+                <div className="text-xs sm:text-sm text-white/50 mt-1">Business margin</div>
               </div>
 
               <div className="space-y-2">
-                <div className="flex justify-between text-ios-footnote">
+                <div className="flex justify-between text-xs">
                   <span className="text-white/60">Margin:</span>
                   <span className="font-medium text-white">{standard.margin.toFixed(0)}%</span>
                 </div>
-                <div className="flex justify-between text-ios-footnote">
+                <div className="flex justify-between text-xs">
                   <span className="text-white/60">Profit:</span>
                   <span className="font-medium text-emerald-400">£{standard.profit.toFixed(0)}</span>
                 </div>
-                <div className="flex justify-between text-ios-footnote">
+                <div className="flex justify-between text-xs">
                   <span className="text-white/60">Per hour:</span>
                   <span className="font-medium text-white">£{standard.profitPerHour.toFixed(0)}</span>
                 </div>
@@ -248,28 +246,27 @@ const PricingOptionsTiers = ({
                   Premium 35%
                 </Badge>
                 <div className="text-3xl font-bold text-white">£{busyPrice.toFixed(0)}</div>
-                <div className="text-ios-caption-1 text-white/50 mt-1">High demand</div>
+                <div className="text-xs sm:text-sm text-white/50 mt-1">High demand</div>
               </div>
 
               <div className="space-y-2">
-                <div className="flex justify-between text-ios-footnote">
+                <div className="flex justify-between text-xs">
                   <span className="text-white/60">Margin:</span>
                   <span className="font-medium text-white">{busy.margin.toFixed(0)}%</span>
                 </div>
-                <div className="flex justify-between text-ios-footnote">
+                <div className="flex justify-between text-xs">
                   <span className="text-white/60">Profit:</span>
                   <span className="font-medium text-emerald-400">£{busy.profit.toFixed(0)}</span>
                 </div>
-                <div className="flex justify-between text-ios-footnote">
+                <div className="flex justify-between text-xs">
                   <span className="text-white/60">Per hour:</span>
                   <span className="font-medium text-white">£{busy.profitPerHour.toFixed(0)}</span>
                 </div>
               </div>
             </motion.div>
-          </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
