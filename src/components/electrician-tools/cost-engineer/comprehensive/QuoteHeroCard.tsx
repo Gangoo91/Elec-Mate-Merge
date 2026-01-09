@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, TrendingUp, Clock, Target } from "lucide-react";
 import { motion } from "framer-motion";
@@ -59,24 +58,27 @@ const QuoteHeroCard = ({
       case 'premium':
         return {
           label: 'PREMIUM',
-          bgClass: 'bg-emerald-500/20',
+          gradient: 'from-emerald-500/30 to-emerald-600/20',
           textClass: 'text-emerald-400',
-          borderClass: 'border-emerald-500/30'
+          iconBg: 'bg-emerald-500/20',
+          badge: 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
         };
       case 'sparse':
       case 'minimum':
         return {
           label: 'MINIMUM',
-          bgClass: 'bg-amber-500/20',
+          gradient: 'from-amber-500/30 to-amber-600/20',
           textClass: 'text-amber-400',
-          borderClass: 'border-amber-500/30'
+          iconBg: 'bg-amber-500/20',
+          badge: 'bg-amber-500/20 border-amber-500/40 text-amber-400'
         };
       default:
         return {
           label: 'STANDARD',
-          bgClass: 'bg-elec-yellow/20',
+          gradient: 'from-elec-yellow/30 to-amber-500/20',
           textClass: 'text-elec-yellow',
-          borderClass: 'border-elec-yellow/30'
+          iconBg: 'bg-elec-yellow/20',
+          badge: 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow'
         };
     }
   };
@@ -84,141 +86,146 @@ const QuoteHeroCard = ({
   const tierConfig = getTierConfig(tier);
 
   return (
-    <Card variant="ios-elevated" className="overflow-hidden">
-      <CardContent className="p-0">
-        {/* Hero Section with Glow */}
-        <div className="relative p-6 pb-8 text-center">
-          {/* Background glow */}
-          <div className="absolute inset-0 overflow-hidden">
-            <motion.div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full bg-elec-yellow/10 blur-[60px]"
-              animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </div>
+    <div className="bg-gradient-to-br from-white/[0.08] to-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-xl">
+      {/* Hero Section */}
+      <div className={`relative p-6 bg-gradient-to-br ${tierConfig.gradient}`}>
+        {/* Background glow effect */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-radial from-white/5 to-transparent opacity-50"
+          animate={{ scale: [1, 1.05, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        />
 
-          <div className="relative z-10 space-y-4">
-            {/* Label */}
-            <motion.p
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-ios-caption-1 text-white/50 font-medium uppercase tracking-wider"
-            >
-              Recommended Quote
-            </motion.p>
-
-            {/* Main Price */}
+        <div className="relative z-10 space-y-4">
+          {/* Top Row: Label + Badge */}
+          <div className="flex items-start justify-between">
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.1 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="flex flex-col"
             >
-              <span className="text-5xl sm:text-6xl font-bold text-white tabular-nums">
-                {formatCurrency(displayAmount)}
+              <span className="text-xs font-bold text-white uppercase tracking-wider">
+                Recommended Quote
               </span>
             </motion.div>
-
-            {/* Tier Badge */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <Badge className={`px-4 py-1.5 text-ios-caption-1 font-bold border ${tierConfig.bgClass} ${tierConfig.textClass} ${tierConfig.borderClass}`}>
-                {tierConfig.label} TIER
+              <Badge className={`px-3 py-1 text-xs font-bold border-2 ${tierConfig.badge}`}>
+                {tierConfig.label}
               </Badge>
             </motion.div>
           </div>
-        </div>
 
-        {/* Metrics Grid */}
-        <div className="grid grid-cols-2 gap-px bg-white/5">
-          {/* Profit */}
+          {/* Main Price - Left Aligned */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="p-4 bg-black/20"
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.1 }}
+            className="text-left"
           >
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+            <span className="text-5xl sm:text-6xl font-black text-white tabular-nums tracking-tight">
+              {formatCurrency(displayAmount)}
+            </span>
+          </motion.div>
+
+          {/* Subtext */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="text-sm font-semibold text-white"
+          >
+            Based on {totalLabourHours.toFixed(1)} hours labour + materials
+          </motion.p>
+        </div>
+      </div>
+
+      {/* Metrics Grid - Mobile First */}
+      <div className="grid grid-cols-2 gap-0.5 bg-white/5 p-0.5">
+        {/* Profit */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="bg-gradient-to-br from-white/[0.06] to-white/[0.03] p-5 rounded-lg"
+        >
+          <div className="flex flex-col space-y-2.5">
+            <div className="flex items-center gap-2">
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center shadow-md">
+                <CheckCircle2 className="h-5 w-5 text-emerald-400" />
               </div>
-              <span className="text-ios-caption-1 text-white/50">Profit</span>
+              <span className="text-xs font-bold text-white uppercase tracking-wide">Profit</span>
             </div>
-            <p className="text-2xl font-bold text-emerald-400 tabular-nums">
+            <p className="text-3xl font-black text-emerald-400 tabular-nums tracking-tight">
               {formatCurrency(displayProfit)}
             </p>
-          </motion.div>
+          </div>
+        </motion.div>
 
-          {/* Margin */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.35 }}
-            className="p-4 bg-black/20"
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
-                <TrendingUp className="h-4 w-4 text-elec-yellow" />
+        {/* Margin */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45 }}
+          className="bg-gradient-to-br from-white/[0.06] to-white/[0.03] p-5 rounded-lg"
+        >
+          <div className="flex flex-col space-y-2.5">
+            <div className="flex items-center gap-2">
+              <div className="w-9 h-9 rounded-xl bg-elec-yellow/20 flex items-center justify-center shadow-md">
+                <TrendingUp className="h-5 w-5 text-elec-yellow" />
               </div>
-              <span className="text-ios-caption-1 text-white/50">Margin</span>
+              <span className="text-xs font-bold text-white uppercase tracking-wide">Margin</span>
             </div>
-            <p className="text-2xl font-bold text-elec-yellow tabular-nums">
+            <p className="text-3xl font-black text-elec-yellow tabular-nums tracking-tight">
               {margin.toFixed(1)}%
             </p>
-          </motion.div>
+          </div>
+        </motion.div>
 
-          {/* Profit Per Hour */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
-            className="p-4 bg-black/20"
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
-                <Clock className="h-4 w-4 text-emerald-400" />
+        {/* Profit Per Hour */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="bg-gradient-to-br from-white/[0.06] to-white/[0.03] p-5 rounded-lg"
+        >
+          <div className="flex flex-col space-y-2.5">
+            <div className="flex items-center gap-2">
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center shadow-md">
+                <Clock className="h-5 w-5 text-emerald-400" />
               </div>
-              <span className="text-ios-caption-1 text-white/50">Per Hour</span>
+              <span className="text-xs font-bold text-white uppercase tracking-wide">Per Hour</span>
             </div>
-            <p className="text-xl font-bold text-emerald-400 tabular-nums">
+            <p className="text-2xl font-black text-emerald-400 tabular-nums tracking-tight">
               {formatCurrency(profitPerHour)}/hr
             </p>
-          </motion.div>
+          </div>
+        </motion.div>
 
-          {/* Confidence */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.45 }}
-            className="p-4 bg-black/20"
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                <Target className="h-4 w-4 text-blue-400" />
+        {/* Confidence */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.55 }}
+          className="bg-gradient-to-br from-white/[0.06] to-white/[0.03] p-5 rounded-lg"
+        >
+          <div className="flex flex-col space-y-2.5">
+            <div className="flex items-center gap-2">
+              <div className="w-9 h-9 rounded-xl bg-blue-500/20 flex items-center justify-center shadow-md">
+                <Target className="h-5 w-5 text-blue-400" />
               </div>
-              <span className="text-ios-caption-1 text-white/50">Confidence</span>
+              <span className="text-xs font-bold text-white uppercase tracking-wide">Confidence</span>
             </div>
-            <p className="text-xl font-bold text-blue-400 tabular-nums">
+            <p className="text-2xl font-black text-blue-400 tabular-nums tracking-tight">
               {confidence}%
             </p>
-          </motion.div>
-        </div>
-
-        {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="px-4 py-3 bg-white/5 border-t border-white/5"
-        >
-          <p className="text-ios-caption-1 text-white/40 text-center">
-            Based on <span className="font-semibold text-white/60">{totalLabourHours.toFixed(1)} hours</span> labour + materials
-          </p>
+          </div>
         </motion.div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
