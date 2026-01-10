@@ -59,7 +59,7 @@ interface BatteryResult {
 }
 
 const BatteryStorageCalculator = () => {
-  const config = CALCULATOR_CONFIG['ev_storage'];
+  const config = CALCULATOR_CONFIG['ev-storage'];
 
   const [criticalLoad, setCriticalLoad] = useState("");
   const [peakLoad, setPeakLoad] = useState("");

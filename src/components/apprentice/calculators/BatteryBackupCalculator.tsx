@@ -37,7 +37,7 @@ interface Load {
 }
 
 const BatteryBackupCalculator = () => {
-  const config = CALCULATOR_CONFIG['ev_storage'];
+  const config = CALCULATOR_CONFIG['ev-storage'];
 
   const [mode, setMode] = useState<'runtime' | 'sizing'>('runtime');
   const [chemistry, setChemistry] = useState('lead-acid-agm');
