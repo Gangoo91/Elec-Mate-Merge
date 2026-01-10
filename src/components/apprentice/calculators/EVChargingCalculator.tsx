@@ -24,7 +24,7 @@ import { formatCurrency } from "@/lib/format";
 import { toast } from "@/hooks/use-toast";
 
 const EVChargingCalculator = () => {
-  const config = CALCULATOR_CONFIG['ev_storage'];
+  const config = CALCULATOR_CONFIG['ev-storage'];
 
   const [inputs, setInputs] = useState({
     batteryCapacity: "",

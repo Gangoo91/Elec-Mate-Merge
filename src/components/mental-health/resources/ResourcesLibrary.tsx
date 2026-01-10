@@ -1,210 +1,394 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { BookOpen, FileText, Video, Headphones, Download, ExternalLink, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { BookOpen, FileText, Video, Headphones, ExternalLink, Search, AlertCircle, Heart, Brain } from "lucide-react";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 const ResourcesLibrary = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
-  const categories = [
-    { id: "all", name: "All Resources", count: 55 },
-    { id: "guides", name: "Guides & Articles", count: 20 },
-    { id: "videos", name: "Videos", count: 12 },
-    { id: "audio", name: "Audio Content", count: 8 },
-    { id: "tools", name: "Interactive Tools", count: 10 },
-    { id: "downloads", name: "Downloads", count: 5 }
-  ];
-
-  const featuredResources = [
+  // External Mental Health Support Services (verified UK resources)
+  const externalResources = [
     {
-      title: "Mental Health First Aid for Electricians",
-      category: "guides",
-      type: "Guide",
-      description: "Comprehensive guide on recognising and responding to mental health issues in the workplace",
-      duration: "20 min read",
-      difficulty: "Beginner",
-      rating: 4.8,
-      downloads: 1250
+      title: "Mind - Mental Health Charity",
+      description: "Information and support for mental health problems across the UK",
+      url: "https://www.mind.org.uk/",
+      type: "Website",
+      category: "external"
     },
     {
-      title: "Stress Management Techniques",
-      category: "videos",
-      type: "Video Series",
-      description: "5-part video series covering practical stress management techniques for trade workers",
-      duration: "45 mins total",
-      difficulty: "All Levels",
-      rating: 4.9,
-      downloads: 890
+      title: "NHS Mental Health Services",
+      description: "Find local NHS mental health support and services near you",
+      url: "https://www.nhs.uk/mental-health/",
+      type: "Healthcare",
+      category: "external"
     },
     {
-      title: "Mindfulness for Busy Professionals",
-      category: "audio",
-      type: "Podcast",
-      description: "Weekly podcast featuring mindfulness practices designed for busy electrical professionals",
-      duration: "30 mins per episode",
-      difficulty: "Beginner",
-      rating: 4.7,
-      downloads: 2100
+      title: "Samaritans",
+      description: "Free confidential emotional support available 24/7 by phone, email, and letter",
+      url: "https://www.samaritans.org/",
+      type: "Helpline",
+      category: "external"
     },
     {
-      title: "Mental Health Self-Assessment Tool",
-      category: "tools",
-      type: "Interactive Tool",
-      description: "Evidence-based self-assessment to help you understand your current mental health status",
-      duration: "10 mins",
-      difficulty: "All Levels",
-      rating: 4.6,
-      downloads: 1800
+      title: "CALM - Campaign Against Living Miserably",
+      description: "Leading movement against suicide, offering support for men facing difficult times",
+      url: "https://www.thecalmzone.net/",
+      type: "Support",
+      category: "external"
+    },
+    {
+      title: "Mental Health First Aid England",
+      description: "Training and resources to support mental health awareness in the workplace",
+      url: "https://mhfaengland.org/",
+      type: "Training",
+      category: "external"
+    },
+    {
+      title: "Electrical Industries Charity",
+      description: "Practical, emotional and financial support specifically for electrical workers",
+      url: "https://www.electricalcharity.org/",
+      type: "Industry",
+      category: "external"
+    },
+    {
+      title: "Mates in Mind",
+      description: "Mental health support programme for construction and related industries",
+      url: "https://matesinmind.org/",
+      type: "Industry",
+      category: "external"
+    },
+    {
+      title: "Anxiety UK",
+      description: "Support and information for those living with anxiety disorders",
+      url: "https://www.anxietyuk.org.uk/",
+      type: "Support",
+      category: "external"
     }
   ];
 
-  const filteredResources = featuredResources.filter(resource => {
+  // Self-help and educational resources
+  const selfHelpResources = [
+    {
+      title: "Stress Management for Tradespeople",
+      description: "Practical techniques for managing workplace stress specific to electrical work",
+      type: "Guide",
+      category: "guides"
+    },
+    {
+      title: "Mindfulness During Work Breaks",
+      description: "Simple 5-minute mindfulness exercises you can do on site",
+      type: "Audio",
+      category: "audio"
+    },
+    {
+      title: "Work-Life Balance Planner",
+      description: "Interactive tool to help you plan and maintain healthy boundaries",
+      type: "Tool",
+      category: "tools"
+    },
+    {
+      title: "Sleep Hygiene for Shift Workers",
+      description: "Evidence-based strategies for better sleep when working irregular hours",
+      type: "Guide",
+      category: "guides"
+    },
+    {
+      title: "Recognising Burnout",
+      description: "Learn the warning signs and what to do if you're experiencing burnout",
+      type: "Video",
+      category: "videos"
+    },
+    {
+      title: "Building Resilience in Construction",
+      description: "Practical skills for developing mental toughness and resilience",
+      type: "Video",
+      category: "videos"
+    }
+  ];
+
+  // Crisis resources
+  const crisisResources = [
+    {
+      title: "Emergency Services",
+      phone: "999",
+      description: "Immediate danger or serious mental health crisis",
+      color: "red"
+    },
+    {
+      title: "Samaritans 24/7",
+      phone: "116 123",
+      description: "Free emotional support anytime, day or night",
+      color: "blue"
+    },
+    {
+      title: "Shout Crisis Text Line",
+      phone: "Text SHOUT to 85258",
+      description: "Free 24/7 text support for mental health crises",
+      color: "purple"
+    }
+  ];
+
+  const allResources = [...externalResources, ...selfHelpResources];
+
+  const filteredResources = allResources.filter(resource => {
     const matchesSearch = resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          resource.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === "all" || resource.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
-  return (
-    <div className="space-y-6">
-      {/* Search and Filter Section */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Search className="h-5 w-5" />
-            Search Resources
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1">
-              <input
-                type="text"
-                placeholder="Search for resources..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg border border-elec-yellow/20 bg-elec-dark text-foreground placeholder-gray-400 focus:outline-none focus:border-elec-yellow"
-              />
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <Button
-                  key={category.id}
-                  variant={selectedCategory === category.id ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={selectedCategory === category.id ? "bg-elec-yellow text-elec-dark" : ""}
-                >
-                  {category.name} ({category.count})
-                </Button>
-              ))}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+  const externalFiltered = filteredResources.filter(r => r.category === "external");
+  const selfHelpFiltered = filteredResources.filter(r => r.category !== "external");
 
-      {/* Featured Resources Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredResources.map((resource, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-all">
-            <CardHeader>
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow">
-                      {resource.type}
-                    </Badge>
-                    <span className="text-xs text-white">{resource.duration}</span>
-                  </div>
-                  <CardTitle className="text-lg mb-2">{resource.title}</CardTitle>
-                </div>
-                <div className="text-right">
-                  <div className="text-sm text-elec-yellow">★ {resource.rating}</div>
-                  <div className="text-xs text-white">{resource.downloads} downloads</div>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-white mb-4">{resource.description}</p>
-              <div className="flex items-center justify-between">
-                <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/40">
-                  {resource.difficulty}
-                </Badge>
-                <div className="flex gap-2">
-                  <Button size="sm" variant="outline">
-                    <ExternalLink className="h-3 w-3 mr-1" />
-                    View
-                  </Button>
-                  <Button size="sm" className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80">
-                    <Download className="h-3 w-3 mr-1" />
-                    Access
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+  return (
+    <div className="space-y-4">
+      {/* Header */}
+      <div className="text-center py-2">
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 mb-3">
+          <BookOpen className="h-6 w-6 text-blue-400" />
+        </div>
+        <h2 className="text-xl font-bold text-white mb-1">Resources Library</h2>
+        <p className="text-sm text-white/70">
+          Comprehensive mental health support and guidance
+        </p>
       </div>
 
-      {/* Resource Categories Overview */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Resource Categories</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="border border-elec-yellow/20 rounded-lg p-4 text-center">
-              <FileText className="h-8 w-8 text-blue-400 mx-auto mb-3" />
-              <h4 className="font-semibold text-foreground mb-2">Guides & Articles</h4>
-              <p className="text-sm text-white mb-3">
-                In-depth written resources covering all aspects of mental health
-              </p>
-              <div className="text-2xl font-bold text-elec-yellow">20</div>
+      {/* Search */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+        <Input
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search resources..."
+          className="pl-10 h-12 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-white/20 focus:ring-1 focus:ring-white/10 touch-manipulation"
+        />
+      </div>
+
+      {/* Category Filter Pills */}
+      <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+        <button
+          onClick={() => setSelectedCategory("all")}
+          className={cn(
+            "px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95",
+            selectedCategory === "all"
+              ? "bg-blue-500 text-white"
+              : "bg-white/10 text-white/70 hover:bg-white/15"
+          )}
+        >
+          All Resources
+        </button>
+        <button
+          onClick={() => setSelectedCategory("external")}
+          className={cn(
+            "px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95",
+            selectedCategory === "external"
+              ? "bg-blue-500 text-white"
+              : "bg-white/10 text-white/70 hover:bg-white/15"
+          )}
+        >
+          External Support
+        </button>
+        <button
+          onClick={() => setSelectedCategory("guides")}
+          className={cn(
+            "px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95",
+            selectedCategory === "guides"
+              ? "bg-green-500 text-white"
+              : "bg-white/10 text-white/70 hover:bg-white/15"
+          )}
+        >
+          Guides
+        </button>
+        <button
+          onClick={() => setSelectedCategory("videos")}
+          className={cn(
+            "px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95",
+            selectedCategory === "videos"
+              ? "bg-purple-500 text-white"
+              : "bg-white/10 text-white/70 hover:bg-white/15"
+          )}
+        >
+          Videos
+        </button>
+        <button
+          onClick={() => setSelectedCategory("audio")}
+          className={cn(
+            "px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95",
+            selectedCategory === "audio"
+              ? "bg-orange-500 text-white"
+              : "bg-white/10 text-white/70 hover:bg-white/15"
+          )}
+        >
+          Audio
+        </button>
+        <button
+          onClick={() => setSelectedCategory("tools")}
+          className={cn(
+            "px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95",
+            selectedCategory === "tools"
+              ? "bg-pink-500 text-white"
+              : "bg-white/10 text-white/70 hover:bg-white/15"
+          )}
+        >
+          Tools
+        </button>
+      </div>
+
+      {/* Crisis Banner */}
+      <Card className="border-red-500/30 bg-red-500/5">
+        <CardContent className="p-4">
+          <div className="flex items-start gap-3 mb-3">
+            <AlertCircle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <h3 className="font-semibold text-red-400 text-sm mb-1">In Crisis?</h3>
+              <p className="text-xs text-white/70">If you're in immediate danger or experiencing a mental health crisis, contact emergency services</p>
             </div>
-            
-            <div className="border border-elec-yellow/20 rounded-lg p-4 text-center">
-              <Video className="h-8 w-8 text-green-400 mx-auto mb-3" />
-              <h4 className="font-semibold text-foreground mb-2">Video Content</h4>
-              <p className="text-sm text-white mb-3">
-                Educational videos and demonstrations for visual learners
-              </p>
-              <div className="text-2xl font-bold text-elec-yellow">12</div>
-            </div>
-            
-            <div className="border border-elec-yellow/20 rounded-lg p-4 text-center">
-              <Headphones className="h-8 w-8 text-purple-400 mx-auto mb-3" />
-              <h4 className="font-semibold text-foreground mb-2">Audio Resources</h4>
-              <p className="text-sm text-white mb-3">
-                Podcasts and guided meditations for on-the-go learning
-              </p>
-              <div className="text-2xl font-bold text-elec-yellow">8</div>
-            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-2">
+            {crisisResources.map((resource, index) => (
+              <a
+                key={index}
+                href={resource.phone.startsWith("Text") ? `sms:85258?body=SHOUT` : `tel:${resource.phone.replace(/\s/g, '')}`}
+                className={cn(
+                  "flex items-center justify-between p-3 rounded-lg transition-all touch-manipulation active:scale-[0.98]",
+                  resource.color === "red" && "border border-red-500/30 bg-red-500/10 hover:bg-red-500/20",
+                  resource.color === "blue" && "border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20",
+                  resource.color === "purple" && "border border-purple-500/30 bg-purple-500/10 hover:bg-purple-500/20"
+                )}
+              >
+                <div className="flex-1">
+                  <div className="text-sm font-semibold text-white">{resource.title}</div>
+                  <div className="text-xs text-white/70 mt-0.5">{resource.description}</div>
+                </div>
+                <div className={cn(
+                  "text-lg font-bold whitespace-nowrap ml-3",
+                  resource.color === "red" && "text-red-400",
+                  resource.color === "blue" && "text-blue-400",
+                  resource.color === "purple" && "text-purple-400"
+                )}>
+                  {resource.phone}
+                </div>
+              </a>
+            ))}
           </div>
         </CardContent>
       </Card>
 
-      {/* Quick Access Links */}
-      <Card className="border-green-500/20 bg-green-500/5">
-        <CardHeader>
-          <CardTitle className="text-green-400">Quick Access</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Button variant="outline" className="h-auto p-4 justify-start">
-              <div className="text-left">
-                <div className="font-semibold">Crisis Resources</div>
-                <div className="text-sm text-white">Immediate help and emergency contacts</div>
-              </div>
+      {/* External Support Services */}
+      {(selectedCategory === "all" || selectedCategory === "external") && externalFiltered.length > 0 && (
+        <Card className="border-blue-500/20 bg-white/5">
+          <CardHeader>
+            <CardTitle className="text-blue-400 flex items-center gap-2">
+              <Heart className="h-5 w-5" />
+              External Support Services
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 gap-3">
+              {externalFiltered.map((resource, index) => (
+                <div
+                  key={index}
+                  className="border border-white/10 bg-white/5 rounded-lg p-4 hover:border-blue-500/30 transition-all"
+                >
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-white text-sm mb-1">{resource.title}</h4>
+                      <p className="text-sm text-white/70">{resource.description}</p>
+                    </div>
+                    <span className="text-xs px-2 py-1 bg-blue-500/10 rounded-md text-blue-400 ml-3 whitespace-nowrap">
+                      {resource.type}
+                    </span>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full h-11 border-blue-500/30 text-white hover:bg-blue-500/10 touch-manipulation active:scale-[0.98] transition-all"
+                    onClick={() => window.open(resource.url, '_blank')}
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    Visit Resource
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Self-Help Resources */}
+      {(selectedCategory === "all" || ["guides", "videos", "audio", "tools"].includes(selectedCategory)) && selfHelpFiltered.length > 0 && (
+        <Card className="border-green-500/20 bg-white/5">
+          <CardHeader>
+            <CardTitle className="text-green-400 flex items-center gap-2">
+              <Brain className="h-5 w-5" />
+              Self-Help & Educational Resources
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 gap-3">
+              {selfHelpFiltered.map((resource, index) => (
+                <div
+                  key={index}
+                  className="border border-white/10 bg-white/5 rounded-lg p-4 hover:border-green-500/30 transition-all"
+                >
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-white text-sm mb-1">{resource.title}</h4>
+                      <p className="text-sm text-white/70">{resource.description}</p>
+                    </div>
+                    <span className="text-xs px-2 py-1 bg-green-500/10 rounded-md text-green-400 ml-3 whitespace-nowrap">
+                      {resource.type}
+                    </span>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full h-11 border-green-500/30 text-white hover:bg-green-500/10 touch-manipulation active:scale-[0.98] transition-all"
+                  >
+                    Access Resource
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* No Results */}
+      {filteredResources.length === 0 && (
+        <Card className="border-white/10 bg-white/5">
+          <CardContent className="text-center py-8">
+            <Search className="h-10 w-10 text-white/60 mx-auto mb-3" />
+            <p className="text-sm text-white/70">No resources found matching your search</p>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => { setSearchTerm(""); setSelectedCategory("all"); }}
+              className="mt-4"
+            >
+              Clear filters
             </Button>
-            <Button variant="outline" className="h-auto p-4 justify-start">
-              <div className="text-left">
-                <div className="font-semibold">Interactive Tools</div>
-                <div className="text-sm text-white">Mood trackers and self-assessment tools</div>
-              </div>
-            </Button>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Info Footer */}
+      <Card className="border-purple-500/20 bg-purple-500/5">
+        <CardContent className="p-4">
+          <div className="flex items-start gap-3">
+            <BookOpen className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <h4 className="font-medium text-purple-400 text-sm mb-1">About These Resources</h4>
+              <p className="text-xs text-white/70">
+                All external resources are verified UK mental health services and charities.
+                Self-help resources are designed specifically for electrical workers and tradespeople.
+                Remember: these resources complement professional help but don't replace it.
+              </p>
+            </div>
           </div>
         </CardContent>
       </Card>

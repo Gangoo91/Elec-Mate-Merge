@@ -327,46 +327,136 @@ const SiteSafety = () => {
 
               <CardContent className="p-4 sm:p-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                  {/* Before Starting Work */}
                   <div className="space-y-4">
                     <h4 className="font-medium text-white flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center text-sm font-bold text-elec-yellow">1</div>
                       Before Starting Work
                     </h4>
-                    <div className="space-y-2 pl-11">
+                    <div className="space-y-3">
                       {[
-                        { title: "Complete risk assessment for each task", detail: "Identify hazards and plan control measures" },
-                        { title: "Brief all team members on hazards", detail: "Ensure understanding of risks and emergency procedures" },
-                        { title: "Check all safety equipment and PPE", detail: "Verify voltage detectors and protective gear" },
-                        { title: "Verify isolation and permit to work", detail: "Confirm safe isolation and authorization" }
+                        {
+                          title: "Complete comprehensive risk assessment",
+                          detail: "Identify all potential hazards including live parts, working at height, confined spaces, and environmental conditions. Plan appropriate control measures and ensure all team members understand the assessment."
+                        },
+                        {
+                          title: "Conduct pre-work safety briefing",
+                          detail: "Brief all team members on identified hazards, emergency procedures, and escape routes. Confirm understanding through discussion and ensure everyone knows their roles and responsibilities."
+                        },
+                        {
+                          title: "Inspect and test safety equipment",
+                          detail: "Check voltage detectors, test probes, lock-off devices, and all PPE for damage or expiry. Verify equipment is properly rated and calibrated for the task. Ensure adequate first aid provision on site."
+                        },
+                        {
+                          title: "Verify safe isolation procedures",
+                          detail: "Confirm electrical isolation using approved methods. Test for dead on all conductors. Apply lock-off devices and warning notices. Obtain and understand any permit to work requirements."
+                        },
+                        {
+                          title: "Establish communication protocols",
+                          detail: "Ensure working mobile phones or radios available. Establish check-in times for lone workers. Confirm location of site first aider and emergency assembly points."
+                        }
                       ].map((item, index) => (
-                        <div key={index} className="flex items-start gap-2">
+                        <div key={index} className="flex items-start gap-3">
                           <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                          <div>
-                            <span className="text-sm text-white/80 block">{item.title}</span>
-                            <span className="text-xs text-white/70">{item.detail}</span>
+                          <div className="flex-1">
+                            <p className="text-sm font-medium text-white/90 leading-relaxed mb-1">
+                              {item.title}
+                            </p>
+                            <p className="text-xs text-white/60 leading-relaxed">
+                              {item.detail}
+                            </p>
                           </div>
                         </div>
                       ))}
                     </div>
                   </div>
 
+                  {/* During Work */}
                   <div className="space-y-4">
                     <h4 className="font-medium text-white flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center text-sm font-bold text-elec-yellow">2</div>
                       During Work
                     </h4>
-                    <div className="space-y-2 pl-11">
+                    <div className="space-y-3">
                       {[
-                        { title: "Follow method statements precisely", detail: "Adhere to approved procedures" },
-                        { title: "Report near misses immediately", detail: "Document incidents to prevent accidents" },
-                        { title: "Update risk assessments if conditions change", detail: "Re-evaluate when new hazards discovered" },
-                        { title: "Use proper tools and equipment", detail: "Only use correctly rated instruments" }
+                        {
+                          title: "Follow method statements and safe systems",
+                          detail: "Adhere strictly to approved work procedures and method statements. Never deviate from planned sequences without reassessment. Maintain safe working distances from live equipment at all times."
+                        },
+                        {
+                          title: "Maintain situational awareness",
+                          detail: "Stay alert to changing conditions and new hazards. Monitor weather for outdoor work. Watch for public access to work areas. Keep emergency exits clear and accessible throughout the job."
+                        },
+                        {
+                          title: "Report and document all incidents",
+                          detail: "Report near misses, accidents, and equipment failures immediately. Complete incident reports with photos where safe. Share learnings with team to prevent recurrence. Never ignore warning signs."
+                        },
+                        {
+                          title: "Use correct tools and equipment only",
+                          detail: "Use only approved, calibrated, and properly rated tools and test equipment. Never improvise or use damaged equipment. Ensure ladders and access equipment are correctly positioned and secure."
+                        },
+                        {
+                          title: "Implement continuous risk monitoring",
+                          detail: "Reassess risks if job scope changes or unexpected hazards appear. Stop work if conditions become unsafe. Update method statements when modifications needed. Consult supervisor before proceeding with changes."
+                        }
                       ].map((item, index) => (
-                        <div key={index} className="flex items-start gap-2">
+                        <div key={index} className="flex items-start gap-3">
                           <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                          <div>
-                            <span className="text-sm text-white/80 block">{item.title}</span>
-                            <span className="text-xs text-white/70">{item.detail}</span>
+                          <div className="flex-1">
+                            <p className="text-sm font-medium text-white/90 leading-relaxed mb-1">
+                              {item.title}
+                            </p>
+                            <p className="text-xs text-white/60 leading-relaxed">
+                              {item.detail}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* After Completing Work */}
+                  <div className="space-y-4 lg:col-span-2">
+                    <h4 className="font-medium text-white flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center text-sm font-bold text-elec-yellow">3</div>
+                      After Completing Work
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {[
+                        {
+                          title: "Conduct thorough site inspection",
+                          detail: "Check all work areas are left safe and secure. Remove all tools, materials, and temporary hazards. Ensure public cannot access incomplete work. Verify all barriers and warning signs remain in place if needed."
+                        },
+                        {
+                          title: "Test and verify installations",
+                          detail: "Perform all required electrical tests per BS 7671. Document results accurately. Label new circuits clearly. Provide certification and testing documentation to client. Never leave untested work energised."
+                        },
+                        {
+                          title: "Restore systems and remove isolations",
+                          detail: "Re-energise circuits following safe procedures. Remove lock-off devices and warning notices. Confirm system operation with load testing. Hand back permits to work and close out isolation certificates."
+                        },
+                        {
+                          title: "Complete documentation and handover",
+                          detail: "Update as-fitted drawings if changes made. Complete all safety documentation including EIC/MEIWC. Provide client with user instructions and safety information. File copies of all certificates and test results."
+                        },
+                        {
+                          title: "Conduct team debrief and lessons learned",
+                          detail: "Review what went well and identify improvements. Discuss any near misses or safety concerns raised. Update risk assessments and method statements with new learnings. Share best practices with wider team."
+                        },
+                        {
+                          title: "Maintain equipment and update records",
+                          detail: "Clean and store all tools and equipment properly. Report any damaged or faulty equipment for repair or replacement. Update equipment registers and calibration records. Replenish first aid supplies used."
+                        }
+                      ].map((item, index) => (
+                        <div key={index} className="flex items-start gap-3">
+                          <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                          <div className="flex-1">
+                            <p className="text-sm font-medium text-white/90 leading-relaxed mb-1">
+                              {item.title}
+                            </p>
+                            <p className="text-xs text-white/60 leading-relaxed">
+                              {item.detail}
+                            </p>
                           </div>
                         </div>
                       ))}
