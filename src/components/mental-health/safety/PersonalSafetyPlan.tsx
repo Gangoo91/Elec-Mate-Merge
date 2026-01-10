@@ -21,7 +21,10 @@ import {
   MessageCircle,
   Home,
   Cloud,
-  CloudOff
+  CloudOff,
+  Download,
+  Share2,
+  Award
 } from "lucide-react";
 import { useSafetyPlan } from "@/hooks/useMentalHealthSync";
 import { useAuth } from "@/contexts/AuthContext";
@@ -180,6 +183,63 @@ const PersonalSafetyPlan = () => {
     return filled;
   };
 
+  const isComplete = getCompletionCount() === 7;
+
+  const exportSafetyPlan = () => {
+    const text = `PERSONAL SAFETY PLAN
+Created: ${new Date().toLocaleDateString('en-GB')}
+
+${'='.repeat(50)}
+
+1. WARNING SIGNS
+Thoughts, feelings, or situations that signal a crisis may be developing:
+${plan.warning_signs.map(s => `• ${s}`).join('\n')}
+
+2. COPING STRATEGIES
+Things I can do to help myself feel better:
+${plan.coping_strategies.map(s => `• ${s}`).join('\n')}
+
+3. HEALTHY DISTRACTIONS
+Activities that help take my mind off difficult thoughts:
+${plan.distractions.map(s => `• ${s}`).join('\n')}
+
+4. PEOPLE I CAN REACH OUT TO
+Friends or family who can help during difficult times:
+${plan.support_people.map(c => `• ${c.name}${c.phone ? ` - ${c.phone}` : ''}`).join('\n')}
+
+5. PROFESSIONAL SUPPORT
+Healthcare professionals or helplines I can contact:
+${plan.professionals.map(c => `• ${c.name}${c.role ? ` (${c.role})` : ''}${c.phone ? ` - ${c.phone}` : ''}`).join('\n')}
+
+6. MAKING MY ENVIRONMENT SAFE
+Steps to remove or limit access to things that could harm me:
+${plan.safe_environment.map(s => `• ${s}`).join('\n')}
+
+7. REASONS FOR LIVING
+What matters most to me and keeps me going:
+${plan.reasons_for_living.map(s => `• ${s}`).join('\n')}
+
+${'='.repeat(50)}
+
+EMERGENCY CONTACTS
+• Emergency Services: 999
+• Samaritans: 116 123 (24/7)
+• Shout Crisis Text Line: Text SHOUT to 85258
+
+This plan is a support tool, not a replacement for professional help.
+Share this plan with someone you trust.
+Review and update it regularly, especially when you're feeling well.
+`;
+
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `personal-safety-plan-${new Date().toISOString().split('T')[0]}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   // Section detail view
   if (activeSection) {
     const section = sections.find(s => s.id === activeSection)!;
@@ -266,33 +326,33 @@ const PersonalSafetyPlan = () => {
             {/* Add new contact */}
             {isEditing && (
               <Card className="border-dashed border-white/20 bg-white/5">
-                <CardContent className="p-3 space-y-2">
+                <CardContent className="p-3 space-y-3">
                   <Input
                     value={newContact.name}
                     onChange={(e) => setNewContact({ ...newContact, name: e.target.value })}
                     placeholder="Name"
-                    className="h-11 text-base touch-manipulation"
+                    className="h-12 text-base touch-manipulation bg-white/5 border-white/10 focus:border-white/20 focus:ring-1 focus:ring-white/10 rounded-xl"
                   />
                   <Input
                     value={newContact.phone}
                     onChange={(e) => setNewContact({ ...newContact, phone: e.target.value })}
                     placeholder="Phone number"
-                    className="h-11 text-base touch-manipulation"
+                    className="h-12 text-base touch-manipulation bg-white/5 border-white/10 focus:border-white/20 focus:ring-1 focus:ring-white/10 rounded-xl"
                   />
                   {section.hasRole && (
                     <Input
                       value={newContact.role}
                       onChange={(e) => setNewContact({ ...newContact, role: e.target.value })}
                       placeholder="Role (e.g., GP, Therapist)"
-                      className="h-11 text-base touch-manipulation"
+                      className="h-12 text-base touch-manipulation bg-white/5 border-white/10 focus:border-white/20 focus:ring-1 focus:ring-white/10 rounded-xl"
                     />
                   )}
                   <Button
-                    className={`w-full h-11 ${colors.bg} ${colors.text} hover:opacity-80 touch-manipulation active:scale-[0.98] transition-all`}
+                    className={`w-full h-12 ${colors.bg} ${colors.text} hover:opacity-80 touch-manipulation active:scale-95 transition-all font-medium`}
                     onClick={() => addContact(activeSection, !!section.hasRole)}
                     disabled={!newContact.name.trim()}
                   >
-                    <Plus className="h-4 w-4 mr-1" />
+                    <Plus className="h-5 w-5 mr-2" />
                     Add Contact
                   </Button>
                 </CardContent>
@@ -346,12 +406,12 @@ const PersonalSafetyPlan = () => {
                   onChange={(e) => setNewItem(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && addItem(activeSection)}
                   placeholder={section.placeholder}
-                  className="flex-1 h-11 text-base touch-manipulation"
+                  className="flex-1 h-12 text-base touch-manipulation bg-white/5 border-white/10 focus:border-white/20 focus:ring-1 focus:ring-white/10 rounded-xl"
                 />
                 <Button
                   onClick={() => addItem(activeSection)}
                   disabled={!newItem.trim()}
-                  className={`h-11 w-11 ${colors.bg} ${colors.text} touch-manipulation active:scale-[0.98] transition-all`}
+                  className={`h-12 w-12 ${colors.bg} ${colors.text} touch-manipulation active:scale-95 transition-all`}
                 >
                   <Plus className="h-5 w-5" />
                 </Button>
@@ -433,6 +493,53 @@ const PersonalSafetyPlan = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Completion Celebration */}
+      {isComplete && (
+        <Card className="border-green-500/30 bg-gradient-to-br from-green-500/20 to-emerald-500/10 shadow-lg shadow-green-500/10">
+          <CardContent className="p-4">
+            <div className="flex items-start gap-3 mb-4">
+              <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                <Award className="h-6 w-6 text-green-400" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-green-400 mb-1">Plan Complete! 🎉</h3>
+                <p className="text-sm text-white/90 leading-relaxed">
+                  Well done for completing your Personal Safety Plan. This is an important step in taking care of your mental health.
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-3 mb-4">
+              <div className="flex items-start gap-2 text-sm">
+                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <span className="text-white/80">Save a copy to share with someone you trust</span>
+              </div>
+              <div className="flex items-start gap-2 text-sm">
+                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <span className="text-white/80">Keep it accessible for when you need it</span>
+              </div>
+              <div className="flex items-start gap-2 text-sm">
+                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                <span className="text-white/80">Review and update it regularly</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-2">
+              <Button
+                onClick={exportSafetyPlan}
+                className="w-full h-12 bg-green-500 hover:bg-green-600 text-white font-medium touch-manipulation active:scale-95 transition-all"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Download Your Plan
+              </Button>
+              <p className="text-xs text-center text-white/60 mt-1">
+                Saves as a text file you can print, email, or share
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Important Note */}
       <Card className="border-red-500/20 bg-gradient-to-br from-red-500/10 to-rose-500/5">

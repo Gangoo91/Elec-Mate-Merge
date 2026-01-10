@@ -283,23 +283,31 @@ const WellbeingJournal = () => {
           <div className="space-y-2">
             <div className="flex gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
                 <Input
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search entries..."
-                  className="pl-10 h-12"
+                  className="pl-10 h-12 bg-white/5 border-white/10 focus:border-white/20 focus:ring-1 focus:ring-white/10 rounded-xl touch-manipulation"
                 />
               </div>
               <Button
                 variant="outline"
                 size="icon"
                 onClick={() => setShowFilters(!showFilters)}
-                className={cn("h-12 w-12", showFilters ? "bg-purple-500/20" : "")}
+                className={cn(
+                  "h-12 w-12 touch-manipulation active:scale-95 transition-all",
+                  showFilters ? "bg-purple-500/20 border-purple-500/30" : "border-white/10"
+                )}
               >
                 <Filter className="h-4 w-4" />
               </Button>
-              <Button variant="outline" size="icon" onClick={exportEntries} className="h-12 w-12">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={exportEntries}
+                className="h-12 w-12 border-white/10 touch-manipulation active:scale-95 transition-all"
+              >
                 <Download className="h-4 w-4" />
               </Button>
             </div>
@@ -513,12 +521,12 @@ const WellbeingJournal = () => {
         {/* Main Content */}
         <Card className="border-white/10 bg-white/5">
           <CardContent className="p-4">
-            <h3 className="text-sm font-medium text-white mb-2">What's on your mind?</h3>
+            <h3 className="text-sm font-medium text-white mb-3">What's on your mind?</h3>
             <Textarea
               value={currentEntry.content || ""}
               onChange={(e) => setCurrentEntry({ ...currentEntry, content: e.target.value })}
               placeholder="Write your thoughts, feelings, reflections..."
-              className="min-h-[150px] resize-none text-base touch-manipulation"
+              className="min-h-[150px] resize-none text-base touch-manipulation bg-white/5 border-white/10 focus:border-white/20 focus:ring-1 focus:ring-white/10 rounded-xl"
             />
           </CardContent>
         </Card>
@@ -527,28 +535,35 @@ const WellbeingJournal = () => {
         <Card className="border-green-500/20 bg-green-500/5">
           <CardContent className="p-4">
             <h3 className="text-sm font-medium text-green-400 mb-2">Gratitude</h3>
-            <p className="text-xs text-white mb-3">What are you grateful for today?</p>
+            <p className="text-xs text-white/70 mb-3">What are you grateful for today?</p>
 
-            <div className="flex gap-2 mb-2">
+            <div className="flex gap-2 mb-3">
               <Input
                 value={newGratitude}
                 onChange={(e) => setNewGratitude(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && addGratitude()}
                 placeholder="Add something you're grateful for..."
-                className="flex-1 h-12"
+                className="flex-1 h-12 bg-white/5 border-white/10 focus:border-green-500/30 focus:ring-1 focus:ring-green-500/20 rounded-xl touch-manipulation"
               />
-              <Button size="sm" onClick={addGratitude} className="h-12 w-12 bg-green-500 hover:bg-green-600">
-                <Plus className="h-4 w-4" />
+              <Button
+                size="sm"
+                onClick={addGratitude}
+                className="h-12 w-12 bg-green-500 hover:bg-green-600 touch-manipulation active:scale-95 transition-all"
+              >
+                <Plus className="h-5 w-5" />
               </Button>
             </div>
 
             {currentEntry.gratitude && currentEntry.gratitude.length > 0 && (
               <div className="space-y-2">
                 {currentEntry.gratitude.map((item, index) => (
-                  <div key={index} className="flex items-center gap-2 p-3 rounded bg-green-500/10">
-                    <span className="text-green-400">+</span>
+                  <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                    <span className="text-green-400 font-semibold">✓</span>
                     <span className="text-sm text-white flex-1">{item}</span>
-                    <button onClick={() => removeGratitude(index)} className="text-white hover:text-white">
+                    <button
+                      onClick={() => removeGratitude(index)}
+                      className="text-white/60 hover:text-white touch-manipulation p-1 active:scale-95 transition-all"
+                    >
                       <X className="h-4 w-4" />
                     </button>
                   </div>
@@ -562,28 +577,35 @@ const WellbeingJournal = () => {
         <Card className="border-orange-500/20 bg-orange-500/5">
           <CardContent className="p-4">
             <h3 className="text-sm font-medium text-orange-400 mb-2">Triggers or Challenges</h3>
-            <p className="text-xs text-white mb-3">Any stressors affecting you? (optional)</p>
+            <p className="text-xs text-white/70 mb-3">Any stressors affecting you? (optional)</p>
 
-            <div className="flex gap-2 mb-2">
+            <div className="flex gap-2 mb-3">
               <Input
                 value={newTrigger}
                 onChange={(e) => setNewTrigger(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && addTrigger()}
                 placeholder="Add a trigger or challenge..."
-                className="flex-1 h-12"
+                className="flex-1 h-12 bg-white/5 border-white/10 focus:border-orange-500/30 focus:ring-1 focus:ring-orange-500/20 rounded-xl touch-manipulation"
               />
-              <Button size="sm" onClick={addTrigger} className="h-12 w-12 bg-orange-500 hover:bg-orange-600">
-                <Plus className="h-4 w-4" />
+              <Button
+                size="sm"
+                onClick={addTrigger}
+                className="h-12 w-12 bg-orange-500 hover:bg-orange-600 touch-manipulation active:scale-95 transition-all"
+              >
+                <Plus className="h-5 w-5" />
               </Button>
             </div>
 
             {currentEntry.triggers && currentEntry.triggers.length > 0 && (
               <div className="space-y-2">
                 {currentEntry.triggers.map((item, index) => (
-                  <div key={index} className="flex items-center gap-2 p-3 rounded bg-orange-500/10">
-                    <span className="text-orange-400">!</span>
+                  <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
+                    <span className="text-orange-400 font-semibold">!</span>
                     <span className="text-sm text-white flex-1">{item}</span>
-                    <button onClick={() => removeTrigger(index)} className="text-white hover:text-white">
+                    <button
+                      onClick={() => removeTrigger(index)}
+                      className="text-white/60 hover:text-white touch-manipulation p-1 active:scale-95 transition-all"
+                    >
                       <X className="h-4 w-4" />
                     </button>
                   </div>
