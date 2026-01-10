@@ -59,9 +59,9 @@ const routeMappings: RouteMapping[] = [
 
   // Electrician Quote/Invoice paths
   { pattern: /^\/electrician\/quotes\/[^/]+/, label: "Back to Quotes", destination: "/electrician/quotes" },
-  { pattern: /^\/electrician\/quotes/, label: "Back to Business Hub", destination: "/electrician/business" },
+  { pattern: /^\/electrician\/quotes/, label: "Back to Electrical Hub", destination: "/electrician" },
   { pattern: /^\/electrician\/invoices\/[^/]+/, label: "Back to Invoices", destination: "/electrician/invoices" },
-  { pattern: /^\/electrician\/invoices/, label: "Back to Business Hub", destination: "/electrician/business" },
+  { pattern: /^\/electrician\/invoices/, label: "Back to Electrical Hub", destination: "/electrician" },
 
   // Electrician Materials paths
   { pattern: /^\/electrician\/materials\/[^/]+/, label: "Back to Materials", destination: "/electrician/materials" },
