@@ -1,6 +1,28 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 # Elec-Mate 2.0
 
 UK electrical certification & apprentice training platform. React/Vite/TypeScript/Tailwind/Supabase.
+
+## Build & Development Commands
+
+```bash
+npm run dev       # Start development server
+npm run build     # Production build
+npm run lint      # Run ESLint
+npm run preview   # Preview production build
+```
+
+### Supabase Edge Functions
+```bash
+npx supabase functions deploy <function-name> --project-ref jtwygbeceundfgnkirof
+```
+
+## Critical Design Principle
+
+**EVERY FILE MUST HAVE A NATIVE MOBILE APP FEEL.** This is a mobile-first application used by electricians on job sites. All UI must feel like a native iOS/Android app, not a desktop website viewed on mobile.
 
 ## Language
 **UK English only**: analyse, colour, centre, organisation, licence, programme, metre
@@ -89,11 +111,28 @@ src/pages/study-centre/
 - `src/pages/study-centre/` - All learning content
 - `supabase/functions/` - Edge functions
 
-## Mobile
+## Mobile-First / Native App Feel
+
+**Every component must feel like a native mobile app.** Electricians use this on job sites - it must be thumb-friendly, fast, and intuitive.
+
+### Required Touch Patterns
 - Touch targets: `h-11` minimum (44px)
 - Always add `touch-manipulation` to interactive elements
 - Use `hidden sm:block` to hide non-essential elements on mobile
 - Bottom padding for fixed footers: `pb-20 sm:pb-4`
+
+### Native App Behaviours
+- Use bottom sheets (`Sheet` with `side="bottom"`) instead of modals for tools/pickers
+- Swipeable interactions where appropriate (`react-swipeable`)
+- Smooth transitions with `framer-motion`
+- Haptic-style feedback on actions (visual confirmation, toasts)
+- Sticky headers/footers for navigation within forms
+- Pull-to-refresh patterns where data can be refreshed
+
+### What NOT to Do
+- No hover-dependent interactions (tooltips must have tap alternatives)
+- No tiny clickable text links - use buttons
+- No horizontal scrolling tables - use cards or collapsible rows on mobile
 
 ## Git Repository
 - **Repository:** `Gangoo91/Elec-Mate-Merge`
