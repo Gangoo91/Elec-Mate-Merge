@@ -165,7 +165,7 @@ export function OJTDashboard({
       <div className="grid grid-cols-2 gap-3">
         <Button
           onClick={onQuickLog}
-          className="h-auto py-4 bg-elec-yellow text-black hover:bg-elec-yellow/90 flex flex-col items-center gap-2"
+          className="h-auto py-4 bg-elec-yellow text-black hover:bg-elec-yellow/90 flex flex-col items-center gap-2 touch-manipulation active:scale-95"
         >
           <Clock className="h-5 w-5" />
           <span className="font-medium">Log Time</span>
@@ -173,7 +173,7 @@ export function OJTDashboard({
         <Button
           onClick={onStartTimer}
           variant="outline"
-          className="h-auto py-4 border-elec-yellow/30 hover:bg-elec-yellow/10 flex flex-col items-center gap-2"
+          className="h-auto py-4 border-elec-yellow/30 hover:bg-elec-yellow/10 flex flex-col items-center gap-2 touch-manipulation active:scale-95"
         >
           <Play className="h-5 w-5 text-elec-yellow" />
           <span className="font-medium">Start Timer</span>
@@ -192,11 +192,11 @@ export function OJTDashboard({
               </Badge>
             </CardTitle>
           </CardHeader>
-          <CardContent className="grid grid-cols-3 gap-2">
+          <CardContent className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {pendingTasks.evidence > 0 && (
               <button
                 onClick={() => onNavigate('evidence')}
-                className="p-3 rounded-lg bg-background border border-border hover:border-elec-yellow/30 transition-colors text-center"
+                className="p-3 rounded-lg bg-background border border-border hover:border-elec-yellow/30 transition-colors text-center touch-manipulation active:scale-95"
               >
                 <FileCheck className="h-5 w-5 text-elec-yellow mx-auto mb-1" />
                 <p className="text-lg font-bold text-foreground">{pendingTasks.evidence}</p>
@@ -206,7 +206,7 @@ export function OJTDashboard({
             {pendingTasks.assessments > 0 && (
               <button
                 onClick={() => onNavigate('assessments')}
-                className="p-3 rounded-lg bg-background border border-border hover:border-elec-yellow/30 transition-colors text-center"
+                className="p-3 rounded-lg bg-background border border-border hover:border-elec-yellow/30 transition-colors text-center touch-manipulation active:scale-95"
               >
                 <Award className="h-5 w-5 text-blue-500 mx-auto mb-1" />
                 <p className="text-lg font-bold text-foreground">{pendingTasks.assessments}</p>
@@ -216,7 +216,7 @@ export function OJTDashboard({
             {pendingTasks.goals > 0 && (
               <button
                 onClick={() => onNavigate('goals')}
-                className="p-3 rounded-lg bg-background border border-border hover:border-elec-yellow/30 transition-colors text-center"
+                className="p-3 rounded-lg bg-background border border-border hover:border-elec-yellow/30 transition-colors text-center touch-manipulation active:scale-95"
               >
                 <Target className="h-5 w-5 text-green-500 mx-auto mb-1" />
                 <p className="text-lg font-bold text-foreground">{pendingTasks.goals}</p>
@@ -291,7 +291,7 @@ export function OJTDashboard({
       <div className="grid grid-cols-2 gap-3">
         <button
           onClick={() => onNavigate('evidence')}
-          className="p-4 rounded-xl border border-border bg-card hover:border-elec-yellow/30 transition-colors text-left"
+          className="p-4 rounded-xl border border-border bg-card hover:border-elec-yellow/30 transition-colors text-left touch-manipulation active:scale-95"
         >
           <FileCheck className="h-6 w-6 text-elec-yellow mb-2" />
           <p className="font-medium text-foreground text-sm">Evidence</p>
@@ -299,7 +299,7 @@ export function OJTDashboard({
         </button>
         <button
           onClick={() => onNavigate('assessments')}
-          className="p-4 rounded-xl border border-border bg-card hover:border-elec-yellow/30 transition-colors text-left"
+          className="p-4 rounded-xl border border-border bg-card hover:border-elec-yellow/30 transition-colors text-left touch-manipulation active:scale-95"
         >
           <Award className="h-6 w-6 text-blue-500 mb-2" />
           <p className="font-medium text-foreground text-sm">Assessments</p>
@@ -307,7 +307,7 @@ export function OJTDashboard({
         </button>
         <button
           onClick={() => onNavigate('goals')}
-          className="p-4 rounded-xl border border-border bg-card hover:border-elec-yellow/30 transition-colors text-left"
+          className="p-4 rounded-xl border border-border bg-card hover:border-elec-yellow/30 transition-colors text-left touch-manipulation active:scale-95"
         >
           <Target className="h-6 w-6 text-green-500 mb-2" />
           <p className="font-medium text-foreground text-sm">Goals</p>
@@ -315,7 +315,7 @@ export function OJTDashboard({
         </button>
         <button
           onClick={() => onNavigate('time')}
-          className="p-4 rounded-xl border border-border bg-card hover:border-elec-yellow/30 transition-colors text-left"
+          className="p-4 rounded-xl border border-border bg-card hover:border-elec-yellow/30 transition-colors text-left touch-manipulation active:scale-95"
         >
           <Calendar className="h-6 w-6 text-purple-500 mb-2" />
           <p className="font-medium text-foreground text-sm">Logbook</p>

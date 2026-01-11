@@ -131,14 +131,14 @@ const ProgressInsightsTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Learning Velocity</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-3 sm:px-6">
+            <CardTitle className="text-xs sm:text-sm font-medium">Learning Velocity</CardTitle>
             <TrendingUp className="h-4 w-4 text-white" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-500">+15%</div>
+          <CardContent className="px-3 sm:px-6">
+            <div className="text-xl sm:text-2xl font-bold text-green-500">+15%</div>
             <p className="text-xs text-white">
               This month vs last
             </p>
@@ -146,12 +146,12 @@ const ProgressInsightsTab = () => {
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Goal Achievement</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-3 sm:px-6">
+            <CardTitle className="text-xs sm:text-sm font-medium">Goal Achievement</CardTitle>
             <Target className="h-4 w-4 text-white" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-blue-500">8/12</div>
+          <CardContent className="px-3 sm:px-6">
+            <div className="text-xl sm:text-2xl font-bold text-blue-500">8/12</div>
             <p className="text-xs text-white">
               Monthly targets hit
             </p>
@@ -159,12 +159,12 @@ const ProgressInsightsTab = () => {
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Cohort Ranking</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-3 sm:px-6">
+            <CardTitle className="text-xs sm:text-sm font-medium">Cohort Ranking</CardTitle>
             <Users className="h-4 w-4 text-white" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-purple-500">12th</div>
+          <CardContent className="px-3 sm:px-6">
+            <div className="text-xl sm:text-2xl font-bold text-purple-500">12th</div>
             <p className="text-xs text-white">
               Out of 45 apprentices
             </p>
@@ -172,12 +172,12 @@ const ProgressInsightsTab = () => {
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Completion ETA</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-3 sm:px-6">
+            <CardTitle className="text-xs sm:text-sm font-medium">Completion ETA</CardTitle>
             <Calendar className="h-4 w-4 text-white" />
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-elec-yellow">18m</div>
+          <CardContent className="px-3 sm:px-6">
+            <div className="text-xl sm:text-2xl font-bold text-elec-yellow">18m</div>
             <p className="text-xs text-white">
               Predicted finish
             </p>
@@ -288,12 +288,12 @@ const ProgressInsightsTab = () => {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Button className="h-12" variant="outline">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Button className="h-12 touch-manipulation active:scale-95" variant="outline">
           <Zap className="mr-2 h-4 w-4" />
           Generate Progress Report
         </Button>
-        <Button className="h-12" variant="outline">
+        <Button className="h-12 touch-manipulation active:scale-95" variant="outline">
           <Calendar className="mr-2 h-4 w-4" />
           Schedule Mentor Review
         </Button>

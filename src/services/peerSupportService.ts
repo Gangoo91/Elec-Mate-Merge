@@ -20,6 +20,12 @@ export interface PeerSupporter {
   updated_at: string;
 }
 
+export interface SeekerProfile {
+  id: string;
+  full_name: string | null;
+  avatar_url: string | null;
+}
+
 export interface PeerConversation {
   id: string;
   supporter_id: string | null;
@@ -30,6 +36,7 @@ export interface PeerConversation {
   last_message_at: string;
   // Joined data
   supporter?: PeerSupporter;
+  seeker?: SeekerProfile;
 }
 
 export interface PeerMessage {
@@ -243,7 +250,8 @@ export const peerConversationService = {
       .from('mental_health_peer_conversations')
       .select(`
         *,
-        supporter:mental_health_peer_supporters(*)
+        supporter:mental_health_peer_supporters(*),
+        seeker:profiles!mental_health_peer_conversations_seeker_id_fkey(id, full_name, avatar_url)
       `)
       .order('last_message_at', { ascending: false });
 
@@ -304,7 +312,8 @@ export const peerConversationService = {
       })
       .select(`
         *,
-        supporter:mental_health_peer_supporters(*)
+        supporter:mental_health_peer_supporters(*),
+        seeker:profiles!mental_health_peer_conversations_seeker_id_fkey(id, full_name, avatar_url)
       `)
       .single();
 
@@ -379,7 +388,57 @@ export const peerMessageService = {
       .single();
 
     if (error) throw error;
+
+    // Send push notification to recipient (fire and forget)
+    this.sendPushNotification(conversationId, user.id, content).catch(console.error);
+
     return data as unknown as PeerMessage;
+  },
+
+  /**
+   * Send push notification to the other person in conversation
+   */
+  async sendPushNotification(conversationId: string, senderId: string, content: string): Promise<void> {
+    try {
+      // Get conversation to find recipient
+      const { data: conversation } = await supabase
+        .from('mental_health_peer_conversations')
+        .select(`
+          *,
+          supporter:mental_health_peer_supporters(user_id, display_name),
+          seeker:profiles!mental_health_peer_conversations_seeker_id_fkey(id, full_name)
+        `)
+        .eq('id', conversationId)
+        .single();
+
+      if (!conversation) return;
+
+      // Determine recipient
+      const isSupporter = conversation.supporter?.user_id === senderId;
+      const recipientId = isSupporter ? conversation.seeker_id : conversation.supporter?.user_id;
+      const senderName = isSupporter
+        ? (conversation.supporter?.display_name || 'Peer Supporter')
+        : (conversation.seeker?.full_name?.split(' ')[0] || 'Someone');
+
+      if (!recipientId) return;
+
+      // Call push notification edge function
+      await supabase.functions.invoke('send-push-notification', {
+        body: {
+          userId: recipientId,
+          title: `Message from ${senderName}`,
+          body: content.length > 100 ? content.substring(0, 97) + '...' : content,
+          type: 'peer',
+          data: {
+            conversationId,
+            senderId,
+            senderName,
+          },
+        },
+      });
+    } catch (error) {
+      console.error('Failed to send push notification:', error);
+    }
   },
 
   /**

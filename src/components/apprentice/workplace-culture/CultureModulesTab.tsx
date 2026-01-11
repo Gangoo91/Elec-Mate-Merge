@@ -6,18 +6,21 @@ import CultureModuleCard from "./CultureModuleCard";
 import LearningResourcesCard from "./LearningResourcesCard";
 import ModuleDetailView from "./ModuleDetailView";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, Target, Users, MessageSquare } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { BookOpen, Target, Users, MessageSquare, Trophy, Loader2 } from "lucide-react";
+import { useWorkplaceCultureProgress } from "@/hooks/workplace-culture/useWorkplaceCultureProgress";
 
 const CultureModulesTab = () => {
   const [activeModule, setActiveModule] = useState<CultureModule | null>(null);
+  const { progress, isLoading, stats, getModuleProgress } = useWorkplaceCultureProgress();
 
   const handleModuleSelect = (module: CultureModule) => {
     setActiveModule(module);
   };
 
   const moduleStats = [
-    { label: "Total Modules", value: cultureModules.length, icon: BookOpen },
-    { label: "Learning Hours", value: "8-12", icon: Target },
+    { label: "Completed", value: `${stats.completedModules}/${stats.totalModules}`, icon: Trophy },
+    { label: "Overall", value: `${stats.overallProgress}%`, icon: Target },
     { label: "Skill Areas", value: "6", icon: Users },
     { label: "Interactive Scenarios", value: "25+", icon: MessageSquare }
   ];
@@ -54,18 +57,41 @@ const CultureModulesTab = () => {
         </CardContent>
       </Card>
 
-      {!activeModule ? (
+      {isLoading ? (
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+        </div>
+      ) : !activeModule ? (
         <div className="space-y-6">
+          {/* Overall Progress Bar */}
+          {stats.overallProgress > 0 && (
+            <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-elec-yellow/20 p-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-white">Your Progress</span>
+                <span className="text-sm text-elec-yellow font-bold">{stats.overallProgress}%</span>
+              </div>
+              <Progress value={stats.overallProgress} className="h-2" />
+              <p className="text-xs text-white/60 mt-2">
+                {stats.completedModules} of {stats.totalModules} modules completed
+              </p>
+            </Card>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {cultureModules.map(module => (
-              <CultureModuleCard 
-                key={module.id}
-                module={module}
-                onSelect={handleModuleSelect}
-              />
-            ))}
+            {cultureModules.map(module => {
+              const moduleProgress = getModuleProgress(module.id);
+              return (
+                <CultureModuleCard
+                  key={module.id}
+                  module={module}
+                  onSelect={handleModuleSelect}
+                  progress={moduleProgress?.progress_percent || 0}
+                  isCompleted={moduleProgress?.completed || false}
+                />
+              );
+            })}
           </div>
-          
+
           <LearningResourcesCard />
         </div>
       ) : (

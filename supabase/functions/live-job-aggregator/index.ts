@@ -24,7 +24,9 @@ serve(async (req) => {
       { name: 'indeed-job-listings', displayName: 'Indeed', timeout: 20000 },
       { name: 'totaljobs-job-listings', displayName: 'TotalJobs', timeout: 30000 },
       { name: 'cvlibrary-job-listings', displayName: 'CV Library', timeout: 20000 },
-      { name: 'jobscouk-job-listings', displayName: 'Jobs.co.uk', timeout: 20000 }
+      { name: 'jobscouk-job-listings', displayName: 'Jobs.co.uk', timeout: 20000 },
+      { name: 'adzuna-job-listings', displayName: 'Adzuna', timeout: 20000 },
+      { name: 'jib-job-listings', displayName: 'JIB', timeout: 20000 }
     ];
 
     const allJobs: any[] = [];

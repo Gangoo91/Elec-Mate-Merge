@@ -1,6 +1,6 @@
 /**
  * Direct AI Provider Utilities
- * Routes to Gemini Flash 2.5 or OpenAI GPT-4.1-mini
+ * Routes to Gemini Flash 3 or OpenAI GPT-4.1-mini
  * Replaces Lovable AI Gateway
  */
 
@@ -69,8 +69,8 @@ export async function generateEmbedding(
 }
 
 /**
- * Call Google Gemini 2.5 Flash for tooling/generation tasks
- * Default model, very fast and cheap
+ * Call Google Gemini 3 Flash for tooling/generation tasks
+ * Default model, excellent for vision/OCR tasks
  */
 export async function callGemini(
   options: AICallOptions,
@@ -78,7 +78,7 @@ export async function callGemini(
 ): Promise<AIResponse> {
   const {
     messages,
-    model = 'gemini-2.5-flash',
+    model = 'gemini-3-flash',
     temperature = 0.3,
     max_tokens = 2000,
     response_format,

@@ -141,13 +141,14 @@ serve(async (req) => {
 
     // HEARTBEAT: Update progress during pipeline execution to prevent stuck detection
     // Phase 1 caps at 45% to leave room for Phase 2 (installation agent)
+    // OPTIMIZED: 5s intervals (was 15s) for better UX - users see faster progress updates
     let heartbeatProgress = 15;
     const heartbeatInterval = setInterval(async () => {
       if (heartbeatProgress < 45) {
-        heartbeatProgress = Math.min(45, heartbeatProgress + 3);
+        heartbeatProgress = Math.min(45, heartbeatProgress + 1); // Smaller increments for 5s interval
         await updateJobProgress(heartbeatProgress, 'AI is designing circuits...');
       }
-    }, 15000); // Every 15 seconds
+    }, 5000); // Every 5 seconds (optimized from 15s)
 
     let result;
     try {
@@ -317,13 +318,13 @@ serve(async (req) => {
         logger.info('Phase 1 (Designer) complete - triggering Phase 2 (Installer)', { jobId });
 
         // ============================================
-        // PHASE 2: Trigger Installation Agent (FIRE-AND-FORGET)
+        // PHASE 2: Trigger Installation Agent (FIRE-AND-FORGET WITH FALLBACK)
         // ============================================
-        logger.info('🔧 Launching Installation Agent (fire-and-forget)...');
-        
+        logger.info('🔧 Launching Installation Agent (fire-and-forget with fallback)...');
+
         // Fire-and-forget: Don't await, let it run independently
         // Installation Agent will update job to 'complete' when it finishes
-        supabase.functions.invoke('design-installation-agent', {
+        const installationAgentTask = supabase.functions.invoke('design-installation-agent', {
           body: {
             jobId,
             designedCircuits: result.circuits,
@@ -333,11 +334,64 @@ serve(async (req) => {
         }).then(() => {
           logger.info('✅ Installation Agent HTTP response received (ignoring status)');
         }).catch((error) => {
-          logger.info('ℹ️ Installation Agent HTTP connection closed (expected for long jobs):', error.message);
-          // This is expected - installation agent updates DB directly
+          logger.warn('⚠️ Installation Agent HTTP connection closed:', error.message);
+          // This is expected for long jobs - installation agent updates DB directly
         });
+
+        // RELIABILITY FIX: Fallback timeout to mark job complete if installation agent hangs
+        // After 5 minutes, check if job is still 'processing' and mark complete
+        // (Design is already saved, installation guidance is supplementary)
+        setTimeout(async () => {
+          try {
+            const { data: currentJob } = await supabase
+              .from('circuit_design_jobs')
+              .select('status, installation_agent_status')
+              .eq('id', jobId)
+              .single();
+
+            // If job is still processing after 5 minutes, mark it complete
+            // (Installation guidance might have failed, but design is valid)
+            if (currentJob?.status === 'processing' && currentJob?.installation_agent_status !== 'complete') {
+              logger.warn('⚠️ Installation agent fallback triggered - marking job complete', {
+                jobId,
+                installationStatus: currentJob?.installation_agent_status
+              });
+
+              await supabase
+                .from('circuit_design_jobs')
+                .update({
+                  status: 'complete',
+                  installation_agent_status: 'timeout',
+                  completed_at: new Date().toISOString(),
+                  current_step: 'Design complete (installation guidance timed out)'
+                })
+                .eq('id', jobId);
+            }
+          } catch (fallbackErr) {
+            logger.error('Fallback timeout check failed', { error: fallbackErr });
+          }
+        }, 300000); // 5 minute fallback
       } catch (err) {
         logger.error('Failed to update job or trigger installer', { error: err });
+
+        // RELIABILITY FIX: If installation agent trigger fails, still mark job as complete
+        // (Design is valid, installation guidance is supplementary)
+        if (jobId) {
+          try {
+            await supabase
+              .from('circuit_design_jobs')
+              .update({
+                status: 'complete',
+                installation_agent_status: 'skipped',
+                completed_at: new Date().toISOString(),
+                current_step: 'Design complete (installation guidance skipped)'
+              })
+              .eq('id', jobId);
+            logger.info('Job marked complete despite installer trigger failure', { jobId });
+          } catch (markErr) {
+            logger.error('Failed to mark job complete after installer failure', { error: markErr });
+          }
+        }
       }
     }
 

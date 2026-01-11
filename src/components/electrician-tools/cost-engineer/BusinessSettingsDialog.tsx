@@ -62,10 +62,23 @@ const STORAGE_KEY = 'electrician_business_settings';
 interface BusinessSettingsDialogProps {
   onSettingsChange?: (settings: BusinessSettings) => void;
   currentSettings?: BusinessSettings;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  hideButton?: boolean;
 }
 
-export function BusinessSettingsDialog({ onSettingsChange, currentSettings }: BusinessSettingsDialogProps) {
-  const [open, setOpen] = useState(false);
+export function BusinessSettingsDialog({
+  onSettingsChange,
+  currentSettings,
+  open: controlledOpen,
+  onOpenChange: controlledOnOpenChange,
+  hideButton = false
+}: BusinessSettingsDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  // Support both controlled and uncontrolled modes
+  const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
+  const setOpen = controlledOnOpenChange || setInternalOpen;
   const [settings, setSettings] = useState<BusinessSettings>(currentSettings || DEFAULT_BUSINESS_SETTINGS);
   const [hasConfigured, setHasConfigured] = useState(false);
 
@@ -104,23 +117,25 @@ export function BusinessSettingsDialog({ onSettingsChange, currentSettings }: Bu
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button 
-          variant={hasConfigured ? "outline" : "default"}
-          size="lg"
-          className={cn(
-            "w-full h-12 sm:h-14 touch-manipulation text-base sm:text-lg font-semibold",
-            hasConfigured 
-              ? "border-green-500/30 bg-green-500/10 hover:bg-green-500/20" 
-              : "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 animate-pulse"
-          )}
-        >
-          <Settings className="h-5 w-5 mr-2 flex-shrink-0" />
-          <span className="truncate">
-            {hasConfigured ? "Business Settings ✓" : "Configure Business Settings"}
-          </span>
-        </Button>
-      </DialogTrigger>
+      {!hideButton && (
+        <DialogTrigger asChild>
+          <Button
+            variant={hasConfigured ? "outline" : "default"}
+            size="lg"
+            className={cn(
+              "w-full h-12 sm:h-14 touch-manipulation text-base sm:text-lg font-semibold",
+              hasConfigured
+                ? "border-green-500/30 bg-green-500/10 hover:bg-green-500/20"
+                : "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 animate-pulse"
+            )}
+          >
+            <Settings className="h-5 w-5 mr-2 flex-shrink-0" />
+            <span className="truncate">
+              {hasConfigured ? "Business Settings ✓" : "Configure Business Settings"}
+            </span>
+          </Button>
+        </DialogTrigger>
+      )}
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl flex items-center gap-2">

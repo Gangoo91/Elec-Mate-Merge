@@ -1,10 +1,42 @@
 
-import React from 'react';
+import React, { useState } from 'react';
+import { Check, Copy } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface ChatMessageRendererProps {
   content: string;
   isUser: boolean;
 }
+
+// Code block component with copy button
+const CodeBlock = ({ code, language }: { code: string; language?: string }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(code);
+    setCopied(true);
+    toast.success('Copied to clipboard');
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="relative my-3 rounded-lg overflow-hidden bg-black/40 border border-white/10">
+      <div className="flex items-center justify-between px-3 py-1.5 bg-white/5 border-b border-white/10">
+        <span className="text-xs text-white/50 font-mono">{language || 'code'}</span>
+        <button
+          onClick={handleCopy}
+          className="flex items-center gap-1 text-xs text-white/50 hover:text-white/80 transition-colors touch-manipulation"
+        >
+          {copied ? <Check className="h-3.5 w-3.5 text-green-400" /> : <Copy className="h-3.5 w-3.5" />}
+          {copied ? 'Copied' : 'Copy'}
+        </button>
+      </div>
+      <pre className="p-3 overflow-x-auto text-sm">
+        <code className="text-green-300 font-mono whitespace-pre-wrap break-words">{code}</code>
+      </pre>
+    </div>
+  );
+};
 
 const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
   const formatContent = (text: string) => {
@@ -12,7 +44,44 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
       return <p className="leading-relaxed">{text}</p>;
     }
 
-    // Split into lines and process each one
+    // Check for code blocks first
+    const codeBlockRegex = /```(\w*)\n?([\s\S]*?)```/g;
+    const parts: (string | { type: 'code'; code: string; language?: string })[] = [];
+    let lastIndex = 0;
+    let match;
+
+    while ((match = codeBlockRegex.exec(text)) !== null) {
+      if (match.index > lastIndex) {
+        parts.push(text.slice(lastIndex, match.index));
+      }
+      parts.push({
+        type: 'code',
+        language: match[1] || undefined,
+        code: match[2].trim()
+      });
+      lastIndex = match.index + match[0].length;
+    }
+
+    if (lastIndex < text.length) {
+      parts.push(text.slice(lastIndex));
+    }
+
+    // If there are code blocks, render them specially
+    if (parts.some(p => typeof p === 'object')) {
+      return parts.map((part, i) => {
+        if (typeof part === 'object' && part.type === 'code') {
+          return <CodeBlock key={i} code={part.code} language={part.language} />;
+        }
+        // Process the text parts normally
+        return <div key={i}>{processTextContent(part as string)}</div>;
+      });
+    }
+
+    // No code blocks, process normally
+    return processTextContent(text);
+  };
+
+  const processTextContent = (text: string) => {
     const lines = text.split('\n');
 
     return lines.map((line, index) => {
@@ -213,12 +282,22 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
     }).filter(Boolean);
   };
 
+  // Don't render empty messages
+  if (!content) return null;
+
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`}>
-      <div className={`max-w-[90%] rounded-xl ${
+    <div className={`flex ${isUser ? 'justify-end' : 'justify-start items-start gap-2'} mb-3`}>
+      {/* Dave Avatar - Only for AI messages */}
+      {!isUser && (
+        <div className="w-7 h-7 rounded-full bg-elec-yellow/20 flex items-center justify-center shrink-0 mt-1">
+          <span className="text-xs">⚡</span>
+        </div>
+      )}
+
+      <div className={`max-w-[85%] ${
         isUser
-          ? 'bg-elec-yellow text-elec-gray px-4 py-3 shadow-lg'
-          : 'bg-gradient-to-br from-white/10 to-white/5 border border-white/15 px-4 py-4 shadow-xl'
+          ? 'bg-elec-yellow text-elec-gray rounded-2xl rounded-br-sm px-4 py-2.5 shadow-lg'
+          : 'bg-white/5 border border-white/10 rounded-2xl rounded-tl-sm px-4 py-3'
       }`}>
         <div className={`${isUser ? 'text-elec-gray' : 'text-white'}`}>
           {isUser ? (

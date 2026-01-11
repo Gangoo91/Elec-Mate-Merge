@@ -114,7 +114,7 @@ serve(async (req) => {
     
     const imageAnalysisData = await withRetry(
       () => withTimeout(
-        fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`, {
+        fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key=${geminiApiKey}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -308,7 +308,7 @@ ${regulations.map(reg => `- [${reg.regulation_number}] ${reg.similarity ? `(rele
 
     const guidanceData = await withRetry(
       () => withTimeout(
-        fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`, {
+        fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key=${geminiApiKey}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

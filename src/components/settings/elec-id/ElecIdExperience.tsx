@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -36,6 +36,14 @@ import {
 import { UK_JOB_TITLES, getJobTitleLabel } from "@/data/uk-electrician-constants";
 import { useNotifications } from "@/components/notifications/NotificationProvider";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
+import { useElecIdProfile } from "@/hooks/useElecIdProfile";
+import {
+  getWorkHistoryByProfileId,
+  addElecIdWorkHistory,
+  updateElecIdWorkHistory,
+  deleteElecIdWorkHistory,
+  ElecIdWorkHistory,
+} from "@/services/elecIdService";
 
 interface WorkExperience {
   id: string;
@@ -52,6 +60,7 @@ interface WorkExperience {
 
 const ElecIdExperience = () => {
   const { addNotification } = useNotifications();
+  const { profile } = useElecIdProfile();
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editingExp, setEditingExp] = useState<WorkExperience | null>(null);
@@ -60,6 +69,7 @@ const ElecIdExperience = () => {
     id: null,
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
   const [isCurrent, setIsCurrent] = useState(false);
   const [formData, setFormData] = useState({
     employerName: "",
@@ -70,124 +80,187 @@ const ElecIdExperience = () => {
     description: "",
   });
 
-  // Mock work history - will be from database
-  const [workHistory, setWorkHistory] = useState<WorkExperience[]>([
-    {
-      id: "1",
-      employerName: "Spark Electrical Ltd",
-      jobTitle: "approved",
-      location: "London",
-      startDate: "2022-03-01",
-      isCurrent: true,
-      description: "Commercial and domestic installations, testing and inspection.",
-      isVerified: true,
-      verifiedByEmployer: true,
-    },
-    {
-      id: "2",
-      employerName: "PowerTech Services",
-      jobTitle: "installation",
-      location: "Manchester",
-      startDate: "2019-06-15",
-      endDate: "2022-02-28",
-      description: "Industrial installations and maintenance work.",
-      isVerified: true,
-      verifiedByEmployer: false,
-    },
-    {
-      id: "3",
-      employerName: "City Electrics",
-      jobTitle: "apprentice_4th",
-      location: "Birmingham",
-      startDate: "2015-09-01",
-      endDate: "2019-06-01",
-      description: "Completed 4-year apprenticeship programme.",
-      isVerified: true,
-      verifiedByEmployer: true,
-    },
-  ]);
+  // Real work history from database
+  const [workHistory, setWorkHistory] = useState<WorkExperience[]>([]);
 
-  const handleAddExperience = async () => {
-    setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 800));
+  // Fetch work history from database
+  useEffect(() => {
+    const fetchWorkHistory = async () => {
+      if (!profile?.id) {
+        setIsFetching(false);
+        return;
+      }
 
-    const newExp: WorkExperience = {
-      id: Date.now().toString(),
-      employerName: formData.employerName,
-      jobTitle: formData.jobTitle,
-      location: formData.location || undefined,
-      startDate: formData.startDate,
-      endDate: isCurrent ? undefined : formData.endDate || undefined,
-      isCurrent,
-      description: formData.description || undefined,
-      isVerified: false,
-      verifiedByEmployer: false,
+      try {
+        const data = await getWorkHistoryByProfileId(profile.id);
+        // Map database schema to UI schema
+        const mapped = data.map((w: ElecIdWorkHistory) => ({
+          id: w.id,
+          employerName: w.employer_name,
+          jobTitle: w.job_title,
+          location: undefined, // Not in current schema
+          startDate: w.start_date,
+          endDate: w.end_date || undefined,
+          isCurrent: w.is_current,
+          description: w.description || undefined,
+          isVerified: w.is_verified,
+          verifiedByEmployer: w.verified_by_employer,
+        }));
+        setWorkHistory(mapped);
+      } catch (error) {
+        console.error('Error fetching work history:', error);
+        addNotification({
+          title: "Error",
+          message: "Failed to load work history",
+          type: "error",
+        });
+      } finally {
+        setIsFetching(false);
+      }
     };
 
-    setWorkHistory((prev) => [newExp, ...prev]);
-    setIsLoading(false);
-    setIsAddDialogOpen(false);
-    resetForm();
+    fetchWorkHistory();
+  }, [profile?.id]);
 
-    addNotification({
-      title: "Experience Added",
-      message: `${formData.employerName} has been added to your work history.`,
-      type: "success",
-    });
+  const handleAddExperience = async () => {
+    if (!profile?.id) {
+      addNotification({
+        title: "Error",
+        message: "Profile not found. Please try again.",
+        type: "error",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const newDbExp = await addElecIdWorkHistory({
+        profile_id: profile.id,
+        employer_name: formData.employerName,
+        job_title: formData.jobTitle,
+        start_date: formData.startDate,
+        end_date: isCurrent ? null : formData.endDate || null,
+        is_current: isCurrent,
+        description: formData.description || null,
+        projects: null,
+        is_verified: false,
+        verified_by_employer: false,
+      });
+
+      const newExp: WorkExperience = {
+        id: newDbExp.id,
+        employerName: formData.employerName,
+        jobTitle: formData.jobTitle,
+        location: formData.location || undefined,
+        startDate: formData.startDate,
+        endDate: isCurrent ? undefined : formData.endDate || undefined,
+        isCurrent,
+        description: formData.description || undefined,
+        isVerified: false,
+        verifiedByEmployer: false,
+      };
+
+      setWorkHistory((prev) => [newExp, ...prev]);
+      setIsAddDialogOpen(false);
+      resetForm();
+
+      addNotification({
+        title: "Experience Added",
+        message: `${formData.employerName} has been added to your work history.`,
+        type: "success",
+      });
+    } catch (error) {
+      console.error('Error adding experience:', error);
+      addNotification({
+        title: "Error",
+        message: "Failed to add experience. Please try again.",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleEditExperience = async () => {
     if (!editingExp) return;
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 800));
 
-    setWorkHistory((prev) =>
-      prev.map((exp) =>
-        exp.id === editingExp.id
-          ? {
-              ...exp,
-              employerName: formData.employerName,
-              jobTitle: formData.jobTitle,
-              location: formData.location || undefined,
-              startDate: formData.startDate,
-              endDate: isCurrent ? undefined : formData.endDate || undefined,
-              isCurrent,
-              description: formData.description || undefined,
-            }
-          : exp
-      )
-    );
+    try {
+      await updateElecIdWorkHistory(editingExp.id, {
+        employer_name: formData.employerName,
+        job_title: formData.jobTitle,
+        start_date: formData.startDate,
+        end_date: isCurrent ? null : formData.endDate || null,
+        is_current: isCurrent,
+        description: formData.description || null,
+      });
 
-    setIsLoading(false);
-    setIsEditDialogOpen(false);
-    setEditingExp(null);
-    resetForm();
+      setWorkHistory((prev) =>
+        prev.map((exp) =>
+          exp.id === editingExp.id
+            ? {
+                ...exp,
+                employerName: formData.employerName,
+                jobTitle: formData.jobTitle,
+                location: formData.location || undefined,
+                startDate: formData.startDate,
+                endDate: isCurrent ? undefined : formData.endDate || undefined,
+                isCurrent,
+                description: formData.description || undefined,
+              }
+            : exp
+        )
+      );
 
-    addNotification({
-      title: "Experience Updated",
-      message: "Your work experience has been updated.",
-      type: "success",
-    });
+      setIsEditDialogOpen(false);
+      setEditingExp(null);
+      resetForm();
+
+      addNotification({
+        title: "Experience Updated",
+        message: "Your work experience has been updated.",
+        type: "success",
+      });
+    } catch (error) {
+      console.error('Error updating experience:', error);
+      addNotification({
+        title: "Error",
+        message: "Failed to update experience. Please try again.",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleDeleteExperience = async () => {
     if (!deleteConfirm.id) return;
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 600));
 
-    const deletedExp = workHistory.find((e) => e.id === deleteConfirm.id);
-    setWorkHistory((prev) => prev.filter((e) => e.id !== deleteConfirm.id));
+    try {
+      await deleteElecIdWorkHistory(deleteConfirm.id);
 
-    setIsLoading(false);
-    setDeleteConfirm({ open: false, id: null });
+      const deletedExp = workHistory.find((e) => e.id === deleteConfirm.id);
+      setWorkHistory((prev) => prev.filter((e) => e.id !== deleteConfirm.id));
+      setDeleteConfirm({ open: false, id: null });
 
-    addNotification({
-      title: "Experience Removed",
-      message: deletedExp
-        ? `${deletedExp.employerName} has been removed from your history.`
-        : "Experience has been removed.",
-      type: "info",
-    });
+      addNotification({
+        title: "Experience Removed",
+        message: deletedExp
+          ? `${deletedExp.employerName} has been removed from your history.`
+          : "Experience has been removed.",
+        type: "info",
+      });
+    } catch (error) {
+      console.error('Error deleting experience:', error);
+      addNotification({
+        title: "Error",
+        message: "Failed to delete experience. Please try again.",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const openEditDialog = (exp: WorkExperience) => {

@@ -71,22 +71,22 @@ const DocumentationGuide = () => {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="photography">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="photography" className="flex items-center gap-1">
+          <TabsList className="grid w-full grid-cols-4 h-auto">
+            <TabsTrigger value="photography" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 py-2 px-1 sm:px-3 text-[10px] sm:text-sm">
               <Camera className="h-4 w-4" />
-              <span className="hidden sm:inline">Photos</span>
+              <span>Photos</span>
             </TabsTrigger>
-            <TabsTrigger value="written" className="flex items-center gap-1">
+            <TabsTrigger value="written" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 py-2 px-1 sm:px-3 text-[10px] sm:text-sm">
               <FileText className="h-4 w-4" />
-              <span className="hidden sm:inline">Written</span>
+              <span>Written</span>
             </TabsTrigger>
-            <TabsTrigger value="video" className="flex items-center gap-1">
+            <TabsTrigger value="video" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 py-2 px-1 sm:px-3 text-[10px] sm:text-sm">
               <Video className="h-4 w-4" />
-              <span className="hidden sm:inline">Video</span>
+              <span>Video</span>
             </TabsTrigger>
-            <TabsTrigger value="audio" className="flex items-center gap-1">
+            <TabsTrigger value="audio" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 py-2 px-1 sm:px-3 text-[10px] sm:text-sm">
               <Mic className="h-4 w-4" />
-              <span className="hidden sm:inline">Audio</span>
+              <span>Audio</span>
             </TabsTrigger>
           </TabsList>
 

@@ -283,7 +283,7 @@ export function EvidenceSection({ onQuickCapture }: EvidenceSectionProps) {
 
       {/* Smart Capture Sheet */}
       <Sheet open={showCaptureSheet} onOpenChange={setShowCaptureSheet}>
-        <SheetContent side="bottom" className="h-[90vh] sm:h-auto sm:max-h-[90vh]">
+        <SheetContent side="bottom" className="h-[85vh] sm:h-auto sm:max-h-[85vh]">
           <SheetHeader className="sr-only">
             <SheetTitle>Add Evidence with AI</SheetTitle>
           </SheetHeader>

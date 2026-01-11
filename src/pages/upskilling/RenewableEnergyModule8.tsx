@@ -1,4 +1,5 @@
 import { ArrowLeft, Award, Building, FileText, AlertTriangle, BookOpen } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -14,7 +15,7 @@ const RenewableEnergyModule8 = () => {
     },
     {
       id: 2,
-      title: "Building Regulations (Part L, Part P, Structural)", 
+      title: "Building Regulations (Part L, Part P, Structural)",
       icon: Building,
       description: "Compliance with building regulations for renewable energy installations"
     },
@@ -44,13 +45,13 @@ const RenewableEnergyModule8 = () => {
         <Link to="../renewable-energy-course">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Renewable Energy Course
           </Button>
         </Link>
-        
+
         <div className="space-y-6">
           <div>
             <h1 className="text-4xl font-bold text-white mb-4">
@@ -73,46 +74,55 @@ const RenewableEnergyModule8 = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 auto-rows-fr">
-            {sections.map((section) => {
-              const sectionRoutes = {
-                1: "/renewable-energy-module-8-section-1",
-                2: "/renewable-energy-module-8-section-2", 
-                3: "/renewable-energy-module-8-section-3",
-                4: "/renewable-energy-module-8-section-4",
-                5: "/renewable-energy-module-8-section-5"
-              };
-              
-              return (
-                <Link key={section.id} to={sectionRoutes[section.id]}>
-                  <Card 
-                    className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col"
+            {sections.map((section, index) => (
+              <motion.div
+                key={section.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
+              >
+                <Link to={`/renewable-energy-module-8-section-${section.id}`} className="h-full block">
+                  <Card
+                    className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 hover:border-elec-yellow/30 hover:shadow-lg hover:shadow-elec-yellow/10 active:scale-[0.98] transition-all duration-300 cursor-pointer touch-manipulation h-full min-h-[200px]"
                   >
-                    <CardContent className="text-center space-y-3 pb-2 p-4 flex-shrink-0">
+                    {/* Accent line at top */}
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/50 to-transparent" />
+
+                    {/* Hover glow */}
+                    <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl bg-elec-yellow/20 opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
+
+                    <CardContent className="relative text-center space-y-3 p-4">
+                      {/* Icon with gradient bg */}
                       <div className="flex justify-center">
-                        <section.icon className="h-8 w-8 text-yellow-400" strokeWidth={2.5} />
+                        <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/20 border border-white/10">
+                          <section.icon className="h-6 w-6 text-elec-yellow" strokeWidth={1.5} />
+                        </div>
                       </div>
-                      
+
+                      {/* Section Badge */}
                       <div className="flex justify-center">
-                        <Badge 
-                          variant="secondary" 
-                          className="bg-yellow-600/40 text-yellow-400 hover:bg-yellow-600/50 font-bold text-xs px-3 py-1 border-0"
+                        <Badge
+                          variant="secondary"
+                          className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 font-bold text-xs px-3 py-1"
                         >
                           Section {section.id}
                         </Badge>
                       </div>
-                      
-                      <h3 className="text-lg font-bold text-white leading-tight group-hover:text-yellow-400 transition-colors duration-300">
+
+                      {/* Title */}
+                      <h3 className="text-base font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors duration-300">
                         {section.title}
                       </h3>
-                      
-                      <p className="text-gray-400 text-xs leading-relaxed">
+
+                      {/* Description */}
+                      <p className="text-white/50 text-xs leading-relaxed line-clamp-2">
                         {section.description}
                       </p>
                     </CardContent>
                   </Card>
                 </Link>
-              );
-            })}
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>

@@ -37,7 +37,11 @@ import { TeamChatList, TeamChatView } from "@/components/employer/team-chat";
 import { CollegeChatList, CollegeChatView } from "@/components/college/chat";
 
 // Peer support
-import { peerConversationService, peerMessageService, PeerConversation, PeerMessage } from "@/services/peerSupportService";
+import { PeerConversation, peerConversationService } from "@/services/peerSupportService";
+import { usePeerConversations, usePeerMessages, useSendPeerMessage, useMarkPeerMessagesAsRead, usePeerTyping, usePeerPresence } from "@/hooks/usePeerChat";
+import { ReadReceipt, getReceiptStatus, TypingIndicatorWithName } from "@/components/messaging/ReadReceipt";
+import { PresenceIndicator } from "@/components/messaging/PresenceIndicator";
+import { calculateStatus } from "@/services/presenceService";
 
 // Types
 import type { Conversation, ElectricianConversation } from "@/services/conversationService";
@@ -63,7 +67,9 @@ function PeerConversationListItem({
   onClick: (conv: PeerConversation) => void;
 }) {
   const isSupporter = conversation.supporter?.user_id === currentUserId;
-  const otherName = isSupporter ? 'Anonymous Seeker' : (conversation.supporter?.display_name || 'Peer Supporter');
+  const otherName = isSupporter
+    ? ((conversation as any).seeker?.full_name?.split(' ')[0] || 'Mate')
+    : (conversation.supporter?.display_name || 'Peer Supporter');
   const initials = otherName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
   const timeAgo = conversation.last_message_at
     ? formatDistanceToNow(new Date(conversation.last_message_at), { addSuffix: false })
@@ -183,8 +189,6 @@ export function MessagesDropdown() {
   const [selectedTeamChannel, setSelectedTeamChannel] = useState<TeamChannel | null>(null);
   const [selectedTeamDM, setSelectedTeamDM] = useState<TeamDirectMessage | null>(null);
   const [selectedCollegeConversation, setSelectedCollegeConversation] = useState<CollegeConversation | null>(null);
-  const [peerMessages, setPeerMessages] = useState<PeerMessage[]>([]);
-  const [isSending, setIsSending] = useState(false);
   const isMobile = useIsMobile();
   const { user } = useAuth();
 
@@ -213,11 +217,8 @@ export function MessagesDropdown() {
     totalUnread: electricianUnread
   } = useElectricianConversations(elecIdProfile?.id);
 
-  // Peer support conversations
-  const { data: peerConversations = [] } = useQuery({
-    queryKey: ['peer-conversations'],
-    queryFn: () => peerConversationService.getMyConversations(),
-  });
+  // Peer support conversations - using centralised hook
+  const { data: peerConversations = [] } = usePeerConversations();
 
   // Team chat (for employer context)
   const teamChatUnread = useTeamChatUnread(employerId);
@@ -245,24 +246,27 @@ export function MessagesDropdown() {
     selectedConversation?.id || ''
   );
 
-  // Load peer messages when a peer conversation is selected
-  useEffect(() => {
-    if (selectedPeerConversation) {
-      peerMessageService.getMessages(selectedPeerConversation.id).then(setPeerMessages);
+  // Peer messages - using centralised hook (shared cache with PeerSupportHub)
+  const { data: peerMessages = [] } = usePeerMessages(selectedPeerConversation?.id);
+  const sendPeerMessage = useSendPeerMessage();
+  const markPeerAsRead = useMarkPeerMessagesAsRead();
 
-      // Subscribe to new messages
-      const unsubscribe = peerMessageService.subscribeToMessages(
-        selectedPeerConversation.id,
-        (newMessage) => {
-          setPeerMessages(prev => [...prev, newMessage]);
-        }
-      );
+  // Peer typing indicator
+  const peerPartnerName = selectedPeerConversation
+    ? (selectedPeerConversation.supporter?.user_id === user?.id
+        ? ((selectedPeerConversation as any).seeker?.full_name?.split(' ')[0] || 'Mate')
+        : (selectedPeerConversation.supporter?.display_name || 'Peer Supporter'))
+    : '';
+  const { isOtherTyping: isPeerTyping, setTyping: setPeerTyping } = usePeerTyping(selectedPeerConversation?.id);
 
-      return unsubscribe;
-    } else {
-      setPeerMessages([]);
-    }
-  }, [selectedPeerConversation?.id]);
+  // Peer presence - get partner's user ID
+  const peerPartnerId = selectedPeerConversation
+    ? (selectedPeerConversation.supporter?.user_id === user?.id
+        ? (selectedPeerConversation as any).seeker_id
+        : selectedPeerConversation.supporter?.user_id)
+    : undefined;
+  const { data: peerPresence } = usePeerPresence(peerPartnerId);
+  const peerPresenceStatus = peerPresence ? calculateStatus(peerPresence.last_seen) : 'offline';
 
   // Mutations for job messages
   const sendMessage = useSendMessage();
@@ -289,7 +293,7 @@ export function MessagesDropdown() {
   // Mark peer messages as read
   useEffect(() => {
     if (selectedPeerConversation) {
-      peerMessageService.markAsRead(selectedPeerConversation.id);
+      markPeerAsRead.mutate(selectedPeerConversation.id);
     }
   }, [selectedPeerConversation?.id]);
 
@@ -388,19 +392,18 @@ export function MessagesDropdown() {
   const handleSendPeerMessage = async (content: string) => {
     if (!selectedPeerConversation) return;
 
-    setIsSending(true);
-    try {
-      const newMessage = await peerMessageService.sendMessage(selectedPeerConversation.id, content);
-      setPeerMessages(prev => [...prev, newMessage]);
-    } catch (error) {
-      toast({
-        title: "Failed to Send",
-        description: "Your message couldn't be sent. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSending(false);
-    }
+    sendPeerMessage.mutate(
+      { conversationId: selectedPeerConversation.id, content },
+      {
+        onError: () => {
+          toast({
+            title: "Failed to Send",
+            description: "Your message couldn't be sent. Please try again.",
+            variant: "destructive",
+          });
+        },
+      }
+    );
   };
 
   const handleFindSupporter = () => {
@@ -433,8 +436,9 @@ export function MessagesDropdown() {
   const getPeerConversationInfo = () => {
     if (!selectedPeerConversation) return { name: '', isSupporter: false };
     const isSupporter = selectedPeerConversation.supporter?.user_id === user?.id;
+    const seekerName = (selectedPeerConversation as any).seeker?.full_name?.split(' ')[0];
     return {
-      name: isSupporter ? 'Anonymous Seeker' : (selectedPeerConversation.supporter?.display_name || 'Peer Supporter'),
+      name: isSupporter ? (seekerName || 'Mate') : (selectedPeerConversation.supporter?.display_name || 'Peer Supporter'),
       isSupporter,
     };
   };
@@ -668,7 +672,10 @@ export function MessagesDropdown() {
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
-                  <h2 className="font-semibold text-foreground truncate">{peerInfo.name}</h2>
+                  <div className="flex items-center gap-2">
+                    <h2 className="font-semibold text-foreground truncate">{peerInfo.name}</h2>
+                    <PresenceIndicator status={peerPresenceStatus} lastSeen={peerPresence?.last_seen} size="sm" />
+                  </div>
                   <p className="text-xs text-pink-500 flex items-center gap-1">
                     <Heart className="h-3 w-3" />
                     {peerInfo.isSupporter ? 'You are supporting' : 'Peer Support Chat'}
@@ -676,7 +683,7 @@ export function MessagesDropdown() {
                 </div>
               </div>
 
-              {/* Peer Messages - Simple display */}
+              {/* Peer Messages with read receipts */}
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
                 {peerMessages.length === 0 ? (
                   <div className="text-center text-muted-foreground text-sm py-8">
@@ -685,6 +692,7 @@ export function MessagesDropdown() {
                 ) : (
                   peerMessages.map((msg) => {
                     const isOwn = msg.sender_id === user?.id;
+                    const isOptimistic = msg.id.startsWith('temp-');
                     return (
                       <div key={msg.id} className={cn("flex", isOwn ? "justify-end" : "justify-start")}>
                         <div className={cn(
@@ -694,20 +702,42 @@ export function MessagesDropdown() {
                             : "bg-muted rounded-bl-sm"
                         )}>
                           <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
-                          <p className={cn("text-[10px] mt-1", isOwn ? "text-pink-100" : "text-muted-foreground")}>
-                            {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                          </p>
+                          <div className={cn("flex items-center gap-1 mt-1", isOwn ? "justify-end" : "")}>
+                            <span className={cn("text-[10px]", isOwn ? "text-pink-100" : "text-muted-foreground")}>
+                              {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                            {isOwn && (
+                              <ReadReceipt
+                                status={getReceiptStatus(
+                                  msg.created_at,
+                                  (msg as any).delivered_at,
+                                  (msg as any).read_at,
+                                  isOptimistic
+                                )}
+                                className={isOptimistic ? "text-pink-200" : "text-pink-100"}
+                              />
+                            )}
+                          </div>
                         </div>
                       </div>
                     );
                   })
+                )}
+                {/* Typing indicator */}
+                {isPeerTyping && (
+                  <div className="flex justify-start">
+                    <div className="bg-muted rounded-2xl rounded-bl-sm px-4 py-2">
+                      <TypingIndicatorWithName userName={peerPartnerName} className="text-muted-foreground" />
+                    </div>
+                  </div>
                 )}
               </div>
 
               <div className="shrink-0 pb-safe">
                 <MessageInput
                   onSend={handleSendPeerMessage}
-                  isSending={isSending}
+                  onTyping={(isTyping) => setPeerTyping(isTyping, peerInfo.name)}
+                  isSending={sendPeerMessage.isPending}
                   placeholder="Type a supportive message..."
                 />
               </div>

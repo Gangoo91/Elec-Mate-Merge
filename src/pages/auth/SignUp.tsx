@@ -24,7 +24,8 @@ import {
   X,
   ChevronLeft,
   Sparkles,
-  AlertTriangle
+  AlertTriangle,
+  Copy
 } from 'lucide-react';
 import { storeConsent } from '@/services/consentService';
 import { supabase } from '@/integrations/supabase/client';
@@ -75,6 +76,7 @@ const SignUp = () => {
     timestamp: ''
   });
   const [showElecIdConfirm, setShowElecIdConfirm] = useState(false);
+  const [generatedElecId, setGeneratedElecId] = useState<string | null>(null);
 
   const { signUp } = useAuth();
   const navigate = useNavigate();
@@ -189,6 +191,7 @@ const SignUp = () => {
           });
           if (elecIdData?.elec_id_number) {
             console.log('Elec-ID generated:', elecIdData.elec_id_number);
+            setGeneratedElecId(elecIdData.elec_id_number);
           }
           if (elecIdError) {
             console.warn('Elec-ID generation returned error:', elecIdError);
@@ -389,12 +392,25 @@ const SignUp = () => {
                       <BadgeCheck className="h-6 w-6 text-elec-yellow" />
                     </div>
                     <div className="text-left flex-1">
-                      <p className="text-ios-headline font-semibold text-white">Elec-ID Requested</p>
-                      <p className="text-ios-caption-1 text-white/50">Ready after verification</p>
+                      <p className="text-ios-headline font-semibold text-white">Your Elec-ID</p>
+                      {generatedElecId ? (
+                        <p className="text-lg font-bold text-elec-yellow tracking-wider">{generatedElecId}</p>
+                      ) : (
+                        <p className="text-ios-caption-1 text-white/50">Generating...</p>
+                      )}
                     </div>
-                    <div className="px-2 py-1 rounded-full bg-elec-yellow/20 text-elec-yellow text-ios-caption-2 font-medium">
-                      Pending
-                    </div>
+                    {generatedElecId && (
+                      <motion.button
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => {
+                          navigator.clipboard.writeText(generatedElecId);
+                        }}
+                        className="px-3 py-2 rounded-xl bg-elec-yellow/20 text-elec-yellow text-ios-caption-1 font-medium flex items-center gap-1.5 active:bg-elec-yellow/30"
+                      >
+                        <Copy className="h-3.5 w-3.5" />
+                        Copy
+                      </motion.button>
+                    )}
                   </div>
                 </CardContent>
               </Card>

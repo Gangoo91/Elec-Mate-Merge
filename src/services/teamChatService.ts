@@ -1,5 +1,22 @@
 import { supabase } from '@/integrations/supabase/client';
 
+// Helper to send push notification (fire and forget)
+const sendPushNotification = async (
+  userId: string,
+  title: string,
+  body: string,
+  type: 'job' | 'team' | 'college' | 'peer',
+  data?: Record<string, unknown>
+) => {
+  try {
+    await supabase.functions.invoke('send-push-notification', {
+      body: { userId, title, body, type, data },
+    });
+  } catch (error) {
+    console.error('Push notification error:', error);
+  }
+};
+
 // Types
 export interface TeamChannel {
   id: string;
@@ -246,6 +263,10 @@ export const teamChannelMessageService = {
       .single();
 
     if (error) throw error;
+
+    // Send push notification to channel members (fire and forget)
+    sendChannelMessagePush(channelId, user.id, content).catch(console.error);
+
     return data;
   },
 
@@ -359,6 +380,10 @@ export const teamDMService = {
       .single();
 
     if (error) throw error;
+
+    // Send push notification to DM recipient (fire and forget)
+    sendDMPush(conversationId, user.id, content).catch(console.error);
+
     return data;
   },
 
@@ -414,3 +439,67 @@ export const teamDMService = {
     return () => supabase.removeChannel(channel);
   },
 };
+
+// =====================================================
+// PUSH NOTIFICATION HELPERS
+// =====================================================
+
+/**
+ * Send push notification to all channel members
+ */
+async function sendChannelMessagePush(channelId: string, senderId: string, content: string) {
+  try {
+    // Get channel info and members
+    const [channelResult, membersResult, senderResult] = await Promise.all([
+      supabase.from('team_channels').select('name').eq('id', channelId).single(),
+      supabase.from('team_channel_members').select('user_id').eq('channel_id', channelId).eq('notifications_enabled', true),
+      supabase.from('employer_employees').select('name').eq('user_id', senderId).single(),
+    ]);
+
+    const channel = channelResult.data;
+    const members = membersResult.data || [];
+    const senderName = senderResult.data?.name || 'Someone';
+
+    if (!channel) return;
+
+    const title = `#${channel.name}`;
+    const body = `${senderName}: ${content.length > 80 ? content.substring(0, 77) + '...' : content}`;
+
+    // Send to all members except sender
+    const notifications = members
+      .filter(m => m.user_id !== senderId)
+      .map(m => sendPushNotification(m.user_id, title, body, 'team', { channelId, senderId, senderName }));
+
+    await Promise.all(notifications);
+  } catch (error) {
+    console.error('Channel push notification error:', error);
+  }
+}
+
+/**
+ * Send push notification for DM
+ */
+async function sendDMPush(conversationId: string, senderId: string, content: string) {
+  try {
+    // Get conversation and sender info
+    const [convResult, senderResult] = await Promise.all([
+      supabase.from('team_direct_messages').select('participant_1_id, participant_2_id').eq('id', conversationId).single(),
+      supabase.from('employer_employees').select('name').eq('user_id', senderId).single(),
+    ]);
+
+    const conv = convResult.data;
+    const senderName = senderResult.data?.name || 'Someone';
+
+    if (!conv) return;
+
+    // Determine recipient
+    const recipientId = conv.participant_1_id === senderId ? conv.participant_2_id : conv.participant_1_id;
+
+    const title = `Message from ${senderName}`;
+    const body = content.length > 100 ? content.substring(0, 97) + '...' : content;
+
+    await sendPushNotification(recipientId, title, body, 'team', { dmId: conversationId, senderId, senderName });
+  } catch (error) {
+    console.error('DM push notification error:', error);
+  }
+}

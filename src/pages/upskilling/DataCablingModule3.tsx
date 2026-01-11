@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const DataCablingModule3 = () => {
   const sections = [
@@ -14,7 +15,7 @@ const DataCablingModule3 = () => {
     },
     {
       id: 2,
-      title: "Connector Types and Polish Grades (LC, SC, ST)", 
+      title: "Connector Types and Polish Grades (LC, SC, ST)",
       icon: Shield,
       description: "Fibre optic connector types and polishing standards"
     },
@@ -50,13 +51,13 @@ const DataCablingModule3 = () => {
         <Link to="../data-cabling-course">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md min-h-[48px]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Data Cabling Course
           </Button>
         </Link>
-        
+
         <div className="space-y-6">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-white mb-4">
@@ -79,37 +80,54 @@ const DataCablingModule3 = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 auto-rows-fr">
-            {sections.map((section) => (
-              <Link 
-                key={section.id} 
-                to={`../data-cabling-module-3-section-${section.id}`}
-                className="h-full"
+            {sections.map((section, index) => (
+              <motion.div
+                key={section.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
               >
-                <Card className="bg-card border-transparent hover:border-yellow-400/30 transition-all duration-300 hover:bg-card/80 cursor-pointer group h-full flex flex-col min-h-[48px]">
-                  <CardContent className="text-center space-y-3 p-4 flex-grow flex flex-col justify-center min-h-[48px]">
-                    <div className="flex justify-center">
-                      <section.icon className="h-8 w-8 text-yellow-400" strokeWidth={2.5} />
-                    </div>
-                    
-                    <div className="flex justify-center">
-                      <Badge 
-                        variant="secondary" 
-                        className="bg-yellow-400/10 text-yellow-400 hover:bg-yellow-400/10 font-bold text-xs px-3 py-1 border-0"
-                      >
-                        Section {section.id}
-                      </Badge>
-                    </div>
-                    
-                    <h3 className="text-lg font-bold text-white leading-tight group-hover:text-yellow-400 transition-colors duration-300">
-                      {section.title}
-                    </h3>
-                    
-                    <p className="text-gray-400 text-xs leading-relaxed">
-                      {section.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
+                <Link to={`../data-cabling-module-3-section-${section.id}`} className="h-full block">
+                  <Card
+                    className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 hover:border-elec-yellow/30 hover:shadow-lg hover:shadow-elec-yellow/10 active:scale-[0.98] transition-all duration-300 cursor-pointer touch-manipulation h-full min-h-[200px]"
+                  >
+                    {/* Accent line at top */}
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/50 to-transparent" />
+
+                    {/* Hover glow */}
+                    <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl bg-elec-yellow/20 opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
+
+                    <CardContent className="relative text-center space-y-3 p-4">
+                      {/* Icon with gradient bg */}
+                      <div className="flex justify-center">
+                        <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/20 border border-white/10">
+                          <section.icon className="h-6 w-6 text-elec-yellow" strokeWidth={1.5} />
+                        </div>
+                      </div>
+
+                      {/* Section Badge */}
+                      <div className="flex justify-center">
+                        <Badge
+                          variant="secondary"
+                          className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 font-bold text-xs px-3 py-1"
+                        >
+                          Section {section.id}
+                        </Badge>
+                      </div>
+
+                      {/* Title */}
+                      <h3 className="text-base font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors duration-300">
+                        {section.title}
+                      </h3>
+
+                      {/* Description */}
+                      <p className="text-white/50 text-xs leading-relaxed line-clamp-2">
+                        {section.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </div>

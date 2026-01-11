@@ -1,11 +1,12 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   ArrowLeft, RotateCcw, CheckCircle, Trophy, Clock, Target,
   XCircle, Sparkles, Brain, Zap, ChevronRight, Award, TrendingUp
 } from "lucide-react";
+import { useStudyStreak } from "@/hooks/useStudyStreak";
 
 interface FlashcardData {
   id: string;
@@ -30,6 +31,10 @@ const FlashcardStudySession = ({ setId, studyMode, onExit }: FlashcardStudySessi
   const [sessionStartTime] = useState(Date.now());
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [isFlipping, setIsFlipping] = useState(false);
+
+  // Streak tracking
+  const { recordSession } = useStudyStreak();
+  const sessionRecordedRef = useRef(false);
 
   // Comprehensive flashcard data for UK electrical apprentices
   const flashcardSets = {
@@ -157,6 +162,14 @@ const FlashcardStudySession = ({ setId, studyMode, onExit }: FlashcardStudySessi
 
     setFlashcards(orderedCards);
   }, [setId, studyMode]);
+
+  // Record streak when session completes
+  useEffect(() => {
+    if (isCompleted && flashcards.length > 0 && !sessionRecordedRef.current) {
+      sessionRecordedRef.current = true;
+      recordSession(flashcards.length);
+    }
+  }, [isCompleted, flashcards.length, recordSession]);
 
   const currentCard = flashcards[currentIndex];
   const progress = flashcards.length > 0 ? ((currentIndex + 1) / flashcards.length) * 100 : 0;

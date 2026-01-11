@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -32,6 +32,14 @@ import {
 import { UK_ELECTRICAL_SKILLS, SKILL_LEVELS, SkillLevel } from "@/data/uk-electrician-constants";
 import { useNotifications } from "@/components/notifications/NotificationProvider";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
+import { useElecIdProfile } from "@/hooks/useElecIdProfile";
+import {
+  getSkillsByProfileId,
+  addElecIdSkill,
+  updateElecIdSkill,
+  deleteElecIdSkill,
+  ElecIdSkill,
+} from "@/services/elecIdService";
 
 interface Skill {
   id: string;
@@ -44,6 +52,7 @@ interface Skill {
 
 const ElecIdSkills = () => {
   const { addNotification } = useNotifications();
+  const { profile } = useElecIdProfile();
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editingSkill, setEditingSkill] = useState<Skill | null>(null);
@@ -52,6 +61,7 @@ const ElecIdSkills = () => {
     id: null,
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedSkill, setSelectedSkill] = useState<string>("");
   const [formData, setFormData] = useState({
@@ -59,92 +69,165 @@ const ElecIdSkills = () => {
     yearsExperience: "",
   });
 
-  // Mock skills - will be from database
-  const [skills, setSkills] = useState<Skill[]>([
-    { id: "1", skillName: "Domestic Installation", category: "installation", level: "advanced", yearsExperience: 8, isVerified: true },
-    { id: "2", skillName: "Commercial Installation", category: "installation", level: "advanced", yearsExperience: 6, isVerified: true },
-    { id: "3", skillName: "Consumer Units", category: "installation", level: "expert", yearsExperience: 10, isVerified: true },
-    { id: "4", skillName: "Initial Verification", category: "testing", level: "advanced", yearsExperience: 5, isVerified: true },
-    { id: "5", skillName: "Periodic Inspection", category: "testing", level: "advanced", yearsExperience: 5, isVerified: true },
-    { id: "6", skillName: "Fault Finding", category: "testing", level: "intermediate", yearsExperience: 3, isVerified: false },
-    { id: "7", skillName: "Fire Alarm Systems", category: "specialist", level: "intermediate", yearsExperience: 2, isVerified: false },
-    { id: "8", skillName: "Emergency Lighting", category: "specialist", level: "advanced", yearsExperience: 4, isVerified: true },
-    { id: "9", skillName: "EV Charging", category: "renewable", level: "intermediate", yearsExperience: 1, isVerified: false },
-    { id: "10", skillName: "Solar PV", category: "renewable", level: "beginner", yearsExperience: 1, isVerified: false },
-  ]);
+  // Real skills from database
+  const [skills, setSkills] = useState<Skill[]>([]);
 
-  const handleAddSkill = async () => {
-    setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 800));
+  // Fetch skills from database
+  useEffect(() => {
+    const fetchSkills = async () => {
+      if (!profile?.id) {
+        setIsFetching(false);
+        return;
+      }
 
-    const newSkill: Skill = {
-      id: Date.now().toString(),
-      skillName: selectedSkill,
-      category: selectedCategory,
-      level: formData.level as SkillLevel,
-      yearsExperience: parseInt(formData.yearsExperience) || 0,
-      isVerified: false,
+      try {
+        const data = await getSkillsByProfileId(profile.id);
+        // Map database schema to UI schema
+        const mapped = data.map((s: ElecIdSkill) => ({
+          id: s.id,
+          skillName: s.skill_name,
+          category: 'installation', // Default category - we may need to store this
+          level: (s.skill_level || 'intermediate') as SkillLevel,
+          yearsExperience: s.years_experience || 0,
+          isVerified: s.is_verified,
+        }));
+        setSkills(mapped);
+      } catch (error) {
+        console.error('Error fetching skills:', error);
+        addNotification({
+          title: "Error",
+          message: "Failed to load skills",
+          type: "error",
+        });
+      } finally {
+        setIsFetching(false);
+      }
     };
 
-    setSkills((prev) => [...prev, newSkill]);
-    setIsLoading(false);
-    setIsAddDialogOpen(false);
-    resetForm();
+    fetchSkills();
+  }, [profile?.id]);
 
-    addNotification({
-      title: "Skill Added",
-      message: `${selectedSkill} has been added to your profile.`,
-      type: "success",
-    });
+  const handleAddSkill = async () => {
+    if (!profile?.id) {
+      addNotification({
+        title: "Error",
+        message: "Profile not found. Please try again.",
+        type: "error",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const newDbSkill = await addElecIdSkill({
+        profile_id: profile.id,
+        skill_name: selectedSkill,
+        skill_level: formData.level as SkillLevel,
+        years_experience: parseInt(formData.yearsExperience) || 0,
+        is_verified: false,
+      });
+
+      const newSkill: Skill = {
+        id: newDbSkill.id,
+        skillName: selectedSkill,
+        category: selectedCategory,
+        level: formData.level as SkillLevel,
+        yearsExperience: parseInt(formData.yearsExperience) || 0,
+        isVerified: false,
+      };
+
+      setSkills((prev) => [...prev, newSkill]);
+      setIsAddDialogOpen(false);
+      resetForm();
+
+      addNotification({
+        title: "Skill Added",
+        message: `${selectedSkill} has been added to your profile.`,
+        type: "success",
+      });
+    } catch (error) {
+      console.error('Error adding skill:', error);
+      addNotification({
+        title: "Error",
+        message: "Failed to add skill. Please try again.",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleEditSkill = async () => {
     if (!editingSkill) return;
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 800));
 
-    setSkills((prev) =>
-      prev.map((s) =>
-        s.id === editingSkill.id
-          ? {
-              ...s,
-              level: formData.level as SkillLevel,
-              yearsExperience: parseInt(formData.yearsExperience) || 0,
-            }
-          : s
-      )
-    );
+    try {
+      await updateElecIdSkill(editingSkill.id, {
+        skill_level: formData.level as SkillLevel,
+        years_experience: parseInt(formData.yearsExperience) || 0,
+      });
 
-    setIsLoading(false);
-    setIsEditDialogOpen(false);
-    setEditingSkill(null);
-    resetForm();
+      setSkills((prev) =>
+        prev.map((s) =>
+          s.id === editingSkill.id
+            ? {
+                ...s,
+                level: formData.level as SkillLevel,
+                yearsExperience: parseInt(formData.yearsExperience) || 0,
+              }
+            : s
+        )
+      );
 
-    addNotification({
-      title: "Skill Updated",
-      message: "Your skill details have been updated.",
-      type: "success",
-    });
+      setIsEditDialogOpen(false);
+      setEditingSkill(null);
+      resetForm();
+
+      addNotification({
+        title: "Skill Updated",
+        message: "Your skill details have been updated.",
+        type: "success",
+      });
+    } catch (error) {
+      console.error('Error updating skill:', error);
+      addNotification({
+        title: "Error",
+        message: "Failed to update skill. Please try again.",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleDeleteSkill = async () => {
     if (!deleteConfirm.id) return;
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 600));
 
-    const deletedSkill = skills.find((s) => s.id === deleteConfirm.id);
-    setSkills((prev) => prev.filter((s) => s.id !== deleteConfirm.id));
+    try {
+      await deleteElecIdSkill(deleteConfirm.id);
 
-    setIsLoading(false);
-    setDeleteConfirm({ open: false, id: null });
+      const deletedSkill = skills.find((s) => s.id === deleteConfirm.id);
+      setSkills((prev) => prev.filter((s) => s.id !== deleteConfirm.id));
+      setDeleteConfirm({ open: false, id: null });
 
-    addNotification({
-      title: "Skill Removed",
-      message: deletedSkill
-        ? `${deletedSkill.skillName} has been removed.`
-        : "Skill has been removed.",
-      type: "info",
-    });
+      addNotification({
+        title: "Skill Removed",
+        message: deletedSkill
+          ? `${deletedSkill.skillName} has been removed.`
+          : "Skill has been removed.",
+        type: "info",
+      });
+    } catch (error) {
+      console.error('Error deleting skill:', error);
+      addNotification({
+        title: "Error",
+        message: "Failed to delete skill. Please try again.",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const openEditDialog = (skill: Skill) => {

@@ -388,7 +388,7 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
         main_switch_side: 'right'
       };
 
-      const { data, error: invokeError } = await supabase.functions.invoke('board-read-simple', {
+      const { data, error: invokeError } = await supabase.functions.invoke('board-read-enhanced', {
         body: { images: capturedImages.map(img => img.url), hints }
       });
 

@@ -261,6 +261,7 @@ export default function UpskillingHome() {
                   lessonsCount={course.lessonsCount}
                   questionsCount={course.questionsCount}
                   icon={course.icon}
+                  colorScheme="Upskilling"
                   onClick={() => navigate(`/electrician/upskilling/${course.id}`)}
                 />
               ))}
@@ -282,6 +283,7 @@ export default function UpskillingHome() {
                     lessonsCount={course.lessonsCount}
                     questionsCount={course.questionsCount}
                     icon={course.icon}
+                    colorScheme="Upskilling"
                     onClick={() => navigate(`/electrician/upskilling/${course.id}`)}
                   />
                 ))}

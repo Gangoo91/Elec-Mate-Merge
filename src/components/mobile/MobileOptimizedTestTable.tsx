@@ -255,7 +255,7 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
                 <span className="font-bold text-lg text-foreground">
                   {result.circuitDesignation || `Circuit ${result.circuitNumber || 'New'}`}
                 </span>
-                <span className="text-sm text-muted-foreground font-medium">
+                <span className="text-sm text-muted-foreground font-medium truncate max-w-[200px]">
                   {result.circuitDescription || 'No description'}
                 </span>
               </div>

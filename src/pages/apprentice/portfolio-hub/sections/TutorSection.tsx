@@ -126,23 +126,23 @@ export function TutorSection() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
           <Card className="border-amber-500/20 bg-amber-500/5">
-            <CardContent className="p-3 text-center">
-              <p className="text-xl font-bold text-amber-500">{actionRequiredCount}</p>
-              <p className="text-xs text-muted-foreground">Actions</p>
+            <CardContent className="p-2 sm:p-3 text-center">
+              <p className="text-lg sm:text-xl font-bold text-amber-500">{actionRequiredCount}</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground">Actions</p>
             </CardContent>
           </Card>
           <Card className="border-blue-500/20 bg-blue-500/5">
-            <CardContent className="p-3 text-center">
-              <p className="text-xl font-bold text-blue-500">{unreadCount}</p>
-              <p className="text-xs text-muted-foreground">Unread</p>
+            <CardContent className="p-2 sm:p-3 text-center">
+              <p className="text-lg sm:text-xl font-bold text-blue-500">{unreadCount}</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground">Unread</p>
             </CardContent>
           </Card>
           <Card className="border-green-500/20 bg-green-500/5">
-            <CardContent className="p-3 text-center">
-              <p className="text-xl font-bold text-green-500">{resolvedThreads.length}</p>
-              <p className="text-xs text-muted-foreground">Resolved</p>
+            <CardContent className="p-2 sm:p-3 text-center">
+              <p className="text-lg sm:text-xl font-bold text-green-500">{resolvedThreads.length}</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground">Resolved</p>
             </CardContent>
           </Card>
         </div>
@@ -167,7 +167,7 @@ export function TutorSection() {
                 <button
                   key={thread.rootComment.id}
                   onClick={() => setSelectedThread(thread.rootComment.id)}
-                  className="w-full text-left p-3 rounded-lg border border-amber-500/20 bg-background hover:bg-amber-500/5 transition-colors"
+                  className="w-full text-left p-3 rounded-lg border border-amber-500/20 bg-background hover:bg-amber-500/5 transition-colors touch-manipulation active:scale-[0.98]"
                 >
                   <div className="flex items-start gap-3">
                     <Avatar className="h-8 w-8 shrink-0">
@@ -457,7 +457,7 @@ export function TutorSection() {
       <div className="fixed bottom-24 right-4 lg:hidden">
         <Button
           size="lg"
-          className="h-14 w-14 rounded-full bg-elec-yellow text-black shadow-lg"
+          className="h-14 w-14 rounded-full bg-elec-yellow text-black shadow-lg touch-manipulation active:scale-95"
         >
           <Send className="h-5 w-5" />
         </Button>

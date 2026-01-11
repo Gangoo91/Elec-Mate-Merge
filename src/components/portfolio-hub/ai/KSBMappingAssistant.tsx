@@ -238,7 +238,7 @@ export function KSBMappingAssistant({
               size="sm"
               variant={selectedCategory === 'all' ? 'default' : 'outline'}
               onClick={() => setSelectedCategory('all')}
-              className="h-7 text-xs"
+              className="h-9 text-xs touch-manipulation active:scale-95"
             >
               All ({totalKSBs})
             </Button>
@@ -246,7 +246,7 @@ export function KSBMappingAssistant({
               size="sm"
               variant={selectedCategory === 'knowledge' ? 'default' : 'outline'}
               onClick={() => setSelectedCategory('knowledge')}
-              className={cn("h-7 text-xs", selectedCategory === 'knowledge' && "bg-blue-500")}
+              className={cn("h-9 text-xs touch-manipulation active:scale-95", selectedCategory === 'knowledge' && "bg-blue-500")}
             >
               <BookOpen className="h-3 w-3 mr-1" />
               Knowledge ({categoryCounts.knowledge})
@@ -255,7 +255,7 @@ export function KSBMappingAssistant({
               size="sm"
               variant={selectedCategory === 'skill' ? 'default' : 'outline'}
               onClick={() => setSelectedCategory('skill')}
-              className={cn("h-7 text-xs", selectedCategory === 'skill' && "bg-green-500")}
+              className={cn("h-9 text-xs touch-manipulation active:scale-95", selectedCategory === 'skill' && "bg-green-500")}
             >
               <Target className="h-3 w-3 mr-1" />
               Skills ({categoryCounts.skill})
@@ -264,7 +264,7 @@ export function KSBMappingAssistant({
               size="sm"
               variant={selectedCategory === 'behaviour' ? 'default' : 'outline'}
               onClick={() => setSelectedCategory('behaviour')}
-              className={cn("h-7 text-xs", selectedCategory === 'behaviour' && "bg-purple-500")}
+              className={cn("h-9 text-xs touch-manipulation active:scale-95", selectedCategory === 'behaviour' && "bg-purple-500")}
             >
               <Users className="h-3 w-3 mr-1" />
               Behaviours ({categoryCounts.behaviour})
@@ -287,7 +287,7 @@ export function KSBMappingAssistant({
                 <div key={group} className="border border-border rounded-lg overflow-hidden">
                   <button
                     onClick={() => setExpandedGroup(isExpanded ? null : group)}
-                    className="w-full flex items-center justify-between p-3 hover:bg-muted/50 transition-colors"
+                    className="w-full flex items-center justify-between p-3 hover:bg-muted/50 transition-colors touch-manipulation active:bg-muted/70"
                   >
                     <div className="flex items-center gap-3">
                       <div className="h-8 w-8 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
@@ -316,7 +316,7 @@ export function KSBMappingAssistant({
                           <div
                             key={item.code}
                             className={cn(
-                              "p-3 transition-colors cursor-pointer",
+                              "p-3 transition-colors cursor-pointer touch-manipulation active:bg-muted/50",
                               isSelected && "bg-elec-yellow/10",
                               isCompleted && "bg-green-500/5"
                             )}

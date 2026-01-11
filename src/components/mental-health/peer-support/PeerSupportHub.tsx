@@ -3,6 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Input } from '@/components/ui/input';
 import {
   Users,
   Heart,
@@ -11,18 +14,30 @@ import {
   AlertTriangle,
   ArrowLeft,
   Plus,
+  Send,
 } from 'lucide-react';
 import {
   PeerSupporter,
   PeerConversation,
   peerSupporterService,
-  peerConversationService,
 } from '@/services/peerSupportService';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
+import {
+  usePeerConversations,
+  usePeerMessages,
+  useSendPeerMessage,
+  useMarkPeerMessagesAsRead,
+  usePeerTyping,
+  usePeerPresence,
+} from '@/hooks/usePeerChat';
+import { ReadReceipt, getReceiptStatus, TypingIndicatorWithName } from '@/components/messaging/ReadReceipt';
+import { PresenceIndicator } from '@/components/messaging/PresenceIndicator';
+import { calculateStatus } from '@/services/presenceService';
 import AvailableSupporters from './AvailableSupporters';
 import SupporterDashboard from './SupporterDashboard';
 import BecomeSupporter from './BecomeSupporter';
+import { cn } from '@/lib/utils';
 
 interface PeerSupportHubProps {
   onClose?: () => void;
@@ -36,45 +51,65 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
 
   const [viewState, setViewState] = useState<ViewState>('hub');
   const [myProfile, setMyProfile] = useState<PeerSupporter | null>(null);
-  const [conversations, setConversations] = useState<PeerConversation[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [connectingId, setConnectingId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('browse');
 
-  const loadData = useCallback(async () => {
+  // Chat sheet state
+  const [selectedConversation, setSelectedConversation] = useState<PeerConversation | null>(null);
+  const [messageInput, setMessageInput] = useState('');
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
+  // Use centralised hooks for conversations and messages
+  const { data: conversations = [], isLoading: conversationsLoading, refetch: refetchConversations } = usePeerConversations();
+  const { data: chatMessages = [], isLoading: messagesLoading } = usePeerMessages(selectedConversation?.id);
+  const sendMessage = useSendPeerMessage();
+  const markAsRead = useMarkPeerMessagesAsRead();
+
+  // Typing indicator
+  const { isOtherTyping, setTyping } = usePeerTyping(selectedConversation?.id);
+
+  // Presence - get partner's user ID
+  const partnerId = selectedConversation
+    ? (selectedConversation.supporter?.user_id === user?.id
+        ? (selectedConversation as any).seeker_id
+        : selectedConversation.supporter?.user_id)
+    : undefined;
+  const { data: partnerPresence } = usePeerPresence(partnerId);
+  const partnerPresenceStatus = partnerPresence ? calculateStatus(partnerPresence.last_seen) : 'offline';
+
+  // Load supporter profile
+  const [profileLoading, setProfileLoading] = useState(true);
+  const loadProfile = useCallback(async () => {
     if (!user) {
-      setIsLoading(false);
+      setProfileLoading(false);
       return;
     }
-
     try {
-      const [profile, convos] = await Promise.all([
-        peerSupporterService.getMyProfile(),
-        peerConversationService.getMyConversations(),
-      ]);
+      const profile = await peerSupporterService.getMyProfile();
       setMyProfile(profile);
-      setConversations(convos);
     } catch (error) {
-      console.error('Error loading peer support data:', error);
+      console.error('Error loading profile:', error);
     } finally {
-      setIsLoading(false);
+      setProfileLoading(false);
     }
   }, [user]);
 
   useEffect(() => {
-    loadData();
-  }, [loadData]);
+    loadProfile();
+  }, [loadProfile]);
+
+  const isLoading = conversationsLoading || profileLoading;
 
   const handleConnect = async (supporterId: string) => {
     setConnectingId(supporterId);
     try {
-      const conversation = await peerConversationService.startConversation(supporterId);
+      const { peerConversationService } = await import('@/services/peerSupportService');
+      await peerConversationService.startConversation(supporterId);
       toast({
         title: "Connected!",
         description: "You can now start chatting. Be kind to each other.",
       });
-      await loadData();
-      // In a full implementation, this would navigate to the chat view
+      refetchConversations();
       setActiveTab('chats');
     } catch (error) {
       console.error('Connection error:', error);
@@ -89,7 +124,61 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
   };
 
   const handleProfileUpdated = () => {
-    loadData();
+    loadProfile();
+    refetchConversations();
+  };
+
+  // Open chat with a conversation - messages are loaded automatically by usePeerMessages hook
+  const handleOpenChat = (conversation: PeerConversation) => {
+    setSelectedConversation(conversation);
+    setIsChatOpen(true);
+    // Mark as read when opening
+    markAsRead.mutate(conversation.id);
+  };
+
+  // Send a message using the centralised hook
+  const handleSendMessage = () => {
+    if (!selectedConversation || !messageInput.trim() || sendMessage.isPending) return;
+
+    sendMessage.mutate(
+      { conversationId: selectedConversation.id, content: messageInput.trim() },
+      {
+        onSuccess: () => {
+          setMessageInput('');
+        },
+        onError: () => {
+          toast({
+            title: "Failed to send",
+            description: "Please try again",
+            variant: "destructive",
+          });
+        },
+      }
+    );
+  };
+
+  // Close chat
+  const handleCloseChat = () => {
+    setIsChatOpen(false);
+    setTimeout(() => {
+      setSelectedConversation(null);
+    }, 300);
+  };
+
+  // Get other person's name in conversation
+  const getChatPartnerName = () => {
+    if (!selectedConversation) return '';
+    const isSupporter = selectedConversation.supporter?.user_id === user?.id;
+    if (isSupporter) {
+      // Current user is the supporter - show seeker's first name
+      const seekerName = selectedConversation.seeker?.full_name;
+      if (seekerName) {
+        // Get first name only
+        return seekerName.split(' ')[0];
+      }
+      return 'Mate';
+    }
+    return selectedConversation.supporter?.display_name || 'Peer Supporter';
   };
 
   // Not logged in
@@ -233,11 +322,12 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                   {conversations.map((convo) => (
                     <div
                       key={convo.id}
+                      onClick={() => convo.status === 'active' && handleOpenChat(convo)}
                       className={`
-                        cursor-pointer transition-all hover:scale-[1.01] p-4 rounded-xl
+                        cursor-pointer transition-all hover:scale-[1.01] p-4 rounded-xl touch-manipulation
                         ${convo.status === 'active'
-                          ? 'bg-white/[0.03] border border-purple-500/30 hover:border-purple-400/50'
-                          : 'bg-white/[0.01] border border-white/10 opacity-60'
+                          ? 'bg-white/[0.03] border border-purple-500/30 hover:border-purple-400/50 active:scale-[0.99]'
+                          : 'bg-white/[0.01] border border-white/10 opacity-60 cursor-not-allowed'
                         }
                       `}
                     >
@@ -250,7 +340,9 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
                             <h4 className="font-medium text-white truncate">
-                              {convo.supporter?.display_name || 'Supporter'}
+                              {convo.supporter?.user_id === user?.id
+                                ? (convo.seeker?.full_name?.split(' ')[0] || 'Mate')
+                                : (convo.supporter?.display_name || 'Supporter')}
                             </h4>
                             {convo.status === 'active' && (
                               <span className="flex h-2 w-2">
@@ -267,7 +359,11 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                         <Button
                           size="sm"
                           disabled={convo.status !== 'active'}
-                          className="bg-purple-500/20 hover:bg-purple-500/30 text-white border border-purple-500/30"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleOpenChat(convo);
+                          }}
+                          className="bg-purple-500/20 hover:bg-purple-500/30 text-white border border-purple-500/30 h-11 touch-manipulation"
                         >
                           <MessageCircle className="w-4 h-4 mr-1.5" />
                           Chat
@@ -298,6 +394,132 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Chat Sheet */}
+      <Sheet open={isChatOpen} onOpenChange={(open) => !open && handleCloseChat()}>
+        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+          <div className="flex flex-col h-full bg-background">
+            {/* Chat Header */}
+            <div className="flex items-center gap-3 p-4 border-b border-border bg-gradient-to-r from-purple-500/10 to-pink-500/10 shrink-0">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleCloseChat}
+                className="shrink-0 -ml-2 h-10 w-10 text-white"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+              <Avatar className="h-10 w-10 border-2 border-pink-500/30">
+                <AvatarImage src={selectedConversation?.supporter?.avatar_url || undefined} />
+                <AvatarFallback className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 text-purple-400 font-semibold">
+                  {getChatPartnerName().split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <h2 className="font-semibold text-white truncate">{getChatPartnerName()}</h2>
+                  <PresenceIndicator status={partnerPresenceStatus} lastSeen={partnerPresence?.last_seen} size="sm" />
+                </div>
+                <p className="text-xs text-pink-400 flex items-center gap-1">
+                  <Heart className="h-3 w-3" />
+                  Peer Support Chat
+                </p>
+              </div>
+            </div>
+
+            {/* Messages Area */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+              {chatMessages.length === 0 ? (
+                <div className="text-center text-white/60 text-sm py-8">
+                  <Heart className="h-10 w-10 text-pink-400/30 mx-auto mb-3" />
+                  <p>Start the conversation with a warm greeting</p>
+                </div>
+              ) : (
+                chatMessages.map((msg) => {
+                  const isOwn = msg.sender_id === user?.id;
+                  const isOptimistic = msg.id.startsWith('temp-');
+                  return (
+                    <div key={msg.id} className={cn("flex", isOwn ? "justify-end" : "justify-start")}>
+                      <div className={cn(
+                        "max-w-[80%] rounded-2xl px-4 py-2",
+                        isOwn
+                          ? "bg-gradient-to-br from-purple-500 to-pink-500 text-white rounded-br-sm"
+                          : "bg-white/10 text-white rounded-bl-sm"
+                      )}>
+                        <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                        <div className={cn("flex items-center gap-1 mt-1", isOwn ? "justify-end" : "")}>
+                          <span className={cn("text-[10px]", isOwn ? "text-white/70" : "text-white/50")}>
+                            {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                          {isOwn && (
+                            <ReadReceipt
+                              status={getReceiptStatus(
+                                msg.created_at,
+                                (msg as any).delivered_at,
+                                (msg as any).read_at,
+                                isOptimistic
+                              )}
+                              className={isOptimistic ? "text-white/50" : "text-white/70"}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+              {/* Typing indicator */}
+              {isOtherTyping && (
+                <div className="flex justify-start">
+                  <div className="bg-white/10 rounded-2xl rounded-bl-sm px-4 py-2">
+                    <TypingIndicatorWithName userName={getChatPartnerName()} className="text-white/60" />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Message Input */}
+            <div className="p-4 border-t border-border bg-background shrink-0">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSendMessage();
+                }}
+                className="flex items-center gap-2"
+              >
+                <Input
+                  value={messageInput}
+                  onChange={(e) => {
+                    setMessageInput(e.target.value);
+                    // Broadcast typing indicator
+                    if (e.target.value.length > 0) {
+                      setTyping(true, getChatPartnerName());
+                    } else {
+                      setTyping(false);
+                    }
+                  }}
+                  onBlur={() => setTyping(false)}
+                  placeholder="Type a supportive message..."
+                  className="flex-1 h-11 bg-white/5 border-white/20 text-white placeholder:text-white/50 touch-manipulation"
+                  disabled={sendMessage.isPending}
+                />
+                <Button
+                  type="submit"
+                  size="icon"
+                  disabled={!messageInput.trim() || sendMessage.isPending}
+                  className="h-11 w-11 bg-gradient-to-br from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white touch-manipulation"
+                >
+                  {sendMessage.isPending ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <Send className="h-5 w-5" />
+                  )}
+                </Button>
+              </form>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };

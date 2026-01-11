@@ -154,27 +154,27 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
                 size="sm"
                 variant="outline"
                 onClick={() => setViewingEntry(entry)}
-                className="gap-1 flex-1 sm:flex-none"
+                className="gap-1 flex-1 sm:flex-none h-10 touch-manipulation active:scale-95"
               >
-                <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
+                <Eye className="h-4 w-4" />
                 View
               </Button>
               <Button
                 size="sm"
                 variant="outline"
                 onClick={() => setCommentsEntry(entry)}
-                className="gap-1 flex-1 sm:flex-none"
+                className="gap-1 flex-1 sm:flex-none h-10 touch-manipulation active:scale-95"
               >
-                <MessageSquare className="h-3 w-3 sm:h-4 sm:w-4" />
+                <MessageSquare className="h-4 w-4" />
                 Comments
               </Button>
               <Button
                 size="sm"
                 variant="outline"
                 onClick={() => setEditingEntry(entry)}
-                className="gap-1 flex-1 sm:flex-none"
+                className="gap-1 flex-1 sm:flex-none h-10 touch-manipulation active:scale-95"
               >
-                <Edit className="h-3 w-3 sm:h-4 sm:w-4" />
+                <Edit className="h-4 w-4" />
                 Edit
               </Button>
               <Button
@@ -185,9 +185,9 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
                     onDeleteEntry(entry.id);
                   }
                 }}
-                className="gap-1 text-red-400 hover:text-red-300 flex-1 sm:flex-none"
+                className="gap-1 text-red-400 hover:text-red-300 flex-1 sm:flex-none h-10 touch-manipulation active:scale-95"
               >
-                <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
+                <Trash2 className="h-4 w-4" />
                 Delete
               </Button>
             </div>

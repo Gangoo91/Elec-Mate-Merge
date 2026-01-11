@@ -99,7 +99,7 @@ export function QuickCaptureButton({
                     "flex items-center gap-3 pl-4 pr-3 py-2.5 rounded-full shadow-lg",
                     "bg-card border border-border",
                     "animate-in slide-in-from-bottom-2 fade-in duration-200",
-                    "hover:scale-105 active:scale-95 transition-transform"
+                    "hover:scale-105 active:scale-95 transition-transform touch-manipulation"
                   )}
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
@@ -120,7 +120,7 @@ export function QuickCaptureButton({
             className={cn(
               "h-14 w-14 rounded-full shadow-lg flex items-center justify-center",
               "transition-all duration-300 ease-out",
-              "active:scale-95",
+              "active:scale-95 touch-manipulation",
               isExpanded
                 ? "bg-muted rotate-45"
                 : "bg-elec-yellow hover:bg-elec-yellow/90"
@@ -171,7 +171,7 @@ export function QuickCaptureButton({
                     "bg-muted/50 border border-border",
                     "hover:border-elec-yellow/50 hover:bg-elec-yellow/5",
                     "transition-all duration-200",
-                    "text-left"
+                    "text-left touch-manipulation active:scale-[0.98]"
                   )}
                 >
                   <span className={cn("h-12 w-12 rounded-xl flex items-center justify-center shrink-0", option.color)}>

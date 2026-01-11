@@ -1,5 +1,22 @@
 import { supabase } from '@/integrations/supabase/client';
 
+// Helper to send push notification (fire and forget)
+const sendPushNotification = async (
+  userId: string,
+  title: string,
+  body: string,
+  type: 'job' | 'team' | 'college' | 'peer',
+  data?: Record<string, unknown>
+) => {
+  try {
+    await supabase.functions.invoke('send-push-notification', {
+      body: { userId, title, body, type, data },
+    });
+  } catch (error) {
+    console.error('Push notification error:', error);
+  }
+};
+
 // Types
 export type ConversationType = 'student_tutor' | 'college_employer' | 'student_employer';
 export type ParticipantType = 'student' | 'staff' | 'employer';
@@ -260,6 +277,10 @@ export const collegeMessageService = {
       .single();
 
     if (error) throw error;
+
+    // Send push notification to recipient (fire and forget)
+    sendCollegeMessagePush(params.conversation_id, user.id, params.content).catch(console.error);
+
     return data as unknown as CollegeMessage;
   },
 
@@ -423,3 +444,42 @@ export const collegeChatHelpers = {
     return { name: 'Unknown', avatar_url: null };
   },
 };
+
+// =====================================================
+// PUSH NOTIFICATION HELPERS
+// =====================================================
+
+/**
+ * Send push notification for college chat message
+ */
+async function sendCollegeMessagePush(conversationId: string, senderId: string, content: string) {
+  try {
+    // Get conversation to find recipient
+    const { data: conv } = await supabase
+      .from('college.conversations')
+      .select('participant_1_id, participant_2_id, participant_1_type, participant_2_type')
+      .eq('id', conversationId)
+      .single();
+
+    if (!conv) return;
+
+    // Determine recipient and sender type
+    const isParticipant1 = (conv as any).participant_1_id === senderId;
+    const recipientId = isParticipant1 ? (conv as any).participant_2_id : (conv as any).participant_1_id;
+    const senderType = isParticipant1 ? (conv as any).participant_1_type : (conv as any).participant_2_type;
+
+    // Get sender name
+    const senderDetails = await collegeChatHelpers.getParticipantDetails(senderId, senderType);
+
+    const title = `College: ${senderDetails.name}`;
+    const body = content.length > 100 ? content.substring(0, 97) + '...' : content;
+
+    await sendPushNotification(recipientId, title, body, 'college', {
+      conversationId,
+      senderId,
+      senderName: senderDetails.name,
+    });
+  } catch (error) {
+    console.error('College message push notification error:', error);
+  }
+}

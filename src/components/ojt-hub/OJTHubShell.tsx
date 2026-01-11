@@ -109,7 +109,7 @@ export function OJTHubShell({
           <Button
             size="lg"
             onClick={onQuickLog}
-            className="h-14 w-14 rounded-full bg-elec-yellow text-black shadow-lg shadow-elec-yellow/25 hover:bg-elec-yellow/90"
+            className="h-14 w-14 rounded-full bg-elec-yellow text-black shadow-lg shadow-elec-yellow/25 hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
           >
             <Plus className="h-6 w-6" />
           </Button>

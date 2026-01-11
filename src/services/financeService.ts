@@ -1,5 +1,22 @@
 import { supabase } from "@/integrations/supabase/client";
 
+// Helper to send push notification (fire and forget)
+const sendPushNotification = async (
+  userId: string,
+  title: string,
+  body: string,
+  type: 'job' | 'team' | 'college' | 'peer',
+  data?: Record<string, unknown>
+) => {
+  try {
+    await supabase.functions.invoke('send-push-notification', {
+      body: { userId, title, body, type, data },
+    });
+  } catch (error) {
+    console.error('Push notification error:', error);
+  }
+};
+
 // Types
 export interface Quote {
   id: string;
@@ -131,6 +148,13 @@ export async function createQuote(quote: Omit<Quote, 'id' | 'created_at' | 'upda
 }
 
 export async function updateQuote(id: string, updates: Partial<Quote>): Promise<Quote> {
+  // Get original quote to check for status change
+  const { data: originalQuote } = await supabase
+    .from('quotes')
+    .select('status, created_by, quote_number, client')
+    .eq('id', id)
+    .single();
+
   const { data, error } = await supabase
     .from('quotes')
     .update(updates)
@@ -138,6 +162,29 @@ export async function updateQuote(id: string, updates: Partial<Quote>): Promise<
     .select()
     .single();
   if (error) throw error;
+
+  // Send push notification if status changed to accepted or rejected
+  if (originalQuote?.created_by && updates.status && originalQuote.status !== updates.status) {
+    const statusLower = updates.status.toLowerCase();
+    if (statusLower === 'accepted' || statusLower === 'approved') {
+      sendPushNotification(
+        originalQuote.created_by,
+        '🎉 Quote Accepted!',
+        `${originalQuote.client} accepted quote #${originalQuote.quote_number}`,
+        'job', // Using job type as quotes are business events
+        { quoteId: id, status: 'accepted' }
+      ).catch(console.error);
+    } else if (statusLower === 'rejected' || statusLower === 'declined') {
+      sendPushNotification(
+        originalQuote.created_by,
+        'Quote Declined',
+        `${originalQuote.client} declined quote #${originalQuote.quote_number}`,
+        'job',
+        { quoteId: id, status: 'rejected' }
+      ).catch(console.error);
+    }
+  }
+
   return data;
 }
 
@@ -177,7 +224,27 @@ export async function updateInvoice(id: string, updates: Partial<Invoice>): Prom
 }
 
 export async function markInvoicePaid(id: string): Promise<Invoice> {
-  return updateInvoice(id, { status: 'Paid', paid_date: new Date().toISOString().split('T')[0] });
+  // Get invoice details for notification
+  const { data: invoice } = await supabase
+    .from('invoices')
+    .select('invoice_number, client, amount, created_by')
+    .eq('id', id)
+    .single();
+
+  const result = await updateInvoice(id, { status: 'Paid', paid_date: new Date().toISOString().split('T')[0] });
+
+  // Send push notification
+  if (invoice?.created_by) {
+    sendPushNotification(
+      invoice.created_by,
+      '💰 Invoice Paid!',
+      `Invoice #${invoice.invoice_number} for £${invoice.amount.toFixed(2)} has been paid`,
+      'job',
+      { invoiceId: id, status: 'paid' }
+    ).catch(console.error);
+  }
+
+  return result;
 }
 
 export async function getOverdueInvoices(): Promise<Invoice[]> {

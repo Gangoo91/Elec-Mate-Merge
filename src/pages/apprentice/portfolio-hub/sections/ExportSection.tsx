@@ -121,7 +121,7 @@ export function ExportSection() {
             <div
               key={option.id}
               className={cn(
-                "flex items-center gap-4 p-4 rounded-xl border transition-colors cursor-pointer",
+                "flex items-center gap-4 p-4 rounded-xl border transition-colors cursor-pointer touch-manipulation active:scale-[0.98]",
                 "hover:border-elec-yellow/30 hover:bg-elec-yellow/5",
                 option.recommended ? "border-elec-yellow/20" : "border-border"
               )}

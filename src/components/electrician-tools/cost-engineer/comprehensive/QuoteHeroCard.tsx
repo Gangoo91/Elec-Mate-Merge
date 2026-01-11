@@ -1,7 +1,16 @@
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, TrendingUp, Clock, Target } from "lucide-react";
+import { CheckCircle2, TrendingUp, Clock, Target, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+
+// Generate confetti particles
+const generateParticles = () => Array.from({ length: 20 }, (_, i) => ({
+  id: i,
+  x: Math.random() * 100,
+  delay: Math.random() * 0.5,
+  duration: 1 + Math.random() * 0.5,
+  color: ['#fbbf24', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6'][Math.floor(Math.random() * 5)]
+}));
 
 interface QuoteHeroCardProps {
   amount: number;
@@ -24,6 +33,8 @@ const QuoteHeroCard = ({
 }: QuoteHeroCardProps) => {
   const [displayAmount, setDisplayAmount] = useState(0);
   const [displayProfit, setDisplayProfit] = useState(0);
+  const [showConfetti, setShowConfetti] = useState(true);
+  const [particles] = useState(generateParticles);
 
   // Animated count-up effect
   useEffect(() => {
@@ -89,6 +100,35 @@ const QuoteHeroCard = ({
     <div className="bg-gradient-to-br from-white/[0.08] to-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-xl">
       {/* Hero Section */}
       <div className={`relative p-6 bg-gradient-to-br ${tierConfig.gradient}`}>
+        {/* Confetti Animation */}
+        {showConfetti && (
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {particles.map((particle) => (
+              <motion.div
+                key={particle.id}
+                className="absolute w-2 h-2 rounded-full"
+                style={{
+                  left: `${particle.x}%`,
+                  backgroundColor: particle.color,
+                }}
+                initial={{ y: -20, opacity: 1, scale: 1 }}
+                animate={{
+                  y: 300,
+                  opacity: 0,
+                  scale: 0.5,
+                  rotate: 360
+                }}
+                transition={{
+                  duration: particle.duration,
+                  delay: particle.delay,
+                  ease: "easeOut"
+                }}
+                onAnimationComplete={() => setShowConfetti(false)}
+              />
+            ))}
+          </div>
+        )}
+
         {/* Background glow effect */}
         <motion.div
           className="absolute inset-0 bg-gradient-radial from-white/5 to-transparent opacity-50"
@@ -102,11 +142,13 @@ const QuoteHeroCard = ({
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="flex flex-col"
+              className="flex items-center gap-2"
             >
+              <Sparkles className="h-4 w-4 text-elec-yellow" />
               <span className="text-xs font-bold text-white uppercase tracking-wider">
                 Recommended Quote
               </span>
+              <Sparkles className="h-4 w-4 text-elec-yellow" />
             </motion.div>
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -34,6 +34,14 @@ import { UK_QUALIFICATIONS, getQualificationLabel } from "@/data/uk-electrician-
 import { getExpiryStatus, getDaysUntilExpiry } from "@/utils/elecIdGenerator";
 import { useNotifications } from "@/components/notifications/NotificationProvider";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
+import { useElecIdProfile } from "@/hooks/useElecIdProfile";
+import {
+  getQualificationsByProfileId,
+  addElecIdQualification,
+  updateElecIdQualification,
+  deleteElecIdQualification,
+  ElecIdQualification,
+} from "@/services/elecIdService";
 
 interface Qualification {
   id: string;
@@ -48,6 +56,7 @@ interface Qualification {
 
 const ElecIdQualifications = () => {
   const { addNotification } = useNotifications();
+  const { profile } = useElecIdProfile();
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editingQual, setEditingQual] = useState<Qualification | null>(null);
@@ -56,6 +65,7 @@ const ElecIdQualifications = () => {
     id: null,
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedQual, setSelectedQual] = useState<string>("");
   const [formData, setFormData] = useState({
@@ -65,131 +75,177 @@ const ElecIdQualifications = () => {
     certificateNumber: "",
   });
 
-  // Mock qualifications - will be from database
-  const [qualifications, setQualifications] = useState<Qualification[]>([
-    {
-      id: "1",
-      qualificationValue: "nvq_level_3",
-      category: "core",
-      awardingBody: "City & Guilds",
-      dateAchieved: "2020-06-15",
-      isVerified: true,
-    },
-    {
-      id: "2",
-      qualificationValue: "18th_edition",
-      category: "regulations",
-      awardingBody: "City & Guilds",
-      dateAchieved: "2023-03-20",
-      expiryDate: "2028-03-20",
-      certificateNumber: "CG-2382-123456",
-      isVerified: true,
-    },
-    {
-      id: "3",
-      qualificationValue: "2391_52",
-      category: "testing",
-      awardingBody: "City & Guilds",
-      dateAchieved: "2021-09-10",
-      isVerified: true,
-    },
-    {
-      id: "4",
-      qualificationValue: "ev_charging",
-      category: "renewable",
-      awardingBody: "City & Guilds",
-      dateAchieved: "2024-01-15",
-      certificateNumber: "EV-2919-789012",
-      isVerified: false,
-    },
-    {
-      id: "5",
-      qualificationValue: "first_aid",
-      category: "specialist",
-      awardingBody: "St John Ambulance",
-      dateAchieved: "2023-06-01",
-      expiryDate: "2026-06-01",
-      isVerified: true,
-    },
-  ]);
+  // Real qualifications from database
+  const [qualifications, setQualifications] = useState<Qualification[]>([]);
 
-  const handleAddQualification = async () => {
-    setIsLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 800));
+  // Fetch qualifications from database
+  useEffect(() => {
+    const fetchQualifications = async () => {
+      if (!profile?.id) {
+        setIsFetching(false);
+        return;
+      }
 
-    const newQual: Qualification = {
-      id: Date.now().toString(),
-      qualificationValue: selectedQual,
-      category: selectedCategory,
-      awardingBody: formData.awardingBody,
-      dateAchieved: formData.dateAchieved,
-      expiryDate: formData.expiryDate || undefined,
-      certificateNumber: formData.certificateNumber || undefined,
-      isVerified: false,
+      try {
+        const data = await getQualificationsByProfileId(profile.id);
+        // Map database schema to UI schema
+        const mapped = data.map((q: ElecIdQualification) => ({
+          id: q.id,
+          qualificationValue: q.qualification_name,
+          category: q.category || q.qualification_type || 'core',
+          awardingBody: q.awarding_body || '',
+          dateAchieved: q.date_achieved || '',
+          expiryDate: q.expiry_date || undefined,
+          certificateNumber: q.certificate_number || undefined,
+          isVerified: q.is_verified,
+        }));
+        setQualifications(mapped);
+      } catch (error) {
+        console.error('Error fetching qualifications:', error);
+        addNotification({
+          title: "Error",
+          message: "Failed to load qualifications",
+          type: "error",
+        });
+      } finally {
+        setIsFetching(false);
+      }
     };
 
-    setQualifications((prev) => [...prev, newQual]);
-    setIsLoading(false);
-    setIsAddDialogOpen(false);
-    resetForm();
+    fetchQualifications();
+  }, [profile?.id]);
 
-    addNotification({
-      title: "Qualification Added",
-      message: `${getQualificationLabel(selectedQual)} has been added to your profile.`,
-      type: "success",
-    });
+  const handleAddQualification = async () => {
+    if (!profile?.id) {
+      addNotification({
+        title: "Error",
+        message: "Profile not found. Please try again.",
+        type: "error",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const newDbQual = await addElecIdQualification({
+        profile_id: profile.id,
+        qualification_name: selectedQual,
+        qualification_type: selectedCategory,
+        category: selectedCategory,
+        awarding_body: formData.awardingBody || null,
+        date_achieved: formData.dateAchieved || null,
+        expiry_date: formData.expiryDate || null,
+        certificate_number: formData.certificateNumber || null,
+        is_verified: false,
+      });
+
+      const newQual: Qualification = {
+        id: newDbQual.id,
+        qualificationValue: selectedQual,
+        category: selectedCategory,
+        awardingBody: formData.awardingBody,
+        dateAchieved: formData.dateAchieved,
+        expiryDate: formData.expiryDate || undefined,
+        certificateNumber: formData.certificateNumber || undefined,
+        isVerified: false,
+      };
+
+      setQualifications((prev) => [...prev, newQual]);
+      setIsAddDialogOpen(false);
+      resetForm();
+
+      addNotification({
+        title: "Qualification Added",
+        message: `${getQualificationLabel(selectedQual)} has been added to your profile.`,
+        type: "success",
+      });
+    } catch (error) {
+      console.error('Error adding qualification:', error);
+      addNotification({
+        title: "Error",
+        message: "Failed to add qualification. Please try again.",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleEditQualification = async () => {
     if (!editingQual) return;
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 800));
 
-    setQualifications((prev) =>
-      prev.map((q) =>
-        q.id === editingQual.id
-          ? {
-              ...q,
-              awardingBody: formData.awardingBody,
-              dateAchieved: formData.dateAchieved,
-              expiryDate: formData.expiryDate || undefined,
-              certificateNumber: formData.certificateNumber || undefined,
-            }
-          : q
-      )
-    );
+    try {
+      await updateElecIdQualification(editingQual.id, {
+        awarding_body: formData.awardingBody || null,
+        date_achieved: formData.dateAchieved || null,
+        expiry_date: formData.expiryDate || null,
+        certificate_number: formData.certificateNumber || null,
+      });
 
-    setIsLoading(false);
-    setIsEditDialogOpen(false);
-    setEditingQual(null);
-    resetForm();
+      setQualifications((prev) =>
+        prev.map((q) =>
+          q.id === editingQual.id
+            ? {
+                ...q,
+                awardingBody: formData.awardingBody,
+                dateAchieved: formData.dateAchieved,
+                expiryDate: formData.expiryDate || undefined,
+                certificateNumber: formData.certificateNumber || undefined,
+              }
+            : q
+        )
+      );
 
-    addNotification({
-      title: "Qualification Updated",
-      message: "Your qualification details have been updated.",
-      type: "success",
-    });
+      setIsEditDialogOpen(false);
+      setEditingQual(null);
+      resetForm();
+
+      addNotification({
+        title: "Qualification Updated",
+        message: "Your qualification details have been updated.",
+        type: "success",
+      });
+    } catch (error) {
+      console.error('Error updating qualification:', error);
+      addNotification({
+        title: "Error",
+        message: "Failed to update qualification. Please try again.",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleDeleteQualification = async () => {
     if (!deleteConfirm.id) return;
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 600));
 
-    const deletedQual = qualifications.find((q) => q.id === deleteConfirm.id);
-    setQualifications((prev) => prev.filter((q) => q.id !== deleteConfirm.id));
+    try {
+      await deleteElecIdQualification(deleteConfirm.id);
 
-    setIsLoading(false);
-    setDeleteConfirm({ open: false, id: null });
+      const deletedQual = qualifications.find((q) => q.id === deleteConfirm.id);
+      setQualifications((prev) => prev.filter((q) => q.id !== deleteConfirm.id));
+      setDeleteConfirm({ open: false, id: null });
 
-    addNotification({
-      title: "Qualification Removed",
-      message: deletedQual
-        ? `${getQualificationLabel(deletedQual.qualificationValue)} has been removed.`
-        : "Qualification has been removed.",
-      type: "info",
-    });
+      addNotification({
+        title: "Qualification Removed",
+        message: deletedQual
+          ? `${getQualificationLabel(deletedQual.qualificationValue)} has been removed.`
+          : "Qualification has been removed.",
+        type: "info",
+      });
+    } catch (error) {
+      console.error('Error deleting qualification:', error);
+      addNotification({
+        title: "Error",
+        message: "Failed to delete qualification. Please try again.",
+        type: "error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const openEditDialog = (qual: Qualification) => {

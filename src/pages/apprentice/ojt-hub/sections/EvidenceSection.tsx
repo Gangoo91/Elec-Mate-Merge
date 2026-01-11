@@ -298,28 +298,28 @@ export function EvidenceSection() {
         />
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           <Card className="border-border">
-            <CardContent className="p-3 text-center">
-              <p className="text-lg font-bold text-foreground">{stats.total}</p>
+            <CardContent className="p-2 sm:p-3 text-center">
+              <p className="text-base sm:text-lg font-bold text-foreground">{stats.total}</p>
               <p className="text-[10px] text-muted-foreground">Total</p>
             </CardContent>
           </Card>
           <Card className="border-green-500/20">
-            <CardContent className="p-3 text-center">
-              <p className="text-lg font-bold text-green-500">{stats.approved}</p>
+            <CardContent className="p-2 sm:p-3 text-center">
+              <p className="text-base sm:text-lg font-bold text-green-500">{stats.approved}</p>
               <p className="text-[10px] text-muted-foreground">Approved</p>
             </CardContent>
           </Card>
           <Card className="border-blue-500/20">
-            <CardContent className="p-3 text-center">
-              <p className="text-lg font-bold text-blue-500">{stats.pending}</p>
+            <CardContent className="p-2 sm:p-3 text-center">
+              <p className="text-base sm:text-lg font-bold text-blue-500">{stats.pending}</p>
               <p className="text-[10px] text-muted-foreground">Pending</p>
             </CardContent>
           </Card>
           <Card className="border-border">
-            <CardContent className="p-3 text-center">
-              <p className="text-lg font-bold text-muted-foreground">{stats.draft}</p>
+            <CardContent className="p-2 sm:p-3 text-center">
+              <p className="text-base sm:text-lg font-bold text-muted-foreground">{stats.draft}</p>
               <p className="text-[10px] text-muted-foreground">Draft</p>
             </CardContent>
           </Card>

@@ -15,6 +15,7 @@ interface ModuleCardProps {
   onClick?: () => void;
   className?: string;
   icon?: React.ReactNode;
+  colorScheme?: "Level 2" | "Level 3" | "AM2" | "Mock Exams" | "Upskilling";
 }
 
 // Get category-based colors
@@ -52,6 +53,14 @@ const getCategoryColors = (category?: string) => {
         iconBg: "from-green-500/20 to-emerald-500/20",
         progress: "from-green-500 to-emerald-500"
       };
+    case "Upskilling":
+      return {
+        accent: "from-elec-yellow to-amber-500",
+        accentLine: "from-transparent via-elec-yellow/50 to-transparent",
+        badge: "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30",
+        iconBg: "from-elec-yellow/20 to-amber-500/20",
+        progress: "from-elec-yellow to-amber-500"
+      };
     default:
       return {
         accent: "from-purple-500 to-pink-500",
@@ -74,10 +83,11 @@ export function ModuleCard({
   questionsCount,
   onClick,
   className,
-  icon
+  icon,
+  colorScheme
 }: ModuleCardProps) {
   const isInProgress = progress > 0 && progress < 100;
-  const colors = getCategoryColors(category);
+  const colors = getCategoryColors(colorScheme || category);
 
   return (
     <Card
@@ -179,7 +189,9 @@ export function ModuleCard({
           {questionsCount !== undefined && (
             <div className={cn(
               "flex items-center gap-1 font-bold",
-              category === "AM2" ? "text-elec-yellow" : "text-blue-400"
+              (colorScheme === "Upskilling" || colorScheme === "AM2" || (!colorScheme && category === "AM2"))
+                ? "text-elec-yellow"
+                : "text-blue-400"
             )}>
               <Award className="h-3.5 w-3.5" />
               <span>{questionsCount} Q</span>

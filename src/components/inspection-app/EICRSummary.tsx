@@ -71,11 +71,12 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
   };
 
   const handleGenerateCertificate = async () => {
+    console.log('[EICRSummary] Starting certificate generation:', {
       clientName: formData.clientName,
       certificateNumber: formData.certificateNumber,
       inspectionDate: formData.inspectionDate
     });
-    
+
     setIsGenerating(true);
     setShowDialog(true);
     setPdfUrl(null);
@@ -131,26 +132,35 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
       }
       
       // Step 2: Format the EICR data for PDF Monkey
+      console.log('[EICRSummary] Preparing to format EICR JSON with fields:', {
         clientName: formData.clientName || 'MISSING',
         installationAddress: formData.installationAddress || 'MISSING',
         inspectorName: formData.inspectorName || 'MISSING',
         certificateNumber: formData.certificateNumber || 'MISSING'
       });
-      
+
       const formattedJson = await formatEICRJson(formData, savedReportId);
+      console.log('[EICRSummary] Formatted JSON result:', {
         clientName: formattedJson.client_details?.client_name,
         installationAddress: formattedJson.installation_details?.address,
         inspectorName: formattedJson.inspector?.name
       });
 
       // Step 3: Call the edge function
-      
+      console.log('[EICRSummary] Calling generate-eicr-pdf edge function...');
+
       const { data, error } = await supabase.functions.invoke('generate-eicr-pdf', {
         body: { formData: formattedJson }
       });
 
+      console.log('[EICRSummary] Edge function response:', { data, error });
 
       if (error) {
+        // Check for common errors
+        const errorMessage = error.message || '';
+        if (errorMessage.includes('not found') || errorMessage.includes('Function not found') || error.status === 404) {
+          throw new Error('FUNCTION_NOT_FOUND');
+        }
         throw new Error(error.message || 'Failed to generate PDF via cloud service');
       }
 
@@ -199,35 +209,47 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
         description: "Your EICR certificate is ready for download.",
       });
     } catch (error) {
-      setGenerationError(error instanceof Error ? error.message : 'Unknown error');
-      
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.log('[EICRSummary] Cloud generation error:', errorMessage);
+      setGenerationError(errorMessage);
+
       // Fallback to local PDF generation
       try {
         setShowDialog(false);
+
+        // Show appropriate toast based on error type
+        if (errorMessage === 'FUNCTION_NOT_FOUND') {
+          toast({
+            title: "Using local PDF generator",
+            description: "Cloud service unavailable. Generating certificate locally...",
+          });
+        }
+
         await exportCompleteEICRToPDF(
           formData,
           formData.inspectionItems || [],
           formData.defectObservations || []
         );
-        
+
         // Mark certificate as completed
         onUpdate('certificateGenerated', true);
         onUpdate('certificateGeneratedAt', new Date().toISOString());
         onUpdate('status', 'completed');
-        
+
         // Invalidate dashboard queries
         queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
         queryClient.invalidateQueries({ queryKey: ['my-reports'] });
         queryClient.invalidateQueries({ queryKey: ['customer-reports'] });
-        
+
         toast({
-          title: "Certificate generated (local)",
+          title: "Certificate generated successfully",
           description: "Your EICR certificate has been generated and downloaded.",
         });
       } catch (localError) {
+        console.error('[EICRSummary] Local PDF generation failed:', localError);
         toast({
           title: "Generation failed",
-          description: localError instanceof Error ? localError.message : "Failed to generate certificate.",
+          description: localError instanceof Error ? localError.message : "Failed to generate certificate. Please check your form data.",
           variant: "destructive",
         });
       }

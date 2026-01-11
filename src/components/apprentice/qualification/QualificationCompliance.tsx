@@ -67,22 +67,22 @@ const QualificationCompliance = () => {
             />
           </div>
           
-          {/* Stats grid - Mobile optimized with aligned text */}
-          <div className="grid grid-cols-3 gap-4">
-            <div className="text-center space-y-2">
-              <CheckCircle className="h-5 w-5 text-green-400 mx-auto" />
-              <div className="text-2xl font-bold text-green-400">{completedCategories}</div>
-              <p className="text-xs text-elec-light/70 leading-tight h-6 flex items-center justify-center">Completed</p>
+          {/* Stats grid - Mobile optimized */}
+          <div className="grid grid-cols-3 gap-2 sm:gap-4">
+            <div className="text-center space-y-1 sm:space-y-2">
+              <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400 mx-auto" />
+              <div className="text-xl sm:text-2xl font-bold text-green-400">{completedCategories}</div>
+              <p className="text-[10px] sm:text-xs text-elec-light/70 leading-tight">Completed</p>
             </div>
-            <div className="text-center space-y-2">
-              <Clock className="h-5 w-5 text-orange-400 mx-auto" />
-              <div className="text-2xl font-bold text-orange-400">{inProgressCategories}</div>
-              <p className="text-xs text-elec-light/70 leading-tight h-6 flex items-center justify-center">In<br/>Progress</p>
+            <div className="text-center space-y-1 sm:space-y-2">
+              <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-orange-400 mx-auto" />
+              <div className="text-xl sm:text-2xl font-bold text-orange-400">{inProgressCategories}</div>
+              <p className="text-[10px] sm:text-xs text-elec-light/70 leading-tight">In Progress</p>
             </div>
-            <div className="text-center space-y-2">
-              <AlertCircle className="h-5 w-5 text-red-400 mx-auto" />
-              <div className="text-2xl font-bold text-red-400">{notStartedCategories}</div>
-              <p className="text-xs text-elec-light/70 leading-tight h-6 flex items-center justify-center">Not<br/>Started</p>
+            <div className="text-center space-y-1 sm:space-y-2">
+              <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400 mx-auto" />
+              <div className="text-xl sm:text-2xl font-bold text-red-400">{notStartedCategories}</div>
+              <p className="text-[10px] sm:text-xs text-elec-light/70 leading-tight">Not Started</p>
             </div>
           </div>
         </CardContent>

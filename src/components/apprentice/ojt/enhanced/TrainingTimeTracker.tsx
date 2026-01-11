@@ -185,13 +185,13 @@ const TrainingTimeTracker = () => {
           
           <div className="flex gap-2 justify-center">
             {!isTracking ? (
-              <Button onClick={startTracking} size="lg" variant="secondary">
+              <Button onClick={startTracking} size="lg" variant="secondary" className="h-12 touch-manipulation active:scale-95">
                 <Play className="h-4 w-4 mr-2" />
                 Start Timer
               </Button>
             ) : (
               <>
-                <Button onClick={stopTracking} size="lg" variant="destructive">
+                <Button onClick={stopTracking} size="lg" variant="destructive" className="h-12 touch-manipulation active:scale-95">
                   <Square className="h-4 w-4 mr-2" />
                   Stop
                 </Button>
@@ -256,10 +256,10 @@ const TrainingTimeTracker = () => {
       <StatsOverview />
       
       <Tabs defaultValue="timer" className="w-full">
-        <TabsList className="w-full">
-          <TabsTrigger value="timer" className="flex-1">Live Timer</TabsTrigger>
-          <TabsTrigger value="manual" className="flex-1">Manual Entry</TabsTrigger>
-          <TabsTrigger value="analytics" className="flex-1">Analytics</TabsTrigger>
+        <TabsList className="w-full h-auto">
+          <TabsTrigger value="timer" className="flex-1 py-3 touch-manipulation">Live Timer</TabsTrigger>
+          <TabsTrigger value="manual" className="flex-1 py-3 touch-manipulation">Manual Entry</TabsTrigger>
+          <TabsTrigger value="analytics" className="flex-1 py-3 touch-manipulation">Analytics</TabsTrigger>
         </TabsList>
 
         <TabsContent value="timer" className="space-y-6">
@@ -406,7 +406,7 @@ const TrainingTimeTracker = () => {
                   />
                 </div>
 
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full h-12 touch-manipulation active:scale-95">
                   <Plus className="h-4 w-4 mr-2" />
                   Log Training Time
                 </Button>

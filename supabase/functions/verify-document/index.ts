@@ -185,7 +185,11 @@ serve(async (req) => {
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const openAiKey = Deno.env.get('OPENAI_API_KEY')!;
+    const geminiApiKey = Deno.env.get('GEMINI_API_KEY')!;
+
+    if (!geminiApiKey) {
+      throw new Error('GEMINI_API_KEY not configured');
+    }
 
     const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -255,51 +259,48 @@ Respond with ONLY valid JSON in this exact format:
   "suggestions": ["helpful suggestion 1", "suggestion 2"]
 }`;
 
-    // Call OpenAI Vision API
-    console.log('🤖 Calling Vision AI for document analysis...');
-    const visionResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o',
-        messages: [
-          {
-            role: 'system',
-            content: systemPrompt
-          },
-          {
+    // Call Gemini 3 Flash Vision API for OCR
+    console.log('🤖 Calling Gemini 3 Flash Vision for document analysis...');
+    const visionResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key=${geminiApiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{
             role: 'user',
-            content: [
+            parts: [
+              { text: systemPrompt + `\n\nPlease analyze this ${documentType.replace('_', ' ')} document and extract all relevant information. The user provided document name: "${documentName}"${issuingBody ? `, issuing body: "${issuingBody}"` : ''}${documentNumber ? `, document number: "${documentNumber}"` : ''}.` },
               {
-                type: 'text',
-                text: `Please analyze this ${documentType.replace('_', ' ')} document and extract all relevant information. The user provided document name: "${documentName}"${issuingBody ? `, issuing body: "${issuingBody}"` : ''}${documentNumber ? `, document number: "${documentNumber}"` : ''}.`
-              },
-              {
-                type: 'image_url',
-                image_url: {
-                  url: `data:${mimeType};base64,${base64Image}`,
-                  detail: 'high'
+                inlineData: {
+                  mimeType: mimeType,
+                  data: base64Image
                 }
               }
             ]
+          }],
+          generationConfig: {
+            maxOutputTokens: 2000,
+            temperature: 0.1,
+            responseMimeType: 'application/json'
           }
-        ],
-        max_tokens: 1500,
-        temperature: 0.1
-      }),
-    });
+        }),
+      }
+    );
 
     const visionData = await visionResponse.json();
 
     if (!visionResponse.ok) {
-      console.error('Vision API error:', visionData);
-      throw new Error(`Vision API error: ${visionData.error?.message || 'Unknown error'}`);
+      console.error('Gemini Vision API error:', visionData);
+      throw new Error(`Vision API error: ${visionData.error?.message || visionResponse.status}`);
     }
 
-    const rawContent = visionData.choices[0].message.content;
+    // Extract text from Gemini response
+    const candidate = visionData.candidates?.[0];
+    if (!candidate?.content?.parts?.[0]?.text) {
+      throw new Error('Empty response from Gemini Vision API');
+    }
+    const rawContent = candidate.content.parts[0].text;
     console.log('📝 Raw AI response:', rawContent.substring(0, 500));
 
     // Parse the JSON response

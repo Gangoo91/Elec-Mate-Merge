@@ -1,5 +1,22 @@
 import { supabase } from '@/integrations/supabase/client';
 
+// Helper to send push notification (fire and forget)
+const sendPushNotification = async (
+  userId: string,
+  title: string,
+  body: string,
+  type: 'job' | 'team' | 'college' | 'peer',
+  data?: Record<string, unknown>
+) => {
+  try {
+    await supabase.functions.invoke('send-push-notification', {
+      body: { userId, title, body, type, data },
+    });
+  } catch (error) {
+    console.error('Push notification error:', error);
+  }
+};
+
 // Types
 export interface Conversation {
   id: string;
@@ -337,7 +354,72 @@ export const sendMessage = async (params: {
     throw error;
   }
 
+  // Send push notification to recipient (fire and forget)
+  sendJobMessagePushNotification(params.conversation_id, params.sender_type, params.sender_id, params.content).catch(console.error);
+
   return data;
+};
+
+// Helper to send push notification for job messages
+const sendJobMessagePushNotification = async (
+  conversationId: string,
+  senderType: 'employer' | 'electrician',
+  senderId: string,
+  content: string
+) => {
+  try {
+    // Get conversation to find recipient
+    const { data: conversation } = await supabase
+      .from('employer_conversations')
+      .select(`
+        employer_id,
+        electrician_profile_id,
+        vacancy:employer_vacancies(title),
+        electrician_profile:employer_elec_id_profiles(
+          employee:employer_employees(name, user_id)
+        )
+      `)
+      .eq('id', conversationId)
+      .single();
+
+    if (!conversation) return;
+
+    // Determine recipient
+    let recipientId: string;
+    let senderName: string;
+
+    if (senderType === 'employer') {
+      // Sender is employer, recipient is electrician
+      const userId = (conversation.electrician_profile as any)?.employee?.user_id;
+      if (!userId) return;
+      recipientId = userId;
+
+      // Get employer name
+      const { data: employer } = await supabase
+        .from('employer_profiles')
+        .select('company_name')
+        .eq('id', conversation.employer_id)
+        .single();
+      senderName = employer?.company_name || 'Employer';
+    } else {
+      // Sender is electrician, recipient is employer
+      recipientId = conversation.employer_id;
+      senderName = (conversation.electrician_profile as any)?.employee?.name || 'Electrician';
+    }
+
+    const vacancyTitle = (conversation.vacancy as any)?.title;
+    const title = vacancyTitle ? `${senderName} - ${vacancyTitle}` : `Message from ${senderName}`;
+    const body = content.length > 100 ? content.substring(0, 97) + '...' : content;
+
+    await sendPushNotification(recipientId, title, body, 'job', {
+      conversationId,
+      senderId,
+      senderName,
+      isEmployer: senderType === 'electrician', // Recipient perspective
+    });
+  } catch (error) {
+    console.error('Error sending job message push:', error);
+  }
 };
 
 export const markMessageAsDelivered = async (id: string): Promise<void> => {

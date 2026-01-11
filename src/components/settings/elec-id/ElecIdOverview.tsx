@@ -217,18 +217,29 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
     setIsEditDialogOpen(true);
   };
 
-  const handleSaveEdit = () => {
-    const selectedJobTitle = UK_JOB_TITLES.find(t => t.value === editFormData.jobTitle);
-    setElecIdData({
-      ...elecIdData,
-      jobTitle: editFormData.jobTitle,
-      jobTitleLabel: selectedJobTitle?.label || editFormData.jobTitle,
-      ecsCardType: editFormData.ecsCardType,
-      ecsCardExpiry: editFormData.ecsCardExpiry,
-      bio: editFormData.bio,
-    });
-    setIsEditDialogOpen(false);
-    // TODO: Save to database
+  const handleSaveEdit = async () => {
+    setIsSaving(true);
+    try {
+      await updateProfile({
+        ecs_card_type: editFormData.ecsCardType,
+        ecs_expiry_date: editFormData.ecsCardExpiry,
+        bio: editFormData.bio,
+      });
+      setIsEditDialogOpen(false);
+      setIsEditSheetOpen(false);
+      toast({
+        title: "Profile updated",
+        description: "Your Elec-ID profile has been saved",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save profile. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleStatClick = (tabId: string) => {
@@ -364,12 +375,10 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                   </Button>
                   <Button
                     className="flex-1 h-12 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
-                    onClick={() => {
-                      handleSaveEdit();
-                      setIsEditSheetOpen(false);
-                    }}
+                    onClick={handleSaveEdit}
+                    disabled={isSaving}
                   >
-                    Save Changes
+                    {isSaving ? "Saving..." : "Save Changes"}
                   </Button>
                 </div>
               </div>
@@ -396,8 +405,9 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                 <Button
                   className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
                   onClick={handleSaveEdit}
+                  disabled={isSaving}
                 >
-                  Save Changes
+                  {isSaving ? "Saving..." : "Save Changes"}
                 </Button>
               </div>
             </div>

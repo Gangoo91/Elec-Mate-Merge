@@ -18,7 +18,11 @@ serve(async (req) => {
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const openAiKey = Deno.env.get('OPENAI_API_KEY')!;
+    const geminiApiKey = Deno.env.get('GEMINI_API_KEY')!;
+
+    if (!geminiApiKey) {
+      throw new Error('GEMINI_API_KEY not configured');
+    }
 
     const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -179,46 +183,48 @@ Provide clear, safe wiring instructions based on:
 Include cable sizing, protection requirements, and testing procedures.`
     };
 
-    const visionResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o',
-        messages: [
-          {
-            role: 'system',
-            content: systemPrompts[mode] || systemPrompts.fault_diagnosis
-          },
-          {
+    // Call Gemini 3 Flash Vision API
+    const systemPrompt = systemPrompts[mode] || systemPrompts.fault_diagnosis;
+    const visionResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key=${geminiApiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{
             role: 'user',
-            content: [
-              { type: 'text', text: enrichedContext },
+            parts: [
+              { text: systemPrompt + '\n\n' + enrichedContext },
               {
-                type: 'image_url',
-                image_url: {
-                  url: `data:image/jpeg;base64,${imageBase64}`,
-                  detail: 'high'
+                inlineData: {
+                  mimeType: 'image/jpeg',
+                  data: imageBase64
                 }
               }
             ]
+          }],
+          generationConfig: {
+            maxOutputTokens: 2000,
+            temperature: 0.1,
+            responseMimeType: 'application/json'
           }
-        ],
-        max_tokens: 2000,
-        temperature: 0.1
-      }),
-    });
+        }),
+      }
+    );
 
     const visionData = await visionResponse.json();
 
     if (!visionResponse.ok) {
-      console.error('Vision API error:', visionData);
-      throw new Error(`Vision API error: ${visionData.error?.message || 'Unknown error'}`);
+      console.error('Gemini Vision API error:', visionData);
+      throw new Error(`Vision API error: ${visionData.error?.message || visionResponse.status}`);
     }
 
-    const analysis = visionData.choices[0].message.content;
+    // Extract text from Gemini response
+    const candidate = visionData.candidates?.[0];
+    if (!candidate?.content?.parts?.[0]?.text) {
+      throw new Error('Empty response from Gemini Vision API');
+    }
+    const analysis = candidate.content.parts[0].text;
 
     console.log('✅ Analysis complete');
 

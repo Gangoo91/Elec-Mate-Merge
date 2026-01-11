@@ -53,7 +53,13 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
   // Format inspection items as flat array for checklist
   const formatInspectionItems = () => {
     const items = get('inspectionItems', []);
-    const parsed = typeof items === 'string' ? JSON.parse(items) : items;
+    let parsed;
+    try {
+      parsed = typeof items === 'string' ? JSON.parse(items) : items;
+    } catch (e) {
+      console.error('[formatEICRJson] Failed to parse inspectionItems:', e);
+      return [];
+    }
     if (!Array.isArray(parsed)) return [];
     
     return parsed.map((item: any) => ({

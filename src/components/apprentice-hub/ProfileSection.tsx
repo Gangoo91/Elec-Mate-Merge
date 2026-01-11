@@ -78,9 +78,10 @@ export function ProfileSection() {
   const [showMessages, setShowMessages] = useState(false);
 
   // Get user info
-  const firstName = profile?.first_name || user?.email?.split('@')[0] || 'Apprentice';
-  const lastName = profile?.last_name || '';
-  const fullName = `${firstName} ${lastName}`.trim();
+  const fullName = profile?.full_name || user?.email?.split('@')[0] || 'Apprentice';
+  const nameParts = fullName.split(' ');
+  const firstName = nameParts[0];
+  const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
   const initials = `${firstName[0]}${lastName[0] || ''}`.toUpperCase();
   const qualification = userSelection?.qualification?.title || 'No qualification selected';
 

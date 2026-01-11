@@ -324,7 +324,7 @@ SITE CHECKLIST GUIDE:
 
 RULES:
 - USE trade prices listed above (accurate 2025 prices)
-- Database prices = LIST prices, apply 20% trade discount
+- Database prices = LIST prices. Apply 20% trade discount (LIST × 0.80 = TRADE price, NOT 0.60)
 - Include 10% cable waste, 5% materials contingency
 - Labour: £${request.businessSettings?.labourRate || 45}/hr, regional multiplier: ${getRegionalMultiplier(request.region || 'other')}x
 - Cross-reference labour hours with timing benchmarks (flag if >30% different)

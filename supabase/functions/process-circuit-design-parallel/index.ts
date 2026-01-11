@@ -42,7 +42,7 @@ Deno.serve(async (req) => {
     }
 
     // Update job: Processing started
-    await supabase
+    const { error: updateError } = await supabase
       .from('circuit_design_jobs')
       .update({
         status: 'processing',
@@ -55,6 +55,12 @@ Deno.serve(async (req) => {
         installation_agent_progress: 0
       })
       .eq('id', jobId);
+
+    if (updateError) {
+      console.error('❌ Failed to update job status:', updateError);
+      throw new Error(`Failed to update job status: ${updateError.message}`);
+    }
+    console.log('✅ Job status updated to processing');
 
     console.log('📋 Job data retrieved, launching Designer agent in fire-and-forget mode');
 

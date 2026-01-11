@@ -151,12 +151,51 @@ serve(async (req) => {
             "https://www.electricaltimes.co.uk/category/electrical-safety/": { category: "Safety", source: "Electrical Times" }
           };
 
+          // UK Electrical Industry relevance keywords
+          const UK_ELECTRICAL_KEYWORDS = [
+            // Regulations & Standards
+            'bs 7671', 'bs7671', '18th edition', 'wiring regulations', 'iee', 'iet',
+            'part p', 'building regulations', 'hse', 'eicr', 'eic', 'mic',
+            // Electrical terms
+            'electrician', 'electrical', 'wiring', 'circuit', 'mcb', 'rcbo', 'rcd',
+            'consumer unit', 'distribution board', 'cable', 'earthing', 'bonding',
+            'socket', 'lighting', 'ev charger', 'ev charging', 'solar', 'pv',
+            'battery storage', 'heat pump', 'immersion', 'shower', 'cooker',
+            // UK Bodies & Orgs
+            'niceic', 'napit', 'elecsa', 'stroma', 'competent person', 'ecs card',
+            'jib', 'apprentice', 'apprenticeship', 'city & guilds', 'c&g',
+            // Safety
+            'electrical safety', 'fire safety', 'shock', 'arc fault', 'afdd',
+            'electrical fire', 'installation', 'inspection', 'testing',
+            // UK specific
+            'uk', 'england', 'scotland', 'wales', 'northern ireland', 'british'
+          ];
+
+          // Words that indicate non-UK or non-electrical content
+          const EXCLUSION_KEYWORDS = [
+            'nec code', 'nfpa', 'ul listed', 'american', 'usa', 'us market',
+            'canadian', 'australian', 'india', 'asia pacific',
+            'stock market', 'share price', 'quarterly earnings', 'ipo',
+            'cryptocurrency', 'bitcoin', 'blockchain'
+          ];
+
+          const isRelevantArticle = (article: any): boolean => {
+            const text = `${article.title || ''} ${article.description || ''}`.toLowerCase();
+            // Check for exclusion keywords first
+            if (EXCLUSION_KEYWORDS.some(keyword => text.includes(keyword))) {
+              return false;
+            }
+            // Must contain at least one UK electrical keyword
+            return UK_ELECTRICAL_KEYWORDS.some(keyword => text.includes(keyword));
+          };
+
             for (const result of status.data) {
             if (result.json && Array.isArray(result.json)) {
               const sourceInfo = sourceMap[result.url as keyof typeof sourceMap] || { category: "General", source: "Unknown" };
-              
+
               const processedArticles = result.json
                 .filter((article: any) => article.title && article.title.length > 10)
+                .filter(isRelevantArticle)
                 .map((article: any) => ({
                   title: article.title,
                   description: article.description,

@@ -253,7 +253,7 @@ export function TimeSection() {
               <div className="flex items-center gap-2">
                 {!isTimerActive && (
                   <Select value={timerActivity} onValueChange={setTimerActivity}>
-                    <SelectTrigger className="w-[140px] h-9 text-xs">
+                    <SelectTrigger className="w-[120px] sm:w-[140px] h-10 text-xs touch-manipulation">
                       <SelectValue placeholder="Activity type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -300,27 +300,27 @@ export function TimeSection() {
         </Card>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
           <Card className="border-border">
-            <CardContent className="p-3 text-center">
-              <p className="text-xl font-bold text-foreground">{entries.length}</p>
-              <p className="text-xs text-muted-foreground">Sessions</p>
+            <CardContent className="p-2 sm:p-3 text-center">
+              <p className="text-lg sm:text-xl font-bold text-foreground">{entries.length}</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground">Sessions</p>
             </CardContent>
           </Card>
           <Card className="border-border">
-            <CardContent className="p-3 text-center">
-              <p className="text-xl font-bold text-foreground">
+            <CardContent className="p-2 sm:p-3 text-center">
+              <p className="text-lg sm:text-xl font-bold text-foreground">
                 {Math.round(totalTime.hours + totalTime.minutes / 60)}h
               </p>
-              <p className="text-xs text-muted-foreground">Total Hours</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground">Total Hours</p>
             </CardContent>
           </Card>
           <Card className="border-border">
-            <CardContent className="p-3 text-center">
-              <p className="text-xl font-bold text-foreground">
+            <CardContent className="p-2 sm:p-3 text-center">
+              <p className="text-lg sm:text-xl font-bold text-foreground">
                 {entries.length > 0 ? Math.round((totalTime.hours * 60 + totalTime.minutes) / entries.length) : 0}m
               </p>
-              <p className="text-xs text-muted-foreground">Avg Session</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground">Avg Session</p>
             </CardContent>
           </Card>
         </div>

@@ -52,7 +52,7 @@ export function OJTHubNav({ activeSection, onSectionChange }: OJTHubNavProps) {
                   onClick={() => onSectionChange(item.id)}
                   className={cn(
                     'flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all duration-200',
-                    'min-w-[60px]',
+                    'min-w-[60px] touch-manipulation active:scale-95',
                     isActive
                       ? 'text-elec-yellow'
                       : 'text-muted-foreground hover:text-foreground'
@@ -113,7 +113,7 @@ export function OJTHubNav({ activeSection, onSectionChange }: OJTHubNavProps) {
                 key={item.id}
                 onClick={() => onSectionChange(item.id)}
                 className={cn(
-                  'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
+                  'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 touch-manipulation',
                   isActive
                     ? 'bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'

@@ -84,6 +84,9 @@ export default function PortfolioHub() {
     target: otjGoal?.target_hours || 400,
   };
 
+  // Calculate pending reviews from actual entry data
+  const pendingReviews = entries.filter(e => e.status === 'pending_review').length;
+
   // Mock recent activity (will be replaced with real data)
   const recentActivity = entries.slice(0, 5).map((entry) => ({
     id: entry.id,
@@ -97,8 +100,8 @@ export default function PortfolioHub() {
   const nextAction = getNextAction(portfolioProgress, otjProgress, entries.length);
 
   // Get user display name
-  const userName = profile?.first_name
-    ? `${profile.first_name} ${profile.last_name || ''}`.trim()
+  const userName = profile?.full_name
+    ? profile.full_name
     : user?.email?.split('@')[0] || 'Apprentice';
 
   // Render active section content
@@ -110,7 +113,7 @@ export default function PortfolioHub() {
             userName={userName}
             portfolioProgress={portfolioProgress}
             otjProgress={otjProgress}
-            pendingReviews={3} // TODO: Get from actual data
+            pendingReviews={pendingReviews}
             recentActivity={recentActivity}
             nextAction={nextAction}
             onNavigate={handleSectionChange}

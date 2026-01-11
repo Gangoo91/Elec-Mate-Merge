@@ -13,7 +13,7 @@ serve(async (req) => {
   }
 
   try {
-    const { message, context } = await req.json();
+    const { message, context, stream = true } = await req.json();
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
     if (!openAIApiKey) {
@@ -114,6 +114,7 @@ Context: ${context || 'general electrical apprenticeship support'}`;
           { role: 'user', content: message }
         ],
         max_completion_tokens: 1500,
+        stream: stream,
       }),
     });
 
@@ -121,10 +122,21 @@ Context: ${context || 'general electrical apprenticeship support'}`;
       throw new Error(`OpenAI API error: ${response.status}`);
     }
 
+    // If streaming is enabled, return the stream directly
+    if (stream && response.body) {
+      return new Response(response.body, {
+        headers: {
+          ...corsHeaders,
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+        },
+      });
+    }
+
+    // Non-streaming fallback
     const data = await response.json();
     let assistantResponse = data.choices[0]?.message?.content || "I'm here to help with your electrical apprenticeship questions! ⚡";
-
-    // Light cleanup while preserving emojis and structure
     assistantResponse = assistantResponse.trim();
 
     return new Response(JSON.stringify({ response: assistantResponse }), {
@@ -133,9 +145,9 @@ Context: ${context || 'general electrical apprenticeship support'}`;
 
   } catch (error) {
     console.error('Error in chat-assistant function:', error);
-    return new Response(JSON.stringify({ 
+    return new Response(JSON.stringify({
       error: 'I apologise, but I encountered an issue processing your question. Please try again in a moment.',
-      details: error instanceof Error ? error.message : 'Unknown error occurred' 
+      details: error instanceof Error ? error.message : 'Unknown error occurred'
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

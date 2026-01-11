@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import InstrumentationMockExam from '@/components/upskilling/InstrumentationMockExam';
 
 const InstrumentationModule9 = () => {
@@ -19,7 +20,7 @@ const InstrumentationModule9 = () => {
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <div className="px-4 md:px-8 pt-4 pb-10">
-        
+
         <div className="space-y-4">
           <div>
             <h1 className="text-4xl font-bold text-white mb-4">
@@ -30,9 +31,13 @@ const InstrumentationModule9 = () => {
             </p>
           </div>
 
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05 }}
+          >
             <InstrumentationMockExam />
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

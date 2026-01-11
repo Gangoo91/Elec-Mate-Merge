@@ -74,7 +74,8 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
     return 'Good evening';
   };
 
-  const firstName = profile?.first_name || user?.email?.split('@')[0] || 'Apprentice';
+  const fullName = profile?.full_name || user?.email?.split('@')[0] || 'Apprentice';
+  const firstName = fullName.split(' ')[0];
 
   // No course selected - show course selector
   if (!userSelection && !qualLoading) {

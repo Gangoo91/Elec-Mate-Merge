@@ -524,7 +524,7 @@ RESPONSE REQUIREMENTS:
 
     const userPrompt = getUserPrompt(analysis_settings.mode, analysis_settings.fast_mode || false);
 
-    console.log(`🚀 Calling Direct Gemini API (gemini-2.5-flash)...`);
+    console.log(`🚀 Calling Direct Gemini API (gemini-3-flash)...`);
 
     // All modes now use 4000 tokens in full mode, so all need extended timeout
     // Timeout must be proportional to maxOutputTokens (2500-4000 tokens)
@@ -556,7 +556,7 @@ RESPONSE REQUIREMENTS:
     const geminiContents = [{ role: 'user', parts }];
 
     const aiResponse = await fetchWithTimeout(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key=${geminiApiKey}`,
       {
         method: 'POST',
         headers: {
@@ -577,7 +577,16 @@ RESPONSE REQUIREMENTS:
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
       console.error('❌ Gemini API error:', aiResponse.status, errorText);
-      
+
+      // Parse the error to get more details
+      let errorDetails = errorText;
+      try {
+        const errorJson = JSON.parse(errorText);
+        errorDetails = errorJson.error?.message || errorJson.message || errorText;
+      } catch (e) {
+        // Keep raw error text if not JSON
+      }
+
       if (aiResponse.status === 429) {
         return new Response(JSON.stringify({
           error: 'Rate limit exceeded',
@@ -588,7 +597,31 @@ RESPONSE REQUIREMENTS:
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         });
       }
-      
+
+      if (aiResponse.status === 400) {
+        return new Response(JSON.stringify({
+          error: 'Bad request',
+          code: 400,
+          message: `Gemini API error: ${errorDetails}`,
+          details: errorText.slice(0, 500)
+        }), {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      if (aiResponse.status === 401 || aiResponse.status === 403) {
+        return new Response(JSON.stringify({
+          error: 'API key error',
+          code: aiResponse.status,
+          message: `Gemini API authentication failed. Please check your GEMINI_API_KEY is valid.`,
+          details: errorDetails
+        }), {
+          status: aiResponse.status,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
       // Check for image format errors
       if (errorText.includes('Invalid InlineData') || errorText.includes('inline_data')) {
         return new Response(JSON.stringify({
@@ -600,8 +633,17 @@ RESPONSE REQUIREMENTS:
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         });
       }
-      
-      throw new Error('Analysis failed');
+
+      // Return full error details for debugging
+      return new Response(JSON.stringify({
+        error: 'Gemini API error',
+        code: aiResponse.status,
+        message: `Analysis failed: ${errorDetails}`,
+        details: errorText.slice(0, 1000)
+      }), {
+        status: aiResponse.status,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
     const data = await aiResponse.json();

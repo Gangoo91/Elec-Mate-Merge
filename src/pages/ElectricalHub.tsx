@@ -221,14 +221,15 @@ function ElectricalStatsBar() {
             <motion.div
               key={stat.label}
               variants={itemVariants}
-              whileTap={{ scale: 0.97 }}
+              whileTap={{ scale: 0.96 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               className={cn(
                 'flex-shrink-0 w-[140px] snap-start touch-manipulation',
                 index === statItems.length - 1 && 'mr-4 sm:mr-0',
                 'sm:w-full'
               )}
             >
-              <div className="glass-premium rounded-xl p-4 h-[100px]">
+              <div className="glass-premium rounded-xl p-4 h-[100px] active:bg-white/[0.02] transition-colors">
                 <div className="flex items-start justify-between gap-2">
                   <div className={cn(
                     'p-2 rounded-lg',
@@ -294,11 +295,12 @@ function ElectricalStatsBar() {
 // Featured Card Component
 function FeaturedCard() {
   return (
-    <Link to="/electrician/agent-selector" className="block group touch-manipulation">
+    <Link to="/electrician/agent-selector" className="block group touch-manipulation active:opacity-90">
       <motion.div
         whileHover={{ y: -2, scale: 1.01 }}
-        whileTap={{ scale: 0.98 }}
-        className="relative overflow-hidden glass-premium rounded-2xl"
+        whileTap={{ scale: 0.97 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+        className="relative overflow-hidden glass-premium rounded-2xl active:bg-white/[0.02]"
       >
         <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
         <div className="absolute -top-16 -right-16 w-32 h-32 bg-elec-yellow/[0.08] blur-3xl rounded-full pointer-events-none" />
@@ -335,11 +337,12 @@ interface ToolCardProps {
 
 function ToolCard({ title, description, icon: Icon, link }: ToolCardProps) {
   return (
-    <Link to={link} className="block group touch-manipulation">
+    <Link to={link} className="block group touch-manipulation active:opacity-90">
       <motion.div
         whileHover={{ y: -2, scale: 1.01 }}
-        whileTap={{ scale: 0.98 }}
-        className="glass-premium rounded-xl h-full min-h-[140px]"
+        whileTap={{ scale: 0.97 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+        className="glass-premium rounded-xl h-full min-h-[140px] active:bg-white/[0.02]"
       >
         <div className="p-4 sm:p-5 flex items-start gap-4">
           <div className="flex-shrink-0 p-2.5 rounded-lg bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors">
@@ -365,11 +368,12 @@ function ToolCard({ title, description, icon: Icon, link }: ToolCardProps) {
 // Compact Tool Card
 function CompactToolCard({ title, description, icon: Icon, link }: ToolCardProps) {
   return (
-    <Link to={link} className="block group touch-manipulation">
+    <Link to={link} className="block group touch-manipulation active:opacity-90">
       <motion.div
         whileHover={{ y: -2, scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className="glass-premium rounded-xl h-full min-h-[120px] sm:min-h-[130px]"
+        whileTap={{ scale: 0.96 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+        className="glass-premium rounded-xl h-full min-h-[120px] sm:min-h-[130px] active:bg-white/[0.02]"
       >
         <div className="p-4 flex flex-col items-center justify-center text-center h-full">
           <div className="p-2 rounded-lg bg-elec-yellow/10 mb-2 group-hover:bg-elec-yellow/20 transition-colors">
@@ -495,9 +499,9 @@ const additionalResources: ToolCardProps[] = [
 
 const ElectricalHub = () => {
   return (
-    <div className="min-h-screen bg-[hsl(240,5.9%,10%)] flex flex-col">
-      <div className="flex-1 overflow-y-auto momentum-scroll-y">
-        <div className="mx-auto max-w-6xl py-4 md:py-6 lg:py-8 pb-safe">
+    <div className="min-h-screen bg-[hsl(240,5.9%,10%)] flex flex-col safe-area-inset-top">
+      <div className="flex-1 overflow-y-auto momentum-scroll-y overscroll-contain">
+        <div className="mx-auto max-w-6xl pt-safe py-4 md:py-6 lg:py-8 pb-safe">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -509,7 +513,7 @@ const ElectricalHub = () => {
               <Link to="/dashboard">
                 <Button
                   variant="ghost"
-                  className="text-white/70 hover:text-white hover:bg-white/[0.05] -ml-2 h-11 touch-manipulation"
+                  className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
                 >
                   <ArrowLeft className="mr-2 h-5 w-5" />
                   Back to Dashboard

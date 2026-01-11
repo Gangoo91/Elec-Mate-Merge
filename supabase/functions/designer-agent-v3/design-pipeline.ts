@@ -53,17 +53,25 @@ export class DesignPipeline {
     const cached = await this.cache.get(cacheKey);
 
     if (cached) {
-      this.logger.info('Cache HIT', { key: cacheKey.slice(0, 12) });
+      this.logger.info('Cache HIT', {
+        key: cacheKey.slice(0, 12),
+        ageSeconds: cached.ageSeconds,
+        hitCount: cached.hitCount
+      });
       return {
         ...cached.design,
         fromCache: true,
+        cacheHit: true, // METRICS: Track cache hits for optimization
         processingTime: Date.now() - startTime,
         cacheAgeSeconds: cached.ageSeconds,
         cacheHitCount: cached.hitCount
       };
     }
 
-    this.logger.info('Cache MISS', { key: cacheKey.slice(0, 12) });
+    this.logger.info('Cache MISS', {
+      key: cacheKey.slice(0, 12),
+      circuitCount: normalized.circuits.length
+    });
 
     // ========================================
     // PHASE 3: RAG Search (GIN-indexed, fast)
@@ -134,19 +142,86 @@ export class DesignPipeline {
     });
     
     // ========================================
-    // PHASE 6.6: Breaking Capacity Validation (INDUSTRIAL SAFETY)
+    // PHASE 6.6 + 6.7: PARALLELIZED VALIDATION (OPTIMIZED)
+    // Both phases are read-only, so they can run concurrently
     // ========================================
+    const validationStart = Date.now();
+
+    // Import validator upfront
     const { validateBreakingCapacity } = await import('./breaking-capacity-validator.ts');
-    const breakingCapacityIssues = validateBreakingCapacity(
-      design.circuits,
-      normalized.supply,
-      this.logger
-    );
-    
+
+    // Run validations in parallel - both are read-only operations
+    const [breakingCapacityIssues, cableValidationResults] = await Promise.all([
+      // PHASE 6.6: Breaking Capacity Validation
+      Promise.resolve(validateBreakingCapacity(
+        design.circuits,
+        normalized.supply,
+        this.logger
+      )),
+
+      // PHASE 6.7: Cable Capacity Validation (all three checks)
+      Promise.resolve((() => {
+        const cableCapacityErrors: any[] = [];
+        const industrialProtectionErrors: any[] = [];
+        const protectionSizingErrors: any[] = [];
+
+        design.circuits.forEach((circuit, index) => {
+          // Validate cable capacity against BS 7671 tables
+          const capacityValidation = validateCableCapacity(circuit, this.logger);
+          if (!capacityValidation.valid) {
+            cableCapacityErrors.push({
+              circuitNumber: circuit.circuitNumber || index + 1,
+              circuitName: circuit.name,
+              error: capacityValidation.error,
+              recommendation: capacityValidation.recommendation,
+              severity: capacityValidation.recommendation?.includes('CRITICAL') ? 'error' : 'warning'
+            });
+          }
+
+          // Validate industrial protection device selection (BS88/MCCB for >63A)
+          const protectionValidation = validateIndustrialProtection(
+            circuit,
+            normalized.supply.installationType || 'commercial',
+            this.logger
+          );
+          if (!protectionValidation.valid) {
+            industrialProtectionErrors.push({
+              circuitNumber: circuit.circuitNumber || index + 1,
+              circuitName: circuit.name,
+              error: protectionValidation.error,
+              recommendation: protectionValidation.recommendation,
+              severity: 'error'
+            });
+          }
+
+          // Validate protection sizing (Ib ≤ In ≤ Iz) - DO NOT correct here, just log
+          const sizingValidation = validateProtectionSizing(circuit, this.logger);
+          if (!sizingValidation.valid) {
+            protectionSizingErrors.push({
+              circuitNumber: circuit.circuitNumber || index + 1,
+              circuitName: circuit.name,
+              reason: sizingValidation.reason,
+              correctedRating: sizingValidation.correctedRating,
+              severity: 'warning'
+            });
+          }
+        });
+
+        return { cableCapacityErrors, industrialProtectionErrors, protectionSizingErrors };
+      })())
+    ]);
+
+    const validationDuration = Date.now() - validationStart;
+    this.logger.info('Parallel validation complete', { durationMs: validationDuration });
+
+    // Extract cable validation results
+    const { cableCapacityErrors, industrialProtectionErrors, protectionSizingErrors } = cableValidationResults;
+
+    // Log breaking capacity results
     if (breakingCapacityIssues.length > 0) {
       const errorCount = breakingCapacityIssues.filter(i => i.severity === 'error').length;
       const warningCount = breakingCapacityIssues.filter(i => i.severity === 'warning').length;
-      
+
       this.logger.warn('Breaking capacity issues detected', {
         errors: errorCount,
         warnings: warningCount,
@@ -156,8 +231,7 @@ export class DesignPipeline {
           message: i.message
         }))
       });
-      
-      // Attach breaking capacity warnings to design result
+
       (design as any).breakingCapacityIssues = breakingCapacityIssues;
     } else {
       this.logger.info('Breaking capacity validation passed', {
@@ -165,56 +239,7 @@ export class DesignPipeline {
       });
     }
 
-    // ========================================
-    // PHASE 6.7: Cable Capacity Validation (CRITICAL SAFETY - PREVENT UNDERSIZING)
-    // ========================================
-    const cableCapacityErrors: any[] = [];
-    const industrialProtectionErrors: any[] = [];
-    const protectionSizingErrors: any[] = [];
-    
-    design.circuits.forEach((circuit, index) => {
-      // Validate cable capacity against BS 7671 tables
-      const capacityValidation = validateCableCapacity(circuit, this.logger);
-      if (!capacityValidation.valid) {
-        cableCapacityErrors.push({
-          circuitNumber: circuit.circuitNumber || index + 1,
-          circuitName: circuit.name,
-          error: capacityValidation.error,
-          recommendation: capacityValidation.recommendation,
-          severity: capacityValidation.recommendation?.includes('CRITICAL') ? 'error' : 'warning'
-        });
-      }
-      
-      // Validate industrial protection device selection (BS88/MCCB for >63A)
-      const protectionValidation = validateIndustrialProtection(
-        circuit,
-        normalized.supply.installationType || 'commercial',
-        this.logger
-      );
-      if (!protectionValidation.valid) {
-        industrialProtectionErrors.push({
-          circuitNumber: circuit.circuitNumber || index + 1,
-          circuitName: circuit.name,
-          error: protectionValidation.error,
-          recommendation: protectionValidation.recommendation,
-          severity: 'error'
-        });
-      }
-      
-      // Validate protection sizing (Ib ≤ In ≤ Iz) - DO NOT correct here, just log
-      const sizingValidation = validateProtectionSizing(circuit, this.logger);
-      if (!sizingValidation.valid) {
-        protectionSizingErrors.push({
-          circuitNumber: circuit.circuitNumber || index + 1,
-          circuitName: circuit.name,
-          reason: sizingValidation.reason,
-          correctedRating: sizingValidation.correctedRating,
-          severity: 'warning'
-        });
-      }
-    });
-    
-    // Log validation results
+    // Log cable validation results
     if (cableCapacityErrors.length > 0) {
       this.logger.error('🔴 Cable capacity validation FAILED', {
         errorCount: cableCapacityErrors.length,
@@ -226,7 +251,7 @@ export class DesignPipeline {
         circuits: design.circuits.length
       });
     }
-    
+
     if (industrialProtectionErrors.length > 0) {
       this.logger.error('🔴 Industrial protection validation FAILED', {
         errorCount: industrialProtectionErrors.length,
@@ -238,7 +263,7 @@ export class DesignPipeline {
         circuits: design.circuits.length
       });
     }
-    
+
     if (protectionSizingErrors.length > 0) {
       this.logger.warn('🟡 Protection sizing issues detected', {
         issueCount: protectionSizingErrors.length,
@@ -300,6 +325,7 @@ export class DesignPipeline {
     const result: DesignResult = {
       ...design,
       fromCache: false,
+      cacheHit: false, // METRICS: Track cache misses for optimization
       processingTime: Date.now() - startTime
     };
 

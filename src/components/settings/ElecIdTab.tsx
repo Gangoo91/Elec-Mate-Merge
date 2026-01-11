@@ -13,7 +13,10 @@ import {
   Loader2,
   ChevronLeft,
   ChevronRight,
+  Camera,
+  Shield,
 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 import ElecIdOverview from "./elec-id/ElecIdOverview";
 import ElecIdQualifications from "./elec-id/ElecIdQualifications";
 import ElecIdExperience from "./elec-id/ElecIdExperience";
@@ -95,6 +98,7 @@ const ElecIdTab = () => {
   const [activeSubTab, setActiveSubTab] = useState("overview");
   const { profile, isLoading, isActivated, activateProfile, refetch } = useElecIdProfile();
   const isMobile = useIsMobile();
+  const { toast } = useToast();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
@@ -180,7 +184,23 @@ const ElecIdTab = () => {
       await refetch();
     };
 
-    const handleSkip = () => {};
+    const handleSkip = async () => {
+      // Activate profile with minimal data - user can complete details later
+      const success = await activateProfile({});
+      if (success) {
+        toast({
+          title: "Elec-ID Activated",
+          description: "You can complete your profile details anytime from this page.",
+        });
+        await refetch();
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to activate Elec-ID. Please try again.",
+          variant: "destructive",
+        });
+      }
+    };
 
     return (
       <Card className="border-border bg-card/50 backdrop-blur-sm">
@@ -350,7 +370,7 @@ const ElecIdTab = () => {
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.2}
         onDragEnd={handleDragEnd}
-        className="touch-pan-y"
+        className="touch-pan-y pb-20 sm:pb-4"
       >
         <SubTabComponent onNavigate={(tabId: string) => {
           setActiveSubTab(tabId);
@@ -358,6 +378,50 @@ const ElecIdTab = () => {
           if (index >= 0) scrollToTab(index);
         }} />
       </motion.div>
+
+      {/* Mobile Quick Actions Bar */}
+      {isMobile && (
+        <div className="fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-lg border-t border-white/10 px-4 py-3 pb-safe z-50">
+          <div className="flex justify-around max-w-md mx-auto">
+            <button
+              onClick={() => {
+                setActiveSubTab("documents");
+                scrollToTab(ELEC_ID_TABS.findIndex(t => t.id === "documents"));
+              }}
+              className="flex flex-col items-center gap-1 p-2 rounded-xl transition-all active:scale-95 touch-manipulation"
+            >
+              <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+                <Camera className="h-5 w-5 text-elec-yellow" />
+              </div>
+              <span className="text-[10px] text-muted-foreground">Scan</span>
+            </button>
+            <button
+              onClick={() => {
+                setActiveSubTab("share");
+                scrollToTab(ELEC_ID_TABS.findIndex(t => t.id === "share"));
+              }}
+              className="flex flex-col items-center gap-1 p-2 rounded-xl transition-all active:scale-95 touch-manipulation"
+            >
+              <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+                <Share2 className="h-5 w-5 text-blue-400" />
+              </div>
+              <span className="text-[10px] text-muted-foreground">Share</span>
+            </button>
+            <button
+              onClick={() => {
+                setActiveSubTab("compliance");
+                scrollToTab(ELEC_ID_TABS.findIndex(t => t.id === "compliance"));
+              }}
+              className="flex flex-col items-center gap-1 p-2 rounded-xl transition-all active:scale-95 touch-manipulation"
+            >
+              <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+                <Shield className="h-5 w-5 text-green-400" />
+              </div>
+              <span className="text-[10px] text-muted-foreground">Status</span>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

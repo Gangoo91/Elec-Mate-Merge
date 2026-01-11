@@ -162,8 +162,8 @@ export default function OJTHub() {
   };
 
   // Get user display name
-  const userName = profile?.first_name
-    ? `${profile.first_name} ${profile.last_name || ''}`.trim()
+  const userName = profile?.full_name
+    ? profile.full_name
     : user?.email?.split('@')[0] || 'Apprentice';
 
   // Render active section content

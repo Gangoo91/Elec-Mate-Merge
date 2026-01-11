@@ -75,9 +75,11 @@ export interface ElecIdQualification {
   profile_id: string;
   qualification_name: string;
   qualification_type: string;
+  category: string | null;
   awarding_body: string | null;
   grade: string | null;
   date_achieved: string | null;
+  expiry_date: string | null;
   certificate_number: string | null;
   is_verified: boolean;
   created_at: string;
@@ -86,10 +88,10 @@ export interface ElecIdQualification {
 // Fetch all Elec-ID profiles with related data
 export const getElecIdProfiles = async (): Promise<ElecIdProfile[]> => {
   const { data: profiles, error: profileError } = await supabase
-    .from('elec_id_profiles')
+    .from('employer_elec_id_profiles')
     .select(`
       *,
-      employee:employees(id, name, role, photo_url, email, phone)
+      employee:employer_employees(id, name, role, photo_url, email, phone)
     `)
     .order('created_at', { ascending: false });
 
@@ -105,10 +107,10 @@ export const getElecIdProfiles = async (): Promise<ElecIdProfile[]> => {
     { data: training },
     { data: qualifications }
   ] = await Promise.all([
-    supabase.from('elec_id_skills').select('*').in('profile_id', profileIds),
-    supabase.from('elec_id_work_history').select('*').in('profile_id', profileIds).order('start_date', { ascending: false }),
-    supabase.from('elec_id_training').select('*').in('profile_id', profileIds).order('completed_date', { ascending: false }),
-    supabase.from('elec_id_qualifications').select('*').in('profile_id', profileIds).order('date_achieved', { ascending: false }),
+    supabase.from('employer_elec_id_skills').select('*').in('profile_id', profileIds),
+    supabase.from('employer_elec_id_work_history').select('*').in('profile_id', profileIds).order('start_date', { ascending: false }),
+    supabase.from('employer_elec_id_training').select('*').in('profile_id', profileIds).order('completed_date', { ascending: false }),
+    supabase.from('employer_elec_id_qualifications').select('*').in('profile_id', profileIds).order('date_achieved', { ascending: false }),
   ]);
 
   return profiles.map(profile => ({
@@ -123,10 +125,10 @@ export const getElecIdProfiles = async (): Promise<ElecIdProfile[]> => {
 // Fetch single profile by employee ID
 export const getElecIdProfileByEmployeeId = async (employeeId: string): Promise<ElecIdProfile | null> => {
   const { data: profile, error } = await supabase
-    .from('elec_id_profiles')
+    .from('employer_elec_id_profiles')
     .select(`
       *,
-      employee:employees(id, name, role, photo_url, email, phone)
+      employee:employer_employees(id, name, role, photo_url, email, phone)
     `)
     .eq('employee_id', employeeId)
     .maybeSingle();
@@ -140,10 +142,10 @@ export const getElecIdProfileByEmployeeId = async (employeeId: string): Promise<
     { data: training },
     { data: qualifications }
   ] = await Promise.all([
-    supabase.from('elec_id_skills').select('*').eq('profile_id', profile.id),
-    supabase.from('elec_id_work_history').select('*').eq('profile_id', profile.id).order('start_date', { ascending: false }),
-    supabase.from('elec_id_training').select('*').eq('profile_id', profile.id).order('completed_date', { ascending: false }),
-    supabase.from('elec_id_qualifications').select('*').eq('profile_id', profile.id).order('date_achieved', { ascending: false }),
+    supabase.from('employer_elec_id_skills').select('*').eq('profile_id', profile.id),
+    supabase.from('employer_elec_id_work_history').select('*').eq('profile_id', profile.id).order('start_date', { ascending: false }),
+    supabase.from('employer_elec_id_training').select('*').eq('profile_id', profile.id).order('completed_date', { ascending: false }),
+    supabase.from('employer_elec_id_qualifications').select('*').eq('profile_id', profile.id).order('date_achieved', { ascending: false }),
   ]);
 
   return {
@@ -158,10 +160,10 @@ export const getElecIdProfileByEmployeeId = async (employeeId: string): Promise<
 // Lookup profile by Elec-ID number (for scanning)
 export const getElecIdProfileByNumber = async (elecIdNumber: string): Promise<ElecIdProfile | null> => {
   const { data: profile, error } = await supabase
-    .from('elec_id_profiles')
+    .from('employer_elec_id_profiles')
     .select(`
       *,
-      employee:employees(id, name, role, photo_url, email, phone)
+      employee:employer_employees(id, name, role, photo_url, email, phone)
     `)
     .eq('elec_id_number', elecIdNumber)
     .maybeSingle();
@@ -175,15 +177,15 @@ export const getElecIdProfileByNumber = async (elecIdNumber: string): Promise<El
     { data: training },
     { data: qualifications }
   ] = await Promise.all([
-    supabase.from('elec_id_skills').select('*').eq('profile_id', profile.id),
-    supabase.from('elec_id_work_history').select('*').eq('profile_id', profile.id).order('start_date', { ascending: false }),
-    supabase.from('elec_id_training').select('*').eq('profile_id', profile.id).order('completed_date', { ascending: false }),
-    supabase.from('elec_id_qualifications').select('*').eq('profile_id', profile.id).order('date_achieved', { ascending: false }),
+    supabase.from('employer_elec_id_skills').select('*').eq('profile_id', profile.id),
+    supabase.from('employer_elec_id_work_history').select('*').eq('profile_id', profile.id).order('start_date', { ascending: false }),
+    supabase.from('employer_elec_id_training').select('*').eq('profile_id', profile.id).order('completed_date', { ascending: false }),
+    supabase.from('employer_elec_id_qualifications').select('*').eq('profile_id', profile.id).order('date_achieved', { ascending: false }),
   ]);
 
   // Increment profile views
   await supabase
-    .from('elec_id_profiles')
+    .from('employer_elec_id_profiles')
     .update({ profile_views: (profile.profile_views || 0) + 1 })
     .eq('id', profile.id);
 
@@ -209,9 +211,9 @@ export const createElecIdProfile = async (data: {
   const elecIdNumber = data.elec_id_number || `ELEC-${new Date().getFullYear()}-${Math.floor(Math.random() * 100000).toString().padStart(5, '0')}`;
   
   const { data: profile, error } = await supabase
-    .from('elec_id_profiles')
+    .from('employer_elec_id_profiles')
     .insert({ ...data, elec_id_number: elecIdNumber })
-    .select(`*, employee:employees(id, name, role, photo_url, email, phone)`)
+    .select(`*, employee:employer_employees(id, name, role, photo_url, email, phone)`)
     .single();
 
   if (error) throw error;
@@ -221,10 +223,10 @@ export const createElecIdProfile = async (data: {
 // Update profile
 export const updateElecIdProfile = async (id: string, updates: Partial<ElecIdProfile>): Promise<ElecIdProfile> => {
   const { data, error } = await supabase
-    .from('elec_id_profiles')
+    .from('employer_elec_id_profiles')
     .update(updates)
     .eq('id', id)
-    .select(`*, employee:employees(id, name, role, photo_url, email, phone)`)
+    .select(`*, employee:employer_employees(id, name, role, photo_url, email, phone)`)
     .single();
 
   if (error) throw error;
@@ -234,14 +236,14 @@ export const updateElecIdProfile = async (id: string, updates: Partial<ElecIdPro
 // Verify profile credentials
 export const verifyElecIdProfile = async (id: string, verifiedBy: string): Promise<ElecIdProfile> => {
   const { data, error } = await supabase
-    .from('elec_id_profiles')
+    .from('employer_elec_id_profiles')
     .update({
       is_verified: true,
       verified_at: new Date().toISOString(),
       verified_by: verifiedBy
     })
     .eq('id', id)
-    .select(`*, employee:employees(id, name, role, photo_url, email, phone)`)
+    .select(`*, employee:employer_employees(id, name, role, photo_url, email, phone)`)
     .single();
 
   if (error) throw error;
@@ -253,7 +255,7 @@ export const generateShareableLink = async (id: string): Promise<string> => {
   const shareableLink = `https://elec-id.app/profile/${id}?token=${crypto.randomUUID()}`;
   
   const { error } = await supabase
-    .from('elec_id_profiles')
+    .from('employer_elec_id_profiles')
     .update({ shareable_link: shareableLink })
     .eq('id', id);
 
@@ -264,7 +266,7 @@ export const generateShareableLink = async (id: string): Promise<string> => {
 // Skills CRUD
 export const addElecIdSkill = async (data: Omit<ElecIdSkill, 'id' | 'created_at'>): Promise<ElecIdSkill> => {
   const { data: skill, error } = await supabase
-    .from('elec_id_skills')
+    .from('employer_elec_id_skills')
     .insert(data)
     .select()
     .single();
@@ -274,14 +276,14 @@ export const addElecIdSkill = async (data: Omit<ElecIdSkill, 'id' | 'created_at'
 };
 
 export const deleteElecIdSkill = async (id: string): Promise<void> => {
-  const { error } = await supabase.from('elec_id_skills').delete().eq('id', id);
+  const { error } = await supabase.from('employer_elec_id_skills').delete().eq('id', id);
   if (error) throw error;
 };
 
 // Work History CRUD
 export const addElecIdWorkHistory = async (data: Omit<ElecIdWorkHistory, 'id' | 'created_at'>): Promise<ElecIdWorkHistory> => {
   const { data: history, error } = await supabase
-    .from('elec_id_work_history')
+    .from('employer_elec_id_work_history')
     .insert(data)
     .select()
     .single();
@@ -291,14 +293,14 @@ export const addElecIdWorkHistory = async (data: Omit<ElecIdWorkHistory, 'id' | 
 };
 
 export const deleteElecIdWorkHistory = async (id: string): Promise<void> => {
-  const { error } = await supabase.from('elec_id_work_history').delete().eq('id', id);
+  const { error } = await supabase.from('employer_elec_id_work_history').delete().eq('id', id);
   if (error) throw error;
 };
 
 // Training CRUD
 export const addElecIdTraining = async (data: Omit<ElecIdTraining, 'id' | 'created_at'>): Promise<ElecIdTraining> => {
   const { data: training, error } = await supabase
-    .from('elec_id_training')
+    .from('employer_elec_id_training')
     .insert(data)
     .select()
     .single();
@@ -308,14 +310,14 @@ export const addElecIdTraining = async (data: Omit<ElecIdTraining, 'id' | 'creat
 };
 
 export const deleteElecIdTraining = async (id: string): Promise<void> => {
-  const { error } = await supabase.from('elec_id_training').delete().eq('id', id);
+  const { error } = await supabase.from('employer_elec_id_training').delete().eq('id', id);
   if (error) throw error;
 };
 
 // Qualifications CRUD
 export const addElecIdQualification = async (data: Omit<ElecIdQualification, 'id' | 'created_at'>): Promise<ElecIdQualification> => {
   const { data: qualification, error } = await supabase
-    .from('elec_id_qualifications')
+    .from('employer_elec_id_qualifications')
     .insert(data)
     .select()
     .single();
@@ -325,6 +327,78 @@ export const addElecIdQualification = async (data: Omit<ElecIdQualification, 'id
 };
 
 export const deleteElecIdQualification = async (id: string): Promise<void> => {
-  const { error } = await supabase.from('elec_id_qualifications').delete().eq('id', id);
+  const { error } = await supabase.from('employer_elec_id_qualifications').delete().eq('id', id);
   if (error) throw error;
+};
+
+export const updateElecIdQualification = async (id: string, data: Partial<ElecIdQualification>): Promise<ElecIdQualification> => {
+  const { data: qualification, error } = await supabase
+    .from('employer_elec_id_qualifications')
+    .update(data)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return qualification;
+};
+
+export const updateElecIdSkill = async (id: string, data: Partial<ElecIdSkill>): Promise<ElecIdSkill> => {
+  const { data: skill, error } = await supabase
+    .from('employer_elec_id_skills')
+    .update(data)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return skill;
+};
+
+export const updateElecIdWorkHistory = async (id: string, data: Partial<ElecIdWorkHistory>): Promise<ElecIdWorkHistory> => {
+  const { data: history, error } = await supabase
+    .from('employer_elec_id_work_history')
+    .update(data)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return history;
+};
+
+// Fetch qualifications for a profile
+export const getQualificationsByProfileId = async (profileId: string): Promise<ElecIdQualification[]> => {
+  const { data, error } = await supabase
+    .from('employer_elec_id_qualifications')
+    .select('*')
+    .eq('profile_id', profileId)
+    .order('date_achieved', { ascending: false });
+
+  if (error) throw error;
+  return data || [];
+};
+
+// Fetch skills for a profile
+export const getSkillsByProfileId = async (profileId: string): Promise<ElecIdSkill[]> => {
+  const { data, error } = await supabase
+    .from('employer_elec_id_skills')
+    .select('*')
+    .eq('profile_id', profileId)
+    .order('skill_name');
+
+  if (error) throw error;
+  return data || [];
+};
+
+// Fetch work history for a profile
+export const getWorkHistoryByProfileId = async (profileId: string): Promise<ElecIdWorkHistory[]> => {
+  const { data, error } = await supabase
+    .from('employer_elec_id_work_history')
+    .select('*')
+    .eq('profile_id', profileId)
+    .order('start_date', { ascending: false });
+
+  if (error) throw error;
+  return data || [];
 };

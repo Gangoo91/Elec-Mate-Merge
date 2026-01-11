@@ -79,6 +79,8 @@ const QuoteBuilder = () => {
         setSearchParams({ filter: sectionLower });
         break;
       case 'back':
+        navigate('/electrician');
+        break;
       case 'business':
         navigate('/electrician/business');
         break;
@@ -122,7 +124,7 @@ const QuoteBuilder = () => {
           <div className="flex items-center h-14 px-4 gap-3">
             {/* Back Button */}
             <button
-              onClick={() => navigate('/electrician/business')}
+              onClick={() => navigate('/electrician')}
               className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-95 transition-all -ml-1"
             >
               <ArrowLeft className="h-5 w-5" />

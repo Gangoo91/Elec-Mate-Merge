@@ -33,21 +33,9 @@ import {
   GraduationCap,
   ChevronUp,
   Sparkles,
+  Loader2,
 } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-
-interface Goal {
-  id: string;
-  title: string;
-  description?: string;
-  category: string;
-  targetValue: number;
-  currentValue: number;
-  unit: string;
-  priority: 'low' | 'medium' | 'high';
-  deadline?: string;
-  status: 'in_progress' | 'completed';
-}
+import { useOJTGoals, OJTGoal } from '@/hooks/time-tracking/useOJTGoals';
 
 const CATEGORIES = [
   { value: 'training', label: 'Training', icon: BookOpen, color: 'text-blue-500' },
@@ -74,11 +62,13 @@ const SMART_GOAL_SUGGESTIONS = [
  * - Category-based organization
  * - Priority management
  * - Achievement celebration
+ * - Real-time database persistence
  */
 export function GoalsSection() {
-  const { toast } = useToast();
+  const { goals, isLoading, stats, addGoal, updateProgress } = useOJTGoals();
   const [showAddGoal, setShowAddGoal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [newGoal, setNewGoal] = useState({
     title: '',
@@ -90,100 +80,36 @@ export function GoalsSection() {
     deadline: '',
   });
 
-  // Mock goals
-  const [goals, setGoals] = useState<Goal[]>([
-    {
-      id: '1',
-      title: 'Complete 400 OJT hours',
-      description: 'Achieve the 20% off-the-job training requirement',
-      category: 'training',
-      targetValue: 400,
-      currentValue: 285,
-      unit: 'hours',
-      priority: 'high',
-      deadline: '2024-08-31',
-      status: 'in_progress',
-    },
-    {
-      id: '2',
-      title: 'Build portfolio entries',
-      description: 'Add evidence across all assessment criteria',
-      category: 'portfolio',
-      targetValue: 20,
-      currentValue: 12,
-      unit: 'entries',
-      priority: 'high',
-      status: 'in_progress',
-    },
-    {
-      id: '3',
-      title: 'Achieve 95% attendance',
-      description: 'Maintain excellent attendance record',
-      category: 'training',
-      targetValue: 95,
-      currentValue: 92,
-      unit: '%',
-      priority: 'medium',
-      status: 'in_progress',
-    },
-    {
-      id: '4',
-      title: 'Pass Unit 201',
-      description: 'Complete all Unit 201 assessments',
-      category: 'assessment',
-      targetValue: 4,
-      currentValue: 4,
-      unit: 'assessments',
-      priority: 'high',
-      status: 'completed',
-    },
-    {
-      id: '5',
-      title: 'Obtain 18th Edition cert',
-      description: 'Get BS7671 certification',
-      category: 'certification',
-      targetValue: 1,
-      currentValue: 0,
-      unit: 'cert',
-      priority: 'low',
-      deadline: '2024-06-30',
-      status: 'in_progress',
-    },
-  ]);
-
   // Filter goals
   const filteredGoals = selectedCategory
     ? goals.filter((g) => g.category === selectedCategory)
     : goals;
 
   // Separate active and completed
-  const activeGoals = filteredGoals.filter((g) => g.status === 'in_progress');
+  const activeGoals = filteredGoals.filter((g) => g.status !== 'completed' && g.status !== 'cancelled');
   const completedGoals = filteredGoals.filter((g) => g.status === 'completed');
 
-  // Overall stats
-  const stats = {
-    total: goals.length,
-    completed: completedGoals.length,
-    inProgress: activeGoals.length,
-    overallProgress: Math.round(
-      goals.reduce((sum, g) => sum + (g.currentValue / g.targetValue) * 100, 0) / goals.length
-    ),
-  };
+  // Calculate overall progress
+  const overallProgress = goals.length > 0
+    ? Math.round(
+        goals.reduce((sum, g) => sum + ((g.current_value || 0) / g.target_value) * 100, 0) / goals.length
+      )
+    : 0;
 
-  const handleAddGoal = () => {
-    if (!newGoal.title) {
-      toast({
-        title: 'Missing title',
-        description: 'Please enter a goal title',
-        variant: 'destructive',
-      });
-      return;
-    }
+  const handleAddGoal = async () => {
+    if (!newGoal.title) return;
 
-    toast({
-      title: 'Goal added',
-      description: `"${newGoal.title}" has been added`,
+    setIsSubmitting(true);
+    await addGoal({
+      title: newGoal.title,
+      description: newGoal.description || undefined,
+      target_value: newGoal.targetValue,
+      unit: newGoal.unit,
+      priority: newGoal.priority,
+      category: newGoal.category,
+      deadline: newGoal.deadline || undefined,
     });
+    setIsSubmitting(false);
 
     setNewGoal({
       title: '',
@@ -197,26 +123,8 @@ export function GoalsSection() {
     setShowAddGoal(false);
   };
 
-  const handleUpdateProgress = (goalId: string, newValue: number) => {
-    setGoals((prev) =>
-      prev.map((g) =>
-        g.id === goalId
-          ? {
-              ...g,
-              currentValue: newValue,
-              status: newValue >= g.targetValue ? 'completed' : 'in_progress',
-            }
-          : g
-      )
-    );
-
-    const goal = goals.find((g) => g.id === goalId);
-    if (goal && newValue >= goal.targetValue) {
-      toast({
-        title: '🎉 Goal achieved!',
-        description: `Congratulations on completing "${goal.title}"`,
-      });
-    }
+  const handleUpdateProgress = async (goalId: string, newValue: number) => {
+    await updateProgress(goalId, newValue);
   };
 
   const getCategoryIcon = (category: string) => {
@@ -250,6 +158,15 @@ export function GoalsSection() {
     }
   };
 
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="p-4 sm:p-6 space-y-4">
@@ -277,7 +194,7 @@ export function GoalsSection() {
                   <Trophy className="h-5 w-5 text-elec-yellow" />
                   <span className="text-sm font-medium text-foreground">Overall Progress</span>
                 </div>
-                <p className="text-3xl font-bold text-foreground">{stats.overallProgress}%</p>
+                <p className="text-3xl font-bold text-foreground">{overallProgress}%</p>
                 <p className="text-xs text-muted-foreground mt-1">
                   {stats.completed} of {stats.total} goals completed
                 </p>
@@ -300,7 +217,7 @@ export function GoalsSection() {
                     stroke="currentColor"
                     strokeWidth="8"
                     fill="none"
-                    strokeDasharray={`${stats.overallProgress * 2.51} 251`}
+                    strokeDasharray={`${overallProgress * 2.51} 251`}
                     strokeLinecap="round"
                     className="text-elec-yellow transition-all duration-500"
                   />
@@ -353,7 +270,8 @@ export function GoalsSection() {
             </h3>
             {activeGoals.map((goal) => {
               const CategoryIcon = getCategoryIcon(goal.category);
-              const percent = Math.round((goal.currentValue / goal.targetValue) * 100);
+              const currentVal = goal.current_value || 0;
+              const percent = Math.round((currentVal / goal.target_value) * 100);
 
               return (
                 <Card key={goal.id} className="border-border">
@@ -390,13 +308,13 @@ export function GoalsSection() {
                         )}
                         <div className="flex items-center justify-between text-xs mb-2">
                           <span className="text-muted-foreground">
-                            {goal.currentValue} / {goal.targetValue} {goal.unit}
+                            {currentVal} / {goal.target_value} {goal.unit}
                           </span>
                           <span className="font-medium text-foreground">{percent}%</span>
                         </div>
                         <Slider
-                          value={[goal.currentValue]}
-                          max={goal.targetValue}
+                          value={[currentVal]}
+                          max={goal.target_value}
                           step={1}
                           onValueChange={([value]) => handleUpdateProgress(goal.id, value)}
                           className="w-full"
@@ -444,7 +362,7 @@ export function GoalsSection() {
                           {goal.title}
                         </p>
                         <p className="text-xs text-green-500">
-                          {goal.targetValue} {goal.unit} achieved
+                          {goal.target_value} {goal.unit} achieved
                         </p>
                       </div>
                       <Trophy className="h-5 w-5 text-elec-yellow shrink-0" />
@@ -470,7 +388,7 @@ export function GoalsSection() {
 
       {/* Add Goal Sheet */}
       <Sheet open={showAddGoal} onOpenChange={setShowAddGoal}>
-        <SheetContent side="bottom" className="h-[90vh] rounded-t-3xl">
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl">
           <div className="w-12 h-1 bg-muted rounded-full mx-auto mb-4" />
           <SheetHeader>
             <SheetTitle>Add Goal</SheetTitle>
@@ -516,7 +434,7 @@ export function GoalsSection() {
             {/* Category */}
             <div className="space-y-2">
               <label className="text-sm font-medium">Category</label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {CATEGORIES.map((cat) => {
                   const Icon = cat.icon;
                   return (
@@ -524,7 +442,7 @@ export function GoalsSection() {
                       key={cat.value}
                       onClick={() => setNewGoal({ ...newGoal, category: cat.value })}
                       className={cn(
-                        "flex flex-col items-center gap-1 p-3 rounded-xl border transition-all active:scale-95",
+                        "flex flex-col items-center gap-1 p-3 rounded-xl border transition-all active:scale-95 touch-manipulation",
                         newGoal.category === cat.value
                           ? "border-elec-yellow bg-elec-yellow/10"
                           : "border-border"
@@ -580,7 +498,7 @@ export function GoalsSection() {
                     key={priority}
                     onClick={() => setNewGoal({ ...newGoal, priority })}
                     className={cn(
-                      "py-2 px-4 rounded-xl border text-sm font-medium capitalize transition-all active:scale-95",
+                      "py-2.5 px-4 rounded-xl border text-sm font-medium capitalize transition-all active:scale-95 touch-manipulation h-11",
                       newGoal.priority === priority
                         ? priority === 'high'
                           ? "border-red-500 bg-red-500/10 text-red-500"
@@ -623,14 +541,23 @@ export function GoalsSection() {
                 variant="outline"
                 onClick={() => setShowAddGoal(false)}
                 className="flex-1 h-12"
+                disabled={isSubmitting}
               >
                 Cancel
               </Button>
               <Button
                 onClick={handleAddGoal}
                 className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                disabled={isSubmitting || !newGoal.title}
               >
-                Add Goal
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    Saving...
+                  </>
+                ) : (
+                  'Add Goal'
+                )}
               </Button>
             </div>
           </div>

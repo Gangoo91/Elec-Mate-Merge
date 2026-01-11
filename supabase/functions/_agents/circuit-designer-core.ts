@@ -198,6 +198,28 @@ async function designCircuitsInternal(
   return await Promise.race([timeoutPromise, designPromise]);
 }
 
+// Calculate circuit complexity score for smart pre-splitting
+function calculateComplexityScore(circuits: any[]): number {
+  if (!circuits || !Array.isArray(circuits)) return 0;
+
+  let score = circuits.length; // Base score is circuit count
+
+  circuits.forEach((circuit) => {
+    // Add complexity for special requirements
+    if (circuit.specialRequirements?.length > 0) score += circuit.specialRequirements.length * 2;
+    // Add complexity for high power circuits (>10kW)
+    if (circuit.loadPower > 10000) score += 2;
+    // Add complexity for motor circuits (inrush current)
+    if (circuit.loadType?.toLowerCase().includes('motor')) score += 2;
+    // Add complexity for three-phase circuits
+    if (circuit.phases === 3) score += 1;
+    // Add complexity for very long cable runs (>50m)
+    if (circuit.cableLength > 50) score += 1;
+  });
+
+  return score;
+}
+
 // PHASE 3: Smart retry with circuit splitting
 export async function designCircuits(
   jobInputs: any,
@@ -205,9 +227,62 @@ export async function designCircuits(
   sharedRegulations?: any[],
   attemptNumber: number = 1
 ): Promise<any> {
-  
+
   console.log(`🔧 Circuit Designer Agent starting (attempt ${attemptNumber})...`);
-  
+
+  // OPTIMIZATION: Smart pre-splitting based on complexity score
+  // Proactively split complex batches to avoid timeout-induced retries
+  if (attemptNumber === 1 && jobInputs.circuits?.length > 0) {
+    const complexityScore = calculateComplexityScore(jobInputs.circuits);
+    const circuitCount = jobInputs.circuits.length;
+
+    console.log(`📊 Complexity analysis: ${circuitCount} circuits, score ${complexityScore}`);
+
+    // Pre-split if: >8 circuits OR complexity score >12
+    // This prevents timeouts before they happen
+    if (circuitCount > 8 || complexityScore > 12) {
+      console.log(`⚡ Pre-splitting due to high complexity (score: ${complexityScore}, circuits: ${circuitCount})`);
+
+      await progressCallback(5, 'Designer: Splitting large batch for faster processing...');
+
+      const halfLength = Math.ceil(circuitCount / 2);
+      const firstHalf = jobInputs.circuits.slice(0, halfLength);
+      const secondHalf = jobInputs.circuits.slice(halfLength);
+
+      console.log(`🔄 Pre-split: Batch 1 (${firstHalf.length} circuits), Batch 2 (${secondHalf.length} circuits)`);
+
+      // Process both batches in parallel
+      const [firstResult, secondResult] = await Promise.all([
+        designCircuits(
+          { ...jobInputs, circuits: firstHalf },
+          progressCallback,
+          sharedRegulations,
+          2 // Mark as attempt 2 to prevent recursive splitting
+        ),
+        designCircuits(
+          { ...jobInputs, circuits: secondHalf },
+          progressCallback,
+          sharedRegulations,
+          2
+        )
+      ]);
+
+      console.log(`✅ Pre-split design completed: ${firstResult.circuits.length + secondResult.circuits.length} total circuits`);
+
+      return {
+        circuits: [...firstResult.circuits, ...secondResult.circuits],
+        metadata: {
+          completedAt: new Date().toISOString(),
+          regulationsUsed: sharedRegulations?.length || 0,
+          totalCircuits: firstResult.circuits.length + secondResult.circuits.length,
+          preSplit: true, // Flag indicating proactive split
+          complexityScore,
+          batchCount: 2
+        }
+      };
+    }
+  }
+
   try {
     // Use retry wrapper for retryable errors (timeout, rate limit, 502/503)
     return await withRetry(

@@ -207,25 +207,31 @@ export class AIDesigner {
     const tools = [this.buildSingleCircuitTool(installationType)];
     const tool_choice = { type: 'function', function: { name: 'design_single_circuit' } };
 
+    // Primary model configuration
+    const PRIMARY_MODEL = 'gpt-5-mini-2025-08-07';
+    const FALLBACK_MODEL = 'gpt-4o-mini'; // Faster fallback for timeout scenarios
+    const PRIMARY_TIMEOUT = 120000; // 120 seconds for primary (reduced from 180)
+    const FALLBACK_TIMEOUT = 90000; // 90 seconds for fallback
+
     try {
-      // Call OpenAI with 180-second timeout per circuit
+      // Call OpenAI with primary model (GPT-5 Mini)
       const response = await callOpenAI(
         {
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: JSON.stringify(singleCircuitInput, null, 2) }
           ],
-          model: 'gpt-5-mini-2025-08-07',
+          model: PRIMARY_MODEL,
           max_completion_tokens: 4000, // Sufficient for single circuit
           tools,
           tool_choice
         },
         this.openAiKey,
-        180000 // 180 second timeout per circuit
+        PRIMARY_TIMEOUT
       );
 
       const circuitDuration = Date.now() - circuitStart;
-      
+
       // Parse tool call
       if (!response.toolCalls || response.toolCalls.length === 0) {
         throw new Error(`No tool calls in AI response for circuit ${index + 1}`);
@@ -237,20 +243,90 @@ export class AIDesigner {
       this.logger.info(`Circuit ${index + 1}: Complete`, {
         name: circuit.name,
         duration: circuitDuration,
+        model: PRIMARY_MODEL,
         cableSize: design.circuit.cableSize,
         protection: design.circuit.protectionDevice?.rating
       });
 
       return design.circuit;
 
-    } catch (error) {
+    } catch (primaryError) {
+      const primaryDuration = Date.now() - circuitStart;
+      const isTimeout = primaryError.message?.toLowerCase().includes('timeout') ||
+                        primaryError.message?.toLowerCase().includes('timed out') ||
+                        primaryError.message?.toLowerCase().includes('aborted');
+
+      this.logger.warn(`Circuit ${index + 1}: Primary model failed`, {
+        name: circuit.name,
+        duration: primaryDuration,
+        isTimeout,
+        error: primaryError.message
+      });
+
+      // FALLBACK: If timeout or rate limit, try faster model
+      if (isTimeout || primaryError.message?.toLowerCase().includes('rate limit')) {
+        this.logger.info(`Circuit ${index + 1}: Attempting fallback model`, {
+          name: circuit.name,
+          fallbackModel: FALLBACK_MODEL
+        });
+
+        try {
+          const fallbackStart = Date.now();
+          const fallbackResponse = await callOpenAI(
+            {
+              messages: [
+                { role: 'system', content: systemPrompt },
+                { role: 'user', content: JSON.stringify(singleCircuitInput, null, 2) }
+              ],
+              model: FALLBACK_MODEL,
+              max_completion_tokens: 4000,
+              tools,
+              tool_choice
+            },
+            this.openAiKey,
+            FALLBACK_TIMEOUT
+          );
+
+          const fallbackDuration = Date.now() - fallbackStart;
+
+          if (!fallbackResponse.toolCalls || fallbackResponse.toolCalls.length === 0) {
+            throw new Error(`No tool calls in fallback response for circuit ${index + 1}`);
+          }
+
+          const toolCall = fallbackResponse.toolCalls[0];
+          const design = JSON.parse(toolCall.function.arguments) as { circuit: DesignedCircuit };
+
+          this.logger.info(`Circuit ${index + 1}: Complete (FALLBACK)`, {
+            name: circuit.name,
+            duration: fallbackDuration,
+            totalDuration: primaryDuration + fallbackDuration,
+            model: FALLBACK_MODEL,
+            cableSize: design.circuit.cableSize,
+            protection: design.circuit.protectionDevice?.rating
+          });
+
+          return design.circuit;
+
+        } catch (fallbackError) {
+          const totalDuration = Date.now() - circuitStart;
+          this.logger.error(`Circuit ${index + 1}: Both models failed`, {
+            name: circuit.name,
+            totalDuration,
+            primaryError: primaryError.message,
+            fallbackError: fallbackError.message
+          });
+          throw new Error(`Circuit ${index + 1} (${circuit.name}) design failed: Primary (${primaryError.message}), Fallback (${fallbackError.message})`);
+        }
+      }
+
+      // Non-timeout error - throw immediately
       const circuitDuration = Date.now() - circuitStart;
-      this.logger.error(`Circuit ${index + 1}: Failed`, {
+      this.logger.error(`Circuit ${index + 1}: Failed (non-retryable)`, {
         name: circuit.name,
         duration: circuitDuration,
-        error: error.message
+        error: primaryError.message
       });
-      throw new Error(`Circuit ${index + 1} (${circuit.name}) design failed: ${error.message}`);
+      throw new Error(`Circuit ${index + 1} (${circuit.name}) design failed: ${primaryError.message}`);
     }
   }
 

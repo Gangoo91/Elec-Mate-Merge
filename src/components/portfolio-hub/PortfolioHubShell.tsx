@@ -130,7 +130,7 @@ export function PortfolioHubShell({
           <div className="p-4 border-t border-border">
             <button
               onClick={() => setIsQuickCaptureOpen(true)}
-              className="w-full py-3 px-4 bg-elec-yellow text-black font-semibold rounded-xl hover:bg-elec-yellow/90 transition-colors flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 bg-elec-yellow text-black font-semibold rounded-xl hover:bg-elec-yellow/90 transition-colors flex items-center justify-center gap-2 touch-manipulation active:scale-95"
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -210,7 +210,7 @@ function DesktopNavItem({ icon, label, active, onClick, badge }: DesktopNavItemP
     <button
       onClick={onClick}
       className={cn(
-        "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors relative",
+        "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors relative touch-manipulation",
         active
           ? "bg-elec-yellow/10 text-elec-yellow"
           : "text-muted-foreground hover:bg-muted hover:text-foreground"

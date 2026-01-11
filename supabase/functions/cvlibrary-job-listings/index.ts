@@ -39,12 +39,14 @@ serve(async (req) => {
         maxAge: 172800000,
         formats: [{
           type: "json",
+          prompt: "Extract ALL job listings visible on the page. Include up to 50 jobs if available. Capture every job posting with its complete details.",
           schema: {
             title: "JobListings",
             type: "object",
             properties: {
               jobs: {
                 type: "array",
+                maxItems: 50,
                 items: {
                   type: "object",
                   properties: {

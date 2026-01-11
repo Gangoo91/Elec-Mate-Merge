@@ -7,6 +7,23 @@
 
 import { supabase } from "@/integrations/supabase/client";
 
+// Helper to send push notification (fire and forget)
+const sendPushNotification = async (
+  userId: string,
+  title: string,
+  body: string,
+  type: 'job' | 'team' | 'college' | 'peer',
+  data?: Record<string, unknown>
+) => {
+  try {
+    await supabase.functions.invoke('send-push-notification', {
+      body: { userId, title, body, type, data },
+    });
+  } catch (error) {
+    console.error('Push notification error:', error);
+  }
+};
+
 export type CertificateType = 'EICR' | 'EIC' | 'Minor Works' | 'PAT';
 export type CertificateOutcome =
   | 'satisfactory'
@@ -104,6 +121,9 @@ export async function logCertificateToElecId(
       console.error('Error logging certificate to work history:', insertError);
       return { success: false, error: 'Failed to log certificate' };
     }
+
+    // Send notification about certificate being logged
+    sendCertificateNotification(userId, entry).catch(console.error);
 
     return { success: true };
   } catch (error) {
@@ -282,4 +302,54 @@ function mapEICROutcome(assessment: string): CertificateOutcome {
     return 'further_investigation';
   }
   return 'N/A';
+}
+
+/**
+ * Send notification about certificate being logged
+ * Includes reminder about expiry date based on certificate type
+ */
+async function sendCertificateNotification(userId: string, entry: CertificateLogEntry) {
+  try {
+    const outcomeEmoji = entry.outcome === 'satisfactory' || entry.outcome === 'pass' ? '✅' : '⚠️';
+    const title = `${outcomeEmoji} ${entry.certificate_type} Logged`;
+
+    // Calculate expiry based on certificate type
+    const expiryYears = getCertificateValidityYears(entry.certificate_type);
+    const expiryDate = new Date(entry.date_completed);
+    expiryDate.setFullYear(expiryDate.getFullYear() + expiryYears);
+
+    const expiryStr = expiryDate.toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    });
+
+    const body = `${entry.certificate_type} at ${entry.property_address.substring(0, 30)}... Due for renewal: ${expiryStr}`;
+
+    await sendPushNotification(userId, title, body, 'job', {
+      certificateId: entry.certificate_ref,
+      certificateType: entry.certificate_type,
+      expiryDate: expiryDate.toISOString(),
+    });
+  } catch (error) {
+    console.error('Error sending certificate notification:', error);
+  }
+}
+
+/**
+ * Get validity period in years for different certificate types
+ */
+function getCertificateValidityYears(type: CertificateType): number {
+  switch (type) {
+    case 'EICR':
+      return 5; // Domestic: 10 years, Commercial: 5 years - using conservative
+    case 'EIC':
+      return 10; // Valid for life of installation, but recommend check in 10
+    case 'Minor Works':
+      return 10; // Part of installation, same as EIC
+    case 'PAT':
+      return 1; // Annual testing typical
+    default:
+      return 5;
+  }
 }

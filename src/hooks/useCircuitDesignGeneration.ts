@@ -29,6 +29,7 @@ interface UseCircuitDesignGenerationReturn {
   progress: number;
   status: 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled';
   currentStep: string;
+  estimatedTimeRemaining: string | null; // OPTIMIZATION: Show estimated completion time
   designData: any;
   installationGuidance: any;
   error: string | null;
@@ -168,28 +169,94 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
     };
   }, [jobId]);
 
-  // Enhanced progress messages for sequential execution
+  // Calculate estimated time remaining based on progress and elapsed time
+  const getEstimatedTimeRemaining = (): string | null => {
+    if (!job || !job.started_at || job.progress <= 5) return null;
+    if (job.status === 'complete' || job.status === 'failed') return null;
+
+    const startTime = new Date(job.started_at).getTime();
+    const elapsedMs = Date.now() - startTime;
+    const progress = Math.max(job.progress, 1);
+
+    // Estimate based on linear projection
+    const totalEstimatedMs = (elapsedMs / progress) * 100;
+    const remainingMs = totalEstimatedMs - elapsedMs;
+
+    if (remainingMs <= 0) return 'Almost done...';
+    if (remainingMs < 10000) return 'A few seconds...';
+    if (remainingMs < 60000) return `~${Math.ceil(remainingMs / 1000)}s remaining`;
+    if (remainingMs < 120000) return '~1 minute remaining';
+    return `~${Math.ceil(remainingMs / 60000)} minutes remaining`;
+  };
+
+  // Enhanced progress messages for sequential execution with phase details
   const getProgressMessage = () => {
     if (!job) return '';
-    
+
     // Phase 1: Circuit Designer
     if (job.designer_status === 'processing') {
-      return `${job.current_step} (Phase 1/2)`;
+      const designerProgress = job.designer_progress || 0;
+      const baseMessage = job.current_step || 'Designing circuits...';
+
+      // Add circuit-level progress if available
+      if (designerProgress > 0 && designerProgress < 100) {
+        return `${baseMessage} (${designerProgress}% complete)`;
+      }
+      return `${baseMessage} (Phase 1/2)`;
     }
-    
+
+    // Transition phase
+    if (job.designer_status === 'complete' && job.installation_agent_status === 'pending') {
+      return 'Circuit design complete. Starting installation guidance...';
+    }
+
     // Phase 2: Installation Agent
     if (job.designer_status === 'complete' && job.installation_agent_status === 'processing') {
-      return `${job.current_step} (Phase 2/2)`;
+      const installProgress = job.installation_agent_progress || 0;
+      const baseMessage = job.current_step || 'Generating installation guidance...';
+
+      if (installProgress > 0 && installProgress < 100) {
+        return `${baseMessage} (${installProgress}% complete)`;
+      }
+      return `${baseMessage} (Phase 2/2)`;
     }
-    
+
+    // Installation agent timed out or skipped
+    if (job.installation_agent_status === 'timeout' || job.installation_agent_status === 'skipped') {
+      return 'Design complete (installation guidance skipped)';
+    }
+
+    // Completed
+    if (job.status === 'complete') {
+      return 'Design complete!';
+    }
+
     return job.current_step || '';
+  };
+
+  // Calculate smoothed progress that never decreases
+  const getSmoothedProgress = (): number => {
+    if (!job) return 0;
+    if (job.status === 'failed') return 0;
+
+    // Combine designer and installation agent progress for overall
+    const designerContribution = Math.min(job.designer_progress || 0, 100) * 0.5; // 0-50%
+    const installContribution = Math.min(job.installation_agent_progress || 0, 100) * 0.5; // 50-100%
+
+    // Use job.progress if available, otherwise calculate
+    const calculatedProgress = job.progress > 0
+      ? job.progress
+      : Math.round(designerContribution + installContribution);
+
+    return Math.max(calculatedProgress, 0);
   };
 
   return {
     job,
-    progress: job?.status === 'failed' ? 0 : (job?.progress || 0), // Show 0% on failure
+    progress: getSmoothedProgress(),
     status: jobId ? ((job?.status as any) || 'pending') : 'idle',
     currentStep: getProgressMessage(),
+    estimatedTimeRemaining: getEstimatedTimeRemaining(),
     designData: job?.design_data,
     installationGuidance: job?.installation_guidance,
     error: job?.error_message

@@ -274,7 +274,7 @@ export function SmartCaptureFlow({
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <Button
           variant="outline"
-          className="h-20 flex-col gap-2 border-elec-yellow/30 hover:bg-elec-yellow/10"
+          className="h-20 flex-col gap-2 border-elec-yellow/30 hover:bg-elec-yellow/10 touch-manipulation active:scale-95"
           onClick={() => {
             if (fileInputRef.current) {
               fileInputRef.current.accept = 'image/*';
@@ -289,7 +289,7 @@ export function SmartCaptureFlow({
 
         <Button
           variant="outline"
-          className="h-20 flex-col gap-2 border-border hover:bg-muted"
+          className="h-20 flex-col gap-2 border-border hover:bg-muted touch-manipulation active:scale-95"
           onClick={() => {
             if (fileInputRef.current) {
               fileInputRef.current.accept = 'image/*';
@@ -304,7 +304,7 @@ export function SmartCaptureFlow({
 
         <Button
           variant="outline"
-          className="h-20 flex-col gap-2 border-border hover:bg-muted"
+          className="h-20 flex-col gap-2 border-border hover:bg-muted touch-manipulation active:scale-95"
           onClick={() => {
             if (fileInputRef.current) {
               fileInputRef.current.accept = 'application/pdf,.doc,.docx';
@@ -319,7 +319,7 @@ export function SmartCaptureFlow({
 
         <Button
           variant="outline"
-          className="h-20 flex-col gap-2 border-border hover:bg-muted"
+          className="h-20 flex-col gap-2 border-border hover:bg-muted touch-manipulation active:scale-95"
           onClick={() => {
             if (fileInputRef.current) {
               fileInputRef.current.accept = 'video/*';
@@ -388,14 +388,14 @@ export function SmartCaptureFlow({
       <div className="flex gap-2">
         <Button
           variant="outline"
-          className="flex-1"
+          className="flex-1 h-11 touch-manipulation active:scale-95"
           onClick={() => setStep('capture')}
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back
         </Button>
         <Button
-          className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+          className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation active:scale-95"
           onClick={handleAnalyze}
           disabled={!captureData.title}
         >
@@ -475,14 +475,14 @@ export function SmartCaptureFlow({
       <div className="flex gap-2 pt-2">
         <Button
           variant="outline"
-          className="flex-1"
+          className="flex-1 h-11 touch-manipulation active:scale-95"
           onClick={() => setStep('details')}
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           Edit
         </Button>
         <Button
-          className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+          className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation active:scale-95"
           onClick={handleComplete}
         >
           <CheckCircle2 className="h-4 w-4 mr-2" />

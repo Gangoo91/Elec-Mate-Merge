@@ -61,12 +61,8 @@ const QuotesPage = () => {
         <div className="relative px-4 py-8 space-y-6">
           {/* Breadcrumb Navigation */}
           <nav className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Link to="/electrician/business" className="hover:text-foreground transition-colors">
-              Business Hub
-            </Link>
-            <span>/</span>
-            <Link to="/electrician/quote-builder" className="hover:text-foreground transition-colors">
-              Quote Builder
+            <Link to="/electrician" className="hover:text-foreground transition-colors">
+              Electrical Hub
             </Link>
             <span>/</span>
             <span>All Quotes</span>

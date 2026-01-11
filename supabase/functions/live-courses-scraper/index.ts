@@ -57,13 +57,20 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         urls: [
+          // Existing providers
           "https://www.tradeskills4u.co.uk/electrical-courses",
           "https://www.serc.ac.uk/course/Electrical-Upskilling/165",
           "https://www.mcptechnicaltraining.com/electrical-skills-training",
           "https://www.harringtonsafety.co.uk/ipaf-operator-training-courses",
           "https://eruditetrainingltd.co.uk/electrical-courses/",
           "https://www.southessex.ac.uk/search",
-          "https://www.cpengineering.co.uk/service/compex-electrical-industrial-training"
+          "https://www.cpengineering.co.uk/service/compex-electrical-industrial-training",
+          // New providers
+          "https://www.jtltraining.com/courses/",
+          "https://eal.org.uk/qualifications/",
+          "https://www.bpec.org.uk/training-courses/",
+          "https://www.abeltraining.co.uk/electrical-courses/",
+          "https://www.tectraining.co.uk/electrical/"
         ],
         onlyMainContent: false,
         maxAge: 0,

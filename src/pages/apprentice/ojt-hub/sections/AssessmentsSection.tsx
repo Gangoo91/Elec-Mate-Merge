@@ -32,19 +32,9 @@ import {
   GraduationCap,
   Wrench,
   Filter,
+  Loader2,
 } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-
-interface Assessment {
-  id: string;
-  title: string;
-  type: string;
-  dueDate: string;
-  status: 'pending' | 'in_progress' | 'completed' | 'overdue';
-  grade?: string;
-  feedback?: string;
-  unit?: string;
-}
+import { useOJTAssessments, OJTAssessment } from '@/hooks/time-tracking/useOJTAssessments';
 
 const ASSESSMENT_TYPES = [
   { value: 'practical', label: 'Practical', icon: Wrench },
@@ -62,108 +52,67 @@ const ASSESSMENT_TYPES = [
  * - Grade display
  * - Add new assessments
  * - Progress overview
+ * - Real-time database persistence
  */
 export function AssessmentsSection() {
-  const { toast } = useToast();
+  const { assessments, isLoading, stats, addAssessment } = useOJTAssessments();
   const [showAddAssessment, setShowAddAssessment] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [newAssessment, setNewAssessment] = useState({
     title: '',
-    type: 'practical',
+    type: 'practical' as 'practical' | 'written' | 'observation' | 'portfolio' | 'other',
     dueDate: '',
-    unit: '',
   });
 
-  // Mock assessments
-  const [assessments] = useState<Assessment[]>([
-    {
-      id: '1',
-      title: 'Consumer Unit Installation',
-      type: 'practical',
-      dueDate: '2024-01-15',
-      status: 'in_progress',
-      unit: 'Unit 202',
-    },
-    {
-      id: '2',
-      title: 'Electrical Science Theory',
-      type: 'written',
-      dueDate: '2024-01-20',
-      status: 'pending',
-      unit: 'Unit 201',
-    },
-    {
-      id: '3',
-      title: 'Safe Isolation Procedure',
-      type: 'observation',
-      dueDate: '2024-01-08',
-      status: 'completed',
-      grade: 'Pass',
-      feedback: 'Excellent demonstration of safe isolation procedure.',
-      unit: 'Unit 203',
-    },
-    {
-      id: '4',
-      title: 'Testing & Inspection',
-      type: 'practical',
-      dueDate: '2024-01-05',
-      status: 'overdue',
-      unit: 'Unit 206',
-    },
-    {
-      id: '5',
-      title: 'Health & Safety Discussion',
-      type: 'professional-discussion',
-      dueDate: '2023-12-20',
-      status: 'completed',
-      grade: 'Merit',
-      unit: 'Unit 200',
-    },
-  ]);
+  // Determine status based on due date and current status
+  const getDisplayStatus = (assessment: OJTAssessment): string => {
+    if (assessment.status === 'completed' || assessment.status === 'failed') {
+      return assessment.status;
+    }
+    const now = new Date();
+    const dueDate = new Date(assessment.due_date);
+    if (dueDate < now) {
+      return 'overdue';
+    }
+    return assessment.status || 'pending';
+  };
 
   // Filter assessments
   const filteredAssessments = selectedFilter
-    ? assessments.filter((a) => a.status === selectedFilter)
+    ? assessments.filter((a) => getDisplayStatus(a) === selectedFilter)
     : assessments;
 
   // Sort by due date (overdue first, then upcoming)
   const sortedAssessments = [...filteredAssessments].sort((a, b) => {
-    if (a.status === 'overdue' && b.status !== 'overdue') return -1;
-    if (b.status === 'overdue' && a.status !== 'overdue') return 1;
-    return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+    const statusA = getDisplayStatus(a);
+    const statusB = getDisplayStatus(b);
+    if (statusA === 'overdue' && statusB !== 'overdue') return -1;
+    if (statusB === 'overdue' && statusA !== 'overdue') return 1;
+    return new Date(a.due_date).getTime() - new Date(b.due_date).getTime();
   });
 
-  // Stats
-  const stats = {
-    total: assessments.length,
-    completed: assessments.filter((a) => a.status === 'completed').length,
-    inProgress: assessments.filter((a) => a.status === 'in_progress').length,
-    overdue: assessments.filter((a) => a.status === 'overdue').length,
-  };
+  // Calculate overdue count
+  const overdueCount = assessments.filter((a) => getDisplayStatus(a) === 'overdue').length;
 
-  const completionPercent = Math.round((stats.completed / stats.total) * 100);
+  const completionPercent = stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0;
 
-  const handleAddAssessment = () => {
-    if (!newAssessment.title || !newAssessment.dueDate) {
-      toast({
-        title: 'Missing information',
-        description: 'Please fill in title and due date',
-        variant: 'destructive',
-      });
-      return;
-    }
+  const handleAddAssessment = async () => {
+    if (!newAssessment.title || !newAssessment.dueDate) return;
 
-    toast({
-      title: 'Assessment added',
-      description: `${newAssessment.title} has been added`,
+    setIsSubmitting(true);
+    await addAssessment({
+      title: newAssessment.title,
+      type: newAssessment.type,
+      due_date: newAssessment.dueDate,
     });
+    setIsSubmitting(false);
 
     setNewAssessment({
       title: '',
       type: 'practical',
       dueDate: '',
-      unit: '',
     });
     setShowAddAssessment(false);
   };
@@ -212,6 +161,15 @@ export function AssessmentsSection() {
     return diffDays;
   };
 
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="p-4 sm:p-6 space-y-4">
@@ -249,7 +207,7 @@ export function AssessmentsSection() {
         </Card>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           <button
             onClick={() => setSelectedFilter(null)}
             className={cn(
@@ -295,7 +253,7 @@ export function AssessmentsSection() {
                 : "border-border bg-card"
             )}
           >
-            <p className="text-lg font-bold text-red-500">{stats.overdue}</p>
+            <p className="text-lg font-bold text-red-500">{overdueCount}</p>
             <p className="text-[10px] text-muted-foreground">Overdue</p>
           </button>
         </div>
@@ -312,19 +270,20 @@ export function AssessmentsSection() {
             </div>
           ) : (
             sortedAssessments.map((assessment) => {
-              const statusConfig = getStatusConfig(assessment.status);
+              const displayStatus = getDisplayStatus(assessment);
+              const statusConfig = getStatusConfig(displayStatus);
               const TypeIcon = getTypeIcon(assessment.type);
               const StatusIcon = statusConfig.icon;
-              const daysUntil = getDaysUntilDue(assessment.dueDate);
+              const daysUntil = getDaysUntilDue(assessment.due_date);
 
               return (
                 <Card
                   key={assessment.id}
                   className={cn(
                     "border-2 transition-all active:scale-[0.99]",
-                    assessment.status === 'overdue'
+                    displayStatus === 'overdue'
                       ? "border-red-500/30 bg-red-500/5"
-                      : assessment.status === 'in_progress'
+                      : displayStatus === 'scheduled'
                       ? "border-blue-500/20"
                       : "border-border"
                   )}
@@ -335,9 +294,9 @@ export function AssessmentsSection() {
                       <div
                         className={cn(
                           "h-12 w-12 rounded-xl flex items-center justify-center shrink-0",
-                          assessment.status === 'completed'
+                          displayStatus === 'completed'
                             ? "bg-green-500/10"
-                            : assessment.status === 'overdue'
+                            : displayStatus === 'overdue'
                             ? "bg-red-500/10"
                             : "bg-elec-yellow/10"
                         )}
@@ -345,9 +304,9 @@ export function AssessmentsSection() {
                         <TypeIcon
                           className={cn(
                             "h-6 w-6",
-                            assessment.status === 'completed'
+                            displayStatus === 'completed'
                               ? "text-green-500"
-                              : assessment.status === 'overdue'
+                              : displayStatus === 'overdue'
                               ? "text-red-500"
                               : "text-elec-yellow"
                           )}
@@ -361,9 +320,9 @@ export function AssessmentsSection() {
                             <p className="font-medium text-foreground line-clamp-1">
                               {assessment.title}
                             </p>
-                            {assessment.unit && (
-                              <p className="text-xs text-muted-foreground mt-0.5">
-                                {assessment.unit}
+                            {assessment.type && (
+                              <p className="text-xs text-muted-foreground mt-0.5 capitalize">
+                                {assessment.type.replace('-', ' ')}
                               </p>
                             )}
                           </div>
@@ -377,11 +336,11 @@ export function AssessmentsSection() {
                         <div className="flex items-center gap-3 mt-2">
                           <div className="flex items-center gap-1 text-xs text-muted-foreground">
                             <Calendar className="h-3 w-3" />
-                            {new Date(assessment.dueDate).toLocaleDateString('en-GB', {
+                            {new Date(assessment.due_date).toLocaleDateString('en-GB', {
                               day: 'numeric',
                               month: 'short',
                             })}
-                            {assessment.status !== 'completed' && (
+                            {displayStatus !== 'completed' && (
                               <span
                                 className={cn(
                                   "ml-1",
@@ -440,6 +399,7 @@ export function AssessmentsSection() {
                 onChange={(e) =>
                   setNewAssessment({ ...newAssessment, title: e.target.value })
                 }
+                className="h-11 touch-manipulation"
               />
             </div>
 
@@ -453,10 +413,10 @@ export function AssessmentsSection() {
                     <button
                       key={type.value}
                       onClick={() =>
-                        setNewAssessment({ ...newAssessment, type: type.value })
+                        setNewAssessment({ ...newAssessment, type: type.value as typeof newAssessment.type })
                       }
                       className={cn(
-                        "flex items-center gap-2 p-3 rounded-xl border transition-all active:scale-95",
+                        "flex items-center gap-2 p-3 rounded-xl border transition-all active:scale-95 touch-manipulation h-11",
                         newAssessment.type === type.value
                           ? "border-elec-yellow bg-elec-yellow/10"
                           : "border-border"
@@ -470,18 +430,6 @@ export function AssessmentsSection() {
               </div>
             </div>
 
-            {/* Unit */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Unit (optional)</label>
-              <Input
-                placeholder="e.g., Unit 202"
-                value={newAssessment.unit}
-                onChange={(e) =>
-                  setNewAssessment({ ...newAssessment, unit: e.target.value })
-                }
-              />
-            </div>
-
             {/* Due Date */}
             <div className="space-y-2">
               <label className="text-sm font-medium">Due Date</label>
@@ -491,6 +439,7 @@ export function AssessmentsSection() {
                 onChange={(e) =>
                   setNewAssessment({ ...newAssessment, dueDate: e.target.value })
                 }
+                className="h-11 touch-manipulation"
               />
             </div>
 
@@ -499,15 +448,24 @@ export function AssessmentsSection() {
               <Button
                 variant="outline"
                 onClick={() => setShowAddAssessment(false)}
-                className="flex-1 h-12"
+                className="flex-1 h-12 touch-manipulation"
+                disabled={isSubmitting}
               >
                 Cancel
               </Button>
               <Button
                 onClick={handleAddAssessment}
-                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
+                disabled={isSubmitting || !newAssessment.title || !newAssessment.dueDate}
               >
-                Add Assessment
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    Saving...
+                  </>
+                ) : (
+                  'Add Assessment'
+                )}
               </Button>
             </div>
           </div>

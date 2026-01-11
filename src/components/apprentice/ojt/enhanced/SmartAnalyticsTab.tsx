@@ -127,7 +127,7 @@ const SmartAnalyticsTab = () => {
       <div className="flex flex-col items-center justify-center p-12">
         <AlertTriangle className="h-8 w-8 text-orange-500 mb-4" />
         <p className="text-white mb-4">{error}</p>
-        <Button onClick={refresh} variant="outline" size="sm">
+        <Button onClick={refresh} variant="outline" size="sm" className="h-10 touch-manipulation active:scale-95">
           <RefreshCw className="h-4 w-4 mr-2" />
           Retry
         </Button>
@@ -266,7 +266,7 @@ const SmartAnalyticsTab = () => {
                     </Badge>
                   </div>
                   <p className="text-xs sm:text-sm text-white mb-3">{rec.description}</p>
-                  <Button size="sm" variant="outline" className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10">
+                  <Button size="sm" variant="outline" className="w-full h-10 border-elec-yellow/30 hover:bg-elec-yellow/10 touch-manipulation active:scale-95">
                     {rec.action}
                   </Button>
                 </div>
@@ -278,7 +278,7 @@ const SmartAnalyticsTab = () => {
 
       {/* Refresh Button */}
       <div className="flex justify-center">
-        <Button onClick={refresh} variant="ghost" size="sm" className="text-white">
+        <Button onClick={refresh} variant="ghost" size="sm" className="text-white h-10 touch-manipulation active:scale-95">
           <RefreshCw className="h-4 w-4 mr-2" />
           Refresh Analytics
         </Button>

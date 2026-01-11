@@ -1,6 +1,7 @@
 import { ArrowLeft, BookOpen, Zap, Eye, Wrench, FileText, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const PATTestingCourse = () => {
   const modules = [
@@ -70,35 +71,51 @@ const PATTestingCourse = () => {
       </div>
 
       {/* Module Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
-          {modules.map((module) => (
-            <Link
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+          {modules.map((module, index) => (
+            <motion.div
               key={module.id}
-              to={module.isExam ? `../pat-testing-mock-exam` : `../pat-testing-module-${module.id}`}
-              className="block h-full"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.05 }}
             >
-              <div className={`bg-card/50 rounded-lg active:scale-[0.98] active:bg-card/70 transition-all duration-200 cursor-pointer h-full flex flex-col ${module.isExam ? 'ring-2 ring-primary/30' : ''}`}>
-                <div className="text-center p-3 sm:p-4 flex-grow flex flex-col justify-center">
-                  <div className="flex justify-center mb-2 sm:mb-3">
-                    <div className="p-2 sm:p-2.5 rounded-lg bg-primary/10">
-                      <module.icon className="h-4 w-4 sm:h-5 sm:w-5 text-primary" strokeWidth={2} />
+              <Link
+                to={module.isExam ? `../pat-testing-mock-exam` : `../pat-testing-module-${module.id}`}
+                className="block h-full"
+              >
+                <div className={`group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 hover:bg-white/10 hover:border-elec-yellow/30 hover:shadow-lg hover:shadow-elec-yellow/10 active:scale-[0.98] transition-all duration-300 cursor-pointer touch-manipulation h-full min-h-[160px] flex flex-col ${module.isExam ? 'ring-2 ring-elec-yellow/30' : ''}`}>
+                  {/* Accent line at top */}
+                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/50 to-transparent" />
+
+                  {/* Hover glow */}
+                  <div className="absolute top-0 right-0 w-24 h-24 rounded-full blur-2xl bg-elec-yellow/20 opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
+
+                  <div className="relative text-center flex-grow flex flex-col justify-center">
+                    {/* Icon with gradient bg */}
+                    <div className="flex justify-center mb-3">
+                      <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/20 border border-white/10">
+                        <module.icon className="h-5 w-5 text-elec-yellow" strokeWidth={2} />
+                      </div>
                     </div>
+
+                    {/* Module label */}
+                    <span className="text-[10px] font-semibold text-elec-yellow/70 uppercase tracking-wider mb-1">
+                      {module.isExam ? 'Mock Exam' : `Module ${module.id}`}
+                    </span>
+
+                    {/* Title */}
+                    <h3 className="text-sm font-semibold text-white leading-tight mb-2 line-clamp-2 group-hover:text-elec-yellow transition-colors">
+                      {module.title}
+                    </h3>
+
+                    {/* Duration */}
+                    <p className="text-white/50 text-xs">
+                      {module.duration}
+                    </p>
                   </div>
-
-                  <span className="text-[9px] sm:text-[10px] font-medium text-primary/70 uppercase tracking-wide mb-1">
-                    {module.isExam ? 'Mock Exam' : `Module ${module.id}`}
-                  </span>
-
-                  <h3 className="text-sm sm:text-base font-semibold text-foreground leading-tight mb-1 line-clamp-2">
-                    {module.title}
-                  </h3>
-
-                  <p className="text-muted-foreground text-[10px] sm:text-xs">
-                    {module.duration}
-                  </p>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </motion.div>
           ))}
       </div>
     </div>

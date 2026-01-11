@@ -1,5 +1,63 @@
 import { supabase } from '@/integrations/supabase/client';
 
+// Helper to send push notification (fire and forget)
+const sendPushNotification = async (
+  userId: string,
+  title: string,
+  body: string,
+  type: 'job' | 'team' | 'college' | 'peer' | 'vacancy',
+  data?: Record<string, unknown>
+) => {
+  try {
+    await supabase.functions.invoke('send-push-notification', {
+      body: { userId, title, body, type, data },
+    });
+  } catch (error) {
+    console.error('Push notification error:', error);
+  }
+};
+
+// Helper to notify available electricians of new vacancy
+async function notifyAvailableElectricians(vacancy: Vacancy) {
+  try {
+    // Only notify for open vacancies
+    if (vacancy.status !== 'Open') return;
+
+    // Get all electricians marked as available for hire
+    const { data: availableProfiles, error } = await supabase
+      .from('elec_id_profiles')
+      .select('user_id')
+      .eq('available_for_hire', true);
+
+    if (error || !availableProfiles || availableProfiles.length === 0) {
+      return;
+    }
+
+    // Format salary for notification
+    let salaryText = '';
+    if (vacancy.salary_min && vacancy.salary_max) {
+      salaryText = ` - £${(vacancy.salary_min / 1000).toFixed(0)}k-£${(vacancy.salary_max / 1000).toFixed(0)}k`;
+    } else if (vacancy.salary_max) {
+      salaryText = ` - Up to £${(vacancy.salary_max / 1000).toFixed(0)}k`;
+    }
+
+    // Send notification to each available electrician (fire and forget)
+    for (const profile of availableProfiles) {
+      if (profile.user_id) {
+        sendPushNotification(
+          profile.user_id,
+          '🔧 New Job Opportunity',
+          `${vacancy.title} in ${vacancy.location}${salaryText}`,
+          'vacancy',
+          { vacancyId: vacancy.id }
+        ).catch(console.error);
+      }
+    }
+  } catch (error) {
+    console.error('Error notifying available electricians:', error);
+  }
+}
+
 export type EmploymentType = 'Full-time' | 'Part-time' | 'Contract' | 'Temporary';
 export type VacancyStatus = 'Open' | 'Closed' | 'Filled' | 'Draft';
 
@@ -104,6 +162,11 @@ export const createVacancy = async (
     throw error;
   }
 
+  // Notify available electricians if vacancy is published as open
+  if (data.status === 'Open') {
+    notifyAvailableElectricians(data).catch(console.error);
+  }
+
   return data;
 };
 
@@ -111,6 +174,17 @@ export const updateVacancy = async (
   id: string,
   updates: Partial<Vacancy>
 ): Promise<Vacancy | null> => {
+  // Get current status to check if it's being published
+  let wasNotOpen = false;
+  if (updates.status === 'Open') {
+    const { data: current } = await supabase
+      .from('vacancies')
+      .select('status')
+      .eq('id', id)
+      .single();
+    wasNotOpen = current?.status !== 'Open';
+  }
+
   const { data, error } = await supabase
     .from('vacancies')
     .update({ ...updates, updated_at: new Date().toISOString() })
@@ -121,6 +195,11 @@ export const updateVacancy = async (
   if (error) {
     console.error('Error updating vacancy:', error);
     return null;
+  }
+
+  // Notify available electricians if vacancy just became open
+  if (wasNotOpen && data.status === 'Open') {
+    notifyAvailableElectricians(data).catch(console.error);
   }
 
   return data;
@@ -240,14 +319,52 @@ export const createApplication = async (
   // Update applications count on vacancy
   await supabase.rpc('increment_applications_count', { vacancy_id: application.vacancy_id });
 
+  // Send push notification to vacancy owner
+  notifyVacancyOwner(application.vacancy_id, application.applicant_name, data.id).catch(console.error);
+
   return data;
 };
+
+// Helper to notify vacancy owner of new application
+async function notifyVacancyOwner(vacancyId: string, applicantName: string, applicationId: string) {
+  try {
+    // Get vacancy details including owner
+    const { data: vacancy } = await supabase
+      .from('vacancies')
+      .select('title, created_by')
+      .eq('id', vacancyId)
+      .single();
+
+    if (vacancy?.created_by) {
+      await sendPushNotification(
+        vacancy.created_by,
+        '📋 New Job Application',
+        `${applicantName} applied for ${vacancy.title}`,
+        'job',
+        { applicationId, vacancyId, isEmployer: true }
+      );
+    }
+  } catch (error) {
+    console.error('Error notifying vacancy owner:', error);
+  }
+}
 
 export const updateApplicationStatus = async (
   id: string,
   status: VacancyApplication['status'],
   notes?: string
 ): Promise<VacancyApplication | null> => {
+  // Get application details for notification
+  const { data: existingApp } = await supabase
+    .from('vacancy_applications')
+    .select(`
+      status,
+      applicant_profile_id,
+      vacancy:vacancies(title)
+    `)
+    .eq('id', id)
+    .single();
+
   const updates: Partial<VacancyApplication> = {
     status,
     updated_at: new Date().toISOString(),
@@ -269,8 +386,82 @@ export const updateApplicationStatus = async (
     return null;
   }
 
+  // Notify applicant of status change
+  if (existingApp && existingApp.status !== status) {
+    notifyApplicantStatusChange(id, existingApp, status).catch(console.error);
+  }
+
   return data;
 };
+
+// Helper to notify applicant of status change
+async function notifyApplicantStatusChange(
+  applicationId: string,
+  existingApp: { applicant_profile_id: string | null; vacancy: { title: string } | null },
+  newStatus: string
+) {
+  try {
+    if (!existingApp.applicant_profile_id) return;
+
+    // Get the user ID from the elec_id profile
+    const { data: profile } = await supabase
+      .from('elec_id_profiles')
+      .select('user_id')
+      .eq('id', existingApp.applicant_profile_id)
+      .single();
+
+    if (!profile?.user_id) return;
+
+    const vacancyTitle = (existingApp.vacancy as any)?.title || 'a job';
+    let title = '';
+    let body = '';
+    let emoji = '';
+
+    switch (newStatus) {
+      case 'Reviewing':
+        emoji = '👀';
+        title = 'Application Being Reviewed';
+        body = `Your application for ${vacancyTitle} is being reviewed`;
+        break;
+      case 'Shortlisted':
+        emoji = '⭐';
+        title = 'You\'ve Been Shortlisted!';
+        body = `Great news! You've been shortlisted for ${vacancyTitle}`;
+        break;
+      case 'Interviewed':
+        emoji = '🎤';
+        title = 'Interview Scheduled';
+        body = `Your interview for ${vacancyTitle} has been noted`;
+        break;
+      case 'Offered':
+        emoji = '🎉';
+        title = 'Job Offer!';
+        body = `Congratulations! You've received an offer for ${vacancyTitle}`;
+        break;
+      case 'Hired':
+        emoji = '🎊';
+        title = 'You\'re Hired!';
+        body = `Welcome aboard! You've been hired for ${vacancyTitle}`;
+        break;
+      case 'Rejected':
+        title = 'Application Update';
+        body = `Your application for ${vacancyTitle} was not successful this time`;
+        break;
+      default:
+        return; // Don't notify for other statuses
+    }
+
+    await sendPushNotification(
+      profile.user_id,
+      emoji ? `${emoji} ${title}` : title,
+      body,
+      'job',
+      { applicationId, status: newStatus, isEmployer: false }
+    );
+  } catch (error) {
+    console.error('Error notifying applicant:', error);
+  }
+}
 
 export const deleteApplication = async (id: string): Promise<boolean> => {
   const { error } = await supabase

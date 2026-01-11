@@ -149,21 +149,21 @@ const IndustrySpecificSections = () => {
       </CardHeader>
       <CardContent className="pt-0">
         <Tabs defaultValue="domestic">
-          <TabsList className="grid w-full grid-cols-2 grid-rows-2 h-auto gap-1">
-            <TabsTrigger value="domestic" className="flex flex-col items-center gap-1 p-2 text-xs">
-              <Home className="h-3 w-3 sm:h-4 sm:w-4" />
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto gap-1">
+            <TabsTrigger value="domestic" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 p-2 sm:p-3 text-[10px] sm:text-xs touch-manipulation">
+              <Home className="h-4 w-4" />
               <span>Domestic</span>
             </TabsTrigger>
-            <TabsTrigger value="commercial" className="flex flex-col items-center gap-1 p-2 text-xs">
-              <Building className="h-3 w-3 sm:h-4 sm:w-4" />
+            <TabsTrigger value="commercial" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 p-2 sm:p-3 text-[10px] sm:text-xs touch-manipulation">
+              <Building className="h-4 w-4" />
               <span>Commercial</span>
             </TabsTrigger>
-            <TabsTrigger value="industrial" className="flex flex-col items-center gap-1 p-2 text-xs">
-              <Factory className="h-3 w-3 sm:h-4 sm:w-4" />
+            <TabsTrigger value="industrial" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 p-2 sm:p-3 text-[10px] sm:text-xs touch-manipulation">
+              <Factory className="h-4 w-4" />
               <span>Industrial</span>
             </TabsTrigger>
-            <TabsTrigger value="renewable" className="flex flex-col items-center gap-1 p-2 text-xs">
-              <Zap className="h-3 w-3 sm:h-4 sm:w-4" />
+            <TabsTrigger value="renewable" className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-1 p-2 sm:p-3 text-[10px] sm:text-xs touch-manipulation">
+              <Zap className="h-4 w-4" />
               <span>Renewable</span>
             </TabsTrigger>
           </TabsList>

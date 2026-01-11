@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -6,9 +6,11 @@ import { useCostEngineerGeneration } from "@/hooks/useCostEngineerGeneration";
 import CostAnalysisProcessingView from "./CostAnalysisProcessingView";
 import CostAnalysisResults from "./CostAnalysisResults";
 import { parseCostAnalysis, ParsedCostAnalysis } from "@/utils/cost-analysis-parser";
-import { BusinessSettings, DEFAULT_BUSINESS_SETTINGS } from "./BusinessSettingsDialog";
+import { BusinessSettings, DEFAULT_BUSINESS_SETTINGS, BusinessSettingsDialog } from "./BusinessSettingsDialog";
 import { AgentSuccessDialog } from "@/components/agents/shared/AgentSuccessDialog";
 import { CostEngineerInput } from "./CostEngineerInput";
+
+const STORAGE_KEY = 'electrician_business_settings';
 
 type ViewState = 'input' | 'processing' | 'results';
 type ProjectType = 'domestic' | 'commercial' | 'industrial';
@@ -25,8 +27,29 @@ const CostEngineerInterface = () => {
   const [location, setLocation] = useState("");
   const [additionalInfo, setAdditionalInfo] = useState("");
   const [businessSettings, setBusinessSettings] = useState<BusinessSettings>(DEFAULT_BUSINESS_SETTINGS);
+  const [hasConfiguredSettings, setHasConfiguredSettings] = useState(false);
+  const [showSettingsDialog, setShowSettingsDialog] = useState(false);
   const [jobId, setJobId] = useState<string | null>(null);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+
+  // Load business settings from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setBusinessSettings(parsed);
+        setHasConfiguredSettings(true);
+      } catch (e) {
+        console.error('Failed to parse business settings:', e);
+      }
+    }
+  }, []);
+
+  const handleSettingsChange = (newSettings: BusinessSettings) => {
+    setBusinessSettings(newSettings);
+    setHasConfiguredSettings(true);
+  };
 
   // Use job queue pattern with polling
   const { job, isPolling, cancelJob } = useCostEngineerGeneration({
@@ -221,6 +244,18 @@ const CostEngineerInterface = () => {
         onAdditionalInfoChange={setAdditionalInfo}
         onGenerate={handleGenerate}
         isProcessing={viewState === 'processing'}
+        businessSettings={businessSettings}
+        onOpenSettings={() => setShowSettingsDialog(true)}
+        hasConfiguredSettings={hasConfiguredSettings}
+      />
+
+      {/* Business Settings Dialog - Controlled from Hero button */}
+      <BusinessSettingsDialog
+        onSettingsChange={handleSettingsChange}
+        currentSettings={businessSettings}
+        open={showSettingsDialog}
+        onOpenChange={setShowSettingsDialog}
+        hideButton={true}
       />
 
       {/* Success Dialog */}

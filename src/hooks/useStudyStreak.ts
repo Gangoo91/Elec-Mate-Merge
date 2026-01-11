@@ -49,8 +49,11 @@ export function useStudyStreak() {
 
       if (data) {
         // Check if streak should be reset (missed a day)
-        const today = new Date().toISOString().split('T')[0];
-        const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+        // Use local timezone to avoid UTC conversion issues
+        const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local time
+        const yesterdayDate = new Date();
+        yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+        const yesterday = yesterdayDate.toLocaleDateString('en-CA');
 
         let currentStreak = data.current_streak;
         if (data.last_study_date &&
@@ -87,8 +90,11 @@ export function useStudyStreak() {
   const recordSession = useCallback(async (cardsReviewed: number) => {
     if (!user) return;
 
-    const today = new Date().toISOString().split('T')[0];
-    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+    // Use local timezone to avoid UTC conversion issues
+    const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in local time
+    const yesterdayDate = new Date();
+    yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+    const yesterday = yesterdayDate.toLocaleDateString('en-CA');
 
     try {
       // Check if record exists
@@ -147,7 +153,7 @@ export function useStudyStreak() {
 
   // Get formatted streak info
   const getStreakDisplay = useCallback(() => {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toLocaleDateString('en-CA'); // Local timezone
     const studiedToday = streak.lastStudyDate === today;
 
     return {

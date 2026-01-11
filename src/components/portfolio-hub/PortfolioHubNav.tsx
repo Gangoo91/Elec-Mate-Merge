@@ -56,7 +56,7 @@ export function PortfolioHubNav({
               className={cn(
                 "flex flex-col items-center justify-center flex-1 h-full relative",
                 "transition-all duration-200 ease-out",
-                "active:scale-95"
+                "active:scale-95 touch-manipulation"
               )}
               aria-label={item.label}
               aria-current={isActive ? 'page' : undefined}
