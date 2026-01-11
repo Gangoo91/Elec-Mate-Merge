@@ -1,6 +1,8 @@
-
-import { Users, ExternalLink } from "lucide-react";
+import { useState } from "react";
+import { Users, Clock, Monitor, ExternalLink, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 
 interface SupportGroup {
@@ -13,12 +15,14 @@ interface SupportGroup {
 
 interface SupportGroupsProps {
   groups: SupportGroup[];
+  defaultExpanded?: boolean;
 }
 
-const SupportGroups = ({ groups }: SupportGroupsProps) => {
+const SupportGroups = ({ groups, defaultExpanded = true }: SupportGroupsProps) => {
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+
   const handleJoinGroup = (group: SupportGroup) => {
     if (group.url) {
-      // Open the external group page
       window.open(group.url, "_blank", "noopener,noreferrer");
     } else {
       toast.success("Request sent!", {
@@ -27,41 +31,92 @@ const SupportGroups = ({ groups }: SupportGroupsProps) => {
     }
   };
 
+  if (groups.length === 0) {
+    return null;
+  }
+
+  const totalMembers = groups.reduce((acc, g) => acc + g.members, 0);
+
   return (
-    <div>
-      <h3 className="text-lg font-medium mb-3">Support Groups</h3>
-      <div className="space-y-3">
-        {groups.map((group, index) => (
-          <div 
-            key={index}
-            className="p-3 bg-purple-500/5 border border-purple-500/10 rounded-lg space-y-2"
-          >
-            <div className="flex items-center justify-between">
-              <h4 className="font-medium text-sm flex items-center">
-                <Users className="h-4 w-4 mr-2 text-purple-400" />
-                {group.name}
-              </h4>
-              <span className="text-xs px-2 py-0.5 bg-purple-500/10 rounded-full text-purple-400">
-                {group.members} members
-              </span>
-            </div>
-            <div className="flex items-center justify-between text-xs text-white">
-              <span>Meetings: {group.meetings}</span>
-              <span>Format: {group.format}</span>
-            </div>
-            <Button 
-              size="sm" 
-              variant="outline" 
-              className="w-full text-xs flex items-center justify-center gap-1"
-              onClick={() => handleJoinGroup(group)}
-            >
-              Request to join
-              {group.url && <ExternalLink className="h-3 w-3" />}
-            </Button>
+    <Card className="border-emerald-500/20 overflow-hidden">
+      {/* Collapsible Header */}
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="w-full p-4 flex items-center justify-between bg-gradient-to-r from-emerald-500/10 to-transparent
+          min-h-[72px] touch-manipulation active:bg-emerald-500/20 transition-colors duration-300"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+            <Users className="h-5 w-5 text-emerald-400" />
           </div>
-        ))}
-      </div>
-    </div>
+          <div className="text-left">
+            <h3 className="font-semibold text-foreground">Support Groups</h3>
+            <p className="text-xs text-white/70">{groups.length} group{groups.length !== 1 ? 's' : ''} • {totalMembers} total members</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <Badge variant="outline" className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
+            {totalMembers}
+          </Badge>
+          <div
+            className="transition-transform duration-300"
+            style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+          >
+            <ChevronDown className="h-5 w-5 text-white/70" />
+          </div>
+        </div>
+      </button>
+
+      {/* Collapsible Content */}
+      {isExpanded && (
+        <CardContent className="p-3 pt-0 space-y-3">
+          {groups.map((group, index) => (
+            <div
+              key={index}
+              className="p-4 rounded-lg border border-emerald-500/20 bg-emerald-500/5
+                touch-manipulation active:scale-[0.99] transition-all duration-300"
+            >
+              {/* Group Header */}
+              <div className="flex items-start justify-between gap-3 mb-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                    <Users className="h-5 w-5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground text-sm">{group.name}</h4>
+                    <Badge variant="outline" className="mt-1 bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs">
+                      {group.members} members
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+
+              {/* Group Details */}
+              <div className="flex items-center gap-4 mb-3 text-xs text-white/70">
+                <div className="flex items-center gap-1.5">
+                  <Clock className="h-3.5 w-3.5 text-emerald-400" />
+                  <span>{group.meetings}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Monitor className="h-3.5 w-3.5 text-emerald-400" />
+                  <span>{group.format}</span>
+                </div>
+              </div>
+
+              {/* Join Button */}
+              <Button
+                className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 text-black font-medium
+                  touch-manipulation active:scale-[0.98] transition-all duration-300"
+                onClick={() => handleJoinGroup(group)}
+              >
+                Request to Join
+                {group.url && <ExternalLink className="h-4 w-4 ml-2" />}
+              </Button>
+            </div>
+          ))}
+        </CardContent>
+      )}
+    </Card>
   );
 };
 
