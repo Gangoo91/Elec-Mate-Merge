@@ -118,7 +118,8 @@ const TaxEstimator = () => {
   const taxStatus = getTaxEfficiencyStatus();
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="min-h-screen bg-background pt-safe pb-safe">
+      <div className="container mx-auto px-4 py-8 max-w-6xl animate-fade-in">
       <Helmet>
         <title>Tax & NI Estimator 2025/26 | UK Electrician Calculator</title>
         <meta name="description" content="Calculate UK electrician tax and National Insurance for 2025/26. Income tax, Class 2/4 NI, VAT and take-home pay calculator." />
@@ -334,6 +335,7 @@ const TaxEstimator = () => {
           </CardContent>
         </Card>
       )}
+      </div>
     </div>
   );
 };

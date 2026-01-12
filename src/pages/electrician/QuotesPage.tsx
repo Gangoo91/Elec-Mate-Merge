@@ -1,24 +1,63 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
-import { Plus, ArrowLeft, PoundSterling, TrendingUp, FileText, Clock, CheckCircle, XCircle, Send } from "lucide-react";
+import { Plus, ArrowLeft, PoundSterling, TrendingUp, FileText, Clock, CheckCircle, XCircle, Send, RefreshCw } from "lucide-react";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
 import { filterQuotesByStatus } from "@/utils/quote-analytics";
-import { useMemo } from "react";
+import { useMemo, useState, useCallback } from "react";
 import { cn } from "@/lib/utils";
+import { VoiceFormProvider } from "@/contexts/VoiceFormContext";
+import { ElectricianVoiceAssistant } from "@/components/electrician/ElectricianVoiceAssistant";
+import { EmptyStateGuide } from "@/components/electrician/shared/EmptyStateGuide";
+import { Card, CardContent } from "@/components/ui/card";
+import { QuoteInvoiceAnalytics } from "@/components/electrician/analytics";
 
 const QuotesPage = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const filter = searchParams.get('filter') || 'all';
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const {
     savedQuotes,
     deleteQuote,
     updateQuoteStatus,
     sendPaymentReminder,
+    refreshQuotes,
     loading
   } = useQuoteStorage();
+
+  // Refresh handler
+  const handleRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+    await refreshQuotes();
+    setTimeout(() => setIsRefreshing(false), 500);
+  }, [refreshQuotes]);
+
+  // Voice navigation handler
+  const handleVoiceNavigate = (section: string) => {
+    const sectionLower = section.toLowerCase().replace(/\s+/g, '-');
+    switch (sectionLower) {
+      case 'create':
+      case 'new-quote':
+      case 'new':
+        navigate('/electrician/quote-builder/create');
+        break;
+      case 'draft':
+      case 'sent':
+      case 'approved':
+      case 'rejected':
+        setSearchParams({ filter: sectionLower });
+        break;
+      case 'back':
+      case 'home':
+        navigate('/electrician');
+        break;
+      default:
+        navigate(`/electrician/${sectionLower}`);
+    }
+  };
 
   const filteredQuotes = useMemo(() => {
     if (!filter || filter === 'all') return savedQuotes;
@@ -69,7 +108,8 @@ const QuotesPage = () => {
   const canonical = `${window.location.origin}/electrician/quotes`;
 
   return (
-    <div className="min-h-screen bg-background pt-safe pb-safe animate-fade-in">
+    <VoiceFormProvider>
+      <div className="min-h-screen bg-background pt-safe pb-safe animate-fade-in">
       <Helmet>
         <title>All Quotes | Professional Quote Management for Electricians</title>
         <meta
@@ -96,6 +136,13 @@ const QuotesPage = () => {
               New
             </Button>
           </Link>
+          <button
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-muted active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
+          >
+            <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
+          </button>
         </div>
       </header>
 
@@ -181,6 +228,14 @@ const QuotesPage = () => {
           </div>
         </section>
 
+        {/* Analytics Dashboard */}
+        {savedQuotes.length > 0 && (
+          <QuoteInvoiceAnalytics
+            quotes={savedQuotes}
+            formatCurrency={(value) => `£${value.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+          />
+        )}
+
         {/* Quotes List */}
         <section className="space-y-3">
           <div className="flex items-center justify-between">
@@ -197,23 +252,22 @@ const QuotesPage = () => {
               <div className="animate-spin rounded-full h-8 w-8 border-2 border-elec-yellow border-t-transparent"></div>
             </div>
           ) : filteredQuotes.length === 0 ? (
-            <div className="text-center py-12 space-y-4">
-              <div className="w-16 h-16 mx-auto rounded-full bg-muted flex items-center justify-center">
-                <FileText className="h-8 w-8 text-muted-foreground" />
-              </div>
-              <div className="space-y-1">
-                <p className="font-medium">No quotes yet</p>
-                <p className="text-sm text-muted-foreground">
-                  Create your first quote to get started
-                </p>
-              </div>
-              <Link to="/electrician/quote-builder/create">
-                <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90 gap-2">
-                  <Plus className="h-4 w-4" />
-                  Create Your First Quote
-                </Button>
-              </Link>
-            </div>
+            filter === 'all' ? (
+              <EmptyStateGuide
+                type="quote"
+                onCreateClick={() => navigate('/electrician/quote-builder/create')}
+              />
+            ) : (
+              <Card className="bg-muted/20 border-dashed">
+                <CardContent className="py-10 text-center">
+                  <FileText className="h-10 w-10 mx-auto text-muted-foreground/50 mb-3" />
+                  <p className="font-medium">No {filter} quotes</p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Quotes will appear here when {filter}
+                  </p>
+                </CardContent>
+              </Card>
+            )
           ) : (
             <RecentQuotesList
               quotes={filteredQuotes}
@@ -226,7 +280,13 @@ const QuotesPage = () => {
         </section>
       </div>
 
+      {/* Voice Assistant */}
+      <ElectricianVoiceAssistant
+        onNavigate={handleVoiceNavigate}
+        currentSection="quotes"
+      />
     </div>
+    </VoiceFormProvider>
   );
 };
 

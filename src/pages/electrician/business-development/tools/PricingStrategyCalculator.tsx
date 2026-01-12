@@ -201,9 +201,10 @@ const PricingStrategyCalculator = () => {
   );
 
   return (
-    <div className="space-y-4">
-      <Helmet>
-        <title>Pricing Strategy Calculator UK | Electrician Tools</title>
+    <div className="min-h-screen bg-background pt-safe pb-safe">
+      <div className="space-y-4 px-4 py-6 animate-fade-in">
+        <Helmet>
+          <title>Pricing Strategy Calculator UK | Electrician Tools</title>
         <meta
           name="description"
           content="Build profitable UK quotes with cost, overhead, margin and VAT handled. Mobile-friendly and fast."
@@ -764,6 +765,7 @@ const PricingStrategyCalculator = () => {
           </CollapsibleContent>
         </div>
       </Collapsible>
+      </div>
     </div>
   );
 };

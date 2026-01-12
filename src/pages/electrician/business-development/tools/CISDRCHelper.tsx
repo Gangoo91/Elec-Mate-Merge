@@ -100,8 +100,9 @@ const CISDRCHelper = () => {
   const warnings = getConditionalWarnings();
 
   return (
-    <div className="space-y-4">
-      {/* Educational Content */}
+    <div className="min-h-screen bg-background pt-safe pb-safe">
+      <div className="space-y-4 px-4 py-6 animate-fade-in">
+        {/* Educational Content */}
       <div className="space-y-2">
         <Collapsible open={showCISGuide} onOpenChange={setShowCISGuide}>
           <div
@@ -671,6 +672,7 @@ const CISDRCHelper = () => {
           </CollapsibleContent>
         </div>
       </Collapsible>
+      </div>
     </div>
   );
 };

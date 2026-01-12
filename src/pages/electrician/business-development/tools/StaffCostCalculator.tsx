@@ -100,9 +100,10 @@ const StaffCostCalculator: React.FC = () => {
   const isValid = basePayHrNum > 0 && weeklyHoursNum > 0;
 
   return (
-    <div className="space-y-4">
-      <Helmet>
-        <title>Fully Loaded Staff Cost Calculator UK</title>
+    <div className="min-h-screen bg-background pt-safe pb-safe">
+      <div className="space-y-4 px-4 py-6 animate-fade-in">
+        <Helmet>
+          <title>Fully Loaded Staff Cost Calculator UK</title>
         <meta
           name="description"
           content="Calculate fully loaded electrician staff cost: wages, NI, pension, holidays, van, tools and overheads."
@@ -573,6 +574,7 @@ const StaffCostCalculator: React.FC = () => {
           </CollapsibleContent>
         </div>
       </Collapsible>
+      </div>
     </div>
   );
 };

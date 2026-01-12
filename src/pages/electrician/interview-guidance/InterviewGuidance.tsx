@@ -361,9 +361,10 @@ export default function InterviewGuidance() {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center gap-2">
-        <SmartBackButton />
+    <div className="min-h-screen bg-background pt-safe pb-safe">
+      <div className="space-y-6 px-4 py-6 animate-fade-in">
+        <div className="flex items-center gap-2">
+          <SmartBackButton />
         <div className="flex items-center gap-3">
           <MessageCircle className="h-6 w-6 text-elec-yellow" />
           <h1 className="text-2xl font-bold">Interview Guidance</h1>
@@ -499,6 +500,7 @@ export default function InterviewGuidance() {
           </p>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

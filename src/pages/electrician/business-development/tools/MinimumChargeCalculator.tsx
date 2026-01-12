@@ -88,8 +88,9 @@ const MinimumChargeCalculator: React.FC = () => {
   const isValid = hourlyCostNum > 0;
 
   return (
-    <div className="space-y-4">
-      <Helmet>
+    <div className="min-h-screen bg-background pt-safe pb-safe">
+      <div className="space-y-4 px-4 py-6 animate-fade-in">
+        <Helmet>
         <title>Minimum Charge & First Hour Pricing UK</title>
         <meta
           name="description"
@@ -496,6 +497,7 @@ const MinimumChargeCalculator: React.FC = () => {
           </CollapsibleContent>
         </div>
       </Collapsible>
+      </div>
     </div>
   );
 };

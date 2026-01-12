@@ -80,9 +80,10 @@ const VATSchemeComparison: React.FC = () => {
   const isValid = annualRevenueNum > 0;
 
   return (
-    <div className="space-y-4">
-      <Helmet>
-        <title>VAT Scheme Comparison for Electricians UK</title>
+    <div className="min-h-screen bg-background pt-safe pb-safe">
+      <div className="space-y-4 px-4 py-6 animate-fade-in">
+        <Helmet>
+          <title>VAT Scheme Comparison for Electricians UK</title>
         <meta
           name="description"
           content="Compare Flat Rate vs Standard VAT schemes for UK electricians to see net take-home impact."
@@ -505,6 +506,7 @@ const VATSchemeComparison: React.FC = () => {
           </CollapsibleContent>
         </div>
       </Collapsible>
+      </div>
     </div>
   );
 };

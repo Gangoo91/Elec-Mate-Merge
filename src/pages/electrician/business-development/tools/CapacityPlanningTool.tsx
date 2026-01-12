@@ -225,8 +225,9 @@ const CapacityPlanningTool = () => {
   const capacityStatus = getCapacityStatus();
 
   return (
-    <div className="space-y-4">
-      <CalculatorCard
+    <div className="min-h-screen bg-background pt-safe pb-safe">
+      <div className="space-y-4 px-4 py-6 animate-fade-in">
+        <CalculatorCard
         category="business"
         title="Capacity Planning Tool"
         description="Plan workforce capacity and analyze utilization to optimize productivity"
@@ -702,6 +703,7 @@ const CapacityPlanningTool = () => {
           </CollapsibleContent>
         </div>
       </Collapsible>
+      </div>
     </div>
   );
 };

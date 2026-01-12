@@ -248,7 +248,7 @@ const CashFlowPlanner = () => {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-background pt-safe pb-safe animate-fade-in">
       <Helmet>
         <title>Cash Flow Planner UK for Electricians | Forecast & Scenarios</title>
         <meta
@@ -325,7 +325,7 @@ const CashFlowPlanner = () => {
         type={addSheetType}
         onAdd={addSheetType === "income" ? handleAddIncome : handleAddExpense}
       />
-    </>
+    </div>
   );
 };
 

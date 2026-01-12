@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   FileText, Send, Edit, Eye, AlertCircle, Plus, CheckCircle,
-  TrendingUp, Search, ArrowLeft, X, RefreshCw, Clock
+  TrendingUp, Search, ArrowLeft, X, RefreshCw, Clock, LayoutGrid, List
 } from "lucide-react";
 import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
 import { isPast } from "date-fns";
@@ -14,10 +14,12 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import InvoiceCardView from "@/components/electrician/InvoiceCardView";
+import InvoiceTableView from "@/components/electrician/InvoiceTableView";
 import { EmptyStateGuide } from "@/components/electrician/shared/EmptyStateGuide";
 import { cn } from "@/lib/utils";
 import { VoiceFormProvider } from "@/contexts/VoiceFormContext";
 import { ElectricianVoiceAssistant } from "@/components/electrician/ElectricianVoiceAssistant";
+import { QuoteInvoiceAnalytics } from "@/components/electrician/analytics";
 
 const InvoicesPage = () => {
   const { invoices, isLoading, fetchInvoices, deleteInvoice } = useInvoiceStorage();
@@ -29,6 +31,7 @@ const InvoicesPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [viewMode, setViewMode] = useState<'card' | 'table'>('card');
   const [markingPaidId, setMarkingPaidId] = useState<string | null>(null);
   const [downloadingPdfId, setDownloadingPdfId] = useState<string | null>(null);
   const [deletingInvoiceId, setDeletingInvoiceId] = useState<string | null>(null);
@@ -414,6 +417,31 @@ const InvoicesPage = () => {
                 >
                   <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
                 </button>
+                {/* View Toggle - Hidden on mobile */}
+                <div className="hidden lg:flex items-center gap-1 bg-elec-gray/30 rounded-lg p-1">
+                  <button
+                    onClick={() => setViewMode('card')}
+                    className={cn(
+                      "h-9 w-9 flex items-center justify-center rounded-md transition-all",
+                      viewMode === 'card'
+                        ? "bg-emerald-500/20 text-emerald-400"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    <LayoutGrid className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => setViewMode('table')}
+                    className={cn(
+                      "h-9 w-9 flex items-center justify-center rounded-md transition-all",
+                      viewMode === 'table'
+                        ? "bg-emerald-500/20 text-emerald-400"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    <List className="h-4 w-4" />
+                  </button>
+                </div>
               </>
             )}
           </div>
@@ -500,6 +528,15 @@ const InvoicesPage = () => {
             </Card>
           </div>
 
+          {/* Analytics Dashboard */}
+          {invoices.length > 0 && (
+            <QuoteInvoiceAnalytics
+              quotes={[]}
+              invoices={invoices}
+              formatCurrency={formatCurrency}
+            />
+          )}
+
           {/* Invoices List */}
           <section>
             <div className="flex items-center justify-between mb-3">
@@ -541,20 +578,41 @@ const InvoicesPage = () => {
                 </Card>
               )
             ) : (
-              <InvoiceCardView
-                invoices={filteredInvoices}
-                onInvoiceAction={handleInvoiceAction}
-                onDownloadPDF={handleDownloadPDF}
-                onMarkAsPaid={handleMarkAsPaid}
-                onSendSuccess={handleSendSuccess}
-                onDeleteInvoice={handleDeleteInvoice}
-                onShareWhatsApp={handleShareWhatsApp}
-                onShareEmail={handleShareEmail}
-                markingPaidId={markingPaidId}
-                downloadingPdfId={downloadingPdfId}
-                deletingInvoiceId={deletingInvoiceId}
-                formatCurrency={formatCurrency}
-              />
+              <>
+                {/* Table view (desktop only) */}
+                {viewMode === 'table' && (
+                  <InvoiceTableView
+                    invoices={filteredInvoices}
+                    onInvoiceAction={handleInvoiceAction}
+                    onDownloadPDF={handleDownloadPDF}
+                    onMarkAsPaid={handleMarkAsPaid}
+                    onSendSuccess={handleSendSuccess}
+                    onDeleteInvoice={handleDeleteInvoice}
+                    onShareWhatsApp={handleShareWhatsApp}
+                    onShareEmail={handleShareEmail}
+                    markingPaidId={markingPaidId}
+                    downloadingPdfId={downloadingPdfId}
+                    deletingInvoiceId={deletingInvoiceId}
+                  />
+                )}
+                {/* Card view (or mobile fallback) */}
+                <div className={viewMode === 'table' ? 'lg:hidden' : ''}>
+                  <InvoiceCardView
+                    invoices={filteredInvoices}
+                    onInvoiceAction={handleInvoiceAction}
+                    onDownloadPDF={handleDownloadPDF}
+                    onMarkAsPaid={handleMarkAsPaid}
+                    onSendSuccess={handleSendSuccess}
+                    onDeleteInvoice={handleDeleteInvoice}
+                    onShareWhatsApp={handleShareWhatsApp}
+                    onShareEmail={handleShareEmail}
+                    markingPaidId={markingPaidId}
+                    downloadingPdfId={downloadingPdfId}
+                    deletingInvoiceId={deletingInvoiceId}
+                    formatCurrency={formatCurrency}
+                  />
+                </div>
+              </>
             )}
           </section>
         </main>

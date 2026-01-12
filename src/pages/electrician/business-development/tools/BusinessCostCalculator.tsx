@@ -200,7 +200,8 @@ const BusinessCostCalculator = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl animate-fade-in">
+    <div className="min-h-screen bg-background pt-safe pb-safe">
+      <div className="container mx-auto px-4 py-8 max-w-7xl animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
           <Building className="h-8 w-8 text-elec-yellow" />
@@ -259,6 +260,7 @@ const BusinessCostCalculator = () => {
           </CardContent>
         </Card>
       )}
+      </div>
     </div>
   );
 };

@@ -105,8 +105,9 @@ const QuoteVarianceTracker = () => {
   const varianceStatus = getVarianceStatus();
 
   return (
-    <div className="space-y-4">
-      <CalculatorCard
+    <div className="min-h-screen bg-background pt-safe pb-safe">
+      <div className="space-y-4 px-4 py-6 animate-fade-in">
+        <CalculatorCard
         category="business"
         title="Quote vs Actual Tracker"
         description="Capture variances to refine your pricing and protect margin"
@@ -431,6 +432,7 @@ const QuoteVarianceTracker = () => {
           </CollapsibleContent>
         </div>
       </Collapsible>
+      </div>
     </div>
   );
 };
