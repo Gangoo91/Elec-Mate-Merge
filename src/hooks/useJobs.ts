@@ -45,9 +45,9 @@ export const useJobsWithLocations = () => {
 
 export const useCreateJob = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: (job: Omit<Job, 'id' | 'created_at' | 'updated_at'>) =>
+    mutationFn: (job: Omit<Job, 'id' | 'created_at' | 'updated_at' | 'user_id'>) =>
       createJob(job),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jobs'] });

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import { PremiumTalentCard } from "@/components/employer/talent-pool/PremiumTale
 import { TalentProfileCardSkeletonGrid } from "@/components/employer/talent-pool/TalentProfileCardSkeleton";
 import { MessageDialog } from "@/components/employer/talent-pool/MessageDialog";
 import { InviteToApplyDialog } from "@/components/employer/talent-pool/InviteToApplyDialog";
+import { TalentFilterChips } from "@/components/employer/talent-pool/TalentFilterChips";
 import {
   Search,
   Map,
@@ -27,6 +28,7 @@ import {
   Award,
   Users,
   Sparkles,
+  RefreshCw,
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useEmployer } from "@/contexts/EmployerContext";
@@ -143,6 +145,7 @@ export function TalentPoolSection() {
   const [bookingDialogOpen, setBookingDialogOpen] = useState(false);
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
   const [selectedElectrician, setSelectedElectrician] = useState<EnhancedElectrician | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   // Filter state
   const [availabilityFilter, setAvailabilityFilter] = useState<AvailabilityFilter>('all');
@@ -157,12 +160,24 @@ export function TalentPoolSection() {
     error,
     availableNowCount,
     totalCount,
+    refetch,
   } = useTalentPool({
     searchQuery,
     tierFilter,
     availabilityFilter,
     specialismsFilter: selectedSpecialisms,
   });
+
+  // Pull to refresh handler
+  const handleRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+    await refetch();
+    setIsRefreshing(false);
+    toast({
+      title: "Refreshed",
+      description: "Talent pool updated with latest availability.",
+    });
+  }, [refetch]);
 
   // Convert workers to EnhancedElectrician format for UI components
   const enhancedElectricians = useMemo(
@@ -295,20 +310,31 @@ export function TalentPoolSection() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search by name, skill, or location..."
+            placeholder="Search sparkies..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 h-12 bg-elec-gray border-border"
+            className="pl-10 h-12 bg-elec-gray border-border touch-manipulation"
           />
         </div>
+
+        {/* Refresh Button */}
+        <Button
+          variant="outline"
+          size="icon"
+          className="h-12 w-12 shrink-0 touch-manipulation"
+          onClick={handleRefresh}
+          disabled={isRefreshing}
+        >
+          <RefreshCw className={`h-5 w-5 ${isRefreshing ? 'animate-spin' : ''}`} />
+        </Button>
 
         {/* Filter Button */}
         <Sheet open={filterSheetOpen} onOpenChange={setFilterSheetOpen}>
           <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="h-12 w-12 shrink-0 relative">
+            <Button variant="outline" size="icon" className="h-12 w-12 shrink-0 relative touch-manipulation">
               <SlidersHorizontal className="h-5 w-5" />
               {activeFilterCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-elec-yellow text-elec-yellow-foreground text-xs rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-elec-yellow text-elec-yellow-foreground text-xs rounded-full flex items-center justify-center font-medium">
                   {activeFilterCount}
                 </span>
               )}
@@ -417,15 +443,29 @@ export function TalentPoolSection() {
 
             <div className="shrink-0 pt-4 border-t border-border bg-background pb-safe">
               <Button
-                className="w-full h-12"
+                className="w-full h-12 touch-manipulation"
                 onClick={() => setFilterSheetOpen(false)}
               >
-                Show {filteredElectricians.length} results
+                Done
               </Button>
             </div>
           </SheetContent>
         </Sheet>
       </div>
+
+      {/* Inline Filter Chips */}
+      <TalentFilterChips
+        availabilityFilter={availabilityFilter}
+        tierFilter={tierFilter}
+        selectedSpecialisms={selectedSpecialisms}
+        labourBankOnly={labourBankOnly}
+        onRemoveAvailability={() => setAvailabilityFilter('all')}
+        onRemoveTier={() => setTierFilter('all')}
+        onRemoveSpecialism={(spec) => setSelectedSpecialisms(prev => prev.filter(s => s !== spec))}
+        onRemoveLabourBank={() => setLabourBankOnly(false)}
+        onOpenFilters={() => setFilterSheetOpen(true)}
+        totalResults={filteredElectricians.length}
+      />
 
       {/* View Toggle */}
       <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as ViewMode)} className="w-full">
