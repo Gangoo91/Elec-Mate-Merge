@@ -162,7 +162,7 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
       circuit.description || '',
       circuit.type || 'Power',
       circuit.rating || '32A',
-      circuit.cableSize || '2.5mm²',
+      circuit.cableSize || '2.5mm2',
       circuit.installationMethod || '101',
       circuit.length || '25m',
       circuit.rcdProtected ? 'Yes' : 'No'
@@ -170,7 +170,7 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
 
     safeAutoTable(pdf, {
       startY: yPos,
-      head: [['Circuit\nReference', 'Circuit\nDesignation', 'Type of\nWiring', 'Overcurrent\nProtection (A)', 'Cable\nSize (mm²)', 'Reference\nMethod', 'Length\n(m)', 'RCD\nProtected']],
+      head: [['Circuit\nReference', 'Circuit\nDesignation', 'Type of\nWiring', 'Overcurrent\nProtection (A)', 'Cable\nSize (mm2)', 'Reference\nMethod', 'Length\n(m)', 'RCD\nProtected']],
       body: tableData,
       theme: 'grid',
       headStyles: {
@@ -235,7 +235,7 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
     // Professional test results table matching BS 7671 format
     safeAutoTable(pdf, {
       startY: yPos,
-      head: [['Circuit\nRef', 'R1+R2\n(Ω)', 'Rn\n(Ω)', 'Insulation\nResistance\n(MΩ)', 'Zs\n(Ω)', 'RCD\nRating\n(mA)', 'RCD\nTime\n(ms)']],
+      head: [['Circuit\nRef', 'R1+R2\n(Ohms)', 'Rn\n(Ohms)', 'Insulation\nResistance\n(MOhms)', 'Zs\n(Ohms)', 'RCD\nRating\n(mA)', 'RCD\nTime\n(ms)']],
       body: tableData,
       theme: 'grid',
       headStyles: {
@@ -399,12 +399,12 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
       }
       
       items.forEach((item: any, index: number) => {
-        const outcomeSymbol = item.outcome === 'satisfactory' ? '✓' : 
-                             item.outcome === 'C1' ? '✗ C1' :
-                             item.outcome === 'C2' ? '✗ C2' :
-                             item.outcome === 'C3' ? '△ C3' :
-                             item.outcome === 'not-satisfactory' ? '✗' : 
-                             item.outcome === 'not-applicable' ? 'N/A' : 
+        const outcomeSymbol = item.outcome === 'satisfactory' ? 'OK' :
+                             item.outcome === 'C1' ? 'X C1' :
+                             item.outcome === 'C2' ? 'X C2' :
+                             item.outcome === 'C3' ? 'C3' :
+                             item.outcome === 'not-satisfactory' ? 'X' :
+                             item.outcome === 'not-applicable' ? 'N/A' :
                              item.outcome === 'limitation' ? 'LIM' : '-';
         
         const outcomeColor = item.outcome === 'satisfactory' ? [34, 139, 34] :
@@ -490,8 +490,8 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
     safeAutoTable(pdf, {
       startY: 35,
       head: [[
-        'Cct', 'Description', 'Type', 'Rating\n(A)', 'Live\n(mm²)', 'CPC\n(mm²)', 
-        'R1+R2\n(Ω)', 'Ring\n(Ω)', 'IR\n(MΩ)', 'Pol', 'Zs\n(Ω)', 
+        'Cct', 'Description', 'Type', 'Rating\n(A)', 'Live\n(mm2)', 'CPC\n(mm2)', 
+        'R1+R2\n(Ohms)', 'Ring\n(Ohms)', 'IR\n(MOhms)', 'Pol', 'Zs\n(Ohms)', 
         'RCD\n(mA)', 'RCD\n(ms)', 'PFC\n(kA)', 'Func'
       ]],
       body: tableData,
@@ -580,11 +580,11 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
       pdf.setTextColor(51, 51, 51);
 
       const verificationItems = [
-        `Zdb: ${group.verificationData.zdb || '-'} Ω`,
+        `Zdb: ${group.verificationData.zdb || '-'} Ohms`,
         `Ipf: ${group.verificationData.ipf || '-'} kA`,
-        `Polarity: ${group.verificationData.polarity ? '✓' : '-'}`,
-        `Phase Seq: ${group.verificationData.phaseSequence ? '✓' : '-'}`,
-        group.verificationData.spdNA ? 'SPD: N/A' : `SPD: ${group.verificationData.spdStatus ? '✓' : '-'}`
+        `Polarity: ${group.verificationData.polarity ? 'OK' : '-'}`,
+        `Phase Seq: ${group.verificationData.phaseSequence ? 'OK' : '-'}`,
+        group.verificationData.spdNA ? 'SPD: N/A' : `SPD: ${group.verificationData.spdStatus ? 'OK' : '-'}`
       ];
 
       const itemWidth = (pageWidth - 40) / verificationItems.length;
@@ -627,8 +627,8 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
       safeAutoTable(pdf, {
         startY: yPos,
         head: [[
-          'Cct', 'Description', 'Ph', 'Type', 'Rating\n(A)', 'Live\n(mm²)', 'CPC\n(mm²)',
-          'R1+R2\n(Ω)', 'Ring\n(Ω)', 'IR\n(MΩ)', 'Pol', 'Zs\n(Ω)',
+          'Cct', 'Description', 'Ph', 'Type', 'Rating\n(A)', 'Live\n(mm2)', 'CPC\n(mm2)',
+          'R1+R2\n(Ohms)', 'Ring\n(Ohms)', 'IR\n(MOhms)', 'Pol', 'Zs\n(Ohms)',
           'RCD\n(mA)', 'RCD\n(ms)', 'PFC\n(kA)', 'Func'
         ]],
         body: tableData,

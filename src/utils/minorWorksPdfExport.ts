@@ -98,8 +98,8 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
   
   addSection('Supply Voltage:', '', formData.supplyVoltage);
   addSection('Earthing Arrangement:', '', formData.earthingArrangement);
-  addSection('Main Earthing Conductor:', '', formData.mainEarthingConductorSize ? `${formData.mainEarthingConductorSize}mm²` : '');
-  addSection('Main Bonding Conductor:', '', formData.mainBondingConductorSize ? `${formData.mainBondingConductorSize}mm²` : '');
+  addSection('Main Earthing Conductor:', '', formData.mainEarthingConductorSize ? `${formData.mainEarthingConductorSize}mm2` : '');
+  addSection('Main Bonding Conductor:', '', formData.mainBondingConductorSize ? `${formData.mainBondingConductorSize}mm2` : '');
 
   // Part 4: Circuit Details
   yPosition += 5;
@@ -109,8 +109,8 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
   addSection('Circuit Designation:', '', formData.circuitDesignation);
   addSection('Circuit Description:', '', formData.circuitDescription);
   addSection('Protective Device:', '', `${formData.protectiveDeviceType} ${formData.protectiveDeviceRating}A`);
-  addSection('Live Conductor Size:', '', formData.liveConductorSize ? `${formData.liveConductorSize}mm²` : '');
-  addSection('CPC Size:', '', formData.cpcSize ? `${formData.cpcSize}mm²` : '');
+  addSection('Live Conductor Size:', '', formData.liveConductorSize ? `${formData.liveConductorSize}mm2` : '');
+  addSection('CPC Size:', '', formData.cpcSize ? `${formData.cpcSize}mm2` : '');
 
   // Check if we need a new page
   if (yPosition > 220) {
@@ -123,20 +123,20 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
   doc.setFont('helvetica', 'bold');
   yPosition = addText('PART 5: TEST RESULTS', margin, yPosition) + 5;
   
-  addSection('Continuity R1+R2:', '', formData.continuityR1R2 ? `${formData.continuityR1R2}Ω` : '');
+  addSection('Continuity R1+R2:', '', formData.continuityR1R2 ? `${formData.continuityR1R2} Ohms` : '');
   addSection('Insulation Resistance:', '', 'See detailed results below');
   if (formData.insulationLiveNeutral) {
-    addSection('  Live-Neutral:', '', `${formData.insulationLiveNeutral}MΩ`);
+    addSection('  Live-Neutral:', '', `${formData.insulationLiveNeutral} MOhms`);
   }
   if (formData.insulationLiveEarth) {
-    addSection('  Live-Earth:', '', `${formData.insulationLiveEarth}MΩ`);
+    addSection('  Live-Earth:', '', `${formData.insulationLiveEarth} MOhms`);
   }
   if (formData.insulationNeutralEarth) {
-    addSection('  Neutral-Earth:', '', `${formData.insulationNeutralEarth}MΩ`);
+    addSection('  Neutral-Earth:', '', `${formData.insulationNeutralEarth} MOhms`);
   }
   addSection('Polarity:', '', formData.polarity);
-  addSection('Earth Fault Loop Impedance (Zs):', '', formData.earthFaultLoopImpedance ? `${formData.earthFaultLoopImpedance}Ω` : '');
-  addSection('Maximum Permitted Zs:', '', formData.maxPermittedZs ? `${formData.maxPermittedZs}Ω` : '');
+  addSection('Earth Fault Loop Impedance (Zs):', '', formData.earthFaultLoopImpedance ? `${formData.earthFaultLoopImpedance} Ohms` : '');
+  addSection('Maximum Permitted Zs:', '', formData.maxPermittedZs ? `${formData.maxPermittedZs} Ohms` : '');
   addSection('Prospective Fault Current:', '', formData.prospectiveFaultCurrent ? `${formData.prospectiveFaultCurrent}kA` : '');
 
   // RCD Testing (if applicable)

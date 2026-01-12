@@ -76,7 +76,7 @@ export const formatCircuitDataForPDF = (formData: any): FormattedCircuitData[] =
     description: circuit.description || circuit.circuitDescription || circuit.designation || `Circuit ${index + 1}`,
     type: circuit.type || circuit.circuitType || circuit.wiringType || 'Power',
     rating: (circuit.rating || circuit.mcbRating || circuit.protectiveDeviceRating || '32').toString() + 'A',
-    cableSize: (circuit.cableSize || circuit.cableCsa || circuit.liveSize || '2.5').toString() + 'mm²',
+    cableSize: (circuit.cableSize || circuit.cableCsa || circuit.liveSize || '2.5').toString() + 'mm2',
     installationMethod: circuit.installationMethod || circuit.referenceMethod || circuit.method || '101',
     length: (circuit.length || circuit.cableLength || circuit.circuitLength || '25').toString() + 'm',
     rcdProtected: circuit.rcdProtected || circuit.rcd === 'yes' || false,
@@ -112,17 +112,17 @@ export const formatTestResultsForPDF = (formData: any): any[] => {
     circuitDescription: result.circuitDescription || result.description || result.designation || `Circuit ${index + 1}`,
     protectiveDeviceType: result.protectiveDeviceType || result.deviceType || result.type || 'MCB',
     protectiveDeviceRating: result.protectiveDeviceRating || result.rating || result.mcbRating || '32A',
-    liveSize: result.liveSize || result.cableSize || result.cableCsa || '2.5mm²',
-    cpcSize: result.cpcSize || result.earthSize || result.liveSize || '2.5mm²',
+    liveSize: result.liveSize || result.cableSize || result.cableCsa || '2.5mm2',
+    cpcSize: result.cpcSize || result.earthSize || result.liveSize || '2.5mm2',
     r1r2: result.r1r2 || result.r1PlusR2 || 'N/A',
     ringContinuityLive: result.ringContinuityLive || result.ringContinuity || 'N/A',
     insulationLiveNeutral: result.insulationLiveNeutral || result.insulationResistance || result.insulation || 'N/A',
-    polarity: result.polarity || (result.polarityTest !== false ? '✓' : '✗'),
+    polarity: result.polarity || (result.polarityTest !== false ? 'OK' : 'X'),
     zs: result.zs || result.earthFaultLoopImpedance || result.loopImpedance || 'N/A',
     rcdRating: result.rcdRating || result.rcdTest || 'N/A',
     rcdOneX: result.rcdOneX || result.rcdTime || result.rcdTripTime || 'N/A',
     pfcLiveNeutral: result.pfcLiveNeutral || result.pfc || result.faultCurrent || 'N/A',
-    functionalTesting: result.functionalTesting || (result.functionalTest !== false ? '✓' : '✗'),
+    functionalTesting: result.functionalTesting || (result.functionalTest !== false ? 'OK' : 'X'),
     satisfactory: result.overallResult === 'satisfactory' || result.satisfactory || false,
     overallResult: result.overallResult || (result.satisfactory ? 'SAT' : 'UNSAT'),
     // Enhanced fields for comprehensive testing
@@ -230,7 +230,7 @@ export const formatSupplyCharacteristics = (formData: any): string[] => {
   if (formData.nominalVoltage) characteristics.push(`Voltage: ${formData.nominalVoltage}V`);
   if (formData.frequency) characteristics.push(`Frequency: ${formData.frequency}Hz`);
   if (formData.prospectiveFaultCurrent) characteristics.push(`PSCC: ${formData.prospectiveFaultCurrent}kA`);
-  if (formData.externalEarthFaultLoopImpedance) characteristics.push(`Ze: ${formData.externalEarthFaultLoopImpedance}Ω`);
+  if (formData.externalEarthFaultLoopImpedance) characteristics.push(`Ze: ${formData.externalEarthFaultLoopImpedance} Ohms`);
   if (formData.suppliedFrom) characteristics.push(`Supplied from: ${formData.suppliedFrom}`);
   if (formData.installationEarthElectrode) characteristics.push(`Earth electrode: ${formData.installationEarthElectrode}`);
   if (formData.mainEarthingConductor) characteristics.push(`Main earthing conductor: ${formData.mainEarthingConductor}`);
