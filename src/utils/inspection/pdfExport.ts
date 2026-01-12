@@ -74,7 +74,7 @@ const drawCheckbox = (pdf: jsPDF, x: number, y: number, checked: boolean = false
   if (checked) {
     pdf.setFontSize(8);
     pdf.setFont('helvetica', 'bold');
-    pdf.text('✓', x + 2, y + 3, { align: 'center' });
+    pdf.text('X', x + 2, y + 3, { align: 'center' });
   }
   
   if (label) {

@@ -43,6 +43,29 @@ interface ExportOptions {
   includeDigitalSignatures?: boolean;
 }
 
+// Track if Unicode font is available for proper symbols
+let unicodeFontAvailable = false;
+
+// Helper to get the correct font name based on Unicode support
+const getFont = (): string => unicodeFontAvailable ? 'Roboto' : 'helvetica';
+
+// Helper to get proper symbol - uses Unicode if font available, ASCII fallback otherwise
+const getSymbol = (type: 'squared' | 'ohm' | 'degree'): string => {
+  if (unicodeFontAvailable) {
+    switch (type) {
+      case 'squared': return '²';
+      case 'ohm': return 'Ω';
+      case 'degree': return '°';
+    }
+  }
+  // ASCII fallbacks
+  switch (type) {
+    case 'squared': return '2';
+    case 'ohm': return ' Ohms';
+    case 'degree': return ' deg';
+  }
+};
+
 // Helper to add signature image
 const addSignatureToPDF = async (pdf: jsPDF, signatureData: string, x: number, y: number, width: number = 60, height: number = 20): Promise<void> => {
   return new Promise((resolve) => {
@@ -92,7 +115,7 @@ const drawSectionHeader = (pdf: jsPDF, title: string, y: number, pageWidth: numb
 
   // Title text
   pdf.setFontSize(9);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.setTextColor(255, 255, 255);
   pdf.text(title, margin + 3, y + 5);
 
@@ -103,11 +126,11 @@ const drawSectionHeader = (pdf: jsPDF, title: string, y: number, pageWidth: numb
 // Draw form row with label and value
 const drawFormRow = (pdf: jsPDF, label: string, value: any, x: number, y: number, labelWidth: number = 45, valueWidth: number = 60): number => {
   pdf.setFontSize(8);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.setTextColor(51, 51, 51);
   pdf.text(String(label || ''), x, y);
 
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   pdf.setTextColor(0, 0, 0);
 
   // Draw input box
@@ -228,7 +251,7 @@ export const exportObservationsToPDF = async (
 
   // Installation details
   pdf.setFontSize(12);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.text('INSTALLATION DETAILS', margin, yPosition);
   yPosition += 10;
 
@@ -241,7 +264,7 @@ export const exportObservationsToPDF = async (
   ];
 
   pdf.setFontSize(10);
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   installationDetails.forEach(detail => {
     pdf.text(detail, margin, yPosition);
     yPosition += 6;
@@ -251,13 +274,13 @@ export const exportObservationsToPDF = async (
 
   // Observations section
   pdf.setFontSize(12);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.text('DEFECTS AND OBSERVATIONS', margin, yPosition);
   yPosition += 10;
 
   if (observations.length === 0) {
     pdf.setFontSize(10);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFont(getFont(), 'normal');
     pdf.text('No defects or observations recorded during this inspection.', margin, yPosition);
   } else {
     const formattedObservations = formatObservationsForPDF(observations);
@@ -267,14 +290,14 @@ export const exportObservationsToPDF = async (
       yPosition = addNewPageIfNeeded(pdf, yPosition, 40);
 
       pdf.setFontSize(10);
-      pdf.setFont('helvetica', 'bold');
+      pdf.setFont(getFont(), 'bold');
       const safeCode = String(obs.defectCode || 'C3');
       const safeItem = String(obs.item || 'Observation');
       pdf.text(`${index + 1}. [${safeCode}] ${safeItem}`, margin, yPosition);
       yPosition += 6;
 
       if (obs.description) {
-        pdf.setFont('helvetica', 'normal');
+        pdf.setFont(getFont(), 'normal');
         const safeDesc = String(obs.description || '');
         const descLines = pdf.splitTextToSize(safeDesc, pageWidth - 2 * margin - 5);
         pdf.text(descLines, margin + 5, yPosition);
@@ -370,6 +393,15 @@ export const exportCompleteEICRToPDF = async (
     format: format.toLowerCase() as 'a4' | 'letter',
   });
 
+  // Load Unicode font for symbols like Ω, ², °
+  const { addUnicodeFont } = await import('./pdfFonts');
+  unicodeFontAvailable = await addUnicodeFont(pdf);
+  if (unicodeFontAvailable) {
+    console.log('Unicode font (Roboto) loaded - symbols like mm², Ω, °C will render correctly');
+  } else {
+    console.warn('Unicode font not loaded, using ASCII fallbacks (mm2, Ohms, deg)');
+  }
+
   // Set PDF metadata
   const metadata = generateCertificateMetadata(sanitizedFormData);
   pdf.setProperties(metadata);
@@ -386,7 +418,7 @@ export const exportCompleteEICRToPDF = async (
 
   // Professional title
   pdf.setFontSize(16);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.setTextColor(0, 0, 0);
   pdf.text('ELECTRICAL INSTALLATION', pageWidth / 2, yPos + 5, { align: 'center' });
   pdf.setFontSize(18);
@@ -402,10 +434,10 @@ export const exportCompleteEICRToPDF = async (
   pdf.setLineWidth(0.5);
   pdf.rect(pageWidth - 55, yPos, 40, 15);
   pdf.setFontSize(7);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.text('Certificate No:', pageWidth - 53, yPos + 5);
   pdf.setFontSize(8);
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   pdf.text(certificateId, pageWidth - 53, yPos + 11);
 
   yPos += 25;
@@ -434,14 +466,14 @@ export const exportCompleteEICRToPDF = async (
 
   // Premises type checkboxes
   pdf.setFontSize(8);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.text('Description of Work:', col1X, yPos + 3);
 
   const premises = sanitizedFormData.description?.toLowerCase() || '';
   let checkX = col1X + 40;
 
   drawCheckbox(pdf, checkX, yPos, premises === 'domestic');
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   pdf.text('Domestic', checkX + 6, yPos + 3);
 
   checkX += 30;
@@ -461,22 +493,22 @@ export const exportCompleteEICRToPDF = async (
   yPos = drawFormRow(pdf, 'Estimated Age of Installation:', `${sanitizedFormData.estimatedAge || ''} ${sanitizedFormData.ageUnit || 'years'}`, col1X, yPos, 55, 30);
 
   // Evidence of alterations
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.text('Evidence of additions / alterations:', col1X, yPos + 3);
   const alterations = sanitizedFormData.evidenceOfAlterations || '';
   drawCheckbox(pdf, col1X + 60, yPos, alterations === 'yes');
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   pdf.text('Yes', col1X + 66, yPos + 3);
   drawCheckbox(pdf, col1X + 80, yPos, alterations === 'no');
   pdf.text('No', col1X + 86, yPos + 3);
   yPos += 8;
 
   // Date of last inspection
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.text('Date of Last Inspection:', col1X, yPos + 3);
   const lastType = sanitizedFormData.lastInspectionType || '';
   drawCheckbox(pdf, col1X + 45, yPos, lastType === 'known');
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   pdf.text('Known', col1X + 51, yPos + 3);
   drawCheckbox(pdf, col1X + 70, yPos, lastType === 'unknown');
   pdf.text('Unknown', col1X + 76, yPos + 3);
@@ -509,11 +541,11 @@ export const exportCompleteEICRToPDF = async (
   if (agreedLimitations.length > 0 || limitationNotes) {
     yPos += 3;
     pdf.setFontSize(7);
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont(getFont(), 'bold');
     pdf.text('Agreed Limitations:', col1X, yPos);
     yPos += 4;
 
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFont(getFont(), 'normal');
     if (Array.isArray(agreedLimitations) && agreedLimitations.length > 0) {
       agreedLimitations.forEach((limitation: any, idx: number) => {
         const limText = String(limitation.description || limitation || '');
@@ -535,7 +567,7 @@ export const exportCompleteEICRToPDF = async (
   // DECLARATION
   yPos = drawSectionHeader(pdf, 'DECLARATION', yPos, pageWidth);
   pdf.setFontSize(7);
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   const declarationText = 'I/We, being the person(s) responsible for the inspection and testing of the electrical installation (as indicated by my/our signatures below), particulars which are described above, having exercised reasonable skill and care when carrying out the inspection and testing, hereby declare this report, including the related schedules, provides an accurate assessment of the condition of the electrical installation taking into account the stated extent and limitations of this report.';
   const declLines = pdf.splitTextToSize(declarationText, pageWidth - margin * 2 - 10);
   pdf.text(declLines, col1X, yPos + 3);
@@ -546,14 +578,14 @@ export const exportCompleteEICRToPDF = async (
 
   // Earthing arrangement checkboxes
   pdf.setFontSize(8);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.text('Earthing Arrangement:', col1X, yPos + 3);
 
   const earthing = sanitizedFormData.earthingArrangement || '';
   checkX = col1X + 40;
 
   drawCheckbox(pdf, checkX, yPos, earthing === 'TN-C');
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   pdf.text('TN-C', checkX + 6, yPos + 3);
 
   checkX += 22;
@@ -605,13 +637,13 @@ export const exportCompleteEICRToPDF = async (
   // MAIN PROTECTIVE BONDING
   yPos = drawSectionHeader(pdf, 'MAIN PROTECTIVE BONDING', yPos, pageWidth);
 
-  yPos = drawFormRow(pdf, 'Main Bonding Conductor Size:', `${sanitizedFormData.mainBondingSize || ''} mm²`, col1X, yPos, 55, 25);
+  yPos = drawFormRow(pdf, 'Main Bonding Conductor Size:', `${sanitizedFormData.mainBondingSize || ''} mm${getSymbol('squared')}`, col1X, yPos, 55, 25);
   yPos -= 7;
   yPos = drawFormRow(pdf, 'Bonding Compliance:', sanitizedFormData.bondingCompliance || '', col2X, yPos, 45, 35);
 
   yPos = drawFormRow(pdf, 'Main Bonding Locations:', sanitizedFormData.mainBondingLocations || '', col1X, yPos, 50, pageWidth - margin * 2 - 55);
 
-  yPos = drawFormRow(pdf, 'Supplementary Bonding Size:', `${sanitizedFormData.supplementaryBondingSize || ''} mm²`, col1X, yPos, 55, 25);
+  yPos = drawFormRow(pdf, 'Supplementary Bonding Size:', `${sanitizedFormData.supplementaryBondingSize || ''} mm${getSymbol('squared')}`, col1X, yPos, 55, 25);
   yPos -= 7;
   yPos = drawFormRow(pdf, 'Equipotential Bonding:', sanitizedFormData.equipotentialBonding || '', col2X, yPos, 50, 30);
 
@@ -628,11 +660,11 @@ export const exportCompleteEICRToPDF = async (
   yPos -= 7;
   yPos = drawFormRow(pdf, 'Manufacturer:', sanitizedFormData.cuManufacturer || '', col2X + 90, yPos, 30, 30);
 
-  yPos = drawFormRow(pdf, 'Intake Cable Size:', `${sanitizedFormData.intakeCableSize || ''} mm²`, col1X, yPos, 40, 25);
+  yPos = drawFormRow(pdf, 'Intake Cable Size:', `${sanitizedFormData.intakeCableSize || ''} mm${getSymbol('squared')}`, col1X, yPos, 40, 25);
   yPos -= 7;
   yPos = drawFormRow(pdf, 'Intake Cable Type:', sanitizedFormData.intakeCableType || '', col1X + 70, yPos, 40, 30);
   yPos -= 7;
-  yPos = drawFormRow(pdf, 'Meter Tails Size:', `${sanitizedFormData.tailsSize || ''} mm²`, col2X + 50, yPos, 40, 20);
+  yPos = drawFormRow(pdf, 'Meter Tails Size:', `${sanitizedFormData.tailsSize || ''} mm${getSymbol('squared')}`, col2X + 50, yPos, 40, 20);
   yPos -= 7;
   yPos = drawFormRow(pdf, 'Length(m):', sanitizedFormData.tailsLength || 'N/A', col2X + 115, yPos, 25, 20);
 
@@ -649,20 +681,20 @@ export const exportCompleteEICRToPDF = async (
 
   // Confirmed checkboxes
   pdf.setFontSize(8);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.text('Confirmed:', col1X, yPos + 3);
 
   drawCheckbox(pdf, col1X + 30, yPos, sanitizedFormData.confirmedCorrectPolarity);
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   pdf.text('Correct polarity', col1X + 36, yPos + 3);
 
   drawCheckbox(pdf, col1X + 75, yPos, sanitizedFormData.confirmedPhaseSequence);
   pdf.text('Phase sequence', col1X + 81, yPos + 3);
 
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.text('SPD:', col2X, yPos + 3);
   drawCheckbox(pdf, col2X + 20, yPos, sanitizedFormData.spdOperationalStatus);
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   pdf.text('Operational', col2X + 26, yPos + 3);
   drawCheckbox(pdf, col2X + 55, yPos, sanitizedFormData.spdNA);
   pdf.text('N/A', col2X + 61, yPos + 3);
@@ -714,20 +746,20 @@ export const exportCompleteEICRToPDF = async (
 
   // Assessment result
   pdf.setFontSize(12);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
 
   if (isSatisfactory) {
     pdf.setTextColor(34, 197, 94);
     pdf.text('SATISFACTORY', margin + 5, yPos + 10);
     pdf.setFontSize(8);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFont(getFont(), 'normal');
     pdf.setTextColor(0, 0, 0);
     pdf.text('The electrical installation is in a satisfactory condition for continued use.', margin + 5, yPos + 18);
   } else {
     pdf.setTextColor(239, 68, 68);
     pdf.text('UNSATISFACTORY', margin + 5, yPos + 10);
     pdf.setFontSize(8);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFont(getFont(), 'normal');
     pdf.setTextColor(0, 0, 0);
     if (hasC1) {
       pdf.text('DANGER PRESENT - Immediate remedial action required.', margin + 5, yPos + 18);
@@ -742,11 +774,11 @@ export const exportCompleteEICRToPDF = async (
 
   // Defect summary on right side
   pdf.setFontSize(7);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.setTextColor(0, 0, 0);
   pdf.text('Defect Summary:', pageWidth - margin - 55, yPos + 8);
 
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   pdf.setTextColor(220, 38, 38);
   pdf.text(`C1: ${defectCounts.c1}`, pageWidth - margin - 55, yPos + 14);
   pdf.setTextColor(249, 115, 22);
@@ -757,15 +789,15 @@ export const exportCompleteEICRToPDF = async (
   pdf.text(`FI: ${defectCounts.fi}`, pageWidth - margin - 10, yPos + 14);
 
   pdf.setTextColor(0, 0, 0);
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   pdf.setFontSize(7);
   pdf.text(`Total observations: ${formattedObservations.length}`, pageWidth - margin - 55, yPos + 20);
 
   // Next inspection date
   if (sanitizedFormData.nextInspectionDate) {
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont(getFont(), 'bold');
     pdf.text('Next inspection recommended by:', margin + 5, yPos + 28);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFont(getFont(), 'normal');
     pdf.text(formatDateTime(sanitizedFormData.nextInspectionDate), margin + 60, yPos + 28);
   }
 
@@ -783,7 +815,7 @@ export const exportCompleteEICRToPDF = async (
     pdf.setFillColor(248, 249, 250);
     pdf.rect(margin, yPos, pageWidth - margin * 2 - 30, 8, 'F');
     pdf.setFontSize(8);
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont(getFont(), 'bold');
     pdf.text('OBSERVATIONS (include schedule reference as appropriate)', margin + 3, yPos + 5);
 
     pdf.setFillColor(74, 85, 104);
@@ -806,7 +838,7 @@ export const exportCompleteEICRToPDF = async (
       pdf.rect(pageWidth - margin - 28, yPos, 28, 8);
 
       pdf.setFontSize(8);
-      pdf.setFont('helvetica', 'normal');
+      pdf.setFont(getFont(), 'normal');
       const obsItem = String(obs.item || 'Observation');
       const obsDesc = String(obs.description || '');
       const obsText = `${obsItem}: ${obsDesc}`.substring(0, 80);
@@ -822,7 +854,7 @@ export const exportCompleteEICRToPDF = async (
       const obsCode = String(obs.defectCode || 'C3');
       const codeColour = codeColours[obsCode] || [100, 100, 100];
       pdf.setTextColor(...codeColour);
-      pdf.setFont('helvetica', 'bold');
+      pdf.setFont(getFont(), 'bold');
       pdf.text(obsCode, pageWidth - margin - 18, yPos + 5);
       pdf.setTextColor(0, 0, 0);
 
@@ -832,35 +864,35 @@ export const exportCompleteEICRToPDF = async (
     // Classification codes legend
     yPos += 5;
     pdf.setFontSize(7);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFont(getFont(), 'normal');
     pdf.text('Classification Codes:', margin, yPos);
     yPos += 4;
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont(getFont(), 'bold');
     pdf.setTextColor(220, 38, 38);
     pdf.text('C1', margin, yPos);
     pdf.setTextColor(0, 0, 0);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFont(getFont(), 'normal');
     pdf.text(' - Danger present. Risk of injury. Immediate remedial action required.', margin + 6, yPos);
     yPos += 4;
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont(getFont(), 'bold');
     pdf.setTextColor(249, 115, 22);
     pdf.text('C2', margin, yPos);
     pdf.setTextColor(0, 0, 0);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFont(getFont(), 'normal');
     pdf.text(' - Potentially dangerous - urgent remedial action required.', margin + 6, yPos);
     yPos += 4;
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont(getFont(), 'bold');
     pdf.setTextColor(245, 158, 11);
     pdf.text('C3', margin, yPos);
     pdf.setTextColor(0, 0, 0);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFont(getFont(), 'normal');
     pdf.text(' - Improvement recommended.', margin + 6, yPos);
     yPos += 4;
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont(getFont(), 'bold');
     pdf.setTextColor(139, 92, 246);
     pdf.text('FI', margin, yPos);
     pdf.setTextColor(0, 0, 0);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFont(getFont(), 'normal');
     pdf.text(' - Further investigation required without delay.', margin + 6, yPos);
   }
 
@@ -879,7 +911,7 @@ export const exportCompleteEICRToPDF = async (
     pdf.setFillColor(74, 85, 104);
     pdf.rect(10, yPos, landscapeWidth - 20, 8, 'F');
     pdf.setFontSize(10);
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont(getFont(), 'bold');
     pdf.setTextColor(255, 255, 255);
     pdf.text('CIRCUIT DETAILS - SCHEDULE OF TEST RESULTS', 15, yPos + 5.5);
     pdf.setTextColor(0, 0, 0);
@@ -901,15 +933,16 @@ export const exportCompleteEICRToPDF = async (
       // Board header
       if (boardGroups.size > 1) {
         pdf.setFontSize(9);
-        pdf.setFont('helvetica', 'bold');
+        pdf.setFont(getFont(), 'bold');
         const safeBoardId = String(boardId || 'main');
         pdf.text(`Distribution Board: ${safeBoardId === 'main' ? 'Main Consumer Unit' : safeBoardId}`, 12, yPos);
         yPos += 6;
       }
 
-      // Table headers (BS 7671 format)
+      // Table headers (BS 7671 format) - use proper symbols if Unicode font available
+      const sq = getSymbol('squared');
       const headers = [
-        ['Cct', 'Description', 'Type', 'Ref', 'Pts', 'Live\nmm²', 'CPC\nmm²', 'BS EN', 'Type', 'A', 'kA', 'Max\nZs', 'BS EN', 'Type', 'mA', 'A', 'r1', 'rn', 'r2', 'R1+R2', 'R2', 'V', 'L-L', 'L-E', 'Pol', 'Zs', 'ms', 'TB', 'AFDD', 'Remarks']
+        ['Cct', 'Description', 'Type', 'Ref', 'Pts', `Live\nmm${sq}`, `CPC\nmm${sq}`, 'BS EN', 'Type', 'A', 'kA', 'Max\nZs', 'BS EN', 'Type', 'mA', 'A', 'r1', 'rn', 'r2', 'R1+R2', 'R2', 'V', 'L-L', 'L-E', 'Pol', 'Zs', 'ms', 'TB', 'AFDD', 'Remarks']
       ];
 
       // Helper to safely convert any value to string
@@ -1109,7 +1142,7 @@ export const exportCompleteEICRToPDF = async (
   yPos = drawSectionHeader(pdf, 'INSPECTOR DECLARATION', yPos, pageWidth);
 
   pdf.setFontSize(7);
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   const inspectorDecl = 'I/We, being the person(s) responsible for the inspection and testing of the electrical installation (as indicated by my/our signatures below), particulars of which are described above, having exercised reasonable skill and care when carrying out the inspection and testing, hereby declare that the information in this report, including the observations and the attached schedules, provides an accurate assessment of the condition of the electrical installation taking into account the stated extent and limitations in section D of this report.';
   const inspDeclLines = pdf.splitTextToSize(inspectorDecl, pageWidth - margin * 2 - 5);
   pdf.text(inspDeclLines, margin + 2, yPos + 3);
@@ -1131,13 +1164,13 @@ export const exportCompleteEICRToPDF = async (
   pdf.rect(margin, yPos, pageWidth - margin * 2, 22, 'FD');
 
   pdf.setFontSize(8);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.setTextColor(59, 130, 246);
   pdf.text('PROFESSIONAL REGISTRATION', margin + 3, yPos + 5);
   pdf.setTextColor(0, 0, 0);
 
   pdf.setFontSize(7);
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   const regScheme = sanitizedFormData.registrationScheme || sanitizedFormData.inspectedByCpScheme || '';
   const regNumber = sanitizedFormData.registrationNumber || '';
   const cpStatus = sanitizedFormData.competentPersonStatus || (regScheme ? 'Competent Person' : '');
@@ -1160,12 +1193,12 @@ export const exportCompleteEICRToPDF = async (
   pdf.rect(margin, yPos, sigBoxWidth, sigBoxHeight);
 
   pdf.setFontSize(9);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.text('INSPECTED BY:', margin + 3, yPos + 6);
 
   let sigY = yPos + 12;
   pdf.setFontSize(7);
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   pdf.text('Name (Capitals):', margin + 3, sigY);
   pdf.text(sanitizedFormData.inspectedByName || '', margin + 35, sigY);
 
@@ -1202,12 +1235,12 @@ export const exportCompleteEICRToPDF = async (
   pdf.rect(rightBoxX, yPos, sigBoxWidth, sigBoxHeight);
 
   pdf.setFontSize(9);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.text('REPORT AUTHORISED FOR ISSUE BY:', rightBoxX + 3, yPos + 6);
 
   sigY = yPos + 12;
   pdf.setFontSize(7);
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   pdf.text('Name (Capitals):', rightBoxX + 3, sigY);
   pdf.text(sanitizedFormData.reportAuthorisedByName || '', rightBoxX + 35, sigY);
   pdf.text('Date:', rightBoxX + sigBoxWidth - 30, sigY);
@@ -1253,16 +1286,16 @@ export const exportCompleteEICRToPDF = async (
   pdf.rect(margin, yPos, pageWidth - margin * 2, 25, 'FD');
 
   pdf.setFontSize(9);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.setTextColor(0, 0, 0);
   pdf.text('RECOMMENDED NEXT INSPECTION', pageWidth / 2, yPos + 7, { align: 'center' });
 
   pdf.setFontSize(8);
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
   pdf.text('This installation should be re-inspected no later than:', pageWidth / 2, yPos + 13, { align: 'center' });
 
   pdf.setFontSize(12);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   const nextDate = sanitizedFormData.nextInspectionDate
     ? formatDateTime(sanitizedFormData.nextInspectionDate)
     : 'Date to be confirmed';
@@ -1275,7 +1308,7 @@ export const exportCompleteEICRToPDF = async (
   yPos = drawSectionHeader(pdf, 'GUIDANCE FOR RECIPIENTS', yPos, pageWidth);
 
   pdf.setFontSize(7);
-  pdf.setFont('helvetica', 'bold');
+  pdf.setFont(getFont(), 'bold');
   pdf.text('This Report is an important and valuable document which should be retained for future reference.', margin + 2, yPos + 3);
   yPos += 8;
 
@@ -1295,7 +1328,7 @@ export const exportCompleteEICRToPDF = async (
     '10. Where the installation includes an SPD the status indicator should be checked to confirm it is in operational condition.',
   ];
 
-  pdf.setFont('helvetica', 'normal');
+  pdf.setFont(getFont(), 'normal');
 
   const colWidth = (pageWidth - margin * 2 - 10) / 2;
   let col1Y = yPos;
@@ -1331,7 +1364,7 @@ export const exportCompleteEICRToPDF = async (
 
       // BS 7671 acknowledgement
       pdf.setFontSize(6);
-      pdf.setFont('helvetica', 'normal');
+      pdf.setFont(getFont(), 'normal');
       pdf.setTextColor(128, 128, 128);
       pdf.text('Acknowledgement: This certificate is based on the model in appendix 6 of BS 7671: 2018 (IET Wiring Regulations)', margin, currentPageHeight - 12);
 
@@ -1345,7 +1378,7 @@ export const exportCompleteEICRToPDF = async (
 
       // Page number
       pdf.setFontSize(8);
-      pdf.setFont('helvetica', 'bold');
+      pdf.setFont(getFont(), 'bold');
       pdf.setTextColor(0, 0, 0);
       pdf.text(`Page ${i} of ${totalPages}`, currentPageWidth - margin, currentPageHeight - 8, { align: 'right' });
     }
