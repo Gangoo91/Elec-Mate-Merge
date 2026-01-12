@@ -554,15 +554,48 @@ const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInsp
                       />
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="registrationNumber">Registration Number</Label>
-                    <Input
-                      id="registrationNumber"
-                      value={formData.registrationNumber || ''}
-                      onChange={(e) => onUpdate('registrationNumber', e.target.value)}
-                      placeholder="NICEIC/NAPIT/Company registration number"
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                    />
+                  <Separator className="my-4" />
+
+                  {/* Professional Registration */}
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                      <div className="w-1 h-1 rounded-full bg-blue-400"></div>
+                      Professional Registration
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="registrationScheme">Registration Scheme</Label>
+                        <select
+                          id="registrationScheme"
+                          value={formData.registrationScheme || ''}
+                          onChange={(e) => onUpdate('registrationScheme', e.target.value)}
+                          className="flex h-11 w-full items-center justify-between rounded-md border border-white/30 bg-background px-3 py-2 text-base touch-manipulation focus:border-yellow-500 focus:ring-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-0"
+                        >
+                          <option value="">Select scheme</option>
+                          <option value="NICEIC">NICEIC</option>
+                          <option value="NAPIT">NAPIT</option>
+                          <option value="ELECSA">ELECSA</option>
+                          <option value="STROMA">STROMA</option>
+                          <option value="BRE">BRE</option>
+                          <option value="ECA">ECA</option>
+                          <option value="SELECT">SELECT (Scotland)</option>
+                          <option value="other">Other</option>
+                        </select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="registrationNumber">Registration Number</Label>
+                        <Input
+                          id="registrationNumber"
+                          value={formData.registrationNumber || ''}
+                          onChange={(e) => onUpdate('registrationNumber', e.target.value)}
+                          placeholder="e.g., 123456"
+                          className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                        />
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Enter your Competent Person scheme registration details
+                    </p>
                   </div>
                 </div>
               </div>

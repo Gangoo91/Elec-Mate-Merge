@@ -502,6 +502,34 @@ export const exportCompleteEICRToPDF = async (
   yPos = drawFormRow(pdf, 'Extent of Inspection:', sanitizedFormData.extentOfInspection || 'Full installation', col1X, yPos, 40, pageWidth - margin * 2 - 45);
   yPos = drawFormRow(pdf, 'Limitations of Inspection:', sanitizedFormData.limitationsOfInspection || 'None', col1X, yPos, 45, pageWidth - margin * 2 - 50);
 
+  // Agreed Limitations list (if any specific limitations exist)
+  const agreedLimitations = sanitizedFormData.agreedLimitations || [];
+  const limitationNotes = sanitizedFormData.limitationNotes || sanitizedFormData.accessLimitations || '';
+
+  if (agreedLimitations.length > 0 || limitationNotes) {
+    yPos += 3;
+    pdf.setFontSize(7);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text('Agreed Limitations:', col1X, yPos);
+    yPos += 4;
+
+    pdf.setFont('helvetica', 'normal');
+    if (Array.isArray(agreedLimitations) && agreedLimitations.length > 0) {
+      agreedLimitations.forEach((limitation: any, idx: number) => {
+        const limText = String(limitation.description || limitation || '');
+        if (limText) {
+          const limLines = pdf.splitTextToSize(`${idx + 1}. ${limText}`, pageWidth - margin * 2 - 10);
+          pdf.text(limLines, col1X + 3, yPos);
+          yPos += limLines.length * 3;
+        }
+      });
+    } else if (limitationNotes) {
+      const notesLines = pdf.splitTextToSize(String(limitationNotes), pageWidth - margin * 2 - 10);
+      pdf.text(notesLines, col1X + 3, yPos);
+      yPos += notesLines.length * 3;
+    }
+  }
+
   yPos += 5;
 
   // DECLARATION
@@ -542,8 +570,19 @@ export const exportCompleteEICRToPDF = async (
 
   yPos += 8;
 
+  // DNO / Supply Authority Details
+  yPos = drawFormRow(pdf, 'DNO:', sanitizedFormData.dnoName || '', col1X, yPos, 20, 50);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'MPAN:', sanitizedFormData.mpan || '', col2X, yPos, 25, 55);
+
+  yPos = drawFormRow(pdf, 'Cutout Location:', sanitizedFormData.cutoutLocation || '', col1X, yPos, 38, 45);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Service Entry:', sanitizedFormData.serviceEntry || '', col2X, yPos, 35, 45);
+
+  yPos += 3;
+
   // Supply details in two columns
-  yPos = drawFormRow(pdf, 'Nominal Voltage U₀/U*:', `${sanitizedFormData.supplyVoltage || '230'} V`, col1X, yPos, 45, 25);
+  yPos = drawFormRow(pdf, 'Nominal Voltage U0/U*:', `${sanitizedFormData.supplyVoltage || '230'} V`, col1X, yPos, 45, 25);
   yPos -= 7;
   yPos = drawFormRow(pdf, 'Nominal Frequency f*:', `${sanitizedFormData.supplyFrequency || '50'} Hz`, col2X, yPos, 45, 20);
 
@@ -604,7 +643,7 @@ export const exportCompleteEICRToPDF = async (
 
   yPos = drawFormRow(pdf, 'DB Reference:', sanitizedFormData.dbReference || 'Main CU', col1X, yPos, 35, 30);
   yPos -= 7;
-  yPos = drawFormRow(pdf, 'Zdb (Ω):', sanitizedFormData.zdb || '', col1X + 70, yPos, 25, 20);
+  yPos = drawFormRow(pdf, 'Zdb (Ohms):', sanitizedFormData.zdb || '', col1X + 70, yPos, 30, 20);
   yPos -= 7;
   yPos = drawFormRow(pdf, 'Ipf (kA):', sanitizedFormData.ipf || '', col2X + 20, yPos, 25, 20);
 
@@ -630,9 +669,109 @@ export const exportCompleteEICRToPDF = async (
 
   yPos += 10;
 
-  // ==================== PAGE 2+: OBSERVATIONS ====================
+  // ==================== OVERALL ASSESSMENT SUMMARY ====================
 
   const formattedObservations = formatObservationsForPDF(sanitizedFormData.defectObservations || observations);
+
+  // Calculate defect counts
+  const defectCounts = {
+    c1: formattedObservations.filter((o: any) => String(o.defectCode || '').toUpperCase() === 'C1').length,
+    c2: formattedObservations.filter((o: any) => String(o.defectCode || '').toUpperCase() === 'C2').length,
+    c3: formattedObservations.filter((o: any) => String(o.defectCode || '').toUpperCase() === 'C3').length,
+    fi: formattedObservations.filter((o: any) => String(o.defectCode || '').toUpperCase() === 'FI').length
+  };
+
+  // Determine overall assessment
+  const hasC1 = defectCounts.c1 > 0;
+  const hasC2 = defectCounts.c2 > 0;
+  const hasFI = defectCounts.fi > 0;
+  const isSatisfactory = !hasC1 && !hasC2 && !hasFI &&
+    (sanitizedFormData.overallAssessment === 'satisfactory' ||
+     sanitizedFormData.satisfactoryForContinuedUse === true ||
+     sanitizedFormData.satisfactoryForContinuedUse === 'yes');
+
+  // Draw Overall Assessment box
+  yPos = addNewPageIfNeeded(pdf, yPos, 50);
+
+  yPos = drawSectionHeader(pdf, 'OVERALL ASSESSMENT OF THE INSTALLATION', yPos, pageWidth);
+
+  // Assessment box with colour coding
+  const assessBoxHeight = 35;
+  const assessBoxY = yPos;
+
+  if (isSatisfactory) {
+    // Green border for satisfactory
+    pdf.setDrawColor(34, 197, 94);
+    pdf.setFillColor(240, 253, 244);
+  } else {
+    // Red border for unsatisfactory
+    pdf.setDrawColor(239, 68, 68);
+    pdf.setFillColor(254, 242, 242);
+  }
+
+  pdf.setLineWidth(1);
+  pdf.rect(margin, yPos, pageWidth - margin * 2, assessBoxHeight, 'FD');
+
+  // Assessment result
+  pdf.setFontSize(12);
+  pdf.setFont('helvetica', 'bold');
+
+  if (isSatisfactory) {
+    pdf.setTextColor(34, 197, 94);
+    pdf.text('SATISFACTORY', margin + 5, yPos + 10);
+    pdf.setFontSize(8);
+    pdf.setFont('helvetica', 'normal');
+    pdf.setTextColor(0, 0, 0);
+    pdf.text('The electrical installation is in a satisfactory condition for continued use.', margin + 5, yPos + 18);
+  } else {
+    pdf.setTextColor(239, 68, 68);
+    pdf.text('UNSATISFACTORY', margin + 5, yPos + 10);
+    pdf.setFontSize(8);
+    pdf.setFont('helvetica', 'normal');
+    pdf.setTextColor(0, 0, 0);
+    if (hasC1) {
+      pdf.text('DANGER PRESENT - Immediate remedial action required.', margin + 5, yPos + 18);
+    } else if (hasC2) {
+      pdf.text('Potentially dangerous - Urgent remedial action required.', margin + 5, yPos + 18);
+    } else if (hasFI) {
+      pdf.text('Further investigation required without delay.', margin + 5, yPos + 18);
+    } else {
+      pdf.text('The electrical installation requires attention.', margin + 5, yPos + 18);
+    }
+  }
+
+  // Defect summary on right side
+  pdf.setFontSize(7);
+  pdf.setFont('helvetica', 'bold');
+  pdf.setTextColor(0, 0, 0);
+  pdf.text('Defect Summary:', pageWidth - margin - 55, yPos + 8);
+
+  pdf.setFont('helvetica', 'normal');
+  pdf.setTextColor(220, 38, 38);
+  pdf.text(`C1: ${defectCounts.c1}`, pageWidth - margin - 55, yPos + 14);
+  pdf.setTextColor(249, 115, 22);
+  pdf.text(`C2: ${defectCounts.c2}`, pageWidth - margin - 40, yPos + 14);
+  pdf.setTextColor(245, 158, 11);
+  pdf.text(`C3: ${defectCounts.c3}`, pageWidth - margin - 25, yPos + 14);
+  pdf.setTextColor(139, 92, 246);
+  pdf.text(`FI: ${defectCounts.fi}`, pageWidth - margin - 10, yPos + 14);
+
+  pdf.setTextColor(0, 0, 0);
+  pdf.setFont('helvetica', 'normal');
+  pdf.setFontSize(7);
+  pdf.text(`Total observations: ${formattedObservations.length}`, pageWidth - margin - 55, yPos + 20);
+
+  // Next inspection date
+  if (sanitizedFormData.nextInspectionDate) {
+    pdf.setFont('helvetica', 'bold');
+    pdf.text('Next inspection recommended by:', margin + 5, yPos + 28);
+    pdf.setFont('helvetica', 'normal');
+    pdf.text(formatDateTime(sanitizedFormData.nextInspectionDate), margin + 60, yPos + 28);
+  }
+
+  yPos += assessBoxHeight + 8;
+
+  // ==================== PAGE 2+: OBSERVATIONS ====================
 
   if (formattedObservations.length > 0) {
     pdf.addPage();
@@ -962,7 +1101,7 @@ export const exportCompleteEICRToPDF = async (
   yPos = drawFormRow(pdf, 'Test Instrument Make/Model:', sanitizedFormData.testInstrumentMake || '', margin + 2, yPos, 55, pageWidth - margin * 2 - 60);
   yPos = drawFormRow(pdf, 'Serial Number:', sanitizedFormData.testInstrumentSerial || '', margin + 2, yPos, 35, 50);
   yPos = drawFormRow(pdf, 'Calibration Date:', sanitizedFormData.calibrationDate ? formatDateTime(sanitizedFormData.calibrationDate) : '', margin + 2, yPos, 38, 35);
-  yPos = drawFormRow(pdf, 'Test Temperature (°C):', sanitizedFormData.testTemperature || '', margin + 2, yPos, 45, 25);
+  yPos = drawFormRow(pdf, 'Test Temperature (C):', sanitizedFormData.testTemperature || '', margin + 2, yPos, 45, 25);
 
   yPos += 8;
 
@@ -981,7 +1120,33 @@ export const exportCompleteEICRToPDF = async (
   yPos = drawFormRow(pdf, 'Company/Organisation:', sanitizedFormData.companyName || sanitizedFormData.inspectorCompany || '', margin + 2, yPos, 48, 80);
   yPos = drawFormRow(pdf, 'Date of Declaration:', formatDateTime(new Date()), margin + 2, yPos, 42, 35);
 
-  yPos += 10;
+  yPos += 5;
+
+  // Professional Registration Display Box
+  yPos = addNewPageIfNeeded(pdf, yPos, 30);
+
+  pdf.setFillColor(245, 250, 255); // Light blue background
+  pdf.setDrawColor(59, 130, 246); // Blue border
+  pdf.setLineWidth(0.5);
+  pdf.rect(margin, yPos, pageWidth - margin * 2, 22, 'FD');
+
+  pdf.setFontSize(8);
+  pdf.setFont('helvetica', 'bold');
+  pdf.setTextColor(59, 130, 246);
+  pdf.text('PROFESSIONAL REGISTRATION', margin + 3, yPos + 5);
+  pdf.setTextColor(0, 0, 0);
+
+  pdf.setFontSize(7);
+  pdf.setFont('helvetica', 'normal');
+  const regScheme = sanitizedFormData.registrationScheme || sanitizedFormData.inspectedByCpScheme || '';
+  const regNumber = sanitizedFormData.registrationNumber || '';
+  const cpStatus = sanitizedFormData.competentPersonStatus || (regScheme ? 'Competent Person' : '');
+
+  pdf.text(`Registration Scheme: ${regScheme}`, margin + 3, yPos + 11);
+  pdf.text(`Registration Number: ${regNumber}`, margin + 3, yPos + 17);
+  pdf.text(`Status: ${cpStatus}`, margin + (pageWidth - margin * 2) / 2, yPos + 11);
+
+  yPos += 27;
 
   // SIGNATURE BOXES
   yPos = drawSectionHeader(pdf, 'AUTHORISATION SIGNATURES', yPos, pageWidth);
@@ -1076,6 +1241,34 @@ export const exportCompleteEICRToPDF = async (
   pdf.text(sanitizedFormData.reportAuthorisedByMembershipNo || '', rightBoxX + 35, sigY);
 
   yPos += sigBoxHeight + 10;
+
+  // ==================== NEXT INSPECTION RECOMMENDATION ====================
+
+  yPos = addNewPageIfNeeded(pdf, yPos, 40);
+
+  // Prominent next inspection box
+  pdf.setFillColor(255, 251, 235); // Light amber background
+  pdf.setDrawColor(255, 204, 0); // Yellow border
+  pdf.setLineWidth(1);
+  pdf.rect(margin, yPos, pageWidth - margin * 2, 25, 'FD');
+
+  pdf.setFontSize(9);
+  pdf.setFont('helvetica', 'bold');
+  pdf.setTextColor(0, 0, 0);
+  pdf.text('RECOMMENDED NEXT INSPECTION', pageWidth / 2, yPos + 7, { align: 'center' });
+
+  pdf.setFontSize(8);
+  pdf.setFont('helvetica', 'normal');
+  pdf.text('This installation should be re-inspected no later than:', pageWidth / 2, yPos + 13, { align: 'center' });
+
+  pdf.setFontSize(12);
+  pdf.setFont('helvetica', 'bold');
+  const nextDate = sanitizedFormData.nextInspectionDate
+    ? formatDateTime(sanitizedFormData.nextInspectionDate)
+    : 'Date to be confirmed';
+  pdf.text(nextDate, pageWidth / 2, yPos + 21, { align: 'center' });
+
+  yPos += 30;
 
   // ==================== GUIDANCE FOR RECIPIENTS ====================
 
