@@ -107,7 +107,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         {userSelection && (
           <button
             onClick={() => setShowCourseSelector(true)}
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
+            className="flex items-center gap-2 h-11 text-sm text-muted-foreground hover:text-foreground transition-colors group touch-manipulation"
           >
             <GraduationCap className="h-4 w-4" />
             <span>{userSelection.qualification?.title}</span>
@@ -162,7 +162,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
       <div className="grid grid-cols-2 gap-3">
         <Button
           onClick={onCapture}
-          className="h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
+          className="h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium touch-manipulation active:scale-95"
         >
           <Plus className="h-5 w-5 mr-2" />
           Add Evidence
@@ -170,7 +170,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         <Button
           variant="outline"
           onClick={() => onNavigate('hours')}
-          className="h-12 font-medium"
+          className="h-12 font-medium touch-manipulation active:scale-95"
         >
           <Timer className="h-5 w-5 mr-2" />
           Log Time
@@ -223,7 +223,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
           <SheetHeader className="pb-4">
             <SheetTitle>Change Qualification</SheetTitle>
           </SheetHeader>
-          <div className="overflow-y-auto pb-8">
+          <div className="overflow-y-auto pb-20 sm:pb-8">
             <QualificationSelector />
           </div>
         </SheetContent>
@@ -265,7 +265,7 @@ function ProgressCard({
   return (
     <button
       onClick={onClick}
-      className="p-4 rounded-xl bg-card border border-border text-left active:scale-[0.98] transition-transform"
+      className="p-4 rounded-xl bg-card border border-border text-left active:scale-[0.98] transition-transform touch-manipulation"
     >
       <div className="flex items-start justify-between mb-3">
         <div className={cn('p-2 rounded-lg', colorClasses[color])}>
@@ -306,7 +306,7 @@ function ActionCard({
   return (
     <button
       onClick={onClick}
-      className="p-4 rounded-xl bg-card border border-border text-left active:scale-[0.98] transition-transform"
+      className="p-4 rounded-xl bg-card border border-border text-left active:scale-[0.98] transition-transform touch-manipulation"
     >
       <div className="flex items-start justify-between mb-3">
         <div className={cn(

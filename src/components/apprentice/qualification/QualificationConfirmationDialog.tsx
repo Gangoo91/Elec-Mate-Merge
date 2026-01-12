@@ -182,7 +182,7 @@ const QualificationConfirmationDialog = ({
                           'w-full p-3 rounded-xl text-left transition-all',
                           'bg-muted/50 border border-border',
                           'hover:bg-muted/80 hover:border-elec-yellow/30',
-                          'active:scale-[0.99]',
+                          'active:scale-[0.99] touch-manipulation',
                           expandedCategories.has(category.id) && 'border-elec-yellow/50'
                         )}
                       >
@@ -301,7 +301,7 @@ const QualificationConfirmationDialog = ({
                   size="sm"
                   onClick={() => setQuickDate(3)}
                   className={cn(
-                    'flex-1 text-xs h-9',
+                    'flex-1 text-xs h-11 touch-manipulation active:scale-95',
                     targetDate &&
                       new Date(targetDate).getMonth() ===
                         new Date(new Date().setMonth(new Date().getMonth() + 3)).getMonth() &&
@@ -317,7 +317,7 @@ const QualificationConfirmationDialog = ({
                   size="sm"
                   onClick={() => setQuickDate(6)}
                   className={cn(
-                    'flex-1 text-xs h-9',
+                    'flex-1 text-xs h-11 touch-manipulation active:scale-95',
                     targetDate &&
                       new Date(targetDate).getMonth() ===
                         new Date(new Date().setMonth(new Date().getMonth() + 6)).getMonth() &&
@@ -333,7 +333,7 @@ const QualificationConfirmationDialog = ({
                   size="sm"
                   onClick={() => setQuickDate(12)}
                   className={cn(
-                    'flex-1 text-xs h-9',
+                    'flex-1 text-xs h-11 touch-manipulation active:scale-95',
                     targetDate &&
                       new Date(targetDate).getMonth() ===
                         new Date(new Date().setMonth(new Date().getMonth() + 12)).getMonth() &&
@@ -352,7 +352,7 @@ const QualificationConfirmationDialog = ({
                 value={targetDate}
                 onChange={(e) => setTargetDate(e.target.value)}
                 min={new Date().toISOString().split('T')[0]}
-                className="bg-background border-border"
+                className="bg-background border-border h-11 touch-manipulation"
               />
 
               <p className="text-xs text-muted-foreground">
@@ -367,14 +367,14 @@ const QualificationConfirmationDialog = ({
             variant="outline"
             onClick={() => onOpenChange(false)}
             disabled={isConfirming}
-            className="w-full sm:w-auto order-2 sm:order-1"
+            className="w-full sm:w-auto order-2 sm:order-1 h-11 touch-manipulation active:scale-95"
           >
             Cancel
           </Button>
           <Button
             onClick={handleConfirm}
             disabled={isConfirming}
-            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 w-full sm:w-auto order-1 sm:order-2 h-11"
+            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 w-full sm:w-auto order-1 sm:order-2 h-11 touch-manipulation active:scale-95"
           >
             {isConfirming ? (
               <>

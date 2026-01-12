@@ -72,7 +72,7 @@ function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, 
       whileTap={!comingSoon ? { scale: 0.98 } : {}}
       onClick={!comingSoon ? onClick : undefined}
       className={cn(
-        "relative glass-premium rounded-xl h-full min-h-[160px] cursor-pointer group overflow-hidden",
+        "relative glass-premium rounded-xl h-full min-h-[160px] cursor-pointer group overflow-hidden touch-manipulation",
         comingSoon && "opacity-70 cursor-not-allowed"
       )}
     >
@@ -402,24 +402,23 @@ const CareerProgression = () => {
         <link rel="canonical" href="/electrician/career-progression" />
       </Helmet>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pb-safe">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pt-safe pb-safe">
         {/* Back Button Header */}
         <div className="flex items-center justify-between">
           {!activeSection ? (
             <Link to="/electrician">
-              <Button variant="ghost" size="sm" className="gap-2 text-white/60 hover:text-white hover:bg-white/10">
-                <ArrowLeft className="h-4 w-4" />
+              <Button variant="ghost" className="gap-2 text-white/60 hover:text-white hover:bg-white/10 h-11 touch-manipulation active:scale-[0.98] -ml-2 px-3">
+                <ArrowLeft className="h-5 w-5" />
                 Back
               </Button>
             </Link>
           ) : (
             <Button
               variant="ghost"
-              size="sm"
               onClick={handleBackToSections}
-              className="gap-2 text-white/60 hover:text-white hover:bg-white/10"
+              className="gap-2 text-white/60 hover:text-white hover:bg-white/10 h-11 touch-manipulation active:scale-[0.98] -ml-2 px-3"
             >
-              <ArrowLeft className="h-4 w-4" />
+              <ArrowLeft className="h-5 w-5" />
               Back to Sections
             </Button>
           )}

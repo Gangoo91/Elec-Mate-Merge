@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Drawer } from "vaul";
 import { motion } from "framer-motion";
 import {
@@ -415,367 +416,288 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         </Dialog>
       )}
 
-      {/* Premium Elec-ID Card - Mobile Optimized */}
+      {/* Premium ELEC-iD Card - Clean Professional Design */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
       >
-        <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-          {/* Decorative elements */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl" />
+        <Card className="relative overflow-hidden border border-white/10 rounded-3xl bg-gradient-to-b from-[#1a1a2e] to-[#12121f]">
+          {/* Subtle top accent line */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
 
-          <CardContent className="relative p-0">
-            {/* Mobile Layout */}
-            <div className="sm:hidden">
-              {/* Top section with photo and basic info */}
-              <div className="p-4 pb-0">
-                <div className="flex items-start gap-4">
-                  {/* Photo */}
-                  <div className="relative">
-                    {elecIdData.photoUrl ? (
-                      <img
-                        src={elecIdData.photoUrl}
-                        alt="Profile"
-                        className="w-20 h-20 rounded-2xl object-cover ring-2 ring-elec-yellow/50"
-                      />
-                    ) : (
-                      <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-elec-yellow to-amber-500 flex items-center justify-center text-elec-dark font-bold text-2xl ring-2 ring-elec-yellow/50 shadow-lg shadow-elec-yellow/20">
-                        {userInitials}
-                      </div>
-                    )}
-                    <button className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-elec-yellow text-elec-dark flex items-center justify-center shadow-lg active:scale-95 transition-transform">
-                      <Camera className="h-3.5 w-3.5" />
-                    </button>
+          <CardContent className="p-0">
+            {/* Header */}
+            <div className="flex items-center justify-between px-5 pt-5 pb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-elec-yellow to-amber-500 flex items-center justify-center">
+                  <Zap className="h-5 w-5 text-elec-dark" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-white tracking-wide">ELEC-iD</h2>
+                  <p className="text-[11px] text-white/40 tracking-wider uppercase">Verified Professional</p>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-11 w-11 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 touch-manipulation active:scale-95"
+                onClick={() => isMobile ? setIsEditSheetOpen(true) : handleOpenEdit()}
+              >
+                <Edit2 className="h-4 w-4 text-white/60" />
+              </Button>
+            </div>
+
+            {/* Main Content Row */}
+            <div className="px-5 pb-5">
+              <div className="flex gap-4">
+                {/* Photo Column */}
+                <div className="relative flex-shrink-0">
+                  {elecIdData.photoUrl ? (
+                    <img
+                      src={elecIdData.photoUrl}
+                      alt="Profile"
+                      className="w-[100px] h-[120px] sm:w-[110px] sm:h-[132px] rounded-2xl object-cover border-2 border-white/20"
+                    />
+                  ) : (
+                    <div className="w-[100px] h-[120px] sm:w-[110px] sm:h-[132px] rounded-2xl bg-gradient-to-br from-elec-yellow via-amber-400 to-amber-500 flex items-center justify-center border-2 border-white/20">
+                      <span className="text-elec-dark font-bold text-4xl">{userInitials}</span>
+                    </div>
+                  )}
+
+                  {/* Camera overlay */}
+                  <button className="absolute -bottom-2 -right-2 w-9 h-9 rounded-full bg-elec-yellow text-elec-dark flex items-center justify-center shadow-lg active:scale-95 transition-transform touch-manipulation border-2 border-[#1a1a2e]">
+                    <Camera className="h-4 w-4" />
+                  </button>
+
+                  {/* Verified badge */}
+                  {elecIdData.isVerified && (
+                    <div className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center border-2 border-[#1a1a2e]">
+                      <CheckCircle2 className="h-4 w-4 text-white" />
+                    </div>
+                  )}
+                </div>
+
+                {/* Details Column */}
+                <div className="flex-1 min-w-0 flex flex-col justify-between">
+                  {/* Name & Job */}
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white truncate">{userName}</h3>
+                    <p className="text-elec-yellow font-semibold text-sm mt-1">{elecIdData.jobTitleLabel}</p>
                   </div>
 
-                  {/* Name and title */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="min-w-0">
-                        <h3 className="text-lg font-bold text-white truncate">{userName}</h3>
-                        <p className="text-elec-yellow text-sm font-medium">{elecIdData.jobTitleLabel}</p>
+                  {/* Info Grid */}
+                  <div className="mt-3 space-y-2">
+                    {/* ECS Card Row */}
+                    {ecsCard && (
+                      <div className="flex items-center gap-2">
+                        <div
+                          className="w-8 h-5 rounded flex items-center justify-center text-[7px] font-bold text-white"
+                          style={{ backgroundColor: ecsCard.color }}
+                        >
+                          ECS
+                        </div>
+                        <span className="text-white/80 text-xs font-medium">{ecsCard.label}</span>
+                        <span className={cn(
+                          "text-[10px] font-medium ml-auto",
+                          expiryStatus.status === "expired" ? "text-red-400" :
+                          expiryStatus.status === "expiring" ? "text-orange-400" : "text-white/40"
+                        )}>
+                          {expiryStatus.status === "expired" ? "EXPIRED" :
+                           expiryStatus.status === "expiring" ? `${expiryStatus.daysRemaining}d` :
+                           new Date(elecIdData.ecsCardExpiry).toLocaleDateString("en-GB", { month: "short", year: "2-digit" })}
+                        </span>
                       </div>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-9 w-9 rounded-xl bg-white/5 hover:bg-white/10 shrink-0"
-                        onClick={() => isMobile ? setIsEditSheetOpen(true) : handleOpenEdit()}
-                      >
-                        <Edit2 className="h-4 w-4" />
-                      </Button>
-                    </div>
+                    )}
 
-                    {/* Verification Badge */}
-                    <div className="mt-2">
+                    {/* Tier Badge Row */}
+                    <div className="flex items-center gap-2">
                       <Badge className={cn(
-                        "text-xs font-medium",
+                        "text-[10px] font-semibold px-2 py-0.5 border",
                         VERIFICATION_TIERS[verificationTier].bgColor,
                         VERIFICATION_TIERS[verificationTier].color,
                         VERIFICATION_TIERS[verificationTier].borderColor
                       )}>
-                        {React.createElement(VERIFICATION_TIERS[verificationTier].icon, {
-                          className: "h-3 w-3 mr-1",
-                        })}
+                        {React.createElement(VERIFICATION_TIERS[verificationTier].icon, { className: "h-3 w-3 mr-1" })}
                         {VERIFICATION_TIERS[verificationTier].label}
                       </Badge>
+                      <span className="text-[10px] text-white/30">Verification</span>
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Elec-ID Number - Prominent display */}
-              <div className="px-4 py-3">
-                <motion.button
-                  whileTap={{ scale: 0.98 }}
-                  onClick={copyElecId}
-                  className="w-full p-3 rounded-xl bg-white/5 border border-white/10 active:bg-white/10 transition-colors"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
-                        <IdCard className="h-5 w-5 text-elec-yellow" />
-                      </div>
-                      <div className="text-left">
-                        <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Elec-ID</p>
-                        <p className="font-mono font-bold text-white text-lg tracking-wide">
-                          {elecIdData.elecIdNumber}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {elecIdData.isVerified && (
-                        <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-                      )}
-                      <Copy className="h-4 w-4 text-muted-foreground" />
-                    </div>
-                  </div>
-                </motion.button>
-              </div>
-
-              {/* ECS Card Info */}
-              <div className="px-4 pb-4">
-                <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
-                  {ecsCard && (
-                    <div className="flex items-center gap-2">
-                      <div
-                        className="w-5 h-5 rounded"
-                        style={{ backgroundColor: ecsCard.color }}
-                      />
-                      <span className="text-white font-medium text-sm">{ecsCard.label}</span>
-                    </div>
-                  )}
-                  <div className="flex items-center gap-1.5">
-                    <Clock className={cn(
-                      "h-4 w-4",
-                      expiryStatus.status === "expired" ? "text-red-400" :
-                      expiryStatus.status === "expiring" ? "text-orange-400" : "text-muted-foreground"
-                    )} />
-                    <span className={cn(
-                      "text-xs font-medium",
-                      expiryStatus.status === "expired" ? "text-red-400" :
-                      expiryStatus.status === "expiring" ? "text-orange-400" : "text-muted-foreground"
-                    )}>
-                      {new Date(elecIdData.ecsCardExpiry).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
-                    </span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Desktop Layout */}
-            <div className="hidden sm:flex">
-              {/* Left: Photo Section */}
-              <div className="relative p-6 flex items-center justify-center bg-white/5 w-48">
-                <div className="relative">
-                  {elecIdData.photoUrl ? (
-                    <img
-                      src={elecIdData.photoUrl}
-                      alt="Profile"
-                      className="w-28 h-28 rounded-xl object-cover border-2 border-elec-yellow"
-                    />
-                  ) : (
-                    <div className="w-28 h-28 rounded-xl bg-gradient-to-br from-elec-yellow to-elec-yellow/70 flex items-center justify-center text-elec-dark font-bold text-3xl border-2 border-elec-yellow">
-                      {userInitials}
-                    </div>
-                  )}
-                  <button className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-elec-yellow text-elec-dark flex items-center justify-center hover:bg-elec-yellow/90 transition-colors">
-                    <Camera className="h-4 w-4" />
-                  </button>
+            {/* ID Number Bar */}
+            <div className="border-t border-white/10 bg-white/[0.02]">
+              <motion.button
+                whileTap={{ scale: 0.99 }}
+                onClick={copyElecId}
+                className="w-full px-5 py-4 flex items-center justify-between touch-manipulation active:bg-white/[0.03] transition-colors"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center">
+                    <QrCode className="h-6 w-6 text-[#1a1a2e]" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-[9px] uppercase tracking-[0.2em] text-white/30 font-medium">ELEC-iD</p>
+                    <p className="font-mono font-bold text-white text-lg tracking-wider">{elecIdData.elecIdNumber}</p>
+                  </div>
                 </div>
+                <div className="flex items-center gap-2 text-white/40">
+                  <span className="text-[10px] uppercase tracking-wide">Tap to copy</span>
+                  <Copy className="h-4 w-4" />
+                </div>
+              </motion.button>
+            </div>
+
+            {/* Footer Status */}
+            <div className="px-5 py-2.5 border-t border-white/[0.06] bg-white/[0.01] flex items-center justify-between">
+              <div className="flex items-center gap-2 text-[10px] text-white/25">
+                <Shield className="h-3 w-3" />
+                <span>VERIFIED BY ELEC-MATE</span>
               </div>
-
-              {/* Right: Info Section */}
-              <div className="flex-1 p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h3 className="text-2xl font-bold text-foreground">{userName}</h3>
-                    <p className="text-elec-yellow font-medium">{elecIdData.jobTitleLabel}</p>
-                    {elecIdData.bio && (
-                      <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{elecIdData.bio}</p>
-                    )}
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="border-white/20 hover:bg-white/10"
-                    onClick={handleOpenEdit}
-                  >
-                    <Edit2 className="h-4 w-4 mr-2" />
-                    Edit
-                  </Button>
-                </div>
-
-                {/* Elec-ID Number */}
-                <div className="flex items-center gap-3 mb-4 p-3 rounded-lg bg-white/5 border border-white/10">
-                  <IdCard className="h-5 w-5 text-elec-yellow" />
-                  <div>
-                    <p className="text-xs text-muted-foreground">Elec-ID Number</p>
-                    <p className="font-mono font-bold text-foreground text-lg">
-                      {elecIdData.elecIdNumber}
-                    </p>
-                  </div>
-                  {elecIdData.isVerified && (
-                    <Badge className="ml-auto bg-green-500/20 text-green-400 border-green-500/30">
-                      <CheckCircle2 className="h-3 w-3 mr-1" />
-                      Verified
-                    </Badge>
-                  )}
-                </div>
-
-                {/* ECS Card Info */}
-                <div className="flex items-center gap-4 flex-wrap">
-                  {ecsCard && (
-                    <div className="flex items-center gap-2">
-                      <div
-                        className="w-4 h-4 rounded"
-                        style={{ backgroundColor: ecsCard.color }}
-                      />
-                      <span className="text-foreground font-medium">{ecsCard.label}</span>
-                    </div>
-                  )}
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span
-                      className={`text-sm ${
-                        expiryStatus.status === "expired"
-                          ? "text-red-400"
-                          : expiryStatus.status === "expiring"
-                          ? "text-orange-400"
-                          : "text-muted-foreground"
-                      }`}
-                    >
-                      Expires: {new Date(elecIdData.ecsCardExpiry).toLocaleDateString("en-GB")}
-                    </span>
-                  </div>
-                </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-[10px] text-emerald-400/60 font-medium">ACTIVE</span>
               </div>
             </div>
           </CardContent>
         </Card>
       </motion.div>
 
-      {/* Verification Tier & Talent Pool Settings - Mobile Optimized */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+      {/* Settings Cards - Aligned Grid */}
+      <div className="grid grid-cols-2 gap-3">
         {/* Verification Tier Card */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <Card className={cn(
-            "border overflow-hidden",
-            VERIFICATION_TIERS[verificationTier].bgColor,
-            VERIFICATION_TIERS[verificationTier].borderColor
-          )}>
+          <Card className="h-full border border-white/10 bg-white/[0.03] overflow-hidden">
             <CardContent className="p-4">
-              <div className="flex items-start gap-3">
+              <div className="flex items-center gap-2.5 mb-3">
                 <div className={cn(
-                  "p-2.5 rounded-xl shrink-0",
+                  "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
                   verificationTier === "premium" ? "bg-elec-yellow/20" :
                   verificationTier === "verified" ? "bg-blue-500/20" : "bg-white/10"
                 )}>
                   {React.createElement(VERIFICATION_TIERS[verificationTier].icon, {
-                    className: cn("h-6 w-6", VERIFICATION_TIERS[verificationTier].color),
+                    className: cn("h-5 w-5", VERIFICATION_TIERS[verificationTier].color),
                   })}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h4 className={cn("font-semibold", VERIFICATION_TIERS[verificationTier].color)}>
-                      {VERIFICATION_TIERS[verificationTier].label} Tier
-                    </h4>
-                    {verificationTier === "premium" && (
-                      <Badge className="bg-elec-yellow text-elec-dark text-[10px] px-1.5">TOP</Badge>
-                    )}
-                  </div>
-                  <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
-                    {VERIFICATION_TIERS[verificationTier].description}
-                  </p>
+                <div className="min-w-0">
+                  <h4 className={cn("font-semibold text-sm", VERIFICATION_TIERS[verificationTier].color)}>
+                    {VERIFICATION_TIERS[verificationTier].label}
+                  </h4>
+                  <p className="text-[10px] text-muted-foreground truncate">Verification Tier</p>
                 </div>
               </div>
 
-              {/* Tier progress */}
-              {verificationTier !== "premium" && (
-                <div className="mt-3 pt-3 border-t border-white/10">
-                  <div className="flex items-center justify-between text-xs mb-1.5">
-                    <span className="text-muted-foreground">Progress to next tier</span>
+              {verificationTier !== "premium" ? (
+                <div>
+                  <div className="flex items-center justify-between text-[10px] mb-1">
+                    <span className="text-muted-foreground">Progress</span>
                     <span className={VERIFICATION_TIERS[verificationTier].color}>
-                      {verificationTier === "basic" ? "1/2 docs" : "3/4 docs"}
+                      {verificationTier === "basic" ? "50%" : "75%"}
                     </span>
                   </div>
-                  <Progress value={verificationTier === "basic" ? 50 : 75} className="h-1.5" />
+                  <Progress value={verificationTier === "basic" ? 50 : 75} className="h-1" />
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="w-full mt-2 h-9 text-xs bg-white/5 hover:bg-white/10"
+                    className="w-full mt-2.5 h-9 text-[11px] bg-white/5 hover:bg-white/10 touch-manipulation active:scale-[0.98]"
                     onClick={() => onNavigate?.("documents")}
                   >
-                    <Sparkles className="h-3.5 w-3.5 mr-1.5" />
-                    Upgrade Tier
+                    <Sparkles className="h-3 w-3 mr-1" />
+                    Upgrade
                   </Button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1.5 text-[10px] text-elec-yellow/70">
+                  <Crown className="h-3 w-3" />
+                  <span>Maximum tier reached</span>
                 </div>
               )}
             </CardContent>
           </Card>
         </motion.div>
 
-        {/* Talent Pool Settings Card */}
+        {/* Talent Pool Card */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
         >
           <Card className={cn(
-            "border overflow-hidden",
+            "h-full border overflow-hidden",
             availableForHire && !isOptedOut
-              ? "bg-emerald-500/10 border-emerald-500/30"
-              : "bg-white/5 border-white/10"
+              ? "bg-emerald-500/[0.05] border-emerald-500/20"
+              : "bg-white/[0.03] border-white/10"
           )}>
             <CardContent className="p-4">
-              <div className="flex items-start gap-3">
-                <div className={cn(
-                  "p-2.5 rounded-xl shrink-0",
-                  availableForHire && !isOptedOut ? "bg-emerald-500/20" : "bg-white/10"
-                )}>
-                  <Users className={cn(
-                    "h-6 w-6",
-                    availableForHire && !isOptedOut ? "text-emerald-400" : "text-muted-foreground"
-                  )} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-semibold text-foreground">Talent Pool</h4>
-                    <Switch
-                      checked={availableForHire && !isOptedOut}
-                      onCheckedChange={handleAvailabilityChange}
-                      disabled={isOptedOut || isSaving}
-                      className="data-[state=checked]:bg-emerald-500"
-                    />
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2.5">
+                  <div className={cn(
+                    "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
+                    availableForHire && !isOptedOut ? "bg-emerald-500/20" : "bg-white/10"
+                  )}>
+                    <Users className={cn(
+                      "h-5 w-5",
+                      availableForHire && !isOptedOut ? "text-emerald-400" : "text-muted-foreground"
+                    )} />
                   </div>
-                  <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
-                    {isOptedOut
-                      ? "Elec-ID disabled"
-                      : availableForHire
-                      ? "Visible to employers"
-                      : "Hidden from employers"}
-                  </p>
+                  <div className="min-w-0">
+                    <h4 className="font-semibold text-sm text-foreground">Talent Pool</h4>
+                    <p className="text-[10px] text-muted-foreground truncate">
+                      {isOptedOut ? "Disabled" : availableForHire ? "Active" : "Hidden"}
+                    </p>
+                  </div>
                 </div>
+                <Switch
+                  checked={availableForHire && !isOptedOut}
+                  onCheckedChange={handleAvailabilityChange}
+                  disabled={isOptedOut || isSaving}
+                  className="data-[state=checked]:bg-emerald-500 scale-90"
+                />
               </div>
 
               {availableForHire && !isOptedOut && (
-                <div className="mt-3 pt-3 border-t border-white/10">
-                  <Label className="text-xs text-muted-foreground mb-2 block">Profile Visibility</Label>
-                  <Select
-                    value={profileVisibility}
-                    onValueChange={handleVisibilityChange}
-                    disabled={isSaving}
-                  >
-                    <SelectTrigger className="h-10 text-xs bg-white/5 border-white/10 rounded-xl">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-white/20">
-                      <SelectItem value="public">
-                        <div className="flex items-center gap-2">
-                          <Eye className="h-3 w-3" />
-                          Public - Anyone can view
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="employers_only">
-                        <div className="flex items-center gap-2">
-                          <Users className="h-3 w-3" />
-                          Employers Only
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="private">
-                        <div className="flex items-center gap-2">
-                          <EyeOff className="h-3 w-3" />
-                          Private - Share link only
-                        </div>
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                <Select
+                  value={profileVisibility}
+                  onValueChange={handleVisibilityChange}
+                  disabled={isSaving}
+                >
+                  <SelectTrigger className="h-9 text-[11px] bg-white/5 border-white/10 rounded-lg">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-gray border-white/20">
+                    <SelectItem value="public" className="text-xs">
+                      <div className="flex items-center gap-2">
+                        <Eye className="h-3 w-3" />
+                        Public
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="employers_only" className="text-xs">
+                      <div className="flex items-center gap-2">
+                        <Users className="h-3 w-3" />
+                        Employers Only
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="private" className="text-xs">
+                      <div className="flex items-center gap-2">
+                        <EyeOff className="h-3 w-3" />
+                        Private
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              )}
+
+              {(!availableForHire || isOptedOut) && (
+                <p className="text-[10px] text-muted-foreground">
+                  {isOptedOut ? "Re-enable to join talent pool" : "Turn on to be discovered"}
+                </p>
               )}
             </CardContent>
           </Card>
@@ -955,10 +877,10 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         ].map((stat, index) => (
           <motion.button
             key={stat.id}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.97 }}
             onClick={() => handleStatClick(stat.id)}
             className={cn(
-              "relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-3 sm:p-4 text-left transition-all",
+              "relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 text-left transition-all touch-manipulation min-h-[120px]",
               stat.borderColor
             )}
           >

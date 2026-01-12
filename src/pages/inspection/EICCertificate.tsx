@@ -85,7 +85,7 @@ export default function EICCertificate() {
 
   // Hooks for tabs and observations
   const tabProps = useEICTabs(formData);
-  const observationsProps = useEICObservations(id || 'new');
+  const observationsProps = useEICObservations([]);
 
   // Fetch design data if designId is provided
   const { data: designData, isLoading: isLoadingDesign, error: designError } = useDesignedCircuit(designId || '');

@@ -152,9 +152,9 @@ const RegionalCultureTab = () => {
 
       <Tabs defaultValue="regions" className="w-full">
         <TabsList className="grid w-full grid-cols-3 bg-white/5">
-          <TabsTrigger value="regions" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black">Regional Differences</TabsTrigger>
-          <TabsTrigger value="industries" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black">Industry Sectors</TabsTrigger>
-          <TabsTrigger value="considerations" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black">Cultural Factors</TabsTrigger>
+          <TabsTrigger value="regions" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black touch-manipulation">Regional Differences</TabsTrigger>
+          <TabsTrigger value="industries" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black touch-manipulation">Industry Sectors</TabsTrigger>
+          <TabsTrigger value="considerations" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black touch-manipulation">Cultural Factors</TabsTrigger>
         </TabsList>
 
         <TabsContent value="regions">

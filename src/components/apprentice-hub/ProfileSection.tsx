@@ -6,6 +6,9 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import JSZip from 'jszip';
 import {
   User,
   MessageSquare,
@@ -51,14 +54,23 @@ import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
 import { usePortfolioSharing } from '@/hooks/portfolio/usePortfolioSharing';
+import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
+import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import { toast } from 'sonner';
+import { KSBCoverageMap } from './KSBCoverageMap';
+import { EPAGatewayStatus } from './EPAGatewayStatus';
+import { DirectMessaging } from './DirectMessaging';
+import { useDirectMessages } from '@/hooks/portfolio/useDirectMessages';
 
 export function ProfileSection() {
   const navigate = useNavigate();
   const { user, profile, signOut } = useAuth();
   const { actionRequiredCount, unreadCount } = usePortfolioComments();
+  const { unreadCount: messageUnreadCount, connections } = useDirectMessages();
   const { userSelection } = useQualifications();
+  const { entries: portfolioEntries } = usePortfolioData();
+  const { entries: timeEntries, totalTime } = useTimeEntries();
   const {
     shares,
     isLoading: sharesLoading,
@@ -76,6 +88,15 @@ export function ProfileSection() {
 
   // Messages sheet state
   const [showMessages, setShowMessages] = useState(false);
+  const [showDirectMessages, setShowDirectMessages] = useState(false);
+
+  // KSB and EPA sheet states
+  const [showKSBMap, setShowKSBMap] = useState(false);
+  const [showEPAStatus, setShowEPAStatus] = useState(false);
+
+  // Export states
+  const [isExportingPDF, setIsExportingPDF] = useState(false);
+  const [isDownloadingAll, setIsDownloadingAll] = useState(false);
 
   // Get user info
   const fullName = profile?.full_name || user?.email?.split('@')[0] || 'Apprentice';
@@ -118,18 +139,154 @@ export function ProfileSection() {
     navigate('/');
   };
 
-  // Handle export to PDF (placeholder)
-  const handleExportPDF = () => {
-    toast.info('PDF export coming soon!', {
-      description: 'This feature is under development.',
-    });
+  // Handle export to PDF
+  const handleExportPDF = async () => {
+    setIsExportingPDF(true);
+    try {
+      const doc = new jsPDF();
+      const pageWidth = doc.internal.pageSize.getWidth();
+
+      // Title
+      doc.setFontSize(20);
+      doc.setTextColor(40);
+      doc.text('Portfolio Summary', pageWidth / 2, 20, { align: 'center' });
+
+      // Apprentice Info
+      doc.setFontSize(12);
+      doc.setTextColor(100);
+      doc.text(`${fullName}`, pageWidth / 2, 30, { align: 'center' });
+      doc.text(`${qualification}`, pageWidth / 2, 36, { align: 'center' });
+      doc.text(`Generated: ${new Date().toLocaleDateString('en-GB')}`, pageWidth / 2, 42, { align: 'center' });
+
+      // OJT Hours Summary
+      doc.setFontSize(14);
+      doc.setTextColor(40);
+      doc.text('Off-the-Job Training Hours', 14, 55);
+      doc.setFontSize(11);
+      doc.setTextColor(80);
+      doc.text(`Total Hours: ${totalTime.hours}h ${totalTime.minutes}m`, 14, 62);
+      doc.text(`Sessions Logged: ${timeEntries.length}`, 14, 68);
+
+      // Evidence Table
+      doc.setFontSize(14);
+      doc.setTextColor(40);
+      doc.text('Portfolio Evidence', 14, 82);
+
+      if (portfolioEntries.length > 0) {
+        const tableData = portfolioEntries.map((entry: any) => [
+          entry.title?.slice(0, 40) || 'Untitled',
+          entry.category || 'N/A',
+          entry.status || 'draft',
+          new Date(entry.dateCreated || entry.created_at).toLocaleDateString('en-GB'),
+          entry.skills?.slice(0, 3).join(', ') || 'None',
+        ]);
+
+        (doc as any).autoTable({
+          startY: 88,
+          head: [['Title', 'Category', 'Status', 'Date', 'KSBs']],
+          body: tableData,
+          theme: 'striped',
+          headStyles: { fillColor: [252, 185, 0] },
+          styles: { fontSize: 9 },
+        });
+      } else {
+        doc.setFontSize(10);
+        doc.setTextColor(100);
+        doc.text('No evidence entries found.', 14, 90);
+      }
+
+      // Save PDF
+      doc.save(`${fullName.replace(/\s+/g, '_')}_Portfolio_${new Date().toISOString().split('T')[0]}.pdf`);
+
+      toast.success('PDF exported successfully!', {
+        description: 'Your portfolio has been downloaded.',
+      });
+    } catch (error) {
+      console.error('PDF export error:', error);
+      toast.error('Failed to export PDF', {
+        description: 'Please try again later.',
+      });
+    } finally {
+      setIsExportingPDF(false);
+    }
   };
 
-  // Handle download all (placeholder)
-  const handleDownloadAll = () => {
-    toast.info('Bulk download coming soon!', {
-      description: 'This feature is under development.',
-    });
+  // Handle download all evidence files as ZIP
+  const handleDownloadAll = async () => {
+    if (portfolioEntries.length === 0) {
+      toast.info('No evidence files to download', {
+        description: 'Add some evidence to your portfolio first.',
+      });
+      return;
+    }
+
+    setIsDownloadingAll(true);
+    try {
+      const zip = new JSZip();
+      const evidenceFolder = zip.folder('portfolio-evidence');
+      let fileCount = 0;
+
+      // Add a summary text file
+      let summary = `Portfolio Evidence Summary\n`;
+      summary += `Generated: ${new Date().toLocaleDateString('en-GB')}\n`;
+      summary += `Apprentice: ${fullName}\n`;
+      summary += `Qualification: ${qualification}\n\n`;
+      summary += `Evidence Entries:\n`;
+      summary += '='.repeat(50) + '\n\n';
+
+      for (const entry of portfolioEntries) {
+        summary += `Title: ${entry.title || 'Untitled'}\n`;
+        summary += `Category: ${entry.category || 'N/A'}\n`;
+        summary += `Status: ${entry.status || 'draft'}\n`;
+        summary += `Date: ${new Date(entry.dateCreated || entry.created_at).toLocaleDateString('en-GB')}\n`;
+        summary += `Description: ${entry.description || 'No description'}\n`;
+        summary += `KSBs: ${entry.skills?.join(', ') || 'None'}\n`;
+        summary += '-'.repeat(50) + '\n\n';
+
+        // Download evidence files
+        if (entry.evidenceFiles?.length > 0) {
+          for (const file of entry.evidenceFiles) {
+            if (file.url && !file.url.startsWith('blob:')) {
+              try {
+                const response = await fetch(file.url);
+                if (response.ok) {
+                  const blob = await response.blob();
+                  const fileName = file.name || `evidence_${fileCount + 1}`;
+                  evidenceFolder?.file(fileName, blob);
+                  fileCount++;
+                }
+              } catch (fetchError) {
+                console.warn(`Failed to download: ${file.url}`);
+              }
+            }
+          }
+        }
+      }
+
+      zip.file('summary.txt', summary);
+
+      // Generate and download ZIP
+      const content = await zip.generateAsync({ type: 'blob' });
+      const url = URL.createObjectURL(content);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${fullName.replace(/\s+/g, '_')}_Portfolio_${new Date().toISOString().split('T')[0]}.zip`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      toast.success('Download complete!', {
+        description: `Downloaded ${fileCount} file${fileCount !== 1 ? 's' : ''} plus summary.`,
+      });
+    } catch (error) {
+      console.error('Download error:', error);
+      toast.error('Failed to download files', {
+        description: 'Please try again later.',
+      });
+    } finally {
+      setIsDownloadingAll(false);
+    }
   };
 
   // Format expiry date
@@ -179,7 +336,7 @@ export function ProfileSection() {
           {/* Action Required */}
           <button
             onClick={() => setShowMessages(true)}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98]"
+            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
           >
             <div
               className={cn(
@@ -213,7 +370,7 @@ export function ProfileSection() {
           {/* Unread Messages */}
           <button
             onClick={() => setShowMessages(true)}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98]"
+            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
           >
             <div className="p-2 rounded-lg bg-blue-500/10">
               <Bell className="h-4 w-4 text-blue-500" />
@@ -234,16 +391,25 @@ export function ProfileSection() {
 
           {/* Message Tutor */}
           <button
-            onClick={() => toast.info('Direct messaging coming soon!')}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98]"
+            onClick={() => setShowDirectMessages(true)}
+            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
           >
-            <div className="p-2 rounded-lg bg-muted">
-              <MessageSquare className="h-4 w-4 text-muted-foreground" />
+            <div className="p-2 rounded-lg bg-purple-500/10">
+              <MessageSquare className="h-4 w-4 text-purple-500" />
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Message Tutor</p>
-              <p className="text-xs text-muted-foreground">Send a message to your tutor</p>
+              <p className="text-xs text-muted-foreground">
+                {connections.length > 0
+                  ? `${connections.length} conversation${connections.length !== 1 ? 's' : ''}`
+                  : 'Send a message to your tutor'}
+              </p>
             </div>
+            {messageUnreadCount > 0 && (
+              <Badge className="bg-purple-500 text-white text-xs">
+                {messageUnreadCount}
+              </Badge>
+            )}
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
           </button>
         </CardContent>
@@ -259,8 +425,8 @@ export function ProfileSection() {
         </CardHeader>
         <CardContent className="pt-0 space-y-2">
           <button
-            onClick={() => toast.info('KSB Coverage Map coming soon!')}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98]"
+            onClick={() => setShowKSBMap(true)}
+            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
           >
             <div className="p-2 rounded-lg bg-elec-yellow/10">
               <Shield className="h-4 w-4 text-elec-yellow" />
@@ -273,8 +439,8 @@ export function ProfileSection() {
           </button>
 
           <button
-            onClick={() => toast.info('EPA Gateway Status coming soon!')}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98]"
+            onClick={() => setShowEPAStatus(true)}
+            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
           >
             <div className="p-2 rounded-lg bg-green-500/10">
               <GraduationCap className="h-4 w-4 text-green-500" />
@@ -299,7 +465,7 @@ export function ProfileSection() {
         <CardContent className="pt-0 space-y-2">
           <button
             onClick={() => setShowShare(true)}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98]"
+            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
           >
             <div className="p-2 rounded-lg bg-blue-500/10">
               <Link2 className="h-4 w-4 text-blue-500" />
@@ -320,28 +486,42 @@ export function ProfileSection() {
 
           <button
             onClick={handleExportPDF}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98]"
+            disabled={isExportingPDF}
+            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation disabled:opacity-50"
           >
             <div className="p-2 rounded-lg bg-red-500/10">
-              <FileText className="h-4 w-4 text-red-500" />
+              {isExportingPDF ? (
+                <Loader2 className="h-4 w-4 text-red-500 animate-spin" />
+              ) : (
+                <FileText className="h-4 w-4 text-red-500" />
+              )}
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Export to PDF</p>
-              <p className="text-xs text-muted-foreground">Download your portfolio as a PDF</p>
+              <p className="text-xs text-muted-foreground">
+                {isExportingPDF ? 'Generating PDF...' : 'Download your portfolio as a PDF'}
+              </p>
             </div>
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
           </button>
 
           <button
             onClick={handleDownloadAll}
-            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98]"
+            disabled={isDownloadingAll}
+            className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation disabled:opacity-50"
           >
             <div className="p-2 rounded-lg bg-muted">
-              <Download className="h-4 w-4 text-muted-foreground" />
+              {isDownloadingAll ? (
+                <Loader2 className="h-4 w-4 text-muted-foreground animate-spin" />
+              ) : (
+                <Download className="h-4 w-4 text-muted-foreground" />
+              )}
             </div>
             <div className="flex-1 text-left">
               <p className="text-sm font-medium text-foreground">Download All Evidence</p>
-              <p className="text-xs text-muted-foreground">Get a zip of all your files</p>
+              <p className="text-xs text-muted-foreground">
+                {isDownloadingAll ? 'Creating zip file...' : 'Get a zip of all your files'}
+              </p>
             </div>
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
           </button>
@@ -353,7 +533,7 @@ export function ProfileSection() {
         <CardContent className="p-0">
           <button
             onClick={() => navigate('/settings')}
-            className="w-full flex items-center gap-3 p-4 hover:bg-muted/50 transition-colors active:scale-[0.98]"
+            className="w-full flex items-center gap-3 p-4 hover:bg-muted/50 transition-colors active:scale-[0.98] touch-manipulation"
           >
             <div className="p-2 rounded-lg bg-muted">
               <Settings className="h-4 w-4 text-muted-foreground" />
@@ -366,7 +546,7 @@ export function ProfileSection() {
 
           <button
             onClick={handleSignOut}
-            className="w-full flex items-center gap-3 p-4 hover:bg-muted/50 transition-colors text-destructive active:scale-[0.98]"
+            className="w-full flex items-center gap-3 p-4 hover:bg-muted/50 transition-colors text-destructive active:scale-[0.98] touch-manipulation"
           >
             <div className="p-2 rounded-lg bg-destructive/10">
               <LogOut className="h-4 w-4" />
@@ -513,6 +693,15 @@ export function ProfileSection() {
           </div>
         </SheetContent>
       </Sheet>
+
+      {/* KSB Coverage Map Sheet */}
+      <KSBCoverageMap open={showKSBMap} onOpenChange={setShowKSBMap} />
+
+      {/* EPA Gateway Status Sheet */}
+      <EPAGatewayStatus open={showEPAStatus} onOpenChange={setShowEPAStatus} />
+
+      {/* Direct Messaging Sheet */}
+      <DirectMessaging open={showDirectMessages} onOpenChange={setShowDirectMessages} />
     </div>
   );
 }

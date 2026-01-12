@@ -242,8 +242,11 @@ export const peerConversationService = {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return [];
 
-    // First, check if user is a supporter
-    const supporterProfile = await peerSupporterService.getMyProfile();
+    // Run supporter profile check and blocked users fetch in parallel for speed
+    const [supporterProfile, blockedUsers] = await Promise.all([
+      peerSupporterService.getMyProfile(),
+      peerBlockService.getBlockedUsers()
+    ]);
 
     // Build query conditions
     let query = supabase
@@ -265,14 +268,14 @@ export const peerConversationService = {
 
     const { data, error } = await query;
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error fetching conversations:', error);
+      throw error;
+    }
 
     const conversations = (data as unknown as PeerConversation[]) || [];
 
     // Filter out conversations with blocked users
-    // Import peerBlockService dynamically to avoid circular dependency
-    const blockedUsers = await peerBlockService.getBlockedUsers();
-
     if (blockedUsers.length === 0) {
       return conversations;
     }

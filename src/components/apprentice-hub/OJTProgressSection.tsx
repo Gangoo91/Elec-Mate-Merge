@@ -7,7 +7,7 @@
  * - Recent sessions
  */
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Clock,
   Plus,
@@ -64,6 +64,25 @@ export function OJTProgressSection() {
   const [timerActive, setTimerActive] = useState(false);
   const [timerSeconds, setTimerSeconds] = useState(0);
   const [timerActivity, setTimerActivity] = useState('');
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Timer effect - increment seconds when active
+  useEffect(() => {
+    if (timerActive) {
+      timerRef.current = setInterval(() => {
+        setTimerSeconds((prev) => prev + 1);
+      }, 1000);
+    } else if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [timerActive]);
 
   // Quick log sheet
   const [showQuickLog, setShowQuickLog] = useState(false);
@@ -90,7 +109,6 @@ export function OJTProgressSection() {
   // Timer controls
   const startTimer = () => {
     setTimerActive(true);
-    // In a real implementation, use setInterval
   };
 
   const pauseTimer = () => {
@@ -257,7 +275,7 @@ export function OJTProgressSection() {
       <div className="grid grid-cols-2 gap-3">
         <Button
           onClick={() => setShowQuickLog(true)}
-          className="h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
+          className="h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium touch-manipulation active:scale-95"
         >
           <Plus className="h-5 w-5 mr-2" />
           Log Time
@@ -265,7 +283,7 @@ export function OJTProgressSection() {
         <Button
           variant="outline"
           onClick={timerActive ? pauseTimer : startTimer}
-          className="h-14 font-medium"
+          className="h-14 font-medium touch-manipulation active:scale-95"
         >
           {timerActive ? (
             <>
@@ -303,6 +321,7 @@ export function OJTProgressSection() {
                 variant="destructive"
                 size="sm"
                 onClick={stopTimer}
+                className="h-11 touch-manipulation active:scale-95"
               >
                 <Square className="h-4 w-4 mr-1" />
                 Stop
@@ -393,7 +412,7 @@ export function OJTProgressSection() {
                   });
                 }}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -415,6 +434,7 @@ export function OJTProgressSection() {
                 onChange={(e) =>
                   setLogData({ ...logData, activity: e.target.value })
                 }
+                className="h-11 touch-manipulation"
               />
             </div>
 
@@ -431,6 +451,7 @@ export function OJTProgressSection() {
                   onChange={(e) =>
                     setLogData({ ...logData, duration: e.target.value })
                   }
+                  className="h-11 touch-manipulation"
                 />
               </div>
               <div className="space-y-2">
@@ -441,6 +462,7 @@ export function OJTProgressSection() {
                   onChange={(e) =>
                     setLogData({ ...logData, date: e.target.value })
                   }
+                  className="h-11 touch-manipulation"
                 />
               </div>
             </div>
@@ -455,21 +477,22 @@ export function OJTProgressSection() {
                   setLogData({ ...logData, notes: e.target.value })
                 }
                 rows={2}
+                className="touch-manipulation"
               />
             </div>
 
             {/* Actions */}
-            <div className="flex gap-3 pt-4 pb-8">
+            <div className="flex gap-3 pt-4 pb-20 sm:pb-8">
               <Button
                 variant="outline"
                 onClick={() => setShowQuickLog(false)}
-                className="flex-1 h-12"
+                className="flex-1 h-12 touch-manipulation active:scale-95"
               >
                 Cancel
               </Button>
               <Button
                 onClick={handleSubmitLog}
-                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
               >
                 Log Time
               </Button>

@@ -13,9 +13,27 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import {
   Share2,
   Edit,
@@ -32,24 +50,43 @@ import {
   Link2,
   ChevronRight,
   User,
+  Copy,
+  Check,
+  Loader2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { usePortfolioComments } from '@/hooks/portfolio/usePortfolioComments';
+import { usePortfolioSharing } from '@/hooks/portfolio/usePortfolioSharing';
+import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
+import { useToast } from '@/hooks/use-toast';
 
 interface PortfolioDetailSheetProps {
   entry: any;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onEdit?: (entry: any) => void;
 }
 
 export function PortfolioDetailSheet({
   entry,
   open,
   onOpenChange,
+  onEdit,
 }: PortfolioDetailSheetProps) {
+  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState<'details' | 'comments'>('details');
   const [newComment, setNewComment] = useState('');
   const { getCommentsForEvidence, addComment } = usePortfolioComments();
+  const { createShareLink, getShareUrl } = usePortfolioSharing();
+  const { deleteEntry } = usePortfolioData();
+
+  // Dialog states
+  const [showShareDialog, setShowShareDialog] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [shareUrl, setShareUrl] = useState('');
+  const [isCreatingShare, setIsCreatingShare] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   if (!entry) return null;
 
@@ -74,9 +111,84 @@ export function PortfolioDetailSheet({
     setNewComment('');
   };
 
-  const handleShare = () => {
-    // TODO: Open share dialog
-    console.log('Share entry:', entry.id);
+  const handleShare = async () => {
+    setShowShareDialog(true);
+    setIsCreatingShare(true);
+    setCopied(false);
+
+    try {
+      const share = await createShareLink({
+        entryIds: [entry.id],
+        title: entry.title,
+        description: entry.description,
+        expiresIn: '7d',
+      });
+
+      if (share) {
+        setShareUrl(getShareUrl(share.token));
+      }
+    } catch (error) {
+      console.error('Error creating share link:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to create share link',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsCreatingShare(false);
+    }
+  };
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      toast({
+        title: 'Link copied',
+        description: 'Share link copied to clipboard',
+      });
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to copy link',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleEdit = () => {
+    if (onEdit) {
+      onEdit(entry);
+      onOpenChange(false);
+    } else {
+      toast({
+        title: 'Edit mode',
+        description: 'Opening edit view...',
+      });
+    }
+  };
+
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      await deleteEntry(entry.id);
+      toast({
+        title: 'Evidence deleted',
+        description: 'The evidence has been removed from your portfolio',
+      });
+      setShowDeleteDialog(false);
+      onOpenChange(false);
+    } catch (error) {
+      console.error('Error deleting entry:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to delete evidence',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   return (
@@ -128,7 +240,7 @@ export function PortfolioDetailSheet({
             <button
               onClick={() => setActiveTab('details')}
               className={cn(
-                'flex-1 py-3 text-sm font-medium border-b-2 transition-colors',
+                'flex-1 h-11 text-sm font-medium border-b-2 transition-colors touch-manipulation',
                 activeTab === 'details'
                   ? 'border-elec-yellow text-elec-yellow'
                   : 'border-transparent text-muted-foreground'
@@ -139,7 +251,7 @@ export function PortfolioDetailSheet({
             <button
               onClick={() => setActiveTab('comments')}
               className={cn(
-                'flex-1 py-3 text-sm font-medium border-b-2 transition-colors flex items-center justify-center gap-2',
+                'flex-1 h-11 text-sm font-medium border-b-2 transition-colors flex items-center justify-center gap-2 touch-manipulation',
                 activeTab === 'comments'
                   ? 'border-elec-yellow text-elec-yellow'
                   : 'border-transparent text-muted-foreground'
@@ -227,7 +339,7 @@ export function PortfolioDetailSheet({
                           href={file.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                          className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors touch-manipulation min-h-[48px]"
                         >
                           <FileIcon type={file.type} />
                           <span className="flex-1 text-sm text-foreground truncate">
@@ -300,13 +412,13 @@ export function PortfolioDetailSheet({
                     placeholder="Add a comment..."
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
-                    className="min-h-[60px] resize-none"
+                    className="min-h-[60px] resize-none touch-manipulation"
                   />
                   <Button
                     size="icon"
                     onClick={handleAddComment}
                     disabled={!newComment.trim()}
-                    className="shrink-0 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                    className="shrink-0 h-11 w-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
                   >
                     <Send className="h-4 w-4" />
                   </Button>
@@ -316,19 +428,20 @@ export function PortfolioDetailSheet({
           </div>
 
           {/* Actions */}
-          <div className="p-4 border-t border-border shrink-0 bg-background">
+          <div className="p-4 border-t border-border shrink-0 bg-background pb-20 sm:pb-4">
             <div className="flex gap-2">
               <Button
                 variant="outline"
                 onClick={handleShare}
-                className="flex-1"
+                className="flex-1 h-11 touch-manipulation active:scale-95"
               >
                 <Share2 className="h-4 w-4 mr-2" />
                 Share
               </Button>
               <Button
                 variant="outline"
-                className="flex-1"
+                onClick={handleEdit}
+                className="flex-1 h-11 touch-manipulation active:scale-95"
               >
                 <Edit className="h-4 w-4 mr-2" />
                 Edit
@@ -336,7 +449,8 @@ export function PortfolioDetailSheet({
               <Button
                 variant="outline"
                 size="icon"
-                className="text-destructive hover:text-destructive"
+                onClick={() => setShowDeleteDialog(true)}
+                className="h-11 w-11 text-destructive hover:text-destructive touch-manipulation active:scale-95"
               >
                 <Trash2 className="h-4 w-4" />
               </Button>
@@ -344,6 +458,82 @@ export function PortfolioDetailSheet({
           </div>
         </div>
       </SheetContent>
+
+      {/* Share Dialog */}
+      <Dialog open={showShareDialog} onOpenChange={setShowShareDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Share Evidence</DialogTitle>
+            <DialogDescription>
+              Share this evidence with your tutor, assessor, or employer
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            {isCreatingShare ? (
+              <div className="flex items-center justify-center py-8">
+                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+              </div>
+            ) : shareUrl ? (
+              <>
+                <div className="flex items-center gap-2">
+                  <Input
+                    value={shareUrl}
+                    readOnly
+                    className="flex-1 h-11"
+                  />
+                  <Button
+                    size="icon"
+                    onClick={handleCopyLink}
+                    className="h-11 w-11 shrink-0"
+                  >
+                    {copied ? (
+                      <Check className="h-4 w-4" />
+                    ) : (
+                      <Copy className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  This link expires in 7 days. Anyone with the link can view this evidence.
+                </p>
+              </>
+            ) : (
+              <p className="text-sm text-muted-foreground text-center py-4">
+                Failed to create share link. Please try again.
+              </p>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Evidence</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete "{entry.title}"? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              disabled={isDeleting}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {isDeleting ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                'Delete'
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Sheet>
   );
 }

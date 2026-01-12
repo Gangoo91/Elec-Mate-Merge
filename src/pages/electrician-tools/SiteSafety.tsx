@@ -140,15 +140,15 @@ const SiteSafety = () => {
   if (activeView) {
     return (
       <RAMSProvider>
-        <div className="min-h-screen bg-elec-dark animate-fade-in">
+        <div className="min-h-screen bg-elec-dark animate-fade-in pt-safe pb-safe">
           <div className="max-w-7xl mx-auto px-4 py-4 sm:py-6">
             <div className="mb-4 sm:mb-6">
               <Button
                 onClick={() => setActiveView(null)}
                 variant="outline"
-                className="h-10 border-white/10 hover:border-elec-yellow/30 text-white/60 hover:text-white hover:bg-white/5"
+                className="h-11 border-white/10 hover:border-elec-yellow/30 text-white/60 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
               >
-                <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
+                <ArrowRight className="h-5 w-5 mr-2 rotate-180" />
                 Back to Site Safety
               </Button>
             </div>
@@ -161,7 +161,7 @@ const SiteSafety = () => {
 
   return (
     <RAMSProvider>
-      <div className="min-h-screen bg-elec-dark">
+      <div className="min-h-screen bg-elec-dark pt-safe pb-safe">
         {/* Hero Section */}
         <div className="border-b border-white/5">
           <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">

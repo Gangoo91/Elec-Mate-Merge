@@ -60,7 +60,17 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   // Use centralised hooks for conversations and messages
-  const { data: conversations = [], isLoading: conversationsLoading, refetch: refetchConversations } = usePeerConversations();
+  const { data: conversations = [], isLoading: conversationsLoading, isError: conversationsError, error: conversationsErrorDetails, refetch: refetchConversations } = usePeerConversations();
+
+  // Debug logging for conversation issues
+  useEffect(() => {
+    if (conversations.length > 0) {
+      console.log('[PeerSupportHub] Loaded conversations:', conversations.length, conversations);
+    }
+    if (conversationsError) {
+      console.error('[PeerSupportHub] Error loading conversations:', conversationsErrorDetails);
+    }
+  }, [conversations, conversationsError, conversationsErrorDetails]);
   const { data: chatMessages = [], isLoading: messagesLoading } = usePeerMessages(selectedConversation?.id);
   const sendMessage = useSendPeerMessage();
   const markAsRead = useMarkPeerMessagesAsRead();
@@ -211,7 +221,8 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
     return (
       <BecomeSupporter
         onSuccess={() => {
-          loadData();
+          loadProfile();
+          refetchConversations();
           setViewState('hub');
         }}
         onBack={() => setViewState('hub')}
@@ -299,7 +310,24 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
 
             {/* My Chats Tab */}
             <TabsContent value="chats" className="mt-4 px-4">
-              {conversations.length === 0 ? (
+              {conversationsError ? (
+                <div className="py-12 text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-500/10 flex items-center justify-center">
+                    <AlertTriangle className="w-8 h-8 text-red-400" />
+                  </div>
+                  <h3 className="font-semibold text-white mb-2">Couldn't load chats</h3>
+                  <p className="text-sm text-white max-w-xs mx-auto mb-4">
+                    There was an error loading your conversations. Please try again.
+                  </p>
+                  <Button
+                    variant="outline"
+                    onClick={() => refetchConversations()}
+                    className="gap-2 text-white border-white/20 hover:bg-white/10 h-11 touch-manipulation"
+                  >
+                    Try Again
+                  </Button>
+                </div>
+              ) : conversations.length === 0 ? (
                 <div className="py-12 text-center">
                   <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-purple-500/10 flex items-center justify-center">
                     <MessageCircle className="w-8 h-8 text-purple-400/50" />

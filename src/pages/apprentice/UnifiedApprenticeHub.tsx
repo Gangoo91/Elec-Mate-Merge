@@ -11,6 +11,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ApprenticeHubShell } from '@/components/apprentice-hub/ApprenticeHubShell';
 import { ApprenticeHubTab } from '@/components/apprentice-hub/ApprenticeHubNav';
 import { UnifiedDashboard } from '@/components/apprentice-hub/UnifiedDashboard';
@@ -33,14 +34,14 @@ export default function UnifiedApprenticeHub() {
   // Capture sheet state
   const [showCapture, setShowCapture] = useState(false);
 
-  // Sync URL with active tab
+  // Sync URL with active tab - use replace: false to create history entries for back button
   useEffect(() => {
     if (activeTab === 'home') {
       searchParams.delete('tab');
     } else {
       searchParams.set('tab', activeTab);
     }
-    setSearchParams(searchParams, { replace: true });
+    setSearchParams(searchParams, { replace: false });
   }, [activeTab, searchParams, setSearchParams]);
 
   // Sync active tab with URL on mount
@@ -66,6 +67,13 @@ export default function UnifiedApprenticeHub() {
     setShowCapture(false);
     // Optionally switch to My Work tab to show new evidence
     // setActiveTab('work');
+  };
+
+  // Tab content animation variants
+  const tabContentVariants = {
+    initial: { opacity: 0, y: 8 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -8 }
   };
 
   // Render active tab content
@@ -96,7 +104,18 @@ export default function UnifiedApprenticeHub() {
         onTabChange={handleTabChange}
         onCapture={handleCapture}
       >
-        {renderTabContent()}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            variants={tabContentVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.15, ease: 'easeOut' }}
+          >
+            {renderTabContent()}
+          </motion.div>
+        </AnimatePresence>
       </ApprenticeHubShell>
 
       {/* Unified Capture Sheet */}

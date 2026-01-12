@@ -5,13 +5,13 @@ import TutorInterface from "@/components/electrician-tools/ai-agents/TutorInterf
 
 const TutorPage = () => {
   return (
-    <div className="min-h-screen bg-elec-dark">
+    <div className="min-h-screen bg-elec-dark pt-safe pb-safe">
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 py-4 sm:py-6">
         <div className="space-y-6 animate-fade-in">
           {/* Back Button */}
           <Link to="/electrician/agent-selector">
-            <Button variant="outline" size="sm" className="gap-2 touch-manipulation h-10">
-              <ArrowLeft className="h-4 w-4" /> Back to Agent Selector
+            <Button variant="outline" className="gap-2 touch-manipulation h-11 active:scale-[0.98]">
+              <ArrowLeft className="h-5 w-5" /> Back to Agent Selector
             </Button>
           </Link>
 

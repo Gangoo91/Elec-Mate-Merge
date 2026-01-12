@@ -87,10 +87,10 @@ const ModuleDetailView = ({ module, onBack }: ModuleDetailViewProps) => {
       <CardContent className="space-y-6 relative">
         <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid grid-cols-4 mb-6 bg-white/5">
-            <TabsTrigger value="overview" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black">Overview</TabsTrigger>
-            <TabsTrigger value="examples" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black">Examples</TabsTrigger>
-            <TabsTrigger value="resources" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black">Resources</TabsTrigger>
-            <TabsTrigger value="faq" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black">FAQ</TabsTrigger>
+            <TabsTrigger value="overview" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black touch-manipulation">Overview</TabsTrigger>
+            <TabsTrigger value="examples" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black touch-manipulation">Examples</TabsTrigger>
+            <TabsTrigger value="resources" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black touch-manipulation">Resources</TabsTrigger>
+            <TabsTrigger value="faq" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black touch-manipulation">FAQ</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview">

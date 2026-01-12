@@ -38,10 +38,12 @@ import {
   Clock,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
 import { usePortfolioData } from '@/hooks/portfolio/usePortfolioData';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import { useAIEvidenceTagger } from '@/hooks/portfolio/useAIEvidenceTagger';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface UnifiedCaptureSheetProps {
   open: boolean;
@@ -67,14 +69,17 @@ export function UnifiedCaptureSheet({
   onComplete,
 }: UnifiedCaptureSheetProps) {
   const { toast } = useToast();
+  const { user } = useAuth();
   const { addEntry } = usePortfolioData();
   const { addTimeEntry } = useTimeEntries();
-  const { analyzeEvidence, isAnalyzing } = useAIEvidenceTagger();
+  const { analyze, isAnalyzing } = useAIEvidenceTagger();
 
   // Form state
   const [step, setStep] = useState<CaptureStep>('capture');
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [uploadedUrl, setUploadedUrl] = useState<string>('');
+  const [isUploading, setIsUploading] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
@@ -94,6 +99,8 @@ export function UnifiedCaptureSheet({
     setStep('capture');
     setFile(null);
     setPreviewUrl('');
+    setUploadedUrl('');
+    setIsUploading(false);
     setTitle('');
     setDescription('');
     setCategory('');
@@ -101,6 +108,56 @@ export function UnifiedCaptureSheet({
     setOjtDuration('');
     setSuggestions(null);
     setSelectedKsbs([]);
+  };
+
+  // Upload file to Supabase Storage
+  const uploadFile = async (fileToUpload: File): Promise<string | null> => {
+    if (!user?.id) {
+      toast({
+        title: 'Not authenticated',
+        description: 'Please sign in to upload files',
+        variant: 'destructive',
+      });
+      return null;
+    }
+
+    setIsUploading(true);
+    try {
+      const fileExt = fileToUpload.name.split('.').pop();
+      const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+
+      const { data, error } = await supabase.storage
+        .from('portfolio-evidence')
+        .upload(fileName, fileToUpload, {
+          cacheControl: '3600',
+          upsert: false,
+        });
+
+      if (error) {
+        // If bucket doesn't exist, fall back to preview URL
+        console.warn('Storage upload failed:', error.message);
+        return null;
+      }
+
+      // Get public URL
+      const { data: urlData } = supabase.storage
+        .from('portfolio-evidence')
+        .getPublicUrl(data.path);
+
+      return urlData.publicUrl;
+    } catch (err) {
+      console.error('Upload error:', err);
+      return null;
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  // Get evidence type from file
+  const getEvidenceType = (fileType: string): 'image' | 'document' | 'video' => {
+    if (fileType.startsWith('image/')) return 'image';
+    if (fileType.startsWith('video/')) return 'video';
+    return 'document';
   };
 
   // Handle file selection
@@ -129,24 +186,37 @@ export function UnifiedCaptureSheet({
     // Move to details step
     setStep('details');
 
-    // Auto-analyze with AI
-    try {
-      const analysis = await analyzeEvidence(selectedFile);
-      if (analysis) {
-        setSuggestions(analysis);
-        // Auto-select high-confidence KSBs
-        const autoSelected = analysis.ksb_suggestions
-          ?.filter((k: any) => k.confidence >= 0.8)
-          .map((k: any) => k.code) || [];
-        setSelectedKsbs(autoSelected);
+    // Upload file to storage
+    const storageUrl = await uploadFile(selectedFile);
+    if (storageUrl) {
+      setUploadedUrl(storageUrl);
 
-        // Auto-fill title if empty
-        if (!title && analysis.detected_content?.title) {
-          setTitle(analysis.detected_content.title);
+      // Auto-analyze with AI using uploaded URL
+      try {
+        const analysis = await analyze({
+          evidenceUrl: storageUrl,
+          evidenceType: getEvidenceType(selectedFile.type),
+          title: title || undefined,
+          description: description || undefined,
+        });
+        if (analysis) {
+          setSuggestions(analysis);
+          // Auto-select high-confidence KSBs
+          const autoSelected = analysis.ksb_suggestions
+            ?.filter((k: any) => k.confidence >= 0.8)
+            .map((k: any) => k.code) || [];
+          setSelectedKsbs(autoSelected);
+
+          // Auto-fill title if empty and detected
+          if (!title && analysis.detected_content?.description) {
+            // Use first sentence of description as title
+            const firstSentence = analysis.detected_content.description.split('.')[0];
+            setTitle(firstSentence.slice(0, 100));
+          }
         }
+      } catch (error) {
+        console.error('AI analysis error:', error);
       }
-    } catch (error) {
-      console.error('AI analysis error:', error);
     }
   };
 
@@ -164,11 +234,16 @@ export function UnifiedCaptureSheet({
     setStep('saving');
 
     try {
-      // Create evidence file URL (in real app, upload to storage first)
+      // Use uploaded URL, or upload now if not done yet
+      let finalUrl = uploadedUrl;
+      if (file && !finalUrl) {
+        finalUrl = await uploadFile(file) || previewUrl;
+      }
+
       const evidenceFile = file ? {
         name: file.name,
         type: file.type,
-        url: previewUrl || '', // In real app, this would be the uploaded URL
+        url: finalUrl || previewUrl,
       } : null;
 
       // Add to portfolio
@@ -250,7 +325,7 @@ export function UnifiedCaptureSheet({
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     onClick={() => cameraInputRef.current?.click()}
-                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-elec-yellow/10 border-2 border-elec-yellow/20 hover:border-elec-yellow/40 active:scale-95 transition-all"
+                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-elec-yellow/10 border-2 border-elec-yellow/20 hover:border-elec-yellow/40 active:scale-95 transition-all touch-manipulation"
                   >
                     <div className="p-3 rounded-full bg-elec-yellow/20">
                       <Camera className="h-6 w-6 text-elec-yellow" />
@@ -260,7 +335,7 @@ export function UnifiedCaptureSheet({
 
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-blue-500/10 border-2 border-blue-500/20 hover:border-blue-500/40 active:scale-95 transition-all"
+                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-blue-500/10 border-2 border-blue-500/20 hover:border-blue-500/40 active:scale-95 transition-all touch-manipulation"
                   >
                     <div className="p-3 rounded-full bg-blue-500/20">
                       <Upload className="h-6 w-6 text-blue-500" />
@@ -272,7 +347,7 @@ export function UnifiedCaptureSheet({
                     onClick={() => {
                       setStep('details');
                     }}
-                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-green-500/10 border-2 border-green-500/20 hover:border-green-500/40 active:scale-95 transition-all"
+                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-green-500/10 border-2 border-green-500/20 hover:border-green-500/40 active:scale-95 transition-all touch-manipulation"
                   >
                     <div className="p-3 rounded-full bg-green-500/20">
                       <Link2 className="h-6 w-6 text-green-500" />
@@ -282,7 +357,7 @@ export function UnifiedCaptureSheet({
 
                   <button
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-purple-500/10 border-2 border-purple-500/20 hover:border-purple-500/40 active:scale-95 transition-all"
+                    className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-purple-500/10 border-2 border-purple-500/20 hover:border-purple-500/40 active:scale-95 transition-all touch-manipulation"
                   >
                     <div className="p-3 rounded-full bg-purple-500/20">
                       <Video className="h-6 w-6 text-purple-500" />
@@ -338,11 +413,13 @@ export function UnifiedCaptureSheet({
                   </div>
                 )}
 
-                {/* AI Analyzing indicator */}
-                {isAnalyzing && (
+                {/* Upload/Analyzing indicator */}
+                {(isUploading || isAnalyzing) && (
                   <div className="flex items-center gap-2 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                     <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
-                    <span className="text-sm text-elec-yellow">AI analyzing evidence...</span>
+                    <span className="text-sm text-elec-yellow">
+                      {isUploading ? 'Uploading file...' : 'AI analysing evidence...'}
+                    </span>
                   </div>
                 )}
 
@@ -353,6 +430,7 @@ export function UnifiedCaptureSheet({
                     placeholder="What is this evidence?"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    className="h-11 touch-manipulation"
                   />
                 </div>
 
@@ -364,6 +442,7 @@ export function UnifiedCaptureSheet({
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     rows={2}
+                    className="touch-manipulation"
                   />
                 </div>
 
@@ -371,7 +450,7 @@ export function UnifiedCaptureSheet({
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Category</label>
                   <Select value={category} onValueChange={setCategory}>
-                    <SelectTrigger>
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent>
@@ -391,7 +470,7 @@ export function UnifiedCaptureSheet({
                     <button
                       onClick={() => setLinkTo('portfolio')}
                       className={cn(
-                        'flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-colors',
+                        'flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-colors touch-manipulation min-h-[60px]',
                         linkTo === 'portfolio'
                           ? 'border-elec-yellow bg-elec-yellow/10'
                           : 'border-border hover:border-muted-foreground/50'
@@ -403,7 +482,7 @@ export function UnifiedCaptureSheet({
                     <button
                       onClick={() => setLinkTo('ojt')}
                       className={cn(
-                        'flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-colors',
+                        'flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-colors touch-manipulation min-h-[60px]',
                         linkTo === 'ojt'
                           ? 'border-elec-yellow bg-elec-yellow/10'
                           : 'border-border hover:border-muted-foreground/50'
@@ -415,7 +494,7 @@ export function UnifiedCaptureSheet({
                     <button
                       onClick={() => setLinkTo('both')}
                       className={cn(
-                        'flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-colors',
+                        'flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-colors touch-manipulation min-h-[60px]',
                         linkTo === 'both'
                           ? 'border-elec-yellow bg-elec-yellow/10'
                           : 'border-border hover:border-muted-foreground/50'
@@ -438,6 +517,7 @@ export function UnifiedCaptureSheet({
                       placeholder="e.g., 2.5"
                       value={ojtDuration}
                       onChange={(e) => setOjtDuration(e.target.value)}
+                      className="h-11 touch-manipulation"
                     />
                   </div>
                 )}
@@ -455,7 +535,7 @@ export function UnifiedCaptureSheet({
                           key={ksb.code}
                           onClick={() => toggleKsb(ksb.code)}
                           className={cn(
-                            'px-3 py-1.5 rounded-full text-xs font-medium border transition-colors',
+                            'px-3 h-9 rounded-full text-xs font-medium border transition-colors touch-manipulation',
                             selectedKsbs.includes(ksb.code)
                               ? 'bg-elec-yellow text-black border-elec-yellow'
                               : 'bg-muted border-border text-muted-foreground hover:border-muted-foreground'
@@ -487,7 +567,7 @@ export function UnifiedCaptureSheet({
 
           {/* Actions */}
           {step === 'details' && (
-            <div className="p-4 border-t border-border shrink-0 bg-background">
+            <div className="p-4 border-t border-border shrink-0 bg-background pb-20 sm:pb-4">
               <div className="flex gap-3">
                 <Button
                   variant="outline"
@@ -495,14 +575,14 @@ export function UnifiedCaptureSheet({
                     resetForm();
                     onOpenChange(false);
                   }}
-                  className="flex-1 h-12"
+                  className="flex-1 h-12 touch-manipulation active:scale-95"
                 >
                   Cancel
                 </Button>
                 <Button
                   onClick={handleSave}
                   disabled={!title.trim() || ((linkTo === 'ojt' || linkTo === 'both') && !ojtDuration)}
-                  className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
                 >
                   Save Evidence
                 </Button>

@@ -259,7 +259,7 @@ function QuickActionCard({
         "bg-card border border-border",
         "hover:border-elec-yellow/30 hover:bg-elec-yellow/5",
         "transition-all duration-200",
-        "text-left active:scale-95"
+        "text-left active:scale-95 touch-manipulation"
       )}
     >
       <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center mb-3", color)}>

@@ -115,14 +115,14 @@ const OnJobWorkplaceCulture = () => {
               <TabsList className="flex w-full overflow-x-auto scrollbar-hide gap-1 bg-transparent">
                 <TabsTrigger
                   value="overview"
-                  className="flex-shrink-0 min-w-fit px-3 sm:px-4 py-2.5 flex items-center gap-2 rounded-lg data-[state=active]:bg-purple-500/20 data-[state=active]:text-purple-400 transition-all"
+                  className="flex-shrink-0 min-w-fit px-3 sm:px-4 py-2.5 flex items-center gap-2 rounded-lg data-[state=active]:bg-purple-500/20 data-[state=active]:text-purple-400 transition-all touch-manipulation"
                 >
                   <MessageSquare className="h-4 w-4" />
                   <span className="hidden sm:inline">Overview</span>
                 </TabsTrigger>
                 <TabsTrigger
                   value="communication"
-                  className="flex-shrink-0 min-w-fit px-3 sm:px-4 py-2.5 flex items-center gap-2 rounded-lg data-[state=active]:bg-blue-500/20 data-[state=active]:text-blue-400 transition-all"
+                  className="flex-shrink-0 min-w-fit px-3 sm:px-4 py-2.5 flex items-center gap-2 rounded-lg data-[state=active]:bg-blue-500/20 data-[state=active]:text-blue-400 transition-all touch-manipulation"
                 >
                   <Users className="h-4 w-4" />
                   <span className="hidden sm:inline">Communication</span>
@@ -130,28 +130,28 @@ const OnJobWorkplaceCulture = () => {
                 </TabsTrigger>
                 <TabsTrigger
                   value="modules"
-                  className="flex-shrink-0 min-w-fit px-3 sm:px-4 py-2.5 flex items-center gap-2 rounded-lg data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow transition-all"
+                  className="flex-shrink-0 min-w-fit px-3 sm:px-4 py-2.5 flex items-center gap-2 rounded-lg data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow transition-all touch-manipulation"
                 >
                   <BookOpen className="h-4 w-4" />
                   <span className="hidden sm:inline">Modules</span>
                 </TabsTrigger>
                 <TabsTrigger
                   value="tools"
-                  className="flex-shrink-0 min-w-fit px-3 sm:px-4 py-2.5 flex items-center gap-2 rounded-lg data-[state=active]:bg-orange-500/20 data-[state=active]:text-orange-400 transition-all"
+                  className="flex-shrink-0 min-w-fit px-3 sm:px-4 py-2.5 flex items-center gap-2 rounded-lg data-[state=active]:bg-orange-500/20 data-[state=active]:text-orange-400 transition-all touch-manipulation"
                 >
                   <Lightbulb className="h-4 w-4" />
                   <span className="hidden sm:inline">Interactive</span>
                 </TabsTrigger>
                 <TabsTrigger
                   value="regional"
-                  className="flex-shrink-0 min-w-fit px-3 sm:px-4 py-2.5 flex items-center gap-2 rounded-lg data-[state=active]:bg-green-500/20 data-[state=active]:text-green-400 transition-all"
+                  className="flex-shrink-0 min-w-fit px-3 sm:px-4 py-2.5 flex items-center gap-2 rounded-lg data-[state=active]:bg-green-500/20 data-[state=active]:text-green-400 transition-all touch-manipulation"
                 >
                   <Globe className="h-4 w-4" />
                   <span className="hidden sm:inline">Regional</span>
                 </TabsTrigger>
                 <TabsTrigger
                   value="resources"
-                  className="flex-shrink-0 min-w-fit px-3 sm:px-4 py-2.5 flex items-center gap-2 rounded-lg data-[state=active]:bg-cyan-500/20 data-[state=active]:text-cyan-400 transition-all"
+                  className="flex-shrink-0 min-w-fit px-3 sm:px-4 py-2.5 flex items-center gap-2 rounded-lg data-[state=active]:bg-cyan-500/20 data-[state=active]:text-cyan-400 transition-all touch-manipulation"
                 >
                   <HelpCircle className="h-4 w-4" />
                   <span className="hidden sm:inline">Resources</span>

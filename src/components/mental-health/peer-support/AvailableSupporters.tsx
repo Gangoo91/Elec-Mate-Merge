@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Loader2, Users, RefreshCw } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Users, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import SupporterCard from './SupporterCard';
 import { PeerSupporter, peerSupporterService, peerPresenceService } from '@/services/peerSupportService';
 
@@ -11,6 +11,38 @@ interface AvailableSupportersProps {
   connectingId?: string | null;
   excludeUserId?: string;
 }
+
+// Skeleton card for loading state
+const SupporterCardSkeleton = () => (
+  <div className="relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl rounded-2xl border border-purple-500/20 overflow-hidden p-5">
+    {/* Avatar skeleton */}
+    <div className="w-16 h-16 mx-auto mb-3">
+      <Skeleton className="w-16 h-16 rounded-2xl bg-white/10" />
+    </div>
+
+    {/* Name skeleton */}
+    <Skeleton className="h-6 w-32 mx-auto mb-2 bg-white/10" />
+
+    {/* Badge skeleton */}
+    <Skeleton className="h-5 w-24 mx-auto mb-2 bg-white/10" />
+
+    {/* Response time skeleton */}
+    <Skeleton className="h-4 w-40 mx-auto mb-3 bg-white/10" />
+
+    {/* Bio skeleton */}
+    <Skeleton className="h-10 w-full mb-3 bg-white/10" />
+
+    {/* Topics skeleton */}
+    <div className="flex gap-2 justify-center mb-3">
+      <Skeleton className="h-6 w-16 rounded-full bg-white/10" />
+      <Skeleton className="h-6 w-20 rounded-full bg-white/10" />
+      <Skeleton className="h-6 w-14 rounded-full bg-white/10" />
+    </div>
+
+    {/* Button skeleton */}
+    <Skeleton className="h-12 w-full rounded-md bg-white/10" />
+  </div>
+);
 
 const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
   onConnect,
@@ -22,7 +54,10 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const loadSupporters = async () => {
+  // Debounce timer ref for presence updates
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const loadSupporters = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
@@ -38,27 +73,59 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [excludeUserId]);
 
   useEffect(() => {
     loadSupporters();
 
-    // Subscribe to real-time updates
+    // Subscribe to real-time updates with debouncing
     const unsubscribe = peerPresenceService.subscribeToAvailability((updated) => {
-      const filtered = excludeUserId
-        ? updated.filter(s => s.user_id !== excludeUserId)
-        : updated;
-      setSupporters(filtered);
+      // Clear existing debounce timer
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+
+      // Debounce updates by 500ms to prevent excessive re-renders
+      debounceTimerRef.current = setTimeout(() => {
+        const filtered = excludeUserId
+          ? updated.filter(s => s.user_id !== excludeUserId)
+          : updated;
+        setSupporters(filtered);
+      }, 500);
     });
 
-    return unsubscribe;
-  }, [excludeUserId]);
+    return () => {
+      unsubscribe();
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, [excludeUserId, loadSupporters]);
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <Loader2 className="w-8 h-8 text-purple-400 animate-spin mb-3" />
-        <p className="text-white text-sm">Finding available supporters...</p>
+      <div className="space-y-4">
+        {/* Header skeleton */}
+        <div className="flex items-center justify-between px-4">
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-2.5 w-2.5 rounded-full bg-white/10" />
+            <Skeleton className="h-4 w-32 bg-white/10" />
+          </div>
+          <Skeleton className="h-10 w-20 bg-white/10" />
+        </div>
+
+        {/* Skeleton cards */}
+        <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x hide-scrollbar md:grid md:grid-cols-2 md:overflow-visible">
+          <div className="min-w-[280px] snap-start md:min-w-0">
+            <SupporterCardSkeleton />
+          </div>
+          <div className="min-w-[280px] snap-start md:min-w-0">
+            <SupporterCardSkeleton />
+          </div>
+          <div className="min-w-[280px] snap-start md:min-w-0 md:hidden">
+            <SupporterCardSkeleton />
+          </div>
+        </div>
       </div>
     );
   }
@@ -67,7 +134,11 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
     return (
       <div className="py-8 text-center px-4">
         <p className="text-red-400 mb-4">{error}</p>
-        <Button variant="outline" onClick={loadSupporters} className="gap-2 text-white border-white/20 hover:bg-white/10">
+        <Button
+          variant="outline"
+          onClick={loadSupporters}
+          className="gap-2 text-white border-white/20 hover:bg-white/10 h-11 touch-manipulation active:scale-[0.98]"
+        >
           <RefreshCw className="w-4 h-4" />
           Try Again
         </Button>
@@ -89,7 +160,7 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
         <Button
           variant="ghost"
           onClick={loadSupporters}
-          className="mt-4 gap-2 text-white hover:text-white"
+          className="mt-4 gap-2 text-white hover:text-white h-11 touch-manipulation active:scale-[0.98]"
         >
           <RefreshCw className="w-4 h-4" />
           Refresh

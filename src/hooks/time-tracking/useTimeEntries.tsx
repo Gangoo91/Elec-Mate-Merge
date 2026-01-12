@@ -3,6 +3,7 @@ import { TimeEntry } from "@/types/time-tracking";
 import { useAuthState } from "./useAuthState";
 import { useEntriesLoader } from "./useEntriesLoader";
 import { useTimeEntryAdder } from "./useTimeEntryAdder";
+import { supabase } from "@/integrations/supabase/client";
 
 export const useTimeEntries = () => {
   const { userId, isLoading: authLoading } = useAuthState();
@@ -25,65 +26,66 @@ export const useTimeEntries = () => {
   }, [loadedManualEntries]);
   
   // Function to delete all entries
-  const deleteAllEntries = (filterMonth: string = "all") => {
+  const deleteAllEntries = async (filterMonth: string = "all") => {
     if (filterMonth === "all") {
       // Clear all manual entries if filter is "all"
       setManualEntries([]);
-      
-      // Store the deletion state in localStorage to ensure it persists
-      localStorage.setItem('entries_cleared', 'true');
-      localStorage.setItem('entries_cleared_timestamp', Date.now().toString());
-      
-      // In a real implementation with Supabase, would delete from the database
+
+      // Delete from Supabase if user is authenticated
       if (userId) {
         try {
-          // This is where we would delete from Supabase
-          // supabase.from('time_entries').delete().eq('user_id', userId);
-          
-          // For now, just store in localStorage that we've cleared entries
-          localStorage.removeItem('manualEntries');
+          const { error } = await supabase
+            .from('time_entries')
+            .delete()
+            .eq('user_id', userId)
+            .eq('is_automatic', false);
+
+          if (error) {
+            console.error('Error deleting entries from Supabase:', error);
+          }
         } catch (error) {
           console.error('Error deleting entries:', error);
         }
       }
+
+      // Also clear localStorage fallback
+      localStorage.removeItem('manualEntries');
     } else {
       // Filter out entries from the specified month
-      setManualEntries(prev => {
-        const filteredEntries = prev.filter(entry => {
-          const date = new Date(entry.date);
-          const entryMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-          return entryMonth !== filterMonth;
-        });
-        
-        // Store updated entries in localStorage
-        localStorage.setItem('manualEntries', JSON.stringify(filteredEntries));
-        
-        return filteredEntries;
+      const entriesToDelete = manualEntries.filter(entry => {
+        const date = new Date(entry.date);
+        const entryMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+        return entryMonth === filterMonth;
       });
+
+      setManualEntries(prev => prev.filter(entry => {
+        const date = new Date(entry.date);
+        const entryMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+        return entryMonth !== filterMonth;
+      }));
+
+      // Delete from Supabase if user is authenticated
+      if (userId && entriesToDelete.length > 0) {
+        try {
+          const entryIds = entriesToDelete.map(e => e.id);
+          const { error } = await supabase
+            .from('time_entries')
+            .delete()
+            .eq('user_id', userId)
+            .in('id', entryIds);
+
+          if (error) {
+            console.error('Error deleting monthly entries from Supabase:', error);
+          }
+        } catch (error) {
+          console.error('Error deleting entries:', error);
+        }
+      }
     }
   };
   
-  // Combine entries but respect the deleted state
-  const wasEntriesCleared = localStorage.getItem('entries_cleared') === 'true';
-  const clearTimestamp = parseInt(localStorage.getItem('entries_cleared_timestamp') || '0');
-  const oneHourAgo = Date.now() - (60 * 60 * 1000);
-  
-  // If entries were cleared less than an hour ago, only use manual entries
-  // Otherwise, use all entries (manual, course, quiz)
-  let allEntries: TimeEntry[] = [];
-  
-  if (wasEntriesCleared && clearTimestamp > oneHourAgo) {
-    // Only use manual entries if entries were cleared recently
-    allEntries = [...manualEntries];
-  } else {
-    // Clear the flag if it's been more than an hour
-    if (wasEntriesCleared) {
-      localStorage.removeItem('entries_cleared');
-      localStorage.removeItem('entries_cleared_timestamp');
-    }
-    // Use all entries
-    allEntries = [...manualEntries, ...courseEntries, ...quizEntries];
-  }
+  // Combine all entries (manual, course, quiz)
+  const allEntries: TimeEntry[] = [...manualEntries, ...courseEntries, ...quizEntries];
   
   // Calculate total minutes
   const totalMinutes = allEntries.reduce((total, entry) => total + entry.duration, 0);

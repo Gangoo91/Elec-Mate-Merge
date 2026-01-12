@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Search, Send, Recycle, BarChart3, RefreshCw, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -45,7 +45,9 @@ const tabs = [
 
 const LivePricingHub = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("pricing");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "pricing";
+  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const [searchResults, setSearchResults] = useState<PricingResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [lastSearch, setLastSearch] = useState<{ postcode: string; jobType?: string } | null>(null);
@@ -126,13 +128,13 @@ const LivePricingHub = () => {
       <OfflineIndicator />
 
       {/* Header - Sticky Premium */}
-      <header className="sticky top-0 z-40 bg-neutral-900/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center justify-between px-4 h-16">
+      <header className="sticky top-0 z-40 bg-neutral-900/95 backdrop-blur-xl border-b border-white/10 pt-safe">
+        <div className="flex items-center justify-between px-4 h-14">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => navigate('/electrician')}
-            className="text-white/70 hover:text-white hover:bg-white/10 rounded-xl"
+            className="text-white/70 hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.95]"
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
@@ -149,7 +151,7 @@ const LivePricingHub = () => {
             size="icon"
             onClick={handleRefresh}
             disabled={isSearching || !lastSearch}
-            className="text-white/70 hover:text-white hover:bg-white/10 rounded-xl disabled:opacity-30"
+            className="text-white/70 hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.95] disabled:opacity-30"
           >
             <RefreshCw className={cn("h-5 w-5", isSearching && "animate-spin")} />
           </Button>

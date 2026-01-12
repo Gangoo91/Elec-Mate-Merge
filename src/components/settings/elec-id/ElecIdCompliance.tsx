@@ -1,21 +1,23 @@
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   AlertTriangle,
   CheckCircle2,
   Clock,
   Calendar,
   Bell,
-  ExternalLink,
   RefreshCw,
   Shield,
   XCircle,
+  ChevronRight,
+  ExternalLink,
+  Sparkles,
 } from "lucide-react";
 import { getExpiryStatus, getDaysUntilExpiry, isExpired, isExpiringWithin } from "@/utils/elecIdGenerator";
-import { getQualificationLabel } from "@/data/uk-electrician-constants";
 
 interface ComplianceItem {
   id: string;
@@ -25,6 +27,28 @@ interface ComplianceItem {
   renewalUrl?: string;
   notes?: string;
 }
+
+// Skeleton loading component
+const ComplianceSkeleton = () => (
+  <div className="space-y-5">
+    {/* Hero card skeleton */}
+    <Skeleton className="h-40 rounded-2xl bg-white/[0.06]" />
+
+    {/* Quick stats skeleton */}
+    <div className="grid grid-cols-4 gap-2">
+      {[1, 2, 3, 4].map((i) => (
+        <Skeleton key={i} className="h-20 rounded-xl bg-white/[0.06]" />
+      ))}
+    </div>
+
+    {/* Items skeleton */}
+    <div className="space-y-3">
+      {[1, 2, 3].map((i) => (
+        <Skeleton key={i} className="h-20 rounded-xl bg-white/[0.06]" />
+      ))}
+    </div>
+  </div>
+);
 
 const ElecIdCompliance = () => {
   // Mock compliance items - will be from database
@@ -89,219 +113,365 @@ const ElecIdCompliance = () => {
   const compliantItems = validItems.length + expiringIn90Days.length;
   const compliancePercentage = totalItems > 0 ? Math.round((compliantItems / totalItems) * 100) : 100;
 
-  const getTypeIcon = (type: ComplianceItem["type"]) => {
+  const getTypeConfig = (type: ComplianceItem["type"]) => {
     switch (type) {
       case "card":
-        return "Card";
+        return { label: "Card", color: "bg-blue-500/20 text-blue-400 border-blue-500/30" };
       case "qualification":
-        return "Qualification";
+        return { label: "Qual", color: "bg-purple-500/20 text-purple-400 border-purple-500/30" };
       case "training":
-        return "Training";
+        return { label: "Training", color: "bg-cyan-500/20 text-cyan-400 border-cyan-500/30" };
       default:
-        return type;
+        return { label: type, color: "bg-white/10 text-white/60 border-white/20" };
     }
   };
 
-  const renderComplianceCard = (item: ComplianceItem) => {
-    const expiryStatus = getExpiryStatus(item.expiryDate);
+  const getStatusConfig = (daysUntil: number) => {
+    if (daysUntil < 0) {
+      return {
+        bg: "bg-red-500/10",
+        border: "border-red-500/30",
+        text: "text-red-400",
+        icon: XCircle,
+        label: `${Math.abs(daysUntil)} days overdue`,
+      };
+    }
+    if (daysUntil <= 30) {
+      return {
+        bg: "bg-orange-500/10",
+        border: "border-orange-500/30",
+        text: "text-orange-400",
+        icon: AlertTriangle,
+        label: `${daysUntil} days left`,
+      };
+    }
+    if (daysUntil <= 90) {
+      return {
+        bg: "bg-yellow-500/10",
+        border: "border-yellow-500/30",
+        text: "text-yellow-400",
+        icon: Clock,
+        label: `${daysUntil} days left`,
+      };
+    }
+    return {
+      bg: "bg-green-500/10",
+      border: "border-green-500/30",
+      text: "text-green-400",
+      icon: CheckCircle2,
+      label: `${daysUntil} days`,
+    };
+  };
+
+  const renderComplianceCard = (item: ComplianceItem, index: number) => {
     const daysUntil = getDaysUntilExpiry(item.expiryDate);
+    const status = getStatusConfig(daysUntil);
+    const typeConfig = getTypeConfig(item.type);
+    const StatusIcon = status.icon;
 
     return (
-      <div
+      <motion.button
         key={item.id}
-        className="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-white/10"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.05 }}
+        onClick={() => item.renewalUrl && window.open(item.renewalUrl, "_blank")}
+        className={cn(
+          "w-full p-4 rounded-2xl border text-left transition-all touch-manipulation",
+          status.bg,
+          status.border,
+          item.renewalUrl && "active:scale-[0.99] hover:brightness-110"
+        )}
       >
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="font-medium text-foreground">{item.name}</span>
-            <Badge variant="secondary" className="text-xs">
-              {getTypeIcon(item.type)}
-            </Badge>
+        <div className="flex items-center gap-3">
+          {/* Status icon */}
+          <div className={cn(
+            "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0",
+            status.bg
+          )}>
+            <StatusIcon className={cn("w-6 h-6", status.text)} />
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <Calendar className="h-4 w-4 text-muted-foreground" />
-            <span className="text-muted-foreground">
-              Expires: {new Date(item.expiryDate).toLocaleDateString("en-GB")}
-            </span>
-            {daysUntil > 0 && (
-              <span className={`font-medium ${
-                daysUntil <= 30 ? "text-red-400" : daysUntil <= 90 ? "text-orange-400" : "text-green-400"
-              }`}>
-                ({daysUntil} days)
+
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1">
+              <h4 className="font-semibold text-foreground truncate">{item.name}</h4>
+              <Badge variant="outline" className={cn("text-[10px] px-1.5 py-0", typeConfig.color)}>
+                {typeConfig.label}
+              </Badge>
+            </div>
+            <div className="flex items-center gap-3 text-sm">
+              <span className="text-muted-foreground flex items-center gap-1">
+                <Calendar className="h-3.5 w-3.5" />
+                {new Date(item.expiryDate).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                })}
               </span>
-            )}
-            {daysUntil < 0 && (
-              <span className="text-red-400 font-medium">
-                ({Math.abs(daysUntil)} days overdue)
+              <span className={cn("font-medium", status.text)}>
+                {status.label}
               </span>
-            )}
+            </div>
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          {item.renewalUrl && (
-            <Button
-              variant="outline"
-              size="sm"
-              className="border-white/20"
-              onClick={() => window.open(item.renewalUrl, "_blank")}
-            >
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Renew
-            </Button>
+
+          {/* Renew action */}
+          {item.renewalUrl ? (
+            <div className="flex items-center gap-1 text-muted-foreground">
+              <RefreshCw className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4" />
+            </div>
+          ) : (
+            <ChevronRight className="h-5 w-5 text-muted-foreground/50" />
           )}
         </div>
-      </div>
+      </motion.button>
     );
   };
 
+  const allClear = expiredItems.length === 0 && expiringIn30Days.length === 0;
+
   return (
-    <div className="space-y-6">
-      {/* Compliance Overview */}
-      <Card className="bg-gradient-to-br from-elec-gray/50 to-elec-dark/50 border-white/10">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
-                <Shield className="h-6 w-6 text-elec-yellow" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-foreground">Compliance Status</h3>
-                <p className="text-sm text-muted-foreground">
-                  {compliancePercentage}% of items are compliant
-                </p>
+    <div className="space-y-5">
+      {/* Compliance Hero Card */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/[0.08] p-5"
+      >
+        {/* Background glow */}
+        <div className={cn(
+          "absolute -top-20 -right-20 w-40 h-40 rounded-full blur-3xl opacity-30",
+          allClear ? "bg-green-500" : expiredItems.length > 0 ? "bg-red-500" : "bg-orange-500"
+        )} />
+
+        <div className="relative flex items-center justify-between">
+          {/* Left side - Info */}
+          <div className="flex items-center gap-4">
+            {/* Circular Progress */}
+            <div className="relative w-20 h-20">
+              <svg className="w-20 h-20 -rotate-90" viewBox="0 0 36 36">
+                {/* Background circle */}
+                <path
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.1)"
+                  strokeWidth="3"
+                />
+                {/* Progress circle */}
+                <path
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke={allClear ? "#22c55e" : expiredItems.length > 0 ? "#ef4444" : "#f59e0b"}
+                  strokeWidth="3"
+                  strokeDasharray={`${compliancePercentage}, 100`}
+                  strokeLinecap="round"
+                  className="transition-all duration-1000 ease-out"
+                />
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className={cn(
+                  "text-xl font-bold",
+                  allClear ? "text-green-400" : expiredItems.length > 0 ? "text-red-400" : "text-orange-400"
+                )}>
+                  {compliancePercentage}%
+                </span>
               </div>
             </div>
-            <div className="text-right">
-              <div className="text-3xl font-bold text-elec-yellow">{compliantItems}/{totalItems}</div>
-              <div className="text-sm text-muted-foreground">items valid</div>
+
+            <div>
+              <h3 className="text-lg font-semibold text-foreground">
+                {allClear ? "All Clear" : expiredItems.length > 0 ? "Action Required" : "Attention Needed"}
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                {compliantItems} of {totalItems} items valid
+              </p>
+              {!allClear && (
+                <p className={cn(
+                  "text-xs mt-1 font-medium",
+                  expiredItems.length > 0 ? "text-red-400" : "text-orange-400"
+                )}>
+                  {expiredItems.length > 0
+                    ? `${expiredItems.length} expired`
+                    : `${expiringIn30Days.length} expiring soon`}
+                </p>
+              )}
             </div>
           </div>
-          <Progress value={compliancePercentage} className="h-3" />
-        </CardContent>
-      </Card>
+
+          {/* Right side - Icon */}
+          <div className={cn(
+            "w-14 h-14 rounded-xl flex items-center justify-center",
+            allClear
+              ? "bg-green-500/20"
+              : expiredItems.length > 0
+              ? "bg-red-500/20"
+              : "bg-orange-500/20"
+          )}>
+            {allClear ? (
+              <Sparkles className="w-7 h-7 text-green-400" />
+            ) : expiredItems.length > 0 ? (
+              <XCircle className="w-7 h-7 text-red-400" />
+            ) : (
+              <AlertTriangle className="w-7 h-7 text-orange-400" />
+            )}
+          </div>
+        </div>
+      </motion.div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className={`border-red-500/30 ${expiredItems.length > 0 ? "bg-red-500/10" : "bg-elec-gray/50"}`}>
-          <CardContent className="p-4 text-center">
-            <XCircle className="h-8 w-8 text-red-400 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-foreground">{expiredItems.length}</p>
-            <p className="text-sm text-muted-foreground">Expired</p>
-          </CardContent>
-        </Card>
-        <Card className={`border-orange-500/30 ${expiringIn30Days.length > 0 ? "bg-orange-500/10" : "bg-elec-gray/50"}`}>
-          <CardContent className="p-4 text-center">
-            <AlertTriangle className="h-8 w-8 text-orange-400 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-foreground">{expiringIn30Days.length}</p>
-            <p className="text-sm text-muted-foreground">Within 30 days</p>
-          </CardContent>
-        </Card>
-        <Card className="bg-elec-gray/50 border-yellow-500/30">
-          <CardContent className="p-4 text-center">
-            <Clock className="h-8 w-8 text-yellow-400 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-foreground">{expiringIn90Days.length}</p>
-            <p className="text-sm text-muted-foreground">Within 90 days</p>
-          </CardContent>
-        </Card>
-        <Card className="bg-elec-gray/50 border-green-500/30">
-          <CardContent className="p-4 text-center">
-            <CheckCircle2 className="h-8 w-8 text-green-400 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-foreground">{validItems.length}</p>
-            <p className="text-sm text-muted-foreground">Valid</p>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-4 gap-2">
+        {[
+          { count: expiredItems.length, label: "Expired", color: "red", icon: XCircle },
+          { count: expiringIn30Days.length, label: "30 days", color: "orange", icon: AlertTriangle },
+          { count: expiringIn90Days.length, label: "90 days", color: "yellow", icon: Clock },
+          { count: validItems.length, label: "Valid", color: "green", icon: CheckCircle2 },
+        ].map((stat, index) => {
+          const colorClasses = {
+            red: stat.count > 0 ? "bg-red-500/10 border-red-500/30" : "bg-white/[0.02] border-white/[0.04]",
+            orange: stat.count > 0 ? "bg-orange-500/10 border-orange-500/30" : "bg-white/[0.02] border-white/[0.04]",
+            yellow: stat.count > 0 ? "bg-yellow-500/10 border-yellow-500/30" : "bg-white/[0.02] border-white/[0.04]",
+            green: stat.count > 0 ? "bg-green-500/10 border-green-500/30" : "bg-white/[0.02] border-white/[0.04]",
+          };
+          const textClasses = {
+            red: stat.count > 0 ? "text-red-400" : "text-muted-foreground/50",
+            orange: stat.count > 0 ? "text-orange-400" : "text-muted-foreground/50",
+            yellow: stat.count > 0 ? "text-yellow-400" : "text-muted-foreground/50",
+            green: stat.count > 0 ? "text-green-400" : "text-muted-foreground/50",
+          };
+          const Icon = stat.icon;
+
+          return (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.05 }}
+              className={cn(
+                "text-center p-3 rounded-xl border transition-all",
+                colorClasses[stat.color as keyof typeof colorClasses]
+              )}
+            >
+              <Icon className={cn("h-5 w-5 mx-auto mb-1", textClasses[stat.color as keyof typeof textClasses])} />
+              <div className={cn("text-lg font-bold", textClasses[stat.color as keyof typeof textClasses])}>
+                {stat.count}
+              </div>
+              <div className="text-[10px] text-muted-foreground uppercase tracking-wide">
+                {stat.label}
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
 
-      {/* Expired Items */}
-      {expiredItems.length > 0 && (
-        <Card className="bg-red-500/10 border-red-500/30">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-red-400 flex items-center gap-2">
-              <XCircle className="h-5 w-5" />
-              Expired - Action Required
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {expiredItems.map(renderComplianceCard)}
-          </CardContent>
-        </Card>
-      )}
+      {/* Items by urgency */}
+      <div className="space-y-4">
+        {/* Expired Items */}
+        {expiredItems.length > 0 && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 px-1">
+              <XCircle className="h-4 w-4 text-red-400" />
+              <h4 className="text-sm font-medium text-red-400">
+                Expired - Action Required
+              </h4>
+              <Badge className="ml-auto text-xs bg-red-500/20 text-red-400 border-red-500/30">
+                {expiredItems.length}
+              </Badge>
+            </div>
+            <div className="space-y-2">
+              {expiredItems.map((item, index) => renderComplianceCard(item, index))}
+            </div>
+          </div>
+        )}
 
-      {/* Expiring in 30 Days */}
-      {expiringIn30Days.length > 0 && (
-        <Card className="bg-orange-500/10 border-orange-500/30">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-orange-400 flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5" />
-              Expiring Within 30 Days
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {expiringIn30Days.map(renderComplianceCard)}
-          </CardContent>
-        </Card>
-      )}
+        {/* Expiring in 30 Days */}
+        {expiringIn30Days.length > 0 && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 px-1">
+              <AlertTriangle className="h-4 w-4 text-orange-400" />
+              <h4 className="text-sm font-medium text-orange-400">
+                Expiring Within 30 Days
+              </h4>
+              <Badge className="ml-auto text-xs bg-orange-500/20 text-orange-400 border-orange-500/30">
+                {expiringIn30Days.length}
+              </Badge>
+            </div>
+            <div className="space-y-2">
+              {expiringIn30Days.map((item, index) => renderComplianceCard(item, index))}
+            </div>
+          </div>
+        )}
 
-      {/* Expiring in 90 Days */}
-      {expiringIn90Days.length > 0 && (
-        <Card className="bg-yellow-500/10 border-yellow-500/30">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-yellow-400 flex items-center gap-2">
-              <Clock className="h-5 w-5" />
-              Expiring Within 90 Days
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {expiringIn90Days.map(renderComplianceCard)}
-          </CardContent>
-        </Card>
-      )}
+        {/* Expiring in 90 Days */}
+        {expiringIn90Days.length > 0 && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 px-1">
+              <Clock className="h-4 w-4 text-yellow-400" />
+              <h4 className="text-sm font-medium text-yellow-400">
+                Expiring Within 90 Days
+              </h4>
+              <Badge className="ml-auto text-xs bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
+                {expiringIn90Days.length}
+              </Badge>
+            </div>
+            <div className="space-y-2">
+              {expiringIn90Days.map((item, index) => renderComplianceCard(item, index))}
+            </div>
+          </div>
+        )}
 
-      {/* Valid Items */}
-      {validItems.length > 0 && (
-        <Card className="bg-elec-gray/50 border-white/10">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-green-400 flex items-center gap-2">
-              <CheckCircle2 className="h-5 w-5" />
-              All Current
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {validItems.map(renderComplianceCard)}
-          </CardContent>
-        </Card>
-      )}
+        {/* Valid Items */}
+        {validItems.length > 0 && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 px-1">
+              <CheckCircle2 className="h-4 w-4 text-green-400" />
+              <h4 className="text-sm font-medium text-green-400">
+                All Current
+              </h4>
+              <Badge className="ml-auto text-xs bg-green-500/20 text-green-400 border-green-500/30">
+                {validItems.length}
+              </Badge>
+            </div>
+            <div className="space-y-2">
+              {validItems.map((item, index) => renderComplianceCard(item, index))}
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* Notification Settings */}
-      <Card className="bg-elec-gray/50 border-white/10">
-        <CardContent className="p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Bell className="h-5 w-5 text-elec-yellow" />
-              <div>
-                <p className="font-medium text-foreground">Expiry Reminders</p>
-                <p className="text-sm text-muted-foreground">
-                  Get notified before your qualifications expire
-                </p>
-              </div>
-            </div>
-            <Button variant="outline" size="sm" className="border-white/20">
-              Configure
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="w-full p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center gap-4 touch-manipulation active:bg-white/[0.06] active:scale-[0.99] transition-all"
+      >
+        <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center">
+          <Bell className="h-6 w-6 text-elec-yellow" />
+        </div>
+        <div className="flex-1 text-left">
+          <p className="font-medium text-foreground">Expiry Reminders</p>
+          <p className="text-sm text-muted-foreground">
+            Get notified before qualifications expire
+          </p>
+        </div>
+        <ChevronRight className="h-5 w-5 text-muted-foreground" />
+      </motion.button>
 
+      {/* Empty State */}
       {complianceItems.length === 0 && (
-        <Card className="bg-elec-gray/50 border-white/10">
-          <CardContent className="py-12 text-center">
-            <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h4 className="text-lg font-medium text-foreground mb-2">No compliance items yet</h4>
-            <p className="text-muted-foreground mb-4">
-              Add qualifications with expiry dates to track your compliance status.
-            </p>
-          </CardContent>
-        </Card>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="py-12 text-center"
+        >
+          <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/[0.04] flex items-center justify-center">
+            <Shield className="h-10 w-10 text-muted-foreground/50" />
+          </div>
+          <h4 className="text-lg font-medium text-foreground mb-2">No compliance items yet</h4>
+          <p className="text-muted-foreground max-w-xs mx-auto">
+            Add qualifications with expiry dates to track your compliance status.
+          </p>
+        </motion.div>
       )}
     </div>
   );

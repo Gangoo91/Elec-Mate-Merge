@@ -173,7 +173,7 @@ const ResourcesTab = () => {
                       <Badge className={getCategoryColor(resource.category)} variant="outline">
                         {resource.category}
                       </Badge>
-                      <Button size="sm" variant="outline" className="h-8 text-xs border-white/20 hover:border-green-500/50 hover:bg-green-500/10">
+                      <Button size="sm" variant="outline" className="h-11 text-xs border-white/20 hover:border-green-500/50 hover:bg-green-500/10 touch-manipulation active:scale-95">
                         {resource.url ? (
                           <>
                             <ExternalLink className="mr-1.5 h-3 w-3" />
@@ -216,7 +216,7 @@ const ResourcesTab = () => {
                       </div>
                     ))}
                   </div>
-                  <Button size="sm" variant="outline" className="w-full mt-3 h-9 text-xs border-purple-500/30 hover:border-purple-500/50 hover:bg-purple-500/10 text-purple-400">
+                  <Button size="sm" variant="outline" className="w-full mt-3 h-11 text-xs border-purple-500/30 hover:border-purple-500/50 hover:bg-purple-500/10 text-purple-400 touch-manipulation active:scale-95">
                     <Download className="mr-1.5 h-3 w-3" />
                     Download Full Guide
                   </Button>

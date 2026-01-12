@@ -169,7 +169,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 touch-manipulation"
             >
               <X className="h-4 w-4 text-muted-foreground" />
             </button>
@@ -183,7 +183,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
             <button
               onClick={() => setViewMode('grid')}
               className={cn(
-                'p-1.5 rounded',
+                'p-2.5 rounded touch-manipulation',
                 viewMode === 'grid' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-muted-foreground'
               )}
             >
@@ -192,7 +192,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
             <button
               onClick={() => setViewMode('list')}
               className={cn(
-                'p-1.5 rounded',
+                'p-2.5 rounded touch-manipulation',
                 viewMode === 'list' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-muted-foreground'
               )}
             >
@@ -203,7 +203,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
           {/* Status Filter */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="shrink-0">
+              <Button variant="outline" size="sm" className="shrink-0 h-11 touch-manipulation">
                 <Filter className="h-3.5 w-3.5 mr-1.5" />
                 {STATUS_OPTIONS.find((s) => s.value === statusFilter)?.label}
                 <ChevronDown className="h-3.5 w-3.5 ml-1.5" />
@@ -230,7 +230,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
               key={cat}
               onClick={() => setCategoryFilter(cat)}
               className={cn(
-                'px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0',
+                'px-4 h-9 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 touch-manipulation',
                 categoryFilter === cat
                   ? 'bg-elec-yellow text-black'
                   : 'bg-muted text-muted-foreground hover:bg-muted/80'
@@ -276,7 +276,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
             </p>
           </div>
           {!hasActiveFilters && (
-            <Button onClick={onCapture} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+            <Button onClick={onCapture} className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-11 touch-manipulation active:scale-95">
               <Plus className="h-4 w-4 mr-2" />
               Add First Evidence
             </Button>
@@ -349,7 +349,7 @@ function GridCard({
   return (
     <button
       onClick={onClick}
-      className="group relative aspect-square rounded-xl bg-card border border-border overflow-hidden text-left active:scale-[0.98] transition-transform"
+      className="group relative aspect-square rounded-xl bg-card border border-border overflow-hidden text-left active:scale-[0.98] transition-transform touch-manipulation"
     >
       {/* Thumbnail or Icon */}
       <div className="absolute inset-0 bg-muted flex items-center justify-center">
@@ -413,7 +413,7 @@ function ListItem({
   return (
     <button
       onClick={onClick}
-      className="w-full flex items-center gap-3 p-3 rounded-xl bg-card border border-border text-left active:scale-[0.99] transition-transform"
+      className="w-full flex items-center gap-3 p-3 rounded-xl bg-card border border-border text-left active:scale-[0.99] transition-transform touch-manipulation"
     >
       {/* Thumbnail */}
       <div className="h-14 w-14 rounded-lg bg-muted flex items-center justify-center shrink-0 overflow-hidden">

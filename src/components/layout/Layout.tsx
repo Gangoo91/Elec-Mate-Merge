@@ -1,14 +1,16 @@
 
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "@/components/layout/Sidebar";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Header from "@/components/layout/Header";
 import { useState, useEffect } from "react";
+import { PageTransition } from "@/components/layout/PageTransition";
 
 const Layout = () => {
   const isMobile = useIsMobile();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -38,7 +40,9 @@ const Layout = () => {
           {/* Reduced padding for more native feel - minimal on mobile, moderate on desktop */}
           <div className="px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6">
             <div className={cn("min-w-0")}>
-              <Outlet />
+              <PageTransition key={location.pathname}>
+                <Outlet />
+              </PageTransition>
             </div>
           </div>
         </main>

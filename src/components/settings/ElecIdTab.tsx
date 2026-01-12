@@ -272,16 +272,16 @@ const ElecIdTab = () => {
             {/* Tab pills - horizontally scrollable */}
             <div className="relative">
               {showLeftArrow && (
-                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+                <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-background via-background/80 to-transparent z-10 pointer-events-none" />
               )}
               {showRightArrow && (
-                <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background via-background/80 to-transparent z-10 pointer-events-none" />
               )}
 
               <div
                 ref={scrollRef}
                 onScroll={handleScroll}
-                className="flex items-center gap-2 px-2 py-3 overflow-x-auto scrollbar-hide"
+                className="flex items-center gap-2 px-3 py-2 overflow-x-auto scrollbar-hide"
               >
                 {ELEC_ID_TABS.map((tab, index) => {
                   const Icon = tab.icon;
@@ -294,40 +294,58 @@ const ElecIdTab = () => {
                         setActiveSubTab(tab.id);
                         scrollToTab(index);
                       }}
-                      whileTap={{ scale: 0.95 }}
+                      whileTap={{ scale: 0.92 }}
+                      animate={isActive ? { scale: 1 } : { scale: 1 }}
                       className={cn(
-                        "flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium transition-all whitespace-nowrap flex-shrink-0",
+                        "relative flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 touch-manipulation",
                         isActive
-                          ? "bg-elec-yellow text-elec-dark shadow-lg shadow-elec-yellow/25"
-                          : "bg-white/5 text-foreground/60 active:bg-white/10"
+                          ? "bg-gradient-to-r from-elec-yellow to-amber-400 text-elec-dark shadow-lg shadow-elec-yellow/30"
+                          : "bg-white/[0.06] text-foreground/70 border border-white/[0.08] active:bg-white/[0.12] active:scale-[0.97]"
                       )}
                     >
-                      <Icon className="h-4 w-4" />
+                      <Icon className={cn("h-4 w-4", isActive ? "text-elec-dark" : "")} />
                       <span>{tab.shortLabel}</span>
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeTabIndicator"
+                          className="absolute inset-0 rounded-2xl bg-gradient-to-r from-elec-yellow to-amber-400 -z-10"
+                          transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                        />
+                      )}
                     </motion.button>
                   );
                 })}
               </div>
             </div>
 
-            {/* Progress dots */}
-            <div className="flex items-center justify-center gap-1 pb-2">
-              {ELEC_ID_TABS.map((tab, index) => (
-                <button
-                  key={tab.id}
-                  onClick={() => {
-                    setActiveSubTab(tab.id);
-                    scrollToTab(index);
-                  }}
-                  className={cn(
-                    "h-1.5 rounded-full transition-all",
-                    activeSubTab === tab.id
-                      ? "w-6 bg-elec-yellow"
-                      : "w-1.5 bg-white/20 active:bg-white/40"
-                  )}
-                  aria-label={tab.label}
-                />
-              ))}
+            {/* Segmented Progress Bar */}
+            <div className="px-4 pb-3">
+              <div className="flex items-center gap-1">
+                {ELEC_ID_TABS.map((tab, index) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => {
+                      setActiveSubTab(tab.id);
+                      scrollToTab(index);
+                    }}
+                    className={cn(
+                      "flex-1 h-1 rounded-full transition-all duration-300",
+                      index <= activeIndex
+                        ? "bg-elec-yellow"
+                        : "bg-white/10"
+                    )}
+                    aria-label={tab.label}
+                  />
+                ))}
+              </div>
+              <div className="flex justify-between mt-1.5">
+                <span className="text-[10px] text-muted-foreground">
+                  {activeIndex + 1} of {ELEC_ID_TABS.length}
+                </span>
+                <span className="text-[10px] text-elec-yellow font-medium">
+                  {Math.round(((activeIndex + 1) / ELEC_ID_TABS.length) * 100)}% Complete
+                </span>
+              </div>
             </div>
           </div>
 
@@ -379,46 +397,84 @@ const ElecIdTab = () => {
         }} />
       </motion.div>
 
-      {/* Mobile Quick Actions Bar */}
+      {/* Mobile Quick Actions Bar - Native App Style */}
       {isMobile && (
-        <div className="fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-lg border-t border-white/10 px-4 py-3 pb-safe z-50">
-          <div className="flex justify-around max-w-md mx-auto">
-            <button
+        <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/95 to-black/90 backdrop-blur-xl border-t border-white/[0.08] px-6 pt-3 pb-6 z-50">
+          <div className="flex justify-around items-end max-w-sm mx-auto">
+            <motion.button
+              whileTap={{ scale: 0.9 }}
               onClick={() => {
                 setActiveSubTab("documents");
                 scrollToTab(ELEC_ID_TABS.findIndex(t => t.id === "documents"));
               }}
-              className="flex flex-col items-center gap-1 p-2 rounded-xl transition-all active:scale-95 touch-manipulation"
+              className={cn(
+                "flex flex-col items-center gap-1.5 py-2 px-4 rounded-2xl transition-all touch-manipulation",
+                activeSubTab === "documents" ? "bg-elec-yellow/10" : ""
+              )}
             >
-              <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-                <Camera className="h-5 w-5 text-elec-yellow" />
+              <div className={cn(
+                "w-12 h-12 rounded-2xl flex items-center justify-center transition-all",
+                activeSubTab === "documents"
+                  ? "bg-elec-yellow shadow-lg shadow-elec-yellow/30"
+                  : "bg-white/[0.08] border border-white/[0.1]"
+              )}>
+                <Camera className={cn("h-5 w-5", activeSubTab === "documents" ? "text-elec-dark" : "text-elec-yellow")} />
               </div>
-              <span className="text-[10px] text-muted-foreground">Scan</span>
-            </button>
-            <button
+              <span className={cn(
+                "text-[11px] font-medium",
+                activeSubTab === "documents" ? "text-elec-yellow" : "text-white/50"
+              )}>Scan</span>
+            </motion.button>
+
+            <motion.button
+              whileTap={{ scale: 0.9 }}
               onClick={() => {
                 setActiveSubTab("share");
                 scrollToTab(ELEC_ID_TABS.findIndex(t => t.id === "share"));
               }}
-              className="flex flex-col items-center gap-1 p-2 rounded-xl transition-all active:scale-95 touch-manipulation"
+              className={cn(
+                "flex flex-col items-center gap-1.5 py-2 px-4 rounded-2xl transition-all touch-manipulation",
+                activeSubTab === "share" ? "bg-blue-500/10" : ""
+              )}
             >
-              <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-                <Share2 className="h-5 w-5 text-blue-400" />
+              <div className={cn(
+                "w-12 h-12 rounded-2xl flex items-center justify-center transition-all",
+                activeSubTab === "share"
+                  ? "bg-blue-500 shadow-lg shadow-blue-500/30"
+                  : "bg-white/[0.08] border border-white/[0.1]"
+              )}>
+                <Share2 className={cn("h-5 w-5", activeSubTab === "share" ? "text-white" : "text-blue-400")} />
               </div>
-              <span className="text-[10px] text-muted-foreground">Share</span>
-            </button>
-            <button
+              <span className={cn(
+                "text-[11px] font-medium",
+                activeSubTab === "share" ? "text-blue-400" : "text-white/50"
+              )}>Share</span>
+            </motion.button>
+
+            <motion.button
+              whileTap={{ scale: 0.9 }}
               onClick={() => {
                 setActiveSubTab("compliance");
                 scrollToTab(ELEC_ID_TABS.findIndex(t => t.id === "compliance"));
               }}
-              className="flex flex-col items-center gap-1 p-2 rounded-xl transition-all active:scale-95 touch-manipulation"
+              className={cn(
+                "flex flex-col items-center gap-1.5 py-2 px-4 rounded-2xl transition-all touch-manipulation",
+                activeSubTab === "compliance" ? "bg-green-500/10" : ""
+              )}
             >
-              <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
-                <Shield className="h-5 w-5 text-green-400" />
+              <div className={cn(
+                "w-12 h-12 rounded-2xl flex items-center justify-center transition-all",
+                activeSubTab === "compliance"
+                  ? "bg-green-500 shadow-lg shadow-green-500/30"
+                  : "bg-white/[0.08] border border-white/[0.1]"
+              )}>
+                <Shield className={cn("h-5 w-5", activeSubTab === "compliance" ? "text-white" : "text-green-400")} />
               </div>
-              <span className="text-[10px] text-muted-foreground">Status</span>
-            </button>
+              <span className={cn(
+                "text-[11px] font-medium",
+                activeSubTab === "compliance" ? "text-green-400" : "text-white/50"
+              )}>Status</span>
+            </motion.button>
           </div>
         </div>
       )}

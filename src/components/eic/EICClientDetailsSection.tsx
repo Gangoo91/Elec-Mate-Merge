@@ -1,14 +1,13 @@
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Separator } from '@/components/ui/separator';
-import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
-import { SectionHeader } from '@/components/ui/section-header';
-import { Users } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import SectionHeader from '@/components/ui/section-header';
+import { Users, Calendar, FileText } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface EICClientDetailsSectionProps {
   formData: any;
@@ -25,191 +24,212 @@ const EICClientDetailsSection = ({ formData, onUpdate, isOpen, onToggle }: EICCl
     onUpdate('sameAsClientAddress', checked ? 'true' : 'false');
   };
 
+  // Calculate completion percentage
+  const getCompletionPercentage = () => {
+    const requiredFields = ['clientName', 'clientAddress', 'installationAddress', 'description', 'installationDate'];
+    const filled = requiredFields.filter(f => formData[f]).length;
+    return Math.round((filled / requiredFields.length) * 100);
+  };
+
   return (
-    <Card className="border border-border bg-card overflow-hidden">
+    <div className="eicr-section-card">
       <Collapsible open={isOpen} onOpenChange={onToggle}>
-        <SectionHeader 
-          title="Client & Installation Details" 
-          icon={Users}
-          isOpen={isOpen}
-          color="amber-500"
-        />
+        <CollapsibleTrigger className="w-full">
+          <SectionHeader
+            title="Client & Installation Details"
+            icon={Users}
+            isOpen={isOpen}
+            color="amber-500"
+            completionPercentage={getCompletionPercentage()}
+          />
+        </CollapsibleTrigger>
         <CollapsibleContent>
-          <CardContent className="space-y-6 p-4 sm:p-6">
-        {/* Certificate Number (Read-only) */}
-        <div className="space-y-4">
-          <div className="bg-gradient-to-r from-blue-500/20 to-blue-600/20 border border-blue-500/30 rounded-lg px-4 py-3">
-            <h3 className="text-sm sm:text-base font-semibold text-foreground flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
-              Certificate Details
-            </h3>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="certificateNumber" className="font-medium text-sm">Certificate Number</Label>
-            <Input
-              id="certificateNumber"
-              value={formData.certificateNumber || ''}
-              readOnly
-              className="bg-muted/50 cursor-not-allowed font-mono text-foreground"
-              tabIndex={-1}
-            />
-            <p className="text-xs text-muted-foreground">Auto-generated and cannot be changed</p>
-          </div>
-        </div>
-
-        <Separator className="my-6" />
-
-        {/* Client Information */}
-        <div className="space-y-4">
-          <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-yellow-400"></div>
-            Client Information
-          </h3>
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="clientName" className="font-medium text-sm">Client Name *</Label>
+          <div className="p-4 sm:p-5 md:p-6 space-y-5 sm:space-y-6">
+            {/* Certificate Number (Read-only) */}
+            <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
+              <div className="flex items-center gap-2 mb-2">
+                <FileText className="h-4 w-4 text-blue-400" />
+                <span className="text-sm font-medium text-blue-300">Certificate Number</span>
+              </div>
               <Input
-                id="clientName"
-                value={formData.clientName || ''}
-                onChange={(e) => onUpdate('clientName', e.target.value)}
-                placeholder="Full name of person ordering work"
+                id="certificateNumber"
+                value={formData.certificateNumber || ''}
+                readOnly
+                className="bg-white/5 cursor-not-allowed font-mono text-white border-blue-500/30"
+                tabIndex={-1}
               />
+              <p className="text-xs text-white/50 mt-1">Auto-generated and cannot be changed</p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+            {/* Client Information */}
+            <div className="space-y-4">
+              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
+                Client Information
+              </h4>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="clientName" className="text-sm">Client Name *</Label>
+                  <Input
+                    id="clientName"
+                    value={formData.clientName || ''}
+                    onChange={(e) => onUpdate('clientName', e.target.value)}
+                    placeholder="Full name of person ordering work"
+                    className={cn(
+                      "h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow",
+                      !formData.clientName && "border-red-500/50"
+                    )}
+                  />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="clientPhone" className="text-sm">Client Phone</Label>
+                    <Input
+                      id="clientPhone"
+                      type="tel"
+                      value={formData.clientPhone || ''}
+                      onChange={(e) => onUpdate('clientPhone', e.target.value)}
+                      placeholder="Contact telephone"
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="clientEmail" className="text-sm">Client Email</Label>
+                    <Input
+                      id="clientEmail"
+                      type="email"
+                      value={formData.clientEmail || ''}
+                      onChange={(e) => onUpdate('clientEmail', e.target.value)}
+                      placeholder="Email address"
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="clientAddress" className="text-sm">Client Address *</Label>
+                  <Textarea
+                    id="clientAddress"
+                    value={formData.clientAddress || ''}
+                    onChange={(e) => onUpdate('clientAddress', e.target.value)}
+                    placeholder="Client's full postal address"
+                    rows={2}
+                    className={cn(
+                      "text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow",
+                      !formData.clientAddress && "border-red-500/50"
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Installation Details */}
+            <div className="space-y-4">
+              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
+                Installation Details
+              </h4>
+
+              {/* Same as client address checkbox */}
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+                <Checkbox
+                  id="sameAsClientAddress"
+                  checked={formData.sameAsClientAddress === 'true'}
+                  onCheckedChange={handleSameAddressToggle}
+                  className="border-elec-yellow/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black mt-0.5"
+                />
+                <Label
+                  htmlFor="sameAsClientAddress"
+                  className="text-sm font-medium cursor-pointer leading-relaxed"
+                >
+                  Installation address is the same as client address
+                </Label>
+              </div>
+
               <div className="space-y-2">
-                <Label htmlFor="clientPhone" className="font-medium text-sm">Client Phone</Label>
-                <Input
-                  id="clientPhone"
-                  type="tel"
-                  value={formData.clientPhone || ''}
-                  onChange={(e) => onUpdate('clientPhone', e.target.value)}
-                  placeholder="Contact telephone number"
+                <Label htmlFor="installationAddress" className="text-sm">Installation Address *</Label>
+                <Textarea
+                  id="installationAddress"
+                  value={formData.installationAddress || ''}
+                  onChange={(e) => onUpdate('installationAddress', e.target.value)}
+                  placeholder="Full address of the installation"
+                  rows={2}
+                  disabled={formData.sameAsClientAddress === 'true'}
+                  className={cn(
+                    "text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow",
+                    !formData.installationAddress && "border-red-500/50",
+                    formData.sameAsClientAddress === 'true' && "opacity-50"
+                  )}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="clientEmail" className="font-medium text-sm">Client Email</Label>
-                <Input
-                  id="clientEmail"
-                  type="email"
-                  value={formData.clientEmail || ''}
-                  onChange={(e) => onUpdate('clientEmail', e.target.value)}
-                  placeholder="Email address for correspondence"
-                />
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="description" className="text-sm">Description of Work *</Label>
+                  <Textarea
+                    id="description"
+                    value={formData.description || ''}
+                    onChange={(e) => onUpdate('description', e.target.value)}
+                    placeholder="Describe the electrical installation"
+                    rows={2}
+                    className={cn(
+                      "text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow",
+                      !formData.description && "border-red-500/50"
+                    )}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="installationType" className="text-sm">Installation Type</Label>
+                  <Select value={formData.installationType || ''} onValueChange={(value) => onUpdate('installationType', value)}>
+                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                      <SelectValue placeholder="Select type" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                      <SelectItem value="domestic">Domestic</SelectItem>
+                      <SelectItem value="commercial">Commercial</SelectItem>
+                      <SelectItem value="industrial">Industrial</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="clientAddress" className="font-medium text-sm">Client Address *</Label>
-              <Textarea
-                id="clientAddress"
-                value={formData.clientAddress || ''}
-                onChange={(e) => onUpdate('clientAddress', e.target.value)}
-                placeholder="Client's full postal address"
-                rows={3}
-                className="min-h-[80px] md:min-h-[60px]"
-              />
-            </div>
-          </div>
-        </div>
 
-        <Separator className="my-6" />
-
-        {/* Installation Details */}
-        <div className="space-y-4">
-          <div className="bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30 rounded-lg px-4 py-3">
-            <h3 className="text-sm sm:text-base font-semibold text-foreground flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
-              Installation Details
-            </h3>
-          </div>
-          <div className="space-y-4">
-            <div className="flex items-start gap-3 p-4 bg-muted rounded-lg border border-border">
-              <Checkbox
-                id="sameAsClientAddress"
-                checked={formData.sameAsClientAddress === 'true'}
-                onCheckedChange={handleSameAddressToggle}
-              />
-              <Label 
-                htmlFor="sameAsClientAddress" 
-                className="text-base font-medium cursor-pointer leading-relaxed"
-              >
-                Installation address is the same as client address
-              </Label>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="installationAddress" className="font-medium text-sm">Installation Address *</Label>
-              <Textarea
-                id="installationAddress"
-                value={formData.installationAddress || ''}
-                onChange={(e) => onUpdate('installationAddress', e.target.value)}
-                placeholder="Full address of the installation"
-                rows={3}
-                disabled={formData.sameAsClientAddress === 'true'}
-                className="min-h-[80px] md:min-h-[60px]"
-              />
+            {/* Installation Dates */}
+            <div className="space-y-4">
+              <h4 className="text-sm font-semibold text-green-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                Installation Dates
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="installationDate" className="text-sm">Date of Installation *</Label>
+                  <Input
+                    id="installationDate"
+                    type="date"
+                    value={formData.installationDate || ''}
+                    onChange={(e) => onUpdate('installationDate', e.target.value)}
+                    className={cn(
+                      "h-11 text-base touch-manipulation border-white/30 focus:border-green-500 focus:ring-green-500",
+                      !formData.installationDate && "border-red-500/50"
+                    )}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="testDate" className="text-sm">Date of Testing</Label>
+                  <Input
+                    id="testDate"
+                    type="date"
+                    value={formData.testDate || ''}
+                    onChange={(e) => onUpdate('testDate', e.target.value)}
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-green-500 focus:ring-green-500"
+                  />
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="description" className="font-medium text-sm">Description of Work *</Label>
-              <Textarea
-                id="description"
-                value={formData.description || ''}
-                onChange={(e) => onUpdate('description', e.target.value)}
-                placeholder="Describe the electrical installation or work carried out"
-                rows={3}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="installationType" className="font-medium text-sm">Installation Type</Label>
-              <Select value={formData.installationType || ''} onValueChange={(value) => onUpdate('installationType', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select installation type" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  <SelectItem value="domestic">Domestic</SelectItem>
-                  <SelectItem value="commercial">Commercial</SelectItem>
-                  <SelectItem value="industrial">Industrial</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </div>
-
-        <Separator className="my-6" />
-
-        {/* Installation Dates */}
-        <div className="space-y-4">
-          <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-border pb-2 flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
-            Installation Dates
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="installationDate" className="font-medium text-sm">Date of Installation *</Label>
-              <Input
-                id="installationDate"
-                type="date"
-                value={formData.installationDate || ''}
-                onChange={(e) => onUpdate('installationDate', e.target.value)}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="testDate" className="font-medium text-sm">Date of Testing</Label>
-              <Input
-                id="testDate"
-                type="date"
-                value={formData.testDate || ''}
-                onChange={(e) => onUpdate('testDate', e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-          </CardContent>
         </CollapsibleContent>
       </Collapsible>
-    </Card>
+    </div>
   );
 };
 

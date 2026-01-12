@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Select,
   SelectContent,
@@ -425,21 +424,33 @@ const ElecIdOnboarding = ({ onComplete, onSkip, elecIdNumber }: ElecIdOnboarding
       </div>
 
       {/* Step content */}
-      <div className="flex-1 overflow-y-auto">{renderStep()}</div>
+      <div className="flex-1 overflow-y-auto">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step.id}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.2 }}
+          >
+            {renderStep()}
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
       {/* Navigation - sticky on mobile */}
       <div className="flex gap-3 mt-6 sm:mt-8 md:mt-10 sticky bottom-0 bg-background pt-3 pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:static sm:bg-transparent">
         {currentStep > 0 && currentStep < STEPS.length - 1 && (
           <Button
             variant="outline"
-            className="h-12 md:h-14 px-4 md:px-5 border-white/20"
+            className="h-12 md:h-14 px-4 md:px-5 border-white/20 touch-manipulation active:scale-[0.97]"
             onClick={handleBack}
           >
             <ChevronLeft className="h-4 w-4 md:h-5 md:w-5" />
           </Button>
         )}
         <Button
-          className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold h-12 md:h-14 text-sm sm:text-base md:text-lg"
+          className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold h-12 md:h-14 text-sm sm:text-base md:text-lg touch-manipulation active:scale-[0.98]"
           onClick={handleNext}
           disabled={!canProceed()}
         >

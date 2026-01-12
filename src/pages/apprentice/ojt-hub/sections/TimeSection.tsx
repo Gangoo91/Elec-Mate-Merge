@@ -253,7 +253,7 @@ export function TimeSection() {
               <div className="flex items-center gap-2">
                 {!isTimerActive && (
                   <Select value={timerActivity} onValueChange={setTimerActivity}>
-                    <SelectTrigger className="w-[120px] sm:w-[140px] h-10 text-xs touch-manipulation">
+                    <SelectTrigger className="w-[120px] sm:w-[140px] h-11 text-xs touch-manipulation">
                       <SelectValue placeholder="Activity type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -272,7 +272,7 @@ export function TimeSection() {
                   size="icon"
                   onClick={toggleTimer}
                   className={cn(
-                    "h-10 w-10 rounded-full",
+                    "h-11 w-11 rounded-full touch-manipulation active:scale-95",
                     isTimerActive
                       ? "bg-amber-500 hover:bg-amber-600"
                       : "bg-green-500 hover:bg-green-600"
@@ -289,7 +289,7 @@ export function TimeSection() {
                     size="icon"
                     variant="destructive"
                     onClick={stopTimer}
-                    className="h-10 w-10 rounded-full"
+                    className="h-11 w-11 rounded-full touch-manipulation active:scale-95"
                   >
                     <Square className="h-4 w-4" />
                   </Button>
@@ -333,7 +333,7 @@ export function TimeSection() {
                 <Calendar className="h-4 w-4 text-elec-yellow" />
                 Recent Sessions
               </CardTitle>
-              <Button variant="ghost" size="icon" className="h-8 w-8">
+              <Button variant="ghost" size="icon" className="h-10 w-10 touch-manipulation">
                 <Filter className="h-4 w-4" />
               </Button>
             </div>
@@ -501,17 +501,17 @@ export function TimeSection() {
             </div>
 
             {/* Actions */}
-            <div className="flex gap-3 pt-4">
+            <div className="flex gap-3 pt-4 pb-20 sm:pb-4">
               <Button
                 variant="outline"
                 onClick={() => setShowAddEntry(false)}
-                className="flex-1"
+                className="flex-1 h-11 touch-manipulation active:scale-95"
               >
                 Cancel
               </Button>
               <Button
                 onClick={handleAddEntry}
-                className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
               >
                 Log Time
               </Button>

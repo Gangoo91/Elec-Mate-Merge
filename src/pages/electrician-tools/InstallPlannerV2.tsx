@@ -102,7 +102,7 @@ const InstallPlannerV2 = () => {
   }
 
   return (
-    <div className="min-h-screen bg-elec-dark">
+    <div className="min-h-screen bg-elec-dark pt-safe pb-safe">
       <div className="container mx-auto px-6 lg:px-12 xl:px-20 py-6">
         <div className="space-y-6 animate-fade-in">
           {/* Header */}
@@ -110,20 +110,20 @@ const InstallPlannerV2 = () => {
             {/* Back button - floating top-left on mobile, inline on desktop */}
             <div className="absolute top-0 left-0 md:hidden">
               <Link to="/electrician">
-                <Button variant="outline" size="sm">
-                  <ArrowLeft className="h-4 w-4" />
+                <Button variant="outline" className="h-11 w-11 p-0 touch-manipulation active:scale-[0.95]">
+                  <ArrowLeft className="h-5 w-5" />
                   <span className="sr-only">Back</span>
                 </Button>
               </Link>
             </div>
-            
+
             {/* Main content - centered on mobile, flex on desktop */}
-            <div className="flex flex-col items-center md:flex-row md:items-center md:justify-between pt-12 md:pt-0">
+            <div className="flex flex-col items-center md:flex-row md:items-center md:justify-between pt-14 md:pt-0">
               <div className="text-center md:text-left md:flex md:items-center md:gap-3">
                 {/* Back button - visible only on desktop */}
                 <Link to="/electrician" className="hidden md:block">
-                  <Button variant="outline" size="sm" className="gap-2">
-                    <ArrowLeft className="h-4 w-4" /> Back
+                  <Button variant="outline" className="gap-2 h-11 touch-manipulation active:scale-[0.98]">
+                    <ArrowLeft className="h-5 w-5" /> Back
                   </Button>
                 </Link>
                 

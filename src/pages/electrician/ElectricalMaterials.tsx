@@ -126,7 +126,7 @@ const ElectricalMaterials = () => {
   );
 
   return (
-    <div className="space-y-8 animate-fade-in p-0">
+    <div className="space-y-8 animate-fade-in p-0 pt-safe pb-safe">
       {/* Premium Header */}
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
         <div className="flex items-center gap-4">
@@ -148,7 +148,7 @@ const ElectricalMaterials = () => {
             onClick={handleUpdateProducts}
             disabled={isUpdating || isForceUpdating}
             variant="outline"
-            className="shrink-0 h-10 px-4 rounded-xl bg-white/5 border-white/10 hover:bg-white/10"
+            className="shrink-0 h-11 px-4 rounded-xl bg-white/5 border-white/10 hover:bg-white/10 touch-manipulation active:scale-[0.98]"
           >
             <RefreshCw className={`w-4 h-4 mr-2 ${isUpdating ? 'animate-spin' : ''}`} />
             {isUpdating ? 'Updating...' : 'Update'}
@@ -159,7 +159,7 @@ const ElectricalMaterials = () => {
               <Button
                 disabled={isUpdating || isForceUpdating}
                 variant="destructive"
-                className="shrink-0 h-10 px-4 rounded-xl"
+                className="shrink-0 h-11 px-4 rounded-xl touch-manipulation active:scale-[0.98]"
               >
                 <Zap className={`w-4 h-4 mr-2 ${isForceUpdating ? 'animate-pulse' : ''}`} />
                 {isForceUpdating ? 'Force Updating...' : 'Force Update'}

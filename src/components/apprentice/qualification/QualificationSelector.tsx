@@ -178,7 +178,7 @@ const QualificationSelector = () => {
                         'w-full text-left p-4 rounded-xl',
                         'bg-muted/50 border border-border',
                         'hover:border-elec-yellow/50 hover:bg-muted/80',
-                        'active:scale-[0.98] transition-all duration-200',
+                        'active:scale-[0.98] transition-all duration-200 touch-manipulation',
                         'focus:outline-none focus:ring-2 focus:ring-elec-yellow/50',
                         selectedQualification?.id === qualification.id && 'ring-2 ring-elec-yellow border-elec-yellow/50'
                       )}

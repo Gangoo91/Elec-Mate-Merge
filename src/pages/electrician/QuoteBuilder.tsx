@@ -109,7 +109,7 @@ const QuoteBuilder = () => {
 
   return (
     <VoiceFormProvider>
-      <div className="min-h-screen bg-background pb-24">
+      <div className="min-h-screen bg-background pb-safe pt-safe">
         <Helmet>
           <title>Quote Builder | Elec-Mate</title>
           <meta
@@ -125,7 +125,7 @@ const QuoteBuilder = () => {
             {/* Back Button */}
             <button
               onClick={() => navigate('/electrician')}
-              className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-95 transition-all -ml-1"
+              className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation -ml-1"
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
@@ -165,14 +165,14 @@ const QuoteBuilder = () => {
                 <h1 className="flex-1 text-lg font-bold">Quotes</h1>
                 <button
                   onClick={() => setIsSearchOpen(true)}
-                  className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-95 transition-all"
+                  className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation"
                 >
                   <Search className="h-5 w-5" />
                 </button>
                 <button
                   onClick={handleRefresh}
                   disabled={isRefreshing}
-                  className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-95 transition-all disabled:opacity-50"
+                  className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
                 >
                   <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
                 </button>
@@ -187,7 +187,7 @@ const QuoteBuilder = () => {
                 key={filter.id}
                 onClick={() => handleFilterChange(filter.id)}
                 className={cn(
-                  "shrink-0 h-9 px-4 rounded-full text-sm font-medium transition-all active:scale-95",
+                  "shrink-0 h-11 px-4 rounded-full text-sm font-medium transition-all active:scale-[0.98] touch-manipulation",
                   activeFilter === filter.id
                     ? "bg-elec-yellow text-elec-dark"
                     : "bg-elec-gray/50 text-foreground hover:bg-elec-gray"

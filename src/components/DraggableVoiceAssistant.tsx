@@ -768,14 +768,30 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
       handleDragEnd();
     };
 
+    // Touch events - added to document for reliable dragging across entire screen
+    const handleDocTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        e.preventDefault(); // Prevent scroll while dragging
+        handleDragMove(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+
+    const handleDocTouchEnd = () => {
+      handleDragEnd();
+    };
+
     if (isDragging) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
+      document.addEventListener('touchmove', handleDocTouchMove, { passive: false });
+      document.addEventListener('touchend', handleDocTouchEnd);
     }
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('touchmove', handleDocTouchMove);
+      document.removeEventListener('touchend', handleDocTouchEnd);
     };
   }, [isDragging, handleDragMove, handleDragEnd]);
 
@@ -1259,8 +1275,6 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
           ref={fabRef}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
           onClick={(e) => {
             // Only trigger click if not dragging
             const moveDistance = Math.abs(e.clientX - startPos.x) + Math.abs(e.clientY - startPos.y);

@@ -8,7 +8,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator,
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
 import { Mail, MessageCircle, Loader2, MailOpen, AlertCircle } from 'lucide-react';
@@ -455,65 +454,77 @@ ${companyName}`;
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="center" className="w-64 bg-background border-border shadow-lg z-50" sideOffset={8}>
-        <DropdownMenuLabel className="text-xs text-muted-foreground">
-          Send Options
+      <DropdownMenuContent
+        align="center"
+        className="w-64 bg-card/95 backdrop-blur-lg border border-border/50 shadow-2xl rounded-2xl z-50 p-2"
+        sideOffset={8}
+      >
+        <DropdownMenuLabel className="text-[10px] font-semibold text-muted-foreground px-3 py-2 uppercase tracking-wider">
+          Send Invoice
         </DropdownMenuLabel>
-        
+
         {!FEATURES.EMAIL_INTEGRATION_ENABLED && (
-          <div className="px-2 py-3 text-xs text-muted-foreground bg-amber-50 dark:bg-amber-950/20 rounded-md mx-2 mb-2 border border-amber-200 dark:border-amber-800">
+          <div className="px-3 py-2 text-xs text-muted-foreground bg-amber-500/10 rounded-xl mx-1 mb-2 border border-amber-500/20">
             <AlertCircle className="h-3 w-3 inline mr-1" />
-            Email sending temporarily disabled for testing
+            Email sending temporarily disabled
           </div>
         )}
-        
+
         {FEATURES.EMAIL_INTEGRATION_ENABLED && (
           <>
             <DropdownMenuItem
               onClick={handleSendEmail}
               disabled={isSendingEmail}
-              className="cursor-pointer"
+              className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-purple-500/10 touch-manipulation"
             >
-              {isSendingEmail ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <Mail className="mr-2 h-4 w-4" />
-              )}
+              <div className="h-10 w-10 rounded-xl bg-purple-500/15 flex items-center justify-center mr-3 flex-shrink-0">
+                {isSendingEmail ? (
+                  <Loader2 className="h-5 w-5 text-purple-500 animate-spin" />
+                ) : (
+                  <Mail className="h-5 w-5 text-purple-500" />
+                )}
+              </div>
               <div className="flex flex-col">
-                <span>Send via Gmail/Outlook</span>
-                <span className="text-xs text-muted-foreground">Send invoice with PDF attachment</span>
+                <span className="font-semibold text-sm">Send via Gmail/Outlook</span>
+                <span className="text-xs text-muted-foreground">With PDF attachment</span>
               </div>
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={handleSendViaEmailClient}
               disabled={isGeneratingMailtoLink}
-              className="cursor-pointer"
+              className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-blue-500/10 touch-manipulation"
             >
-              {isGeneratingMailtoLink ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <MailOpen className="mr-2 h-4 w-4" />
-              )}
+              <div className="h-10 w-10 rounded-xl bg-blue-500/15 flex items-center justify-center mr-3 flex-shrink-0">
+                {isGeneratingMailtoLink ? (
+                  <Loader2 className="h-5 w-5 text-blue-500 animate-spin" />
+                ) : (
+                  <MailOpen className="h-5 w-5 text-blue-500" />
+                )}
+              </div>
               <div className="flex flex-col">
-                <span>Send via My Email App</span>
+                <span className="font-semibold text-sm">Send via Email App</span>
                 <span className="text-xs text-muted-foreground">Opens your email client</span>
               </div>
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
           </>
         )}
-        
+
         <DropdownMenuItem
           onClick={handleShareWhatsApp}
           disabled={isSharingWhatsApp}
-          className="cursor-pointer"
+          className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-green-500/10 touch-manipulation"
         >
-          {isSharingWhatsApp ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <MessageCircle className="mr-2 h-4 w-4" />
-          )}
-          <span>Share via WhatsApp</span>
+          <div className="h-10 w-10 rounded-xl bg-green-500/15 flex items-center justify-center mr-3 flex-shrink-0">
+            {isSharingWhatsApp ? (
+              <Loader2 className="h-5 w-5 text-green-500 animate-spin" />
+            ) : (
+              <MessageCircle className="h-5 w-5 text-green-500" />
+            )}
+          </div>
+          <div className="flex flex-col">
+            <span className="font-semibold text-sm">Share via WhatsApp</span>
+            <span className="text-xs text-muted-foreground">Send with PDF link</span>
+          </div>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

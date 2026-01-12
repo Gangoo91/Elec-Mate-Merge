@@ -130,7 +130,7 @@ const SupplierMaterials = () => {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in pt-safe pb-safe">
       <Helmet>
         <title>{`${supplier} Deals | ElecMate Electrical Materials`}</title>
         <meta name="description" content={`Latest ${supplier} electrical materials and deals. BS 7671 18th Edition aware recommendations for UK electricians.`} />
@@ -148,19 +148,19 @@ const SupplierMaterials = () => {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Button 
-            variant="outline" 
-            size="icon" 
+          <Button
+            variant="outline"
+            size="icon"
             onClick={toggleNotifications}
-            className={isNotifying ? "border-elec-yellow text-elec-yellow" : ""}
+            className={`h-11 w-11 touch-manipulation active:scale-[0.95] ${isNotifying ? "border-elec-yellow text-elec-yellow" : ""}`}
           >
-            <BellDot className={`h-4 w-4 ${isNotifying ? "text-elec-yellow" : ""}`} />
+            <BellDot className={`h-5 w-5 ${isNotifying ? "text-elec-yellow" : ""}`} />
           </Button>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={fetchLiveDeals}
             disabled={isFetchingLive}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 h-11 touch-manipulation active:scale-[0.98]"
           >
             <RefreshCw className={`h-4 w-4 ${isFetchingLive ? "animate-spin" : ""}`} />
             {isFetchingLive ? "Fetching…" : "Fetch Live Deals"}

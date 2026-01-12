@@ -2,6 +2,25 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight, Zap, Calculator, Wrench, Shield, CheckCircle2, Clipboard, Settings, GraduationCap, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06, delayChildren: 0.1 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: 'spring', stiffness: 300, damping: 24 },
+  },
+};
 
 interface Agent {
   id: string;
@@ -126,11 +145,11 @@ const AgentSelectorPage = () => {
   return (
     <div className="min-h-screen bg-background pb-24">
       {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-3">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10 pt-safe">
+        <div className="px-4 py-2">
           <button
             onClick={() => navigate('/electrician')}
-            className="flex items-center gap-2 text-white active:opacity-70 transition-opacity touch-manipulation"
+            className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
           >
             <ArrowLeft className="h-5 w-5" />
             <span className="text-sm font-medium">Electrician Hub</span>
@@ -138,9 +157,14 @@ const AgentSelectorPage = () => {
         </div>
       </div>
 
-      <main className="px-4 py-4 space-y-6">
+      <motion.main
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="px-4 py-4 space-y-6"
+      >
         {/* Hero Header */}
-        <div className="flex items-center gap-3">
+        <motion.div variants={itemVariants} className="flex items-center gap-3">
           <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
             <Sparkles className="h-6 w-6 text-elec-yellow" />
           </div>
@@ -148,9 +172,9 @@ const AgentSelectorPage = () => {
             <h1 className="text-xl font-bold text-white">AI Design Consultation</h1>
             <p className="text-sm text-white/50">Choose your specialist agent</p>
           </div>
-        </div>
+        </motion.div>
         {/* Available Agents Section */}
-        <section className="space-y-4">
+        <motion.section variants={itemVariants} className="space-y-4">
           <div className="flex items-center gap-2.5">
             <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
             <h2 className="text-base font-bold text-white">Available Agents</h2>
@@ -159,14 +183,16 @@ const AgentSelectorPage = () => {
             </Badge>
           </div>
 
-          <div className="space-y-3">
+          <motion.div variants={containerVariants} className="space-y-3">
             {availableAgents.map((agent) => {
               const IconComponent = agent.icon;
               return (
-                <button
+                <motion.button
                   key={agent.id}
+                  variants={itemVariants}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => handleAgentSelect(agent.id, agent.comingSoon)}
-                  className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation active:scale-[0.98] transition-transform"
+                  className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
                 >
                   <Card className="relative overflow-hidden bg-[#1e1e1e] border border-white/10 rounded-2xl group">
                     <CardContent className="p-4">
@@ -207,14 +233,14 @@ const AgentSelectorPage = () => {
                       </div>
                     </CardContent>
                   </Card>
-                </button>
+                </motion.button>
               );
             })}
-          </div>
-        </section>
+          </motion.div>
+        </motion.section>
 
         {/* Coming Soon Agents Section */}
-        <section className="space-y-4">
+        <motion.section variants={itemVariants} className="space-y-4">
           <div className="flex items-center gap-2.5">
             <div className="h-1.5 w-1.5 rounded-full bg-white/40" />
             <h2 className="text-base font-bold text-white/60">Coming Soon</h2>
@@ -272,8 +298,8 @@ const AgentSelectorPage = () => {
               );
             })}
           </div>
-        </section>
-      </main>
+        </motion.section>
+      </motion.main>
     </div>
   );
 };

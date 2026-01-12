@@ -140,15 +140,15 @@ const SettingsPage = () => {
   if (isMobile) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95 momentum-scroll-y">
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" initial={false}>
           {selectedTab === null ? (
-            // Mobile Grid View
+            // Mobile Grid View (List)
             <motion.div
               key="grid"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ type: "spring", stiffness: 400, damping: 35 }}
               className="min-h-screen"
             >
               {/* Mobile Header */}
@@ -232,10 +232,10 @@ const SettingsPage = () => {
             // Mobile Detail View
             <motion.div
               key="detail"
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.2 }}
+              exit={{ opacity: 0, x: 30 }}
+              transition={{ type: "spring", stiffness: 400, damping: 35 }}
               className="min-h-screen"
             >
               {/* Detail Header */}

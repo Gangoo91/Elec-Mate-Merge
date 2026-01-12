@@ -24,9 +24,9 @@ interface RecentQuotesListProps {
   showAll?: boolean;
 }
 
-const RecentQuotesList: React.FC<RecentQuotesListProps> = ({ 
-  quotes, 
-  onDeleteQuote, 
+const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
+  quotes,
+  onDeleteQuote,
   onUpdateQuoteStatus,
   onSendPaymentReminder,
   showAll = false
@@ -40,9 +40,6 @@ const RecentQuotesList: React.FC<RecentQuotesListProps> = ({
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showInvoiceDecision, setShowInvoiceDecision] = useState(false);
   const [quoteForInvoice, setQuoteForInvoice] = useState<Quote | null>(null);
-  
-  
-  // Poll PDF Monkey status until downloadUrl is ready
 
   // Poll PDF Monkey status until downloadUrl is ready
   const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {

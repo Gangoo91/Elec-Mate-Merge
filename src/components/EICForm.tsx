@@ -354,7 +354,8 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     canNavigatePrevious,
     navigateNext,
     navigatePrevious,
-    getProgressPercentage
+    getProgressPercentage,
+    getCurrentTabLabel
   } = useEICTabs(formData);
 
   // Prevent space bar from triggering anything - removed keyboard shortcut handling
@@ -920,6 +921,8 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
           isOnline={isOnline}
           isAuthenticated={isAuthenticated}
           currentTab={currentTabIndex}
+          currentTabLabel={getCurrentTabLabel ? getCurrentTabLabel() : ''}
+          progressPercentage={getProgressPercentage()}
           completedSections={completedSections}
           onOpenBoardScan={() => setShowBoardScan(true)}
         />
@@ -929,6 +932,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
             currentTab={currentTab}
             onTabChange={handleTabChange}
             canAccessTab={canAccessTab}
+            isTabComplete={isTabComplete}
             formData={formData}
             onUpdate={handleUpdate}
             tabNavigationProps={tabNavigationProps}

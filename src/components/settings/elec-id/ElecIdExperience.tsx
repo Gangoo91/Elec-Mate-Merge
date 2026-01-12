@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
@@ -20,7 +13,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Drawer } from "vaul";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Plus,
   Briefcase,
@@ -30,8 +27,9 @@ import {
   CheckCircle2,
   Clock,
   Trash2,
-  Edit2,
+  ChevronRight,
   Loader2,
+  X,
 } from "lucide-react";
 import { UK_JOB_TITLES, getJobTitleLabel } from "@/data/uk-electrician-constants";
 import { useNotifications } from "@/components/notifications/NotificationProvider";
@@ -58,11 +56,47 @@ interface WorkExperience {
   verifiedByEmployer: boolean;
 }
 
+// Skeleton loading component
+const ExperienceSkeleton = () => (
+  <div className="space-y-4">
+    {/* Header skeleton */}
+    <div className="flex items-center justify-between px-1">
+      <div>
+        <Skeleton className="h-6 w-32 bg-white/[0.06]" />
+        <Skeleton className="h-4 w-24 mt-1 bg-white/[0.06]" />
+      </div>
+      <Skeleton className="h-12 w-36 rounded-xl bg-white/[0.06]" />
+    </div>
+
+    {/* Timeline skeleton */}
+    <div className="relative pl-6">
+      <div className="absolute left-2 top-4 bottom-4 w-0.5 bg-white/[0.06]" />
+      {[1, 2, 3].map((i) => (
+        <div key={i} className="relative mb-4">
+          <div className="absolute left-[-14px] top-6 w-3 h-3 rounded-full bg-white/[0.06]" />
+          <div className="bg-white/[0.03] rounded-2xl p-4 ml-2">
+            <div className="flex items-start gap-3">
+              <Skeleton className="w-12 h-12 rounded-xl bg-white/[0.06] flex-shrink-0" />
+              <div className="flex-1 space-y-2">
+                <Skeleton className="h-5 w-40 bg-white/[0.06]" />
+                <Skeleton className="h-4 w-32 bg-white/[0.06]" />
+                <Skeleton className="h-4 w-24 bg-white/[0.06]" />
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
 const ElecIdExperience = () => {
   const { addNotification } = useNotifications();
   const { profile } = useElecIdProfile();
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const isMobile = useIsMobile();
+
+  const [isAddSheetOpen, setIsAddSheetOpen] = useState(false);
+  const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
   const [editingExp, setEditingExp] = useState<WorkExperience | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<{ open: boolean; id: string | null }>({
     open: false,
@@ -80,7 +114,6 @@ const ElecIdExperience = () => {
     description: "",
   });
 
-  // Real work history from database
   const [workHistory, setWorkHistory] = useState<WorkExperience[]>([]);
 
   // Fetch work history from database
@@ -93,12 +126,11 @@ const ElecIdExperience = () => {
 
       try {
         const data = await getWorkHistoryByProfileId(profile.id);
-        // Map database schema to UI schema
         const mapped = data.map((w: ElecIdWorkHistory) => ({
           id: w.id,
           employerName: w.employer_name,
           jobTitle: w.job_title,
-          location: undefined, // Not in current schema
+          location: undefined,
           startDate: w.start_date,
           endDate: w.end_date || undefined,
           isCurrent: w.is_current,
@@ -161,7 +193,7 @@ const ElecIdExperience = () => {
       };
 
       setWorkHistory((prev) => [newExp, ...prev]);
-      setIsAddDialogOpen(false);
+      setIsAddSheetOpen(false);
       resetForm();
 
       addNotification({
@@ -212,7 +244,7 @@ const ElecIdExperience = () => {
         )
       );
 
-      setIsEditDialogOpen(false);
+      setIsEditSheetOpen(false);
       setEditingExp(null);
       resetForm();
 
@@ -263,7 +295,7 @@ const ElecIdExperience = () => {
     }
   };
 
-  const openEditDialog = (exp: WorkExperience) => {
+  const openEditSheet = (exp: WorkExperience) => {
     setEditingExp(exp);
     setFormData({
       employerName: exp.employerName,
@@ -274,7 +306,7 @@ const ElecIdExperience = () => {
       description: exp.description || "",
     });
     setIsCurrent(exp.isCurrent);
-    setIsEditDialogOpen(true);
+    setIsEditSheetOpen(true);
   };
 
   const resetForm = () => {
@@ -312,9 +344,9 @@ const ElecIdExperience = () => {
       startDate.getMonth();
     const years = Math.floor(months / 12);
     const remainingMonths = months % 12;
-    if (years === 0) return `${remainingMonths} month${remainingMonths !== 1 ? "s" : ""}`;
-    if (remainingMonths === 0) return `${years} year${years !== 1 ? "s" : ""}`;
-    return `${years} yr${years !== 1 ? "s" : ""} ${remainingMonths} mo`;
+    if (years === 0) return `${remainingMonths} mo`;
+    if (remainingMonths === 0) return `${years} yr${years !== 1 ? "s" : ""}`;
+    return `${years}y ${remainingMonths}m`;
   };
 
   // Group job titles by category
@@ -324,37 +356,42 @@ const ElecIdExperience = () => {
     return acc;
   }, {} as Record<string, typeof UK_JOB_TITLES>);
 
-  const ExperienceForm = ({ isEdit = false }: { isEdit?: boolean }) => (
-    <div className="space-y-4 pt-4">
+  // Form content - reusable for both mobile and desktop
+  const FormContent = ({ isEdit = false }: { isEdit?: boolean }) => (
+    <div className="space-y-5">
       {/* Employer Name */}
       <div className="space-y-2">
-        <Label className="text-foreground">Employer Name</Label>
+        <Label className="text-sm font-medium text-foreground">Employer Name</Label>
         <Input
           value={formData.employerName}
           onChange={(e) => setFormData({ ...formData, employerName: e.target.value })}
           placeholder="e.g., Spark Electrical Ltd"
-          className="bg-white/5 border-white/20"
+          className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base"
         />
       </div>
 
       {/* Job Title */}
       <div className="space-y-2">
-        <Label className="text-foreground">Job Title</Label>
+        <Label className="text-sm font-medium text-foreground">Job Title</Label>
         <Select
           value={formData.jobTitle}
           onValueChange={(value) => setFormData({ ...formData, jobTitle: value })}
         >
-          <SelectTrigger className="bg-white/5 border-white/20">
+          <SelectTrigger className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation">
             <SelectValue placeholder="Select job title" />
           </SelectTrigger>
-          <SelectContent className="bg-elec-gray border-white/20 max-h-60">
+          <SelectContent className="bg-background border-white/[0.1] max-h-60 z-[200]">
             {Object.entries(jobTitlesByCategory).map(([category, titles]) => (
               <React.Fragment key={category}>
-                <div className="px-2 py-1.5 text-xs font-semibold text-elec-yellow">
+                <div className="px-3 py-2 text-xs font-semibold text-elec-yellow uppercase tracking-wide">
                   {category}
                 </div>
                 {titles.map((title) => (
-                  <SelectItem key={title.value} value={title.value}>
+                  <SelectItem
+                    key={title.value}
+                    value={title.value}
+                    className="py-3 touch-manipulation"
+                  >
                     {title.label}
                   </SelectItem>
                 ))}
@@ -366,270 +403,420 @@ const ElecIdExperience = () => {
 
       {/* Location */}
       <div className="space-y-2">
-        <Label className="text-foreground">
-          Location
-          <span className="text-muted-foreground ml-2">(optional)</span>
+        <Label className="text-sm font-medium text-foreground">
+          Location <span className="text-muted-foreground font-normal">(optional)</span>
         </Label>
         <Input
           value={formData.location}
           onChange={(e) => setFormData({ ...formData, location: e.target.value })}
           placeholder="e.g., London"
-          className="bg-white/5 border-white/20"
+          className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base"
         />
       </div>
 
       {/* Date Range */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-3">
         <div className="space-y-2">
-          <Label className="text-foreground">Start Date</Label>
+          <Label className="text-sm font-medium text-foreground">Start Date</Label>
           <Input
             type="date"
             value={formData.startDate}
             onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-            className="bg-white/5 border-white/20"
+            className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation"
           />
         </div>
         <div className="space-y-2">
-          <Label className="text-foreground">End Date</Label>
+          <Label className="text-sm font-medium text-foreground">End Date</Label>
           <Input
             type="date"
             value={formData.endDate}
             onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
             disabled={isCurrent}
-            className="bg-white/5 border-white/20"
+            className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation disabled:opacity-40"
           />
         </div>
       </div>
 
       {/* Current Position */}
-      <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-white/5 transition-colors">
+      <button
+        type="button"
+        onClick={() => setIsCurrent(!isCurrent)}
+        className="w-full flex items-center gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:bg-white/[0.08] transition-colors"
+      >
         <Checkbox
           id="current"
           checked={isCurrent}
           onCheckedChange={(checked) => setIsCurrent(checked as boolean)}
+          className="h-5 w-5 border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
         />
-        <Label htmlFor="current" className="text-foreground cursor-pointer flex-1">
+        <Label htmlFor="current" className="text-foreground cursor-pointer flex-1 text-left">
           I currently work here
         </Label>
-      </div>
+      </button>
 
       {/* Description */}
       <div className="space-y-2">
-        <Label className="text-foreground">
-          Description
-          <span className="text-muted-foreground ml-2">(optional)</span>
+        <Label className="text-sm font-medium text-foreground">
+          Description <span className="text-muted-foreground font-normal">(optional)</span>
         </Label>
         <Textarea
           value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           placeholder="Describe your responsibilities and achievements..."
-          className="bg-white/5 border-white/20 min-h-[80px]"
+          className="bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base min-h-[100px] resize-none"
         />
-      </div>
-
-      <div className="flex gap-3 pt-4">
-        <Button
-          variant="outline"
-          className="flex-1 border-white/20"
-          onClick={() => {
-            isEdit ? setIsEditDialogOpen(false) : setIsAddDialogOpen(false);
-            resetForm();
-          }}
-          disabled={isLoading}
-        >
-          Cancel
-        </Button>
-        <Button
-          className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
-          onClick={isEdit ? handleEditExperience : handleAddExperience}
-          disabled={
-            !formData.employerName || !formData.jobTitle || !formData.startDate || isLoading
-          }
-        >
-          {isLoading ? (
-            <>
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              {isEdit ? "Saving..." : "Adding..."}
-            </>
-          ) : isEdit ? (
-            "Save Changes"
-          ) : (
-            "Add Experience"
-          )}
-        </Button>
       </div>
     </div>
   );
 
+  // Mobile bottom sheet for forms
+  const MobileFormSheet = ({
+    open,
+    onOpenChange,
+    title,
+    isEdit = false
+  }: {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+    title: string;
+    isEdit?: boolean;
+  }) => (
+    <Drawer.Root open={open} onOpenChange={onOpenChange}>
+      <Drawer.Portal>
+        <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
+        <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[92vh] bg-background rounded-t-[20px] border-t border-white/[0.08]">
+          {/* Drag handle */}
+          <div className="flex justify-center pt-3 pb-2">
+            <div className="w-12 h-1.5 rounded-full bg-white/20" />
+          </div>
+
+          {/* Header */}
+          <div className="flex items-center justify-between px-5 pb-4 border-b border-white/[0.06]">
+            <Drawer.Title className="text-lg font-semibold text-foreground">
+              {title}
+            </Drawer.Title>
+            <button
+              onClick={() => {
+                onOpenChange(false);
+                resetForm();
+              }}
+              className="p-2 -mr-2 rounded-full hover:bg-white/[0.08] touch-manipulation"
+            >
+              <X className="w-5 h-5 text-muted-foreground" />
+            </button>
+          </div>
+
+          {/* Form content */}
+          <div className="flex-1 overflow-y-auto px-5 py-5">
+            <FormContent isEdit={isEdit} />
+          </div>
+
+          {/* Footer buttons */}
+          <div className="flex gap-3 p-5 border-t border-white/[0.06] bg-background/80 backdrop-blur-sm">
+            <Button
+              variant="outline"
+              className="flex-1 h-12 rounded-xl border-white/[0.15] touch-manipulation active:scale-[0.98]"
+              onClick={() => {
+                onOpenChange(false);
+                resetForm();
+              }}
+              disabled={isLoading}
+            >
+              Cancel
+            </Button>
+            <Button
+              className="flex-1 h-12 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation active:scale-[0.98]"
+              onClick={isEdit ? handleEditExperience : handleAddExperience}
+              disabled={!formData.employerName || !formData.jobTitle || !formData.startDate || isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  {isEdit ? "Saving..." : "Adding..."}
+                </>
+              ) : isEdit ? (
+                "Save Changes"
+              ) : (
+                "Add Experience"
+              )}
+            </Button>
+          </div>
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
+  );
+
+  // Desktop dialog for forms
+  const DesktopFormDialog = ({
+    open,
+    onOpenChange,
+    title,
+    isEdit = false
+  }: {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+    title: string;
+    isEdit?: boolean;
+  }) => (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="bg-background border-white/[0.1] max-w-md">
+        <DialogHeader>
+          <DialogTitle className="text-foreground">{title}</DialogTitle>
+        </DialogHeader>
+        <FormContent isEdit={isEdit} />
+        <div className="flex gap-3 pt-4">
+          <Button
+            variant="outline"
+            className="flex-1 border-white/[0.15]"
+            onClick={() => {
+              onOpenChange(false);
+              resetForm();
+            }}
+            disabled={isLoading}
+          >
+            Cancel
+          </Button>
+          <Button
+            className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
+            onClick={isEdit ? handleEditExperience : handleAddExperience}
+            disabled={!formData.employerName || !formData.jobTitle || !formData.startDate || isLoading}
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                {isEdit ? "Saving..." : "Adding..."}
+              </>
+            ) : isEdit ? (
+              "Save Changes"
+            ) : (
+              "Add Experience"
+            )}
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+
+  // Show skeleton while fetching
+  if (isFetching) {
+    return <ExperienceSkeleton />;
+  }
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Delete Confirmation */}
       <ConfirmDeleteDialog
         open={deleteConfirm.open}
         onOpenChange={(open) => setDeleteConfirm({ ...deleteConfirm, open })}
         title="Delete Work Experience?"
-        description="This will permanently remove this position from your Elec-ID profile. This action cannot be undone."
+        description="This will permanently remove this position from your ELEC-iD profile. This action cannot be undone."
         onConfirm={handleDeleteExperience}
         isLoading={isLoading}
       />
 
-      {/* Edit Dialog */}
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="bg-elec-gray border-white/20 max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-foreground">Edit Work Experience</DialogTitle>
-          </DialogHeader>
-          <ExperienceForm isEdit />
-        </DialogContent>
-      </Dialog>
+      {/* Add Sheet - Mobile or Desktop */}
+      {isMobile ? (
+        <MobileFormSheet
+          open={isAddSheetOpen}
+          onOpenChange={setIsAddSheetOpen}
+          title="Add Work Experience"
+        />
+      ) : (
+        <DesktopFormDialog
+          open={isAddSheetOpen}
+          onOpenChange={setIsAddSheetOpen}
+          title="Add Work Experience"
+        />
+      )}
+
+      {/* Edit Sheet - Mobile or Desktop */}
+      {isMobile ? (
+        <MobileFormSheet
+          open={isEditSheetOpen}
+          onOpenChange={setIsEditSheetOpen}
+          title="Edit Work Experience"
+          isEdit
+        />
+      ) : (
+        <DesktopFormDialog
+          open={isEditSheetOpen}
+          onOpenChange={setIsEditSheetOpen}
+          title="Edit Work Experience"
+          isEdit
+        />
+      )}
 
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between px-1">
         <div>
           <h3 className="text-lg font-semibold text-foreground">Work History</h3>
           <p className="text-sm text-muted-foreground">
             {workHistory.length} position{workHistory.length !== 1 ? "s" : ""} recorded
           </p>
         </div>
-        <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold">
-              <Plus className="h-4 w-4 mr-2" />
-              Add Experience
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="bg-elec-gray border-white/20 max-w-md">
-            <DialogHeader>
-              <DialogTitle className="text-foreground">Add Work Experience</DialogTitle>
-            </DialogHeader>
-            <ExperienceForm />
-          </DialogContent>
-        </Dialog>
+        <Button
+          onClick={() => setIsAddSheetOpen(true)}
+          className="h-12 px-4 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation active:scale-[0.97]"
+        >
+          <Plus className="h-4 w-4 mr-2" />
+          Add Experience
+        </Button>
       </div>
 
       {/* Timeline */}
-      <div className="relative">
-        {/* Timeline line */}
-        {workHistory.length > 0 && (
-          <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-white/10" />
-        )}
+      {workHistory.length > 0 ? (
+        <div className="relative pl-6">
+          {/* Timeline line */}
+          <div className="absolute left-2 top-6 bottom-6 w-0.5 bg-gradient-to-b from-elec-yellow via-white/20 to-transparent" />
 
-        <div className="space-y-6">
-          {workHistory.map((exp, index) => (
-            <div
-              key={exp.id}
-              className={cn(
-                "relative pl-10",
-                "animate-in fade-in slide-in-from-left-2"
-              )}
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              {/* Timeline dot */}
-              <div
-                className={cn(
-                  "absolute left-2.5 w-3 h-3 rounded-full border-2 transition-all",
-                  exp.isCurrent
-                    ? "bg-elec-yellow border-elec-yellow shadow-lg shadow-elec-yellow/30"
-                    : "bg-elec-gray border-white/30"
-                )}
-                style={{ top: "1.25rem" }}
-              />
+          <AnimatePresence mode="popLayout">
+            {workHistory.map((exp, index) => (
+              <motion.div
+                key={exp.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ delay: index * 0.05 }}
+                className="relative mb-4 last:mb-0"
+              >
+                {/* Timeline dot */}
+                <div
+                  className={cn(
+                    "absolute left-[-14px] w-4 h-4 rounded-full border-2 transition-all z-10",
+                    exp.isCurrent
+                      ? "bg-elec-yellow border-elec-yellow shadow-lg shadow-elec-yellow/40"
+                      : "bg-background border-white/30"
+                  )}
+                  style={{ top: "1.5rem" }}
+                />
 
-              <Card className="bg-elec-gray/50 border-white/10 hover:border-white/20 transition-colors">
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1 space-y-2 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <h4 className="font-semibold text-foreground">
-                          {getJobTitleLabel(exp.jobTitle)}
-                        </h4>
+                {/* Card - tappable on mobile */}
+                <button
+                  onClick={() => openEditSheet(exp)}
+                  className={cn(
+                    "w-full text-left ml-2 p-4 rounded-2xl border transition-all touch-manipulation",
+                    exp.isCurrent
+                      ? "bg-gradient-to-br from-elec-yellow/10 to-amber-600/5 border-elec-yellow/20 shadow-lg shadow-elec-yellow/10"
+                      : "bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06] active:bg-white/[0.08] active:scale-[0.99]"
+                  )}
+                >
+                  <div className="flex items-start gap-3">
+                    {/* Company icon */}
+                    <div className={cn(
+                      "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0",
+                      exp.isCurrent
+                        ? "bg-elec-yellow/20"
+                        : "bg-white/[0.06]"
+                    )}>
+                      <Building2 className={cn(
+                        "w-6 h-6",
+                        exp.isCurrent ? "text-elec-yellow" : "text-muted-foreground"
+                      )} />
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <h4 className="font-semibold text-foreground truncate">
+                            {getJobTitleLabel(exp.jobTitle)}
+                          </h4>
+                          <p className="text-sm text-muted-foreground truncate">
+                            {exp.employerName}
+                          </p>
+                        </div>
+                        <ChevronRight className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                      </div>
+
+                      {/* Badges */}
+                      <div className="flex items-center gap-2 flex-wrap mt-2">
                         {exp.isCurrent && (
-                          <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+                          <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs">
                             Current
                           </Badge>
                         )}
                         {exp.verifiedByEmployer && (
-                          <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                          <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
                             <CheckCircle2 className="h-3 w-3 mr-1" />
                             Verified
                           </Badge>
                         )}
                       </div>
 
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
+                      {/* Meta info */}
+                      <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
                         <span className="flex items-center gap-1">
-                          <Building2 className="h-4 w-4" />
-                          {exp.employerName}
-                        </span>
-                        {exp.location && (
-                          <span className="flex items-center gap-1">
-                            <MapPin className="h-4 w-4" />
-                            {exp.location}
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="flex items-center gap-4 text-sm">
-                        <span className="flex items-center gap-1 text-muted-foreground">
-                          <Calendar className="h-4 w-4" />
+                          <Calendar className="h-3.5 w-3.5" />
                           {formatDateRange(exp.startDate, exp.endDate, exp.isCurrent)}
                         </span>
-                        <span className="flex items-center gap-1 text-elec-yellow font-medium">
-                          <Clock className="h-4 w-4" />
+                        <span className={cn(
+                          "flex items-center gap-1 font-medium",
+                          exp.isCurrent ? "text-elec-yellow" : "text-foreground/60"
+                        )}>
+                          <Clock className="h-3.5 w-3.5" />
                           {calculateDuration(exp.startDate, exp.isCurrent ? undefined : exp.endDate)}
                         </span>
                       </div>
 
+                      {/* Location */}
+                      {exp.location && (
+                        <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                          <MapPin className="h-3 w-3" />
+                          {exp.location}
+                        </p>
+                      )}
+
+                      {/* Description preview */}
                       {exp.description && (
-                        <p className="text-sm text-foreground/70 mt-2 line-clamp-2">{exp.description}</p>
+                        <p className="text-sm text-foreground/60 mt-2 line-clamp-2">
+                          {exp.description}
+                        </p>
                       )}
                     </div>
-
-                    <div className="flex items-center gap-1 flex-shrink-0">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 hover:bg-white/10"
-                        onClick={() => openEditDialog(exp)}
-                        aria-label="Edit experience"
-                      >
-                        <Edit2 className="h-4 w-4 text-muted-foreground" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 hover:bg-red-500/10"
-                        onClick={() => setDeleteConfirm({ open: true, id: exp.id })}
-                        aria-label="Delete experience"
-                      >
-                        <Trash2 className="h-4 w-4 text-red-400" />
-                      </Button>
-                    </div>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
-          ))}
-        </div>
-      </div>
 
-      {workHistory.length === 0 && (
-        <Card className="bg-elec-gray/50 border-white/10">
-          <CardContent className="py-12 text-center">
-            <Briefcase className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h4 className="text-lg font-medium text-foreground mb-2">No work history yet</h4>
-            <p className="text-muted-foreground mb-4">
-              Add your work experience to build your professional timeline.
-            </p>
-            <Button
-              className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
-              onClick={() => setIsAddDialogOpen(true)}
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Your First Position
-            </Button>
-          </CardContent>
-        </Card>
+                  {/* Delete button - positioned bottom right */}
+                  <div className="flex justify-end mt-3 pt-3 border-t border-white/[0.04]">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-9 px-3 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg touch-manipulation"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setDeleteConfirm({ open: true, id: exp.id });
+                      }}
+                    >
+                      <Trash2 className="h-4 w-4 mr-1.5" />
+                      Delete
+                    </Button>
+                  </div>
+                </button>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      ) : (
+        /* Empty State */
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="py-12 text-center"
+        >
+          <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/[0.04] flex items-center justify-center">
+            <Briefcase className="h-10 w-10 text-muted-foreground/50" />
+          </div>
+          <h4 className="text-lg font-medium text-foreground mb-2">No work history yet</h4>
+          <p className="text-muted-foreground max-w-xs mx-auto mb-6">
+            Add your work experience to build your professional timeline.
+          </p>
+          <Button
+            onClick={() => setIsAddSheetOpen(true)}
+            className="h-12 px-6 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation active:scale-[0.97]"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Add Your First Position
+          </Button>
+        </motion.div>
       )}
     </div>
   );

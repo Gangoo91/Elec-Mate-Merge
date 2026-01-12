@@ -52,9 +52,8 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
             {onChangeCourse && (
               <Button
                 variant="outline"
-                size="sm"
                 onClick={onChangeCourse}
-                className="mt-2"
+                className="mt-2 h-11 touch-manipulation active:scale-95"
               >
                 Select Qualification
               </Button>
@@ -80,7 +79,7 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
       <CardHeader className="pb-3">
         <button
           onClick={() => setExpanded(!expanded)}
-          className="flex items-center justify-between w-full text-left"
+          className="flex items-center justify-between w-full text-left min-h-[44px] touch-manipulation"
         >
           <div className="space-y-1">
             <div className="flex items-center gap-2">
@@ -91,7 +90,7 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
                     e.stopPropagation();
                     onChangeCourse();
                   }}
-                  className="p-1 rounded hover:bg-muted transition-colors"
+                  className="p-2 rounded hover:bg-muted transition-colors touch-manipulation"
                   title="Change qualification"
                 >
                   <Pencil className="h-3.5 w-3.5 text-muted-foreground hover:text-foreground" />

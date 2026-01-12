@@ -413,7 +413,7 @@ export function GoalsSection() {
                         unit: suggestion.unit,
                       })
                     }
-                    className="px-3 py-2 rounded-lg bg-muted text-xs whitespace-nowrap hover:bg-muted/80 active:scale-95 transition-all"
+                    className="px-3 h-9 rounded-lg bg-muted text-xs whitespace-nowrap hover:bg-muted/80 active:scale-95 transition-all touch-manipulation"
                   >
                     {suggestion.title}
                   </button>
@@ -536,18 +536,18 @@ export function GoalsSection() {
             </div>
 
             {/* Actions */}
-            <div className="flex gap-3 pt-4 pb-8">
+            <div className="flex gap-3 pt-4 pb-20 sm:pb-8">
               <Button
                 variant="outline"
                 onClick={() => setShowAddGoal(false)}
-                className="flex-1 h-12"
+                className="flex-1 h-12 touch-manipulation active:scale-95"
                 disabled={isSubmitting}
               >
                 Cancel
               </Button>
               <Button
                 onClick={handleAddGoal}
-                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
                 disabled={isSubmitting || !newGoal.title}
               >
                 {isSubmitting ? (

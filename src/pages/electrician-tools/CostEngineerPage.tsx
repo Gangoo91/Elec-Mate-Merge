@@ -10,7 +10,7 @@ const CostEngineerPage = () => {
   const backLabel = fromAgentSelector ? "Agents" : "Hub";
 
   return (
-    <div className="min-h-screen bg-background flex flex-col safe-top safe-bottom">
+    <div className="min-h-screen bg-background flex flex-col pt-safe pb-safe">
       {/* Background gradient */}
       <div className="fixed inset-0 bg-gradient-to-b from-elec-yellow/5 via-transparent to-transparent pointer-events-none" />
 
@@ -20,7 +20,7 @@ const CostEngineerPage = () => {
           {/* Back button */}
           <Link
             to={backPath}
-            className="flex items-center gap-1 text-elec-yellow ios-pressable p-2 -ml-2 rounded-xl"
+            className="flex items-center gap-1 text-elec-yellow h-11 px-2 -ml-2 rounded-xl touch-manipulation active:scale-[0.98] transition-transform"
           >
             <ChevronLeft className="h-5 w-5" />
             <span className="text-ios-body font-medium">{backLabel}</span>

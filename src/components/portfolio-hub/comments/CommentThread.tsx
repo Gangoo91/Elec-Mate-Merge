@@ -167,7 +167,7 @@ export function CommentThread({
                 variant="outline"
                 size="sm"
                 onClick={() => setShowReplyInput(!showReplyInput)}
-                className="h-7 text-xs gap-1"
+                className="h-10 text-xs gap-1 touch-manipulation active:scale-95"
               >
                 <Reply className="h-3 w-3" />
                 Reply
@@ -177,7 +177,7 @@ export function CommentThread({
                   variant="outline"
                   size="sm"
                   onClick={handleResolve}
-                  className="h-7 text-xs gap-1 text-green-500 hover:text-green-400 hover:bg-green-500/10"
+                  className="h-10 text-xs gap-1 text-green-500 hover:text-green-400 hover:bg-green-500/10 touch-manipulation active:scale-95"
                 >
                   <CheckCircle2 className="h-3 w-3" />
                   Mark Resolved

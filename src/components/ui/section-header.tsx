@@ -106,3 +106,5 @@ export const SectionHeader = ({
     </CollapsibleTrigger>
   );
 };
+
+export default SectionHeader;

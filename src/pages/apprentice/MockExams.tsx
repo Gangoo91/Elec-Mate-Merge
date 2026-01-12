@@ -1,10 +1,9 @@
 
-import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { FileText, Clock, Award, CheckCircle, Star, Zap, Lock, ArrowRight, GraduationCap } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { useAuth } from "@/contexts/AuthContext";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
@@ -168,7 +167,9 @@ const ExamGrid = ({ exams, isSubscribed }: { exams: MockExam[]; isSubscribed: bo
 );
 
 const MockExams = () => {
-  const [activeTab, setActiveTab] = useState("all");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "all";
+  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const { isSubscribed } = useAuth();
 
   // Filter exams based on the active tab

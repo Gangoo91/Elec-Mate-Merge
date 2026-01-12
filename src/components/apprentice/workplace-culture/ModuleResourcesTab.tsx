@@ -57,13 +57,13 @@ const ModuleResourcesTab = ({ module }: ModuleResourcesTabProps) => {
                 <AccordionContent className="px-4 pb-4">
                   <p className="text-sm text-white/70 mb-3">{resource.description}</p>
                   {resource.url ? (
-                    <Button size="sm" variant="outline" className="h-9 border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/10" asChild>
+                    <Button size="sm" variant="outline" className="h-11 border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/10 touch-manipulation active:scale-95" asChild>
                       <a href={resource.url} target="_blank" rel="noopener noreferrer">
                         Access Resource <ExternalLink className="ml-1.5 h-3.5 w-3.5" />
                       </a>
                     </Button>
                   ) : (
-                    <Button size="sm" variant="outline" className="h-9 border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/10">Download</Button>
+                    <Button size="sm" variant="outline" className="h-11 border-white/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/10 touch-manipulation active:scale-95">Download</Button>
                   )}
                 </AccordionContent>
               </AccordionItem>
@@ -91,13 +91,13 @@ const ModuleResourcesTab = ({ module }: ModuleResourcesTabProps) => {
                 <h3 className="font-medium text-white mb-1">{resource.title}</h3>
                 <p className="text-sm text-white/70">{resource.description}</p>
                 {resource.url ? (
-                  <Button size="sm" variant="link" className="p-0 h-auto mt-3 text-elec-yellow hover:text-elec-yellow/80" asChild>
+                  <Button size="sm" variant="link" className="p-0 h-auto mt-3 text-elec-yellow hover:text-elec-yellow/80 touch-manipulation" asChild>
                     <a href={resource.url} target="_blank" rel="noopener noreferrer">
                       Access Resource <ExternalLink className="ml-1 h-3.5 w-3.5" />
                     </a>
                   </Button>
                 ) : (
-                  <Button size="sm" variant="link" className="p-0 h-auto mt-3 text-elec-yellow hover:text-elec-yellow/80">Download</Button>
+                  <Button size="sm" variant="link" className="p-0 h-auto mt-3 text-elec-yellow hover:text-elec-yellow/80 touch-manipulation">Download</Button>
                 )}
               </div>
             </div>

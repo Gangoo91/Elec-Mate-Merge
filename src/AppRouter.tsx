@@ -1,6 +1,7 @@
 
 import { lazy } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import { LazyRoute } from "@/components/LazyRoute";
 
 // Core components that should load immediately (small, critical path)
@@ -58,8 +59,11 @@ const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
 };
 
 const AppRouter = () => {
+  const location = useLocation();
+
   return (
-    <Routes>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
       {/* Public Routes */}
       <Route path="/" element={<LazyRoute><LandingPage /></LazyRoute>} />
       <Route path="/process-onsite-now" element={<LazyRoute><AutoProcessOnsite /></LazyRoute>} />
@@ -141,7 +145,8 @@ const AppRouter = () => {
         {/* Catch-all route for 404 */}
         <Route path="*" element={<LazyRoute><NotFound /></LazyRoute>} />
       </Route>
-    </Routes>
+      </Routes>
+    </AnimatePresence>
   );
 };
 

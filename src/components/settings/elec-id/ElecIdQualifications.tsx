@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Drawer } from "vaul";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Select,
@@ -19,6 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import {
   Plus,
   GraduationCap,
@@ -29,12 +31,16 @@ import {
   Trash2,
   Edit2,
   Loader2,
+  Camera,
+  ChevronRight,
+  AlertCircle,
 } from "lucide-react";
 import { UK_QUALIFICATIONS, getQualificationLabel } from "@/data/uk-electrician-constants";
 import { getExpiryStatus, getDaysUntilExpiry } from "@/utils/elecIdGenerator";
 import { useNotifications } from "@/components/notifications/NotificationProvider";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 import { useElecIdProfile } from "@/hooks/useElecIdProfile";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   getQualificationsByProfileId,
   addElecIdQualification,
@@ -54,11 +60,33 @@ interface Qualification {
   isVerified: boolean;
 }
 
+// Skeleton loader for qualifications
+const QualificationSkeleton = () => (
+  <div className="space-y-4">
+    <div className="bg-white/[0.04] rounded-2xl border border-white/[0.06] overflow-hidden">
+      <div className="p-4 border-b border-white/[0.06]">
+        <Skeleton className="h-5 w-32 bg-white/10" />
+      </div>
+      <div className="p-4 space-y-3">
+        {[1, 2].map((i) => (
+          <div key={i} className="p-4 rounded-xl bg-white/[0.04]">
+            <Skeleton className="h-5 w-48 mb-2 bg-white/10" />
+            <Skeleton className="h-4 w-32 mb-1 bg-white/10" />
+            <Skeleton className="h-3 w-24 bg-white/10" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
 const ElecIdQualifications = () => {
   const { addNotification } = useNotifications();
   const { profile } = useElecIdProfile();
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const isMobile = useIsMobile();
+
+  const [isAddSheetOpen, setIsAddSheetOpen] = useState(false);
+  const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
   const [editingQual, setEditingQual] = useState<Qualification | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<{ open: boolean; id: string | null }>({
     open: false,
@@ -75,7 +103,6 @@ const ElecIdQualifications = () => {
     certificateNumber: "",
   });
 
-  // Real qualifications from database
   const [qualifications, setQualifications] = useState<Qualification[]>([]);
 
   // Fetch qualifications from database
@@ -88,7 +115,6 @@ const ElecIdQualifications = () => {
 
       try {
         const data = await getQualificationsByProfileId(profile.id);
-        // Map database schema to UI schema
         const mapped = data.map((q: ElecIdQualification) => ({
           id: q.id,
           qualificationValue: q.qualification_name,
@@ -151,7 +177,7 @@ const ElecIdQualifications = () => {
       };
 
       setQualifications((prev) => [...prev, newQual]);
-      setIsAddDialogOpen(false);
+      setIsAddSheetOpen(false);
       resetForm();
 
       addNotification({
@@ -197,7 +223,7 @@ const ElecIdQualifications = () => {
         )
       );
 
-      setIsEditDialogOpen(false);
+      setIsEditSheetOpen(false);
       setEditingQual(null);
       resetForm();
 
@@ -248,7 +274,7 @@ const ElecIdQualifications = () => {
     }
   };
 
-  const openEditDialog = (qual: Qualification) => {
+  const openEditSheet = (qual: Qualification) => {
     setEditingQual(qual);
     setSelectedCategory(qual.category);
     setSelectedQual(qual.qualificationValue);
@@ -258,7 +284,7 @@ const ElecIdQualifications = () => {
       expiryDate: qual.expiryDate || "",
       certificateNumber: qual.certificateNumber || "",
     });
-    setIsEditDialogOpen(true);
+    setIsEditSheetOpen(true);
   };
 
   const resetForm = () => {
@@ -284,20 +310,21 @@ const ElecIdQualifications = () => {
 
   const selectedQualInfo = getSelectedQualInfo();
 
-  const QualificationForm = ({ isEdit = false }: { isEdit?: boolean }) => (
-    <div className="space-y-4 pt-4">
+  // Form content - shared between sheet and dialog
+  const FormContent = ({ isEdit = false }: { isEdit?: boolean }) => (
+    <div className="space-y-5">
       {/* Category Selection */}
       <div className="space-y-2">
-        <Label className="text-foreground">Category</Label>
+        <Label className="text-foreground text-sm font-medium">Category</Label>
         <Select
           value={selectedCategory}
           onValueChange={setSelectedCategory}
           disabled={isEdit}
         >
-          <SelectTrigger className="bg-white/5 border-white/20">
+          <SelectTrigger className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation">
             <SelectValue placeholder="Select category" />
           </SelectTrigger>
-          <SelectContent className="bg-elec-gray border-white/20">
+          <SelectContent className="bg-elec-gray border-white/20 max-h-60">
             {Object.entries(UK_QUALIFICATIONS).map(([key, cat]) => (
               <SelectItem key={key} value={key}>
                 {cat.label}
@@ -310,16 +337,16 @@ const ElecIdQualifications = () => {
       {/* Qualification Selection */}
       {selectedCategory && (
         <div className="space-y-2">
-          <Label className="text-foreground">Qualification</Label>
+          <Label className="text-foreground text-sm font-medium">Qualification</Label>
           <Select
             value={selectedQual}
             onValueChange={setSelectedQual}
             disabled={isEdit}
           >
-            <SelectTrigger className="bg-white/5 border-white/20">
+            <SelectTrigger className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation">
               <SelectValue placeholder="Select qualification" />
             </SelectTrigger>
-            <SelectContent className="bg-elec-gray border-white/20">
+            <SelectContent className="bg-elec-gray border-white/20 max-h-60">
               {getCategoryQualifications(selectedCategory).map((qual) => (
                 <SelectItem key={qual.value} value={qual.value}>
                   {qual.label}
@@ -333,37 +360,38 @@ const ElecIdQualifications = () => {
       {/* Awarding Body */}
       {(selectedQualInfo || isEdit) && (
         <div className="space-y-2">
-          <Label className="text-foreground">Awarding Body</Label>
+          <Label className="text-foreground text-sm font-medium">Awarding Body</Label>
           <Input
             value={formData.awardingBody || (selectedQualInfo?.awarding || "")}
             onChange={(e) =>
               setFormData({ ...formData, awardingBody: e.target.value })
             }
-            className="bg-white/5 border-white/20"
+            className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation"
+            placeholder="e.g., City & Guilds"
           />
         </div>
       )}
 
       {/* Date Achieved */}
       <div className="space-y-2">
-        <Label className="text-foreground">Date Achieved</Label>
+        <Label className="text-foreground text-sm font-medium">Date Achieved</Label>
         <Input
           type="date"
           value={formData.dateAchieved}
           onChange={(e) =>
             setFormData({ ...formData, dateAchieved: e.target.value })
           }
-          className="bg-white/5 border-white/20"
+          className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation"
         />
       </div>
 
       {/* Expiry Date */}
-      {(selectedQualInfo?.hasExpiry || formData.expiryDate) && (
+      {(selectedQualInfo?.hasExpiry || formData.expiryDate || isEdit) && (
         <div className="space-y-2">
-          <Label className="text-foreground">
+          <Label className="text-foreground text-sm font-medium">
             Expiry Date
             {selectedQualInfo?.expiryYears && (
-              <span className="text-muted-foreground ml-2">
+              <span className="text-muted-foreground ml-2 font-normal">
                 (renews every {selectedQualInfo.expiryYears} years)
               </span>
             )}
@@ -374,16 +402,16 @@ const ElecIdQualifications = () => {
             onChange={(e) =>
               setFormData({ ...formData, expiryDate: e.target.value })
             }
-            className="bg-white/5 border-white/20"
+            className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation"
           />
         </div>
       )}
 
       {/* Certificate Number */}
       <div className="space-y-2">
-        <Label className="text-foreground">
+        <Label className="text-foreground text-sm font-medium">
           Certificate Number
-          <span className="text-muted-foreground ml-2">(optional)</span>
+          <span className="text-muted-foreground ml-2 font-normal">(optional)</span>
         </Label>
         <Input
           value={formData.certificateNumber}
@@ -391,47 +419,55 @@ const ElecIdQualifications = () => {
             setFormData({ ...formData, certificateNumber: e.target.value })
           }
           placeholder="e.g., CG-2382-123456"
-          className="bg-white/5 border-white/20"
+          className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation"
         />
-      </div>
-
-      <div className="flex gap-3 pt-4">
-        <Button
-          variant="outline"
-          className="flex-1 border-white/20"
-          onClick={() => {
-            isEdit ? setIsEditDialogOpen(false) : setIsAddDialogOpen(false);
-            resetForm();
-          }}
-          disabled={isLoading}
-        >
-          Cancel
-        </Button>
-        <Button
-          className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
-          onClick={isEdit ? handleEditQualification : handleAddQualification}
-          disabled={
-            (!isEdit && (!selectedCategory || !selectedQual || !formData.dateAchieved)) ||
-            isLoading
-          }
-        >
-          {isLoading ? (
-            <>
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              {isEdit ? "Saving..." : "Adding..."}
-            </>
-          ) : isEdit ? (
-            "Save Changes"
-          ) : (
-            "Add Qualification"
-          )}
-        </Button>
       </div>
     </div>
   );
 
+  // Form footer with buttons
+  const FormFooter = ({ isEdit = false, onClose }: { isEdit?: boolean; onClose: () => void }) => (
+    <div className="flex gap-3 pt-2">
+      <Button
+        variant="outline"
+        className="flex-1 h-12 rounded-xl border-white/[0.1] touch-manipulation active:scale-[0.98]"
+        onClick={() => {
+          onClose();
+          resetForm();
+        }}
+        disabled={isLoading}
+      >
+        Cancel
+      </Button>
+      <Button
+        className="flex-1 h-12 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation active:scale-[0.98]"
+        onClick={isEdit ? handleEditQualification : handleAddQualification}
+        disabled={
+          (!isEdit && (!selectedCategory || !selectedQual || !formData.dateAchieved)) ||
+          isLoading
+        }
+      >
+        {isLoading ? (
+          <>
+            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+            {isEdit ? "Saving..." : "Adding..."}
+          </>
+        ) : isEdit ? (
+          "Save Changes"
+        ) : (
+          "Add Qualification"
+        )}
+      </Button>
+    </div>
+  );
+
+  // Loading state
+  if (isFetching) {
+    return <QualificationSkeleton />;
+  }
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Delete Confirmation */}
       <ConfirmDeleteDialog
         open={deleteConfirm.open}
@@ -442,156 +478,231 @@ const ElecIdQualifications = () => {
         isLoading={isLoading}
       />
 
-      {/* Edit Dialog */}
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="bg-elec-gray border-white/20 max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-foreground">Edit Qualification</DialogTitle>
-          </DialogHeader>
-          <QualificationForm isEdit />
-        </DialogContent>
-      </Dialog>
-
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h3 className="text-lg font-semibold text-foreground">Your Qualifications</h3>
-          <p className="text-sm text-muted-foreground">
-            {qualifications.length} qualification{qualifications.length !== 1 ? "s" : ""} recorded
-          </p>
-        </div>
-        <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold">
-              <Plus className="h-4 w-4 mr-2" />
-              Add Qualification
-            </Button>
-          </DialogTrigger>
+      {/* Mobile Bottom Sheet for Add */}
+      {isMobile ? (
+        <Drawer.Root open={isAddSheetOpen} onOpenChange={setIsAddSheetOpen}>
+          <Drawer.Portal>
+            <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
+            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[90vh] bg-background rounded-t-[20px] border-t border-white/[0.08]">
+              <div className="flex justify-center pt-3 pb-2">
+                <div className="w-12 h-1.5 rounded-full bg-white/20" />
+              </div>
+              <div className="px-5 pb-2">
+                <h3 className="text-lg font-bold text-foreground">Add Qualification</h3>
+                <p className="text-sm text-muted-foreground">Add a new credential to your profile</p>
+              </div>
+              <div className="flex-1 overflow-y-auto px-5 pb-4">
+                <FormContent />
+              </div>
+              <div className="p-5 border-t border-white/[0.08] bg-background/95 backdrop-blur-sm">
+                <FormFooter onClose={() => setIsAddSheetOpen(false)} />
+              </div>
+            </Drawer.Content>
+          </Drawer.Portal>
+        </Drawer.Root>
+      ) : (
+        <Dialog open={isAddSheetOpen} onOpenChange={setIsAddSheetOpen}>
           <DialogContent className="bg-elec-gray border-white/20 max-w-md">
             <DialogHeader>
               <DialogTitle className="text-foreground">Add Qualification</DialogTitle>
             </DialogHeader>
-            <QualificationForm />
+            <FormContent />
+            <FormFooter onClose={() => setIsAddSheetOpen(false)} />
           </DialogContent>
         </Dialog>
+      )}
+
+      {/* Mobile Bottom Sheet for Edit */}
+      {isMobile ? (
+        <Drawer.Root open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>
+          <Drawer.Portal>
+            <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
+            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[90vh] bg-background rounded-t-[20px] border-t border-white/[0.08]">
+              <div className="flex justify-center pt-3 pb-2">
+                <div className="w-12 h-1.5 rounded-full bg-white/20" />
+              </div>
+              <div className="px-5 pb-2">
+                <h3 className="text-lg font-bold text-foreground">Edit Qualification</h3>
+                <p className="text-sm text-muted-foreground">Update your credential details</p>
+              </div>
+              <div className="flex-1 overflow-y-auto px-5 pb-4">
+                <FormContent isEdit />
+              </div>
+              <div className="p-5 border-t border-white/[0.08] bg-background/95 backdrop-blur-sm">
+                <FormFooter isEdit onClose={() => setIsEditSheetOpen(false)} />
+              </div>
+            </Drawer.Content>
+          </Drawer.Portal>
+        </Drawer.Root>
+      ) : (
+        <Dialog open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>
+          <DialogContent className="bg-elec-gray border-white/20 max-w-md">
+            <DialogHeader>
+              <DialogTitle className="text-foreground">Edit Qualification</DialogTitle>
+            </DialogHeader>
+            <FormContent isEdit />
+            <FormFooter isEdit onClose={() => setIsEditSheetOpen(false)} />
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h3 className="text-lg font-semibold text-foreground">Qualifications</h3>
+          <p className="text-sm text-muted-foreground">
+            {qualifications.length} credential{qualifications.length !== 1 ? "s" : ""} recorded
+          </p>
+        </div>
+        <Button
+          className="h-11 px-4 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold rounded-xl touch-manipulation active:scale-[0.97]"
+          onClick={() => setIsAddSheetOpen(true)}
+        >
+          <Plus className="h-4 w-4 mr-2" />
+          Add
+        </Button>
       </div>
 
       {/* Qualifications List */}
-      <div className="space-y-4">
-        {Object.entries(UK_QUALIFICATIONS).map(([catKey, category]) => {
-          const categoryQuals = qualifications.filter((q) => q.category === catKey);
-          if (categoryQuals.length === 0) return null;
+      {qualifications.length > 0 ? (
+        <div className="space-y-4">
+          {Object.entries(UK_QUALIFICATIONS).map(([catKey, category]) => {
+            const categoryQuals = qualifications.filter((q) => q.category === catKey);
+            if (categoryQuals.length === 0) return null;
 
-          return (
-            <Card key={catKey} className="bg-elec-gray/50 border-white/10 overflow-hidden">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-foreground text-base flex items-center gap-2">
-                  <GraduationCap className="h-5 w-5 text-elec-yellow" />
-                  {category.label}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {categoryQuals.map((qual, index) => {
-                  const expiryStatus = qual.expiryDate
-                    ? getExpiryStatus(qual.expiryDate)
-                    : null;
+            return (
+              <motion.div
+                key={catKey}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-white/[0.04] rounded-2xl border border-white/[0.06] overflow-hidden"
+              >
+                {/* Category Header */}
+                <div className="px-4 py-3 border-b border-white/[0.06] bg-white/[0.02]">
+                  <div className="flex items-center gap-2">
+                    <div className="p-1.5 rounded-lg bg-purple-500/20">
+                      <GraduationCap className="h-4 w-4 text-purple-400" />
+                    </div>
+                    <span className="font-medium text-foreground text-sm">{category.label}</span>
+                    <Badge variant="secondary" className="ml-auto text-[10px] bg-white/10">
+                      {categoryQuals.length}
+                    </Badge>
+                  </div>
+                </div>
 
-                  return (
-                    <div
-                      key={qual.id}
-                      className={cn(
-                        "flex items-start justify-between p-3 rounded-lg bg-white/5 border border-white/10",
-                        "transition-all duration-200 hover:bg-white/10",
-                        "animate-in fade-in slide-in-from-bottom-2"
-                      )}
-                      style={{ animationDelay: `${index * 50}ms` }}
-                    >
-                      <div className="space-y-1 flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-medium text-foreground">
-                            {getQualificationLabel(qual.qualificationValue)}
-                          </span>
-                          {qual.isVerified && (
-                            <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0" />
+                {/* Qualification Cards */}
+                <div className="divide-y divide-white/[0.06]">
+                  {categoryQuals.map((qual, index) => {
+                    const expiryStatus = qual.expiryDate
+                      ? getExpiryStatus(qual.expiryDate)
+                      : null;
+                    const daysUntil = qual.expiryDate ? getDaysUntilExpiry(qual.expiryDate) : null;
+
+                    return (
+                      <motion.button
+                        key={qual.id}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        onClick={() => openEditSheet(qual)}
+                        className="w-full p-4 text-left flex items-start gap-3 hover:bg-white/[0.04] active:bg-white/[0.08] active:scale-[0.99] transition-all touch-manipulation"
+                      >
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="font-medium text-foreground text-[15px]">
+                              {getQualificationLabel(qual.qualificationValue)}
+                            </span>
+                            {qual.isVerified && (
+                              <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0" />
+                            )}
+                          </div>
+
+                          <div className="flex items-center gap-3 text-xs text-muted-foreground mb-2">
+                            <span className="flex items-center gap-1">
+                              <Building2 className="h-3 w-3" />
+                              {qual.awardingBody || "Unknown"}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <Calendar className="h-3 w-3" />
+                              {qual.dateAchieved ? new Date(qual.dateAchieved).toLocaleDateString("en-GB", { month: "short", year: "numeric" }) : "N/A"}
+                            </span>
+                          </div>
+
+                          {expiryStatus && (
+                            <Badge
+                              className={cn(
+                                "text-[10px] font-medium",
+                                expiryStatus.status === "expired"
+                                  ? "bg-red-500/20 text-red-400 border-red-500/30"
+                                  : expiryStatus.status === "expiring"
+                                  ? "bg-orange-500/20 text-orange-400 border-orange-500/30"
+                                  : "bg-green-500/20 text-green-400 border-green-500/30"
+                              )}
+                            >
+                              <Clock className="h-3 w-3 mr-1" />
+                              {expiryStatus.status === "expired"
+                                ? "Expired"
+                                : expiryStatus.status === "expiring"
+                                ? `${daysUntil} days left`
+                                : "Valid"}
+                            </Badge>
                           )}
                         </div>
-                        <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
-                          <span className="flex items-center gap-1">
-                            <Building2 className="h-3 w-3" />
-                            {qual.awardingBody}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Calendar className="h-3 w-3" />
-                            {new Date(qual.dateAchieved).toLocaleDateString("en-GB")}
-                          </span>
-                        </div>
-                        {qual.certificateNumber && (
-                          <p className="text-xs text-muted-foreground font-mono">
-                            {qual.certificateNumber}
-                          </p>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2 flex-shrink-0 ml-2">
-                        {expiryStatus && (
-                          <Badge
-                            className={cn(
-                              "text-xs",
-                              expiryStatus.status === "expired"
-                                ? "bg-red-500/20 text-red-400 border-red-500/30"
-                                : expiryStatus.status === "expiring"
-                                ? "bg-orange-500/20 text-orange-400 border-orange-500/30"
-                                : "bg-green-500/20 text-green-400 border-green-500/30"
-                            )}
-                          >
-                            <Clock className="h-3 w-3 mr-1" />
-                            {expiryStatus.label}
-                          </Badge>
-                        )}
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 hover:bg-white/10"
-                          onClick={() => openEditDialog(qual)}
-                          aria-label="Edit qualification"
-                        >
-                          <Edit2 className="h-4 w-4 text-muted-foreground" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 hover:bg-red-500/10"
-                          onClick={() => setDeleteConfirm({ open: true, id: qual.id })}
-                          aria-label="Delete qualification"
-                        >
-                          <Trash2 className="h-4 w-4 text-red-400" />
-                        </Button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
 
-      {qualifications.length === 0 && (
-        <Card className="bg-elec-gray/50 border-white/10">
-          <CardContent className="py-12 text-center">
-            <GraduationCap className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h4 className="text-lg font-medium text-foreground mb-2">No qualifications yet</h4>
-            <p className="text-muted-foreground mb-4">
-              Add your electrical qualifications to build your professional profile.
-            </p>
+                        <div className="flex items-center gap-1">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-9 w-9 rounded-xl hover:bg-red-500/10"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setDeleteConfirm({ open: true, id: qual.id });
+                            }}
+                            aria-label="Delete qualification"
+                          >
+                            <Trash2 className="h-4 w-4 text-red-400" />
+                          </Button>
+                          <ChevronRight className="h-5 w-5 text-white/20" />
+                        </div>
+                      </motion.button>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      ) : (
+        /* Empty State */
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-gradient-to-br from-white/[0.06] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 text-center"
+        >
+          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center">
+            <GraduationCap className="h-8 w-8 text-purple-400" />
+          </div>
+          <h4 className="text-lg font-semibold text-foreground mb-2">No qualifications yet</h4>
+          <p className="text-sm text-muted-foreground mb-6 max-w-xs mx-auto">
+            Add your electrical qualifications to build your verified professional profile.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button
-              className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
-              onClick={() => setIsAddDialogOpen(true)}
+              className="h-12 px-6 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold rounded-xl touch-manipulation active:scale-[0.97]"
+              onClick={() => setIsAddSheetOpen(true)}
             >
               <Plus className="h-4 w-4 mr-2" />
-              Add Your First Qualification
+              Add Qualification
             </Button>
-          </CardContent>
-        </Card>
+            <Button
+              variant="outline"
+              className="h-12 px-6 border-white/[0.1] rounded-xl touch-manipulation active:scale-[0.97]"
+            >
+              <Camera className="h-4 w-4 mr-2" />
+              Scan Certificate
+            </Button>
+          </div>
+        </motion.div>
       )}
     </div>
   );

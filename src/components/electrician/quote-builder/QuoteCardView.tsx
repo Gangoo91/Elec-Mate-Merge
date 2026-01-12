@@ -1,11 +1,12 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Download, Eye, Calendar, Check, X, Receipt, User, ArrowRight, CheckCheck, Trash2 } from 'lucide-react';
+import { Download, Eye, Calendar, Check, X, Receipt, User, ArrowRight, CheckCheck, Trash2, RefreshCw, Send } from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { format } from 'date-fns';
 import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
 import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 interface QuoteCardViewProps {
   quotes: Quote[];
@@ -49,7 +50,8 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
     if (hasInvoiceRaised(quote)) {
       return {
         color: 'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300',
-        label: '🧾 Invoiced',
+        borderColor: 'border-l-blue-500',
+        label: 'Invoiced',
         icon: Receipt
       };
     }
@@ -57,8 +59,9 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
     // Work complete + Accepted = Ready to invoice
     if (isWorkComplete(quote) && quote.acceptance_status === 'accepted') {
       return {
-        color: 'bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-300 animate-pulse',
-        label: '✅ Ready to Invoice',
+        color: 'bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-300',
+        borderColor: 'border-l-green-500',
+        label: 'Ready to Invoice',
         icon: CheckCheck
       };
     }
@@ -67,7 +70,8 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
     if (quote.acceptance_status === 'accepted' && !isWorkComplete(quote)) {
       return {
         color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300',
-        label: '🟢 Approved - Work Pending',
+        borderColor: 'border-l-green-500',
+        label: 'Approved',
         icon: Check
       };
     }
@@ -75,9 +79,10 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
     // Sent + Awaiting response
     if (quote.status === 'sent' && quote.acceptance_status !== 'accepted' && quote.acceptance_status !== 'rejected') {
       return {
-        color: 'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300',
-        label: '🔵 Sent - Awaiting Client',
-        icon: ArrowRight
+        color: 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
+        borderColor: 'border-l-amber-500',
+        label: 'Sent',
+        icon: Send
       };
     }
 
@@ -85,7 +90,8 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
     if (quote.acceptance_status === 'rejected') {
       return {
         color: 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300',
-        label: '🔴 Declined',
+        borderColor: 'border-l-red-500',
+        label: 'Declined',
         icon: X
       };
     }
@@ -93,22 +99,31 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
     // Draft
     if (quote.status === 'draft') {
       return {
-        color: 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
-        label: '🟡 Ready to Send to Client',
-        icon: ArrowRight
+        color: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300',
+        borderColor: 'border-l-muted-foreground/40',
+        label: 'Draft',
+        icon: Eye
       };
     }
 
     // Default
     return {
       color: 'bg-slate-100 text-slate-700 dark:bg-slate-950 dark:text-slate-300',
+      borderColor: 'border-l-muted-foreground/40',
       label: quote.status,
       icon: Eye
     };
   };
 
+  // Check if quote can be resent (sent but not yet accepted/rejected)
+  const canResend = (quote: Quote) => {
+    return quote.status === 'sent' &&
+           quote.acceptance_status !== 'accepted' &&
+           quote.acceptance_status !== 'rejected';
+  };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
       {quotes.map((quote) => {
         const statusInfo = getStatusInfo(quote);
         const StatusIcon = statusInfo.icon;
@@ -117,13 +132,10 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
           <div
             key={quote.id}
             id={`quote-${quote.id}`}
-            className={`relative bg-elec-gray/50 rounded-xl overflow-hidden hover:bg-elec-gray/70 transition-all border ${
-              quote.acceptance_status === 'accepted'
-                ? 'border-green-500/30 border-l-4 border-l-green-500'
-                : quote.acceptance_status === 'rejected'
-                  ? 'border-red-500/30 border-l-4 border-l-red-500'
-                  : 'border-border/50 border-l-4 border-l-elec-yellow'
-            }`}
+            className={cn(
+              "relative bg-card rounded-xl overflow-hidden transition-all border border-border/50 border-l-4 min-h-[80px]",
+              statusInfo.borderColor
+            )}
           >
             {/* Content Container */}
             <div className="relative p-4">
@@ -205,12 +217,14 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                   </button>
                 </div>
 
-                {/* Send Options */}
-                <QuoteSendDropdown
-                  quote={quote}
-                  onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
-                  disabled={!quote.client?.email}
-                />
+                {/* Send Options - Only for non-sent quotes */}
+                {!canResend(quote) && (
+                  <QuoteSendDropdown
+                    quote={quote}
+                    onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
+                    disabled={!quote.client?.email}
+                  />
+                )}
 
                 {/* Conditional Action Buttons */}
                 {quote.acceptance_status === 'accepted' && !isWorkComplete(quote) && !hasInvoiceRaised(quote) && onMarkWorkComplete && (
@@ -224,24 +238,36 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                   </button>
                 )}
 
-                {quote.status === 'sent' && quote.acceptance_status !== 'accepted' && quote.acceptance_status !== 'rejected' && (
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleActionClick(quote, 'accept')}
-                      disabled={loadingAction === `action-${quote.id}`}
-                      className="flex-1 h-10 bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 text-green-500 rounded-lg flex items-center justify-center gap-1.5 text-xs font-medium disabled:opacity-50"
-                    >
-                      <Check className="h-3.5 w-3.5" />
-                      Accept
-                    </button>
-                    <button
-                      onClick={() => handleActionClick(quote, 'reject')}
-                      disabled={loadingAction === `action-${quote.id}`}
-                      className="flex-1 h-10 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-500 rounded-lg flex items-center justify-center gap-1.5 text-xs font-medium disabled:opacity-50"
-                    >
-                      <X className="h-3.5 w-3.5" />
-                      Reject
-                    </button>
+                {/* Resend + Accept/Reject for sent quotes awaiting response */}
+                {canResend(quote) && (
+                  <div className="space-y-2">
+                    {/* Prominent Resend Button */}
+                    <QuoteSendDropdown
+                      quote={quote}
+                      onSuccess={() => handleStatusUpdate(quote.id, 'sent')}
+                      disabled={!quote.client?.email}
+                      variant="resend"
+                    />
+
+                    {/* Accept/Reject if you have response from client */}
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleActionClick(quote, 'accept')}
+                        disabled={loadingAction === `action-${quote.id}`}
+                        className="flex-1 h-10 bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 text-green-500 rounded-lg flex items-center justify-center gap-1.5 text-xs font-medium disabled:opacity-50 touch-manipulation"
+                      >
+                        <Check className="h-3.5 w-3.5" />
+                        Accept
+                      </button>
+                      <button
+                        onClick={() => handleActionClick(quote, 'reject')}
+                        disabled={loadingAction === `action-${quote.id}`}
+                        className="flex-1 h-10 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-500 rounded-lg flex items-center justify-center gap-1.5 text-xs font-medium disabled:opacity-50 touch-manipulation"
+                      >
+                        <X className="h-3.5 w-3.5" />
+                        Reject
+                      </button>
+                    </div>
                   </div>
                 )}
 

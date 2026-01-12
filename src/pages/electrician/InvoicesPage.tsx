@@ -346,7 +346,7 @@ const InvoicesPage = () => {
 
   return (
     <VoiceFormProvider>
-      <div className="min-h-screen bg-background pb-24">
+      <div className="min-h-screen bg-background pb-safe pt-safe">
         <Helmet>
           <title>Invoices | Elec-Mate</title>
           <meta name="description" content="Manage all your electrical invoices. Track drafts, sent invoices, payments and overdue invoices." />
@@ -359,7 +359,7 @@ const InvoicesPage = () => {
             {/* Back Button */}
             <button
               onClick={() => navigate('/electrician')}
-              className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-95 transition-all -ml-1"
+              className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation -ml-1"
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
@@ -396,22 +396,21 @@ const InvoicesPage = () => {
                 <h1 className="flex-1 text-lg font-bold">Invoices</h1>
                 <Button
                   onClick={() => navigate('/electrician/invoice-builder/create')}
-                  size="sm"
-                  className="bg-emerald-500 text-white hover:bg-emerald-600 gap-1.5 h-9 px-3"
+                  className="bg-emerald-500 text-white hover:bg-emerald-600 gap-1.5 h-11 px-3 touch-manipulation active:scale-[0.98]"
                 >
                   <Plus className="h-4 w-4" />
                   <span className="hidden sm:inline">New Invoice</span>
                 </Button>
                 <button
                   onClick={() => setIsSearchOpen(true)}
-                  className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-95 transition-all"
+                  className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation"
                 >
                   <Search className="h-5 w-5" />
                 </button>
                 <button
                   onClick={handleRefresh}
                   disabled={isRefreshing}
-                  className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-95 transition-all disabled:opacity-50"
+                  className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
                 >
                   <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
                 </button>
@@ -426,7 +425,7 @@ const InvoicesPage = () => {
                 key={filter.id}
                 onClick={() => handleFilterChange(filter.id)}
                 className={cn(
-                  "shrink-0 h-9 px-4 rounded-full text-sm font-medium transition-all active:scale-95",
+                  "shrink-0 h-11 px-4 rounded-full text-sm font-medium transition-all active:scale-[0.98] touch-manipulation",
                   activeFilter === filter.id
                     ? "bg-emerald-500 text-white"
                     : "bg-elec-gray/50 text-foreground hover:bg-elec-gray"
@@ -559,17 +558,6 @@ const InvoicesPage = () => {
             )}
           </section>
         </main>
-
-        {/* Floating Action Button - New Invoice */}
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30">
-          <Button
-            onClick={() => navigate('/electrician/invoice-builder/create')}
-            className="h-14 px-6 rounded-full bg-emerald-500 text-white hover:bg-emerald-600 shadow-2xl shadow-emerald-500/30 font-semibold text-base gap-2 active:scale-95 transition-transform"
-          >
-            <Plus className="h-5 w-5" />
-            New Invoice
-          </Button>
-        </div>
 
         {/* Voice Assistant */}
         <ElectricianVoiceAssistant

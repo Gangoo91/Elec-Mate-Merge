@@ -8,19 +8,20 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator,
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
-import { Mail, MessageCircle, Loader2, MailOpen } from 'lucide-react';
+import { Mail, MessageCircle, Loader2, MailOpen, RefreshCw } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 interface QuoteSendDropdownProps {
   quote: Quote;
   onSuccess?: () => void;
   disabled?: boolean;
   className?: string;
+  variant?: 'default' | 'resend';
 }
 
 export const QuoteSendDropdown = ({
@@ -28,6 +29,7 @@ export const QuoteSendDropdown = ({
   onSuccess,
   disabled = false,
   className = '',
+  variant = 'default',
 }: QuoteSendDropdownProps) => {
   const navigate = useNavigate();
   const [isSendingEmail, setIsSendingEmail] = useState(false);
@@ -673,89 +675,81 @@ ${companyName}`;
 
   const isLoading = isSendingEmail || isSharingWhatsApp || isGeneratingMailtoLink;
 
+  const isResendVariant = variant === 'resend';
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="outline"
+          variant={isResendVariant ? "default" : "outline"}
           size="sm"
           disabled={disabled || isLoading}
-          className="flex-1 text-xs border border-elec-yellow/20 hover:bg-elec-yellow/10"
+          className={cn(
+            "flex-1 text-xs touch-manipulation",
+            isResendVariant
+              ? "h-10 bg-amber-500 hover:bg-amber-600 text-black font-semibold gap-1.5"
+              : "border border-elec-yellow/20 hover:bg-elec-yellow/10"
+          )}
         >
           {isLoading ? (
             <>
-              <Loader2 className="mr-1 h-3 w-3 animate-spin" />
+              <Loader2 className="h-3.5 w-3.5 animate-spin" />
               {isSendingEmail ? 'Sending...' : isGeneratingMailtoLink ? 'Preparing...' : 'Loading...'}
+            </>
+          ) : isResendVariant ? (
+            <>
+              <RefreshCw className="h-3.5 w-3.5" />
+              Resend Quote
             </>
           ) : (
             <>
-              <Mail className="mr-1 h-3 w-3" />
+              <Mail className="h-3 w-3" />
               Send
             </>
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="center" className="w-64 bg-background border-border shadow-lg z-50" sideOffset={8}>
-        <DropdownMenuLabel className="text-xs text-muted-foreground">
-          Send Options
+      <DropdownMenuContent
+        align="center"
+        className="w-64 bg-card/95 backdrop-blur-lg border border-border/50 shadow-2xl rounded-2xl z-50 p-2"
+        sideOffset={8}
+      >
+        <DropdownMenuLabel className="text-[10px] font-semibold text-muted-foreground px-3 py-2 uppercase tracking-wider">
+          {isResendVariant ? 'Resend Quote' : 'Send Quote'}
         </DropdownMenuLabel>
-        <DropdownMenuItem
-          onClick={() => handleSendEmail(true)}
-          disabled={isSendingEmail}
-          className="cursor-pointer"
-        >
-          {isSendingEmail ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <Mail className="mr-2 h-4 w-4" />
-          )}
-          <div className="flex flex-col">
-            <span>Send via Gmail (use existing PDF)</span>
-            <span className="text-xs text-muted-foreground">Send the PDF you generated</span>
-          </div>
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => handleSendEmail(false)}
-          disabled={isSendingEmail}
-          className="cursor-pointer"
-        >
-          {isSendingEmail ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <Mail className="mr-2 h-4 w-4" />
-          )}
-          <div className="flex flex-col">
-            <span>Send via Gmail (generate fresh PDF)</span>
-            <span className="text-xs text-muted-foreground">Auto-generate and send new PDF</span>
-          </div>
-        </DropdownMenuItem>
         <DropdownMenuItem
           onClick={handleSendViaEmailClient}
           disabled={isGeneratingMailtoLink}
-          className="cursor-pointer"
+          className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-blue-500/10 touch-manipulation"
         >
-          {isGeneratingMailtoLink ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <MailOpen className="mr-2 h-4 w-4" />
-          )}
+          <div className="h-10 w-10 rounded-xl bg-blue-500/15 flex items-center justify-center mr-3 flex-shrink-0">
+            {isGeneratingMailtoLink ? (
+              <Loader2 className="h-5 w-5 animate-spin text-blue-500" />
+            ) : (
+              <MailOpen className="h-5 w-5 text-blue-500" />
+            )}
+          </div>
           <div className="flex flex-col">
-            <span>Send via My Email App</span>
-            <span className="text-xs text-muted-foreground">Opens your email client</span>
+            <span className="font-semibold text-sm">Send via Email</span>
+            <span className="text-xs text-muted-foreground">Opens your email app</span>
           </div>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={handleShareWhatsApp}
           disabled={isSharingWhatsApp}
-          className="cursor-pointer"
+          className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-green-500/10 touch-manipulation"
         >
-          {isSharingWhatsApp ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <MessageCircle className="mr-2 h-4 w-4" />
-          )}
-          <span>Share via WhatsApp</span>
+          <div className="h-10 w-10 rounded-xl bg-green-500/15 flex items-center justify-center mr-3 flex-shrink-0">
+            {isSharingWhatsApp ? (
+              <Loader2 className="h-5 w-5 animate-spin text-green-500" />
+            ) : (
+              <MessageCircle className="h-5 w-5 text-green-500" />
+            )}
+          </div>
+          <div className="flex flex-col">
+            <span className="font-semibold text-sm">Share via WhatsApp</span>
+            <span className="text-xs text-muted-foreground">Send with PDF link</span>
+          </div>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

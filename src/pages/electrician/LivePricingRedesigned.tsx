@@ -18,7 +18,7 @@ import {
   Clock,
   AlertTriangle
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { useLiveMetalPrices } from "@/hooks/useLiveMetalPrices";
 import { useToast } from "@/hooks/use-toast";
@@ -121,7 +121,9 @@ const EnhancedSearchBox = ({
 const LivePricingRedesigned = () => {
   const { data, isLoading, refreshPrices } = useLiveMetalPrices();
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState("regional");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "regional";
+  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const [searchQuery, setSearchQuery] = useState("");
   
   // Mock data for enhanced features

@@ -259,18 +259,18 @@ export function EvidenceSection() {
         <div className="grid grid-cols-3 gap-3">
           <button
             onClick={handleCameraCapture}
-            className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-elec-yellow/10 border-2 border-elec-yellow/20 hover:border-elec-yellow/40 active:scale-95 transition-all"
+            className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-elec-yellow/10 border-2 border-elec-yellow/20 hover:border-elec-yellow/40 active:scale-95 transition-all touch-manipulation min-h-[100px]"
           >
-            <div className="h-12 w-12 rounded-full bg-elec-yellow flex items-center justify-center">
+            <div className="h-14 w-14 rounded-full bg-elec-yellow flex items-center justify-center">
               <Camera className="h-6 w-6 text-black" />
             </div>
             <span className="text-xs font-medium text-foreground">Camera</span>
           </button>
           <button
             onClick={handleFileUpload}
-            className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-blue-500/10 border-2 border-blue-500/20 hover:border-blue-500/40 active:scale-95 transition-all"
+            className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-blue-500/10 border-2 border-blue-500/20 hover:border-blue-500/40 active:scale-95 transition-all touch-manipulation min-h-[100px]"
           >
-            <div className="h-12 w-12 rounded-full bg-blue-500 flex items-center justify-center">
+            <div className="h-14 w-14 rounded-full bg-blue-500 flex items-center justify-center">
               <Upload className="h-6 w-6 text-white" />
             </div>
             <span className="text-xs font-medium text-foreground">Upload</span>
@@ -280,9 +280,9 @@ export function EvidenceSection() {
               setCaptureMode('link');
               setShowUpload(true);
             }}
-            className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-green-500/10 border-2 border-green-500/20 hover:border-green-500/40 active:scale-95 transition-all"
+            className="flex flex-col items-center gap-2 p-4 rounded-2xl bg-green-500/10 border-2 border-green-500/20 hover:border-green-500/40 active:scale-95 transition-all touch-manipulation min-h-[100px]"
           >
-            <div className="h-12 w-12 rounded-full bg-green-500 flex items-center justify-center">
+            <div className="h-14 w-14 rounded-full bg-green-500 flex items-center justify-center">
               <Link2 className="h-6 w-6 text-white" />
             </div>
             <span className="text-xs font-medium text-foreground">Link</span>
@@ -341,7 +341,7 @@ export function EvidenceSection() {
           <button
             onClick={() => setSelectedCategory(null)}
             className={cn(
-              'px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all active:scale-95',
+              'px-4 h-9 rounded-full text-xs font-medium whitespace-nowrap transition-all active:scale-95 touch-manipulation',
               !selectedCategory
                 ? 'bg-elec-yellow text-black'
                 : 'bg-muted text-muted-foreground'
@@ -354,7 +354,7 @@ export function EvidenceSection() {
               key={cat}
               onClick={() => setSelectedCategory(cat)}
               className={cn(
-                'px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all active:scale-95',
+                'px-4 h-9 rounded-full text-xs font-medium whitespace-nowrap transition-all active:scale-95 touch-manipulation',
                 selectedCategory === cat
                   ? 'bg-elec-yellow text-black'
                   : 'bg-muted text-muted-foreground'
@@ -418,7 +418,7 @@ export function EvidenceSection() {
                       </div>
 
                       {/* Actions */}
-                      <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
+                      <Button variant="ghost" size="icon" className="h-10 w-10 shrink-0 touch-manipulation">
                         <MoreVertical className="h-4 w-4" />
                       </Button>
                     </div>
@@ -432,7 +432,7 @@ export function EvidenceSection() {
 
       {/* Upload Sheet */}
       <Sheet open={showUpload} onOpenChange={setShowUpload}>
-        <SheetContent side="bottom" className="h-[90vh] rounded-t-3xl">
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl">
           <div className="w-12 h-1 bg-muted rounded-full mx-auto mb-4" />
           <SheetHeader>
             <SheetTitle>Add Evidence</SheetTitle>
@@ -542,18 +542,18 @@ export function EvidenceSection() {
             </Card>
 
             {/* Actions */}
-            <div className="flex gap-3 pt-4 pb-8">
+            <div className="flex gap-3 pt-4 pb-20 sm:pb-8">
               <Button
                 variant="outline"
                 onClick={() => setShowUpload(false)}
-                className="flex-1 h-12"
+                className="flex-1 h-12 touch-manipulation active:scale-95"
               >
                 Cancel
               </Button>
               <Button
                 onClick={handleSubmit}
                 disabled={isUploading}
-                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
               >
                 {isUploading ? (
                   <>

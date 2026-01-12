@@ -74,14 +74,14 @@ export default function OJTHub() {
   const { entries, totalTime, addTimeEntry, isLoading: entriesLoading } = useTimeEntries();
   const { otjGoal, isLoading: complianceLoading } = useComplianceTracking();
 
-  // Sync URL with active section
+  // Sync URL with active section - use replace: false to create history entries for back button
   useEffect(() => {
     if (activeSection === 'home') {
       searchParams.delete('section');
     } else {
       searchParams.set('section', activeSection);
     }
-    setSearchParams(searchParams, { replace: true });
+    setSearchParams(searchParams, { replace: false });
   }, [activeSection]);
 
   // Sync active section with URL on mount
@@ -231,7 +231,7 @@ export default function OJTHub() {
                   });
                 }}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -301,17 +301,17 @@ export default function OJTHub() {
             </div>
 
             {/* Actions */}
-            <div className="flex gap-3 pt-4 pb-8">
+            <div className="flex gap-3 pt-4 pb-20 sm:pb-8">
               <Button
                 variant="outline"
                 onClick={() => setShowQuickLog(false)}
-                className="flex-1 h-12 touch-manipulation"
+                className="flex-1 h-12 touch-manipulation active:scale-95"
               >
                 Cancel
               </Button>
               <Button
                 onClick={handleSubmitQuickLog}
-                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
+                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
               >
                 Log Time
               </Button>

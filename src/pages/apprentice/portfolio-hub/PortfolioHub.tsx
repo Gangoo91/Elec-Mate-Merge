@@ -48,14 +48,14 @@ export default function PortfolioHub() {
     isLoading: complianceLoading,
   } = useComplianceTracking();
 
-  // Sync URL with active section
+  // Sync URL with active section - use replace: false to create history entries for back button
   useEffect(() => {
     if (activeSection === 'home') {
       searchParams.delete('section');
     } else {
       searchParams.set('section', activeSection);
     }
-    setSearchParams(searchParams, { replace: true });
+    setSearchParams(searchParams, { replace: false });
   }, [activeSection]);
 
   // Sync active section with URL on mount

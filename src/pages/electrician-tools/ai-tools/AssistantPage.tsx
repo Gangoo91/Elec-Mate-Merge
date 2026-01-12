@@ -11,7 +11,7 @@ const AssistantPage = () => {
       <header className="shrink-0 px-4 py-2 pt-safe border-b border-border/50 bg-background/95 backdrop-blur-sm">
         <button
           onClick={() => navigate('/electrician-tools/ai-tooling')}
-          className="flex items-center gap-2 text-muted-foreground hover:text-foreground active:opacity-70 transition-all touch-manipulation"
+          className="flex items-center gap-2 text-muted-foreground hover:text-foreground active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
         >
           <ArrowLeft className="h-5 w-5" />
           <span className="text-sm">Back</span>

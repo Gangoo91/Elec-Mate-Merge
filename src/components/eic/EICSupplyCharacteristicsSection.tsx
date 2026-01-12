@@ -1,11 +1,10 @@
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Power } from 'lucide-react';
-import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
-import { SectionHeader } from '@/components/ui/section-header';
-import InputWithValidation from './InputWithValidation';
+import { Zap, AlertCircle } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import SectionHeader from '@/components/ui/section-header';
 
 interface EICSupplyCharacteristicsSectionProps {
   formData: any;
@@ -17,7 +16,7 @@ interface EICSupplyCharacteristicsSectionProps {
 const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionProps> = ({ formData, onUpdate, isOpen, onToggle }) => {
   const handlePhasesChange = (value: string) => {
     onUpdate('phases', value);
-    
+
     // Auto-set supply voltage based on phases
     if (value === 'single' && formData.supplyVoltage !== '230V') {
       onUpdate('supplyVoltage', '230V');
@@ -28,7 +27,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
 
   const handleEarthingArrangementChange = (value: string) => {
     onUpdate('earthingArrangement', value);
-    
+
     // Auto-set PME status based on earthing arrangement
     if (value === 'tncs' && formData.supplyPME !== 'yes') {
       onUpdate('supplyPME', 'yes');
@@ -37,107 +36,129 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
     }
   };
 
+  // Calculate completion percentage
+  const getCompletionPercentage = () => {
+    const requiredFields = ['supplyVoltage', 'phases', 'earthingArrangement'];
+    const filled = requiredFields.filter(f => formData[f]).length;
+    return Math.round((filled / requiredFields.length) * 100);
+  };
+
   return (
-    <Card className="border border-border bg-card overflow-hidden">
+    <div className="eicr-section-card">
       <Collapsible open={isOpen} onOpenChange={onToggle}>
-        <SectionHeader 
-          title="Supply Characteristics" 
-          icon={Power}
-          isOpen={isOpen}
-          color="amber-500"
-        />
-        <CollapsibleContent>
-          <CardContent className="space-y-6 p-4 sm:p-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <Label htmlFor="supplyVoltage" className="font-medium text-sm">Supply Voltage *</Label>
-            <Select
-              value={formData.supplyVoltage || ''}
-              onValueChange={(value) => onUpdate('supplyVoltage', value)}
-            >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="Select voltage" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="230V">230V (Single Phase)</SelectItem>
-                <SelectItem value="400V">400V (Three Phase)</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <InputWithValidation
-            id="supplyFrequency"
-            label="Frequency (Hz)"
-            value={formData.supplyFrequency || '50'}
-            onChange={(value) => onUpdate('supplyFrequency', value)}
-            placeholder="50"
-            type="number"
-            helpText="Typically 50Hz in the UK"
+        <CollapsibleTrigger className="w-full">
+          <SectionHeader
+            title="Supply Characteristics"
+            icon={Zap}
+            isOpen={isOpen}
+            color="yellow-500"
+            completionPercentage={getCompletionPercentage()}
           />
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <div className="p-4 sm:p-5 md:p-6 space-y-5 sm:space-y-6">
+            {/* Voltage & Frequency */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="supplyVoltage" className="text-sm">Supply Voltage *</Label>
+                <Select
+                  value={formData.supplyVoltage || ''}
+                  onValueChange={(value) => onUpdate('supplyVoltage', value)}
+                >
+                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                    <SelectValue placeholder="Select voltage" />
+                  </SelectTrigger>
+                  <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                    <SelectItem value="230V">230V (Single Phase)</SelectItem>
+                    <SelectItem value="400V">400V (Three Phase)</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-          <div>
-            <Label htmlFor="phases" className="font-medium text-sm">Number of Phases *</Label>
-            <Select
-              value={formData.phases || ''}
-              onValueChange={handlePhasesChange}
-            >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="Select phases" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="single">Single Phase</SelectItem>
-                <SelectItem value="three">Three Phase</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+              <div className="space-y-2">
+                <Label htmlFor="supplyFrequency" className="text-sm">Frequency (Hz)</Label>
+                <Input
+                  id="supplyFrequency"
+                  type="number"
+                  value={formData.supplyFrequency || '50'}
+                  onChange={(e) => onUpdate('supplyFrequency', e.target.value)}
+                  placeholder="50"
+                  className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                />
+                <p className="text-xs text-white/50">Typically 50Hz in the UK</p>
+              </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="earthingArrangement" className="font-medium text-sm">Earthing Arrangement *</Label>
-            <Select
-              value={formData.earthingArrangement || ''}
-              onValueChange={handleEarthingArrangementChange}
-            >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="Select earthing type" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="tncs">TN-C-S (PME)</SelectItem>
-                <SelectItem value="tns">TN-S</SelectItem>
-                <SelectItem value="tt">TT</SelectItem>
-                <SelectItem value="it">IT</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="phases" className="text-sm">Number of Phases *</Label>
+                <Select
+                  value={formData.phases || ''}
+                  onValueChange={handlePhasesChange}
+                >
+                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                    <SelectValue placeholder="Select phases" />
+                  </SelectTrigger>
+                  <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                    <SelectItem value="single">Single Phase</SelectItem>
+                    <SelectItem value="three">Three Phase</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
 
-          <div>
-            <Label htmlFor="supplyPME" className="font-medium text-sm">Supply PME</Label>
-            <Select
-              value={formData.supplyPME || ''}
-              onValueChange={(value) => onUpdate('supplyPME', value)}
-            >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="PME status" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="yes">Yes</SelectItem>
-                <SelectItem value="no">No</SelectItem>
-                <SelectItem value="unknown">Unknown</SelectItem>
-              </SelectContent>
-            </Select>
-            {formData.earthingArrangement === 'tncs' && formData.supplyPME !== 'yes' && (
-              <p className="text-xs text-amber-600 mt-1">
-                TN-C-S systems typically have PME
-              </p>
-            )}
+            {/* Earthing */}
+            <div className="space-y-4">
+              <h4 className="text-sm font-semibold text-green-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
+                Earthing Arrangement
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="earthingArrangement" className="text-sm">Earthing Type *</Label>
+                  <Select
+                    value={formData.earthingArrangement || ''}
+                    onValueChange={handleEarthingArrangementChange}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-green-500 focus:ring-green-500 data-[state=open]:border-green-500 data-[state=open]:ring-2">
+                      <SelectValue placeholder="Select earthing type" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                      <SelectItem value="tncs">TN-C-S (PME)</SelectItem>
+                      <SelectItem value="tns">TN-S</SelectItem>
+                      <SelectItem value="tt">TT</SelectItem>
+                      <SelectItem value="it">IT</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="supplyPME" className="text-sm">Supply PME</Label>
+                  <Select
+                    value={formData.supplyPME || ''}
+                    onValueChange={(value) => onUpdate('supplyPME', value)}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-green-500 focus:ring-green-500 data-[state=open]:border-green-500 data-[state=open]:ring-2">
+                      <SelectValue placeholder="PME status" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                      <SelectItem value="yes">Yes</SelectItem>
+                      <SelectItem value="no">No</SelectItem>
+                      <SelectItem value="unknown">Unknown</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {formData.earthingArrangement === 'tncs' && formData.supplyPME !== 'yes' && (
+                    <p className="text-xs text-amber-400 mt-1 flex items-center gap-1">
+                      <AlertCircle className="h-3 w-3" />
+                      TN-C-S systems typically have PME
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-          </CardContent>
         </CollapsibleContent>
       </Collapsible>
-    </Card>
+    </div>
   );
 };
 

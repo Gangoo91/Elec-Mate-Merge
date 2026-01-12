@@ -59,10 +59,10 @@ export function ApprenticeHubNav({
             onClick={onCapture}
             className={cn(
               'flex items-center gap-2',
-              'px-4 py-2.5 rounded-xl',
+              'px-4 h-11 rounded-xl',
               'bg-elec-yellow text-black font-semibold text-sm',
               'hover:bg-elec-yellow/90 active:scale-95',
-              'transition-all shadow-sm'
+              'transition-all shadow-sm touch-manipulation'
             )}
           >
             <Plus className="h-4 w-4" strokeWidth={2.5} />
@@ -90,8 +90,8 @@ function TabButton({
     <button
       onClick={onClick}
       className={cn(
-        'flex items-center gap-2 px-4 py-2 rounded-lg',
-        'text-sm font-medium transition-all active:scale-95',
+        'flex items-center gap-2 px-4 h-11 rounded-lg',
+        'text-sm font-medium transition-all active:scale-95 touch-manipulation',
         active
           ? 'bg-background text-elec-yellow shadow-sm'
           : 'text-muted-foreground hover:text-foreground'

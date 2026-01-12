@@ -1,14 +1,18 @@
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, Clock, Settings, Users, RefreshCcw } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
 
 const ScheduleManager = () => {
-  const [activeTab, setActiveTab] = useState("calendar");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "calendar";
+
+  const setActiveTab = (tab: string) => {
+    setSearchParams({ tab }, { replace: false });
+  };
 
   const handleAction = (action: string) => {
     toast({

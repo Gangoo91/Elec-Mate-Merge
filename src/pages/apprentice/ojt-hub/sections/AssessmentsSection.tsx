@@ -211,7 +211,7 @@ export function AssessmentsSection() {
           <button
             onClick={() => setSelectedFilter(null)}
             className={cn(
-              "p-3 rounded-xl border text-center transition-all active:scale-95",
+              "p-3 rounded-xl border text-center transition-all active:scale-95 touch-manipulation min-h-[60px]",
               !selectedFilter
                 ? "border-elec-yellow/50 bg-elec-yellow/10"
                 : "border-border bg-card"
@@ -223,7 +223,7 @@ export function AssessmentsSection() {
           <button
             onClick={() => setSelectedFilter('completed')}
             className={cn(
-              "p-3 rounded-xl border text-center transition-all active:scale-95",
+              "p-3 rounded-xl border text-center transition-all active:scale-95 touch-manipulation min-h-[60px]",
               selectedFilter === 'completed'
                 ? "border-green-500/50 bg-green-500/10"
                 : "border-border bg-card"
@@ -235,7 +235,7 @@ export function AssessmentsSection() {
           <button
             onClick={() => setSelectedFilter('in_progress')}
             className={cn(
-              "p-3 rounded-xl border text-center transition-all active:scale-95",
+              "p-3 rounded-xl border text-center transition-all active:scale-95 touch-manipulation min-h-[60px]",
               selectedFilter === 'in_progress'
                 ? "border-blue-500/50 bg-blue-500/10"
                 : "border-border bg-card"
@@ -247,7 +247,7 @@ export function AssessmentsSection() {
           <button
             onClick={() => setSelectedFilter('overdue')}
             className={cn(
-              "p-3 rounded-xl border text-center transition-all active:scale-95",
+              "p-3 rounded-xl border text-center transition-all active:scale-95 touch-manipulation min-h-[60px]",
               selectedFilter === 'overdue'
                 ? "border-red-500/50 bg-red-500/10"
                 : "border-border bg-card"
@@ -444,18 +444,18 @@ export function AssessmentsSection() {
             </div>
 
             {/* Actions */}
-            <div className="flex gap-3 pt-4 pb-8">
+            <div className="flex gap-3 pt-4 pb-20 sm:pb-8">
               <Button
                 variant="outline"
                 onClick={() => setShowAddAssessment(false)}
-                className="flex-1 h-12 touch-manipulation"
+                className="flex-1 h-12 touch-manipulation active:scale-95"
                 disabled={isSubmitting}
               >
                 Cancel
               </Button>
               <Button
                 onClick={handleAddAssessment}
-                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
+                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
                 disabled={isSubmitting || !newAssessment.title || !newAssessment.dueDate}
               >
                 {isSubmitting ? (

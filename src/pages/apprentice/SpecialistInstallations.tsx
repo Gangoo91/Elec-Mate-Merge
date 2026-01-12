@@ -1,6 +1,6 @@
 
-import { useState } from "react";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
+import { useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -37,7 +37,9 @@ import SpecialistTestingGuide from "@/components/apprentice/installation-guides/
 import SpecialistReferenceGuide from "@/components/apprentice/installation-guides/specialist/SpecialistReferenceGuide";
 
 const SpecialistInstallations = () => {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "overview";
+  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
 
   const tabOptions = [
     { value: "overview", label: "Overview", icon: FileText },
