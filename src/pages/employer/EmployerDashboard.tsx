@@ -1,5 +1,6 @@
-import { useState, useCallback, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { OverviewSection } from "@/components/employer/sections/OverviewSection";
 import { EmployeesSection } from "@/components/employer/sections/EmployeesSection";
 import { JobsSection } from "@/components/employer/sections/JobsSection";
@@ -113,10 +114,82 @@ export type Section =
   | "aibriefingpack"
   | "aiquote";
 
+// Section hierarchy for back navigation fallback
+const getParentSection = (section: Section): Section => {
+  const hierarchy: Record<Section, Section> = {
+    // People Hub children -> peoplehub
+    team: "peoplehub", elecid: "peoplehub", timesheets: "peoplehub",
+    comms: "peoplehub", talentpool: "peoplehub", vacancies: "peoplehub",
+    // Finance Hub children -> financehub
+    quotes: "financehub", tenders: "financehub", expenses: "financehub",
+    procurement: "financehub", financials: "financehub", reports: "financehub",
+    signatures: "financehub", pricebook: "financehub",
+    // Jobs Hub children -> jobshub
+    jobpacks: "jobshub", jobs: "jobshub", jobboard: "jobshub",
+    timeline: "jobshub", tracking: "jobshub", progresslogs: "jobshub",
+    issues: "jobshub", testing: "jobshub", quality: "jobshub",
+    clientportal: "jobshub", fleet: "jobshub", photogallery: "jobshub",
+    // Safety Hub children -> safetyhub
+    safety: "safetyhub", rams: "safetyhub", incidents: "safetyhub",
+    policies: "safetyhub", contracts: "safetyhub", training: "safetyhub",
+    briefings: "safetyhub", compliance: "safetyhub",
+    // SmartDocs children -> smartdocs
+    aidesignspec: "smartdocs", airams: "smartdocs", aimethodstatement: "smartdocs",
+    aibriefingpack: "smartdocs", aiquote: "smartdocs",
+    // Hubs -> overview
+    peoplehub: "overview", financehub: "overview", jobshub: "overview",
+    safetyhub: "overview", smartdocs: "overview",
+    // Default cases
+    overview: "overview", settings: "overview", automations: "overview",
+  };
+  return hierarchy[section] || "overview";
+};
+
+// Get section depth for determining navigation direction
+const getSectionDepth = (section: Section): number => {
+  if (section === 'overview') return 0;
+  if (['peoplehub', 'financehub', 'jobshub', 'safetyhub', 'smartdocs'].includes(section)) return 1;
+  return 2;
+};
+
+// Page transition variants - iOS-style slide animations
+const slideVariants = {
+  forward: {
+    initial: { opacity: 0, x: 24 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -24 },
+  },
+  backward: {
+    initial: { opacity: 0, x: -24 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: 24 },
+  },
+};
+
+const pageTransition = {
+  duration: 0.2,
+  ease: [0.32, 0.72, 0, 1], // iOS-like spring curve
+};
+
 const EmployerDashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const activeSection = (searchParams.get('section') as Section) || "overview";
   const setActiveSection = (section: Section) => setSearchParams({ section }, { replace: false });
+
+  // Track navigation direction for page transitions
+  const previousSectionRef = useRef<Section | null>(null);
+  const [navigationDirection, setNavigationDirection] = useState<'forward' | 'backward'>('forward');
+
+  // Update navigation direction when section changes
+  useEffect(() => {
+    if (previousSectionRef.current && previousSectionRef.current !== activeSection) {
+      const prevDepth = getSectionDepth(previousSectionRef.current);
+      const currDepth = getSectionDepth(activeSection);
+      setNavigationDirection(currDepth >= prevDepth ? 'forward' : 'backward');
+    }
+    previousSectionRef.current = activeSection;
+  }, [activeSection]);
 
   // Voice-controlled dialog states
   const [quoteDialogOpen, setQuoteDialogOpen] = useState(false);
@@ -371,30 +444,17 @@ const EmployerDashboard = () => {
     setActiveSection(mappedSection);
   }, []);
 
-  const handleBack = () => {
-    // Smart back navigation - go to hub if coming from sub-section
-    const peopleSubSections: Section[] = ["team", "elecid", "timesheets", "comms", "talentpool", "vacancies"];
-    const financeSubSections: Section[] = ["quotes", "tenders", "expenses", "procurement", "financials", "reports", "signatures", "pricebook"];
-    const jobsSubSections: Section[] = ["jobpacks", "jobs", "jobboard", "timeline", "tracking", "progresslogs", "issues", "testing", "quality", "clientportal", "fleet", "photogallery"];
-    const safetySubSections: Section[] = ["safety", "rams", "incidents", "policies", "contracts", "training", "briefings", "compliance"];
-    const smartDocsSubSections: Section[] = ["aidesignspec", "airams", "aimethodstatement", "aibriefingpack", "aiquote"];
-
-    if (peopleSubSections.includes(activeSection)) {
-      setActiveSection("peoplehub");
-    } else if (financeSubSections.includes(activeSection)) {
-      setActiveSection("financehub");
-    } else if (jobsSubSections.includes(activeSection)) {
-      setActiveSection("jobshub");
-    } else if (safetySubSections.includes(activeSection)) {
-      setActiveSection("safetyhub");
-    } else if (smartDocsSubSections.includes(activeSection)) {
-      setActiveSection("smartdocs");
-    } else if (activeSection === "smartdocs") {
-      setActiveSection("overview");
+  // Use real browser history for back navigation (fixes phone back button)
+  const handleBack = useCallback(() => {
+    // Check if we have browser history to go back to
+    if (window.history.length > 1) {
+      navigate(-1);
     } else {
-      setActiveSection("overview");
+      // Fallback for direct URL access - navigate to logical parent
+      const parent = getParentSection(activeSection);
+      setActiveSection(parent);
     }
-  };
+  }, [navigate, activeSection, setActiveSection]);
 
   const renderSection = () => {
     switch (activeSection) {
@@ -500,7 +560,7 @@ const EmployerDashboard = () => {
 
   return (
     <EmployerProvider>
-      <div className="animate-fade-in pb-20 md:pb-0 px-4 sm:px-6 momentum-scroll-y">
+      <div className="pb-20 md:pb-0 px-4 sm:px-6 momentum-scroll-y overflow-hidden">
         {/* Back navigation for sub-sections */}
         {activeSection !== "overview" && (
           <div className="mb-4">
@@ -516,7 +576,19 @@ const EmployerDashboard = () => {
           </div>
         )}
 
-        {renderSection()}
+        {/* Animated page transitions */}
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={activeSection}
+            initial={slideVariants[navigationDirection].initial}
+            animate={slideVariants[navigationDirection].animate}
+            exit={slideVariants[navigationDirection].exit}
+            transition={pageTransition}
+            className="w-full"
+          >
+            {renderSection()}
+          </motion.div>
+        </AnimatePresence>
 
         {/* Voice-controlled dialogs */}
         <CreateQuoteDialog open={quoteDialogOpen} onOpenChange={setQuoteDialogOpen} />
