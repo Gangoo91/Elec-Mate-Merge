@@ -104,7 +104,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           placeholder="C1"
         />
       </TableCell>
-      <TableCell className="p-1 border-r border-border bg-elec-gray min-w-[200px]">
+      <TableCell className="p-1 border-r border-border bg-elec-gray min-w-[120px] sm:min-w-[200px]">
         <Input
           value={result.circuitDescription}
           onChange={(e) => onUpdate(result.id, 'circuitDescription', e.target.value)}

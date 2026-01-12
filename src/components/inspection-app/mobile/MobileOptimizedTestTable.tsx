@@ -185,6 +185,23 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
     return 'border-l-border';
   }, []);
 
+  // Calculate circuit completion percentage
+  const getCircuitCompletion = useCallback((result: TestResult) => {
+    const keyFields = [
+      result.circuitDescription,
+      result.typeOfWiring,
+      result.liveSize,
+      result.cpcSize,
+      result.bsStandard,
+      result.protectiveDeviceRating,
+      result.zs,
+      result.polarity,
+      result.insulationLiveEarth
+    ];
+    const filledCount = keyFields.filter(f => f && f.trim() !== '').length;
+    return Math.round((filledCount / keyFields.length) * 100);
+  }, []);
+
   // RCD Quick Fill handlers
   const handleFillAllRcdBsStandard = (value: string) => {
     testResults.forEach(result => {
@@ -252,10 +269,27 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
               className="w-full flex items-center justify-between p-4 hover:bg-accent/10 transition-colors touch-manipulation"
             >
               <div className="flex flex-col items-start gap-1">
-                <span className="font-bold text-lg text-foreground">
-                  {result.circuitDesignation || `Circuit ${result.circuitNumber || 'New'}`}
-                </span>
-                <span className="text-sm text-muted-foreground font-medium">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-lg text-foreground">
+                    {result.circuitDesignation || `Circuit ${result.circuitNumber || 'New'}`}
+                  </span>
+                  {/* Completion indicator */}
+                  {(() => {
+                    const completion = getCircuitCompletion(result);
+                    return (
+                      <span className={`text-xs px-1.5 py-0.5 rounded-full font-medium ${
+                        completion === 100
+                          ? 'bg-green-500/20 text-green-500'
+                          : completion >= 50
+                            ? 'bg-amber-500/20 text-amber-500'
+                            : 'bg-muted text-muted-foreground'
+                      }`}>
+                        {completion}%
+                      </span>
+                    );
+                  })()}
+                </div>
+                <span className="text-sm text-muted-foreground font-medium line-clamp-2 sm:line-clamp-1 max-w-[140px] sm:max-w-[200px] break-words">
                   {result.circuitDescription || 'No description'}
                 </span>
               </div>

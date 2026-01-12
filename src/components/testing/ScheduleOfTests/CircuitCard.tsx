@@ -162,7 +162,7 @@ export const CircuitCard: React.FC<CircuitCardProps> = ({
 
           {/* Circuit Info */}
           <div className="flex-1 min-w-0 pt-1">
-            <h3 className="font-semibold text-base text-foreground truncate leading-tight">
+            <h3 className="font-semibold text-base text-foreground line-clamp-1 sm:truncate leading-tight max-w-[150px] sm:max-w-none break-words">
               {circuit.circuitDescription || 'Unnamed Circuit'}
             </h3>
             <div className="flex items-center gap-2 mt-1">

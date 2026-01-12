@@ -13,7 +13,7 @@ interface CircuitDetailsCellsProps {
 
 const CircuitDetailsCellsComponent: React.FC<CircuitDetailsCellsProps> = ({ result, onUpdate }) => {
   return (
-    <TableCell className="sticky left-[96px] z-40 bg-black p-0 h-5 align-middle w-55 min-w-[220px] max-w-[220px]">
+    <TableCell className="sticky left-[96px] z-40 bg-black p-0 h-5 align-middle w-55 min-w-[150px] sm:min-w-[220px] max-w-[150px] sm:max-w-[220px]">
       <EnhancedValidatedInput
         value={result.circuitDescription}
         onChange={(value) => onUpdate(result.id, 'circuitDescription', value)}
