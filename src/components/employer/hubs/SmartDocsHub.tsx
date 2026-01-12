@@ -46,12 +46,7 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
 
   if (isLoading) {
     return (
-      <div className="space-y-4 md:space-y-6 animate-fade-in">
-        <SectionHeader
-          title="Smart Docs"
-          description="AI-powered document generation"
-          icon={Sparkles}
-        />
+      <div className="space-y-4 md:space-y-6">
         <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
           {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-16 w-28 shrink-0" />)}
         </div>
@@ -63,12 +58,7 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
   }
 
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <SectionHeader
-        title="Smart Docs"
-        description="AI-powered document generation for job packs"
-        icon={Sparkles}
-      />
+    <div className="space-y-4 md:space-y-6">
 
       {/* Quick Stats */}
       <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">

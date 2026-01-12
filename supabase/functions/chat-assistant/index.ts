@@ -111,7 +111,7 @@ serve(async (req) => {
   }
 
   try {
-    const { message, context, stream = true, history = [] } = await req.json();
+    const { message, context, stream = true, history = [], imageUrl } = await req.json();
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
@@ -212,6 +212,15 @@ WHEN THEY ASK ABOUT SOMETHING DANGEROUS:
 - Reference relevant regulations
 - If it's genuinely outside their competence, tell them directly
 
+WHEN THEY SEND YOU A PHOTO:
+- First describe what you can see clearly (cable types, colours, equipment, installation)
+- Identify any issues or concerns you spot (bad terminations, overcrowding, incorrect glands, etc.)
+- Praise good work if you see it - apprentices need encouragement
+- Reference relevant regulations if applicable
+- Give practical advice on how to fix any issues
+- If you can't see something clearly, ask them to take a better photo
+- Always consider safety - if you see something dangerous, make that the priority
+
 Remember: You're not just answering questions - you're training the next generation of electricians. Every answer should make them a better, safer electrician.
 
 Context: ${context || 'general electrical apprenticeship support'}${ragContext}`;
@@ -224,6 +233,25 @@ Context: ${context || 'general electrical apprenticeship support'}${ragContext}`
           .map((m: any) => ({ role: m.role, content: m.content }))
       : [];
 
+    // Build user message - with image if provided
+    let userMessage: any;
+    if (imageUrl) {
+      // Multimodal message with image
+      userMessage = {
+        role: 'user',
+        content: [
+          { type: 'text', text: message },
+          { type: 'image_url', image_url: { url: imageUrl, detail: 'high' } }
+        ]
+      };
+    } else {
+      // Text-only message
+      userMessage = { role: 'user', content: message };
+    }
+
+    // Use gpt-4o for vision, gpt-4o-mini for text-only
+    const modelToUse = imageUrl ? 'gpt-4o' : 'gpt-4o-mini';
+
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -231,11 +259,11 @@ Context: ${context || 'general electrical apprenticeship support'}${ragContext}`
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: modelToUse,
         messages: [
           { role: 'system', content: systemPrompt },
           ...conversationHistory,
-          { role: 'user', content: message }
+          userMessage
         ],
         max_tokens: 1500,
         stream: stream,

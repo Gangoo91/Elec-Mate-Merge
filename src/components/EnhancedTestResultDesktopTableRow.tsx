@@ -25,6 +25,7 @@ import { EnhancedValidatedInput } from './table-cells/EnhancedValidatedInput';
 import { AfddCell } from './table-cells/AfddCell';
 import { FunctionalTestCell } from './table-cells/FunctionalTestCell';
 import { RemarksCell } from './table-cells/RemarksCell';
+import { PhaseTypeCell } from './table-cells/PhaseTypeCell';
 
 interface EnhancedTestResultDesktopTableRowProps {
   result: TestResult;
@@ -165,7 +166,10 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
             disabled={!!result.sourceCircuitId}
           />
         </TableCell>
-        
+
+        {/* Phase Type - Always visible */}
+        <PhaseTypeCell result={result} onUpdate={onUpdate} />
+
         {/* Circuit Details */}
         {!isGroupCollapsed('circuit') && (
           <>

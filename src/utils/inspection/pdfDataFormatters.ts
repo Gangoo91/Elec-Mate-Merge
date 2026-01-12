@@ -1,3 +1,6 @@
+import { DistributionBoard, MAIN_BOARD_ID, createDefaultBoard } from '@/types/distributionBoard';
+import { TestResult } from '@/types/testResult';
+
 export interface FormattedInspectionData {
   satisfactoryItems: any[];
   criticalDefects: any[];
@@ -276,4 +279,88 @@ export const formatInstallationDetails = (formData: any): string[] => {
   if (formData.numberOfCircuits) details.push(`Number of circuits: ${formData.numberOfCircuits}`);
   
   return details.length > 0 ? details : ['Installation details to be confirmed'];
+};
+
+// ============================================================================
+// Board Grouping for Multi-Board PDF Export
+// ============================================================================
+
+export interface BoardGroupedCircuits {
+  board: DistributionBoard;
+  circuits: any[];
+  verificationData: {
+    zdb: string;
+    ipf: string;
+    polarity: boolean;
+    phaseSequence: boolean;
+    spdStatus: boolean;
+    spdNA: boolean;
+  };
+}
+
+/**
+ * Format circuit data grouped by distribution board for PDF export
+ * Supports both legacy single-board and new multi-board installations
+ */
+export const formatCircuitDataGroupedByBoard = (formData: any): BoardGroupedCircuits[] => {
+  // Get boards - use distributionBoards if available, otherwise create default main board
+  let boards: DistributionBoard[] = formData.distributionBoards || [];
+
+  if (boards.length === 0) {
+    // Create a default main board from legacy single-board data
+    const mainBoard = createDefaultBoard(MAIN_BOARD_ID, 'Main CU', 0);
+    mainBoard.reference = formData.dbReference || 'Main CU';
+    mainBoard.zdb = formData.zdb || '';
+    mainBoard.ipf = formData.ipf || '';
+    mainBoard.confirmedCorrectPolarity = formData.confirmedCorrectPolarity || false;
+    mainBoard.confirmedPhaseSequence = formData.confirmedPhaseSequence || false;
+    mainBoard.spdOperationalStatus = formData.spdOperationalStatus || false;
+    mainBoard.spdNA = formData.spdNA || false;
+    boards = [mainBoard];
+  }
+
+  // Get all circuits/test results
+  const allCircuits = formatTestResultsForPDF(formData);
+
+  // Get raw circuit data for boardId lookup
+  const rawCircuits: TestResult[] = formData.scheduleOfTests || formData.testResults || formData.circuits || [];
+
+  // Group circuits by board
+  return boards
+    .sort((a, b) => a.order - b.order)
+    .map(board => {
+      // Find circuits belonging to this board
+      const boardCircuits = allCircuits.filter((circuit, index) => {
+        const rawCircuit = rawCircuits[index];
+        const circuitBoardId = rawCircuit?.boardId || MAIN_BOARD_ID;
+        return circuitBoardId === board.id;
+      });
+
+      return {
+        board,
+        circuits: boardCircuits,
+        verificationData: {
+          zdb: board.zdb || '',
+          ipf: board.ipf || '',
+          polarity: board.confirmedCorrectPolarity || false,
+          phaseSequence: board.confirmedPhaseSequence || false,
+          spdStatus: board.spdOperationalStatus || false,
+          spdNA: board.spdNA || false,
+        },
+      };
+    });
+};
+
+/**
+ * Check if form data has multiple boards
+ */
+export const hasMultipleBoards = (formData: any): boolean => {
+  return (formData.distributionBoards?.length || 0) > 1;
+};
+
+/**
+ * Get total circuit count across all boards
+ */
+export const getTotalCircuitCount = (boardGroups: BoardGroupedCircuits[]): number => {
+  return boardGroups.reduce((total, group) => total + group.circuits.length, 0);
 };

@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Download, Eye, Calendar, User, Trash2, CheckCircle, AlertCircle, Receipt, Send, Edit, FileText } from 'lucide-react';
+import { Download, Eye, Calendar, User, Trash2, CheckCircle, AlertCircle, Receipt, Send, Edit, FileText, CreditCard, PoundSterling } from 'lucide-react';
 import { Quote } from '@/types/quote';
-import { format, isPast } from 'date-fns';
+import { format, isPast, differenceInDays } from 'date-fns';
 import { InvoiceSendDropdown } from '@/components/electrician/invoice-builder/InvoiceSendDropdown';
+import { PaymentReminderButton } from '@/components/electrician/invoice-builder/PaymentReminderButton';
+import { PartialPaymentDialog } from '@/components/electrician/invoice-builder/PartialPaymentDialog';
+import { SwipeableCard } from '@/components/ui/SwipeableCard';
+import { cn } from '@/lib/utils';
 
 interface InvoiceCardViewProps {
   invoices: Quote[];
@@ -33,6 +37,31 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
   deletingInvoiceId,
   formatCurrency,
 }) => {
+  const [partialPaymentInvoice, setPartialPaymentInvoice] = useState<Quote | null>(null);
+
+  // Get days overdue info with severity escalation
+  const getOverdueInfo = (invoice: Quote) => {
+    if (!invoice.invoice_due_date) return null;
+    const dueDate = new Date(invoice.invoice_due_date);
+    const daysOverdue = differenceInDays(new Date(), dueDate);
+
+    if (daysOverdue <= 0) return null;
+
+    // Severity escalation: amber (1-7), orange (8-14), red (15+)
+    let severity: 'warning' | 'danger' | 'critical' = 'warning';
+    let color = 'text-amber-500 bg-amber-500/10 border-amber-500/20';
+
+    if (daysOverdue > 14) {
+      severity = 'critical';
+      color = 'text-red-600 bg-red-500/20 border-red-500/30';
+    } else if (daysOverdue > 7) {
+      severity = 'danger';
+      color = 'text-orange-500 bg-orange-500/15 border-orange-500/20';
+    }
+
+    return { daysOverdue, severity, color };
+  };
+
   const getStatusInfo = (invoice: Quote) => {
     const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
     const status = invoice.invoice_status;
@@ -83,16 +112,38 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      {invoices.map((invoice) => {
+      {invoices.map((invoice, index) => {
         const statusInfo = getStatusInfo(invoice);
         const StatusIcon = statusInfo.icon;
         const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
-        
+        const overdueInfo = getOverdueInfo(invoice);
+        const isPaid = invoice.invoice_status === 'paid';
+        const canMarkPaid = invoice.invoice_status === 'sent' || invoice.invoice_status === 'overdue' || isOverdue;
+
         const clientData = invoice.client;
 
         return (
           <div
             key={invoice.id}
+            className="animate-fade-in"
+            style={{ animationDelay: `${index * 50}ms` }}
+          >
+            <SwipeableCard
+              leftAction={{
+                icon: <Trash2 className="h-5 w-5" />,
+                bgColor: 'bg-red-500',
+                onAction: () => onDeleteInvoice(invoice.id),
+                label: 'Delete'
+              }}
+              rightAction={canMarkPaid ? {
+                icon: <CreditCard className="h-5 w-5" />,
+                bgColor: 'bg-emerald-500',
+                onAction: () => onMarkAsPaid(invoice),
+                label: 'Paid'
+              } : undefined}
+              disabled={isPaid}
+            >
+          <div
             id={`invoice-${invoice.id}`}
             className={`relative bg-elec-card rounded-2xl overflow-hidden hover:shadow-2xl transition-all border ${statusInfo.borderColor}`}
           >
@@ -171,6 +222,16 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                     {invoice.invoice_due_date ? format(new Date(invoice.invoice_due_date), 'dd MMM yyyy') : 'N/A'}
                     {isOverdue && <AlertCircle className="h-3 w-3 ml-1" />}
                   </div>
+                  {/* Days overdue badge */}
+                  {overdueInfo && (
+                    <div className={cn(
+                      "flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium mt-2 border w-fit",
+                      overdueInfo.color
+                    )}>
+                      <AlertCircle className="h-3 w-3" />
+                      <span>{overdueInfo.daysOverdue} days overdue</span>
+                    </div>
+                  )}
                 </div>
                 <div>
                   <div className="text-xs text-muted-foreground mb-1">Items</div>
@@ -215,18 +276,36 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                   />
                 </div>
 
-                {/* Mark as Paid - Only for sent/overdue invoices */}
+                {/* Payment Actions - Only for sent/overdue invoices */}
                 {(invoice.invoice_status === 'sent' || invoice.invoice_status === 'overdue' || isOverdue) && (
-                  <Button
-                    onClick={() => onMarkAsPaid(invoice)}
-                    disabled={markingPaidId === invoice.id}
-                    variant="default"
-                    size="sm"
-                    className="col-span-2 bg-green-600 hover:bg-green-700 text-foreground"
-                  >
-                    <CheckCircle className="h-4 w-4 mr-2" />
-                    {markingPaidId === invoice.id ? 'Updating...' : 'Mark as Paid'}
-                  </Button>
+                  <>
+                    {/* Record Payment + Send Reminder Row */}
+                    <Button
+                      onClick={() => setPartialPaymentInvoice(invoice)}
+                      variant="outline"
+                      size="sm"
+                      className="w-full border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/10"
+                    >
+                      <PoundSterling className="h-4 w-4 mr-2" />
+                      Record Payment
+                    </Button>
+                    <PaymentReminderButton
+                      invoice={invoice}
+                      onReminderSent={onSendSuccess}
+                      className="w-full"
+                    />
+                    {/* Mark as Fully Paid */}
+                    <Button
+                      onClick={() => onMarkAsPaid(invoice)}
+                      disabled={markingPaidId === invoice.id}
+                      variant="default"
+                      size="sm"
+                      className="col-span-2 bg-green-600 hover:bg-green-700 text-foreground"
+                    >
+                      <CheckCircle className="h-4 w-4 mr-2" />
+                      {markingPaidId === invoice.id ? 'Updating...' : 'Mark as Fully Paid'}
+                    </Button>
+                  </>
                 )}
 
                 {/* Delete */}
@@ -243,8 +322,23 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
               </div>
             </div>
           </div>
+            </SwipeableCard>
+          </div>
         );
       })}
+
+      {/* Partial Payment Dialog */}
+      {partialPaymentInvoice && (
+        <PartialPaymentDialog
+          invoice={partialPaymentInvoice}
+          open={!!partialPaymentInvoice}
+          onOpenChange={(open) => !open && setPartialPaymentInvoice(null)}
+          onPaymentRecorded={() => {
+            setPartialPaymentInvoice(null);
+            onSendSuccess();
+          }}
+        />
+      )}
     </div>
   );
 };

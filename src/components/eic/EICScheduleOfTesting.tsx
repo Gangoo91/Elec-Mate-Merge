@@ -1,20 +1,23 @@
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import SectionHeader from '@/components/ui/section-header';
-import { Plus, BarChart3, Zap, Camera, LayoutGrid, Table2, Shield, X, PenTool, FileText, Wrench, ClipboardList, ClipboardCheck, Wand2, Sparkles, MoreVertical, Layout, Table, Pen, Mic } from 'lucide-react';
+import { Plus, BarChart3, Zap, Camera, Grid, Shield, X, PenTool, FileText, Wrench, ClipboardList, ClipboardCheck, Wand2, Sparkles, MoreVertical, Layout, Table, Trash2, Pen, ChevronDown, TestTube, Mic } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
+import { DistributionBoard, MAIN_BOARD_ID, createDefaultBoard, generateBoardId, getNextSubBoardName } from '@/types/distributionBoard';
+import { migrateToMultiBoard, getCircuitsForBoard, formatBoardsForFormData } from '@/utils/boardMigration';
+import BoardSection from '../testing/BoardSection';
+import BoardManagement from '../testing/BoardManagement';
 import EnhancedTestResultDesktopTable from '../EnhancedTestResultDesktopTable';
 import MobileOptimizedTestTable from '../mobile/MobileOptimizedTestTable';
 import { MobileHorizontalScrollTable } from '../mobile/MobileHorizontalScrollTable';
 import MobileSmartAutoFill from '../mobile/MobileSmartAutoFill';
 import QuickRcdPresets from '../QuickRcdPresets';
+import QuickFillRcdPanel from '../QuickFillRcdPanel';
 import TestInstrumentInfo from '../TestInstrumentInfo';
 import TestMethodInfo from '../TestMethodInfo';
 import TestAnalytics from '../TestAnalytics';
-import DistributionBoardVerificationSection from '../testing/DistributionBoardVerificationSection';
 import SmartAutoFillPromptDialog from '../SmartAutoFillPromptDialog';
 
 import { BoardPhotoCapture } from '../testing/BoardPhotoCapture';
@@ -38,41 +41,11 @@ interface EICScheduleOfTestingProps {
 
 const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, onUpdate }) => {
   const [testResults, setTestResults] = useState<TestResult[]>([]);
+  const [distributionBoards, setDistributionBoards] = useState<DistributionBoard[]>([]);
+  const [expandedBoards, setExpandedBoards] = useState<Set<string>>(new Set([MAIN_BOARD_ID]));
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [showAutoFillPrompt, setShowAutoFillPrompt] = useState(false);
   const [newCircuitNumber, setNewCircuitNumber] = useState('');
-  const [openSections, setOpenSections] = useState({
-    instruments: true,
-    distributionBoard: true,
-    testMethod: true
-  });
-
-  const toggleSection = (section: keyof typeof openSections) => {
-    setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
-  };
-
-  // Completion percentage for each section
-  const getCompletionPercentage = (section: string) => {
-    switch (section) {
-      case 'instruments': {
-        const fields = ['testInstrumentMake', 'testInstrumentModel', 'testInstrumentSerial'];
-        const filled = fields.filter(f => formData[f]).length;
-        return Math.round((filled / fields.length) * 100);
-      }
-      case 'distributionBoard': {
-        const fields = ['dbReference', 'zdb', 'ipf'];
-        const filled = fields.filter(f => formData[f]).length;
-        return Math.round((filled / fields.length) * 100);
-      }
-      case 'testMethod': {
-        const fields = ['testMethod'];
-        const filled = fields.filter(f => formData[f]).length;
-        return Math.round((filled / fields.length) * 100);
-      }
-      default:
-        return 0;
-    }
-  };
 
   const [showPhotoCapture, setShowPhotoCapture] = useState(false);
   const [detectedCircuits, setDetectedCircuits] = useState<any>(null);
@@ -80,14 +53,31 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   const [showTestResultsScan, setShowTestResultsScan] = useState(false);
   const [extractedTestResults, setExtractedTestResults] = useState<any>(null);
   const [showTestResultsReview, setShowTestResultsReview] = useState(false);
-  const [mobileViewType, setMobileViewType] = useState<'table' | 'card'>('table');
+  const [mobileViewType, setMobileViewType] = useState<'table' | 'card'>('card');
   const [showScribbleDialog, setShowScribbleDialog] = useState(false);
   const [showSmartAutoFillDialog, setShowSmartAutoFillDialog] = useState(false);
   const [showRcdPresetsDialog, setShowRcdPresetsDialog] = useState(false);
   const [showBulkInfillDialog, setShowBulkInfillDialog] = useState(false);
+  const [showQuickFillPanel, setShowQuickFillPanel] = useState(false);
   const [lastDeleted, setLastDeleted] = useState<{ circuit: TestResult; index: number } | null>(null);
+  const [activeToolPanel, setActiveToolPanel] = useState<'ai' | 'smart' | null>(null);
   const orientation = useOrientation();
-  
+
+  // Calculate completion stats for progress indicator
+  const { completedCount, progressPercent, pendingCount } = useMemo(() => {
+    const completed = testResults.filter(r =>
+      r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
+    ).length;
+    const percent = testResults.length > 0
+      ? Math.round((completed / testResults.length) * 100)
+      : 0;
+    return {
+      completedCount: completed,
+      progressPercent: percent,
+      pendingCount: testResults.length - completed
+    };
+  }, [testResults]);
+
   // Load mobile view preference
   useEffect(() => {
     const loadViewPref = async () => {
@@ -106,27 +96,29 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     await setTableViewPreference(newView);
   };
 
-  // Initialize test results from form data
+  // Initialize boards and test results from form data
   useEffect(() => {
-    if (formData.scheduleOfTests && formData.scheduleOfTests.length > 0) {
+    // Migrate to multi-board structure (handles both legacy and new format)
+    const { distributionBoards: migratedBoards, scheduleOfTests: migratedCircuits } = migrateToMultiBoard(formData);
+    setDistributionBoards(migratedBoards);
+
+    if (migratedCircuits && migratedCircuits.length > 0) {
       // Normalize legacy data - remove K/Z curves for MCB/RCBO devices
       const bsStandardRequiresCurve = (bs: string): boolean => bs === 'MCB' || bs === 'RCBO';
-      const normalizedResults = formData.scheduleOfTests.map((result: TestResult) => {
+      const normalizedResults = migratedCircuits.map((result: TestResult) => {
         const needsCurve = bsStandardRequiresCurve(result.bsStandard || '');
         const validCurves = ['B', 'C', 'D'];
-        
+
         if (needsCurve && result.protectiveDeviceCurve && !validCurves.includes(result.protectiveDeviceCurve)) {
-          // Clear invalid curves (K, Z, etc.) for MCB/RCBO
           return { ...result, protectiveDeviceCurve: '' };
         } else if (!needsCurve && result.protectiveDeviceCurve) {
-          // Clear curve for fuses/other devices
           return { ...result, protectiveDeviceCurve: '' };
         }
         return result;
       });
       setTestResults(normalizedResults);
     } else {
-      // Initial result with basic defaults for EIC
+      // Initial result with basic defaults for EIC - assigned to main board
       const initialResult: TestResult = {
         id: '1',
         circuitDesignation: 'C1',
@@ -172,16 +164,161 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         typeOfWiring: '',
         rcdBsStandard: '',
         rcdType: '',
-        rcdRatingA: ''
+        rcdRatingA: '',
+        boardId: MAIN_BOARD_ID
       };
       setTestResults([initialResult]);
     }
   }, []);
 
-  const addTestResult = () => {
+  // Current board for adding circuits (defaults to main)
+  const [currentBoardId, setCurrentBoardId] = useState<string>(MAIN_BOARD_ID);
+
+  const addTestResult = (boardId?: string) => {
+    const targetBoardId = boardId || currentBoardId;
+    setCurrentBoardId(targetBoardId);
     const nextCircuitNumber = (testResults.length + 1).toString();
     setNewCircuitNumber(nextCircuitNumber);
     setShowAutoFillPrompt(true);
+  };
+
+  // Add a circuit directly to a specific board
+  const addCircuitToBoard = (boardId: string) => {
+    const boardCircuits = getCircuitsForBoard(testResults, boardId);
+    const nextCircuitNum = testResults.length + 1;
+    const newResult: TestResult = {
+      id: Date.now().toString(),
+      circuitDesignation: `C${nextCircuitNum}`,
+      circuitNumber: nextCircuitNum.toString(),
+      circuitDescription: '',
+      circuitType: '',
+      type: '',
+      referenceMethod: '',
+      liveSize: '',
+      cpcSize: '',
+      protectiveDeviceType: '',
+      protectiveDeviceRating: '',
+      protectiveDeviceKaRating: '',
+      protectiveDeviceLocation: '',
+      bsStandard: '',
+      cableSize: '',
+      protectiveDevice: '',
+      r1r2: '',
+      r2: '',
+      ringContinuityLive: '',
+      ringContinuityNeutral: '',
+      ringR1: '',
+      ringRn: '',
+      ringR2: '',
+      insulationTestVoltage: '',
+      insulationResistance: '',
+      insulationLiveNeutral: '',
+      insulationLiveEarth: '',
+      insulationNeutralEarth: '',
+      polarity: '',
+      zs: '',
+      maxZs: '',
+      pointsServed: '',
+      rcdRating: '',
+      rcdOneX: '',
+      rcdTestButton: '',
+      afddTest: '',
+      pfc: '',
+      pfcLiveNeutral: '',
+      pfcLiveEarth: '',
+      functionalTesting: '',
+      notes: '',
+      typeOfWiring: '',
+      rcdBsStandard: '',
+      rcdType: '',
+      rcdRatingA: '',
+      boardId: boardId
+    };
+    const updatedResults = [...testResults, newResult];
+    setTestResults(updatedResults);
+    onUpdate('scheduleOfTests', updatedResults);
+    toast.success(`Circuit C${nextCircuitNum} added`);
+  };
+
+  // Board management functions
+  const handleAddBoard = () => {
+    const newBoard = createDefaultBoard(
+      generateBoardId(),
+      getNextSubBoardName(distributionBoards),
+      distributionBoards.length
+    );
+    const updatedBoards = [...distributionBoards, newBoard];
+    setDistributionBoards(updatedBoards);
+    setExpandedBoards(prev => new Set([...prev, newBoard.id]));
+
+    // Save boards to formData
+    const formDataUpdate = formatBoardsForFormData(updatedBoards, testResults);
+    Object.entries(formDataUpdate).forEach(([key, value]) => {
+      onUpdate(key, value);
+    });
+
+    toast.success(`${newBoard.name} added`);
+  };
+
+  const handleRemoveBoard = (boardId: string) => {
+    if (boardId === MAIN_BOARD_ID) {
+      toast.error('Cannot remove Main CU');
+      return;
+    }
+
+    const boardToRemove = distributionBoards.find(b => b.id === boardId);
+    const boardCircuits = getCircuitsForBoard(testResults, boardId);
+
+    // Move circuits to main board
+    const updatedResults = testResults.map(c =>
+      c.boardId === boardId ? { ...c, boardId: MAIN_BOARD_ID } : c
+    );
+
+    // Remove the board
+    const updatedBoards = distributionBoards
+      .filter(b => b.id !== boardId)
+      .map((b, index) => ({ ...b, order: index }));
+
+    setDistributionBoards(updatedBoards);
+    setTestResults(updatedResults);
+    setExpandedBoards(prev => {
+      const next = new Set(prev);
+      next.delete(boardId);
+      return next;
+    });
+
+    // Save to formData
+    const formDataUpdate = formatBoardsForFormData(updatedBoards, updatedResults);
+    Object.entries(formDataUpdate).forEach(([key, value]) => {
+      onUpdate(key, value);
+    });
+
+    toast.success(`${boardToRemove?.name || 'Board'} removed. ${boardCircuits.length > 0 ? `${boardCircuits.length} circuit(s) moved to Main CU.` : ''}`);
+  };
+
+  const handleUpdateBoard = (boardId: string, field: keyof DistributionBoard, value: any) => {
+    const updatedBoards = distributionBoards.map(b =>
+      b.id === boardId ? { ...b, [field]: value, updatedAt: new Date() } : b
+    );
+    setDistributionBoards(updatedBoards);
+
+    // Save to formData
+    const formDataUpdate = formatBoardsForFormData(updatedBoards, testResults);
+    Object.entries(formDataUpdate).forEach(([key, value]) => {
+      onUpdate(key, value);
+    });
+  };
+
+  const toggleBoardExpanded = (boardId: string) => {
+    setExpandedBoards(prev => {
+      const next = new Set(prev);
+      if (next.has(boardId)) {
+        next.delete(boardId);
+      } else {
+        next.add(boardId);
+      }
+      return next;
+    });
   };
 
   const handleAIAnalysisComplete = (data: any) => {
@@ -813,451 +950,512 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     onUpdate('scheduleOfTests', updatedResults);
   };
 
+  // Quick Fill RCD handlers
+  const handleFillAllRcdBsStandard = (value: string) => {
+    handleBulkFieldUpdate('rcdBsStandard', value);
+  };
+
+  const handleFillAllRcdType = (value: string) => {
+    handleBulkFieldUpdate('rcdType', value);
+  };
+
+  const handleFillAllRcdRating = (value: string) => {
+    handleBulkFieldUpdate('rcdRating', value);
+  };
+
+  const handleFillAllRcdRatingA = (value: string) => {
+    handleBulkFieldUpdate('rcdRatingA', value);
+  };
+
   return (
-    <>
-      {/* MOBILE FULL-WIDTH LAYOUT */}
+    <div className="pb-20 lg:pb-4">
+      {/* MOBILE FULL-WIDTH LAYOUT - Native iOS Feel */}
       {useMobileView ? (
-        <div className="w-full">
-          {/* Mobile Sticky Header */}
-          {/* Title Section */}
-          <div className="px-4 py-3 border-b border-border/50 bg-background">
-            <h2 className="text-xl font-bold text-foreground">Schedule of Tests</h2>
-            <span className="text-sm text-muted-foreground">{testResults.length} {testResults.length === 1 ? 'circuit' : 'circuits'}</span>
+        <div className="min-h-screen bg-background">
+          {/* Hero Section with Progress */}
+          <div className="testing-hero mx-2 mt-2 p-4">
+            <div className="relative z-10">
+              {/* Title Row */}
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-elec-yellow/20 border border-elec-yellow/30">
+                    <TestTube className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold text-white">Circuit Testing</h2>
+                    <p className="text-xs text-white/50">
+                      {testResults.length} circuits • {completedCount} complete
+                    </p>
+                  </div>
+                </div>
+                {/* Settings Menu */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="h-9 w-9 p-0 text-white/60 hover:text-white hover:bg-white/10">
+                      <MoreVertical className="h-5 w-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56 bg-card border-border">
+                    <DropdownMenuItem onClick={() => setShowQuickFillPanel(true)}>
+                      <Zap className="mr-2 h-4 w-4" />
+                      Quick Fill RCD
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={removeAllTestResults} className="text-destructive">
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Clear All Circuits
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+
+              {/* Progress Bar */}
+              <div className="testing-progress-bar mt-3">
+                <div className="testing-progress-fill" style={{ width: `${progressPercent}%` }} />
+              </div>
+              <div className="flex justify-between mt-1.5 text-xs">
+                <span className="text-white/40">Progress</span>
+                <span className="font-semibold text-elec-yellow">{progressPercent}%</span>
+              </div>
+            </div>
           </div>
 
-          {/* Sticky Toolbar */}
-          <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-sm border-b border-border shadow-sm px-3 py-2 flex items-center gap-2 justify-end">
-            <div className="flex items-center gap-2">
-              {/* Primary Add Button */}
+          {/* Primary Actions */}
+          <div className="px-4 py-3 space-y-2">
+            {/* Main Action Row */}
+            <div className="grid grid-cols-2 gap-2">
               <Button
-                variant="outline"
-                size="sm"
-                className="h-9 px-3 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
-                onClick={addTestResult}
-              >
-                <Plus className="h-4 w-4 mr-1 text-primary" />
-                <span className="text-sm font-medium">Add</span>
-              </Button>
-
-              <div className="w-px h-8 bg-border/50" />
-
-              {/* AI Board Scanner - Direct Access */}
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="h-9 w-9 p-0 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
-                title="AI Scan Board"
+                className="testing-action-primary"
                 onClick={() => setShowPhotoCapture(true)}
               >
-                <Camera className="h-4 w-4 text-primary" />
+                <Camera className="h-4 w-4 mr-2" />
+                AI Scan
               </Button>
+              <Button className="testing-action-secondary" onClick={addTestResult}>
+                <Plus className="h-4 w-4 mr-2" />
+                Add Circuit
+              </Button>
+            </div>
+            {/* Voice Assistant - Prominent */}
+            <Button
+              className="w-full h-12 rounded-lg font-medium transition-all duration-200 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/30 border border-purple-400/30"
+              onClick={() => toast.info('Voice assistant coming soon', { description: 'Eleven Labs integration in progress', duration: 2000 })}
+            >
+              <Mic className="h-5 w-5 mr-2" />
+              Voice Assistant
+            </Button>
+          </div>
 
-              {/* AI Tools */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="h-9 w-9 p-0 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
-                    title="AI Tools"
-                  >
-                    <Wand2 className="h-4 w-4 text-primary" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-background z-50">
-                  <DropdownMenuItem onClick={() => setShowScribbleDialog(true)}>
-                    <Pen className="mr-2 h-4 w-4" />
-                    Text to Circuits
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setShowTestResultsScan(true)}>
-                    <ClipboardList className="mr-2 h-4 w-4" />
-                    Scan Test Notes
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* Smart Tools */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-9 w-9 p-0 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
-                    title="Smart Tools"
-                  >
-                    <Sparkles className="h-4 w-4 text-primary" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-background z-50">
-                  <DropdownMenuItem onClick={() => setShowSmartAutoFillDialog(true)}>
-                    <Zap className="mr-2 h-4 w-4" />
-                    Smart Auto-Fill
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setShowRcdPresetsDialog(true)}>
-                    <Shield className="mr-2 h-4 w-4" />
-                    Quick RCD Presets
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setShowBulkInfillDialog(true)}>
-                    <ClipboardCheck className="mr-2 h-4 w-4" />
-                    Bulk Infill
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* Voice Button - Placeholder for Eleven Labs */}
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-9 w-9 p-0 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
-                title="Voice Assistant (Coming Soon)"
-                onClick={() => toast.info('Voice assistant coming soon', { description: 'Eleven Labs integration in progress', duration: 2000 })}
+          {/* Segmented Control for Tools */}
+          <div className="px-4 pb-3">
+            <div className="testing-segment-control">
+              <button
+                className="testing-segment-button"
+                data-active={activeToolPanel === 'ai'}
+                onClick={() => setActiveToolPanel(activeToolPanel === 'ai' ? null : 'ai')}
               >
-                <Mic className="h-4 w-4 text-primary" />
-              </Button>
-
-              {/* More Options */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-9 w-9 p-0 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
-                    title="More Options"
-                  >
-                    <MoreVertical className="h-4 w-4 text-primary" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-background z-50">
-                  <DropdownMenuItem
-                    onClick={() => {
-                      const newView = mobileViewType === 'table' ? 'card' : 'table';
-                      setMobileViewType(newView);
-                      setTableViewPreference(newView);
-                    }}
-                  >
-                    {mobileViewType === 'table' ? (
-                      <><Layout className="mr-2 h-4 w-4" /> Switch to Card View</>
-                    ) : (
-                      <><Table className="mr-2 h-4 w-4" /> Switch to Table View</>
-                    )}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={removeAllTestResults}
-                    className="text-destructive"
-                  >
-                    <X className="mr-2 h-4 w-4" />
-                    Clear All Circuits
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </div>
-
-
-          {/* Mobile Table - Full Width */}
-          <div className="w-full bg-background/30 pt-3">
-            {mobileViewType === 'table' ? (
-              <MobileHorizontalScrollTable
-                testResults={testResults}
-                onUpdate={updateTestResult}
-                onRemove={removeTestResult}
-                onBulkUpdate={handleBulkUpdate}
-                onBulkFieldUpdate={handleBulkFieldUpdate}
-              />
-            ) : (
-              <MobileOptimizedTestTable
-                testResults={testResults}
-                onUpdate={updateTestResult}
-                onRemove={removeTestResult}
-                onBulkUpdate={handleBulkUpdate}
-              />
-            )}
-          </div>
-
-          {/* Information Sections - Mobile Only - BELOW TABLE */}
-          <div className="w-full space-y-4 p-4 bg-background/50">
-            {/* Test Instrument Information */}
-            <div className="eicr-section-card">
-              <Collapsible open={openSections.instruments} onOpenChange={() => toggleSection('instruments')}>
-                <CollapsibleTrigger className="w-full">
-                  <SectionHeader
-                    title="Test Instrument Information"
-                    icon={Wrench}
-                    isOpen={openSections.instruments}
-                    color="blue-500"
-                    completionPercentage={getCompletionPercentage('instruments')}
-                  />
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
-                    <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
-            </div>
-
-            {/* Distribution Board Verification */}
-            <div className="eicr-section-card">
-              <Collapsible open={openSections.distributionBoard} onOpenChange={() => toggleSection('distributionBoard')}>
-                <CollapsibleTrigger className="w-full">
-                  <SectionHeader
-                    title="Distribution Board Verification"
-                    icon={Zap}
-                    isOpen={openSections.distributionBoard}
-                    color="amber-500"
-                    completionPercentage={getCompletionPercentage('distributionBoard')}
-                  />
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
-                    <DistributionBoardVerificationSection
-                      data={{
-                        dbReference: formData.dbReference || '',
-                        zdb: formData.zdb || '',
-                        ipf: formData.ipf || '',
-                        confirmedCorrectPolarity: formData.confirmedCorrectPolarity || false,
-                        confirmedPhaseSequence: formData.confirmedPhaseSequence || false,
-                        spdOperationalStatus: formData.spdOperationalStatus || false,
-                        spdNA: formData.spdNA || false,
-                      }}
-                      onUpdate={(field, value) => onUpdate(field, value)}
-                    />
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
-            </div>
-
-            {/* Test Method & Notes */}
-            <div className="eicr-section-card">
-              <Collapsible open={openSections.testMethod} onOpenChange={() => toggleSection('testMethod')}>
-                <CollapsibleTrigger className="w-full">
-                  <SectionHeader
-                    title="Test Method & Notes"
-                    icon={FileText}
-                    isOpen={openSections.testMethod}
-                    color="green-500"
-                    completionPercentage={getCompletionPercentage('testMethod')}
-                  />
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
-                    <TestMethodInfo formData={formData} onUpdate={onUpdate} />
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
-            </div>
-          </div>
-
-
-          {/* Analytics Section */}
-          {testResults.length > 0 && (
-            <div className="border-t border-border/50 p-4 space-y-4">
-              <Button 
-                onClick={() => setShowAnalytics(!showAnalytics)} 
-                size="default" 
-                variant="outline" 
-                className="w-full gap-2 h-11 touch-manipulation"
+                <Wand2 className="h-3.5 w-3.5" />
+                AI
+              </button>
+              <button
+                className="testing-segment-button"
+                data-active={activeToolPanel === 'smart'}
+                onClick={() => setActiveToolPanel(activeToolPanel === 'smart' ? null : 'smart')}
               >
-                <BarChart3 className="h-4 w-4" />
-                Test Results Analytics
-              </Button>
-              {showAnalytics && (
-                <TestAnalytics testResults={testResults} />
-              )}
+                <Sparkles className="h-3.5 w-3.5" />
+                Smart
+              </button>
+              <button
+                className="testing-segment-button"
+                data-active={showAnalytics}
+                onClick={() => setShowAnalytics(!showAnalytics)}
+              >
+                <BarChart3 className="h-3.5 w-3.5" />
+                Stats
+              </button>
             </div>
-          )}
-        </div>
-      ) : (
-        /* DESKTOP LAYOUT - MATCHING EICR */
-        <div className="w-full space-y-8 py-6 lg:py-8 px-0 bg-elec-gray border border-primary/30 rounded-xl shadow-lg shadow-black/10">
-          {/* HEADER SECTION */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-8">
-            <div className="space-y-1">
-              <h3 className="text-lg font-semibold text-foreground">Circuit Test Results</h3>
-              <p className="text-sm text-muted-foreground">
-                Enter test results for each circuit according to BS 7671
-              </p>
-            </div>
-            {/* ACTIONS - Better grouped */}
-            <div className="flex flex-wrap gap-3 w-full sm:w-auto">
-              {/* AI Tools Group */}
-              <div className="flex gap-2 p-2 rounded-lg bg-card/50 border border-elec-blue/30">
-                <Button 
-                  onClick={() => setShowPhotoCapture(true)} 
-                  size="sm" 
-                  variant="outline"
-                  className="h-9 text-sm px-4 gap-2 border-transparent hover:bg-muted"
+
+            {/* AI Tools Panel */}
+            {activeToolPanel === 'ai' && (
+              <div className="testing-tool-panel">
+                <Button
+                  variant="ghost"
+                  className="testing-tool-button"
+                  onClick={() => { setShowTestResultsScan(true); setActiveToolPanel(null); }}
                 >
-                  <Camera className="h-4 w-4" />
-                  Scan Board
+                  <FileText className="h-4 w-4 mr-3" />
+                  AI Scan Test Results
                 </Button>
-                <Button 
-                  onClick={() => setShowTestResultsScan(true)} 
-                  size="sm" 
-                  variant="outline"
-                  className="h-9 text-sm px-4 gap-2 border-transparent hover:bg-muted"
+                <Button
+                  variant="ghost"
+                  className="testing-tool-button"
+                  onClick={() => { setShowScribbleDialog(true); setActiveToolPanel(null); }}
                 >
-                  <ClipboardList className="h-4 w-4" />
-                  Scan Results
+                  <Pen className="h-4 w-4 mr-3" />
+                  Scribble to Table
                 </Button>
               </div>
-              
-              {/* Smart Tools Group */}
-              <div className="flex gap-2 p-2 rounded-lg bg-card/50 border border-elec-yellow/30">
-                <Button 
-                  onClick={() => setShowScribbleDialog(true)} 
-                  size="sm" 
-                  variant="outline"
-                  className="h-9 text-sm px-4 gap-2 border-transparent hover:bg-muted"
+            )}
+
+            {/* Smart Tools Panel */}
+            {activeToolPanel === 'smart' && (
+              <div className="testing-tool-panel">
+                <Button
+                  variant="ghost"
+                  className="testing-tool-button"
+                  onClick={() => { setShowSmartAutoFillDialog(true); setActiveToolPanel(null); }}
                 >
-                  <PenTool className="h-4 w-4" />
-                  Text to Circuits
-                </Button>
-                <Button 
-                  onClick={() => setShowSmartAutoFillDialog(true)} 
-                  size="sm" 
-                  variant="outline"
-                  className="h-9 text-sm px-4 gap-2 border-transparent hover:bg-muted"
-                >
-                  <Zap className="h-4 w-4" />
+                  <Zap className="h-4 w-4 mr-3" />
                   Smart Auto-Fill
                 </Button>
-                <Button 
-                  onClick={() => setShowBulkInfillDialog(true)} 
-                  size="sm" 
-                  variant="outline"
-                  className="h-9 text-sm px-4 gap-2 border-transparent hover:bg-muted"
+                <Button
+                  variant="ghost"
+                  className="testing-tool-button"
+                  onClick={() => { setShowRcdPresetsDialog(true); setActiveToolPanel(null); }}
                 >
-                  <ClipboardCheck className="h-4 w-4" />
+                  <Shield className="h-4 w-4 mr-3" />
+                  Quick RCD Presets
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="testing-tool-button"
+                  onClick={() => { setShowBulkInfillDialog(true); setActiveToolPanel(null); }}
+                >
+                  <Grid className="h-4 w-4 mr-3" />
                   Bulk Infill
                 </Button>
               </div>
-              
-              {/* Primary Actions */}
-              <div className="flex gap-2">
-                <Button onClick={addTestResult} size="sm" className="h-9 px-4 gap-2">
-                  <Plus className="h-4 w-4" />
+            )}
+
+            {/* Analytics Panel */}
+            {showAnalytics && testResults.length > 0 && (
+              <div className="testing-tool-panel">
+                <TestAnalytics testResults={testResults} />
+              </div>
+            )}
+          </div>
+
+          {/* View Toggle + Circuit Count */}
+          <div className="px-4 pb-2 flex items-center justify-between">
+            <span className="text-xs text-muted-foreground">
+              {testResults.length} {testResults.length === 1 ? 'circuit' : 'circuits'}
+              {distributionBoards.length > 1 && ` • ${distributionBoards.length} boards`}
+            </span>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleAddBoard}
+                className="h-8 text-xs gap-1.5 text-muted-foreground hover:text-foreground"
+              >
+                <Plus className="h-3.5 w-3.5" />
+                Board
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={toggleMobileView}
+                className="h-8 text-xs gap-1.5 text-muted-foreground hover:text-foreground"
+              >
+                {mobileViewType === 'table' ? <Layout className="h-3.5 w-3.5" /> : <Table className="h-3.5 w-3.5" />}
+                {mobileViewType === 'table' ? 'Cards' : 'Table'}
+              </Button>
+            </div>
+          </div>
+
+          {/* Distribution Boards with Circuit Lists */}
+          <div className="px-2 pb-4 space-y-3">
+            {distributionBoards
+              .sort((a, b) => a.order - b.order)
+              .map(board => {
+                const boardCircuits = getCircuitsForBoard(testResults, board.id);
+                return (
+                  <BoardSection
+                    key={board.id}
+                    board={board}
+                    isExpanded={expandedBoards.has(board.id)}
+                    onToggleExpanded={() => toggleBoardExpanded(board.id)}
+                    onUpdateBoard={handleUpdateBoard}
+                    onRemoveBoard={handleRemoveBoard}
+                    onAddCircuit={() => addCircuitToBoard(board.id)}
+                    circuitCount={boardCircuits.length}
+                    completedCount={boardCircuits.filter(r =>
+                      r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
+                    ).length}
+                    isMobile={true}
+                  >
+                    {mobileViewType === 'table' ? (
+                      <MobileHorizontalScrollTable
+                        testResults={boardCircuits}
+                        onUpdate={updateTestResult}
+                        onRemove={removeTestResult}
+                        onBulkUpdate={handleBulkUpdate}
+                        onBulkFieldUpdate={handleBulkFieldUpdate}
+                      />
+                    ) : (
+                      <MobileOptimizedTestTable
+                        testResults={boardCircuits}
+                        onUpdate={updateTestResult}
+                        onRemove={removeTestResult}
+                        onBulkUpdate={handleBulkUpdate}
+                      />
+                    )}
+                  </BoardSection>
+                );
+              })}
+          </div>
+        </div>
+      ) : (
+        /* DESKTOP LAYOUT - Premium Professional Dashboard */
+        <div className="w-full space-y-6 py-6">
+          {/* Hero Card */}
+          <div className="testing-hero p-6">
+            <div className="relative z-10">
+              {/* Header Row */}
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 rounded-2xl bg-elec-yellow/20 border border-elec-yellow/30">
+                    <TestTube className="h-8 w-8 text-elec-yellow" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-white">Schedule of Tests</h2>
+                    <p className="text-sm text-white/60">
+                      BS 7671 compliant circuit testing & verification
+                    </p>
+                  </div>
+                </div>
+
+                {/* Stats Grid */}
+                <div className="flex gap-3">
+                  <div className="testing-stat-card min-w-[80px]">
+                    <span className="text-2xl font-bold text-white">{testResults.length}</span>
+                    <span className="text-xs text-white/50">Circuits</span>
+                  </div>
+                  <div className="testing-stat-card min-w-[80px]">
+                    <span className="text-2xl font-bold text-green-400">{completedCount}</span>
+                    <span className="text-xs text-white/50">Complete</span>
+                  </div>
+                  <div className="testing-stat-card min-w-[80px]">
+                    <span className="text-2xl font-bold text-amber-400">{pendingCount}</span>
+                    <span className="text-xs text-white/50">Pending</span>
+                  </div>
+                  <div className="testing-stat-card min-w-[80px]">
+                    <span className="text-2xl font-bold text-elec-yellow">{progressPercent}%</span>
+                    <span className="text-xs text-white/50">Progress</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons Grid */}
+              <div className="grid grid-cols-6 gap-3">
+                <Button
+                  className="testing-action-primary col-span-2"
+                  onClick={() => setShowPhotoCapture(true)}
+                >
+                  <Camera className="h-4 w-4 mr-2" />
+                  AI Board Scan
+                </Button>
+                <Button
+                  className="col-span-2 h-11 rounded-lg font-medium transition-all duration-200 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/20 border border-purple-400/30"
+                  onClick={() => toast.info('Voice assistant coming soon', { description: 'Eleven Labs integration in progress', duration: 2000 })}
+                >
+                  <Mic className="h-4 w-4 mr-2" />
+                  Voice Assistant
+                </Button>
+                <Button className="testing-action-secondary col-span-2" onClick={addTestResult}>
+                  <Plus className="h-4 w-4 mr-2" />
                   Add Circuit
                 </Button>
-                {testResults.length > 0 && (
-                  <Button 
-                    onClick={removeAllTestResults} 
-                    size="sm" 
-                    variant="destructive"
-                    className="h-9 px-4 gap-2"
+              </div>
+
+              {/* Secondary Tools Row */}
+              <div className="grid grid-cols-4 gap-2 mt-3">
+                <Button className="testing-action-secondary" onClick={() => setShowTestResultsScan(true)}>
+                  <FileText className="h-4 w-4 mr-2" />
+                  Scan Results
+                </Button>
+                <Button className="testing-action-secondary" onClick={() => setShowScribbleDialog(true)}>
+                  <PenTool className="h-4 w-4 mr-2" />
+                  Text to Circuits
+                </Button>
+                <Button className="testing-action-secondary" onClick={() => setShowSmartAutoFillDialog(true)}>
+                  <Zap className="h-4 w-4 mr-2" />
+                  Smart Fill
+                </Button>
+                <Button className="testing-action-secondary" onClick={() => setShowBulkInfillDialog(true)}>
+                  <ClipboardCheck className="h-4 w-4 mr-2" />
+                  Bulk Infill
+                </Button>
+              </div>
+
+              {/* Secondary Actions Row */}
+              <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/10">
+                <div className="flex gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
+                    onClick={() => setShowRcdPresetsDialog(true)}
                   >
-                    Remove All
+                    <Shield className="h-4 w-4 mr-2" />
+                    RCD Presets
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
+                    onClick={() => setShowAnalytics(!showAnalytics)}
+                  >
+                    <BarChart3 className="h-4 w-4 mr-2" />
+                    Analytics
+                  </Button>
+                </div>
+                {testResults.length > 0 && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-9 text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                    onClick={removeAllTestResults}
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Clear All
                   </Button>
                 )}
               </div>
             </div>
           </div>
 
-          {/* TABLE - Full width, no card wrapper */}
-          <div data-autofill-section className="mt-6">
-            <EnhancedTestResultDesktopTable 
-              testResults={testResults}
-              onUpdate={updateTestResult}
-              onRemove={removeTestResult}
-              allResults={testResults}
-              onBulkUpdate={handleBulkUpdate}
-              onAddCircuit={addTestResult}
-              onBulkFieldUpdate={handleBulkFieldUpdate}
-            />
-          </div>
-
-          {/* ANALYTICS BUTTON - At bottom */}
-          <div className="flex justify-center pt-6 border-t border-border/50 px-4 md:px-8 lg:px-12 xl:px-16">
-            <Button 
-              onClick={() => setShowAnalytics(!showAnalytics)} 
-              size="default"
-              variant="outline" 
-              className="h-10 px-6 gap-2 text-base"
-              disabled={testResults.length === 0}
-            >
-              <BarChart3 className="h-4 w-4" />
-              Test Results Analytics
-            </Button>
-          </div>
-
+          {/* Analytics Section */}
           {showAnalytics && testResults.length > 0 && (
-            <TestAnalytics testResults={testResults} />
+            <div className="testing-table-container p-4">
+              <TestAnalytics testResults={testResults} />
+            </div>
           )}
+
+          {/* Board Management Header */}
+          <BoardManagement
+            boards={distributionBoards}
+            onAddBoard={handleAddBoard}
+            totalCircuits={testResults.length}
+          />
+
+          {/* Distribution Boards with Circuit Tables */}
+          <div className="space-y-4" data-autofill-section>
+            {distributionBoards
+              .sort((a, b) => a.order - b.order)
+              .map(board => {
+                const boardCircuits = getCircuitsForBoard(testResults, board.id);
+                return (
+                  <BoardSection
+                    key={board.id}
+                    board={board}
+                    isExpanded={expandedBoards.has(board.id)}
+                    onToggleExpanded={() => toggleBoardExpanded(board.id)}
+                    onUpdateBoard={handleUpdateBoard}
+                    onRemoveBoard={handleRemoveBoard}
+                    onAddCircuit={() => addCircuitToBoard(board.id)}
+                    circuitCount={boardCircuits.length}
+                    completedCount={boardCircuits.filter(r =>
+                      r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
+                    ).length}
+                  >
+                    <EnhancedTestResultDesktopTable
+                      testResults={boardCircuits}
+                      onUpdate={updateTestResult}
+                      onRemove={removeTestResult}
+                      allResults={testResults}
+                      onBulkUpdate={handleBulkUpdate}
+                      onAddCircuit={() => addCircuitToBoard(board.id)}
+                      onBulkFieldUpdate={handleBulkFieldUpdate}
+                    />
+                  </BoardSection>
+                );
+              })}
+          </div>
         </div>
       )}
 
-      {/* INFO SECTIONS - Desktop only (mobile has own implementation) */}
-      {!useMobileView && (
-        <div className="space-y-4 sm:space-y-6">
-          {/* Test Instrument Information */}
-          <div className="eicr-section-card">
-            <Collapsible open={openSections.instruments} onOpenChange={() => toggleSection('instruments')}>
-              <CollapsibleTrigger className="w-full">
-                <SectionHeader
-                  title="Test Instrument Information"
-                  icon={Wrench}
-                  isOpen={openSections.instruments}
-                  color="blue-500"
-                  completionPercentage={getCompletionPercentage('instruments')}
-                />
+      {/* SHARED INFO SECTIONS - Responsive Layout */}
+      {useMobileView ? (
+        /* Mobile: Collapsible Accordions */
+        <div className="px-4 pb-24 space-y-2 mt-4">
+          {/* Test Instrument Info */}
+          <div className="testing-info-section">
+            <Collapsible>
+              <CollapsibleTrigger asChild>
+                <button className="testing-info-header">
+                  <span className="flex items-center gap-2">
+                    <Wrench className="h-4 w-4 text-elec-yellow" />
+                    Test Instruments
+                  </span>
+                  <ChevronDown className="h-4 w-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                </button>
               </CollapsibleTrigger>
-              <CollapsibleContent>
-                <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
-                  <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
-
-          {/* Distribution Board Verification */}
-          <div className="eicr-section-card">
-            <Collapsible open={openSections.distributionBoard} onOpenChange={() => toggleSection('distributionBoard')}>
-              <CollapsibleTrigger className="w-full">
-                <SectionHeader
-                  title="Distribution Board Verification"
-                  icon={Zap}
-                  isOpen={openSections.distributionBoard}
-                  color="amber-500"
-                  completionPercentage={getCompletionPercentage('distributionBoard')}
-                />
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
-                  <DistributionBoardVerificationSection
-                    data={{
-                      dbReference: formData.dbReference || '',
-                      zdb: formData.zdb || '',
-                      ipf: formData.ipf || '',
-                      confirmedCorrectPolarity: formData.confirmedCorrectPolarity || false,
-                      confirmedPhaseSequence: formData.confirmedPhaseSequence || false,
-                      spdOperationalStatus: formData.spdOperationalStatus || false,
-                      spdNA: formData.spdNA || false,
-                    }}
-                    onUpdate={(field, value) => onUpdate(field, value)}
-                  />
-                </div>
+              <CollapsibleContent className="px-4 pb-4">
+                <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
               </CollapsibleContent>
             </Collapsible>
           </div>
 
           {/* Test Method & Notes */}
-          <div className="eicr-section-card">
-            <Collapsible open={openSections.testMethod} onOpenChange={() => toggleSection('testMethod')}>
-              <CollapsibleTrigger className="w-full">
-                <SectionHeader
-                  title="Test Method & Notes"
-                  icon={FileText}
-                  isOpen={openSections.testMethod}
-                  color="green-500"
-                  completionPercentage={getCompletionPercentage('testMethod')}
-                />
+          <div className="testing-info-section">
+            <Collapsible>
+              <CollapsibleTrigger asChild>
+                <button className="testing-info-header">
+                  <span className="flex items-center gap-2">
+                    <FileText className="h-4 w-4 text-elec-yellow" />
+                    Test Method & Notes
+                  </span>
+                  <ChevronDown className="h-4 w-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                </button>
               </CollapsibleTrigger>
-              <CollapsibleContent>
-                <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
-                  <TestMethodInfo formData={formData} onUpdate={onUpdate} />
-                </div>
+              <CollapsibleContent className="px-4 pb-4">
+                <TestMethodInfo formData={formData} onUpdate={onUpdate} />
               </CollapsibleContent>
             </Collapsible>
+          </div>
+        </div>
+      ) : (
+        /* Desktop: Horizontal Card Grid */
+        <div className="grid grid-cols-2 gap-4 mt-6">
+          <div className="testing-info-section p-4">
+            <h3 className="text-sm font-semibold text-white/90 flex items-center gap-2 mb-4">
+              <Wrench className="h-4 w-4 text-elec-yellow" />
+              Test Instruments
+            </h3>
+            <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
+          </div>
+
+          <div className="testing-info-section p-4">
+            <h3 className="text-sm font-semibold text-white/90 flex items-center gap-2 mb-4">
+              <FileText className="h-4 w-4 text-elec-yellow" />
+              Test Method & Notes
+            </h3>
+            <TestMethodInfo formData={formData} onUpdate={onUpdate} />
+          </div>
+        </div>
+      )}
+
+      {/* Quick Fill RCD Panel Dialog */}
+      {showQuickFillPanel && (
+        <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex flex-col">
+          <div className="flex items-center justify-between p-4 border-b">
+            <h2 className="text-lg font-semibold">Quick Fill RCD Details</h2>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowQuickFillPanel(false)}
+              className="h-9 w-9 p-0"
+            >
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+          <div className="flex-1 overflow-y-auto p-4">
+            <QuickFillRcdPanel
+              onFillAllRcdBsStandard={handleFillAllRcdBsStandard}
+              onFillAllRcdType={handleFillAllRcdType}
+              onFillAllRcdRating={handleFillAllRcdRating}
+              onFillAllRcdRatingA={handleFillAllRcdRatingA}
+            />
           </div>
         </div>
       )}
@@ -1275,7 +1473,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                 <Camera className="h-5 w-5 text-elec-yellow" />
                 AI Board Scanner
               </div>
-              <Button variant="ghost" size="icon" onClick={() => setShowPhotoCapture(false)} className="text-white/70 hover:text-white hover:bg-white/10">
+              <Button variant="ghost" size="icon" onClick={() => setShowPhotoCapture(false)}>
                 <X className="h-5 w-5" />
               </Button>
             </div>
@@ -1298,10 +1496,10 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
             <div className="tool-sheet-handle md:hidden" />
             <div className="tool-sheet-header">
               <div className="tool-sheet-title">
-                <FileText className="h-5 w-5 text-elec-yellow" />
+                <Camera className="h-5 w-5 text-elec-yellow" />
                 Scan Test Results
               </div>
-              <Button variant="ghost" size="icon" onClick={() => setShowTestResultsScan(false)} className="text-white/70 hover:text-white hover:bg-white/10">
+              <Button variant="ghost" size="icon" onClick={() => setShowTestResultsScan(false)}>
                 <X className="h-5 w-5" />
               </Button>
             </div>
@@ -1309,27 +1507,41 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               <TestResultsPhotoCapture
                 onAnalysisComplete={handleTestResultsAnalysisComplete}
                 onClose={() => setShowTestResultsScan(false)}
+                renderContentOnly={true}
               />
             </div>
           </div>
         </>
       )}
 
-      {/* AI Circuit Review */}
+      {/* AI Circuit Review - Tool Sheet Pattern */}
       {showCircuitReview && detectedCircuits && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="max-h-[90vh] overflow-auto w-full">
-            <SimpleCircuitTable
-              circuits={detectedCircuits.circuits || []}
-              board={detectedCircuits.board || { make: 'Unknown', model: 'Unknown', mainSwitch: 'Unknown', spd: 'Unknown', totalWays: 0 }}
-              onApply={handleApplyAICircuitsFromTable}
-              onClose={() => {
-                setShowCircuitReview(false);
-                setDetectedCircuits(null);
-              }}
-            />
+        <>
+          <div className="tool-sheet-overlay" onClick={() => { setShowCircuitReview(false); setDetectedCircuits(null); }} />
+          <div className="tool-sheet-container">
+            <div className="tool-sheet-handle md:hidden" />
+            <div className="tool-sheet-header">
+              <div className="tool-sheet-title">
+                <Zap className="h-5 w-5 text-elec-yellow" />
+                Review Detected Circuits
+              </div>
+              <Button variant="ghost" size="icon" onClick={() => { setShowCircuitReview(false); setDetectedCircuits(null); }}>
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="tool-sheet-content">
+              <SimpleCircuitTable
+                circuits={detectedCircuits.circuits || []}
+                board={detectedCircuits.board || { make: 'Unknown', model: 'Unknown', mainSwitch: 'Unknown', spd: 'Unknown', totalWays: 0 }}
+                onApply={handleApplyAICircuitsFromTable}
+                onClose={() => {
+                  setShowCircuitReview(false);
+                  setDetectedCircuits(null);
+                }}
+              />
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Test Results Review Dialog */}
@@ -1377,9 +1589,9 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
             <div className="tool-sheet-header">
               <div className="tool-sheet-title">
                 <Zap className="h-5 w-5 text-elec-yellow" />
-                Smart Auto-Fill
+                Smart Circuit Auto-Fill
               </div>
-              <Button variant="ghost" size="icon" onClick={() => setShowSmartAutoFillDialog(false)} className="text-white/70 hover:text-white hover:bg-white/10">
+              <Button variant="ghost" size="icon" onClick={() => setShowSmartAutoFillDialog(false)}>
                 <X className="h-5 w-5" />
               </Button>
             </div>
@@ -1404,7 +1616,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                 <Shield className="h-5 w-5 text-elec-yellow" />
                 Quick RCD Presets
               </div>
-              <Button variant="ghost" size="icon" onClick={() => setShowRcdPresetsDialog(false)} className="text-white/70 hover:text-white hover:bg-white/10">
+              <Button variant="ghost" size="icon" onClick={() => setShowRcdPresetsDialog(false)}>
                 <X className="h-5 w-5" />
               </Button>
             </div>
@@ -1447,8 +1659,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         testResults={testResults}
         onApply={handleBulkInfill}
       />
-
-    </>
+    </div>
   );
 };
 

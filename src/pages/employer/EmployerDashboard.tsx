@@ -1,6 +1,16 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { useQueryClient } from "@tanstack/react-query";
+import { NativePageWrapper } from "@/components/native/NativePageWrapper";
+import { useToast } from "@/hooks/use-toast";
+import {
+  Home, Users, UserSearch, Briefcase, CreditCard, Clock, MessageSquare,
+  PoundSterling, FileText, Receipt, ShoppingCart, BarChart3, FileSignature,
+  Tag, Truck, Camera, Folder, MapPin, ListChecks, AlertCircle, PlayCircle,
+  CheckCircle, Users2, ShieldCheck, BookOpen, ClipboardList, GraduationCap,
+  FileCheck, Sparkles, Cpu, Zap, Settings, type LucideIcon,
+} from "lucide-react";
 import { OverviewSection } from "@/components/employer/sections/OverviewSection";
 import { EmployeesSection } from "@/components/employer/sections/EmployeesSection";
 import { JobsSection } from "@/components/employer/sections/JobsSection";
@@ -171,11 +181,97 @@ const pageTransition = {
   ease: [0.32, 0.72, 0, 1], // iOS-like spring curve
 };
 
+// Section metadata for NativePageWrapper
+interface SectionMeta {
+  title: string;
+  subtitle?: string;
+  icon: LucideIcon;
+  color: 'yellow' | 'blue' | 'green' | 'purple' | 'orange';
+  queryKeys?: string[];
+}
+
+const sectionMetadata: Record<Section, SectionMeta> = {
+  // Overview
+  overview: { title: "Employer Hub", subtitle: "Your business command centre", icon: Home, color: "yellow", queryKeys: ['employerDashboardStats'] },
+  // People Hub
+  peoplehub: { title: "People Hub", subtitle: "Team & hiring", icon: Users, color: "yellow", queryKeys: ['employees', 'talentPool', 'vacancies'] },
+  team: { title: "Your Team", subtitle: "Active employees", icon: Users, color: "yellow", queryKeys: ['employees'] },
+  elecid: { title: "Credentials", subtitle: "Elec-ID & compliance", icon: CreditCard, color: "purple", queryKeys: ['employees', 'certifications'] },
+  timesheets: { title: "Timesheets", subtitle: "Hours & attendance", icon: Clock, color: "orange", queryKeys: ['timesheets'] },
+  comms: { title: "Communications", subtitle: "Messages & alerts", icon: MessageSquare, color: "blue", queryKeys: ['communications'] },
+  talentpool: { title: "Talent Pool", subtitle: "Browse available sparkies", icon: UserSearch, color: "green", queryKeys: ['talentPool'] },
+  vacancies: { title: "Job Vacancies", subtitle: "Post jobs & manage apps", icon: Briefcase, color: "blue", queryKeys: ['vacancies', 'applications'] },
+  // Finance Hub
+  financehub: { title: "Finance Hub", subtitle: "Quotes, invoices & costs", icon: PoundSterling, color: "green", queryKeys: ['quotes', 'invoices', 'expenses'] },
+  quotes: { title: "Quotes & Invoices", icon: FileText, color: "green", queryKeys: ['quotes', 'invoices'] },
+  tenders: { title: "Tenders", icon: FileText, color: "blue", queryKeys: ['tenders'] },
+  expenses: { title: "Expenses", icon: Receipt, color: "orange", queryKeys: ['expenses'] },
+  procurement: { title: "Procurement", icon: ShoppingCart, color: "blue", queryKeys: ['procurement', 'suppliers'] },
+  financials: { title: "Job Financials", icon: BarChart3, color: "green", queryKeys: ['jobFinancials'] },
+  reports: { title: "Reports", icon: BarChart3, color: "blue", queryKeys: ['reports'] },
+  signatures: { title: "Signatures", icon: FileSignature, color: "purple" },
+  pricebook: { title: "Price Book", icon: Tag, color: "yellow", queryKeys: ['priceBook'] },
+  // Jobs Hub
+  jobshub: { title: "Jobs Hub", subtitle: "Projects & tracking", icon: Briefcase, color: "blue", queryKeys: ['jobs', 'activeJobs'] },
+  jobpacks: { title: "Job Packs", icon: Folder, color: "yellow", queryKeys: ['jobPacks'] },
+  jobs: { title: "Jobs", icon: Briefcase, color: "blue", queryKeys: ['jobs'] },
+  jobboard: { title: "Job Board", icon: Briefcase, color: "blue", queryKeys: ['jobs'] },
+  timeline: { title: "Timeline", icon: Clock, color: "blue", queryKeys: ['jobTimeline'] },
+  tracking: { title: "Worker Tracking", icon: MapPin, color: "green", queryKeys: ['workerTracking'] },
+  progresslogs: { title: "Progress Logs", icon: ListChecks, color: "blue", queryKeys: ['progressLogs'] },
+  issues: { title: "Job Issues", icon: AlertCircle, color: "orange", queryKeys: ['jobIssues'] },
+  testing: { title: "Testing Workflow", icon: PlayCircle, color: "purple", queryKeys: ['testingWorkflow'] },
+  quality: { title: "Quality & Snags", icon: CheckCircle, color: "green", queryKeys: ['quality', 'snags'] },
+  clientportal: { title: "Client Portal", icon: Users2, color: "blue" },
+  fleet: { title: "Fleet", icon: Truck, color: "orange", queryKeys: ['fleet', 'vehicles'] },
+  photogallery: { title: "Photo Gallery", icon: Camera, color: "purple", queryKeys: ['photos'] },
+  // Safety Hub
+  safetyhub: { title: "Safety Hub", subtitle: "RAMS & compliance", icon: ShieldCheck, color: "orange", queryKeys: ['rams', 'incidents', 'compliance'] },
+  safety: { title: "Health & Safety", icon: ShieldCheck, color: "orange", queryKeys: ['safetyRecords'] },
+  rams: { title: "RAMS", icon: FileCheck, color: "orange", queryKeys: ['rams'] },
+  incidents: { title: "Incidents", icon: AlertCircle, color: "orange", queryKeys: ['incidents'] },
+  policies: { title: "Policies", icon: BookOpen, color: "blue", queryKeys: ['policies'] },
+  contracts: { title: "Contracts", icon: FileSignature, color: "purple", queryKeys: ['contracts'] },
+  training: { title: "Training Records", icon: GraduationCap, color: "blue", queryKeys: ['trainingRecords'] },
+  briefings: { title: "Briefings", icon: ClipboardList, color: "yellow", queryKeys: ['briefings'] },
+  compliance: { title: "Compliance", icon: CheckCircle, color: "green", queryKeys: ['compliance'] },
+  // Smart Docs Hub
+  smartdocs: { title: "Smart Docs", subtitle: "AI-powered documents", icon: Sparkles, color: "purple" },
+  aidesignspec: { title: "AI Design Spec", icon: Cpu, color: "purple" },
+  airams: { title: "AI RAMS", icon: ShieldCheck, color: "purple" },
+  aimethodstatement: { title: "AI Method Statement", icon: FileText, color: "purple" },
+  aibriefingpack: { title: "AI Briefing Pack", icon: ClipboardList, color: "purple" },
+  aiquote: { title: "AI Quote", icon: PoundSterling, color: "purple" },
+  // Other
+  automations: { title: "Automations", icon: Zap, color: "purple" },
+  settings: { title: "Settings", icon: Settings, color: "yellow" },
+};
+
 const EmployerDashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
   const activeSection = (searchParams.get('section') as Section) || "overview";
   const setActiveSection = (section: Section) => setSearchParams({ section }, { replace: false });
+
+  // Get current section metadata
+  const currentMeta = sectionMetadata[activeSection];
+  const CurrentIcon = currentMeta.icon;
+
+  // Pull-to-refresh handler - invalidates React Query cache
+  const handleRefresh = useCallback(async () => {
+    const queryKeys = currentMeta.queryKeys || [];
+    if (queryKeys.length > 0) {
+      await Promise.all(
+        queryKeys.map(key => queryClient.invalidateQueries({ queryKey: [key] }))
+      );
+      toast({
+        title: "Refreshed",
+        description: `${currentMeta.title} data updated.`,
+      });
+    }
+  }, [currentMeta, queryClient, toast]);
 
   // Track navigation direction for page transitions
   const previousSectionRef = useRef<Section | null>(null);
@@ -560,22 +656,17 @@ const EmployerDashboard = () => {
 
   return (
     <EmployerProvider>
-      <div className="pb-20 md:pb-0 px-4 sm:px-6 momentum-scroll-y overflow-hidden">
-        {/* Back navigation for sub-sections */}
-        {activeSection !== "overview" && (
-          <div className="mb-4">
-            <button
-              onClick={handleBack}
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-elec-yellow transition-colors touch-manipulation min-h-[44px] active:scale-95"
-            >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back
-            </button>
-          </div>
-        )}
-
+      <NativePageWrapper
+        title={currentMeta.title}
+        subtitle={currentMeta.subtitle}
+        icon={<CurrentIcon />}
+        headerColor={currentMeta.color}
+        showBackButton={activeSection !== "overview"}
+        onBack={handleBack}
+        onRefresh={currentMeta.queryKeys && currentMeta.queryKeys.length > 0 ? handleRefresh : undefined}
+        collapsingHeader={true}
+        contentClassName="pb-20 md:pb-0"
+      >
         {/* Animated page transitions */}
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
@@ -589,22 +680,22 @@ const EmployerDashboard = () => {
             {renderSection()}
           </motion.div>
         </AnimatePresence>
+      </NativePageWrapper>
 
-        {/* Voice-controlled dialogs */}
-        <CreateQuoteDialog open={quoteDialogOpen} onOpenChange={setQuoteDialogOpen} />
-        <AddJobDialog open={jobDialogOpen} onOpenChange={setJobDialogOpen} trigger={null} />
-        <AddEmployeeDialog open={employeeDialogOpen} onOpenChange={setEmployeeDialogOpen} trigger={null} />
-        <CreateInvoiceDialog open={invoiceDialogOpen} onOpenChange={setInvoiceDialogOpen} />
-        <CreateExpenseDialog open={expenseDialogOpen} onOpenChange={setExpenseDialogOpen} />
-        <ManualTimeEntryDialog open={timeEntryDialogOpen} onOpenChange={setTimeEntryDialogOpen} trigger={null} />
-        <AddCertificationDialog open={certificationDialogOpen} onOpenChange={setCertificationDialogOpen} trigger={null} />
-        <CreateOrderDialog open={orderDialogOpen} onOpenChange={setOrderDialogOpen} />
-        <CreateSupplierDialog open={supplierDialogOpen} onOpenChange={setSupplierDialogOpen} />
-        <PostVacancyDialog open={vacancyDialogOpen} onOpenChange={setVacancyDialogOpen} trigger={null} />
+      {/* Voice-controlled dialogs - outside NativePageWrapper */}
+      <CreateQuoteDialog open={quoteDialogOpen} onOpenChange={setQuoteDialogOpen} />
+      <AddJobDialog open={jobDialogOpen} onOpenChange={setJobDialogOpen} trigger={null} />
+      <AddEmployeeDialog open={employeeDialogOpen} onOpenChange={setEmployeeDialogOpen} trigger={null} />
+      <CreateInvoiceDialog open={invoiceDialogOpen} onOpenChange={setInvoiceDialogOpen} />
+      <CreateExpenseDialog open={expenseDialogOpen} onOpenChange={setExpenseDialogOpen} />
+      <ManualTimeEntryDialog open={timeEntryDialogOpen} onOpenChange={setTimeEntryDialogOpen} trigger={null} />
+      <AddCertificationDialog open={certificationDialogOpen} onOpenChange={setCertificationDialogOpen} trigger={null} />
+      <CreateOrderDialog open={orderDialogOpen} onOpenChange={setOrderDialogOpen} />
+      <CreateSupplierDialog open={supplierDialogOpen} onOpenChange={setSupplierDialogOpen} />
+      <PostVacancyDialog open={vacancyDialogOpen} onOpenChange={setVacancyDialogOpen} trigger={null} />
 
-        {/* Draggable Voice Assistant */}
-        <DraggableVoiceAssistant onNavigate={handleNavigate} currentSection={activeSection} />
-      </div>
+      {/* Draggable Voice Assistant */}
+      <DraggableVoiceAssistant onNavigate={handleNavigate} currentSection={activeSection} />
     </EmployerProvider>
   );
 };

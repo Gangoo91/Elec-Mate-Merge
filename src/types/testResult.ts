@@ -81,9 +81,12 @@ export interface TestResult {
   
   // Track source circuit ID for sync
   sourceCircuitId?: number;
-  
+
   // Track auto-filled circuits
   autoFilled?: boolean;
+
+  // Board association (for multi-board installations)
+  boardId?: string; // References DistributionBoard.id, defaults to MAIN_BOARD_ID
   
   // Three-Phase Circuit Fields (BS 7671:2018+A2:2022)
   phaseType?: '1P' | '3P' | '';

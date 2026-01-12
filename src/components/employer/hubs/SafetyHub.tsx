@@ -71,39 +71,19 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
   ];
 
   return (
-    <div className="space-y-6 animate-fade-in pb-6">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-elec-gray via-background to-orange-500/5 border border-border/50 p-5 md:p-6">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-24 h-24 bg-success/10 rounded-full blur-2xl" />
-
-        <div className="relative flex items-start justify-between">
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-2xl bg-orange-500/10 border border-orange-500/20">
-              <Shield className="h-7 w-7 text-orange-500" />
-            </div>
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-                HR & Safety
-              </h1>
-              <p className="text-sm text-muted-foreground mt-0.5">
-                Documents, compliance & safety
-              </p>
-            </div>
-          </div>
-          {safetyScore >= 95 ? (
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-success/10 border border-success/20">
-              <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-              <span className="text-xs font-medium text-success">Compliant</span>
-            </div>
-          ) : openIncidents > 0 && (
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-warning/10 border border-warning/20">
-              <Bell className="h-3.5 w-3.5 text-warning" />
-              <span className="text-xs font-medium text-warning">{openIncidents} open</span>
-            </div>
-          )}
+    <div className="space-y-6 pb-6">
+      {/* Compliance status badge */}
+      {safetyScore >= 95 ? (
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-success/10 border border-success/20 w-fit">
+          <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
+          <span className="text-xs font-medium text-success">{safetyScore}% compliant</span>
         </div>
-      </div>
+      ) : openIncidents > 0 ? (
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-warning/10 border border-warning/20 w-fit">
+          <Bell className="h-3.5 w-3.5 text-warning" />
+          <span className="text-xs font-medium text-warning">{openIncidents} open incidents</span>
+        </div>
+      ) : null}
 
       {/* Quick Stats - Centered Grid */}
       <div className="grid grid-cols-4 gap-2 md:gap-3">

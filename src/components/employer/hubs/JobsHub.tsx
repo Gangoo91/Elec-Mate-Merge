@@ -94,34 +94,14 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
   ];
 
   return (
-    <div className="space-y-6 animate-fade-in pb-6">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-elec-gray via-background to-info/5 border border-border/50 p-5 md:p-6">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-info/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-24 h-24 bg-elec-yellow/10 rounded-full blur-2xl" />
-
-        <div className="relative flex items-start justify-between">
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-2xl bg-info/10 border border-info/20">
-              <Briefcase className="h-7 w-7 text-info" />
-            </div>
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-                Jobs Hub
-              </h1>
-              <p className="text-sm text-muted-foreground mt-0.5">
-                Manage projects and workflows
-              </p>
-            </div>
-          </div>
-          {openIssues > 0 && (
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-warning/10 border border-warning/20">
-              <AlertTriangle className="h-3.5 w-3.5 text-warning" />
-              <span className="text-xs font-medium text-warning">{openIssues} issues</span>
-            </div>
-          )}
+    <div className="space-y-6 pb-6">
+      {/* Issues warning badge */}
+      {openIssues > 0 && (
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-warning/10 border border-warning/20 w-fit">
+          <AlertTriangle className="h-3.5 w-3.5 text-warning" />
+          <span className="text-xs font-medium text-warning">{openIssues} open issues</span>
         </div>
-      </div>
+      )}
 
       {/* Quick Stats - Centered Grid */}
       <div className="grid grid-cols-4 gap-2 md:gap-3">

@@ -48,6 +48,14 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           <span className="text-elec-yellow font-bold">C#</span>
         </TableHead>
 
+        {/* Phase - Always visible */}
+        <TableHead
+          colSpan={1}
+          className="sot-header-group-cell w-14 min-w-[56px] max-w-[56px] bg-purple-500/10"
+        >
+          <span className="text-purple-400 font-semibold text-xs">Phase</span>
+        </TableHead>
+
         <TableHead
           colSpan={4}
           className="sot-header-group-cell bg-blue-500/5"
@@ -185,6 +193,11 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         {/* Circuit Number - Always visible */}
         <TableHead className="sot-header-cell sot-sticky-col w-20 min-w-[80px] max-w-[80px]" data-group="circuit">
           Circuit
+        </TableHead>
+
+        {/* Phase - Always visible */}
+        <TableHead className="sot-header-cell w-14 min-w-[56px] max-w-[56px]" data-group="phase">
+          1P/3P
         </TableHead>
 
         {/* Circuit Details */}

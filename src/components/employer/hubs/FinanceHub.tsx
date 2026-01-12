@@ -103,34 +103,14 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in pb-6">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-elec-gray via-background to-success/5 border border-border/50 p-5 md:p-6">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-success/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-24 h-24 bg-info/10 rounded-full blur-2xl" />
-
-        <div className="relative flex items-start justify-between">
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-2xl bg-success/10 border border-success/20">
-              <PoundSterling className="h-7 w-7 text-success" />
-            </div>
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-                Finance Hub
-              </h1>
-              <p className="text-sm text-muted-foreground mt-0.5">
-                Finances, expenses & procurement
-              </p>
-            </div>
-          </div>
-          {totalOverdueInvoices > 0 && (
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-destructive/10 border border-destructive/20">
-              <AlertTriangle className="h-3.5 w-3.5 text-destructive" />
-              <span className="text-xs font-medium text-destructive">Overdue</span>
-            </div>
-          )}
+    <div className="space-y-6 pb-6">
+      {/* Overdue warning badge */}
+      {totalOverdueInvoices > 0 && (
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-destructive/10 border border-destructive/20 w-fit">
+          <AlertTriangle className="h-3.5 w-3.5 text-destructive" />
+          <span className="text-xs font-medium text-destructive">£{(totalOverdueInvoices / 1000).toFixed(0)}k overdue</span>
         </div>
-      </div>
+      )}
 
       {/* Quick Stats - Centered Grid */}
       <div className="grid grid-cols-4 gap-2 md:gap-3">

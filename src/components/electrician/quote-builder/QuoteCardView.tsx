@@ -7,6 +7,8 @@ import { format } from 'date-fns';
 import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import { SwipeableCard } from '@/components/ui/SwipeableCard';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 interface QuoteCardViewProps {
   quotes: Quote[];
@@ -43,6 +45,11 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
 }) => {
   const isWorkComplete = (quote: Quote) => {
     return quote.tags?.includes('work_done');
+  };
+
+  // Get initials from client name
+  const getInitials = (name: string) => {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
   };
 
   const getStatusInfo = (quote: Quote) => {
@@ -124,13 +131,34 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
-      {quotes.map((quote) => {
+      {quotes.map((quote, index) => {
         const statusInfo = getStatusInfo(quote);
         const StatusIcon = statusInfo.icon;
+        const canSwipeAccept = canResend(quote);
+        const isCompleted = hasInvoiceRaised(quote) || quote.acceptance_status === 'rejected';
 
         return (
           <div
             key={quote.id}
+            className="animate-fade-in"
+            style={{ animationDelay: `${index * 50}ms` }}
+          >
+          <SwipeableCard
+            leftAction={{
+              icon: <Trash2 className="h-5 w-5" />,
+              bgColor: 'bg-red-500',
+              onAction: () => onDeleteQuote(quote),
+              label: 'Delete'
+            }}
+            rightAction={canSwipeAccept ? {
+              icon: <Check className="h-5 w-5" />,
+              bgColor: 'bg-green-500',
+              onAction: () => handleActionClick(quote, 'accept'),
+              label: 'Accept'
+            } : undefined}
+            disabled={isCompleted}
+          >
+          <div
             id={`quote-${quote.id}`}
             className={cn(
               "relative bg-card rounded-xl overflow-hidden transition-all border border-border/50 border-l-4 min-h-[80px]",
@@ -177,7 +205,11 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
               {/* Client and Amount Row */}
               <div className="flex items-center justify-between py-3 border-y border-border/30 mb-3">
                 <div className="flex items-center gap-2 min-w-0 flex-1">
-                  <User className="h-8 w-8 text-muted-foreground/50 flex-shrink-0" strokeWidth={1.5} />
+                  <Avatar className="h-10 w-10 flex-shrink-0 bg-elec-yellow/20">
+                    <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow text-sm font-medium">
+                      {getInitials(quote.client.name)}
+                    </AvatarFallback>
+                  </Avatar>
                   <div className="min-w-0">
                     <p className="text-sm font-medium truncate">{quote.client.name}</p>
                     <p className="text-xs text-muted-foreground">
@@ -284,7 +316,10 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
               </div>
           </div>
         </div>
-      )})}
+          </SwipeableCard>
+          </div>
+        );
+      })}
     </div>
   );
 };

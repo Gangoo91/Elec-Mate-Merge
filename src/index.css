@@ -364,8 +364,8 @@
   }
 
   /* iOS entrance with custom delay */
+  /* Note: Removed opacity: 0 - content visible by default */
   .ios-animate-in-delayed {
-    opacity: 0;
     animation: ios-scale-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     animation-delay: var(--ios-delay, 0ms);
   }
@@ -376,8 +376,8 @@
   }
 
   /* Stagger children animations - iOS style */
+  /* Note: Removed opacity: 0 - content visible by default, animation enhances but doesn't hide */
   .ios-stagger-children > * {
-    opacity: 0;
     animation: ios-scale-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
   .ios-stagger-children > *:nth-child(1) { animation-delay: 0ms; }
@@ -1485,9 +1485,8 @@
   }
 
   /* Staggered entrance for cards */
+  /* Note: Removed opacity: 0 - content visible by default */
   .stagger-enter > * {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
     animation: stagger-fade-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
 
@@ -2350,9 +2349,9 @@
     }
   }
 
+  /* Note: Removed opacity: 0 - content visible by default */
   .animate-fade-in-up {
     animation: fadeInUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    opacity: 0;
   }
 
   /* Desktop: Centered modal instead of sheet */

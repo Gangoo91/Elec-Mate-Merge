@@ -15,6 +15,7 @@ interface VoiceAssistantV2Props {
 }
 
 const SETTINGS_KEY = 'elevenlabs_agent_id';
+const DEFAULT_EMPLOYER_AGENT_ID = 'agent_7301kdxbnshce7vv8mtah970y3g1';
 
 type ConnectionStep = 'idle' | 'mic' | 'token' | 'connecting' | 'connected' | 'error';
 
@@ -179,9 +180,10 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
     const loadAgentId = async () => {
       try {
         const value = await getSetting(SETTINGS_KEY);
-        if (value) setAgentId(value);
+        setAgentId(value || DEFAULT_EMPLOYER_AGENT_ID);
       } catch (error) {
         console.error('Failed to load agent ID:', error);
+        setAgentId(DEFAULT_EMPLOYER_AGENT_ID);
       } finally {
         setIsLoadingSettings(false);
       }
@@ -193,7 +195,7 @@ export const VoiceAssistantV2: React.FC<VoiceAssistantV2Props> = ({
   const executeServerTool = async (toolName: string, params: Record<string, unknown>) => {
     try {
       console.log('[VoiceAssistant] Server tool:', toolName, params);
-      const { data, error } = await supabase.functions.invoke('voice-tools', {
+      const { data, error } = await supabase.functions.invoke('voice-tools-employer', {
         body: { tool: toolName, params },
       });
       

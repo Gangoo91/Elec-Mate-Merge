@@ -19,15 +19,19 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ChatContainer, ChatMessagesArea, ChatInputArea } from '@/components/electrician-tools/ai-tools/chat/ChatContainer';
-import { MessageBubble } from '@/components/electrician-tools/ai-tools/chat/MessageBubble';
 import { MobileChatInput } from '@/components/electrician-tools/ai-tools/chat/MobileChatInput';
-import ChatMessageRenderer from "./ChatMessageRenderer";
+import { InspectorMessage } from '@/components/electrician-tools/ai-tools/InspectorMessage';
+import { ChatImageUpload, ImagePreviewBadge } from './ChatImageUpload';
+import { Camera } from 'lucide-react';
+import { AnimatePresence } from 'framer-motion';
+import { useSmoothedStreaming } from '@/hooks/useSmoothedStreaming';
 
 interface ChatMessage {
   id: string;
   content: string;
   role: 'user' | 'assistant';
   timestamp: Date;
+  imageUrl?: string;
 }
 
 interface QuickQuestionCategory {
@@ -46,38 +50,52 @@ const HelpBotTab = () => {
   const [quickQuestionsOpen, setQuickQuestionsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [followUpQuestions, setFollowUpQuestions] = useState<string[]>([]);
+  const [attachedImage, setAttachedImage] = useState<string>('');
+  const [imageUploadOpen, setImageUploadOpen] = useState(false);
+  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const lastScrollRef = useRef<number>(0);
-  const isNearBottomRef = useRef(true);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const userScrolledRef = useRef(false);
+  const wasAtBottomBeforeStreamRef = useRef(true);
 
-  // Track scroll position
-  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
-    const el = e.currentTarget;
+  // Smooth streaming hook - 60fps text animation
+  const {
+    displayedText: streamedContent,
+    addTokens,
+    flush: flushStream,
+    reset: resetStream,
+  } = useSmoothedStreaming({ charsPerFrame: 4, stateUpdateInterval: 60 });
+
+  // Check if user is at bottom of scroll
+  const isAtBottom = useCallback(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return true;
     const { scrollTop, scrollHeight, clientHeight } = el;
-    isNearBottomRef.current = scrollHeight - scrollTop - clientHeight < 150;
+    return scrollHeight - scrollTop - clientHeight < 100;
   }, []);
 
-  // Smooth scroll that respects user position
+  // Track when user manually scrolls during streaming
+  const handleScroll = useCallback(() => {
+    if (isLoading && !isAtBottom()) {
+      userScrolledRef.current = true;
+    }
+  }, [isLoading, isAtBottom]);
+
+  // Smooth scroll to bottom - only if user hasn't scrolled away
   const scrollToBottom = useCallback((force = false) => {
-    if (force || isNearBottomRef.current) {
+    if (force || (!userScrolledRef.current && wasAtBottomBeforeStreamRef.current)) {
       requestAnimationFrame(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
       });
     }
   }, []);
 
-  // Debounced scroll for streaming (max once per 50ms)
-  const scrollToBottomDebounced = useCallback(() => {
-    const now = Date.now();
-    if (now - lastScrollRef.current > 50) {
-      lastScrollRef.current = now;
+  // Scroll to bottom when new message arrives (not during streaming)
+  useEffect(() => {
+    if (!isLoading) {
       scrollToBottom();
     }
-  }, [scrollToBottom]);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [chatMessages.length, scrollToBottom]);
+  }, [chatMessages.length, scrollToBottom, isLoading]);
 
   const quickQuestionCategories: QuickQuestionCategory[] = [
     {
@@ -206,21 +224,32 @@ const HelpBotTab = () => {
     const textToSend = messageText || currentMessage;
     if (!textToSend.trim() || isLoading) return;
 
-    // Clear follow-ups when sending new message
+    // Clear follow-ups and reset streaming state
     setFollowUpQuestions([]);
+    resetStream();
+
+    // Record scroll position before streaming starts
+    wasAtBottomBeforeStreamRef.current = isAtBottom();
+    userScrolledRef.current = false;
+
+    // Capture attached image before clearing
+    const imageToSend = attachedImage;
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
       content: textToSend.trim(),
       role: 'user',
-      timestamp: new Date()
+      timestamp: new Date(),
+      imageUrl: imageToSend || undefined
     };
 
     const aiMessageId = (Date.now() + 1).toString();
 
     setChatMessages(prev => [...prev, userMessage]);
     setCurrentMessage('');
+    setAttachedImage('');
     setIsLoading(true);
+    setStreamingMessageId(aiMessageId);
 
     // Add empty AI message for streaming
     setChatMessages(prev => [...prev, {
@@ -229,6 +258,9 @@ const HelpBotTab = () => {
       role: 'assistant',
       timestamp: new Date()
     }]);
+
+    // Scroll to show the new message
+    setTimeout(() => scrollToBottom(true), 50);
 
     try {
       const { data: { session } } = await supabase.auth.getSession();
@@ -245,7 +277,7 @@ const HelpBotTab = () => {
             message: textToSend.trim(),
             context: 'electrical apprenticeship training and guidance',
             stream: true,
-            // Send conversation history for context (last 10 messages max)
+            imageUrl: imageToSend || undefined,
             history: chatMessages
               .filter(m => m.content.trim() !== '')
               .slice(-10)
@@ -280,14 +312,8 @@ const HelpBotTab = () => {
                 const content = parsed.choices?.[0]?.delta?.content || '';
                 if (content) {
                   fullContent += content;
-                  setChatMessages(prev =>
-                    prev.map(msg =>
-                      msg.id === aiMessageId
-                        ? { ...msg, content: fullContent }
-                        : msg
-                    )
-                  );
-                  scrollToBottomDebounced();
+                  // Add to smooth streaming buffer (no React re-render per chunk)
+                  addTokens(content);
                 }
               } catch {
                 // Skip malformed JSON chunks
@@ -297,20 +323,20 @@ const HelpBotTab = () => {
         }
       }
 
-      // If no content was streamed, show fallback
-      if (!fullContent) {
-        fullContent = "I'm here to help with your electrical apprentice questions!";
-        setChatMessages(prev =>
-          prev.map(msg =>
-            msg.id === aiMessageId
-              ? { ...msg, content: fullContent }
-              : msg
-          )
-        );
-      }
+      // Flush any remaining buffered content and get final text
+      const finalContent = flushStream() || fullContent || "I'm here to help with your electrical apprentice questions!";
+
+      // Update the message with final content (single React update)
+      setChatMessages(prev =>
+        prev.map(msg =>
+          msg.id === aiMessageId
+            ? { ...msg, content: finalContent }
+            : msg
+        )
+      );
 
       // Generate follow-up questions
-      setFollowUpQuestions(generateFollowUps(fullContent));
+      setFollowUpQuestions(generateFollowUps(finalContent));
 
     } catch (error) {
       console.error('Error sending message:', error);
@@ -325,14 +351,21 @@ const HelpBotTab = () => {
       );
     } finally {
       setIsLoading(false);
+      setStreamingMessageId(null);
+      // Scroll to bottom at end if user didn't scroll away
+      if (!userScrolledRef.current) {
+        setTimeout(() => scrollToBottom(), 100);
+      }
     }
   };
 
   const handleClearConversation = useCallback(() => {
     setChatMessages([]);
     setFollowUpQuestions([]);
+    resetStream();
+    setStreamingMessageId(null);
     toast.success('Conversation cleared');
-  }, []);
+  }, [resetStream]);
 
   const handleQuickQuestion = (question: string) => {
     handleSendMessage(question);
@@ -343,11 +376,6 @@ const HelpBotTab = () => {
   const handleFollowUp = (question: string) => {
     handleSendMessage(question);
   };
-
-  // Render assistant messages with rich formatting
-  const renderAssistantContent = useCallback((content: string) => {
-    return <ChatMessageRenderer content={content} isUser={false} />;
-  }, []);
 
   // Welcome screen when no messages - compact on mobile
   const WelcomeScreen = () => (
@@ -416,20 +444,29 @@ const HelpBotTab = () => {
             <WelcomeScreen />
           ) : (
             <div className="px-4 py-2 space-y-4">
-              {chatMessages.map((message) => (
-                message.content === '' && message.role === 'assistant' && isLoading ? (
-                  <TypingIndicator key={message.id} />
-                ) : (
-                  <MessageBubble
+              {chatMessages.map((message) => {
+                const isCurrentlyStreaming = message.id === streamingMessageId && isLoading;
+                // Use smoothed content for streaming message, otherwise use stored content
+                const displayContent = isCurrentlyStreaming ? streamedContent : message.content;
+
+                // Show typing indicator only when no content yet
+                if (displayContent === '' && message.role === 'assistant' && isLoading) {
+                  return <TypingIndicator key={message.id} />;
+                }
+
+                return (
+                  <InspectorMessage
                     key={message.id}
-                    role={message.role}
-                    content={message.content}
-                    timestamp={message.timestamp}
-                    isStreaming={message.content !== '' && message.role === 'assistant' && isLoading && message.id === chatMessages[chatMessages.length - 1]?.id}
-                    renderContent={message.role === 'assistant' ? renderAssistantContent : undefined}
+                    message={{
+                      role: message.role,
+                      content: displayContent,
+                      agentName: message.role === 'assistant' ? 'Dave' : undefined,
+                      imageUrl: message.imageUrl
+                    }}
+                    isStreaming={isCurrentlyStreaming && displayContent !== ''}
                   />
-                )
-              ))}
+                );
+              })}
             </div>
           )}
         </ChatMessagesArea>
@@ -511,19 +548,55 @@ const HelpBotTab = () => {
             </Sheet>
           </div>
 
-          {/* Premium Mobile Chat Input */}
-          <MobileChatInput
-            value={currentMessage}
-            onChange={setCurrentMessage}
-            onSubmit={() => handleSendMessage()}
-            onClear={handleClearConversation}
-            isStreaming={isLoading}
-            placeholder="Ask Dave anything..."
-            messageCount={chatMessages.length}
-            showClearButton={chatMessages.length > 0}
-          />
+          {/* Attached Image Preview */}
+          <AnimatePresence>
+            {attachedImage && (
+              <div className="mb-2">
+                <ImagePreviewBadge
+                  imageUrl={attachedImage}
+                  onRemove={() => setAttachedImage('')}
+                />
+              </div>
+            )}
+          </AnimatePresence>
+
+          {/* Input Row with Camera Button */}
+          <div className="flex items-end gap-1.5 sm:gap-2">
+            {/* Camera Button - Compact on mobile */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setImageUploadOpen(true)}
+              disabled={isLoading}
+              className="h-10 w-10 sm:h-11 sm:w-11 shrink-0 rounded-xl bg-white/5 hover:bg-elec-yellow/20 border border-white/10 hover:border-elec-yellow/30 transition-colors touch-manipulation"
+            >
+              <Camera className="h-4.5 w-4.5 sm:h-5 sm:w-5 text-elec-yellow" />
+            </Button>
+
+            {/* Premium Mobile Chat Input */}
+            <div className="flex-1 min-w-0">
+              <MobileChatInput
+                value={currentMessage}
+                onChange={setCurrentMessage}
+                onSubmit={() => handleSendMessage()}
+                onClear={handleClearConversation}
+                isStreaming={isLoading}
+                placeholder={attachedImage ? "What do you see?" : "Ask Dave anything..."}
+                messageCount={chatMessages.length}
+                showClearButton={chatMessages.length > 0}
+              />
+            </div>
+          </div>
         </ChatInputArea>
       </ChatContainer>
+
+      {/* Image Upload Sheet */}
+      <ChatImageUpload
+        open={imageUploadOpen}
+        onOpenChange={setImageUploadOpen}
+        onImageReady={(url) => setAttachedImage(url)}
+        onCancel={() => {}}
+      />
     </div>
   );
 };

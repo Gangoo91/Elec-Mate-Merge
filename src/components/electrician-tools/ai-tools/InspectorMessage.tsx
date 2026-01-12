@@ -13,6 +13,7 @@ interface InspectorMessageProps {
     content: string;
     citations?: Array<{ number: string; title: string }>;
     agentName?: string;
+    imageUrl?: string;
   };
   isStreaming?: boolean;
 }
@@ -50,10 +51,23 @@ export const InspectorMessage = memo(function InspectorMessage({
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="max-w-[85%] sm:max-w-[75%] rounded-2xl rounded-tr-sm px-4 py-3 bg-gradient-to-br from-elec-yellow to-elec-yellow/90 text-elec-dark shadow-lg shadow-elec-yellow/20"
+          className="max-w-[85%] sm:max-w-[75%] space-y-2"
         >
-          <div className="whitespace-pre-wrap break-words font-medium text-sm sm:text-base">
-            {message.content}
+          {/* Attached Image */}
+          {message.imageUrl && (
+            <div className="rounded-xl overflow-hidden shadow-lg ml-auto">
+              <img
+                src={message.imageUrl}
+                alt="Attached"
+                className="max-w-full max-h-40 sm:max-h-48 object-cover rounded-xl"
+              />
+            </div>
+          )}
+          {/* Text Content */}
+          <div className="rounded-2xl rounded-tr-sm px-4 py-3 bg-gradient-to-br from-elec-yellow to-elec-yellow/90 text-elec-dark shadow-lg shadow-elec-yellow/20">
+            <div className="whitespace-pre-wrap break-words font-medium text-sm sm:text-base">
+              {message.content}
+            </div>
           </div>
         </motion.div>
       </div>
@@ -81,7 +95,9 @@ export const InspectorMessage = memo(function InspectorMessage({
                 <Sparkles className="w-3.5 h-3.5 text-elec-yellow animate-pulse" />
               )}
             </span>
-            <span className="text-[11px] text-muted-foreground">18th Edition Expert</span>
+            <span className="text-[11px] text-muted-foreground">
+              {message.agentName === 'Dave' ? 'Master Electrician • 20+ Years' : '18th Edition Expert'}
+            </span>
           </div>
         </div>
 

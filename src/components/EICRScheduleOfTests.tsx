@@ -951,17 +951,28 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           </div>
 
           {/* Primary Actions */}
-          <div className="px-4 py-3 grid grid-cols-2 gap-2">
+          <div className="px-4 py-3 space-y-2">
+            {/* Main Action Row */}
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                className="testing-action-primary"
+                onClick={() => onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true)}
+              >
+                <Camera className="h-4 w-4 mr-2" />
+                AI Scan
+              </Button>
+              <Button className="testing-action-secondary" onClick={addTestResult}>
+                <Plus className="h-4 w-4 mr-2" />
+                Add Circuit
+              </Button>
+            </div>
+            {/* Voice Assistant - Prominent */}
             <Button
-              className="testing-action-primary"
-              onClick={() => onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true)}
+              className="w-full h-12 rounded-lg font-medium transition-all duration-200 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/30 border border-purple-400/30"
+              onClick={() => toast.info('Voice assistant coming soon', { description: 'Eleven Labs integration in progress', duration: 2000 })}
             >
-              <Camera className="h-4 w-4 mr-2" />
-              AI Scan
-            </Button>
-            <Button className="testing-action-secondary" onClick={addTestResult}>
-              <Plus className="h-4 w-4 mr-2" />
-              Add Circuit
+              <Mic className="h-5 w-5 mr-2" />
+              Voice Assistant
             </Button>
           </div>
 
@@ -991,15 +1002,6 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               >
                 <BarChart3 className="h-3.5 w-3.5" />
                 Stats
-              </button>
-              {/* Voice button - placeholder for Eleven Labs */}
-              <button
-                className="testing-segment-button"
-                onClick={() => toast.info('Voice assistant coming soon', { description: 'Eleven Labs integration in progress', duration: 2000 })}
-                title="Voice Assistant (Coming Soon)"
-              >
-                <Mic className="h-3.5 w-3.5" />
-                Voice
               </button>
             </div>
 
@@ -1151,6 +1153,21 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   <Camera className="h-4 w-4 mr-2" />
                   AI Board Scan
                 </Button>
+                <Button
+                  className="col-span-2 h-11 rounded-lg font-medium transition-all duration-200 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/20 border border-purple-400/30"
+                  onClick={() => toast.info('Voice assistant coming soon', { description: 'Eleven Labs integration in progress', duration: 2000 })}
+                >
+                  <Mic className="h-4 w-4 mr-2" />
+                  Voice Assistant
+                </Button>
+                <Button className="testing-action-secondary col-span-2" onClick={addTestResult}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Circuit
+                </Button>
+              </div>
+
+              {/* Secondary Tools Row */}
+              <div className="grid grid-cols-4 gap-2 mt-3">
                 <Button className="testing-action-secondary" onClick={() => setShowTestResultsScan(true)}>
                   <FileText className="h-4 w-4 mr-2" />
                   Scan Results
@@ -1163,24 +1180,15 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   <Zap className="h-4 w-4 mr-2" />
                   Smart Fill
                 </Button>
-                <Button className="testing-action-secondary" onClick={addTestResult}>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Circuit
+                <Button className="testing-action-secondary" onClick={() => setShowBulkInfillDialog(true)}>
+                  <ClipboardCheck className="h-4 w-4 mr-2" />
+                  Bulk Infill
                 </Button>
               </div>
 
               {/* Secondary Actions Row */}
               <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/10">
                 <div className="flex gap-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
-                    onClick={() => setShowBulkInfillDialog(true)}
-                  >
-                    <ClipboardCheck className="h-4 w-4 mr-2" />
-                    Bulk Infill
-                  </Button>
                   <Button
                     variant="ghost"
                     size="sm"

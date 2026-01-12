@@ -21,6 +21,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "basic-ac-circuit", label: "Basic AC Circuit", category: "Fundamental" },
     { value: "power-factor", label: "Power Factor", category: "Fundamental" },
     { value: "three-phase-power", label: "Three Phase Power", category: "Fundamental" },
+    { value: "star-delta", label: "Star-Delta Conversion", category: "Fundamental" },
     
     // Design & Installation - Enhanced Safety
     { value: "voltage-drop", label: "Voltage Drop", category: "Design & Installation" },
@@ -29,8 +30,10 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "cable-current-capacity", label: "Cable Current Capacity", category: "Design & Installation" },
     { value: "cable-derating", label: "Cable Derating", category: "Design & Installation" },
     { value: "conduit-fill", label: "Conduit Fill", category: "Design & Installation" },
+    { value: "conduit-bending", label: "Conduit Bending", category: "Design & Installation" },
     { value: "diversity-factor", label: "Diversity Factor", category: "Design & Installation" },
     { value: "maximum-demand", label: "Maximum Demand", category: "Design & Installation" },
+    { value: "power-factor-correction", label: "Power Factor Correction", category: "Design & Installation" },
     
     // Testing & Inspection - Enhanced Safety
     { value: "zs-values", label: "Maximum Zs Values", category: "Testing & Inspection" },
@@ -45,6 +48,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "pfc", label: "Prospective Fault Current", category: "Protection & Safety" },
     { value: "rcd-trip-time", label: "RCD Trip Time", category: "Protection & Safety" },
     { value: "rcd-discrimination", label: "RCD Discrimination", category: "Protection & Safety" },
+    { value: "earth-electrode", label: "Earth Electrode (TT Systems)", category: "Protection & Safety" },
     
     // Lighting & Power Systems
     { value: "lumen", label: "Lighting (Lumens)", category: "Lighting & Power Systems" },
@@ -74,6 +78,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     
     // Specialised Applications
     { value: "data-centre", label: "Data Centre Calculator", category: "Specialised Applications" },
+    { value: "generator-sizing", label: "Generator Sizing", category: "Specialised Applications" },
     
     // Specialist Locations
     { value: "marine-electrical", label: "Marine Electrical", category: "Specialist Locations" },

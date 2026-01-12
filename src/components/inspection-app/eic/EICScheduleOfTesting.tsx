@@ -1,5 +1,6 @@
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useOptionalVoiceFormContext, FormField } from '@/contexts/VoiceFormContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
@@ -36,7 +37,9 @@ interface EICScheduleOfTestingProps {
 }
 
 const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, onUpdate }) => {
+  const voiceForm = useOptionalVoiceFormContext();
   const [testResults, setTestResults] = useState<TestResult[]>([]);
+  const [selectedCircuitIndex, setSelectedCircuitIndex] = useState(0);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [showAutoFillPrompt, setShowAutoFillPrompt] = useState(false);
   const [newCircuitNumber, setNewCircuitNumber] = useState('');
@@ -144,6 +147,220 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       setTestResults([initialResult]);
     }
   }, []);
+
+  // Voice form fields for circuit testing
+  const voiceFields: FormField[] = useMemo(() => [
+    { name: 'circuit_number', aliases: ['circuit', 'number', 'circuit num'] },
+    { name: 'circuit_description', aliases: ['description', 'desc', 'circuit desc'] },
+    { name: 'circuit_type', aliases: ['type', 'circuit type'] },
+    { name: 'protective_device_rating', aliases: ['rating', 'breaker rating', 'mcb rating', 'device rating'] },
+    { name: 'protective_device_type', aliases: ['device type', 'breaker type', 'mcb type'] },
+    { name: 'cable_size', aliases: ['cable', 'live size', 'conductor size'] },
+    { name: 'cpc_size', aliases: ['cpc', 'earth size', 'earth conductor'] },
+    { name: 'reference_method', aliases: ['ref method', 'installation method'] },
+    { name: 'zs', aliases: ['earth fault loop', 'impedance', 'loop impedance', 'zed s'] },
+    { name: 'max_zs', aliases: ['max impedance', 'maximum zs', 'max zed s'] },
+    { name: 'r1r2', aliases: ['r1 plus r2', 'continuity', 'r1 r2'] },
+    { name: 'r2', aliases: ['earth continuity', 'r 2'] },
+    { name: 'insulation_resistance', aliases: ['ir', 'insulation', 'meg'] },
+    { name: 'polarity', aliases: ['pol'] },
+    { name: 'rcd_type', aliases: ['rcd', 'residual current device type'] },
+    { name: 'rcd_rating', aliases: ['rcd ma', 'rcd milliamps', 'trip rating'] },
+    { name: 'rcd_trip_time', aliases: ['trip time', 'rcd time', 'disconnect time'] },
+    { name: 'points_served', aliases: ['points', 'outlets'] },
+    { name: 'notes', aliases: ['note', 'comment', 'remarks'] },
+  ], []);
+
+  // Handle voice field fill
+  const handleVoiceFillField = useCallback((fieldName: string, value: string) => {
+    if (testResults.length === 0) {
+      toast.error('No circuits to update. Add a circuit first.');
+      return;
+    }
+
+    const currentCircuit = testResults[selectedCircuitIndex];
+    if (!currentCircuit) {
+      toast.error('No circuit selected');
+      return;
+    }
+
+    // Map voice field names to TestResult fields
+    const fieldMapping: Record<string, keyof TestResult> = {
+      'circuit_number': 'circuitNumber',
+      'circuit_description': 'circuitDescription',
+      'circuit_type': 'circuitType',
+      'protective_device_rating': 'protectiveDeviceRating',
+      'protective_device_type': 'protectiveDeviceType',
+      'cable_size': 'liveSize',
+      'cpc_size': 'cpcSize',
+      'reference_method': 'referenceMethod',
+      'zs': 'zs',
+      'max_zs': 'maxZs',
+      'r1r2': 'r1r2',
+      'r2': 'r2',
+      'insulation_resistance': 'insulationResistance',
+      'polarity': 'polarity',
+      'rcd_type': 'rcdType',
+      'rcd_rating': 'rcdRating',
+      'rcd_trip_time': 'rcdOneX',
+      'points_served': 'pointsServed',
+      'notes': 'notes',
+    };
+
+    const resultField = fieldMapping[fieldName];
+    if (resultField) {
+      setTestResults(prev => {
+        const updated = [...prev];
+        updated[selectedCircuitIndex] = {
+          ...updated[selectedCircuitIndex],
+          [resultField]: value,
+        };
+        return updated;
+      });
+      toast.success(`Set ${fieldName.replace(/_/g, ' ')} to "${value}"`);
+    }
+  }, [testResults, selectedCircuitIndex]);
+
+  // Handle voice actions
+  const handleVoiceAction = useCallback((action: string, params: Record<string, unknown>) => {
+    switch (action) {
+      case 'add_circuit': {
+        const circuitType = params.type as string || '';
+        const nextNum = (testResults.length + 1).toString();
+        const newCircuit: TestResult = {
+          id: crypto.randomUUID(),
+          circuitDesignation: `C${nextNum}`,
+          circuitNumber: nextNum,
+          circuitDescription: circuitType,
+          circuitType: circuitType,
+          type: circuitType,
+          referenceMethod: '',
+          liveSize: '',
+          cpcSize: '',
+          protectiveDeviceType: '',
+          protectiveDeviceRating: params.rating as string || '',
+          protectiveDeviceKaRating: '',
+          protectiveDeviceLocation: '',
+          bsStandard: '',
+          cableSize: '',
+          protectiveDevice: '',
+          r1r2: '',
+          r2: '',
+          ringContinuityLive: '',
+          ringContinuityNeutral: '',
+          ringR1: '',
+          ringRn: '',
+          ringR2: '',
+          insulationTestVoltage: '',
+          insulationResistance: '',
+          insulationLiveNeutral: '',
+          insulationLiveEarth: '',
+          insulationNeutralEarth: '',
+          polarity: '',
+          zs: '',
+          maxZs: '',
+          pointsServed: '',
+          rcdRating: '',
+          rcdOneX: '',
+          rcdTestButton: '',
+          afddTest: '',
+          pfc: '',
+          pfcLiveNeutral: '',
+          pfcLiveEarth: '',
+          functionalTesting: '',
+          notes: '',
+          typeOfWiring: '',
+          rcdBsStandard: '',
+          rcdType: '',
+          rcdRatingA: '',
+        };
+        setTestResults(prev => [...prev, newCircuit]);
+        setSelectedCircuitIndex(testResults.length);
+        toast.success(`Added circuit C${nextNum}${circuitType ? ` (${circuitType})` : ''}`);
+        return true;
+      }
+      case 'next_circuit': {
+        if (selectedCircuitIndex < testResults.length - 1) {
+          setSelectedCircuitIndex(prev => prev + 1);
+          toast.info(`Now on circuit C${testResults[selectedCircuitIndex + 1]?.circuitNumber || selectedCircuitIndex + 2}`);
+        } else {
+          toast.info('Already on the last circuit');
+        }
+        return true;
+      }
+      case 'previous_circuit': {
+        if (selectedCircuitIndex > 0) {
+          setSelectedCircuitIndex(prev => prev - 1);
+          toast.info(`Now on circuit C${testResults[selectedCircuitIndex - 1]?.circuitNumber || selectedCircuitIndex}`);
+        } else {
+          toast.info('Already on the first circuit');
+        }
+        return true;
+      }
+      case 'select_circuit': {
+        const num = parseInt(params.number as string, 10);
+        const idx = testResults.findIndex(r => r.circuitNumber === String(num) || r.circuitDesignation === `C${num}`);
+        if (idx >= 0) {
+          setSelectedCircuitIndex(idx);
+          toast.info(`Selected circuit C${num}`);
+        } else {
+          toast.error(`Circuit ${num} not found`);
+        }
+        return true;
+      }
+      case 'remove_circuit': {
+        if (testResults.length > 0) {
+          const removed = testResults[selectedCircuitIndex];
+          setTestResults(prev => prev.filter((_, i) => i !== selectedCircuitIndex));
+          if (selectedCircuitIndex >= testResults.length - 1 && selectedCircuitIndex > 0) {
+            setSelectedCircuitIndex(prev => prev - 1);
+          }
+          toast.success(`Removed circuit ${removed?.circuitDesignation || selectedCircuitIndex + 1}`);
+        }
+        return true;
+      }
+      case 'set_polarity_ok': {
+        if (testResults.length > 0) {
+          setTestResults(prev => {
+            const updated = [...prev];
+            updated[selectedCircuitIndex] = { ...updated[selectedCircuitIndex], polarity: '✓' };
+            return updated;
+          });
+          toast.success('Polarity marked as OK');
+        }
+        return true;
+      }
+      default:
+        return false;
+    }
+  }, [testResults, selectedCircuitIndex]);
+
+  // Register with voice form context
+  useEffect(() => {
+    if (!voiceForm) return;
+
+    voiceForm.registerForm({
+      formId: 'eic-schedule-of-testing',
+      formName: 'EIC Schedule of Testing',
+      fields: voiceFields,
+      actions: ['add_circuit', 'next_circuit', 'previous_circuit', 'select_circuit', 'remove_circuit', 'set_polarity_ok'],
+      onFillField: handleVoiceFillField,
+      onAction: handleVoiceAction,
+      onSubmit: () => {
+        toast.success('Schedule of Testing saved');
+        return true;
+      },
+      onClear: () => {
+        setTestResults([]);
+        setSelectedCircuitIndex(0);
+        return true;
+      },
+    });
+
+    return () => {
+      voiceForm.unregisterForm('eic-schedule-of-testing');
+    };
+  }, [voiceForm, voiceFields, handleVoiceFillField, handleVoiceAction]);
 
   const addTestResult = () => {
     const nextCircuitNumber = (testResults.length + 1).toString();
@@ -863,15 +1080,28 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {/* Voice Button - Placeholder for Eleven Labs */}
+              {/* Voice Button - Active when VoiceFormContext is available */}
               <Button
                 variant="outline"
                 size="sm"
-                className="h-9 w-9 p-0 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
-                title="Voice Assistant (Coming Soon)"
-                onClick={() => toast.info('Voice assistant coming soon', { description: 'Eleven Labs integration in progress', duration: 2000 })}
+                className={`h-9 w-9 p-0 shrink-0 transition-all duration-200 ${
+                  voiceForm?.activeForm?.formId === 'eic-schedule-of-testing'
+                    ? 'bg-primary/20 border-primary ring-2 ring-primary/30'
+                    : 'hover:bg-primary/10 hover:border-primary/30'
+                }`}
+                title={voiceForm ? `Voice Assistant - Circuit ${selectedCircuitIndex + 1} selected` : 'Voice Assistant'}
+                onClick={() => {
+                  if (voiceForm) {
+                    toast.success('Voice ready for Schedule of Testing', {
+                      description: `Say "add circuit" or fill fields like "set zs to 0.45"`,
+                      duration: 3000
+                    });
+                  } else {
+                    toast.info('Voice assistant available when using the Electrician Voice FAB');
+                  }
+                }}
               >
-                <Mic className="h-4 w-4 text-primary" />
+                <Mic className={`h-4 w-4 ${voiceForm?.activeForm?.formId === 'eic-schedule-of-testing' ? 'text-primary animate-pulse' : 'text-primary'}`} />
               </Button>
 
               {/* More Options */}

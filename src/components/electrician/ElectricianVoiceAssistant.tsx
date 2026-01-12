@@ -319,11 +319,58 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
         return success ? 'Form cancelled' : 'Could not cancel form';
       },
 
+      // Certificate/Testing tools
+      add_circuit: async ({ type, rating }: { type?: string; rating?: string }) => {
+        if (!formContext) return 'No form is currently open';
+        const success = formContext.executeAction('add_circuit', { type, rating });
+        return success ? `Added circuit${type ? ` (${type})` : ''}${rating ? ` with ${rating}A rating` : ''}` : 'Cannot add circuit to this form';
+      },
+
+      next_circuit: async () => {
+        if (!formContext) return 'No form is currently open';
+        const success = formContext.executeAction('next_circuit', {});
+        return success ? 'Moving to next circuit' : 'Cannot move to next circuit';
+      },
+
+      previous_circuit: async () => {
+        if (!formContext) return 'No form is currently open';
+        const success = formContext.executeAction('previous_circuit', {});
+        return success ? 'Moving to previous circuit' : 'Cannot move to previous circuit';
+      },
+
+      select_circuit: async ({ number }: { number: string | number }) => {
+        if (!formContext) return 'No form is currently open';
+        const success = formContext.executeAction('select_circuit', { number: String(number) });
+        return success ? `Selected circuit ${number}` : `Could not find circuit ${number}`;
+      },
+
+      remove_circuit: async () => {
+        if (!formContext) return 'No form is currently open';
+        const success = formContext.executeAction('remove_circuit', {});
+        return success ? 'Removed circuit' : 'Cannot remove circuit';
+      },
+
+      set_polarity_ok: async () => {
+        if (!formContext) return 'No form is currently open';
+        const success = formContext.executeAction('set_polarity_ok', {});
+        return success ? 'Polarity marked as OK' : 'Cannot set polarity';
+      },
+
+      set_test_result: async ({ field, value }: { field: string; value: string }) => {
+        if (!formContext) return 'No form is currently open';
+        const success = formContext.fillField(field, value);
+        return success ? `Set ${field} to ${value}` : `Could not set ${field}`;
+      },
+
       // Query tools for electrician
       get_quote_info: async ({ client, status }: { client?: string; status?: string }) => executeServerTool('get_quote_info', { client, status }),
       get_invoice_info: async ({ client, status }: { client?: string; status?: string }) => executeServerTool('get_invoice_info', { client, status }),
       get_overdue_invoices: async () => executeServerTool('get_overdue_invoices', {}),
       lookup_price: async ({ searchTerm }: { searchTerm: string }) => executeServerTool('lookup_price', { searchTerm }),
+
+      // Certificate query tools
+      get_cert_info: async ({ certNumber, status }: { certNumber?: string; status?: string }) => executeServerTool('get_cert_info', { certNumber, status }),
+      get_recent_certificates: async ({ days }: { days?: number }) => executeServerTool('get_recent_certificates', { days: days || 30 }),
     },
   });
 

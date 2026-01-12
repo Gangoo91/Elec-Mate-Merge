@@ -62,6 +62,13 @@ const GridTieInverterCalculator = lazy(() => import("@/components/apprentice/cal
 const OffGridSystemCalculator = lazy(() => import("@/components/apprentice/calculators/OffGridSystemCalculator"));
 const FeedInTariffCalculator = lazy(() => import("@/components/apprentice/calculators/FeedInTariffCalculator"));
 const MarineElectricalCalculator = lazy(() => import("@/components/apprentice/calculators/MarineElectricalCalculator"));
+// New Calculators
+const EarthElectrodeCalculator = lazy(() => import("@/components/apprentice/calculators/EarthElectrodeCalculator"));
+const PowerFactorCorrectionCalculator = lazy(() => import("@/components/apprentice/calculators/PowerFactorCorrectionCalculator"));
+const GeneratorSizingCalculator = lazy(() => import("@/components/apprentice/calculators/GeneratorSizingCalculator"));
+// Final Additions - Practical & Educational
+const ConduitBendingCalculator = lazy(() => import("@/components/apprentice/calculators/ConduitBendingCalculator"));
+const StarDeltaCalculator = lazy(() => import("@/components/apprentice/calculators/StarDeltaCalculator"));
 
 // Loading fallback component
 const CalculatorLoader = () => (
@@ -194,6 +201,18 @@ const OnJobCalculations = () => {
       // Working Specialist Locations
       case "marine-electrical":
         return <MarineElectricalCalculator />;
+      // New Calculators
+      case "earth-electrode":
+        return <EarthElectrodeCalculator />;
+      case "power-factor-correction":
+        return <PowerFactorCorrectionCalculator />;
+      case "generator-sizing":
+        return <GeneratorSizingCalculator />;
+      // Final Additions
+      case "conduit-bending":
+        return <ConduitBendingCalculator />;
+      case "star-delta":
+        return <StarDeltaCalculator />;
       default:
         return <OhmsLawCalculator />;
     }
