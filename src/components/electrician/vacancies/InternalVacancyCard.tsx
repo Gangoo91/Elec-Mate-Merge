@@ -12,6 +12,8 @@ import {
   Send,
   Briefcase,
   ChevronRight,
+  BadgeCheck,
+  Sparkles,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -94,20 +96,28 @@ export function InternalVacancyCard({
   return (
     <Card
       className={cn(
-        "transition-all duration-200 cursor-pointer",
-        "border-border hover:border-elec-yellow/50 hover:shadow-lg",
+        "transition-all duration-200 cursor-pointer overflow-hidden",
+        "bg-gradient-to-br from-emerald-500/5 via-background to-background",
+        "border-emerald-500/30 hover:border-emerald-400/50 hover:shadow-lg hover:shadow-emerald-500/10",
         isHovered && "scale-[1.01]"
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => onViewDetails(vacancy)}
     >
+      {/* Direct from Employer Banner */}
+      <div className="bg-gradient-to-r from-emerald-500/20 to-emerald-600/10 border-b border-emerald-500/20 px-4 py-2 flex items-center gap-2">
+        <BadgeCheck className="h-4 w-4 text-emerald-400" />
+        <span className="text-xs font-medium text-emerald-400">Direct from Employer</span>
+        <Sparkles className="h-3 w-3 text-emerald-400/60 ml-auto" />
+      </div>
+
       <CardContent className="p-4">
         <div className="flex gap-4">
           {/* Company Logo */}
-          <Avatar className="h-14 w-14 rounded-xl border-2 border-border shrink-0">
+          <Avatar className="h-14 w-14 rounded-xl border-2 border-emerald-500/30 shrink-0">
             <AvatarImage src={vacancy.employer?.logo_url || undefined} />
-            <AvatarFallback className="rounded-xl bg-gradient-to-br from-elec-yellow/20 to-orange-500/20 text-elec-yellow font-bold">
+            <AvatarFallback className="rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 text-emerald-400 font-bold">
               {companyInitials}
             </AvatarFallback>
           </Avatar>
@@ -120,39 +130,39 @@ export function InternalVacancyCard({
                 <h3 className="font-semibold text-foreground line-clamp-1">
                   {vacancy.title}
                 </h3>
-                <p className="text-sm text-muted-foreground flex items-center gap-1">
+                <p className="text-sm text-emerald-400/80 flex items-center gap-1">
                   <Building2 className="h-3.5 w-3.5" />
-                  {vacancy.employer?.company_name || 'Unknown Company'}
+                  {vacancy.employer?.company_name || 'Employer'}
                 </p>
               </div>
 
               {vacancy.has_applied && (
-                <Badge className="bg-green-500/10 text-green-500 border-green-500/30 shrink-0">
+                <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shrink-0">
                   Applied
                 </Badge>
               )}
             </div>
 
-            {/* Details */}
-            <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground mb-3">
-              <span className="flex items-center gap-1">
-                <MapPin className="h-3.5 w-3.5" />
+            {/* Details - Improved contrast */}
+            <div className="flex flex-wrap gap-2 mb-3">
+              <Badge variant="outline" className="bg-white/10 border-white/20 text-foreground/90 font-normal">
+                <MapPin className="h-3 w-3 mr-1" />
                 {vacancy.location}
-              </span>
-              <span className="flex items-center gap-1">
-                <Briefcase className="h-3.5 w-3.5" />
+              </Badge>
+              <Badge variant="outline" className="bg-white/10 border-white/20 text-foreground/90 font-normal">
+                <Briefcase className="h-3 w-3 mr-1" />
                 {vacancy.type}
-              </span>
+              </Badge>
               {salaryDisplay && (
-                <span className="flex items-center gap-1 text-green-600 dark:text-green-400 font-medium">
-                  <PoundSterling className="h-3.5 w-3.5" />
+                <Badge className="bg-emerald-500/20 border-emerald-500/30 text-emerald-400 font-medium">
+                  <PoundSterling className="h-3 w-3 mr-1" />
                   {salaryDisplay}
-                </span>
+                </Badge>
               )}
-              <span className="flex items-center gap-1">
-                <Clock className="h-3.5 w-3.5" />
+              <Badge variant="outline" className="bg-white/10 border-white/20 text-foreground/70 font-normal">
+                <Clock className="h-3 w-3 mr-1" />
                 {postedAgo}
-              </span>
+              </Badge>
             </div>
 
             {/* Description Preview */}
@@ -165,7 +175,7 @@ export function InternalVacancyCard({
               <Button
                 size="sm"
                 variant="outline"
-                className="gap-1.5"
+                className="gap-1.5 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 hover:text-emerald-300"
                 onClick={(e) => {
                   e.stopPropagation();
                   onMessage(vacancy);
@@ -178,7 +188,7 @@ export function InternalVacancyCard({
               {!vacancy.has_applied && (
                 <Button
                   size="sm"
-                  className="gap-1.5 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  className="gap-1.5 bg-emerald-500 text-white hover:bg-emerald-400"
                   onClick={(e) => {
                     e.stopPropagation();
                     onApply(vacancy);
@@ -192,7 +202,7 @@ export function InternalVacancyCard({
               <Button
                 size="sm"
                 variant="ghost"
-                className="ml-auto gap-1"
+                className="ml-auto gap-1 text-emerald-400/80 hover:text-emerald-400 hover:bg-emerald-500/10"
                 onClick={(e) => {
                   e.stopPropagation();
                   onViewDetails(vacancy);

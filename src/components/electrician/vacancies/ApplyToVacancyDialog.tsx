@@ -28,7 +28,9 @@ import {
   CreditCard,
   BadgeCheck,
   ChevronDown,
+  Sparkles,
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useApplyToVacancy } from "@/hooks/useInternalVacancies";
 import { useElecIdProfile } from "@/hooks/useElecIdProfile";
@@ -71,8 +73,59 @@ export function ApplyToVacancyDialog({
   const [coverLetter, setCoverLetter] = useState("");
   const [shareProfile, setShareProfile] = useState(true);
   const [showProfilePreview, setShowProfilePreview] = useState(false);
+  const [isGeneratingCoverLetter, setIsGeneratingCoverLetter] = useState(false);
 
   const applyMutation = useApplyToVacancy();
+
+  // AI Cover Letter Generation
+  const generateCoverLetter = async () => {
+    if (!vacancy || !elecIdProfile) return;
+
+    setIsGeneratingCoverLetter(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
+        body: {
+          type: 'cover_letter_generation',
+          prompt: 'Generate a cover letter for this job application',
+          context: {
+            vacancy: {
+              title: vacancy.title,
+              company: vacancy.employer?.company_name || 'the employer',
+              location: vacancy.location,
+              description: vacancy.description?.replace(/<[^>]*>/g, ' ').substring(0, 500), // Strip HTML and limit
+              requirements: vacancy.requirements,
+              type: vacancy.type,
+            },
+            profile: {
+              bio: elecIdProfile.bio,
+              specialisations: elecIdProfile.specialisations,
+              ecs_card_type: elecIdProfile.ecs_card_type,
+              verification_tier: elecIdProfile.verification_tier,
+            },
+          },
+        },
+      });
+
+      if (error) throw error;
+
+      if (data?.content) {
+        setCoverLetter(data.content);
+        toast({
+          title: "Cover Letter Generated",
+          description: "AI has written a personalised cover letter for you. Feel free to edit it!",
+        });
+      }
+    } catch (error: any) {
+      console.error('Error generating cover letter:', error);
+      toast({
+        title: "Generation Failed",
+        description: "Could not generate cover letter. Please try again or write your own.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGeneratingCoverLetter(false);
+    }
+  };
 
   const handleApply = async () => {
     if (!vacancy) return;
@@ -326,7 +379,31 @@ export function ApplyToVacancyDialog({
 
           {/* Cover Letter */}
           <div className="space-y-2">
-            <Label htmlFor="cover-letter">Cover Letter (Optional)</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="cover-letter">Cover Letter (Optional)</Label>
+              {elecIdProfile && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={generateCoverLetter}
+                  disabled={isGeneratingCoverLetter}
+                  className="gap-1.5 h-8 text-xs bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-purple-500/30 text-purple-400 hover:bg-purple-500/20 hover:text-purple-300"
+                >
+                  {isGeneratingCoverLetter ? (
+                    <>
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      Writing...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="h-3.5 w-3.5" />
+                      AI Write
+                    </>
+                  )}
+                </Button>
+              )}
+            </div>
             <Textarea
               id="cover-letter"
               value={coverLetter}
@@ -334,9 +411,13 @@ export function ApplyToVacancyDialog({
               placeholder="Introduce yourself and explain why you're a great fit for this role..."
               rows={4}
               className="resize-none"
+              disabled={isGeneratingCoverLetter}
             />
             <p className="text-xs text-muted-foreground">
-              A personalized cover letter can help you stand out from other applicants.
+              {elecIdProfile
+                ? "Use AI to write a personalised cover letter based on your Elec-ID, or write your own."
+                : "A personalised cover letter can help you stand out from other applicants."
+              }
             </p>
           </div>
 

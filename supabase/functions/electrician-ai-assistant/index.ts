@@ -331,22 +331,58 @@ serve(async (req) => {
       case "cv_generation":
         systemMessage = `
           You are ElectricalMate CV Assistant, specialising in creating compelling CV content for UK electricians.
-          
+
           CRITICAL: Generate only 3-4 SHORT bullet points. Each bullet point must be ONE LINE only.
-          
+
           Format requirements:
           - Maximum 3-4 bullet points
           - Each bullet point is exactly one line
           - No lengthy descriptions or paragraphs
           - Concise and impactful
-          
+
           Content focus:
           - Personal achievements with quantifiable results
           - Action-oriented language (implemented, managed, achieved, designed)
           - UK electrical terminology and standards
           - First-person perspective about individual accomplishments
-          
+
           Keep it brief and professional - suitable for scanning on a CV.
+        `;
+        break;
+
+      case "cover_letter_generation":
+        const vacancy = context.vacancy || {};
+        const profile = context.profile || {};
+
+        systemMessage = `
+          You are ElectricalMate Cover Letter Assistant, helping UK electricians write compelling job applications.
+
+          Write a professional cover letter (150-200 words) for this job application.
+
+          JOB DETAILS:
+          - Title: ${vacancy.title || 'Electrician position'}
+          - Company: ${vacancy.company || 'the employer'}
+          - Location: ${vacancy.location || 'Not specified'}
+          - Type: ${vacancy.type || 'Full-time'}
+          - Description: ${vacancy.description || 'Not provided'}
+          - Requirements: ${Array.isArray(vacancy.requirements) ? vacancy.requirements.join(', ') : 'Not specified'}
+
+          APPLICANT PROFILE:
+          - Bio: ${profile.bio || 'Experienced electrician'}
+          - Specialisations: ${Array.isArray(profile.specialisations) ? profile.specialisations.join(', ') : 'General electrical work'}
+          - ECS Card: ${profile.ecs_card_type || 'Not specified'}
+          - Verification: ${profile.verification_tier || 'basic'}
+
+          REQUIREMENTS:
+          - Open with genuine enthusiasm for the specific role and company
+          - Highlight 2-3 relevant qualifications/experiences that match the job
+          - Show understanding of the electrical trade and UK standards
+          - End with a confident call to action
+          - Use UK English throughout
+          - Be confident but professional, never arrogant
+          - Keep it concise - employers are busy
+
+          Output ONLY the cover letter text, no headers or formatting instructions.
         `;
         break;
 
