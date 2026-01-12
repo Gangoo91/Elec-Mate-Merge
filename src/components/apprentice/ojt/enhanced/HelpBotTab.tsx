@@ -21,7 +21,6 @@ import { toast } from "sonner";
 import { ChatContainer, ChatMessagesArea, ChatInputArea } from '@/components/electrician-tools/ai-tools/chat/ChatContainer';
 import { MessageBubble } from '@/components/electrician-tools/ai-tools/chat/MessageBubble';
 import { MobileChatInput } from '@/components/electrician-tools/ai-tools/chat/MobileChatInput';
-import { FollowUpChips } from '@/components/electrician-tools/ai-tools/chat/FollowUpChips';
 import ChatMessageRenderer from "./ChatMessageRenderer";
 
 interface ChatMessage {
@@ -245,7 +244,12 @@ const HelpBotTab = () => {
           body: JSON.stringify({
             message: textToSend.trim(),
             context: 'electrical apprenticeship training and guidance',
-            stream: true
+            stream: true,
+            // Send conversation history for context (last 10 messages max)
+            history: chatMessages
+              .filter(m => m.content.trim() !== '')
+              .slice(-10)
+              .map(m => ({ role: m.role, content: m.content }))
           })
         }
       );
@@ -345,35 +349,35 @@ const HelpBotTab = () => {
     return <ChatMessageRenderer content={content} isUser={false} />;
   }, []);
 
-  // Welcome screen when no messages
+  // Welcome screen when no messages - compact on mobile
   const WelcomeScreen = () => (
-    <div className="flex flex-col items-center justify-center min-h-[400px] text-center px-4 py-8">
-      {/* Dave Avatar */}
-      <div className="relative mb-4">
-        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-elec-yellow/30 to-orange-500/20 flex items-center justify-center border-2 border-elec-yellow/40">
-          <Bot className="h-10 w-10 text-elec-yellow" />
+    <div className="flex flex-col items-center justify-center min-h-[200px] sm:min-h-[400px] text-center px-4 py-4 sm:py-8">
+      {/* Dave Avatar - smaller on mobile */}
+      <div className="relative mb-3 sm:mb-4">
+        <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-elec-yellow/30 to-orange-500/20 flex items-center justify-center border-2 border-elec-yellow/40">
+          <Bot className="h-7 w-7 sm:h-10 sm:w-10 text-elec-yellow" />
         </div>
-        <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-background flex items-center justify-center">
-          <Sparkles className="h-3 w-3 text-white" />
+        <div className="absolute -bottom-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full border-2 border-background flex items-center justify-center">
+          <Sparkles className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-white" />
         </div>
       </div>
 
-      <h3 className="font-bold text-xl mb-1">Hey, I'm Dave!</h3>
-      <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow text-xs mb-3">
+      <h3 className="font-bold text-lg sm:text-xl mb-0.5 sm:mb-1">Hey, I'm Dave!</h3>
+      <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow text-[10px] sm:text-xs mb-2 sm:mb-3">
         20+ Years in the Trade
       </Badge>
 
-      <p className="text-white/70 text-sm max-w-xs mb-4">
+      <p className="text-white/70 text-xs sm:text-sm max-w-xs mb-3 sm:mb-4 hidden sm:block">
         Qualified sparky with decades of UK experience. Ask me about regs, testing, calcs, or your apprenticeship.
       </p>
 
       {/* Quick Start Suggestions */}
-      <div className="flex flex-wrap justify-center gap-2 max-w-sm">
+      <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 max-w-sm">
         {["Safe isolation", "Cable sizing", "Test sequence", "RCD rules"].map((topic, i) => (
           <button
             key={i}
             onClick={() => handleSendMessage(`Tell me about ${topic.toLowerCase()}`)}
-            className="px-3 py-1.5 text-xs bg-white/5 hover:bg-elec-yellow/20 border border-white/10 hover:border-elec-yellow/30 rounded-full transition-all touch-manipulation"
+            className="px-2.5 sm:px-3 py-1 sm:py-1.5 text-[11px] sm:text-xs bg-white/5 hover:bg-elec-yellow/20 border border-white/10 hover:border-elec-yellow/30 rounded-full transition-all touch-manipulation"
           >
             {topic}
           </button>
@@ -402,7 +406,7 @@ const HelpBotTab = () => {
   );
 
   return (
-    <div className="h-[calc(100dvh-280px)] sm:h-[600px]">
+    <div className="h-[calc(100dvh-140px)] sm:h-[600px]">
       <ChatContainer>
         <ChatMessagesArea
           messagesEndRef={messagesEndRef}
@@ -431,17 +435,24 @@ const HelpBotTab = () => {
         </ChatMessagesArea>
 
         <ChatInputArea>
-          {/* Follow-up chips */}
+          {/* Compact Follow-up chips - horizontal scroll on mobile */}
           {followUpQuestions.length > 0 && !isLoading && (
-            <FollowUpChips
-              questions={followUpQuestions}
-              onSelect={handleFollowUp}
-              className="mb-2"
-            />
+            <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide py-1 mb-2 -mx-1 px-1">
+              <span className="text-[10px] text-muted-foreground shrink-0 hidden sm:inline">Try:</span>
+              {followUpQuestions.slice(0, 2).map((q, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleFollowUp(q)}
+                  className="shrink-0 px-2.5 py-1 text-[11px] bg-elec-yellow/10 hover:bg-elec-yellow/20 border border-elec-yellow/20 rounded-full text-foreground/80 truncate max-w-[160px] touch-manipulation transition-colors"
+                >
+                  {q.length > 35 ? q.slice(0, 35) + '...' : q}
+                </button>
+              ))}
+            </div>
           )}
 
-          {/* Quick Questions Button Row */}
-          <div className="flex items-center gap-2 mb-2">
+          {/* Quick Questions Button Row - Hidden on mobile */}
+          <div className="hidden sm:flex items-center gap-2 mb-2">
             <Sheet open={quickQuestionsOpen} onOpenChange={setQuickQuestionsOpen}>
               <SheetTrigger asChild>
                 <Button

@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { CollegeOverviewSection } from "@/components/college/sections/CollegeOverviewSection";
 import { TutorsSection } from "@/components/college/sections/TutorsSection";
 import { StudentsSection } from "@/components/college/sections/StudentsSection";
@@ -99,7 +99,9 @@ const sectionTitles: Record<CollegeSection, string> = {
 
 const CollegeDashboard = () => {
   const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState<CollegeSection>("overview");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeSection = (searchParams.get("section") as CollegeSection) || "overview";
+  const setActiveSection = (section: CollegeSection) => setSearchParams({ section }, { replace: false });
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
   // Keyboard shortcuts

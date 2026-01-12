@@ -9,7 +9,7 @@ const QuoteInvoiceDashboard = () => {
   const canonical = `${window.location.origin}/electrician/quote-invoice-dashboard`;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark pt-safe">
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark pt-safe animate-fade-in">
       <Helmet>
         <title>Quote & Invoice Dashboard | Professional Business Management</title>
         <meta

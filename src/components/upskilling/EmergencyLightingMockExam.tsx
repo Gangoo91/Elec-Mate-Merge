@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getRandomEmergencyLightingMockExamQuestions } from '@/data/upskilling/emergencyLightingMockExamData';
 import QuizQuestion from './quiz/QuizQuestion';
 import QuizResults from './quiz/QuizResults';
@@ -16,7 +16,12 @@ import { useToast } from '@/hooks/use-toast';
 const EmergencyLightingMockExam = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Results filter state - URL-based for back button support
+  const reviewFilter = (searchParams.get("filter") as 'all' | 'incorrect' | 'flagged' | 'correct') || 'all';
+  const setReviewFilter = (filter: 'all' | 'incorrect' | 'flagged' | 'correct') => setSearchParams({ filter }, { replace: false });
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [showResults, setShowResults] = useState(false);
@@ -25,16 +30,13 @@ const EmergencyLightingMockExam = () => {
   const [examQuestions, setExamQuestions] = useState<QuizQuestionType[]>([]);
   const [startTime, setStartTime] = useState<Date | null>(null);
   const [endTime, setEndTime] = useState<Date | null>(null);
-  
+
   // Timer state
   const [timeRemaining, setTimeRemaining] = useState<number>(45 * 60); // 45 minutes in seconds
   const [timerActive, setTimerActive] = useState<boolean>(false);
-  
+
   // Flag system state
   const [flaggedQuestions, setFlaggedQuestions] = useState<Set<number>>(new Set());
-  
-  // Results filter state
-  const [reviewFilter, setReviewFilter] = useState<'all' | 'incorrect' | 'flagged' | 'correct'>('all');
 
   // Timer logic
   useEffect(() => {

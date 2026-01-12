@@ -1,8 +1,13 @@
+import { useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Settings, Zap, FileText, AlertTriangle } from 'lucide-react';
 
 const ControlStrategiesPractical = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("control") || "selection";
+  const setActiveTab = (tab: string) => setSearchParams({ control: tab }, { replace: false });
+
   return (
     <Card className="bg-elec-gray border-gray-600">
       <CardHeader>
@@ -12,7 +17,7 @@ const ControlStrategiesPractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="selection" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-4 bg-elec-dark">
             <TabsTrigger value="selection" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
               <Settings className="h-4 w-4 mr-1" />

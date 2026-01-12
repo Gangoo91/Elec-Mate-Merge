@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Clock, CheckCircle, XCircle, Award, RotateCcw, ArrowLeft, ArrowRight, Home, Flag, Zap } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { evChargingQuestions } from '@/data/upskilling/evChargingQuestions';
 import { QuizQuestion } from '@/types/quiz';
 import { cn } from '@/lib/utils';
@@ -16,6 +16,12 @@ interface SelectedAnswer {
 }
 
 const EVChargingMockExam = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Results filter state - URL-based for back button support
+  const reviewFilter = (searchParams.get("filter") as 'all' | 'incorrect' | 'flagged' | 'correct') || 'all';
+  const setReviewFilter = (filter: 'all' | 'incorrect' | 'flagged' | 'correct') => setSearchParams({ filter }, { replace: false });
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<SelectedAnswer[]>([]);
   const [showResults, setShowResults] = useState(false);
@@ -26,7 +32,6 @@ const EVChargingMockExam = () => {
   const [startTime, setStartTime] = useState<Date | null>(null);
   const [endTime, setEndTime] = useState<Date | null>(null);
   const [score, setScore] = useState(0);
-  const [reviewFilter, setReviewFilter] = useState<'all' | 'incorrect' | 'flagged' | 'correct'>('all');
 
   const toggleFlag = (questionId: number) => {
     setFlaggedQuestions(prev => 

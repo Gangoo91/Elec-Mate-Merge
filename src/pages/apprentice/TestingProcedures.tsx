@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import TestingHeader from "@/components/apprentice/testing-procedures/TestingHeader";
@@ -12,7 +13,9 @@ import { Button } from "@/components/ui/button";
 import { BookmarkCheck, HelpCircle, Zap, Activity, GitBranch, Check } from "lucide-react";
 
 const TestingProcedures = () => {
-  const [activeTab, setActiveTab] = useState("r1r2");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "r1r2";
+  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const [lastVisited, setLastVisited] = useState<string | null>(null);
 
   const testingOptions = [

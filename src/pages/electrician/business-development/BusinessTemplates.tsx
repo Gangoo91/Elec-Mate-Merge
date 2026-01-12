@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import {
   FileText,
@@ -23,7 +24,9 @@ import {
 import { BusinessPageLayout, SectionNav, ContentBlock, DataGrid, InfoList } from "@/components/business-hub";
 
 const BusinessTemplates = () => {
-  const [activeSection, setActiveSection] = useState("quotes-invoices");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeSection = searchParams.get("section") || "quotes-invoices";
+  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
 
   const sections = [
     { id: "quotes-invoices", label: "Quotes", icon: Receipt },

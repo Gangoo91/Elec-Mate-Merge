@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import {
   GraduationCap,
@@ -42,7 +43,9 @@ import TrainingScheduleOptimiser from "@/components/electrician/business-develop
 import ComplianceChecker from "@/components/electrician/business-development/apprentices/interactive/ComplianceChecker";
 
 const BusinessApprentices = () => {
-  const [activeSection, setActiveSection] = useState("recruitment");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeSection = searchParams.get("section") || "recruitment";
+  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
   const contentRef = useRef<HTMLDivElement>(null);
 
   const sections = [

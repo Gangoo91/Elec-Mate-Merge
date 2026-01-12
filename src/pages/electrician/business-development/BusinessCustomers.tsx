@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import {
   Target,
@@ -31,7 +32,9 @@ import {
 import { BusinessPageLayout, SectionNav, ContentBlock, DataGrid, InfoList } from "@/components/business-hub";
 
 const BusinessCustomers = () => {
-  const [activeSection, setActiveSection] = useState("market-research");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeSection = searchParams.get("section") || "market-research";
+  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
 
   const sections = [
     { id: "market-research", label: "Research", icon: Search },

@@ -131,13 +131,13 @@ export default function InvoiceQuoteBuilder() {
   }
 
   return (
-    <>
+    <div className="min-h-screen bg-background pt-safe pb-safe">
       <Helmet>
         <title>Adjust Invoice Costs - Electrical Hub</title>
         <meta name="description" content="Adjust costs and items before generating your invoice" />
       </Helmet>
-      
-      <div className="container mx-auto p-0 sm:px-4 sm:py-6">
+
+      <div className="container mx-auto p-4 sm:px-4 sm:py-6 animate-fade-in">
         <div className="mb-6">
           <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
             <span>Business Hub</span>
@@ -181,6 +181,6 @@ export default function InvoiceQuoteBuilder() {
           <InvoiceWizard sourceQuote={quote} />
         ) : null}
       </div>
-    </>
+    </div>
   );
 }

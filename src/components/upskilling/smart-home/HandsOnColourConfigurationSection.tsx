@@ -1,8 +1,13 @@
+import { useSearchParams } from 'react-router-dom';
 import { Palette, Smartphone, Monitor } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export const HandsOnColourConfigurationSection = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("colour") || "setup";
+  const setActiveTab = (tab: string) => setSearchParams({ colour: tab }, { replace: false });
+
   return (
     <Card className="bg-gradient-to-br from-rose-50/10 to-pink-50/10 border-rose-200/20">
       <CardHeader>
@@ -12,7 +17,7 @@ export const HandsOnColourConfigurationSection = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="setup" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3 bg-elec-gray">
             <TabsTrigger value="setup">Initial Setup</TabsTrigger>
             <TabsTrigger value="scenes">Scene Creation</TabsTrigger>

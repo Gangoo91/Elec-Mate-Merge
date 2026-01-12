@@ -111,21 +111,23 @@ const QuoteBuilderEdit = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <SmartBackButton />
-        <div>
-          <h1 className="text-2xl font-bold">Edit Quote {quote.quoteNumber}</h1>
-          <p className="text-sm text-muted-foreground">
-            Make changes to your existing quote
-          </p>
+    <div className="min-h-screen bg-background pt-safe pb-safe">
+      <div className="space-y-6 px-4 py-6 animate-fade-in">
+        <div className="flex items-center gap-4">
+          <SmartBackButton />
+          <div>
+            <h1 className="text-2xl font-bold">Edit Quote {quote.quoteNumber}</h1>
+            <p className="text-sm text-muted-foreground">
+              Make changes to your existing quote
+            </p>
+          </div>
         </div>
+
+        <QuoteWizard
+          initialQuote={quote}
+          onQuoteGenerated={() => navigate('/electrician/quote-builder')}
+        />
       </div>
-      
-      <QuoteWizard
-        initialQuote={quote}
-        onQuoteGenerated={() => navigate('/electrician/quote-builder')}
-      />
     </div>
   );
 };

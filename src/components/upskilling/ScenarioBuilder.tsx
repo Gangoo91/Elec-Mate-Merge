@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { MapPin, AlertTriangle, CheckCircle, XCircle, Lightbulb } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -26,7 +27,10 @@ interface Scenario {
 }
 
 export const ScenarioBuilder = () => {
-  const [selectedScenario, setSelectedScenario] = useState<string>('domestic');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedScenario = searchParams.get("scenario") || "domestic";
+  const setSelectedScenario = (scenario: string) => setSearchParams({ scenario }, { replace: false });
+
   const [currentStep, setCurrentStep] = useState(0);
   const [userChoices, setUserChoices] = useState<{ [key: string]: number }>({});
   const [showResults, setShowResults] = useState(false);

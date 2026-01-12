@@ -78,7 +78,7 @@ const BusinessDevelopment = () => {
   const canonical = `${window.location.origin}/electrician/business-development`;
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] pb-safe">
+    <div className="min-h-screen bg-[#1a1a1a] pb-safe animate-fade-in">
       <Helmet>
         <title>Business Development for Electricians | Elec-Mate</title>
         <meta

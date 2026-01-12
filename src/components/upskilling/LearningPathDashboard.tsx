@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { BookOpen, Target, Clock, Award, ChevronRight, Play, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -26,7 +27,9 @@ interface LearningModule {
 }
 
 export const LearningPathDashboard = () => {
-  const [selectedPath, setSelectedPath] = useState<'systematic' | 'competency' | 'refresher'>('systematic');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedPath = (searchParams.get("path") as 'systematic' | 'competency' | 'refresher') || 'systematic';
+  const setSelectedPath = (path: string) => setSearchParams({ path }, { replace: false });
 
   const modules: LearningModule[] = [
     {

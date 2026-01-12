@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -36,7 +36,9 @@ import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAcc
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const OffJobTrainingGuide = () => {
-  const [activeTab, setActiveTab] = useState("what-counts");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "what-counts";
+  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const isMobile = useIsMobile();
 
   const validActivities = [

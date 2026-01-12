@@ -58,6 +58,17 @@ const calculateDayRate = (hourlyRate: number): number => {
   return Math.round(hourlyRate * 8);
 };
 
+// Helper to convert any rate type to day rate
+const convertToDayRate = (amount: number, type: string): number => {
+  switch (type) {
+    case 'hourly': return Math.round(amount * 8);
+    case 'daily': return Math.round(amount);
+    case 'weekly': return Math.round(amount / 5);
+    case 'yearly': return Math.round(amount / 260); // 52 weeks × 5 days
+    default: return Math.round(amount);
+  }
+};
+
 // Helper to determine availability status
 const determineAvailability = (tier: string): 'Immediate' | '1 week notice' | 'Limited' => {
   // In production, this would come from a schedule/availability table
@@ -104,6 +115,8 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
           profile_visibility,
           specialisations,
           bio,
+          rate_type,
+          rate_amount,
           employer_employees!inner (
             id,
             name,
@@ -176,6 +189,11 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
         const profileQuals = qualsByProfile[profile.id] || [];
         const profileSkills = skillsByProfile[profile.id] || [];
 
+        // Use profile rate if set, otherwise calculate from hourly
+        const dayRate = profile.rate_amount
+          ? convertToDayRate(profile.rate_amount, profile.rate_type || 'daily')
+          : calculateDayRate(hourlyRate);
+
         return {
           id: employee.id,
           elecIdProfileId: profile.id,
@@ -194,7 +212,7 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
           specialisms: profile.specialisations || [],
           bio: profile.bio,
           hourlyRate,
-          dayRate: calculateDayRate(hourlyRate),
+          dayRate,
           qualifications: profileQuals,
           qualificationsCount: profileQuals.length,
           skills: profileSkills,

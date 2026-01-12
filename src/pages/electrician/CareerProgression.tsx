@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -368,7 +368,16 @@ const opportunities = [
 ];
 
 const CareerProgression = () => {
-  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeSection = searchParams.get("section") || null;
+  const setActiveSection = (section: string | null) => {
+    if (section) {
+      setSearchParams({ section }, { replace: false });
+    } else {
+      searchParams.delete("section");
+      setSearchParams(searchParams, { replace: false });
+    }
+  };
   const { marketData } = useLiveMarketData();
 
   const handleBackToSections = () => {

@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import {
   Calculator,
@@ -31,7 +32,9 @@ import {
 import { BusinessPageLayout, SectionNav, ContentBlock, DataGrid, InfoList } from "@/components/business-hub";
 
 const TaxFinances = () => {
-  const [activeSection, setActiveSection] = useState("structure");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeSection = searchParams.get("section") || "structure";
+  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
 
   const sections = [
     { id: "structure", label: "Structure", icon: FileText },

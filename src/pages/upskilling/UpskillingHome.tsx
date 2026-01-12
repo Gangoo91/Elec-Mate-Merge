@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ModuleCard } from "@/components/shared/ModuleCard";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -7,6 +7,9 @@ import { Search, Zap, BookOpen, Cpu, Lightbulb, Network, Home, Sun, BatteryCharg
 
 export default function UpskillingHome() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "all";
+  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const [searchQuery, setSearchQuery] = useState("");
 
   // All professional upskilling courses - IDs match route paths
@@ -235,7 +238,7 @@ export default function UpskillingHome() {
         </div>
 
         {/* Tabs for filtering */}
-        <Tabs defaultValue="all" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="w-full sm:w-auto mb-6 flex-wrap h-auto">
             <TabsTrigger value="all">
               All ({filteredCourses.length})

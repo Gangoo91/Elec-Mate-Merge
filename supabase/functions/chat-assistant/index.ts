@@ -1,9 +1,107 @@
 
 import { serve } from '../_shared/deps.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
+// Extract keywords from query for RAG searches
+const extractKeywords = (query: string): string[] => {
+  const stopWords = new Set([
+    'the', 'a', 'an', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
+    'what', 'how', 'why', 'when', 'where', 'which', 'who', 'whom',
+    'do', 'does', 'did', 'can', 'could', 'should', 'would', 'will', 'shall',
+    'i', 'you', 'we', 'they', 'he', 'she', 'it', 'me', 'him', 'her', 'us', 'them',
+    'my', 'your', 'our', 'their', 'his', 'its',
+    'this', 'that', 'these', 'those',
+    'for', 'to', 'of', 'in', 'on', 'at', 'by', 'with', 'from', 'about', 'into',
+    'and', 'or', 'but', 'if', 'then', 'so', 'as', 'than',
+    'have', 'has', 'had', 'need', 'want', 'tell', 'explain', 'help', 'please',
+  ]);
+
+  return query
+    .toLowerCase()
+    .replace(/[^\w\s]/g, '')
+    .split(/\s+/)
+    .filter(word => word.length > 2 && !stopWords.has(word))
+    .slice(0, 6);
+};
+
+// Search regulations intelligence
+const searchRegulations = async (supabase: any, keywords: string[]): Promise<any[]> => {
+  if (keywords.length === 0) return [];
+
+  try {
+    const { data, error } = await supabase
+      .from('regulations_intelligence')
+      .select('regulation_number, title, content, category')
+      .or(keywords.map(k => `content.ilike.%${k}%`).join(','))
+      .limit(5);
+
+    if (error) {
+      console.error('Regulations search error:', error);
+      return [];
+    }
+    return data || [];
+  } catch (e) {
+    console.error('Regulations search exception:', e);
+    return [];
+  }
+};
+
+// Search practical work intelligence
+const searchPractical = async (supabase: any, keywords: string[]): Promise<any[]> => {
+  if (keywords.length === 0) return [];
+
+  try {
+    const { data, error } = await supabase
+      .from('practical_work_intelligence')
+      .select('title, content, category')
+      .or(keywords.map(k => `content.ilike.%${k}%`).join(','))
+      .limit(5);
+
+    if (error) {
+      console.error('Practical search error:', error);
+      return [];
+    }
+    return data || [];
+  } catch (e) {
+    console.error('Practical search exception:', e);
+    return [];
+  }
+};
+
+// Build context from RAG results
+const buildContext = (regulations: any[], practical: any[]): string => {
+  if (regulations.length === 0 && practical.length === 0) return '';
+
+  let context = '\n\n--- RELEVANT KNOWLEDGE FROM YOUR TRAINING MATERIALS ---\n';
+
+  if (regulations.length > 0) {
+    context += '\nBS 7671 Regulations:\n';
+    regulations.forEach(r => {
+      context += `- ${r.regulation_number || 'Reg'}: ${r.title || ''}\n`;
+      if (r.content) {
+        context += `  ${r.content.slice(0, 200)}${r.content.length > 200 ? '...' : ''}\n`;
+      }
+    });
+  }
+
+  if (practical.length > 0) {
+    context += '\nPractical Guidance:\n';
+    practical.forEach(p => {
+      context += `- ${p.title || 'Guidance'}: `;
+      if (p.content) {
+        context += `${p.content.slice(0, 150)}${p.content.length > 150 ? '...' : ''}\n`;
+      }
+    });
+  }
+
+  context += '\nUse this information to give specific, accurate answers. Reference regulation numbers where relevant.\n';
+
+  return context;
 };
 
 serve(async (req) => {
@@ -13,12 +111,29 @@ serve(async (req) => {
   }
 
   try {
-    const { message, context, stream = true } = await req.json();
+    const { message, context, stream = true, history = [] } = await req.json();
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
     if (!openAIApiKey) {
       throw new Error('OpenAI API key not configured');
     }
+
+    // Initialize Supabase client for RAG
+    const supabase = createClient(supabaseUrl!, supabaseKey!);
+
+    // Extract keywords and perform parallel RAG searches
+    const keywords = extractKeywords(message);
+
+    // Parallel RAG searches (50-100ms)
+    const [regulations, practical] = await Promise.all([
+      searchRegulations(supabase, keywords),
+      searchPractical(supabase, keywords),
+    ]);
+
+    // Build context from RAG results
+    const ragContext = buildContext(regulations, practical);
 
     const systemPrompt = `You are Dave, a master electrician with 20 years of experience in the UK electrical industry. You've seen it all - from small domestic jobs to major commercial installations, industrial plants, and everything in between. You've trained dozens of apprentices over the years, many of whom have gone on to run their own successful businesses.
 
@@ -99,7 +214,15 @@ WHEN THEY ASK ABOUT SOMETHING DANGEROUS:
 
 Remember: You're not just answering questions - you're training the next generation of electricians. Every answer should make them a better, safer electrician.
 
-Context: ${context || 'general electrical apprenticeship support'}`;
+Context: ${context || 'general electrical apprenticeship support'}${ragContext}`;
+
+    // Build messages array with conversation history
+    const conversationHistory = Array.isArray(history)
+      ? history
+          .filter((m: any) => m.role && m.content)
+          .slice(-10) // Keep last 10 messages for context
+          .map((m: any) => ({ role: m.role, content: m.content }))
+      : [];
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -108,12 +231,13 @@ Context: ${context || 'general electrical apprenticeship support'}`;
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5-mini-2025-08-07',
+        model: 'gpt-4o-mini',
         messages: [
           { role: 'system', content: systemPrompt },
+          ...conversationHistory,
           { role: 'user', content: message }
         ],
-        max_completion_tokens: 1500,
+        max_tokens: 1500,
         stream: stream,
       }),
     });

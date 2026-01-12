@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Calculator, Zap, AlertCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -8,10 +9,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export const CalculationTools = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeCalc = searchParams.get("calc") || "zs";
+  const setActiveCalc = (calc: string) => setSearchParams({ calc }, { replace: false });
+
   const [zsValues, setZsValues] = useState({ ze: '', r1r2: '' });
   const [currentValues, setCurrentValues] = useState({ voltage: '230', resistance: '' });
-  const [voltageDropValues, setVoltageDropValues] = useState({ 
-    current: '', length: '', resistance: '' 
+  const [voltageDropValues, setVoltageDropValues] = useState({
+    current: '', length: '', resistance: ''
   });
 
   const calculateZs = () => {
@@ -49,7 +54,7 @@ export const CalculationTools = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="zs" className="space-y-4">
+        <Tabs value={activeCalc} onValueChange={setActiveCalc} className="space-y-4">
           <TabsList className="grid w-full grid-cols-3 bg-elec-dark">
             <TabsTrigger value="zs" className="text-gray-300 data-[state=active]:bg-elec-yellow data-[state=active]:text-black">
               Zs Calculation

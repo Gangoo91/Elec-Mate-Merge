@@ -109,7 +109,7 @@ const QuoteBuilder = () => {
 
   return (
     <VoiceFormProvider>
-      <div className="min-h-screen bg-background pb-safe pt-safe">
+      <div className="min-h-screen bg-background pb-safe pt-safe animate-fade-in">
         <Helmet>
           <title>Quote Builder | Elec-Mate</title>
           <meta

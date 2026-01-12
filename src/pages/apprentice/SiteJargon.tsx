@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,10 +10,12 @@ import { Search, MessageSquare, MapPin, Lightbulb, Volume2, Star, Filter } from 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const SiteJargon = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "terminology";
+  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedRegion, setSelectedRegion] = useState("all");
-  const [activeTab, setActiveTab] = useState("terminology");
 
   const jargonTerms = [
     { term: "2nd Fix", meaning: "Second phase of electrical installation - switches, sockets, light fittings", category: "Installation", difficulty: "beginner", audio: true },

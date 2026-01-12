@@ -1,8 +1,13 @@
+import { useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Zap, List, Route, Clock } from 'lucide-react';
 
 const LoadPriorityPractical = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("loadpriority") || "classification";
+  const setActiveTab = (tab: string) => setSearchParams({ loadpriority: tab }, { replace: false });
+
   return (
     <Card className="bg-elec-gray border-gray-600">
       <CardHeader>
@@ -12,7 +17,7 @@ const LoadPriorityPractical = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="classification" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-4 bg-elec-dark">
             <TabsTrigger value="classification" className="data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
               <List className="h-4 w-4 mr-1" />

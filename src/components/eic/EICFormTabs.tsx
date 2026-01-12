@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { EICTabValue } from '@/hooks/useEICTabs';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { motion, AnimatePresence } from 'framer-motion';
 import EICStepIndicator from './EICStepIndicator';
 import EICInstallationDetails from './EICInstallationDetails';
@@ -50,22 +49,6 @@ interface EICFormTabsProps {
   canGenerateCertificate?: boolean;
 }
 
-// Animation variants for tab transitions
-const tabVariants = {
-  enter: (direction: number) => ({
-    x: direction > 0 ? 20 : -20,
-    opacity: 0
-  }),
-  center: {
-    x: 0,
-    opacity: 1
-  },
-  exit: (direction: number) => ({
-    x: direction > 0 ? -20 : 20,
-    opacity: 0
-  })
-};
-
 const EICFormTabs: React.FC<EICFormTabsProps> = ({
   currentTab,
   onTabChange,
@@ -79,19 +62,6 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
   onSaveDraft,
   canGenerateCertificate = true
 }) => {
-  const isMobile = useIsMobile();
-  const [direction, setDirection] = React.useState(0);
-  const prevTabRef = React.useRef(currentTab);
-
-  // Track tab change direction for animation
-  React.useEffect(() => {
-    const tabs: EICTabValue[] = ['details', 'inspection', 'testing', 'declarations', 'certificate'];
-    const prevIndex = tabs.indexOf(prevTabRef.current);
-    const currIndex = tabs.indexOf(currentTab);
-    setDirection(currIndex > prevIndex ? 1 : -1);
-    prevTabRef.current = currentTab;
-  }, [currentTab]);
-
   const handleTabChange = (tab: EICTabValue) => {
     onTabChange(tab);
   };
@@ -169,18 +139,13 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
       />
 
       {/* Tab Content with Animation */}
-      <AnimatePresence mode="wait" custom={direction}>
+      <AnimatePresence mode="wait">
         <motion.div
           key={currentTab}
-          custom={direction}
-          variants={tabVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{
-            x: { type: "spring", stiffness: 300, damping: 30 },
-            opacity: { duration: 0.2 }
-          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.15 }}
         >
           {renderTabContent()}
         </motion.div>

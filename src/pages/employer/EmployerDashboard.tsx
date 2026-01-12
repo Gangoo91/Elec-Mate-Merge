@@ -114,29 +114,9 @@ export type Section =
   | "aiquote";
 
 const EmployerDashboard = () => {
-  const [searchParams] = useSearchParams();
-  const [activeSection, setActiveSection] = useState<Section>("overview");
-
-  // Sync URL params to activeSection on mount and when URL changes
-  useEffect(() => {
-    const sectionFromUrl = searchParams.get('section');
-    if (sectionFromUrl) {
-      // Map URL param to valid section
-      const validSections: Section[] = [
-        'overview', 'peoplehub', 'team', 'elecid', 'timesheets', 'comms',
-        'talentpool', 'vacancies', 'financehub', 'quotes', 'expenses',
-        'procurement', 'financials', 'reports', 'signatures', 'pricebook',
-        'jobshub', 'jobs', 'jobpacks', 'jobboard', 'timeline', 'tracking',
-        'progresslogs', 'issues', 'quality', 'fleet', 'photogallery', 'testing',
-        'safetyhub', 'safety', 'rams', 'incidents', 'policies', 'contracts',
-        'training', 'briefings', 'compliance', 'smartdocs', 'aidesignspec',
-        'airams', 'aimethodstatement', 'aibriefingpack', 'aiquote', 'settings'
-      ];
-      if (validSections.includes(sectionFromUrl as Section)) {
-        setActiveSection(sectionFromUrl as Section);
-      }
-    }
-  }, [searchParams]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeSection = (searchParams.get('section') as Section) || "overview";
+  const setActiveSection = (section: Section) => setSearchParams({ section }, { replace: false });
 
   // Voice-controlled dialog states
   const [quoteDialogOpen, setQuoteDialogOpen] = useState(false);

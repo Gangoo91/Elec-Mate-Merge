@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import {
   Briefcase,
@@ -29,7 +29,9 @@ import {
 } from "@/components/business-hub";
 
 const BusinessStartup = () => {
-  const [activeSection, setActiveSection] = useState("planning");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeSection = searchParams.get("section") || "planning";
+  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
 
   const sections = [
     { id: "planning", label: "Business Planning", icon: TrendingUp },

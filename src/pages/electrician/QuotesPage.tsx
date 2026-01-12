@@ -69,7 +69,7 @@ const QuotesPage = () => {
   const canonical = `${window.location.origin}/electrician/quotes`;
 
   return (
-    <div className="min-h-screen bg-background pt-safe pb-safe">
+    <div className="min-h-screen bg-background pt-safe pb-safe animate-fade-in">
       <Helmet>
         <title>All Quotes | Professional Quote Management for Electricians</title>
         <meta

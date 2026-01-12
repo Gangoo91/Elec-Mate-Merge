@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import {
   TrendingUp,
@@ -30,7 +31,9 @@ import {
 import { BusinessPageLayout, SectionNav, ContentBlock, DataGrid, InfoList } from "@/components/business-hub";
 
 const BusinessGrowth = () => {
-  const [activeSection, setActiveSection] = useState("growth-strategies");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeSection = searchParams.get("section") || "growth-strategies";
+  const setActiveSection = (section: string) => setSearchParams({ section }, { replace: false });
 
   const sections = [
     { id: "growth-strategies", label: "Growth", icon: Target },

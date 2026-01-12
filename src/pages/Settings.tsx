@@ -23,7 +23,7 @@ import {
   Lock,
   Settings as SettingsIcon,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useNotifications } from "@/components/notifications/NotificationProvider";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -61,22 +61,31 @@ const SettingsPage = () => {
   const { addNotification } = useNotifications();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Get tab from URL - null means show grid on mobile
+  const tabParam = searchParams.get("tab");
 
   // Mobile: null = show grid, string = show detail
-  // Desktop: always show tabs
-  const [selectedTab, setSelectedTab] = useState<string | null>(isMobile ? null : "elec-id");
-  const [activeDesktopTab, setActiveDesktopTab] = useState("elec-id");
+  // Desktop: always show tabs (default to elec-id)
+  const selectedTab = isMobile ? tabParam : (tabParam || "elec-id");
+  const activeDesktopTab = tabParam || "elec-id";
+
+  const setSelectedTab = (tab: string | null) => {
+    if (tab) {
+      setSearchParams({ tab }, { replace: false });
+    } else {
+      searchParams.delete("tab");
+      setSearchParams(searchParams, { replace: false });
+    }
+  };
+  const setActiveDesktopTab = (tab: string) => setSearchParams({ tab }, { replace: false });
 
   const tabsRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
 
-  // Update selected tab when switching between mobile/desktop
-  useEffect(() => {
-    if (!isMobile && selectedTab === null) {
-      setSelectedTab(activeDesktopTab);
-    }
-  }, [isMobile, selectedTab, activeDesktopTab]);
+  // URL-based state handles mobile/desktop sync automatically
 
   const activeTabConfig = ALL_TABS.find(
     (tab) => tab.id === (isMobile ? selectedTab : activeDesktopTab)

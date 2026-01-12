@@ -28,7 +28,8 @@ const ElectricalTools = () => {
   );
 
   return (
-    <div className="space-y-6 sm:space-y-8 animate-fade-in">
+    <div className="min-h-screen bg-background pt-safe pb-safe">
+      <div className="space-y-6 sm:space-y-8 animate-fade-in px-4 py-6">
       {/* Premium Header */}
       <header className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -82,18 +83,19 @@ const ElectricalTools = () => {
         ))}
       </div>
 
-      {/* Empty State */}
-      {filteredCategories.length === 0 && (
-        <div className="text-center py-16">
-          <div className="p-4 rounded-full bg-white/5 w-fit mx-auto mb-4">
-            <Search className="h-10 w-10 text-muted-foreground" />
+        {/* Empty State */}
+        {filteredCategories.length === 0 && (
+          <div className="text-center py-16">
+            <div className="p-4 rounded-full bg-white/5 w-fit mx-auto mb-4">
+              <Search className="h-10 w-10 text-muted-foreground" />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-2">No categories found</h3>
+            <p className="text-muted-foreground max-w-md mx-auto">
+              Try adjusting your search terms or browse all available tool categories.
+            </p>
           </div>
-          <h3 className="text-xl font-semibold text-white mb-2">No categories found</h3>
-          <p className="text-muted-foreground max-w-md mx-auto">
-            Try adjusting your search terms or browse all available tool categories.
-          </p>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

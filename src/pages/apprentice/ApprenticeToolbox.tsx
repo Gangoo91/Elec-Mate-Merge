@@ -1,5 +1,4 @@
 
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -23,7 +22,7 @@ import {
   Target,
   Lightbulb
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import ActiveToolContent from "@/components/apprentice/toolbox/ActiveToolContent";
 
 interface ToolboxItem {
@@ -39,7 +38,16 @@ interface ToolboxItem {
 }
 
 const ApprenticeToolbox = () => {
-  const [activeTool, setActiveTool] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTool = searchParams.get("tool") || null;
+  const setActiveTool = (tool: string | null) => {
+    if (tool) {
+      setSearchParams({ tool }, { replace: false });
+    } else {
+      searchParams.delete("tool");
+      setSearchParams(searchParams, { replace: false });
+    }
+  };
 
   const toolboxItems: ToolboxItem[] = [
     {

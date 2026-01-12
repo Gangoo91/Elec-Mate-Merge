@@ -1,9 +1,10 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
-import { Plus, BarChart3, Zap, Camera, LayoutGrid, Table2, Shield, X, PenTool, FileText, Wrench, ClipboardList, ClipboardCheck, Wand2, Sparkles, MoreVertical, Layout, Table, Pen } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import SectionHeader from '@/components/ui/section-header';
+import { Plus, BarChart3, Zap, Camera, LayoutGrid, Table2, Shield, X, PenTool, FileText, Wrench, ClipboardList, ClipboardCheck, Wand2, Sparkles, MoreVertical, Layout, Table, Pen, Mic } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 import EnhancedTestResultDesktopTable from '../EnhancedTestResultDesktopTable';
 import MobileOptimizedTestTable from '../mobile/MobileOptimizedTestTable';
@@ -53,7 +54,39 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   const [showRcdPresetsDialog, setShowRcdPresetsDialog] = useState(false);
   const [showBulkInfillDialog, setShowBulkInfillDialog] = useState(false);
   const [lastDeleted, setLastDeleted] = useState<{ circuit: TestResult; index: number } | null>(null);
+  const [openSections, setOpenSections] = useState({
+    instruments: true,
+    distributionBoard: true,
+    testMethod: true
+  });
   const orientation = useOrientation();
+
+  const toggleSection = (section: keyof typeof openSections) => {
+    setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
+  };
+
+  // Completion percentage for each section
+  const getCompletionPercentage = (section: string) => {
+    switch (section) {
+      case 'instruments': {
+        const fields = ['testInstrumentMake', 'testInstrumentModel', 'testInstrumentSerial'];
+        const filled = fields.filter(f => formData[f]).length;
+        return Math.round((filled / fields.length) * 100);
+      }
+      case 'distributionBoard': {
+        const fields = ['dbReference', 'zdb', 'ipf'];
+        const filled = fields.filter(f => formData[f]).length;
+        return Math.round((filled / fields.length) * 100);
+      }
+      case 'testMethod': {
+        const fields = ['testMethod'];
+        const filled = fields.filter(f => formData[f]).length;
+        return Math.round((filled / fields.length) * 100);
+      }
+      default:
+        return 0;
+    }
+  };
   
   // Load mobile view preference
   useEffect(() => {
@@ -846,8 +879,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               {/* Smart Tools */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     size="sm"
                     className="h-9 w-9 p-0 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
                     title="Smart Tools"
@@ -860,8 +893,27 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     <Zap className="mr-2 h-4 w-4" />
                     Smart Auto-Fill
                   </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setShowRcdPresetsDialog(true)}>
+                    <Shield className="mr-2 h-4 w-4" />
+                    Quick RCD Presets
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setShowBulkInfillDialog(true)}>
+                    <ClipboardCheck className="mr-2 h-4 w-4" />
+                    Bulk Infill
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+
+              {/* Voice Button - Placeholder for Eleven Labs */}
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9 w-9 p-0 shrink-0 hover:bg-primary/10 hover:border-primary/30 transition-all duration-200"
+                title="Voice Assistant (Coming Soon)"
+                onClick={() => toast.info('Voice assistant coming soon', { description: 'Eleven Labs integration in progress', duration: 2000 })}
+              >
+                <Mic className="h-4 w-4 text-primary" />
+              </Button>
 
               {/* More Options */}
               <DropdownMenu>
@@ -876,7 +928,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56 bg-background z-50">
-                  <DropdownMenuItem 
+                  <DropdownMenuItem
                     onClick={() => {
                       const newView = mobileViewType === 'table' ? 'card' : 'table';
                       setMobileViewType(newView);
@@ -888,6 +940,13 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     ) : (
                       <><Table className="mr-2 h-4 w-4" /> Switch to Table View</>
                     )}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={removeAllTestResults}
+                    className="text-destructive"
+                  >
+                    <X className="mr-2 h-4 w-4" />
+                    Clear All Circuits
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -918,54 +977,75 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           {/* Information Sections - Mobile Only - BELOW TABLE */}
           <div className="w-full space-y-4 p-4 bg-background/50">
             {/* Test Instrument Information */}
-            <Card>
-              <CardHeader className="p-4 pb-3">
-                <CardTitle className="text-base font-semibold flex items-center gap-2">
-                  <Wrench className="h-5 w-5" />
-                  Test Instrument Information
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-4 pt-3 bg-card/30">
-                <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
-              </CardContent>
-            </Card>
+            <div className="eicr-section-card">
+              <Collapsible open={openSections.instruments} onOpenChange={() => toggleSection('instruments')}>
+                <CollapsibleTrigger className="w-full">
+                  <SectionHeader
+                    title="Test Instrument Information"
+                    icon={Wrench}
+                    isOpen={openSections.instruments}
+                    color="blue-500"
+                    completionPercentage={getCompletionPercentage('instruments')}
+                  />
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
+                    <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
+            </div>
 
             {/* Distribution Board Verification */}
-            <Card>
-              <CardHeader className="p-4 pb-3">
-                <CardTitle className="text-base font-semibold flex items-center gap-2">
-                  <Zap className="h-5 w-5" />
-                  Distribution Board Verification
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-4 pt-3 bg-card/30">
-                <DistributionBoardVerificationSection
-                  data={{
-                    dbReference: formData.dbReference || '',
-                    zdb: formData.zdb || '',
-                    ipf: formData.ipf || '',
-                    confirmedCorrectPolarity: formData.confirmedCorrectPolarity || false,
-                    confirmedPhaseSequence: formData.confirmedPhaseSequence || false,
-                    spdOperationalStatus: formData.spdOperationalStatus || false,
-                    spdNA: formData.spdNA || false,
-                  }}
-                  onUpdate={(field, value) => onUpdate(field, value)}
-                />
-              </CardContent>
-            </Card>
+            <div className="eicr-section-card">
+              <Collapsible open={openSections.distributionBoard} onOpenChange={() => toggleSection('distributionBoard')}>
+                <CollapsibleTrigger className="w-full">
+                  <SectionHeader
+                    title="Distribution Board Verification"
+                    icon={Zap}
+                    isOpen={openSections.distributionBoard}
+                    color="amber-500"
+                    completionPercentage={getCompletionPercentage('distributionBoard')}
+                  />
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
+                    <DistributionBoardVerificationSection
+                      data={{
+                        dbReference: formData.dbReference || '',
+                        zdb: formData.zdb || '',
+                        ipf: formData.ipf || '',
+                        confirmedCorrectPolarity: formData.confirmedCorrectPolarity || false,
+                        confirmedPhaseSequence: formData.confirmedPhaseSequence || false,
+                        spdOperationalStatus: formData.spdOperationalStatus || false,
+                        spdNA: formData.spdNA || false,
+                      }}
+                      onUpdate={(field, value) => onUpdate(field, value)}
+                    />
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
+            </div>
 
             {/* Test Method & Notes */}
-            <Card>
-              <CardHeader className="p-4 pb-3">
-                <CardTitle className="text-base font-semibold flex items-center gap-2">
-                  <FileText className="h-5 w-5" />
-                  Test Method & Notes
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-4 pt-3">
-                <TestMethodInfo formData={formData} onUpdate={onUpdate} />
-              </CardContent>
-            </Card>
+            <div className="eicr-section-card">
+              <Collapsible open={openSections.testMethod} onOpenChange={() => toggleSection('testMethod')}>
+                <CollapsibleTrigger className="w-full">
+                  <SectionHeader
+                    title="Test Method & Notes"
+                    icon={FileText}
+                    isOpen={openSections.testMethod}
+                    color="green-500"
+                    completionPercentage={getCompletionPercentage('testMethod')}
+                  />
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
+                    <TestMethodInfo formData={formData} onUpdate={onUpdate} />
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
+            </div>
           </div>
 
 
@@ -1108,27 +1188,77 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
       {/* INFO SECTIONS - Desktop only (mobile has own implementation) */}
       {!useMobileView && (
-        <div className="space-y-8 p-6 lg:p-8 bg-elec-gray rounded-xl border border-primary/30 shadow-lg shadow-black/10">
-          <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
-          
-          <div className="h-px bg-muted/50" />
+        <div className="space-y-4 sm:space-y-6">
+          {/* Test Instrument Information */}
+          <div className="eicr-section-card">
+            <Collapsible open={openSections.instruments} onOpenChange={() => toggleSection('instruments')}>
+              <CollapsibleTrigger className="w-full">
+                <SectionHeader
+                  title="Test Instrument Information"
+                  icon={Wrench}
+                  isOpen={openSections.instruments}
+                  color="blue-500"
+                  completionPercentage={getCompletionPercentage('instruments')}
+                />
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
+                  <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
 
-          <DistributionBoardVerificationSection
-            data={{
-              dbReference: formData.dbReference || '',
-              zdb: formData.zdb || '',
-              ipf: formData.ipf || '',
-              confirmedCorrectPolarity: formData.confirmedCorrectPolarity || false,
-              confirmedPhaseSequence: formData.confirmedPhaseSequence || false,
-              spdOperationalStatus: formData.spdOperationalStatus || false,
-              spdNA: formData.spdNA || false,
-            }}
-            onUpdate={(field, value) => onUpdate(field, value)}
-          />
-          
-          <div className="h-px bg-muted/50" />
+          {/* Distribution Board Verification */}
+          <div className="eicr-section-card">
+            <Collapsible open={openSections.distributionBoard} onOpenChange={() => toggleSection('distributionBoard')}>
+              <CollapsibleTrigger className="w-full">
+                <SectionHeader
+                  title="Distribution Board Verification"
+                  icon={Zap}
+                  isOpen={openSections.distributionBoard}
+                  color="amber-500"
+                  completionPercentage={getCompletionPercentage('distributionBoard')}
+                />
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
+                  <DistributionBoardVerificationSection
+                    data={{
+                      dbReference: formData.dbReference || '',
+                      zdb: formData.zdb || '',
+                      ipf: formData.ipf || '',
+                      confirmedCorrectPolarity: formData.confirmedCorrectPolarity || false,
+                      confirmedPhaseSequence: formData.confirmedPhaseSequence || false,
+                      spdOperationalStatus: formData.spdOperationalStatus || false,
+                      spdNA: formData.spdNA || false,
+                    }}
+                    onUpdate={(field, value) => onUpdate(field, value)}
+                  />
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
 
-          <TestMethodInfo formData={formData} onUpdate={onUpdate} />
+          {/* Test Method & Notes */}
+          <div className="eicr-section-card">
+            <Collapsible open={openSections.testMethod} onOpenChange={() => toggleSection('testMethod')}>
+              <CollapsibleTrigger className="w-full">
+                <SectionHeader
+                  title="Test Method & Notes"
+                  icon={FileText}
+                  isOpen={openSections.testMethod}
+                  color="green-500"
+                  completionPercentage={getCompletionPercentage('testMethod')}
+                />
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
+                  <TestMethodInfo formData={formData} onUpdate={onUpdate} />
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
         </div>
       )}
 

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
@@ -32,7 +32,16 @@ import GratitudeJournal from "@/components/mental-health/GratitudeJournal";
 import DailyAffirmation from "@/components/mental-health/DailyAffirmation";
 
 const ElectricianMentalHealth = () => {
-  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeSection = searchParams.get("section") || null;
+  const setActiveSection = (section: string | null) => {
+    if (section) {
+      setSearchParams({ section }, { replace: false });
+    } else {
+      searchParams.delete("section");
+      setSearchParams(searchParams, { replace: false });
+    }
+  };
 
   const quickActions = [
     {

@@ -346,7 +346,7 @@ const InvoicesPage = () => {
 
   return (
     <VoiceFormProvider>
-      <div className="min-h-screen bg-background pb-safe pt-safe">
+      <div className="min-h-screen bg-background pb-safe pt-safe animate-fade-in">
         <Helmet>
           <title>Invoices | Elec-Mate</title>
           <meta name="description" content="Manage all your electrical invoices. Track drafts, sent invoices, payments and overdue invoices." />

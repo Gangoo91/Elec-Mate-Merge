@@ -1,6 +1,8 @@
 import { supabase } from "@/integrations/supabase/client";
 
 // Types matching the database schema
+export type RateType = "hourly" | "daily" | "weekly" | "yearly";
+
 export interface ElecIdProfile {
   id: string;
   employee_id: string;
@@ -15,6 +17,9 @@ export interface ElecIdProfile {
   is_verified: boolean;
   verified_at: string | null;
   verified_by: string | null;
+  // Rate settings
+  rate_type: RateType | null;
+  rate_amount: number | null;
   created_at: string;
   updated_at: string;
   // Joined data

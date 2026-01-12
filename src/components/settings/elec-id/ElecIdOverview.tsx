@@ -177,6 +177,8 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
     isVerified: elecIdProfile?.is_verified || false,
     photoUrl: null as string | null,
     bio: elecIdProfile?.bio || "",
+    rateType: elecIdProfile?.rate_type || "daily",
+    rateAmount: elecIdProfile?.rate_amount || null,
   };
 
   const [editFormData, setEditFormData] = useState({
@@ -184,6 +186,8 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
     ecsCardType: elecIdData.ecsCardType,
     ecsCardExpiry: elecIdData.ecsCardExpiry,
     bio: elecIdData.bio,
+    rateType: elecIdData.rateType,
+    rateAmount: elecIdData.rateAmount?.toString() || "",
   });
 
   // Real stats from backend
@@ -276,6 +280,8 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
       ecsCardType: elecIdData.ecsCardType,
       ecsCardExpiry: elecIdData.ecsCardExpiry,
       bio: elecIdData.bio,
+      rateType: elecIdData.rateType,
+      rateAmount: elecIdData.rateAmount?.toString() || "",
     });
     setIsEditDialogOpen(true);
   };
@@ -287,6 +293,8 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         ecs_card_type: editFormData.ecsCardType,
         ecs_expiry_date: editFormData.ecsCardExpiry,
         bio: editFormData.bio,
+        rate_type: editFormData.rateType as "hourly" | "daily" | "weekly" | "yearly",
+        rate_amount: editFormData.rateAmount ? parseFloat(editFormData.rateAmount) : null,
       });
       setIsEditDialogOpen(false);
       setIsEditSheetOpen(false);
@@ -389,6 +397,46 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           }
           className="h-12 bg-white/5 border-white/10 rounded-xl"
         />
+      </div>
+
+      {/* Rate Settings */}
+      <div className="space-y-2">
+        <Label className="text-foreground text-sm">
+          Your Rate
+          <span className="text-muted-foreground ml-2">(shown in Talent Pool)</span>
+        </Label>
+        <div className="flex gap-2">
+          <div className="relative flex-1">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">£</span>
+            <Input
+              type="number"
+              inputMode="decimal"
+              min="0"
+              value={editFormData.rateAmount}
+              onChange={(e) =>
+                setEditFormData({ ...editFormData, rateAmount: e.target.value })
+              }
+              placeholder="Amount"
+              className="h-12 bg-white/5 border-white/10 rounded-xl pl-8"
+            />
+          </div>
+          <Select
+            value={editFormData.rateType}
+            onValueChange={(value) =>
+              setEditFormData({ ...editFormData, rateType: value })
+            }
+          >
+            <SelectTrigger className="w-28 h-12 bg-white/5 border-white/10 rounded-xl">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-elec-gray border-white/20">
+              <SelectItem value="hourly">/hour</SelectItem>
+              <SelectItem value="daily">/day</SelectItem>
+              <SelectItem value="weekly">/week</SelectItem>
+              <SelectItem value="yearly">/year</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* Bio */}

@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 export type VerificationTier = "basic" | "verified" | "premium";
 export type ProfileVisibility = "public" | "employers_only" | "private";
+export type RateType = "hourly" | "daily" | "weekly" | "yearly";
 
 export interface ElecIdProfile {
   id: string;
@@ -28,6 +29,9 @@ export interface ElecIdProfile {
   tier_updated_at: string | null;
   available_for_hire: boolean;
   profile_visibility: ProfileVisibility;
+  // Rate settings
+  rate_type: RateType | null;
+  rate_amount: number | null;
   created_at: string;
   updated_at: string;
 }
