@@ -293,7 +293,7 @@ const InvoiceViewPage = () => {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="min-h-screen space-y-6 animate-fade-in pt-safe pb-safe">
       <Helmet>
         <title>Invoice {invoice.invoice_number} | ElecMate</title>
         <meta name="description" content={`View invoice ${invoice.invoice_number} for ${invoice.client?.name}`} />

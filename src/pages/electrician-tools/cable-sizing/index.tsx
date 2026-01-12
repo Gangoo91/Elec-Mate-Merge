@@ -54,23 +54,24 @@ const CableSizingCalculator = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
-            <Cable className="h-8 w-8 text-elec-yellow" />
-            Cable Sizing Calculator
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            Calculate appropriate cable sizes for electrical installations
-          </p>
+    <div className="min-h-screen bg-background pt-safe pb-safe">
+      <div className="max-w-4xl mx-auto px-4 py-6 space-y-6 animate-fade-in">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight flex items-center gap-3">
+              <Cable className="h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow" />
+              Cable Sizing Calculator
+            </h1>
+            <p className="text-muted-foreground mt-2 text-sm sm:text-base">
+              Calculate appropriate cable sizes for electrical installations
+            </p>
+          </div>
+          <Link to="/electrician-tools/calculations">
+            <Button variant="outline" className="flex items-center gap-2 h-11 touch-manipulation active:scale-[0.98]">
+              <ArrowLeft className="h-4 w-4" /> <span className="hidden sm:inline">Back to Calculations</span><span className="sm:hidden">Back</span>
+            </Button>
+          </Link>
         </div>
-        <Link to="/electrician-tools/calculations">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Calculations
-          </Button>
-        </Link>
-      </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Input Form */}
@@ -150,7 +151,7 @@ const CableSizingCalculator = () => {
 
             <Button
               onClick={calculateCableSize}
-              className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
               disabled={!current || !length}
             >
               Calculate Cable Size
@@ -252,6 +253,7 @@ const CableSizingCalculator = () => {
             </ul>
           </CardContent>
         </Card>
+      </div>
       </div>
     </div>
   );

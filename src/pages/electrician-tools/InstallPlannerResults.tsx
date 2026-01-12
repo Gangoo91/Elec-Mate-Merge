@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate, Link, useParams } from "react-router-dom";
+import { useLocation, useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Download, RotateCcw, Loader } from "lucide-react";
 import { ResultsPage } from "@/components/install-planner/ResultsPage";
@@ -29,8 +29,10 @@ const InstallPlannerResults = () => {
   const navigate = useNavigate();
   const { conversationId } = useParams();
   const { companyProfile } = useCompanyProfile();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "results";
+  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
-  const [activeTab, setActiveTab] = useState("results");
   const [isLoading, setIsLoading] = useState(false);
   const [agentResults, setAgentResults] = useState<any[]>([]);
 

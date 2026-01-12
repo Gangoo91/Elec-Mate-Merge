@@ -167,7 +167,7 @@ const QuoteViewPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-background/95">
+    <div className="min-h-screen bg-gradient-to-br from-background to-background/95 pt-safe pb-safe">
       <Helmet>
         <title>View Quote {quote.quoteNumber} | Professional Electrical Quote</title>
         <meta

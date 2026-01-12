@@ -123,7 +123,7 @@ const LivePricingHub = () => {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-900 flex flex-col">
+    <div className="min-h-screen bg-neutral-900 flex flex-col pt-safe pb-safe">
       {/* Offline Indicator */}
       <OfflineIndicator />
 

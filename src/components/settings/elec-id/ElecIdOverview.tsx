@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -54,10 +54,16 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import { useElecIdProfile } from "@/hooks/useElecIdProfile";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { getExpiryStatus, calculateProfileCompleteness } from "@/utils/elecIdGenerator";
+import { getExpiryStatus, calculateProfileCompleteness, isExpiringWithin } from "@/utils/elecIdGenerator";
 import { getECSCardType, UK_JOB_TITLES, ECS_CARD_TYPES } from "@/data/uk-electrician-constants";
 import { TrainingRequestsCard } from "./TrainingRequestsCard";
 import { toast } from "@/hooks/use-toast";
+import {
+  getQualificationsByProfileId,
+  getSkillsByProfileId,
+  getWorkHistoryByProfileId,
+  getTrainingByProfileId,
+} from "@/services/elecIdService";
 
 interface ElecIdOverviewProps {
   onNavigate?: (tabId: string) => void;
@@ -180,12 +186,68 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
     bio: elecIdData.bio,
   });
 
-  const profileStats = {
-    qualificationsCount: 5,
-    experienceCount: 3,
-    skillsCount: 12,
-    expiringItems: 2,
-  };
+  // Real stats from backend
+  const [profileStats, setProfileStats] = useState({
+    qualificationsCount: 0,
+    experienceCount: 0,
+    skillsCount: 0,
+    expiringItems: 0,
+  });
+  const [statsLoading, setStatsLoading] = useState(true);
+
+  // Fetch real stats from backend
+  const loadProfileStats = useCallback(async () => {
+    if (!elecIdProfile?.id) {
+      setStatsLoading(false);
+      return;
+    }
+
+    try {
+      const [qualifications, skills, workHistory, training] = await Promise.all([
+        getQualificationsByProfileId(elecIdProfile.id),
+        getSkillsByProfileId(elecIdProfile.id),
+        getWorkHistoryByProfileId(elecIdProfile.id),
+        getTrainingByProfileId(elecIdProfile.id),
+      ]);
+
+      // Count items expiring within 90 days
+      let expiringCount = 0;
+
+      // Check ECS card expiry
+      if (elecIdProfile.ecs_expiry_date && isExpiringWithin(elecIdProfile.ecs_expiry_date, 90)) {
+        expiringCount++;
+      }
+
+      // Check qualifications with expiry dates
+      qualifications.forEach(q => {
+        if (q.expiry_date && isExpiringWithin(q.expiry_date, 90)) {
+          expiringCount++;
+        }
+      });
+
+      // Check training with expiry dates
+      training.forEach(t => {
+        if (t.expiry_date && isExpiringWithin(t.expiry_date, 90)) {
+          expiringCount++;
+        }
+      });
+
+      setProfileStats({
+        qualificationsCount: qualifications.length,
+        experienceCount: workHistory.length,
+        skillsCount: skills.length,
+        expiringItems: expiringCount,
+      });
+    } catch (err) {
+      console.error("Error loading profile stats:", err);
+    } finally {
+      setStatsLoading(false);
+    }
+  }, [elecIdProfile?.id, elecIdProfile?.ecs_expiry_date]);
+
+  useEffect(() => {
+    loadProfileStats();
+  }, [loadProfileStats]);
 
   const completeness = calculateProfileCompleteness({
     jobTitle: elecIdData.jobTitleLabel,
@@ -869,39 +931,52 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         transition={{ delay: 0.25 }}
         className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4"
       >
-        {[
-          { id: "qualifications", icon: GraduationCap, count: profileStats.qualificationsCount, label: "Qualifications", shortLabel: "Quals", color: "from-purple-500/20 to-pink-500/20", iconColor: "text-purple-400", borderColor: "hover:border-purple-500/50 active:border-purple-500/50" },
-          { id: "experience", icon: Briefcase, count: profileStats.experienceCount, label: "Work History", shortLabel: "Work", color: "from-blue-500/20 to-cyan-500/20", iconColor: "text-blue-400", borderColor: "hover:border-blue-500/50 active:border-blue-500/50" },
-          { id: "skills", icon: Wrench, count: profileStats.skillsCount, label: "Skills", shortLabel: "Skills", color: "from-emerald-500/20 to-teal-500/20", iconColor: "text-emerald-400", borderColor: "hover:border-emerald-500/50 active:border-emerald-500/50" },
-          { id: "compliance", icon: Shield, count: profileStats.expiringItems, label: "Expiring Soon", shortLabel: "Expiry", color: "from-orange-500/20 to-red-500/20", iconColor: "text-orange-400", borderColor: "hover:border-orange-500/50 active:border-orange-500/50" },
-        ].map((stat, index) => (
-          <motion.button
-            key={stat.id}
-            whileTap={{ scale: 0.97 }}
-            onClick={() => handleStatClick(stat.id)}
-            className={cn(
-              "relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 text-left transition-all touch-manipulation min-h-[120px]",
-              stat.borderColor
-            )}
-          >
-            {/* Gradient background */}
-            <div className={cn("absolute inset-0 bg-gradient-to-br opacity-50", stat.color)} />
-
-            <div className="relative">
-              <div className={cn("w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-2 sm:mb-3", stat.color.replace("from-", "bg-gradient-to-br from-").replace("/20", "/30"))}>
-                <stat.icon className={cn("h-5 w-5 sm:h-6 sm:w-6", stat.iconColor)} />
+        {statsLoading ? (
+          // Loading skeletons
+          <>
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 min-h-[120px]">
+                <Skeleton className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl mb-2 sm:mb-3 bg-white/10" />
+                <Skeleton className="h-8 w-12 mb-1 bg-white/10" />
+                <Skeleton className="h-3 w-16 bg-white/10" />
               </div>
-              <p className="text-2xl sm:text-3xl font-bold text-foreground">{stat.count}</p>
-              <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 sm:hidden">{stat.shortLabel}</p>
-              <p className="text-xs text-muted-foreground mt-0.5 hidden sm:block">{stat.label}</p>
-            </div>
+            ))}
+          </>
+        ) : (
+          [
+            { id: "qualifications", icon: GraduationCap, count: profileStats.qualificationsCount, label: "Qualifications", shortLabel: "Quals", color: "from-purple-500/20 to-pink-500/20", iconColor: "text-purple-400", borderColor: "hover:border-purple-500/50 active:border-purple-500/50" },
+            { id: "experience", icon: Briefcase, count: profileStats.experienceCount, label: "Work History", shortLabel: "Work", color: "from-blue-500/20 to-cyan-500/20", iconColor: "text-blue-400", borderColor: "hover:border-blue-500/50 active:border-blue-500/50" },
+            { id: "skills", icon: Wrench, count: profileStats.skillsCount, label: "Skills", shortLabel: "Skills", color: "from-emerald-500/20 to-teal-500/20", iconColor: "text-emerald-400", borderColor: "hover:border-emerald-500/50 active:border-emerald-500/50" },
+            { id: "compliance", icon: Shield, count: profileStats.expiringItems, label: "Expiring Soon", shortLabel: "Expiry", color: "from-orange-500/20 to-red-500/20", iconColor: "text-orange-400", borderColor: "hover:border-orange-500/50 active:border-orange-500/50" },
+          ].map((stat, index) => (
+            <motion.button
+              key={stat.id}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => handleStatClick(stat.id)}
+              className={cn(
+                "relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 text-left transition-all touch-manipulation min-h-[120px]",
+                stat.borderColor
+              )}
+            >
+              {/* Gradient background */}
+              <div className={cn("absolute inset-0 bg-gradient-to-br opacity-50", stat.color)} />
 
-            {/* Chevron indicator */}
-            <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
-              <ChevronRight className="h-4 w-4 text-muted-foreground/50" />
-            </div>
-          </motion.button>
-        ))}
+              <div className="relative">
+                <div className={cn("w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-2 sm:mb-3", stat.color.replace("from-", "bg-gradient-to-br from-").replace("/20", "/30"))}>
+                  <stat.icon className={cn("h-5 w-5 sm:h-6 sm:w-6", stat.iconColor)} />
+                </div>
+                <p className="text-2xl sm:text-3xl font-bold text-foreground">{stat.count}</p>
+                <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 sm:hidden">{stat.shortLabel}</p>
+                <p className="text-xs text-muted-foreground mt-0.5 hidden sm:block">{stat.label}</p>
+              </div>
+
+              {/* Chevron indicator */}
+              <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
+                <ChevronRight className="h-4 w-4 text-muted-foreground/50" />
+              </div>
+            </motion.button>
+          ))
+        )}
       </motion.div>
 
       {/* Training Requests from Employers */}

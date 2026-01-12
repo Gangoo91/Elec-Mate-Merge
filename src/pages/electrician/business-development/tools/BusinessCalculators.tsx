@@ -107,14 +107,14 @@ const BusinessCalculators = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark">
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark pt-safe">
       <Helmet>
         <title>Electrician Business Calculators UK | Pricing, ROI, Tax</title>
         <meta name="description" content="UK electrician calculators: hourly rate, pricing, ROI, cash flow, capacity and tax. Mobile-first, fast and accurate." />
         <link rel="canonical" href="/electrician/business-development/tools" />
       </Helmet>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pb-safe">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pt-safe pb-safe">
         {/* Header */}
         <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -145,7 +145,7 @@ const BusinessCalculators = () => {
                 to={`/electrician/business-development/tools/${calculator.id}`}
                 className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-xl touch-manipulation"
               >
-                <Card className="relative overflow-hidden border-white/10 bg-white/5 hover:bg-white/10 hover:border-elec-yellow/40 active:scale-[0.97] h-full transition-all duration-200">
+                <Card className="relative overflow-hidden border-white/10 bg-white/5 hover:bg-white/10 hover:border-elec-yellow/40 active:scale-[0.98] h-full transition-all duration-200">
                   <CardHeader className="flex flex-col items-center justify-center text-center p-4 sm:p-5 space-y-2 sm:space-y-3">
                     <div className="p-2 sm:p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
                       {calculator.icon}

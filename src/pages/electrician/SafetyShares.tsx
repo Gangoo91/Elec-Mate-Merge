@@ -48,7 +48,7 @@ const SafetyShares = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-elec-dark text-white">
+    <div className="min-h-screen bg-elec-dark text-white pt-safe pb-safe">
       <Helmet>
         <title>Safety Shares - Elec-Mate</title>
         <meta name="description" content="Share safety knowledge, learn from experience, and stay updated with the latest electrical industry safety information" />

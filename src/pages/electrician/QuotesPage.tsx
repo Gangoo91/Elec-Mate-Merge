@@ -69,7 +69,7 @@ const QuotesPage = () => {
   const canonical = `${window.location.origin}/electrician/quotes`;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pt-safe pb-safe">
       <Helmet>
         <title>All Quotes | Professional Quote Management for Electricians</title>
         <meta
@@ -84,14 +84,14 @@ const QuotesPage = () => {
         <div className="px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link to="/electrician">
-              <Button variant="ghost" size="icon" className="h-9 w-9">
+              <Button variant="ghost" size="icon" className="h-11 w-11 touch-manipulation active:scale-[0.98]">
                 <ArrowLeft className="h-5 w-5" />
               </Button>
             </Link>
             <h1 className="text-xl font-bold">Quotes</h1>
           </div>
           <Link to="/electrician/quote-builder/create">
-            <Button size="sm" className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-9 gap-1.5">
+            <Button size="sm" className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-11 gap-1.5 touch-manipulation active:scale-[0.98]">
               <Plus className="h-4 w-4" />
               New
             </Button>

@@ -73,7 +73,7 @@ const InvoiceBuilderCreate = () => {
 
   return (
     <VoiceFormProvider>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background pt-safe pb-safe">
         <Helmet>
           <title>Create Invoice | Elec-Mate</title>
           <meta

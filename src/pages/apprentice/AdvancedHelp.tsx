@@ -18,9 +18,9 @@ import HelpBotTab from "@/components/apprentice/ojt/enhanced/HelpBotTab";
 
 const AdvancedHelp = () => {
   return (
-    <div className="max-w-6xl mx-auto space-y-3 sm:space-y-6 animate-fade-in" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
+    <div className="max-w-6xl mx-auto space-y-2 sm:space-y-6 animate-fade-in" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
       {/* Compact Header - Mobile Optimized */}
-      <div className="relative overflow-hidden rounded-xl border border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 via-white/5 to-elec-yellow/5 p-3 sm:p-6">
+      <div className="relative overflow-hidden rounded-xl border border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 via-white/5 to-elec-yellow/5 p-2 sm:p-6">
         <div className="absolute top-0 right-0 w-32 sm:w-64 h-32 sm:h-64 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
         <div className="relative z-10">
@@ -79,28 +79,28 @@ const AdvancedHelp = () => {
 
       {/* Main Tabs Section */}
       <Tabs defaultValue="helpbot" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 h-11 bg-white/5 border border-white/10 rounded-xl">
+        <TabsList className="grid w-full grid-cols-2 h-9 sm:h-11 bg-white/5 border border-white/10 rounded-xl">
           <TabsTrigger
             value="helpbot"
-            className="flex items-center gap-2 data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow h-9 rounded-lg touch-manipulation"
+            className="flex items-center gap-1.5 sm:gap-2 data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow h-7 sm:h-9 rounded-lg touch-manipulation"
           >
-            <Bot className="h-4 w-4" />
-            <span className="text-sm">Ask Dave</span>
+            <Bot className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span className="text-xs sm:text-sm">Ask Dave</span>
           </TabsTrigger>
           <TabsTrigger
             value="tips"
-            className="flex items-center gap-2 data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow h-9 rounded-lg touch-manipulation"
+            className="flex items-center gap-1.5 sm:gap-2 data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow h-7 sm:h-9 rounded-lg touch-manipulation"
           >
-            <Lightbulb className="h-4 w-4" />
-            <span className="text-sm">Daily Tips</span>
+            <Lightbulb className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span className="text-xs sm:text-sm">Daily Tips</span>
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="helpbot" className="mt-3 sm:mt-4">
+        <TabsContent value="helpbot" className="mt-1 sm:mt-4">
           <HelpBotTab />
         </TabsContent>
 
-        <TabsContent value="tips" className="mt-3 sm:mt-4">
+        <TabsContent value="tips" className="mt-1 sm:mt-4">
           <DailyAITipsTab />
         </TabsContent>
       </Tabs>

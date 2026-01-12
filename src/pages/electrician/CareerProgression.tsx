@@ -395,7 +395,7 @@ const CareerProgression = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95">
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95 pt-safe pb-safe">
       <Helmet>
         <title>Electrician Career Progression UK | JIB Timeline & CPD</title>
         <meta name="description" content="Explore UK electrician career progression: JIB grades, timelines, prerequisites, day rates, CPD, and pathways. BS 7671 18th Edition compliant." />
