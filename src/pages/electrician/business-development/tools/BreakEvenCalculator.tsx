@@ -622,6 +622,9 @@ const BreakEvenCalculator: React.FC = () => {
             </CollapsibleContent>
           </div>
         </Collapsible>
+        </div>
+      </div>
+      </div>
       </div>
     </div>
   );
