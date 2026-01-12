@@ -3887,6 +3887,104 @@ export const voiceToolsRegistry: VoiceTool[] = [
     waitForResponse: true,
     disableInterruptions: false,
     executionMode: 'wait'
+  },
+
+  // ============================================
+  // CERTIFICATE TESTING - CIRCUIT MANAGEMENT (9 tools)
+  // ============================================
+  {
+    name: 'add_circuit',
+    description: 'Add a new circuit to the schedule of tests. Use when recording test results for a new circuit.',
+    category: 'Certificate Testing',
+    parameters: [
+      { name: 'type', type: 'string', required: false, description: 'Circuit type (e.g., ring, radial, lighting)' },
+      { name: 'rating', type: 'string', required: false, description: 'Protective device rating (e.g., 32A, 20A, 6A)' }
+    ],
+    waitForResponse: true,
+    disableInterruptions: false,
+    executionMode: 'wait'
+  },
+  {
+    name: 'next_circuit',
+    description: 'Move to the next circuit in the schedule of tests.',
+    category: 'Certificate Testing',
+    parameters: [],
+    waitForResponse: false,
+    disableInterruptions: false,
+    executionMode: 'immediate'
+  },
+  {
+    name: 'previous_circuit',
+    description: 'Move to the previous circuit in the schedule of tests.',
+    category: 'Certificate Testing',
+    parameters: [],
+    waitForResponse: false,
+    disableInterruptions: false,
+    executionMode: 'immediate'
+  },
+  {
+    name: 'select_circuit',
+    description: 'Select a specific circuit by number.',
+    category: 'Certificate Testing',
+    parameters: [
+      { name: 'number', type: 'number', required: true, description: 'Circuit number to select' }
+    ],
+    waitForResponse: false,
+    disableInterruptions: false,
+    executionMode: 'immediate'
+  },
+  {
+    name: 'remove_circuit',
+    description: 'Remove the currently selected circuit from the schedule.',
+    category: 'Certificate Testing',
+    parameters: [],
+    waitForResponse: true,
+    disableInterruptions: false,
+    executionMode: 'wait'
+  },
+  {
+    name: 'set_polarity_ok',
+    description: 'Mark polarity as correct/OK for the current circuit.',
+    category: 'Certificate Testing',
+    parameters: [],
+    waitForResponse: false,
+    disableInterruptions: false,
+    executionMode: 'immediate'
+  },
+  {
+    name: 'set_test_result',
+    description: 'Set a specific test result value for the current circuit.',
+    category: 'Certificate Testing',
+    parameters: [
+      { name: 'field', type: 'string', required: true, description: 'Test field (zs, r1r2, ir, rcd_time, etc.)' },
+      { name: 'value', type: 'string', required: true, description: 'Test result value' }
+    ],
+    waitForResponse: true,
+    disableInterruptions: false,
+    executionMode: 'wait'
+  },
+  {
+    name: 'get_cert_info',
+    description: 'Query saved EICR and EIC certificates. Returns certificate details and status.',
+    category: 'Certificate Testing',
+    parameters: [
+      { name: 'certNumber', type: 'string', required: false, description: 'Certificate number to search for' },
+      { name: 'status', type: 'string', required: false, description: 'Filter by status (draft, completed, etc.)' }
+    ],
+    waitForResponse: true,
+    disableInterruptions: false,
+    executionMode: 'wait'
+  },
+  {
+    name: 'get_recent_certificates',
+    description: 'Get recently created certificates within a specified time period.',
+    category: 'Certificate Testing',
+    parameters: [
+      { name: 'days', type: 'number', required: false, description: 'Number of days to look back (default 30)' }
+    ],
+    waitForResponse: true,
+    disableInterruptions: false,
+    executionMode: 'wait'
   }
 ];
 

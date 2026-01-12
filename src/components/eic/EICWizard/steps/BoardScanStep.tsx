@@ -5,13 +5,15 @@
  * Uses shared BoardScanFlow component
  */
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Camera, Sparkles, Plus, Zap, ArrowRight, CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
+import { DistributionBoard, MAIN_BOARD_ID, createMainBoard } from '@/types/distributionBoard';
 
 interface BoardScanStepProps {
   data: any;
@@ -27,10 +29,24 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
   isMobile,
 }) => {
   const [showScanner, setShowScanner] = useState(false);
+  const [selectedBoardId, setSelectedBoardId] = useState<string>(MAIN_BOARD_ID);
   const haptic = useHaptic();
 
+  // Get boards from wizard data
+  const boards: DistributionBoard[] = useMemo(() => {
+    const wizardBoards = data.distributionBoards || [];
+    if (wizardBoards.length === 0) {
+      return [createMainBoard()];
+    }
+    return wizardBoards;
+  }, [data.distributionBoards]);
+
+  const selectedBoard = boards.find(b => b.id === selectedBoardId) || boards[0];
   const hasCircuits = data.circuits && data.circuits.length > 0;
   const circuitCount = data.circuits?.length || 0;
+  const selectedBoardCircuits = (data.circuits || []).filter(
+    (c: any) => (c.boardId || MAIN_BOARD_ID) === selectedBoardId
+  );
 
   const handleStartScan = () => {
     haptic.medium();
@@ -39,17 +55,27 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
 
   const handleScanComplete = (circuits: any[]) => {
     haptic.success();
-    onChange({ circuits });
+    // Tag all scanned circuits with the selected board ID
+    const taggedCircuits = circuits.map(c => ({
+      ...c,
+      boardId: selectedBoardId,
+    }));
+    // Merge with existing circuits from other boards
+    const otherBoardCircuits = (data.circuits || []).filter(
+      (c: any) => (c.boardId || MAIN_BOARD_ID) !== selectedBoardId
+    );
+    onChange({ circuits: [...otherBoardCircuits, ...taggedCircuits] });
     setShowScanner(false);
   };
 
   const handleAddManually = () => {
     haptic.light();
-    // Add empty circuit
+    // Add empty circuit to selected board
     const newCircuit = {
       id: `circuit-${Date.now()}`,
-      circuitDesignation: `C${circuitCount + 1}`,
-      circuitNumber: `${circuitCount + 1}`,
+      boardId: selectedBoardId,
+      circuitDesignation: `C${selectedBoardCircuits.length + 1}`,
+      circuitNumber: `${selectedBoardCircuits.length + 1}`,
       circuitDescription: '',
       protectiveDeviceType: '',
       protectiveDeviceRating: '',
@@ -119,12 +145,33 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
             </div>
           </div>
 
+          {/* Board Selector - show if multiple boards */}
+          {boards.length > 1 && (
+            <div className="space-y-1">
+              <label className="text-sm text-muted-foreground">
+                Select board to scan:
+              </label>
+              <Select value={selectedBoardId} onValueChange={setSelectedBoardId}>
+                <SelectTrigger className="h-11 touch-manipulation">
+                  <SelectValue placeholder="Select board" />
+                </SelectTrigger>
+                <SelectContent>
+                  {boards.map((board) => (
+                    <SelectItem key={board.id} value={board.id}>
+                      {board.name} {board.location && `(${board.location})`}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
           <Button
             onClick={handleStartScan}
             className="w-full h-14 text-lg gap-3 bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
             <Camera className="h-5 w-5" />
-            Start Scanning
+            Scan {selectedBoard?.name || 'Board'}
             <ArrowRight className="h-5 w-5" />
           </Button>
         </CardContent>

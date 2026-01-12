@@ -1208,7 +1208,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {/* Voice Button - Active when VoiceFormContext is available */}
+              {/* Voice Button - Activates Voice Assistant FAB */}
               <Button
                 variant="outline"
                 size="sm"
@@ -1219,14 +1219,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
                 }`}
                 title={voiceForm ? `Voice Assistant - Circuit ${selectedCircuitIndex + 1} selected` : 'Voice Assistant'}
                 onClick={() => {
-                  if (voiceForm) {
-                    toast.success('Voice ready for Schedule of Tests', {
-                      description: `Say "add circuit" or fill fields like "set zs to 0.45"`,
-                      duration: 3000
-                    });
-                  } else {
-                    toast.info('Voice assistant available when using the Electrician Voice FAB');
-                  }
+                  // Dispatch event to activate the voice FAB
+                  window.dispatchEvent(new CustomEvent('activate-voice-assistant'));
+                  toast.success('Voice assistant activated', {
+                    description: 'Say "add circuit" or "set zs to 0.45"',
+                    duration: 2000
+                  });
                 }}
               >
                 <Mic className={`h-4 w-4 ${voiceForm?.activeForm?.formId === 'eicr-schedule-of-tests' ? 'text-primary animate-pulse' : 'text-primary'}`} />

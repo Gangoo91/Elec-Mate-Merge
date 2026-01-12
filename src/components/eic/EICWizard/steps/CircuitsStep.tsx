@@ -5,7 +5,7 @@
  * Desktop: Full table view
  */
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -32,9 +32,11 @@ import {
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import { SwipeableCard } from '@/components/ui/SwipeableCard';
+import { DistributionBoard, MAIN_BOARD_ID, createMainBoard } from '@/types/distributionBoard';
 
 interface Circuit {
   id: string;
+  boardId?: string; // Links to distribution board
   circuitDesignation: string;
   circuitNumber: string;
   circuitDescription: string;
@@ -163,8 +165,9 @@ const CircuitEditSheet: React.FC<{
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSave: (circuit: Circuit) => void;
+  boards: DistributionBoard[];
   isMobile?: boolean;
-}> = ({ circuit, open, onOpenChange, onSave, isMobile }) => {
+}> = ({ circuit, open, onOpenChange, onSave, boards, isMobile }) => {
   const [editData, setEditData] = useState<Circuit | null>(null);
 
   React.useEffect(() => {
@@ -201,6 +204,28 @@ const CircuitEditSheet: React.FC<{
         </SheetHeader>
 
         <div className="py-4 space-y-4 overflow-y-auto">
+          {/* Board Selection */}
+          {boards.length > 1 && (
+            <div className="space-y-2">
+              <Label className="text-xs">Distribution Board</Label>
+              <Select
+                value={editData.boardId || MAIN_BOARD_ID}
+                onValueChange={(v) => handleChange('boardId', v)}
+              >
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Select board" />
+                </SelectTrigger>
+                <SelectContent>
+                  {boards.map((board) => (
+                    <SelectItem key={board.id} value={board.id}>
+                      {board.name} {board.location && `(${board.location})`}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
           {/* Circuit Details */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
@@ -357,20 +382,42 @@ const CircuitEditSheet: React.FC<{
 export const CircuitsStep: React.FC<CircuitsStepProps> = ({ data, onChange, isMobile }) => {
   const [editingCircuit, setEditingCircuit] = useState<Circuit | null>(null);
   const [showEditSheet, setShowEditSheet] = useState(false);
+  const [activeBoard, setActiveBoard] = useState<string>(MAIN_BOARD_ID);
   const haptic = useHaptic();
 
   const circuits: Circuit[] = data.circuits || [];
 
-  const handleAddCircuit = useCallback(() => {
+  // Get boards from wizard data, ensure main board exists
+  const boards: DistributionBoard[] = useMemo(() => {
+    const wizardBoards = data.distributionBoards || [];
+    if (wizardBoards.length === 0) {
+      return [createMainBoard()];
+    }
+    return wizardBoards;
+  }, [data.distributionBoards]);
+
+  // Group circuits by board
+  const circuitsByBoard = useMemo(() => {
+    const grouped: Record<string, Circuit[]> = {};
+    boards.forEach(board => {
+      grouped[board.id] = circuits.filter(c => (c.boardId || MAIN_BOARD_ID) === board.id);
+    });
+    return grouped;
+  }, [circuits, boards]);
+
+  const handleAddCircuit = useCallback((boardId?: string) => {
     haptic.medium();
+    const targetBoardId = boardId || activeBoard;
+    const boardCircuits = circuits.filter(c => (c.boardId || MAIN_BOARD_ID) === targetBoardId);
     const newCircuit: Circuit = {
       id: `circuit-${Date.now()}`,
-      circuitDesignation: `C${circuits.length + 1}`,
-      circuitNumber: `${circuits.length + 1}`,
+      boardId: targetBoardId,
+      circuitDesignation: `C${boardCircuits.length + 1}`,
+      circuitNumber: `${boardCircuits.length + 1}`,
       circuitDescription: '',
     };
     onChange({ circuits: [...circuits, newCircuit] });
-  }, [circuits, onChange, haptic]);
+  }, [circuits, onChange, haptic, activeBoard]);
 
   const handleEditCircuit = useCallback((circuit: Circuit) => {
     setEditingCircuit(circuit);
@@ -420,44 +467,77 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({ data, onChange, isMo
         </div>
       )}
 
-      {/* Circuit List */}
-      {circuits.length > 0 ? (
-        <div className="space-y-3">
-          {circuits.map((circuit) => (
-            <CircuitCard
-              key={circuit.id}
-              circuit={circuit}
-              onEdit={() => handleEditCircuit(circuit)}
-              onDelete={() => handleDeleteCircuit(circuit)}
-              isMobile={isMobile}
-            />
+      {/* Board Tabs - only show if multiple boards */}
+      {boards.length > 1 && (
+        <div className="flex rounded-lg bg-muted p-1 gap-1 overflow-x-auto">
+          {boards.map((board) => (
+            <button
+              key={board.id}
+              type="button"
+              onClick={() => setActiveBoard(board.id)}
+              className={cn(
+                'flex-shrink-0 px-3 py-2.5 rounded-md text-sm font-medium transition-all touch-manipulation',
+                'min-h-[44px] whitespace-nowrap',
+                activeBoard === board.id
+                  ? 'bg-elec-yellow text-black shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground'
+              )}
+            >
+              {board.name}
+              <Badge variant="secondary" className="ml-2 text-xs">
+                {circuitsByBoard[board.id]?.length || 0}
+              </Badge>
+            </button>
           ))}
         </div>
-      ) : (
-        <Card className="border-dashed border-2 border-border">
-          <CardContent className="py-12 text-center">
-            <Zap className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <h3 className="font-semibold mb-2">No Circuits Added</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Add circuits to record test results
-            </p>
-            <Button onClick={handleAddCircuit} className="gap-2">
-              <Plus className="h-4 w-4" />
-              Add First Circuit
-            </Button>
-          </CardContent>
-        </Card>
       )}
 
+      {/* Circuit List - filtered by active board */}
+      {(() => {
+        const currentBoardCircuits = boards.length > 1
+          ? (circuitsByBoard[activeBoard] || [])
+          : circuits;
+
+        return currentBoardCircuits.length > 0 ? (
+          <div className="space-y-3">
+            {currentBoardCircuits.map((circuit) => (
+              <CircuitCard
+                key={circuit.id}
+                circuit={circuit}
+                onEdit={() => handleEditCircuit(circuit)}
+                onDelete={() => handleDeleteCircuit(circuit)}
+                isMobile={isMobile}
+              />
+            ))}
+          </div>
+        ) : (
+          <Card className="border-dashed border-2 border-border">
+            <CardContent className="py-12 text-center">
+              <Zap className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+              <h3 className="font-semibold mb-2">No Circuits Added</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                {boards.length > 1
+                  ? `Add circuits to ${boards.find(b => b.id === activeBoard)?.name || 'this board'}`
+                  : 'Add circuits to record test results'}
+              </p>
+              <Button onClick={() => handleAddCircuit(activeBoard)} className="gap-2">
+                <Plus className="h-4 w-4" />
+                Add First Circuit
+              </Button>
+            </CardContent>
+          </Card>
+        );
+      })()}
+
       {/* Add Circuit Button */}
-      {circuits.length > 0 && (
+      {((boards.length > 1 ? (circuitsByBoard[activeBoard] || []) : circuits).length > 0) && (
         <Button
-          onClick={handleAddCircuit}
+          onClick={() => handleAddCircuit(activeBoard)}
           variant="outline"
           className="w-full h-12 gap-2 border-dashed"
         >
           <Plus className="h-4 w-4" />
-          Add Circuit
+          Add Circuit {boards.length > 1 && `to ${boards.find(b => b.id === activeBoard)?.name}`}
         </Button>
       )}
 
@@ -467,6 +547,7 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({ data, onChange, isMo
         open={showEditSheet}
         onOpenChange={setShowEditSheet}
         onSave={handleSaveCircuit}
+        boards={boards}
         isMobile={isMobile}
       />
     </div>

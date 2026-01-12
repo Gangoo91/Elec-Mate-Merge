@@ -524,7 +524,7 @@ RESPONSE REQUIREMENTS:
 
     const userPrompt = getUserPrompt(analysis_settings.mode, analysis_settings.fast_mode || false);
 
-    console.log(`🚀 Calling Direct Gemini API (gemini-3-flash)...`);
+    console.log(`🚀 Calling Direct Gemini API (gemini-3-flash-preview)...`);
 
     // All modes now use 4000 tokens in full mode, so all need extended timeout
     // Timeout must be proportional to maxOutputTokens (2500-4000 tokens)
@@ -556,7 +556,7 @@ RESPONSE REQUIREMENTS:
     const geminiContents = [{ role: 'user', parts }];
 
     const aiResponse = await fetchWithTimeout(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key=${geminiApiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
       {
         method: 'POST',
         headers: {

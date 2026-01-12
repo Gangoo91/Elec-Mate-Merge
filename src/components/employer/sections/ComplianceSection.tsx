@@ -1,59 +1,231 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { FeatureTile } from "@/components/employer/FeatureTile";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SectionHeader } from "@/components/employer/SectionHeader";
+import { QuickStats } from "@/components/employer/QuickStats";
+import {
+  useComplianceDocuments,
+  useComplianceStats,
+  useCreateComplianceDocument,
+  useUpdateSignatures,
+  useDeleteComplianceDocument,
+  type ComplianceDocument,
+  type DocumentType,
+  type DocumentCategory
+} from "@/hooks/useComplianceDocuments";
 import {
   Shield,
   FileCheck,
-  ClipboardCheck,
-  KeyRound,
-  Users,
-  FileText,
   CheckCircle2,
   Clock,
   Search,
-  Download
+  Download,
+  Plus,
+  Loader2,
+  RefreshCw,
+  AlertTriangle,
+  Trash2,
+  FileText
 } from "lucide-react";
 
-const complianceDocuments = [
-  { id: "1", name: "RAMS Acknowledgement Record", category: "Safety", signed: 12, required: 12, status: "Complete" },
-  { id: "2", name: "Briefing Sign-off Sheet", category: "Safety", signed: 5, required: 6, status: "Pending" },
-  { id: "3", name: "Permit to Work - Hot Works", category: "Permits", signed: 1, required: 1, status: "Complete" },
-  { id: "4", name: "Site Induction Record", category: "Induction", signed: 6, required: 6, status: "Complete" },
-  { id: "5", name: "Method Statement Acceptance", category: "Safety", signed: 8, required: 10, status: "Pending" },
-];
+const statusColors: Record<string, string> = {
+  "Current": "bg-green-500/20 text-green-400",
+  "Pending": "bg-yellow-500/20 text-yellow-400",
+  "Expiring": "bg-orange-500/20 text-orange-400",
+  "Expired": "bg-red-500/20 text-red-400",
+  "Draft": "bg-gray-500/20 text-gray-400",
+};
 
-const complianceTemplates = [
-  { id: "1", name: "RAMS Acknowledgement", description: "Worker sign-off for RAMS", icon: FileCheck },
-  { id: "2", name: "Briefing Sign-off", description: "Attendance record sheet", icon: ClipboardCheck },
-  { id: "3", name: "Permit to Work", description: "Work permit template", icon: KeyRound },
-  { id: "4", name: "Site Induction Record", description: "New site induction sign-off", icon: Users },
-  { id: "5", name: "Method Statement Acceptance", description: "MS acknowledgement form", icon: FileText },
-  { id: "6", name: "Client Compliance Checklist", description: "Client-specific requirements", icon: Shield },
-];
+const documentTypes: DocumentType[] = ["RAMS Sign-off", "Permit", "Induction", "Briefing", "Method Statement", "Certificate", "Policy"];
+const categories: DocumentCategory[] = ["Safety", "Permits", "Induction", "Training", "Legal", "Insurance"];
 
 export function ComplianceSection() {
   const [searchQuery, setSearchQuery] = useState("");
-  
-  const completeDocuments = complianceDocuments.filter(d => d.status === "Complete").length;
-  const pendingDocuments = complianceDocuments.filter(d => d.status === "Pending").length;
-  const totalSigned = complianceDocuments.reduce((sum, d) => sum + d.signed, 0);
-  const totalRequired = complianceDocuments.reduce((sum, d) => sum + d.required, 0);
-  const complianceScore = Math.round((totalSigned / totalRequired) * 100);
+  const [showNewDoc, setShowNewDoc] = useState(false);
 
-  const filteredDocuments = complianceDocuments.filter(d =>
-    d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    d.category.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Form state
+  const [title, setTitle] = useState("");
+  const [documentType, setDocumentType] = useState<DocumentType>("RAMS Sign-off");
+  const [category, setCategory] = useState<DocumentCategory>("Safety");
+  const [signaturesRequired, setSignaturesRequired] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
+
+  // Hooks
+  const { data: documents, isLoading, error, refetch } = useComplianceDocuments();
+  const { data: stats } = useComplianceStats();
+  const createDocument = useCreateComplianceDocument();
+  const updateSignatures = useUpdateSignatures();
+  const deleteDocument = useDeleteComplianceDocument();
+
+  // Filter by search
+  const filteredDocuments = documents?.filter(doc =>
+    doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    doc.category?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    doc.document_type?.toLowerCase().includes(searchQuery.toLowerCase())
+  ) || [];
+
+  const handleCreateDocument = async () => {
+    if (!title) return;
+
+    await createDocument.mutateAsync({
+      title,
+      document_type: documentType,
+      category,
+      signatures_required: parseInt(signaturesRequired) || 0,
+      signatures_collected: 0,
+      status: "Pending",
+      expiry_date: expiryDate || undefined,
+    });
+
+    // Reset form
+    setTitle("");
+    setDocumentType("RAMS Sign-off");
+    setCategory("Safety");
+    setSignaturesRequired("");
+    setExpiryDate("");
+    setShowNewDoc(false);
+  };
+
+  const handleAddSignature = async (doc: ComplianceDocument) => {
+    if (doc.signatures_collected < doc.signatures_required) {
+      await updateSignatures.mutateAsync({
+        id: doc.id,
+        signatures_collected: doc.signatures_collected + 1,
+      });
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    await deleteDocument.mutateAsync(id);
+  };
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12 space-y-4">
+        <AlertTriangle className="h-12 w-12 text-destructive" />
+        <p className="text-muted-foreground">Failed to load compliance documents</p>
+        <Button onClick={() => refetch()} variant="outline" className="gap-2">
+          <RefreshCw className="h-4 w-4" />
+          Retry
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <SectionHeader
-        title="Compliance Evidence"
-        description="Sign-offs, permits, and compliance documentation"
-      />
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <SectionHeader
+          title="Compliance Evidence"
+          description="Sign-offs, permits, and compliance documentation"
+        />
+
+        <Sheet open={showNewDoc} onOpenChange={setShowNewDoc}>
+          <SheetTrigger asChild>
+            <Button className="gap-2 h-11 touch-manipulation">
+              <Plus className="h-4 w-4" />
+              Add Document
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+            <div className="flex flex-col h-full bg-background">
+              <SheetHeader className="p-4 border-b border-border">
+                <SheetTitle>Add Compliance Document</SheetTitle>
+              </SheetHeader>
+              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                <div className="space-y-2">
+                  <Label>Document Title *</Label>
+                  <Input
+                    placeholder="e.g. RAMS Acknowledgement Record..."
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="h-11 touch-manipulation"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Document Type</Label>
+                  <Select value={documentType} onValueChange={(v) => setDocumentType(v as DocumentType)}>
+                    <SelectTrigger className="h-11 touch-manipulation">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100]">
+                      {documentTypes.map(type => (
+                        <SelectItem key={type} value={type}>{type}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Category</Label>
+                  <Select value={category} onValueChange={(v) => setCategory(v as DocumentCategory)}>
+                    <SelectTrigger className="h-11 touch-manipulation">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100]">
+                      {categories.map(cat => (
+                        <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Signatures Required</Label>
+                  <Input
+                    type="number"
+                    placeholder="Number of signatures needed..."
+                    value={signaturesRequired}
+                    onChange={(e) => setSignaturesRequired(e.target.value)}
+                    className="h-11 touch-manipulation"
+                    min="0"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Expiry Date (Optional)</Label>
+                  <Input
+                    type="date"
+                    value={expiryDate}
+                    onChange={(e) => setExpiryDate(e.target.value)}
+                    className="h-11 touch-manipulation"
+                  />
+                </div>
+              </div>
+
+              <div className="p-4 border-t border-border bg-background">
+                <div className="flex gap-3">
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowNewDoc(false)}
+                    className="flex-1 h-11 touch-manipulation"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={handleCreateDocument}
+                    disabled={!title || createDocument.isPending}
+                    className="flex-1 h-11 touch-manipulation"
+                  >
+                    {createDocument.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      "Add Document"
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
 
       {/* Search */}
       <div className="relative">
@@ -62,7 +234,7 @@ export function ComplianceSection() {
           placeholder="Search compliance documents..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-9"
+          className="pl-9 h-11 touch-manipulation"
         />
       </div>
 
@@ -71,113 +243,169 @@ export function ComplianceSection() {
         stats={[
           {
             icon: Shield,
-            value: complianceScore,
+            value: isLoading ? "-" : (stats?.complianceScore || 100),
             label: "Compliance",
             color: "green",
             suffix: "%",
           },
           {
             icon: CheckCircle2,
-            value: totalSigned,
+            value: isLoading ? "-" : (stats?.signaturesCollected || 0),
             label: "Signed",
             color: "yellow",
           },
-          ...(pendingDocuments > 0
-            ? [
-                {
-                  icon: Clock,
-                  value: pendingDocuments,
-                  label: "Pending",
-                  color: "orange" as const,
-                  pulse: true,
-                },
-              ]
+          ...(stats?.pending && stats.pending > 0
+            ? [{
+                icon: Clock,
+                value: stats.pending,
+                label: "Pending",
+                color: "orange" as const,
+                pulse: true,
+              }]
+            : []),
+          ...(stats?.expiring && stats.expiring > 0
+            ? [{
+                icon: AlertTriangle,
+                value: stats.expiring,
+                label: "Expiring",
+                color: "orange" as const,
+                pulse: true,
+              }]
             : []),
         ]}
       />
-
-      {/* Quick Actions */}
-      <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-elec-yellow rounded-full"></span>
-          Templates & Forms
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          {complianceTemplates.map((template) => (
-            <FeatureTile
-              key={template.id}
-              icon={template.icon}
-              title={template.name}
-              description={template.description}
-              onClick={() => {}}
-              compact
-            />
-          ))}
-        </div>
-      </div>
 
       {/* Active Documents */}
       <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-base md:text-lg font-semibold text-foreground flex items-center gap-2">
             <span className="w-1 h-5 bg-success rounded-full"></span>
-            Active Documents
+            Compliance Documents
           </h2>
           <button className="text-xs text-elec-yellow hover:underline flex items-center gap-1">
             <Download className="h-3 w-3" />
             Export Pack
           </button>
         </div>
-        <div className="space-y-2">
-          {filteredDocuments.map((doc) => (
-            <Card key={doc.id} className={`hover:bg-muted/50 transition-colors cursor-pointer ${
-              doc.status === "Pending" ? "border-l-4 border-l-warning" : ""
-            }`}>
-              <CardContent className="p-3 md:p-4">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-start gap-3">
-                    <div className={`p-2 rounded-lg ${
-                      doc.status === "Complete" 
-                        ? "bg-success/10" 
-                        : "bg-warning/10"
-                    }`}>
-                      <FileCheck className={`h-4 w-4 ${
-                        doc.status === "Complete" 
-                          ? "text-success" 
-                          : "text-warning"
-                      }`} />
+
+        {isLoading ? (
+          <div className="space-y-3">
+            {[1, 2, 3].map((i) => (
+              <Card key={i} className="bg-elec-gray border-border">
+                <CardContent className="p-4">
+                  <Skeleton className="h-6 w-3/4 mb-2" />
+                  <Skeleton className="h-4 w-1/2 mb-4" />
+                  <Skeleton className="h-2 w-full" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : filteredDocuments.length === 0 ? (
+          <Card className="bg-elec-gray border-border">
+            <CardContent className="p-8 text-center">
+              <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-foreground mb-2">No Documents</h3>
+              <p className="text-muted-foreground mb-4">Add your first compliance document to get started.</p>
+              <Button onClick={() => setShowNewDoc(true)} className="gap-2">
+                <Plus className="h-4 w-4" />
+                Add Document
+              </Button>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="space-y-3">
+            {filteredDocuments.map((doc) => {
+              const isComplete = doc.signatures_required > 0 && doc.signatures_collected >= doc.signatures_required;
+              const progress = doc.signatures_required > 0
+                ? (doc.signatures_collected / doc.signatures_required) * 100
+                : 100;
+
+              return (
+                <Card key={doc.id} className={`hover:bg-muted/50 transition-colors ${
+                  !isComplete && doc.signatures_required > 0 ? "border-l-4 border-l-warning" : ""
+                }`}>
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-3 flex-1">
+                        <div className={`p-2 rounded-lg ${
+                          isComplete ? "bg-success/10" : "bg-warning/10"
+                        }`}>
+                          <FileCheck className={`h-4 w-4 ${
+                            isComplete ? "text-success" : "text-warning"
+                          }`} />
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-medium text-foreground text-sm md:text-base">{doc.title}</p>
+                          <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mt-1">
+                            {doc.category && (
+                              <Badge variant="outline" className="text-xs">
+                                {doc.category}
+                              </Badge>
+                            )}
+                            {doc.document_type && (
+                              <span>{doc.document_type}</span>
+                            )}
+                          </div>
+                          {doc.signatures_required > 0 && (
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {doc.signatures_collected}/{doc.signatures_required} signatures collected
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end gap-2">
+                        <Badge className={statusColors[doc.status] || statusColors["Pending"]}>
+                          {isComplete ? "Complete" : doc.signatures_required > 0
+                            ? `${doc.signatures_required - doc.signatures_collected} pending`
+                            : doc.status}
+                        </Badge>
+                        <div className="flex items-center gap-1">
+                          {!isComplete && doc.signatures_required > 0 && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleAddSignature(doc)}
+                              disabled={updateSignatures.isPending}
+                              className="h-8 text-xs touch-manipulation"
+                            >
+                              {updateSignatures.isPending ? (
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                              ) : (
+                                <>
+                                  <CheckCircle2 className="h-3 w-3 mr-1" />
+                                  Sign
+                                </>
+                              )}
+                            </Button>
+                          )}
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => handleDelete(doc.id)}
+                            disabled={deleteDocument.isPending}
+                            className="h-8 text-xs text-destructive hover:text-destructive touch-manipulation"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-medium text-foreground text-sm md:text-base">{doc.name}</p>
-                      <p className="text-xs text-muted-foreground">{doc.category}</p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {doc.signed}/{doc.required} signatures collected
-                      </p>
-                    </div>
-                  </div>
-                  <div className={`px-2 py-1 rounded-full text-xs font-medium shrink-0 ${
-                    doc.status === "Complete" 
-                      ? "bg-success/10 text-success" 
-                      : "bg-warning/10 text-warning"
-                  }`}>
-                    {doc.status === "Complete" ? "Complete" : `${doc.required - doc.signed} pending`}
-                  </div>
-                </div>
-                {/* Progress bar */}
-                <div className="mt-3 h-1.5 bg-muted rounded-full overflow-hidden">
-                  <div 
-                    className={`h-full rounded-full ${
-                      doc.status === "Complete" 
-                        ? "bg-success" 
-                        : "bg-warning"
-                    }`}
-                    style={{ width: `${(doc.signed / doc.required) * 100}%` }}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+
+                    {/* Progress bar */}
+                    {doc.signatures_required > 0 && (
+                      <div className="mt-3 h-1.5 bg-muted rounded-full overflow-hidden">
+                        <div
+                          className={`h-full rounded-full ${isComplete ? "bg-success" : "bg-warning"}`}
+                          style={{ width: `${progress}%` }}
+                        />
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Export Options */}
@@ -187,7 +415,7 @@ export function ComplianceSection() {
           Evidence Packs
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+          <Card className="hover:bg-muted/50 transition-colors cursor-pointer touch-manipulation">
             <CardContent className="p-4 flex items-center gap-3">
               <Download className="h-5 w-5 text-info" />
               <div>
@@ -196,7 +424,7 @@ export function ComplianceSection() {
               </div>
             </CardContent>
           </Card>
-          <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+          <Card className="hover:bg-muted/50 transition-colors cursor-pointer touch-manipulation">
             <CardContent className="p-4 flex items-center gap-3">
               <FileText className="h-5 w-5 text-info" />
               <div>

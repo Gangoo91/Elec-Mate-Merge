@@ -6,6 +6,7 @@
  */
 
 import { useState, useCallback, useMemo, useEffect } from 'react';
+import { DistributionBoard } from '@/types/distributionBoard';
 
 export interface EICWizardStep {
   id: string;
@@ -49,9 +50,12 @@ interface EICWizardData {
   mainSwitchRating?: string;
   mainSwitchBsEn?: string;
   mainSwitchLocation?: string;
-  distributionBoardLocation?: string;
+  distributionBoardLocation?: string;  // Legacy field for single board
   externalLoopImpedance?: string;
   prospectiveFaultCurrent?: string;
+
+  // Distribution Boards (multi-board support)
+  distributionBoards?: DistributionBoard[];
 
   // Earthing Details
   earthElectrodeType?: string;

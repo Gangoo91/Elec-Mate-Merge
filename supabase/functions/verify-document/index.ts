@@ -262,7 +262,7 @@ Respond with ONLY valid JSON in this exact format:
     // Call Gemini 3 Flash Vision API for OCR
     console.log('🤖 Calling Gemini 3 Flash Vision for document analysis...');
     const visionResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key=${geminiApiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

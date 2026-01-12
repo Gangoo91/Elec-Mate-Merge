@@ -1080,7 +1080,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {/* Voice Button - Active when VoiceFormContext is available */}
+              {/* Voice Button - Activates Voice Assistant FAB */}
               <Button
                 variant="outline"
                 size="sm"
@@ -1091,14 +1091,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                 }`}
                 title={voiceForm ? `Voice Assistant - Circuit ${selectedCircuitIndex + 1} selected` : 'Voice Assistant'}
                 onClick={() => {
-                  if (voiceForm) {
-                    toast.success('Voice ready for Schedule of Testing', {
-                      description: `Say "add circuit" or fill fields like "set zs to 0.45"`,
-                      duration: 3000
-                    });
-                  } else {
-                    toast.info('Voice assistant available when using the Electrician Voice FAB');
-                  }
+                  // Dispatch event to activate the voice FAB
+                  window.dispatchEvent(new CustomEvent('activate-voice-assistant'));
+                  toast.success('Voice assistant activated', {
+                    description: 'Say "add circuit" or "set zs to 0.45"',
+                    duration: 2000
+                  });
                 }}
               >
                 <Mic className={`h-4 w-4 ${voiceForm?.activeForm?.formId === 'eic-schedule-of-testing' ? 'text-primary animate-pulse' : 'text-primary'}`} />

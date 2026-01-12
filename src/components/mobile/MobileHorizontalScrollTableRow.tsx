@@ -90,13 +90,13 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
     autoFillMaxZs(result.bsStandard || '', result.protectiveDeviceCurve || '', value);
   };
 
-  const inputClassName = "h-11 text-sm border border-input bg-background text-foreground focus:ring-2 focus:ring-primary text-center touch-manipulation";
-  const selectTriggerClassName = "h-11 text-sm border border-input bg-background focus:ring-2 focus:ring-primary touch-manipulation";
+  const inputClassName = "h-11 text-xs px-1 border border-input bg-background text-foreground focus:ring-2 focus:ring-primary text-center touch-manipulation";
+  const selectTriggerClassName = "h-11 text-xs px-1 border border-input bg-background focus:ring-2 focus:ring-primary touch-manipulation";
 
   return (
     <TableRow className={cn("hover:bg-muted/50 border-b border-border", getBorderColor())}>
       {/* Circuit Details Group */}
-      <TableCell className="sticky left-0 z-10 border-r-[3px] border-primary/40 p-1 font-bold text-center whitespace-nowrap bg-elec-gray-light min-w-[70px]">
+      <TableCell className="sticky left-0 z-10 border-r-[3px] border-primary/40 p-0.5 font-bold text-center whitespace-nowrap bg-elec-gray-light w-[44px] min-w-[44px] max-w-[44px]">
         <Input
           value={result.circuitDesignation}
           onChange={(e) => onUpdate(result.id, 'circuitDesignation', e.target.value)}
@@ -104,22 +104,22 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           placeholder="C1"
         />
       </TableCell>
-      <TableCell className="p-1 border-r border-border bg-elec-gray min-w-[200px]">
+      <TableCell className="p-0.5 border-r border-border bg-elec-gray w-[70px] min-w-[70px] max-w-[70px]">
         <Input
           value={result.circuitDescription}
           onChange={(e) => onUpdate(result.id, 'circuitDescription', e.target.value)}
-          className={cn(inputClassName, "whitespace-normal")}
-          placeholder="Description"
+          className={cn(inputClassName, "truncate")}
+          placeholder="Desc"
         />
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[60px] min-w-[60px] max-w-[60px]">
         <Select
           value={result.typeOfWiring || ''}
           onValueChange={(value) => onUpdate(result.id, 'typeOfWiring', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="Type">
-              {result.typeOfWiring || "Type"}
+            <SelectValue placeholder="Ty">
+              {result.typeOfWiring || "Ty"}
             </SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100]">
@@ -131,14 +131,14 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[100px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[55px] min-w-[55px] max-w-[55px]">
         <Select
           value={result.referenceMethod || ''}
           onValueChange={(value) => onUpdate(result.id, 'referenceMethod', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="Method">
-              {result.referenceMethod || "Method"}
+            <SelectValue placeholder="Mth">
+              {result.referenceMethod || "Mth"}
             </SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100]">
@@ -150,7 +150,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[80px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[50px] min-w-[50px] max-w-[50px]">
         <Input
           value={result.pointsServed || ''}
           onChange={(e) => onUpdate(result.id, 'pointsServed', e.target.value)}
@@ -162,13 +162,13 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
       </TableCell>
 
       {/* Conductor Details Group */}
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[80px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[55px] min-w-[55px] max-w-[55px]">
         <Select
           value={result.liveSize || ''}
           onValueChange={(value) => onUpdate(result.id, 'liveSize', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="Size" />
+            <SelectValue placeholder="mm²" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
             {cableSizeOptions.map((option) => (
@@ -179,13 +179,13 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[80px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[55px] min-w-[55px] max-w-[55px]">
         <Select
           value={result.cpcSize || ''}
           onValueChange={(value) => onUpdate(result.id, 'cpcSize', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="CPC" />
+            <SelectValue placeholder="mm²" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
             {cableSizeOptions.map((option) => (
@@ -198,7 +198,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
       </TableCell>
 
       {/* Protection Group */}
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[60px] min-w-[60px] max-w-[60px]">
         <Select
           value={result.bsStandard || ''}
           onValueChange={handleBsStandardChange}
@@ -215,15 +215,15 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[85px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[50px] min-w-[50px] max-w-[50px]">
         <Select
           value={result.protectiveDeviceCurve || ''}
           onValueChange={handleCurveChange}
           disabled={!bsStandardRequiresCurve(result.bsStandard || '')}
         >
           <SelectTrigger className={selectTriggerClassName}>
-          <SelectValue placeholder="Type">
-            {result.protectiveDeviceCurve || "Type"}
+          <SelectValue placeholder="Ty">
+            {result.protectiveDeviceCurve || "Ty"}
           </SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100]">
@@ -235,14 +235,14 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[50px] min-w-[50px] max-w-[50px]">
         <Select
           value={result.protectiveDeviceRating || ''}
           onValueChange={handleRatingChange}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="Rating">
-              {result.protectiveDeviceRating || "Rating"}
+            <SelectValue placeholder="A">
+              {result.protectiveDeviceRating || "A"}
             </SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100]">
@@ -254,15 +254,15 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[75px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[50px] min-w-[50px] max-w-[50px]">
         <Input
           value={result.protectiveDeviceKaRating}
           onChange={(e) => onUpdate(result.id, 'protectiveDeviceKaRating', e.target.value)}
           className={inputClassName}
-          placeholder="6kA"
+          placeholder="kA"
         />
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[55px] min-w-[55px] max-w-[55px]">
         <Input
           value={result.maxZs || ''}
           onChange={(e) => onUpdate(result.id, 'maxZs', e.target.value)}
@@ -274,7 +274,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
       </TableCell>
 
       {/* RCD Details Group */}
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 min-w-[120px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 w-[60px] min-w-[60px] max-w-[60px]">
         <Select
           value={result.rcdBsStandard || ''}
           onValueChange={(value) => onUpdate(result.id, 'rcdBsStandard', value)}
@@ -293,14 +293,14 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 min-w-[120px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 w-[55px] min-w-[55px] max-w-[55px]">
         <Select
           value={result.rcdType || ''}
           onValueChange={(value) => onUpdate(result.id, 'rcdType', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="Type">
-              {result.rcdType || "Type"}
+            <SelectValue placeholder="Ty">
+              {result.rcdType || "Ty"}
             </SelectValue>
           </SelectTrigger>
           <SelectContent className="z-[100]">
@@ -312,7 +312,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 min-w-[120px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 w-[50px] min-w-[50px] max-w-[50px]">
         <Select
           value={result.rcdRating || ''}
           onValueChange={(value) => onUpdate(result.id, 'rcdRating', value)}
@@ -329,7 +329,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r-2 border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 min-w-[120px]">
+      <TableCell className="p-0.5 border-r-2 border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 w-[50px] min-w-[50px] max-w-[50px]">
         <Input
           value={result.rcdRatingA || ''}
           onChange={(e) => onUpdate(result.id, 'rcdRatingA', e.target.value)}
@@ -339,33 +339,33 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
       </TableCell>
 
       {/* Continuity Tests Group */}
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[55px] min-w-[55px] max-w-[55px]">
         <Input
           value={result.ringR1 || ''}
           onChange={(e) => onUpdate(result.id, 'ringR1', e.target.value)}
           className={inputClassName}
-          placeholder="r1"
+          placeholder="Ω"
           type="number"
           step="0.001"
         />
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[55px] min-w-[55px] max-w-[55px]">
         <Input
           value={result.ringRn || ''}
           onChange={(e) => onUpdate(result.id, 'ringRn', e.target.value)}
           className={inputClassName}
-          placeholder="rn"
+          placeholder="Ω"
           type="number"
           step="0.001"
         />
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[100px]">
-        <div className="flex items-center gap-0.5">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[70px] min-w-[70px] max-w-[70px]">
+        <div className="flex items-center gap-0">
           <Input
             value={result.ringR2 || ''}
             onChange={(e) => onUpdate(result.id, 'ringR2', e.target.value)}
-            className={inputClassName}
-            placeholder="r2"
+            className={cn(inputClassName, "flex-1")}
+            placeholder="Ω"
             type="number"
             step="0.001"
           />
@@ -373,43 +373,43 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
             type="button"
             variant="ghost"
             size="icon"
-            className="h-8 w-8 shrink-0 p-0"
+            className="h-7 w-7 shrink-0 p-0"
             onClick={handleCalculateR1R2}
-            title="Calculate R1+R2"
+            title="Calc"
           >
-            <Calculator className="h-3.5 w-3.5" />
+            <Calculator className="h-3 w-3" />
           </Button>
         </div>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[95px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[55px] min-w-[55px] max-w-[55px]">
         <Input
           value={result.r1r2}
           onChange={(e) => onUpdate(result.id, 'r1r2', e.target.value)}
           className={inputClassName}
-          placeholder="0.5"
+          placeholder="Ω"
           type="number"
           step="0.01"
         />
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[55px] min-w-[55px] max-w-[55px]">
         <Input
           value={result.ringContinuityLive || ''}
           onChange={(e) => onUpdate(result.id, 'ringContinuityLive', e.target.value)}
           className={inputClassName}
-          placeholder="R₂"
+          placeholder="Ω"
           type="number"
           step="0.001"
         />
       </TableCell>
 
       {/* Insulation Tests Group */}
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[55px] min-w-[55px] max-w-[55px]">
         <Select
           value={result.insulationTestVoltage || ''}
           onValueChange={(value) => onUpdate(result.id, 'insulationTestVoltage', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="Voltage" />
+            <SelectValue placeholder="V" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
             {insulationTestVoltageOptions.map((option) => (
@@ -420,99 +420,99 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[80px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[55px] min-w-[55px] max-w-[55px]">
         <Input
           value={result.insulationLiveNeutral || ''}
           onChange={(e) => onUpdate(result.id, 'insulationLiveNeutral', e.target.value)}
           className={inputClassName}
-          placeholder="L-L"
+          placeholder="MΩ"
           type="number"
           step="0.1"
         />
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[80px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[55px] min-w-[55px] max-w-[55px]">
         <Input
           value={result.insulationLiveEarth || ''}
           onChange={(e) => onUpdate(result.id, 'insulationLiveEarth', e.target.value)}
           className={inputClassName}
-          placeholder="L-E"
+          placeholder="MΩ"
           type="number"
           step="0.1"
         />
       </TableCell>
 
       {/* Earth Fault Tests Group */}
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[95px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[55px] min-w-[55px] max-w-[55px]">
         <Select
           value={result.polarity || ''}
           onValueChange={(value) => onUpdate(result.id, 'polarity', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="Polarity" />
+            <SelectValue placeholder="Pol" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
-            <SelectItem value="Correct" className="text-xs py-2">Correct</SelectItem>
-            <SelectItem value="Incorrect" className="text-xs py-2">Incorrect</SelectItem>
+            <SelectItem value="Correct" className="text-xs py-2">✓</SelectItem>
+            <SelectItem value="Incorrect" className="text-xs py-2">✗</SelectItem>
             <SelectItem value="N/A" className="text-xs py-2">N/A</SelectItem>
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[85px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[55px] min-w-[55px] max-w-[55px]">
         <Input
           value={result.zs}
           onChange={(e) => onUpdate(result.id, 'zs', e.target.value)}
           className={inputClassName}
-          placeholder="0.5"
+          placeholder="Ω"
           type="number"
           step="0.01"
         />
       </TableCell>
 
       {/* RCD Tests Group */}
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[85px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[55px] min-w-[55px] max-w-[55px]">
         <Input
           value={result.rcdOneX}
           onChange={(e) => onUpdate(result.id, 'rcdOneX', e.target.value)}
           className={inputClassName}
-          placeholder="28"
+          placeholder="ms"
           type="number"
         />
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[85px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[50px] min-w-[50px] max-w-[50px]">
         <Select
           value={result.rcdTestButton || ''}
           onValueChange={(value) => onUpdate(result.id, 'rcdTestButton', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="Btn" />
+            <SelectValue placeholder="-" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
-            <SelectItem value="✓" className="text-xs py-2">✓ Pass</SelectItem>
-            <SelectItem value="✗" className="text-xs py-2">✗ Fail</SelectItem>
+            <SelectItem value="✓" className="text-xs py-2">✓</SelectItem>
+            <SelectItem value="✗" className="text-xs py-2">✗</SelectItem>
             <SelectItem value="N/A" className="text-xs py-2">N/A</SelectItem>
           </SelectContent>
         </Select>
       </TableCell>
 
       {/* AFDD Group */}
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[85px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[50px] min-w-[50px] max-w-[50px]">
         <Select
           value={result.afddTest || ''}
           onValueChange={(value) => onUpdate(result.id, 'afddTest', value)}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="AFDD" />
+            <SelectValue placeholder="-" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
-            <SelectItem value="✓" className="text-xs py-2 text-green-600">✓ Pass</SelectItem>
-            <SelectItem value="✗" className="text-xs py-2 text-red-600">✗ Fail</SelectItem>
+            <SelectItem value="✓" className="text-xs py-2 text-green-600">✓</SelectItem>
+            <SelectItem value="✗" className="text-xs py-2 text-red-600">✗</SelectItem>
             <SelectItem value="N/A" className="text-xs py-2">N/A</SelectItem>
           </SelectContent>
         </Select>
       </TableCell>
 
       {/* Functional Group */}
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[95px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[50px] min-w-[50px] max-w-[50px]">
         <Select
           value={result.functionalTesting || ''}
           onValueChange={(value) => onUpdate(result.id, 'functionalTesting', value)}
@@ -524,30 +524,30 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
             <SelectValue placeholder="-" />
           </SelectTrigger>
           <SelectContent className="z-[100]">
-            <SelectItem value="✓" className="text-sm py-2 text-green-600">✓ Satisfactory</SelectItem>
-            <SelectItem value="✗" className="text-sm py-2 text-red-600">✗ Unsatisfactory</SelectItem>
-            <SelectItem value="N/A" className="text-sm py-2">N/A</SelectItem>
+            <SelectItem value="✓" className="text-xs py-2 text-green-600">✓</SelectItem>
+            <SelectItem value="✗" className="text-xs py-2 text-red-600">✗</SelectItem>
+            <SelectItem value="N/A" className="text-xs py-2">N/A</SelectItem>
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[150px]">
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[80px] min-w-[80px] max-w-[80px]">
         <Input
           value={result.notes || ''}
           onChange={(e) => onUpdate(result.id, 'notes', e.target.value)}
-          className={inputClassName}
-          placeholder="Remarks"
+          className={cn(inputClassName, "truncate")}
+          placeholder="Notes"
         />
       </TableCell>
 
       {/* Actions Column */}
-      <TableCell className="border-l border-border p-1 whitespace-nowrap bg-elec-gray min-w-[70px]">
+      <TableCell className="border-l border-border p-0.5 whitespace-nowrap bg-elec-gray w-[50px] min-w-[50px] max-w-[50px]">
         <Button
           variant="ghost"
           size="icon"
           onClick={() => onRemove(result.id)}
           className="h-11 w-11 text-destructive hover:bg-destructive/10 touch-manipulation"
         >
-          <Trash2 className="h-5 w-5" />
+          <Trash2 className="h-4 w-4" />
         </Button>
       </TableCell>
     </TableRow>

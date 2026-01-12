@@ -2,6 +2,7 @@
 import jsPDF from 'jspdf';
 import { bs7671InspectionSections } from '@/data/bs7671ChecklistData';
 import { safeAutoTable } from './pdfEnhancements';
+import { BoardGroupedCircuits } from './pdfDataFormatters';
 
 // Extend jsPDF interface to include autoTable
 declare module 'jspdf' {
@@ -23,6 +24,7 @@ export interface EICRPDFTemplate {
   addBrandingElements: (pdf: jsPDF, formData?: any) => void;
   addInspectionChecklistSection: (pdf: jsPDF, inspectionItems: any[], yPosition: number) => number;
   addTestResultsLandscapePage: (pdf: jsPDF, testResults: any[]) => void;
+  addTestResultsGroupedByBoard: (pdf: jsPDF, boardGroups: BoardGroupedCircuits[]) => void;
 }
 
 export const createEICRTemplate = (): EICRPDFTemplate => {
@@ -529,6 +531,145 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
     });
   };
 
+  /**
+   * Add test results grouped by distribution board
+   * Creates a separate section for each board with header and verification data
+   */
+  const addTestResultsGroupedByBoard = (pdf: jsPDF, boardGroups: BoardGroupedCircuits[]): void => {
+    if (!boardGroups || boardGroups.length === 0) return;
+
+    boardGroups.forEach((group, groupIndex) => {
+      // Add new page for each board (landscape for test results)
+      if (groupIndex === 0) {
+        pdf.addPage('a4', 'landscape');
+      } else {
+        // Check if we need a new page for subsequent boards
+        const lastY = (pdf as any).lastAutoTable?.finalY || 0;
+        if (lastY > pdf.internal.pageSize.getHeight() - 60) {
+          pdf.addPage('a4', 'landscape');
+        }
+      }
+
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      let yPos = groupIndex === 0 ? 15 : ((pdf as any).lastAutoTable?.finalY || 15) + 15;
+
+      // Board Header Section
+      pdf.setFillColor(51, 51, 51);
+      pdf.rect(14, yPos, pageWidth - 28, 12, 'F');
+
+      pdf.setFontSize(11);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setTextColor(255, 255, 255);
+      pdf.text(group.board.name || group.board.reference || 'Distribution Board', 20, yPos + 8);
+
+      // Board reference on the right
+      if (group.board.reference) {
+        pdf.setFontSize(9);
+        pdf.setFont('helvetica', 'normal');
+        pdf.text(`Ref: ${group.board.reference}`, pageWidth - 50, yPos + 8);
+      }
+
+      yPos += 16;
+
+      // Board Verification Data Row
+      pdf.setFillColor(240, 240, 240);
+      pdf.rect(14, yPos, pageWidth - 28, 10, 'F');
+
+      pdf.setFontSize(8);
+      pdf.setFont('helvetica', 'normal');
+      pdf.setTextColor(51, 51, 51);
+
+      const verificationItems = [
+        `Zdb: ${group.verificationData.zdb || '-'} Ω`,
+        `Ipf: ${group.verificationData.ipf || '-'} kA`,
+        `Polarity: ${group.verificationData.polarity ? '✓' : '-'}`,
+        `Phase Seq: ${group.verificationData.phaseSequence ? '✓' : '-'}`,
+        group.verificationData.spdNA ? 'SPD: N/A' : `SPD: ${group.verificationData.spdStatus ? '✓' : '-'}`
+      ];
+
+      const itemWidth = (pageWidth - 40) / verificationItems.length;
+      verificationItems.forEach((item, index) => {
+        pdf.text(item, 20 + (index * itemWidth), yPos + 7);
+      });
+
+      yPos += 14;
+
+      // Circuit count indicator
+      if (group.circuits.length === 0) {
+        pdf.setFontSize(9);
+        pdf.setFont('helvetica', 'italic');
+        pdf.setTextColor(128, 128, 128);
+        pdf.text('No circuits assigned to this board', 20, yPos + 5);
+        yPos += 15;
+        return;
+      }
+
+      // Test Results Table for this board
+      const tableData = group.circuits.map((result: any) => [
+        result.circuitNumber || '',
+        result.circuitDescription || '',
+        result.phaseType || '1P',
+        result.protectiveDeviceType || '',
+        result.protectiveDeviceRating || '',
+        result.liveSize || result.cableSize || '',
+        result.cpcSize || '',
+        result.r1r2 || '',
+        result.ringContinuityLive || '',
+        result.insulationLiveNeutral || '',
+        result.polarity || '',
+        result.zs || '',
+        result.rcdRating || '',
+        result.rcdOneX || '',
+        result.pfcLiveNeutral || '',
+        result.functionalTesting || ''
+      ]);
+
+      safeAutoTable(pdf, {
+        startY: yPos,
+        head: [[
+          'Cct', 'Description', 'Ph', 'Type', 'Rating\n(A)', 'Live\n(mm²)', 'CPC\n(mm²)',
+          'R1+R2\n(Ω)', 'Ring\n(Ω)', 'IR\n(MΩ)', 'Pol', 'Zs\n(Ω)',
+          'RCD\n(mA)', 'RCD\n(ms)', 'PFC\n(kA)', 'Func'
+        ]],
+        body: tableData,
+        styles: {
+          fontSize: 6,
+          cellPadding: 1,
+          lineColor: [200, 200, 200],
+          lineWidth: 0.1,
+          halign: 'center'
+        },
+        headStyles: {
+          fillColor: [70, 130, 180],
+          textColor: 255,
+          fontStyle: 'bold',
+          fontSize: 6
+        },
+        alternateRowStyles: {
+          fillColor: [245, 245, 245]
+        },
+        columnStyles: {
+          0: { cellWidth: 12 },
+          1: { cellWidth: 40 },
+          2: { cellWidth: 12 },
+          3: { cellWidth: 18 },
+          4: { cellWidth: 14 },
+          5: { cellWidth: 14 },
+          6: { cellWidth: 14 },
+          7: { cellWidth: 14 },
+          8: { cellWidth: 14 },
+          9: { cellWidth: 14 },
+          10: { cellWidth: 12 },
+          11: { cellWidth: 14 },
+          12: { cellWidth: 14 },
+          13: { cellWidth: 14 },
+          14: { cellWidth: 14 },
+          15: { cellWidth: 12 }
+        }
+      });
+    });
+  };
+
   return {
     addHeader,
     addFooter,
@@ -538,6 +679,7 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
     addComplianceSection,
     addBrandingElements,
     addInspectionChecklistSection,
-    addTestResultsLandscapePage
+    addTestResultsLandscapePage,
+    addTestResultsGroupedByBoard
   };
 };

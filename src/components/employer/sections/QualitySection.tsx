@@ -4,15 +4,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { toast } from "@/hooks/use-toast";
-import { snagLists, closeoutReports, jobs, employees } from "@/data/employerMockData";
-import { 
-  ClipboardCheck, 
-  Search, 
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  useJobIssuesByType,
+  useJobIssueStats,
+  useCreateJobIssue,
+  useUpdateJobIssueStatus,
+  type JobIssue,
+  type IssueType,
+  type IssueSeverity
+} from "@/hooks/useJobIssues";
+import { useJobs } from "@/hooks/useJobs";
+import {
+  ClipboardCheck,
+  Search,
   Plus,
   Camera,
   CheckCircle2,
@@ -21,14 +30,23 @@ import {
   Download,
   User,
   Calendar,
-  Briefcase
+  Briefcase,
+  Loader2,
+  RefreshCw
 } from "lucide-react";
 
-const snagStatusColors = {
+const statusColors: Record<string, string> = {
   "Open": "bg-warning/20 text-warning",
-  "Resolved": "bg-success/20 text-success",
   "In Progress": "bg-info/20 text-info",
-  "Complete": "bg-success/20 text-success",
+  "Resolved": "bg-success/20 text-success",
+  "Closed": "bg-success/20 text-success",
+};
+
+const severityColors: Record<string, string> = {
+  "Low": "bg-blue-500/20 text-blue-400",
+  "Medium": "bg-yellow-500/20 text-yellow-400",
+  "High": "bg-orange-500/20 text-orange-400",
+  "Critical": "bg-red-500/20 text-red-400",
 };
 
 export const QualitySection = () => {
@@ -36,50 +54,73 @@ export const QualitySection = () => {
   const [showNewSnag, setShowNewSnag] = useState(false);
   const [activeTab, setActiveTab] = useState("snags");
 
-  const filteredSnags = snagLists.filter(snag =>
-    snag.jobTitle.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Form state
+  const [selectedJobId, setSelectedJobId] = useState("");
+  const [snagTitle, setSnagTitle] = useState("");
+  const [snagDescription, setSnagDescription] = useState("");
+  const [snagSeverity, setSnagSeverity] = useState<IssueSeverity>("Medium");
+  const [snagLocation, setSnagLocation] = useState("");
 
-  const filteredCloseouts = closeoutReports.filter(report =>
-    report.jobTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    report.client.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Fetch snags and defects using the real hook
+  const { data: snagIssues, isLoading, error, refetch } = useJobIssuesByType(["Snag", "Defect"]);
+  const { data: stats } = useJobIssueStats();
+  const { data: jobs } = useJobs();
+  const createIssue = useCreateJobIssue();
+  const updateStatus = useUpdateJobIssueStatus();
 
-  const stats = {
-    totalSnags: snagLists.reduce((sum, s) => sum + s.items.length, 0),
-    openSnags: snagLists.reduce((sum, s) => sum + s.items.filter(i => i.status === "Open").length, 0),
-    resolvedSnags: snagLists.reduce((sum, s) => sum + s.items.filter(i => i.status === "Resolved").length, 0),
-    closeouts: closeoutReports.length,
-  };
+  // Filter by search
+  const filteredSnags = snagIssues?.filter(issue =>
+    issue.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    issue.job?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    issue.description?.toLowerCase().includes(searchQuery.toLowerCase())
+  ) || [];
 
-  const handleCreateSnag = () => {
-    toast({
-      title: "Snag List Created",
-      description: "New snag list has been created for the selected job.",
+  // Group by status for tabs
+  const openSnags = filteredSnags.filter(s => s.status === "Open" || s.status === "In Progress");
+  const resolvedSnags = filteredSnags.filter(s => s.status === "Resolved" || s.status === "Closed");
+
+  const handleCreateSnag = async () => {
+    if (!selectedJobId || !snagTitle) return;
+
+    await createIssue.mutateAsync({
+      job_id: selectedJobId,
+      title: snagTitle,
+      description: snagDescription,
+      issue_type: "Snag" as IssueType,
+      severity: snagSeverity,
+      status: "Open",
+      location: snagLocation,
+      photos: [],
     });
+
+    // Reset form
+    setSelectedJobId("");
+    setSnagTitle("");
+    setSnagDescription("");
+    setSnagSeverity("Medium");
+    setSnagLocation("");
     setShowNewSnag(false);
   };
 
-  const handleResolveSnag = (snagListId: string, itemId: string) => {
-    toast({
-      title: "Snag Resolved",
-      description: "The snag item has been marked as resolved.",
+  const handleResolve = async (issue: JobIssue) => {
+    await updateStatus.mutateAsync({
+      id: issue.id,
+      status: "Resolved",
     });
   };
 
-  const handleGenerateCloseout = (jobId: string) => {
-    toast({
-      title: "Closeout Report Generated",
-      description: "The closeout report PDF has been generated.",
-    });
-  };
-
-  const handleDownloadCloseout = (reportId: string) => {
-    toast({
-      title: "Download Started",
-      description: "Closeout report is being downloaded...",
-    });
-  };
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12 space-y-4">
+        <AlertCircle className="h-12 w-12 text-destructive" />
+        <p className="text-muted-foreground">Failed to load quality data</p>
+        <Button onClick={() => refetch()} variant="outline" className="gap-2">
+          <RefreshCw className="h-4 w-4" />
+          Retry
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -91,83 +132,157 @@ export const QualitySection = () => {
             Quality Assurance
           </h1>
           <p className="text-muted-foreground text-sm mt-1">
-            Snag lists, defect tracking, and closeout reports
+            Snag lists, defect tracking, and quality management
           </p>
         </div>
-        
-        <Dialog open={showNewSnag} onOpenChange={setShowNewSnag}>
-          <DialogTrigger asChild>
-            <Button className="gap-2">
+
+        <Sheet open={showNewSnag} onOpenChange={setShowNewSnag}>
+          <SheetTrigger asChild>
+            <Button className="gap-2 h-11 touch-manipulation">
               <Plus className="h-4 w-4" />
-              New Snag List
+              New Snag
             </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Create Snag List</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <Label>Select Job</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Choose a job..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {jobs.map(job => (
-                      <SelectItem key={job.id} value={job.id}>{job.title} - {job.client}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label>First Snag Item</Label>
-                <Textarea placeholder="Describe the defect or issue..." />
-              </div>
-              <div className="space-y-2">
-                <Label>Photo (optional)</Label>
-                <Button variant="outline" className="w-full gap-2">
+          </SheetTrigger>
+          <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+            <div className="flex flex-col h-full bg-background">
+              <SheetHeader className="p-4 border-b border-border">
+                <SheetTitle>Log New Snag</SheetTitle>
+              </SheetHeader>
+              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                <div className="space-y-2">
+                  <Label>Select Job *</Label>
+                  <Select value={selectedJobId} onValueChange={setSelectedJobId}>
+                    <SelectTrigger className="h-11 touch-manipulation">
+                      <SelectValue placeholder="Choose a job..." />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
+                      {jobs?.map(job => (
+                        <SelectItem key={job.id} value={job.id}>
+                          {job.title} - {job.client}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Snag Title *</Label>
+                  <Input
+                    placeholder="Brief description of the issue..."
+                    value={snagTitle}
+                    onChange={(e) => setSnagTitle(e.target.value)}
+                    className="h-11 touch-manipulation"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Location</Label>
+                  <Input
+                    placeholder="Where is this issue?"
+                    value={snagLocation}
+                    onChange={(e) => setSnagLocation(e.target.value)}
+                    className="h-11 touch-manipulation"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Severity</Label>
+                  <Select value={snagSeverity} onValueChange={(v) => setSnagSeverity(v as IssueSeverity)}>
+                    <SelectTrigger className="h-11 touch-manipulation">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100]">
+                      <SelectItem value="Low">Low</SelectItem>
+                      <SelectItem value="Medium">Medium</SelectItem>
+                      <SelectItem value="High">High</SelectItem>
+                      <SelectItem value="Critical">Critical</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Detailed Description</Label>
+                  <Textarea
+                    placeholder="Describe the defect or issue in detail..."
+                    value={snagDescription}
+                    onChange={(e) => setSnagDescription(e.target.value)}
+                    className="min-h-[100px] touch-manipulation"
+                  />
+                </div>
+
+                <Button variant="outline" className="w-full gap-2 h-11 touch-manipulation">
                   <Camera className="h-4 w-4" />
-                  Add Photo
+                  Add Photo (Coming Soon)
                 </Button>
               </div>
-              <div className="flex justify-end gap-2 pt-4">
-                <Button variant="outline" onClick={() => setShowNewSnag(false)}>
-                  Cancel
-                </Button>
-                <Button onClick={handleCreateSnag}>
-                  Create Snag List
-                </Button>
+
+              <div className="p-4 border-t border-border bg-background">
+                <div className="flex gap-3">
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowNewSnag(false)}
+                    className="flex-1 h-11 touch-manipulation"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={handleCreateSnag}
+                    disabled={!selectedJobId || !snagTitle || createIssue.isPending}
+                    className="flex-1 h-11 touch-manipulation"
+                  >
+                    {createIssue.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      "Create Snag"
+                    )}
+                  </Button>
+                </div>
               </div>
             </div>
-          </DialogContent>
-        </Dialog>
+          </SheetContent>
+        </Sheet>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card className="bg-elec-gray border-border">
           <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-foreground">{stats.totalSnags}</p>
+            {isLoading ? (
+              <Skeleton className="h-8 w-12 mx-auto mb-2" />
+            ) : (
+              <p className="text-2xl font-bold text-foreground">{stats?.snags || 0}</p>
+            )}
             <p className="text-sm text-muted-foreground">Total Snags</p>
           </CardContent>
         </Card>
         <Card className="bg-elec-gray border-border">
           <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-warning">{stats.openSnags}</p>
+            {isLoading ? (
+              <Skeleton className="h-8 w-12 mx-auto mb-2" />
+            ) : (
+              <p className="text-2xl font-bold text-warning">{openSnags.length}</p>
+            )}
             <p className="text-sm text-muted-foreground">Open</p>
           </CardContent>
         </Card>
         <Card className="bg-elec-gray border-border">
           <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-success">{stats.resolvedSnags}</p>
+            {isLoading ? (
+              <Skeleton className="h-8 w-12 mx-auto mb-2" />
+            ) : (
+              <p className="text-2xl font-bold text-success">{resolvedSnags.length}</p>
+            )}
             <p className="text-sm text-muted-foreground">Resolved</p>
           </CardContent>
         </Card>
         <Card className="bg-elec-gray border-border">
           <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-elec-yellow">{stats.closeouts}</p>
-            <p className="text-sm text-muted-foreground">Closeouts</p>
+            {isLoading ? (
+              <Skeleton className="h-8 w-12 mx-auto mb-2" />
+            ) : (
+              <p className="text-2xl font-bold text-elec-yellow">{stats?.defects || 0}</p>
+            )}
+            <p className="text-sm text-muted-foreground">Defects</p>
           </CardContent>
         </Card>
       </div>
@@ -176,8 +291,8 @@ export const QualitySection = () => {
       <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder="Search by job..."
-          className="pl-10"
+          placeholder="Search snags by title, job, or description..."
+          className="pl-10 h-11 touch-manipulation"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -186,149 +301,150 @@ export const QualitySection = () => {
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList>
-          <TabsTrigger value="snags" className="gap-2">
+          <TabsTrigger value="snags" className="gap-2 touch-manipulation">
             <AlertCircle className="h-4 w-4" />
-            Snag Lists
+            Open ({openSnags.length})
           </TabsTrigger>
-          <TabsTrigger value="closeouts" className="gap-2">
-            <FileText className="h-4 w-4" />
-            Closeout Reports
+          <TabsTrigger value="resolved" className="gap-2 touch-manipulation">
+            <CheckCircle2 className="h-4 w-4" />
+            Resolved ({resolvedSnags.length})
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="snags" className="mt-4 space-y-4">
-          {filteredSnags.map((snagList) => (
-            <Card key={snagList.id} className="bg-elec-gray border-border">
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-lg flex items-center gap-2">
-                      <Briefcase className="h-4 w-4 text-muted-foreground" />
-                      {snagList.jobTitle}
-                    </CardTitle>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      Created by {snagList.createdBy} on {new Date(snagList.createdDate).toLocaleDateString('en-GB')}
-                    </p>
-                  </div>
-                  <Badge className={snagStatusColors[snagList.status as keyof typeof snagStatusColors]}>
-                    {snagList.status}
-                  </Badge>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {snagList.items.map((item) => (
-                  <div key={item.id} className="flex items-start justify-between p-3 bg-surface rounded-lg">
-                    <div className="flex items-start gap-3">
-                      <div className={`p-1.5 rounded ${
-                        item.status === "Resolved" ? "bg-success/20" : "bg-warning/20"
-                      }`}>
-                        {item.status === "Resolved" ? (
-                          <CheckCircle2 className="h-4 w-4 text-success" />
-                        ) : (
-                          <AlertCircle className="h-4 w-4 text-warning" />
-                        )}
-                      </div>
-                      <div>
-                        <p className="text-sm text-foreground">{item.description}</p>
-                        {item.resolvedBy && (
-                          <p className="text-xs text-muted-foreground mt-1">
-                            Resolved by {item.resolvedBy} on {new Date(item.resolvedDate!).toLocaleDateString('en-GB')}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    {item.status === "Open" && (
-                      <Button 
-                        size="sm" 
-                        variant="outline"
-                        onClick={() => handleResolveSnag(snagList.id, item.id)}
-                      >
-                        Resolve
-                      </Button>
-                    )}
-                  </div>
-                ))}
-                
-                <div className="flex gap-2 pt-2">
-                  <Button size="sm" variant="outline" className="gap-2">
-                    <Plus className="h-4 w-4" />
-                    Add Snag
-                  </Button>
-                  {snagList.status === "Complete" && (
-                    <Button size="sm" onClick={() => handleGenerateCloseout(snagList.jobId)} className="gap-2">
-                      <FileText className="h-4 w-4" />
-                      Generate Closeout
-                    </Button>
-                  )}
-                </div>
+          {isLoading ? (
+            <div className="space-y-4">
+              {[1, 2, 3].map((i) => (
+                <Card key={i} className="bg-elec-gray border-border">
+                  <CardContent className="p-4">
+                    <Skeleton className="h-6 w-3/4 mb-2" />
+                    <Skeleton className="h-4 w-1/2 mb-4" />
+                    <Skeleton className="h-10 w-full" />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : openSnags.length === 0 ? (
+            <Card className="bg-elec-gray border-border">
+              <CardContent className="p-8 text-center">
+                <CheckCircle2 className="h-12 w-12 text-success mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-foreground mb-2">All Clear!</h3>
+                <p className="text-muted-foreground">No open snags or defects to resolve.</p>
               </CardContent>
             </Card>
-          ))}
-        </TabsContent>
-
-        <TabsContent value="closeouts" className="mt-4 space-y-4">
-          {filteredCloseouts.map((report) => {
-            const linkedEmployees = employees.filter(e => report.elecIdLinked.includes(e.id));
-            
-            return (
-              <Card key={report.id} className="bg-elec-gray border-border">
-                <CardContent className="p-6">
+          ) : (
+            openSnags.map((issue) => (
+              <Card key={issue.id} className="bg-elec-gray border-border">
+                <CardContent className="p-4 space-y-3">
                   <div className="flex items-start justify-between">
-                    <div className="space-y-3">
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground">{report.jobTitle}</h3>
-                        <p className="text-sm text-muted-foreground">{report.client}</p>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="font-semibold text-foreground">{issue.title}</h3>
+                        <Badge className={severityColors[issue.severity] || ""}>
+                          {issue.severity}
+                        </Badge>
                       </div>
-                      
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="h-4 w-4" />
-                          Completed: {new Date(report.completedDate).toLocaleDateString('en-GB')}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <User className="h-4 w-4" />
-                          Signed off by {report.signedOffBy}
-                        </span>
-                      </div>
+                      <p className="text-sm text-muted-foreground flex items-center gap-2">
+                        <Briefcase className="h-3.5 w-3.5" />
+                        {issue.job?.title || "No job linked"}
+                        {issue.job?.client && ` - ${issue.job.client}`}
+                      </p>
+                    </div>
+                    <Badge className={statusColors[issue.status] || ""}>
+                      {issue.status}
+                    </Badge>
+                  </div>
 
-                      {/* Documents included */}
-                      <div className="flex flex-wrap gap-1">
-                        {report.documents.map((doc) => (
-                          <Badge key={doc} variant="outline" className="text-xs">
-                            <FileText className="h-3 w-3 mr-1" />
-                            {doc}
-                          </Badge>
-                        ))}
-                      </div>
+                  {issue.description && (
+                    <p className="text-sm text-muted-foreground bg-surface p-3 rounded-lg">
+                      {issue.description}
+                    </p>
+                  )}
 
-                      {/* Linked Elec-IDs */}
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-muted-foreground">Linked Elec-IDs:</span>
-                        {linkedEmployees.map((emp) => (
-                          <Badge key={emp.id} variant="secondary" className="text-xs">
-                            {emp.name}
-                          </Badge>
-                        ))}
-                      </div>
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <div className="flex items-center gap-4">
+                      {issue.location && (
+                        <span className="flex items-center gap-1">
+                          <FileText className="h-3.5 w-3.5" />
+                          {issue.location}
+                        </span>
+                      )}
+                      <span className="flex items-center gap-1">
+                        <Calendar className="h-3.5 w-3.5" />
+                        {new Date(issue.created_at).toLocaleDateString('en-GB')}
+                      </span>
                     </div>
 
-                    <div className="flex flex-col items-end gap-2">
-                      {report.signedOff && (
-                        <Badge className="bg-success/20 text-success">
-                          <CheckCircle2 className="h-3 w-3 mr-1" />
-                          Signed Off
-                        </Badge>
+                    <Button
+                      size="sm"
+                      onClick={() => handleResolve(issue)}
+                      disabled={updateStatus.isPending}
+                      className="gap-2 h-9 touch-manipulation"
+                    >
+                      {updateStatus.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <>
+                          <CheckCircle2 className="h-4 w-4" />
+                          Resolve
+                        </>
                       )}
-                      <Button onClick={() => handleDownloadCloseout(report.id)} className="gap-2">
-                        <Download className="h-4 w-4" />
-                        Download PDF
-                      </Button>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
+        </TabsContent>
+
+        <TabsContent value="resolved" className="mt-4 space-y-4">
+          {isLoading ? (
+            <div className="space-y-4">
+              {[1, 2].map((i) => (
+                <Card key={i} className="bg-elec-gray border-border">
+                  <CardContent className="p-4">
+                    <Skeleton className="h-6 w-3/4 mb-2" />
+                    <Skeleton className="h-4 w-1/2" />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : resolvedSnags.length === 0 ? (
+            <Card className="bg-elec-gray border-border">
+              <CardContent className="p-8 text-center">
+                <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <p className="text-muted-foreground">No resolved snags yet.</p>
+              </CardContent>
+            </Card>
+          ) : (
+            resolvedSnags.map((issue) => (
+              <Card key={issue.id} className="bg-elec-gray border-border">
+                <CardContent className="p-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <CheckCircle2 className="h-4 w-4 text-success" />
+                        <h3 className="font-semibold text-foreground">{issue.title}</h3>
+                      </div>
+                      <p className="text-sm text-muted-foreground flex items-center gap-2">
+                        <Briefcase className="h-3.5 w-3.5" />
+                        {issue.job?.title || "No job linked"}
+                      </p>
+                      {issue.resolution_notes && (
+                        <p className="text-sm text-muted-foreground mt-2 bg-surface p-2 rounded">
+                          {issue.resolution_notes}
+                        </p>
+                      )}
+                    </div>
+                    <div className="text-right text-xs text-muted-foreground">
+                      <p>Resolved</p>
+                      <p>{issue.resolved_at ? new Date(issue.resolved_at).toLocaleDateString('en-GB') : '-'}</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            );
-          })}
+            ))
+          )}
         </TabsContent>
       </Tabs>
     </div>

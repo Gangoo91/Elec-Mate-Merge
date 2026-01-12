@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Plus, Zap, AlertTriangle, CheckCircle, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { DistributionBoard, MAIN_BOARD_ID, createMainBoard } from '@/types/distributionBoard';
 
 interface CircuitsStepProps {
   data: Record<string, any>;
@@ -21,12 +22,34 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({
   isMobile,
 }) => {
   const circuits = data.circuits || [];
+  const [activeBoard, setActiveBoard] = useState<string>(MAIN_BOARD_ID);
 
-  const handleAddCircuit = () => {
+  // Get boards from wizard data, ensure main board exists
+  const boards: DistributionBoard[] = useMemo(() => {
+    const wizardBoards = data.distributionBoards || [];
+    if (wizardBoards.length === 0) {
+      return [createMainBoard()];
+    }
+    return wizardBoards;
+  }, [data.distributionBoards]);
+
+  // Group circuits by board
+  const circuitsByBoard = useMemo(() => {
+    const grouped: Record<string, any[]> = {};
+    boards.forEach(board => {
+      grouped[board.id] = circuits.filter((c: any) => (c.boardId || MAIN_BOARD_ID) === board.id);
+    });
+    return grouped;
+  }, [circuits, boards]);
+
+  const handleAddCircuit = (boardId?: string) => {
+    const targetBoardId = boardId || activeBoard;
+    const boardCircuits = circuits.filter((c: any) => (c.boardId || MAIN_BOARD_ID) === targetBoardId);
     const newCircuit = {
       id: crypto.randomUUID(),
-      circuitNumber: (circuits.length + 1).toString(),
-      circuitDesignation: `C${circuits.length + 1}`,
+      boardId: targetBoardId,
+      circuitNumber: (boardCircuits.length + 1).toString(),
+      circuitDesignation: `C${boardCircuits.length + 1}`,
       circuitDescription: '',
       status: 'pending',
     };
@@ -56,15 +79,44 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({
         <StatCard label="Failed" value={stats.failed} variant="error" />
       </div>
 
+      {/* Board Tabs - only show if multiple boards */}
+      {boards.length > 1 && (
+        <div className="flex rounded-lg bg-muted p-1 gap-1 overflow-x-auto">
+          {boards.map((board) => (
+            <button
+              key={board.id}
+              type="button"
+              onClick={() => setActiveBoard(board.id)}
+              className={cn(
+                'flex-shrink-0 px-3 py-2.5 rounded-md text-sm font-medium transition-all touch-manipulation',
+                'min-h-[44px] whitespace-nowrap',
+                activeBoard === board.id
+                  ? 'bg-elec-yellow text-black shadow-sm'
+                  : 'text-muted-foreground hover:text-foreground'
+              )}
+            >
+              {board.name}
+              <Badge variant="secondary" className="ml-2 text-xs">
+                {circuitsByBoard[board.id]?.length || 0}
+              </Badge>
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* Circuit List */}
       <Card>
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-lg">Circuits</CardTitle>
+            <CardTitle className="text-lg">
+              {boards.length > 1
+                ? `${boards.find(b => b.id === activeBoard)?.name || 'Board'} Circuits`
+                : 'Circuits'}
+            </CardTitle>
             <Button
               size="sm"
               variant="outline"
-              onClick={handleAddCircuit}
+              onClick={() => handleAddCircuit(activeBoard)}
               className="gap-1"
             >
               <Plus className="h-4 w-4" />
@@ -73,18 +125,24 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({
           </div>
         </CardHeader>
         <CardContent className="space-y-2">
-          {circuits.length === 0 ? (
-            <EmptyState onAdd={handleAddCircuit} />
-          ) : (
-            circuits.map((circuit: any) => (
-              <CircuitCard
-                key={circuit.id}
-                circuit={circuit}
-                onClick={() => handleEditCircuit(circuit.id)}
-                isMobile={isMobile}
-              />
-            ))
-          )}
+          {(() => {
+            const currentBoardCircuits = boards.length > 1
+              ? (circuitsByBoard[activeBoard] || [])
+              : circuits;
+
+            return currentBoardCircuits.length === 0 ? (
+              <EmptyState onAdd={() => handleAddCircuit(activeBoard)} />
+            ) : (
+              currentBoardCircuits.map((circuit: any) => (
+                <CircuitCard
+                  key={circuit.id}
+                  circuit={circuit}
+                  onClick={() => handleEditCircuit(circuit.id)}
+                  isMobile={isMobile}
+                />
+              ))
+            );
+          })()}
         </CardContent>
       </Card>
 

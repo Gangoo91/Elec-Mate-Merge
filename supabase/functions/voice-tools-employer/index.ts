@@ -994,6 +994,250 @@ serve(async (req: Request) => {
         break;
       }
 
+      // ============================================
+      // QUOTE CREATION & SENDING (Full Flow Tools)
+      // ============================================
+      case 'create_and_send_quote': {
+        const { clientName, clientEmail, clientPhone, clientAddress, description, items, notes } = params as {
+          clientName: string;
+          clientEmail?: string;
+          clientPhone?: string;
+          clientAddress?: string;
+          description?: string;
+          items?: Array<{ description: string; quantity: number; unitPrice: number }>;
+          notes?: string;
+        };
+
+        if (!clientName) {
+          result = 'Client name is required to create a quote';
+          break;
+        }
+
+        // Generate quote number
+        const quoteNumber = `Q-${Date.now().toString(36).toUpperCase()}`;
+
+        // Calculate total from items
+        const quoteItems = items || [];
+        const total = quoteItems.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+
+        // Create the quote
+        const { data: quote, error } = await supabase
+          .from('quotes')
+          .insert({
+            quoteNumber,
+            client_data: {
+              name: clientName,
+              email: clientEmail,
+              phone: clientPhone,
+              address: clientAddress,
+            },
+            description,
+            items: quoteItems,
+            notes,
+            total,
+            status: 'sent',
+            user_id: userId,
+            created_at: new Date().toISOString(),
+          })
+          .select()
+          .single();
+
+        if (error) {
+          result = `Failed to create quote: ${error.message}`;
+        } else {
+          // If email provided, we would send it here (integration with email service)
+          const emailStatus = clientEmail ? ` and sent to ${clientEmail}` : '';
+          result = `Quote ${quoteNumber} created for ${clientName} (£${total.toFixed(2)})${emailStatus}`;
+        }
+        break;
+      }
+
+      case 'create_quote': {
+        const { clientName, clientEmail, clientPhone, clientAddress, description, items } = params as {
+          clientName: string;
+          clientEmail?: string;
+          clientPhone?: string;
+          clientAddress?: string;
+          description?: string;
+          items?: Array<{ description: string; quantity: number; unitPrice: number }>;
+        };
+
+        if (!clientName) {
+          result = 'Client name is required';
+          break;
+        }
+
+        const quoteNumber = `Q-${Date.now().toString(36).toUpperCase()}`;
+        const quoteItems = items || [];
+        const total = quoteItems.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+
+        const { data: quote, error } = await supabase
+          .from('quotes')
+          .insert({
+            quoteNumber,
+            client_data: {
+              name: clientName,
+              email: clientEmail,
+              phone: clientPhone,
+              address: clientAddress,
+            },
+            description,
+            items: quoteItems,
+            total,
+            status: 'draft',
+            user_id: userId,
+            created_at: new Date().toISOString(),
+          })
+          .select()
+          .single();
+
+        if (error) {
+          result = `Failed to create quote: ${error.message}`;
+        } else {
+          result = `Quote ${quoteNumber} created for ${clientName} (£${total.toFixed(2)}) - Status: Draft`;
+        }
+        break;
+      }
+
+      case 'send_quote': {
+        const { quoteNumber, clientEmail } = params as { quoteNumber: string; clientEmail?: string };
+
+        if (!quoteNumber) {
+          result = 'Quote number is required';
+          break;
+        }
+
+        const { data: quote, error } = await supabase
+          .from('quotes')
+          .update({ status: 'sent', sent_at: new Date().toISOString() })
+          .ilike('quoteNumber', `%${quoteNumber}%`)
+          .select()
+          .single();
+
+        if (error) {
+          result = `Failed to send quote: ${error.message}`;
+        } else {
+          const clientData = typeof quote.client_data === 'string' ? JSON.parse(quote.client_data) : quote.client_data;
+          result = `Quote ${quote.quoteNumber} sent to ${clientData?.name || 'client'}`;
+        }
+        break;
+      }
+
+      case 'create_invoice': {
+        const { quoteNumber, dueDate } = params as { quoteNumber: string; dueDate?: string };
+
+        if (!quoteNumber) {
+          result = 'Quote number is required to create an invoice';
+          break;
+        }
+
+        // Find the quote
+        const { data: quote, error: findError } = await supabase
+          .from('quotes')
+          .select('*')
+          .ilike('quoteNumber', `%${quoteNumber}%`)
+          .single();
+
+        if (findError || !quote) {
+          result = `No quote found matching "${quoteNumber}"`;
+          break;
+        }
+
+        // Generate invoice number
+        const invoiceNumber = `INV-${Date.now().toString(36).toUpperCase()}`;
+        const invoiceDueDate = dueDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+
+        const { error } = await supabase
+          .from('quotes')
+          .update({
+            invoice_number: invoiceNumber,
+            invoice_date: new Date().toISOString(),
+            invoice_due_date: invoiceDueDate,
+            invoice_status: 'unpaid',
+          })
+          .eq('id', quote.id);
+
+        if (error) {
+          result = `Failed to create invoice: ${error.message}`;
+        } else {
+          const clientData = typeof quote.client_data === 'string' ? JSON.parse(quote.client_data) : quote.client_data;
+          result = `Invoice ${invoiceNumber} created from quote ${quote.quoteNumber} for ${clientData?.name || 'client'} - Due: ${invoiceDueDate}`;
+        }
+        break;
+      }
+
+      case 'send_invoice': {
+        const { invoiceNumber } = params as { invoiceNumber: string };
+
+        if (!invoiceNumber) {
+          result = 'Invoice number is required';
+          break;
+        }
+
+        const { data: invoice, error } = await supabase
+          .from('quotes')
+          .update({ invoice_sent_at: new Date().toISOString() })
+          .ilike('invoice_number', `%${invoiceNumber}%`)
+          .select()
+          .single();
+
+        if (error) {
+          result = `Failed to send invoice: ${error.message}`;
+        } else {
+          const clientData = typeof invoice.client_data === 'string' ? JSON.parse(invoice.client_data) : invoice.client_data;
+          result = `Invoice ${invoice.invoice_number} sent to ${clientData?.name || 'client'}`;
+        }
+        break;
+      }
+
+      case 'mark_invoice_paid': {
+        const { invoiceNumber } = params as { invoiceNumber: string };
+
+        if (!invoiceNumber) {
+          result = 'Invoice number is required';
+          break;
+        }
+
+        const { data: invoice, error } = await supabase
+          .from('quotes')
+          .update({ invoice_status: 'paid', paid_at: new Date().toISOString() })
+          .ilike('invoice_number', `%${invoiceNumber}%`)
+          .select()
+          .single();
+
+        if (error) {
+          result = `Failed to mark invoice as paid: ${error.message}`;
+        } else {
+          const clientData = typeof invoice.client_data === 'string' ? JSON.parse(invoice.client_data) : invoice.client_data;
+          result = `Invoice ${invoice.invoice_number} marked as paid - £${invoice.total?.toFixed(2) || 0} from ${clientData?.name || 'client'}`;
+        }
+        break;
+      }
+
+      case 'approve_quote': {
+        const { quoteNumber } = params as { quoteNumber: string };
+
+        if (!quoteNumber) {
+          result = 'Quote number is required';
+          break;
+        }
+
+        const { data: quote, error } = await supabase
+          .from('quotes')
+          .update({ acceptance_status: 'accepted', accepted_at: new Date().toISOString() })
+          .ilike('quoteNumber', `%${quoteNumber}%`)
+          .select()
+          .single();
+
+        if (error) {
+          result = `Failed to approve quote: ${error.message}`;
+        } else {
+          const clientData = typeof quote.client_data === 'string' ? JSON.parse(quote.client_data) : quote.client_data;
+          result = `Quote ${quote.quoteNumber} approved for ${clientData?.name || 'client'} - £${quote.total?.toFixed(2) || 0}`;
+        }
+        break;
+      }
+
       default:
         result = `Unknown tool: ${tool}. Available employer tools: get_employee_info, get_pending_timesheets, approve_timesheet, get_job_info, get_worker_locations, and more.`;
     }

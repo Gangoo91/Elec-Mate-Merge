@@ -12,6 +12,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { Zap, Shield, Plug, Cable } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { DistributionBoard } from '@/types/distributionBoard';
+import MultiboardSetup from '@/components/testing/MultiboardSetup';
 
 interface InstallationStepProps {
   data: any;
@@ -390,6 +392,16 @@ export const InstallationStep: React.FC<InstallationStepProps> = ({ data, onChan
               </Select>
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Distribution Boards */}
+      <Card className="border-border/50">
+        <CardContent className="pt-6">
+          <MultiboardSetup
+            boards={data.distributionBoards || []}
+            onBoardsChange={(boards: DistributionBoard[]) => onChange({ distributionBoards: boards })}
+          />
         </CardContent>
       </Card>
     </div>

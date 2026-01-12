@@ -3,6 +3,50 @@
  * Supports multiple boards (Main CU + Sub-DBs) per installation
  */
 
+// Board type options
+export type BoardType = 'metal-clad' | 'plastic' | 'flush-mount' | 'surface-mount';
+
+// Common board manufacturers
+export const BOARD_MANUFACTURERS = [
+  'Hager',
+  'MK Electric',
+  'Schneider Electric',
+  'Fusebox',
+  'Wylex',
+  'Crabtree',
+  'Contactum',
+  'BG Electrical',
+  'Eaton',
+  'ABB',
+  'Legrand',
+  'Other'
+] as const;
+
+// Board type display names
+export const BOARD_TYPES: { value: BoardType; label: string }[] = [
+  { value: 'metal-clad', label: 'Metal Clad' },
+  { value: 'plastic', label: 'Plastic' },
+  { value: 'flush-mount', label: 'Flush Mount' },
+  { value: 'surface-mount', label: 'Surface Mount' }
+];
+
+// Common board locations
+export const BOARD_LOCATIONS = [
+  'Hallway',
+  'Kitchen',
+  'Utility Room',
+  'Garage',
+  'Cupboard',
+  'Basement',
+  'Loft',
+  'Plant Room',
+  'External',
+  'Other'
+] as const;
+
+// Board size options (number of ways)
+export const BOARD_SIZES = [4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24] as const;
+
 export interface DistributionBoard {
   id: string;
   name: string;                      // "Main CU", "Sub-DB1", "Sub-DB2"
@@ -18,10 +62,11 @@ export interface DistributionBoard {
   spdOperationalStatus: boolean;
   spdNA: boolean;
 
-  // Board metadata
-  make?: string;
-  model?: string;
-  totalWays?: number;
+  // Board details (for wizard collection)
+  make?: string;                     // Manufacturer (from BOARD_MANUFACTURERS)
+  model?: string;                    // Model number/name
+  type?: BoardType;                  // Board enclosure type
+  totalWays?: number;                // Board size (from BOARD_SIZES)
 
   // Timestamps
   createdAt?: Date;

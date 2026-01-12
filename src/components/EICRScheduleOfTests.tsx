@@ -6,6 +6,10 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Plus, BarChart3, Zap, Camera, LayoutGrid, Table2, Shield, X, PenTool, FileText, Wrench, ClipboardList, ClipboardCheck, Wand2, Sparkles, MoreVertical, Layout, Table, Trash2, Grid, Pen, ChevronDown, TestTube, Mic } from 'lucide-react';
 import { toast } from 'sonner';
 import { TestResult } from '@/types/testResult';
+import { DistributionBoard, MAIN_BOARD_ID, createDefaultBoard, generateBoardId, getNextSubBoardName } from '@/types/distributionBoard';
+import { migrateToMultiBoard, getCircuitsForBoard, formatBoardsForFormData } from '@/utils/boardMigration';
+import BoardSection from './testing/BoardSection';
+import BoardManagement from './testing/BoardManagement';
 import EnhancedTestResultDesktopTable from './EnhancedTestResultDesktopTable';
 import MobileOptimizedTestTable from './mobile/MobileOptimizedTestTable';
 import { MobileHorizontalScrollTable } from './mobile/MobileHorizontalScrollTable';
@@ -16,7 +20,6 @@ import QuickFillRcdPanel from './QuickFillRcdPanel';
 import TestInstrumentInfo from './TestInstrumentInfo';
 import TestMethodInfo from './TestMethodInfo';
 import TestAnalytics from './TestAnalytics';
-import DistributionBoardVerificationSection from './testing/DistributionBoardVerificationSection';
 import SmartAutoFillPromptDialog from './SmartAutoFillPromptDialog';
 import { ThreePhaseScheduleOfTests } from './eicr/ThreePhaseScheduleOfTests';
 
@@ -41,6 +44,8 @@ interface EICRScheduleOfTestsProps {
 
 const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRScheduleOfTestsProps) => {
   const [testResults, setTestResults] = useState<TestResult[]>([]);
+  const [distributionBoards, setDistributionBoards] = useState<DistributionBoard[]>([]);
+  const [expandedBoards, setExpandedBoards] = useState<Set<string>>(new Set([MAIN_BOARD_ID]));
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [showAutoFillPrompt, setShowAutoFillPrompt] = useState(false);
   const [newCircuitNumber, setNewCircuitNumber] = useState('');
@@ -115,12 +120,16 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
   // NOTE: We no longer use getDefaultCpcSize - replaced by twinAndEarthCpcFor utility
 
-  // Initialize test results from form data
+  // Initialize boards and test results from form data
   useEffect(() => {
-    if (formData.scheduleOfTests && formData.scheduleOfTests.length > 0) {
-      setTestResults(formData.scheduleOfTests);
+    // Migrate to multi-board structure (handles both legacy and new format)
+    const { distributionBoards: migratedBoards, scheduleOfTests: migratedCircuits } = migrateToMultiBoard(formData);
+    setDistributionBoards(migratedBoards);
+
+    if (migratedCircuits && migratedCircuits.length > 0) {
+      setTestResults(migratedCircuits);
     } else {
-      // Initial result with basic defaults
+      // Initial result with basic defaults - assigned to main board
       const initialResult: TestResult = {
         id: '1',
         circuitDesignation: 'C1',
@@ -166,7 +175,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         typeOfWiring: '',
         rcdBsStandard: '',
         rcdType: '',
-        rcdRatingA: ''
+        rcdRatingA: '',
+        boardId: MAIN_BOARD_ID
       };
       setTestResults([initialResult]);
       // Write initial result to formData so voice updates can apply immediately
@@ -174,18 +184,149 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     }
   }, []);
 
-  // Load initial data from formData on mount only (like EIC pattern)
-  useEffect(() => {
-    if (Array.isArray(formData.scheduleOfTests) && formData.scheduleOfTests.length > 0) {
-      const incoming = formData.scheduleOfTests as TestResult[];
-      setTestResults(incoming);
-    }
-  }, []);
-
-  const addTestResult = () => {
+  const addTestResult = (boardId?: string) => {
     const nextCircuitNumber = (testResults.length + 1).toString();
     setNewCircuitNumber(nextCircuitNumber);
     setShowAutoFillPrompt(true);
+  };
+
+  // Add a circuit directly to a specific board
+  const addCircuitToBoard = (boardId: string) => {
+    const boardCircuits = getCircuitsForBoard(testResults, boardId);
+    const nextCircuitNum = testResults.length + 1;
+    const newResult: TestResult = {
+      id: Date.now().toString(),
+      circuitDesignation: `C${nextCircuitNum}`,
+      circuitNumber: nextCircuitNum.toString(),
+      circuitDescription: '',
+      circuitType: '',
+      type: '',
+      referenceMethod: '',
+      liveSize: '',
+      cpcSize: '',
+      protectiveDeviceType: '',
+      protectiveDeviceRating: '',
+      protectiveDeviceKaRating: '',
+      protectiveDeviceLocation: '',
+      bsStandard: '',
+      cableSize: '',
+      protectiveDevice: '',
+      r1r2: '',
+      r2: '',
+      ringContinuityLive: '',
+      ringContinuityNeutral: '',
+      ringR1: '',
+      ringRn: '',
+      ringR2: '',
+      insulationTestVoltage: '',
+      insulationResistance: '',
+      insulationLiveNeutral: '',
+      insulationLiveEarth: '',
+      insulationNeutralEarth: '',
+      polarity: '',
+      zs: '',
+      maxZs: '',
+      pointsServed: '',
+      rcdRating: '',
+      rcdOneX: '',
+      rcdTestButton: '',
+      afddTest: '',
+      pfc: '',
+      pfcLiveNeutral: '',
+      pfcLiveEarth: '',
+      functionalTesting: '',
+      notes: '',
+      typeOfWiring: '',
+      rcdBsStandard: '',
+      rcdType: '',
+      rcdRatingA: '',
+      boardId: boardId
+    };
+    const updatedResults = [...testResults, newResult];
+    setTestResults(updatedResults);
+    onUpdate('scheduleOfTests', updatedResults);
+    toast.success(`Circuit C${nextCircuitNum} added`);
+  };
+
+  // Board management functions
+  const handleAddBoard = () => {
+    const newBoard = createDefaultBoard(
+      generateBoardId(),
+      getNextSubBoardName(distributionBoards),
+      distributionBoards.length
+    );
+    const updatedBoards = [...distributionBoards, newBoard];
+    setDistributionBoards(updatedBoards);
+    setExpandedBoards(prev => new Set([...prev, newBoard.id]));
+
+    // Save boards to formData
+    const formDataUpdate = formatBoardsForFormData(updatedBoards, testResults);
+    Object.entries(formDataUpdate).forEach(([key, value]) => {
+      onUpdate(key, value);
+    });
+
+    toast.success(`${newBoard.name} added`);
+  };
+
+  const handleRemoveBoard = (boardId: string) => {
+    if (boardId === MAIN_BOARD_ID) {
+      toast.error('Cannot remove Main CU');
+      return;
+    }
+
+    const boardToRemove = distributionBoards.find(b => b.id === boardId);
+    const boardCircuits = getCircuitsForBoard(testResults, boardId);
+
+    // Move circuits to main board
+    const updatedResults = testResults.map(c =>
+      c.boardId === boardId ? { ...c, boardId: MAIN_BOARD_ID } : c
+    );
+
+    // Remove the board
+    const updatedBoards = distributionBoards
+      .filter(b => b.id !== boardId)
+      .map((b, index) => ({ ...b, order: index }));
+
+    setDistributionBoards(updatedBoards);
+    setTestResults(updatedResults);
+    setExpandedBoards(prev => {
+      const next = new Set(prev);
+      next.delete(boardId);
+      return next;
+    });
+
+    // Save to formData
+    const formDataUpdate = formatBoardsForFormData(updatedBoards, updatedResults);
+    Object.entries(formDataUpdate).forEach(([key, value]) => {
+      onUpdate(key, value);
+    });
+
+    toast.success(`${boardToRemove?.name || 'Board'} removed. ${boardCircuits.length > 0 ? `${boardCircuits.length} circuit(s) moved to Main CU.` : ''}`);
+  };
+
+  const handleUpdateBoard = (boardId: string, field: keyof DistributionBoard, value: any) => {
+    const updatedBoards = distributionBoards.map(b =>
+      b.id === boardId ? { ...b, [field]: value } : b
+    );
+    setDistributionBoards(updatedBoards);
+
+    // Save to formData
+    const formDataUpdate = formatBoardsForFormData(updatedBoards, testResults);
+    Object.entries(formDataUpdate).forEach(([key, value]) => {
+      onUpdate(key, value);
+    });
+  };
+
+  const toggleBoardExpanded = (boardId: string) => {
+    setExpandedBoards(prev => {
+      const next = new Set(prev);
+      if (next.has(boardId)) {
+        next.delete(boardId);
+      } else {
+        next.add(boardId);
+      }
+      return next;
+    });
   };
 
   const handleCreateCircuit = (useAutoFill: boolean = false, circuitType?: string, suggestions?: Partial<TestResult>) => {
@@ -1069,38 +1210,72 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           <div className="px-4 pb-2 flex items-center justify-between">
             <span className="text-xs text-muted-foreground">
               {testResults.length} {testResults.length === 1 ? 'circuit' : 'circuits'}
+              {distributionBoards.length > 1 && ` • ${distributionBoards.length} boards`}
             </span>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleMobileView}
-              className="h-8 text-xs gap-1.5 text-muted-foreground hover:text-foreground"
-            >
-              {mobileViewType === 'table' ? <Layout className="h-3.5 w-3.5" /> : <Table className="h-3.5 w-3.5" />}
-              {mobileViewType === 'table' ? 'Cards' : 'Table'}
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleAddBoard}
+                className="h-8 text-xs gap-1.5 text-muted-foreground hover:text-foreground"
+              >
+                <Plus className="h-3.5 w-3.5" />
+                Board
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={toggleMobileView}
+                className="h-8 text-xs gap-1.5 text-muted-foreground hover:text-foreground"
+              >
+                {mobileViewType === 'table' ? <Layout className="h-3.5 w-3.5" /> : <Table className="h-3.5 w-3.5" />}
+                {mobileViewType === 'table' ? 'Cards' : 'Table'}
+              </Button>
+            </div>
           </div>
 
-          {/* Circuit List/Table */}
-          <div className="px-2 pb-4">
-            {mobileViewType === 'table' ? (
-              <MobileHorizontalScrollTable
-                testResults={testResults}
-                onUpdate={updateTestResult}
-                onRemove={removeTestResult}
-                onBulkUpdate={handleBulkUpdate}
-                onBulkFieldUpdate={handleBulkFieldUpdate}
-              />
-            ) : (
-              <CircuitList
-                circuits={testResults}
-                onUpdate={updateTestResult}
-                onRemove={removeTestResult}
-                onBulkUpdate={handleBulkUpdate}
-                viewMode="card"
-                className="px-0"
-              />
-            )}
+          {/* Distribution Boards with Circuit Lists */}
+          <div className="px-2 pb-4 space-y-3">
+            {distributionBoards
+              .sort((a, b) => a.order - b.order)
+              .map(board => {
+                const boardCircuits = getCircuitsForBoard(testResults, board.id);
+                return (
+                  <BoardSection
+                    key={board.id}
+                    board={board}
+                    isExpanded={expandedBoards.has(board.id)}
+                    onToggleExpanded={() => toggleBoardExpanded(board.id)}
+                    onUpdateBoard={handleUpdateBoard}
+                    onRemoveBoard={handleRemoveBoard}
+                    onAddCircuit={() => addCircuitToBoard(board.id)}
+                    circuitCount={boardCircuits.length}
+                    completedCount={boardCircuits.filter(r =>
+                      r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
+                    ).length}
+                    isMobile={true}
+                  >
+                    {mobileViewType === 'table' ? (
+                      <MobileHorizontalScrollTable
+                        testResults={boardCircuits}
+                        onUpdate={updateTestResult}
+                        onRemove={removeTestResult}
+                        onBulkUpdate={handleBulkUpdate}
+                        onBulkFieldUpdate={handleBulkFieldUpdate}
+                      />
+                    ) : (
+                      <CircuitList
+                        circuits={boardCircuits}
+                        onUpdate={updateTestResult}
+                        onRemove={removeTestResult}
+                        onBulkUpdate={handleBulkUpdate}
+                        viewMode="card"
+                        className="px-0"
+                      />
+                    )}
+                  </BoardSection>
+                );
+              })}
           </div>
         </div>
       ) : (
@@ -1230,17 +1405,45 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             </div>
           )}
 
-          {/* Table Container */}
-          <div className="testing-table-container" data-autofill-section>
-            <EnhancedTestResultDesktopTable
-              testResults={testResults}
-              onUpdate={updateTestResult}
-              onRemove={removeTestResult}
-              allResults={testResults}
-              onBulkUpdate={handleBulkUpdate}
-              onAddCircuit={addTestResult}
-              onBulkFieldUpdate={handleBulkFieldUpdate}
-            />
+          {/* Board Management Header */}
+          <BoardManagement
+            boards={distributionBoards}
+            onAddBoard={handleAddBoard}
+            totalCircuits={testResults.length}
+          />
+
+          {/* Distribution Boards with Circuit Tables */}
+          <div className="space-y-4" data-autofill-section>
+            {distributionBoards
+              .sort((a, b) => a.order - b.order)
+              .map(board => {
+                const boardCircuits = getCircuitsForBoard(testResults, board.id);
+                return (
+                  <BoardSection
+                    key={board.id}
+                    board={board}
+                    isExpanded={expandedBoards.has(board.id)}
+                    onToggleExpanded={() => toggleBoardExpanded(board.id)}
+                    onUpdateBoard={handleUpdateBoard}
+                    onRemoveBoard={handleRemoveBoard}
+                    onAddCircuit={() => addCircuitToBoard(board.id)}
+                    circuitCount={boardCircuits.length}
+                    completedCount={boardCircuits.filter(r =>
+                      r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
+                    ).length}
+                  >
+                    <EnhancedTestResultDesktopTable
+                      testResults={boardCircuits}
+                      onUpdate={updateTestResult}
+                      onRemove={removeTestResult}
+                      allResults={testResults}
+                      onBulkUpdate={handleBulkUpdate}
+                      onAddCircuit={() => addCircuitToBoard(board.id)}
+                      onBulkFieldUpdate={handleBulkFieldUpdate}
+                    />
+                  </BoardSection>
+                );
+              })}
           </div>
         </div>
       )}
@@ -1278,35 +1481,6 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             </Collapsible>
           </div>
 
-          {/* Distribution Board Verification */}
-          <div className="testing-info-section">
-            <Collapsible>
-              <CollapsibleTrigger asChild>
-                <button className="testing-info-header">
-                  <span className="flex items-center gap-2">
-                    <Zap className="h-4 w-4 text-elec-yellow" />
-                    Distribution Board
-                  </span>
-                  <ChevronDown className="h-4 w-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                </button>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="px-4 pb-4">
-                <DistributionBoardVerificationSection
-                  data={{
-                    dbReference: formData.dbReference || '',
-                    zdb: formData.zdb || '',
-                    ipf: formData.ipf || '',
-                    confirmedCorrectPolarity: formData.confirmedCorrectPolarity || false,
-                    confirmedPhaseSequence: formData.confirmedPhaseSequence || false,
-                    spdOperationalStatus: formData.spdOperationalStatus || false,
-                    spdNA: formData.spdNA || false,
-                  }}
-                  onUpdate={(field, value) => onUpdate(field, value)}
-                />
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
-
           {/* Test Method & Notes */}
           <div className="testing-info-section">
             <Collapsible>
@@ -1327,32 +1501,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         </div>
       ) : (
         /* Desktop: Horizontal Card Grid */
-        <div className="grid grid-cols-3 gap-4 mt-6">
+        <div className="grid grid-cols-2 gap-4 mt-6">
           <div className="testing-info-section p-4">
             <h3 className="text-sm font-semibold text-white/90 flex items-center gap-2 mb-4">
               <Wrench className="h-4 w-4 text-elec-yellow" />
               Test Instruments
             </h3>
             <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
-          </div>
-
-          <div className="testing-info-section p-4">
-            <h3 className="text-sm font-semibold text-white/90 flex items-center gap-2 mb-4">
-              <Zap className="h-4 w-4 text-elec-yellow" />
-              Distribution Board
-            </h3>
-            <DistributionBoardVerificationSection
-              data={{
-                dbReference: formData.dbReference || '',
-                zdb: formData.zdb || '',
-                ipf: formData.ipf || '',
-                confirmedCorrectPolarity: formData.confirmedCorrectPolarity || false,
-                confirmedPhaseSequence: formData.confirmedPhaseSequence || false,
-                spdOperationalStatus: formData.spdOperationalStatus || false,
-                spdNA: formData.spdNA || false,
-              }}
-              onUpdate={(field, value) => onUpdate(field, value)}
-            />
           </div>
 
           <div className="testing-info-section p-4">

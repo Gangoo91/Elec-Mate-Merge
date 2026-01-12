@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -8,6 +8,8 @@ import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Cable } from 'lucide-react';
 import { cableSizeOptions } from '@/types/cableTypes';
+import MultiboardSetup from '@/components/testing/MultiboardSetup';
+import { DistributionBoard, createMainBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
 
 interface EICElectricalInstallationSectionProps {
   formData: any;
@@ -22,11 +24,41 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
 
   const handleRCDMainSwitchChange = (value: string) => {
     onUpdate('rcdMainSwitch', value);
-    
+
     // Clear RCD fields when "No" is selected
     if (value === 'no') {
       onUpdate('rcdRating', '');
       onUpdate('rcdType', '');
+    }
+  };
+
+  // Migrate legacy single-board data to multi-board format
+  const boards: DistributionBoard[] = useMemo(() => {
+    // If we already have distributionBoards, use them
+    if (formData.distributionBoards && formData.distributionBoards.length > 0) {
+      return formData.distributionBoards;
+    }
+
+    // Otherwise, create main board from legacy fields
+    const mainBoard = createMainBoard();
+    if (formData.boardLocation) mainBoard.location = formData.boardLocation;
+    if (formData.boardType) mainBoard.type = formData.boardType as any;
+    if (formData.boardSize) {
+      mainBoard.totalWays = parseInt(formData.boardSize) || 0;
+    }
+    return [mainBoard];
+  }, [formData.distributionBoards, formData.boardLocation, formData.boardType, formData.boardSize]);
+
+  // Handle board changes - sync to both new and legacy fields for backward compatibility
+  const handleBoardsChange = (newBoards: DistributionBoard[]) => {
+    onUpdate('distributionBoards', newBoards as any);
+
+    // Also update legacy fields from main board for backward compatibility
+    const mainBoard = newBoards.find(b => b.id === MAIN_BOARD_ID) || newBoards[0];
+    if (mainBoard) {
+      if (mainBoard.location) onUpdate('boardLocation', mainBoard.location);
+      if (mainBoard.type) onUpdate('boardType', mainBoard.type);
+      if (mainBoard.totalWays) onUpdate('boardSize', String(mainBoard.totalWays));
     }
   };
 
@@ -170,66 +202,11 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
 
         <Separator />
 
-        {/* Distribution Board */}
-        <div className="space-y-4">
-          <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
-            Distribution Board
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <Label htmlFor="boardSize" className="font-medium text-sm">Number of Ways</Label>
-              <Select value={formData.boardSize || ''} onValueChange={(value) => onUpdate('boardSize', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select number of ways" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  <SelectItem value="4">4 Way</SelectItem>
-                  <SelectItem value="6">6 Way</SelectItem>
-                  <SelectItem value="8">8 Way</SelectItem>
-                  <SelectItem value="10">10 Way</SelectItem>
-                  <SelectItem value="12">12 Way</SelectItem>
-                  <SelectItem value="16">16 Way</SelectItem>
-                  <SelectItem value="18">18 Way</SelectItem>
-                  <SelectItem value="20">20 Way</SelectItem>
-                  <SelectItem value="24">24 Way</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="boardType" className="font-medium text-sm">Board Type</Label>
-              <Select value={formData.boardType || ''} onValueChange={(value) => onUpdate('boardType', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select board type" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  <SelectItem value="metal">Metal Clad</SelectItem>
-                  <SelectItem value="plastic">Plastic</SelectItem>
-                  <SelectItem value="flush">Flush Mount</SelectItem>
-                  <SelectItem value="surface">Surface Mount</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="boardLocation" className="font-medium text-sm">Board Location</Label>
-              <Select value={formData.boardLocation || ''} onValueChange={(value) => onUpdate('boardLocation', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select location" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  <SelectItem value="kitchen">Kitchen</SelectItem>
-                  <SelectItem value="utility">Utility Room</SelectItem>
-                  <SelectItem value="garage">Garage</SelectItem>
-                  <SelectItem value="hallway">Hallway</SelectItem>
-                  <SelectItem value="cupboard">Cupboard</SelectItem>
-                  <SelectItem value="basement">Basement</SelectItem>
-                  <SelectItem value="plant-room">Plant Room</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </div>
+        {/* Distribution Boards - Multi-board support */}
+        <MultiboardSetup
+          boards={boards}
+          onBoardsChange={handleBoardsChange}
+        />
 
         <Separator />
 

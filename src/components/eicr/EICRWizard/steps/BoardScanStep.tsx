@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Camera, Plus, Sparkles, Check, Zap, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { DistributionBoard, MAIN_BOARD_ID, createMainBoard } from '@/types/distributionBoard';
 
 interface BoardScanStepProps {
   data: Record<string, any>;
@@ -23,13 +25,47 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
   isMobile,
 }) => {
   const [isScanning, setIsScanning] = useState(false);
+  const [selectedBoardId, setSelectedBoardId] = useState<string>(MAIN_BOARD_ID);
+
+  // Get boards from wizard data
+  const boards: DistributionBoard[] = useMemo(() => {
+    const wizardBoards = data.distributionBoards || [];
+    if (wizardBoards.length === 0) {
+      return [createMainBoard()];
+    }
+    return wizardBoards;
+  }, [data.distributionBoards]);
+
+  const selectedBoard = boards.find(b => b.id === selectedBoardId) || boards[0];
   const hasCircuits = data.circuits && data.circuits.length > 0;
 
+  // Handle AI scan - updates board details and creates circuits
   const handleScan = async () => {
     setIsScanning(true);
     // TODO: Integrate with BoardPhotoCapture component
-    // For now, simulate scan
+    // When AI scan completes, it should:
+    // 1. Update the selected board's make/model if detected
+    // 2. Add detected circuits with the selected boardId
+
     setTimeout(() => {
+      // Simulate AI detecting board details
+      // In real implementation, this would come from the AI response
+      const updatedBoards = boards.map(board => {
+        if (board.id === selectedBoardId) {
+          return {
+            ...board,
+            // AI would update these fields
+            // make: detectedMake,
+            // model: detectedModel,
+            // totalWays: detectedWays,
+          };
+        }
+        return board;
+      });
+
+      // Update boards if any changes detected
+      // onChange({ distributionBoards: updatedBoards });
+
       setIsScanning(false);
     }, 2000);
   };
@@ -73,6 +109,27 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
                 Board make/model
               </Badge>
             </div>
+
+            {/* Board Selector - show if multiple boards */}
+            {boards.length > 1 && (
+              <div className="w-full max-w-xs">
+                <label className="text-sm text-muted-foreground mb-1 block text-left">
+                  Scanning board:
+                </label>
+                <Select value={selectedBoardId} onValueChange={setSelectedBoardId}>
+                  <SelectTrigger className="h-11 touch-manipulation">
+                    <SelectValue placeholder="Select board" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {boards.map((board) => (
+                      <SelectItem key={board.id} value={board.id}>
+                        {board.name} {board.location && `(${board.location})`}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
 
             {/* Primary Action */}
             <Button

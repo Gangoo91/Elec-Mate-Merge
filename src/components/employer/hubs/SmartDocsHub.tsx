@@ -1,8 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { FeatureTile } from "@/components/employer/FeatureTile";
-import { SectionHeader } from "@/components/employer/SectionHeader";
-import { Skeleton } from "@/components/ui/skeleton";
+import { HubSkeleton } from "@/components/employer/skeletons";
 import type { Section } from "@/pages/employer/EmployerDashboard";
 import { useJobPacks } from "@/hooks/useJobPacks";
 import {
@@ -45,16 +44,7 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
   ];
 
   if (isLoading) {
-    return (
-      <div className="space-y-4 md:space-y-6">
-        <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-          {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-16 w-28 shrink-0" />)}
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          {[1, 2, 3, 4, 5].map(i => <Skeleton key={i} className="h-24" />)}
-        </div>
-      </div>
-    );
+    return <HubSkeleton statCount={4} cardCount={5} columns={3} />;
   }
 
   return (

@@ -4,6 +4,8 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { DistributionBoard } from '@/types/distributionBoard';
+import MultiboardSetup from '@/components/testing/MultiboardSetup';
 
 interface InstallationStepProps {
   data: Record<string, any>;
@@ -152,6 +154,16 @@ export const InstallationStep: React.FC<InstallationStepProps> = ({
               </div>
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Distribution Boards */}
+      <Card>
+        <CardContent className="pt-6">
+          <MultiboardSetup
+            boards={data.distributionBoards || []}
+            onBoardsChange={(boards: DistributionBoard[]) => onChange({ distributionBoards: boards })}
+          />
         </CardContent>
       </Card>
     </div>

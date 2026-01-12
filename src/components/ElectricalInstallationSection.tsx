@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
@@ -12,6 +12,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Badge } from '@/components/ui/badge';
 import { Plus, Trash2, Copy, Palette, Calculator, Cable } from 'lucide-react';
 import CircuitTemplateSelector from './CircuitTemplateSelector';
+import MultiboardSetup from '@/components/testing/MultiboardSetup';
+import { DistributionBoard, createMainBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
 
 interface ElectricalInstallationSectionProps {
   formData: any;
@@ -21,6 +23,39 @@ interface ElectricalInstallationSectionProps {
 const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstallationSectionProps) => {
   const [isOpen, setIsOpen] = useState(true);
   const [showTemplateDialog, setShowTemplateDialog] = useState(false);
+
+  // Migrate legacy single-board data to multi-board format
+  const boards: DistributionBoard[] = useMemo(() => {
+    // If we already have distributionBoards, use them
+    if (formData.distributionBoards && formData.distributionBoards.length > 0) {
+      return formData.distributionBoards;
+    }
+
+    // Otherwise, create main board from legacy fields
+    const mainBoard = createMainBoard();
+    if (formData.cuLocation) mainBoard.location = formData.cuLocation;
+    if (formData.cuManufacturer) mainBoard.make = formData.cuManufacturer;
+    if (formData.cuType) mainBoard.type = formData.cuType as any;
+    if (formData.boardSize) {
+      const sizeMatch = formData.boardSize.match(/(\d+)/);
+      if (sizeMatch) mainBoard.totalWays = parseInt(sizeMatch[1]);
+    }
+    return [mainBoard];
+  }, [formData.distributionBoards, formData.cuLocation, formData.cuManufacturer, formData.cuType, formData.boardSize]);
+
+  // Handle board changes - sync to both new and legacy fields for backward compatibility
+  const handleBoardsChange = (newBoards: DistributionBoard[]) => {
+    onUpdate('distributionBoards', newBoards);
+
+    // Also update legacy fields from main board for backward compatibility
+    const mainBoard = newBoards.find(b => b.id === MAIN_BOARD_ID) || newBoards[0];
+    if (mainBoard) {
+      if (mainBoard.location) onUpdate('cuLocation', mainBoard.location);
+      if (mainBoard.make) onUpdate('cuManufacturer', mainBoard.make);
+      if (mainBoard.type) onUpdate('cuType', mainBoard.type);
+      if (mainBoard.totalWays) onUpdate('boardSize', `${mainBoard.totalWays}-way`);
+    }
+  };
 
   const addCircuit = () => {
     const circuits = formData.circuits || [];
@@ -102,95 +137,21 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
         />
         <CollapsibleContent>
           <CardContent className="p-4 space-y-6">
-            {/* Consumer Unit Details */}
+            {/* Distribution Boards - Multi-board support */}
+            <MultiboardSetup
+              boards={boards}
+              onBoardsChange={handleBoardsChange}
+            />
+
+            <Separator className="bg-border/30" />
+
+            {/* Intake Cable Details */}
             <div className="space-y-4">
               <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
                 <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
-                Consumer Unit / Distribution Board
+                Intake Cable
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="cuLocation">Location <span className="text-elec-yellow">*</span></Label>
-                  <Select value={formData.cuLocation || ''} onValueChange={(value) => onUpdate('cuLocation', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select location" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Hallway cupboard">Hallway cupboard</SelectItem>
-                      <SelectItem value="Under stairs cupboard">Under stairs cupboard</SelectItem>
-                      <SelectItem value="Garage">Garage</SelectItem>
-                      <SelectItem value="Utility room">Utility room</SelectItem>
-                      <SelectItem value="Kitchen">Kitchen</SelectItem>
-                      <SelectItem value="Entrance hallway">Entrance hallway</SelectItem>
-                      <SelectItem value="Meter cupboard">Meter cupboard</SelectItem>
-                      <SelectItem value="Airing cupboard">Airing cupboard</SelectItem>
-                      <SelectItem value="Basement">Basement</SelectItem>
-                      <SelectItem value="Outside (external box)">Outside (external box)</SelectItem>
-                      <SelectItem value="Loft">Loft</SelectItem>
-                      <SelectItem value="Other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="cuManufacturer">Manufacturer <span className="text-elec-yellow">*</span></Label>
-                  <Select value={formData.cuManufacturer || ''} onValueChange={(value) => onUpdate('cuManufacturer', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select manufacturer" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Hager">Hager</SelectItem>
-                      <SelectItem value="MK Electric">MK Electric</SelectItem>
-                      <SelectItem value="Schneider Electric">Schneider Electric</SelectItem>
-                      <SelectItem value="Fusebox">Fusebox</SelectItem>
-                      <SelectItem value="Elucian">Elucian</SelectItem>
-                      <SelectItem value="Eaton">Eaton</SelectItem>
-                      <SelectItem value="Wylex">Wylex</SelectItem>
-                      <SelectItem value="BG Electrical">BG Electrical</SelectItem>
-                      <SelectItem value="Lewden">Lewden</SelectItem>
-                      <SelectItem value="Crabtree">Crabtree</SelectItem>
-                      <SelectItem value="ABB">ABB</SelectItem>
-                      <SelectItem value="Legrand">Legrand</SelectItem>
-                      <SelectItem value="Other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="cuType">Type <span className="text-elec-yellow">*</span></Label>
-                  <Select value={formData.cuType || ''} onValueChange={(value) => onUpdate('cuType', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="metal">Metal Enclosure</SelectItem>
-                      <SelectItem value="plastic">Plastic Enclosure</SelectItem>
-                      <SelectItem value="metal-clad">Metal Clad</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="boardSize">Board Size <span className="text-elec-yellow">*</span></Label>
-                  <Select value={formData.boardSize || ''} onValueChange={(value) => onUpdate('boardSize', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select board size" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="4-way">4 Way</SelectItem>
-                      <SelectItem value="6-way">6 Way</SelectItem>
-                      <SelectItem value="8-way">8 Way</SelectItem>
-                      <SelectItem value="10-way">10 Way</SelectItem>
-                      <SelectItem value="12-way">12 Way</SelectItem>
-                      <SelectItem value="16-way">16 Way</SelectItem>
-                      <SelectItem value="18-way">18 Way</SelectItem>
-                      <SelectItem value="24-way">24 Way</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  {formData.circuits && formData.circuits.length > 0 && (
-                    <p className="text-xs text-elec-yellow/80 flex items-center gap-1">
-                      <span className="w-1 h-1 rounded-full bg-elec-yellow"></span>
-                      Suggested: {suggestedBoardSize()} for {formData.circuits.length} circuits
-                    </p>
-                  )}
-                </div>
                 <div className="space-y-1.5">
                   <Label htmlFor="intakeCableSize">Intake Cable Size <span className="text-elec-yellow">*</span></Label>
                   <Select value={formData.intakeCableSize || ''} onValueChange={(value) => onUpdate('intakeCableSize', value)}>

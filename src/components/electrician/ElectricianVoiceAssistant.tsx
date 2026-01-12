@@ -145,15 +145,24 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
     loadAgentId();
   }, []);
 
-  // Execute server-side tool
+  // Execute server-side tool with auth header
   const executeServerTool = async (toolName: string, params: Record<string, unknown>) => {
     try {
       console.log('[ElectricianVoice] Server tool:', toolName, params);
+
+      // Get auth token for edge function
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData.session?.access_token;
+
       const { data, error } = await supabase.functions.invoke('voice-tools', {
         body: { tool: toolName, params },
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('[ElectricianVoice] Voice tool error:', error);
+        return `Error: ${error.message || 'Failed to execute tool'}`;
+      }
 
       // Invalidate relevant queries
       if (toolName.includes('quote') || toolName.includes('invoice')) {
@@ -397,6 +406,21 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
 
     return () => clearInterval(interval);
   }, [conversation.status, conversation.isSpeaking]);
+
+  // Listen for external voice activation events (from EICR/EIC voice buttons)
+  useEffect(() => {
+    const handleActivateVoice = () => {
+      if (!isConnected && !isConnecting) {
+        setIsMinimised(false);
+        startConversation();
+      } else if (isConnected && isMinimised) {
+        setIsMinimised(false);
+      }
+    };
+
+    window.addEventListener('activate-voice-assistant', handleActivateVoice);
+    return () => window.removeEventListener('activate-voice-assistant', handleActivateVoice);
+  }, [isConnected, isConnecting, isMinimised, startConversation]);
 
   // Handle quick prompt click
   const handleQuickPrompt = useCallback((message: string) => {
@@ -714,9 +738,15 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
       )}
 
       <div className="z-50" style={fabStyle}>
-        {/* Expanded Panel */}
+        {/* Expanded Panel - Mobile responsive */}
         {!isMinimised && (
-          <div className="absolute bottom-16 right-0 w-80 max-w-[calc(100vw-32px)] rounded-2xl bg-card border border-border shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4">
+          <div className={cn(
+            "absolute rounded-2xl bg-card border border-border shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4",
+            // Mobile: full width with safe margins, positioned above FAB
+            "w-[calc(100vw-24px)] left-1/2 -translate-x-1/2 bottom-[72px]",
+            // Desktop: fixed width positioned to the right
+            "sm:w-80 sm:left-auto sm:translate-x-0 sm:right-0 sm:bottom-16"
+          )}>
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 bg-elec-yellow/10 border-b border-border">
               <div className="flex items-center gap-2">
@@ -731,8 +761,8 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
               </Button>
             </div>
 
-            {/* Content */}
-            <div className="p-4 space-y-3 min-h-[120px] max-h-[300px] overflow-y-auto">
+            {/* Content - Mobile responsive height */}
+            <div className="p-4 space-y-3 min-h-[120px] max-h-[50vh] sm:max-h-[300px] overflow-y-auto pb-safe">
               {isConnecting && (
                 <div className="flex flex-col items-center justify-center py-6 gap-3">
                   <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />

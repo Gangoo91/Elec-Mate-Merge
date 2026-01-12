@@ -78,7 +78,7 @@ export async function callGemini(
 ): Promise<AIResponse> {
   const {
     messages,
-    model = 'gemini-3-flash',
+    model = 'gemini-3-flash-preview',
     temperature = 0.3,
     max_tokens = 2000,
     response_format,
