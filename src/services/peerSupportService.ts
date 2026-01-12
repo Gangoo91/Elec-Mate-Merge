@@ -248,13 +248,12 @@ export const peerConversationService = {
       peerBlockService.getBlockedUsers()
     ]);
 
-    // Build query conditions
+    // Build query conditions - fetch conversations with supporter data
     let query = supabase
       .from('mental_health_peer_conversations')
       .select(`
         *,
-        supporter:mental_health_peer_supporters(*),
-        seeker:profiles!mental_health_peer_conversations_seeker_id_fkey(id, full_name, avatar_url)
+        supporter:mental_health_peer_supporters(*)
       `)
       .order('last_message_at', { ascending: false });
 
@@ -273,7 +272,21 @@ export const peerConversationService = {
       throw error;
     }
 
-    const conversations = (data as unknown as PeerConversation[]) || [];
+    const rawConversations = data || [];
+
+    // Get unique seeker IDs and fetch their profiles
+    const seekerIds = [...new Set(rawConversations.map(c => c.seeker_id))];
+    const { data: seekerProfiles } = await supabase
+      .from('profiles')
+      .select('id, full_name, avatar_url')
+      .in('id', seekerIds);
+
+    // Map seeker profiles to conversations
+    const profileMap = new Map(seekerProfiles?.map(p => [p.id, p]) || []);
+    const conversations = rawConversations.map(conv => ({
+      ...conv,
+      seeker: profileMap.get(conv.seeker_id) || { id: conv.seeker_id, full_name: null, avatar_url: null }
+    })) as unknown as PeerConversation[];
 
     // Filter out conversations with blocked users
     if (blockedUsers.length === 0) {
@@ -306,7 +319,8 @@ export const peerConversationService = {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
-    const { data, error } = await supabase
+    // First insert the conversation
+    const { data: conversation, error: insertError } = await supabase
       .from('mental_health_peer_conversations')
       .insert({
         supporter_id: supporterId,
@@ -315,13 +329,23 @@ export const peerConversationService = {
       })
       .select(`
         *,
-        supporter:mental_health_peer_supporters(*),
-        seeker:profiles!mental_health_peer_conversations_seeker_id_fkey(id, full_name, avatar_url)
+        supporter:mental_health_peer_supporters(*)
       `)
       .single();
 
-    if (error) throw error;
-    return data as unknown as PeerConversation;
+    if (insertError) throw insertError;
+
+    // Get seeker profile separately (profiles table uses user id as primary key)
+    const { data: seekerProfile } = await supabase
+      .from('profiles')
+      .select('id, full_name, avatar_url')
+      .eq('id', user.id)
+      .single();
+
+    return {
+      ...conversation,
+      seeker: seekerProfile || { id: user.id, full_name: null, avatar_url: null }
+    } as unknown as PeerConversation;
   },
 
   /**
@@ -408,20 +432,26 @@ export const peerMessageService = {
         .from('mental_health_peer_conversations')
         .select(`
           *,
-          supporter:mental_health_peer_supporters(user_id, display_name),
-          seeker:profiles!mental_health_peer_conversations_seeker_id_fkey(id, full_name)
+          supporter:mental_health_peer_supporters(user_id, display_name)
         `)
         .eq('id', conversationId)
         .single();
 
       if (!conversation) return;
 
+      // Get seeker profile separately
+      const { data: seekerProfile } = await supabase
+        .from('profiles')
+        .select('id, full_name')
+        .eq('id', conversation.seeker_id)
+        .single();
+
       // Determine recipient
       const isSupporter = conversation.supporter?.user_id === senderId;
       const recipientId = isSupporter ? conversation.seeker_id : conversation.supporter?.user_id;
       const senderName = isSupporter
         ? (conversation.supporter?.display_name || 'Peer Supporter')
-        : (conversation.seeker?.full_name?.split(' ')[0] || 'Someone');
+        : (seekerProfile?.full_name?.split(' ')[0] || 'Someone');
 
       if (!recipientId) return;
 
