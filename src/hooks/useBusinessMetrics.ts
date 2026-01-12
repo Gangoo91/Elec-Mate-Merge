@@ -102,7 +102,7 @@ export function useBusinessMetrics() {
 
       // Fetch jobs for job counts
       const { data: jobs, error: jobsError } = await supabase
-        .from('jobs')
+        .from('employer_jobs')
         .select('status')
         .is('archived_at', null)
         .eq('is_template', false);
@@ -129,7 +129,7 @@ export function useBusinessMetrics() {
 
       // Fetch employees count
       const { count: employeeCount, error: empError } = await supabase
-        .from('employees')
+        .from('employer_employees')
         .select('*', { count: 'exact', head: true })
         .eq('status', 'Active');
 
@@ -285,7 +285,7 @@ export function useJobsByStatus() {
     queryKey: ['jobs-by-status'],
     queryFn: async (): Promise<JobsByStatus[]> => {
       const { data: jobs, error } = await supabase
-        .from('jobs')
+        .from('employer_jobs')
         .select('status')
         .is('archived_at', null)
         .eq('is_template', false);
@@ -373,7 +373,7 @@ export function useTopPerformers() {
     queryFn: async (): Promise<TopPerformer[]> => {
       // Get job assignments with employee names and job values
       const { data: assignments, error: assignError } = await supabase
-        .from('job_assignments')
+        .from('employer_job_assignments')
         .select(`
           employee_id,
           job_id,
@@ -410,7 +410,7 @@ export function useTopPerformers() {
       if (sorted.length === 0) {
         // Get employees as fallback
         const { data: employees } = await supabase
-          .from('employees')
+          .from('employer_employees')
           .select('name')
           .eq('status', 'Active')
           .limit(4);
