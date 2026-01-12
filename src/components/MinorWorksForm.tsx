@@ -365,12 +365,22 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
         const { linkCustomerToReport } = await import('@/utils/customerHelper');
         await linkCustomerToReport(result.reportId as string, customerIdFromNav);
       }
-    }
 
-    toast({
-      title: "Draft Saved",
-      description: "Your Minor Works Certificate draft has been saved.",
-    });
+      toast({
+        title: "Draft Saved",
+        description: "Your Minor Works Certificate draft has been saved.",
+      });
+    } else if (!result?.success) {
+      // Error toast - useCloudSync shows "Cannot save yet" if form empty
+      // Show generic error only if form has data
+      if (formData.clientName || formData.propertyAddress) {
+        toast({
+          title: 'Save failed',
+          description: 'Unable to save. Please check your connection and try again.',
+          variant: 'destructive',
+        });
+      }
+    }
   };
 
   const handleStartNew = () => {

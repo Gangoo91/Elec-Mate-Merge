@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
 import { useCloudSync } from '@/hooks/useCloudSync';
@@ -66,6 +66,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   const [showCustomerDialog, setShowCustomerDialog] = useState(false);
   const [pendingReportId, setPendingReportId] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  const lastSaveErrorToastRef = useRef<number>(0);
   
   // Capture customer data from navigation state
   const customerIdFromNav = location.state?.customerId;
@@ -440,11 +441,16 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         description: "You're offline. Changes will sync when you reconnect.",
       });
     } else {
-      toast({
-        title: "Save failed",
-        description: "Failed to save the report. Please try again.",
-        variant: "destructive",
-      });
+      // Debounce error toasts - only show once per 30 seconds
+      const now = Date.now();
+      if (now - lastSaveErrorToastRef.current > 30000) {
+        lastSaveErrorToastRef.current = now;
+        toast({
+          title: "Save failed",
+          description: "Failed to save the report. Please try again.",
+          variant: "destructive",
+        });
+      }
     }
   };
 

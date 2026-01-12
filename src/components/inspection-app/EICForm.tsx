@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useEICTabs } from '@/hooks/useEICTabs';
 import { useEICObservations } from '@/hooks/useEICObservations';
 import { useEICAutoSave } from '@/hooks/useEICAutoSave';
@@ -23,7 +23,8 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
   const navigate = useNavigate();
   const location = useLocation();
   const queryClient = useQueryClient();
-  
+  const lastSaveErrorToastRef = useRef<number>(0);
+
   // Capture customer data from navigation state
   const customerIdFromNav = location.state?.customerId;
   const customerDataFromNav = location.state?.customerData;
@@ -613,13 +614,17 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
     // Check if save was successful
     if (!result || !result.success) {
       // Toast already shown by useCloudSync if form is too empty
-      // Only show generic error for other failures
+      // Only show generic error for other failures - debounced to prevent spam
       if (formData.clientName || formData.installationAddress) {
-        toast({
-          title: 'Save failed',
-          description: 'Unable to save EIC. Please check your connection and try again.',
-          variant: 'destructive',
-        });
+        const now = Date.now();
+        if (now - lastSaveErrorToastRef.current > 30000) {
+          lastSaveErrorToastRef.current = now;
+          toast({
+            title: 'Save failed',
+            description: 'Unable to save EIC. Please check your connection and try again.',
+            variant: 'destructive',
+          });
+        }
       }
       return;
     }

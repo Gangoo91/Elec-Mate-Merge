@@ -44,11 +44,11 @@ export const useCloudSync = ({
   const debounceTimeoutRef = useRef<NodeJS.Timeout>();
   const lastErrorToastTimeRef = useRef<Record<string, number>>({});
 
-  // Debounced toast helper - only shows error toasts once per 5 minutes unless manual action
+  // Debounced toast helper - only shows error toasts once per 30 seconds unless manual action
   const showDebouncedToast = useCallback((key: string, title: string, description: string, isManualAction: boolean = false) => {
     const now = Date.now();
     const lastShown = lastErrorToastTimeRef.current[key] || 0;
-    const DEBOUNCE_MS = 5 * 60 * 1000; // 5 minutes
+    const DEBOUNCE_MS = 30 * 1000; // 30 seconds
 
     // Always show for manual actions, otherwise debounce
     if (isManualAction || now - lastShown > DEBOUNCE_MS) {
@@ -184,6 +184,13 @@ export const useCloudSync = ({
             id: operation.id,
             type: operation.type,
             reportId: operation.reportId,
+          });
+          // CRITICAL: Warn user about potential data loss
+          toast({
+            title: 'Data may be lost',
+            description: `Failed to sync ${operation.reportType.toUpperCase()} after 3 attempts. Please try saving again.`,
+            variant: 'destructive',
+            duration: 10000,
           });
         }
         
@@ -347,24 +354,26 @@ export const useCloudSync = ({
     } catch (error) {
       console.error('[CloudSync] Sync error:', error);
       isSyncingRef.current = false;
-      
+
       // Queue for retry
+      let newQueueCount = 0;
       try {
         if (reportId) {
           await offlineQueue.addToQueue({ type: 'update', reportId, reportType, data });
         } else {
           await offlineQueue.addToQueue({ type: 'create', reportId: null, reportType, data });
         }
-        await updateQueuedCount();
+        newQueueCount = await offlineQueue.getQueueCount();
       } catch (queueError) {
         console.error('[CloudSync] Failed to queue after error:', queueError);
       }
 
-      setSyncState({
-        status: 'error',
+      setSyncState(prev => ({
+        ...prev,
+        status: 'queued', // Set to queued, not error - changes are safely queued
         errorMessage: error instanceof Error ? error.message : 'Failed to sync',
-        queuedChanges: 0,
-      });
+        queuedChanges: newQueueCount,
+      }));
 
       return { success: false, reportId: null };
     }
