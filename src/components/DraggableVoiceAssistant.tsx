@@ -138,6 +138,7 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
   const fabRef = useRef<HTMLButtonElement>(null);
   const lastFormContextRef = useRef<string>('');
   const connectionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const startConversationRef = useRef<(() => Promise<void>) | null>(null);
 
   // Initialize position on mount
   useEffect(() => {
@@ -904,6 +905,24 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
   }, [conversation]);
 
   const isConnected = conversation.status === 'connected';
+
+  // Keep startConversation ref updated for event listener
+  startConversationRef.current = startConversation;
+
+  // Listen for external voice activation events (from quote/invoice voice buttons)
+  useEffect(() => {
+    const handleActivateVoice = () => {
+      if (!isConnected && !isConnecting) {
+        setIsMinimised(false);
+        startConversationRef.current?.();
+      } else if (isConnected && isMinimised) {
+        setIsMinimised(false);
+      }
+    };
+
+    window.addEventListener('activate-voice-assistant', handleActivateVoice);
+    return () => window.removeEventListener('activate-voice-assistant', handleActivateVoice);
+  }, [isConnected, isConnecting, isMinimised]);
 
   if (isLoadingSettings) return null;
 

@@ -21,9 +21,9 @@ import {
   Mail
 } from "lucide-react";
 import { useMaterialOrders, useSuppliers, useUpdateOrderStatus } from "@/hooks/useFinance";
+import { useCompanyTools, useToolStats } from "@/hooks/useCompanyTools";
 import { CreateOrderDialog } from "@/components/employer/dialogs/CreateOrderDialog";
 import { CreateSupplierDialog } from "@/components/employer/dialogs/CreateSupplierDialog";
-import { companyTools } from "@/data/employerMockData";
 import type { MaterialOrder, Supplier } from "@/services/financeService";
 
 export function ProcurementSection() {
@@ -35,21 +35,15 @@ export function ProcurementSection() {
 
   const { data: materialOrders = [], isLoading: ordersLoading } = useMaterialOrders();
   const { data: suppliers = [], isLoading: suppliersLoading } = useSuppliers();
+  const { data: companyTools = [], isLoading: toolsLoading } = useCompanyTools();
+  const toolStats = useToolStats();
   const updateOrderStatusMutation = useUpdateOrderStatus();
 
-  const isLoading = ordersLoading || suppliersLoading;
+  const isLoading = ordersLoading || suppliersLoading || toolsLoading;
 
   const pendingOrders = materialOrders.filter(o => o.status === "Processing" || o.status === "In Transit").length;
-  const toolsDuePAT = companyTools.filter(t => {
-    if (!t.patDue) return false;
-    const daysUntil = Math.ceil((new Date(t.patDue).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-    return daysUntil <= 30 && daysUntil > 0;
-  }).length;
-  const toolsDueCalibration = companyTools.filter(t => {
-    if (!t.nextCalibration) return false;
-    const daysUntil = Math.ceil((new Date(t.nextCalibration).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
-    return daysUntil <= 30 && daysUntil > 0;
-  }).length;
+  const toolsDuePAT = toolStats.toolsDuePAT;
+  const toolsDueCalibration = toolStats.toolsDueCalibration;
 
   const getOrderStatusBadge = (status: string) => {
     switch (status) {
@@ -322,7 +316,7 @@ export function ProcurementSection() {
           </div>
         </TabsContent>
 
-        {/* Equipment Tab - still uses mock data for tools */}
+        {/* Equipment Tab */}
         <TabsContent value="tools" className="mt-4 space-y-4">
           <div className="flex gap-2">
             <Button className="flex-1 md:flex-none">
@@ -331,63 +325,87 @@ export function ProcurementSection() {
             </Button>
           </div>
 
-          <div className="space-y-3">
-            {companyTools.map((tool) => {
-              const isExpanded = expandedItem === tool.id;
+          {companyTools.length === 0 ? (
+            <Card className="bg-elec-gray border-border">
+              <CardContent className="p-8 text-center">
+                <Wrench className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="font-semibold text-foreground mb-2">No Equipment</h3>
+                <p className="text-sm text-muted-foreground">Add your first tool to track equipment inventory.</p>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="space-y-3">
+              {companyTools.map((tool) => {
+                const isExpanded = expandedItem === tool.id;
 
-              return (
-                <Card key={tool.id} className="bg-elec-gray border-border overflow-hidden">
-                  <CardContent className="p-0">
-                    <div 
-                      className="p-4 cursor-pointer touch-feedback"
-                      onClick={() => setExpandedItem(isExpanded ? null : tool.id)}
-                    >
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-foreground text-sm">{tool.name}</h3>
-                          <Badge variant="outline" className="text-xs">{tool.category}</Badge>
-                          <p className="text-xs text-muted-foreground mt-1">{tool.assignedTo}</p>
+                return (
+                  <Card key={tool.id} className="bg-elec-gray border-border overflow-hidden">
+                    <CardContent className="p-0">
+                      <div
+                        className="p-4 cursor-pointer touch-feedback"
+                        onClick={() => setExpandedItem(isExpanded ? null : tool.id)}
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-semibold text-foreground text-sm">{tool.name}</h3>
+                            <Badge variant="outline" className="text-xs">{tool.category}</Badge>
+                            {tool.assigned_to && (
+                              <p className="text-xs text-muted-foreground mt-1">{tool.assigned_to}</p>
+                            )}
+                          </div>
+                          {getToolStatusBadge(tool.status)}
                         </div>
-                        {getToolStatusBadge(tool.status)}
-                      </div>
 
-                      <div className="flex justify-center mt-2">
-                        {isExpanded ? (
-                          <ChevronUp className="h-4 w-4 text-muted-foreground" />
-                        ) : (
-                          <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                        )}
-                      </div>
-                    </div>
-
-                    {isExpanded && (
-                      <div className="border-t border-border p-4 bg-muted/30 space-y-3">
-                        <div className="grid grid-cols-2 gap-2 text-sm">
-                          {tool.serialNumber && (
-                            <div>
-                              <span className="text-muted-foreground">Serial:</span>
-                              <span className="ml-2 font-medium text-xs">{tool.serialNumber}</span>
-                            </div>
-                          )}
-                          {tool.purchasePrice > 0 && (
-                            <div>
-                              <span className="text-muted-foreground">Value:</span>
-                              <span className="ml-2 font-medium">£{tool.purchasePrice}</span>
-                            </div>
+                        <div className="flex justify-center mt-2">
+                          {isExpanded ? (
+                            <ChevronUp className="h-4 w-4 text-muted-foreground" />
+                          ) : (
+                            <ChevronDown className="h-4 w-4 text-muted-foreground" />
                           )}
                         </div>
-
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm" className="flex-1">Edit</Button>
-                          <Button size="sm" className="flex-1">Log Service</Button>
-                        </div>
                       </div>
-                    )}
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+
+                      {isExpanded && (
+                        <div className="border-t border-border p-4 bg-muted/30 space-y-3">
+                          <div className="grid grid-cols-2 gap-2 text-sm">
+                            {tool.serial_number && (
+                              <div>
+                                <span className="text-muted-foreground">Serial:</span>
+                                <span className="ml-2 font-medium text-xs">{tool.serial_number}</span>
+                              </div>
+                            )}
+                            {tool.purchase_price && Number(tool.purchase_price) > 0 && (
+                              <div>
+                                <span className="text-muted-foreground">Value:</span>
+                                <span className="ml-2 font-medium">£{Number(tool.purchase_price).toFixed(2)}</span>
+                              </div>
+                            )}
+                            {tool.pat_due && (
+                              <div>
+                                <span className="text-muted-foreground">PAT Due:</span>
+                                <span className="ml-2 font-medium">{new Date(tool.pat_due).toLocaleDateString("en-GB")}</span>
+                              </div>
+                            )}
+                            {tool.next_calibration && (
+                              <div>
+                                <span className="text-muted-foreground">Calibration Due:</span>
+                                <span className="ml-2 font-medium">{new Date(tool.next_calibration).toLocaleDateString("en-GB")}</span>
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="flex gap-2">
+                            <Button variant="outline" size="sm" className="flex-1">Edit</Button>
+                            <Button size="sm" className="flex-1">Log Service</Button>
+                          </div>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          )}
         </TabsContent>
       </Tabs>
 

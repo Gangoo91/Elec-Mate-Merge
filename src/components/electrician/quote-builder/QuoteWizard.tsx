@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight, User, FileText, Settings, Check, Loader2, Send, Mic } from "lucide-react";
+import { ArrowLeft, ArrowRight, User, FileText, Settings, Check, Loader2, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useQuoteBuilder } from "@/hooks/useQuoteBuilder";
 import { ClientDetailsStep } from "./steps/ClientDetailsStep";
@@ -272,7 +272,7 @@ export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData }:
       {/* Email Banner */}
       {FEATURES.EMAIL_INTEGRATION_ENABLED && <EmailStatusBanner />}
 
-      {/* Step Progress with Voice Button */}
+      {/* Step Progress - Clean pills */}
       <div className="flex items-center justify-center gap-2">
         {steps.map((step, index) => {
           const isComplete = currentStep > index;
@@ -313,18 +313,6 @@ export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData }:
             </React.Fragment>
           );
         })}
-
-        {/* Voice Assistant Button */}
-        <button
-          onClick={() => {
-            window.dispatchEvent(new CustomEvent('activate-voice-assistant'));
-          }}
-          className="ml-3 flex items-center gap-1.5 px-3 py-2 rounded-full bg-pink-500/10 text-pink-400 text-sm hover:bg-pink-500/20 transition-colors touch-manipulation"
-          title="Activate Voice Assistant"
-        >
-          <Mic className="h-4 w-4" />
-          <span className="hidden sm:inline">Voice</span>
-        </button>
       </div>
 
       {/* Step Content */}

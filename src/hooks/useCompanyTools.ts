@@ -46,9 +46,13 @@ export function useCompanyTools() {
   return useQuery({
     queryKey: ['company-tools'],
     queryFn: async (): Promise<CompanyTool[]> => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Not authenticated");
+
       const { data, error } = await supabase
-        .from('company_tools')
+        .from('employer_company_tools')
         .select('*')
+        .or(`user_id.eq.${user.id},user_id.is.null`)
         .order('name');
 
       if (error) throw error;
@@ -65,7 +69,7 @@ export function useCompanyTool(id: string | undefined) {
       if (!id) return null;
 
       const { data, error } = await supabase
-        .from('company_tools')
+        .from('employer_company_tools')
         .select('*')
         .eq('id', id)
         .single();
@@ -83,7 +87,7 @@ export function useToolsByStatus(status: string) {
     queryKey: ['company-tools', 'status', status],
     queryFn: async (): Promise<CompanyTool[]> => {
       const { data, error } = await supabase
-        .from('company_tools')
+        .from('employer_company_tools')
         .select('*')
         .eq('status', status)
         .order('name');
@@ -100,7 +104,7 @@ export function useToolsByCategory(category: string) {
     queryKey: ['company-tools', 'category', category],
     queryFn: async (): Promise<CompanyTool[]> => {
       const { data, error } = await supabase
-        .from('company_tools')
+        .from('employer_company_tools')
         .select('*')
         .eq('category', category)
         .order('name');
@@ -119,7 +123,7 @@ export function useCreateTool() {
   return useMutation({
     mutationFn: async (data: CreateToolData): Promise<CompanyTool> => {
       const { data: result, error } = await supabase
-        .from('company_tools')
+        .from('employer_company_tools')
         .insert(data)
         .select()
         .single();
@@ -152,7 +156,7 @@ export function useUpdateTool() {
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: UpdateToolData }): Promise<CompanyTool> => {
       const { data: result, error } = await supabase
-        .from('company_tools')
+        .from('employer_company_tools')
         .update(data)
         .eq('id', id)
         .select()
@@ -187,7 +191,7 @@ export function useDeleteTool() {
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
       const { error } = await supabase
-        .from('company_tools')
+        .from('employer_company_tools')
         .delete()
         .eq('id', id);
 
@@ -227,7 +231,7 @@ export function useUpdateToolStatus() {
       if (assignedToEmployeeId !== undefined) updates.assigned_to_employee_id = assignedToEmployeeId;
 
       const { data, error } = await supabase
-        .from('company_tools')
+        .from('employer_company_tools')
         .update(updates)
         .eq('id', id)
         .select()
@@ -276,7 +280,7 @@ export function useLogService() {
       }
 
       const { data, error } = await supabase
-        .from('company_tools')
+        .from('employer_company_tools')
         .update(updates)
         .eq('id', id)
         .select()

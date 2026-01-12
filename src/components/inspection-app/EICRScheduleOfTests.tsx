@@ -25,6 +25,7 @@ import TestResultsReviewDialog from './testing/TestResultsReviewDialog';
 import ScribbleToTableDialog from './mobile/ScribbleToTableDialog';
 import BulkInfillDialog from './BulkInfillDialog';
 import { useOrientation } from '@/hooks/useOrientation';
+import { useInlineVoice } from '@/hooks/useInlineVoice';
 import { twinAndEarthCpcFor, normaliseCableSize } from '@/utils/twinAndEarth';
 import { getTableViewPreference, setTableViewPreference } from '@/utils/mobileTableUtils';
 import { calculatePointsServed } from '@/types/autoFillTypes';
@@ -59,6 +60,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
   const [showQuickFillPanel, setShowQuickFillPanel] = useState(false);
   const [lastDeleted, setLastDeleted] = useState<{ circuit: TestResult; index: number } | null>(null);
   const orientation = useOrientation();
+  const { isConnecting: voiceConnecting, isActive: voiceActive, toggleVoice } = useInlineVoice();
   const saveTimeoutRef = useRef<NodeJS.Timeout>();
   const lastSavedHashRef = useRef('');
   const computeResultsHash = (results: TestResult[]) =>
@@ -1208,26 +1210,22 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              {/* Voice Button - Activates Voice Assistant FAB */}
+              {/* Voice Button - Direct ElevenLabs connection */}
               <Button
                 variant="outline"
                 size="sm"
                 className={`h-9 w-9 p-0 shrink-0 transition-all duration-200 ${
-                  voiceForm?.activeForm?.formId === 'eicr-schedule-of-tests'
-                    ? 'bg-primary/20 border-primary ring-2 ring-primary/30'
+                  voiceActive
+                    ? 'bg-green-500/20 border-green-500 ring-2 ring-green-500/30'
+                    : voiceConnecting
+                    ? 'bg-yellow-500/20 border-yellow-500 animate-pulse'
                     : 'hover:bg-primary/10 hover:border-primary/30'
                 }`}
-                title={voiceForm ? `Voice Assistant - Circuit ${selectedCircuitIndex + 1} selected` : 'Voice Assistant'}
-                onClick={() => {
-                  // Dispatch event to activate the voice FAB
-                  window.dispatchEvent(new CustomEvent('activate-voice-assistant'));
-                  toast.success('Voice assistant activated', {
-                    description: 'Say "add circuit" or "set zs to 0.45"',
-                    duration: 2000
-                  });
-                }}
+                title={voiceActive ? 'Voice active - click to stop' : 'Start voice input'}
+                onClick={toggleVoice}
+                disabled={voiceConnecting}
               >
-                <Mic className={`h-4 w-4 ${voiceForm?.activeForm?.formId === 'eicr-schedule-of-tests' ? 'text-primary animate-pulse' : 'text-primary'}`} />
+                <Mic className={`h-4 w-4 ${voiceActive ? 'text-green-500 animate-pulse' : voiceConnecting ? 'text-yellow-500' : 'text-primary'}`} />
               </Button>
 
               {/* More Options */}

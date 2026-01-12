@@ -96,7 +96,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
   return (
     <TableRow className={cn("hover:bg-muted/50 border-b border-border", getBorderColor())}>
       {/* Circuit Details Group */}
-      <TableCell className="sticky left-0 z-10 border-r-[3px] border-primary/40 p-1 font-bold text-center whitespace-nowrap bg-elec-gray-light min-w-[70px]">
+      <TableCell className="sticky left-0 z-10 border-r-[3px] border-primary/40 p-1 font-bold text-center whitespace-nowrap bg-elec-gray-light min-w-[60px]">
         <Input
           value={result.circuitDesignation}
           onChange={(e) => onUpdate(result.id, 'circuitDesignation', e.target.value)}
@@ -104,7 +104,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           placeholder="C1"
         />
       </TableCell>
-      <TableCell className="p-1 border-r border-border bg-elec-gray min-w-[200px]">
+      <TableCell className="p-1 border-r border-border bg-elec-gray min-w-[280px]">
         <Input
           value={result.circuitDescription}
           onChange={(e) => onUpdate(result.id, 'circuitDescription', e.target.value)}
@@ -112,7 +112,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           placeholder="Description"
         />
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[80px]">
         <Select
           value={result.typeOfWiring || ''}
           onValueChange={(value) => onUpdate(result.id, 'typeOfWiring', value)}
@@ -131,7 +131,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[100px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
         <Select
           value={result.referenceMethod || ''}
           onValueChange={(value) => onUpdate(result.id, 'referenceMethod', value)}
@@ -150,7 +150,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[80px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[60px]">
         <Input
           value={result.pointsServed || ''}
           onChange={(e) => onUpdate(result.id, 'pointsServed', e.target.value)}
@@ -162,7 +162,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
       </TableCell>
 
       {/* Conductor Details Group */}
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[80px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[70px]">
         <Select
           value={result.liveSize || ''}
           onValueChange={(value) => onUpdate(result.id, 'liveSize', value)}
@@ -179,7 +179,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[80px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[70px]">
         <Select
           value={result.cpcSize || ''}
           onValueChange={(value) => onUpdate(result.id, 'cpcSize', value)}
@@ -215,7 +215,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[85px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[70px]">
         <Select
           value={result.protectiveDeviceCurve || ''}
           onValueChange={handleCurveChange}
@@ -235,7 +235,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[70px]">
         <Select
           value={result.protectiveDeviceRating || ''}
           onValueChange={handleRatingChange}
@@ -254,7 +254,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[75px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[70px]">
         <Input
           value={result.protectiveDeviceKaRating}
           onChange={(e) => onUpdate(result.id, 'protectiveDeviceKaRating', e.target.value)}
@@ -262,7 +262,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           placeholder="6kA"
         />
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[80px]">
         <Input
           value={result.maxZs || ''}
           onChange={(e) => onUpdate(result.id, 'maxZs', e.target.value)}
@@ -274,7 +274,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
       </TableCell>
 
       {/* RCD Details Group */}
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 min-w-[120px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 min-w-[80px]">
         <Select
           value={result.rcdBsStandard || ''}
           onValueChange={(value) => onUpdate(result.id, 'rcdBsStandard', value)}
@@ -293,7 +293,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 min-w-[120px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 min-w-[80px]">
         <Select
           value={result.rcdType || ''}
           onValueChange={(value) => onUpdate(result.id, 'rcdType', value)}
@@ -312,7 +312,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 min-w-[120px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 min-w-[80px]">
         <Select
           value={result.rcdRating || ''}
           onValueChange={(value) => onUpdate(result.id, 'rcdRating', value)}
@@ -329,7 +329,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r-2 border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 min-w-[120px]">
+      <TableCell className="p-1 border-r-2 border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 min-w-[80px]">
         <Input
           value={result.rcdRatingA || ''}
           onChange={(e) => onUpdate(result.id, 'rcdRatingA', e.target.value)}
@@ -339,7 +339,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
       </TableCell>
 
       {/* Continuity Tests Group */}
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[80px]">
         <Input
           value={result.ringR1 || ''}
           onChange={(e) => onUpdate(result.id, 'ringR1', e.target.value)}
@@ -349,7 +349,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           step="0.001"
         />
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[80px]">
         <Input
           value={result.ringRn || ''}
           onChange={(e) => onUpdate(result.id, 'ringRn', e.target.value)}
@@ -381,7 +381,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </Button>
         </div>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[95px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[80px]">
         <Input
           value={result.r1r2}
           onChange={(e) => onUpdate(result.id, 'r1r2', e.target.value)}
@@ -391,7 +391,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           step="0.01"
         />
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[90px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[80px]">
         <Input
           value={result.ringContinuityLive || ''}
           onChange={(e) => onUpdate(result.id, 'ringContinuityLive', e.target.value)}

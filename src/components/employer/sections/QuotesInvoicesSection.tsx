@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { FileText, Send, Plus, Search, Eye, Check, TrendingUp, AlertTriangle, Receipt, PoundSterling } from "lucide-react";
+import { FileText, Send, Plus, Search, Eye, Check, TrendingUp, AlertTriangle, Receipt, PoundSterling, Mic } from "lucide-react";
+import { useInlineVoice } from "@/hooks/useInlineVoice";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -36,6 +37,11 @@ export function QuotesInvoicesSection() {
   const markPaidMutation = useMarkInvoicePaid();
   const isMobile = useIsMobile();
   const queryClient = useQueryClient();
+
+  // Voice assistant for quotes/invoices - uses employer agent
+  const { isConnecting: voiceConnecting, isActive: voiceActive, toggleVoice } = useInlineVoice({
+    agentId: 'agent_7301kdxbnshce7vv8mtah970y3g1' // Employer agent
+  });
 
   const handleRefresh = async () => {
     await Promise.all([
@@ -287,6 +293,22 @@ export function QuotesInvoicesSection() {
         >
           <Plus className="h-4 w-4" />
           Create Invoice
+        </Button>
+        <Button
+          variant="outline"
+          className={cn(
+            "h-12 w-12 p-0 shrink-0 active:scale-[0.98] transition-all",
+            voiceActive && "bg-green-500/20 border-green-500 ring-2 ring-green-500/30",
+            voiceConnecting && "bg-yellow-500/20 border-yellow-500 animate-pulse"
+          )}
+          onClick={toggleVoice}
+          disabled={voiceConnecting}
+          title={voiceActive ? 'Voice active - click to stop' : 'Create quote/invoice by voice'}
+        >
+          <Mic className={cn(
+            "h-5 w-5",
+            voiceActive ? "text-green-500 animate-pulse" : voiceConnecting ? "text-yellow-500" : "text-primary"
+          )} />
         </Button>
       </div>
 

@@ -16,7 +16,8 @@ import {
   CheckCircle2,
   Info,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  ArrowLeftRight
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -250,6 +251,17 @@ export const AIResultsPreview: React.FC<AIResultsPreviewProps> = ({
     onOpenChange(false);
   };
 
+  // Reverse circuit order (for boards where main switch is on right)
+  const handleReverseOrder = () => {
+    const reversed = [...circuits].reverse();
+    const reindexed = reversed.map((c, idx) => ({
+      ...c,
+      position: idx + 1
+    }));
+    setCircuits(reindexed);
+    setEditingId(null); // Cancel any active edits
+  };
+
   // Statistics
   const highConfidence = circuits.filter(c => c.confidence === 'high').length;
   const mediumConfidence = circuits.filter(c => c.confidence === 'medium').length;
@@ -390,6 +402,10 @@ export const AIResultsPreview: React.FC<AIResultsPreviewProps> = ({
         {/* Actions */}
         <div className="flex items-center justify-between pt-4 border-t">
           <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" onClick={handleReverseOrder}>
+              <ArrowLeftRight className="h-4 w-4 mr-2" />
+              Reverse Order
+            </Button>
             {onRescan && (
               <Button variant="outline" size="sm" onClick={onRescan}>
                 <RefreshCw className="h-4 w-4 mr-2" />
