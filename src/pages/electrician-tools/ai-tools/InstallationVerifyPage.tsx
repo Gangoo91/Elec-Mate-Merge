@@ -162,7 +162,7 @@ const InstallationVerifyPage = () => {
       const propLabel = propertyTypes.find(p => p.id === selectedPropertyType)?.label || '';
       const scopeLabels = selectedScopes.map(s => scopeAreas.find(a => a.id === s)?.label).join(', ');
 
-      const { data, error } = await supabase.functions.invoke('visual-electrical-analysis', {
+      const { data, error } = await supabase.functions.invoke('visual-analysis', {
         body: {
           imageUrl: publicUrl,
           analysisMode: 'installation_verify',

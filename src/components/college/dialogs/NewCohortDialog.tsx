@@ -3,13 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogFooter,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+  ResponsiveDialogBody,
+} from "@/components/ui/responsive-dialog";
 import {
   Select,
   SelectContent,
@@ -151,18 +152,19 @@ export function NewCohortDialog({ open, onOpenChange }: NewCohortDialogProps) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
+      <ResponsiveDialogContent className="sm:max-w-[550px]">
+        <ResponsiveDialogHeader>
+          <ResponsiveDialogTitle className="flex items-center gap-2">
             <UsersRound className="h-5 w-5 text-elec-yellow" />
             Create New Cohort
-          </DialogTitle>
-          <DialogDescription>
+          </ResponsiveDialogTitle>
+          <ResponsiveDialogDescription>
             Set up a new cohort for a course. All fields marked with * are required.
-          </DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
 
+        <ResponsiveDialogBody>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Course Selection */}
           <div>
@@ -323,7 +325,7 @@ export function NewCohortDialog({ open, onOpenChange }: NewCohortDialogProps) {
                 value={formData.meetingDay}
                 onValueChange={(value) => handleChange("meetingDay", value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select day" />
                 </SelectTrigger>
                 <SelectContent>
@@ -341,7 +343,7 @@ export function NewCohortDialog({ open, onOpenChange }: NewCohortDialogProps) {
                 value={formData.meetingTime}
                 onValueChange={(value) => handleChange("meetingTime", value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select time" />
                 </SelectTrigger>
                 <SelectContent>
@@ -359,7 +361,7 @@ export function NewCohortDialog({ open, onOpenChange }: NewCohortDialogProps) {
                 value={formData.room}
                 onValueChange={(value) => handleChange("room", value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select room" />
                 </SelectTrigger>
                 <SelectContent>
@@ -372,32 +374,36 @@ export function NewCohortDialog({ open, onOpenChange }: NewCohortDialogProps) {
               </Select>
             </div>
           </div>
-
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-              disabled={isSubmitting}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              disabled={isSubmitting || !formData.name || !formData.code || !formData.courseId || !formData.leadTutorId}
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Creating...
-                </>
-              ) : (
-                "Create Cohort"
-              )}
-            </Button>
-          </DialogFooter>
         </form>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveDialogBody>
+
+        <ResponsiveDialogFooter>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+            disabled={isSubmitting}
+            className="h-11 touch-manipulation"
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            disabled={isSubmitting || !formData.name || !formData.code || !formData.courseId || !formData.leadTutorId}
+            className="h-11 touch-manipulation"
+            onClick={handleSubmit}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Creating...
+              </>
+            ) : (
+              "Create Cohort"
+            )}
+          </Button>
+        </ResponsiveDialogFooter>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }

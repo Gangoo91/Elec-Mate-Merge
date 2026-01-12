@@ -202,7 +202,7 @@ const WiringInstructionPage = () => {
       const contextLabel = installContexts.find(c => c.id === selectedContext)?.label || '';
       const earthingLabel = earthingSystems.find(e => e.id === selectedEarthing)?.label || '';
 
-      const { data, error } = await supabase.functions.invoke('visual-electrical-analysis', {
+      const { data, error } = await supabase.functions.invoke('visual-analysis', {
         body: {
           imageUrl: publicUrl,
           analysisMode: 'wiring_instruction',

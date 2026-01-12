@@ -3,6 +3,7 @@ import { useConversation } from '@elevenlabs/react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
+import { resolveFieldName } from '@/utils/voiceFieldAliases';
 
 // Default electrician agent for inspection/testing
 const DEFAULT_AGENT_ID = 'agent_9901ke9rd48cf6jva60jd90sgx1y';
@@ -111,15 +112,30 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
         handleToolCall('remove_circuit', params),
       set_polarity_ok: async (params: { circuit_number?: number; value: boolean }) =>
         handleToolCall('set_polarity_ok', params),
-      set_test_result: async (params: { field: string; value: string; circuit_number?: number }) =>
-        handleToolCall('set_test_result', params),
+      set_test_result: async (params: { field: string; value: string; circuit_number?: number }) => {
+        // Resolve spoken field name to actual TestResult property
+        const resolvedField = resolveFieldName(params.field);
+        if (!resolvedField) {
+          console.warn('[InlineVoice] Unknown field:', params.field);
+          return `Unknown field: ${params.field}`;
+        }
+        return handleToolCall('set_test_result', {
+          ...params,
+          field: resolvedField,
+        });
+      },
     },
   });
 
   const startVoice = useCallback(async () => {
-    if (isConnecting || isActive) return;
+    console.log('[InlineVoice] startVoice called, isConnecting:', isConnecting, 'isActive:', isActive);
+    if (isConnecting || isActive) {
+      console.log('[InlineVoice] Already connecting or active, returning early');
+      return;
+    }
 
     setIsConnecting(true);
+    console.log('[InlineVoice] Set isConnecting to true');
 
     try {
       // Request microphone
@@ -178,12 +194,14 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
   }, [conversation]);
 
   const toggleVoice = useCallback(() => {
+    console.log('[InlineVoice] toggleVoice called, isActive:', isActive, 'isConnecting:', isConnecting);
+    toast.info('Voice button clicked');
     if (isActive) {
       stopVoice();
     } else {
       startVoice();
     }
-  }, [isActive, startVoice, stopVoice]);
+  }, [isActive, isConnecting, startVoice, stopVoice]);
 
   return {
     isConnecting,

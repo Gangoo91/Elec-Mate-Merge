@@ -1,5 +1,11 @@
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+  ResponsiveDialogBody,
+} from "@/components/ui/responsive-dialog";
 import TimeEntryForm from "../TimeEntryForm";
 
 export interface TimeEntryDialogProps {
@@ -10,24 +16,24 @@ export interface TimeEntryDialogProps {
 
 export const TimeEntryDialog = ({ isOpen, onClose, onSubmit }: TimeEntryDialogProps) => {
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl w-[95vw] max-h-[90vh] bg-white/5 border-elec-yellow/20 overflow-y-auto">
-        <DialogHeader className="pb-4 border-b border-elec-yellow/20">
-          <DialogTitle className="text-elec-light flex items-center gap-2">
+    <ResponsiveDialog open={isOpen} onOpenChange={onClose}>
+      <ResponsiveDialogContent className="sm:max-w-2xl bg-white/5 border-elec-yellow/20">
+        <ResponsiveDialogHeader className="pb-4 border-b border-elec-yellow/20">
+          <ResponsiveDialogTitle className="text-elec-light flex items-center gap-2">
             Log Training Hours
-          </DialogTitle>
+          </ResponsiveDialogTitle>
           <p className="text-sm text-elec-light/70 mt-2">
             Record your off-the-job training activities and hours
           </p>
-        </DialogHeader>
-        <div className="pt-4 pb-4">
-          <TimeEntryForm 
-            onAddEntry={onSubmit} 
-            onCancel={onClose} 
+        </ResponsiveDialogHeader>
+        <ResponsiveDialogBody>
+          <TimeEntryForm
+            onAddEntry={onSubmit}
+            onCancel={onClose}
           />
-        </div>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveDialogBody>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 };
 

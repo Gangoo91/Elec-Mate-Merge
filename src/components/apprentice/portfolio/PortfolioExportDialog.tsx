@@ -1,6 +1,13 @@
 
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+  ResponsiveDialogBody,
+  ResponsiveDialogFooter,
+} from "@/components/ui/responsive-dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -86,20 +93,24 @@ const PortfolioExportDialog = ({ entries }: PortfolioExportDialogProps) => {
   const categoryOptions = [...new Set(entries.map(entry => entry.category))];
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" className="gap-1.5 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10 text-sm" size="sm">
-          <Download className="h-3.5 w-3.5" />
-          Export
-        </Button>
-      </DialogTrigger>
-      
-      <DialogContent className="max-w-md">
-        <DialogHeader>
-          <DialogTitle>Export Portfolio</DialogTitle>
-        </DialogHeader>
+    <>
+      <Button
+        variant="outline"
+        className="gap-1.5 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10 text-sm h-11 touch-manipulation"
+        size="sm"
+        onClick={() => setOpen(true)}
+      >
+        <Download className="h-3.5 w-3.5" />
+        Export
+      </Button>
 
-        <div className="space-y-6">
+      <ResponsiveDialog open={open} onOpenChange={setOpen}>
+        <ResponsiveDialogContent className="sm:max-w-md">
+          <ResponsiveDialogHeader>
+            <ResponsiveDialogTitle>Export Portfolio</ResponsiveDialogTitle>
+          </ResponsiveDialogHeader>
+
+          <ResponsiveDialogBody className="space-y-6">
           {/* Export Format */}
           <div>
             <Label className="text-base font-medium">Export Format</Label>
@@ -237,7 +248,7 @@ const PortfolioExportDialog = ({ entries }: PortfolioExportDialogProps) => {
                 <span>{exportProgress.progress}/{exportProgress.total}</span>
               </div>
               <div className="w-full bg-white/5 rounded-full h-2">
-                <div 
+                <div
                   className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
                   style={{ width: `${(exportProgress.progress / exportProgress.total) * 100}%` }}
                 />
@@ -245,33 +256,35 @@ const PortfolioExportDialog = ({ entries }: PortfolioExportDialogProps) => {
             </div>
           )}
 
-          {/* Export Button */}
-          <Button 
-            onClick={handleExport} 
-            className="w-full gap-2" 
-            disabled={isExporting || entries.length === 0}
-          >
-            {isExporting ? (
-              <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
-                {exportProgress ? exportProgress.step : 'Exporting...'}
-              </>
-            ) : (
-              <>
-                <Download className="h-4 w-4" />
-                Export Portfolio
-              </>
-            )}
-          </Button>
-          
           {entries.length === 0 && (
             <p className="text-xs text-white text-center">
               No portfolio entries available to export.
             </p>
           )}
-        </div>
-      </DialogContent>
-    </Dialog>
+          </ResponsiveDialogBody>
+
+          <ResponsiveDialogFooter>
+            <Button
+              onClick={handleExport}
+              className="w-full gap-2 h-11 touch-manipulation"
+              disabled={isExporting || entries.length === 0}
+            >
+              {isExporting ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+                  {exportProgress ? exportProgress.step : 'Exporting...'}
+                </>
+              ) : (
+                <>
+                  <Download className="h-4 w-4" />
+                  Export Portfolio
+                </>
+              )}
+            </Button>
+          </ResponsiveDialogFooter>
+        </ResponsiveDialogContent>
+      </ResponsiveDialog>
+    </>
   );
 };
 

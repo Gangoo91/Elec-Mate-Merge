@@ -3,13 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogFooter,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+  ResponsiveDialogBody,
+} from "@/components/ui/responsive-dialog";
 import {
   Select,
   SelectContent,
@@ -131,18 +132,19 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
+      <ResponsiveDialogContent className="sm:max-w-[500px]">
+        <ResponsiveDialogHeader>
+          <ResponsiveDialogTitle className="flex items-center gap-2">
             <UserPlus className="h-5 w-5 text-elec-yellow" />
             Add New Tutor
-          </DialogTitle>
-          <DialogDescription>
+          </ResponsiveDialogTitle>
+          <ResponsiveDialogDescription>
             Add a new tutor or staff member to the system. All fields marked with * are required.
-          </DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
 
+        <ResponsiveDialogBody>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Personal Information */}
           <div className="space-y-3">
@@ -297,7 +299,7 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
                   type="button"
                   variant={formData.specializations.includes(spec) ? "default" : "outline"}
                   size="sm"
-                  className={formData.specializations.includes(spec) ? "bg-elec-yellow hover:bg-elec-yellow/90 text-black" : ""}
+                  className={`h-11 touch-manipulation ${formData.specializations.includes(spec) ? "bg-elec-yellow hover:bg-elec-yellow/90 text-black" : ""}`}
                   onClick={() => toggleSpecialization(spec)}
                 >
                   {spec}
@@ -305,32 +307,36 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
               ))}
             </div>
           </div>
-
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-              disabled={isSubmitting}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              disabled={isSubmitting || !formData.name || !formData.email || !formData.department}
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Adding...
-                </>
-              ) : (
-                "Add Tutor"
-              )}
-            </Button>
-          </DialogFooter>
         </form>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveDialogBody>
+
+        <ResponsiveDialogFooter>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+            disabled={isSubmitting}
+            className="h-11 touch-manipulation"
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            disabled={isSubmitting || !formData.name || !formData.email || !formData.department}
+            className="h-11 touch-manipulation"
+            onClick={handleSubmit}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Adding...
+              </>
+            ) : (
+              "Add Tutor"
+            )}
+          </Button>
+        </ResponsiveDialogFooter>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }

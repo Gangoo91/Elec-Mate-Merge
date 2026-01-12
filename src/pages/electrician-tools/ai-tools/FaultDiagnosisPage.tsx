@@ -141,7 +141,7 @@ const FaultDiagnosisPage = () => {
       const symptomLabels = selectedSymptoms.map(s => symptoms.find(sym => sym.id === s)?.label).join(', ');
       const timeLabel = timeframes.find(t => t.id === selectedTimeframe)?.label || '';
 
-      const { data, error } = await supabase.functions.invoke('visual-electrical-analysis', {
+      const { data, error } = await supabase.functions.invoke('visual-analysis', {
         body: {
           imageUrl: publicUrl,
           analysisMode: 'fault_diagnosis',

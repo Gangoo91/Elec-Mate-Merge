@@ -3,8 +3,6 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
 
 const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
-const anthropicApiKey = Deno.env.get('ANTHROPIC_API_KEY');
-const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -42,7 +40,7 @@ interface DetectedCircuit {
   };
   pictograms: Array<{ type: string; confidence: number }>;
   phase: '1P' | '3P';
-  phases?: string[];
+  phase_assignment?: string | string[];
   confidence: 'high' | 'medium' | 'low';
   evidence: string;
   source_model: string;
@@ -52,10 +50,12 @@ interface BoardStructure {
   brand: string;
   model: string;
   main_switch_rating: number | null;
-  spd_status: 'green_ok' | 'yellow_check' | 'red_replace' | 'not_present' | 'unknown';
-  board_layout: '1P' | '3P-vertical' | '3P-horizontal';
+  main_switch_poles?: string;
+  is_three_phase: boolean;
+  spd_status: 'present' | 'not_present' | 'unknown';
+  board_layout: 'single_row' | 'dual_row' | '3P-vertical' | '3P-horizontal';
   estimated_total_ways: number;
-  evidence: string;
+  circuits_per_phase?: { L1: number; L2: number; L3: number };
 }
 
 // SSE Event Types
@@ -68,6 +68,161 @@ type StreamEvent =
   | { type: 'decision'; message: string }
   | { type: 'complete'; metadata: any }
   | { type: 'error'; message: string };
+
+// ============================================================================
+// UNIFIED GEMINI PROMPT - Comprehensive single-pass analysis
+// ============================================================================
+
+const UNIFIED_BOARD_PROMPT = `You are an expert UK electrical installation analyst. Analyse the consumer unit photo(s) with precision and return complete JSON.
+
+## BOARD DETECTION
+
+Identify the board structure:
+- brand: Manufacturer name (Hager, MK, Schneider, Wylex, Crabtree, Contactum, BG, Consumer Unit Direct, etc)
+- model: Model number if visible, otherwise null
+- main_switch_rating: Main isolator rating in amps (typical: 63, 80, 100A for domestic; 100-125A for commercial)
+- main_switch_poles: "1P+N" | "3P" | "3P+N" | "4P"
+- is_three_phase: true if board has L1/L2/L3 busbars, false for single phase
+- spd_status: "present" (SPD module visible with green LED or SPD marking) | "not_present" | "unknown"
+- board_layout: "single_row" | "dual_row" | "3P-vertical" (3 rows, one per phase) | "3P-horizontal" (single row, alternating phases)
+- estimated_total_ways: Total physical DIN rail positions (common: 6, 8, 10, 12, 14, 16, 18, 20, 24)
+
+For three-phase boards, also include:
+- circuits_per_phase: { "L1": count, "L2": count, "L3": count }
+
+## THREE-PHASE BOARD IDENTIFICATION
+
+A board is THREE-PHASE if you see:
+1. Main switch is 3-pole or 4-pole (3P+N)
+2. Three busbars visible (L1, L2, L3) - may be colour-coded:
+   - Modern: Brown (L1), Black (L2), Grey (L3)
+   - Old: Red (L1), Yellow (L2), Blue (L3)
+3. Multiple rows of MCBs (typically 3 rows in vertical layout)
+4. Phase markers (P1/P2/P3 or L1/L2/L3) near circuit positions
+
+## CIRCUIT DETECTION
+
+Scan systematically LEFT to RIGHT, TOP to BOTTOM. For each occupied circuit position:
+
+### 1. Position & Label
+- index: Sequential position number (1, 2, 3...)
+- label_text: Read the label EXACTLY, then expand common abbreviations:
+  - K, Kit = Kitchen
+  - Lts, Lgt, L = Lights/Lighting
+  - Skt, Soc, S = Sockets
+  - Dn, Dwn = Downstairs
+  - Up, Upst = Upstairs
+  - FF, 1F = First Floor
+  - GF, G = Ground Floor
+  - Ext, Out = External/Outside
+  - Gar = Garage
+  - Util, U = Utility
+  - Smk, SD = Smoke Detectors
+  - Imm, IH = Immersion Heater
+  - CH, Blr = Central Heating/Boiler
+  - WM = Washing Machine
+  - DW = Dishwasher
+  - TD = Tumble Dryer
+  - Shwr = Shower
+  - Ckr = Cooker
+  - Ring = Ring Main
+  - Use [?] suffix if text is genuinely unclear
+
+### 2. Device Identification (CRITICAL - examine physical features)
+- category: Identify by PHYSICAL appearance:
+  - MCB: Simple toggle switch with NO test button, single module width
+  - RCBO: Toggle PLUS small test button (red/white/blue), single module width, often "30mA" marking
+  - RCD: TWO module width, LARGE test button, "30mA" or "100mA" marking
+  - AFDD: Marked "AFDD" or "Arc Fault", may have small LCD screen
+  - Isolator: No trip mechanism, often the main switch
+  - Fuse: Rewirable carrier or cartridge fuse
+
+- rating_amps: Read from device face. Standard UK values ONLY: 6, 10, 16, 20, 25, 32, 40, 45, 50, 63, 80, 100A
+- curve: Letter before rating - B (general domestic), C (motors, AC), D (high inrush), or null if not visible
+- type: Combined designation e.g. "B16", "C32", "D40"
+
+### 3. Phase Detection
+- phase: "1P" for single-pole devices, "3P" for three-pole devices
+- phase_assignment: Which phase the circuit is on:
+  - For 1P circuits on 3P boards: "L1" | "L2" | "L3" (determine from row position or phase markers)
+  - For 3P circuits: ["L1", "L2", "L3"]
+  - For 1P circuits on 1P boards: omit or null
+
+### 4. Three-Pole Device Identification
+A device is THREE-POLE (3P) if:
+- Three toggle handles linked together
+- Device spans 3 module widths
+- L1/L2/L3 markings on the device
+- Common 3P loads: cookers (32-45A), EV chargers (32A), motors, HVAC, hot tubs
+
+### 5. Pictogram Inference
+Based on label and rating, infer circuit type:
+- SOCKET: "sockets", "skt", ring main, 32A typical
+- LIGHTING: "lights", "lts", 6-10A typical
+- COOKER: "cooker", "oven", 32-45A
+- HOB: "hob", 32A
+- SHOWER: "shower", 32-50A
+- EV_CHARGER: "EV", "charger", 32A typical
+- FRIDGE_FREEZER: "fridge", "freezer", "FF"
+- WASHING_MACHINE: "washing", "WM", 20A
+- DISHWASHER: "DW", "dishwasher"
+- BOILER: "boiler", "CH", central heating
+- IMMERSION: "immersion", "imm", 16A
+- SMOKE_ALARM: "smoke", "smk", 6A
+- GARAGE: "garage", "gar"
+- EXTERNAL: "external", "ext", "outside"
+- RING_MAIN: "ring", 32A
+- SPUR: "spur", "FCU"
+- UNKNOWN: Cannot determine
+
+### 6. Confidence Assessment
+- confidence: "high" | "medium" | "low"
+  - HIGH: Clear label visible + certain device type + visible rating
+  - MEDIUM: Partially readable, logical inference
+  - LOW: Unclear label OR uncertain if MCB/RCBO
+
+## OUTPUT FORMAT
+
+Return ONLY valid JSON in this exact structure:
+{
+  "board": {
+    "brand": "string",
+    "model": "string or null",
+    "main_switch_rating": number,
+    "main_switch_poles": "1P+N | 3P | 3P+N | 4P",
+    "is_three_phase": boolean,
+    "spd_status": "present | not_present | unknown",
+    "board_layout": "single_row | dual_row | 3P-vertical | 3P-horizontal",
+    "estimated_total_ways": number,
+    "circuits_per_phase": { "L1": number, "L2": number, "L3": number } // only for 3P boards
+  },
+  "circuits": [
+    {
+      "index": number,
+      "label_text": "string (expanded)",
+      "device": {
+        "category": "MCB | RCBO | RCD | AFDD | Isolator | Fuse",
+        "rating_amps": number,
+        "curve": "B | C | D | null",
+        "type": "string e.g. B32"
+      },
+      "phase": "1P | 3P",
+      "phase_assignment": "L1 | L2 | L3" or ["L1", "L2", "L3"],
+      "pictograms": [{ "type": "SOCKET", "confidence": 0.9 }],
+      "confidence": "high | medium | low",
+      "evidence": "brief reason for detection"
+    }
+  ]
+}
+
+## IMPORTANT RULES
+
+1. MCB vs RCBO: The most common error! MCBs have NO test button. RCBOs have a small test button.
+2. Don't guess ratings - if unreadable, use null
+3. Expand ALL abbreviations in label_text
+4. Include spare/blank positions with label_text: "Spare" and device: null
+5. For 3P boards, determine phase assignment for EVERY circuit
+6. Be thorough - don't miss any circuits`;
 
 // ============================================================================
 // UTILITIES
@@ -104,49 +259,52 @@ const parseAIResponse = (content: string, context: string = 'AI response'): any 
   throw new Error(`Could not parse ${context} as JSON`);
 };
 
-const urlToBase64 = async (url: string): Promise<{ mimeType: string; data: string }> => {
-  if (url.startsWith('data:image')) {
-    const match = url.match(/data:(.*?);base64,(.+)/);
-    if (!match) throw new Error('Invalid data URL format');
-    return { mimeType: match[1], data: match[2] };
+async function urlToBase64(url: string): Promise<{ mimeType: string; data: string }> {
+  // Handle data URLs
+  if (url.startsWith('data:')) {
+    const match = url.match(/^data:([^;]+);base64,(.+)$/);
+    if (match) {
+      return { mimeType: match[1], data: match[2] };
+    }
+    throw new Error('Invalid data URL format');
   }
 
+  // Fetch external URLs
   const response = await fetch(url);
-  if (!response.ok) throw new Error(`Failed to fetch image: ${response.status}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch image: ${response.status}`);
+  }
 
-  const contentType = response.headers.get('content-type') || 'image/jpeg';
   const arrayBuffer = await response.arrayBuffer();
-  const base64Data = base64Encode(new Uint8Array(arrayBuffer));
+  const base64 = base64Encode(new Uint8Array(arrayBuffer));
+  const contentType = response.headers.get('content-type') || 'image/jpeg';
 
-  return { mimeType: contentType, data: base64Data };
-};
+  return { mimeType: contentType, data: base64 };
+}
 
-const fetchWithTimeout = async (url: string, options: RequestInit, timeoutMs: number): Promise<Response> => {
+async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number): Promise<Response> {
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
-    const response = await fetch(url, { ...options, signal: controller.signal });
-    clearTimeout(timeoutId);
-    return response;
-  } catch (error) {
-    clearTimeout(timeoutId);
-    throw error;
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timeout);
   }
-};
+}
 
-// ============================================================================
-// STREAMING RESPONSE HELPER
-// ============================================================================
-
-function createSSEStream() {
-  const encoder = new TextEncoder();
+function createSSEStream(): {
+  stream: ReadableStream;
+  sendEvent: (event: StreamEvent) => void;
+  close: () => void;
+} {
   let controller: ReadableStreamDefaultController<Uint8Array>;
+  const encoder = new TextEncoder();
 
-  const stream = new ReadableStream<Uint8Array>({
+  const stream = new ReadableStream({
     start(c) {
       controller = c;
-    }
+    },
   });
 
   const sendEvent = (event: StreamEvent) => {
@@ -162,7 +320,7 @@ function createSSEStream() {
 }
 
 // ============================================================================
-// AI MODEL CALLS
+// MAIN ANALYSIS - Single Gemini Call
 // ============================================================================
 
 async function analyzeWithGemini(
@@ -173,331 +331,114 @@ async function analyzeWithGemini(
   board: Partial<BoardStructure>;
   circuits: Partial<DetectedCircuit>[];
 }> {
-  sendEvent({ type: 'stage', stage: 'gemini', message: 'Analysing board structure...' });
+  sendEvent({ type: 'stage', stage: 'analyzing', message: 'Analysing board with AI...' });
 
-  // OPTIMIZED PROMPT - Concise but comprehensive
-  const systemPrompt = `UK electrician: Analyse consumer unit photo. Return JSON only.
-
-BOARD: brand, model, main_switch_rating (amps), spd_status (green_ok/yellow_check/red_replace/not_present), board_layout (1P/3P-vertical/3P-horizontal), estimated_total_ways, evidence.
-
-THREE-PHASE DETECTION:
-- 3P boards: L1/L2/L3 busbar labels, 3 rows of MCBs, phase colour coding (brown/black/grey or red/yellow/blue)
-- 3-pole MCBs: 3 adjacent positions with linked toggles, same rating, wider device
-- Mark 3P circuits with phase:"3P", phases:["L1","L2","L3"]
-- Common 3P loads: cookers 32A+, EV chargers, motors, HVAC
-
-CIRCUITS (left→right, top→bottom for 3P):
-- index, label_text (expand abbreviations), device.category/type/rating_amps/curve
-- phase (1P or 3P), confidence (high/medium/low)
-- pictograms [{type, confidence}] - types: SOCKET,LIGHTING,COOKER_OVEN,HOB,SHOWER,IMMERSION,GARAGE,BOILER,EV_CHARGER
-
-JSON: {"board":{...},"circuits":[{...}]}`;
-
-  const parts: any[] = [{ text: systemPrompt }];
-
-  for (const imageUrl of images.slice(0, 4)) {
-    const { mimeType, data } = await urlToBase64(imageUrl);
-    parts.push({ inlineData: { mimeType, data } });
-  }
+  // Build prompt with hints
+  let prompt = UNIFIED_BOARD_PROMPT;
 
   if (hints) {
-    parts[0].text += `\n\nHINTS:
-- Main switch side: ${hints.main_switch_side || 'unknown'}
-- Expected ways: ${hints.expected_ways || 'unknown'}
+    prompt += `\n\n## HINTS FROM USER
+- Main switch side: ${hints.main_switch_side || 'not specified'}
+- Expected ways: ${hints.expected_ways || 'not specified'}
 - Board type: ${hints.board_type || 'domestic'}
-- Three phase: ${hints.is_three_phase || 'unknown'}`;
+- Is three phase: ${hints.is_three_phase === true ? 'YES - look for L1/L2/L3' : hints.is_three_phase === false ? 'NO - single phase' : 'not specified'}`;
   }
 
+  // Prepare image parts
+  const parts: any[] = [{ text: prompt }];
+
+  for (const imageUrl of images.slice(0, 4)) {
+    try {
+      const { mimeType, data } = await urlToBase64(imageUrl);
+      parts.push({ inlineData: { mimeType, data } });
+    } catch (error) {
+      console.error('Failed to process image:', error);
+      sendEvent({ type: 'warning', message: `Could not process one image` });
+    }
+  }
+
+  if (parts.length < 2) {
+    throw new Error('No valid images to analyse');
+  }
+
+  sendEvent({ type: 'stage', stage: 'analyzing', message: 'Reading board labels and devices...' });
+
   const response = await fetchWithTimeout(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contents: [{ role: 'user', parts }],
         generationConfig: {
-          maxOutputTokens: 4000,
+          maxOutputTokens: 8000,
           temperature: 0.2,
           responseMimeType: 'application/json'
         }
       }),
     },
-    45000
+    60000 // 60 second timeout for comprehensive analysis
   );
 
   if (!response.ok) {
-    throw new Error(`Gemini API error: ${response.status}`);
+    const errorText = await response.text();
+    console.error('Gemini API error:', errorText);
+    throw new Error(`Analysis failed: ${response.status}`);
   }
 
   const data = await response.json();
   const text = data.candidates?.[0]?.content?.parts?.find((p: any) => p.text)?.text;
 
   if (!text) {
-    throw new Error('No response from Gemini');
+    throw new Error('No response from AI');
   }
 
-  const result = parseAIResponse(text, 'Gemini response');
+  const result = parseAIResponse(text, 'Board analysis');
 
   // Stream board info immediately
   if (result.board) {
     sendEvent({ type: 'board', data: result.board });
-    sendEvent({ type: 'decision', message: `Detected ${result.board.brand || 'unknown'} board with ${result.board.estimated_total_ways || '?'} ways` });
+
+    const phaseType = result.board.is_three_phase ? 'three-phase' : 'single-phase';
+    sendEvent({
+      type: 'decision',
+      message: `Detected ${result.board.brand || 'unknown'} ${phaseType} board with ${result.board.estimated_total_ways || '?'} ways`
+    });
   }
 
-  // Stream circuits in batches for smooth UI
+  // Stream circuits in batches
   const circuits = result.circuits || [];
   const batchSize = 4;
 
   for (let i = 0; i < circuits.length; i += batchSize) {
     const batch = circuits.slice(i, i + batchSize).map((c: any) => ({
       ...c,
-      source_model: 'gemini'
+      source_model: 'gemini-2.0-flash'
     }));
 
     sendEvent({ type: 'circuits_batch', circuits: batch });
 
-    // Small delay between batches for visual effect
+    // Small delay between batches for smooth UI animation
     if (i + batchSize < circuits.length) {
-      await new Promise(resolve => setTimeout(resolve, 50));
+      await new Promise(resolve => setTimeout(resolve, 100));
     }
   }
 
-  sendEvent({ type: 'stage', stage: 'gemini_complete', message: `Found ${circuits.length} circuits` });
+  // Summary
+  const highConfidence = circuits.filter((c: any) => c.confidence === 'high').length;
+  const threePhaseCircuits = circuits.filter((c: any) => c.phase === '3P').length;
+
+  let summary = `Found ${circuits.length} circuits (${highConfidence} high confidence)`;
+  if (threePhaseCircuits > 0) {
+    summary += `, ${threePhaseCircuits} three-phase`;
+  }
+
+  sendEvent({ type: 'decision', message: summary });
 
   return {
     board: result.board || {},
-    circuits: circuits.map((c: any) => ({ ...c, source_model: 'gemini' }))
+    circuits: circuits.map((c: any) => ({ ...c, source_model: 'gemini-2.0-flash' }))
   };
-}
-
-async function analyzeWithClaude(
-  images: string[],
-  geminiCircuits: Partial<DetectedCircuit>[],
-  sendEvent: (event: StreamEvent) => void
-): Promise<{
-  labelCorrections: Map<number, string>;
-  additionalCircuits: Partial<DetectedCircuit>[];
-}> {
-  if (!anthropicApiKey) {
-    return { labelCorrections: new Map(), additionalCircuits: [] };
-  }
-
-  sendEvent({ type: 'stage', stage: 'claude', message: 'Enhancing label OCR...' });
-
-  // OPTIMIZED: Concise prompt
-  const systemPrompt = `OCR specialist: Read circuit labels in UK consumer unit. Fix errors, expand abbreviations. Return JSON only.
-
-Current: ${geminiCircuits.slice(0, 20).map(c => `${c.index}:"${c.label_text || '?'}"`).join(', ')}
-
-Abbreviations: K=Kitchen, Lts=Lights, Skt=Sockets, Dn=Down, Up=Upstairs, FF=First Floor, GF=Ground Floor, Ext=External
-
-Return: {"label_readings":[{"position":1,"text_read":"Label","confidence":0.9}],"corrections":[{"position":3,"original":"K Skt","corrected":"Kitchen Sockets"}],"missed_circuits":[{"position":12,"text_read":"Garage"}]}`;
-
-  const imageContents = await Promise.all(
-    images.slice(0, 2).map(async (url) => {
-      const { mimeType, data } = await urlToBase64(url);
-      return {
-        type: "image" as const,
-        source: { type: "base64" as const, media_type: mimeType, data }
-      };
-    })
-  );
-
-  const response = await fetchWithTimeout(
-    'https://api.anthropic.com/v1/messages',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': anthropicApiKey,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 2000,
-        messages: [{
-          role: 'user',
-          content: [...imageContents, { type: 'text', text: systemPrompt }]
-        }]
-      }),
-    },
-    30000
-  );
-
-  if (!response.ok) {
-    sendEvent({ type: 'warning', message: 'Claude OCR unavailable, using Gemini results only' });
-    return { labelCorrections: new Map(), additionalCircuits: [] };
-  }
-
-  const data = await response.json();
-  const text = data.content?.find((c: any) => c.type === 'text')?.text;
-
-  if (!text) {
-    return { labelCorrections: new Map(), additionalCircuits: [] };
-  }
-
-  try {
-    const result = parseAIResponse(text, 'Claude OCR response');
-
-    const corrections = new Map<number, string>();
-
-    // Apply corrections and stream updates
-    for (const correction of result.corrections || []) {
-      corrections.set(correction.position, correction.corrected);
-      sendEvent({
-        type: 'circuit_update',
-        index: correction.position,
-        updates: { label_text: correction.corrected, source_model: 'gemini+claude' }
-      });
-      sendEvent({ type: 'decision', message: `Position ${correction.position}: "${correction.original}" → "${correction.corrected}"` });
-    }
-
-    // High confidence readings
-    for (const reading of result.label_readings || []) {
-      if (reading.confidence > 0.85 && reading.text_read && !corrections.has(reading.position)) {
-        corrections.set(reading.position, reading.text_read);
-        sendEvent({
-          type: 'circuit_update',
-          index: reading.position,
-          updates: { label_text: reading.text_read }
-        });
-      }
-    }
-
-    // Missed circuits
-    const additionalCircuits = (result.missed_circuits || []).map((c: any) => {
-      sendEvent({
-        type: 'circuits_batch',
-        circuits: [{
-          index: c.position,
-          label_text: c.text_read,
-          device: { category: 'MCB', type: '', rating_amps: null, curve: null, breaking_capacity_kA: null },
-          pictograms: [],
-          phase: '1P',
-          confidence: 'low',
-          evidence: 'Detected by Claude OCR',
-          source_model: 'claude-ocr'
-        }]
-      });
-
-      return {
-        index: c.position,
-        label_text: c.text_read,
-        confidence: 'medium' as const,
-        source_model: 'claude-ocr'
-      };
-    });
-
-    if (corrections.size > 0 || additionalCircuits.length > 0) {
-      sendEvent({ type: 'stage', stage: 'claude_complete', message: `${corrections.size} labels refined, ${additionalCircuits.length} new circuits found` });
-    }
-
-    return { labelCorrections: corrections, additionalCircuits };
-
-  } catch (e) {
-    console.error('Claude OCR parse error:', e);
-    return { labelCorrections: new Map(), additionalCircuits: [] };
-  }
-}
-
-async function verifyWithOpenAI(
-  images: string[],
-  circuits: Partial<DetectedCircuit>[],
-  sendEvent: (event: StreamEvent) => void
-): Promise<{
-  deviceCorrections: Map<number, Partial<DetectedCircuit['device']>>;
-}> {
-  if (!openaiApiKey) {
-    return { deviceCorrections: new Map() };
-  }
-
-  sendEvent({ type: 'stage', stage: 'openai', message: 'Verifying device ratings...' });
-
-  // OPTIMIZED: Concise prompt
-  const systemPrompt = `Electrical device specialist: Verify MCB/RCBO ratings. Return JSON only.
-
-Verify: ${circuits.slice(0, 20).map(c => `${c.index}:${c.device?.category || '?'} ${c.device?.rating_amps || '?'}A`).join(', ')}
-
-Device ID: MCB=no test button. RCBO=small test button. RCD=2 modules. 3-pole MCB=linked toggles, triple width.
-
-Return ONLY corrections: {"device_verifications":[{"position":3,"verified":false,"corrections":{"category":"RCBO","rating_amps":16,"curve":"B"},"reason":"Test button visible"}]}`;
-
-  const imageContents = await Promise.all(
-    images.slice(0, 2).map(async (url) => {
-      const { mimeType, data } = await urlToBase64(url);
-      return {
-        type: "image_url" as const,
-        image_url: { url: `data:${mimeType};base64,${data}` }
-      };
-    })
-  );
-
-  const response = await fetchWithTimeout(
-    'https://api.openai.com/v1/chat/completions',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${openaiApiKey}`
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o',
-        max_tokens: 2000,
-        temperature: 0.2,
-        messages: [{
-          role: 'user',
-          content: [...imageContents, { type: 'text', text: systemPrompt }]
-        }],
-        response_format: { type: 'json_object' }
-      }),
-    },
-    30000
-  );
-
-  if (!response.ok) {
-    sendEvent({ type: 'warning', message: 'OpenAI verification unavailable' });
-    return { deviceCorrections: new Map() };
-  }
-
-  const data = await response.json();
-  const text = data.choices?.[0]?.message?.content;
-
-  if (!text) {
-    return { deviceCorrections: new Map() };
-  }
-
-  try {
-    const result = parseAIResponse(text, 'OpenAI verification response');
-
-    const deviceCorrections = new Map<number, Partial<DetectedCircuit['device']>>();
-
-    for (const verification of result.device_verifications || []) {
-      if (!verification.verified && verification.corrections) {
-        deviceCorrections.set(verification.position, verification.corrections);
-
-        // Stream the update
-        sendEvent({
-          type: 'circuit_update',
-          index: verification.position,
-          updates: { device: verification.corrections }
-        });
-
-        if (verification.reason) {
-          sendEvent({ type: 'decision', message: `Position ${verification.position}: ${verification.reason}` });
-        }
-      }
-    }
-
-    if (deviceCorrections.size > 0) {
-      sendEvent({ type: 'stage', stage: 'openai_complete', message: `${deviceCorrections.size} device corrections` });
-    }
-
-    return { deviceCorrections };
-
-  } catch (e) {
-    console.error('OpenAI parse error:', e);
-    return { deviceCorrections: new Map() };
-  }
 }
 
 // ============================================================================
@@ -505,7 +446,7 @@ Return ONLY corrections: {"device_verifications":[{"position":3,"verified":false
 // ============================================================================
 
 serve(async (req) => {
-  console.log('board-read-stream | Streaming multi-model ensemble | ' + new Date().toISOString());
+  console.log('board-read-stream | Simplified single-model analysis | ' + new Date().toISOString());
 
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -517,7 +458,7 @@ serve(async (req) => {
   // Start processing in background
   (async () => {
     try {
-      const { images, hints, options }: BoardReadRequest = await req.json();
+      const { images, hints }: BoardReadRequest = await req.json();
 
       if (!images || images.length === 0) {
         sendEvent({ type: 'error', message: 'At least one image is required' });
@@ -531,37 +472,21 @@ serve(async (req) => {
         return;
       }
 
-      sendEvent({ type: 'stage', stage: 'start', message: `Processing ${images.length} image(s)...` });
+      sendEvent({ type: 'stage', stage: 'connecting', message: `Processing ${images.length} image(s)...` });
 
-      // Stage 1: Gemini
-      const geminiResult = await analyzeWithGemini(images, hints, sendEvent);
-
-      // Stage 2: Claude OCR (unless fast mode)
-      let claudeResult = { labelCorrections: new Map<number, string>(), additionalCircuits: [] as Partial<DetectedCircuit>[] };
-      if (!options?.fast_mode && options?.use_claude_ocr !== false) {
-        claudeResult = await analyzeWithClaude(images, geminiResult.circuits, sendEvent);
-      }
-
-      // Stage 3: OpenAI Verification (unless fast mode)
-      let openaiResult = { deviceCorrections: new Map<number, Partial<DetectedCircuit['device']>>() };
-      if (!options?.fast_mode && options?.use_openai_components !== false) {
-        openaiResult = await verifyWithOpenAI(images, geminiResult.circuits, sendEvent);
-      }
-
-      // Build models used list
-      const modelsUsed: string[] = ['gemini'];
-      if (claudeResult.labelCorrections.size > 0) modelsUsed.push('claude-ocr');
-      if (openaiResult.deviceCorrections.size > 0) modelsUsed.push('openai-verify');
+      // Single comprehensive Gemini analysis
+      const result = await analyzeWithGemini(images, hints, sendEvent);
 
       // Send completion
       sendEvent({
         type: 'complete',
         metadata: {
           analysisTime: Date.now() - startTime,
-          modelsUsed,
+          model: 'gemini-2.0-flash',
           imageCount: images.length,
-          circuitCount: geminiResult.circuits.length + claudeResult.additionalCircuits.length,
-          boardSize: geminiResult.board.estimated_total_ways || geminiResult.circuits.length
+          circuitCount: result.circuits.length,
+          boardSize: result.board.estimated_total_ways || result.circuits.length,
+          isThreePhase: result.board.is_three_phase || false
         }
       });
 
@@ -569,7 +494,7 @@ serve(async (req) => {
       console.error('Stream error:', error);
       sendEvent({
         type: 'error',
-        message: error instanceof Error ? error.message : 'Unknown error'
+        message: error instanceof Error ? error.message : 'Analysis failed'
       });
     } finally {
       close();

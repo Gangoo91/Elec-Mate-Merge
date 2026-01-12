@@ -3,7 +3,6 @@ import { Search, Filter, Briefcase, PoundSterling, Users, RefreshCw, Plus } from
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PullToRefresh } from "@/components/ui/pull-to-refresh";
-import { FloatingActionButton } from "@/components/ui/floating-action-button";
 import { JobCard, AssignedWorker } from "@/components/employer/JobCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -379,13 +378,6 @@ export function JobsSection() {
         onOpenChange={setShowJobSheet}
       />
 
-      {/* Mobile FAB for adding jobs */}
-      <FloatingActionButton
-        icon={<Plus className="h-6 w-6" />}
-        onClick={() => setShowAddDialog(true)}
-        label="Add Job"
-        className="sm:hidden"
-      />
     </div>
     </PullToRefresh>
   );

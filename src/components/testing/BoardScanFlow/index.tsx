@@ -167,7 +167,10 @@ export const BoardScanFlow: React.FC<BoardScanFlowProps> = ({
             board={analysis.board as BoardInfo | null}
             circuits={analysis.circuits as DetectedCircuit[]}
             warnings={analysis.warnings}
+            error={analysis.error}
+            isError={analysis.isError}
             onCancel={handleCancelAnalysis}
+            onRetry={handleRescan}
           />
         )}
         {step === 'results' && (

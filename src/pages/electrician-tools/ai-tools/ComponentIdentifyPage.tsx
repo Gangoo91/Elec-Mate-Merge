@@ -139,7 +139,7 @@ const ComponentIdentifyPage = () => {
         .getPublicUrl(fileName);
 
       // Call analysis function
-      const { data, error } = await supabase.functions.invoke('visual-electrical-analysis', {
+      const { data, error } = await supabase.functions.invoke('visual-analysis', {
         body: {
           imageUrl: publicUrl,
           analysisMode: 'component_identify',

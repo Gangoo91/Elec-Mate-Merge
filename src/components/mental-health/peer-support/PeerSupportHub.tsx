@@ -30,6 +30,7 @@ import {
   useMarkPeerMessagesAsRead,
   usePeerTyping,
   usePeerPresence,
+  usePeerSupporterProfile,
 } from '@/hooks/usePeerChat';
 import { ReadReceipt, getReceiptStatus, TypingIndicatorWithName } from '@/components/messaging/ReadReceipt';
 import { PresenceIndicator } from '@/components/messaging/PresenceIndicator';
@@ -50,7 +51,6 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
   const { user } = useAuth();
 
   const [viewState, setViewState] = useState<ViewState>('hub');
-  const [myProfile, setMyProfile] = useState<PeerSupporter | null>(null);
   const [connectingId, setConnectingId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('browse');
 
@@ -59,18 +59,9 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
   const [messageInput, setMessageInput] = useState('');
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  // Use centralised hooks for conversations and messages
+  // Use centralised hooks for conversations, messages, and profile (all cached)
   const { data: conversations = [], isLoading: conversationsLoading, isError: conversationsError, error: conversationsErrorDetails, refetch: refetchConversations } = usePeerConversations();
-
-  // Debug logging for conversation issues
-  useEffect(() => {
-    if (conversations.length > 0) {
-      console.log('[PeerSupportHub] Loaded conversations:', conversations.length, conversations);
-    }
-    if (conversationsError) {
-      console.error('[PeerSupportHub] Error loading conversations:', conversationsErrorDetails);
-    }
-  }, [conversations, conversationsError, conversationsErrorDetails]);
+  const { data: myProfile, refetch: refetchProfile } = usePeerSupporterProfile();
   const { data: chatMessages = [], isLoading: messagesLoading } = usePeerMessages(selectedConversation?.id);
   const sendMessage = useSendPeerMessage();
   const markAsRead = useMarkPeerMessagesAsRead();
@@ -87,28 +78,8 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
   const { data: partnerPresence } = usePeerPresence(partnerId);
   const partnerPresenceStatus = partnerPresence ? calculateStatus(partnerPresence.last_seen) : 'offline';
 
-  // Load supporter profile
-  const [profileLoading, setProfileLoading] = useState(true);
-  const loadProfile = useCallback(async () => {
-    if (!user) {
-      setProfileLoading(false);
-      return;
-    }
-    try {
-      const profile = await peerSupporterService.getMyProfile();
-      setMyProfile(profile);
-    } catch (error) {
-      console.error('Error loading profile:', error);
-    } finally {
-      setProfileLoading(false);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    loadProfile();
-  }, [loadProfile]);
-
-  const isLoading = conversationsLoading || profileLoading;
+  // Only block on conversations loading - profile loads in background
+  const isLoading = conversationsLoading;
 
   const handleConnect = async (supporterId: string) => {
     setConnectingId(supporterId);
@@ -134,7 +105,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
   };
 
   const handleProfileUpdated = () => {
-    loadProfile();
+    refetchProfile();
     refetchConversations();
   };
 
@@ -221,7 +192,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
     return (
       <BecomeSupporter
         onSuccess={() => {
-          loadProfile();
+          refetchProfile();
           refetchConversations();
           setViewState('hub');
         }}

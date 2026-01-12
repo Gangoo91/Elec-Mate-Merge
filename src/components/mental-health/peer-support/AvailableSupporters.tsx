@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Users, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import SupporterCard from './SupporterCard';
-import { PeerSupporter, peerSupporterService, peerPresenceService } from '@/services/peerSupportService';
+import { PeerSupporter, peerPresenceService } from '@/services/peerSupportService';
+import { useAvailableSupporters } from '@/hooks/usePeerChat';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface AvailableSupportersProps {
   onConnect: (supporterId: string) => void;
@@ -50,35 +52,14 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
   connectingId,
   excludeUserId,
 }) => {
-  const [supporters, setSupporters] = useState<PeerSupporter[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  // Debounce timer ref for presence updates
+  const queryClient = useQueryClient();
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const loadSupporters = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const data = await peerSupporterService.getAvailableSupporters();
-      // Filter out current user if they're also a supporter
-      const filtered = excludeUserId
-        ? data.filter(s => s.user_id !== excludeUserId)
-        : data;
-      setSupporters(filtered);
-    } catch (err) {
-      console.error('Error loading supporters:', err);
-      setError('Failed to load supporters');
-    } finally {
-      setIsLoading(false);
-    }
-  }, [excludeUserId]);
+  // Use cached hook for supporters
+  const { data: supporters = [], isLoading, isError, refetch } = useAvailableSupporters(excludeUserId);
 
+  // Subscribe to real-time presence updates
   useEffect(() => {
-    loadSupporters();
-
-    // Subscribe to real-time updates with debouncing
     const unsubscribe = peerPresenceService.subscribeToAvailability((updated) => {
       // Clear existing debounce timer
       if (debounceTimerRef.current) {
@@ -90,7 +71,8 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
         const filtered = excludeUserId
           ? updated.filter(s => s.user_id !== excludeUserId)
           : updated;
-        setSupporters(filtered);
+        // Update the React Query cache directly
+        queryClient.setQueryData(['available-supporters', excludeUserId], filtered);
       }, 500);
     });
 
@@ -100,7 +82,7 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
         clearTimeout(debounceTimerRef.current);
       }
     };
-  }, [excludeUserId, loadSupporters]);
+  }, [excludeUserId, queryClient]);
 
   if (isLoading) {
     return (
@@ -130,13 +112,13 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
     );
   }
 
-  if (error) {
+  if (isError) {
     return (
       <div className="py-8 text-center px-4">
-        <p className="text-red-400 mb-4">{error}</p>
+        <p className="text-red-400 mb-4">Failed to load supporters</p>
         <Button
           variant="outline"
-          onClick={loadSupporters}
+          onClick={() => refetch()}
           className="gap-2 text-white border-white/20 hover:bg-white/10 h-11 touch-manipulation active:scale-[0.98]"
         >
           <RefreshCw className="w-4 h-4" />
@@ -159,7 +141,7 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
         </p>
         <Button
           variant="ghost"
-          onClick={loadSupporters}
+          onClick={() => refetch()}
           className="mt-4 gap-2 text-white hover:text-white h-11 touch-manipulation active:scale-[0.98]"
         >
           <RefreshCw className="w-4 h-4" />
@@ -184,7 +166,7 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
         </div>
         <Button
           variant="ghost"
-          onClick={loadSupporters}
+          onClick={() => refetch()}
           className="h-11 gap-1.5 text-white hover:text-white touch-manipulation active:scale-[0.98] transition-all"
         >
           <RefreshCw className="w-4 h-4" />

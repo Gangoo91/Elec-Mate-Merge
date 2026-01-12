@@ -332,6 +332,29 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         }
         return true;
       }
+      case 'set_test_result': {
+        const fieldName = params.field as keyof TestResult;
+        const value = params.value as string;
+        const circuitNum = params.circuit_number as number | undefined;
+
+        // Determine which circuit to update
+        const targetIndex = circuitNum !== undefined
+          ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`)
+          : selectedCircuitIndex;
+
+        if (targetIndex >= 0 && targetIndex < testResults.length) {
+          setTestResults(prev => {
+            const updated = [...prev];
+            updated[targetIndex] = { ...updated[targetIndex], [fieldName]: value };
+            return updated;
+          });
+          toast.success(`Set ${fieldName} to ${value}`);
+          return true;
+        } else {
+          toast.error(`Circuit not found`);
+          return false;
+        }
+      }
       default:
         return false;
     }
@@ -345,7 +368,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       formId: 'eic-schedule-of-testing',
       formName: 'EIC Schedule of Testing',
       fields: voiceFields,
-      actions: ['add_circuit', 'next_circuit', 'previous_circuit', 'select_circuit', 'remove_circuit', 'set_polarity_ok'],
+      actions: ['add_circuit', 'next_circuit', 'previous_circuit', 'select_circuit', 'remove_circuit', 'set_polarity_ok', 'set_test_result'],
       onFillField: handleVoiceFillField,
       onAction: handleVoiceAction,
       onSubmit: () => {

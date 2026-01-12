@@ -349,6 +349,29 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
         }
         return true;
       }
+      case 'set_test_result': {
+        const fieldName = params.field as keyof TestResult;
+        const value = params.value as string;
+        const circuitNum = params.circuit_number as number | undefined;
+
+        // Determine which circuit to update
+        const targetIndex = circuitNum !== undefined
+          ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`)
+          : selectedCircuitIndex;
+
+        if (targetIndex >= 0 && targetIndex < testResults.length) {
+          setTestResults(prev => {
+            const updated = [...prev];
+            updated[targetIndex] = { ...updated[targetIndex], [fieldName]: value };
+            return updated;
+          });
+          toast.success(`Set ${fieldName} to ${value}`);
+          return true;
+        } else {
+          toast.error(`Circuit not found`);
+          return false;
+        }
+      }
       default:
         return false;
     }
@@ -362,7 +385,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
       formId: 'eicr-schedule-of-tests',
       formName: 'EICR Schedule of Tests',
       fields: voiceFields,
-      actions: ['add_circuit', 'next_circuit', 'previous_circuit', 'select_circuit', 'remove_circuit', 'set_polarity_ok'],
+      actions: ['add_circuit', 'next_circuit', 'previous_circuit', 'select_circuit', 'remove_circuit', 'set_polarity_ok', 'set_test_result'],
       onFillField: handleVoiceFillField,
       onAction: handleVoiceAction,
       onSubmit: () => {
@@ -1222,7 +1245,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
                     : 'hover:bg-primary/10 hover:border-primary/30'
                 }`}
                 title={voiceActive ? 'Voice active - click to stop' : 'Start voice input'}
-                onClick={toggleVoice}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  console.log('Voice button clicked directly!');
+                  toggleVoice();
+                }}
                 disabled={voiceConnecting}
               >
                 <Mic className={`h-4 w-4 ${voiceActive ? 'text-green-500 animate-pulse' : voiceConnecting ? 'text-yellow-500' : 'text-primary'}`} />

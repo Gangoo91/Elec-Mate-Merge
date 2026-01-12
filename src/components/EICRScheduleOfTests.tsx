@@ -30,6 +30,7 @@ import TestResultsReviewDialog from './testing/TestResultsReviewDialog';
 import ScribbleToTableDialog from './mobile/ScribbleToTableDialog';
 import BulkInfillDialog from './BulkInfillDialog';
 import { useOrientation } from '@/hooks/useOrientation';
+import { useInlineVoice } from '@/hooks/useInlineVoice';
 import { twinAndEarthCpcFor, normaliseCableSize } from '@/utils/twinAndEarth';
 import { getTableViewPreference, setTableViewPreference } from '@/utils/mobileTableUtils';
 import { calculatePointsServed } from '@/types/autoFillTypes';
@@ -65,7 +66,156 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   const [showQuickFillPanel, setShowQuickFillPanel] = useState(false);
   const [lastDeleted, setLastDeleted] = useState<{ circuit: TestResult; index: number } | null>(null);
   const [activeToolPanel, setActiveToolPanel] = useState<'ai' | 'smart' | null>(null);
+  const [selectedCircuitIndex, setSelectedCircuitIndex] = useState(0);
   const orientation = useOrientation();
+
+  // Voice tool call handler - connects ElevenLabs agent to component state
+  const handleVoiceToolCall = useCallback((toolName: string, params: Record<string, unknown>): string => {
+    switch (toolName) {
+      case 'add_circuit': {
+        const circuitType = params.type as string || params.description as string || '';
+        const nextNum = (testResults.length + 1).toString();
+        const newCircuit: TestResult = {
+          id: crypto.randomUUID(),
+          circuitDesignation: `C${nextNum}`,
+          circuitNumber: nextNum,
+          circuitDescription: circuitType,
+          circuitType: circuitType,
+          type: circuitType,
+          referenceMethod: '',
+          liveSize: '',
+          cpcSize: '',
+          protectiveDeviceType: '',
+          protectiveDeviceRating: '',
+          protectiveDeviceKaRating: '',
+          protectiveDeviceLocation: '',
+          bsStandard: '',
+          cableSize: '',
+          protectiveDevice: '',
+          r1r2: '',
+          r2: '',
+          ringContinuityLive: '',
+          ringContinuityNeutral: '',
+          ringR1: '',
+          ringRn: '',
+          ringR2: '',
+          insulationTestVoltage: '',
+          insulationResistance: '',
+          insulationLiveNeutral: '',
+          insulationLiveEarth: '',
+          insulationNeutralEarth: '',
+          polarity: '',
+          zs: '',
+          maxZs: '',
+          pointsServed: '',
+          rcdRating: '',
+          rcdOneX: '',
+          rcdTestButton: '',
+          afddTest: '',
+          pfc: '',
+          pfcLiveNeutral: '',
+          pfcLiveEarth: '',
+          functionalTesting: '',
+          notes: '',
+          typeOfWiring: '',
+          rcdBsStandard: '',
+          rcdType: '',
+          rcdRatingA: '',
+        };
+        setTestResults(prev => [...prev, newCircuit]);
+        setSelectedCircuitIndex(testResults.length);
+        toast.success(`Added circuit C${nextNum}${circuitType ? ` (${circuitType})` : ''}`);
+        return `Added circuit ${nextNum}${circuitType ? ` for ${circuitType}` : ''}`;
+      }
+
+      case 'set_test_result': {
+        const field = params.field as string;
+        const value = params.value as string;
+        const circuitNum = params.circuit_number as number | undefined;
+        const targetIndex = circuitNum !== undefined
+          ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`)
+          : selectedCircuitIndex;
+
+        if (targetIndex >= 0 && targetIndex < testResults.length) {
+          setTestResults(prev => {
+            const updated = [...prev];
+            updated[targetIndex] = { ...updated[targetIndex], [field]: value };
+            return updated;
+          });
+          toast.success(`Set ${field} to ${value}`);
+          return `Set ${field} to ${value} on circuit ${targetIndex + 1}`;
+        }
+        return 'No circuit selected - add a circuit first';
+      }
+
+      case 'next_circuit': {
+        if (selectedCircuitIndex < testResults.length - 1) {
+          const newIndex = selectedCircuitIndex + 1;
+          setSelectedCircuitIndex(newIndex);
+          toast.info(`Now on circuit ${newIndex + 1}`);
+          return `Moved to circuit ${newIndex + 1}`;
+        }
+        return 'Already on the last circuit';
+      }
+
+      case 'previous_circuit': {
+        if (selectedCircuitIndex > 0) {
+          const newIndex = selectedCircuitIndex - 1;
+          setSelectedCircuitIndex(newIndex);
+          toast.info(`Now on circuit ${newIndex + 1}`);
+          return `Moved to circuit ${newIndex + 1}`;
+        }
+        return 'Already on the first circuit';
+      }
+
+      case 'select_circuit': {
+        const num = params.circuit_number as number;
+        const idx = testResults.findIndex(r =>
+          r.circuitNumber === String(num) || r.circuitDesignation === `C${num}`
+        );
+        if (idx >= 0) {
+          setSelectedCircuitIndex(idx);
+          toast.info(`Selected circuit ${num}`);
+          return `Selected circuit ${num}`;
+        }
+        return `Circuit ${num} not found`;
+      }
+
+      case 'remove_circuit': {
+        if (testResults.length > 0) {
+          const removed = testResults[selectedCircuitIndex];
+          setTestResults(prev => prev.filter((_, i) => i !== selectedCircuitIndex));
+          if (selectedCircuitIndex >= testResults.length - 1 && selectedCircuitIndex > 0) {
+            setSelectedCircuitIndex(prev => prev - 1);
+          }
+          toast.success(`Removed circuit ${removed?.circuitDesignation || selectedCircuitIndex + 1}`);
+          return `Removed circuit ${removed?.circuitDesignation}`;
+        }
+        return 'No circuits to remove';
+      }
+
+      case 'set_polarity_ok': {
+        if (testResults.length > 0) {
+          setTestResults(prev => {
+            const updated = [...prev];
+            updated[selectedCircuitIndex] = { ...updated[selectedCircuitIndex], polarity: '✓' };
+            return updated;
+          });
+          toast.success('Polarity marked as OK');
+          return 'Polarity set to OK';
+        }
+        return 'No circuit selected';
+      }
+
+      default:
+        console.log('[Voice] Unknown tool:', toolName, params);
+        return `Unknown command: ${toolName}`;
+    }
+  }, [testResults, selectedCircuitIndex]);
+
+  const { isConnecting: voiceConnecting, isActive: voiceActive, toggleVoice } = useInlineVoice({
+    onToolCall: handleVoiceToolCall,
+  });
 
   // Calculate completion stats for progress indicator
   const { completedCount, progressPercent, pendingCount } = useMemo(() => {
@@ -1109,11 +1259,18 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             </div>
             {/* Voice Assistant - Prominent */}
             <Button
-              className="w-full h-12 rounded-lg font-medium transition-all duration-200 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/30 border border-purple-400/30"
-              onClick={() => toast.info('Voice assistant coming soon', { description: 'Eleven Labs integration in progress', duration: 2000 })}
+              className={`w-full h-12 rounded-lg font-medium transition-all duration-200 text-white shadow-lg border ${
+                voiceActive
+                  ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 shadow-green-500/30 border-green-400/30'
+                  : voiceConnecting
+                  ? 'bg-gradient-to-r from-yellow-600 to-amber-600 animate-pulse shadow-yellow-500/30 border-yellow-400/30'
+                  : 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-purple-500/30 border-purple-400/30'
+              }`}
+              onClick={toggleVoice}
+              disabled={voiceConnecting}
             >
-              <Mic className="h-5 w-5 mr-2" />
-              Voice Assistant
+              <Mic className={`h-5 w-5 mr-2 ${voiceActive ? 'animate-pulse' : ''}`} />
+              {voiceActive ? 'Voice Active - Tap to Stop' : voiceConnecting ? 'Connecting...' : 'Voice Assistant'}
             </Button>
           </div>
 
@@ -1329,11 +1486,18 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   AI Board Scan
                 </Button>
                 <Button
-                  className="col-span-2 h-11 rounded-lg font-medium transition-all duration-200 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-500/20 border border-purple-400/30"
-                  onClick={() => toast.info('Voice assistant coming soon', { description: 'Eleven Labs integration in progress', duration: 2000 })}
+                  className={`col-span-2 h-11 rounded-lg font-medium transition-all duration-200 text-white shadow-lg border ${
+                    voiceActive
+                      ? 'bg-gradient-to-r from-green-600 to-emerald-600 shadow-green-500/20 border-green-400/30'
+                      : voiceConnecting
+                      ? 'bg-gradient-to-r from-yellow-600 to-amber-600 animate-pulse shadow-yellow-500/20 border-yellow-400/30'
+                      : 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-purple-500/20 border-purple-400/30'
+                  }`}
+                  onClick={toggleVoice}
+                  disabled={voiceConnecting}
                 >
-                  <Mic className="h-4 w-4 mr-2" />
-                  Voice Assistant
+                  <Mic className={`h-4 w-4 mr-2 ${voiceActive ? 'animate-pulse' : ''}`} />
+                  {voiceActive ? 'Tap to Stop' : voiceConnecting ? 'Connecting...' : 'Voice Assistant'}
                 </Button>
                 <Button className="testing-action-secondary col-span-2" onClick={addTestResult}>
                   <Plus className="h-4 w-4 mr-2" />

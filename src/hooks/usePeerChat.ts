@@ -5,14 +5,18 @@ import { supabase } from '@/integrations/supabase/client';
 import {
   PeerConversation,
   PeerMessage,
+  PeerSupporter,
   peerConversationService,
   peerMessageService,
+  peerSupporterService,
 } from '@/services/peerSupportService';
 import { getUserPresence, UserPresence } from '@/services/presenceService';
 
 // Query Keys
 const PEER_CONVERSATIONS_KEY = ['peer-conversations'];
 const PEER_MESSAGES_KEY = ['peer-messages'];
+const PEER_PROFILE_KEY = ['peer-supporter-profile'];
+const AVAILABLE_SUPPORTERS_KEY = ['available-supporters'];
 
 // =====================================================
 // CONVERSATIONS
@@ -27,6 +31,8 @@ export function usePeerConversations() {
   return useQuery({
     queryKey: PEER_CONVERSATIONS_KEY,
     queryFn: () => peerConversationService.getMyConversations(),
+    staleTime: 30000, // Cache for 30 seconds
+    gcTime: 5 * 60 * 1000, // Keep in cache for 5 minutes
   });
 }
 
@@ -55,6 +61,42 @@ export function useEndPeerConversation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: PEER_CONVERSATIONS_KEY });
     },
+  });
+}
+
+// =====================================================
+// SUPPORTER PROFILE
+// =====================================================
+
+/**
+ * Hook to get current user's peer supporter profile (cached)
+ */
+export function usePeerSupporterProfile() {
+  const { user } = useAuth();
+
+  return useQuery({
+    queryKey: PEER_PROFILE_KEY,
+    queryFn: () => peerSupporterService.getMyProfile(),
+    enabled: !!user,
+    staleTime: 60000, // Cache for 1 minute
+    gcTime: 5 * 60 * 1000, // Keep in cache for 5 minutes
+  });
+}
+
+/**
+ * Hook to get available supporters (cached)
+ */
+export function useAvailableSupporters(excludeUserId?: string) {
+  return useQuery({
+    queryKey: [...AVAILABLE_SUPPORTERS_KEY, excludeUserId],
+    queryFn: async () => {
+      const supporters = await peerSupporterService.getAvailableSupporters();
+      return excludeUserId
+        ? supporters.filter(s => s.user_id !== excludeUserId)
+        : supporters;
+    },
+    staleTime: 30000, // Cache for 30 seconds
+    gcTime: 5 * 60 * 1000, // Keep in cache for 5 minutes
   });
 }
 

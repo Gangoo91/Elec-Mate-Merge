@@ -3,7 +3,6 @@ import { Search, Filter, Users, Plus, X, CheckSquare, Square, MessageSquare, Bri
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PullToRefresh } from "@/components/ui/pull-to-refresh";
-import { FloatingActionButton } from "@/components/ui/floating-action-button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -495,13 +494,6 @@ export function EmployeesSection() {
         onComplete={() => setMultiSelectMode(false)}
       />
 
-      {/* Mobile FAB for adding employees */}
-      <FloatingActionButton
-        icon={<Plus className="h-6 w-6" />}
-        onClick={() => setAddEmployeeDialogOpen(true)}
-        label="Add Employee"
-        className="sm:hidden"
-      />
     </div>
     </PullToRefresh>
   );

@@ -111,6 +111,7 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
   const lastFormContextRef = useRef<string>('');
   const connectionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const startConversationRef = useRef<(() => Promise<void>) | null>(null);
+  const hasDraggedRef = useRef(false); // Track if actual dragging occurred (fixes first-click bug)
 
   // Initialize position on mount
   useEffect(() => {
@@ -451,10 +452,14 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
       x: clientX - rect.left,
       y: clientY - rect.top,
     });
+    hasDraggedRef.current = false; // Reset drag tracking on new interaction
   }, [isDocked]);
 
   const handleDragMove = useCallback((clientX: number, clientY: number) => {
     if (!isDragging) return;
+
+    // Mark that actual dragging occurred (fixes first-click bug)
+    hasDraggedRef.current = true;
 
     const newX = clientX - dragOffset.x;
     const newY = clientY - dragOffset.y;
@@ -952,9 +957,9 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
-          onClick={(e) => {
-            const moveDistance = Math.abs(e.clientX - startPos.x) + Math.abs(e.clientY - startPos.y);
-            if (moveDistance < 10) {
+          onClick={() => {
+            // Only handle click if no actual dragging occurred (fixes first-click bug)
+            if (!hasDraggedRef.current) {
               if (isMinimised) {
                 setIsMinimised(false);
                 if (!isConnected && !isConnecting) {
