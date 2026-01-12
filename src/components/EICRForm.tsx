@@ -26,6 +26,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
 
   // Board scan state
   const [showBoardScan, setShowBoardScan] = useState(false);
+  const [returnToTestingTab, setReturnToTestingTab] = useState(false);
 
   // Handle board scan completion - populate circuits
   const handleBoardScanComplete = useCallback((data: {
@@ -108,6 +109,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     }
 
     setShowBoardScan(false);
+    setReturnToTestingTab(true);
   }, [formData.scheduleOfTests, updateFormData]);
 
   // Warn before closing tab if there are unsynchronised changes
@@ -190,6 +192,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
           onConfirmStartNew={confirmStartNew}
           onConfirmDuplicate={confirmDuplicate}
           onOpenBoardScan={() => setShowBoardScan(true)}
+          initialTab={returnToTestingTab ? 'testing' : undefined}
         />
       </div>
     </div>

@@ -36,8 +36,9 @@ const tabConfigs: TabConfig[] = [
   }
 ];
 
-export const useEICRTabs = (formData: any) => {
-  const [currentTab, setCurrentTab] = useState<EICRTabValue>('details');
+export const useEICRTabs = (formData: any, initialTab?: EICRTabValue) => {
+  // Use initialTab if provided, otherwise default to 'details'
+  const [currentTab, setCurrentTab] = useState<EICRTabValue>(initialTab || 'details');
 
   const currentTabIndex = tabConfigs.findIndex(tab => tab.id === currentTab);
   const totalTabs = tabConfigs.length;

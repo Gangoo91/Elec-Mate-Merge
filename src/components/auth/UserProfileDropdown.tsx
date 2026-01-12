@@ -92,33 +92,27 @@ const UserProfileDropdown = () => {
       <DropdownMenuTrigger asChild>
         <button
           className={cn(
-            "relative group transition-all duration-200",
-            "rounded-2xl p-[3px]",
-            "bg-gradient-to-br from-elec-yellow/60 via-amber-500/50 to-orange-500/40",
-            "hover:from-elec-yellow/80 hover:via-amber-500/70 hover:to-orange-500/60",
-            "shadow-lg shadow-elec-yellow/10 hover:shadow-elec-yellow/25",
-            "active:scale-95 touch-manipulation"
+            "relative touch-manipulation",
+            "rounded-full",
+            "active:scale-95 transition-transform duration-150"
           )}
           aria-label="User profile"
         >
-          {/* Inner container with dark background */}
-          <div className="relative rounded-[13px] bg-elec-dark/95 p-[2px]">
-            <Avatar className="h-9 w-9 transition-transform duration-200 group-hover:scale-[1.02]">
-              <AvatarImage src={profile?.avatar_url || ''} className="object-cover" />
-              <AvatarFallback className="bg-gradient-to-br from-elec-yellow to-amber-500 text-elec-dark font-bold text-sm">
-                {getInitials()}
-              </AvatarFallback>
-            </Avatar>
+          <Avatar className="h-10 w-10 border-2 border-white/20 hover:border-elec-yellow/50 transition-colors">
+            <AvatarImage src={profile?.avatar_url || ''} className="object-cover" />
+            <AvatarFallback className="bg-gradient-to-br from-elec-yellow to-amber-500 text-elec-dark font-bold text-sm">
+              {getInitials()}
+            </AvatarFallback>
+          </Avatar>
 
-            {/* Online status indicator - always shown at bottom-right */}
-            <span className="absolute -bottom-0.5 -right-0.5 block h-2.5 w-2.5 rounded-full border-[2px] border-elec-dark bg-green-500 shadow-sm shadow-green-500/50" />
-          </div>
+          {/* Online status indicator */}
+          <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full border-2 border-elec-dark bg-green-500" />
 
-          {/* Unread badge with count - positioned outside button */}
+          {/* Notification badge - positioned to not overflow */}
           {hasUnread && totalUnread > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 flex items-center justify-center">
+            <span className="absolute -top-1 -right-1 flex items-center justify-center">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-50" />
-              <span className="relative flex h-5 min-w-5 items-center justify-center rounded-full bg-gradient-to-br from-red-500 to-red-600 px-1.5 text-[10px] font-bold text-white shadow-md shadow-red-500/30 border border-red-400/30">
+              <span className="relative flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[9px] font-bold text-white">
                 {totalUnread > 9 ? '9+' : totalUnread}
               </span>
             </span>

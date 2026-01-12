@@ -17,6 +17,7 @@ interface EICRFormContentProps {
   onConfirmStartNew: () => void;
   onConfirmDuplicate?: () => void;
   onOpenBoardScan?: () => void;
+  initialTab?: 'details' | 'inspection' | 'testing' | 'inspector' | 'certificate';
 }
 
 const EICRFormContent: React.FC<EICRFormContentProps> = ({
@@ -31,7 +32,8 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
   onCloseStartNewDialog,
   onConfirmStartNew,
   onConfirmDuplicate,
-  onOpenBoardScan
+  onOpenBoardScan,
+  initialTab
 }) => {
   const handleApplyRcdPreset = (circuitIds: string[], preset: any) => {
     const currentResults = formData.testResults || [];
@@ -73,6 +75,7 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
         formData={formData}
         onUpdate={onUpdate}
         onOpenBoardScan={onOpenBoardScan}
+        initialTab={initialTab}
       />
 
       <StartNewEICRDialog
