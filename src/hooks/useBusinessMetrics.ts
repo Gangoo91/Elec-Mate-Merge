@@ -377,8 +377,8 @@ export function useTopPerformers() {
         .select(`
           employee_id,
           job_id,
-          employees (name),
-          jobs (value)
+          employer_employees (name),
+          employer_jobs (value)
         `)
         .eq('status', 'assigned');
 
@@ -389,8 +389,8 @@ export function useTopPerformers() {
 
       (assignments || []).forEach((assignment: any) => {
         const empId = assignment.employee_id;
-        const empName = assignment.employees?.name || 'Unknown';
-        const jobValue = Number(assignment.jobs?.value || 0);
+        const empName = assignment.employer_employees?.name || 'Unknown';
+        const jobValue = Number(assignment.employer_jobs?.value || 0);
 
         if (performerMap.has(empId)) {
           const existing = performerMap.get(empId)!;

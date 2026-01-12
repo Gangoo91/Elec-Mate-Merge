@@ -35,10 +35,10 @@ export interface JobAssignmentWithDetails extends JobAssignment {
 
 export const getJobAssignments = async (jobId: string): Promise<JobAssignmentWithDetails[]> => {
   const { data, error } = await supabase
-    .from('job_assignments')
+    .from('employer_job_assignments')
     .select(`
       *,
-      employee:employees(id, name, role, avatar_initials, phone, email)
+      employee:employer_employees(id, name, role, avatar_initials, phone, email)
     `)
     .eq('job_id', jobId)
     .order('assigned_at', { ascending: false });
@@ -53,10 +53,10 @@ export const getJobAssignments = async (jobId: string): Promise<JobAssignmentWit
 
 export const getEmployeeAssignments = async (employeeId: string): Promise<JobAssignmentWithDetails[]> => {
   const { data, error } = await supabase
-    .from('job_assignments')
+    .from('employer_job_assignments')
     .select(`
       *,
-      job:jobs(id, title, client, location)
+      job:employer_jobs(id, title, client, location)
     `)
     .eq('employee_id', employeeId)
     .order('start_date', { ascending: true });
@@ -82,7 +82,7 @@ export const createJobAssignment = async (
   }
 ): Promise<JobAssignment> => {
   const { data, error } = await supabase
-    .from('job_assignments')
+    .from('employer_job_assignments')
     .insert({
       ...assignment,
       status: 'assigned',
@@ -104,7 +104,7 @@ export const updateJobAssignment = async (
   updates: Partial<JobAssignment>
 ): Promise<JobAssignment | null> => {
   const { data, error } = await supabase
-    .from('job_assignments')
+    .from('employer_job_assignments')
     .update(updates)
     .eq('id', id)
     .select()
@@ -120,7 +120,7 @@ export const updateJobAssignment = async (
 
 export const deleteJobAssignment = async (id: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('job_assignments')
+    .from('employer_job_assignments')
     .delete()
     .eq('id', id);
 
@@ -134,7 +134,7 @@ export const deleteJobAssignment = async (id: string): Promise<boolean> => {
 
 export const removeWorkerFromJob = async (jobId: string, employeeId: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('job_assignments')
+    .from('employer_job_assignments')
     .delete()
     .eq('job_id', jobId)
     .eq('employee_id', employeeId);
@@ -154,10 +154,10 @@ export const checkForClashes = async (
   excludeJobId?: string
 ): Promise<JobAssignmentWithDetails[]> => {
   let query = supabase
-    .from('job_assignments')
+    .from('employer_job_assignments')
     .select(`
       *,
-      job:jobs(id, title, client, location)
+      job:employer_jobs(id, title, client, location)
     `)
     .eq('employee_id', employeeId);
 

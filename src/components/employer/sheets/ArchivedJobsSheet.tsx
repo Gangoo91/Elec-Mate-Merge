@@ -31,7 +31,7 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
     queryKey: ['archived-jobs'],
     queryFn: async (): Promise<ArchivedJob[]> => {
       const { data, error } = await supabase
-        .from('jobs')
+        .from('employer_jobs')
         .select('id, title, client, location, value, archived_at')
         .not('archived_at', 'is', null)
         .order('archived_at', { ascending: false });
@@ -45,7 +45,7 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
   const restoreJob = useMutation({
     mutationFn: async (jobId: string) => {
       const { error } = await supabase
-        .from('jobs')
+        .from('employer_jobs')
         .update({ archived_at: null, status: 'Pending', updated_at: new Date().toISOString() })
         .eq('id', jobId);
       
@@ -53,7 +53,7 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['archived-jobs'] });
-      queryClient.invalidateQueries({ queryKey: ['jobs'] });
+      queryClient.invalidateQueries({ queryKey: ['employer-jobs'] });
       toast.success("Job restored");
     },
     onError: () => {
@@ -64,7 +64,7 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
   const permanentlyDelete = useMutation({
     mutationFn: async (jobId: string) => {
       const { error } = await supabase
-        .from('jobs')
+        .from('employer_jobs')
         .delete()
         .eq('id', jobId);
       

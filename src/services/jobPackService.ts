@@ -25,7 +25,7 @@ export interface JobPack {
 
 export const getJobPacks = async (): Promise<JobPack[]> => {
   const { data, error } = await supabase
-    .from('job_packs')
+    .from('employer_job_packs')
     .select('*')
     .order('created_at', { ascending: false });
   
@@ -39,7 +39,7 @@ export const getJobPacks = async (): Promise<JobPack[]> => {
 
 export const getJobPackById = async (id: string): Promise<JobPack | null> => {
   const { data, error } = await supabase
-    .from('job_packs')
+    .from('employer_job_packs')
     .select('*')
     .eq('id', id)
     .single();
@@ -56,7 +56,7 @@ export const createJobPack = async (
   jobPack: Omit<JobPack, 'id' | 'created_at' | 'updated_at'>
 ): Promise<JobPack> => {
   const { data, error } = await supabase
-    .from('job_packs')
+    .from('employer_job_packs')
     .insert(jobPack)
     .select()
     .single();
@@ -74,7 +74,7 @@ export const updateJobPack = async (
   updates: Partial<JobPack>
 ): Promise<JobPack | null> => {
   const { data, error } = await supabase
-    .from('job_packs')
+    .from('employer_job_packs')
     .update(updates)
     .eq('id', id)
     .select()
@@ -90,7 +90,7 @@ export const updateJobPack = async (
 
 export const deleteJobPack = async (id: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('job_packs')
+    .from('employer_job_packs')
     .delete()
     .eq('id', id);
   
@@ -108,7 +108,7 @@ export const updateJobPackDocumentStatus = async (
   status: boolean
 ): Promise<boolean> => {
   const { error } = await supabase
-    .from('job_packs')
+    .from('employer_job_packs')
     .update({ [documentType]: status })
     .eq('id', id);
   

@@ -18,7 +18,7 @@ export const useJobChecklist = (jobId: string) => {
     queryKey: ['job-checklist', jobId],
     queryFn: async (): Promise<JobChecklistItem[]> => {
       const { data, error } = await supabase
-        .from('job_checklist_items')
+        .from('employer_job_checklist_items')
         .select('*')
         .eq('job_id', jobId)
         .order('position');
@@ -36,7 +36,7 @@ export const useAllJobChecklistSummaries = () => {
     queryKey: ['all-job-checklist-summaries'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('job_checklist_items')
+        .from('employer_job_checklist_items')
         .select('job_id, is_completed');
       
       if (error) throw error;
@@ -66,7 +66,7 @@ export const useAddChecklistItem = () => {
     mutationFn: async ({ jobId, title }: { jobId: string; title: string }) => {
       // Get max position
       const { data: existing } = await supabase
-        .from('job_checklist_items')
+        .from('employer_job_checklist_items')
         .select('position')
         .eq('job_id', jobId)
         .order('position', { ascending: false })
@@ -75,7 +75,7 @@ export const useAddChecklistItem = () => {
       const position = existing && existing.length > 0 ? (existing[0] as { position: number }).position + 1 : 0;
       
       const { data, error } = await supabase
-        .from('job_checklist_items')
+        .from('employer_job_checklist_items')
         .insert({ job_id: jobId, title, position })
         .select()
         .single();
@@ -100,7 +100,7 @@ export const useToggleChecklistItem = () => {
   return useMutation({
     mutationFn: async ({ id, isCompleted, jobId }: { id: string; isCompleted: boolean; jobId: string }) => {
       const { error } = await supabase
-        .from('job_checklist_items')
+        .from('employer_job_checklist_items')
         .update({ is_completed: isCompleted })
         .eq('id', id);
       
@@ -124,7 +124,7 @@ export const useDeleteChecklistItem = () => {
   return useMutation({
     mutationFn: async ({ id, jobId }: { id: string; jobId: string }) => {
       const { error } = await supabase
-        .from('job_checklist_items')
+        .from('employer_job_checklist_items')
         .delete()
         .eq('id', id);
       

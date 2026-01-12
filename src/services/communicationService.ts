@@ -166,7 +166,7 @@ const createRecipientsForCommunication = async (communication: Communication): P
   if (communication.target_audience === 'all') {
     // Get all active employees
     const { data: employees } = await supabase
-      .from('employees')
+      .from('employer_employees')
       .select('id')
       .eq('status', 'Active');
 
@@ -174,7 +174,7 @@ const createRecipientsForCommunication = async (communication: Communication): P
   } else if (communication.target_audience === 'managers') {
     // Get employees with manager roles
     const { data: employees } = await supabase
-      .from('employees')
+      .from('employer_employees')
       .select('id')
       .eq('status', 'Active')
       .in('team_role', ['Manager', 'Admin', 'Supervisor']);
@@ -199,7 +199,7 @@ export const getRecipientsForCommunication = async (communicationId: string): Pr
     .from('communication_recipients')
     .select(`
       *,
-      employee:employees (
+      employee:employer_employees (
         id,
         name,
         photo_url

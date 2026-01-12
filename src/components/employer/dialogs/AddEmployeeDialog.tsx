@@ -171,7 +171,7 @@ export function AddEmployeeDialog({ trigger, open: controlledOpen, onOpenChange 
         const photoUrl = await uploadPhoto(employee.id);
         if (photoUrl) {
           await supabase
-            .from('employees')
+            .from('employer_employees')
             .update({ photo_url: photoUrl })
             .eq('id', employee.id);
         }

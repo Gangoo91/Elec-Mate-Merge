@@ -73,7 +73,33 @@ type StreamEvent =
 // UNIFIED GEMINI PROMPT - Comprehensive single-pass analysis
 // ============================================================================
 
-const UNIFIED_BOARD_PROMPT = `You are an expert UK electrical installation analyst. Analyse the consumer unit photo(s) with precision and return complete JSON.
+const UNIFIED_BOARD_PROMPT = `You are an expert UK electrical installation analyst. Your job is to identify EVERY SINGLE circuit in this consumer unit.
+
+## CRITICAL: CIRCUIT COUNTING METHODOLOGY
+You MUST follow this exact process:
+
+### STEP 1: COUNT TOTAL POSITIONS
+First, count ALL DIN rail positions in the board:
+- Look at the physical DIN rail(s)
+- Count every single slot/position from LEFT to RIGHT
+- Include the main switch position(s)
+- Common sizes: 6, 8, 10, 12, 14, 16, 18, 20, 24 ways
+- Write this count in estimated_total_ways
+
+### STEP 2: IDENTIFY EVERY POSITION
+For EVERY position you counted, you MUST identify what's there:
+- Device installed (MCB, RCBO, RCD, etc.)
+- Blank/cover plate ("Spare")
+- Empty/unused slot ("Spare")
+- Main switch or isolator
+
+### STEP 3: VERIFY YOUR COUNT
+Before responding, CHECK:
+- Number of circuits in your JSON = estimated_total_ways (approximately)
+- If you have 12 ways but only 8 circuits, you MISSED some - go back and look again
+- Include ALL spares/blanks as entries with label_text: "Spare" and device: null
+
+MISSING CIRCUITS IS UNACCEPTABLE. If in doubt, include it.
 
 ## BOARD DETECTION
 
@@ -220,9 +246,11 @@ Return ONLY valid JSON in this exact structure:
 1. MCB vs RCBO: The most common error! MCBs have NO test button. RCBOs have a small test button (usually red, white, or blue).
 2. Don't guess ratings - if unreadable, use null
 3. Expand ALL abbreviations in label_text
-4. Include spare/blank positions with label_text: "Spare" and device: null
+4. ALWAYS include spare/blank positions with label_text: "Spare" and device: null - these are critical for accurate board documentation
 5. For 3P boards, determine phase assignment for EVERY circuit
-6. Be thorough - don't miss any circuits
+6. BE EXHAUSTIVE - scan the ENTIRE board systematically. If you see a device, include it. If there's a gap, include "Spare".
+7. FINAL CHECK: Compare your circuit count to estimated_total_ways. They should be close. If not, you missed circuits.
+8. When unsure if something is a circuit or not, INCLUDE IT with confidence: "low"
 
 ## UK BOARD SPECIFICS
 
@@ -438,7 +466,7 @@ async function analyzeWithGemini(
         contents: [{ role: 'user', parts }],
         generationConfig: {
           maxOutputTokens: 8000,
-          temperature: 0.2,
+          temperature: 0.1,
           responseMimeType: 'application/json'
         }
       }),
@@ -573,6 +601,7 @@ async function analyzeWithGemini(
   // Summary
   const highConfidence = circuits.filter((c: any) => c.confidence === 'high').length;
   const threePhaseCircuits = circuits.filter((c: any) => c.phase === '3P').length;
+  const estimatedWays = result.board?.estimated_total_ways || 0;
 
   let summary = `Found ${circuits.length} circuits (${highConfidence} high confidence)`;
   if (threePhaseCircuits > 0) {
@@ -580,6 +609,14 @@ async function analyzeWithGemini(
   }
 
   sendEvent({ type: 'decision', message: summary });
+
+  // Warn if circuit count doesn't match board size
+  if (estimatedWays > 0 && circuits.length < estimatedWays - 2) {
+    sendEvent({
+      type: 'warning',
+      message: `Board has ${estimatedWays} ways but only ${circuits.length} circuits detected - some may be missing`
+    });
+  }
 
   return {
     board: result.board || {},

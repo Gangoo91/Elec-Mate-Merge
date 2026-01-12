@@ -127,8 +127,8 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
   };
 
   return (
-    <div className="w-screen relative left-[calc(-50vw+50%)]">
-      {/* Table Container - Full bleed, edge-to-edge */}
+    <div className="w-screen relative left-[calc(-50vw+50%)] px-2">
+      {/* Table Container - Full bleed with slight padding */}
       <div
         ref={scrollContainerRef}
         className="overflow-x-auto overflow-y-visible"

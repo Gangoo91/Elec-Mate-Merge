@@ -27,7 +27,7 @@ export interface JobPackAcknowledgement {
 // Document CRUD operations
 export const getJobPackDocuments = async (jobPackId: string): Promise<JobPackDocument[]> => {
   const { data, error } = await supabase
-    .from('job_pack_documents')
+    .from('employer_job_pack_documents')
     .select('*')
     .eq('job_pack_id', jobPackId)
     .order('created_at', { ascending: false });
@@ -44,7 +44,7 @@ export const createJobPackDocument = async (
   document: Omit<JobPackDocument, 'id' | 'created_at' | 'updated_at'>
 ): Promise<JobPackDocument> => {
   const { data, error } = await supabase
-    .from('job_pack_documents')
+    .from('employer_job_pack_documents')
     .insert(document)
     .select()
     .single();
@@ -59,7 +59,7 @@ export const createJobPackDocument = async (
 
 export const deleteJobPackDocument = async (id: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('job_pack_documents')
+    .from('employer_job_pack_documents')
     .delete()
     .eq('id', id);
   
@@ -74,7 +74,7 @@ export const deleteJobPackDocument = async (id: string): Promise<boolean> => {
 // Acknowledgement operations
 export const getJobPackAcknowledgements = async (jobPackId: string): Promise<JobPackAcknowledgement[]> => {
   const { data, error } = await supabase
-    .from('job_pack_acknowledgements')
+    .from('employer_job_pack_acknowledgements')
     .select('*')
     .eq('job_pack_id', jobPackId)
     .order('acknowledged_at', { ascending: false });
@@ -91,7 +91,7 @@ export const createJobPackAcknowledgement = async (
   acknowledgement: Omit<JobPackAcknowledgement, 'id' | 'created_at' | 'acknowledged_at'>
 ): Promise<JobPackAcknowledgement> => {
   const { data, error } = await supabase
-    .from('job_pack_acknowledgements')
+    .from('employer_job_pack_acknowledgements')
     .insert(acknowledgement)
     .select()
     .single();

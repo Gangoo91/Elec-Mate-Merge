@@ -17,7 +17,7 @@ export const useJobComments = (jobId: string) => {
     queryKey: ['job-comments', jobId],
     queryFn: async (): Promise<JobComment[]> => {
       const { data, error } = await supabase
-        .from('job_comments')
+        .from('employer_job_comments')
         .select('*')
         .eq('job_id', jobId)
         .order('created_at', { ascending: false });
@@ -46,7 +46,7 @@ export const useAddComment = () => {
       commentType?: JobComment['comment_type'];
     }) => {
       const { data, error } = await supabase
-        .from('job_comments')
+        .from('employer_job_comments')
         .insert({ 
           job_id: jobId, 
           content, 
@@ -75,7 +75,7 @@ export const useDeleteComment = () => {
   return useMutation({
     mutationFn: async ({ id, jobId }: { id: string; jobId: string }) => {
       const { error } = await supabase
-        .from('job_comments')
+        .from('employer_job_comments')
         .delete()
         .eq('id', id);
       
@@ -107,7 +107,7 @@ export const useLogJobActivity = () => {
       commentType: JobComment['comment_type'];
     }) => {
       const { data, error } = await supabase
-        .from('job_comments')
+        .from('employer_job_comments')
         .insert({ 
           job_id: jobId, 
           content, 

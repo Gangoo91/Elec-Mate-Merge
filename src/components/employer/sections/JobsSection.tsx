@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { Search, Filter, Briefcase, PoundSterling, Users, RefreshCw, Plus } from "lucide-react";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PullToRefresh } from "@/components/ui/pull-to-refresh";
@@ -19,6 +20,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 export function JobsSection() {
   const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState("");
+  const debouncedSearch = useDebouncedValue(searchQuery, 300);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [showJobSheet, setShowJobSheet] = useState(false);
@@ -113,11 +115,11 @@ export function JobsSection() {
 
   const filteredJobs = useMemo(() => {
     return jobs.filter(job => {
-      // Search filter
-      const matchesSearch = 
-        job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        job.client.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        job.location.toLowerCase().includes(searchQuery.toLowerCase());
+      // Search filter (using debounced value for performance)
+      const matchesSearch =
+        job.title.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+        job.client.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+        job.location.toLowerCase().includes(debouncedSearch.toLowerCase());
       
       // Status filter
       const matchesStatus = 
@@ -132,7 +134,7 @@ export function JobsSection() {
       
       return matchesSearch && matchesStatus && matchesValue;
     });
-  }, [jobs, searchQuery, filters]);
+  }, [jobs, debouncedSearch, filters]);
 
   const activeJobs = filteredJobs.filter(j => j.status === "Active");
   const pendingJobs = filteredJobs.filter(j => j.status === "Pending");

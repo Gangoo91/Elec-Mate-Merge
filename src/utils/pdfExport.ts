@@ -73,9 +73,12 @@ const drawCheckbox = (pdf: jsPDF, x: number, y: number, checked: boolean = false
   pdf.rect(x, y, size, size);
 
   if (checked) {
-    pdf.setFontSize(7);
-    pdf.setFont('helvetica', 'bold');
-    pdf.text('✓', x + size/2, y + size - 0.5, { align: 'center' });
+    // Draw checkmark using lines (jsPDF doesn't support Unicode)
+    pdf.setLineWidth(0.5);
+    pdf.setDrawColor(0, 128, 0); // Green checkmark
+    pdf.line(x + 0.8, y + size/2, x + size/2 - 0.3, y + size - 1);
+    pdf.line(x + size/2 - 0.3, y + size - 1, x + size - 0.8, y + 1);
+    pdf.setDrawColor(0, 0, 0);
   }
 };
 
@@ -98,11 +101,11 @@ const drawSectionHeader = (pdf: jsPDF, title: string, y: number, pageWidth: numb
 };
 
 // Draw form row with label and value
-const drawFormRow = (pdf: jsPDF, label: string, value: string, x: number, y: number, labelWidth: number = 45, valueWidth: number = 60): number => {
+const drawFormRow = (pdf: jsPDF, label: string, value: any, x: number, y: number, labelWidth: number = 45, valueWidth: number = 60): number => {
   pdf.setFontSize(8);
   pdf.setFont('helvetica', 'bold');
   pdf.setTextColor(51, 51, 51);
-  pdf.text(label, x, y);
+  pdf.text(String(label || ''), x, y);
 
   pdf.setFont('helvetica', 'normal');
   pdf.setTextColor(0, 0, 0);
@@ -112,9 +115,10 @@ const drawFormRow = (pdf: jsPDF, label: string, value: string, x: number, y: num
   pdf.setLineWidth(0.3);
   pdf.rect(x + labelWidth, y - 3.5, valueWidth, 5);
 
-  // Value text
-  if (value) {
-    const truncatedValue = value.length > 35 ? value.substring(0, 35) + '...' : value;
+  // Value text - ensure it's a string
+  const safeValue = value != null ? String(value) : '';
+  if (safeValue) {
+    const truncatedValue = safeValue.length > 35 ? safeValue.substring(0, 35) + '...' : safeValue;
     pdf.text(truncatedValue, x + labelWidth + 2, y);
   }
 
@@ -264,12 +268,15 @@ export const exportObservationsToPDF = async (
 
       pdf.setFontSize(10);
       pdf.setFont('helvetica', 'bold');
-      pdf.text(`${index + 1}. [${obs.defectCode}] ${obs.item}`, margin, yPosition);
+      const safeCode = String(obs.defectCode || 'C3');
+      const safeItem = String(obs.item || 'Observation');
+      pdf.text(`${index + 1}. [${safeCode}] ${safeItem}`, margin, yPosition);
       yPosition += 6;
 
       if (obs.description) {
         pdf.setFont('helvetica', 'normal');
-        const descLines = pdf.splitTextToSize(obs.description, pageWidth - 2 * margin - 5);
+        const safeDesc = String(obs.description || '');
+        const descLines = pdf.splitTextToSize(safeDesc, pageWidth - 2 * margin - 5);
         pdf.text(descLines, margin + 5, yPosition);
         yPosition += descLines.length * 5;
       }
@@ -661,7 +668,9 @@ export const exportCompleteEICRToPDF = async (
 
       pdf.setFontSize(8);
       pdf.setFont('helvetica', 'normal');
-      const obsText = `${obs.item}: ${obs.description}`.substring(0, 80);
+      const obsItem = String(obs.item || 'Observation');
+      const obsDesc = String(obs.description || '');
+      const obsText = `${obsItem}: ${obsDesc}`.substring(0, 80);
       pdf.text(obsText, margin + 2, yPos + 5);
 
       // Code with colour
@@ -671,10 +680,11 @@ export const exportCompleteEICRToPDF = async (
         'C3': [245, 158, 11],
         'FI': [139, 92, 246]
       };
-      const codeColour = codeColours[obs.defectCode] || [100, 100, 100];
+      const obsCode = String(obs.defectCode || 'C3');
+      const codeColour = codeColours[obsCode] || [100, 100, 100];
       pdf.setTextColor(...codeColour);
       pdf.setFont('helvetica', 'bold');
-      pdf.text(obs.defectCode, pageWidth - margin - 18, yPos + 5);
+      pdf.text(obsCode, pageWidth - margin - 18, yPos + 5);
       pdf.setTextColor(0, 0, 0);
 
       yPos += 10;
@@ -753,7 +763,8 @@ export const exportCompleteEICRToPDF = async (
       if (boardGroups.size > 1) {
         pdf.setFontSize(9);
         pdf.setFont('helvetica', 'bold');
-        pdf.text(`Distribution Board: ${boardId === 'main' ? 'Main Consumer Unit' : boardId}`, 12, yPos);
+        const safeBoardId = String(boardId || 'main');
+        pdf.text(`Distribution Board: ${safeBoardId === 'main' ? 'Main Consumer Unit' : safeBoardId}`, 12, yPos);
         yPos += 6;
       }
 
@@ -762,37 +773,43 @@ export const exportCompleteEICRToPDF = async (
         ['Cct', 'Description', 'Type', 'Ref', 'Pts', 'Live\nmm²', 'CPC\nmm²', 'BS EN', 'Type', 'A', 'kA', 'Max\nZs', 'BS EN', 'Type', 'mA', 'A', 'r1', 'rn', 'r2', 'R1+R2', 'R2', 'V', 'L-L', 'L-E', 'Pol', 'Zs', 'ms', 'TB', 'AFDD', 'Remarks']
       ];
 
+      // Helper to safely convert any value to string
+      const safeStr = (val: any, maxLen?: number): string => {
+        const str = val != null ? String(val) : '';
+        return maxLen ? str.substring(0, maxLen) : str;
+      };
+
       const tableData = circuits.map((r: any, idx: number) => [
-        r.circuitNumber || `C${idx + 1}`,
-        (r.circuitDescription || '').substring(0, 20),
-        r.typeOfWiring || '',
-        r.referenceMethod || '',
-        r.pointsServed || '',
-        r.liveSize || '',
-        r.cpcSize || '',
-        r.bsStandard || '',
-        r.protectiveDeviceCurve || '',
-        r.protectiveDeviceRating || '',
-        r.protectiveDeviceKaRating || '',
-        r.maxZs || '',
-        r.rcdBsStandard || '',
-        r.rcdType || '',
-        r.rcdRating || '',
-        r.rcdRatingA || '',
-        r.ringR1 || '',
-        r.ringRn || '',
-        r.ringR2 || '',
-        r.r1r2 || '',
-        r.r2 || '',
-        r.insulationTestVoltage || '',
-        r.insulationLiveNeutral || '',
-        r.insulationLiveEarth || '',
-        r.polarity || '',
-        r.zs || '',
-        r.rcdOneX || '',
-        r.rcdTestButton || '',
-        r.afddTest || '',
-        (r.notes || '').substring(0, 15)
+        safeStr(r.circuitNumber) || `C${idx + 1}`,
+        safeStr(r.circuitDescription, 20),
+        safeStr(r.typeOfWiring),
+        safeStr(r.referenceMethod),
+        safeStr(r.pointsServed),
+        safeStr(r.liveSize),
+        safeStr(r.cpcSize),
+        safeStr(r.bsStandard),
+        safeStr(r.protectiveDeviceCurve),
+        safeStr(r.protectiveDeviceRating),
+        safeStr(r.protectiveDeviceKaRating),
+        safeStr(r.maxZs),
+        safeStr(r.rcdBsStandard),
+        safeStr(r.rcdType),
+        safeStr(r.rcdRating),
+        safeStr(r.rcdRatingA),
+        safeStr(r.ringR1),
+        safeStr(r.ringRn),
+        safeStr(r.ringR2),
+        safeStr(r.r1r2),
+        safeStr(r.r2),
+        safeStr(r.insulationTestVoltage),
+        safeStr(r.insulationLiveNeutral),
+        safeStr(r.insulationLiveEarth),
+        safeStr(r.polarity),
+        safeStr(r.zs),
+        safeStr(r.rcdOneX),
+        safeStr(r.rcdTestButton),
+        safeStr(r.afddTest),
+        safeStr(r.notes, 15)
       ]);
 
       safeAutoTable(pdf, {
@@ -887,15 +904,16 @@ export const exportCompleteEICRToPDF = async (
       ]);
 
       items.forEach((item: any, idx: number) => {
-        const outcome = item.outcome || '';
+        const outcome = String(item.outcome || '');
+        const itemDesc = String(item.item || item.description || '');
         tableData.push([
           `${sectionIndex}.${idx + 1}`,
-          item.item || item.description || '',
-          outcome === 'satisfactory' ? '✓' : '',
-          outcome === 'not-applicable' ? '✓' : '',
+          itemDesc,
+          outcome === 'satisfactory' ? 'X' : '',
+          outcome === 'not-applicable' ? 'X' : '',
           ['C1', 'C2'].includes(outcome) ? outcome : '',
-          outcome === 'C3' ? '✓' : '',
-          outcome === 'not-verified' ? '✓' : ''
+          outcome === 'C3' ? 'X' : '',
+          outcome === 'not-verified' ? 'X' : ''
         ]);
       });
 

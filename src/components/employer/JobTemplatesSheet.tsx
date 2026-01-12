@@ -35,7 +35,7 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
     queryKey: ['job-templates'],
     queryFn: async (): Promise<TemplateJob[]> => {
       const { data, error } = await supabase
-        .from('jobs')
+        .from('employer_jobs')
         .select('id, title, client, location, value, description')
         .eq('is_template', true)
         .is('archived_at', null)
@@ -53,8 +53,8 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
     try {
       // Fetch template's checklist items and labels
       const [checklistRes, labelsRes] = await Promise.all([
-        supabase.from('job_checklist_items').select('title').eq('job_id', template.id).order('position'),
-        supabase.from('job_label_assignments').select('label_id').eq('job_id', template.id),
+        supabase.from('employer_job_checklist_items').select('title').eq('job_id', template.id).order('position'),
+        supabase.from('employer_job_label_assignments').select('label_id').eq('job_id', template.id),
       ]);
       
       // Create new job from template

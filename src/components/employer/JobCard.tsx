@@ -89,8 +89,9 @@ export function JobCard({
   return (
     <Card 
       className={cn(
-        "cursor-pointer transition-all duration-200 active:scale-[0.98] border-l-4 overflow-hidden",
+        "cursor-pointer transition-all duration-200 border-l-4 overflow-hidden touch-manipulation",
         "hover:border-elec-yellow/40 hover:shadow-lg hover:shadow-elec-yellow/5",
+        "active:border-elec-yellow/40 active:shadow-lg active:shadow-elec-yellow/5 active:scale-[0.98]",
         getStatusColour(status),
         className
       )}

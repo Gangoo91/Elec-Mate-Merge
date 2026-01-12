@@ -21,7 +21,7 @@ export const useJobLabels = () => {
     queryKey: ['job-labels'],
     queryFn: async (): Promise<JobLabel[]> => {
       const { data, error } = await supabase
-        .from('job_labels')
+        .from('employer_job_labels')
         .select('*')
         .order('name');
       
@@ -37,12 +37,12 @@ export const useJobLabelAssignments = (jobId: string) => {
     queryKey: ['job-label-assignments', jobId],
     queryFn: async (): Promise<(JobLabelAssignment & { label: JobLabel })[]> => {
       const { data, error } = await supabase
-        .from('job_label_assignments')
+        .from('employer_job_label_assignments')
         .select(`
           job_id,
           label_id,
           created_at,
-          label:job_labels(id, name, colour, created_at)
+          label:employer_job_labels(id, name, colour, created_at)
         `)
         .eq('job_id', jobId);
       
@@ -66,12 +66,12 @@ export const useAllJobLabelAssignments = () => {
     queryKey: ['all-job-label-assignments'],
     queryFn: async (): Promise<(JobLabelAssignment & { label: JobLabel })[]> => {
       const { data, error } = await supabase
-        .from('job_label_assignments')
+        .from('employer_job_label_assignments')
         .select(`
           job_id,
           label_id,
           created_at,
-          label:job_labels(id, name, colour, created_at)
+          label:employer_job_labels(id, name, colour, created_at)
         `);
       
       if (error) throw error;
@@ -94,7 +94,7 @@ export const useAssignLabel = () => {
   return useMutation({
     mutationFn: async ({ jobId, labelId }: { jobId: string; labelId: string }) => {
       const { error } = await supabase
-        .from('job_label_assignments')
+        .from('employer_job_label_assignments')
         .insert({ job_id: jobId, label_id: labelId });
       
       if (error) throw error;
@@ -116,7 +116,7 @@ export const useRemoveLabel = () => {
   return useMutation({
     mutationFn: async ({ jobId, labelId }: { jobId: string; labelId: string }) => {
       const { error } = await supabase
-        .from('job_label_assignments')
+        .from('employer_job_label_assignments')
         .delete()
         .eq('job_id', jobId)
         .eq('label_id', labelId);
@@ -140,7 +140,7 @@ export const useCreateLabel = () => {
   return useMutation({
     mutationFn: async ({ name, colour }: { name: string; colour: string }) => {
       const { data, error } = await supabase
-        .from('job_labels')
+        .from('employer_job_labels')
         .insert({ name, colour })
         .select()
         .single();
@@ -165,7 +165,7 @@ export const useDeleteLabel = () => {
   return useMutation({
     mutationFn: async (labelId: string) => {
       const { error } = await supabase
-        .from('job_labels')
+        .from('employer_job_labels')
         .delete()
         .eq('id', labelId);
       
