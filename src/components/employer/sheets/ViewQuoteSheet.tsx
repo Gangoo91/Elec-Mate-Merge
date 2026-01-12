@@ -87,7 +87,7 @@ export function ViewQuoteSheet({ open, onOpenChange, quote, onConvertToInvoice }
     setLoadingAcceptance(true);
     try {
       const { data, error } = await supabase
-        .from("quote_acceptances")
+        .from("employer_quote_acceptances")
         .select("*")
         .eq("quote_id", quote.id)
         .order("created_at", { ascending: false })
@@ -211,7 +211,7 @@ export function ViewQuoteSheet({ open, onOpenChange, quote, onConvertToInvoice }
 
       // Update quote with client email if not already set
       if (!(quote as any).client_email && targetEmail) {
-        await supabase.from('quotes').update({ client_email: targetEmail }).eq('id', quote.id);
+        await supabase.from('employer_quotes').update({ client_email: targetEmail }).eq('id', quote.id);
       }
 
       toast.success(`Quote sent to ${targetEmail}`);

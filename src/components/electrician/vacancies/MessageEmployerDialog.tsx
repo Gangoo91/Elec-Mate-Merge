@@ -1,11 +1,10 @@
 import { useState } from "react";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -63,9 +62,8 @@ export function MessageEmployerDialog({
 
     try {
       // Create or get existing conversation
-      // Note: employer_id here is the employer's user_id
       const conversation = await startConversation.mutateAsync({
-        employer_id: vacancy.employer?.id || '', // This should be the employer's auth.uid()
+        employer_id: vacancy.employer?.id || '',
         electrician_profile_id: elecIdProfile.id,
         vacancy_id: vacancy.id,
         initiated_by: 'electrician',
@@ -82,7 +80,7 @@ export function MessageEmployerDialog({
 
       toast({
         title: "Message Sent",
-        description: `Your message has been sent to ${vacancy.employer?.company_name}.`,
+        description: `Your message has been sent to ${vacancy.employer?.company_name || 'the employer'}.`,
       });
 
       setMessage("");
@@ -107,44 +105,58 @@ export function MessageEmployerDialog({
     .map(n => n[0])
     .join('')
     .toUpperCase()
-    .slice(0, 2) || '??';
+    .slice(0, 2) || 'EM';
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <MessageSquare className="h-5 w-5 text-elec-yellow" />
-            Message Employer
-          </DialogTitle>
-          <DialogDescription>
-            Reach out about this opportunity
-          </DialogDescription>
-        </DialogHeader>
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="bottom"
+        className="h-[75vh] p-0 rounded-t-2xl overflow-hidden flex flex-col"
+      >
+        {/* Drag Handle - Native App Feel */}
+        <div className="flex justify-center pt-3 pb-2 touch-manipulation">
+          <div className="w-10 h-1 bg-muted-foreground/30 rounded-full" />
+        </div>
 
-        <div className="space-y-4">
+        {/* Header */}
+        <SheetHeader className="px-4 pb-3 border-b border-border">
+          <SheetTitle className="flex items-center gap-2 text-lg">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+              <MessageSquare className="h-5 w-5 text-emerald-400" />
+            </div>
+            <div>
+              <span className="block">Message Employer</span>
+              <span className="text-sm font-normal text-muted-foreground">
+                Reach out about this opportunity
+              </span>
+            </div>
+          </SheetTitle>
+        </SheetHeader>
+
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
           {/* Vacancy Info */}
-          <Card className="bg-muted/50">
-            <CardContent className="p-3">
+          <Card className="bg-muted/50 border-border">
+            <CardContent className="p-4">
               <div className="flex items-start gap-3">
-                <Avatar className="h-12 w-12 rounded-lg">
+                <Avatar className="h-14 w-14 rounded-xl">
                   <AvatarImage src={vacancy.employer?.logo_url || undefined} />
-                  <AvatarFallback className="rounded-lg bg-elec-yellow/20 text-elec-yellow font-bold">
+                  <AvatarFallback className="rounded-xl bg-emerald-500/20 text-emerald-400 font-bold text-lg">
                     {companyInitials}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-foreground">{vacancy.title}</p>
-                  <p className="text-sm text-muted-foreground flex items-center gap-1">
-                    <Building2 className="h-3.5 w-3.5" />
-                    {vacancy.employer?.company_name}
+                  <p className="font-semibold text-foreground text-base">{vacancy.title}</p>
+                  <p className="text-sm text-muted-foreground flex items-center gap-1.5 mt-0.5">
+                    <Building2 className="h-4 w-4" />
+                    {vacancy.employer?.company_name || 'Employer'}
                   </p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <Badge variant="outline" className="text-xs">
+                  <div className="flex items-center gap-2 mt-2">
+                    <Badge variant="outline" className="text-xs h-6">
                       <MapPin className="h-3 w-3 mr-1" />
                       {vacancy.location}
                     </Badge>
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="outline" className="text-xs h-6">
                       <Briefcase className="h-3 w-3 mr-1" />
                       {vacancy.type}
                     </Badge>
@@ -155,58 +167,60 @@ export function MessageEmployerDialog({
           </Card>
 
           {/* Info Notice */}
-          <div className="flex gap-2 p-3 bg-blue-500/10 rounded-lg text-sm">
-            <Info className="h-4 w-4 text-blue-500 shrink-0 mt-0.5" />
-            <p className="text-muted-foreground">
-              <span className="font-medium text-foreground">Tip:</span> Introduce yourself briefly
-              and explain why you're interested in this role. Employers respond better to
-              personalized messages.
-            </p>
+          <div className="flex gap-3 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl text-sm">
+            <Info className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
+            <div>
+              <p className="font-medium text-foreground">Tip for better responses</p>
+              <p className="text-muted-foreground mt-1">
+                Introduce yourself briefly and explain why you're interested in this role.
+                Employers respond better to personalised messages.
+              </p>
+            </div>
           </div>
 
           {/* Message Input */}
-          <div className="space-y-2">
-            <Label htmlFor="message">Your Message</Label>
+          <div className="space-y-3">
+            <Label htmlFor="message" className="text-sm font-medium">Your Message</Label>
             <Textarea
               id="message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Hi, I'm interested in this position and wanted to reach out. I have experience in..."
-              rows={4}
-              className="resize-none"
+              rows={5}
+              className="resize-none text-base touch-manipulation"
             />
           </div>
-
-          {/* Actions */}
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              className="flex-1 h-11"
-              onClick={() => onOpenChange(false)}
-              disabled={isSending}
-            >
-              Cancel
-            </Button>
-            <Button
-              className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-              onClick={handleSend}
-              disabled={isSending || !message.trim() || !elecIdProfile}
-            >
-              {isSending ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Sending...
-                </>
-              ) : (
-                <>
-                  <Send className="h-4 w-4 mr-2" />
-                  Send Message
-                </>
-              )}
-            </Button>
-          </div>
         </div>
-      </DialogContent>
-    </Dialog>
+
+        {/* Sticky Footer - Action Buttons */}
+        <div className="border-t border-border bg-background p-4 pb-6 flex gap-3">
+          <Button
+            variant="outline"
+            className="flex-1 h-12 text-base touch-manipulation active:scale-[0.98] transition-transform"
+            onClick={() => onOpenChange(false)}
+            disabled={isSending}
+          >
+            Cancel
+          </Button>
+          <Button
+            className="flex-1 h-12 text-base bg-emerald-500 active:bg-emerald-400 text-white touch-manipulation active:scale-[0.98] transition-transform"
+            onClick={handleSend}
+            disabled={isSending || !message.trim() || !elecIdProfile}
+          >
+            {isSending ? (
+              <>
+                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                Sending...
+              </>
+            ) : (
+              <>
+                <Send className="h-5 w-5 mr-2" />
+                Send Message
+              </>
+            )}
+          </Button>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }

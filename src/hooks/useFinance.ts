@@ -60,7 +60,7 @@ export function useDeleteQuote() {
   return useMutation({
     mutationFn: async (id: string) => {
       const { error } = await (await import('@/integrations/supabase/client')).supabase
-        .from('quotes')
+        .from('employer_quotes')
         .delete()
         .eq('id', id);
       if (error) throw error;

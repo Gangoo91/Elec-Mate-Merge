@@ -42,6 +42,24 @@ export const useCloudSync = ({
   const retryTimeoutRef = useRef<NodeJS.Timeout>();
   const lastSyncTimestampRef = useRef<number>(0);
   const debounceTimeoutRef = useRef<NodeJS.Timeout>();
+  const lastErrorToastTimeRef = useRef<Record<string, number>>({});
+
+  // Debounced toast helper - only shows error toasts once per 5 minutes unless manual action
+  const showDebouncedToast = useCallback((key: string, title: string, description: string, isManualAction: boolean = false) => {
+    const now = Date.now();
+    const lastShown = lastErrorToastTimeRef.current[key] || 0;
+    const DEBOUNCE_MS = 5 * 60 * 1000; // 5 minutes
+
+    // Always show for manual actions, otherwise debounce
+    if (isManualAction || now - lastShown > DEBOUNCE_MS) {
+      toast({
+        title,
+        description,
+        variant: 'destructive',
+      });
+      lastErrorToastTimeRef.current[key] = now;
+    }
+  }, [toast]);
 
   // Check authentication status
   useEffect(() => {
@@ -176,23 +194,29 @@ export const useCloudSync = ({
     console.log('[CloudSync] Queue processing complete:', { successCount, failCount });
     await updateQueuedCount();
 
-    if (successCount > 0) {
+    // Only show a single consolidated toast when syncing completes
+    if (successCount > 0 && failCount === 0) {
+      // All succeeded - single success toast
       toast({
         title: 'Synced',
         description: `${successCount} change${successCount !== 1 ? 's' : ''} synced to cloud.`,
       });
-    }
-
-    if (failCount > 0) {
+    } else if (failCount > 0 && successCount === 0) {
+      // All failed - debounced error toast
+      showDebouncedToast('queue-sync-fail', 'Sync failed', 'Changes will retry automatically.', false);
+    } else if (successCount > 0 && failCount > 0) {
+      // Mixed results - single toast
       toast({
-        title: 'Sync incomplete',
-        description: `${failCount} change${failCount !== 1 ? 's' : ''} failed to sync. Will retry.`,
-        variant: 'destructive',
+        title: 'Partially synced',
+        description: `${successCount} synced, ${failCount} will retry.`,
       });
     }
-  }, [isAuthenticated, userId, isOnline, toast, updateQueuedCount]);
+    // If nothing to report, stay silent
+  }, [isAuthenticated, userId, isOnline, toast, updateQueuedCount, showDebouncedToast]);
 
   // Sync to cloud (main persistence function)
+  // forceSync = true means user manually triggered save (show toasts)
+  // forceSync = false means auto-sync (silent, status indicator only)
   const syncToCloud = useCallback(async (forceSync = false): Promise<{ success: boolean; reportId: string | null }> => {
     if (!enabled) {
       return { success: false, reportId: null };

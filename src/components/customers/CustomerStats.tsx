@@ -39,19 +39,25 @@ export const CustomerStats = ({ customers, onNavigateToCustomers }: CustomerStat
               <div className={cn("rounded-xl bg-elec-yellow/20 flex-shrink-0", isMobile ? "p-2" : "p-2.5")}>
                 <Users className={cn("text-elec-yellow", isMobile ? "h-4 w-4" : "h-5 w-5")} />
               </div>
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <h3 className={cn("font-semibold text-foreground", isMobile ? "text-sm" : "text-base")}>Customers</h3>
-                <div className={cn("flex flex-row items-center mt-2", isMobile ? "gap-3" : "gap-4 sm:gap-6")}>
-                  <div>
-                    <p className="text-[10px] sm:text-xs text-neutral-400 font-medium">Total Customers</p>
-                    <p className="text-xl sm:text-2xl font-bold text-foreground tabular-nums">{totalCustomers}</p>
+                {totalCustomers === 0 ? (
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+                    Track your clients and their certificates
+                  </p>
+                ) : (
+                  <div className={cn("flex flex-row items-center mt-2", isMobile ? "gap-3" : "gap-4 sm:gap-6")}>
+                    <div>
+                      <p className="text-[10px] sm:text-xs text-neutral-400 font-medium">Total Customers</p>
+                      <p className="text-xl sm:text-2xl font-bold text-foreground tabular-nums">{totalCustomers}</p>
+                    </div>
+                    <div className={cn("bg-muted", isMobile ? "w-px h-8" : "w-px h-10")}></div>
+                    <div>
+                      <p className="text-[10px] sm:text-xs text-neutral-400 font-medium">Added This Month</p>
+                      <p className="text-xl sm:text-2xl font-bold text-foreground tabular-nums">{recentCustomers}</p>
+                    </div>
                   </div>
-                  <div className={cn("bg-muted", isMobile ? "w-px h-8" : "w-px h-10")}></div>
-                  <div>
-                    <p className="text-[10px] sm:text-xs text-neutral-400 font-medium">Added This Month</p>
-                    <p className="text-xl sm:text-2xl font-bold text-foreground tabular-nums">{recentCustomers}</p>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
             {onNavigateToCustomers && (

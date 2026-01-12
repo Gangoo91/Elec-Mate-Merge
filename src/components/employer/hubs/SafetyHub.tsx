@@ -92,7 +92,7 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
           return (
             <Card
               key={stat.label}
-              className={`relative overflow-hidden border-2 ${stat.borderClass} bg-gradient-to-br ${stat.bgClass} cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]`}
+              className={`relative overflow-hidden border-2 ${stat.borderClass} bg-gradient-to-br ${stat.bgClass} cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] touch-manipulation`}
               onClick={() => onNavigate(stat.section)}
             >
               {stat.pulse && (

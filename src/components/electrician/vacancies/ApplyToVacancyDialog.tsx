@@ -1,11 +1,10 @@
 import { useState } from "react";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -92,7 +91,7 @@ export function ApplyToVacancyDialog({
               title: vacancy.title,
               company: vacancy.employer?.company_name || 'the employer',
               location: vacancy.location,
-              description: vacancy.description?.replace(/<[^>]*>/g, ' ').substring(0, 500), // Strip HTML and limit
+              description: vacancy.description?.replace(/<[^>]*>/g, ' ').substring(0, 500),
               requirements: vacancy.requirements,
               type: vacancy.type,
             },
@@ -138,7 +137,7 @@ export function ApplyToVacancyDialog({
 
       toast({
         title: "Application Submitted",
-        description: `Your application for "${vacancy.title}" has been sent to ${vacancy.employer?.company_name}.`,
+        description: `Your application for "${vacancy.title}" has been sent to ${vacancy.employer?.company_name || 'the employer'}.`,
       });
 
       setCoverLetter("");
@@ -161,7 +160,7 @@ export function ApplyToVacancyDialog({
     .map(n => n[0])
     .join('')
     .toUpperCase()
-    .slice(0, 2) || '??';
+    .slice(0, 2) || 'EM';
 
   const formatSalary = () => {
     if (!vacancy.salary_min && !vacancy.salary_max) return null;
@@ -191,46 +190,60 @@ export function ApplyToVacancyDialog({
   const salaryDisplay = formatSalary();
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Send className="h-5 w-5 text-elec-yellow" />
-            Apply to Vacancy
-          </DialogTitle>
-          <DialogDescription>
-            Submit your application for this position
-          </DialogDescription>
-        </DialogHeader>
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden flex flex-col"
+      >
+        {/* Drag Handle - Native App Feel */}
+        <div className="flex justify-center pt-3 pb-2 touch-manipulation">
+          <div className="w-10 h-1 bg-muted-foreground/30 rounded-full" />
+        </div>
 
-        <div className="space-y-4">
-          {/* Vacancy Info */}
-          <Card className="bg-muted/50">
-            <CardContent className="p-3">
+        {/* Header */}
+        <SheetHeader className="px-4 pb-3 border-b border-border">
+          <SheetTitle className="flex items-center gap-2 text-lg">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+              <Send className="h-5 w-5 text-emerald-400" />
+            </div>
+            <div>
+              <span className="block">Apply to Vacancy</span>
+              <span className="text-sm font-normal text-muted-foreground">
+                Submit your application
+              </span>
+            </div>
+          </SheetTitle>
+        </SheetHeader>
+
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+          {/* Vacancy Info Card */}
+          <Card className="bg-muted/50 border-border">
+            <CardContent className="p-4">
               <div className="flex items-start gap-3">
-                <Avatar className="h-12 w-12 rounded-lg">
+                <Avatar className="h-14 w-14 rounded-xl">
                   <AvatarImage src={vacancy.employer?.logo_url || undefined} />
-                  <AvatarFallback className="rounded-lg bg-elec-yellow/20 text-elec-yellow font-bold">
+                  <AvatarFallback className="rounded-xl bg-emerald-500/20 text-emerald-400 font-bold text-lg">
                     {companyInitials}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-foreground">{vacancy.title}</p>
-                  <p className="text-sm text-muted-foreground flex items-center gap-1">
-                    <Building2 className="h-3.5 w-3.5" />
-                    {vacancy.employer?.company_name}
+                  <p className="font-semibold text-foreground text-base">{vacancy.title}</p>
+                  <p className="text-sm text-muted-foreground flex items-center gap-1.5 mt-0.5">
+                    <Building2 className="h-4 w-4" />
+                    {vacancy.employer?.company_name || 'Employer'}
                   </p>
-                  <div className="flex flex-wrap items-center gap-2 mt-1">
-                    <Badge variant="outline" className="text-xs">
+                  <div className="flex flex-wrap items-center gap-2 mt-2">
+                    <Badge variant="outline" className="text-xs h-6">
                       <MapPin className="h-3 w-3 mr-1" />
                       {vacancy.location}
                     </Badge>
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="outline" className="text-xs h-6">
                       <Briefcase className="h-3 w-3 mr-1" />
                       {vacancy.type}
                     </Badge>
                     {salaryDisplay && (
-                      <Badge variant="outline" className="text-xs text-green-600">
+                      <Badge className="text-xs h-6 bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
                         {salaryDisplay}
                       </Badge>
                     )}
@@ -242,9 +255,9 @@ export function ApplyToVacancyDialog({
 
           {/* Elec-ID Profile Preview */}
           {profileLoading ? (
-            <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              <span className="text-sm">Loading your Elec-ID...</span>
+            <div className="flex items-center gap-3 p-4 bg-muted rounded-xl">
+              <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+              <span className="text-sm text-muted-foreground">Loading your Elec-ID...</span>
             </div>
           ) : elecIdProfile ? (
             <div className="space-y-3">
@@ -272,7 +285,7 @@ export function ApplyToVacancyDialog({
                 <button
                   type="button"
                   onClick={() => setShowProfilePreview(!showProfilePreview)}
-                  className="mt-3 w-full flex items-center justify-between text-sm text-emerald-300 hover:text-emerald-200 transition-colors"
+                  className="mt-3 w-full h-11 flex items-center justify-between text-sm text-emerald-300 active:text-emerald-200 transition-colors touch-manipulation rounded-lg px-2 -mx-2 active:bg-emerald-500/10"
                 >
                   <span>What will be shared with employer</span>
                   <ChevronDown className={cn(
@@ -291,18 +304,13 @@ export function ApplyToVacancyDialog({
                       transition={{ duration: 0.2 }}
                       className="overflow-hidden"
                     >
-                      <div className="mt-3 pt-3 border-t border-emerald-500/20 space-y-2">
+                      <div className="mt-3 pt-3 border-t border-emerald-500/20 space-y-3">
                         {/* ECS Card */}
                         {elecIdProfile.ecs_card_type && (
                           <div className="flex items-center gap-2 text-sm">
                             <CreditCard className="h-4 w-4 text-emerald-400" />
                             <span className="text-muted-foreground">ECS Card:</span>
                             <span className="text-foreground font-medium">{elecIdProfile.ecs_card_type}</span>
-                            {elecIdProfile.ecs_expiry_date && (
-                              <span className="text-xs text-muted-foreground">
-                                (Expires: {new Date(elecIdProfile.ecs_expiry_date).toLocaleDateString()})
-                              </span>
-                            )}
                           </div>
                         )}
 
@@ -312,14 +320,14 @@ export function ApplyToVacancyDialog({
                             <Wrench className="h-4 w-4 text-emerald-400 mt-0.5" />
                             <div>
                               <span className="text-muted-foreground">Specialisations:</span>
-                              <div className="flex flex-wrap gap-1 mt-1">
+                              <div className="flex flex-wrap gap-1.5 mt-1.5">
                                 {elecIdProfile.specialisations.slice(0, 4).map((spec, i) => (
-                                  <Badge key={i} variant="outline" className="text-xs">
+                                  <Badge key={i} variant="outline" className="text-xs h-6">
                                     {spec}
                                   </Badge>
                                 ))}
                                 {elecIdProfile.specialisations.length > 4 && (
-                                  <Badge variant="outline" className="text-xs">
+                                  <Badge variant="outline" className="text-xs h-6">
                                     +{elecIdProfile.specialisations.length - 4} more
                                   </Badge>
                                 )}
@@ -343,15 +351,15 @@ export function ApplyToVacancyDialog({
                         <div className="mt-2 pt-2 border-t border-emerald-500/10">
                           <p className="text-xs text-muted-foreground mb-2">Also includes:</p>
                           <div className="flex flex-wrap gap-1.5">
-                            <Badge variant="outline" className="text-xs bg-background/50">
+                            <Badge variant="outline" className="text-xs h-6 bg-background/50">
                               <Award className="h-3 w-3 mr-1" />
                               Qualifications
                             </Badge>
-                            <Badge variant="outline" className="text-xs bg-background/50">
+                            <Badge variant="outline" className="text-xs h-6 bg-background/50">
                               <Clock className="h-3 w-3 mr-1" />
                               Work History
                             </Badge>
-                            <Badge variant="outline" className="text-xs bg-background/50">
+                            <Badge variant="outline" className="text-xs h-6 bg-background/50">
                               <Wrench className="h-3 w-3 mr-1" />
                               Skills
                             </Badge>
@@ -378,26 +386,27 @@ export function ApplyToVacancyDialog({
           )}
 
           {/* Cover Letter */}
-          <div className="space-y-2">
+          <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label htmlFor="cover-letter">Cover Letter (Optional)</Label>
+              <Label htmlFor="cover-letter" className="text-sm font-medium">
+                Cover Letter (Optional)
+              </Label>
               {elecIdProfile && (
                 <Button
                   type="button"
                   variant="outline"
-                  size="sm"
                   onClick={generateCoverLetter}
                   disabled={isGeneratingCoverLetter}
-                  className="gap-1.5 h-8 text-xs bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-purple-500/30 text-purple-400 hover:bg-purple-500/20 hover:text-purple-300"
+                  className="gap-2 h-10 text-sm bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-purple-500/30 text-purple-400 active:bg-purple-500/20 active:text-purple-300 touch-manipulation"
                 >
                   {isGeneratingCoverLetter ? (
                     <>
-                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      <Loader2 className="h-4 w-4 animate-spin" />
                       Writing...
                     </>
                   ) : (
                     <>
-                      <Sparkles className="h-3.5 w-3.5" />
+                      <Sparkles className="h-4 w-4" />
                       AI Write
                     </>
                   )}
@@ -409,8 +418,8 @@ export function ApplyToVacancyDialog({
               value={coverLetter}
               onChange={(e) => setCoverLetter(e.target.value)}
               placeholder="Introduce yourself and explain why you're a great fit for this role..."
-              rows={4}
-              className="resize-none"
+              rows={5}
+              className="resize-none text-base touch-manipulation"
               disabled={isGeneratingCoverLetter}
             />
             <p className="text-xs text-muted-foreground">
@@ -422,14 +431,15 @@ export function ApplyToVacancyDialog({
           </div>
 
           {/* Share Profile Consent */}
-          <div className="flex items-start space-x-3">
+          <div className="flex items-start space-x-3 p-3 bg-muted/50 rounded-xl touch-manipulation">
             <Checkbox
               id="share-profile"
               checked={shareProfile}
               onCheckedChange={(checked) => setShareProfile(checked as boolean)}
+              className="mt-0.5 h-5 w-5"
             />
             <div className="space-y-1">
-              <Label htmlFor="share-profile" className="text-sm font-normal cursor-pointer">
+              <Label htmlFor="share-profile" className="text-sm font-medium">
                 Share my Elec-ID profile with the employer
               </Label>
               <p className="text-xs text-muted-foreground">
@@ -437,37 +447,37 @@ export function ApplyToVacancyDialog({
               </p>
             </div>
           </div>
-
-          {/* Actions */}
-          <div className="flex gap-2 pt-2">
-            <Button
-              variant="outline"
-              className="flex-1 h-11"
-              onClick={() => onOpenChange(false)}
-              disabled={applyMutation.isPending}
-            >
-              Cancel
-            </Button>
-            <Button
-              className="flex-1 h-11 bg-emerald-500 hover:bg-emerald-400 text-white"
-              onClick={handleApply}
-              disabled={applyMutation.isPending || !elecIdProfile || !shareProfile}
-            >
-              {applyMutation.isPending ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Applying...
-                </>
-              ) : (
-                <>
-                  <Send className="h-4 w-4 mr-2" />
-                  Apply with Elec-ID
-                </>
-              )}
-            </Button>
-          </div>
         </div>
-      </DialogContent>
-    </Dialog>
+
+        {/* Sticky Footer - Action Buttons */}
+        <div className="border-t border-border bg-background p-4 pb-6 flex gap-3">
+          <Button
+            variant="outline"
+            className="flex-1 h-12 text-base touch-manipulation active:scale-[0.98] transition-transform"
+            onClick={() => onOpenChange(false)}
+            disabled={applyMutation.isPending}
+          >
+            Cancel
+          </Button>
+          <Button
+            className="flex-1 h-12 text-base bg-emerald-500 active:bg-emerald-400 text-white touch-manipulation active:scale-[0.98] transition-transform"
+            onClick={handleApply}
+            disabled={applyMutation.isPending || !elecIdProfile || !shareProfile}
+          >
+            {applyMutation.isPending ? (
+              <>
+                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                Applying...
+              </>
+            ) : (
+              <>
+                <Send className="h-5 w-5 mr-2" />
+                Apply with Elec-ID
+              </>
+            )}
+          </Button>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 }

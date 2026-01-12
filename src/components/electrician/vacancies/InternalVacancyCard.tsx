@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -56,8 +55,6 @@ export function InternalVacancyCard({
   onMessage,
   onViewDetails,
 }: InternalVacancyCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
-
   const formatSalary = () => {
     if (!vacancy.salary_min && !vacancy.salary_max) return null;
 
@@ -96,13 +93,11 @@ export function InternalVacancyCard({
   return (
     <Card
       className={cn(
-        "transition-all duration-200 cursor-pointer overflow-hidden",
+        "transition-all duration-150 overflow-hidden touch-manipulation",
         "bg-gradient-to-br from-emerald-500/5 via-background to-background",
-        "border-emerald-500/30 hover:border-emerald-400/50 hover:shadow-lg hover:shadow-emerald-500/10",
-        isHovered && "scale-[1.01]"
+        "border-emerald-500/30",
+        "active:scale-[0.98] active:border-emerald-400/50 active:shadow-lg active:shadow-emerald-500/10"
       )}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       onClick={() => onViewDetails(vacancy)}
     >
       {/* Direct from Employer Banner */}
@@ -170,12 +165,11 @@ export function InternalVacancyCard({
               {vacancy.description}
             </p>
 
-            {/* Actions */}
-            <div className="flex items-center gap-2">
+            {/* Actions - Mobile-first touch targets */}
+            <div className="flex items-center gap-2 flex-wrap">
               <Button
-                size="sm"
                 variant="outline"
-                className="gap-1.5 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 hover:text-emerald-300"
+                className="h-11 gap-2 px-4 border-emerald-500/30 text-emerald-400 active:bg-emerald-500/10 active:text-emerald-300 touch-manipulation"
                 onClick={(e) => {
                   e.stopPropagation();
                   onMessage(vacancy);
@@ -187,8 +181,7 @@ export function InternalVacancyCard({
 
               {!vacancy.has_applied && (
                 <Button
-                  size="sm"
-                  className="gap-1.5 bg-emerald-500 text-white hover:bg-emerald-400"
+                  className="h-11 gap-2 px-4 bg-emerald-500 text-white active:bg-emerald-400 touch-manipulation active:scale-[0.98] transition-transform"
                   onClick={(e) => {
                     e.stopPropagation();
                     onApply(vacancy);
@@ -200,15 +193,14 @@ export function InternalVacancyCard({
               )}
 
               <Button
-                size="sm"
                 variant="ghost"
-                className="ml-auto gap-1 text-emerald-400/80 hover:text-emerald-400 hover:bg-emerald-500/10"
+                className="h-11 ml-auto gap-1 text-emerald-400/80 active:text-emerald-400 active:bg-emerald-500/10 touch-manipulation"
                 onClick={(e) => {
                   e.stopPropagation();
                   onViewDetails(vacancy);
                 }}
               >
-                View Details
+                Details
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>

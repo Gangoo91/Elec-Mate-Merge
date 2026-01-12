@@ -16,7 +16,7 @@ export interface Notification {
 
 export const getNotifications = async (employeeId?: string): Promise<Notification[]> => {
   let query = supabase
-    .from('notifications')
+    .from('employer_notifications')
     .select('*')
     .order('created_at', { ascending: false })
     .limit(50);
@@ -37,7 +37,7 @@ export const getNotifications = async (employeeId?: string): Promise<Notificatio
 
 export const getUnreadNotifications = async (employeeId?: string): Promise<Notification[]> => {
   let query = supabase
-    .from('notifications')
+    .from('employer_notifications')
     .select('*')
     .is('read_at', null)
     .order('created_at', { ascending: false });
@@ -58,7 +58,7 @@ export const getUnreadNotifications = async (employeeId?: string): Promise<Notif
 
 export const getUnreadCount = async (employeeId?: string): Promise<number> => {
   let query = supabase
-    .from('notifications')
+    .from('employer_notifications')
     .select('id', { count: 'exact', head: true })
     .is('read_at', null);
 
@@ -87,7 +87,7 @@ export const createNotification = async (
   }
 ): Promise<Notification> => {
   const { data, error } = await supabase
-    .from('notifications')
+    .from('employer_notifications')
     .insert(notification)
     .select()
     .single();
@@ -102,7 +102,7 @@ export const createNotification = async (
 
 export const markAsRead = async (id: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('notifications')
+    .from('employer_notifications')
     .update({ read_at: new Date().toISOString() })
     .eq('id', id);
 
@@ -116,7 +116,7 @@ export const markAsRead = async (id: string): Promise<boolean> => {
 
 export const markAllAsRead = async (employeeId?: string): Promise<boolean> => {
   let query = supabase
-    .from('notifications')
+    .from('employer_notifications')
     .update({ read_at: new Date().toISOString() })
     .is('read_at', null);
 
@@ -136,7 +136,7 @@ export const markAllAsRead = async (employeeId?: string): Promise<boolean> => {
 
 export const deleteNotification = async (id: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('notifications')
+    .from('employer_notifications')
     .delete()
     .eq('id', id);
 

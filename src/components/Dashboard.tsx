@@ -71,14 +71,14 @@ const Dashboard = ({ onNavigate }: { onNavigate: (section: string, reportId?: st
           {/* Designed Circuits from Circuit Designer */}
           <DesignedCircuitsCard onNavigate={handleNavigate} />
 
-          {/* Customer Stats - only if has customers */}
+          {/* Customer Stats - always show so users can add customers */}
           {isLoading ? (
             <Card className="bg-card border-border">
               <CardHeader className="p-4">
                 <LoadingSkeleton type="card" count={1} />
               </CardHeader>
             </Card>
-          ) : customers.length > 0 && (
+          ) : (
             <CustomerStats
               customers={customers}
               onNavigateToCustomers={() => navigate('/customers')}

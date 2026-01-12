@@ -72,7 +72,7 @@ export interface ExpenseClaim {
   rejection_reason: string | null;
   created_at: string;
   updated_at: string;
-  employees?: { name: string; avatar_initials: string };
+  employee?: { name: string; avatar_initials: string };
 }
 
 export interface Supplier {
@@ -107,7 +107,7 @@ export interface MaterialOrder {
   notes: string | null;
   created_at: string;
   updated_at: string;
-  suppliers?: { name: string };
+  supplier?: { name: string };
 }
 
 export interface PriceBookItem {
@@ -124,13 +124,13 @@ export interface PriceBookItem {
   sku: string | null;
   created_at: string;
   updated_at: string;
-  suppliers?: { name: string };
+  supplier?: { name: string };
 }
 
 // Quotes
 export async function getQuotes(): Promise<Quote[]> {
   const { data, error } = await supabase
-    .from('quotes')
+    .from('employer_quotes')
     .select('*')
     .order('created_at', { ascending: false });
   if (error) throw error;
@@ -139,7 +139,7 @@ export async function getQuotes(): Promise<Quote[]> {
 
 export async function createQuote(quote: Omit<Quote, 'id' | 'created_at' | 'updated_at'>): Promise<Quote> {
   const { data, error } = await supabase
-    .from('quotes')
+    .from('employer_quotes')
     .insert(quote)
     .select()
     .single();
@@ -150,13 +150,13 @@ export async function createQuote(quote: Omit<Quote, 'id' | 'created_at' | 'upda
 export async function updateQuote(id: string, updates: Partial<Quote>): Promise<Quote> {
   // Get original quote to check for status change
   const { data: originalQuote } = await supabase
-    .from('quotes')
+    .from('employer_quotes')
     .select('status, created_by, quote_number, client')
     .eq('id', id)
     .single();
 
   const { data, error } = await supabase
-    .from('quotes')
+    .from('employer_quotes')
     .update(updates)
     .eq('id', id)
     .select()
@@ -195,7 +195,7 @@ export async function sendQuote(id: string): Promise<Quote> {
 // Invoices
 export async function getInvoices(): Promise<Invoice[]> {
   const { data, error } = await supabase
-    .from('invoices')
+    .from('employer_invoices')
     .select('*')
     .order('created_at', { ascending: false });
   if (error) throw error;
@@ -204,7 +204,7 @@ export async function getInvoices(): Promise<Invoice[]> {
 
 export async function createInvoice(invoice: Omit<Invoice, 'id' | 'created_at' | 'updated_at'>): Promise<Invoice> {
   const { data, error } = await supabase
-    .from('invoices')
+    .from('employer_invoices')
     .insert(invoice)
     .select()
     .single();
@@ -214,7 +214,7 @@ export async function createInvoice(invoice: Omit<Invoice, 'id' | 'created_at' |
 
 export async function updateInvoice(id: string, updates: Partial<Invoice>): Promise<Invoice> {
   const { data, error } = await supabase
-    .from('invoices')
+    .from('employer_invoices')
     .update(updates)
     .eq('id', id)
     .select()
@@ -226,7 +226,7 @@ export async function updateInvoice(id: string, updates: Partial<Invoice>): Prom
 export async function markInvoicePaid(id: string): Promise<Invoice> {
   // Get invoice details for notification
   const { data: invoice } = await supabase
-    .from('invoices')
+    .from('employer_invoices')
     .select('invoice_number, client, amount, created_by')
     .eq('id', id)
     .single();
@@ -249,7 +249,7 @@ export async function markInvoicePaid(id: string): Promise<Invoice> {
 
 export async function getOverdueInvoices(): Promise<Invoice[]> {
   const { data, error } = await supabase
-    .from('invoices')
+    .from('employer_invoices')
     .select('*')
     .eq('status', 'Overdue')
     .order('due_date', { ascending: true });
@@ -260,7 +260,7 @@ export async function getOverdueInvoices(): Promise<Invoice[]> {
 export async function sendInvoice(id: string): Promise<{ portalUrl: string; accessToken: string }> {
   // First get the invoice to get client details
   const { data: invoice, error: invoiceError } = await supabase
-    .from('invoices')
+    .from('employer_invoices')
     .select('*')
     .eq('id', id)
     .single();
@@ -308,8 +308,8 @@ export async function generateInvoicePdf(id: string): Promise<{ html: string }> 
 // Expense Claims
 export async function getExpenseClaims(): Promise<ExpenseClaim[]> {
   const { data, error } = await supabase
-    .from('expense_claims')
-    .select('*, employees(name, avatar_initials)')
+    .from('employer_expense_claims')
+    .select('*, employee:employer_employees(name, avatar_initials)')
     .order('submitted_date', { ascending: false });
   if (error) throw error;
   return data || [];
@@ -317,9 +317,9 @@ export async function getExpenseClaims(): Promise<ExpenseClaim[]> {
 
 export async function createExpenseClaim(claim: Omit<ExpenseClaim, 'id' | 'created_at' | 'updated_at' | 'employees'>): Promise<ExpenseClaim> {
   const { data, error } = await supabase
-    .from('expense_claims')
+    .from('employer_expense_claims')
     .insert(claim)
-    .select('*, employees(name, avatar_initials)')
+    .select('*, employee:employer_employees(name, avatar_initials)')
     .single();
   if (error) throw error;
   return data;
@@ -327,14 +327,14 @@ export async function createExpenseClaim(claim: Omit<ExpenseClaim, 'id' | 'creat
 
 export async function approveExpense(id: string, approvedBy: string): Promise<ExpenseClaim> {
   const { data, error } = await supabase
-    .from('expense_claims')
+    .from('employer_expense_claims')
     .update({ 
       status: 'Approved', 
       approved_by: approvedBy, 
       approved_date: new Date().toISOString() 
     })
     .eq('id', id)
-    .select('*, employees(name, avatar_initials)')
+    .select('*, employee:employer_employees(name, avatar_initials)')
     .single();
   if (error) throw error;
   return data;
@@ -342,7 +342,7 @@ export async function approveExpense(id: string, approvedBy: string): Promise<Ex
 
 export async function rejectExpense(id: string, approvedBy: string, reason: string): Promise<ExpenseClaim> {
   const { data, error } = await supabase
-    .from('expense_claims')
+    .from('employer_expense_claims')
     .update({ 
       status: 'Rejected', 
       approved_by: approvedBy, 
@@ -350,7 +350,7 @@ export async function rejectExpense(id: string, approvedBy: string, reason: stri
       rejection_reason: reason
     })
     .eq('id', id)
-    .select('*, employees(name, avatar_initials)')
+    .select('*, employee:employer_employees(name, avatar_initials)')
     .single();
   if (error) throw error;
   return data;
@@ -358,10 +358,10 @@ export async function rejectExpense(id: string, approvedBy: string, reason: stri
 
 export async function markExpensePaid(id: string): Promise<ExpenseClaim> {
   const { data, error } = await supabase
-    .from('expense_claims')
+    .from('employer_expense_claims')
     .update({ paid_date: new Date().toISOString().split('T')[0] })
     .eq('id', id)
-    .select('*, employees(name, avatar_initials)')
+    .select('*, employee:employer_employees(name, avatar_initials)')
     .single();
   if (error) throw error;
   return data;
@@ -370,7 +370,7 @@ export async function markExpensePaid(id: string): Promise<ExpenseClaim> {
 // Suppliers
 export async function getSuppliers(): Promise<Supplier[]> {
   const { data, error } = await supabase
-    .from('suppliers')
+    .from('employer_suppliers')
     .select('*')
     .order('name', { ascending: true });
   if (error) throw error;
@@ -379,7 +379,7 @@ export async function getSuppliers(): Promise<Supplier[]> {
 
 export async function createSupplier(supplier: Omit<Supplier, 'id' | 'created_at' | 'updated_at'>): Promise<Supplier> {
   const { data, error } = await supabase
-    .from('suppliers')
+    .from('employer_suppliers')
     .insert(supplier)
     .select()
     .single();
@@ -389,7 +389,7 @@ export async function createSupplier(supplier: Omit<Supplier, 'id' | 'created_at
 
 export async function updateSupplier(id: string, updates: Partial<Supplier>): Promise<Supplier> {
   const { data, error } = await supabase
-    .from('suppliers')
+    .from('employer_suppliers')
     .update(updates)
     .eq('id', id)
     .select()
@@ -401,8 +401,8 @@ export async function updateSupplier(id: string, updates: Partial<Supplier>): Pr
 // Material Orders
 export async function getMaterialOrders(): Promise<MaterialOrder[]> {
   const { data, error } = await supabase
-    .from('material_orders')
-    .select('*, suppliers(name)')
+    .from('employer_material_orders')
+    .select('*, supplier:employer_suppliers(name)')
     .order('order_date', { ascending: false });
   if (error) throw error;
   return data || [];
@@ -410,9 +410,9 @@ export async function getMaterialOrders(): Promise<MaterialOrder[]> {
 
 export async function createMaterialOrder(order: Omit<MaterialOrder, 'id' | 'created_at' | 'updated_at' | 'suppliers'>): Promise<MaterialOrder> {
   const { data, error } = await supabase
-    .from('material_orders')
+    .from('employer_material_orders')
     .insert(order)
-    .select('*, suppliers(name)')
+    .select('*, supplier:employer_suppliers(name)')
     .single();
   if (error) throw error;
   return data;
@@ -423,10 +423,10 @@ export async function updateOrderStatus(id: string, status: string, deliveryDate
   if (deliveryDate) updates.delivery_date = deliveryDate;
   
   const { data, error } = await supabase
-    .from('material_orders')
+    .from('employer_material_orders')
     .update(updates)
     .eq('id', id)
-    .select('*, suppliers(name)')
+    .select('*, supplier:employer_suppliers(name)')
     .single();
   if (error) throw error;
   return data;
@@ -435,8 +435,8 @@ export async function updateOrderStatus(id: string, status: string, deliveryDate
 // Price Book
 export async function getPriceBook(): Promise<PriceBookItem[]> {
   const { data, error } = await supabase
-    .from('price_book')
-    .select('*, suppliers(name)')
+    .from('employer_price_book')
+    .select('*, supplier:employer_suppliers(name)')
     .order('name', { ascending: true });
   if (error) throw error;
   return data || [];
@@ -444,9 +444,9 @@ export async function getPriceBook(): Promise<PriceBookItem[]> {
 
 export async function createPriceBookItem(item: Omit<PriceBookItem, 'id' | 'created_at' | 'updated_at' | 'markup' | 'suppliers'>): Promise<PriceBookItem> {
   const { data, error } = await supabase
-    .from('price_book')
+    .from('employer_price_book')
     .insert(item)
-    .select('*, suppliers(name)')
+    .select('*, supplier:employer_suppliers(name)')
     .single();
   if (error) throw error;
   return data;
@@ -454,10 +454,10 @@ export async function createPriceBookItem(item: Omit<PriceBookItem, 'id' | 'crea
 
 export async function updatePriceBookItem(id: string, updates: Partial<PriceBookItem>): Promise<PriceBookItem> {
   const { data, error } = await supabase
-    .from('price_book')
+    .from('employer_price_book')
     .update(updates)
     .eq('id', id)
-    .select('*, suppliers(name)')
+    .select('*, supplier:employer_suppliers(name)')
     .single();
   if (error) throw error;
   return data;
@@ -465,8 +465,8 @@ export async function updatePriceBookItem(id: string, updates: Partial<PriceBook
 
 export async function getLowStockItems(): Promise<PriceBookItem[]> {
   const { data, error } = await supabase
-    .from('price_book')
-    .select('*, suppliers(name)')
+    .from('employer_price_book')
+    .select('*, supplier:employer_suppliers(name)')
     .order('stock_level', { ascending: true });
   if (error) throw error;
   return (data || []).filter(item => item.stock_level <= item.reorder_level);
@@ -485,7 +485,7 @@ export async function bulkCreatePriceBookItems(
     const batch = items.slice(i, i + BATCH_SIZE);
     
     const { data, error } = await supabase
-      .from('price_book')
+      .from('employer_price_book')
       .insert(batch)
       .select();
     
@@ -508,8 +508,8 @@ export async function searchPriceBook(
   limit = 20
 ): Promise<{ items: PriceBookItem[]; total: number }> {
   let q = supabase
-    .from('price_book')
-    .select('*, suppliers(name)', { count: 'exact' });
+    .from('employer_price_book')
+    .select('*, supplier:employer_suppliers(name)', { count: 'exact' });
 
   if (query && query.length >= 2) {
     q = q.or(`name.ilike.%${query}%,sku.ilike.%${query}%`);
@@ -539,7 +539,7 @@ export async function getPriceBookStats(): Promise<{
   stockValue: number;
 }> {
   const { data, count, error } = await supabase
-    .from('price_book')
+    .from('employer_price_book')
     .select('buy_price, sell_price, stock_level, reorder_level', { count: 'exact' });
 
   if (error) throw error;
@@ -573,7 +573,7 @@ export async function getPriceBookStats(): Promise<{
 export async function getNextQuoteNumber(): Promise<string> {
   const year = new Date().getFullYear();
   const { data } = await supabase
-    .from('quotes')
+    .from('employer_quotes')
     .select('quote_number')
     .like('quote_number', `QU-${year}-%`)
     .order('quote_number', { ascending: false })
@@ -592,7 +592,7 @@ export async function getNextQuoteNumber(): Promise<string> {
 export async function getNextInvoiceNumber(): Promise<string> {
   const year = new Date().getFullYear();
   const { data } = await supabase
-    .from('invoices')
+    .from('employer_invoices')
     .select('invoice_number')
     .like('invoice_number', `INV-${year}-%`)
     .order('invoice_number', { ascending: false })
@@ -608,7 +608,7 @@ export async function getNextInvoiceNumber(): Promise<string> {
 export async function getNextOrderNumber(): Promise<string> {
   const year = new Date().getFullYear();
   const { data } = await supabase
-    .from('material_orders')
+    .from('employer_material_orders')
     .select('order_number')
     .like('order_number', `ORD-${year}-%`)
     .order('order_number', { ascending: false })

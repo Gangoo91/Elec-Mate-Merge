@@ -38,7 +38,7 @@ export function FeatureTile({
     return (
       <Card
         className={cn(
-          "cursor-pointer group",
+          "cursor-pointer group touch-manipulation",
           "hover:bg-[#222222] hover:border-elec-yellow/40",
           "active:scale-[0.98] active:bg-elec-yellow/5",
           className
@@ -75,7 +75,7 @@ export function FeatureTile({
   return (
     <Card
       className={cn(
-        "cursor-pointer group",
+        "cursor-pointer group touch-manipulation",
         "hover:bg-[#222222] hover:border-elec-yellow/40",
         "active:scale-[0.98] active:bg-elec-yellow/5",
         className

@@ -37,6 +37,8 @@ const KnowledgeUploader = lazy(() => import("@/pages/Admin/KnowledgeUploader"));
 const LearningReview = lazy(() => import("@/pages/admin/LearningReview"));
 const CircuitDesigner = lazy(() => import("@/pages/electrician-tools/CircuitDesigner"));
 const EnrichmentMonitor = lazy(() => import("@/pages/Admin/EnrichmentMonitor"));
+const CustomersPage = lazy(() => import("@/pages/CustomersPage"));
+const CertificateExpiryPage = lazy(() => import("@/pages/CertificateExpiryPage"));
 const EmployerDashboard = lazy(() => import("@/pages/employer/EmployerDashboard"));
 const CollegeDashboard = lazy(() => import("@/pages/college/CollegeDashboard"));
 const ElecIdPage = lazy(() => import("@/pages/ElecIdPage"));
@@ -91,6 +93,8 @@ const AppRouter = () => {
         <Route path="profile" element={<LazyRoute><Profile /></LazyRoute>} />
         <Route path="settings" element={<LazyRoute><Settings /></LazyRoute>} />
         <Route path="notifications" element={<LazyRoute><NotificationsPage /></LazyRoute>} />
+        <Route path="customers" element={<LazyRoute><CustomersPage /></LazyRoute>} />
+        <Route path="certificate-expiry" element={<LazyRoute><CertificateExpiryPage /></LazyRoute>} />
         <Route path="subscriptions" element={<LazyRoute><Subscriptions /></LazyRoute>} />
         <Route path="payment-success" element={<LazyRoute><PaymentSuccess /></LazyRoute>} />
         <Route path="admin/rag-processor" element={<LazyRoute><AdminRAGProcessor /></LazyRoute>} />

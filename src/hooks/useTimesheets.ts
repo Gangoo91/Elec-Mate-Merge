@@ -25,7 +25,7 @@ export interface TimesheetWithDetails extends Timesheet {
 
 export const getTimesheets = async (startDate?: string, endDate?: string): Promise<Timesheet[]> => {
   let query = supabase
-    .from('timesheets')
+    .from('employer_timesheets')
     .select('*')
     .order('date', { ascending: false });
 
@@ -48,7 +48,7 @@ export const getTimesheets = async (startDate?: string, endDate?: string): Promi
 
 export const getTimesheetsByEmployee = async (employeeId: string): Promise<Timesheet[]> => {
   const { data, error } = await supabase
-    .from('timesheets')
+    .from('employer_timesheets')
     .select('*')
     .eq('employee_id', employeeId)
     .order('date', { ascending: false });
@@ -65,7 +65,7 @@ export const createTimesheet = async (
   timesheet: Omit<Timesheet, 'id' | 'created_at' | 'updated_at'>
 ): Promise<Timesheet> => {
   const { data, error } = await supabase
-    .from('timesheets')
+    .from('employer_timesheets')
     .insert(timesheet)
     .select()
     .single();
@@ -83,7 +83,7 @@ export const updateTimesheet = async (
   updates: Partial<Timesheet>
 ): Promise<Timesheet | null> => {
   const { data, error } = await supabase
-    .from('timesheets')
+    .from('employer_timesheets')
     .update({ ...updates, updated_at: new Date().toISOString() })
     .eq('id', id)
     .select()
@@ -99,7 +99,7 @@ export const updateTimesheet = async (
 
 export const approveTimesheet = async (id: string, approvedBy: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('timesheets')
+    .from('employer_timesheets')
     .update({
       status: 'Approved',
       approved_by: approvedBy,
@@ -118,7 +118,7 @@ export const approveTimesheet = async (id: string, approvedBy: string): Promise<
 
 export const rejectTimesheet = async (id: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('timesheets')
+    .from('employer_timesheets')
     .update({
       status: 'Rejected',
       updated_at: new Date().toISOString(),
@@ -135,7 +135,7 @@ export const rejectTimesheet = async (id: string): Promise<boolean> => {
 
 export const deleteTimesheet = async (id: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('timesheets')
+    .from('employer_timesheets')
     .delete()
     .eq('id', id);
 
@@ -152,6 +152,8 @@ export const useTimesheets = (startDate?: string, endDate?: string) => {
   return useQuery({
     queryKey: ['timesheets', startDate, endDate],
     queryFn: () => getTimesheets(startDate, endDate),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000,   // 10 minutes
   });
 };
 
@@ -160,6 +162,8 @@ export const useEmployeeTimesheets = (employeeId: string) => {
     queryKey: ['timesheets', 'employee', employeeId],
     queryFn: () => getTimesheetsByEmployee(employeeId),
     enabled: !!employeeId,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000,   // 10 minutes
   });
 };
 

@@ -20,13 +20,15 @@ export const useCertifications = () => {
     queryKey: ['certifications'],
     queryFn: async (): Promise<Certification[]> => {
       const { data, error } = await supabase
-        .from('certifications')
+        .from('employer_certifications')
         .select('*')
         .order('expiry_date', { ascending: true });
-      
+
       if (error) throw error;
       return data || [];
-    }
+    },
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000,   // 10 minutes
   });
 };
 
@@ -35,17 +37,19 @@ export const useCertificationsByEmployee = (employeeId: string | undefined) => {
     queryKey: ['certifications', 'employee', employeeId],
     queryFn: async (): Promise<Certification[]> => {
       if (!employeeId) return [];
-      
+
       const { data, error } = await supabase
-        .from('certifications')
+        .from('employer_certifications')
         .select('*')
         .eq('employee_id', employeeId)
         .order('expiry_date', { ascending: true });
-      
+
       if (error) throw error;
       return data || [];
     },
-    enabled: !!employeeId
+    enabled: !!employeeId,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000,   // 10 minutes
   });
 };
 
@@ -54,17 +58,19 @@ export const useCertificationsByEmployees = (employeeIds: string[]) => {
     queryKey: ['certifications', 'employees', employeeIds],
     queryFn: async (): Promise<Certification[]> => {
       if (!employeeIds.length) return [];
-      
+
       const { data, error } = await supabase
-        .from('certifications')
+        .from('employer_certifications')
         .select('*')
         .in('employee_id', employeeIds)
         .eq('status', 'Valid')
         .order('employee_id');
-      
+
       if (error) throw error;
       return data || [];
     },
-    enabled: employeeIds.length > 0
+    enabled: employeeIds.length > 0,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000,   // 10 minutes
   });
 };

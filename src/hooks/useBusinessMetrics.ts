@@ -67,7 +67,7 @@ export function useBusinessMetrics() {
 
       // Fetch invoices for revenue calculation
       const { data: invoices, error: invoicesError } = await supabase
-        .from('invoices')
+        .from('employer_invoices')
         .select('amount, status, paid_date, created_at');
 
       if (invoicesError) throw invoicesError;
@@ -137,7 +137,7 @@ export function useBusinessMetrics() {
 
       // Fetch certifications for compliance
       const { data: certifications, error: certError } = await supabase
-        .from('certifications')
+        .from('employer_certifications')
         .select('status, expiry_date');
 
       if (certError) throw certError;
@@ -164,7 +164,7 @@ export function useBusinessMetrics() {
 
       // Fetch incidents for safety score (no incidents = 100, each incident reduces score)
       const { count: incidentCount, error: incError } = await supabase
-        .from('incidents')
+        .from('employer_incidents')
         .select('*', { count: 'exact', head: true })
         .gte('reported_at', subMonths(now, 3).toISOString());
 
@@ -205,7 +205,7 @@ export function useInvoiceSummaries() {
     queryKey: ['invoice-summaries'],
     queryFn: async (): Promise<InvoiceSummary[]> => {
       const { data, error } = await supabase
-        .from('invoices')
+        .from('employer_invoices')
         .select('id, invoice_number, client, project, amount, status, due_date, paid_date')
         .order('created_at', { ascending: false });
 
@@ -236,7 +236,7 @@ export function useMonthlyRevenue() {
       const sixMonthsAgo = subMonths(now, 6);
 
       const { data: invoices, error } = await supabase
-        .from('invoices')
+        .from('employer_invoices')
         .select('amount, paid_date')
         .eq('status', 'Paid')
         .gte('paid_date', sixMonthsAgo.toISOString().split('T')[0]);
@@ -336,7 +336,7 @@ export function useComplianceData() {
       thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
 
       const { data: certifications, error } = await supabase
-        .from('certifications')
+        .from('employer_certifications')
         .select('status, expiry_date');
 
       if (error) throw error;
@@ -436,7 +436,7 @@ export function usePaymentSummary() {
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
       const { data: invoices, error } = await supabase
-        .from('invoices')
+        .from('employer_invoices')
         .select('amount, status, paid_date, due_date');
 
       if (error) throw error;

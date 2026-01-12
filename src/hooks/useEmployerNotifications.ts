@@ -21,7 +21,7 @@ export const useUnreadCount = () => {
       if (!user) return 0;
 
       const { count, error } = await supabase
-        .from('notifications')
+        .from('employer_notifications')
         .select('*', { count: 'exact', head: true })
         .eq('user_id', user.id)
         .is('read_at', null);
@@ -46,7 +46,7 @@ export const useNotifications = () => {
       if (!user) return [];
 
       const { data, error } = await supabase
-        .from('notifications')
+        .from('employer_notifications')
         .select('*')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
@@ -70,7 +70,7 @@ export const useMarkAsRead = () => {
   return useMutation({
     mutationFn: async (notificationId: string) => {
       const { error } = await supabase
-        .from('notifications')
+        .from('employer_notifications')
         .update({ read_at: new Date().toISOString() })
         .eq('id', notificationId);
 
@@ -92,7 +92,7 @@ export const useMarkAllAsRead = () => {
       if (!user) throw new Error('Not authenticated');
 
       const { error } = await supabase
-        .from('notifications')
+        .from('employer_notifications')
         .update({ read_at: new Date().toISOString() })
         .eq('user_id', user.id)
         .is('read_at', null);
