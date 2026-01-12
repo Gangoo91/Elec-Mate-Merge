@@ -70,7 +70,7 @@ export function useInternalVacancies(filters?: VacancyFilters) {
             logo_url
           )
         `)
-        .eq('status', 'open')
+        .eq('status', 'Open')
         .order('created_at', { ascending: false });
 
       // Apply filters

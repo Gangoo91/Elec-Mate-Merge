@@ -234,7 +234,7 @@ export const incrementVacancyViews = async (id: string): Promise<void> => {
 // Vacancy Applications CRUD
 export const getApplicationsForVacancy = async (vacancyId: string): Promise<VacancyApplication[]> => {
   const { data, error } = await supabase
-    .from('vacancy_applications')
+    .from('employer_vacancy_applications')
     .select(`
       *,
       elec_id_profile:elec_id_profiles (
@@ -257,10 +257,10 @@ export const getApplicationsForVacancy = async (vacancyId: string): Promise<Vaca
 
 export const getAllApplications = async (): Promise<VacancyApplication[]> => {
   const { data, error } = await supabase
-    .from('vacancy_applications')
+    .from('employer_vacancy_applications')
     .select(`
       *,
-      vacancy:vacancies (
+      vacancy:employer_vacancies (
         id,
         title,
         location,
@@ -285,10 +285,10 @@ export const getAllApplications = async (): Promise<VacancyApplication[]> => {
 
 export const getApplicationById = async (id: string): Promise<VacancyApplication | null> => {
   const { data, error } = await supabase
-    .from('vacancy_applications')
+    .from('employer_vacancy_applications')
     .select(`
       *,
-      vacancy:vacancies (*),
+      vacancy:employer_vacancies (*),
       elec_id_profile:elec_id_profiles (*)
     `)
     .eq('id', id)
@@ -306,7 +306,7 @@ export const createApplication = async (
   application: Omit<VacancyApplication, 'id' | 'applied_at' | 'updated_at'>
 ): Promise<VacancyApplication> => {
   const { data, error } = await supabase
-    .from('vacancy_applications')
+    .from('employer_vacancy_applications')
     .insert(application)
     .select()
     .single();
@@ -356,7 +356,7 @@ export const updateApplicationStatus = async (
 ): Promise<VacancyApplication | null> => {
   // Get application details for notification
   const { data: existingApp } = await supabase
-    .from('vacancy_applications')
+    .from('employer_vacancy_applications')
     .select(`
       status,
       applicant_profile_id,
@@ -375,7 +375,7 @@ export const updateApplicationStatus = async (
   }
 
   const { data, error } = await supabase
-    .from('vacancy_applications')
+    .from('employer_vacancy_applications')
     .update(updates)
     .eq('id', id)
     .select()
@@ -465,7 +465,7 @@ async function notifyApplicantStatusChange(
 
 export const deleteApplication = async (id: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('vacancy_applications')
+    .from('employer_vacancy_applications')
     .delete()
     .eq('id', id);
 
@@ -485,8 +485,8 @@ export const getVacancyStats = async (): Promise<{
 }> => {
   const [vacanciesResult, applicationsResult, newAppsResult] = await Promise.all([
     supabase.from('employer_vacancies').select('id', { count: 'exact' }).eq('status', 'Open'),
-    supabase.from('vacancy_applications').select('id', { count: 'exact' }),
-    supabase.from('vacancy_applications').select('id', { count: 'exact' }).eq('status', 'New'),
+    supabase.from('employer_vacancy_applications').select('id', { count: 'exact' }),
+    supabase.from('employer_vacancy_applications').select('id', { count: 'exact' }).eq('status', 'New'),
   ]);
 
   return {
@@ -785,7 +785,7 @@ export const getEmployerVacancyStats = async (): Promise<{
   shortlistedCount: number;
 }> => {
   const [vacanciesResult, applicationsResult, newAppsResult, shortlistedResult] = await Promise.all([
-    supabase.from('employer_vacancies').select('id', { count: 'exact' }).eq('status', 'open'),
+    supabase.from('employer_vacancies').select('id', { count: 'exact' }).eq('status', 'Open'),
     supabase.from('employer_vacancy_applications').select('id', { count: 'exact' }),
     supabase.from('employer_vacancy_applications').select('id', { count: 'exact' }).eq('status', 'New'),
     supabase.from('employer_vacancy_applications').select('id', { count: 'exact' }).eq('status', 'Shortlisted'),
@@ -829,7 +829,7 @@ export interface VacancyTemplate {
  */
 export const getVacancyTemplates = async (): Promise<VacancyTemplate[]> => {
   const { data, error } = await supabase
-    .from('vacancy_templates')
+    .from('employer_vacancy_templates')
     .select('*')
     .order('is_system_template', { ascending: false })
     .order('name', { ascending: true });
@@ -874,7 +874,7 @@ export const saveVacancyAsTemplate = async (
   };
 
   const { data, error } = await supabase
-    .from('vacancy_templates')
+    .from('employer_vacancy_templates')
     .insert(template)
     .select()
     .single();
@@ -892,7 +892,7 @@ export const saveVacancyAsTemplate = async (
  */
 export const deleteVacancyTemplate = async (id: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('vacancy_templates')
+    .from('employer_vacancy_templates')
     .delete()
     .eq('id', id)
     .eq('is_system_template', false); // Can only delete user templates
