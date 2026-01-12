@@ -106,7 +106,7 @@ export function JobChecklist({ jobId }: JobChecklistProps) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-7 w-7 opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive"
+                className="h-7 w-7 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 text-muted-foreground hover:text-destructive"
                 onClick={() => handleDelete(item.id)}
               >
                 <Trash2 className="h-3.5 w-3.5" />

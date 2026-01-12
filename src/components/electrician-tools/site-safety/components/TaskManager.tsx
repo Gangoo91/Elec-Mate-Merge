@@ -301,7 +301,7 @@ const TaskManager: React.FC<TaskManagerProps> = ({ onTaskSelect, onLinkHazard })
                     </div>
                     
                     {/* Action Buttons */}
-                    <div className="flex gap-1 ml-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <div className="flex gap-1 ml-4 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200">
                       {onLinkHazard && (
                         <Button
                           onClick={() => onLinkHazard(task.id)}

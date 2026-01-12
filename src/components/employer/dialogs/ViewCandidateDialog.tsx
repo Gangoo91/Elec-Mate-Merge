@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+  ResponsiveDialogBody,
+  ResponsiveDialogFooter,
+} from "@/components/ui/responsive-dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -85,12 +92,13 @@ export function ViewCandidateDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="sr-only">Candidate Profile</DialogTitle>
-        </DialogHeader>
+    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
+      <ResponsiveDialogContent className="sm:max-w-lg">
+        <ResponsiveDialogHeader>
+          <ResponsiveDialogTitle className="sr-only">Candidate Profile</ResponsiveDialogTitle>
+        </ResponsiveDialogHeader>
 
+        <ResponsiveDialogBody className="space-y-4">
         {/* Header with Avatar */}
         <div className="flex items-start gap-4">
           <Avatar className="w-16 h-16 border-2 border-border">
@@ -290,34 +298,33 @@ export function ViewCandidateDialog({
           )}
         </div>
 
-        <Separator />
+        </ResponsiveDialogBody>
 
-        {/* Actions */}
-        <div className="flex flex-wrap gap-2">
+        <ResponsiveDialogFooter className="flex-col sm:flex-row gap-2">
           {application.status !== 'Interview Scheduled' && application.status !== 'Offer Made' && application.status !== 'Rejected' && (
-            <Button onClick={onScheduleInterview} variant="outline" className="flex-1 min-w-[140px]">
+            <Button onClick={onScheduleInterview} variant="outline" className="flex-1 h-11 touch-manipulation min-w-[140px]">
               <Calendar className="h-4 w-4 mr-2" />
               Schedule Interview
             </Button>
           )}
           {application.status === 'New' || application.status === 'Reviewing' ? (
-            <Button onClick={onShortlist} variant="outline" className="flex-1 min-w-[100px]">
+            <Button onClick={onShortlist} variant="outline" className="flex-1 h-11 touch-manipulation min-w-[100px]">
               <Star className="h-4 w-4 mr-2" />
               Shortlist
             </Button>
           ) : null}
           {application.status === 'Interview Scheduled' || application.status === 'Shortlisted' ? (
-            <Button onClick={onMakeOffer} className="flex-1 min-w-[100px]">
+            <Button onClick={onMakeOffer} className="flex-1 h-11 touch-manipulation min-w-[100px]">
               Make Offer
             </Button>
           ) : null}
           {application.status !== 'Rejected' && application.status !== 'Offer Made' && (
-            <Button onClick={onReject} variant="ghost" className="text-destructive hover:text-destructive hover:bg-destructive/10">
+            <Button onClick={onReject} variant="ghost" className="h-11 touch-manipulation text-destructive hover:text-destructive hover:bg-destructive/10">
               Reject
             </Button>
           )}
-        </div>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveDialogFooter>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }

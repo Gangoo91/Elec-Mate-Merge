@@ -1,7 +1,9 @@
-import { useState, useMemo, useEffect } from "react";
-import { Search, Filter, Briefcase, PoundSterling, Users, RefreshCw } from "lucide-react";
+import { useState, useMemo, useEffect, useCallback } from "react";
+import { Search, Filter, Briefcase, PoundSterling, Users, RefreshCw, Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { PullToRefresh } from "@/components/ui/pull-to-refresh";
+import { FloatingActionButton } from "@/components/ui/floating-action-button";
 import { JobCard, AssignedWorker } from "@/components/employer/JobCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -23,6 +25,11 @@ export function JobsSection() {
   const [showJobSheet, setShowJobSheet] = useState(false);
   const [showFilterSheet, setShowFilterSheet] = useState(false);
   const { data: jobs = [], isLoading, refetch, isRefetching } = useJobs();
+
+  // Pull-to-refresh handler
+  const handleRefresh = useCallback(async () => {
+    await refetch();
+  }, [refetch]);
 
   // Fetch all job assignments with employee details
   const { data: allAssignments = [] } = useQuery({
@@ -196,6 +203,7 @@ export function JobsSection() {
   }
 
   return (
+    <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefetching}>
     <div className="space-y-6 animate-fade-in">
       {/* Header */}
       <div className="flex flex-col gap-4">
@@ -370,6 +378,15 @@ export function JobsSection() {
         open={showJobSheet}
         onOpenChange={setShowJobSheet}
       />
+
+      {/* Mobile FAB for adding jobs */}
+      <FloatingActionButton
+        icon={<Plus className="h-6 w-6" />}
+        onClick={() => setShowAddDialog(true)}
+        label="Add Job"
+        className="sm:hidden"
+      />
     </div>
+    </PullToRefresh>
   );
 }

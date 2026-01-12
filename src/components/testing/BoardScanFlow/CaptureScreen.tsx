@@ -125,24 +125,7 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({
 
   return (
     <div className="flex flex-col h-full bg-black">
-      {/* Header */}
-      <header className="flex items-center justify-between p-4 bg-black/80 backdrop-blur">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => {
-            stopCamera();
-            onCancel();
-          }}
-          className="text-white hover:bg-white/10"
-        >
-          <X className="h-6 w-6" />
-        </Button>
-        <h2 className="text-white font-semibold">Scan Board</h2>
-        <div className="w-10" /> {/* Spacer */}
-      </header>
-
-      {/* Main content */}
+      {/* Main content - full height since parent has header */}
       <main className="flex-1 flex flex-col items-center justify-center p-4 relative">
         {isCapturing ? (
           /* Camera viewfinder */
@@ -208,7 +191,7 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({
                 size="lg"
                 onClick={startCamera}
                 className={cn(
-                  'w-full gap-3',
+                  'w-full gap-3 touch-manipulation active:scale-[0.98] transition-transform',
                   isMobile ? 'h-16 text-lg' : 'h-14'
                 )}
               >
@@ -227,7 +210,7 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({
                 size="lg"
                 onClick={() => fileInputRef.current?.click()}
                 className={cn(
-                  'w-full gap-3 border-white/30 text-white hover:bg-white/10',
+                  'w-full gap-3 border-white/30 text-white hover:bg-white/10 touch-manipulation',
                   isMobile ? 'h-14' : 'h-12'
                 )}
               >
@@ -277,38 +260,47 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({
         </Card>
       )}
 
-      {/* Camera controls */}
+      {/* Camera controls - iOS style */}
       {isCapturing && (
-        <div className="p-6 bg-black/80 backdrop-blur flex items-center justify-center gap-6">
+        <div className="p-6 bg-black/80 backdrop-blur flex items-center justify-center gap-8" style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}>
           <Button
             variant="outline"
             size="icon"
             onClick={stopCamera}
-            className="h-12 w-12 rounded-full border-white/30 text-white hover:bg-white/10"
+            className="h-14 w-14 rounded-full border-white/30 text-white hover:bg-white/10 touch-manipulation"
           >
-            <X className="h-5 w-5" />
+            <X className="h-6 w-6" />
           </Button>
-          <Button
-            size="icon"
+          {/* iOS-style shutter button */}
+          <button
             onClick={capturePhoto}
-            className="h-16 w-16 rounded-full bg-white hover:bg-white/90 active:scale-90 transition-transform"
+            className="h-20 w-20 rounded-full bg-white/20 border-4 border-white flex items-center justify-center active:scale-95 transition-transform touch-manipulation"
           >
-            <Camera className="h-7 w-7 text-black" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => fileInputRef.current?.click()}
-            className="h-12 w-12 rounded-full border-white/30 text-white hover:bg-white/10"
-          >
-            <Upload className="h-5 w-5" />
-          </Button>
+            <div className="h-16 w-16 rounded-full bg-white" />
+          </button>
+          {capturedImages.length > 0 ? (
+            <Button
+              onClick={handleSubmit}
+              className="h-14 px-6 rounded-full touch-manipulation"
+            >
+              Analyse ({capturedImages.length})
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => fileInputRef.current?.click()}
+              className="h-14 w-14 rounded-full border-white/30 text-white hover:bg-white/10 touch-manipulation"
+            >
+              <Upload className="h-5 w-5" />
+            </Button>
+          )}
         </div>
       )}
 
       {/* Submit button when images captured */}
       {capturedImages.length > 0 && !isCapturing && (
-        <div className="p-4 bg-black/80 backdrop-blur space-y-3">
+        <div className="p-4 bg-black/80 backdrop-blur space-y-3" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
           <Button
             size="lg"
             onClick={handleSubmit}

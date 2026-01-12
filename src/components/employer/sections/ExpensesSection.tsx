@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from "react";
-import { Search, Filter, Plus, Receipt } from "lucide-react";
+import { Search, Filter, Plus, Receipt, Download } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -17,11 +17,14 @@ import { CreateExpenseSheet } from "@/components/employer/expense/CreateExpenseS
 import { ExpenseDetailSheet } from "@/components/employer/expense/ExpenseDetailSheet";
 import {
   useExpenses,
+  exportExpensesToCSV,
   type ExpenseFilters,
   type ExpenseStatus,
 } from "@/hooks/useExpenses";
+import { useJobs } from "@/hooks/useJobs";
 import type { ExpenseClaim } from "@/services/financeService";
 import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 interface ExpensesSectionProps {
   /**
@@ -73,12 +76,20 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
     isLoading,
     stats,
     refetch,
-    approveMutation,
-    rejectMutation,
-    markPaidMutation,
-    createMutation,
-    deleteMutation,
+    approve: handleApprove,
+    reject: handleReject,
+    markPaid: handleMarkPaid,
+    create: handleCreate,
+    delete: handleDelete,
+    isApproving,
   } = useExpenses(mergedFilters);
+
+  // Get jobs for linking expenses
+  const { data: jobsData = [] } = useJobs();
+  const jobs = useMemo(() =>
+    jobsData.map(j => ({ id: j.id, title: j.title || j.client || 'Untitled Job' })),
+    [jobsData]
+  );
 
   // Get employees for filter and create sheets
   const employees = expenses.reduce<{ id: string; name: string }[]>((acc, expense) => {
@@ -146,34 +157,19 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
     }
   }, [sortField]);
 
-  const handleApprove = useCallback((id: string) => {
-    approveMutation.mutate(id);
-  }, [approveMutation]);
-
-  const handleReject = useCallback((id: string, reason?: string) => {
-    rejectMutation.mutate({ id, reason: reason || "Rejected" });
-  }, [rejectMutation]);
-
-  const handleMarkPaid = useCallback((id: string) => {
-    markPaidMutation.mutate(id);
-  }, [markPaidMutation]);
-
-  const handleDelete = useCallback((id: string) => {
-    deleteMutation.mutate(id);
-  }, [deleteMutation]);
-
   const handleView = useCallback((expense: ExpenseClaim) => {
     setSelectedExpense(expense);
     setShowDetailSheet(true);
   }, []);
 
-  const handleCreate = useCallback((data: any) => {
-    createMutation.mutate(data, {
-      onSuccess: () => {
-        setShowCreateSheet(false);
-      },
-    });
-  }, [createMutation]);
+  const handleCreateSubmit = useCallback((data: any) => {
+    handleCreate(data);
+    setShowCreateSheet(false);
+  }, [handleCreate]);
+
+  const handleRejectWithReason = useCallback((id: string, reason?: string) => {
+    handleReject({ id, reason: reason || "Rejected" });
+  }, [handleReject]);
 
   const handleBulkApprove = useCallback(() => {
     selectedIds.forEach((id) => {
@@ -189,11 +185,20 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
     selectedIds.forEach((id) => {
       const expense = expenses.find((e) => e.id === id);
       if (expense?.status === "Pending") {
-        handleReject(id, "Bulk rejected");
+        handleRejectWithReason(id, "Bulk rejected");
       }
     });
     setSelectedIds([]);
-  }, [selectedIds, expenses, handleReject]);
+  }, [selectedIds, expenses, handleRejectWithReason]);
+
+  const handleExport = useCallback(async () => {
+    try {
+      await exportExpensesToCSV(sortedExpenses);
+      toast.success("Expenses exported to CSV");
+    } catch (error) {
+      toast.error("Failed to export expenses");
+    }
+  }, [sortedExpenses]);
 
   // Count active filters
   const activeFilterCount = [
@@ -239,14 +244,27 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
         title={sectionTitle}
         description={sectionDescription}
         action={
-          <Button
-            size="sm"
-            className="gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-            onClick={() => setShowCreateSheet(true)}
-          >
-            <Plus className="h-4 w-4" />
-            <span className="hidden sm:inline">{addButtonLabel}</span>
-          </Button>
+          <div className="flex gap-2">
+            {!isEmployeeMode && sortedExpenses.length > 0 && (
+              <Button
+                size="sm"
+                variant="outline"
+                className="gap-2"
+                onClick={handleExport}
+              >
+                <Download className="h-4 w-4" />
+                <span className="hidden sm:inline">Export</span>
+              </Button>
+            )}
+            <Button
+              size="sm"
+              className="gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              onClick={() => setShowCreateSheet(true)}
+            >
+              <Plus className="h-4 w-4" />
+              <span className="hidden sm:inline">{addButtonLabel}</span>
+            </Button>
+          </div>
         }
       />
 
@@ -352,7 +370,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
                   key={expense.id}
                   expense={expense}
                   onApprove={isEmployeeMode ? undefined : handleApprove}
-                  onReject={isEmployeeMode ? undefined : handleReject}
+                  onReject={isEmployeeMode ? undefined : handleRejectWithReason}
                   onClick={() => handleView(expense)}
                   showSwipeActions={!isEmployeeMode && expense.status === 'Pending'}
                 />
@@ -365,7 +383,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
               selectedIds={selectedIds}
               onSelectionChange={setSelectedIds}
               onApprove={isEmployeeMode ? undefined : handleApprove}
-              onReject={isEmployeeMode ? undefined : (id) => handleReject(id)}
+              onReject={isEmployeeMode ? undefined : (id) => handleRejectWithReason(id)}
               onMarkPaid={isEmployeeMode ? undefined : handleMarkPaid}
               onView={handleView}
               sortField={sortField}
@@ -397,9 +415,10 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
       <CreateExpenseSheet
         open={showCreateSheet}
         onOpenChange={setShowCreateSheet}
-        onSubmit={handleCreate}
+        onSubmit={handleCreateSubmit}
         employees={employees}
-        isSubmitting={createMutation.isPending}
+        jobs={jobs}
+        isSubmitting={isApproving}
         employeeMode={isEmployeeMode}
         currentEmployeeId={employeeIdForFilter}
       />
@@ -410,7 +429,7 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
         open={showDetailSheet}
         onOpenChange={setShowDetailSheet}
         onApprove={isEmployeeMode ? undefined : handleApprove}
-        onReject={isEmployeeMode ? undefined : handleReject}
+        onReject={isEmployeeMode ? undefined : handleRejectWithReason}
         onMarkPaid={isEmployeeMode ? undefined : handleMarkPaid}
         onDelete={isEmployeeMode ? undefined : handleDelete}
       />

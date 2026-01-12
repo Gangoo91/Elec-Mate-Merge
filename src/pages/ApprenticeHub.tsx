@@ -6,9 +6,10 @@
  * Yellow/gold theme throughout.
  */
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import {
   GraduationCap,
   Clock,
@@ -467,17 +468,15 @@ const additionalResources: ToolCardProps[] = [
 ];
 
 const ApprenticeHub = () => {
-  const { refetch } = useApprenticeData();
+  const { refetch, isRefetching } = useApprenticeData();
 
-  const handleRefresh = async () => {
+  const handleRefresh = useCallback(async () => {
     await refetch?.();
-    // Small delay for visual feedback
-    await new Promise(resolve => setTimeout(resolve, 500));
-  };
+  }, [refetch]);
 
   return (
     <div className="min-h-screen bg-[hsl(240,5.9%,10%)] flex flex-col">
-      {/* Pull-to-refresh container */}
+      <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefetching}>
       <div className="flex-1 overflow-y-auto momentum-scroll-y">
         <div className="mx-auto max-w-6xl py-4 md:py-6 lg:py-8 pb-safe">
           <motion.div
@@ -545,6 +544,7 @@ const ApprenticeHub = () => {
           </motion.div>
         </div>
       </div>
+      </PullToRefresh>
     </div>
   );
 };

@@ -1,9 +1,10 @@
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import type { ExpenseClaim } from '@/services/financeService';
+import { v4 as uuidv4 } from 'uuid';
 
 // Category configuration
 export const EXPENSE_CATEGORIES = [
@@ -511,4 +512,184 @@ export function formatCompactCurrency(amount: number): string {
 // Get category config by ID
 export function getCategoryConfig(categoryId: string) {
   return EXPENSE_CATEGORIES.find((c) => c.id === categoryId) || EXPENSE_CATEGORIES[EXPENSE_CATEGORIES.length - 1];
+}
+
+// Fetch expenses by job ID
+export function useExpensesByJob(jobId: string | undefined) {
+  return useQuery({
+    queryKey: ['expense_claims', 'job', jobId],
+    queryFn: async (): Promise<ExpenseClaim[]> => {
+      if (!jobId) return [];
+
+      const { data, error } = await supabase
+        .from('expense_claims')
+        .select('*, employees(name, avatar_initials)')
+        .eq('job_id', jobId)
+        .order('submitted_date', { ascending: false });
+
+      if (error) throw error;
+      return data || [];
+    },
+    enabled: !!jobId,
+  });
+}
+
+// Fetch expenses by date range
+export function useExpensesByDateRange(startDate: Date | undefined, endDate: Date | undefined) {
+  return useQuery({
+    queryKey: ['expense_claims', 'dateRange', startDate?.toISOString(), endDate?.toISOString()],
+    queryFn: async (): Promise<ExpenseClaim[]> => {
+      let query = supabase
+        .from('expense_claims')
+        .select('*, employees(name, avatar_initials)')
+        .order('submitted_date', { ascending: false });
+
+      if (startDate) {
+        query = query.gte('submitted_date', startDate.toISOString().split('T')[0]);
+      }
+      if (endDate) {
+        query = query.lte('submitted_date', endDate.toISOString().split('T')[0]);
+      }
+
+      const { data, error } = await query;
+      if (error) throw error;
+      return data || [];
+    },
+    enabled: !!(startDate || endDate),
+  });
+}
+
+// Upload receipt image
+export function useUploadReceipt() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ expenseId, file }: { expenseId: string; file: File }): Promise<string> => {
+      // Generate unique filename
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${uuidv4()}.${fileExt}`;
+      const filePath = `receipts/${expenseId}/${fileName}`;
+
+      // Upload to Supabase storage
+      const { error: uploadError } = await supabase.storage
+        .from('expense-receipts')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false,
+        });
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('expense-receipts')
+        .getPublicUrl(filePath);
+
+      // Update expense with receipt URL
+      const { error: updateError } = await supabase
+        .from('expense_claims')
+        .update({ receipt_url: publicUrl })
+        .eq('id', expenseId);
+
+      if (updateError) throw updateError;
+
+      return publicUrl;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['expense_claims'] });
+      toast.success('Receipt uploaded successfully');
+    },
+    onError: (error: Error) => {
+      toast.error(`Failed to upload receipt: ${error.message}`);
+    },
+  });
+}
+
+// Export expenses to CSV
+export async function exportExpensesToCSV(expenses: ExpenseClaim[], filename?: string): Promise<void> {
+  const headers = [
+    'Date',
+    'Employee',
+    'Category',
+    'Description',
+    'Amount',
+    'Status',
+    'Approved By',
+    'Approved Date',
+    'Paid Date',
+    'Has Receipt',
+  ];
+
+  const rows = expenses.map((exp) => [
+    exp.submitted_date,
+    exp.employees?.name || 'Unknown',
+    exp.category || '',
+    exp.description || '',
+    exp.amount?.toString() || '0',
+    exp.status || '',
+    exp.approved_by || '',
+    exp.approved_date || '',
+    exp.paid_date || '',
+    exp.receipt_url ? 'Yes' : 'No',
+  ]);
+
+  const csvContent = [
+    headers.join(','),
+    ...rows.map((row) =>
+      row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(',')
+    ),
+  ].join('\n');
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.setAttribute('download', filename || `expenses-${new Date().toISOString().split('T')[0]}.csv`);
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+// Calculate expense totals by category
+export function useExpenseTotalsByCategory() {
+  const { allExpenses } = useExpenses();
+
+  return useMemo(() => {
+    const totals: Record<string, { total: number; count: number }> = {};
+
+    allExpenses.forEach((exp) => {
+      const category = exp.category || 'Other';
+      if (!totals[category]) {
+        totals[category] = { total: 0, count: 0 };
+      }
+      totals[category].total += Number(exp.amount) || 0;
+      totals[category].count += 1;
+    });
+
+    return totals;
+  }, [allExpenses]);
+}
+
+// Get expense stats by job
+export function useExpenseStatsByJob() {
+  const { allExpenses } = useExpenses();
+
+  return useMemo(() => {
+    const jobStats: Record<string, { total: number; count: number; pending: number; approved: number }> = {};
+
+    allExpenses.forEach((exp) => {
+      const jobId = exp.job_id || 'unassigned';
+      if (!jobStats[jobId]) {
+        jobStats[jobId] = { total: 0, count: 0, pending: 0, approved: 0 };
+      }
+      jobStats[jobId].total += Number(exp.amount) || 0;
+      jobStats[jobId].count += 1;
+      if (exp.status === 'Pending') jobStats[jobId].pending += 1;
+      if (exp.status === 'Approved' || exp.status === 'Paid') jobStats[jobId].approved += 1;
+    });
+
+    return jobStats;
+  }, [allExpenses]);
 }

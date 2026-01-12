@@ -17,7 +17,9 @@ import {
   ChevronUp,
   Plus,
   Filter,
-  Briefcase
+  Briefcase,
+  Edit,
+  PoundSterling
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -29,6 +31,9 @@ import {
   type JobFinancialWithJob,
   type VariationOrder
 } from "@/hooks/useJobFinancials";
+import { RecordActualCostSheet } from "./sheets/RecordActualCostSheet";
+import { EditJobBudgetSheet } from "./sheets/EditJobBudgetSheet";
+import { VariationOrderDetailSheet } from "./sheets/VariationOrderDetailSheet";
 import {
   Dialog,
   DialogContent,
@@ -47,6 +52,11 @@ export function JobFinancialsSection() {
   const [showAddVariation, setShowAddVariation] = useState<string | null>(null);
   const [variationDesc, setVariationDesc] = useState("");
   const [variationValue, setVariationValue] = useState("");
+
+  // New sheet states
+  const [showRecordCostSheet, setShowRecordCostSheet] = useState<{ jobId: string; jobTitle: string } | null>(null);
+  const [showEditBudgetSheet, setShowEditBudgetSheet] = useState<{ jobId: string; jobTitle: string } | null>(null);
+  const [showVariationSheet, setShowVariationSheet] = useState<{ vo: VariationOrder; jobTitle: string } | null>(null);
 
   const { data: financials = [], isLoading } = useJobFinancials();
   const stats = useJobFinancialStats();
@@ -355,7 +365,8 @@ export function JobFinancialsSection() {
                           {fin.variation_orders.map((vo) => (
                             <div
                               key={vo.id}
-                              className="flex items-center justify-between p-2 bg-elec-gray rounded-lg text-xs"
+                              className="flex items-center justify-between p-2 bg-elec-gray rounded-lg text-xs cursor-pointer hover:bg-muted/50 transition-colors"
+                              onClick={() => setShowVariationSheet({ vo, jobTitle: fin.job?.title || 'Untitled Job' })}
                             >
                               <div className="min-w-0">
                                 <p className="font-medium text-foreground truncate">{vo.description}</p>
@@ -382,7 +393,10 @@ export function JobFinancialsSection() {
                                     size="sm"
                                     variant="outline"
                                     className="h-6 text-xs"
-                                    onClick={() => handleApproveVariation(vo)}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleApproveVariation(vo);
+                                    }}
                                     disabled={updateVariationStatusMutation.isPending}
                                   >
                                     Approve
@@ -396,7 +410,25 @@ export function JobFinancialsSection() {
                     )}
 
                     {/* Actions */}
-                    <div className="flex flex-col sm:flex-row gap-2 pt-2">
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="touch-feedback"
+                        onClick={() => setShowRecordCostSheet({ jobId: fin.job_id, jobTitle: fin.job?.title || 'Untitled Job' })}
+                      >
+                        <PoundSterling className="h-4 w-4 mr-1" />
+                        Record Cost
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="touch-feedback"
+                        onClick={() => setShowEditBudgetSheet({ jobId: fin.job_id, jobTitle: fin.job?.title || 'Untitled Job' })}
+                      >
+                        <Edit className="h-4 w-4 mr-1" />
+                        Edit Budget
+                      </Button>
                       <Button
                         variant="outline"
                         size="sm"
@@ -462,6 +494,30 @@ export function JobFinancialsSection() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Record Actual Cost Sheet */}
+      <RecordActualCostSheet
+        open={!!showRecordCostSheet}
+        onOpenChange={() => setShowRecordCostSheet(null)}
+        jobId={showRecordCostSheet?.jobId || ""}
+        jobTitle={showRecordCostSheet?.jobTitle}
+      />
+
+      {/* Edit Budget Sheet */}
+      <EditJobBudgetSheet
+        open={!!showEditBudgetSheet}
+        onOpenChange={() => setShowEditBudgetSheet(null)}
+        jobId={showEditBudgetSheet?.jobId || ""}
+        jobTitle={showEditBudgetSheet?.jobTitle}
+      />
+
+      {/* Variation Order Detail Sheet */}
+      <VariationOrderDetailSheet
+        open={!!showVariationSheet}
+        onOpenChange={() => setShowVariationSheet(null)}
+        variationOrder={showVariationSheet?.vo || null}
+        jobTitle={showVariationSheet?.jobTitle}
+      />
     </div>
   );
 }

@@ -110,7 +110,7 @@ const QuotesPage = () => {
   return (
     <VoiceFormProvider>
       <div className="min-h-screen bg-background pt-safe pb-safe animate-fade-in">
-      <Helmet>
+        <Helmet>
         <title>All Quotes | Professional Quote Management for Electricians</title>
         <meta
           name="description"

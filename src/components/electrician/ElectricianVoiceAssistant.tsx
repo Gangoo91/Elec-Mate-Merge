@@ -89,6 +89,15 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
   const [agentId, setAgentId] = useState<string>('');
   const [isLoadingSettings, setIsLoadingSettings] = useState(true);
   const [currentTipIndex, setCurrentTipIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Mobile detection
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Drag state
   const [isDragging, setIsDragging] = useState(false);
@@ -220,7 +229,19 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
       const msg = message as unknown as Record<string, unknown>;
       if (msg.type === 'user_transcript') {
         const event = msg.user_transcription_event as { user_transcript?: string } | undefined;
-        setTranscript(event?.user_transcript || '');
+        const userText = event?.user_transcript || '';
+
+        // Check for voice "stop" command
+        const textLower = userText.toLowerCase().trim();
+        if (textLower === 'stop' || textLower === 'stop listening' || textLower === 'end' || textLower === 'close') {
+          console.log('[ElectricianVoice] Stop command detected');
+          conversation.endSession();
+          setIsMinimised(true);
+          toast({ title: 'Voice stopped', description: 'Say command to restart' });
+          return;
+        }
+
+        setTranscript(userText);
       }
       if (msg.type === 'agent_response') {
         const event = msg.agent_response_event as { agent_response?: string } | undefined;
@@ -742,14 +763,32 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
       )}
 
       <div className="z-50" style={fabStyle}>
-        {/* Expanded Panel - Mobile responsive */}
-        {!isMinimised && (
+        {/* Mobile Minimal Mode - just a status bar when connected */}
+        {!isMinimised && isMobile && isConnected && (
+          <div className="absolute bottom-[72px] left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-full bg-card/95 backdrop-blur border border-green-500/50 shadow-lg flex items-center gap-3 animate-in slide-in-from-bottom-2">
+            <div className="h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-sm font-medium text-foreground">
+              {conversation.isSpeaking ? 'Speaking...' : 'Listening...'}
+            </span>
+            <button
+              onClick={stopConversation}
+              className="text-xs font-medium text-red-400 hover:text-red-300 px-2 py-1 rounded-full hover:bg-red-500/10 transition-colors"
+            >
+              Stop
+            </button>
+          </div>
+        )}
+
+        {/* Full Panel - Desktop or mobile when not connected */}
+        {!isMinimised && (!isMobile || !isConnected) && (
           <div className={cn(
             "absolute rounded-2xl bg-card border border-border shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4",
             // Mobile: full width with safe margins, positioned above FAB
             "w-[calc(100vw-24px)] left-1/2 -translate-x-1/2 bottom-[72px]",
             // Desktop: fixed width positioned to the right
-            "sm:w-80 sm:left-auto sm:translate-x-0 sm:right-0 sm:bottom-16"
+            "sm:w-80 sm:left-auto sm:translate-x-0 sm:right-0 sm:bottom-16",
+            // Max height for scrollable content
+            "max-h-[60vh]"
           )}>
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 bg-elec-yellow/10 border-b border-border">

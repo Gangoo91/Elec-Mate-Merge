@@ -1,5 +1,6 @@
 /**
  * BoardScanFlow - Full-screen AI board scanning experience
+ * Native mobile app feel with smooth transitions
  *
  * Three-step flow:
  * 1. CaptureScreen - Camera/upload UI
@@ -10,7 +11,8 @@
 import React, { useState, useCallback } from 'react';
 import { useStreamingBoardAnalysis } from '@/hooks/useStreamingBoardAnalysis';
 import { useOrientation } from '@/hooks/useOrientation';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { X } from 'lucide-react';
 import { CaptureScreen } from './CaptureScreen';
 import { AnalyzingScreen } from './AnalyzingScreen';
 import { ResultsPreview } from './ResultsPreview';
@@ -117,10 +119,38 @@ export const BoardScanFlow: React.FC<BoardScanFlowProps> = ({
     });
   }, [capturedImages, onComplete]);
 
-  // Render current step inside Sheet
+  // Get step title for header
+  const getStepTitle = () => {
+    switch (step) {
+      case 'capture': return 'Scan Board';
+      case 'analyzing': return 'Analysing...';
+      case 'results': return 'Review Results';
+      default: return 'Board Scanner';
+    }
+  };
+
+  // Render full-screen native flow
   return (
-    <Sheet open={true} onOpenChange={(open) => !open && onCancel()}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-background flex flex-col">
+      {/* iOS-style navigation bar - only show for capture step */}
+      {step === 'capture' && (
+        <header className="h-14 flex items-center justify-between px-4 border-b border-border shrink-0" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onCancel}
+            className="gap-1.5 touch-manipulation"
+          >
+            <X className="h-4 w-4" />
+            Cancel
+          </Button>
+          <h1 className="font-semibold text-lg">{getStepTitle()}</h1>
+          <div className="w-20" /> {/* Balance the header */}
+        </header>
+      )}
+
+      {/* Main content area */}
+      <main className="flex-1 overflow-hidden">
         {step === 'capture' && (
           <CaptureScreen
             onCapture={handleCapture}
@@ -151,8 +181,8 @@ export const BoardScanFlow: React.FC<BoardScanFlowProps> = ({
             isMobile={isMobile}
           />
         )}
-      </SheetContent>
-    </Sheet>
+      </main>
+    </div>
   );
 };
 

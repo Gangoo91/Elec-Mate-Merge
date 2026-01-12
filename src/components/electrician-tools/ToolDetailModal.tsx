@@ -1,15 +1,16 @@
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+  ResponsiveDialogBody,
+  ResponsiveDialogFooter,
+} from "@/components/ui/responsive-dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ToolItem } from "@/hooks/useToolsData";
-import { ExternalLink, Plus, Check, Star, Package, Shield, Zap } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ExternalLink, Plus, Check, Package, Shield, Zap } from "lucide-react";
 
 interface ToolDetailModalProps {
   tool: ToolItem | null;
@@ -103,18 +104,18 @@ const ToolDetailModal = ({
   })();
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl max-h-[90vh] bg-elec-card border-elec-yellow/20 overflow-hidden pb-4">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-elec-light pr-8">
+    <ResponsiveDialog open={isOpen} onOpenChange={onClose}>
+      <ResponsiveDialogContent className="sm:max-w-3xl bg-elec-card border-elec-yellow/20">
+        <ResponsiveDialogHeader>
+          <ResponsiveDialogTitle className="text-xl sm:text-2xl font-bold text-elec-light pr-8">
             {tool.name}
-          </DialogTitle>
-          <DialogDescription className="text-text-muted">
+          </ResponsiveDialogTitle>
+          <ResponsiveDialogDescription className="text-text-muted">
             Full product details and specifications
-          </DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
 
-        <ScrollArea className="max-h-[calc(90vh-120px)] pr-4 overflow-hidden mb-4">
+        <ResponsiveDialogBody>
           <div className="space-y-6">
             {/* Image and basic info */}
             <div className="grid md:grid-cols-2 gap-6">
@@ -179,40 +180,6 @@ const ToolDetailModal = ({
                   </Badge>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex gap-2 pt-4">
-                  <Button 
-                    onClick={() => window.open(getProductUrl(), '_blank')}
-                    className="flex-1 bg-elec-yellow text-background hover:bg-elec-yellow/90"
-                  >
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    View on {tool.supplier}
-                  </Button>
-                  <Button 
-                    variant="outline"
-                    onClick={() => {
-                      if (isSelected && onRemoveFromCompare) {
-                        onRemoveFromCompare(tool.id.toString());
-                      } else if (onAddToCompare) {
-                        onAddToCompare(tool);
-                      }
-                    }}
-                    disabled={isCompareDisabled && !isSelected}
-                    className="px-4"
-                  >
-                    {isSelected ? (
-                      <>
-                        <Check className="h-4 w-4 mr-2" />
-                        Added
-                      </>
-                    ) : (
-                      <>
-                        <Plus className="h-4 w-4 mr-2" />
-                        Compare
-                      </>
-                    )}
-                  </Button>
-                </div>
               </div>
             </div>
 
@@ -264,9 +231,43 @@ const ToolDetailModal = ({
               </div>
             )}
           </div>
-        </ScrollArea>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveDialogBody>
+
+        <ResponsiveDialogFooter className="flex-col sm:flex-row gap-2">
+          <Button
+            onClick={() => window.open(getProductUrl(), '_blank')}
+            className="flex-1 h-11 touch-manipulation bg-elec-yellow text-background hover:bg-elec-yellow/90"
+          >
+            <ExternalLink className="w-4 h-4 mr-2" />
+            View on {tool.supplier}
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => {
+              if (isSelected && onRemoveFromCompare) {
+                onRemoveFromCompare(tool.id.toString());
+              } else if (onAddToCompare) {
+                onAddToCompare(tool);
+              }
+            }}
+            disabled={isCompareDisabled && !isSelected}
+            className="h-11 touch-manipulation px-4"
+          >
+            {isSelected ? (
+              <>
+                <Check className="h-4 w-4 mr-2" />
+                Added
+              </>
+            ) : (
+              <>
+                <Plus className="h-4 w-4 mr-2" />
+                Compare
+              </>
+            )}
+          </Button>
+        </ResponsiveDialogFooter>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 };
 

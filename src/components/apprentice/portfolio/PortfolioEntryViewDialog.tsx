@@ -1,14 +1,20 @@
-
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+  ResponsiveDialogBody,
+  ResponsiveDialogFooter,
+} from "@/components/ui/responsive-dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  Edit, 
-  Calendar, 
-  Clock, 
-  Star, 
-  FileText, 
+import {
+  Edit,
+  Calendar,
+  Clock,
+  Star,
+  FileText,
   Download,
   Tag
 } from "lucide-react";
@@ -41,13 +47,13 @@ const PortfolioEntryViewDialog = ({ entry, onClose, onEdit }: PortfolioEntryView
   };
 
   return (
-    <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <div className="flex items-start justify-between">
+    <ResponsiveDialog open={true} onOpenChange={onClose}>
+      <ResponsiveDialogContent className="sm:max-w-4xl">
+        <ResponsiveDialogHeader>
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
             <div>
-              <DialogTitle className="text-xl mb-2">{entry.title}</DialogTitle>
-              <div className="flex items-center gap-4 text-sm text-white">
+              <ResponsiveDialogTitle className="text-xl mb-2">{entry.title}</ResponsiveDialogTitle>
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center gap-1">
                   <Calendar className="h-4 w-4" />
                   {formatDate(entry.dateCreated)}
@@ -62,22 +68,18 @@ const PortfolioEntryViewDialog = ({ entry, onClose, onEdit }: PortfolioEntryView
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <Badge variant={getStatusColor(entry.status)}>
                 {entry.status}
               </Badge>
               <Badge variant="outline" style={{ backgroundColor: `${entry.category.color}20` }}>
                 {entry.category.name}
               </Badge>
-              <Button onClick={onEdit} size="sm" className="gap-1">
-                <Edit className="h-4 w-4" />
-                Edit
-              </Button>
             </div>
           </div>
-        </DialogHeader>
+        </ResponsiveDialogHeader>
 
-        <div className="space-y-6">
+        <ResponsiveDialogBody className="space-y-6">
           {/* Description */}
           <Card>
             <CardHeader>
@@ -222,9 +224,19 @@ const PortfolioEntryViewDialog = ({ entry, onClose, onEdit }: PortfolioEntryView
               </CardContent>
             </Card>
           )}
-        </div>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveDialogBody>
+
+        <ResponsiveDialogFooter>
+          <Button variant="outline" onClick={onClose} className="h-11 touch-manipulation">
+            Close
+          </Button>
+          <Button onClick={onEdit} className="h-11 touch-manipulation gap-2">
+            <Edit className="h-4 w-4" />
+            Edit Entry
+          </Button>
+        </ResponsiveDialogFooter>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 };
 

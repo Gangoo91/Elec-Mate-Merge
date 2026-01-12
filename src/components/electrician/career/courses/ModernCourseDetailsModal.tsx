@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+  ResponsiveDialogBody,
+  ResponsiveDialogFooter,
+} from "@/components/ui/responsive-dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -91,16 +98,16 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
     : ["Contact provider for available dates"];
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto p-0 gap-0 mx-2 sm:mx-4 w-[calc(100vw-1rem)] sm:w-full">
+    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
+      <ResponsiveDialogContent className="sm:max-w-4xl">
         {/* Hero Section */}
-        <DialogHeader className="p-4 sm:p-6 pb-3 sm:pb-4 space-y-3 sm:space-y-4">
+        <ResponsiveDialogHeader className="space-y-3 sm:space-y-4">
           <div className="flex flex-col gap-3 sm:gap-4">
             <div className="flex-1 space-y-2 sm:space-y-3">
               {/* Badges */}
               <div className="flex flex-wrap items-center gap-2">
-                <Badge 
-                  variant="outline" 
+                <Badge
+                  variant="outline"
                   className={`text-xs ${getCategoryColor(course.category)}`}
                 >
                   {course.category}
@@ -120,9 +127,9 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
               </div>
 
               {/* Course Title */}
-              <DialogTitle className="text-lg sm:text-xl lg:text-2xl font-semibold leading-tight text-foreground">
+              <ResponsiveDialogTitle className="text-lg sm:text-xl lg:text-2xl font-semibold leading-tight text-foreground">
                 {course.title}
-              </DialogTitle>
+              </ResponsiveDialogTitle>
 
               {/* Provider */}
               <div className="text-base sm:text-lg font-medium text-elec-yellow">
@@ -134,23 +141,10 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
                 {course.description}
               </p>
             </div>
-
-            {/* Action Buttons */}
-            <div className="flex gap-2 w-full">
-              <Button 
-                onClick={handleViewProvider}
-                disabled={!course.external_url}
-                className="flex-1 sm:flex-none"
-                size="sm"
-              >
-                <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
-                <span className="text-xs sm:text-sm">View Provider</span>
-              </Button>
-            </div>
           </div>
-        </DialogHeader>
+        </ResponsiveDialogHeader>
 
-        <div className="px-4 sm:px-6 pb-4 sm:pb-6 space-y-4 sm:space-y-6">
+        <ResponsiveDialogBody className="space-y-4 sm:space-y-6">
           {/* Key Information Cards */}
           <div className="grid grid-cols-2 gap-2 sm:gap-3">
             <Card className="bg-background/50 border-border/50">
@@ -331,9 +325,20 @@ const ModernCourseDetailsModal = ({ course, open, onOpenChange }: ModernCourseDe
               </Card>
             </CollapsibleContent>
           </Collapsible>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveDialogBody>
+
+        <ResponsiveDialogFooter>
+          <Button
+            onClick={handleViewProvider}
+            disabled={!course.external_url}
+            className="w-full sm:w-auto h-11 touch-manipulation"
+          >
+            <ExternalLink className="h-4 w-4 mr-2" />
+            View Provider
+          </Button>
+        </ResponsiveDialogFooter>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 };
 

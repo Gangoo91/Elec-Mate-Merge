@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { useConversation } from '@elevenlabs/react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -21,6 +21,41 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
   const [transcript, setTranscript] = useState('');
   const [agentMessage, setAgentMessage] = useState('');
   const connectionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Refs for stable tool handler access (avoid stale closures)
+  const onToolCallRef = useRef(onToolCall);
+  const formContextRef = useRef(formContext);
+  onToolCallRef.current = onToolCall;
+  formContextRef.current = formContext;
+
+  // Stable client tools handler
+  const handleToolCall = useCallback(async (toolName: string, params: Record<string, unknown>) => {
+    console.log('[InlineVoice] Tool call:', toolName, params);
+
+    // Try custom handler first
+    if (onToolCallRef.current) {
+      const result = await onToolCallRef.current(toolName, params);
+      if (result) return result;
+    }
+
+    // Handle form filling via VoiceFormContext
+    if (formContextRef.current?.activeForm) {
+      if (toolName === 'fill_field' && params.field_name && params.value) {
+        formContextRef.current.activeForm.onFillField(
+          params.field_name as string,
+          params.value as string
+        );
+        return `Set ${params.field_name} to ${params.value}`;
+      }
+
+      if (formContextRef.current.activeForm.actions?.includes(toolName)) {
+        formContextRef.current.activeForm.onAction?.(toolName, params);
+        return 'Action completed';
+      }
+    }
+
+    return 'Done';
+  }, []);
 
   const conversation = useConversation({
     onConnect: () => {
@@ -50,59 +85,36 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
       });
     },
     onMessage: (message) => {
-      if (message.type === 'transcript' && message.role === 'user') {
-        setTranscript(message.text || '');
-      } else if (message.type === 'agent_response') {
-        setAgentMessage(message.text || '');
+      const msg = message as unknown as Record<string, unknown>;
+      if (msg.type === 'user_transcript') {
+        const event = msg.user_transcription_event as { user_transcript?: string } | undefined;
+        setTranscript(event?.user_transcript || '');
+      }
+      if (msg.type === 'agent_response') {
+        const event = msg.agent_response_event as { agent_response?: string } | undefined;
+        setAgentMessage(event?.agent_response || '');
       }
     },
+    // CLIENT TOOLS MUST BE PASSED HERE - not assigned via useEffect!
+    clientTools: {
+      fill_field: async (params: { field_name: string; value: string }) =>
+        handleToolCall('fill_field', params),
+      add_circuit: async (params: Record<string, unknown>) =>
+        handleToolCall('add_circuit', params),
+      next_circuit: async () =>
+        handleToolCall('next_circuit', {}),
+      previous_circuit: async () =>
+        handleToolCall('previous_circuit', {}),
+      select_circuit: async (params: { circuit_number: number }) =>
+        handleToolCall('select_circuit', params),
+      remove_circuit: async (params: { circuit_number: number }) =>
+        handleToolCall('remove_circuit', params),
+      set_polarity_ok: async (params: { circuit_number?: number; value: boolean }) =>
+        handleToolCall('set_polarity_ok', params),
+      set_test_result: async (params: { field: string; value: string; circuit_number?: number }) =>
+        handleToolCall('set_test_result', params),
+    },
   });
-
-  // Handle tool calls from ElevenLabs
-  useEffect(() => {
-    if (!conversation.status) return;
-
-    const handleClientToolCall = async (toolName: string, params: Record<string, unknown>) => {
-      console.log('[InlineVoice] Tool call:', toolName, params);
-
-      // Try custom handler first
-      if (onToolCall) {
-        const result = await onToolCall(toolName, params);
-        if (result) return result;
-      }
-
-      // Handle form filling via VoiceFormContext
-      if (formContext?.activeForm) {
-        if (toolName === 'fill_field' && params.field_name && params.value) {
-          formContext.activeForm.onFillField(
-            params.field_name as string,
-            params.value as string
-          );
-          return `Set ${params.field_name} to ${params.value}`;
-        }
-
-        // Handle form actions
-        if (formContext.activeForm.actions?.includes(toolName)) {
-          const result = formContext.activeForm.onAction?.(toolName, params);
-          if (result) return 'Action completed';
-        }
-      }
-
-      return 'Done';
-    };
-
-    // Register client tools handler
-    (conversation as any).clientTools = {
-      fill_field: handleClientToolCall.bind(null, 'fill_field'),
-      add_circuit: handleClientToolCall.bind(null, 'add_circuit'),
-      next_circuit: handleClientToolCall.bind(null, 'next_circuit'),
-      previous_circuit: handleClientToolCall.bind(null, 'previous_circuit'),
-      select_circuit: handleClientToolCall.bind(null, 'select_circuit'),
-      remove_circuit: handleClientToolCall.bind(null, 'remove_circuit'),
-      set_polarity_ok: handleClientToolCall.bind(null, 'set_polarity_ok'),
-      set_test_result: handleClientToolCall.bind(null, 'set_test_result'),
-    };
-  }, [conversation, formContext, onToolCall]);
 
   const startVoice = useCallback(async () => {
     if (isConnecting || isActive) return;
@@ -139,10 +151,10 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
         connectionType: 'webrtc',
       });
 
-      // Send initial context
+      // Send initial context if form is active
       setTimeout(() => {
-        if (conversation.status === 'connected' && formContext?.activeForm) {
-          conversation.sendContextualUpdate(formContext.getFormContext());
+        if (conversation.status === 'connected' && formContextRef.current?.activeForm) {
+          conversation.sendContextualUpdate(formContextRef.current.getFormContext());
         }
       }, 500);
 
@@ -157,7 +169,7 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
         description: error instanceof Error ? error.message : 'Unknown error',
       });
     }
-  }, [agentId, conversation, formContext, isConnecting, isActive]);
+  }, [agentId, conversation, isConnecting, isActive]);
 
   const stopVoice = useCallback(async () => {
     await conversation.endSession();

@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Search, Filter, Users, Plus, X, CheckSquare, Square, MessageSquare, Briefcase } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { PullToRefresh } from "@/components/ui/pull-to-refresh";
+import { FloatingActionButton } from "@/components/ui/floating-action-button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -57,7 +59,12 @@ const getTeamRole = (role: string): TeamRole => {
 };
 
 export function EmployeesSection() {
-  const { data: employees = [], isLoading, error } = useEmployees();
+  const { data: employees = [], isLoading, error, refetch, isRefetching } = useEmployees();
+
+  // Pull-to-refresh handler
+  const handleRefresh = useCallback(async () => {
+    await refetch();
+  }, [refetch]);
   
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
@@ -74,6 +81,7 @@ export function EmployeesSection() {
   const [assignJobDialogOpen, setAssignJobDialogOpen] = useState(false);
   const [messageDialogOpen, setMessageDialogOpen] = useState(false);
   const [bulkAssignDialogOpen, setBulkAssignDialogOpen] = useState(false);
+  const [addEmployeeDialogOpen, setAddEmployeeDialogOpen] = useState(false);
 
   const activeEmployees = employees.filter(e => e.status !== 'Archived');
   
@@ -184,6 +192,7 @@ export function EmployeesSection() {
   }
 
   return (
+    <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefetching}>
     <div className="space-y-4 animate-fade-in">
       {/* Clean Header */}
       <div className="flex items-center justify-between">
@@ -193,12 +202,16 @@ export function EmployeesSection() {
             {activeEmployees.length} team · {availableNow.length} available · {onJob.length} on job
           </p>
         </div>
-        <AddEmployeeDialog trigger={
-          <Button size="sm" className="gap-1">
-            <Plus className="h-4 w-4" />
-            <span className="hidden sm:inline">Add</span>
-          </Button>
-        } />
+        <AddEmployeeDialog
+          open={addEmployeeDialogOpen}
+          onOpenChange={setAddEmployeeDialogOpen}
+          trigger={
+            <Button size="sm" className="gap-1">
+              <Plus className="h-4 w-4" />
+              <span className="hidden sm:inline">Add</span>
+            </Button>
+          }
+        />
       </div>
 
       {/* Multi-Select Bar */}
@@ -481,6 +494,15 @@ export function EmployeesSection() {
         onOpenChange={setBulkAssignDialogOpen}
         onComplete={() => setMultiSelectMode(false)}
       />
+
+      {/* Mobile FAB for adding employees */}
+      <FloatingActionButton
+        icon={<Plus className="h-6 w-6" />}
+        onClick={() => setAddEmployeeDialogOpen(true)}
+        label="Add Employee"
+        className="sm:hidden"
+      />
     </div>
+    </PullToRefresh>
   );
 }

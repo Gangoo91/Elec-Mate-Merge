@@ -204,7 +204,7 @@ export const PhotoComments = ({
             )}
 
             {/* Actions */}
-            <div className="flex items-center gap-2 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="flex items-center gap-2 mt-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
               <button
                 onClick={() => handleReply(comment.id)}
                 className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1"

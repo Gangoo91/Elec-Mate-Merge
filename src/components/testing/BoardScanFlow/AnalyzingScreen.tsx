@@ -1,16 +1,11 @@
 import React from 'react';
-import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
   Sparkles,
   CheckCircle,
-  Circle,
-  Loader2,
-  Zap,
-  X,
   AlertTriangle,
+  X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -45,16 +40,16 @@ interface AnalyzingScreenProps {
 
 // Analysis stages for visual progress
 const STAGES = [
-  { id: 'connecting', label: 'Connecting to AI' },
+  { id: 'connecting', label: 'Connecting' },
   { id: 'gemini', label: 'Reading labels' },
-  { id: 'claude', label: 'Analysing components' },
-  { id: 'openai', label: 'Verifying results' },
+  { id: 'claude', label: 'Analysing' },
+  { id: 'openai', label: 'Verifying' },
   { id: 'complete', label: 'Complete' },
 ];
 
 /**
- * Animated analysis screen showing AI processing progress
- * Real-time updates as circuits are detected
+ * Native-style analysis screen with circular progress
+ * Clean, focused design with real-time updates
  */
 export const AnalyzingScreen: React.FC<AnalyzingScreenProps> = ({
   images,
@@ -71,187 +66,131 @@ export const AnalyzingScreen: React.FC<AnalyzingScreenProps> = ({
     stage.toLowerCase().includes(s.id.toLowerCase())
   );
 
+  // Calculate circular progress
+  const radius = 88;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (circumference * progress / 100);
+
   return (
     <div className="flex flex-col h-full bg-background">
-      {/* Header */}
-      <header className="flex items-center justify-between p-4 border-b border-border">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-primary/10 rounded-lg">
-            <Sparkles className="h-5 w-5 text-primary animate-pulse" />
-          </div>
-          <div>
-            <h2 className="font-semibold">Analysing Board</h2>
-            <p className="text-sm text-muted-foreground">{stageMessage}</p>
-          </div>
-        </div>
+      {/* Header - minimal */}
+      <header className="flex items-center justify-between px-4 py-3 border-b border-border shrink-0">
+        <div className="w-10" />
+        <h2 className="font-semibold text-lg">Analysing</h2>
         <Button
           variant="ghost"
           size="icon"
           onClick={onCancel}
-          className="text-muted-foreground"
+          className="text-muted-foreground touch-manipulation"
         >
           <X className="h-5 w-5" />
         </Button>
       </header>
 
-      {/* Main content */}
-      <main className="flex-1 overflow-y-auto p-4 space-y-6">
-        {/* Image preview with overlay */}
-        <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-muted max-w-lg mx-auto">
-          <img
-            src={images[0]}
-            alt="Board being analysed"
-            className="w-full h-full object-cover"
-          />
-          {/* Scanning overlay effect */}
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent animate-pulse" />
-          <div
-            className="absolute left-0 right-0 h-1 bg-primary/80 shadow-lg shadow-primary/50"
-            style={{
-              top: `${progress}%`,
-              transition: 'top 0.5s ease-out',
-            }}
-          />
-          {/* Progress badge */}
-          <Badge className="absolute bottom-3 right-3 bg-black/60 text-white">
-            {Math.round(progress)}% analysed
-          </Badge>
+      {/* Main content - centered */}
+      <main className="flex-1 flex flex-col items-center justify-center p-6 overflow-y-auto">
+        {/* Large circular progress */}
+        <div className="relative w-48 h-48 mb-8">
+          <svg className="w-full h-full -rotate-90" viewBox="0 0 200 200">
+            {/* Background circle */}
+            <circle
+              cx="100"
+              cy="100"
+              r={radius}
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="8"
+              className="text-muted"
+            />
+            {/* Progress circle */}
+            <circle
+              cx="100"
+              cy="100"
+              r={radius}
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="8"
+              strokeLinecap="round"
+              strokeDasharray={circumference}
+              strokeDashoffset={strokeDashoffset}
+              className="text-primary transition-all duration-500 ease-out"
+            />
+          </svg>
+          {/* Center content */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <Sparkles className="h-10 w-10 text-primary animate-pulse mb-2" />
+            <span className="text-3xl font-bold">{Math.round(progress)}%</span>
+          </div>
         </div>
 
-        {/* Progress bar */}
-        <div className="max-w-lg mx-auto">
-          <Progress value={progress} className="h-2" />
+        {/* Stage message */}
+        <p className="text-lg font-medium text-center mb-2">{stageMessage}</p>
+
+        {/* Stage dots */}
+        <div className="flex items-center gap-2 mb-8">
+          {STAGES.map((s, index) => {
+            const isComplete = index < currentStageIndex || (index === currentStageIndex && stage.includes('complete'));
+            const isCurrent = index === currentStageIndex && !stage.includes('complete');
+
+            return (
+              <div
+                key={s.id}
+                className={cn(
+                  'h-2 w-2 rounded-full transition-all duration-300',
+                  isComplete && 'bg-green-500',
+                  isCurrent && 'bg-primary w-6',
+                  !isComplete && !isCurrent && 'bg-muted-foreground/30'
+                )}
+              />
+            );
+          })}
         </div>
 
-        {/* Stage indicators */}
-        <Card className="max-w-lg mx-auto">
-          <CardContent className="py-4">
-            <div className="space-y-3">
-              {STAGES.map((s, index) => {
-                const isComplete = index < currentStageIndex ||
-                  (index === currentStageIndex && stage.includes('complete'));
-                const isCurrent = index === currentStageIndex && !stage.includes('complete');
-                const isPending = index > currentStageIndex;
+        {/* Live results */}
+        {circuits.length > 0 && (
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 mb-4">
+            <CheckCircle className="h-5 w-5 text-green-500" />
+            <span className="font-medium text-green-700 dark:text-green-300">
+              {circuits.length} circuit{circuits.length !== 1 ? 's' : ''} found
+            </span>
+          </div>
+        )}
 
-                return (
-                  <div
-                    key={s.id}
-                    className={cn(
-                      'flex items-center gap-3 transition-opacity',
-                      isPending && 'opacity-40'
-                    )}
-                  >
-                    {isComplete ? (
-                      <CheckCircle className="h-5 w-5 text-green-500 shrink-0" />
-                    ) : isCurrent ? (
-                      <Loader2 className="h-5 w-5 text-primary shrink-0 animate-spin" />
-                    ) : (
-                      <Circle className="h-5 w-5 text-muted-foreground shrink-0" />
-                    )}
-                    <span className={cn(
-                      'text-sm',
-                      isComplete && 'text-green-600 dark:text-green-400',
-                      isCurrent && 'text-foreground font-medium',
-                      isPending && 'text-muted-foreground'
-                    )}>
-                      {s.label}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Live results preview */}
-        {(board || circuits.length > 0) && (
-          <Card className="max-w-lg mx-auto">
-            <CardContent className="py-4 space-y-4">
-              <h3 className="font-semibold flex items-center gap-2">
-                <Zap className="h-4 w-4 text-primary" />
-                Live Results
-              </h3>
-
-              {/* Board info */}
-              {board && (
-                <div className="p-3 rounded-lg bg-muted/50 space-y-1">
-                  <p className="text-sm font-medium">
-                    {board.brand} {board.model}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {board.main_switch_rating && (
-                      <Badge variant="outline">{board.main_switch_rating}A Main</Badge>
-                    )}
-                    {board.spd_status && board.spd_status !== 'unknown' && (
-                      <Badge variant="outline" className={cn(
-                        board.spd_status === 'present' && 'border-green-500 text-green-600'
-                      )}>
-                        SPD: {board.spd_status}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* Circuits preview */}
-              {circuits.length > 0 && (
-                <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground">
-                    {circuits.length} circuit{circuits.length !== 1 ? 's' : ''} detected
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {circuits.slice(0, 12).map((circuit) => (
-                      <Badge
-                        key={circuit.index}
-                        variant="secondary"
-                        className={cn(
-                          'text-xs',
-                          circuit.confidence === 'high' && 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300',
-                          circuit.confidence === 'medium' && 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300',
-                          circuit.confidence === 'low' && 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
-                        )}
-                      >
-                        C{circuit.index}
-                        {circuit.device.rating_amps && ` ${circuit.device.rating_amps}A`}
-                      </Badge>
-                    ))}
-                    {circuits.length > 12 && (
-                      <Badge variant="outline" className="text-xs">
-                        +{circuits.length - 12} more
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+        {/* Board info preview */}
+        {board && (
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <Badge variant="secondary" className="gap-1">
+              {board.brand}
+            </Badge>
+            {board.main_switch_rating && (
+              <Badge variant="outline">{board.main_switch_rating}A Main</Badge>
+            )}
+          </div>
         )}
 
         {/* Warnings */}
         {warnings.length > 0 && (
-          <Card className="max-w-lg mx-auto border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/20">
-            <CardContent className="py-3">
-              <div className="flex items-start gap-2">
-                <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
-                <div className="space-y-1">
-                  {warnings.map((warning, i) => (
-                    <p key={i} className="text-sm text-amber-700 dark:text-amber-300">
-                      {warning}
-                    </p>
-                  ))}
-                </div>
+          <div className="mt-6 mx-4 p-3 rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/20">
+            <div className="flex items-start gap-2">
+              <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                {warnings.map((warning, i) => (
+                  <p key={i} className="text-sm text-amber-700 dark:text-amber-300">
+                    {warning}
+                  </p>
+                ))}
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         )}
       </main>
 
       {/* Footer */}
-      <footer className="p-4 border-t border-border">
+      <footer className="p-4 border-t border-border shrink-0" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
         <Button
           variant="outline"
           onClick={onCancel}
-          className="w-full"
+          className="w-full h-12 touch-manipulation"
         >
           Cancel Analysis
         </Button>

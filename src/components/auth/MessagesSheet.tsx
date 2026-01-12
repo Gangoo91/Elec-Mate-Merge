@@ -360,6 +360,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
 
   // Messages for selected job conversation
   const { data: messages = [], isLoading: messagesLoading } = useMessages(selectedConversation?.id || '');
+  const sendMessage = useSendMessage();
 
   // Reset state when sheet closes
   const handleClose = (isOpen: boolean) => {
@@ -382,6 +383,40 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
     setSelectedTeamDM(null);
     setSelectedCollegeConversation(null);
     setPeerMessages([]);
+  };
+
+  // Handle sending job messages
+  const handleSendJobMessage = async (content: string) => {
+    if (!selectedConversation || !user) return;
+
+    // For electrician: check if they can reply
+    if (!isEmployerContext && 'electrician_can_reply' in selectedConversation && !selectedConversation.electrician_can_reply) {
+      toast({
+        title: "Cannot Reply Yet",
+        description: "Apply to a vacancy from this employer to unlock messaging.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSending(true);
+    try {
+      await sendMessage.mutateAsync({
+        conversation_id: selectedConversation.id,
+        sender_type: userType,
+        sender_id: user.id,
+        content,
+        message_type: 'text',
+      });
+    } catch (error) {
+      toast({
+        title: "Failed to Send",
+        description: "Your message couldn't be sent. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSending(false);
+    }
   };
 
   const isInChat = selectedConversation || selectedPeerConversation || selectedTeamChannel || selectedTeamDM || selectedCollegeConversation;
@@ -575,8 +610,9 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                   </ScrollArea>
                   <div className="p-4 border-t border-border shrink-0">
                     <MessageInput
-                      conversationId={selectedConversation.id}
-                      recipientId={isEmployerContext ? selectedConversation.electrician_id : selectedConversation.employer_id}
+                      onSend={handleSendJobMessage}
+                      isSending={isSending}
+                      disabled={!isEmployerContext && 'electrician_can_reply' in selectedConversation && !selectedConversation.electrician_can_reply}
                     />
                   </div>
                 </div>

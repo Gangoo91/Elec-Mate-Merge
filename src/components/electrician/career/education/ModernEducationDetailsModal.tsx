@@ -1,7 +1,14 @@
-import { ExternalLink, X, MapPin, Clock, Star, GraduationCap, Calendar, Users, BookOpen, TrendingUp, ArrowRight } from "lucide-react";
+import { ExternalLink, MapPin, Clock, Star, GraduationCap, Calendar, BookOpen, TrendingUp, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
+import {
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+  ResponsiveDialogBody,
+  ResponsiveDialogFooter,
+} from "@/components/ui/responsive-dialog";
 import { cn } from "@/lib/utils";
 import type { LiveEducationData } from "@/hooks/useLiveEducationData";
 
@@ -90,22 +97,13 @@ const ModernEducationDetailsModal = ({ programme, open, onOpenChange }: ModernEd
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-elec-card to-elec-card/80 border-elec-yellow/20 text-foreground">
-        <DialogHeader className="sr-only">
-          <h2>Programme Details</h2>
-        </DialogHeader>
+    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
+      <ResponsiveDialogContent className="sm:max-w-4xl bg-gradient-to-br from-elec-card to-elec-card/80 border-elec-yellow/20 text-foreground">
+        <ResponsiveDialogHeader>
+          <ResponsiveDialogTitle className="sr-only">Programme Details</ResponsiveDialogTitle>
+        </ResponsiveDialogHeader>
 
-        {/* Close Button */}
-        <Button
-          variant="ghost"
-          size="sm"
-          className="absolute right-4 top-4 text-foreground/80 hover:text-foreground hover:bg-white/10 z-10"
-          onClick={() => onOpenChange(false)}
-        >
-          <X className="h-4 w-4" />
-        </Button>
-
+        <ResponsiveDialogBody className="p-0">
         {/* Hero Section */}
         <div className="relative -m-6 mb-6">
           <div className="relative h-48 sm:h-64 overflow-hidden">
@@ -281,26 +279,27 @@ const ModernEducationDetailsModal = ({ programme, open, onOpenChange }: ModernEd
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3 mt-6 pt-6 border-t border-white/10">
-          <Button
-            onClick={handleApplyNow}
-            className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold"
-          >
-            <ExternalLink className="h-4 w-4 mr-2" />
-            Apply Now
-          </Button>
+        </ResponsiveDialogBody>
+
+        <ResponsiveDialogFooter className="flex-col sm:flex-row gap-3">
           <Button
             variant="outline"
             onClick={handleVisitProvider}
-            className="flex-1 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            className="flex-1 h-11 touch-manipulation border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
           >
             <ExternalLink className="h-4 w-4 mr-2" />
             Visit Provider Site
           </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+          <Button
+            onClick={handleApplyNow}
+            className="flex-1 h-11 touch-manipulation bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold"
+          >
+            <ExternalLink className="h-4 w-4 mr-2" />
+            Apply Now
+          </Button>
+        </ResponsiveDialogFooter>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 };
 

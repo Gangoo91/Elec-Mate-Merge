@@ -530,7 +530,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
           </SelectContent>
         </Select>
       </TableCell>
-      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[150px]">
+      <TableCell className="p-1 border-r border-border whitespace-nowrap bg-elec-gray min-w-[180px]">
         <Input
           value={result.notes || ''}
           onChange={(e) => onUpdate(result.id, 'notes', e.target.value)}
@@ -540,7 +540,7 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
       </TableCell>
 
       {/* Actions Column */}
-      <TableCell className="border-l border-border p-1 whitespace-nowrap bg-elec-gray min-w-[70px]">
+      <TableCell className="border-l border-border p-1 whitespace-nowrap bg-elec-gray min-w-[50px]">
         <Button
           variant="ghost"
           size="icon"

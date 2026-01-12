@@ -1,9 +1,15 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+  ResponsiveDialogFooter,
+  ResponsiveDialogBody,
+} from "@/components/ui/responsive-dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent } from "@/components/ui/card";
 import { StatusBadge } from "@/components/employer/StatusBadge";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -72,20 +78,18 @@ export function ViewEmployeeDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={isMobile ? "max-w-[95vw] max-h-[90vh] p-0 flex flex-col" : "sm:max-w-2xl max-h-[85vh] p-0 flex flex-col"}>
+    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
+      <ResponsiveDialogContent className="sm:max-w-2xl">
         <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-primary to-primary/50 rounded-t-lg" />
-        
+
         {/* Fixed Header */}
-        <div className="p-4 md:p-6 pb-3 flex-shrink-0 pr-12">
+        <ResponsiveDialogHeader className="pr-12">
           <div className="flex items-start gap-4">
             <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl bg-elec-yellow/10 flex items-center justify-center text-xl md:text-2xl font-bold text-elec-yellow flex-shrink-0 border border-elec-yellow/20">
               {employee.avatar}
             </div>
             <div className="flex-1 min-w-0">
-              <DialogHeader className="text-left space-y-0">
-                <DialogTitle className="text-lg font-bold truncate pr-2">{employee.name}</DialogTitle>
-              </DialogHeader>
+              <ResponsiveDialogTitle className="text-lg font-bold truncate pr-2">{employee.name}</ResponsiveDialogTitle>
               <p className="text-sm text-muted-foreground">{employee.role}</p>
               <div className="flex items-center gap-1.5 mt-2 flex-wrap">
                 <StatusBadge status={employee.status} />
@@ -105,29 +109,29 @@ export function ViewEmployeeDialog({
           </div>
 
           <div className="flex gap-2 mt-3 overflow-x-auto hide-scrollbar">
-            <Button size="sm" variant="outline" className="gap-1.5 flex-shrink-0 text-xs" onClick={handleCall}>
+            <Button size="sm" variant="outline" className="gap-1.5 flex-shrink-0 text-xs h-11 touch-manipulation" onClick={handleCall}>
               <Phone className="h-3.5 w-3.5 text-success" />Call
             </Button>
-            <Button size="sm" variant="outline" className="gap-1.5 flex-shrink-0 text-xs" onClick={onSendMessage}>
+            <Button size="sm" variant="outline" className="gap-1.5 flex-shrink-0 text-xs h-11 touch-manipulation" onClick={onSendMessage}>
               <MessageSquare className="h-3.5 w-3.5 text-info" />Message
             </Button>
-            <Button size="sm" variant="outline" className="gap-1.5 flex-shrink-0 text-xs" onClick={onAssignToJob}>
+            <Button size="sm" variant="outline" className="gap-1.5 flex-shrink-0 text-xs h-11 touch-manipulation" onClick={onAssignToJob}>
               <Briefcase className="h-3.5 w-3.5 text-warning" />Assign
             </Button>
           </div>
-        </div>
+        </ResponsiveDialogHeader>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1">
-          <div className="px-4 md:px-6 border-b border-border overflow-x-auto hide-scrollbar">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
+          <div className="px-4 md:px-6 border-b border-border overflow-x-auto hide-scrollbar shrink-0">
             <TabsList className="w-auto justify-start gap-1 bg-transparent h-auto p-0">
-              <TabsTrigger value="profile" className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3 py-2 text-xs">Profile</TabsTrigger>
-              <TabsTrigger value="jobs" className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3 py-2 text-xs">Jobs</TabsTrigger>
-              <TabsTrigger value="certs" className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3 py-2 text-xs">Certs</TabsTrigger>
-              <TabsTrigger value="notes" className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3 py-2 text-xs">Notes</TabsTrigger>
+              <TabsTrigger value="profile" className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3 py-2 text-xs h-11 touch-manipulation">Profile</TabsTrigger>
+              <TabsTrigger value="jobs" className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3 py-2 text-xs h-11 touch-manipulation">Jobs</TabsTrigger>
+              <TabsTrigger value="certs" className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3 py-2 text-xs h-11 touch-manipulation">Certs</TabsTrigger>
+              <TabsTrigger value="notes" className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3 py-2 text-xs h-11 touch-manipulation">Notes</TabsTrigger>
             </TabsList>
           </div>
 
-          <ScrollArea className={isMobile ? "h-[calc(90vh-300px)]" : "h-[380px]"}>
+          <div className="flex-1 overflow-y-auto">
             <div className="p-4 md:p-6">
               {/* Profile Tab */}
               <TabsContent value="profile" className="mt-0 space-y-4">
@@ -215,7 +219,7 @@ export function ViewEmployeeDialog({
                       <Card key={a.id} className="border-l-2 border-l-primary">
                         <CardContent className="p-3 flex items-start justify-between gap-2">
                           <div><p className="font-medium text-sm">{a.jobTitle}</p><p className="text-xs text-muted-foreground flex items-center gap-1"><MapPin className="h-3 w-3" />{a.jobLocation}</p></div>
-                          <Button size="icon" variant="ghost" className="h-6 w-6 text-muted-foreground hover:text-destructive" onClick={() => { removeEmployeeFromJob(a.id); toast({ title: "Removed from Job" }); }}><X className="h-3 w-3" /></Button>
+                          <Button size="icon" variant="ghost" className="h-9 w-9 sm:h-6 sm:w-6 text-muted-foreground hover:text-destructive" onClick={() => { removeEmployeeFromJob(a.id); toast({ title: "Removed from Job" }); }}><X className="h-3 w-3" /></Button>
                         </CardContent>
                       </Card>
                     ))}
@@ -247,7 +251,7 @@ export function ViewEmployeeDialog({
               <TabsContent value="notes" className="mt-0 space-y-4">
                 <div className="flex items-center justify-between">
                   <h4 className="text-sm font-semibold">Notes ({employee.notes.length})</h4>
-                  <Button size="sm" variant="outline" className="gap-1 text-xs" onClick={() => setAddNoteOpen(true)}><Plus className="h-3 w-3" />Add Note</Button>
+                  <Button size="sm" variant="outline" className="gap-1 text-xs h-11 touch-manipulation" onClick={() => setAddNoteOpen(true)}><Plus className="h-3 w-3" />Add Note</Button>
                 </div>
                 {employee.notes.length > 0 ? (
                   <div className="space-y-2">
@@ -267,16 +271,16 @@ export function ViewEmployeeDialog({
                 ) : <Card className="border-dashed"><CardContent className="p-6 text-center"><StickyNote className="h-8 w-8 text-muted-foreground mx-auto mb-2" /><p className="text-sm text-muted-foreground">No notes yet</p></CardContent></Card>}
               </TabsContent>
             </div>
-          </ScrollArea>
+          </div>
         </Tabs>
 
-        <div className="p-4 md:p-6 pt-0 flex gap-2">
-          <Button variant="outline" className="flex-1 gap-2" onClick={onEdit}><UserCog className="h-4 w-4" />Edit</Button>
-          <Button className="flex-1 gap-2" onClick={onSendMessage}><Send className="h-4 w-4" />Message</Button>
-        </div>
-      </DialogContent>
+        <ResponsiveDialogFooter className="flex gap-2">
+          <Button variant="outline" className="flex-1 gap-2 h-11 touch-manipulation" onClick={onEdit}><UserCog className="h-4 w-4" />Edit</Button>
+          <Button className="flex-1 gap-2 h-11 touch-manipulation" onClick={onSendMessage}><Send className="h-4 w-4" />Message</Button>
+        </ResponsiveDialogFooter>
+      </ResponsiveDialogContent>
 
       <AddNoteDialog employee={employee} open={addNoteOpen} onOpenChange={setAddNoteOpen} />
-    </Dialog>
+    </ResponsiveDialog>
   );
 }

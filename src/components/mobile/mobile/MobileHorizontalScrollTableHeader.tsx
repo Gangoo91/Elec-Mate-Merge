@@ -216,7 +216,7 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
         </TableHead>
 
         {/* Actions Column */}
-        <TableHead className="border-l border-border font-semibold text-xs p-1 text-center whitespace-nowrap bg-elec-gray text-foreground min-w-[70px]">
+        <TableHead className="border-l border-border font-semibold text-xs p-1 text-center whitespace-nowrap bg-elec-gray text-foreground min-w-[50px]">
           Delete
         </TableHead>
       </TableRow>
