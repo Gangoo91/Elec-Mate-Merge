@@ -192,11 +192,12 @@ const WiringInstructionPage = () => {
 
     try {
       const image = images[0];
-      const fileName = `wiring-${Date.now()}.jpg`;
-      const { error: uploadError } = await supabase.storage.from('visual-analysis').upload(fileName, image);
+      const { data: { user } } = await supabase.auth.getUser();
+      const fileName = `${user?.id}/visual-analysis/wiring-${Date.now()}.jpg`;
+      const { error: uploadError } = await supabase.storage.from('visual-uploads').upload(fileName, image);
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage.from('visual-analysis').getPublicUrl(fileName);
+      const { data: { publicUrl } } = supabase.storage.from('visual-uploads').getPublicUrl(fileName);
 
       const circuitLabel = currentCircuits.find(c => c.id === selectedCircuit)?.label || 'component';
       const contextLabel = installContexts.find(c => c.id === selectedContext)?.label || '';
@@ -204,9 +205,16 @@ const WiringInstructionPage = () => {
 
       const { data, error } = await supabase.functions.invoke('visual-analysis', {
         body: {
-          imageUrl: publicUrl,
-          analysisMode: 'wiring_instruction',
-          userContext: `Property type: ${selectedProperty}. Circuit type: ${circuitLabel}. Installation context: ${contextLabel}. Earthing system: ${earthingLabel}. Supply: ${supplyAmps || 'Not specified'}A. Notes: ${additionalNotes}`
+          primary_image: publicUrl,
+          analysis_settings: {
+            mode: 'wiring_instruction',
+            confidence_threshold: 0.5,
+            enable_bounding_boxes: false,
+            focus_areas: [`Property: ${selectedProperty}`, `Circuit: ${circuitLabel}`, `Context: ${contextLabel}`, `Earthing: ${earthingLabel}`, `Supply: ${supplyAmps || 'Not specified'}A`, additionalNotes].filter(Boolean),
+            remove_background: false,
+            bs7671_compliance: true,
+            fast_mode: false
+          }
         }
       });
 

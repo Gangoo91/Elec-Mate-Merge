@@ -27,7 +27,7 @@ export const useVacancies = () => {
       .channel('vacancies-changes')
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'vacancies' },
+        { event: '*', schema: 'public', table: 'employer_vacancies' },
         () => {
           queryClient.invalidateQueries({ queryKey: VACANCIES_KEY });
           queryClient.invalidateQueries({ queryKey: VACANCY_STATS_KEY });

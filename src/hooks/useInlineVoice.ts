@@ -96,33 +96,60 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
         setAgentMessage(event?.agent_response || '');
       }
     },
-    // CLIENT TOOLS MUST BE PASSED HERE - not assigned via useEffect!
+    // CLIENT TOOLS - 3 simple tools for EICR, EIC, Minor Works
     clientTools: {
-      fill_field: async (params: { field_name: string; value: string }) =>
-        handleToolCall('fill_field', params),
-      add_circuit: async (params: Record<string, unknown>) =>
-        handleToolCall('add_circuit', params),
-      next_circuit: async () =>
-        handleToolCall('next_circuit', {}),
-      previous_circuit: async () =>
-        handleToolCall('previous_circuit', {}),
-      select_circuit: async (params: { circuit_number: number }) =>
-        handleToolCall('select_circuit', params),
-      remove_circuit: async (params: { circuit_number: number }) =>
-        handleToolCall('remove_circuit', params),
-      set_polarity_ok: async (params: { circuit_number?: number; value: boolean }) =>
-        handleToolCall('set_polarity_ok', params),
-      set_test_result: async (params: { field: string; value: string; circuit_number?: number }) => {
-        // Resolve spoken field name to actual TestResult property
-        const resolvedField = resolveFieldName(params.field);
-        if (!resolvedField) {
-          console.warn('[InlineVoice] Unknown field:', params.field);
-          return `Unknown field: ${params.field}`;
+      fill_eicr: async (params: {
+        action: string;
+        circuit_type?: string;
+        circuit_number?: number;
+        field?: string;
+        value?: string;
+        description?: string;
+      }) => {
+        console.log('[InlineVoice] fill_eicr called:', params);
+        // Resolve field name if update_field action
+        if (params.action === 'update_field' && params.field) {
+          const resolvedField = resolveFieldName(params.field);
+          if (resolvedField) {
+            params = { ...params, field: resolvedField };
+          }
         }
-        return handleToolCall('set_test_result', {
-          ...params,
-          field: resolvedField,
-        });
+        return handleToolCall('fill_eicr', params);
+      },
+
+      fill_eic: async (params: {
+        action: string;
+        circuit_type?: string;
+        circuit_number?: number;
+        field?: string;
+        value?: string;
+        description?: string;
+      }) => {
+        console.log('[InlineVoice] fill_eic called:', params);
+        if (params.action === 'update_field' && params.field) {
+          const resolvedField = resolveFieldName(params.field);
+          if (resolvedField) {
+            params = { ...params, field: resolvedField };
+          }
+        }
+        return handleToolCall('fill_eic', params);
+      },
+
+      fill_minor_works: async (params: {
+        action: string;
+        circuit_type?: string;
+        field?: string;
+        value?: string;
+        description?: string;
+      }) => {
+        console.log('[InlineVoice] fill_minor_works called:', params);
+        if (params.action === 'update_field' && params.field) {
+          const resolvedField = resolveFieldName(params.field);
+          if (resolvedField) {
+            params = { ...params, field: resolvedField };
+          }
+        }
+        return handleToolCall('fill_minor_works', params);
       },
     },
   });

@@ -135,7 +135,7 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({
               autoPlay
               playsInline
               muted
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain bg-black"
             />
             {/* Overlay guide */}
             <div className="absolute inset-4 border-2 border-dashed border-white/50 rounded-xl pointer-events-none" />
@@ -151,7 +151,7 @@ export const CaptureScreen: React.FC<CaptureScreenProps> = ({
             <div className="grid grid-cols-2 gap-3">
               {capturedImages.map((img, index) => (
                 <div key={index} className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-800">
-                  <img src={img} alt={`Captured ${index + 1}`} className="w-full h-full object-cover" />
+                  <img src={img} alt={`Captured ${index + 1}`} className="w-full h-full object-contain bg-black" />
                   <button
                     onClick={() => removeImage(index)}
                     className="absolute top-2 right-2 p-1.5 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors"

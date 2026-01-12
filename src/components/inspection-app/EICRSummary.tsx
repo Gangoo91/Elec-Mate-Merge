@@ -10,11 +10,10 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { AlertTriangle, CheckCircle, XCircle, FileText, FileDown, Save, Beaker, Copy, ChevronDown, ChevronUp, Loader2, User } from 'lucide-react';
 import { exportCompleteEICRToPDF } from '@/utils/pdfExport';
+import { formatEICRJson } from '@/utils/eicrJsonFormatter';
 import { cn } from '@/lib/utils';
 
 import { useToast } from '@/hooks/use-toast';
-import { useCloudSync } from '@/hooks/useCloudSync';
-import { formatEICRJson } from '@/utils/eicrJsonFormatter';
 import { supabase } from '@/integrations/supabase/client';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { useEICRForm } from './eicr/EICRFormProvider';
@@ -71,20 +70,19 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
   };
 
   const handleGenerateCertificate = async () => {
-    console.log('[EICRSummary] Starting certificate generation:', {
+    console.log('[EICRSummary] Starting local PDF generation:', {
       clientName: formData.clientName,
       certificateNumber: formData.certificateNumber,
       inspectionDate: formData.inspectionDate
     });
 
     setIsGenerating(true);
-    setShowDialog(true);
+    setShowDialog(false); // No dialog needed for local generation
     setPdfUrl(null);
     setGenerationError(null);
-    
+
     try {
       // Step 0: Validate required fields
-      
       const missingFields = [];
       if (!formData.clientName || formData.clientName.trim() === '') {
         missingFields.push('Client Name');
@@ -95,10 +93,9 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
       if (!formData.inspectorName || formData.inspectorName.trim() === '') {
         missingFields.push('Inspector Name');
       }
-      
+
       if (missingFields.length > 0) {
         setIsGenerating(false);
-        setShowDialog(false);
         toast({
           title: "Cannot generate PDF",
           description: `Please complete the following required fields: ${missingFields.join(', ')}`,
@@ -107,20 +104,19 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
         });
         return;
       }
-      
+
       // Step 1: Ensure report is saved to database first
-      
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         throw new Error('User not authenticated');
       }
-      
+
       const { reportCloud } = await import('@/utils/reportCloud');
-      
+
       // Check if report exists and save/update it
       let savedReportId = effectiveReportId;
       const existingReport = await reportCloud.getReportByReportId(effectiveReportId, user.id);
-      
+
       if (!existingReport) {
         const createResult = await reportCloud.createReport(user.id, 'eicr', formData);
         if (!createResult.success || !createResult.reportId) {
@@ -130,129 +126,38 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
       } else {
         await reportCloud.updateReport(savedReportId, user.id, formData);
       }
-      
-      // Step 2: Format the EICR data for PDF Monkey
-      console.log('[EICRSummary] Preparing to format EICR JSON with fields:', {
-        clientName: formData.clientName || 'MISSING',
-        installationAddress: formData.installationAddress || 'MISSING',
-        inspectorName: formData.inspectorName || 'MISSING',
-        certificateNumber: formData.certificateNumber || 'MISSING'
-      });
 
-      const formattedJson = await formatEICRJson(formData, savedReportId);
-      console.log('[EICRSummary] Formatted JSON result:', {
-        clientName: formattedJson.client_details?.client_name,
-        installationAddress: formattedJson.installation_details?.address,
-        inspectorName: formattedJson.inspector?.name
-      });
+      // Step 2: Generate PDF locally using jsPDF (no PDFMonkey dependency)
+      console.log('[EICRSummary] Generating PDF locally with jsPDF...');
 
-      // Step 3: Call the edge function
-      console.log('[EICRSummary] Calling generate-eicr-pdf edge function...');
+      await exportCompleteEICRToPDF(
+        formData,
+        formData.inspectionItems || [],
+        formData.defectObservations || []
+      );
 
-      const { data, error } = await supabase.functions.invoke('generate-eicr-pdf', {
-        body: { formData: formattedJson }
-      });
-
-      console.log('[EICRSummary] Edge function response:', { data, error });
-
-      if (error) {
-        // Check for common errors
-        const errorMessage = error.message || '';
-        if (errorMessage.includes('not found') || errorMessage.includes('Function not found') || error.status === 404) {
-          throw new Error('FUNCTION_NOT_FOUND');
-        }
-        throw new Error(error.message || 'Failed to generate PDF via cloud service');
-      }
-
-      // Try multiple response formats
-      const pdfUrlFromResponse = data?.pdfUrl || data?.pdf_url || data?.url || data?.data?.pdfUrl;
-      
-      
-      if (!pdfUrlFromResponse) {
-        throw new Error('Edge function succeeded but returned no PDF URL');
-      }
-
-      setPdfUrl(pdfUrlFromResponse);
-      
-      // Step 5: Save PDF URL to database using the SAVED report_id
-      const { error: updateError, data: updateData } = await supabase
-        .from('reports')
-        .update({ 
-          pdf_url: pdfUrlFromResponse,
-          pdf_generated_at: new Date().toISOString()
-        })
-        .eq('report_id', savedReportId)
-        .select('id, report_id, pdf_url');
-        
-      if (updateError) {
-        
-        // Still show the PDF to user, but warn them
-        toast({
-          title: "Warning",
-          description: "PDF generated but not saved to your account. Please save manually.",
-          variant: "destructive"
-        });
-      }
-        
-      // Mark certificate as completed
+      // Step 3: Mark certificate as completed
       onUpdate('certificateGenerated', true);
       onUpdate('certificateGeneratedAt', new Date().toISOString());
       onUpdate('status', 'completed');
-      
+
       // Invalidate dashboard queries to refresh
       queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
       queryClient.invalidateQueries({ queryKey: ['my-reports'] });
       queryClient.invalidateQueries({ queryKey: ['customer-reports'] });
-      
+
       toast({
-        title: "Certificate generated",
-        description: "Your EICR certificate is ready for download.",
+        title: "Certificate generated successfully",
+        description: "Your EICR certificate has been generated and downloaded.",
       });
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      console.log('[EICRSummary] Cloud generation error:', errorMessage);
-      setGenerationError(errorMessage);
-
-      // Fallback to local PDF generation
-      try {
-        setShowDialog(false);
-
-        // Show appropriate toast based on error type
-        if (errorMessage === 'FUNCTION_NOT_FOUND') {
-          toast({
-            title: "Using local PDF generator",
-            description: "Cloud service unavailable. Generating certificate locally...",
-          });
-        }
-
-        await exportCompleteEICRToPDF(
-          formData,
-          formData.inspectionItems || [],
-          formData.defectObservations || []
-        );
-
-        // Mark certificate as completed
-        onUpdate('certificateGenerated', true);
-        onUpdate('certificateGeneratedAt', new Date().toISOString());
-        onUpdate('status', 'completed');
-
-        // Invalidate dashboard queries
-        queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
-        queryClient.invalidateQueries({ queryKey: ['my-reports'] });
-        queryClient.invalidateQueries({ queryKey: ['customer-reports'] });
-
-        toast({
-          title: "Certificate generated successfully",
-          description: "Your EICR certificate has been generated and downloaded.",
-        });
-      } catch (localError) {
-        console.error('[EICRSummary] Local PDF generation failed:', localError);
-        toast({
-          title: "Generation failed",
-          description: localError instanceof Error ? localError.message : "Failed to generate certificate. Please check your form data.",
-          variant: "destructive",
-        });
-      }
+      console.error('[EICRSummary] PDF generation failed:', error);
+      setGenerationError(error instanceof Error ? error.message : 'Unknown error');
+      toast({
+        title: "Generation failed",
+        description: error instanceof Error ? error.message : "Failed to generate certificate. Please check your form data.",
+        variant: "destructive",
+      });
     } finally {
       setIsGenerating(false);
     }

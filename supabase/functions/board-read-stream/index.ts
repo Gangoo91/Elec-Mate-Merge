@@ -217,12 +217,78 @@ Return ONLY valid JSON in this exact structure:
 
 ## IMPORTANT RULES
 
-1. MCB vs RCBO: The most common error! MCBs have NO test button. RCBOs have a small test button.
+1. MCB vs RCBO: The most common error! MCBs have NO test button. RCBOs have a small test button (usually red, white, or blue).
 2. Don't guess ratings - if unreadable, use null
 3. Expand ALL abbreviations in label_text
 4. Include spare/blank positions with label_text: "Spare" and device: null
 5. For 3P boards, determine phase assignment for EVERY circuit
-6. Be thorough - don't miss any circuits`;
+6. Be thorough - don't miss any circuits
+
+## UK BOARD SPECIFICS
+
+### Common UK Consumer Unit Brands (recognise by logo/style):
+- Hager: Blue/white modern units, "Hager" text
+- MK Sentry: Grey/black, "MK" logo
+- Schneider: Green/white, "Schneider Electric" text
+- Wylex: Blue, older style, "Wylex" text
+- Crabtree: Green/grey, "Crabtree" text
+- BG: Orange/grey, "BG" logo
+- Contactum: Grey, "Contactum" text
+- Consumer Unit Direct (CUD): Budget brand
+- Fusebox: "Fusebox" branding
+
+### MCB vs RCBO - KEY VISUAL DIFFERENCES:
+- **MCB**: Simple switch toggle, NO test button, narrow front face, rating printed (e.g., "B32")
+- **RCBO**: Switch toggle + small TEST button (round, often red/white), "30mA" marking, rating + curve (e.g., "B32 30mA")
+- **RCD**: WIDE device (2 modules), LARGE test button, "30mA" or "100mA" prominent
+
+### Standard UK Circuit Ratings:
+- Lighting: 6A (MCB B6)
+- Smoke/Fire alarm: 6A (MCB B6)
+- Immersion heater: 16A (MCB B16)
+- Radial sockets: 20A (RCBO B20)
+- Ring final: 32A (RCBO B32)
+- Cooker: 32A or 40A (MCB B32/C32)
+- Shower: 40A or 45A or 50A (RCBO B40/B45/B50)
+- EV charger: 32A (RCBO B32)
+
+### Type B vs Type C:
+- Type B: Most domestic circuits (3-5x trip)
+- Type C: Motors, inductive loads, garage doors (5-10x trip)
+- Type D: Transformers, welders (10-20x trip)`;
+
+// ============================================================================
+// VALIDATION PROMPT - Second pass for uncertain circuits
+// ============================================================================
+
+const VALIDATION_PROMPT = `You are a UK electrical expert. Review these circuit detections and correct any errors.
+
+Focus on:
+1. MCB vs RCBO: Does it have a test button? MCB=NO, RCBO=YES
+2. Rating: Is the amp rating clearly visible and correctly read?
+3. Curve type: Is B/C/D correctly identified?
+4. Label: Is the circuit description accurate?
+
+For each circuit, either:
+- CONFIRM: If detection is correct
+- CORRECT: Provide fixed values with evidence
+
+Return JSON:
+{
+  "validations": [
+    {
+      "index": number,
+      "status": "confirmed" | "corrected",
+      "corrections": {
+        "device_category": "MCB | RCBO | RCD",
+        "rating_amps": number,
+        "curve": "B | C | D",
+        "label_text": "string"
+      },
+      "evidence": "reason for correction"
+    }
+  ]
+}`;
 
 // ============================================================================
 // UTILITIES
@@ -421,6 +487,86 @@ async function analyzeWithGemini(
     // Small delay between batches for smooth UI animation
     if (i + batchSize < circuits.length) {
       await new Promise(resolve => setTimeout(resolve, 100));
+    }
+  }
+
+  // Validation pass for uncertain circuits
+  const uncertainCircuits = circuits.filter((c: any) => c.confidence !== 'high');
+
+  if (uncertainCircuits.length > 0 && parts.length >= 2) {
+    sendEvent({ type: 'stage', stage: 'validating', message: `Verifying ${uncertainCircuits.length} uncertain circuits...` });
+
+    try {
+      const validationParts = [
+        { text: VALIDATION_PROMPT + '\n\nCircuits to validate:\n' + JSON.stringify(uncertainCircuits, null, 2) },
+        ...parts.slice(1) // Include images for reference
+      ];
+
+      const validationResponse = await fetchWithTimeout(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ role: 'user', parts: validationParts }],
+            generationConfig: {
+              maxOutputTokens: 4000,
+              temperature: 0.1, // Lower temp for more consistent corrections
+              responseMimeType: 'application/json'
+            }
+          }),
+        },
+        30000 // 30 second timeout for validation
+      );
+
+      if (validationResponse.ok) {
+        const validationData = await validationResponse.json();
+        const validationText = validationData.candidates?.[0]?.content?.parts?.find((p: any) => p.text)?.text;
+
+        if (validationText) {
+          const validations = parseAIResponse(validationText, 'Validation');
+          let correctedCount = 0;
+
+          // Apply corrections
+          for (const v of (validations.validations || [])) {
+            if (v.status === 'corrected' && v.corrections) {
+              const circuitIndex = circuits.findIndex((c: any) => c.index === v.index);
+              if (circuitIndex >= 0) {
+                const circuit = circuits[circuitIndex];
+
+                // Apply corrections
+                if (v.corrections.device_category) {
+                  circuit.device.category = v.corrections.device_category;
+                }
+                if (v.corrections.rating_amps) {
+                  circuit.device.rating_amps = v.corrections.rating_amps;
+                }
+                if (v.corrections.curve) {
+                  circuit.device.curve = v.corrections.curve;
+                  circuit.device.type = `${v.corrections.curve}${circuit.device.rating_amps || ''}`;
+                }
+                if (v.corrections.label_text) {
+                  circuit.label_text = v.corrections.label_text;
+                }
+
+                circuit.confidence = 'high'; // Upgrade confidence after validation
+                circuit.evidence = (circuit.evidence || '') + ' [Validated: ' + v.evidence + ']';
+                correctedCount++;
+
+                // Stream the correction
+                sendEvent({ type: 'circuit_update', index: v.index, updates: circuit });
+              }
+            }
+          }
+
+          if (correctedCount > 0) {
+            sendEvent({ type: 'decision', message: `Validation corrected ${correctedCount} circuits` });
+          }
+        }
+      }
+    } catch (validationError) {
+      console.error('Validation pass failed:', validationError);
+      sendEvent({ type: 'warning', message: 'Could not complete validation pass' });
     }
   }
 

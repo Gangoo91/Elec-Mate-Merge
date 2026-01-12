@@ -127,23 +127,31 @@ const ComponentIdentifyPage = () => {
     try {
       // Upload image
       const image = images[0];
-      const fileName = `component-${Date.now()}.jpg`;
+      const { data: { user } } = await supabase.auth.getUser();
+      const fileName = `${user?.id}/visual-analysis/component-${Date.now()}.jpg`;
       const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('visual-analysis')
+        .from('visual-uploads')
         .upload(fileName, image);
 
       if (uploadError) throw uploadError;
 
       const { data: { publicUrl } } = supabase.storage
-        .from('visual-analysis')
+        .from('visual-uploads')
         .getPublicUrl(fileName);
 
       // Call analysis function
       const { data, error } = await supabase.functions.invoke('visual-analysis', {
         body: {
-          imageUrl: publicUrl,
-          analysisMode: 'component_identify',
-          userContext: `Category hint: ${selectedCategory || 'unknown'}. User wants: ${selectedInfo.join(', ')}`
+          primary_image: publicUrl,
+          analysis_settings: {
+            mode: 'component_identify',
+            confidence_threshold: 0.5,
+            enable_bounding_boxes: false,
+            focus_areas: [`Category: ${selectedCategory || 'unknown'}`, `Info needed: ${selectedInfo.join(', ')}`],
+            remove_background: false,
+            bs7671_compliance: true,
+            fast_mode: false
+          }
         }
       });
 

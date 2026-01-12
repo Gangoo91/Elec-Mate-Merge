@@ -31,49 +31,49 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
     <TableHeader className="sticky top-14 z-40 bg-elec-gray shadow-sm border-b h-12">
       <TableRow className="hover:bg-transparent border-b border-border">
         {/* Circuit Details Group */}
-        <TableHead className="sticky left-0 z-20 border-r-[3px] border-primary/40 font-bold text-xs p-0.5 text-center whitespace-nowrap bg-elec-gray-light text-foreground w-[66px] min-w-[66px] max-w-[66px]">
+        <TableHead className="sticky left-0 z-20 border-r-[3px] border-primary/40 font-bold text-xs p-0.5 text-center whitespace-nowrap bg-elec-gray-light text-foreground w-[72px] min-w-[72px] max-w-[72px]">
           C
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[120px] min-w-[120px] max-w-[120px]")}>
+        <TableHead className={cn(headerCell, "w-[132px] min-w-[132px] max-w-[132px]")}>
           Desc
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[88px] min-w-[88px] max-w-[88px]")}>
+        <TableHead className={cn(headerCell, "w-[96px] min-w-[96px] max-w-[96px]")}>
           Type
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[60px] min-w-[60px] max-w-[60px]")}>
+        <TableHead className={cn(headerCell, "w-[66px] min-w-[66px] max-w-[66px]")}>
           M
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[66px] min-w-[66px] max-w-[66px]")}>
+        <TableHead className={cn(headerCell, "w-[72px] min-w-[72px] max-w-[72px]")}>
           Pts
         </TableHead>
 
         {/* Conductor Details Group */}
-        <TableHead className={cn(headerCell, "w-[88px] min-w-[88px] max-w-[88px]")}>
+        <TableHead className={cn(headerCell, "w-[96px] min-w-[96px] max-w-[96px]")}>
           Live
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[88px] min-w-[88px] max-w-[88px]")}>
+        <TableHead className={cn(headerCell, "w-[96px] min-w-[96px] max-w-[96px]")}>
           CPC
         </TableHead>
 
         {/* Protection Group */}
-        <TableHead className={cn(headerCell, "w-[88px] min-w-[88px] max-w-[88px]")}>
+        <TableHead className={cn(headerCell, "w-[96px] min-w-[96px] max-w-[96px]")}>
           BS
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[60px] min-w-[60px] max-w-[60px]")}>
+        <TableHead className={cn(headerCell, "w-[66px] min-w-[66px] max-w-[66px]")}>
           Ty
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[72px] min-w-[72px] max-w-[72px]")}>
+        <TableHead className={cn(headerCell, "w-[80px] min-w-[80px] max-w-[80px]")}>
           A
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[66px] min-w-[66px] max-w-[66px]")}>
+        <TableHead className={cn(headerCell, "w-[72px] min-w-[72px] max-w-[72px]")}>
           kA
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[88px] min-w-[88px] max-w-[88px]")}>
+        <TableHead className={cn(headerCell, "w-[96px] min-w-[96px] max-w-[96px]")}>
           Zs
         </TableHead>
 
         {/* RCD Details Group */}
-        <TableHead className={cn(headerCell, "w-[88px] min-w-[88px] max-w-[88px]")}>
+        <TableHead className={cn(headerCell, "w-[96px] min-w-[96px] max-w-[96px]")}>
           <div className="flex items-center justify-center gap-0">
             <span>BS</span>
             {onFillAllRcdBsStandard && (
@@ -88,7 +88,7 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
             )}
           </div>
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[88px] min-w-[88px] max-w-[88px]")}>
+        <TableHead className={cn(headerCell, "w-[96px] min-w-[96px] max-w-[96px]")}>
           <div className="flex items-center justify-center gap-0">
             <span>Ty</span>
             {onFillAllRcdType && (
@@ -103,7 +103,7 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
             )}
           </div>
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[72px] min-w-[72px] max-w-[72px]")}>
+        <TableHead className={cn(headerCell, "w-[80px] min-w-[80px] max-w-[80px]")}>
           <div className="flex items-center justify-center gap-0">
             <span>mA</span>
             {onFillAllRcdRating && (
@@ -118,7 +118,7 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
             )}
           </div>
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[72px] min-w-[72px] max-w-[72px]")}>
+        <TableHead className={cn(headerCell, "w-[80px] min-w-[80px] max-w-[80px]")}>
           <div className="flex items-center justify-center gap-0">
             <span>A</span>
             {onFillAllRcdRatingA && (
@@ -135,46 +135,46 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
         </TableHead>
 
         {/* Continuity Tests Group */}
-        <TableHead className={cn(headerCell, "w-[72px] min-w-[72px] max-w-[72px]")}>
+        <TableHead className={cn(headerCell, "w-[80px] min-w-[80px] max-w-[80px]")}>
           r₁
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[72px] min-w-[72px] max-w-[72px]")}>
+        <TableHead className={cn(headerCell, "w-[80px] min-w-[80px] max-w-[80px]")}>
           rₙ
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[88px] min-w-[88px] max-w-[88px]")}>
+        <TableHead className={cn(headerCell, "w-[96px] min-w-[96px] max-w-[96px]")}>
           r₂
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[88px] min-w-[88px] max-w-[88px]")}>
+        <TableHead className={cn(headerCell, "w-[96px] min-w-[96px] max-w-[96px]")}>
           R1+R2
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[72px] min-w-[72px] max-w-[72px]")}>
+        <TableHead className={cn(headerCell, "w-[80px] min-w-[80px] max-w-[80px]")}>
           R₂
         </TableHead>
 
         {/* Insulation Tests Group */}
-        <TableHead className={cn(headerCell, "w-[88px] min-w-[88px] max-w-[88px]")}>
+        <TableHead className={cn(headerCell, "w-[96px] min-w-[96px] max-w-[96px]")}>
           V
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[88px] min-w-[88px] max-w-[88px]")}>
+        <TableHead className={cn(headerCell, "w-[96px] min-w-[96px] max-w-[96px]")}>
           L-L
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[88px] min-w-[88px] max-w-[88px]")}>
+        <TableHead className={cn(headerCell, "w-[96px] min-w-[96px] max-w-[96px]")}>
           L-E
         </TableHead>
 
         {/* Earth Fault Tests Group */}
-        <TableHead className={cn(headerCell, "w-[60px] min-w-[60px] max-w-[60px]")}>
+        <TableHead className={cn(headerCell, "w-[66px] min-w-[66px] max-w-[66px]")}>
           Pol
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[88px] min-w-[88px] max-w-[88px]")}>
+        <TableHead className={cn(headerCell, "w-[96px] min-w-[96px] max-w-[96px]")}>
           Zs
         </TableHead>
 
         {/* RCD Tests Group */}
-        <TableHead className={cn(headerCell, "w-[72px] min-w-[72px] max-w-[72px]")}>
+        <TableHead className={cn(headerCell, "w-[80px] min-w-[80px] max-w-[80px]")}>
           ms
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[60px] min-w-[60px] max-w-[60px]")}>
+        <TableHead className={cn(headerCell, "w-[66px] min-w-[66px] max-w-[66px]")}>
           <div className="flex items-center justify-center gap-0">
             <span>✓</span>
             {onFillAllRcdTestButton && (
@@ -192,7 +192,7 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
         </TableHead>
 
         {/* AFDD Group */}
-        <TableHead className={cn(headerCell, "w-[60px] min-w-[60px] max-w-[60px]")}>
+        <TableHead className={cn(headerCell, "w-[66px] min-w-[66px] max-w-[66px]")}>
           <div className="flex items-center justify-center gap-0">
             <span>AF</span>
             {onFillAllAfdd && (
@@ -210,15 +210,15 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
         </TableHead>
 
         {/* Functional Group */}
-        <TableHead className={cn(headerCell, "w-[60px] min-w-[60px] max-w-[60px]")}>
+        <TableHead className={cn(headerCell, "w-[66px] min-w-[66px] max-w-[66px]")}>
           Fn
         </TableHead>
-        <TableHead className={cn(headerCell, "w-[120px] min-w-[120px] max-w-[120px]")}>
+        <TableHead className={cn(headerCell, "w-[132px] min-w-[132px] max-w-[132px]")}>
           Notes
         </TableHead>
 
         {/* Actions Column */}
-        <TableHead className="border-l border-border font-semibold text-xs p-0.5 text-center whitespace-nowrap bg-elec-gray text-foreground w-[66px] min-w-[66px] max-w-[66px]">
+        <TableHead className="border-l border-border font-semibold text-xs p-0.5 text-center whitespace-nowrap bg-elec-gray text-foreground w-[72px] min-w-[72px] max-w-[72px]">
           Del
         </TableHead>
       </TableRow>

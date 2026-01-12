@@ -39,12 +39,31 @@ import AvailableSupporters from './AvailableSupporters';
 import SupporterDashboard from './SupporterDashboard';
 import BecomeSupporter from './BecomeSupporter';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface PeerSupportHubProps {
   onClose?: () => void;
 }
 
 type ViewState = 'hub' | 'become-supporter' | 'chat';
+
+// Skeleton for conversation items
+const ConversationSkeleton = () => (
+  <div className="space-y-3 pb-4">
+    {[1, 2].map((i) => (
+      <div key={i} className="p-4 rounded-xl bg-white/[0.03] border border-purple-500/20">
+        <div className="flex items-center gap-4">
+          <Skeleton className="w-12 h-12 rounded-xl bg-white/10" />
+          <div className="flex-1 space-y-2">
+            <Skeleton className="h-4 w-32 bg-white/10" />
+            <Skeleton className="h-3 w-24 bg-white/10" />
+          </div>
+          <Skeleton className="h-10 w-16 rounded-md bg-white/10" />
+        </div>
+      </div>
+    ))}
+  </div>
+);
 
 const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
   const { toast } = useToast();
@@ -77,9 +96,6 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
     : undefined;
   const { data: partnerPresence } = usePeerPresence(partnerId);
   const partnerPresenceStatus = partnerPresence ? calculateStatus(partnerPresence.last_seen) : 'offline';
-
-  // Only block on conversations loading - profile loads in background
-  const isLoading = conversationsLoading;
 
   const handleConnect = async (supporterId: string) => {
     setConnectingId(supporterId);
@@ -177,16 +193,6 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
     );
   }
 
-  // Loading
-  if (isLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16">
-        <Loader2 className="w-10 h-10 text-purple-400 animate-spin mb-4" />
-        <p className="text-white">Loading Mental Health Mates...</p>
-      </div>
-    );
-  }
-
   // Become Supporter View
   if (viewState === 'become-supporter') {
     return (
@@ -281,7 +287,9 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
 
             {/* My Chats Tab */}
             <TabsContent value="chats" className="mt-4 px-4">
-              {conversationsError ? (
+              {conversationsLoading ? (
+                <ConversationSkeleton />
+              ) : conversationsError ? (
                 <div className="py-12 text-center">
                   <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-500/10 flex items-center justify-center">
                     <AlertTriangle className="w-8 h-8 text-red-400" />

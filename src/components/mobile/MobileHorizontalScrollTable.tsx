@@ -127,11 +127,11 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
   };
 
   return (
-    <div className="w-full">
-      {/* Table Container - Mobile optimized */}
+    <div className="w-screen relative left-[calc(-50vw+50%)]">
+      {/* Table Container - Full bleed, edge-to-edge */}
       <div
         ref={scrollContainerRef}
-        className="sot-mobile-wrapper"
+        className="overflow-x-auto overflow-y-visible"
         style={{
           WebkitOverflowScrolling: 'touch',
           scrollBehavior: 'smooth',

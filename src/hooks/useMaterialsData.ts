@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { productsBySupplier } from '@/data/electrician/productData';
 
@@ -303,6 +303,7 @@ export const useMaterialsData = () => {
     gcTime: 1000 * 60 * 10, // 10 minutes
     retry: 1,
     refetchOnWindowFocus: false,
+    placeholderData: keepPreviousData, // Show previous data while refetching
   });
 
   return {

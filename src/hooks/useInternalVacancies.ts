@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient, keepPreviousData } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { InternalVacancy } from '@/components/electrician/vacancies/InternalVacancyCard';
@@ -41,6 +41,7 @@ export function useInternalVacancies(filters?: VacancyFilters) {
 
   return useQuery({
     queryKey: [...INTERNAL_VACANCIES_KEY, filters],
+    placeholderData: keepPreviousData, // Show previous data while refetching
     queryFn: async (): Promise<InternalVacancy[]> => {
       // Get current user's elec_id_profile to check applications
       const { data: { user } } = await supabase.auth.getUser();
@@ -313,6 +314,7 @@ export function useApplyToVacancy() {
 export function useMyApplications() {
   return useQuery({
     queryKey: MY_APPLICATIONS_KEY,
+    placeholderData: keepPreviousData, // Show previous data while refetching
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return [];
@@ -381,6 +383,7 @@ export function useMyInvitations() {
 
   return useQuery({
     queryKey: ['my-invitations'],
+    placeholderData: keepPreviousData, // Show previous data while refetching
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return [];

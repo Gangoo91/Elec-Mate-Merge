@@ -1,12 +1,11 @@
 import jsPDF from 'jspdf';
-// (autoTable imported via safeAutoTable in pdfEnhancements)
 import { createEICRTemplate } from './pdfTemplates';
-import { 
-  formatCircuitDataForPDF, 
-  formatTestResultsForPDF, 
-  formatInspectionDataForPDF, 
-  formatObservationsForPDF, 
-  formatSupplyCharacteristics, 
+import {
+  formatCircuitDataForPDF,
+  formatTestResultsForPDF,
+  formatInspectionDataForPDF,
+  formatObservationsForPDF,
+  formatSupplyCharacteristics,
   formatInstallationDetails,
   formatClientDetails,
   formatInspectorDetails,
@@ -44,6 +43,7 @@ interface ExportOptions {
   includeDigitalSignatures?: boolean;
 }
 
+// Helper to add signature image
 const addSignatureToPDF = async (pdf: jsPDF, signatureData: string, x: number, y: number, width: number = 60, height: number = 20): Promise<void> => {
   return new Promise((resolve) => {
     if (signatureData && signatureData.startsWith('data:image/')) {
@@ -57,54 +57,71 @@ const addSignatureToPDF = async (pdf: jsPDF, signatureData: string, x: number, y
   });
 };
 
+// Helper to check if new page needed
 const addNewPageIfNeeded = (pdf: jsPDF, yPosition: number, requiredSpace: number = 60): number => {
   if (yPosition > pdf.internal.pageSize.getHeight() - requiredSpace) {
     pdf.addPage();
-    return 20; // Reset to top margin
+    return 20;
   }
   return yPosition;
 };
 
-// Helper function to draw checkboxes matching BS 7671 format
-const drawCheckbox = (pdf: jsPDF, x: number, y: number, checked: boolean = false, label: string = '') => {
+// Draw checkbox matching BS 7671 format
+const drawCheckbox = (pdf: jsPDF, x: number, y: number, checked: boolean = false, size: number = 4) => {
   pdf.setDrawColor(0, 0, 0);
   pdf.setLineWidth(0.3);
-  pdf.rect(x, y, 4, 4);
-  
+  pdf.rect(x, y, size, size);
+
   if (checked) {
-    pdf.setFontSize(8);
+    pdf.setFontSize(7);
     pdf.setFont('helvetica', 'bold');
-    pdf.text('✓', x + 2, y + 3, { align: 'center' });
-  }
-  
-  if (label) {
-    pdf.setFontSize(9);
-    pdf.setFont('helvetica', 'normal');
-    pdf.text(label, x + 6, y + 3);
+    pdf.text('✓', x + size/2, y + size - 0.5, { align: 'center' });
   }
 };
 
-// Helper function to add form fields with labels
-const addFormField = (pdf: jsPDF, x: number, y: number, width: number, height: number, label: string, value: string = '', bold: boolean = false) => {
-  // Field box
-  pdf.setDrawColor(0, 0, 0);
-  pdf.setLineWidth(0.3);
-  pdf.rect(x, y, width, height);
-  
-  // Label
+// Draw section header with yellow accent
+const drawSectionHeader = (pdf: jsPDF, title: string, y: number, pageWidth: number): number => {
+  const margin = 15;
+
+  // Grey background
+  pdf.setFillColor(74, 85, 104);
+  pdf.rect(margin, y, pageWidth - 2 * margin, 7, 'F');
+
+  // Title text
+  pdf.setFontSize(9);
+  pdf.setFont('helvetica', 'bold');
+  pdf.setTextColor(255, 255, 255);
+  pdf.text(title, margin + 3, y + 5);
+
+  pdf.setTextColor(0, 0, 0);
+  return y + 10;
+};
+
+// Draw form row with label and value
+const drawFormRow = (pdf: jsPDF, label: string, value: string, x: number, y: number, labelWidth: number = 45, valueWidth: number = 60): number => {
   pdf.setFontSize(8);
-  pdf.setFont('helvetica', bold ? 'bold' : 'normal');
-  pdf.text(label, x, y - 2);
-  
-  // Value
+  pdf.setFont('helvetica', 'bold');
+  pdf.setTextColor(51, 51, 51);
+  pdf.text(label, x, y);
+
+  pdf.setFont('helvetica', 'normal');
+  pdf.setTextColor(0, 0, 0);
+
+  // Draw input box
+  pdf.setDrawColor(200, 200, 200);
+  pdf.setLineWidth(0.3);
+  pdf.rect(x + labelWidth, y - 3.5, valueWidth, 5);
+
+  // Value text
   if (value) {
-    pdf.setFontSize(9);
-    pdf.setFont('helvetica', 'normal');
-    pdf.text(value, x + 2, y + height - 2);
+    const truncatedValue = value.length > 35 ? value.substring(0, 35) + '...' : value;
+    pdf.text(truncatedValue, x + labelWidth + 2, y);
   }
+
+  return y + 7;
 };
 
-// Helper function to fetch photos for observations
+// Fetch photos for observations
 const fetchObservationPhotos = async (observationId: string): Promise<string[]> => {
   try {
     const { data, error } = await supabase
@@ -118,7 +135,6 @@ const fetchObservationPhotos = async (observationId: string): Promise<string[]> 
       return [];
     }
 
-    // Convert file paths to full URLs
     const photoUrls = await Promise.all(
       (data || []).map(async (photo) => {
         const { data: urlData } = supabase.storage
@@ -135,15 +151,14 @@ const fetchObservationPhotos = async (observationId: string): Promise<string[]> 
   }
 };
 
-// Helper function to add photo to PDF
+// Add photo to PDF with aspect ratio preservation
 const addPhotoToPDF = async (pdf: jsPDF, photoUrl: string, x: number, y: number, maxWidth: number, maxHeight: number): Promise<number> => {
   return new Promise((resolve) => {
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    
+
     img.onload = () => {
       try {
-        // Calculate dimensions to maintain aspect ratio
         let width = img.width;
         let height = img.height;
         const aspectRatio = width / height;
@@ -152,13 +167,11 @@ const addPhotoToPDF = async (pdf: jsPDF, photoUrl: string, x: number, y: number,
           width = maxWidth;
           height = width / aspectRatio;
         }
-
         if (height > maxHeight) {
           height = maxHeight;
           width = height * aspectRatio;
         }
 
-        // Convert to mm (assuming 96 DPI)
         const widthMm = (width / 96) * 25.4;
         const heightMm = (height / 96) * 25.4;
 
@@ -184,7 +197,6 @@ export const exportObservationsToPDF = async (
   formData: any,
   options: ExportOptions = {}
 ): Promise<void> => {
-  // This function remains the same for observations-only reports
   const {
     includeHeader = true,
     includeFooter = true,
@@ -203,11 +215,10 @@ export const exportObservationsToPDF = async (
   const margin = 20;
   let yPosition = margin;
 
-  // Professional header
   if (includeHeader) {
-    yPosition = template.addHeader(pdf, { 
-      ...formData, 
-      certificateReference: `OBS-${Date.now().toString().slice(-6)}` 
+    yPosition = template.addHeader(pdf, {
+      ...formData,
+      certificateReference: `OBS-${Date.now().toString().slice(-6)}`
     });
   }
 
@@ -246,35 +257,34 @@ export const exportObservationsToPDF = async (
     pdf.text('No defects or observations recorded during this inspection.', margin, yPosition);
   } else {
     const formattedObservations = formatObservationsForPDF(observations);
-    
+
     for (let index = 0; index < formattedObservations.length; index++) {
       const obs = formattedObservations[index];
       yPosition = addNewPageIfNeeded(pdf, yPosition, 40);
-      
+
       pdf.setFontSize(10);
       pdf.setFont('helvetica', 'bold');
       pdf.text(`${index + 1}. [${obs.defectCode}] ${obs.item}`, margin, yPosition);
       yPosition += 6;
-      
+
       if (obs.description) {
         pdf.setFont('helvetica', 'normal');
         const descLines = pdf.splitTextToSize(obs.description, pageWidth - 2 * margin - 5);
         pdf.text(descLines, margin + 5, yPosition);
         yPosition += descLines.length * 5;
       }
-      
-      // Fetch and add photos for this observation
+
       const originalObs = observations[index];
       if (originalObs?.id) {
         const photos = await fetchObservationPhotos(originalObs.id);
-        
+
         if (photos.length > 0) {
           yPosition += 5;
           pdf.setFontSize(9);
           pdf.setFont('helvetica', 'italic');
           pdf.text(`Photo Evidence (${photos.length} photo${photos.length > 1 ? 's' : ''}):`, margin + 5, yPosition);
           yPosition += 8;
-          
+
           for (const photoUrl of photos) {
             yPosition = addNewPageIfNeeded(pdf, yPosition, 80);
             const photoHeight = await addPhotoToPDF(pdf, photoUrl, margin + 5, yPosition, 80, 60);
@@ -284,12 +294,11 @@ export const exportObservationsToPDF = async (
           }
         }
       }
-      
+
       yPosition += 10;
     }
   }
 
-  // Add footer
   if (includeFooter) {
     const totalPages = pdf.getNumberOfPages();
     for (let i = 1; i <= totalPages; i++) {
@@ -313,24 +322,24 @@ export const exportCompleteEICRToPDF = async (
   observations: DefectObservation[] = [],
   options: ExportOptions = {}
 ): Promise<void> => {
-  console.log('Starting enhanced EICR PDF export with professional features...');
-  
-  // Sanitize all form data before PDF generation
+  console.log('Starting professional EICR PDF generation...');
+
+  // Sanitize all form data
   const { sanitizeObject } = await import('./inputSanitization');
   const sanitizedFormData = sanitizeObject(formData);
-  
+
   // Import enhanced utilities
   const { validateEICRData, calculateQualityMetrics, generateCompletionReport } = await import('./pdfValidation');
-  const { 
-    addDigitalSignature, 
-    addProfessionalWatermark, 
+  const {
+    addDigitalSignature,
+    addProfessionalWatermark,
     enhanceTableStyling,
     addCertificateValidation,
     generateCertificateMetadata,
     formatDateTime,
     safeAutoTable
   } = await import('./pdfEnhancements');
-  
+
   const {
     includeHeader = true,
     includeFooter = true,
@@ -340,14 +349,12 @@ export const exportCompleteEICRToPDF = async (
     includeDigitalSignatures = true
   } = options;
 
-  // Validate data quality before generation
   const validation = validateEICRData(sanitizedFormData, inspectionItems, observations);
   const qualityMetrics = calculateQualityMetrics(sanitizedFormData, inspectionItems, observations);
-  
-  console.log('Certificate Quality Assessment:', {
+
+  console.log('Certificate Quality:', {
     overall: qualityMetrics.overallScore,
-    completion: validation.completionScore,
-    isValid: validation.isValid
+    completion: validation.completionScore
   });
 
   const pdf = new jsPDF({
@@ -356,411 +363,793 @@ export const exportCompleteEICRToPDF = async (
     format: format.toLowerCase() as 'a4' | 'letter',
   });
 
-  // Set PDF metadata for professional presentation
+  // Set PDF metadata
   const metadata = generateCertificateMetadata(sanitizedFormData);
   pdf.setProperties(metadata);
 
-  const template = createEICRTemplate();
   const pageWidth = pdf.internal.pageSize.getWidth();
-  const margin = 20;
-  let yPosition = margin;
+  const pageHeight = pdf.internal.pageSize.getHeight();
+  const margin = 15;
+  let yPos = margin;
 
-  // Generate unique certificate ID
-  const certificateId = sanitizedFormData.certificateReference || `EICR-${Date.now().toString().slice(-6)}`;
+  // Certificate ID
+  const certificateId = sanitizedFormData.certificateReference || sanitizedFormData.certificateNumber || `EICR-${Date.now().toString().slice(-6)}`;
 
-  // Enhanced data formatting with comprehensive field mapping
-  const formattedCircuits = formatCircuitDataForPDF(sanitizedFormData);
-  const formattedTestResults = formatTestResultsForPDF(sanitizedFormData);
-  const formattedInspectionData = formatInspectionDataForPDF(sanitizedFormData.inspectionItems || inspectionItems);
-  const formattedObservations = formatObservationsForPDF(sanitizedFormData.observations || observations);
-  const supplyCharacteristics = formatSupplyCharacteristics(sanitizedFormData);
-  const installationDetails = formatInstallationDetails(sanitizedFormData);
-  const clientDetails = formatClientDetails(sanitizedFormData);
-  const inspectorDetails = formatInspectorDetails(sanitizedFormData);
-  const companyBranding = formatCompanyBranding(sanitizedFormData);
+  // ==================== PAGE 1: HEADER & CLIENT DETAILS ====================
 
-  // PAGE 1 - PROFESSIONAL HEADER & CLIENT DETAILS
-  if (includeHeader) {
-    yPosition = template.addHeader(pdf, { 
-      ...sanitizedFormData, 
-      certificateReference: certificateId,
-      ...companyBranding
+  // Professional title
+  pdf.setFontSize(16);
+  pdf.setFont('helvetica', 'bold');
+  pdf.setTextColor(0, 0, 0);
+  pdf.text('ELECTRICAL INSTALLATION', pageWidth / 2, yPos + 5, { align: 'center' });
+  pdf.setFontSize(18);
+  pdf.text('CONDITION REPORT', pageWidth / 2, yPos + 12, { align: 'center' });
+
+  // Yellow accent line
+  pdf.setDrawColor(255, 204, 0);
+  pdf.setLineWidth(2);
+  pdf.line(margin, yPos + 16, pageWidth - margin, yPos + 16);
+
+  // Certificate number box
+  pdf.setDrawColor(0, 0, 0);
+  pdf.setLineWidth(0.5);
+  pdf.rect(pageWidth - 55, yPos, 40, 15);
+  pdf.setFontSize(7);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('Certificate No:', pageWidth - 53, yPos + 5);
+  pdf.setFontSize(8);
+  pdf.setFont('helvetica', 'normal');
+  pdf.text(certificateId, pageWidth - 53, yPos + 11);
+
+  yPos += 25;
+
+  // CLIENT DETAILS SECTION
+  yPos = drawSectionHeader(pdf, 'CLIENT DETAILS', yPos, pageWidth);
+
+  let col1X = margin + 2;
+  let col2X = pageWidth / 2 + 5;
+
+  yPos = drawFormRow(pdf, 'Name:', sanitizedFormData.clientName || '', col1X, yPos, 30, 55);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Email:', sanitizedFormData.clientEmail || '', col2X, yPos, 30, 50);
+
+  yPos = drawFormRow(pdf, 'Phone:', sanitizedFormData.clientPhone || '', col1X, yPos, 30, 40);
+  yPos += 0;
+
+  yPos = drawFormRow(pdf, 'Address:', sanitizedFormData.clientAddress || '', col1X, yPos, 30, 55);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'INSTALLATION ADDRESS:', sanitizedFormData.installationAddress || '', col2X, yPos, 50, 30);
+
+  yPos += 5;
+
+  // DESCRIPTION OF PREMISES SECTION
+  yPos = drawSectionHeader(pdf, 'DESCRIPTION OF PREMISES', yPos, pageWidth);
+
+  // Premises type checkboxes
+  pdf.setFontSize(8);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('Description of Work:', col1X, yPos + 3);
+
+  const premises = sanitizedFormData.description?.toLowerCase() || '';
+  let checkX = col1X + 40;
+
+  drawCheckbox(pdf, checkX, yPos, premises === 'domestic');
+  pdf.setFont('helvetica', 'normal');
+  pdf.text('Domestic', checkX + 6, yPos + 3);
+
+  checkX += 30;
+  drawCheckbox(pdf, checkX, yPos, premises === 'commercial');
+  pdf.text('Commercial', checkX + 6, yPos + 3);
+
+  checkX += 35;
+  drawCheckbox(pdf, checkX, yPos, premises === 'industrial');
+  pdf.text('Industrial', checkX + 6, yPos + 3);
+
+  checkX += 30;
+  drawCheckbox(pdf, checkX, yPos, premises === 'other');
+  pdf.text('Other', checkX + 6, yPos + 3);
+
+  yPos += 8;
+
+  yPos = drawFormRow(pdf, 'Estimated Age of Installation:', `${sanitizedFormData.estimatedAge || ''} ${sanitizedFormData.ageUnit || 'years'}`, col1X, yPos, 55, 30);
+
+  // Evidence of alterations
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('Evidence of additions / alterations:', col1X, yPos + 3);
+  const alterations = sanitizedFormData.evidenceOfAlterations || '';
+  drawCheckbox(pdf, col1X + 60, yPos, alterations === 'yes');
+  pdf.setFont('helvetica', 'normal');
+  pdf.text('Yes', col1X + 66, yPos + 3);
+  drawCheckbox(pdf, col1X + 80, yPos, alterations === 'no');
+  pdf.text('No', col1X + 86, yPos + 3);
+  yPos += 8;
+
+  // Date of last inspection
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('Date of Last Inspection:', col1X, yPos + 3);
+  const lastType = sanitizedFormData.lastInspectionType || '';
+  drawCheckbox(pdf, col1X + 45, yPos, lastType === 'known');
+  pdf.setFont('helvetica', 'normal');
+  pdf.text('Known', col1X + 51, yPos + 3);
+  drawCheckbox(pdf, col1X + 70, yPos, lastType === 'unknown');
+  pdf.text('Unknown', col1X + 76, yPos + 3);
+  drawCheckbox(pdf, col1X + 100, yPos, lastType === 'not-applicable');
+  pdf.text('N/A (First)', col1X + 106, yPos + 3);
+
+  if (sanitizedFormData.dateOfLastInspection) {
+    pdf.text(`Date: ${formatDateTime(sanitizedFormData.dateOfLastInspection)}`, col1X + 140, yPos + 3);
+  }
+  yPos += 10;
+
+  // PURPOSE & INSPECTION DETAILS SECTION
+  yPos = drawSectionHeader(pdf, 'PURPOSE & INSPECTION DETAILS', yPos, pageWidth);
+
+  yPos = drawFormRow(pdf, 'Purpose of Inspection:', sanitizedFormData.purposeOfInspection || 'Periodic inspection', col1X, yPos, 45, 70);
+
+  yPos = drawFormRow(pdf, 'Date of Inspection:', formatDateTime(sanitizedFormData.inspectionDate || new Date()), col1X, yPos, 40, 30);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Inspection Interval:', `${sanitizedFormData.inspectionInterval || '5'} years`, col2X - 20, yPos, 38, 20);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Next Inspection Date:', sanitizedFormData.nextInspectionDate ? formatDateTime(sanitizedFormData.nextInspectionDate) : '', col2X + 40, yPos, 40, 25);
+
+  yPos = drawFormRow(pdf, 'Extent of Inspection:', sanitizedFormData.extentOfInspection || 'Full installation', col1X, yPos, 40, pageWidth - margin * 2 - 45);
+  yPos = drawFormRow(pdf, 'Limitations of Inspection:', sanitizedFormData.limitationsOfInspection || 'None', col1X, yPos, 45, pageWidth - margin * 2 - 50);
+
+  yPos += 5;
+
+  // DECLARATION
+  yPos = drawSectionHeader(pdf, 'DECLARATION', yPos, pageWidth);
+  pdf.setFontSize(7);
+  pdf.setFont('helvetica', 'normal');
+  const declarationText = 'I/We, being the person(s) responsible for the inspection and testing of the electrical installation (as indicated by my/our signatures below), particulars which are described above, having exercised reasonable skill and care when carrying out the inspection and testing, hereby declare this report, including the related schedules, provides an accurate assessment of the condition of the electrical installation taking into account the stated extent and limitations of this report.';
+  const declLines = pdf.splitTextToSize(declarationText, pageWidth - margin * 2 - 10);
+  pdf.text(declLines, col1X, yPos + 3);
+  yPos += declLines.length * 3.5 + 5;
+
+  // SUPPLY & EARTHING CHARACTERISTICS
+  yPos = drawSectionHeader(pdf, 'SUPPLY & EARTHING CHARACTERISTICS', yPos, pageWidth);
+
+  // Earthing arrangement checkboxes
+  pdf.setFontSize(8);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('Earthing Arrangement:', col1X, yPos + 3);
+
+  const earthing = sanitizedFormData.earthingArrangement || '';
+  checkX = col1X + 40;
+
+  drawCheckbox(pdf, checkX, yPos, earthing === 'TN-C');
+  pdf.setFont('helvetica', 'normal');
+  pdf.text('TN-C', checkX + 6, yPos + 3);
+
+  checkX += 22;
+  drawCheckbox(pdf, checkX, yPos, earthing === 'TN-S');
+  pdf.text('TN-S', checkX + 6, yPos + 3);
+
+  checkX += 22;
+  drawCheckbox(pdf, checkX, yPos, earthing === 'TN-C-S');
+  pdf.text('TN-C-S', checkX + 6, yPos + 3);
+
+  checkX += 26;
+  drawCheckbox(pdf, checkX, yPos, earthing === 'TT');
+  pdf.text('TT', checkX + 6, yPos + 3);
+
+  yPos += 8;
+
+  // Supply details in two columns
+  yPos = drawFormRow(pdf, 'Nominal Voltage U₀/U*:', `${sanitizedFormData.supplyVoltage || '230'} V`, col1X, yPos, 45, 25);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Nominal Frequency f*:', `${sanitizedFormData.supplyFrequency || '50'} Hz`, col2X, yPos, 45, 20);
+
+  yPos = drawFormRow(pdf, 'Phase:', sanitizedFormData.phases || 'Single', col1X, yPos, 30, 25);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Supply PME:', sanitizedFormData.supplyPME || '', col2X, yPos, 35, 25);
+
+  yPos = drawFormRow(pdf, 'Earth Electrode Type:', sanitizedFormData.earthElectrodeType || '', col1X, yPos, 45, 40);
+  yPos += 3;
+
+  // Main Protective Device
+  yPos = drawFormRow(pdf, 'Main Protective Device:', sanitizedFormData.mainProtectiveDevice || '', col1X, yPos, 48, 40);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'RCD Main Switch:', sanitizedFormData.rcdMainSwitch || '', col2X, yPos, 40, 25);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'RCD Rating:', sanitizedFormData.rcdRating || '', col2X + 70, yPos, 30, 20);
+
+  yPos += 5;
+
+  // MAIN PROTECTIVE BONDING
+  yPos = drawSectionHeader(pdf, 'MAIN PROTECTIVE BONDING', yPos, pageWidth);
+
+  yPos = drawFormRow(pdf, 'Main Bonding Conductor Size:', `${sanitizedFormData.mainBondingSize || ''} mm²`, col1X, yPos, 55, 25);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Bonding Compliance:', sanitizedFormData.bondingCompliance || '', col2X, yPos, 45, 35);
+
+  yPos = drawFormRow(pdf, 'Main Bonding Locations:', sanitizedFormData.mainBondingLocations || '', col1X, yPos, 50, pageWidth - margin * 2 - 55);
+
+  yPos = drawFormRow(pdf, 'Supplementary Bonding Size:', `${sanitizedFormData.supplementaryBondingSize || ''} mm²`, col1X, yPos, 55, 25);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Equipotential Bonding:', sanitizedFormData.equipotentialBonding || '', col2X, yPos, 50, 30);
+
+  yPos += 5;
+
+  // CONSUMER UNIT / DISTRIBUTION BOARD
+  yPos = drawSectionHeader(pdf, 'CONSUMER UNIT / DISTRIBUTION BOARD', yPos, pageWidth);
+
+  yPos = drawFormRow(pdf, 'Board Size:', sanitizedFormData.boardSize || '', col1X, yPos, 30, 25);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Board Type:', sanitizedFormData.cuType || '', col1X + 60, yPos, 30, 25);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Board Location:', sanitizedFormData.cuLocation || '', col2X + 20, yPos, 35, 30);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Manufacturer:', sanitizedFormData.cuManufacturer || '', col2X + 90, yPos, 30, 30);
+
+  yPos = drawFormRow(pdf, 'Intake Cable Size:', `${sanitizedFormData.intakeCableSize || ''} mm²`, col1X, yPos, 40, 25);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Intake Cable Type:', sanitizedFormData.intakeCableType || '', col1X + 70, yPos, 40, 30);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Meter Tails Size:', `${sanitizedFormData.tailsSize || ''} mm²`, col2X + 50, yPos, 40, 20);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Length(m):', sanitizedFormData.tailsLength || 'N/A', col2X + 115, yPos, 25, 20);
+
+  yPos += 5;
+
+  // DISTRIBUTION BOARD VERIFICATION
+  yPos = drawSectionHeader(pdf, 'DISTRIBUTION BOARD VERIFICATION', yPos, pageWidth);
+
+  yPos = drawFormRow(pdf, 'DB Reference:', sanitizedFormData.dbReference || 'Main CU', col1X, yPos, 35, 30);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Zdb (Ω):', sanitizedFormData.zdb || '', col1X + 70, yPos, 25, 20);
+  yPos -= 7;
+  yPos = drawFormRow(pdf, 'Ipf (kA):', sanitizedFormData.ipf || '', col2X + 20, yPos, 25, 20);
+
+  // Confirmed checkboxes
+  pdf.setFontSize(8);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('Confirmed:', col1X, yPos + 3);
+
+  drawCheckbox(pdf, col1X + 30, yPos, sanitizedFormData.confirmedCorrectPolarity);
+  pdf.setFont('helvetica', 'normal');
+  pdf.text('Correct polarity', col1X + 36, yPos + 3);
+
+  drawCheckbox(pdf, col1X + 75, yPos, sanitizedFormData.confirmedPhaseSequence);
+  pdf.text('Phase sequence', col1X + 81, yPos + 3);
+
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('SPD:', col2X, yPos + 3);
+  drawCheckbox(pdf, col2X + 20, yPos, sanitizedFormData.spdOperationalStatus);
+  pdf.setFont('helvetica', 'normal');
+  pdf.text('Operational', col2X + 26, yPos + 3);
+  drawCheckbox(pdf, col2X + 55, yPos, sanitizedFormData.spdNA);
+  pdf.text('N/A', col2X + 61, yPos + 3);
+
+  yPos += 10;
+
+  // ==================== PAGE 2+: OBSERVATIONS ====================
+
+  const formattedObservations = formatObservationsForPDF(sanitizedFormData.defectObservations || observations);
+
+  if (formattedObservations.length > 0) {
+    pdf.addPage();
+    yPos = margin;
+
+    yPos = drawSectionHeader(pdf, 'OBSERVATIONS', yPos, pageWidth);
+
+    // Observations header row
+    pdf.setFillColor(248, 249, 250);
+    pdf.rect(margin, yPos, pageWidth - margin * 2 - 30, 8, 'F');
+    pdf.setFontSize(8);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text('OBSERVATIONS (include schedule reference as appropriate)', margin + 3, yPos + 5);
+
+    pdf.setFillColor(74, 85, 104);
+    pdf.rect(pageWidth - margin - 28, yPos, 28, 8, 'F');
+    pdf.setTextColor(255, 255, 255);
+    pdf.text('CODE', pageWidth - margin - 20, yPos + 5);
+    pdf.setTextColor(0, 0, 0);
+
+    yPos += 12;
+
+    // Each observation
+    for (let i = 0; i < formattedObservations.length; i++) {
+      const obs = formattedObservations[i];
+      yPos = addNewPageIfNeeded(pdf, yPos, 15);
+
+      // Observation box
+      pdf.setDrawColor(200, 200, 200);
+      pdf.setLineWidth(0.3);
+      pdf.rect(margin, yPos, pageWidth - margin * 2 - 30, 8);
+      pdf.rect(pageWidth - margin - 28, yPos, 28, 8);
+
+      pdf.setFontSize(8);
+      pdf.setFont('helvetica', 'normal');
+      const obsText = `${obs.item}: ${obs.description}`.substring(0, 80);
+      pdf.text(obsText, margin + 2, yPos + 5);
+
+      // Code with colour
+      const codeColours: Record<string, [number, number, number]> = {
+        'C1': [220, 38, 38],
+        'C2': [249, 115, 22],
+        'C3': [245, 158, 11],
+        'FI': [139, 92, 246]
+      };
+      const codeColour = codeColours[obs.defectCode] || [100, 100, 100];
+      pdf.setTextColor(...codeColour);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text(obs.defectCode, pageWidth - margin - 18, yPos + 5);
+      pdf.setTextColor(0, 0, 0);
+
+      yPos += 10;
+    }
+
+    // Classification codes legend
+    yPos += 5;
+    pdf.setFontSize(7);
+    pdf.setFont('helvetica', 'normal');
+    pdf.text('Classification Codes:', margin, yPos);
+    yPos += 4;
+    pdf.setFont('helvetica', 'bold');
+    pdf.setTextColor(220, 38, 38);
+    pdf.text('C1', margin, yPos);
+    pdf.setTextColor(0, 0, 0);
+    pdf.setFont('helvetica', 'normal');
+    pdf.text(' - Danger present. Risk of injury. Immediate remedial action required.', margin + 6, yPos);
+    yPos += 4;
+    pdf.setFont('helvetica', 'bold');
+    pdf.setTextColor(249, 115, 22);
+    pdf.text('C2', margin, yPos);
+    pdf.setTextColor(0, 0, 0);
+    pdf.setFont('helvetica', 'normal');
+    pdf.text(' - Potentially dangerous - urgent remedial action required.', margin + 6, yPos);
+    yPos += 4;
+    pdf.setFont('helvetica', 'bold');
+    pdf.setTextColor(245, 158, 11);
+    pdf.text('C3', margin, yPos);
+    pdf.setTextColor(0, 0, 0);
+    pdf.setFont('helvetica', 'normal');
+    pdf.text(' - Improvement recommended.', margin + 6, yPos);
+    yPos += 4;
+    pdf.setFont('helvetica', 'bold');
+    pdf.setTextColor(139, 92, 246);
+    pdf.text('FI', margin, yPos);
+    pdf.setTextColor(0, 0, 0);
+    pdf.setFont('helvetica', 'normal');
+    pdf.text(' - Further investigation required without delay.', margin + 6, yPos);
+  }
+
+  // ==================== SCHEDULE OF TEST RESULTS (LANDSCAPE) ====================
+
+  const testResults = sanitizedFormData.scheduleOfTests || [];
+
+  if (testResults.length > 0 && includeTestResults) {
+    // Add landscape page for circuit details
+    pdf.addPage('a4', 'landscape');
+    const landscapeWidth = pdf.internal.pageSize.getWidth();
+    const landscapeHeight = pdf.internal.pageSize.getHeight();
+    yPos = 12;
+
+    // Header
+    pdf.setFillColor(74, 85, 104);
+    pdf.rect(10, yPos, landscapeWidth - 20, 8, 'F');
+    pdf.setFontSize(10);
+    pdf.setFont('helvetica', 'bold');
+    pdf.setTextColor(255, 255, 255);
+    pdf.text('CIRCUIT DETAILS - SCHEDULE OF TEST RESULTS', 15, yPos + 5.5);
+    pdf.setTextColor(0, 0, 0);
+
+    yPos += 12;
+
+    // Group test results by board
+    const boardGroups = new Map<string, any[]>();
+    testResults.forEach((result: any) => {
+      const boardId = result.boardId || 'main';
+      if (!boardGroups.has(boardId)) {
+        boardGroups.set(boardId, []);
+      }
+      boardGroups.get(boardId)!.push(result);
+    });
+
+    // Render each board's schedule
+    boardGroups.forEach((circuits, boardId) => {
+      // Board header
+      if (boardGroups.size > 1) {
+        pdf.setFontSize(9);
+        pdf.setFont('helvetica', 'bold');
+        pdf.text(`Distribution Board: ${boardId === 'main' ? 'Main Consumer Unit' : boardId}`, 12, yPos);
+        yPos += 6;
+      }
+
+      // Table headers (BS 7671 format)
+      const headers = [
+        ['Cct', 'Description', 'Type', 'Ref', 'Pts', 'Live\nmm²', 'CPC\nmm²', 'BS EN', 'Type', 'A', 'kA', 'Max\nZs', 'BS EN', 'Type', 'mA', 'A', 'r1', 'rn', 'r2', 'R1+R2', 'R2', 'V', 'L-L', 'L-E', 'Pol', 'Zs', 'ms', 'TB', 'AFDD', 'Remarks']
+      ];
+
+      const tableData = circuits.map((r: any, idx: number) => [
+        r.circuitNumber || `C${idx + 1}`,
+        (r.circuitDescription || '').substring(0, 20),
+        r.typeOfWiring || '',
+        r.referenceMethod || '',
+        r.pointsServed || '',
+        r.liveSize || '',
+        r.cpcSize || '',
+        r.bsStandard || '',
+        r.protectiveDeviceCurve || '',
+        r.protectiveDeviceRating || '',
+        r.protectiveDeviceKaRating || '',
+        r.maxZs || '',
+        r.rcdBsStandard || '',
+        r.rcdType || '',
+        r.rcdRating || '',
+        r.rcdRatingA || '',
+        r.ringR1 || '',
+        r.ringRn || '',
+        r.ringR2 || '',
+        r.r1r2 || '',
+        r.r2 || '',
+        r.insulationTestVoltage || '',
+        r.insulationLiveNeutral || '',
+        r.insulationLiveEarth || '',
+        r.polarity || '',
+        r.zs || '',
+        r.rcdOneX || '',
+        r.rcdTestButton || '',
+        r.afddTest || '',
+        (r.notes || '').substring(0, 15)
+      ]);
+
+      safeAutoTable(pdf, {
+        startY: yPos,
+        head: headers,
+        body: tableData,
+        styles: {
+          fontSize: 5.5,
+          cellPadding: 0.8,
+          lineColor: [180, 180, 180],
+          lineWidth: 0.1,
+          halign: 'center',
+          valign: 'middle',
+          overflow: 'ellipsize'
+        },
+        headStyles: {
+          fillColor: [70, 130, 180],
+          textColor: [255, 255, 255],
+          fontStyle: 'bold',
+          fontSize: 5
+        },
+        alternateRowStyles: {
+          fillColor: [248, 249, 250]
+        },
+        columnStyles: {
+          0: { cellWidth: 8 },
+          1: { cellWidth: 22, halign: 'left' },
+          2: { cellWidth: 8 },
+          3: { cellWidth: 7 },
+          4: { cellWidth: 7 },
+          5: { cellWidth: 8 },
+          6: { cellWidth: 8 },
+          7: { cellWidth: 10 },
+          8: { cellWidth: 7 },
+          9: { cellWidth: 7 },
+          10: { cellWidth: 7 },
+          11: { cellWidth: 9 },
+          12: { cellWidth: 10 },
+          13: { cellWidth: 7 },
+          14: { cellWidth: 8 },
+          15: { cellWidth: 7 },
+          16: { cellWidth: 8 },
+          17: { cellWidth: 8 },
+          18: { cellWidth: 8 },
+          19: { cellWidth: 10 },
+          20: { cellWidth: 8 },
+          21: { cellWidth: 7 },
+          22: { cellWidth: 9 },
+          23: { cellWidth: 9 },
+          24: { cellWidth: 7 },
+          25: { cellWidth: 9 },
+          26: { cellWidth: 8 },
+          27: { cellWidth: 7 },
+          28: { cellWidth: 8 },
+          29: { cellWidth: 18, halign: 'left' }
+        },
+        margin: { left: 10, right: 10 },
+        tableWidth: 'auto'
+      });
+
+      yPos = (pdf as any).lastAutoTable?.finalY + 10 || yPos + 50;
     });
   }
 
-  // Add certificate validation box
-  addCertificateValidation(pdf, {
-    id: certificateId,
-    issueDate: new Date(),
-    version: '2.0',
-    expiryDate: sanitizedFormData.nextInspectionDate ? new Date(sanitizedFormData.nextInspectionDate) : undefined
-  });
+  // ==================== INSPECTION CHECKLIST ====================
 
-  // Enhanced Client Details Section
-  yPosition = addNewPageIfNeeded(pdf, yPosition, 100);
-  pdf.setFontSize(14);
-  pdf.setFont('helvetica', 'bold');
-  pdf.setTextColor(51, 51, 51);
-  pdf.text('CLIENT AND INSTALLATION DETAILS', margin, yPosition);
-  
-  // Professional section divider
-  pdf.setDrawColor(255, 204, 0);
-  pdf.setLineWidth(2);
-  pdf.line(margin, yPosition + 3, pageWidth - margin, yPosition + 3);
-  yPosition += 12;
+  const itemsToUse = sanitizedFormData.inspectionItems?.length > 0 ? sanitizedFormData.inspectionItems : inspectionItems;
 
-  // Client information in professional format
-  const clientInfo = [
-    ['Client Name:', clientDetails.name],
-    ['Installation Address:', clientDetails.installationAddress],
-    ['Contact Phone:', clientDetails.phone],
-    ['Contact Email:', clientDetails.email],
-    ['Property Type:', sanitizedFormData.description || 'Not specified'],
-    ['Estimated Age:', sanitizedFormData.estimatedAge ? `${sanitizedFormData.estimatedAge} ${sanitizedFormData.ageUnit || 'years'}` : 'Not specified']
-  ];
+  if (itemsToUse.length > 0 && includeInspectionChecklist) {
+    pdf.addPage('a4', 'portrait');
+    yPos = margin;
 
-  pdf.setFontSize(9);
-  clientInfo.forEach(([label, value]) => {
-    pdf.setFont('helvetica', 'bold');
-    pdf.setTextColor(51, 51, 51);
-    pdf.text(label, margin, yPosition);
-    pdf.setFont('helvetica', 'normal');
-    pdf.setTextColor(0, 0, 0);
-    pdf.text(value, margin + 45, yPosition);
-    yPosition += 6;
-  });
+    yPos = drawSectionHeader(pdf, 'EICR INSPECTION CHECKLIST', yPos, pageWidth);
 
-  // PURPOSE AND SCOPE Section
-  yPosition += 10;
-  pdf.setFontSize(12);
-  pdf.setFont('helvetica', 'bold');
-  pdf.setTextColor(51, 51, 51);
-  pdf.text('PURPOSE AND SCOPE OF INSPECTION', margin, yPosition);
-  yPosition += 8;
-
-  const purposeInfo = [
-    ['Inspection Date:', formatDateTime(formData.inspectionDate || new Date())],
-    ['Inspector:', inspectorDetails.name],
-    ['Qualifications:', inspectorDetails.qualifications],
-    ['Purpose:', formData.purposeOfInspection || 'Periodic inspection'],
-    ['Extent:', formData.extentOfInspection || 'Full installation'],
-    ['Limitations:', formData.limitationsOfInspection || 'None specified']
-  ];
-
-  pdf.setFontSize(9);
-  purposeInfo.forEach(([label, value]) => {
-    if (value && value !== 'Not specified') {
-      pdf.setFont('helvetica', 'bold');
-      pdf.setTextColor(51, 51, 51);
-      pdf.text(label, margin, yPosition);
-      pdf.setFont('helvetica', 'normal');
-      pdf.setTextColor(0, 0, 0);
-      
-      // Handle long text with wrapping
-      const maxWidth = pageWidth - margin - 50;
-      if (pdf.getTextWidth(value) > maxWidth) {
-        const lines = pdf.splitTextToSize(value, maxWidth);
-        pdf.text(lines, margin + 45, yPosition);
-        yPosition += (lines.length - 1) * 4;
-      } else {
-        pdf.text(value, margin + 45, yPosition);
+    // Group items by section
+    const sectionMap = new Map<string, any[]>();
+    itemsToUse.forEach((item: any) => {
+      const section = item.section || 'General';
+      if (!sectionMap.has(section)) {
+        sectionMap.set(section, []);
       }
-      yPosition += 6;
-    }
-  });
+      sectionMap.get(section)!.push(item);
+    });
 
-  // PAGE 2 - SUPPLY CHARACTERISTICS & EARTHING
-  pdf.addPage();
-  yPosition = 25;
+    const tableData: any[] = [];
+    let sectionIndex = 1;
 
-  pdf.setFontSize(14);
-  pdf.setFont('helvetica', 'bold');
-  pdf.setTextColor(51, 51, 51);
-  pdf.text('SUPPLY CHARACTERISTICS & EARTHING ARRANGEMENTS', margin, yPosition);
-  pdf.setDrawColor(255, 204, 0);
-  pdf.setLineWidth(2);
-  pdf.line(margin, yPosition + 3, pageWidth - margin, yPosition + 3);
-  yPosition += 15;
+    sectionMap.forEach((items, sectionName) => {
+      // Section header row
+      tableData.push([
+        { content: `${sectionIndex}.0  ${sectionName}`, colSpan: 7, styles: { fontStyle: 'bold', fillColor: [51, 51, 51], textColor: [255, 255, 255] } }
+      ]);
 
-  // Enhanced supply characteristics table
-  const supplyData = supplyCharacteristics.map(char => [char]);
-  
-  if (supplyData.length > 0) {
-    safeAutoTable(pdf, enhanceTableStyling({
-      startY: yPosition,
-      head: [['Supply and Installation Characteristics']],
-      body: supplyData,
+      items.forEach((item: any, idx: number) => {
+        const outcome = item.outcome || '';
+        tableData.push([
+          `${sectionIndex}.${idx + 1}`,
+          item.item || item.description || '',
+          outcome === 'satisfactory' ? '✓' : '',
+          outcome === 'not-applicable' ? '✓' : '',
+          ['C1', 'C2'].includes(outcome) ? outcome : '',
+          outcome === 'C3' ? '✓' : '',
+          outcome === 'not-verified' ? '✓' : ''
+        ]);
+      });
+
+      sectionIndex++;
+    });
+
+    safeAutoTable(pdf, {
+      startY: yPos,
+      head: [['#', 'Description', 'OK', 'N/A', 'C1/C2', 'C3', 'N/V']],
+      body: tableData,
+      styles: {
+        fontSize: 7,
+        cellPadding: 2,
+        lineColor: [200, 200, 200],
+        lineWidth: 0.2
+      },
+      headStyles: {
+        fillColor: [70, 130, 180],
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+        fontSize: 7
+      },
       columnStyles: {
-        0: { cellWidth: pageWidth - 2 * margin }
+        0: { cellWidth: 15, halign: 'center' },
+        1: { cellWidth: 95 },
+        2: { cellWidth: 12, halign: 'center' },
+        3: { cellWidth: 12, halign: 'center' },
+        4: { cellWidth: 15, halign: 'center' },
+        5: { cellWidth: 12, halign: 'center' },
+        6: { cellWidth: 12, halign: 'center' }
       },
       margin: { left: margin, right: margin }
-    }));
-    yPosition = (pdf as any).lastAutoTable.finalY + 15;
+    });
+
+    yPos = (pdf as any).lastAutoTable?.finalY + 10 || yPos + 100;
   }
 
-  // Installation Details
-  if (installationDetails.length > 0) {
-    const installationData = installationDetails.map(detail => [detail]);
-    
-    safeAutoTable(pdf, enhanceTableStyling({
-      startY: yPosition,
-      head: [['Installation Configuration Details']],
-      body: installationData,
-      columnStyles: {
-        0: { cellWidth: pageWidth - 2 * margin }
-      },
-      margin: { left: margin, right: margin }
-    }));
-    yPosition = (pdf as any).lastAutoTable.finalY + 15;
-  }
+  // ==================== TEST INSTRUMENT & INSPECTOR DETAILS ====================
 
-  // PAGE 3+ - CIRCUIT SCHEDULE AND TEST RESULTS
-  if (formattedTestResults.length > 0 && includeTestResults) {
-    pdf.addPage();
-    yPosition = 25;
-
-    pdf.setFontSize(14);
-    pdf.setFont('helvetica', 'bold');
-    pdf.setTextColor(51, 51, 51);
-    pdf.text('SCHEDULE OF CIRCUIT DETAILS AND TEST RESULTS', margin, yPosition);
-    pdf.setDrawColor(255, 204, 0);
-    pdf.setLineWidth(2);
-    pdf.line(margin, yPosition + 3, pageWidth - margin, yPosition + 3);
-    yPosition += 15;
-
-    // Enhanced circuit schedule
-    if (formattedCircuits.length > 0) {
-      yPosition = template.addCircuitScheduleTable(pdf, formattedCircuits, yPosition);
-      yPosition += 10;
-    }
-
-    // Enhanced test results
-    yPosition = template.addTestResultsTable(pdf, formattedTestResults, yPosition);
-    
-    // Add comprehensive landscape test results page
-    template.addTestResultsLandscapePage(pdf, formattedTestResults);
-  }
-
-  // INSPECTION CHECKLIST (Enhanced)
-  if (includeInspectionChecklist && (formData.inspectionItems?.length > 0 || inspectionItems.length > 0)) {
-    pdf.addPage();
-    yPosition = 25;
-    
-    const itemsToUse = formData.inspectionItems?.length > 0 ? formData.inspectionItems : inspectionItems;
-    yPosition = template.addInspectionChecklistSection(pdf, itemsToUse, yPosition);
-  }
-
-  // OBSERVATIONS AND DEFECTS
-  if (formattedObservations.length > 0) {
-    yPosition = addNewPageIfNeeded(pdf, yPosition, 80);
-    
-    pdf.setFontSize(14);
-    pdf.setFont('helvetica', 'bold');
-    pdf.setTextColor(51, 51, 51);
-    pdf.text('SCHEDULE OF ITEMS INSPECTED AND RECORD OF OBSERVATIONS', margin, yPosition);
-    pdf.setDrawColor(255, 204, 0);
-    pdf.setLineWidth(2);
-    pdf.line(margin, yPosition + 3, pageWidth - margin, yPosition + 3);
-    yPosition += 15;
-
-    // Enhanced observations with photos
-    for (let index = 0; index < formattedObservations.length; index++) {
-      const obs = formattedObservations[index];
-      yPosition = addNewPageIfNeeded(pdf, yPosition, 50);
-      
-      // Observation header
-      pdf.setFontSize(11);
-      pdf.setFont('helvetica', 'bold');
-      pdf.setTextColor(51, 51, 51);
-      pdf.text(`${index + 1}. [${obs.defectCode}] ${obs.item}`, margin, yPosition);
-      yPosition += 7;
-      
-      // Classification
-      pdf.setFontSize(9);
-      pdf.setFont('helvetica', 'normal');
-      pdf.setTextColor(80, 80, 80);
-      pdf.text(`Classification: ${obs.codeDescription}`, margin + 5, yPosition);
-      yPosition += 6;
-      
-      // Description
-      if (obs.description) {
-        pdf.setTextColor(0, 0, 0);
-        const descLines = pdf.splitTextToSize(`Description: ${obs.description}`, pageWidth - 2 * margin - 5);
-        pdf.text(descLines, margin + 5, yPosition);
-        yPosition += descLines.length * 5;
-      }
-      
-      // Recommendation
-      if (obs.recommendation) {
-        yPosition += 2;
-        pdf.setTextColor(0, 0, 0);
-        const recLines = pdf.splitTextToSize(`Recommendation: ${obs.recommendation}`, pageWidth - 2 * margin - 5);
-        pdf.text(recLines, margin + 5, yPosition);
-        yPosition += recLines.length * 5;
-      }
-      
-      // Rectified status
-      pdf.setFontSize(8);
-      pdf.setFont('helvetica', 'bold');
-      if (obs.rectified) {
-        pdf.setTextColor(34, 139, 34); // Green for rectified
-      } else {
-        pdf.setTextColor(178, 34, 34); // Red for not rectified
-      }
-      pdf.text(`Status: ${obs.rectified ? 'Rectified' : 'Not Rectified'}`, margin + 5, yPosition);
-      pdf.setTextColor(0, 0, 0); // Reset to black
-      yPosition += 6;
-      
-      // Fetch and add photos for this observation
-      const originalObs = (formData.observations || observations)[index];
-      if (originalObs?.id) {
-        const photos = await fetchObservationPhotos(originalObs.id);
-        
-        if (photos.length > 0) {
-          yPosition += 3;
-          pdf.setFontSize(9);
-          pdf.setFont('helvetica', 'italic');
-          pdf.setTextColor(0, 0, 0);
-          pdf.text(`Photo Evidence (${photos.length} photo${photos.length > 1 ? 's' : ''}):`, margin + 5, yPosition);
-          yPosition += 6;
-          
-          for (const photoUrl of photos) {
-            yPosition = addNewPageIfNeeded(pdf, yPosition, 80);
-            
-            // Add photo border
-            pdf.setDrawColor(200, 200, 200);
-            pdf.setLineWidth(0.5);
-            const photoHeight = await addPhotoToPDF(pdf, photoUrl, margin + 10, yPosition, 90, 70);
-            
-            if (photoHeight > 0) {
-              pdf.rect(margin + 9, yPosition - 1, 92, photoHeight + 2);
-              yPosition += photoHeight + 5;
-            }
-          }
-        }
-      }
-      
-      // Separator line
-      yPosition += 5;
-      pdf.setDrawColor(220, 220, 220);
-      pdf.setLineWidth(0.3);
-      pdf.line(margin, yPosition, pageWidth - margin, yPosition);
-      yPosition += 10;
-    }
-  }
-
-  // PROFESSIONAL DECLARATION SECTION
   pdf.addPage();
-  yPosition = 25;
+  yPos = margin;
 
-  pdf.setFontSize(14);
-  pdf.setFont('helvetica', 'bold');
-  pdf.setTextColor(51, 51, 51);
-  pdf.text('DECLARATION AND CERTIFICATION', margin, yPosition);
-  pdf.setDrawColor(255, 204, 0);
-  pdf.setLineWidth(2);
-  pdf.line(margin, yPosition + 3, pageWidth - margin, yPosition + 3);
-  yPosition += 15;
+  // MFT Details
+  yPos = drawSectionHeader(pdf, 'MFT - MULTI FUNCTIONAL TESTER', yPos, pageWidth);
 
-  // Enhanced declaration text
-  const declarationText = [
-    'I/We, being the person(s) responsible for the inspection and testing of the electrical installation',
-    'described in this report, having exercised reasonable skill and care when carrying out the inspection',
-    'and testing, hereby declare that the information in this report, including the observations and the',
-    'attached schedules, provides an accurate assessment of the condition of the electrical installation',
-    'taking into account the stated extent and limitations of this inspection.',
-    '',
-    'This certificate is issued in accordance with BS 7671:2018 (IET Wiring Regulations) and complies',
-    'with the requirements for electrical installation condition reporting as specified in the regulations.'
-  ];
+  yPos = drawFormRow(pdf, 'Test Instrument Make/Model:', sanitizedFormData.testInstrumentMake || '', margin + 2, yPos, 55, pageWidth - margin * 2 - 60);
+  yPos = drawFormRow(pdf, 'Serial Number:', sanitizedFormData.testInstrumentSerial || '', margin + 2, yPos, 35, 50);
+  yPos = drawFormRow(pdf, 'Calibration Date:', sanitizedFormData.calibrationDate ? formatDateTime(sanitizedFormData.calibrationDate) : '', margin + 2, yPos, 38, 35);
+  yPos = drawFormRow(pdf, 'Test Temperature (°C):', sanitizedFormData.testTemperature || '', margin + 2, yPos, 45, 25);
 
-  pdf.setFontSize(10);
+  yPos += 8;
+
+  // Inspector Declaration
+  yPos = drawSectionHeader(pdf, 'INSPECTOR DECLARATION', yPos, pageWidth);
+
+  pdf.setFontSize(7);
   pdf.setFont('helvetica', 'normal');
-  declarationText.forEach((line, index) => {
-    if (line.trim() !== '') {
-      pdf.text(line, margin, yPosition + (index * 5));
-    }
-  });
-  yPosition += declarationText.length * 5 + 10;
+  const inspectorDecl = 'I/We, being the person(s) responsible for the inspection and testing of the electrical installation (as indicated by my/our signatures below), particulars of which are described above, having exercised reasonable skill and care when carrying out the inspection and testing, hereby declare that the information in this report, including the observations and the attached schedules, provides an accurate assessment of the condition of the electrical installation taking into account the stated extent and limitations in section D of this report.';
+  const inspDeclLines = pdf.splitTextToSize(inspectorDecl, pageWidth - margin * 2 - 5);
+  pdf.text(inspDeclLines, margin + 2, yPos + 3);
+  yPos += inspDeclLines.length * 3 + 5;
 
-  // Professional signature section
-  pdf.setFontSize(12);
-  pdf.setFont('helvetica', 'bold');
-  pdf.text('INSPECTOR CERTIFICATION', margin, yPosition);
-  yPosition += 10;
+  yPos = drawFormRow(pdf, 'Inspector Name:', sanitizedFormData.inspectorName || '', margin + 2, yPos, 35, 60);
+  yPos = drawFormRow(pdf, 'Professional Qualifications:', sanitizedFormData.inspectorQualifications || '', margin + 2, yPos, 50, 80);
+  yPos = drawFormRow(pdf, 'Company/Organisation:', sanitizedFormData.companyName || sanitizedFormData.inspectorCompany || '', margin + 2, yPos, 48, 80);
+  yPos = drawFormRow(pdf, 'Date of Declaration:', formatDateTime(new Date()), margin + 2, yPos, 42, 35);
 
-  // Signature fields in professional layout
-  const sigFields = [
-    ['Inspector Name:', inspectorDetails.name],
-    ['Qualifications:', inspectorDetails.qualifications],
-    ['Registration No.:', inspectorDetails.registrationNumber],
-    ['Company:', inspectorDetails.company],
-    ['Date:', formatDateTime(new Date())]
-  ];
+  yPos += 10;
+
+  // SIGNATURE BOXES
+  yPos = drawSectionHeader(pdf, 'AUTHORISATION SIGNATURES', yPos, pageWidth);
+
+  const sigBoxWidth = (pageWidth - margin * 2 - 10) / 2;
+  const sigBoxHeight = 70;
+
+  // Inspected By box
+  pdf.setDrawColor(200, 200, 200);
+  pdf.setLineWidth(0.5);
+  pdf.rect(margin, yPos, sigBoxWidth, sigBoxHeight);
 
   pdf.setFontSize(9);
-  sigFields.forEach(([label, value]) => {
-    pdf.setFont('helvetica', 'bold');
-    pdf.text(label, margin, yPosition);
-    pdf.setFont('helvetica', 'normal');
-    pdf.text(value, margin + 35, yPosition);
-    yPosition += 8;
-  });
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('INSPECTED BY:', margin + 3, yPos + 6);
 
-  yPosition += 5;
+  let sigY = yPos + 12;
+  pdf.setFontSize(7);
+  pdf.setFont('helvetica', 'normal');
+  pdf.text('Name (Capitals):', margin + 3, sigY);
+  pdf.text(sanitizedFormData.inspectedByName || '', margin + 35, sigY);
 
-  // Digital signature integration
-  if (includeDigitalSignatures && formData.inspectorSignature) {
-    await addDigitalSignature(pdf, {
-      signature: formData.inspectorSignature,
-      timestamp: new Date(),
-      location: inspectorDetails.company,
-      reason: 'EICR Certification'
-    }, margin, yPosition, 80, 30);
-  } else {
-    // Signature box placeholder
-    pdf.setDrawColor(200, 200, 200);
-    pdf.setLineWidth(0.5);
-    pdf.rect(margin, yPosition, 80, 25);
-    pdf.setFontSize(8);
-    pdf.setTextColor(150, 150, 150);
-    pdf.text('Digital Signature', margin + 2, yPosition + 15);
-    pdf.setTextColor(0, 0, 0);
+  sigY += 6;
+  pdf.text('Signature:', margin + 3, sigY);
+  // Add signature if available
+  if (sanitizedFormData.inspectedBySignature && sanitizedFormData.inspectedBySignature.startsWith('data:image/')) {
+    try {
+      pdf.addImage(sanitizedFormData.inspectedBySignature, 'PNG', margin + 30, sigY - 3, 40, 15);
+    } catch (e) {
+      console.warn('Failed to add inspected by signature');
+    }
   }
 
-  // Add professional watermark
+  sigY += 18;
+  pdf.text('For/on behalf of:', margin + 3, sigY);
+  pdf.text(sanitizedFormData.inspectedByForOnBehalfOf || '', margin + 35, sigY);
+
+  sigY += 6;
+  pdf.text('Position:', margin + 3, sigY);
+  pdf.text(sanitizedFormData.inspectedByPosition || '', margin + 25, sigY);
+
+  sigY += 6;
+  pdf.text('Address:', margin + 3, sigY);
+  const inspAddr = (sanitizedFormData.inspectedByAddress || '').substring(0, 50);
+  pdf.text(inspAddr, margin + 22, sigY);
+
+  sigY += 6;
+  pdf.text('CP Scheme:', margin + 3, sigY);
+  pdf.text(sanitizedFormData.inspectedByCpScheme || (sanitizedFormData.inspectedByCpSchemeNA ? 'N/A' : ''), margin + 28, sigY);
+
+  // Report Authorised By box
+  const rightBoxX = margin + sigBoxWidth + 10;
+  pdf.rect(rightBoxX, yPos, sigBoxWidth, sigBoxHeight);
+
+  pdf.setFontSize(9);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('REPORT AUTHORISED FOR ISSUE BY:', rightBoxX + 3, yPos + 6);
+
+  sigY = yPos + 12;
+  pdf.setFontSize(7);
+  pdf.setFont('helvetica', 'normal');
+  pdf.text('Name (Capitals):', rightBoxX + 3, sigY);
+  pdf.text(sanitizedFormData.reportAuthorisedByName || '', rightBoxX + 35, sigY);
+  pdf.text('Date:', rightBoxX + sigBoxWidth - 30, sigY);
+  pdf.text(sanitizedFormData.reportAuthorisedByDate ? formatDateTime(sanitizedFormData.reportAuthorisedByDate) : '', rightBoxX + sigBoxWidth - 15, sigY);
+
+  sigY += 6;
+  pdf.text('Signature:', rightBoxX + 3, sigY);
+  if (sanitizedFormData.reportAuthorisedBySignature && sanitizedFormData.reportAuthorisedBySignature.startsWith('data:image/')) {
+    try {
+      pdf.addImage(sanitizedFormData.reportAuthorisedBySignature, 'PNG', rightBoxX + 30, sigY - 3, 40, 15);
+    } catch (e) {
+      console.warn('Failed to add authorised by signature');
+    }
+  }
+
+  sigY += 18;
+  pdf.text('For/on behalf of:', rightBoxX + 3, sigY);
+  pdf.text(sanitizedFormData.reportAuthorisedByForOnBehalfOf || '', rightBoxX + 35, sigY);
+
+  sigY += 6;
+  pdf.text('Position:', rightBoxX + 3, sigY);
+  pdf.text(sanitizedFormData.reportAuthorisedByPosition || '', rightBoxX + 25, sigY);
+
+  sigY += 6;
+  pdf.text('Address:', rightBoxX + 3, sigY);
+  const authAddr = (sanitizedFormData.reportAuthorisedByAddress || '').substring(0, 50);
+  pdf.text(authAddr, rightBoxX + 22, sigY);
+
+  sigY += 6;
+  pdf.text('Membership No:', rightBoxX + 3, sigY);
+  pdf.text(sanitizedFormData.reportAuthorisedByMembershipNo || '', rightBoxX + 35, sigY);
+
+  yPos += sigBoxHeight + 10;
+
+  // ==================== GUIDANCE FOR RECIPIENTS ====================
+
+  yPos = drawSectionHeader(pdf, 'GUIDANCE FOR RECIPIENTS', yPos, pageWidth);
+
+  pdf.setFontSize(7);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('This Report is an important and valuable document which should be retained for future reference.', margin + 2, yPos + 3);
+  yPos += 8;
+
+  const guidanceCol1 = [
+    '1. The purpose of this Report is to confirm, as far as reasonably practicable, whether or not the electrical installation is in a satisfactory condition for continued service.',
+    '2. This Report is only valid if accompanied by the Inspection Schedule(s) and the Schedule(s) of Circuit Details and Test Results.',
+    '3. The \'original\' Report should be retained in a safe place and be made available to any person inspecting or undertaking work on the electrical installation in the future.',
+    '4. For items classified as C1 (\'Danger present\') the safety of those using the installation is at risk, and it is recommended that a skilled person undertakes the necessary remedial work immediately.',
+    '5. For items classified as C2 (\'Potentially dangerous\') it is recommended that a skilled person undertakes the necessary remedial work as a matter of urgency.',
+  ];
+
+  const guidanceCol2 = [
+    '6. Where it has been stated that an observation requires further investigation (code FI) the inspection has revealed an apparent deficiency which could not be fully identified. Such observations should be investigated without delay.',
+    '7. For safety reasons, the electrical installation should be re-inspected at appropriate intervals by a skilled person. The recommended date is stated in Section F of the Report.',
+    '8. Where the installation includes an RCD it should be tested six-monthly by pressing the button marked \'T\' or \'Test\'.',
+    '9. Where the installation includes an AFDD having a manual test facility it should be tested six-monthly by pressing the test button.',
+    '10. Where the installation includes an SPD the status indicator should be checked to confirm it is in operational condition.',
+  ];
+
+  pdf.setFont('helvetica', 'normal');
+
+  const colWidth = (pageWidth - margin * 2 - 10) / 2;
+  let col1Y = yPos;
+  let col2Y = yPos;
+
+  guidanceCol1.forEach(text => {
+    const lines = pdf.splitTextToSize(text, colWidth - 5);
+    pdf.text(lines, margin + 2, col1Y);
+    col1Y += lines.length * 3 + 2;
+  });
+
+  guidanceCol2.forEach(text => {
+    const lines = pdf.splitTextToSize(text, colWidth - 5);
+    pdf.text(lines, margin + colWidth + 8, col2Y);
+    col2Y += lines.length * 3 + 2;
+  });
+
+  // ==================== ADD WATERMARK & FOOTER ====================
+
   addProfessionalWatermark(pdf, 'ORIGINAL CERTIFICATE', 0.05);
 
-  // Enhanced footer with quality metrics
   if (includeFooter) {
     const totalPages = pdf.getNumberOfPages();
     for (let i = 1; i <= totalPages; i++) {
       pdf.setPage(i);
-      template.addFooter(pdf, i, totalPages, { 
-        ...formData, 
-        ...companyBranding,
-        qualityScore: qualityMetrics.overallScore
-      });
+      const currentPageHeight = pdf.internal.pageSize.getHeight();
+      const currentPageWidth = pdf.internal.pageSize.getWidth();
+
+      // Footer line
+      pdf.setDrawColor(200, 200, 200);
+      pdf.setLineWidth(0.5);
+      pdf.line(margin, currentPageHeight - 18, currentPageWidth - margin, currentPageHeight - 18);
+
+      // BS 7671 acknowledgement
+      pdf.setFontSize(6);
+      pdf.setFont('helvetica', 'normal');
+      pdf.setTextColor(128, 128, 128);
+      pdf.text('Acknowledgement: This certificate is based on the model in appendix 6 of BS 7671: 2018 (IET Wiring Regulations)', margin, currentPageHeight - 12);
+
+      // Company info
+      if (sanitizedFormData.companyName) {
+        let footerText = sanitizedFormData.companyName;
+        if (sanitizedFormData.companyPhone) footerText += ` | Tel: ${sanitizedFormData.companyPhone}`;
+        if (sanitizedFormData.companyEmail) footerText += ` | ${sanitizedFormData.companyEmail}`;
+        pdf.text(footerText, currentPageWidth / 2, currentPageHeight - 8, { align: 'center' });
+      }
+
+      // Page number
+      pdf.setFontSize(8);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setTextColor(0, 0, 0);
+      pdf.text(`Page ${i} of ${totalPages}`, currentPageWidth - margin, currentPageHeight - 8, { align: 'right' });
     }
   }
 
-  // Generate quality assessment report in console
-  if (validation.criticalIssues.length > 0 || qualityMetrics.overallScore < 80) {
-    console.warn('Certificate Quality Assessment:');
-    console.warn(generateCompletionReport(validation, qualityMetrics));
-  }
+  // ==================== SAVE PDF ====================
 
-  console.log('Enhanced EICR PDF generation complete with professional features');
-  
-  // Professional filename using standardised generator
   const { generatePdfFilename } = await import('./pdfFilenameGenerator');
   const filename = generatePdfFilename(
     'EICR',
     certificateId,
-    formData.clientName || 'Client',
-    formData.inspectionDate || new Date()
+    sanitizedFormData.clientName || 'Client',
+    sanitizedFormData.inspectionDate || new Date()
   );
-  
+
   pdf.save(filename);
   console.log(`Professional EICR certificate saved: ${filename}`);
   console.log(`Quality Score: ${qualityMetrics.overallScore}% | Completion: ${validation.completionScore}%`);

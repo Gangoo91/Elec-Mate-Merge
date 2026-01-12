@@ -3,6 +3,8 @@ import { EICRFormProvider, useEICRForm } from './eicr/EICRFormProvider';
 import EICRFormHeader from './eicr/EICRFormHeader';
 import EICRFormContent from './eicr/EICRFormContent';
 import { BoardScanFlow } from './testing/BoardScanFlow';
+import { getCableSizeForRating, getCpcForLive, BS_STANDARD_MAP } from '@/utils/circuitDefaults';
+import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
 
 const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   const {
@@ -32,30 +34,61 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     images: string[];
   }) => {
     // Convert detected circuits to test results format matching TestResult type
-    const newCircuits = data.circuits.map((circuit, index) => ({
-      id: `circuit-${Date.now()}-${index}`,
-      circuitNumber: circuit.index?.toString() || String(index + 1),
-      circuitDesignation: `C${circuit.index?.toString() || String(index + 1)}`,
-      circuitDescription: circuit.label_text || `Circuit ${index + 1}`,
-      circuitType: circuit.circuit_type || '',
-      type: circuit.circuit_type || '',
-      protectiveDeviceType: circuit.device?.type || 'MCB',
-      protectiveDeviceRating: circuit.device?.rating_amps?.toString() || '',
-      protectiveDeviceCurve: circuit.device?.curve || '',
-      phaseType: circuit.phase === '3P' ? '3P' : '1P' as '1P' | '3P',
-      // Default test values
-      r1r2: '',
-      r2: '',
-      zs: '',
-      rcdRating: '',
-      rcdType: '',
-      polarity: '',
-      insulationTestVoltage: '500V',
-      insulationLiveNeutral: '',
-      insulationLiveEarth: '',
-      autoFilled: true,
-      notes: `AI detected circuit - please verify`,
-    }));
+    const newCircuits = data.circuits.map((circuit, index) => {
+      const ratingAmps = circuit.device?.rating_amps || null;
+      const deviceCategory = circuit.device?.category || 'MCB';
+      const deviceCurve = circuit.device?.curve || 'B';
+
+      // Get cable size from detected rating
+      const liveSize = getCableSizeForRating(ratingAmps) || '2.5mm';
+      const cpcSize = getCpcForLive(liveSize) || '1.5mm';
+
+      // Get BS standard from device category
+      const bsStandard = BS_STANDARD_MAP[deviceCategory] || 'MCB (BS EN 60898)';
+
+      // Calculate Max Zs from detected device
+      const maxZs = getMaxZsFromDeviceDetails(
+        bsStandard,
+        deviceCurve,
+        ratingAmps?.toString() || '',
+        circuit.label_text || ''
+      );
+
+      return {
+        id: `circuit-${Date.now()}-${index}`,
+        circuitNumber: circuit.index?.toString() || String(index + 1),
+        circuitDesignation: `C${circuit.index?.toString() || String(index + 1)}`,
+        circuitDescription: circuit.label_text || `Circuit ${index + 1}`,
+        circuitType: circuit.circuit_type || '',
+        type: circuit.circuit_type || '',
+        // Use DETECTED device values
+        protectiveDeviceType: deviceCategory,
+        protectiveDeviceRating: ratingAmps?.toString() || '',
+        protectiveDeviceCurve: deviceCurve,
+        bsStandard: bsStandard,
+        // Cable sizes from detected rating
+        liveSize: liveSize,
+        cpcSize: cpcSize,
+        // Max Zs calculated from BS 7671 tables
+        maxZs: maxZs?.toString() || '',
+        phaseType: circuit.phase === '3P' ? '3P' : '1P' as '1P' | '3P',
+        // RCD details if RCBO
+        rcdBsStandard: deviceCategory === 'RCBO' ? 'RCBO (BS EN 61009)' : '',
+        rcdType: deviceCategory === 'RCBO' ? 'A' : '',
+        rcdRating: deviceCategory === 'RCBO' ? '30' : '',
+        // Default test values - user must fill these
+        r1r2: '',
+        r2: '',
+        zs: '',
+        polarity: '',
+        insulationTestVoltage: '500',
+        insulationLiveNeutral: '',
+        insulationLiveEarth: '',
+        rcdOneX: '',
+        autoFilled: true,
+        notes: '',
+      };
+    });
 
     // Merge with existing circuits or replace
     const existingCircuits = formData.scheduleOfTests || [];

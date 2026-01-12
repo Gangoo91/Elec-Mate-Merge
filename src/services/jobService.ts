@@ -27,7 +27,7 @@ export interface Job {
 
 export const getJobs = async (): Promise<Job[]> => {
   const { data, error } = await supabase
-    .from('jobs')
+    .from('employer_jobs')
     .select('*')
     .is('archived_at', null)
     .eq('is_template', false)
@@ -44,7 +44,7 @@ export const getJobs = async (): Promise<Job[]> => {
 
 export const archiveJob = async (id: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('jobs')
+    .from('employer_jobs')
     .update({ archived_at: new Date().toISOString(), updated_at: new Date().toISOString() })
     .eq('id', id);
   
@@ -58,7 +58,7 @@ export const archiveJob = async (id: string): Promise<boolean> => {
 
 export const setJobAsTemplate = async (id: string, isTemplate: boolean): Promise<boolean> => {
   const { error } = await supabase
-    .from('jobs')
+    .from('employer_jobs')
     .update({ is_template: isTemplate, updated_at: new Date().toISOString() })
     .eq('id', id);
   
@@ -72,7 +72,7 @@ export const setJobAsTemplate = async (id: string, isTemplate: boolean): Promise
 
 export const getJobById = async (id: string): Promise<Job | null> => {
   const { data, error } = await supabase
-    .from('jobs')
+    .from('employer_jobs')
     .select('*')
     .eq('id', id)
     .single();
@@ -87,7 +87,7 @@ export const getJobById = async (id: string): Promise<Job | null> => {
 
 export const getActiveJobs = async (): Promise<Job[]> => {
   const { data, error } = await supabase
-    .from('jobs')
+    .from('employer_jobs')
     .select('*')
     .eq('status', 'Active')
     .order('start_date');
@@ -107,7 +107,7 @@ export const createJob = async (
   if (!userData.user) throw new Error('Not authenticated');
 
   const { data, error } = await supabase
-    .from('jobs')
+    .from('employer_jobs')
     .insert({ ...job, user_id: userData.user.id })
     .select()
     .single();
@@ -125,7 +125,7 @@ export const updateJob = async (
   updates: Partial<Job>
 ): Promise<Job | null> => {
   const { data, error } = await supabase
-    .from('jobs')
+    .from('employer_jobs')
     .update({ ...updates, updated_at: new Date().toISOString() })
     .eq('id', id)
     .select()
@@ -144,7 +144,7 @@ export const updateJobStatus = async (
   status: JobStatus
 ): Promise<boolean> => {
   const { error } = await supabase
-    .from('jobs')
+    .from('employer_jobs')
     .update({ status, updated_at: new Date().toISOString() })
     .eq('id', id);
   
@@ -158,7 +158,7 @@ export const updateJobStatus = async (
 
 export const getJobsWithLocations = async (): Promise<Job[]> => {
   const { data, error } = await supabase
-    .from('jobs')
+    .from('employer_jobs')
     .select('*')
     .not('lat', 'is', null)
     .not('lng', 'is', null);
@@ -173,7 +173,7 @@ export const getJobsWithLocations = async (): Promise<Job[]> => {
 
 export const deleteJob = async (id: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('jobs')
+    .from('employer_jobs')
     .delete()
     .eq('id', id);
   

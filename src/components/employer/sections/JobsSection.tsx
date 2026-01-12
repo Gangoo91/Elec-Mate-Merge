@@ -35,10 +35,10 @@ export function JobsSection() {
     queryKey: ['all-job-assignments'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('job_assignments')
+        .from('employer_job_assignments')
         .select(`
           job_id,
-          employee:employees(id, name, avatar_initials, photo_url)
+          employee:employer_employees(id, name, avatar_initials, photo_url)
         `);
       if (error) throw error;
       return data || [];
@@ -70,17 +70,17 @@ export function JobsSection() {
       .on('postgres_changes', {
         event: '*',
         schema: 'public',
-        table: 'job_assignments'
+        table: 'employer_job_assignments'
       }, () => {
-        queryClient.invalidateQueries({ queryKey: ['jobs'] });
+        queryClient.invalidateQueries({ queryKey: ['employer-jobs'] });
         queryClient.invalidateQueries({ queryKey: ['all-job-assignments'] });
       })
       .on('postgres_changes', {
         event: '*',
         schema: 'public',
-        table: 'jobs'
+        table: 'employer_jobs'
       }, () => {
-        queryClient.invalidateQueries({ queryKey: ['jobs'] });
+        queryClient.invalidateQueries({ queryKey: ['employer-jobs'] });
       })
       .subscribe();
 

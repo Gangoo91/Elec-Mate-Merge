@@ -152,11 +152,12 @@ const InstallationVerifyPage = () => {
 
     try {
       const image = images[0];
-      const fileName = `verify-${Date.now()}.jpg`;
-      const { error: uploadError } = await supabase.storage.from('visual-analysis').upload(fileName, image);
+      const { data: { user } } = await supabase.auth.getUser();
+      const fileName = `${user?.id}/visual-analysis/verify-${Date.now()}.jpg`;
+      const { error: uploadError } = await supabase.storage.from('visual-uploads').upload(fileName, image);
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage.from('visual-analysis').getPublicUrl(fileName);
+      const { data: { publicUrl } } = supabase.storage.from('visual-uploads').getPublicUrl(fileName);
 
       const certLabel = certificateTypes.find(c => c.id === selectedCertType)?.fullName || '';
       const propLabel = propertyTypes.find(p => p.id === selectedPropertyType)?.label || '';
@@ -164,9 +165,16 @@ const InstallationVerifyPage = () => {
 
       const { data, error } = await supabase.functions.invoke('visual-analysis', {
         body: {
-          imageUrl: publicUrl,
-          analysisMode: 'installation_verify',
-          userContext: `Certificate: ${certLabel}. Property: ${propLabel}. Scope: ${scopeLabels}. Notes: ${additionalNotes}`
+          primary_image: publicUrl,
+          analysis_settings: {
+            mode: 'installation_verify',
+            confidence_threshold: 0.5,
+            enable_bounding_boxes: false,
+            focus_areas: [`Certificate: ${certLabel}`, `Property: ${propLabel}`, `Scope: ${scopeLabels}`, additionalNotes].filter(Boolean),
+            remove_background: false,
+            bs7671_compliance: true,
+            fast_mode: false
+          }
         }
       });
 

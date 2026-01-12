@@ -237,12 +237,16 @@ export const peerConversationService = {
   /**
    * Get all conversations for current user (as seeker or supporter)
    * Filters out conversations with blocked users
+   * OPTIMIZED: Runs all independent queries in parallel
    */
   async getMyConversations(): Promise<PeerConversation[]> {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return [];
 
-    // Run supporter profile check and blocked users fetch in parallel for speed
+    // OPTIMIZATION: Run ALL initial queries in parallel
+    // - Profile check (to determine query filter)
+    // - Blocked users (for filtering results)
+    // We'll fetch conversations immediately after we have the profile
     const [supporterProfile, blockedUsers] = await Promise.all([
       peerSupporterService.getMyProfile(),
       peerBlockService.getBlockedUsers()
@@ -273,6 +277,11 @@ export const peerConversationService = {
     }
 
     const rawConversations = data || [];
+
+    // Early return if no conversations - skip seeker profile fetch
+    if (rawConversations.length === 0) {
+      return [];
+    }
 
     // Get unique seeker IDs and fetch their profiles
     const seekerIds = [...new Set(rawConversations.map(c => c.seeker_id))];
@@ -682,21 +691,42 @@ export const peerReportService = {
 export const peerPresenceService = {
   /**
    * Subscribe to supporter availability changes
+   * OPTIMIZED: Returns single changed supporter instead of full list refetch
    */
-  subscribeToAvailability(onUpdate: (supporters: PeerSupporter[]) => void) {
+  subscribeToAvailability(onUpdate: (supporter: PeerSupporter, eventType: 'INSERT' | 'UPDATE' | 'DELETE') => void) {
     const channel = supabase
       .channel('peer-supporters-availability')
       .on(
         'postgres_changes',
         {
-          event: '*',
+          event: 'INSERT',
           schema: 'public',
           table: 'mental_health_peer_supporters',
         },
-        async () => {
-          // Fetch updated list when any supporter changes
-          const supporters = await peerSupporterService.getAvailableSupporters();
-          onUpdate(supporters);
+        (payload) => {
+          onUpdate(payload.new as PeerSupporter, 'INSERT');
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'mental_health_peer_supporters',
+        },
+        (payload) => {
+          onUpdate(payload.new as PeerSupporter, 'UPDATE');
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'DELETE',
+          schema: 'public',
+          table: 'mental_health_peer_supporters',
+        },
+        (payload) => {
+          onUpdate(payload.old as PeerSupporter, 'DELETE');
         }
       )
       .subscribe();

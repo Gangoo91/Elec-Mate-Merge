@@ -24,7 +24,7 @@ export interface Employee {
 
 export const getEmployees = async (): Promise<Employee[]> => {
   const { data, error } = await supabase
-    .from('employees')
+    .from('employer_employees')
     .select('*')
     .order('name');
   
@@ -38,7 +38,7 @@ export const getEmployees = async (): Promise<Employee[]> => {
 
 export const getEmployeeById = async (id: string): Promise<Employee | null> => {
   const { data, error } = await supabase
-    .from('employees')
+    .from('employer_employees')
     .select('*')
     .eq('id', id)
     .single();
@@ -55,7 +55,7 @@ export const createEmployee = async (
   employee: Omit<Employee, 'id' | 'created_at' | 'updated_at'>
 ): Promise<Employee> => {
   const { data, error } = await supabase
-    .from('employees')
+    .from('employer_employees')
     .insert(employee)
     .select()
     .single();
@@ -73,7 +73,7 @@ export const updateEmployee = async (
   updates: Partial<Employee>
 ): Promise<Employee | null> => {
   const { data, error } = await supabase
-    .from('employees')
+    .from('employer_employees')
     .update({ ...updates, updated_at: new Date().toISOString() })
     .eq('id', id)
     .select()
@@ -89,7 +89,7 @@ export const updateEmployee = async (
 
 export const deleteEmployee = async (id: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('employees')
+    .from('employer_employees')
     .delete()
     .eq('id', id);
   
@@ -103,7 +103,7 @@ export const deleteEmployee = async (id: string): Promise<boolean> => {
 
 export const getActiveEmployees = async (): Promise<Employee[]> => {
   const { data, error } = await supabase
-    .from('employees')
+    .from('employer_employees')
     .select('*')
     .eq('status', 'Active')
     .order('name');

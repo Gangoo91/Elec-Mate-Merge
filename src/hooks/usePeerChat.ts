@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient, QueryClient, keepPreviousData } from '@tanstack/react-query';
 import { useEffect, useRef, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -19,6 +19,37 @@ const PEER_PROFILE_KEY = ['peer-supporter-profile'];
 const AVAILABLE_SUPPORTERS_KEY = ['available-supporters'];
 
 // =====================================================
+// PREFETCH (for hover/navigation optimization)
+// =====================================================
+
+/**
+ * Prefetch Mental Health Mates data before user navigates
+ * Call this on hover over nav item for instant page load
+ */
+export function prefetchPeerSupportData(queryClient: QueryClient) {
+  // Prefetch conversations
+  queryClient.prefetchQuery({
+    queryKey: PEER_CONVERSATIONS_KEY,
+    queryFn: () => peerConversationService.getMyConversations(),
+    staleTime: 30000,
+  });
+
+  // Prefetch available supporters
+  queryClient.prefetchQuery({
+    queryKey: [...AVAILABLE_SUPPORTERS_KEY, undefined],
+    queryFn: () => peerSupporterService.getAvailableSupporters(),
+    staleTime: 30000,
+  });
+
+  // Prefetch user's supporter profile
+  queryClient.prefetchQuery({
+    queryKey: PEER_PROFILE_KEY,
+    queryFn: () => peerSupporterService.getMyProfile(),
+    staleTime: 60000,
+  });
+}
+
+// =====================================================
 // CONVERSATIONS
 // =====================================================
 
@@ -33,6 +64,7 @@ export function usePeerConversations() {
     queryFn: () => peerConversationService.getMyConversations(),
     staleTime: 30000, // Cache for 30 seconds
     gcTime: 5 * 60 * 1000, // Keep in cache for 5 minutes
+    placeholderData: keepPreviousData, // Show previous data while refetching
   });
 }
 
@@ -80,6 +112,7 @@ export function usePeerSupporterProfile() {
     enabled: !!user,
     staleTime: 60000, // Cache for 1 minute
     gcTime: 5 * 60 * 1000, // Keep in cache for 5 minutes
+    placeholderData: keepPreviousData, // Show previous data while refetching
   });
 }
 
@@ -97,6 +130,7 @@ export function useAvailableSupporters(excludeUserId?: string) {
     },
     staleTime: 30000, // Cache for 30 seconds
     gcTime: 5 * 60 * 1000, // Keep in cache for 5 minutes
+    placeholderData: keepPreviousData, // Show previous data while refetching
   });
 }
 
@@ -137,6 +171,7 @@ export function usePeerMessages(conversationId: string | undefined) {
     queryKey: [...PEER_MESSAGES_KEY, conversationId],
     queryFn: () => conversationId ? peerMessageService.getMessages(conversationId) : [],
     enabled: !!conversationId,
+    placeholderData: keepPreviousData, // Show previous messages while refetching
   });
 }
 

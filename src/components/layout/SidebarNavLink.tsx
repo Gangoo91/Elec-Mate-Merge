@@ -1,8 +1,10 @@
 
 import { useLocation } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import { NavItem } from "./SidebarNavItems";
 import SafeLink from "@/components/common/SafeLink";
+import { prefetchPeerSupportData } from "@/hooks/usePeerChat";
 
 interface SidebarNavLinkProps {
   item: NavItem;
@@ -12,6 +14,7 @@ interface SidebarNavLinkProps {
 const SidebarNavLink = ({ item, onItemClick }: SidebarNavLinkProps) => {
   try {
     const location = useLocation();
+    const queryClient = useQueryClient();
     const isActive = location.pathname === item.path || location.pathname.startsWith(`${item.path}/`);
 
     const handleClick = () => {
@@ -19,10 +22,18 @@ const SidebarNavLink = ({ item, onItemClick }: SidebarNavLinkProps) => {
       onItemClick?.();
     };
 
+    const handleMouseEnter = () => {
+      // Prefetch data for specific routes on hover
+      if (item.path === '/mental-health') {
+        prefetchPeerSupportData(queryClient);
+      }
+    };
+
     return (
       <SafeLink
         to={item.path}
         onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
         className={cn(
           "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium",
           "transition-all duration-200 ease-out",

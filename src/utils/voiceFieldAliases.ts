@@ -12,8 +12,8 @@ export const TEST_RESULT_FIELD_ALIASES: Record<string, string[]> = {
   circuitDescription: ['description', 'desc', 'circuit desc', 'circuit description', 'what is it'],
   circuitDesignation: ['designation', 'circuit designation', 'circuit ref'],
   circuitType: ['circuit type', 'type', 'ring final', 'radial', 'ring', 'lighting circuit', 'socket circuit', 'cooker circuit', 'shower circuit', 'immersion'],
-  typeOfWiring: ['wiring type', 'wiring method', 'installation method', 'wiring', 'type of wiring', 'cable type'],
-  referenceMethod: ['reference method', 'ref method', 'installation ref', 'installation method'],
+  typeOfWiring: ['wiring type', 'wiring method', 'installation method', 'wiring', 'type of wiring', 'cable type', 'clipped direct', 'conduit', 'trunking', 'free air', 'cable tray'],
+  referenceMethod: ['reference method', 'ref method', 'reference', 'method'],
   pointsServed: ['points', 'outlets', 'points served', 'number of points'],
 
   // Conductor Details
@@ -21,8 +21,8 @@ export const TEST_RESULT_FIELD_ALIASES: Record<string, string[]> = {
   cpcSize: ['cpc size', 'earth size', 'earth conductor', 'cpc', 'earth cable', 'protective conductor size'],
 
   // Protective Device
-  bsStandard: ['bs standard', 'british standard', 'standard'],
-  protectiveDeviceType: ['device type', 'breaker type', 'mcb type', 'rcbo type', 'protection', 'protective device type', 'mcb', 'rcbo'],
+  bsStandard: ['bs standard', 'british standard', 'standard', 'device standard', 'protection standard', 'breaker standard'],
+  protectiveDeviceType: ['device type', 'breaker type', 'mcb type', 'rcbo type', 'protection', 'protective device type'],
   protectiveDeviceCurve: ['curve', 'device curve', 'mcb curve', 'type b', 'type c', 'type d', 'breaker curve'],
   protectiveDeviceRating: ['rating', 'breaker rating', 'amps', 'mcb rating', 'device rating', 'protective device rating', 'breaker amps'],
   protectiveDeviceKaRating: ['ka rating', 'breaking capacity', 'fault rating', 'ka', 'fault capacity'],

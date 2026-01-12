@@ -149,6 +149,13 @@ serve(async (req) => {
       throw new Error('Primary image URL is required');
     }
 
+    if (!analysis_settings || typeof analysis_settings !== 'object') {
+      throw new Error('analysis_settings is required');
+    }
+    if (!analysis_settings.mode) {
+      throw new Error('analysis_settings.mode is required');
+    }
+
     console.log(`⚡ Starting ${analysis_settings.fast_mode ? 'FAST' : 'FULL'} visual analysis v2`, {
       mode: analysis_settings.mode,
       images: 1 + additional_images.length,
@@ -524,7 +531,7 @@ RESPONSE REQUIREMENTS:
 
     const userPrompt = getUserPrompt(analysis_settings.mode, analysis_settings.fast_mode || false);
 
-    console.log(`🚀 Calling Direct Gemini API (gemini-3-flash-preview)...`);
+    console.log(`🚀 Calling Direct Gemini API (gemini-2.0-flash)...`);
 
     // All modes now use 4000 tokens in full mode, so all need extended timeout
     // Timeout must be proportional to maxOutputTokens (2500-4000 tokens)
@@ -556,7 +563,7 @@ RESPONSE REQUIREMENTS:
     const geminiContents = [{ role: 'user', parts }];
 
     const aiResponse = await fetchWithTimeout(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`,
       {
         method: 'POST',
         headers: {

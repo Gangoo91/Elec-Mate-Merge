@@ -34,6 +34,9 @@ import { calculatePointsServed } from '@/types/autoFillTypes';
 import { getTableViewPreference, setTableViewPreference } from '@/utils/mobileTableUtils';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
 import { getDefaultBsStandard } from '@/types/protectiveDeviceTypes';
+import { createCircuitWithDefaults } from '@/utils/circuitDefaults';
+import { resolveFieldName } from '@/utils/voiceFieldAliases';
+import { resolveDropdownValue } from '@/utils/voiceDropdownResolver';
 
 interface EICScheduleOfTestingProps {
   formData: any;
@@ -66,148 +69,214 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   const orientation = useOrientation();
 
   // Voice tool call handler - connects ElevenLabs agent to component state
+  // Handles fill_eic tool with actions: add_circuit, update_field, next, previous, select, remove
   const handleVoiceToolCall = useCallback((toolName: string, params: Record<string, unknown>): string => {
-    switch (toolName) {
-      case 'add_circuit': {
-        const circuitType = params.type as string || params.description as string || '';
-        const nextNum = (testResults.length + 1).toString();
-        const newCircuit: TestResult = {
-          id: crypto.randomUUID(),
-          circuitDesignation: `C${nextNum}`,
-          circuitNumber: nextNum,
-          circuitDescription: circuitType,
-          circuitType: circuitType,
-          type: circuitType,
-          referenceMethod: '',
-          liveSize: '',
-          cpcSize: '',
-          protectiveDeviceType: '',
-          protectiveDeviceRating: '',
-          protectiveDeviceKaRating: '',
-          protectiveDeviceLocation: '',
-          bsStandard: '',
-          cableSize: '',
-          protectiveDevice: '',
-          r1r2: '',
-          r2: '',
-          ringContinuityLive: '',
-          ringContinuityNeutral: '',
-          ringR1: '',
-          ringRn: '',
-          ringR2: '',
-          insulationTestVoltage: '',
-          insulationResistance: '',
-          insulationLiveNeutral: '',
-          insulationLiveEarth: '',
-          insulationNeutralEarth: '',
-          polarity: '',
-          zs: '',
-          maxZs: '',
-          pointsServed: '',
-          rcdRating: '',
-          rcdOneX: '',
-          rcdTestButton: '',
-          afddTest: '',
-          pfc: '',
-          pfcLiveNeutral: '',
-          pfcLiveEarth: '',
-          functionalTesting: '',
-          notes: '',
-          typeOfWiring: '',
-          rcdBsStandard: '',
-          rcdType: '',
-          rcdRatingA: '',
-        };
-        setTestResults(prev => [...prev, newCircuit]);
-        setSelectedCircuitIndex(testResults.length);
-        toast.success(`Added circuit C${nextNum}${circuitType ? ` (${circuitType})` : ''}`);
-        return `Added circuit ${nextNum}${circuitType ? ` for ${circuitType}` : ''}`;
-      }
+    console.log('[Voice] Tool call:', toolName, params);
 
-      case 'set_test_result': {
-        const field = params.field as string;
-        const value = params.value as string;
-        const circuitNum = params.circuit_number as number | undefined;
-        const targetIndex = circuitNum !== undefined
-          ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`)
-          : selectedCircuitIndex;
+    // Handle fill_eic tool (the single tool for all EIC actions)
+    if (toolName === 'fill_eic' || toolName === 'fill_eicr') {
+      const action = params.action as string;
 
-        if (targetIndex >= 0 && targetIndex < testResults.length) {
-          setTestResults(prev => {
-            const updated = [...prev];
-            updated[targetIndex] = { ...updated[targetIndex], [field]: value };
-            return updated;
-          });
-          toast.success(`Set ${field} to ${value}`);
-          return `Set ${field} to ${value} on circuit ${targetIndex + 1}`;
+      switch (action) {
+        case 'add_circuit': {
+          const circuitType = params.circuit_type as string || 'other';
+          const description = params.description as string || '';
+          const nextNum = (testResults.length + 1).toString();
+
+          // Create circuit with ALL 32 fields pre-filled using BS7671 defaults
+          const newCircuit = createCircuitWithDefaults(circuitType, nextNum, description);
+
+          setTestResults(prev => [...prev, newCircuit]);
+          setSelectedCircuitIndex(testResults.length);
+          toast.success(`Added ${newCircuit.circuitType} circuit C${nextNum}`);
+          return `Added ${newCircuit.circuitType} circuit ${nextNum} with all defaults filled`;
         }
-        return 'No circuit selected - add a circuit first';
-      }
 
-      case 'next_circuit': {
-        if (selectedCircuitIndex < testResults.length - 1) {
-          const newIndex = selectedCircuitIndex + 1;
-          setSelectedCircuitIndex(newIndex);
-          toast.info(`Now on circuit ${newIndex + 1}`);
-          return `Moved to circuit ${newIndex + 1}`;
-        }
-        return 'Already on the last circuit';
-      }
+        case 'update_field': {
+          const field = params.field as string;
+          let value = params.value as string;
+          const circuitNum = params.circuit_number as number | undefined;
 
-      case 'previous_circuit': {
-        if (selectedCircuitIndex > 0) {
-          const newIndex = selectedCircuitIndex - 1;
-          setSelectedCircuitIndex(newIndex);
-          toast.info(`Now on circuit ${newIndex + 1}`);
-          return `Moved to circuit ${newIndex + 1}`;
-        }
-        return 'Already on the first circuit';
-      }
+          // Resolve spoken field name to actual property name
+          const resolvedField = resolveFieldName(field) || field;
 
-      case 'select_circuit': {
-        const num = params.circuit_number as number;
-        const idx = testResults.findIndex(r =>
-          r.circuitNumber === String(num) || r.circuitDesignation === `C${num}`
-        );
-        if (idx >= 0) {
-          setSelectedCircuitIndex(idx);
-          toast.info(`Selected circuit ${num}`);
-          return `Selected circuit ${num}`;
-        }
-        return `Circuit ${num} not found`;
-      }
+          // Resolve dropdown values (e.g., "OK" -> "Correct" for polarity)
+          value = resolveDropdownValue(resolvedField, value);
 
-      case 'remove_circuit': {
-        if (testResults.length > 0) {
-          const removed = testResults[selectedCircuitIndex];
-          setTestResults(prev => prev.filter((_, i) => i !== selectedCircuitIndex));
-          if (selectedCircuitIndex >= testResults.length - 1 && selectedCircuitIndex > 0) {
-            setSelectedCircuitIndex(prev => prev - 1);
+          const targetIndex = circuitNum !== undefined
+            ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`)
+            : selectedCircuitIndex;
+
+          if (targetIndex >= 0 && targetIndex < testResults.length) {
+            setTestResults(prev => {
+              const updated = [...prev];
+              updated[targetIndex] = { ...updated[targetIndex], [resolvedField]: value };
+              return updated;
+            });
+            toast.success(`Set ${resolvedField} to ${value}`);
+            return `Set ${resolvedField} to ${value} on circuit ${targetIndex + 1}`;
           }
-          toast.success(`Removed circuit ${removed?.circuitDesignation || selectedCircuitIndex + 1}`);
-          return `Removed circuit ${removed?.circuitDesignation}`;
+          return 'No circuit selected - add a circuit first';
         }
-        return 'No circuits to remove';
-      }
 
-      case 'set_polarity_ok': {
-        if (testResults.length > 0) {
+        case 'next': {
+          if (selectedCircuitIndex < testResults.length - 1) {
+            const newIndex = selectedCircuitIndex + 1;
+            setSelectedCircuitIndex(newIndex);
+            toast.info(`Now on circuit ${newIndex + 1}`);
+            return `Moved to circuit ${newIndex + 1}`;
+          }
+          return 'Already on the last circuit';
+        }
+
+        case 'previous': {
+          if (selectedCircuitIndex > 0) {
+            const newIndex = selectedCircuitIndex - 1;
+            setSelectedCircuitIndex(newIndex);
+            toast.info(`Now on circuit ${newIndex + 1}`);
+            return `Moved to circuit ${newIndex + 1}`;
+          }
+          return 'Already on the first circuit';
+        }
+
+        case 'select': {
+          const num = params.circuit_number as number;
+          const idx = testResults.findIndex(r =>
+            r.circuitNumber === String(num) || r.circuitDesignation === `C${num}`
+          );
+          if (idx >= 0) {
+            setSelectedCircuitIndex(idx);
+            toast.info(`Selected circuit ${num}`);
+            return `Selected circuit ${num}`;
+          }
+          return `Circuit ${num} not found`;
+        }
+
+        case 'delete_circuit': {
+          const circuitNum = params.circuit_number as number | undefined;
+          const removeIdx = circuitNum !== undefined
+            ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`)
+            : selectedCircuitIndex;
+
+          if (removeIdx >= 0 && removeIdx < testResults.length) {
+            const removed = testResults[removeIdx];
+            setTestResults(prev => {
+              // Remove the circuit
+              const filtered = prev.filter((_, i) => i !== removeIdx);
+              // Renumber all remaining circuits
+              return filtered.map((circuit, i) => ({
+                ...circuit,
+                circuitNumber: (i + 1).toString(),
+                circuitDesignation: `C${i + 1}`,
+              }));
+            });
+            // Adjust selected index if needed
+            if (selectedCircuitIndex >= testResults.length - 1 && selectedCircuitIndex > 0) {
+              setSelectedCircuitIndex(prev => Math.max(0, prev - 1));
+            }
+            toast.success(`Deleted circuit ${removed?.circuitDesignation || removeIdx + 1}, renumbered remaining`);
+            return `Deleted circuit and renumbered remaining circuits`;
+          }
+          return 'No circuits to delete';
+        }
+
+        case 'move_circuit': {
+          const circuitNum = params.circuit_number as number | undefined;
+          const toPosition = params.to_position as number | undefined;
+
+          if (circuitNum === undefined || toPosition === undefined) {
+            return 'Need both circuit_number and to_position for move';
+          }
+
+          const fromIdx = testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`);
+          const toIdx = toPosition - 1;
+
+          if (fromIdx < 0 || fromIdx >= testResults.length) {
+            return `Circuit ${circuitNum} not found`;
+          }
+          if (toIdx < 0 || toIdx >= testResults.length) {
+            return `Invalid position ${toPosition}`;
+          }
+          if (fromIdx === toIdx) {
+            return `Circuit ${circuitNum} is already at position ${toPosition}`;
+          }
+
           setTestResults(prev => {
             const updated = [...prev];
-            updated[selectedCircuitIndex] = { ...updated[selectedCircuitIndex], polarity: '✓' };
-            return updated;
+            const [movedCircuit] = updated.splice(fromIdx, 1);
+            updated.splice(toIdx, 0, movedCircuit);
+            return updated.map((circuit, i) => ({
+              ...circuit,
+              circuitNumber: (i + 1).toString(),
+              circuitDesignation: `C${i + 1}`,
+            }));
           });
-          toast.success('Polarity marked as OK');
-          return 'Polarity set to OK';
-        }
-        return 'No circuit selected';
-      }
 
-      default:
-        console.log('[Voice] Unknown tool:', toolName, params);
-        return `Unknown command: ${toolName}`;
+          setSelectedCircuitIndex(toIdx);
+          toast.success(`Moved circuit to position ${toPosition}, renumbered all circuits`);
+          return `Moved circuit ${circuitNum} to position ${toPosition}`;
+        }
+
+        case 'complete': {
+          toast.success('Schedule of tests complete!');
+          return 'Schedule marked as complete';
+        }
+
+        case 'select_board': {
+          const boardName = params.board_name as string;
+          if (!boardName) return 'Need board name to select';
+          const board = distributionBoards.find(b =>
+            b.name.toLowerCase().includes(boardName.toLowerCase()) ||
+            b.reference?.toLowerCase().includes(boardName.toLowerCase()) ||
+            b.id.toLowerCase().includes(boardName.toLowerCase())
+          );
+          if (board) {
+            setExpandedBoards(new Set([board.id]));
+            toast.success(`Switched to ${board.name}`);
+            return `Selected board: ${board.name}`;
+          }
+          return `Board "${boardName}" not found. Available: ${distributionBoards.map(b => b.name).join(', ')}`;
+        }
+
+        case 'get_missing_tests': {
+          const circuitNum = params.circuit_number as number || selectedCircuitIndex + 1;
+          const circuit = testResults.find(r =>
+            r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`
+          );
+          if (!circuit) return `Circuit ${circuitNum} not found`;
+
+          const missing: string[] = [];
+          if (!circuit.r1r2) missing.push('R1+R2');
+          if (!circuit.zs) missing.push('Zs');
+          if (!circuit.insulationLiveEarth && !circuit.insulationResistance) missing.push('insulation');
+          if (!circuit.polarity || circuit.polarity === '') missing.push('polarity');
+
+          const hasRcd = circuit.protectiveDeviceType === 'RCBO' || circuit.protectiveDeviceType === 'RCD';
+          if (hasRcd && !circuit.rcdOneX) missing.push('RCD trip time');
+
+          if (circuit.circuitType?.toLowerCase().includes('ring')) {
+            if (!circuit.ringR1) missing.push('ring R1');
+            if (!circuit.ringRn) missing.push('ring Rn');
+            if (!circuit.ringR2) missing.push('ring R2');
+          }
+
+          if (missing.length === 0) {
+            toast.success(`Circuit ${circuitNum} complete!`);
+            return `Circuit ${circuitNum} has all required tests`;
+          }
+          toast.info(`Circuit ${circuitNum} needs: ${missing.join(', ')}`);
+          return `Circuit ${circuitNum} needs: ${missing.join(', ')}`;
+        }
+
+        default:
+          console.log('[Voice] Unknown action:', action);
+          return `Unknown action: ${action}`;
+      }
     }
-  }, [testResults, selectedCircuitIndex]);
+
+    console.log('[Voice] Unknown tool:', toolName, params);
+    return `Unknown tool: ${toolName}`;
+  }, [testResults, selectedCircuitIndex, distributionBoards]);
 
   const { isConnecting: voiceConnecting, isActive: voiceActive, toggleVoice } = useInlineVoice({
     onToolCall: handleVoiceToolCall,

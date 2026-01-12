@@ -106,7 +106,7 @@ export interface VacancyApplication {
 // Vacancy CRUD
 export const getVacancies = async (): Promise<Vacancy[]> => {
   const { data, error } = await supabase
-    .from('vacancies')
+    .from('employer_vacancies')
     .select('*')
     .order('created_at', { ascending: false });
 
@@ -120,7 +120,7 @@ export const getVacancies = async (): Promise<Vacancy[]> => {
 
 export const getOpenVacancies = async (): Promise<Vacancy[]> => {
   const { data, error } = await supabase
-    .from('vacancies')
+    .from('employer_vacancies')
     .select('*')
     .eq('status', 'Open')
     .order('created_at', { ascending: false });
@@ -135,7 +135,7 @@ export const getOpenVacancies = async (): Promise<Vacancy[]> => {
 
 export const getVacancyById = async (id: string): Promise<Vacancy | null> => {
   const { data, error } = await supabase
-    .from('vacancies')
+    .from('employer_vacancies')
     .select('*')
     .eq('id', id)
     .single();
@@ -152,7 +152,7 @@ export const createVacancy = async (
   vacancy: Omit<Vacancy, 'id' | 'created_at' | 'updated_at' | 'views' | 'applications_count'>
 ): Promise<Vacancy> => {
   const { data, error } = await supabase
-    .from('vacancies')
+    .from('employer_vacancies')
     .insert(vacancy)
     .select()
     .single();
@@ -178,7 +178,7 @@ export const updateVacancy = async (
   let wasNotOpen = false;
   if (updates.status === 'Open') {
     const { data: current } = await supabase
-      .from('vacancies')
+      .from('employer_vacancies')
       .select('status')
       .eq('id', id)
       .single();
@@ -186,7 +186,7 @@ export const updateVacancy = async (
   }
 
   const { data, error } = await supabase
-    .from('vacancies')
+    .from('employer_vacancies')
     .update({ ...updates, updated_at: new Date().toISOString() })
     .eq('id', id)
     .select()
@@ -207,7 +207,7 @@ export const updateVacancy = async (
 
 export const deleteVacancy = async (id: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('vacancies')
+    .from('employer_vacancies')
     .delete()
     .eq('id', id);
 
@@ -330,7 +330,7 @@ async function notifyVacancyOwner(vacancyId: string, applicantName: string, appl
   try {
     // Get vacancy details including owner
     const { data: vacancy } = await supabase
-      .from('vacancies')
+      .from('employer_vacancies')
       .select('title, created_by')
       .eq('id', vacancyId)
       .single();
@@ -484,7 +484,7 @@ export const getVacancyStats = async (): Promise<{
   newApplications: number;
 }> => {
   const [vacanciesResult, applicationsResult, newAppsResult] = await Promise.all([
-    supabase.from('vacancies').select('id', { count: 'exact' }).eq('status', 'Open'),
+    supabase.from('employer_vacancies').select('id', { count: 'exact' }).eq('status', 'Open'),
     supabase.from('vacancy_applications').select('id', { count: 'exact' }),
     supabase.from('vacancy_applications').select('id', { count: 'exact' }).eq('status', 'New'),
   ]);

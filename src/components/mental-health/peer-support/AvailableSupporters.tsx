@@ -58,22 +58,49 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
   // Use cached hook for supporters
   const { data: supporters = [], isLoading, isError, refetch } = useAvailableSupporters(excludeUserId);
 
-  // Subscribe to real-time presence updates
+  // Subscribe to real-time presence updates - OPTIMIZED: Single record updates
   useEffect(() => {
-    const unsubscribe = peerPresenceService.subscribeToAvailability((updated) => {
+    const unsubscribe = peerPresenceService.subscribeToAvailability((updatedSupporter, eventType) => {
+      // Skip if this is the excluded user
+      if (excludeUserId && updatedSupporter.user_id === excludeUserId) return;
+
       // Clear existing debounce timer
       if (debounceTimerRef.current) {
         clearTimeout(debounceTimerRef.current);
       }
 
-      // Debounce updates by 500ms to prevent excessive re-renders
+      // Debounce updates by 200ms to batch rapid changes
       debounceTimerRef.current = setTimeout(() => {
-        const filtered = excludeUserId
-          ? updated.filter(s => s.user_id !== excludeUserId)
-          : updated;
-        // Update the React Query cache directly
-        queryClient.setQueryData(['available-supporters', excludeUserId], filtered);
-      }, 500);
+        queryClient.setQueryData<PeerSupporter[]>(['available-supporters', excludeUserId], (old) => {
+          if (!old) return old;
+
+          // Handle different event types
+          if (eventType === 'DELETE') {
+            return old.filter(s => s.id !== updatedSupporter.id);
+          }
+
+          if (eventType === 'INSERT') {
+            // Only add if available and active
+            if (updatedSupporter.is_available && updatedSupporter.is_active) {
+              return [...old, updatedSupporter];
+            }
+            return old;
+          }
+
+          // UPDATE event
+          if (updatedSupporter.is_available && updatedSupporter.is_active) {
+            // Update existing or add if not found
+            const exists = old.find(s => s.id === updatedSupporter.id);
+            if (exists) {
+              return old.map(s => s.id === updatedSupporter.id ? updatedSupporter : s);
+            }
+            return [...old, updatedSupporter];
+          } else {
+            // Remove if no longer available/active
+            return old.filter(s => s.id !== updatedSupporter.id);
+          }
+        });
+      }, 200);
     });
 
     return () => {

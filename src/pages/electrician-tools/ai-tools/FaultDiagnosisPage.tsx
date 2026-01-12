@@ -132,20 +132,28 @@ const FaultDiagnosisPage = () => {
 
     try {
       const image = images[0];
-      const fileName = `fault-${Date.now()}.jpg`;
-      const { error: uploadError } = await supabase.storage.from('visual-analysis').upload(fileName, image);
+      const { data: { user } } = await supabase.auth.getUser();
+      const fileName = `${user?.id}/visual-analysis/fault-${Date.now()}.jpg`;
+      const { error: uploadError } = await supabase.storage.from('visual-uploads').upload(fileName, image);
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage.from('visual-analysis').getPublicUrl(fileName);
+      const { data: { publicUrl } } = supabase.storage.from('visual-uploads').getPublicUrl(fileName);
 
       const symptomLabels = selectedSymptoms.map(s => symptoms.find(sym => sym.id === s)?.label).join(', ');
       const timeLabel = timeframes.find(t => t.id === selectedTimeframe)?.label || '';
 
       const { data, error } = await supabase.functions.invoke('visual-analysis', {
         body: {
-          imageUrl: publicUrl,
-          analysisMode: 'fault_diagnosis',
-          userContext: `Symptoms: ${symptomLabels}. Timeframe: ${timeLabel}. Location: ${selectedLocation}. Notes: ${additionalNotes}`
+          primary_image: publicUrl,
+          analysis_settings: {
+            mode: 'fault_diagnosis',
+            confidence_threshold: 0.5,
+            enable_bounding_boxes: false,
+            focus_areas: [`Symptoms: ${symptomLabels}`, `Timeframe: ${timeLabel}`, `Location: ${selectedLocation}`, additionalNotes].filter(Boolean),
+            remove_background: false,
+            bs7671_compliance: true,
+            fast_mode: false
+          }
         }
       });
 
