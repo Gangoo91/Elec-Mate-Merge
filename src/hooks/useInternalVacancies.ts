@@ -62,13 +62,7 @@ export function useInternalVacancies(filters?: VacancyFilters) {
           benefits,
           closing_date,
           views,
-          created_at,
-          employer_id,
-          employer:employers (
-            id,
-            company_name,
-            logo_url
-          )
+          created_at
         `)
         .eq('status', 'Open')
         .order('created_at', { ascending: false });
@@ -134,11 +128,7 @@ export function useInternalVacancies(filters?: VacancyFilters) {
         closing_date: v.closing_date,
         views: v.views || 0,
         created_at: v.created_at,
-        employer: v.employer ? {
-          id: v.employer_id,
-          company_name: v.employer.company_name,
-          logo_url: v.employer.logo_url,
-        } : undefined,
+        employer: undefined,
         has_applied: applicationVacancyIds.has(v.id),
       }));
     },
@@ -172,13 +162,7 @@ export function useInternalVacancy(id: string | undefined) {
           benefits,
           closing_date,
           views,
-          created_at,
-          employer_id,
-          employer:employers (
-            id,
-            company_name,
-            logo_url
-          )
+          created_at
         `)
         .eq('id', id)
         .single();
@@ -233,11 +217,7 @@ export function useInternalVacancy(id: string | undefined) {
         closing_date: vacancy.closing_date,
         views: vacancy.views || 0,
         created_at: vacancy.created_at,
-        employer: (vacancy as any).employer ? {
-          id: vacancy.employer_id,
-          company_name: (vacancy as any).employer.company_name,
-          logo_url: (vacancy as any).employer.logo_url,
-        } : undefined,
+        employer: undefined,
         has_applied: hasApplied,
       };
     },
