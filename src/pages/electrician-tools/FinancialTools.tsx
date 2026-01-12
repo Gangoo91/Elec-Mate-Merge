@@ -1,14 +1,15 @@
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, DollarSign, Calculator, Percent, LineChart, CreditCard } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
 
 const FinancialTools = () => {
-  const [activeTab, setActiveTab] = useState("profitCalculator");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "profitCalculator";
+  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
 
   const handleAction = (action: string) => {
     toast({

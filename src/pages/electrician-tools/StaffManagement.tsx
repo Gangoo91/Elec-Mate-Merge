@@ -1,13 +1,14 @@
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Users, UserCircle, BriefcaseIcon, Clock, Award } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const StaffManagement = () => {
-  const [activeTab, setActiveTab] = useState("team");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "team";
+  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
 
   // Remove toast notifications and replace with console.log
   const handleAction = (action: string) => {

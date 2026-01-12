@@ -1,6 +1,6 @@
 
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useSearchParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   BookOpen,
@@ -22,7 +22,9 @@ import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAcc
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const PortfolioBuilding = () => {
-  const [activeTab, setActiveTab] = useState("introduction");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "introduction";
+  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const isMobile = useIsMobile();
 
   const quickStats = [

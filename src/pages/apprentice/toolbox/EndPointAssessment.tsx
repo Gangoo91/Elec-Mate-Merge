@@ -1,6 +1,6 @@
 
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useSearchParams } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Award, FileText, ClipboardCheck, MessageSquare, Clock, CheckCircle, AlertTriangle, Star, Target, BookOpen, Lightbulb, AlertCircle, Zap, Heart } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -9,7 +9,9 @@ import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAcc
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const EndPointAssessment = () => {
-  const [activeTab, setActiveTab] = useState("components");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "components";
+  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const isMobile = useIsMobile();
 
   const quickStats = [

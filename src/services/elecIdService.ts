@@ -402,3 +402,15 @@ export const getWorkHistoryByProfileId = async (profileId: string): Promise<Elec
   if (error) throw error;
   return data || [];
 };
+
+// Fetch training for a profile
+export const getTrainingByProfileId = async (profileId: string): Promise<ElecIdTraining[]> => {
+  const { data, error } = await supabase
+    .from('employer_elec_id_training')
+    .select('*')
+    .eq('profile_id', profileId)
+    .order('completed_date', { ascending: false });
+
+  if (error) throw error;
+  return data || [];
+};

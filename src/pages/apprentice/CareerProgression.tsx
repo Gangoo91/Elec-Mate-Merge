@@ -1,5 +1,6 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   GraduationCap,
   ArrowLeft,
@@ -29,7 +30,19 @@ import BusinessBuilder from "@/components/electrician/business/BusinessBuilder";
 import { careerSections, quickFacts, industryStats } from "@/components/apprentice/career/SectionData";
 
 const CareerProgression = () => {
-  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const sectionParam = searchParams.get("section");
+  const [activeSection, setActiveSection] = useState<string | null>(sectionParam);
+
+  // Sync section changes to URL
+  useEffect(() => {
+    if (activeSection) {
+      setSearchParams({ section: activeSection }, { replace: false });
+    } else {
+      searchParams.delete("section");
+      setSearchParams(searchParams, { replace: false });
+    }
+  }, [activeSection]);
 
   const handleBackToSections = () => {
     setActiveSection(null);

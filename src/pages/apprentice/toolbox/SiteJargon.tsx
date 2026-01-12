@@ -1,5 +1,6 @@
 
 import { useState, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,11 +15,13 @@ import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAcc
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const SiteJargon = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [activeTab, setActiveTab] = useState("browse");
+  const activeTab = searchParams.get("tab") || "browse";
+  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const isMobile = useIsMobile();
 
   // Get all available tags

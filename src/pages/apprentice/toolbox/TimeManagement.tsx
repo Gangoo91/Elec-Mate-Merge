@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,7 +14,9 @@ import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAcc
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const TimeManagement = () => {
-  const [activeTab, setActiveTab] = useState("fundamentals");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "fundamentals";
+  const setActiveTab = (tab: string) => setSearchParams({ tab }, { replace: false });
   const isMobile = useIsMobile();
 
   const quickStats = [

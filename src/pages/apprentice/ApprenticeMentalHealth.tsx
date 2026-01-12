@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -58,8 +59,20 @@ const moodEmojis = [
 ];
 
 const MentalHealthContent = () => {
-  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeSectionParam = searchParams.get("section");
+  const [activeSection, setActiveSection] = useState<string | null>(activeSectionParam);
   const [showQuickMood, setShowQuickMood] = useState(false);
+
+  // Sync section changes to URL
+  useEffect(() => {
+    if (activeSection) {
+      setSearchParams({ section: activeSection }, { replace: false });
+    } else {
+      searchParams.delete("section");
+      setSearchParams(searchParams, { replace: false });
+    }
+  }, [activeSection]);
   const [selectedQuickMood, setSelectedQuickMood] = useState<number | null>(null);
   const { moodHistory } = useMentalHealth();
   const { user } = useAuth();

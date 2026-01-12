@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -18,6 +18,9 @@ import {
   Sparkles,
 } from "lucide-react";
 import { getExpiryStatus, getDaysUntilExpiry, isExpired, isExpiringWithin } from "@/utils/elecIdGenerator";
+import { useElecIdProfile } from "@/hooks/useElecIdProfile";
+import { getQualificationsByProfileId, getTrainingByProfileId } from "@/services/elecIdService";
+import { getECSCardType } from "@/data/uk-electrician-constants";
 
 interface ComplianceItem {
   id: string;
@@ -51,48 +54,78 @@ const ComplianceSkeleton = () => (
 );
 
 const ElecIdCompliance = () => {
-  // Mock compliance items - will be from database
-  const complianceItems: ComplianceItem[] = [
-    {
-      id: "1",
-      name: "ECS Gold Card",
-      type: "card",
-      expiryDate: "2026-12-15",
-      renewalUrl: "https://www.ecscard.org.uk/",
-    },
-    {
-      id: "2",
-      name: "18th Edition (BS 7671)",
-      type: "qualification",
-      expiryDate: "2026-02-15",
-      renewalUrl: "https://www.cityandguilds.com/",
-    },
-    {
-      id: "3",
-      name: "First Aid at Work",
-      type: "training",
-      expiryDate: "2026-06-01",
-    },
-    {
-      id: "4",
-      name: "IPAF 3a",
-      type: "training",
-      expiryDate: "2026-09-20",
-      renewalUrl: "https://www.ipaf.org/",
-    },
-    {
-      id: "5",
-      name: "Asbestos Awareness",
-      type: "training",
-      expiryDate: "2025-03-01",
-    },
-    {
-      id: "6",
-      name: "PASMA Tower Scaffold",
-      type: "training",
-      expiryDate: "2028-05-10",
-    },
-  ];
+  const { profile, isLoading: profileLoading } = useElecIdProfile();
+  const [complianceItems, setComplianceItems] = useState<ComplianceItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Load compliance items from backend
+  const loadComplianceItems = useCallback(async () => {
+    if (!profile?.id) {
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const items: ComplianceItem[] = [];
+
+      // Add ECS Card if it has an expiry date
+      if (profile.ecs_expiry_date) {
+        const ecsCard = getECSCardType(profile.ecs_card_type || "gold");
+        items.push({
+          id: "ecs-card",
+          name: ecsCard ? `ECS ${ecsCard.label}` : "ECS Card",
+          type: "card",
+          expiryDate: profile.ecs_expiry_date,
+          renewalUrl: "https://www.ecscard.org.uk/",
+        });
+      }
+
+      // Fetch qualifications with expiry dates
+      const qualifications = await getQualificationsByProfileId(profile.id);
+      qualifications
+        .filter(q => q.expiry_date)
+        .forEach(q => {
+          items.push({
+            id: `qual-${q.id}`,
+            name: q.qualification_name,
+            type: "qualification",
+            expiryDate: q.expiry_date!,
+            renewalUrl: q.awarding_body ? `https://www.google.com/search?q=${encodeURIComponent(q.awarding_body + ' renewal')}` : undefined,
+          });
+        });
+
+      // Fetch training with expiry dates
+      const training = await getTrainingByProfileId(profile.id);
+      training
+        .filter(t => t.expiry_date)
+        .forEach(t => {
+          items.push({
+            id: `training-${t.id}`,
+            name: t.training_name,
+            type: "training",
+            expiryDate: t.expiry_date!,
+            renewalUrl: t.provider ? `https://www.google.com/search?q=${encodeURIComponent(t.provider + ' ' + t.training_name + ' renewal')}` : undefined,
+          });
+        });
+
+      setComplianceItems(items);
+    } catch (err) {
+      console.error("Error loading compliance items:", err);
+      setError("Failed to load compliance data");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [profile?.id, profile?.ecs_expiry_date, profile?.ecs_card_type]);
+
+  useEffect(() => {
+    if (!profileLoading) {
+      loadComplianceItems();
+    }
+  }, [profileLoading, loadComplianceItems]);
 
   // Sort and categorize items
   const expiredItems = complianceItems.filter((item) => isExpired(item.expiryDate));
@@ -230,6 +263,28 @@ const ElecIdCompliance = () => {
   };
 
   const allClear = expiredItems.length === 0 && expiringIn30Days.length === 0;
+
+  // Show loading skeleton
+  if (isLoading || profileLoading) {
+    return <ComplianceSkeleton />;
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="py-12 text-center">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-red-500/10 flex items-center justify-center">
+          <AlertTriangle className="h-8 w-8 text-red-400" />
+        </div>
+        <h4 className="text-lg font-medium text-foreground mb-2">Failed to load compliance data</h4>
+        <p className="text-muted-foreground mb-4">{error}</p>
+        <Button onClick={loadComplianceItems} className="gap-2">
+          <RefreshCw className="h-4 w-4" />
+          Try Again
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-5">

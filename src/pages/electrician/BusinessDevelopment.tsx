@@ -89,14 +89,14 @@ const BusinessDevelopment = () => {
       </Helmet>
 
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
+      <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10 pt-safe">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="flex items-center h-14 sm:h-16">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => navigate("/electrician/business")}
-              className="text-white/70 hover:text-white hover:bg-white/10 rounded-xl mr-3"
+              className="text-white/70 hover:text-white hover:bg-white/10 rounded-xl mr-3 h-11 w-11 touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
