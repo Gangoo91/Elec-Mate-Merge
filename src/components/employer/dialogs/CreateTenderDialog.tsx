@@ -132,17 +132,19 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
                 placeholder="e.g., Office Building Rewire"
                 value={formData.title}
                 onChange={(e) => updateField("title", e.target.value)}
+                className="h-11 text-base touch-manipulation"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="client">Client / Organization *</Label>
+              <Label htmlFor="client">Client / Organisation *</Label>
               <Input
                 id="client"
                 placeholder="e.g., ABC Corporation"
                 value={formData.client}
                 onChange={(e) => updateField("client", e.target.value)}
+                className="h-11 text-base touch-manipulation"
                 required
               />
             </div>
@@ -158,6 +160,7 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
                   placeholder="0"
                   value={formData.value || ""}
                   onChange={(e) => updateField("value", parseFloat(e.target.value) || 0)}
+                  className="h-11 text-base touch-manipulation"
                 />
               </div>
 
@@ -168,6 +171,7 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
                   type="date"
                   value={formData.deadline}
                   onChange={(e) => updateField("deadline", e.target.value)}
+                  className="h-11 text-base touch-manipulation"
                 />
               </div>
             </div>
@@ -178,10 +182,10 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
                 value={formData.category}
                 onValueChange={(value) => updateField("category", value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="z-[100]">
                   {CATEGORIES.map((cat) => (
                     <SelectItem key={cat} value={cat}>
                       {cat}
@@ -198,6 +202,7 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
                 placeholder="Brief description of the tender scope..."
                 value={formData.description}
                 onChange={(e) => updateField("description", e.target.value)}
+                className="text-base touch-manipulation min-h-[100px]"
                 rows={3}
               />
             </div>
@@ -210,6 +215,7 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
                   placeholder="John Smith"
                   value={formData.contact_name}
                   onChange={(e) => updateField("contact_name", e.target.value)}
+                  className="h-11 text-base touch-manipulation"
                 />
               </div>
 
@@ -221,6 +227,7 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
                   placeholder="john@company.com"
                   value={formData.contact_email}
                   onChange={(e) => updateField("contact_email", e.target.value)}
+                  className="h-11 text-base touch-manipulation"
                 />
               </div>
             </div>
@@ -232,21 +239,27 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
                 placeholder="Any additional notes..."
                 value={formData.notes}
                 onChange={(e) => updateField("notes", e.target.value)}
+                className="text-base touch-manipulation"
                 rows={2}
               />
             </div>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="gap-2 sm:gap-0">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
               disabled={createTender.isPending}
+              className="h-11 touch-manipulation"
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={createTender.isPending}>
+            <Button
+              type="submit"
+              disabled={createTender.isPending}
+              className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            >
               {createTender.isPending && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               )}

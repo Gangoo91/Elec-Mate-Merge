@@ -10,7 +10,6 @@ import {
   CreditCard,
   MessageSquare,
   Activity,
-  Settings,
   Shield,
   ShieldCheck,
 } from "lucide-react";
@@ -22,9 +21,8 @@ const adminNavItems = [
   { name: "Offers", path: "/admin/offers", icon: Gift },
   { name: "Elec-IDs", path: "/admin/elec-ids", icon: IdCard },
   { name: "Subscriptions", path: "/admin/subscriptions", icon: CreditCard },
-  { name: "Conversations", path: "/admin/conversations", icon: MessageSquare },
-  { name: "System Health", path: "/admin/system", icon: Activity },
-  { name: "Settings", path: "/admin/settings", icon: Settings },
+  { name: "Chats", path: "/admin/conversations", icon: MessageSquare },
+  { name: "System", path: "/admin/system", icon: Activity },
 ];
 
 export default function AdminPanel() {

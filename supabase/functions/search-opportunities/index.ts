@@ -236,9 +236,11 @@ Deno.serve(async (req) => {
     });
 
     // Filter by radius if location provided
+    // Only include opportunities that have valid coordinates AND are within radius
+    // Opportunities without coordinates are excluded when searching by location
     if (searchLat && searchLng) {
       opportunities = opportunities.filter(opp =>
-        opp.distance_miles === null || opp.distance_miles <= radius_miles
+        opp.distance_miles !== null && opp.distance_miles <= radius_miles
       );
     }
 

@@ -41,6 +41,10 @@ const AdminPanel = lazy(() => import("@/pages/admin/AdminPanel"));
 const AdminDashboard = lazy(() => import("@/pages/admin/AdminDashboard"));
 const AdminUsers = lazy(() => import("@/pages/admin/AdminUsers"));
 const AdminOffers = lazy(() => import("@/pages/admin/AdminOffers"));
+const AdminElecIds = lazy(() => import("@/pages/admin/AdminElecIds"));
+const AdminSubscriptions = lazy(() => import("@/pages/admin/AdminSubscriptions"));
+const AdminConversations = lazy(() => import("@/pages/admin/AdminConversations"));
+const AdminSystem = lazy(() => import("@/pages/admin/AdminSystem"));
 const CustomersPage = lazy(() => import("@/pages/CustomersPage"));
 const CertificateExpiryPage = lazy(() => import("@/pages/CertificateExpiryPage"));
 const EmployerDashboard = lazy(() => import("@/pages/employer/EmployerDashboard"));
@@ -112,6 +116,10 @@ const AppRouter = () => {
           <Route index element={<LazyRoute><AdminDashboard /></LazyRoute>} />
           <Route path="users" element={<LazyRoute><AdminUsers /></LazyRoute>} />
           <Route path="offers" element={<LazyRoute><AdminOffers /></LazyRoute>} />
+          <Route path="elec-ids" element={<LazyRoute><AdminElecIds /></LazyRoute>} />
+          <Route path="subscriptions" element={<LazyRoute><AdminSubscriptions /></LazyRoute>} />
+          <Route path="conversations" element={<LazyRoute><AdminConversations /></LazyRoute>} />
+          <Route path="system" element={<LazyRoute><AdminSystem /></LazyRoute>} />
         </Route>
 
         {/* Top level routes for shared features */}

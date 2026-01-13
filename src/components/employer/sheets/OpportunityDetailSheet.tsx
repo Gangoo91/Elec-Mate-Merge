@@ -373,18 +373,18 @@ export function OpportunityDetailSheet({
           </ScrollArea>
 
           {/* Fixed Footer Actions */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t border-border">
+          <div className="absolute bottom-0 left-0 right-0 p-4 pb-safe bg-background/95 backdrop-blur border-t border-border">
             <div className="flex gap-3">
               <Button
                 variant="outline"
-                className="flex-1 h-12"
+                className="flex-1 h-12 touch-manipulation active:scale-[0.98] transition-transform"
                 onClick={() => setShowAIEstimate(true)}
               >
                 <Sparkles className="h-4 w-4 mr-2" />
                 AI Estimate
               </Button>
               <Button
-                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] transition-transform"
                 onClick={onStartTender}
               >
                 <Zap className="h-4 w-4 mr-2" />

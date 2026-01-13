@@ -269,6 +269,263 @@ async function geocodePostcode(postcode: string): Promise<{ lat: number; lng: nu
   return null;
 }
 
+/**
+ * Scrape Contracts Finder public search page for electrical tenders
+ * This gets REAL LIVE data without needing API credentials
+ */
+async function scrapeContractsFinderPublic(supabase: any): Promise<{ found: number; inserted: number; errors: string[] }> {
+  const errors: string[] = [];
+  let totalFound = 0;
+  let totalInserted = 0;
+
+  // Search terms for electrical contracts
+  const searchTerms = [
+    'electrical installation',
+    'electrical rewiring',
+    'fire alarm',
+    'emergency lighting',
+    'electrical testing',
+    'EICR',
+    'EV charging',
+    'LED lighting',
+    'electrical maintenance',
+    'M&E electrical',
+    'electrical upgrade',
+    'consumer unit',
+    'distribution board',
+    'electrical contractor',
+    'solar PV installation',
+  ];
+
+  for (const searchTerm of searchTerms) {
+    try {
+      console.log(`[SCRAPE] Searching for: ${searchTerm}`);
+
+      // Contracts Finder search URL
+      const searchUrl = `https://www.contractsfinder.service.gov.uk/Search/Results?searchTerm=${encodeURIComponent(searchTerm)}&locationPostcode=&locationDistance=0&locationDistanceMiles=0&publishedFrom=&publishedTo=&deadlineFrom=&deadlineTo=&budgetFrom=&budgetTo=&statuses=Open&sortType=Relevance`;
+
+      const response = await fetch(searchUrl, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+          'Accept-Language': 'en-GB,en;q=0.5',
+        },
+      });
+
+      if (!response.ok) {
+        errors.push(`Search failed for "${searchTerm}": ${response.status}`);
+        continue;
+      }
+
+      const html = await response.text();
+
+      // Parse search results - looking for notice links and data
+      const noticeMatches = html.matchAll(/<a[^>]*href="\/Notice\/([a-f0-9-]+)"[^>]*>([^<]+)<\/a>/gi);
+      const notices: { id: string; title: string }[] = [];
+
+      for (const match of noticeMatches) {
+        const id = match[1];
+        const title = match[2].trim();
+        if (title.length > 10 && !notices.some(n => n.id === id)) {
+          notices.push({ id, title });
+        }
+      }
+
+      console.log(`[SCRAPE] Found ${notices.length} notices for "${searchTerm}"`);
+      totalFound += notices.length;
+
+      // Fetch details for each notice (limit to prevent rate limiting)
+      const noticeLimit = Math.min(notices.length, 20);
+      for (let i = 0; i < noticeLimit; i++) {
+        const notice = notices[i];
+        try {
+          const detailUrl = `https://www.contractsfinder.service.gov.uk/Notice/${notice.id}`;
+          const detailResponse = await fetch(detailUrl, {
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+              'Accept': 'text/html',
+            },
+          });
+
+          if (!detailResponse.ok) continue;
+
+          const detailHtml = await detailResponse.text();
+          const opportunity = parseContractsFinderNotice(notice.id, notice.title, detailHtml);
+
+          if (opportunity) {
+            const { error } = await supabase
+              .from('tender_opportunities')
+              .upsert(opportunity, { onConflict: 'source,external_id' });
+
+            if (!error) {
+              totalInserted++;
+            }
+          }
+
+          // Small delay to be respectful
+          await new Promise(r => setTimeout(r, 200));
+        } catch (e) {
+          errors.push(`Error fetching notice ${notice.id}: ${(e as Error).message}`);
+        }
+      }
+
+      // Delay between search terms
+      await new Promise(r => setTimeout(r, 500));
+    } catch (e) {
+      errors.push(`Search error for "${searchTerm}": ${(e as Error).message}`);
+    }
+  }
+
+  console.log(`[SCRAPE] Complete: ${totalFound} found, ${totalInserted} inserted`);
+  return { found: totalFound, inserted: totalInserted, errors };
+}
+
+/**
+ * Parse a Contracts Finder notice page into opportunity data
+ */
+function parseContractsFinderNotice(noticeId: string, title: string, html: string): any | null {
+  try {
+    // Extract key fields from the HTML
+    const getValue = (label: string): string | null => {
+      const regex = new RegExp(`${label}[:\\s]*<[^>]*>([^<]+)<`, 'i');
+      const match = html.match(regex);
+      return match ? match[1].trim() : null;
+    };
+
+    const getSection = (heading: string): string | null => {
+      const regex = new RegExp(`<h[23][^>]*>${heading}</h[23]>[\\s\\S]*?<[^>]*>([\\s\\S]*?)</`, 'i');
+      const match = html.match(regex);
+      return match ? match[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() : null;
+    };
+
+    // Extract buyer/organisation
+    const buyerMatch = html.match(/Organisation[:\s]*<[^>]*>([^<]+)</i) ||
+                       html.match(/Contracting authority[:\s]*<[^>]*>([^<]+)</i) ||
+                       html.match(/<span[^>]*class="[^"]*organisation[^"]*"[^>]*>([^<]+)</i);
+    const clientName = buyerMatch ? buyerMatch[1].trim() : 'Unknown Organisation';
+
+    // Extract value
+    let valueLow: number | null = null;
+    let valueHigh: number | null = null;
+    const valueMatch = html.match(/(?:Value|Budget|Contract value)[:\s]*£?([\d,]+)(?:\s*-\s*£?([\d,]+))?/i);
+    if (valueMatch) {
+      valueLow = parseInt(valueMatch[1].replace(/,/g, '')) || null;
+      valueHigh = valueMatch[2] ? parseInt(valueMatch[2].replace(/,/g, '')) : valueLow;
+    }
+
+    // Extract deadline
+    let deadline: string | null = null;
+    const deadlineMatch = html.match(/(?:Closing|Deadline|Submission)[^:]*[:\s]*(\d{1,2}[\s\/\-]\w+[\s\/\-]\d{4}|\d{4}-\d{2}-\d{2})/i);
+    if (deadlineMatch) {
+      try {
+        deadline = new Date(deadlineMatch[1]).toISOString();
+      } catch (e) {
+        // Invalid date
+      }
+    }
+
+    // Extract location/postcode
+    const postcodeMatch = html.match(/([A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2})/i);
+    const postcode = postcodeMatch ? postcodeMatch[1].toUpperCase() : null;
+
+    const locationMatch = html.match(/(?:Location|Region|Area)[:\s]*<[^>]*>([^<]+)</i);
+    const locationText = locationMatch ? locationMatch[1].trim() : null;
+
+    // Extract description
+    const descMatch = html.match(/<div[^>]*class="[^"]*description[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
+    let description = descMatch ? descMatch[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() : '';
+    if (!description) {
+      description = getSection('Description') || getSection('Summary') || '';
+    }
+
+    // Determine categories based on title and description
+    const text = (title + ' ' + description).toLowerCase();
+    const categories: string[] = ['electrical'];
+
+    if (text.includes('fire alarm') || text.includes('fire detection')) categories.push('fire_alarm');
+    if (text.includes('emergency light')) categories.push('emergency_lighting');
+    if (text.includes('rewir') || text.includes('re-wir')) categories.push('rewire');
+    if (text.includes('eicr') || text.includes('periodic') || text.includes('testing')) categories.push('testing');
+    if (text.includes('ev charg') || text.includes('electric vehicle')) categories.push('ev_charging');
+    if (text.includes('led') || text.includes('lighting upgrade')) categories.push('lighting');
+    if (text.includes('solar') || text.includes('pv')) categories.push('solar');
+    if (text.includes('data') || text.includes('cabling')) categories.push('data_cabling');
+
+    // Determine sector
+    const clientLower = clientName.toLowerCase();
+    let sector = 'public';
+    if (clientLower.includes('nhs') || clientLower.includes('hospital') || clientLower.includes('health')) {
+      sector = 'healthcare';
+    } else if (clientLower.includes('housing') || clientLower.includes('homes')) {
+      sector = 'housing';
+    } else if (clientLower.includes('school') || clientLower.includes('college') || clientLower.includes('university') || clientLower.includes('academy')) {
+      sector = 'education';
+    } else if (clientLower.includes('council') || clientLower.includes('borough')) {
+      sector = 'local_authority';
+    }
+
+    // Determine complexity
+    let complexity = 'standard';
+    if ((valueLow && valueLow > 500000) || text.includes('complex') || text.includes('major')) {
+      complexity = 'complex';
+    } else if ((valueLow && valueLow < 30000) || text.includes('minor') || text.includes('small')) {
+      complexity = 'simple';
+    }
+
+    return {
+      external_id: noticeId,
+      source: 'contracts_finder',
+      source_url: `https://www.contractsfinder.service.gov.uk/Notice/${noticeId}`,
+      title: title.substring(0, 500),
+      description: description.substring(0, 2000),
+      scope_of_works: description,
+      client_name: clientName,
+      client_type: sector,
+      cpv_codes: ['45310000'],
+      categories,
+      sector,
+      value_low: valueLow,
+      value_high: valueHigh,
+      currency: 'GBP',
+      location_text: locationText,
+      postcode,
+      lat: null, // Will geocode separately
+      lng: null,
+      region: postcode ? extractRegionFromPostcode(postcode) : null,
+      published_at: new Date().toISOString(),
+      deadline,
+      requirements: { niceic: true },
+      estimated_complexity: complexity,
+      status: 'live',
+      fetched_at: new Date().toISOString(),
+    };
+  } catch (e) {
+    console.error(`[PARSE] Error parsing notice ${noticeId}:`, e);
+    return null;
+  }
+}
+
+function extractRegionFromPostcode(postcode: string): string {
+  const prefix = postcode.replace(/\s+/g, '').match(/^[A-Z]{1,2}/i)?.[0]?.toUpperCase() || '';
+
+  const regionMap: Record<string, string> = {
+    'B': 'west_midlands', 'CV': 'west_midlands', 'DY': 'west_midlands', 'WS': 'west_midlands', 'WV': 'west_midlands',
+    'M': 'northwest', 'L': 'northwest', 'WA': 'northwest', 'WN': 'northwest', 'BL': 'northwest', 'OL': 'northwest', 'PR': 'northwest', 'FY': 'northwest',
+    'LS': 'yorkshire', 'BD': 'yorkshire', 'HX': 'yorkshire', 'HD': 'yorkshire', 'WF': 'yorkshire', 'S': 'yorkshire', 'DN': 'yorkshire', 'HU': 'yorkshire', 'YO': 'yorkshire',
+    'NE': 'northeast', 'DH': 'northeast', 'SR': 'northeast', 'TS': 'northeast', 'DL': 'northeast',
+    'NG': 'east_midlands', 'DE': 'east_midlands', 'LE': 'east_midlands', 'NN': 'east_midlands', 'LN': 'east_midlands',
+    'BS': 'southwest', 'BA': 'southwest', 'EX': 'southwest', 'PL': 'southwest', 'TQ': 'southwest', 'TR': 'southwest', 'GL': 'southwest', 'TA': 'southwest',
+    'CB': 'east_england', 'CO': 'east_england', 'IP': 'east_england', 'NR': 'east_england', 'PE': 'east_england', 'CM': 'east_england',
+    'RG': 'southeast', 'SL': 'southeast', 'HP': 'southeast', 'MK': 'southeast', 'OX': 'southeast', 'GU': 'southeast', 'PO': 'southeast', 'BN': 'southeast', 'TN': 'southeast', 'ME': 'southeast', 'CT': 'southeast', 'SO': 'southeast',
+    'SW': 'london', 'SE': 'london', 'NW': 'london', 'N': 'london', 'E': 'london', 'W': 'london', 'EC': 'london', 'WC': 'london', 'CR': 'london', 'BR': 'london', 'DA': 'london', 'EN': 'london', 'HA': 'london', 'IG': 'london', 'KT': 'london', 'RM': 'london', 'SM': 'london', 'TW': 'london', 'UB': 'london',
+    'CF': 'wales', 'SA': 'wales', 'LL': 'wales', 'SY': 'wales', 'NP': 'wales', 'LD': 'wales',
+    'G': 'scotland', 'EH': 'scotland', 'AB': 'scotland', 'DD': 'scotland', 'KY': 'scotland', 'FK': 'scotland', 'PA': 'scotland', 'IV': 'scotland', 'PH': 'scotland', 'ML': 'scotland', 'KA': 'scotland',
+    'BT': 'northern_ireland',
+  };
+
+  return regionMap[prefix] || 'uk_wide';
+}
+
 function extractRegion(postcode: string | null, location: string | null): string | null {
   if (!postcode && !location) return null;
 
@@ -310,35 +567,35 @@ Deno.serve(async (req) => {
   try {
     console.log('[SYNC] Starting Contracts Finder sync...');
 
-    // Get access token
-    let accessToken: string;
+    // Try API first, fall back to web scraping
+    let accessToken: string | null = null;
     try {
       accessToken = await getAccessToken();
     } catch (e) {
-      console.log('[SYNC] No API credentials, using mock data for development');
-      // Insert some mock opportunities for testing
-      const mockOpportunities = generateMockOpportunities();
+      console.log('[SYNC] No API credentials, will scrape public website');
+    }
 
-      for (const opp of mockOpportunities) {
-        await supabase
-          .from('tender_opportunities')
-          .upsert(opp, { onConflict: 'source,external_id' });
-      }
+    // If no API credentials, scrape the public Contracts Finder website
+    if (!accessToken) {
+      console.log('[SYNC] Scraping Contracts Finder public search...');
+      const scrapedOpportunities = await scrapeContractsFinderPublic(supabase);
 
       // Update source sync status
       await supabase
         .from('tender_sources')
         .update({
           last_sync_at: new Date().toISOString(),
-          last_sync_count: mockOpportunities.length,
+          last_sync_count: scrapedOpportunities.inserted,
         })
         .eq('name', 'contracts_finder');
 
       return new Response(
         JSON.stringify({
           success: true,
-          message: 'Synced mock data (no API credentials)',
-          count: mockOpportunities.length
+          message: 'Scraped live data from Contracts Finder',
+          total_found: scrapedOpportunities.found,
+          inserted: scrapedOpportunities.inserted,
+          errors: scrapedOpportunities.errors
         }),
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -497,172 +754,318 @@ Deno.serve(async (req) => {
   }
 });
 
-// Generate mock opportunities for testing without API credentials
+// Generate comprehensive mock opportunities for testing without API credentials
 function generateMockOpportunities() {
-  const mockData = [
+  // UK locations with accurate coordinates
+  const locations = [
+    // West Midlands
+    { city: 'Birmingham', area: 'City Centre', postcode: 'B1 1BB', lat: 52.4862, lng: -1.8904, region: 'west_midlands' },
+    { city: 'Birmingham', area: 'Edgbaston', postcode: 'B15 2TT', lat: 52.4534, lng: -1.9398, region: 'west_midlands' },
+    { city: 'Birmingham', area: 'Erdington', postcode: 'B23 6RJ', lat: 52.5276, lng: -1.8379, region: 'west_midlands' },
+    { city: 'Wolverhampton', area: 'City Centre', postcode: 'WV1 1NX', lat: 52.5870, lng: -2.1288, region: 'west_midlands' },
+    { city: 'Coventry', area: 'City Centre', postcode: 'CV1 1FJ', lat: 52.4068, lng: -1.5197, region: 'west_midlands' },
+    { city: 'Solihull', area: 'Town Centre', postcode: 'B91 3SJ', lat: 52.4120, lng: -1.7780, region: 'west_midlands' },
+    // North West
+    { city: 'Manchester', area: 'City Centre', postcode: 'M1 1AD', lat: 53.4808, lng: -2.2426, region: 'northwest' },
+    { city: 'Manchester', area: 'Salford', postcode: 'M3 7DG', lat: 53.4839, lng: -2.2662, region: 'northwest' },
+    { city: 'Manchester', area: 'Trafford', postcode: 'M16 0QG', lat: 53.4631, lng: -2.2887, region: 'northwest' },
+    { city: 'Liverpool', area: 'City Centre', postcode: 'L1 1JF', lat: 53.4084, lng: -2.9916, region: 'northwest' },
+    { city: 'Liverpool', area: 'Bootle', postcode: 'L20 3NJ', lat: 53.4464, lng: -3.0027, region: 'northwest' },
+    { city: 'Warrington', area: 'Town Centre', postcode: 'WA1 1GP', lat: 53.3900, lng: -2.5970, region: 'northwest' },
+    { city: 'Preston', area: 'City Centre', postcode: 'PR1 2HE', lat: 53.7632, lng: -2.7031, region: 'northwest' },
+    { city: 'Blackpool', area: 'Town Centre', postcode: 'FY1 1HB', lat: 53.8175, lng: -3.0357, region: 'northwest' },
+    // Yorkshire
+    { city: 'Leeds', area: 'City Centre', postcode: 'LS1 4BR', lat: 53.7996, lng: -1.5491, region: 'yorkshire' },
+    { city: 'Leeds', area: 'Headingley', postcode: 'LS6 2DJ', lat: 53.8199, lng: -1.5802, region: 'yorkshire' },
+    { city: 'Sheffield', area: 'City Centre', postcode: 'S1 2HB', lat: 53.3811, lng: -1.4701, region: 'yorkshire' },
+    { city: 'Sheffield', area: 'Hillsborough', postcode: 'S6 2LR', lat: 53.4084, lng: -1.5007, region: 'yorkshire' },
+    { city: 'Bradford', area: 'City Centre', postcode: 'BD1 1JF', lat: 53.7950, lng: -1.7594, region: 'yorkshire' },
+    { city: 'Hull', area: 'City Centre', postcode: 'HU1 1NQ', lat: 53.7457, lng: -0.3367, region: 'yorkshire' },
+    { city: 'York', area: 'City Centre', postcode: 'YO1 9QL', lat: 53.9600, lng: -1.0873, region: 'yorkshire' },
+    // North East
+    { city: 'Newcastle', area: 'City Centre', postcode: 'NE1 4PA', lat: 54.9783, lng: -1.6178, region: 'northeast' },
+    { city: 'Newcastle', area: 'Gateshead', postcode: 'NE8 1EP', lat: 54.9628, lng: -1.6016, region: 'northeast' },
+    { city: 'Sunderland', area: 'City Centre', postcode: 'SR1 1DG', lat: 54.9069, lng: -1.3838, region: 'northeast' },
+    { city: 'Durham', area: 'City Centre', postcode: 'DH1 3NJ', lat: 54.7753, lng: -1.5849, region: 'northeast' },
+    { city: 'Middlesbrough', area: 'Town Centre', postcode: 'TS1 2AZ', lat: 54.5742, lng: -1.2350, region: 'northeast' },
+    // East Midlands
+    { city: 'Nottingham', area: 'City Centre', postcode: 'NG1 2GB', lat: 52.9540, lng: -1.1550, region: 'east_midlands' },
+    { city: 'Nottingham', area: 'West Bridgford', postcode: 'NG2 5GJ', lat: 52.9327, lng: -1.1270, region: 'east_midlands' },
+    { city: 'Leicester', area: 'City Centre', postcode: 'LE1 6DA', lat: 52.6369, lng: -1.1398, region: 'east_midlands' },
+    { city: 'Derby', area: 'City Centre', postcode: 'DE1 2FS', lat: 52.9225, lng: -1.4746, region: 'east_midlands' },
+    { city: 'Northampton', area: 'Town Centre', postcode: 'NN1 1ED', lat: 52.2405, lng: -0.9027, region: 'east_midlands' },
+    // South West
+    { city: 'Bristol', area: 'City Centre', postcode: 'BS1 5TR', lat: 51.4545, lng: -2.5879, region: 'southwest' },
+    { city: 'Bristol', area: 'Clifton', postcode: 'BS8 2PS', lat: 51.4559, lng: -2.6197, region: 'southwest' },
+    { city: 'Plymouth', area: 'City Centre', postcode: 'PL1 2AA', lat: 50.3755, lng: -4.1427, region: 'southwest' },
+    { city: 'Exeter', area: 'City Centre', postcode: 'EX1 1GA', lat: 50.7236, lng: -3.5275, region: 'southwest' },
+    { city: 'Bath', area: 'City Centre', postcode: 'BA1 1JW', lat: 51.3758, lng: -2.3599, region: 'southwest' },
+    { city: 'Gloucester', area: 'City Centre', postcode: 'GL1 1PN', lat: 51.8667, lng: -2.2431, region: 'southwest' },
+    // East of England
+    { city: 'Cambridge', area: 'City Centre', postcode: 'CB2 1TN', lat: 52.2053, lng: 0.1218, region: 'east_england' },
+    { city: 'Norwich', area: 'City Centre', postcode: 'NR1 3JF', lat: 52.6309, lng: 1.2974, region: 'east_england' },
+    { city: 'Ipswich', area: 'Town Centre', postcode: 'IP1 1DH', lat: 52.0567, lng: 1.1482, region: 'east_england' },
+    { city: 'Peterborough', area: 'City Centre', postcode: 'PE1 1EJ', lat: 52.5695, lng: -0.2405, region: 'east_england' },
+    // South East
+    { city: 'Reading', area: 'Town Centre', postcode: 'RG1 1LG', lat: 51.4551, lng: -0.9787, region: 'southeast' },
+    { city: 'Brighton', area: 'City Centre', postcode: 'BN1 1AE', lat: 50.8225, lng: -0.1372, region: 'southeast' },
+    { city: 'Southampton', area: 'City Centre', postcode: 'SO14 7FJ', lat: 50.9097, lng: -1.4044, region: 'southeast' },
+    { city: 'Portsmouth', area: 'City Centre', postcode: 'PO1 2ED', lat: 50.8198, lng: -1.0880, region: 'southeast' },
+    { city: 'Oxford', area: 'City Centre', postcode: 'OX1 2BQ', lat: 51.7520, lng: -1.2577, region: 'southeast' },
+    { city: 'Milton Keynes', area: 'Central', postcode: 'MK9 2FE', lat: 52.0406, lng: -0.7594, region: 'southeast' },
+    // London
+    { city: 'London', area: 'Westminster', postcode: 'SW1A 1AA', lat: 51.5014, lng: -0.1419, region: 'london' },
+    { city: 'London', area: 'Camden', postcode: 'NW1 0NE', lat: 51.5390, lng: -0.1426, region: 'london' },
+    { city: 'London', area: 'Tower Hamlets', postcode: 'E1 6AN', lat: 51.5150, lng: -0.0720, region: 'london' },
+    { city: 'London', area: 'Croydon', postcode: 'CR0 1RD', lat: 51.3762, lng: -0.0982, region: 'london' },
+    { city: 'London', area: 'Ealing', postcode: 'W5 5QT', lat: 51.5130, lng: -0.3089, region: 'london' },
+    { city: 'London', area: 'Greenwich', postcode: 'SE10 9EW', lat: 51.4826, lng: -0.0077, region: 'london' },
+    { city: 'London', area: 'Hackney', postcode: 'E8 1DY', lat: 51.5450, lng: -0.0553, region: 'london' },
+    { city: 'London', area: 'Lewisham', postcode: 'SE13 6LG', lat: 51.4415, lng: -0.0117, region: 'london' },
+    // Wales
+    { city: 'Cardiff', area: 'City Centre', postcode: 'CF10 1EP', lat: 51.4816, lng: -3.1791, region: 'wales' },
+    { city: 'Swansea', area: 'City Centre', postcode: 'SA1 1NW', lat: 51.6214, lng: -3.9436, region: 'wales' },
+    { city: 'Newport', area: 'City Centre', postcode: 'NP20 1TT', lat: 51.5842, lng: -2.9977, region: 'wales' },
+    // Scotland
+    { city: 'Edinburgh', area: 'City Centre', postcode: 'EH1 1YZ', lat: 55.9533, lng: -3.1883, region: 'scotland' },
+    { city: 'Glasgow', area: 'City Centre', postcode: 'G1 1XQ', lat: 55.8642, lng: -4.2518, region: 'scotland' },
+    { city: 'Aberdeen', area: 'City Centre', postcode: 'AB10 1XG', lat: 57.1497, lng: -2.0943, region: 'scotland' },
+    { city: 'Dundee', area: 'City Centre', postcode: 'DD1 1DA', lat: 56.4620, lng: -2.9707, region: 'scotland' },
+    // Northern Ireland
+    { city: 'Belfast', area: 'City Centre', postcode: 'BT1 2BA', lat: 54.5973, lng: -5.9301, region: 'northern_ireland' },
+    { city: 'Derry', area: 'City Centre', postcode: 'BT48 6HQ', lat: 54.9966, lng: -7.3086, region: 'northern_ireland' },
+  ];
+
+  // Project templates with detailed scopes
+  const projectTemplates = [
     {
-      external_id: 'MOCK-2025-001',
-      source: 'contracts_finder',
-      source_url: 'https://www.contractsfinder.service.gov.uk/Notice/mock-001',
-      title: 'Electrical Rewiring - Council Housing Block',
-      description: 'Full electrical rewiring of 24-unit residential block including new consumer units to BS 7671:2018, fire alarm system upgrade, emergency lighting to communal areas, and EICR certification for all units. NICEIC/NAPIT approved contractor required.',
-      client_name: 'Birmingham City Council',
-      client_type: 'local_authority',
-      cpv_codes: ['45310000', '45311000'],
-      categories: ['electrical', 'rewire', 'fire_alarm', 'emergency_lighting', 'testing'],
-      sector: 'housing',
-      value_low: 45000,
-      value_high: 65000,
-      currency: 'GBP',
-      location_text: 'Ladywood, Birmingham',
-      postcode: 'B16 8LP',
-      lat: 52.4774,
-      lng: -1.9330,
-      region: 'west_midlands',
-      published_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-      deadline: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
-      requirements: { niceic: true, insurance: 5000000, asbestos_awareness: true },
-      contact_name: 'John Smith',
-      contact_email: 'procurement@birmingham.gov.uk',
-      estimated_complexity: 'standard',
-      status: 'live',
+      type: 'rewire',
+      titles: ['Electrical Rewiring', 'Full Rewire Project', 'Complete Electrical Upgrade'],
+      scopes: [
+        'Full electrical rewiring of {units}-unit residential block including new consumer units to BS 7671:2018, fire alarm system upgrade, emergency lighting to communal areas, and EICR certification for all units. Work to be completed in phases to minimise disruption to residents.',
+        'Complete rewire of {sqm}sqm office building comprising {floors} floors. Scope includes new distribution boards, power circuits, lighting circuits, data infrastructure containment, and emergency lighting. All work to current 18th Edition regulations.',
+        'Rewiring of heritage-listed property requiring sensitive approach. Works include upgrade of existing installation, replacement of hazardous wiring, installation of new consumer unit with RCBO protection, and full EICR certification.',
+      ],
+      valueRange: [35000, 120000],
+      categories: ['electrical', 'rewire'],
+      complexity: ['standard', 'complex'],
     },
     {
-      external_id: 'MOCK-2025-002',
-      source: 'contracts_finder',
-      source_url: 'https://www.contractsfinder.service.gov.uk/Notice/mock-002',
-      title: 'Emergency Lighting Installation - NHS Trust',
-      description: 'Supply and installation of emergency lighting system across 3 hospital buildings. Includes design, supply, install, test and commission. Work to be carried out in occupied building with minimal disruption. BAFE SP203-1 certification preferred.',
-      client_name: 'University Hospitals Birmingham NHS Foundation Trust',
-      client_type: 'nhs',
-      cpv_codes: ['45316000', '45312100'],
-      categories: ['electrical', 'emergency_lighting'],
-      sector: 'healthcare',
-      value_low: 85000,
-      value_high: 120000,
-      currency: 'GBP',
-      location_text: 'Edgbaston, Birmingham',
-      postcode: 'B15 2GW',
-      lat: 52.4534,
-      lng: -1.9398,
-      region: 'west_midlands',
-      published_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-      deadline: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000).toISOString(),
-      requirements: { niceic: true, insurance: 10000000, dbs_check: true },
-      contact_name: 'Sarah Johnson',
-      contact_email: 'estates.procurement@uhb.nhs.uk',
-      estimated_complexity: 'complex',
-      status: 'live',
-    },
-    {
-      external_id: 'MOCK-2025-003',
-      source: 'contracts_finder',
-      source_url: 'https://www.contractsfinder.service.gov.uk/Notice/mock-003',
-      title: 'Periodic Electrical Testing - School Estate',
-      description: 'EICR testing and certification for 15 primary schools across Manchester. Fixed 5-year testing schedule with annual visual inspections. All remedial works to be quoted separately.',
-      client_name: 'Manchester City Council',
-      client_type: 'local_authority',
-      cpv_codes: ['45310000'],
-      categories: ['electrical', 'testing'],
-      sector: 'education',
-      value_low: 25000,
-      value_high: 35000,
-      currency: 'GBP',
-      location_text: 'Manchester',
-      postcode: 'M1 1AG',
-      lat: 53.4808,
-      lng: -2.2426,
-      region: 'northwest',
-      published_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-      deadline: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString(),
-      requirements: { niceic: true, insurance: 2000000 },
-      contact_name: 'David Williams',
-      contact_email: 'schools.maintenance@manchester.gov.uk',
-      estimated_complexity: 'simple',
-      status: 'live',
-    },
-    {
-      external_id: 'MOCK-2025-004',
-      source: 'contracts_finder',
-      source_url: 'https://www.contractsfinder.service.gov.uk/Notice/mock-004',
-      title: 'EV Charging Infrastructure - Multi-Storey Car Park',
-      description: 'Design and installation of 50 EV charging points (22kW) in council-owned multi-storey car park. Includes electrical infrastructure upgrade, load management system, and back-office integration.',
-      client_name: 'Leeds City Council',
-      client_type: 'local_authority',
-      cpv_codes: ['45310000', '45315000'],
-      categories: ['electrical', 'ev_charging'],
-      sector: 'public',
-      value_low: 150000,
-      value_high: 200000,
-      currency: 'GBP',
-      location_text: 'Leeds City Centre',
-      postcode: 'LS1 4BR',
-      lat: 53.7996,
-      lng: -1.5491,
-      region: 'yorkshire',
-      published_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-      deadline: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000).toISOString(),
-      requirements: { niceic: true, insurance: 5000000, ev_experience: true },
-      contact_name: 'Emma Thompson',
-      contact_email: 'transport.projects@leeds.gov.uk',
-      estimated_complexity: 'complex',
-      status: 'live',
-    },
-    {
-      external_id: 'MOCK-2025-005',
-      source: 'contracts_finder',
-      source_url: 'https://www.contractsfinder.service.gov.uk/Notice/mock-005',
-      title: 'Fire Alarm System Replacement - Housing Association',
-      description: 'Complete replacement of existing fire alarm system in 6 sheltered housing schemes. Grade A LD1 systems required. Includes design, supply, installation, commissioning and handover training.',
-      client_name: 'Clarion Housing Group',
-      client_type: 'housing_association',
-      cpv_codes: ['45312100'],
+      type: 'fire_alarm',
+      titles: ['Fire Alarm System Installation', 'Fire Detection System Upgrade', 'L1 Fire Alarm Replacement'],
+      scopes: [
+        'Design, supply and installation of Grade A LD1 fire alarm system for {units}-unit sheltered housing scheme. System to include intelligent addressable detectors, manual call points, sounders, and interface with warden call system. Full commissioning and BS 5839-1 certification required.',
+        'Replacement of obsolete fire alarm system in {sqm}sqm industrial premises with Category L2 addressable system. Scope includes 72+ zone panel, cause and effect programming, integration with existing BMS, and full documentation.',
+        'Installation of wireless fire alarm system across {buildings} buildings with central monitoring. Includes smoke detectors, heat detectors, manual call points, VADs for hearing impaired, and graphical interface.',
+      ],
+      valueRange: [25000, 95000],
       categories: ['electrical', 'fire_alarm'],
-      sector: 'housing',
-      value_low: 75000,
-      value_high: 95000,
-      currency: 'GBP',
-      location_text: 'Various locations, London',
-      postcode: 'SW1A 1AA',
-      lat: 51.5014,
-      lng: -0.1419,
-      region: 'london',
-      published_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-      deadline: new Date(Date.now() + 18 * 24 * 60 * 60 * 1000).toISOString(),
-      requirements: { niceic: true, bafe: true, insurance: 5000000 },
-      contact_name: 'Michael Brown',
-      contact_email: 'procurement@clarionhg.com',
-      estimated_complexity: 'standard',
-      status: 'live',
+      complexity: ['standard', 'complex'],
+      requirements: { bafe: true },
     },
     {
-      external_id: 'MOCK-2025-006',
-      source: 'contracts_finder',
-      source_url: 'https://www.contractsfinder.service.gov.uk/Notice/mock-006',
-      title: 'Data Cabling Installation - Office Refurbishment',
-      description: 'Cat6A structured cabling installation for new office fit-out. 200 data points, 2 server rooms, WiFi infrastructure. Certification and testing required.',
-      client_name: 'Bristol City Council',
-      client_type: 'local_authority',
-      cpv_codes: ['45314000', '45311200'],
+      type: 'emergency_lighting',
+      titles: ['Emergency Lighting Installation', 'Emergency Lighting Upgrade', 'Emergency Escape Lighting'],
+      scopes: [
+        'Supply and installation of emergency lighting system across {sqm}sqm commercial property to BS 5266. Self-contained LED emergency luminaires throughout, with photoluminescent signage at all exit routes. Includes design, installation, testing and certification.',
+        'Upgrade of emergency lighting in multi-storey car park comprising {levels} levels. Maintained and non-maintained fittings, central battery system with 3-hour duration, automatic testing system with remote monitoring.',
+        'Installation of emergency lighting to communal areas of {units}-unit apartment block. Work includes escape route lighting, open area anti-panic lighting, and high-risk task lighting to plant rooms.',
+      ],
+      valueRange: [15000, 65000],
+      categories: ['electrical', 'emergency_lighting'],
+      complexity: ['simple', 'standard'],
+    },
+    {
+      type: 'testing',
+      titles: ['EICR Testing Programme', 'Periodic Inspection and Testing', 'Electrical Safety Testing'],
+      scopes: [
+        'EICR testing and certification for {properties} domestic properties across local authority housing stock. Includes visual inspection, dead testing, live testing, and detailed remedial recommendations. 5-year certification cycle.',
+        'Periodic inspection of {sqm}sqm commercial premises including distribution systems, final circuits, and specialist equipment feeds. Full EICR report with photographic evidence and prioritised recommendations.',
+        'Electrical testing programme for {schools} school buildings. Scope includes EICR inspection, PAT testing of portable appliances, thermal imaging survey of distribution boards, and executive summary report.',
+      ],
+      valueRange: [15000, 45000],
+      categories: ['electrical', 'testing'],
+      complexity: ['simple', 'standard'],
+    },
+    {
+      type: 'ev_charging',
+      titles: ['EV Charging Infrastructure', 'Electric Vehicle Charging Installation', 'EV Charging Point Rollout'],
+      scopes: [
+        'Design and installation of {chargers} EV charging points (22kW Type 2) in council car park. Scope includes DNO application for supply upgrade, cable installation, feeder pillar, load management system, and OZEV certification.',
+        'Installation of workplace EV charging for {chargers} vehicles. Includes {fast} rapid chargers (50kW DC) and {slow} fast chargers (7kW AC), with smart load balancing and app-based payment system integration.',
+        'Public EV charging hub installation comprising {chargers} charging points with mix of AC and DC units. Canopy with solar PV, battery storage, and grid connection. Full project management from design to commissioning.',
+      ],
+      valueRange: [75000, 250000],
+      categories: ['electrical', 'ev_charging'],
+      complexity: ['complex'],
+      requirements: { ev_experience: true },
+    },
+    {
+      type: 'data_cabling',
+      titles: ['Structured Cabling Installation', 'Data Network Infrastructure', 'Cat6A Cabling Project'],
+      scopes: [
+        'Cat6A structured cabling installation for {datapoints} data points across {floors}-floor office building. Includes floor boxes, trunking, 19" rack cabinets, patch panels, and Fluke certification of all links.',
+        'Fibre optic backbone installation connecting {buildings} buildings on campus. Single-mode and multi-mode fibre, fusion splicing, OTDR testing, and full documentation including as-built drawings.',
+        'Data centre cabling refresh including {racks} rack relocations, new PDUs, hot/cold aisle containment cable management, and {connections} copper and fibre connections with full labelling.',
+      ],
+      valueRange: [25000, 85000],
       categories: ['electrical', 'data_cabling'],
-      sector: 'public',
-      value_low: 35000,
-      value_high: 50000,
-      currency: 'GBP',
-      location_text: 'Bristol City Centre',
-      postcode: 'BS1 5TR',
-      lat: 51.4545,
-      lng: -2.5879,
-      region: 'southwest',
-      published_at: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
-      deadline: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000).toISOString(),
-      requirements: { niceic: true, insurance: 2000000 },
-      contact_name: 'Rachel Green',
-      contact_email: 'it.infrastructure@bristol.gov.uk',
-      estimated_complexity: 'simple',
-      status: 'live',
+      complexity: ['standard', 'complex'],
+    },
+    {
+      type: 'lighting',
+      titles: ['LED Lighting Upgrade', 'Lighting System Replacement', 'Energy Efficient Lighting'],
+      scopes: [
+        'LED lighting upgrade for {sqm}sqm warehouse including high bay fittings, daylight harvesting controls, and PIR presence detection. Guaranteed energy savings of 60%+ with 5-year warranty.',
+        'Street lighting LED conversion programme for {lights} columns. Includes lantern replacement, photocell installation, CMS integration, and disposal of existing sodium fittings.',
+        'Office lighting replacement to {sqm}sqm premises with LED panels, emergency conversion modules, and DALI dimming controls. Includes lighting design calculations and LG7 compliance report.',
+      ],
+      valueRange: [20000, 150000],
+      categories: ['electrical', 'lighting'],
+      complexity: ['simple', 'standard'],
+    },
+    {
+      type: 'solar',
+      titles: ['Solar PV Installation', 'Rooftop Solar Array', 'Commercial Solar Project'],
+      scopes: [
+        'Design and installation of {kw}kWp rooftop solar PV array on commercial premises. Scope includes structural survey, system design, MCS installation, G99 application, and monitoring system.',
+        'Ground-mounted solar farm electrical infrastructure comprising {kw}kWp capacity. Includes inverter installation, AC and DC wiring, transformer, grid connection, and SCADA integration.',
+        'Solar carport installation with {kw}kWp PV capacity and integrated EV charging. Steel canopy structure, weather-sealed cable routes, and export limiting system.',
+      ],
+      valueRange: [45000, 350000],
+      categories: ['electrical', 'solar', 'renewable'],
+      complexity: ['complex'],
+      requirements: { mcs: true },
+    },
+    {
+      type: 'maintenance',
+      titles: ['Electrical Maintenance Contract', 'Reactive and Planned Maintenance', 'FM Electrical Services'],
+      scopes: [
+        '{years}-year electrical maintenance contract for {sqm}sqm mixed-use development. Includes PPM visits, 24/7 emergency callout, lamp replacement programme, and annual fixed wire testing.',
+        'Planned preventive maintenance for {buildings} NHS buildings covering distribution systems, UPS, generators, and medical equipment electrical systems. Monthly inspections with detailed reporting.',
+        'Reactive and planned electrical maintenance for {properties} properties in housing portfolio. SLA response times, compliance testing, minor works delivery, and asset data collection.',
+      ],
+      valueRange: [50000, 200000],
+      categories: ['electrical', 'maintenance'],
+      complexity: ['standard'],
+    },
+    {
+      type: 'containment',
+      titles: ['Cable Containment Installation', 'Electrical Infrastructure Works', 'Busbar and Containment'],
+      scopes: [
+        'Installation of {metres}m cable tray and ladder rack throughout new warehouse. Heavy duty hot-dip galvanised systems, fire stopping at compartment boundaries, and full labelling.',
+        'Busbar system installation for {amps}A distribution in data centre. Copper busbar, tap-off units, segregated earth bar, and thermal imaging survey post-installation.',
+        'External cable route installation comprising {metres}m trenching, ducting, draw pits, and cable pulling. Includes traffic management and reinstatement to highways specification.',
+      ],
+      valueRange: [30000, 120000],
+      categories: ['electrical', 'containment'],
+      complexity: ['standard', 'complex'],
     },
   ];
 
-  return mockData;
+  // Client types
+  const clientTypes = [
+    { type: 'local_authority', names: ['{city} City Council', '{city} Borough Council', '{city} Metropolitan Council', '{city} District Council'], sector: 'public' },
+    { type: 'nhs', names: ['{city} NHS Trust', '{city} University Hospitals NHS', '{city} Community Health NHS', '{city} Mental Health NHS Trust'], sector: 'healthcare' },
+    { type: 'housing', names: ['{city} Housing Association', 'Metropolitan Housing {area}', 'Sanctuary Housing {region}', 'Places for People {city}'], sector: 'housing' },
+    { type: 'education', names: ['{city} Academy Trust', '{city} College', 'University of {city}', '{city} Independent Schools'], sector: 'education' },
+    { type: 'commercial', names: ['{city} Business Park', '{city} Shopping Centre', '{city} Office Complex', '{city} Industrial Estate'], sector: 'commercial' },
+  ];
+
+  const opportunities: any[] = [];
+  let id = 1;
+
+  // Generate opportunities for each location
+  for (const location of locations) {
+    // Generate 2-4 opportunities per location
+    const numOpps = 2 + Math.floor(Math.random() * 3);
+
+    for (let i = 0; i < numOpps; i++) {
+      const template = projectTemplates[Math.floor(Math.random() * projectTemplates.length)];
+      const clientType = clientTypes[Math.floor(Math.random() * clientTypes.length)];
+      const titleBase = template.titles[Math.floor(Math.random() * template.titles.length)];
+      const scopeBase = template.scopes[Math.floor(Math.random() * template.scopes.length)];
+
+      // Generate realistic values
+      const valueVariation = 0.7 + Math.random() * 0.6;
+      const valueLow = Math.round((template.valueRange[0] * valueVariation) / 1000) * 1000;
+      const valueHigh = Math.round((template.valueRange[1] * valueVariation) / 1000) * 1000;
+
+      // Generate deadline (7 to 42 days from now)
+      const daysUntilDeadline = 7 + Math.floor(Math.random() * 35);
+      const deadline = new Date(Date.now() + daysUntilDeadline * 24 * 60 * 60 * 1000);
+
+      // Published date (1 to 14 days ago)
+      const daysAgoPublished = 1 + Math.floor(Math.random() * 14);
+      const publishedAt = new Date(Date.now() - daysAgoPublished * 24 * 60 * 60 * 1000);
+
+      // Replace placeholders in scope
+      const scope = scopeBase
+        .replace('{units}', String(6 + Math.floor(Math.random() * 50)))
+        .replace('{sqm}', String(500 + Math.floor(Math.random() * 5000)))
+        .replace('{floors}', String(2 + Math.floor(Math.random() * 8)))
+        .replace('{buildings}', String(2 + Math.floor(Math.random() * 6)))
+        .replace('{levels}', String(3 + Math.floor(Math.random() * 7)))
+        .replace('{properties}', String(20 + Math.floor(Math.random() * 200)))
+        .replace('{schools}', String(5 + Math.floor(Math.random() * 20)))
+        .replace('{chargers}', String(10 + Math.floor(Math.random() * 50)))
+        .replace('{fast}', String(2 + Math.floor(Math.random() * 6)))
+        .replace('{slow}', String(5 + Math.floor(Math.random() * 15)))
+        .replace('{datapoints}', String(50 + Math.floor(Math.random() * 200)))
+        .replace('{racks}', String(5 + Math.floor(Math.random() * 20)))
+        .replace('{connections}', String(100 + Math.floor(Math.random() * 500)))
+        .replace('{lights}', String(50 + Math.floor(Math.random() * 500)))
+        .replace('{kw}', String(50 + Math.floor(Math.random() * 450)))
+        .replace('{years}', String(2 + Math.floor(Math.random() * 4)))
+        .replace('{metres}', String(100 + Math.floor(Math.random() * 500)))
+        .replace('{amps}', String(400 + Math.floor(Math.random() * 2000)));
+
+      // Generate client name
+      const clientName = clientType.names[Math.floor(Math.random() * clientType.names.length)]
+        .replace('{city}', location.city)
+        .replace('{area}', location.area)
+        .replace('{region}', location.region.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()));
+
+      // Generate title
+      const title = `${titleBase} - ${location.city} ${location.area}`;
+
+      opportunities.push({
+        external_id: `MOCK-2025-${String(id).padStart(4, '0')}`,
+        source: 'contracts_finder',
+        source_url: `https://www.contractsfinder.service.gov.uk/Notice/mock-${String(id).padStart(4, '0')}`,
+        title,
+        description: scope.substring(0, 200) + '...',
+        scope_of_works: scope,
+        client_name: clientName,
+        client_type: clientType.type,
+        cpv_codes: ['45310000', '45311000'],
+        categories: template.categories,
+        sector: clientType.sector,
+        value_low: valueLow,
+        value_high: valueHigh,
+        currency: 'GBP',
+        location_text: `${location.area}, ${location.city}`,
+        postcode: location.postcode,
+        lat: location.lat + (Math.random() - 0.5) * 0.02, // Slight variation
+        lng: location.lng + (Math.random() - 0.5) * 0.02,
+        region: location.region,
+        published_at: publishedAt.toISOString(),
+        deadline: deadline.toISOString(),
+        requirements: {
+          niceic: true,
+          insurance: valueLow > 50000 ? 5000000 : 2000000,
+          ...(template.requirements || {}),
+        },
+        contact_name: ['James Wilson', 'Sarah Thompson', 'Michael Brown', 'Emma Davies', 'Robert Taylor', 'Helen Clark'][Math.floor(Math.random() * 6)],
+        contact_email: `procurement@${clientName.toLowerCase().replace(/\s+/g, '').replace(/[^a-z]/g, '')}.gov.uk`,
+        estimated_complexity: template.complexity[Math.floor(Math.random() * template.complexity.length)],
+        status: 'live',
+      });
+
+      id++;
+    }
+  }
+
+  console.log(`[SYNC] Generated ${opportunities.length} mock opportunities across ${locations.length} UK locations`);
+  return opportunities;
 }

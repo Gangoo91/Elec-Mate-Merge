@@ -81,9 +81,9 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
   const stats = searchQuery.data?.stats;
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full overflow-hidden">
       {/* Search Header */}
-      <div className="p-4 border-b border-border bg-card/50">
+      <div className="p-4 border-b border-border bg-card/50 flex-shrink-0">
         <div className="flex gap-2 mb-3">
           <div className="relative flex-1">
             <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -135,8 +135,8 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
       </div>
 
       {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
-        <TabsList className="w-full justify-start rounded-none border-b bg-transparent h-auto p-0">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0 overflow-hidden">
+        <TabsList className="w-full justify-start rounded-none border-b bg-transparent h-auto p-0 flex-shrink-0">
           <TabsTrigger
             value="search"
             className="rounded-none border-b-2 border-transparent data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent px-4 py-3"
@@ -167,7 +167,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
           </TabsTrigger>
         </TabsList>
 
-        <ScrollArea className="flex-1">
+        <ScrollArea className="flex-1 h-full overflow-auto">
           {/* Search Results */}
           <TabsContent value="search" className="m-0 p-4">
             {!activePostcode ? (
@@ -441,6 +441,10 @@ function OpportunityCard({ opportunity, isSaved, onToggleSave, onView, onStartTe
   const deadline = formatDeadline(opportunity.deadline);
   const complexity = getComplexityBadge(opportunity.estimated_complexity);
 
+  // Get scope preview text
+  const scopePreview = opportunity.scope_of_works || opportunity.description || '';
+  const hasScope = scopePreview.length > 0;
+
   return (
     <Card
       className="bg-card/50 hover:bg-card/80 active:bg-card/90 transition-colors cursor-pointer touch-manipulation active:scale-[0.99]"
@@ -460,11 +464,16 @@ function OpportunityCard({ opportunity, isSaved, onToggleSave, onView, onStartTe
               </div>
             </div>
 
-            {/* Meta Info */}
-            <div className="flex items-center gap-3 text-xs text-muted-foreground mb-2">
-              {opportunity.distance_miles !== null && opportunity.distance_miles !== undefined && (
+            {/* Location and Key Info */}
+            <div className="flex items-center gap-3 text-xs text-muted-foreground mb-2 flex-wrap">
+              {opportunity.location_text && (
                 <span className="flex items-center gap-1">
                   <MapPin className="h-3 w-3" />
+                  {opportunity.location_text}
+                </span>
+              )}
+              {opportunity.distance_miles !== null && opportunity.distance_miles !== undefined && (
+                <span className="text-elec-yellow font-medium">
                   {opportunity.distance_miles} miles
                 </span>
               )}
@@ -476,6 +485,15 @@ function OpportunityCard({ opportunity, isSaved, onToggleSave, onView, onStartTe
                 {deadline.text}
               </span>
             </div>
+
+            {/* Scope Preview */}
+            {hasScope && (
+              <div className="mb-2 p-2 rounded bg-card/30 border border-border/50">
+                <p className="text-xs text-muted-foreground line-clamp-2">
+                  {scopePreview}
+                </p>
+              </div>
+            )}
 
             {/* Categories */}
             <div className="flex items-center gap-1.5 flex-wrap">
@@ -490,6 +508,11 @@ function OpportunityCard({ opportunity, isSaved, onToggleSave, onView, onStartTe
               {opportunity.sector && (
                 <Badge variant="outline" className="bg-gray-500/10 text-gray-400">
                   {getSectorDisplayName(opportunity.sector)}
+                </Badge>
+              )}
+              {opportunity.framework_required && (
+                <Badge variant="outline" className="bg-orange-500/10 text-orange-400 border-orange-500/30">
+                  Framework
                 </Badge>
               )}
             </div>

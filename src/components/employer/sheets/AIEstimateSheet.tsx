@@ -328,7 +328,7 @@ export function AIEstimateSheet({
 
                       {/* Labour Breakdown */}
                       <Collapsible open={expandedSections.labour} onOpenChange={() => toggleSection('labour')}>
-                        <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-lg bg-card/50 hover:bg-card transition-colors">
+                        <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-lg bg-card/50 hover:bg-card transition-colors touch-manipulation active:scale-[0.99]">
                           <div className="flex items-center gap-2">
                             <Users className="h-4 w-4 text-blue-400" />
                             <span className="font-medium">Labour Breakdown</span>
@@ -352,7 +352,7 @@ export function AIEstimateSheet({
 
                       {/* Materials Breakdown */}
                       <Collapsible open={expandedSections.materials} onOpenChange={() => toggleSection('materials')}>
-                        <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-lg bg-card/50 hover:bg-card transition-colors">
+                        <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-lg bg-card/50 hover:bg-card transition-colors touch-manipulation active:scale-[0.99]">
                           <div className="flex items-center gap-2">
                             <Package className="h-4 w-4 text-green-400" />
                             <span className="font-medium">Materials Breakdown</span>
@@ -381,7 +381,7 @@ export function AIEstimateSheet({
                   {/* Hazards */}
                   {displayEstimate.hazards && displayEstimate.hazards.length > 0 && (
                     <Collapsible open={expandedSections.hazards} onOpenChange={() => toggleSection('hazards')}>
-                      <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-lg bg-orange-500/10 border border-orange-500/30 hover:bg-orange-500/20 transition-colors">
+                      <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-lg bg-orange-500/10 border border-orange-500/30 hover:bg-orange-500/20 transition-colors touch-manipulation active:scale-[0.99]">
                         <div className="flex items-center gap-2">
                           <AlertTriangle className="h-4 w-4 text-orange-400" />
                           <span className="font-medium text-orange-400">
@@ -450,11 +450,11 @@ export function AIEstimateSheet({
 
           {/* Fixed Footer */}
           {estimate && (
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t border-border">
+            <div className="absolute bottom-0 left-0 right-0 p-4 pb-safe bg-background/95 backdrop-blur border-t border-border">
               <div className="flex gap-3">
                 <Button
                   variant="outline"
-                  className="flex-1 h-12"
+                  className="flex-1 h-12 touch-manipulation active:scale-[0.98] transition-transform"
                   onClick={generateEstimate}
                   disabled={isLoading}
                 >
@@ -462,7 +462,7 @@ export function AIEstimateSheet({
                   Regenerate
                 </Button>
                 <Button
-                  className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] transition-transform"
                   onClick={() => {
                     onUseEstimate?.(editedEstimate || estimate);
                     onOpenChange(false);
@@ -500,10 +500,10 @@ function CostCard({ icon, label, value, isEditing, onEdit }: CostCardProps) {
           type="number"
           value={value}
           onChange={(e) => onEdit(Number(e.target.value))}
-          className="h-8 text-lg font-semibold"
+          className="h-10 text-base font-semibold touch-manipulation"
         />
       ) : (
-        <p className="font-semibold">£{value?.toLocaleString()}</p>
+        <p className="font-semibold text-base">£{value?.toLocaleString()}</p>
       )}
     </div>
   );
