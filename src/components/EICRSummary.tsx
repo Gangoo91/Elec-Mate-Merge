@@ -289,6 +289,129 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
     return requiredFields.every(field => formData[field] && formData[field].toString().trim() !== '');
   };
 
+  // DEV ONLY: Fill all required fields for quick PDF testing
+  const handleDevFillAllFields = () => {
+    const today = new Date().toISOString().split('T')[0];
+    const futureDate = new Date();
+    futureDate.setFullYear(futureDate.getFullYear() + 5);
+    const nextInspection = futureDate.toISOString().split('T')[0];
+
+    // A simple signature placeholder (small transparent data URL)
+    const devSignature = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAyCAYAAACqNX6+AAAABHNCSVQICAgIfAhkiAAAADl0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4xLjEsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy8QZhcZAAAA00lEQVR4nO3XMQ6AIBQFQNj/TusFvBQWJBQkxmjhzEyL0r9J/gIAAAAAAAC+qiY+s5vnPP25/+f6s+z6fV37OefY7fN+79f1s65z7vp5v/frpSfnAICdxQEAq7MBAJY0DgBgSeoAgCWNAwCWNI4AANiTOgJgSeqIgCWpIwKWpA4AWJI6AGBJ6gCAJakDAJakDgBYkjoAYEnqAIAlqQMAlqQOAFiSOgBgSeoAgCWpAwCWpA4AWJI6AGBJ6gCAJakDAJakDgBYkjoAYEnqAIAlqQMAAAAAwHp/8nwMH37tpDsAAAAASUVORK5CYII=';
+
+    // Client & Installation Details
+    onUpdate('clientName', 'John Smith');
+    onUpdate('clientEmail', 'john.smith@example.com');
+    onUpdate('clientPhone', '07700 900123');
+    onUpdate('clientAddress', '123 Test Street, London, SW1A 1AA');
+    onUpdate('installationAddress', '456 Installation Road, Manchester, M1 2AB');
+
+    // Description of Premises
+    onUpdate('description', 'domestic');
+    onUpdate('estimatedAge', '15');
+    onUpdate('ageUnit', 'years');
+    onUpdate('evidenceOfAlterations', 'yes');
+    onUpdate('lastInspectionType', 'known');
+    onUpdate('dateOfLastInspection', '2019-06-15');
+
+    // Purpose & Inspection Details
+    onUpdate('purposeOfInspection', 'Periodic inspection');
+    onUpdate('inspectionDate', today);
+    onUpdate('inspectionInterval', '5');
+    onUpdate('nextInspectionDate', nextInspection);
+    onUpdate('extentOfInspection', 'Full installation including consumer unit and all circuits');
+    onUpdate('limitationsOfInspection', 'None - full access provided');
+
+    // Supply & Earthing Characteristics
+    onUpdate('earthingArrangement', 'TN-C-S');
+    onUpdate('dnoName', 'UK Power Networks');
+    onUpdate('mpan', '1234567890123');
+    onUpdate('cutoutLocation', 'Under stairs cupboard');
+    onUpdate('serviceEntry', 'Underground');
+    onUpdate('supplyVoltage', '230');
+    onUpdate('supplyFrequency', '50');
+    onUpdate('phases', 'Single');
+    onUpdate('supplyPME', 'Yes');
+    onUpdate('earthElectrodeType', 'Rod');
+
+    // Main Protective Device
+    onUpdate('mainProtectiveDevice', '100A BS 88-3');
+    onUpdate('rcdMainSwitch', 'Yes');
+    onUpdate('rcdRating', '100');
+
+    // Main Protective Bonding
+    onUpdate('mainBondingSize', '10');
+    onUpdate('bondingCompliance', 'Satisfactory');
+    onUpdate('mainBondingLocations', 'Gas, Water, Oil');
+    onUpdate('supplementaryBondingSize', '4');
+    onUpdate('equipotentialBonding', 'Satisfactory');
+
+    // Consumer Unit / Distribution Board
+    onUpdate('boardSize', '18 Way');
+    onUpdate('cuType', 'Metal clad');
+    onUpdate('cuLocation', 'Under stairs');
+    onUpdate('cuManufacturer', 'Hager');
+    onUpdate('intakeCableSize', '25');
+    onUpdate('intakeCableType', 'PVC/SWA');
+    onUpdate('tailsSize', '25');
+    onUpdate('tailsLength', '3');
+
+    // Distribution Board Verification
+    onUpdate('dbReference', 'Main CU');
+    onUpdate('zdb', '0.15');
+    onUpdate('ipf', '4.5');
+    onUpdate('confirmedCorrectPolarity', true);
+    onUpdate('confirmedPhaseSequence', true);
+    onUpdate('spdOperationalStatus', true);
+
+    // Inspector Details
+    onUpdate('inspectorName', 'James Wilson');
+    onUpdate('inspectorQualifications', 'City & Guilds 2391-52, 18th Edition');
+    onUpdate('companyName', 'Wilson Electrical Services Ltd');
+    onUpdate('companyAddress', '789 Contractor Lane, Birmingham, B1 1AA');
+    onUpdate('companyPhone', '0121 123 4567');
+    onUpdate('companyEmail', 'info@wilsonelectrical.co.uk');
+    onUpdate('registrationScheme', 'NICEIC');
+    onUpdate('registrationNumber', 'NIC123456');
+    onUpdate('inspectorSignature', devSignature);
+
+    // Test Instrument
+    onUpdate('testInstrumentMake', 'Megger MFT1741');
+    onUpdate('testInstrumentSerial', 'SN-2024-001234');
+    onUpdate('calibrationDate', '2024-01-15');
+    onUpdate('testTemperature', '20');
+
+    // Overall Assessment
+    onUpdate('overallAssessment', 'satisfactory');
+    onUpdate('satisfactoryForContinuedUse', 'yes');
+    onUpdate('additionalComments', 'Installation in good condition. Minor recommendations for improvement included in observations.');
+
+    // Authorisation - Inspected By
+    onUpdate('inspectedByName', 'JAMES WILSON');
+    onUpdate('inspectedBySignature', devSignature);
+    onUpdate('inspectedByForOnBehalfOf', 'Wilson Electrical Services Ltd');
+    onUpdate('inspectedByPosition', 'Senior Electrician');
+    onUpdate('inspectedByAddress', '789 Contractor Lane, Birmingham, B1 1AA');
+    onUpdate('inspectedByCpScheme', 'NICEIC');
+
+    // Authorisation - Report Authorised By
+    onUpdate('reportAuthorisedByName', 'JAMES WILSON');
+    onUpdate('reportAuthorisedBySignature', devSignature);
+    onUpdate('reportAuthorisedByDate', today);
+    onUpdate('reportAuthorisedByForOnBehalfOf', 'Wilson Electrical Services Ltd');
+    onUpdate('reportAuthorisedByPosition', 'Managing Director');
+    onUpdate('reportAuthorisedByAddress', '789 Contractor Lane, Birmingham, B1 1AA');
+    onUpdate('reportAuthorisedByMembershipNo', 'NIC123456');
+
+    // Sample test results
+    handleGenerateTestData();
+
+    toast({
+      title: "Dev Mode: All Fields Populated",
+      description: "All required fields filled with test data. Ready to generate PDF.",
+    });
+  };
+
   const handleGenerateTestData = () => {
     const mockTestResults = [
       {
@@ -790,7 +913,7 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <Button 
+              <Button
                 className="h-12 px-6 gap-2.5 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold shadow-lg shadow-elec-yellow/20 transition-all duration-200 hover:shadow-elec-yellow/30 hover:scale-[1.02]"
                 onClick={handleGenerateCertificate}
                 disabled={!isFormComplete()}
@@ -798,15 +921,29 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
                 <FileDown className="h-5 w-5" />
                 Generate PDF
               </Button>
-              <Button 
-                variant="outline" 
-                className="h-12 px-6 gap-2.5 border-border bg-card/50 hover:bg-muted/50 transition-all duration-200 hover:border-neutral-500" 
+              <Button
+                variant="outline"
+                className="h-12 px-6 gap-2.5 border-border bg-card/50 hover:bg-muted/50 transition-all duration-200 hover:border-neutral-500"
                 onClick={handleSaveDraft}
               >
                 <Save className="h-5 w-5" />
                 Save Draft
               </Button>
             </div>
+
+            {/* DEV ONLY: Quick fill button for testing */}
+            {import.meta.env.DEV && (
+              <div className="pt-3 border-t border-elec-yellow/20">
+                <Button
+                  variant="outline"
+                  className="w-full h-10 gap-2 border-purple-500/50 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 hover:text-purple-200"
+                  onClick={handleDevFillAllFields}
+                >
+                  <Beaker className="h-4 w-4" />
+                  DEV: Fill All Fields for Testing
+                </Button>
+              </div>
+            )}
             
             {!isFormComplete() && (
               <div className="pt-4 border-t border-elec-yellow/10">
