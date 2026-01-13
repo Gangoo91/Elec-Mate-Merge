@@ -26,7 +26,7 @@ interface VoiceTool {
 }
 
 interface SyncRequest {
-  apiKey: string;
+  apiKey?: string; // Optional - will use env var if not provided
   agentId: string;
   tools: VoiceTool[];
   systemPrompt?: string;
@@ -176,11 +176,14 @@ serve(async (req) => {
   }
 
   try {
-    const { apiKey, agentId, tools, systemPrompt }: SyncRequest = await req.json();
+    const { apiKey: providedApiKey, agentId, tools, systemPrompt }: SyncRequest = await req.json();
+
+    // Use provided API key or fall back to environment variable
+    const apiKey = providedApiKey || Deno.env.get('ELEVENLABS_API_KEY');
 
     if (!apiKey) {
       return new Response(
-        JSON.stringify({ error: 'API key is required' }),
+        JSON.stringify({ error: 'API key is required (either in request body or ELEVENLABS_API_KEY environment variable)' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }

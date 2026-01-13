@@ -250,6 +250,51 @@ You have access to 300+ tools organised by category. Use them proactively:
 
 Always use the most specific tool available. Prefer single-purpose tools over general ones.
 
+## CIRCUIT TEST DATA ENTRY (EICR/EIC)
+
+When filling circuit test data for EICR or EIC forms:
+
+1. **ALWAYS ask how many circuits first** - "How many circuits are we testing?"
+2. **Use bulk tools for efficiency**:
+   - 'set_field_all_circuits' - When same value applies to ALL circuits (e.g., "IR voltage 500 for all")
+   - 'set_circuit_field' - To update a specific circuit directly by number
+   - 'set_multiple_fields' - When user gives several values at once
+3. **Check progress with 'get_circuits_status'** - Shows which fields are missing for each circuit
+4. **Work systematically for large numbers (10+ circuits)**:
+   - First: Set common values for ALL circuits (IR voltage, polarity - usually same across all)
+   - Then: Go circuit by circuit for unique values (Zs, R1+R2, RCD times)
+5. **Confirm what you've filled** and proactively ask about remaining empty fields
+6. **NEVER iterate one-by-one** when the same value applies to multiple circuits - use bulk tools
+
+Example workflow:
+- "I've got 12 circuits to test"
+- "Got it. What's the IR test voltage for all of them?" (usually 500V)
+- Set insulationTestVoltage to 500 for all 12 using set_field_all_circuits
+- "Now let's do the readings. Circuit 1 - what's the Zs?"
+- Continue circuit by circuit for individual readings
+
+## SUB-BOARDS (Multi-Board Installations)
+
+When working with multiple distribution boards:
+
+1. **ALWAYS ask which board first**: "Which board - main CU or a sub-board?"
+2. **Use board-specific tools**:
+   - 'select_board' - Switch between main and sub-boards
+   - 'add_circuit_to_board' - Add circuit to a specific board
+   - 'set_board_field_all_circuits' - Bulk fill for circuits on one board only
+   - 'get_board_status' - See all boards and their circuits
+   - 'scan_board' - AI scanner for a specific board
+3. **Each board has its own set of circuits** with separate numbering (C1, C2, C3 for main; C1, C2, C3 for sub-board)
+4. **When filling bulk values, specify the board** to avoid filling the wrong circuits
+5. The board scanner and AI features work on the currently selected board
+
+Example:
+- "We've got the main CU and a garage sub-board"
+- "Let's start with the main CU. How many circuits?" (use select_board first)
+- Fill main CU circuits
+- "Now the garage sub-board" (switch with select_board)
+- Fill garage circuits
+
 ## FINAL NOTES
 
 - You are ELEC-MATE - act like you own the place
@@ -3958,6 +4003,121 @@ export const voiceToolsRegistry: VoiceTool[] = [
     parameters: [
       { name: 'field', type: 'string', required: true, description: 'Test field (zs, r1r2, ir, rcd_time, etc.)' },
       { name: 'value', type: 'string', required: true, description: 'Test result value' }
+    ],
+    waitForResponse: true,
+    disableInterruptions: false,
+    executionMode: 'wait'
+  },
+  // BULK CIRCUIT TOOLS - For filling multiple circuits at once
+  {
+    name: 'set_field_all_circuits',
+    description: 'Set the same value for a specific field across ALL circuits at once. Use when the user says "set IR voltage to 500 for all circuits" or "all circuits polarity OK". Much faster than setting one at a time.',
+    category: 'Certificate Testing',
+    parameters: [
+      { name: 'field', type: 'string', required: true, description: 'Field name (insulationTestVoltage, polarity, zs, r1r2, rcdOneX, etc.)' },
+      { name: 'value', type: 'string', required: true, description: 'Value to set for all circuits' }
+    ],
+    waitForResponse: true,
+    disableInterruptions: false,
+    executionMode: 'wait'
+  },
+  {
+    name: 'set_circuit_field',
+    description: 'Set a specific field value for a specific circuit number directly, without having to navigate to it first. Use this to update any circuit by number.',
+    category: 'Certificate Testing',
+    parameters: [
+      { name: 'circuit_number', type: 'number', required: true, description: 'Circuit number (1, 2, 3, etc.)' },
+      { name: 'field', type: 'string', required: true, description: 'Field name (zs, r1r2, insulationTestVoltage, polarity, etc.)' },
+      { name: 'value', type: 'string', required: true, description: 'Value to set' }
+    ],
+    waitForResponse: true,
+    disableInterruptions: false,
+    executionMode: 'wait'
+  },
+  {
+    name: 'set_multiple_fields',
+    description: 'Set multiple field values at once for a circuit. Use when user gives several test results together like "Zs 0.45, R1+R2 0.28, polarity OK".',
+    category: 'Certificate Testing',
+    parameters: [
+      { name: 'circuit_number', type: 'number', required: false, description: 'Circuit number (optional, uses current circuit if not specified)' },
+      { name: 'zs', type: 'string', required: false, description: 'Earth fault loop impedance value' },
+      { name: 'r1r2', type: 'string', required: false, description: 'R1+R2 continuity value' },
+      { name: 'polarity', type: 'string', required: false, description: 'Polarity result (OK, Correct, etc.)' },
+      { name: 'insulationTestVoltage', type: 'string', required: false, description: 'IR test voltage (250, 500, 1000)' },
+      { name: 'insulationLiveEarth', type: 'string', required: false, description: 'Live-Earth insulation reading' },
+      { name: 'insulationLiveNeutral', type: 'string', required: false, description: 'Live-Neutral insulation reading' },
+      { name: 'rcdOneX', type: 'string', required: false, description: 'RCD trip time at 1x' },
+      { name: 'pfc', type: 'string', required: false, description: 'Prospective fault current' }
+    ],
+    waitForResponse: true,
+    disableInterruptions: false,
+    executionMode: 'wait'
+  },
+  {
+    name: 'get_circuits_status',
+    description: 'Get a summary of all circuits showing which fields are filled and which are missing. Use to check progress and identify incomplete circuits.',
+    category: 'Certificate Testing',
+    parameters: [],
+    waitForResponse: true,
+    disableInterruptions: false,
+    executionMode: 'wait'
+  },
+  // SUB-BOARD TOOLS - For working with multiple distribution boards
+  {
+    name: 'select_board',
+    description: 'Select a distribution board to work with (main consumer unit or sub-board). All subsequent circuit operations will apply to the selected board.',
+    category: 'Certificate Testing',
+    parameters: [
+      { name: 'board', type: 'string', required: true, description: 'Board name or reference (main, main-cu, sub-db-1, garage, kitchen, etc.)' }
+    ],
+    waitForResponse: true,
+    disableInterruptions: false,
+    executionMode: 'wait'
+  },
+  {
+    name: 'add_circuit_to_board',
+    description: 'Add a new circuit directly to a specific board without having to select it first.',
+    category: 'Certificate Testing',
+    parameters: [
+      { name: 'board', type: 'string', required: true, description: 'Board name or reference' },
+      { name: 'type', type: 'string', required: false, description: 'Circuit type (ring, radial, lighting, cooker, shower)' },
+      { name: 'rating', type: 'string', required: false, description: 'Protective device rating (32A, 20A, 6A, etc.)' },
+      { name: 'description', type: 'string', required: false, description: 'Circuit description' }
+    ],
+    waitForResponse: true,
+    disableInterruptions: false,
+    executionMode: 'wait'
+  },
+  {
+    name: 'set_board_field_all_circuits',
+    description: 'Set the same value for a specific field across ALL circuits on a SPECIFIC board. Use when filling common values for one board at a time.',
+    category: 'Certificate Testing',
+    parameters: [
+      { name: 'board', type: 'string', required: true, description: 'Board name or reference' },
+      { name: 'field', type: 'string', required: true, description: 'Field name' },
+      { name: 'value', type: 'string', required: true, description: 'Value to set' }
+    ],
+    waitForResponse: true,
+    disableInterruptions: false,
+    executionMode: 'wait'
+  },
+  {
+    name: 'get_board_status',
+    description: 'Get status of all circuits on a specific board, or all boards if not specified. Shows which fields are missing.',
+    category: 'Certificate Testing',
+    parameters: [
+      { name: 'board', type: 'string', required: false, description: 'Board name (shows all boards if not specified)' }
+    ],
+    waitForResponse: true,
+    disableInterruptions: false,
+    executionMode: 'wait'
+  },
+  {
+    name: 'scan_board',
+    description: 'Run AI board scanner on a specific board to auto-detect circuits from a photo. Takes a photo or uses existing photo of the board.',
+    category: 'Certificate Testing',
+    parameters: [
+      { name: 'board', type: 'string', required: true, description: 'Board to scan (main, sub-db-1, etc.)' }
     ],
     waitForResponse: true,
     disableInterruptions: false,

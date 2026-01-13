@@ -307,6 +307,21 @@ class OfflineStorageManager {
     return (await db.get('test-instruments', 'recent')) || [];
   }
 
+  // Save full instrument details (make, serial, calibration) - keyed by instrument make
+  async saveInstrumentDetails(make: string, details: { serialNumber: string; calibrationDate: string }): Promise<void> {
+    if (!make || make === 'Other') return;
+    const db = await this.dbPromise;
+    await db.put('test-instruments', { ...details, lastUsed: Date.now() }, `details-${make}`);
+  }
+
+  // Get saved details for a specific instrument make
+  async getInstrumentDetails(make: string): Promise<{ serialNumber: string; calibrationDate: string } | null> {
+    if (!make || make === 'Other') return null;
+    const db = await this.dbPromise;
+    const details = await db.get('test-instruments', `details-${make}`);
+    return details ? { serialNumber: details.serialNumber || '', calibrationDate: details.calibrationDate || '' } : null;
+  }
+
   // Table Preferences
   async setTablePreference(key: string, value: any): Promise<void> {
     const db = await this.dbPromise;

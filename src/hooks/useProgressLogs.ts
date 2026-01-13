@@ -45,7 +45,7 @@ export function useProgressLogs() {
         .from("progress_logs")
         .select(`
           *,
-          job:jobs(id, title, client)
+          job:employer_jobs(id, title, client)
         `)
         .eq("user_id", user.id)
         .order("date", { ascending: false });
@@ -70,7 +70,7 @@ export function useJobProgressLogs(jobId: string | undefined) {
         .from("progress_logs")
         .select(`
           *,
-          job:jobs(id, title, client)
+          job:employer_jobs(id, title, client)
         `)
         .eq("user_id", user.id)
         .eq("job_id", jobId)
@@ -94,7 +94,7 @@ export function useProgressLog(id: string | undefined) {
         .from("progress_logs")
         .select(`
           *,
-          job:jobs(id, title, client)
+          job:employer_jobs(id, title, client)
         `)
         .eq("id", id)
         .single();
@@ -118,7 +118,7 @@ export function useProgressLogsByDateRange(startDate?: string, endDate?: string)
         .from("progress_logs")
         .select(`
           *,
-          job:jobs(id, title, client)
+          job:employer_jobs(id, title, client)
         `)
         .eq("user_id", user.id);
 
@@ -188,7 +188,7 @@ export function useCreateProgressLog() {
         .insert({ ...input, user_id: user.id })
         .select(`
           *,
-          job:jobs(id, title, client)
+          job:employer_jobs(id, title, client)
         `)
         .single();
 
@@ -225,7 +225,7 @@ export function useUpdateProgressLog() {
         .eq("id", id)
         .select(`
           *,
-          job:jobs(id, title, client)
+          job:employer_jobs(id, title, client)
         `)
         .single();
 
@@ -271,7 +271,7 @@ export function useSignOffProgressLog() {
         .eq("id", id)
         .select(`
           *,
-          job:jobs(id, title, client)
+          job:employer_jobs(id, title, client)
         `)
         .single();
 

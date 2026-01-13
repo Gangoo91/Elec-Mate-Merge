@@ -28,6 +28,11 @@ import { cn } from "@/lib/utils";
 const Index = () => {
   const { user } = useAuth();
 
+  // Respect reduced motion preferences
+  const prefersReducedMotion = typeof window !== 'undefined'
+    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    : false;
+
   const hubs = [
     {
       title: "Apprentice Hub",
@@ -110,7 +115,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white safe-top safe-bottom overflow-hidden">
+    <div className="min-h-screen bg-black text-white overflow-hidden pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         {/* Animated background */}
@@ -121,18 +126,18 @@ const Index = () => {
             transition={{ duration: 1 }}
             className="absolute inset-0 bg-gradient-to-b from-elec-yellow/10 via-elec-yellow/5 to-transparent"
           />
-          {/* Primary animated orb */}
+          {/* Primary animated orb - skip animation if reduced motion preferred */}
           <motion.div
-            animate={{
+            animate={prefersReducedMotion ? {} : {
               scale: [1, 1.2, 1],
               opacity: [0.15, 0.25, 0.15]
             }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-elec-yellow/20 blur-[120px]"
           />
-          {/* Secondary orb */}
+          {/* Secondary orb - skip animation if reduced motion preferred */}
           <motion.div
-            animate={{
+            animate={prefersReducedMotion ? {} : {
               scale: [1.1, 0.9, 1.1],
               opacity: [0.08, 0.15, 0.08]
             }}
@@ -156,7 +161,7 @@ const Index = () => {
                 whileTap={{ scale: 0.95 }}
                 className="w-14 h-14 rounded-2xl overflow-hidden shadow-[0_4px_24px_rgba(255,209,0,0.3)] ring-2 ring-elec-yellow/20"
               >
-                <img src="/logo.jpg" alt="Elec-Mate" className="w-full h-full object-cover" />
+                <img src="/logo.jpg" alt="Elec-Mate" loading="lazy" decoding="async" className="w-full h-full object-cover" />
               </motion.div>
               <span className="text-[22px] font-bold tracking-tight">
                 Elec-<span className="text-elec-yellow">Mate</span>
@@ -524,9 +529,9 @@ const Index = () => {
 
       {/* Final CTA */}
       <section className="py-16 px-6 relative">
-        {/* Background glow */}
+        {/* Background glow - skip animation if reduced motion preferred */}
         <motion.div
-          animate={{
+          animate={prefersReducedMotion ? {} : {
             scale: [1, 1.1, 1],
             opacity: [0.1, 0.15, 0.1]
           }}

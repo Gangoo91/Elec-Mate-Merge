@@ -9,7 +9,8 @@ import {
   Database,
   BookOpen,
   Zap,
-  School
+  School,
+  Shield
 } from "lucide-react";
 
 export type NavItem = {
@@ -17,6 +18,7 @@ export type NavItem = {
   path: string;
   icon: JSX.Element;
   roles: string[];
+  adminOnly?: boolean; // Requires admin_role to be set
 };
 
 export const mainNavItems: NavItem[] = [
@@ -79,5 +81,12 @@ export const mainNavItems: NavItem[] = [
     path: "/admin/knowledge-uploader",
     icon: <Database className="h-5 w-5" />,
     roles: ["admin"],
+  },
+  {
+    name: "Admin Panel",
+    path: "/admin",
+    icon: <Shield className="h-5 w-5" />,
+    roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
+    adminOnly: true,
   },
 ];

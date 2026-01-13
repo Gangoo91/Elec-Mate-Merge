@@ -52,15 +52,65 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
     loadInstruments();
   }, []);
 
+  // Auto-fill serial and calibration when instrument is selected and fields are empty
+  const loadInstrumentDetails = async (make: string) => {
+    if (!make || make === 'Other') return;
+    try {
+      const { offlineStorage } = await import('@/utils/offlineStorage');
+      const details = await offlineStorage.getInstrumentDetails(make);
+      if (details) {
+        // Only auto-fill if the fields are currently empty
+        if (!formData.testInstrumentSerial && details.serialNumber) {
+          onUpdate('testInstrumentSerial', details.serialNumber);
+        }
+        if (!formData.calibrationDate && details.calibrationDate) {
+          onUpdate('calibrationDate', details.calibrationDate);
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load instrument details', e);
+    }
+  };
+
+  // Save instrument details when serial or calibration changes
+  const saveInstrumentDetails = async () => {
+    const make = formData.testInstrumentMake;
+    if (!make || make === 'Other') return;
+
+    const serial = formData.testInstrumentSerial;
+    const calibration = formData.calibrationDate;
+
+    // Only save if we have at least a serial number
+    if (serial) {
+      try {
+        const { offlineStorage } = await import('@/utils/offlineStorage');
+        await offlineStorage.saveInstrumentDetails(make, {
+          serialNumber: serial,
+          calibrationDate: calibration || ''
+        });
+      } catch (e) {
+        console.error('Failed to save instrument details', e);
+      }
+    }
+  };
+
+  // Save details when serial or calibration changes (debounced effect)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      saveInstrumentDetails();
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [formData.testInstrumentSerial, formData.calibrationDate, formData.testInstrumentMake]);
+
   // Save instrument to recent list
   const saveToRecent = async (instrument: string) => {
     if (!instrument || instrument === 'Other') return;
-    
+
     const updated = [
       instrument,
       ...recentInstruments.filter(i => i !== instrument)
     ].slice(0, 3); // Keep only last 3
-    
+
     setRecentInstruments(updated);
     const { offlineStorage } = await import('@/utils/offlineStorage');
     await offlineStorage.saveRecentInstrument(instrument);
@@ -95,6 +145,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
             onValueChange={(value) => {
               onUpdate("testInstrumentMake", value);
               saveToRecent(value);
+              loadInstrumentDetails(value); // Auto-fill serial & calibration
               setSearchTerm('');
             }}
           >

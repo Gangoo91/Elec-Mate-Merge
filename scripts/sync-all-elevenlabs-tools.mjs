@@ -122,6 +122,26 @@ async function createTool(tool) {
   return data.id;
 }
 
+// Update an existing tool
+async function updateTool(toolId, tool) {
+  const body = convertToElevenLabsFormat(tool);
+  const response = await fetch(`${API_BASE}/convai/tools/${toolId}`, {
+    method: 'PATCH',
+    headers: {
+      'xi-api-key': API_KEY,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`Failed to update ${tool.name}: ${error}`);
+  }
+
+  return await response.json();
+}
+
 // Update agent with tools
 async function updateAgentTools(agentId, toolIds) {
   const response = await fetch(`${API_BASE}/convai/agents/${agentId}`, {
@@ -163,22 +183,31 @@ async function syncAllTools() {
   const existingTools = await getExistingTools();
   console.log(`Found ${existingTools.size} existing tools\n`);
 
-  // Find missing tools
-  const missingTools = registryTools.filter(t => !existingTools.has(t.name));
-  console.log(`Need to create ${missingTools.length} new tools\n`);
-
-  // Create missing tools
+  // Sync ALL tools - create new ones OR update existing ones
   let created = 0;
+  let updated = 0;
   let failed = 0;
-  const allToolIds = [...existingTools.values()];
+  const allToolIds = [];
 
-  for (const tool of missingTools) {
+  for (const tool of registryTools) {
     try {
-      process.stdout.write(`Creating ${tool.name}... `);
-      const id = await createTool(tool);
-      allToolIds.push(id);
-      created++;
-      console.log(`✓ ${id}`);
+      const existingId = existingTools.get(tool.name);
+
+      if (existingId) {
+        // UPDATE existing tool
+        process.stdout.write(`Updating ${tool.name}... `);
+        await updateTool(existingId, tool);
+        allToolIds.push(existingId);
+        updated++;
+        console.log(`✓ updated`);
+      } else {
+        // CREATE new tool
+        process.stdout.write(`Creating ${tool.name}... `);
+        const id = await createTool(tool);
+        allToolIds.push(id);
+        created++;
+        console.log(`✓ ${id}`);
+      }
 
       // Rate limit - 100ms between requests
       await new Promise(r => setTimeout(r, 100));
@@ -188,7 +217,7 @@ async function syncAllTools() {
     }
   }
 
-  console.log(`\nCreated: ${created}, Failed: ${failed}, Total: ${allToolIds.length}\n`);
+  console.log(`\nCreated: ${created}, Updated: ${updated}, Failed: ${failed}, Total: ${allToolIds.length}\n`);
 
   // Update both agents
   console.log('Updating Electrician agent...');

@@ -463,6 +463,14 @@ export async function updatePriceBookItem(id: string, updates: Partial<PriceBook
   return data;
 }
 
+export async function deletePriceBookItem(id: string): Promise<void> {
+  const { error } = await supabase
+    .from('employer_price_book')
+    .delete()
+    .eq('id', id);
+  if (error) throw error;
+}
+
 export async function getLowStockItems(): Promise<PriceBookItem[]> {
   const { data, error } = await supabase
     .from('employer_price_book')

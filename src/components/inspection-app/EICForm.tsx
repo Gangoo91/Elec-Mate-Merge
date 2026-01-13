@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useEICTabs } from '@/hooks/useEICTabs';
 import { useEICObservations } from '@/hooks/useEICObservations';
-import { useEICAutoSave } from '@/hooks/useEICAutoSave';
-import { useCloudSync } from '@/hooks/useCloudSync';
+import { useReportSync } from '@/hooks/useReportSync';
 import { useReportId } from '@/hooks/useReportId';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -14,9 +13,9 @@ import { checkAllResultsCompliance } from '@/utils/autoRegChecker';
 import EICFormHeader from './eic/EICFormHeader';
 import EICFormTabs from './eic/EICFormTabs';
 import StartNewEICRDialog from './StartNewEICRDialog';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { DraftRecoveryDialog } from '@/components/ui/DraftRecoveryDialog';
 import { Button } from '@/components/ui/button';
-import { Save, Upload, AlertTriangle, Bell } from 'lucide-react';
+import { Bell } from 'lucide-react';
 
 const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialReportId?: string | null }) => {
   const { toast } = useToast();
@@ -121,6 +120,7 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
   const [currentReportId, setCurrentReportId] = useState<string | null>(initialReportId || null);
   const [authChecked, setAuthChecked] = useState(false);
   const [showStartNewDialog, setShowStartNewDialog] = useState(false);
+  const [showDraftRecovery, setShowDraftRecovery] = useState(false);
 
   // Generate and manage temporary report ID for photo uploads
   const { effectiveReportId } = useReportId({
@@ -128,32 +128,65 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
     currentReportId,
   });
 
-  // Auto-save hook
+  // Best-in-class sync integration - handles auto-save, cloud sync, and offline queue
   const {
-    isSaving,
-    lastSaveTime,
-    hasUnsavedChanges,
-    manualSave,
-    loadFromLocalStorage,
-    clearAutoSave
-  } = useEICAutoSave({
+    status: syncStatus,
+    saveNow,
+    loadReport,
+    isOnline,
+    isAuthenticated,
+    hasRecoverableDraft,
+    draftPreview,
+    recoverDraft,
+    discardDraft,
+  } = useReportSync({
+    reportId: currentReportId,
+    reportType: 'eic',
     formData,
-    interval: 30, // Auto-save every 30 seconds
-    enabled: true
+    enabled: true,
+    customerId: customerIdFromNav,
   });
 
-  // Load saved data from IndexedDB on mount
+  // Map new status to legacy syncState format for backwards compatibility
+  const syncState = {
+    status: syncStatus.cloud === 'synced' ? 'synced' :
+            syncStatus.cloud === 'syncing' ? 'syncing' :
+            syncStatus.cloud === 'queued' || syncStatus.cloud === 'offline' ? 'queued' :
+            'error',
+    lastSyncTime: syncStatus.lastCloudSync?.getTime(),
+    errorMessage: syncStatus.errorMessage,
+    queuedChanges: syncStatus.queuedChanges,
+  };
+
+  // Derive saving state from sync status
+  const isSaving = syncStatus.local === 'saving' || syncStatus.cloud === 'syncing';
+  const hasUnsavedChanges = syncStatus.local === 'unsaved' || syncStatus.cloud !== 'synced';
+
+  // Show draft recovery dialog when recoverable draft detected
   useEffect(() => {
-    const loadData = async () => {
-      const savedData = await loadFromLocalStorage();
-      if (savedData?.formData) {
-        // Preserve certificate number if it exists, otherwise keep the generated one
-        const certificateNumber = savedData.formData.certificateNumber || formData.certificateNumber;
-        setFormData({ ...savedData.formData, certificateNumber });
-      }
-    };
-    loadData();
-  }, []); // Empty dependency array - only run once on mount
+    if (hasRecoverableDraft && !currentReportId && !initialReportId) {
+      setShowDraftRecovery(true);
+    }
+  }, [hasRecoverableDraft, currentReportId, initialReportId]);
+
+  // Handle draft recovery
+  const handleRecoverDraft = () => {
+    const recoveredData = recoverDraft();
+    if (recoveredData) {
+      setFormData(prev => ({ ...prev, ...recoveredData }));
+      toast({
+        title: "Draft recovered",
+        description: "Your unsaved EIC work has been restored.",
+      });
+    }
+    setShowDraftRecovery(false);
+  };
+
+  // Handle draft discard
+  const handleDiscardDraft = () => {
+    discardDraft();
+    setShowDraftRecovery(false);
+  };
 
   // Generate certificate number on mount if needed - Prevent regeneration
   const certNumberGenerated = React.useRef(false);
@@ -168,15 +201,6 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
     };
     initCertificateNumber();
   }, []);
-
-  // Cloud sync integration
-  const { syncState, syncToCloud, loadFromCloud, isOnline, isAuthenticated } = useCloudSync({
-    reportId: currentReportId,
-    reportType: 'eic',
-    data: formData,
-    enabled: true,
-    customerId: customerIdFromNav,
-  });
 
   // Warn before closing tab if there are unsynchronised changes
   useEffect(() => {
@@ -231,7 +255,7 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
         return;
       }
 
-      loadFromCloud(initialReportId).then(cloudData => {
+      loadReport(initialReportId).then(cloudData => {
         if (cloudData && typeof cloudData === 'object') {
           const data = cloudData as any;
           const certificateNumber = data.certificateNumber || formData.certificateNumber;
@@ -246,7 +270,7 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
         }
       });
     }
-  }, [initialReportId, authChecked, isAuthenticated, isOnline, loadFromCloud]);
+  }, [initialReportId, authChecked, isAuthenticated, isOnline, loadReport]);
 
   // Observations hook
   const {
@@ -308,7 +332,7 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
   };
 
   const confirmStartNew = async () => {
-    clearAutoSave();
+    discardDraft(); // Clear any draft data
     // Generate new certificate number for new report
     const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
     const certificateNumber = await generateCertificateNumber('eic');
@@ -487,14 +511,11 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
         certificateGeneratedAt: new Date().toISOString(),
         status: 'completed'
       };
-      
+
       setFormData(completedData);
-      
-      // Save current state before generating
-      await manualSave();
-      
-      // Sync to cloud with completed data
-      const result = await syncToCloud(true);
+
+      // Sync to cloud with completed data using best-in-class saveNow()
+      const result = await saveNow();
       if (result && typeof result === 'object' && 'reportId' in result) {
         setCurrentReportId(result.reportId as string);
       }
@@ -594,8 +615,8 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
         });
       }
       
-      // Clear auto-save after successful generation
-      clearAutoSave();
+      // Clear draft after successful generation
+      discardDraft();
     } catch (error) {
       toast({
         title: "Generation Failed",
@@ -606,15 +627,12 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
   };
 
   const handleSaveDraft = async () => {
-    await manualSave();
-    
-    // Sync to cloud
-    const result = await syncToCloud(true);
-    
+    // Use best-in-class saveNow() - handles local save, cloud sync, and offline queuing
+    const result = await saveNow();
+
     // Check if save was successful
     if (!result || !result.success) {
-      // Toast already shown by useCloudSync if form is too empty
-      // Only show generic error for other failures - debounced to prevent spam
+      // Only show generic error for failures - debounced to prevent spam
       if (formData.clientName || formData.installationAddress) {
         const now = Date.now();
         if (now - lastSaveErrorToastRef.current > 30000) {
@@ -628,22 +646,17 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
       }
       return;
     }
-    
+
     if (result.reportId) {
       setCurrentReportId(result.reportId as string);
-      
+
       // Link to customer if navigated from customer page
       if (customerIdFromNav && result.reportId) {
         const { linkCustomerToReport } = await import('@/utils/customerHelper');
         await linkCustomerToReport(result.reportId as string, customerIdFromNav);
       }
-      
-      toast({
-        title: 'EIC Saved',
-        description: 'Your certificate has been saved successfully.',
-      });
     }
-    
+
     // Invalidate queries to refresh dashboard
     queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
     queryClient.invalidateQueries({ queryKey: ['my-reports'] });
@@ -750,6 +763,14 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
         onConfirm={confirmStartNew}
         onDuplicate={handleDuplicate}
         hasUnsavedChanges={hasUnsavedChanges}
+      />
+
+      <DraftRecoveryDialog
+        open={showDraftRecovery}
+        reportType="eic"
+        draftPreview={draftPreview}
+        onRecover={handleRecoverDraft}
+        onDiscard={handleDiscardDraft}
       />
     </>
   );

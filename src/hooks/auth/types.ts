@@ -7,6 +7,7 @@ export type ProfileType = {
   full_name: string;
   avatar_url: string;
   role?: 'admin' | 'electrician' | 'apprentice' | 'visitor' | 'employer';
+  admin_role?: 'super_admin' | 'admin' | null;
   created_at?: string;
   updated_at?: string;
   bio?: string;

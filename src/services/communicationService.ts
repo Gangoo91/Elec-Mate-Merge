@@ -44,7 +44,7 @@ export interface CommunicationRecipient {
 // Communications CRUD
 export const getCommunications = async (): Promise<Communication[]> => {
   const { data, error } = await supabase
-    .from('communications')
+    .from('employer_communications')
     .select('*')
     .order('is_pinned', { ascending: false })
     .order('created_at', { ascending: false });
@@ -61,7 +61,7 @@ export const getActiveCommunications = async (): Promise<Communication[]> => {
   const now = new Date().toISOString();
 
   const { data, error } = await supabase
-    .from('communications')
+    .from('employer_communications')
     .select('*')
     .or(`expires_at.is.null,expires_at.gt.${now}`)
     .order('is_pinned', { ascending: false })
@@ -77,7 +77,7 @@ export const getActiveCommunications = async (): Promise<Communication[]> => {
 
 export const getCommunicationById = async (id: string): Promise<Communication | null> => {
   const { data, error } = await supabase
-    .from('communications')
+    .from('employer_communications')
     .select('*')
     .eq('id', id)
     .single();
@@ -94,7 +94,7 @@ export const createCommunication = async (
   communication: Omit<Communication, 'id' | 'created_at'>
 ): Promise<Communication> => {
   const { data, error } = await supabase
-    .from('communications')
+    .from('employer_communications')
     .insert(communication)
     .select()
     .single();
@@ -117,7 +117,7 @@ export const updateCommunication = async (
   updates: Partial<Communication>
 ): Promise<Communication | null> => {
   const { data, error } = await supabase
-    .from('communications')
+    .from('employer_communications')
     .update(updates)
     .eq('id', id)
     .select()
@@ -133,7 +133,7 @@ export const updateCommunication = async (
 
 export const deleteCommunication = async (id: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('communications')
+    .from('employer_communications')
     .delete()
     .eq('id', id);
 
@@ -147,7 +147,7 @@ export const deleteCommunication = async (id: string): Promise<boolean> => {
 
 export const pinCommunication = async (id: string, isPinned: boolean): Promise<boolean> => {
   const { error } = await supabase
-    .from('communications')
+    .from('employer_communications')
     .update({ is_pinned: isPinned })
     .eq('id', id);
 
@@ -190,13 +190,13 @@ const createRecipientsForCommunication = async (communication: Communication): P
       employee_id: employeeId,
     }));
 
-    await supabase.from('communication_recipients').insert(recipients);
+    await supabase.from('employer_communication_recipients').insert(recipients);
   }
 };
 
 export const getRecipientsForCommunication = async (communicationId: string): Promise<CommunicationRecipient[]> => {
   const { data, error } = await supabase
-    .from('communication_recipients')
+    .from('employer_communication_recipients')
     .select(`
       *,
       employee:employer_employees (
@@ -218,7 +218,7 @@ export const getRecipientsForCommunication = async (communicationId: string): Pr
 
 export const markAsRead = async (communicationId: string, employeeId: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('communication_recipients')
+    .from('employer_communication_recipients')
     .update({ read_at: new Date().toISOString() })
     .eq('communication_id', communicationId)
     .eq('employee_id', employeeId)
@@ -234,7 +234,7 @@ export const markAsRead = async (communicationId: string, employeeId: string): P
 
 export const acknowledgeMessage = async (communicationId: string, employeeId: string): Promise<boolean> => {
   const { error } = await supabase
-    .from('communication_recipients')
+    .from('employer_communication_recipients')
     .update({
       acknowledged_at: new Date().toISOString(),
       read_at: new Date().toISOString(), // Also mark as read
@@ -253,7 +253,7 @@ export const acknowledgeMessage = async (communicationId: string, employeeId: st
 // Get unread count for an employee
 export const getUnreadCount = async (employeeId: string): Promise<number> => {
   const { count, error } = await supabase
-    .from('communication_recipients')
+    .from('employer_communication_recipients')
     .select('id', { count: 'exact', head: true })
     .eq('employee_id', employeeId)
     .is('read_at', null);
@@ -273,13 +273,13 @@ export const getCommunicationStats = async (): Promise<{
   pinnedCount: number;
 }> => {
   const [announcementsResult, pinnedResult] = await Promise.all([
-    supabase.from('communications').select('id', { count: 'exact' }),
-    supabase.from('communications').select('id', { count: 'exact' }).eq('is_pinned', true),
+    supabase.from('employer_communications').select('id', { count: 'exact' }),
+    supabase.from('employer_communications').select('id', { count: 'exact' }).eq('is_pinned', true),
   ]);
 
   // Get unread count for current context (would need employee ID in real app)
   const unreadResult = await supabase
-    .from('communication_recipients')
+    .from('employer_communication_recipients')
     .select('id', { count: 'exact' })
     .is('read_at', null);
 

@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { Building2, User, Bell, Shield, Palette, Users, Save, Plus, Trash2, Key, Link2, CheckCircle2, Mail, Loader2, Upload, Image as ImageIcon, CreditCard, Mic } from "lucide-react";
+import { Building2, User, Bell, Shield, Palette, Users, Save, Plus, Trash2, Key, Link2, CheckCircle2, Mail, Loader2, Upload, Image as ImageIcon, CreditCard, Mic, RotateCw } from "lucide-react";
 import { getSetting, setSetting, getCompanySettings, saveCompanySettings, getBrandingSettings, saveBrandingSettings, uploadCompanyLogo, type CompanySettings, type BrandingSettings } from "@/services/settingsService";
+import { useTeamMembers, useInviteTeamMember, useRemoveTeamMember, useResendInvitation, type TeamMemberRole } from "@/hooks/useTeamMembers";
+import { InviteTeamMemberDialog } from "../dialogs/InviteTeamMemberDialog";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -59,6 +61,13 @@ export function SettingsSection() {
   });
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [savingBranding, setSavingBranding] = useState(false);
+
+  // Team member state
+  const [showInviteDialog, setShowInviteDialog] = useState(false);
+  const { data: teamMembers = [], isLoading: teamLoading } = useTeamMembers();
+  const inviteTeamMember = useInviteTeamMember();
+  const removeTeamMember = useRemoveTeamMember();
+  const resendInvitation = useResendInvitation();
 
   useEffect(() => {
     // Load notification email
@@ -135,11 +144,9 @@ export function SettingsSection() {
     }
   };
 
-  const teamMembers = [
-    { name: "John Smith", email: "john@elec-mate.com", role: "Owner", status: "Active" },
-    { name: "Sarah Johnson", email: "sarah@elec-mate.com", role: "Admin", status: "Active" },
-    { name: "Mike Williams", email: "mike@elec-mate.com", role: "Manager", status: "Active" },
-  ];
+  const handleInviteTeamMember = async (data: { email: string; name?: string; role: TeamMemberRole }) => {
+    await inviteTeamMember.mutateAsync(data);
+  };
 
   const integrations = [
     { name: "Xero", description: "Accounting & payroll integration", connected: true, icon: "X", color: "bg-[#13B5EA]" },
@@ -571,40 +578,85 @@ export function SettingsSection() {
                   </CardTitle>
                   <CardDescription>Manage who has access to the employer dashboard</CardDescription>
                 </div>
-                <Button size="sm" className={isMobile ? 'w-full h-12' : ''}>
+                <Button size="sm" className={isMobile ? 'w-full h-12' : ''} onClick={() => setShowInviteDialog(true)}>
                   <Plus className="h-4 w-4 mr-2" />
                   Add User
                 </Button>
               </div>
             </CardHeader>
             <CardContent>
-              <div className="space-y-2">
-                {teamMembers.map((member, idx) => (
-                  <div key={idx} className={`flex ${isMobile ? 'flex-col gap-3' : 'items-center justify-between'} p-4 rounded-xl bg-muted/30 border border-border/50`}>
-                    <div className="flex items-center gap-4">
-                      <Avatar className="h-12 w-12 border-2 border-elec-yellow/20">
-                        <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-medium">
-                          {member.name.split(" ").map(n => n[0]).join("")}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <p className="font-medium">{member.name}</p>
-                        <p className="text-sm text-muted-foreground">{member.email}</p>
+              {teamLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                </div>
+              ) : teamMembers.length === 0 ? (
+                <div className="text-center py-8">
+                  <Users className="h-12 w-12 text-muted-foreground/30 mx-auto mb-3" />
+                  <p className="text-muted-foreground mb-4">No team members yet</p>
+                  <Button onClick={() => setShowInviteDialog(true)}>
+                    <Plus className="h-4 w-4 mr-2" />
+                    Invite Team Member
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {teamMembers.map((member) => (
+                    <div key={member.id} className={`flex ${isMobile ? 'flex-col gap-3' : 'items-center justify-between'} p-4 rounded-xl bg-muted/30 border border-border/50`}>
+                      <div className="flex items-center gap-4">
+                        <Avatar className="h-12 w-12 border-2 border-elec-yellow/20">
+                          <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-medium">
+                            {(member.name || member.email).split(/[ @]/).map(n => n[0]?.toUpperCase()).slice(0, 2).join("")}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-medium">{member.name || member.email}</p>
+                          <p className="text-sm text-muted-foreground">{member.email}</p>
+                        </div>
+                      </div>
+                      <div className={`flex items-center gap-3 ${isMobile ? 'ml-16' : ''}`}>
+                        <Badge
+                          variant={member.status === "Pending" ? "outline" : "secondary"}
+                          className={`h-7 ${member.status === "Pending" ? "border-warning text-warning" : ""}`}
+                        >
+                          {member.status === "Pending" ? "Pending" : member.role}
+                        </Badge>
+                        {member.status === "Pending" && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-9 w-9"
+                            onClick={() => resendInvitation.mutate(member.id)}
+                            disabled={resendInvitation.isPending}
+                          >
+                            <RotateCw className={`h-4 w-4 ${resendInvitation.isPending ? 'animate-spin' : ''}`} />
+                          </Button>
+                        )}
+                        {member.role !== "Owner" && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="text-destructive h-9 w-9"
+                            onClick={() => removeTeamMember.mutate(member.id)}
+                            disabled={removeTeamMember.isPending}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        )}
                       </div>
                     </div>
-                    <div className={`flex items-center gap-3 ${isMobile ? 'ml-16' : ''}`}>
-                      <Badge variant="secondary" className="h-7">{member.role}</Badge>
-                      {member.role !== "Owner" && (
-                        <Button variant="ghost" size="icon" className="text-destructive h-9 w-9">
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
+
+          {/* Invite Dialog */}
+          <InviteTeamMemberDialog
+            open={showInviteDialog}
+            onOpenChange={setShowInviteDialog}
+            onInvite={handleInviteTeamMember}
+            isInviting={inviteTeamMember.isPending}
+          />
         </TabsContent>
 
         {/* Voice Assistant Settings */}

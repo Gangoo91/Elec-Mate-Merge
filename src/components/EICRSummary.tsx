@@ -19,6 +19,8 @@ import { supabase } from '@/integrations/supabase/client';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { useEICRForm } from './eicr/EICRFormProvider';
 import { useQueryClient } from '@tanstack/react-query';
+import { CreateCustomerDialog } from '@/components/CreateCustomerDialog';
+import { useCustomers } from '@/hooks/useCustomers';
 
 interface EICRSummaryProps {
   formData: any;
@@ -35,6 +37,9 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [generationError, setGenerationError] = useState<string | null>(null);
   const [formattedJsonPreview, setFormattedJsonPreview] = useState<string>('');
+  const [showCustomerDialog, setShowCustomerDialog] = useState(false);
+  const [savedReportIdForCustomer, setSavedReportIdForCustomer] = useState<string | null>(null);
+  const { saveCustomer, customers } = useCustomers();
 
   // Load formatted JSON when collapsible is opened
   const handleToggleJsonPreview = async (isOpen: boolean) => {
@@ -120,23 +125,29 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
       }
       
       const { reportCloud } = await import('@/utils/reportCloud');
-      
-      // Check if report exists and save/update it
+
+      // Check if report exists and save/update it (non-blocking)
       let savedReportId = effectiveReportId;
-      const existingReport = await reportCloud.getReportByReportId(effectiveReportId, user.id);
-      
-      if (!existingReport) {
-        console.log('[PDF Generation] Creating new report in database...');
-        const createResult = await reportCloud.createReport(user.id, 'eicr', formData);
-        if (!createResult.success || !createResult.reportId) {
-          throw new Error('Failed to save report before generating PDF');
+      try {
+        const existingReport = await reportCloud.getReportByReportId(effectiveReportId, user.id);
+
+        if (!existingReport) {
+          console.log('[PDF Generation] Creating new report in database...');
+          const createResult = await reportCloud.createReport(user.id, 'eicr', formData);
+          if (createResult.success && createResult.reportId) {
+            savedReportId = createResult.reportId;
+            console.log('[PDF Generation] Report created with ID:', savedReportId);
+          } else {
+            console.warn('[PDF Generation] Report save failed, continuing with PDF generation...');
+          }
+        } else {
+          console.log('[PDF Generation] Updating existing report...');
+          await reportCloud.updateReport(savedReportId, user.id, formData);
+          console.log('[PDF Generation] Report updated with ID:', savedReportId);
         }
-        savedReportId = createResult.reportId;
-        console.log('[PDF Generation] Report created with ID:', savedReportId);
-      } else {
-        console.log('[PDF Generation] Updating existing report...');
-        await reportCloud.updateReport(savedReportId, user.id, formData);
-        console.log('[PDF Generation] Report updated with ID:', savedReportId);
+      } catch (saveError) {
+        console.warn('[PDF Generation] Report save error (non-blocking):', saveError);
+        // Continue with PDF generation anyway
       }
       
       // Step 2: Format the EICR data for PDF Monkey
@@ -165,16 +176,25 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
         body: { formData: formattedJson }
       });
 
-      console.log('[PDF Generation] Edge function raw response:', JSON.stringify(data).substring(0, 300));
+      console.log('[PDF Generation] Edge function raw response:', JSON.stringify(data));
       console.log('[PDF Generation] Edge function error:', error);
 
+      // Check for errors - either from Supabase or from our edge function response
       if (error) {
         console.error('[PDF Generation] Edge function invocation error:', error);
-        throw new Error(error.message || 'Failed to generate PDF via cloud service');
+        // Try to get more details from the error context
+        const errorDetail = error.context?.body ? JSON.stringify(error.context.body) : error.message;
+        throw new Error(`Edge function error: ${errorDetail}`);
+      }
+
+      // Check if the edge function returned an error in the response
+      if (data?.success === false || data?.error) {
+        console.error('[PDF Generation] Edge function returned error:', data.error);
+        throw new Error(`PDF Monkey error: ${data.error || 'Unknown error'}`);
       }
 
       // Try multiple response formats
-      const pdfUrlFromResponse = data?.pdfUrl || data?.pdf_url || data?.url || data?.data?.pdfUrl;
+      const pdfUrlFromResponse = data?.pdfUrl || data?.pdf_url || data?.url || data?.data?.pdfUrl || data?.downloadUrl;
       
       console.log('[PDF Generation] Extracted PDF URL:', pdfUrlFromResponse);
       
@@ -224,42 +244,29 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
         title: "Certificate generated",
         description: "Your EICR certificate is ready for download.",
       });
+
+      // Check if customer already exists in pool
+      const existingCustomer = customers.find(
+        c => c.name.toLowerCase() === formData.clientName?.toLowerCase()
+      );
+
+      // If customer doesn't exist, show prompt to save
+      if (!existingCustomer && formData.clientName) {
+        setSavedReportIdForCustomer(savedReportId);
+        setShowCustomerDialog(true);
+      }
     } catch (error) {
       console.error('Cloud PDF generation failed:', error);
-      setGenerationError(error instanceof Error ? error.message : 'Unknown error');
-      
-      // Fallback to local PDF generation
-      console.log('Falling back to local PDF generation...');
-      try {
-        setShowDialog(false);
-        await exportCompleteEICRToPDF(
-          formData,
-          formData.inspectionItems || [],
-          formData.defectObservations || []
-        );
-        
-        // Mark certificate as completed
-        onUpdate('certificateGenerated', true);
-        onUpdate('certificateGeneratedAt', new Date().toISOString());
-        onUpdate('status', 'completed');
-        
-        // Invalidate dashboard queries
-        queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
-        queryClient.invalidateQueries({ queryKey: ['my-reports'] });
-        queryClient.invalidateQueries({ queryKey: ['customer-reports'] });
-        
-        toast({
-          title: "Certificate generated (local)",
-          description: "Your EICR certificate has been generated and downloaded.",
-        });
-      } catch (localError) {
-        console.error('Local PDF generation also failed:', localError);
-        toast({
-          title: "Generation failed",
-          description: localError instanceof Error ? localError.message : "Failed to generate certificate.",
-          variant: "destructive",
-        });
-      }
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      setGenerationError(errorMessage);
+
+      // Show the error to user - NO FALLBACK so we can debug
+      toast({
+        title: "PDF Generation Failed",
+        description: `PDF Monkey error: ${errorMessage}. Check console for details.`,
+        variant: "destructive",
+        duration: 10000
+      });
     } finally {
       setIsGenerating(false);
     }
@@ -271,6 +278,19 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
       title: "Saved to cloud",
       description: "Your EICR is automatically saved to the cloud.",
     });
+  };
+
+  const handleSaveCustomer = async (customerData: {
+    name: string;
+    email?: string;
+    phone?: string;
+    address?: string;
+    notes?: string;
+  }) => {
+    await saveCustomer(customerData);
+
+    // Invalidate customer queries to refresh list
+    queryClient.invalidateQueries({ queryKey: ['customers'] });
   };
 
   const isFormComplete = () => {
@@ -1076,6 +1096,19 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
           </DialogHeader>
         </DialogContent>
       </Dialog>
+
+      {/* Save Customer Dialog */}
+      <CreateCustomerDialog
+        open={showCustomerDialog}
+        onOpenChange={setShowCustomerDialog}
+        onConfirm={handleSaveCustomer}
+        prefillData={{
+          name: formData.clientName || '',
+          email: formData.clientEmail || '',
+          phone: formData.clientPhone || '',
+          address: formData.installationAddress || '',
+        }}
+      />
     </div>
   );
 };

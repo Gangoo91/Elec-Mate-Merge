@@ -7,7 +7,7 @@ import { Plus, BarChart3, Zap, Camera, Grid, Shield, X, PenTool, FileText, Wrenc
 import { TestResult } from '@/types/testResult';
 import { DistributionBoard, MAIN_BOARD_ID, createDefaultBoard, generateBoardId, getNextSubBoardName } from '@/types/distributionBoard';
 import { migrateToMultiBoard, getCircuitsForBoard, formatBoardsForFormData } from '@/utils/boardMigration';
-import BoardSection from '../testing/BoardSection';
+import BoardSection, { BoardToolCallbacks } from '../testing/BoardSection';
 import BoardManagement from '../testing/BoardManagement';
 import EnhancedTestResultDesktopTable from '../EnhancedTestResultDesktopTable';
 import MobileOptimizedTestTable from '../mobile/MobileOptimizedTestTable';
@@ -66,6 +66,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   const [lastDeleted, setLastDeleted] = useState<{ circuit: TestResult; index: number } | null>(null);
   const [activeToolPanel, setActiveToolPanel] = useState<'ai' | 'smart' | null>(null);
   const [selectedCircuitIndex, setSelectedCircuitIndex] = useState(0);
+  const [activeBoardId, setActiveBoardId] = useState<string | null>(null);
   const orientation = useOrientation();
 
   // Voice tool call handler - connects ElevenLabs agent to component state
@@ -268,6 +269,201 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           return `Circuit ${circuitNum} needs: ${missing.join(', ')}`;
         }
 
+        // BULK CIRCUIT OPERATIONS - Fill same value across ALL circuits
+        case 'update_all_circuits':
+        case 'set_field_all_circuits': {
+          const field = params.field as string;
+          let value = params.value as string;
+          if (!field || !value) return 'Need field and value for bulk update';
+
+          const resolvedField = resolveFieldName(field) || field;
+          value = resolveDropdownValue(resolvedField, value);
+
+          setTestResults(prev => prev.map(circuit => ({
+            ...circuit,
+            [resolvedField]: value
+          })));
+
+          toast.success(`Set ${resolvedField} to ${value} for all ${testResults.length} circuits`);
+          return `Set ${resolvedField} to ${value} for all ${testResults.length} circuits`;
+        }
+
+        case 'set_circuit_field': {
+          const circuitNum = params.circuit_number as number;
+          const field = params.field as string;
+          let value = params.value as string;
+          if (!circuitNum || !field || !value) return 'Need circuit_number, field, and value';
+
+          const resolvedField = resolveFieldName(field) || field;
+          value = resolveDropdownValue(resolvedField, value);
+
+          const idx = circuitNum - 1;
+          if (idx < 0 || idx >= testResults.length) {
+            return `Circuit ${circuitNum} not found`;
+          }
+
+          setTestResults(prev => prev.map((circuit, i) =>
+            i === idx ? { ...circuit, [resolvedField]: value } : circuit
+          ));
+
+          toast.success(`Set C${circuitNum} ${resolvedField} to ${value}`);
+          return `Set circuit ${circuitNum} ${resolvedField} to ${value}`;
+        }
+
+        case 'set_multiple_fields': {
+          const circuitNum = params.circuit_number as number | undefined;
+          const targetIdx = circuitNum !== undefined ? circuitNum - 1 : selectedCircuitIndex;
+
+          if (targetIdx < 0 || targetIdx >= testResults.length) {
+            return 'Invalid circuit number';
+          }
+
+          const fieldUpdates: Record<string, string> = {};
+          const fieldKeys = ['zs', 'r1r2', 'polarity', 'insulationTestVoltage', 'insulationLiveEarth', 'insulationLiveNeutral', 'rcdOneX', 'pfc'];
+
+          for (const key of fieldKeys) {
+            const value = params[key] as string | undefined;
+            if (value) {
+              const resolvedField = resolveFieldName(key) || key;
+              fieldUpdates[resolvedField] = resolveDropdownValue(resolvedField, value);
+            }
+          }
+
+          if (Object.keys(fieldUpdates).length === 0) {
+            return 'No fields provided to update';
+          }
+
+          setTestResults(prev => prev.map((circuit, i) =>
+            i === targetIdx ? { ...circuit, ...fieldUpdates } : circuit
+          ));
+
+          const fieldCount = Object.keys(fieldUpdates).length;
+          toast.success(`Updated ${fieldCount} fields on C${targetIdx + 1}`);
+          return `Updated ${fieldCount} fields on circuit ${targetIdx + 1}`;
+        }
+
+        case 'get_circuits_status': {
+          const statusLines = testResults.map((circuit, i) => {
+            const missing: string[] = [];
+            if (!circuit.zs) missing.push('Zs');
+            if (!circuit.r1r2) missing.push('R1+R2');
+            if (!circuit.insulationTestVoltage) missing.push('IR voltage');
+            if (!circuit.insulationLiveEarth && !circuit.insulationResistance) missing.push('IR reading');
+            if (!circuit.polarity) missing.push('polarity');
+
+            const hasRcd = circuit.protectiveDeviceType === 'RCBO' || circuit.protectiveDeviceType === 'RCD';
+            if (hasRcd && !circuit.rcdOneX) missing.push('RCD time');
+
+            const status = missing.length === 0 ? 'Complete' : `Missing: ${missing.join(', ')}`;
+            return `C${i + 1}: ${status}`;
+          });
+
+          const completeCount = statusLines.filter(s => s.includes('Complete')).length;
+          toast.info(`${completeCount}/${testResults.length} circuits complete`);
+          return statusLines.join('\n');
+        }
+
+        // SUB-BOARD OPERATIONS
+        case 'add_circuit_to_board': {
+          const boardName = params.board as string;
+          const circuitType = params.type as string || 'other';
+          const description = params.description as string || '';
+
+          const board = distributionBoards.find(b =>
+            b.name.toLowerCase().includes(boardName.toLowerCase()) ||
+            b.reference?.toLowerCase().includes(boardName.toLowerCase()) ||
+            b.id.toLowerCase().includes(boardName.toLowerCase())
+          );
+
+          if (!board) {
+            return `Board "${boardName}" not found. Available: ${distributionBoards.map(b => b.name).join(', ')}`;
+          }
+
+          const boardCircuits = testResults.filter(c => c.boardId === board.id);
+          const nextNum = (boardCircuits.length + 1).toString();
+          const newCircuit = createCircuitWithDefaults(circuitType, nextNum, description);
+          newCircuit.boardId = board.id;
+
+          setTestResults(prev => [...prev, newCircuit]);
+          setExpandedBoards(new Set([board.id]));
+          toast.success(`Added circuit to ${board.name}`);
+          return `Added ${circuitType} circuit to ${board.name}`;
+        }
+
+        case 'set_board_field_all_circuits': {
+          const boardName = params.board as string;
+          const field = params.field as string;
+          let value = params.value as string;
+
+          const board = distributionBoards.find(b =>
+            b.name.toLowerCase().includes(boardName.toLowerCase()) ||
+            b.reference?.toLowerCase().includes(boardName.toLowerCase()) ||
+            b.id.toLowerCase().includes(boardName.toLowerCase())
+          );
+
+          if (!board) {
+            return `Board "${boardName}" not found`;
+          }
+
+          const resolvedField = resolveFieldName(field) || field;
+          value = resolveDropdownValue(resolvedField, value);
+
+          const boardCircuitCount = testResults.filter(c => c.boardId === board.id).length;
+
+          setTestResults(prev => prev.map(circuit =>
+            circuit.boardId === board.id
+              ? { ...circuit, [resolvedField]: value }
+              : circuit
+          ));
+
+          toast.success(`Set ${resolvedField} to ${value} for all ${boardCircuitCount} circuits on ${board.name}`);
+          return `Set ${resolvedField} to ${value} for all ${boardCircuitCount} circuits on ${board.name}`;
+        }
+
+        case 'get_board_status': {
+          const boardName = params.board as string | undefined;
+
+          const boardsToCheck = boardName
+            ? distributionBoards.filter(b =>
+                b.name.toLowerCase().includes(boardName.toLowerCase()) ||
+                b.id.toLowerCase().includes(boardName.toLowerCase())
+              )
+            : distributionBoards;
+
+          if (boardsToCheck.length === 0) {
+            return `Board "${boardName}" not found`;
+          }
+
+          const statusLines = boardsToCheck.map(board => {
+            const boardCircuits = testResults.filter(c => c.boardId === board.id);
+            const complete = boardCircuits.filter(c =>
+              c.zs && c.polarity && (c.insulationLiveEarth || c.insulationResistance)
+            ).length;
+
+            return `${board.name}: ${complete}/${boardCircuits.length} circuits complete`;
+          });
+
+          return statusLines.join('\n');
+        }
+
+        case 'scan_board': {
+          const boardName = params.board as string;
+          const board = distributionBoards.find(b =>
+            b.name.toLowerCase().includes(boardName.toLowerCase()) ||
+            b.id.toLowerCase().includes(boardName.toLowerCase())
+          );
+
+          if (!board) {
+            return `Board "${boardName}" not found`;
+          }
+
+          // Open the photo capture for this board
+          setExpandedBoards(new Set([board.id]));
+          setShowPhotoCapture(true);
+          toast.info(`Opening scanner for ${board.name}`);
+          return `Opening board scanner for ${board.name}. Please take a photo of the board.`;
+        }
+
         default:
           console.log('[Voice] Unknown action:', action);
           return `Unknown action: ${action}`;
@@ -281,6 +477,37 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   const { isConnecting: voiceConnecting, isActive: voiceActive, toggleVoice } = useInlineVoice({
     onToolCall: handleVoiceToolCall,
   });
+
+  // Create board-specific tool callbacks
+  const createBoardTools = useCallback((boardId: string): BoardToolCallbacks => ({
+    onScanBoard: () => {
+      setActiveBoardId(boardId);
+      setShowPhotoCapture(true);
+    },
+    onScanTestResults: () => {
+      setActiveBoardId(boardId);
+      setShowTestResultsScan(true);
+    },
+    onScribbleToTable: () => {
+      setActiveBoardId(boardId);
+      setShowScribbleDialog(true);
+    },
+    onSmartAutoFill: () => {
+      setActiveBoardId(boardId);
+      setShowSmartAutoFillDialog(true);
+    },
+    onQuickRcdPresets: () => {
+      setActiveBoardId(boardId);
+      setShowRcdPresetsDialog(true);
+    },
+    onBulkInfill: () => {
+      setActiveBoardId(boardId);
+      setShowBulkInfillDialog(true);
+    },
+    onVoiceToggle: toggleVoice,
+    voiceActive,
+    voiceConnecting,
+  }), [toggleVoice, voiceActive, voiceConnecting]);
 
   // Calculate completion stats for progress indicator
   const { completedCount, progressPercent, pendingCount } = useMemo(() => {
@@ -1408,6 +1635,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                       r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
                     ).length}
                     isMobile={true}
+                    showTools={true}
+                    tools={createBoardTools(board.id)}
                   >
                     {mobileViewType === 'table' ? (
                       <MobileHorizontalScrollTable
@@ -1590,6 +1819,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     completedCount={boardCircuits.filter(r =>
                       r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
                     ).length}
+                    showTools={true}
+                    tools={createBoardTools(board.id)}
                   >
                     <EnhancedTestResultDesktopTable
                       testResults={boardCircuits}

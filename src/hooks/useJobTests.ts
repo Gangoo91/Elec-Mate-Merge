@@ -79,7 +79,7 @@ export function useJobTests() {
         .from("job_tests")
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
         `)
         .eq("user_id", user.id)
@@ -105,7 +105,7 @@ export function useJobTestsByJob(jobId: string | undefined) {
         .from("job_tests")
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
         `)
         .eq("user_id", user.id)
@@ -132,7 +132,7 @@ export function usePendingJobTests() {
         .from("job_tests")
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
         `)
         .eq("user_id", user.id)
@@ -157,7 +157,7 @@ export function useFailedJobTests() {
         .from("job_tests")
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
         `)
         .eq("user_id", user.id)
@@ -181,7 +181,7 @@ export function useJobTest(id: string | undefined) {
         .from("job_tests")
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
         `)
         .eq("id", id)
@@ -241,7 +241,7 @@ export function useCreateJobTest() {
         .insert({ ...input, user_id: user.id })
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
         `)
         .single();
@@ -283,7 +283,7 @@ export function useBatchCreateJobTests() {
         .insert(testsWithUser)
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
         `);
 
@@ -320,7 +320,7 @@ export function useUpdateJobTest() {
         .eq("id", id)
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
         `)
         .single();
@@ -367,7 +367,7 @@ export function useRecordTestResult() {
         .eq("id", id)
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
         `)
         .single();
@@ -413,7 +413,7 @@ export function useVerifyJobTest() {
         .eq("id", id)
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           tester:employer_employees!job_tests_tested_by_fkey(id, name)
         `)
         .single();

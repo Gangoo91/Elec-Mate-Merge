@@ -362,7 +362,7 @@ export function useCreatePriceBookItem() {
 export function useUpdatePriceBookItem() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, updates }: { id: string; updates: Partial<PriceBookItem> }) => 
+    mutationFn: ({ id, updates }: { id: string; updates: Partial<PriceBookItem> }) =>
       financeService.updatePriceBookItem(id, updates),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['price_book'] });
@@ -370,6 +370,20 @@ export function useUpdatePriceBookItem() {
     },
     onError: (error: Error) => {
       toast.error(`Failed to update material: ${error.message}`);
+    },
+  });
+}
+
+export function useDeletePriceBookItem() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => financeService.deletePriceBookItem(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['price_book'] });
+      toast.success("Material deleted");
+    },
+    onError: (error: Error) => {
+      toast.error(`Failed to delete material: ${error.message}`);
     },
   });
 }

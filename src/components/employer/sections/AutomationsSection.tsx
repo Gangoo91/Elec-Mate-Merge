@@ -31,6 +31,7 @@ import {
   useRunAutomation,
 } from "@/hooks/useAutomations";
 import { getCategoryInfo, getTriggerTypeInfo, type AutomationRule, type AutomationLog } from "@/services/automationService";
+import { CreateAutomationRuleSheet } from "@/components/employer/dialogs/CreateAutomationRuleSheet";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { formatDistanceToNow } from "date-fns";
 
@@ -38,6 +39,7 @@ export function AutomationsSection() {
   const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useState("rules");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [showCreateSheet, setShowCreateSheet] = useState(false);
 
   const { data: rules, isLoading: rulesLoading } = useAutomationRules();
   const { data: logs, isLoading: logsLoading } = useAutomationLogs({ limit: 50 });
@@ -99,14 +101,20 @@ export function AutomationsSection() {
   return (
     <div className="space-y-6 animate-fade-in pb-safe">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-          <Zap className="h-6 w-6 text-elec-yellow" />
-          Workflow Automations
-        </h1>
-        <p className="text-muted-foreground text-sm">
-          Automate repetitive tasks and stay on top of compliance
-        </p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+            <Zap className="h-6 w-6 text-elec-yellow" />
+            Workflow Automations
+          </h1>
+          <p className="text-muted-foreground text-sm">
+            Automate repetitive tasks and stay on top of compliance
+          </p>
+        </div>
+        <Button onClick={() => setShowCreateSheet(true)} className="gap-2">
+          <Plus className="h-4 w-4" />
+          {!isMobile && "Create Rule"}
+        </Button>
       </div>
 
       {/* Stats Cards */}
@@ -288,6 +296,12 @@ export function AutomationsSection() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Create Rule Sheet */}
+      <CreateAutomationRuleSheet
+        open={showCreateSheet}
+        onOpenChange={setShowCreateSheet}
+      />
     </div>
   );
 }

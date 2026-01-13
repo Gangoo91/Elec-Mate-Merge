@@ -9,9 +9,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useEmployer, type Employee } from "@/contexts/EmployerContext";
+import { useJobs } from "@/hooks/useJobs";
 import { toast } from "@/hooks/use-toast";
 import { Briefcase, MapPin, Calendar, Check, Search } from "lucide-react";
-import { jobs } from "@/data/employerMockData";
 
 interface AssignToJobDialogProps {
   employee: Employee | null;
@@ -22,6 +22,7 @@ interface AssignToJobDialogProps {
 export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobDialogProps) {
   const isMobile = useIsMobile();
   const { assignEmployeeToJob } = useEmployer();
+  const { data: jobs = [] } = useJobs();
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
   const [notes, setNotes] = useState("");

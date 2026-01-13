@@ -73,6 +73,48 @@ const toSafeString = (val: any): string => {
   return String(val);
 };
 
+// Patch jsPDF instance to log and fix any non-string values
+const patchPdfText = (pdf: jsPDF): void => {
+  // Patch text()
+  const originalText = pdf.text.bind(pdf);
+  (pdf as any).text = (text: any, x: number, y: number, options?: any) => {
+    if (text !== null && text !== undefined && typeof text !== 'string' && !Array.isArray(text)) {
+      console.error('[PDF DEBUG] Non-string passed to pdf.text:', typeof text, text);
+      console.trace('[PDF DEBUG] Stack trace:');
+    }
+    let safeText: string | string[];
+    if (Array.isArray(text)) {
+      safeText = text.map(t => (t === null || t === undefined) ? '' : String(t));
+    } else {
+      safeText = (text === null || text === undefined) ? '' : String(text);
+    }
+    try {
+      return originalText(safeText, x, y, options);
+    } catch (err) {
+      console.error('[PDF DEBUG] pdf.text FAILED with:', { text: safeText, x, y, options });
+      console.error('[PDF DEBUG] Error:', err);
+      throw err;
+    }
+  };
+
+  // Patch splitTextToSize()
+  const originalSplit = pdf.splitTextToSize.bind(pdf);
+  (pdf as any).splitTextToSize = (text: any, maxWidth: number, options?: any) => {
+    if (text !== null && text !== undefined && typeof text !== 'string') {
+      console.error('[PDF DEBUG] Non-string passed to splitTextToSize:', typeof text, text);
+      console.trace('[PDF DEBUG] Stack trace:');
+    }
+    const safeText = (text === null || text === undefined) ? '' : String(text);
+    try {
+      return originalSplit(safeText, maxWidth, options);
+    } catch (err) {
+      console.error('[PDF DEBUG] splitTextToSize FAILED with:', { text: safeText, maxWidth });
+      console.error('[PDF DEBUG] Error:', err);
+      throw err;
+    }
+  };
+};
+
 // Helper to add signature image
 const addSignatureToPDF = async (pdf: jsPDF, signatureData: string, x: number, y: number, width: number = 60, height: number = 20): Promise<void> => {
   return new Promise((resolve) => {
@@ -244,6 +286,9 @@ export const exportObservationsToPDF = async (
     format: format.toLowerCase() as 'a4' | 'letter',
   });
 
+  // Patch pdf.text to ensure all values are strings
+  patchPdfText(pdf);
+
   const template = createEICRTemplate();
   const pageWidth = pdf.internal.pageSize.getWidth();
   const margin = 20;
@@ -399,6 +444,9 @@ export const exportCompleteEICRToPDF = async (
     unit: 'mm',
     format: format.toLowerCase() as 'a4' | 'letter',
   });
+
+  // Patch pdf.text to ensure all values are strings - prevents charCodeAt errors
+  patchPdfText(pdf);
 
   // Load Unicode font for symbols like Ω, ², °
   const { addUnicodeFont } = await import('./pdfFonts');

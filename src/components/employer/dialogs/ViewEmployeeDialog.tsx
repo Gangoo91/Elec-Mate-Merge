@@ -22,7 +22,8 @@ import {
   AlertCircle, StickyNote, Plus, Zap
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-import type { TeamRole } from "@/data/employerMockData";
+
+type TeamRole = "QS" | "Supervisor" | "Operative" | "Apprentice" | "Project Manager";
 
 const roleColors: Record<TeamRole, string> = {
   "QS": "bg-elec-yellow/20 text-elec-yellow",

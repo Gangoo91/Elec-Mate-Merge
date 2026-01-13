@@ -16,10 +16,13 @@ import {
   useCreateVehicle,
   useCreateFuelLog,
   useDeleteVehicle,
+  useUpdateVehicle,
   type Vehicle,
   type FuelLog,
-  type VehicleStatus
+  type VehicleStatus,
+  type UpdateVehicleInput
 } from "@/hooks/useFleet";
+import { EditVehicleSheet } from "@/components/employer/dialogs/EditVehicleSheet";
 import {
   Car,
   Search,
@@ -35,7 +38,8 @@ import {
   Plus,
   Loader2,
   RefreshCw,
-  Trash2
+  Trash2,
+  Pencil
 } from "lucide-react";
 
 const vehicleStatuses: VehicleStatus[] = ["Active", "Available", "Maintenance", "Off Road"];
@@ -46,6 +50,10 @@ export function FleetSection() {
   const [activeTab, setActiveTab] = useState<"vehicles" | "fuel">("vehicles");
   const [showNewVehicle, setShowNewVehicle] = useState(false);
   const [showNewFuel, setShowNewFuel] = useState(false);
+
+  // Edit vehicle state
+  const [editVehicle, setEditVehicle] = useState<Vehicle | null>(null);
+  const [showEditSheet, setShowEditSheet] = useState(false);
 
   // Vehicle form state
   const [registration, setRegistration] = useState("");
@@ -71,6 +79,7 @@ export function FleetSection() {
   const createVehicle = useCreateVehicle();
   const createFuelLog = useCreateFuelLog();
   const deleteVehicle = useDeleteVehicle();
+  const updateVehicle = useUpdateVehicle();
 
   const isLoading = vehiclesLoading || fuelLoading;
 
@@ -148,6 +157,16 @@ export function FleetSection() {
 
   const handleDelete = async (id: string) => {
     await deleteVehicle.mutateAsync(id);
+  };
+
+  const handleEditVehicle = (vehicle: Vehicle) => {
+    setEditVehicle(vehicle);
+    setShowEditSheet(true);
+  };
+
+  const handleUpdateVehicle = async (id: string, updates: UpdateVehicleInput) => {
+    await updateVehicle.mutateAsync({ id, ...updates });
+    setExpandedCard(null);
   };
 
   if (error) {
@@ -421,6 +440,7 @@ export function FleetSection() {
                         </div>
                         <div className="flex gap-2">
                           <Button variant="outline" size="sm" className="flex-1" onClick={() => { setFuelVehicleId(vehicle.id); setShowNewFuel(true); }}><Fuel className="h-4 w-4 mr-2" />Log Fuel</Button>
+                          <Button variant="outline" size="sm" className="flex-1" onClick={() => handleEditVehicle(vehicle)}><Pencil className="h-4 w-4 mr-2" />Edit</Button>
                           <Button variant="outline" size="sm" onClick={() => handleDelete(vehicle.id)} disabled={deleteVehicle.isPending} className="text-destructive hover:text-destructive"><Trash2 className="h-4 w-4" /></Button>
                         </div>
                       </div>
@@ -464,6 +484,17 @@ export function FleetSection() {
           </div>
         )
       )}
+
+      {/* Edit Vehicle Sheet */}
+      <EditVehicleSheet
+        vehicle={editVehicle}
+        open={showEditSheet}
+        onOpenChange={setShowEditSheet}
+        onSave={handleUpdateVehicle}
+        onDelete={handleDelete}
+        isSaving={updateVehicle.isPending}
+        isDeleting={deleteVehicle.isPending}
+      />
     </div>
   );
 }

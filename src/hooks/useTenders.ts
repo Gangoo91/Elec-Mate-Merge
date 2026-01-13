@@ -21,6 +21,8 @@ export interface Tender {
   result_date: string | null;
   notes: string | null;
   documents: any[];
+  opportunity_id: string | null;
+  source_url: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -58,6 +60,8 @@ export interface CreateTenderData {
   contact_email?: string;
   contact_phone?: string;
   notes?: string;
+  opportunity_id?: string;
+  source_url?: string;
 }
 
 export interface UpdateTenderData extends Partial<CreateTenderData> {
@@ -419,4 +423,185 @@ export function useTenderStats() {
   };
 
   return stats;
+}
+
+// Document types
+export interface TenderDocument {
+  id: string;
+  name: string;
+  url: string;
+  size?: number;
+  uploaded_at: string;
+}
+
+// Upload tender document
+export function useUploadTenderDocument() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async ({ tenderId, file }: { tenderId: string; file: File }): Promise<TenderDocument> => {
+      const { data: userData } = await supabase.auth.getUser();
+      if (!userData.user) throw new Error('Not authenticated');
+
+      // Generate unique filename
+      const fileExt = file.name.split('.').pop();
+      const timestamp = Date.now();
+      const uniqueName = `${timestamp}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const storagePath = `${userData.user.id}/${tenderId}/${uniqueName}`;
+
+      // Upload to storage
+      const { error: uploadError } = await supabase.storage
+        .from('tender-documents')
+        .upload(storagePath, file, {
+          cacheControl: '3600',
+          upsert: false,
+        });
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: urlData } = supabase.storage
+        .from('tender-documents')
+        .getPublicUrl(storagePath);
+
+      const newDoc: TenderDocument = {
+        id: `doc-${timestamp}`,
+        name: file.name,
+        url: urlData.publicUrl,
+        size: file.size,
+        uploaded_at: new Date().toISOString(),
+      };
+
+      // Get current tender to update documents array
+      const { data: tender, error: fetchError } = await supabase
+        .from('tenders')
+        .select('documents')
+        .eq('id', tenderId)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      const currentDocs = Array.isArray(tender.documents) ? tender.documents : [];
+      const updatedDocs = [...currentDocs, newDoc];
+
+      // Update tender with new document
+      const { error: updateError } = await supabase
+        .from('tenders')
+        .update({ documents: updatedDocs })
+        .eq('id', tenderId);
+
+      if (updateError) throw updateError;
+
+      return newDoc;
+    },
+    onSuccess: (_, { tenderId }) => {
+      queryClient.invalidateQueries({ queryKey: ['tenders'] });
+      queryClient.invalidateQueries({ queryKey: ['tenders', tenderId] });
+      toast({
+        title: "Document Uploaded",
+        description: "The document has been added to the tender.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Upload Failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+}
+
+// Delete tender document
+export function useDeleteTenderDocument() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async ({ tenderId, documentId, url }: { tenderId: string; documentId: string; url: string }): Promise<void> => {
+      // Try to delete from storage (extract path from URL)
+      try {
+        const urlObj = new URL(url);
+        const pathMatch = urlObj.pathname.match(/\/tender-documents\/(.+)$/);
+        if (pathMatch) {
+          await supabase.storage.from('tender-documents').remove([pathMatch[1]]);
+        }
+      } catch (e) {
+        // Storage deletion is best-effort
+        console.warn('Could not delete file from storage:', e);
+      }
+
+      // Get current tender
+      const { data: tender, error: fetchError } = await supabase
+        .from('tenders')
+        .select('documents')
+        .eq('id', tenderId)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      const currentDocs = Array.isArray(tender.documents) ? tender.documents : [];
+      const updatedDocs = currentDocs.filter((doc: TenderDocument) => doc.id !== documentId);
+
+      // Update tender
+      const { error: updateError } = await supabase
+        .from('tenders')
+        .update({ documents: updatedDocs })
+        .eq('id', tenderId);
+
+      if (updateError) throw updateError;
+    },
+    onSuccess: (_, { tenderId }) => {
+      queryClient.invalidateQueries({ queryKey: ['tenders'] });
+      queryClient.invalidateQueries({ queryKey: ['tenders', tenderId] });
+      toast({
+        title: "Document Deleted",
+        description: "The document has been removed.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Delete Failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+}
+
+// Generate AI tender estimate
+export function useGenerateTenderEstimate() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async ({ tenderId, documentUrls, description }: {
+      tenderId: string;
+      documentUrls: string[];
+      description?: string;
+    }): Promise<CreateEstimateData & { id: string }> => {
+      const { data, error } = await supabase.functions.invoke('generate-tender-estimate', {
+        body: { tenderId, documentUrls, description },
+      });
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: (_, { tenderId }) => {
+      queryClient.invalidateQueries({ queryKey: ['tender-estimates'] });
+      queryClient.invalidateQueries({ queryKey: ['tender-estimates', tenderId] });
+      toast({
+        title: "Estimate Generated",
+        description: "AI has generated a cost estimate for this tender.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Estimation Failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
 }

@@ -111,7 +111,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
           >
             <GraduationCap className="h-4 w-4" />
             <span>{userSelection.qualification?.title}</span>
-            <Pencil className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <Pencil className="h-3 w-3 opacity-50 group-hover:opacity-100 transition-opacity" />
           </button>
         )}
       </div>

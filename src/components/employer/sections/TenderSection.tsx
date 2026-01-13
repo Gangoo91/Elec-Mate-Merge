@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { FileSearch, Send, Clock, Trophy, Plus, Eye, Download, Brain, Sparkles, Trash2, TrendingUp } from "lucide-react";
+import { useState, useRef } from "react";
+import { FileSearch, Send, Clock, Trophy, Plus, Eye, Download, Brain, Sparkles, Trash2, TrendingUp, Upload, X, FileIcon, Loader2, Search, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -9,18 +9,27 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { StatusBadge } from "@/components/employer/StatusBadge";
 import { SectionHeader } from "@/components/employer/SectionHeader";
 import { CreateTenderDialog } from "@/components/employer/dialogs/CreateTenderDialog";
+import { ViewTenderSheet } from "@/components/employer/sheets/ViewTenderSheet";
+import { ConvertTenderToJobDialog } from "@/components/employer/dialogs/ConvertTenderToJobDialog";
+import { TenderOpportunitiesSection } from "@/components/employer/sections/TenderOpportunitiesSection";
 import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
+import { type TenderOpportunity } from "@/hooks/useOpportunities";
 import {
   useTenders,
   useAllTenderEstimates,
   useUpdateTenderStatus,
   useDeleteTender,
   useTenderStats,
-  type Tender
+  useUploadTenderDocument,
+  useGenerateTenderEstimate,
+  useCreateTenderEstimate,
+  type Tender,
+  type TenderDocument
 } from "@/hooks/useTenders";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { supabase } from "@/integrations/supabase/client";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -36,12 +45,25 @@ export function TenderSection() {
   const [showAIEstimator, setShowAIEstimator] = useState(false);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [tenderToDelete, setTenderToDelete] = useState<Tender | null>(null);
+  const [selectedTender, setSelectedTender] = useState<Tender | null>(null);
+  const [showViewSheet, setShowViewSheet] = useState(false);
+  const [showConvertDialog, setShowConvertDialog] = useState(false);
+  const [estimatorTender, setEstimatorTender] = useState<Tender | null>(null);
+  const [estimatorFiles, setEstimatorFiles] = useState<File[]>([]);
+  const [isGeneratingEstimate, setIsGeneratingEstimate] = useState(false);
+  const [isUploadingForEstimate, setIsUploadingForEstimate] = useState(false);
+  const [showDiscoverSheet, setShowDiscoverSheet] = useState(false);
+  const [createTenderInitialData, setCreateTenderInitialData] = useState<any>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
 
   const { data: tenders = [], isLoading: tendersLoading } = useTenders();
   const { data: aiEstimates = [], isLoading: estimatesLoading } = useAllTenderEstimates();
   const updateStatusMutation = useUpdateTenderStatus();
   const deleteMutation = useDeleteTender();
+  const uploadDocMutation = useUploadTenderDocument();
+  const generateEstimateMutation = useGenerateTenderEstimate();
+  const createEstimateMutation = useCreateTenderEstimate();
   const stats = useTenderStats();
 
   const isLoading = tendersLoading || estimatesLoading;
@@ -72,16 +94,124 @@ export function TenderSection() {
     }
   };
 
-  const handleGenerateEstimate = () => {
-    toast({
-      title: "AI Estimate Generated",
-      description: "Your estimate package is ready for review.",
-    });
-    setShowAIEstimator(false);
+  const handleViewTender = (tender: Tender) => {
+    setSelectedTender(tender);
+    setShowViewSheet(true);
+  };
+
+  const handleOpenEstimator = (tender: Tender) => {
+    setEstimatorTender(tender);
+    setEstimatorFiles([]);
+    setShowAIEstimator(true);
+  };
+
+  const handleEstimatorFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files) return;
+    setEstimatorFiles(prev => [...prev, ...Array.from(files)]);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const handleRemoveEstimatorFile = (index: number) => {
+    setEstimatorFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleGenerateEstimate = async () => {
+    if (!estimatorTender) return;
+
+    setIsGeneratingEstimate(true);
+    try {
+      // First upload all files to storage
+      const documentUrls: string[] = [];
+      setIsUploadingForEstimate(true);
+
+      for (const file of estimatorFiles) {
+        const result = await uploadDocMutation.mutateAsync({
+          tenderId: estimatorTender.id,
+          file
+        });
+        documentUrls.push(result.url);
+      }
+      setIsUploadingForEstimate(false);
+
+      // Call the AI estimation function
+      const estimate = await generateEstimateMutation.mutateAsync({
+        tenderId: estimatorTender.id,
+        documentUrls,
+        description: estimatorTender.description || undefined
+      });
+
+      toast({
+        title: "AI Estimate Generated",
+        description: "Your estimate package is ready for review.",
+      });
+      setShowAIEstimator(false);
+      setEstimatorFiles([]);
+      setEstimatorTender(null);
+    } catch (error: any) {
+      console.error('Estimate generation error:', error);
+      // If AI fails, still show that documents were uploaded
+      if (estimatorFiles.length > 0) {
+        toast({
+          title: "Documents Uploaded",
+          description: "Files saved. AI estimation will be available soon.",
+        });
+      }
+    } finally {
+      setIsGeneratingEstimate(false);
+      setIsUploadingForEstimate(false);
+    }
+  };
+
+  const handleConvertToJob = (tender: Tender) => {
+    setSelectedTender(tender);
+    setShowConvertDialog(true);
+  };
+
+  const handleStartTenderFromOpportunity = (opportunity: TenderOpportunity) => {
+    // Map opportunity data to tender create data
+    const sectorToCategory: Record<string, string> = {
+      'public': 'Public Sector',
+      'housing': 'Residential',
+      'healthcare': 'Healthcare',
+      'education': 'Education',
+      'commercial': 'Commercial',
+      'industrial': 'Industrial',
+    };
+
+    const initialData = {
+      title: opportunity.title,
+      client: opportunity.client_name,
+      value: opportunity.value_exact || opportunity.value_high || opportunity.value_low || 0,
+      deadline: opportunity.deadline ? opportunity.deadline.split('T')[0] : '',
+      category: sectorToCategory[opportunity.sector || ''] || 'Other',
+      description: opportunity.scope_of_works || opportunity.description || '',
+      contact_name: opportunity.contact_name || '',
+      contact_email: opportunity.contact_email || '',
+      notes: `Source: ${opportunity.source?.replace('_', ' ')}${opportunity.location_text ? `\nLocation: ${opportunity.location_text}` : ''}`,
+      opportunity_id: opportunity.id,
+      source_url: opportunity.source_url || '',
+      fromOpportunity: true,
+    };
+
+    // Close discover sheet and open create dialog pre-filled
+    setShowDiscoverSheet(false);
+    setCreateTenderInitialData(initialData);
+    setShowCreateDialog(true);
   };
 
   const AIEstimatorContent = () => (
     <div className="space-y-4 py-4">
+      {estimatorTender && (
+        <div className="p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
+          <p className="text-sm text-muted-foreground">Estimating for:</p>
+          <p className="font-semibold">{estimatorTender.title}</p>
+          <p className="text-sm text-muted-foreground">{estimatorTender.client}</p>
+        </div>
+      )}
+
       <p className="text-sm text-muted-foreground">
         Upload your tender documents and our AI will generate a comprehensive estimate package including:
       </p>
@@ -104,22 +234,85 @@ export function TenderSection() {
         </div>
       </div>
 
-      <div className="border-2 border-dashed border-border rounded-lg p-6 sm:p-8 text-center">
+      <input
+        ref={fileInputRef}
+        type="file"
+        multiple
+        accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png"
+        onChange={handleEstimatorFileSelect}
+        className="hidden"
+      />
+
+      <div
+        className="border-2 border-dashed border-border rounded-lg p-6 sm:p-8 text-center cursor-pointer hover:border-elec-yellow/50 transition-colors"
+        onClick={() => fileInputRef.current?.click()}
+      >
         <Brain className="h-10 w-10 sm:h-12 sm:w-12 text-muted-foreground mx-auto mb-3" />
         <p className="font-medium">Upload Tender Documents</p>
         <p className="text-sm text-muted-foreground">Drawings, specs, BOQs, job descriptions</p>
-        <Button variant="outline" className="mt-4">
+        <Button variant="outline" className="mt-4" onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}>
+          <Upload className="h-4 w-4 mr-2" />
           Select Files
         </Button>
       </div>
 
+      {/* Selected Files List */}
+      {estimatorFiles.length > 0 && (
+        <div className="space-y-2">
+          <p className="text-sm font-medium">Selected Files ({estimatorFiles.length})</p>
+          <div className="space-y-1">
+            {estimatorFiles.map((file, index) => (
+              <div key={index} className="flex items-center justify-between p-2 bg-muted/50 rounded-lg">
+                <div className="flex items-center gap-2 min-w-0">
+                  <FileIcon className="h-4 w-4 text-muted-foreground shrink-0" />
+                  <span className="text-sm truncate">{file.name}</span>
+                  <span className="text-xs text-muted-foreground shrink-0">
+                    ({(file.size / 1024).toFixed(0)} KB)
+                  </span>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6 shrink-0"
+                  onClick={() => handleRemoveEstimatorFile(index)}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col sm:flex-row justify-end gap-2">
-        <Button variant="outline" onClick={() => setShowAIEstimator(false)} className="w-full sm:w-auto">
+        <Button
+          variant="outline"
+          onClick={() => {
+            setShowAIEstimator(false);
+            setEstimatorFiles([]);
+            setEstimatorTender(null);
+          }}
+          className="w-full sm:w-auto"
+          disabled={isGeneratingEstimate}
+        >
           Cancel
         </Button>
-        <Button onClick={handleGenerateEstimate} className="gap-2 w-full sm:w-auto">
-          <Sparkles className="h-4 w-4" />
-          Generate Estimate
+        <Button
+          onClick={handleGenerateEstimate}
+          className="gap-2 w-full sm:w-auto"
+          disabled={estimatorFiles.length === 0 || !estimatorTender || isGeneratingEstimate}
+        >
+          {isGeneratingEstimate ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              {isUploadingForEstimate ? 'Uploading...' : 'Generating...'}
+            </>
+          ) : (
+            <>
+              <Sparkles className="h-4 w-4" />
+              Generate Estimate
+            </>
+          )}
         </Button>
       </div>
     </div>
@@ -151,9 +344,20 @@ export function TenderSection() {
       {/* Header */}
       <SectionHeader
         title="Tender Portal"
-        description="Track tenders and generate AI estimates"
+        description="Discover contracts and generate AI estimates"
         action={
           <div className="flex gap-2">
+            {/* Discover Tenders Button */}
+            <Button
+              variant="outline"
+              size={isMobile ? "icon" : "default"}
+              className="gap-2 border-elec-yellow/50 hover:bg-elec-yellow/10"
+              onClick={() => setShowDiscoverSheet(true)}
+            >
+              <Search className="h-4 w-4 text-elec-yellow" />
+              {!isMobile && "Discover"}
+            </Button>
+
             <Sheet open={showAIEstimator} onOpenChange={setShowAIEstimator}>
               <SheetTrigger asChild>
                 <Button variant="outline" size={isMobile ? "icon" : "default"} className="gap-2">
@@ -171,7 +375,10 @@ export function TenderSection() {
                 <AIEstimatorContent />
               </SheetContent>
             </Sheet>
-            <Button size={isMobile ? "icon" : "sm"} className="gap-2" onClick={() => setShowCreateDialog(true)}>
+            <Button size={isMobile ? "icon" : "sm"} className="gap-2" onClick={() => {
+              setCreateTenderInitialData(null);
+              setShowCreateDialog(true);
+            }}>
               <Plus className="h-4 w-4" />
               {!isMobile && "Track Tender"}
             </Button>
@@ -279,7 +486,10 @@ export function TenderSection() {
             <p className="text-sm text-muted-foreground mb-4">
               Start tracking your tender opportunities to manage bids and win more work.
             </p>
-            <Button onClick={() => setShowCreateDialog(true)} className="gap-2">
+            <Button onClick={() => {
+              setCreateTenderInitialData(null);
+              setShowCreateDialog(true);
+            }} className="gap-2">
               <Plus className="h-4 w-4" />
               Track Your First Tender
             </Button>
@@ -348,7 +558,12 @@ export function TenderSection() {
 
                             {/* Actions */}
                             <div className="flex gap-2 flex-wrap">
-                              <Button variant="outline" size="sm" className="flex-1 md:flex-none">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="flex-1 md:flex-none"
+                                onClick={() => handleViewTender(tender)}
+                              >
                                 <Eye className="h-4 w-4 mr-1 md:mr-2" />
                                 View
                               </Button>
@@ -358,7 +573,7 @@ export function TenderSection() {
                                     variant="outline"
                                     size="sm"
                                     className="flex-1 md:flex-none"
-                                    onClick={() => setShowAIEstimator(true)}
+                                    onClick={() => handleOpenEstimator(tender)}
                                   >
                                     <Brain className="h-4 w-4 mr-1 md:mr-2" />
                                     Estimate
@@ -375,9 +590,24 @@ export function TenderSection() {
                                 </>
                               )}
                               {tender.status === "Submitted" && (
-                                <Button variant="outline" size="sm" className="flex-1 md:flex-none">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="flex-1 md:flex-none"
+                                  onClick={() => handleViewTender(tender)}
+                                >
                                   <Download className="h-4 w-4 mr-1 md:mr-2" />
                                   Docs
+                                </Button>
+                              )}
+                              {tender.status === "Won" && (
+                                <Button
+                                  size="sm"
+                                  className="flex-1 md:flex-none bg-success hover:bg-success/90"
+                                  onClick={() => handleConvertToJob(tender)}
+                                >
+                                  <Trophy className="h-4 w-4 mr-1 md:mr-2" />
+                                  Convert
                                 </Button>
                               )}
                               <Button
@@ -419,7 +649,14 @@ export function TenderSection() {
       )}
 
       {/* Create Tender Dialog */}
-      <CreateTenderDialog open={showCreateDialog} onOpenChange={setShowCreateDialog} />
+      <CreateTenderDialog
+        open={showCreateDialog}
+        onOpenChange={(open) => {
+          setShowCreateDialog(open);
+          if (!open) setCreateTenderInitialData(null);
+        }}
+        initialData={createTenderInitialData}
+      />
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={!!tenderToDelete} onOpenChange={() => setTenderToDelete(null)}>
@@ -441,6 +678,41 @@ export function TenderSection() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* View Tender Sheet */}
+      <ViewTenderSheet
+        open={showViewSheet}
+        onOpenChange={setShowViewSheet}
+        tender={selectedTender}
+        onConvertToJob={handleConvertToJob}
+      />
+
+      {/* Convert to Job Dialog */}
+      <ConvertTenderToJobDialog
+        open={showConvertDialog}
+        onOpenChange={setShowConvertDialog}
+        tender={selectedTender}
+      />
+
+      {/* Discover Tenders Sheet */}
+      <Sheet open={showDiscoverSheet} onOpenChange={setShowDiscoverSheet}>
+        <SheetContent side="bottom" className="h-[95vh] p-0 rounded-t-2xl overflow-hidden">
+          <div className="flex flex-col h-full">
+            <SheetHeader className="p-4 pb-0 flex-shrink-0">
+              <SheetTitle className="flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-elec-yellow" />
+                Discover Tender Opportunities
+              </SheetTitle>
+              <p className="text-sm text-muted-foreground">
+                Find electrical contracts from 20+ UK sources
+              </p>
+            </SheetHeader>
+            <div className="flex-1 overflow-hidden">
+              <TenderOpportunitiesSection onStartTender={handleStartTenderFromOpportunity} />
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

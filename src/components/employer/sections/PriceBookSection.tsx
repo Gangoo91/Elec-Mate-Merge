@@ -19,9 +19,11 @@ import {
   ChevronRight,
   X
 } from "lucide-react";
-import { useSearchPriceBook, usePriceBookStats, useCreatePriceBookItem } from "@/hooks/useFinance";
+import { useSearchPriceBook, usePriceBookStats, useCreatePriceBookItem, useUpdatePriceBookItem, useDeletePriceBookItem } from "@/hooks/useFinance";
 import { ImportPriceBookDialog } from "../dialogs/ImportPriceBookDialog";
+import { EditPriceBookItemSheet } from "../dialogs/EditPriceBookItemSheet";
 import { toast } from "sonner";
+import type { PriceBookItem } from "@/services/financeService";
 
 const CATEGORIES = ['All', 'Cable', 'Accessories', 'Fixings', 'Lighting', 'Switches & Sockets', 'Consumer Units', 'Tools', 'Testing', 'Safety', 'Other'];
 
@@ -30,12 +32,16 @@ export function PriceBookSection() {
   const [category, setCategory] = useState("All");
   const [showImportDialog, setShowImportDialog] = useState(false);
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  
+
   // Quick add form state
   const [showQuickAdd, setShowQuickAdd] = useState(false);
   const [newItemName, setNewItemName] = useState("");
   const [newItemBuyPrice, setNewItemBuyPrice] = useState("");
   const [newItemCategory, setNewItemCategory] = useState("Cable");
+
+  // Edit sheet state
+  const [editItem, setEditItem] = useState<PriceBookItem | null>(null);
+  const [showEditSheet, setShowEditSheet] = useState(false);
 
   // Fetch stats for header
   const { data: stats, isLoading: statsLoading } = usePriceBookStats();
@@ -50,9 +56,26 @@ export function PriceBookSection() {
   } = useSearchPriceBook(search, category === 'All' ? undefined : category);
 
   const createItem = useCreatePriceBookItem();
+  const updateItem = useUpdatePriceBookItem();
+  const deleteItem = useDeletePriceBookItem();
 
   const items = searchResults?.pages.flatMap(p => p.items) || [];
   const totalFound = searchResults?.pages[0]?.total || 0;
+
+  const handleEdit = (item: PriceBookItem) => {
+    setEditItem(item);
+    setShowEditSheet(true);
+  };
+
+  const handleSaveItem = async (id: string, updates: Partial<PriceBookItem>) => {
+    await updateItem.mutateAsync({ id, updates });
+    setExpandedId(null);
+  };
+
+  const handleDeleteItem = async (id: string) => {
+    await deleteItem.mutateAsync(id);
+    setExpandedId(null);
+  };
 
   const handleQuickAdd = async () => {
     if (!newItemName.trim()) {
@@ -332,7 +355,15 @@ export function PriceBookSection() {
                     </div>
                   </div>
                   <div className="flex gap-2 pt-2">
-                    <Button size="sm" variant="outline" className="flex-1">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="flex-1"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleEdit(item);
+                      }}
+                    >
                       Edit
                     </Button>
                     <Button size="sm" className="flex-1">
@@ -369,6 +400,17 @@ export function PriceBookSection() {
       <ImportPriceBookDialog
         open={showImportDialog}
         onOpenChange={setShowImportDialog}
+      />
+
+      {/* Edit Item Sheet */}
+      <EditPriceBookItemSheet
+        item={editItem}
+        open={showEditSheet}
+        onOpenChange={setShowEditSheet}
+        onSave={handleSaveItem}
+        onDelete={handleDeleteItem}
+        isSaving={updateItem.isPending}
+        isDeleting={deleteItem.isPending}
       />
     </div>
   );

@@ -93,17 +93,18 @@ function ActionCard({ action }: { action: DashboardActionItem }) {
   return (
     <motion.div
       variants={itemVariants}
-      layout
       className={cn(
         // Base
         'relative group',
         // Glass morphism
         'glass-premium rounded-xl',
+        // Consistent height to match skeleton
+        'min-h-[5rem]',
         // Left border accent
         'border-l-2',
         styles.borderColor,
-        // Touch optimization
-        'touch-manipulation'
+        // Touch optimization + transform hint
+        'touch-manipulation will-change-transform'
       )}
     >
       <div className="p-3 sm:p-4 flex items-start gap-3">
@@ -130,10 +131,10 @@ function ActionCard({ action }: { action: DashboardActionItem }) {
               size="sm"
               onClick={() => navigate(action.path)}
               className={cn(
-                'flex-shrink-0 h-8 px-3 text-xs font-medium',
-                'bg-white/[0.05] hover:bg-white/[0.1]',
+                'flex-shrink-0 h-10 px-3 text-xs font-medium',
+                'bg-white/[0.05] hover:bg-white/[0.1] active:bg-white/[0.15]',
                 'text-white hover:text-white',
-                'transition-colors'
+                'transition-colors touch-manipulation'
               )}
             >
               {action.action}

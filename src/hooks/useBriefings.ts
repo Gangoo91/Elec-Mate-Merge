@@ -62,7 +62,7 @@ export function useBriefings() {
         .from("briefings")
         .select(`
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `)
         .eq("user_id", user.id)
         .order("date", { ascending: false });
@@ -113,7 +113,7 @@ export function useUpcomingBriefings() {
         .from("briefings")
         .select(`
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `)
         .eq("user_id", user.id)
         .eq("status", "Scheduled")
@@ -137,7 +137,7 @@ export function useBriefingWithAttendees(briefingId: string | undefined) {
         .from("briefings")
         .select(`
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `)
         .eq("id", briefingId)
         .single();
@@ -240,7 +240,7 @@ export function useCreateBriefing() {
         .insert({ ...input, user_id: user.id })
         .select(`
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `)
         .single();
 
@@ -277,7 +277,7 @@ export function useUpdateBriefing() {
         .eq("id", id)
         .select(`
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `)
         .single();
 
@@ -317,7 +317,7 @@ export function useCompleteBriefing() {
         .eq("id", id)
         .select(`
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `)
         .single();
 

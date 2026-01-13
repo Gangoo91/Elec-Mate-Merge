@@ -9,9 +9,9 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useEmployer, type Employee } from "@/contexts/EmployerContext";
+import { useJobs } from "@/hooks/useJobs";
 import { toast } from "@/hooks/use-toast";
 import { MessageSquare, Send, Paperclip } from "lucide-react";
-import { jobs } from "@/data/employerMockData";
 
 const MESSAGE_TYPES = [
   { id: "general", label: "General Message" },
@@ -38,6 +38,7 @@ interface SendMessageDialogProps {
 export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageDialogProps) {
   const isMobile = useIsMobile();
   const { sendMessage } = useEmployer();
+  const { data: jobs = [] } = useJobs();
   const [messageType, setMessageType] = useState("general");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");

@@ -27,7 +27,7 @@ import {
   Briefcase
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { LeaveType, LeaveStatus } from "@/data/employerMockData";
+import type { LeaveType, LeaveStatus } from "@/hooks/useEmployeeLeave";
 
 const LEAVE_TYPES: { value: LeaveType; label: string; colour: string }[] = [
   { value: 'annual', label: 'Annual Leave', colour: 'bg-elec-yellow/20 text-elec-yellow' },

@@ -82,7 +82,7 @@ export function useClientPortalLinks() {
         .from("client_portal_links")
         .select(`
           *,
-          job:jobs(id, title, client, progress, status, start_date, end_date)
+          job:employer_jobs(id, title, client, progress, status, start_date, end_date)
         `)
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
@@ -107,7 +107,7 @@ export function usePortalLinkByJob(jobId: string | undefined) {
         .from("client_portal_links")
         .select(`
           *,
-          job:jobs(id, title, client, progress, status, start_date, end_date)
+          job:employer_jobs(id, title, client, progress, status, start_date, end_date)
         `)
         .eq("user_id", user.id)
         .eq("job_id", jobId)
@@ -177,7 +177,7 @@ export function useCreatePortalLink() {
         })
         .select(`
           *,
-          job:jobs(id, title, client, progress, status, start_date, end_date)
+          job:employer_jobs(id, title, client, progress, status, start_date, end_date)
         `)
         .single();
 
@@ -236,7 +236,7 @@ export function useUpdatePortalLink() {
         .eq("id", id)
         .select(`
           *,
-          job:jobs(id, title, client, progress, status, start_date, end_date)
+          job:employer_jobs(id, title, client, progress, status, start_date, end_date)
         `)
         .single();
 
@@ -290,7 +290,7 @@ export function useUpdatePortalPermissions() {
         .eq("id", id)
         .select(`
           *,
-          job:jobs(id, title, client, progress, status, start_date, end_date)
+          job:employer_jobs(id, title, client, progress, status, start_date, end_date)
         `)
         .single();
 
@@ -337,7 +337,7 @@ export function useRegenerateToken() {
           .eq("id", id)
           .select(`
             *,
-            job:jobs(id, title, client, progress, status, start_date, end_date)
+            job:employer_jobs(id, title, client, progress, status, start_date, end_date)
           `)
           .single();
 
@@ -352,7 +352,7 @@ export function useRegenerateToken() {
         .from("client_portal_links")
         .select(`
           *,
-          job:jobs(id, title, client, progress, status, start_date, end_date)
+          job:employer_jobs(id, title, client, progress, status, start_date, end_date)
         `)
         .eq("id", id)
         .single();
@@ -393,7 +393,7 @@ export function useTogglePortalActive() {
         .eq("id", id)
         .select(`
           *,
-          job:jobs(id, title, client, progress, status, start_date, end_date)
+          job:employer_jobs(id, title, client, progress, status, start_date, end_date)
         `)
         .single();
 

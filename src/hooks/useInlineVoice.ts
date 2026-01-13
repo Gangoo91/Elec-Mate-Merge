@@ -151,6 +151,56 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
         }
         return handleToolCall('fill_minor_works', params);
       },
+
+      // BULK CIRCUIT TOOLS
+      set_field_all_circuits: async (params: { field: string; value: string }) => {
+        console.log('[InlineVoice] set_field_all_circuits called:', params);
+        const resolvedField = resolveFieldName(params.field);
+        return handleToolCall('set_field_all_circuits', { ...params, field: resolvedField || params.field });
+      },
+
+      set_circuit_field: async (params: { circuit_number: number; field: string; value: string }) => {
+        console.log('[InlineVoice] set_circuit_field called:', params);
+        const resolvedField = resolveFieldName(params.field);
+        return handleToolCall('set_circuit_field', { ...params, field: resolvedField || params.field });
+      },
+
+      set_multiple_fields: async (params: Record<string, unknown>) => {
+        console.log('[InlineVoice] set_multiple_fields called:', params);
+        return handleToolCall('set_multiple_fields', params);
+      },
+
+      get_circuits_status: async () => {
+        console.log('[InlineVoice] get_circuits_status called');
+        return handleToolCall('get_circuits_status', {});
+      },
+
+      // SUB-BOARD TOOLS
+      select_board: async (params: { board: string }) => {
+        console.log('[InlineVoice] select_board called:', params);
+        return handleToolCall('select_board', params);
+      },
+
+      add_circuit_to_board: async (params: { board: string; type?: string; rating?: string; description?: string }) => {
+        console.log('[InlineVoice] add_circuit_to_board called:', params);
+        return handleToolCall('add_circuit_to_board', params);
+      },
+
+      set_board_field_all_circuits: async (params: { board: string; field: string; value: string }) => {
+        console.log('[InlineVoice] set_board_field_all_circuits called:', params);
+        const resolvedField = resolveFieldName(params.field);
+        return handleToolCall('set_board_field_all_circuits', { ...params, field: resolvedField || params.field });
+      },
+
+      get_board_status: async (params: { board?: string }) => {
+        console.log('[InlineVoice] get_board_status called:', params);
+        return handleToolCall('get_board_status', params);
+      },
+
+      scan_board: async (params: { board: string }) => {
+        console.log('[InlineVoice] scan_board called:', params);
+        return handleToolCall('scan_board', params);
+      },
     },
   });
 

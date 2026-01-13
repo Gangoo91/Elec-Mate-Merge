@@ -20,6 +20,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
 
   // Get the user role from the profile, defaulting to "visitor" if not available
   const userRole = profile?.role || "visitor";
+  const adminRole = profile?.admin_role;
 
   // Close sidebar on Escape key press (mobile)
   useEffect(() => {
@@ -101,6 +102,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
           <SidebarNavSection
             items={mainNavItems}
             userRole={userRole}
+            adminRole={adminRole}
             onItemClick={() => setOpen(false)}
           />
         </nav>

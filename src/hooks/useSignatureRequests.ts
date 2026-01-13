@@ -47,7 +47,7 @@ export function useSignatureRequests() {
         .from("signature_requests")
         .select(`
           *,
-          job:jobs(id, title, client)
+          job:employer_jobs(id, title, client)
         `)
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
@@ -70,7 +70,7 @@ export function usePendingSignatures() {
         .from("signature_requests")
         .select(`
           *,
-          job:jobs(id, title, client)
+          job:employer_jobs(id, title, client)
         `)
         .eq("user_id", user.id)
         .in("status", ["Pending", "Sent", "Viewed"])
@@ -127,7 +127,7 @@ export function useCreateSignatureRequest() {
         .insert({ ...input, user_id: user.id })
         .select(`
           *,
-          job:jobs(id, title, client)
+          job:employer_jobs(id, title, client)
         `)
         .single();
 
@@ -164,7 +164,7 @@ export function useUpdateSignatureRequest() {
         .eq("id", id)
         .select(`
           *,
-          job:jobs(id, title, client)
+          job:employer_jobs(id, title, client)
         `)
         .single();
 
@@ -204,7 +204,7 @@ export function useResendSignatureRequest() {
         .eq("id", id)
         .select(`
           *,
-          job:jobs(id, title, client)
+          job:employer_jobs(id, title, client)
         `)
         .single();
 
@@ -246,7 +246,7 @@ export function useMarkAsSigned() {
         .eq("id", id)
         .select(`
           *,
-          job:jobs(id, title, client)
+          job:employer_jobs(id, title, client)
         `)
         .single();
 

@@ -2,17 +2,18 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
-import { useCloudSync } from '@/hooks/useCloudSync';
+import { useReportSync, SyncStatus } from '@/hooks/useReportSync';
 import { useReportId } from '@/hooks/useReportId';
 import { useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
 import OfflineBanner from '@/components/OfflineBanner';
 import { CreateCustomerDialog } from '@/components/CreateCustomerDialog';
-import { 
-  findCustomerByName, 
-  createCustomerFromCertificate, 
-  linkCustomerToReport 
+import { DraftRecoveryDialog } from '@/components/ui/DraftRecoveryDialog';
+import {
+  findCustomerByName,
+  createCustomerFromCertificate,
+  linkCustomerToReport
 } from '@/utils/customerHelper';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -30,6 +31,7 @@ interface EICRFormContextType {
   handleLoadSavePoint: (data: any) => void;
   handleManualSave: () => Promise<void>;
   syncState: any;
+  syncStatus: SyncStatus; // New best-in-class status
   isOnline: boolean;
   isAuthenticated: boolean;
   isLoadingReport: boolean;
@@ -209,21 +211,64 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     };
   });
 
-  // Cloud sync integration - primary persistence layer
+  // Best-in-class sync integration - local-first with cloud backup
   const {
-    syncState,
-    syncToCloud,
-    loadFromCloud,
+    status: syncStatus,
+    saveNow,
+    loadReport,
     isOnline,
     isAuthenticated,
-    processOfflineQueue,
-  } = useCloudSync({
+    hasRecoverableDraft,
+    draftPreview,
+    recoverDraft,
+    discardDraft,
+  } = useReportSync({
     reportId: currentReportId,
     reportType: 'eicr',
-    data: formData,
+    formData,
     enabled: true,
     customerId: customerIdFromNav,
   });
+
+  // Map new status to legacy syncState format for backwards compatibility
+  const syncState = {
+    status: syncStatus.cloud === 'synced' ? 'synced' :
+            syncStatus.cloud === 'syncing' ? 'syncing' :
+            syncStatus.cloud === 'queued' || syncStatus.cloud === 'offline' ? 'queued' :
+            'error',
+    lastSyncTime: syncStatus.lastCloudSync?.getTime(),
+    errorMessage: syncStatus.errorMessage,
+    queuedChanges: syncStatus.queuedChanges,
+  };
+
+  // State for draft recovery dialog
+  const [showDraftRecovery, setShowDraftRecovery] = useState(false);
+
+  // Show draft recovery dialog when recoverable draft detected
+  useEffect(() => {
+    if (hasRecoverableDraft && !currentReportId && !initialReportId) {
+      setShowDraftRecovery(true);
+    }
+  }, [hasRecoverableDraft, currentReportId, initialReportId]);
+
+  // Handle draft recovery
+  const handleRecoverDraft = () => {
+    const recoveredData = recoverDraft();
+    if (recoveredData) {
+      setFormData(prev => ({ ...prev, ...recoveredData }));
+      toast({
+        title: "Draft recovered",
+        description: "Your unsaved work has been restored.",
+      });
+    }
+    setShowDraftRecovery(false);
+  };
+
+  // Handle draft discard
+  const handleDiscardDraft = () => {
+    discardDraft();
+    setShowDraftRecovery(false);
+  };
 
   // Helper function to check if form is empty (for auto-filling profile)
   const isFormEmpty = (data: any) => {
@@ -311,7 +356,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         return;
       }
 
-      const cloudData = await loadFromCloud(initialReportId);
+      const cloudData = await loadReport(initialReportId);
       if (cloudData && typeof cloudData === 'object') {
         
         const loadedData = cloudData as any;
@@ -402,23 +447,24 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     // Mark as completed if inspector has signed off
     const updatedData = {
       ...formData,
-      status: formData.satisfactoryForContinuedUse && formData.inspectorSignature ? 'completed' : 
+      status: formData.satisfactoryForContinuedUse && formData.inspectorSignature ? 'completed' :
               (formData.clientName || formData.inspectionDate) ? 'in-progress' : 'draft'
     };
-    
+
     setFormData(updatedData);
-    
-    const result = await syncToCloud(true);
-    
+
+    // Use best-in-class saveNow() - handles local save, cloud sync, and offline queuing
+    const result = await saveNow();
+
     if (result.success) {
       if (result.reportId) {
         setCurrentReportId(result.reportId);
-        
+
         // Link to customer if navigated from customer page
         if (customerIdFromNav && result.reportId) {
           await linkCustomerToReport(result.reportId, customerIdFromNav);
         }
-        
+
         // Check if we should prompt to create customer
         if (userId && formData.clientName && !customerIdFromNav) {
           const existingCustomer = await findCustomerByName(userId, formData.clientName);
@@ -429,21 +475,13 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         }
       }
       setHasUnsavedChanges(false);
-      
+
       // Invalidate queries to refresh dashboard
       queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
       queryClient.invalidateQueries({ queryKey: ['my-reports'] });
       queryClient.invalidateQueries({ queryKey: ['expiry-reminders'] });
-      
-      toast({
-        title: "Saved",
-        description: "Your EICR report has been saved to the cloud.",
-      });
-    } else if (!isOnline) {
-      toast({
-        title: "Queued for sync",
-        description: "You're offline. Changes will sync when you reconnect.",
-      });
+
+      // Toast is handled by saveNow() based on online/offline status
     } else {
       // Debounce error toasts - only show once per 30 seconds
       const now = Date.now();
@@ -671,6 +709,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     handleLoadSavePoint,
     handleManualSave,
     syncState,
+    syncStatus, // Best-in-class status for new components
     isOnline,
     isAuthenticated,
     isLoadingReport,
@@ -679,10 +718,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   return (
     <EICRFormContext.Provider value={contextValue}>
       {syncState.queuedChanges > 0 && (
-        <OfflineBanner 
-          queuedChanges={syncState.queuedChanges} 
+        <OfflineBanner
+          queuedChanges={syncState.queuedChanges}
           isOnline={isOnline}
-          onRetry={processOfflineQueue}
         />
       )}
       {children}
@@ -696,6 +734,13 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
           phone: formData.clientPhone || '',
           address: formData.installationAddress || formData.clientAddress || '',
         }}
+      />
+      <DraftRecoveryDialog
+        open={showDraftRecovery}
+        reportType="eicr"
+        draftPreview={draftPreview}
+        onRecover={handleRecoverDraft}
+        onDiscard={handleDiscardDraft}
       />
     </EICRFormContext.Provider>
   );

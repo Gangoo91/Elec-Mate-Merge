@@ -18,13 +18,13 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useToast } from '@/hooks/use-toast';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
 import MinorWorksPdfGenerator from '@/components/pdf/MinorWorksPdfGenerator';
-import { useEICAutoSave } from '@/hooks/useEICAutoSave';
+import { useReportSync } from '@/hooks/useReportSync';
 import TestInstrumentInfo from '@/components/TestInstrumentInfo';
 import { SmartCircuitDetails } from '@/components/minor-works/SmartCircuitDetails';
 import { useSectionCompletion } from '@/hooks/useSectionCompletion';
 import { SectionHeader } from '@/components/ui/section-header';
 import SignatureInput from '@/components/signature/SignatureInput';
-import { useCloudSync } from '@/hooks/useCloudSync';
+import { DraftRecoveryDialog } from '@/components/ui/DraftRecoveryDialog';
 import { supabase } from '@/integrations/supabase/client';
 import { useQueryClient } from '@tanstack/react-query';
 import IntelligentInput from '@/components/minor-works/IntelligentInput';
@@ -228,32 +228,57 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
   // Section completion tracking
   const sectionCompletion = useSectionCompletion(formData);
 
-  // Cloud sync
-  const { loadFromCloud, isAuthenticated, isOnline, syncToCloud } = useCloudSync({
+  // Best-in-class sync integration - handles auto-save, cloud sync, and offline queue
+  const {
+    status: syncStatus,
+    saveNow,
+    loadReport,
+    isOnline,
+    isAuthenticated,
+    hasRecoverableDraft,
+    draftPreview,
+    recoverDraft,
+    discardDraft,
+  } = useReportSync({
     reportId: currentReportId,
     reportType: 'minor-works',
-    data: formData,
+    formData,
     enabled: true,
     customerId: customerIdFromNav,
   });
 
-  // Auto-save hook (IndexedDB + cloud sync)
-  const { 
-    isSaving, 
-    lastSaveTime, 
-    hasUnsavedChanges, 
-    manualSave: autoSaveManualSave,
-    loadFromLocalStorage: loadFromIndexedDB,
-    clearAutoSave 
-  } = useEICAutoSave({
-    formData,
-    interval: 30,
-    reportType: 'minor-works',
-    onSave: async (data) => {
-      await syncToCloud(false);
-    },
-    enabled: true
-  });
+  // Derive saving state from sync status
+  const isSaving = syncStatus.local === 'saving' || syncStatus.cloud === 'syncing';
+  const hasUnsavedChanges = syncStatus.local === 'unsaved' || syncStatus.cloud !== 'synced';
+
+  // State for draft recovery
+  const [showDraftRecovery, setShowDraftRecovery] = useState(false);
+
+  // Show draft recovery dialog when recoverable draft detected
+  useEffect(() => {
+    if (hasRecoverableDraft && !currentReportId && !initialReportId) {
+      setShowDraftRecovery(true);
+    }
+  }, [hasRecoverableDraft, currentReportId, initialReportId]);
+
+  // Handle draft recovery
+  const handleRecoverDraft = () => {
+    const recoveredData = recoverDraft();
+    if (recoveredData) {
+      setFormData((prev: any) => ({ ...prev, ...recoveredData }));
+      toast({
+        title: "Draft recovered",
+        description: "Your unsaved Minor Works work has been restored.",
+      });
+    }
+    setShowDraftRecovery(false);
+  };
+
+  // Handle draft discard
+  const handleDiscardDraft = () => {
+    discardDraft();
+    setShowDraftRecovery(false);
+  };
   
   // Pre-fill customer details if navigating from customer page
   useEffect(() => {
@@ -333,7 +358,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
         return;
       }
 
-      loadFromCloud(initialReportId).then(cloudData => {
+      loadReport(initialReportId).then(cloudData => {
         if (cloudData) {
           setFormData(cloudData);
         } else {
@@ -345,23 +370,9 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
         }
       });
     }
-  }, [initialReportId, authChecked, isAuthenticated, isOnline, loadFromCloud]);
+  }, [initialReportId, authChecked, isAuthenticated, isOnline, loadReport]);
 
-  // Load saved data on mount from IndexedDB
-  useEffect(() => {
-    if (!initialReportId) {
-      const loadSavedData = async () => {
-        try {
-          const savedState = await loadFromIndexedDB();
-          if (savedState?.formData) {
-            setFormData(savedState.formData);
-          }
-        } catch (error) {
-        }
-      };
-      loadSavedData();
-    }
-  }, [initialReportId, loadFromIndexedDB]);
+  // Draft recovery is now handled by useReportSync and DraftRecoveryDialog
 
   // Generate certificate number on mount if needed - Prevent regeneration
   const certNumberGenerated = React.useRef(false);
@@ -406,11 +417,9 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
   };
 
   const handleSaveDraft = async () => {
-    // Use auto-save hook's manual save (saves to IndexedDB)
-    await autoSaveManualSave();
+    // Use best-in-class saveNow() - handles local save, cloud sync, and offline queuing
+    const result = await saveNow();
 
-    // Sync to cloud
-    const result = await syncToCloud(true);
     if (result && typeof result === 'object' && 'reportId' in result && result.reportId) {
       setCurrentReportId(result.reportId as string);
 
@@ -419,13 +428,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
         const { linkCustomerToReport } = await import('@/utils/customerHelper');
         await linkCustomerToReport(result.reportId as string, customerIdFromNav);
       }
-
-      toast({
-        title: "Draft Saved",
-        description: "Your Minor Works Certificate draft has been saved.",
-      });
     } else if (!result?.success) {
-      // Error toast - useCloudSync shows "Cannot save yet" if form empty
       // Show generic error only if form has data
       if (formData.clientName || formData.propertyAddress) {
         toast({
@@ -435,6 +438,10 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
         });
       }
     }
+
+    // Invalidate queries to refresh dashboard
+    queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
+    queryClient.invalidateQueries({ queryKey: ['my-reports'] });
   };
 
   const handleStartNew = () => {
@@ -2370,8 +2377,8 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                 queryClient.invalidateQueries({ queryKey: ['my-reports'] });
                 queryClient.invalidateQueries({ queryKey: ['customer-reports'] });
                 
-                // Clear auto-save draft
-                await clearAutoSave();
+                // Clear draft after successful completion
+                discardDraft();
                 
                 toast({
                   title: "Certificate Completed",
@@ -2416,6 +2423,14 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
         onConfirm={confirmStartNew}
         onDuplicate={handleDuplicate}
         hasUnsavedChanges={hasUnsavedChanges}
+      />
+
+      <DraftRecoveryDialog
+        open={showDraftRecovery}
+        reportType="minor-works"
+        draftPreview={draftPreview}
+        onRecover={handleRecoverDraft}
+        onDiscard={handleDiscardDraft}
       />
     </div>
   );

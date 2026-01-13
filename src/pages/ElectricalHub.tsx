@@ -267,7 +267,7 @@ function ElectricalStatsBar() {
       </motion.div>
 
       {/* Pagination dots - mobile only */}
-      <div className="flex justify-center gap-1.5 mt-3 sm:hidden">
+      <div className="flex justify-center gap-0.5 mt-3 sm:hidden">
         {statItems.map((_, i) => (
           <button
             key={i}
@@ -278,14 +278,18 @@ function ElectricalStatsBar() {
                 el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
               }
             }}
-            className={cn(
-              'transition-all duration-200',
-              i === activeIndex
-                ? 'w-4 h-1.5 rounded-full bg-elec-yellow'
-                : 'w-1.5 h-1.5 rounded-full bg-white/20'
-            )}
+            className="min-h-11 min-w-8 flex items-center justify-center touch-manipulation active:scale-95"
             aria-label={`View ${statItems[i].label}`}
-          />
+          >
+            <span
+              className={cn(
+                'transition-all duration-200',
+                i === activeIndex
+                  ? 'w-5 h-2 rounded-full bg-elec-yellow'
+                  : 'w-2 h-2 rounded-full bg-white/20'
+              )}
+            />
+          </button>
         ))}
       </div>
     </div>
@@ -306,7 +310,7 @@ function FeaturedCard() {
         <div className="absolute -top-16 -right-16 w-32 h-32 bg-elec-yellow/[0.08] blur-3xl rounded-full pointer-events-none" />
 
         <div className="relative z-10 p-5 sm:p-6 text-center">
-          <div className="inline-flex p-3 rounded-2xl bg-elec-yellow/10 mb-4 group-hover:bg-elec-yellow/20 transition-colors">
+          <div className="inline-flex p-3 rounded-2xl bg-elec-yellow/10 mb-4 group-hover:bg-elec-yellow/20 group-active:bg-elec-yellow/25 transition-colors">
             <Sparkles className="h-8 w-8 text-elec-yellow" />
           </div>
 
@@ -317,9 +321,9 @@ function FeaturedCard() {
             8 specialist agents for circuit design, costing, installation, safety, testing & project management
           </p>
 
-          <div className="inline-flex items-center gap-2 text-elec-yellow font-medium text-sm group-hover:gap-3 transition-all">
+          <div className="inline-flex items-center gap-2 text-elec-yellow font-medium text-sm group-hover:gap-3 group-active:gap-3 transition-all">
             <span>Choose Agent</span>
-            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
           </div>
         </div>
       </motion.div>
@@ -345,12 +349,12 @@ function ToolCard({ title, description, icon: Icon, link }: ToolCardProps) {
         className="glass-premium rounded-xl h-full min-h-[140px] active:bg-white/[0.02]"
       >
         <div className="p-4 sm:p-5 flex items-start gap-4">
-          <div className="flex-shrink-0 p-2.5 rounded-lg bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors">
+          <div className="flex-shrink-0 p-2.5 rounded-lg bg-elec-yellow/10 group-hover:bg-elec-yellow/20 group-active:bg-elec-yellow/25 transition-colors">
             <Icon className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
           </div>
 
           <div className="flex-1 min-w-0">
-            <h3 className="text-base sm:text-lg font-semibold text-white mb-1 group-hover:text-elec-yellow transition-colors">
+            <h3 className="text-base sm:text-lg font-semibold text-white mb-1 group-hover:text-elec-yellow group-active:text-elec-yellow transition-colors">
               {title}
             </h3>
             <p className="text-sm text-white/70 leading-relaxed line-clamp-2">
@@ -358,7 +362,7 @@ function ToolCard({ title, description, icon: Icon, link }: ToolCardProps) {
             </p>
           </div>
 
-          <ChevronRight className="h-5 w-5 text-white/40 group-hover:text-elec-yellow group-hover:translate-x-1 transition-all flex-shrink-0" />
+          <ChevronRight className="h-5 w-5 text-white/40 group-hover:text-elec-yellow group-hover:translate-x-1 group-active:text-elec-yellow group-active:translate-x-1 transition-all flex-shrink-0" />
         </div>
       </motion.div>
     </Link>

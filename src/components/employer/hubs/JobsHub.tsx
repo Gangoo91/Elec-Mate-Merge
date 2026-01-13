@@ -4,7 +4,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { Section } from "@/pages/employer/EmployerDashboard";
 import { useJobs } from "@/hooks/useJobs";
 import { useJobPacks } from "@/hooks/useJobPacks";
-import { jobIssues, testingWorkflows, companyVehicles, jobPhotos } from "@/data/employerMockData";
+import { useJobIssueStats } from "@/hooks/useJobIssues";
+import { useJobTestStats } from "@/hooks/useJobTests";
+import { useFleetStats } from "@/hooks/useFleet";
 import {
   Briefcase,
   Package,
@@ -30,23 +32,18 @@ interface JobsHubProps {
 export function JobsHub({ onNavigate }: JobsHubProps) {
   const { data: jobs = [], isLoading: isLoadingJobs } = useJobs();
   const { data: jobPacks = [], isLoading: isLoadingJobPacks } = useJobPacks();
+  const { data: issueStats, isLoading: isLoadingIssues } = useJobIssueStats();
+  const { data: testStats, isLoading: isLoadingTests } = useJobTestStats();
+  const { data: fleetStats, isLoading: isLoadingFleet } = useFleetStats();
 
   // Calculate real stats from Supabase data
   const activeJobs = jobs.filter(j => j.status === "Active").length;
   const activeJobPacks = jobPacks.filter(jp => jp.status === "In Progress").length;
 
-  // These remain mock for now (separate features)
-  const openIssues = jobIssues.filter(i => i.status === "Open").length;
-  const testingInProgress = testingWorkflows.filter(t => t.status === "In Progress").length;
-
-  // Fleet stats
-  const getExpiryStatus = (dateStr: string) => {
-    const date = new Date(dateStr);
-    const now = new Date();
-    const daysUntil = Math.ceil((date.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-    return daysUntil < 30;
-  };
-  const motDueCount = companyVehicles.filter(v => getExpiryStatus(v.motExpiry)).length;
+  // Real stats from hooks
+  const openIssues = issueStats?.open ?? 0;
+  const testingInProgress = testStats?.pending ?? 0;
+  const motDueCount = fleetStats?.motDue ?? 0;
 
   // Stats configuration with individual loading states
   const statsConfig = [
@@ -79,7 +76,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
       textClass: openIssues > 0 ? "text-warning" : "text-muted-foreground",
       section: "issues" as Section,
       pulse: openIssues > 0,
-      isLoading: false,
+      isLoading: isLoadingIssues,
     },
     {
       icon: CheckCircle,
@@ -89,7 +86,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
       borderClass: "border-info/30 hover:border-info/60",
       textClass: "text-info",
       section: "testing" as Section,
-      isLoading: false,
+      isLoading: isLoadingTests,
     },
   ];
 
@@ -246,7 +243,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
             { icon: Calendar, title: "Timeline", desc: "Gantt & scheduling", section: "timeline" as Section, color: "purple" },
             { icon: Users, title: "Tracking", desc: "Worker locations", section: "tracking" as Section, color: "cyan" },
             { icon: FileText, title: "Progress", desc: "Daily diary", section: "progresslogs" as Section, color: "orange" },
-            { icon: Camera, title: "Photos", desc: "Job gallery", section: "photogallery" as Section, color: "pink", badge: jobPhotos.length },
+            { icon: Camera, title: "Photos", desc: "Job gallery", section: "photogallery" as Section, color: "pink" },
           ].map((item) => {
             const Icon = item.icon;
             const colorClasses: Record<string, { bg: string, hover: string, text: string }> = {

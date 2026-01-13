@@ -87,13 +87,13 @@ export const reportCloud = {
         report_id: `${reportType.toUpperCase()}-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
         status: data.status === 'completed' ? 'completed' :
                 data.certificateGenerated ? 'completed' :
-                data.satisfactoryForContinuedUse && data.inspectorSignature ? 'completed' : 
-                (data.clientName || data.inspectionDate) ? 'in-progress' : 'draft',
+                data.satisfactoryForContinuedUse && data.inspectorSignature ? 'completed' :
+                (data.clientName || data.inspectionDate || data.workDate) ? 'in-progress' : 'draft',
         customer_id: customerId || null,
         client_name: data.clientName || null,
-        installation_address: data.installationAddress || null,
-        inspection_date: data.inspectionDate || null,
-        inspector_name: data.inspectorName || null,
+        installation_address: data.installationAddress || data.propertyAddress || null,
+        inspection_date: data.inspectionDate || data.workDate || null,
+        inspector_name: data.inspectorName || data.contractorName || null,
         data: data,
         last_synced_at: new Date().toISOString(),
       };
@@ -150,12 +150,12 @@ export const reportCloud = {
       const updateData: any = {
         status: data.status === 'completed' ? 'completed' :
                 data.certificateGenerated ? 'completed' :
-                data.satisfactoryForContinuedUse && data.inspectorSignature ? 'completed' : 
-                (data.clientName || data.inspectionDate) ? 'in-progress' : 'draft',
+                data.satisfactoryForContinuedUse && data.inspectorSignature ? 'completed' :
+                (data.clientName || data.inspectionDate || data.workDate) ? 'in-progress' : 'draft',
         client_name: data.clientName || null,
-        installation_address: data.installationAddress || null,
-        inspection_date: data.inspectionDate || null,
-        inspector_name: data.inspectorName || null,
+        installation_address: data.installationAddress || data.propertyAddress || null,
+        inspection_date: data.inspectionDate || data.workDate || null,
+        inspector_name: data.inspectorName || data.contractorName || null,
         data: data,
         last_synced_at: new Date().toISOString(),
       };

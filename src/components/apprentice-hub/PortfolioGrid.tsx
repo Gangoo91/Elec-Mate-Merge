@@ -183,7 +183,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
             <button
               onClick={() => setViewMode('grid')}
               className={cn(
-                'p-2.5 rounded touch-manipulation',
+                'p-3 rounded touch-manipulation active:scale-95',
                 viewMode === 'grid' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-muted-foreground'
               )}
             >
@@ -192,7 +192,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
             <button
               onClick={() => setViewMode('list')}
               className={cn(
-                'p-2.5 rounded touch-manipulation',
+                'p-3 rounded touch-manipulation active:scale-95',
                 viewMode === 'list' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-muted-foreground'
               )}
             >
@@ -230,7 +230,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
               key={cat}
               onClick={() => setCategoryFilter(cat)}
               className={cn(
-                'px-4 h-9 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 touch-manipulation',
+                'px-4 h-10 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 touch-manipulation active:scale-95',
                 categoryFilter === cat
                   ? 'bg-elec-yellow text-black'
                   : 'bg-muted text-muted-foreground hover:bg-muted/80'
@@ -251,7 +251,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
               variant="ghost"
               size="sm"
               onClick={clearFilters}
-              className="h-6 text-xs text-muted-foreground hover:text-foreground"
+              className="h-10 text-xs text-muted-foreground hover:text-foreground touch-manipulation"
             >
               Clear filters
             </Button>

@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import {
   ChevronDown,
   Plus,
@@ -12,10 +13,30 @@ import {
   MapPin,
   CircuitBoard,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  Camera,
+  Mic,
+  Wand2,
+  Sparkles,
+  FileText,
+  Pen,
+  Shield,
+  Grid
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { DistributionBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
+
+export interface BoardToolCallbacks {
+  onScanBoard?: () => void;
+  onScanTestResults?: () => void;
+  onScribbleToTable?: () => void;
+  onSmartAutoFill?: () => void;
+  onQuickRcdPresets?: () => void;
+  onBulkInfill?: () => void;
+  onVoiceToggle?: () => void;
+  voiceActive?: boolean;
+  voiceConnecting?: boolean;
+}
 
 interface BoardSectionProps {
   board: DistributionBoard;
@@ -28,6 +49,9 @@ interface BoardSectionProps {
   completedCount: number;
   isMobile?: boolean;
   children?: React.ReactNode; // Circuit table will be passed as children
+  // AI Tools - optional, pass to enable toolbar
+  tools?: BoardToolCallbacks;
+  showTools?: boolean;
 }
 
 /**
@@ -45,6 +69,8 @@ const BoardSection: React.FC<BoardSectionProps> = ({
   completedCount,
   isMobile = false,
   children,
+  tools,
+  showTools = false,
 }) => {
   const isMainBoard = board.id === MAIN_BOARD_ID || board.order === 0;
 
@@ -246,6 +272,112 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 <span className={cn("text-sm text-white/60", isMobile && "text-xs")}>SPD N/A</span>
               </label>
             </div>
+
+            {/* AI Tools Toolbar */}
+            {showTools && tools && (
+              <div className="flex items-center gap-2 py-3 border-t border-white/10">
+                {/* Primary: AI Board Scanner */}
+                {tools.onScanBoard && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-9 px-3 hover:bg-primary/10 hover:border-primary/30"
+                    title="AI Scan Board"
+                    onClick={tools.onScanBoard}
+                  >
+                    <Camera className="h-4 w-4 mr-1.5 text-primary" />
+                    <span className="text-xs">Scan Board</span>
+                  </Button>
+                )}
+
+                {/* AI Tools Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-9 w-9 p-0 hover:bg-primary/10 hover:border-primary/30"
+                      title="AI Tools"
+                    >
+                      <Wand2 className="h-4 w-4 text-primary" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-56 bg-background z-50">
+                    {tools.onScanTestResults && (
+                      <DropdownMenuItem onClick={tools.onScanTestResults}>
+                        <FileText className="mr-2 h-4 w-4" />
+                        AI Scan Test Results
+                      </DropdownMenuItem>
+                    )}
+                    {tools.onScribbleToTable && (
+                      <DropdownMenuItem onClick={tools.onScribbleToTable}>
+                        <Pen className="mr-2 h-4 w-4" />
+                        Scribble to Table
+                      </DropdownMenuItem>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                {/* Smart Tools Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-9 w-9 p-0 hover:bg-primary/10 hover:border-primary/30"
+                      title="Smart Tools"
+                    >
+                      <Sparkles className="h-4 w-4 text-primary" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-56 bg-background z-50">
+                    {tools.onSmartAutoFill && (
+                      <DropdownMenuItem onClick={tools.onSmartAutoFill}>
+                        <Zap className="mr-2 h-4 w-4" />
+                        Smart Auto-Fill
+                      </DropdownMenuItem>
+                    )}
+                    {tools.onQuickRcdPresets && (
+                      <DropdownMenuItem onClick={tools.onQuickRcdPresets}>
+                        <Shield className="mr-2 h-4 w-4" />
+                        Quick RCD Presets
+                      </DropdownMenuItem>
+                    )}
+                    {tools.onBulkInfill && (
+                      <DropdownMenuItem onClick={tools.onBulkInfill}>
+                        <Grid className="mr-2 h-4 w-4" />
+                        Bulk Infill
+                      </DropdownMenuItem>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                {/* Voice Button */}
+                {tools.onVoiceToggle && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={cn(
+                      "h-9 w-9 p-0 transition-all duration-200",
+                      tools.voiceActive
+                        ? "bg-green-500/20 border-green-500 ring-2 ring-green-500/30"
+                        : tools.voiceConnecting
+                        ? "bg-yellow-500/20 border-yellow-500 animate-pulse"
+                        : "hover:bg-primary/10 hover:border-primary/30"
+                    )}
+                    title={tools.voiceActive ? "Voice active - click to stop" : "Start voice input"}
+                    onClick={tools.onVoiceToggle}
+                    disabled={tools.voiceConnecting}
+                  >
+                    <Mic className={cn(
+                      "h-4 w-4",
+                      tools.voiceActive ? "text-green-500 animate-pulse" :
+                      tools.voiceConnecting ? "text-yellow-500" : "text-primary"
+                    )} />
+                  </Button>
+                )}
+              </div>
+            )}
 
             {/* Circuit Table (passed as children) */}
             {children && (

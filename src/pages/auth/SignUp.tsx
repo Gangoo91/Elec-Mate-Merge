@@ -208,7 +208,9 @@ const SignUp = () => {
 
       // AUTO-LOGIN: If session exists, go straight to dashboard
       if (data?.session) {
-        console.log('Session active - redirecting to dashboard');
+        console.log('Session active - waiting for profile trigger then redirecting');
+        // Wait for profile database trigger to complete before redirecting
+        await new Promise(resolve => setTimeout(resolve, 500));
         navigate('/dashboard');
         return;
       }
@@ -271,10 +273,11 @@ const SignUp = () => {
     }
   };
 
-  const errorShakeVariants = {
-    shake: {
-      x: [0, -10, 10, -10, 10, 0],
-      transition: { duration: 0.5 }
+  // Gentle error highlight instead of jarring shake
+  const errorHighlightVariants = {
+    highlight: {
+      borderColor: ['rgba(239, 68, 68, 0.2)', 'rgba(239, 68, 68, 0.6)', 'rgba(239, 68, 68, 0.3)'],
+      transition: { duration: 0.3, ease: 'easeOut' }
     }
   };
 
@@ -604,9 +607,9 @@ const SignUp = () => {
                 className="mb-4 overflow-hidden"
               >
                 <motion.div
-                  animate={error ? "shake" : ""}
-                  variants={errorShakeVariants}
-                  className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20"
+                  animate={error ? "highlight" : ""}
+                  variants={errorHighlightVariants}
+                  className="p-4 rounded-2xl bg-red-500/10 border-2 border-red-500/30 transition-colors"
                 >
                   <div className="flex gap-3 items-center">
                     <div className="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center flex-shrink-0">

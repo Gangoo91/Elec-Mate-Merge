@@ -28,6 +28,8 @@ import { useOrientation } from '@/hooks/useOrientation';
 import { useInlineVoice } from '@/hooks/useInlineVoice';
 import { twinAndEarthCpcFor, normaliseCableSize } from '@/utils/twinAndEarth';
 import { getTableViewPreference, setTableViewPreference } from '@/utils/mobileTableUtils';
+import { resolveDropdownValue } from '@/utils/voiceDropdownResolver';
+import { resolveFieldName } from '@/utils/voiceFieldAliases';
 import { calculatePointsServed } from '@/types/autoFillTypes';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
 import { getDefaultBsStandard } from '@/types/protectiveDeviceTypes';
@@ -372,6 +374,219 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
           return false;
         }
       }
+
+      // BULK CIRCUIT TOOLS
+      case 'update_all_circuits':
+      case 'set_field_all_circuits': {
+        const field = params.field as string;
+        const value = params.value as string;
+        if (!field || value === undefined) {
+          toast.error('Missing field or value');
+          return false;
+        }
+        const resolvedField = resolveFieldName(field) as keyof TestResult;
+        const resolvedValue = resolveDropdownValue(resolvedField, value);
+        setTestResults(prev => prev.map(circuit => ({
+          ...circuit,
+          [resolvedField]: resolvedValue
+        })));
+        toast.success(`Set ${field} to ${value} for all ${testResults.length} circuits`);
+        return true;
+      }
+
+      case 'set_circuit_field': {
+        const circuitNumber = params.circuit_number as number;
+        const field = params.field as string;
+        const value = params.value as string;
+        if (!circuitNumber || !field || value === undefined) {
+          toast.error('Missing circuit number, field, or value');
+          return false;
+        }
+        const resolvedField = resolveFieldName(field) as keyof TestResult;
+        const resolvedValue = resolveDropdownValue(resolvedField, value);
+        const targetIdx = testResults.findIndex(r =>
+          r.circuitNumber === String(circuitNumber) || r.circuitDesignation === `C${circuitNumber}`
+        );
+        if (targetIdx >= 0) {
+          setTestResults(prev => prev.map((circuit, idx) =>
+            idx === targetIdx ? { ...circuit, [resolvedField]: resolvedValue } : circuit
+          ));
+          toast.success(`Set circuit ${circuitNumber} ${field} to ${value}`);
+          return true;
+        } else {
+          toast.error(`Circuit ${circuitNumber} not found`);
+          return false;
+        }
+      }
+
+      case 'set_multiple_fields': {
+        const circuitNumber = params.circuit_number as number | undefined;
+        const targetIdx = circuitNumber
+          ? testResults.findIndex(r => r.circuitNumber === String(circuitNumber) || r.circuitDesignation === `C${circuitNumber}`)
+          : selectedCircuitIndex;
+        if (targetIdx < 0 || targetIdx >= testResults.length) {
+          toast.error(circuitNumber ? `Circuit ${circuitNumber} not found` : 'No circuit selected');
+          return false;
+        }
+        const fieldsToUpdate: Partial<TestResult> = {};
+        let fieldCount = 0;
+        const possibleFields = ['zs', 'r1r2', 'polarity', 'insulationTestVoltage', 'insulationLiveEarth', 'insulationLiveNeutral', 'rcdOneX', 'pfc'];
+        possibleFields.forEach(f => {
+          if (params[f] !== undefined && params[f] !== null) {
+            const resolvedField = resolveFieldName(f) as keyof TestResult;
+            const resolvedValue = resolveDropdownValue(resolvedField, params[f] as string);
+            fieldsToUpdate[resolvedField] = resolvedValue;
+            fieldCount++;
+          }
+        });
+        if (fieldCount === 0) {
+          toast.error('No valid fields provided');
+          return false;
+        }
+        setTestResults(prev => prev.map((circuit, idx) =>
+          idx === targetIdx ? { ...circuit, ...fieldsToUpdate } : circuit
+        ));
+        toast.success(`Updated ${fieldCount} fields on circuit ${targetIdx + 1}`);
+        return true;
+      }
+
+      case 'get_circuits_status': {
+        const summary = testResults.map((c, i) => {
+          const missing: string[] = [];
+          if (!c.zs) missing.push('Zs');
+          if (!c.r1r2) missing.push('R1+R2');
+          if (!c.insulationTestVoltage) missing.push('IR voltage');
+          if (!c.insulationLiveEarth) missing.push('IR L-E');
+          if (!c.insulationLiveNeutral) missing.push('IR L-N');
+          if (!c.polarity) missing.push('polarity');
+          if (!c.rcdOneX && c.rcdType) missing.push('RCD time');
+          return `C${i + 1}: ${missing.length === 0 ? 'Complete' : `Missing: ${missing.join(', ')}`}`;
+        });
+        return summary.join('\n');
+      }
+
+      // SUB-BOARD TOOLS
+      case 'select_board': {
+        const board = params.board as string;
+        toast.info(`Selected board: ${board}`);
+        return true;
+      }
+
+      case 'add_circuit_to_board': {
+        const board = params.board as string;
+        const circuitType = params.type as string || '';
+        const rating = params.rating as string || '';
+        const description = params.description as string || circuitType;
+        const nextNum = (testResults.length + 1).toString();
+        const newCircuit: TestResult = {
+          id: crypto.randomUUID(),
+          circuitDesignation: `C${nextNum}`,
+          circuitNumber: nextNum,
+          circuitDescription: description,
+          circuitType: circuitType,
+          type: circuitType,
+          referenceMethod: '',
+          liveSize: '',
+          cpcSize: '',
+          protectiveDeviceType: '',
+          protectiveDeviceRating: rating,
+          protectiveDeviceKaRating: '',
+          protectiveDeviceLocation: board || 'Consumer Unit',
+          bsStandard: '',
+          cableSize: '',
+          protectiveDevice: '',
+          r1r2: '',
+          r2: '',
+          ringContinuityLive: '',
+          ringContinuityNeutral: '',
+          ringR1: '',
+          ringRn: '',
+          ringR2: '',
+          insulationTestVoltage: '',
+          insulationResistance: '',
+          insulationLiveNeutral: '',
+          insulationLiveEarth: '',
+          insulationNeutralEarth: '',
+          polarity: '',
+          zs: '',
+          maxZs: '',
+          pointsServed: '',
+          rcdRating: '',
+          rcdOneX: '',
+          rcdTestButton: '',
+          afddTest: '',
+          pfc: '',
+          pfcLiveNeutral: '',
+          pfcLiveEarth: '',
+          functionalTesting: '',
+          notes: board ? `Board: ${board}` : '',
+          typeOfWiring: '',
+          rcdBsStandard: '',
+          rcdType: '',
+          rcdRatingA: '',
+        };
+        setTestResults(prev => [...prev, newCircuit]);
+        setSelectedCircuitIndex(testResults.length);
+        toast.success(`Added circuit C${nextNum} to ${board || 'main board'}`);
+        return true;
+      }
+
+      case 'set_board_field_all_circuits': {
+        const board = params.board as string;
+        const field = params.field as string;
+        const value = params.value as string;
+        if (!field || value === undefined) {
+          toast.error('Missing field or value');
+          return false;
+        }
+        const resolvedField = resolveFieldName(field) as keyof TestResult;
+        const resolvedValue = resolveDropdownValue(resolvedField, value);
+        // Filter circuits by board (using protectiveDeviceLocation or notes containing board name)
+        let count = 0;
+        setTestResults(prev => prev.map(circuit => {
+          const isOnBoard = board
+            ? (circuit.protectiveDeviceLocation?.toLowerCase().includes(board.toLowerCase()) ||
+               circuit.notes?.toLowerCase().includes(board.toLowerCase()))
+            : true;
+          if (isOnBoard) {
+            count++;
+            return { ...circuit, [resolvedField]: resolvedValue };
+          }
+          return circuit;
+        }));
+        toast.success(`Set ${field} to ${value} for ${count} circuits on ${board || 'all boards'}`);
+        return true;
+      }
+
+      case 'get_board_status': {
+        const board = params.board as string | undefined;
+        const filteredCircuits = board
+          ? testResults.filter(c =>
+              c.protectiveDeviceLocation?.toLowerCase().includes(board.toLowerCase()) ||
+              c.notes?.toLowerCase().includes(board.toLowerCase())
+            )
+          : testResults;
+        if (filteredCircuits.length === 0) {
+          return board ? `No circuits found on board: ${board}` : 'No circuits in schedule';
+        }
+        const summary = filteredCircuits.map((c, i) => {
+          const missing: string[] = [];
+          if (!c.zs) missing.push('Zs');
+          if (!c.r1r2) missing.push('R1+R2');
+          if (!c.insulationTestVoltage) missing.push('IR voltage');
+          if (!c.polarity) missing.push('polarity');
+          return `${c.circuitDesignation}: ${missing.length === 0 ? 'Complete' : `Missing: ${missing.join(', ')}`}`;
+        });
+        return `${board || 'All boards'} (${filteredCircuits.length} circuits):\n${summary.join('\n')}`;
+      }
+
+      case 'scan_board': {
+        const board = params.board as string;
+        toast.info(`Opening board scanner for: ${board || 'main board'}`);
+        setShowBoardCapture(true);
+        return true;
+      }
+
       default:
         return false;
     }
@@ -385,7 +600,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
       formId: 'eicr-schedule-of-tests',
       formName: 'EICR Schedule of Tests',
       fields: voiceFields,
-      actions: ['add_circuit', 'next_circuit', 'previous_circuit', 'select_circuit', 'remove_circuit', 'set_polarity_ok', 'set_test_result'],
+      actions: [
+        'add_circuit', 'next_circuit', 'previous_circuit', 'select_circuit', 'remove_circuit', 'set_polarity_ok', 'set_test_result',
+        // Bulk circuit tools (update_all_circuits is the ElevenLabs action name)
+        'update_all_circuits', 'set_field_all_circuits', 'set_circuit_field', 'set_multiple_fields', 'get_circuits_status',
+        // Sub-board tools
+        'select_board', 'add_circuit_to_board', 'set_board_field_all_circuits', 'get_board_status', 'scan_board'
+      ],
       onFillField: handleVoiceFillField,
       onAction: handleVoiceAction,
       onSubmit: () => {

@@ -52,7 +52,7 @@ export function useJobIssues() {
         .from("job_issues")
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           assigned_employee:employer_employees!job_issues_assigned_to_fkey(id, name)
         `)
         .eq("user_id", user.id)
@@ -78,7 +78,7 @@ export function useJobIssuesByJob(jobId: string | undefined) {
         .from("job_issues")
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           assigned_employee:employer_employees!job_issues_assigned_to_fkey(id, name)
         `)
         .eq("user_id", user.id)
@@ -104,7 +104,7 @@ export function useOpenJobIssues() {
         .from("job_issues")
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           assigned_employee:employer_employees!job_issues_assigned_to_fkey(id, name)
         `)
         .eq("user_id", user.id)
@@ -129,7 +129,7 @@ export function useJobIssue(id: string | undefined) {
         .from("job_issues")
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           assigned_employee:employer_employees!job_issues_assigned_to_fkey(id, name)
         `)
         .eq("id", id)
@@ -190,7 +190,7 @@ export function useCreateJobIssue() {
         .insert({ ...input, user_id: user.id })
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           assigned_employee:employer_employees!job_issues_assigned_to_fkey(id, name)
         `)
         .single();
@@ -228,7 +228,7 @@ export function useUpdateJobIssue() {
         .eq("id", id)
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           assigned_employee:employer_employees!job_issues_assigned_to_fkey(id, name)
         `)
         .single();
@@ -283,7 +283,7 @@ export function useUpdateJobIssueStatus() {
         .eq("id", id)
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           assigned_employee:employer_employees!job_issues_assigned_to_fkey(id, name)
         `)
         .single();
@@ -321,7 +321,7 @@ export function useJobIssuesByType(types: IssueType[]) {
         .from("job_issues")
         .select(`
           *,
-          job:jobs(id, title, client),
+          job:employer_jobs(id, title, client),
           assigned_employee:employer_employees!job_issues_assigned_to_fkey(id, name)
         `)
         .eq("user_id", user.id)

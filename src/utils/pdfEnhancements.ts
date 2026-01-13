@@ -289,7 +289,7 @@ export const generateCertificateMetadata = (formData: any): any => {
     author: formData.inspectorName || formData.companyName || 'Unknown Inspector',
     creator: 'Professional EICR System',
     producer: 'Enhanced jsPDF Generator',
-    keywords: ['EICR', 'BS7671', 'Electrical', 'Inspection', 'Certificate'],
+    keywords: 'EICR, BS7671, Electrical, Inspection, Certificate',
     creationDate: new Date(),
     modDate: new Date()
   };

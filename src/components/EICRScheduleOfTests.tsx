@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 import { TestResult } from '@/types/testResult';
 import { DistributionBoard, MAIN_BOARD_ID, createDefaultBoard, generateBoardId, getNextSubBoardName } from '@/types/distributionBoard';
 import { migrateToMultiBoard, getCircuitsForBoard, formatBoardsForFormData } from '@/utils/boardMigration';
-import BoardSection from './testing/BoardSection';
+import BoardSection, { BoardToolCallbacks } from './testing/BoardSection';
 import BoardManagement from './testing/BoardManagement';
 import EnhancedTestResultDesktopTable from './EnhancedTestResultDesktopTable';
 import MobileOptimizedTestTable from './mobile/MobileOptimizedTestTable';
@@ -70,6 +70,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   const [lastDeleted, setLastDeleted] = useState<{ circuit: TestResult; index: number } | null>(null);
   const [activeToolPanel, setActiveToolPanel] = useState<'ai' | 'smart' | null>(null);
   const [selectedCircuitIndex, setSelectedCircuitIndex] = useState(0);
+  const [activeBoardId, setActiveBoardId] = useState<string | null>(null);
   const orientation = useOrientation();
 
   // Voice tool call handler - connects ElevenLabs agent to component state
@@ -301,6 +302,37 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   const { isConnecting: voiceConnecting, isActive: voiceActive, toggleVoice } = useInlineVoice({
     onToolCall: handleVoiceToolCall,
   });
+
+  // Create board-specific tool callbacks
+  const createBoardTools = useCallback((boardId: string): BoardToolCallbacks => ({
+    onScanBoard: () => {
+      setActiveBoardId(boardId);
+      setShowBoardCapture(true);
+    },
+    onScanTestResults: () => {
+      setActiveBoardId(boardId);
+      setShowTestResultsScan(true);
+    },
+    onScribbleToTable: () => {
+      setActiveBoardId(boardId);
+      setShowScribbleDialog(true);
+    },
+    onSmartAutoFill: () => {
+      setActiveBoardId(boardId);
+      setShowSmartAutoFillDialog(true);
+    },
+    onQuickRcdPresets: () => {
+      setActiveBoardId(boardId);
+      setShowRcdPresetsDialog(true);
+    },
+    onBulkInfill: () => {
+      setActiveBoardId(boardId);
+      setShowBulkInfillDialog(true);
+    },
+    onVoiceToggle: toggleVoice,
+    voiceActive,
+    voiceConnecting,
+  }), [toggleVoice, voiceActive, voiceConnecting]);
 
   // Calculate completion stats for progress indicator
   const { completedCount, progressPercent, pendingCount } = useMemo(() => {
@@ -1496,6 +1528,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                       r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
                     ).length}
                     isMobile={true}
+                    showTools={true}
+                    tools={createBoardTools(board.id)}
                   >
                     {mobileViewType === 'table' ? (
                       <MobileHorizontalScrollTable
@@ -1680,6 +1714,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                     completedCount={boardCircuits.filter(r =>
                       r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
                     ).length}
+                    showTools={true}
+                    tools={createBoardTools(board.id)}
                   >
                     <EnhancedTestResultDesktopTable
                       testResults={boardCircuits}

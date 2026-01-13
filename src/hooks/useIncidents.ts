@@ -62,7 +62,7 @@ export function useIncidents() {
       if (!user) throw new Error("Not authenticated");
 
       const { data, error } = await supabase
-        .from("incidents")
+        .from("employer_incidents")
         .select("*")
         .eq("user_id", user.id)
         .order("date_occurred", { ascending: false });
@@ -81,7 +81,7 @@ export function useIncident(id: string | undefined) {
       if (!id) return null;
 
       const { data, error } = await supabase
-        .from("incidents")
+        .from("employer_incidents")
         .select("*")
         .eq("id", id)
         .single();
@@ -102,7 +102,7 @@ export function useIncidentsByStatus(status: IncidentStatus) {
       if (!user) throw new Error("Not authenticated");
 
       const { data, error } = await supabase
-        .from("incidents")
+        .from("employer_incidents")
         .select("*")
         .eq("user_id", user.id)
         .eq("status", status)
@@ -123,7 +123,7 @@ export function useIncidentStats() {
       if (!user) throw new Error("Not authenticated");
 
       const { data, error } = await supabase
-        .from("incidents")
+        .from("employer_incidents")
         .select("status, severity")
         .eq("user_id", user.id);
 
@@ -155,7 +155,7 @@ export function useCreateIncident() {
       if (!user) throw new Error("Not authenticated");
 
       const { data, error } = await supabase
-        .from("incidents")
+        .from("employer_incidents")
         .insert({ ...input, user_id: user.id })
         .select()
         .single();
@@ -188,7 +188,7 @@ export function useUpdateIncident() {
   return useMutation({
     mutationFn: async ({ id, ...input }: UpdateIncidentInput & { id: string }): Promise<Incident> => {
       const { data, error } = await supabase
-        .from("incidents")
+        .from("employer_incidents")
         .update({ ...input, updated_at: new Date().toISOString() })
         .eq("id", id)
         .select()
@@ -235,7 +235,7 @@ export function useUpdateIncidentStatus() {
       }
 
       const { data, error } = await supabase
-        .from("incidents")
+        .from("employer_incidents")
         .update(updates)
         .eq("id", id)
         .select()
@@ -270,7 +270,7 @@ export function useDeleteIncident() {
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
       const { error } = await supabase
-        .from("incidents")
+        .from("employer_incidents")
         .delete()
         .eq("id", id);
 

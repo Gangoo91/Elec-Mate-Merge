@@ -23,7 +23,7 @@ export const useVacancyApplications = (vacancyId?: string) => {
       .channel('vacancy-applications-changes')
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'vacancy_applications' },
+        { event: '*', schema: 'public', table: 'employer_vacancy_applications' },
         () => {
           queryClient.invalidateQueries({ queryKey: APPLICATIONS_KEY });
           // Also invalidate vacancies to update application counts
@@ -125,7 +125,7 @@ export const useNewApplicationsCount = () => {
     queryKey: [...APPLICATIONS_KEY, 'new-count'],
     queryFn: async () => {
       const { count, error } = await supabase
-        .from('vacancy_applications')
+        .from('employer_vacancy_applications')
         .select('id', { count: 'exact', head: true })
         .eq('status', 'New');
 

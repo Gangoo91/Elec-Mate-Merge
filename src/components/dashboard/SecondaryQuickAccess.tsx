@@ -84,7 +84,7 @@ export function SecondaryQuickAccess() {
       <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-2.5 px-0.5">
         Quick Access
       </h3>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         {items.map((item) => (
           <QuickAccessItem key={item.path + item.title} {...item} />
         ))}

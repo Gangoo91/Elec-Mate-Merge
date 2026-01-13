@@ -26,7 +26,8 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
       return await reportCloud.getUserReports(user.id, { limit: 5 });
     },
     enabled: !!user,
-    staleTime: 60 * 1000, // Cache for 1 minute
+    staleTime: 10 * 1000, // Cache for 10 seconds - allows immediate refresh after saves
+    refetchOnWindowFocus: true,
   });
 
   const reports = reportsData.reports;

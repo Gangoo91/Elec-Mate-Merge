@@ -394,6 +394,63 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
         return success ? `Set ${field} to ${value}` : `Could not set ${field}`;
       },
 
+      // BULK CIRCUIT TOOLS
+      set_field_all_circuits: async ({ field, value }: { field: string; value: string }) => {
+        if (!formContext) return 'No form is currently open';
+        const success = formContext.executeAction('set_field_all_circuits', { field, value });
+        return success ? `Set ${field} to ${value} for all circuits` : `Could not set ${field} for all circuits`;
+      },
+
+      set_circuit_field: async ({ circuit_number, field, value }: { circuit_number: number; field: string; value: string }) => {
+        if (!formContext) return 'No form is currently open';
+        const success = formContext.executeAction('set_circuit_field', { circuit_number, field, value });
+        return success ? `Set circuit ${circuit_number} ${field} to ${value}` : `Could not update circuit ${circuit_number}`;
+      },
+
+      set_multiple_fields: async (params: { circuit_number?: number; zs?: string; r1r2?: string; polarity?: string; insulationTestVoltage?: string; insulationLiveEarth?: string; insulationLiveNeutral?: string; rcdOneX?: string; pfc?: string }) => {
+        if (!formContext) return 'No form is currently open';
+        const success = formContext.executeAction('set_multiple_fields', params);
+        const fieldCount = Object.keys(params).filter(k => k !== 'circuit_number' && params[k as keyof typeof params]).length;
+        return success ? `Updated ${fieldCount} fields${params.circuit_number ? ` on circuit ${params.circuit_number}` : ''}` : 'Could not update fields';
+      },
+
+      get_circuits_status: async () => {
+        if (!formContext) return 'No form is currently open';
+        const result = formContext.executeAction('get_circuits_status', {});
+        return result || 'Could not get circuit status';
+      },
+
+      // SUB-BOARD TOOLS
+      select_board: async ({ board }: { board: string }) => {
+        if (!formContext) return 'No form is currently open';
+        const success = formContext.executeAction('select_board', { board });
+        return success ? `Selected ${board} board` : `Could not find board: ${board}`;
+      },
+
+      add_circuit_to_board: async ({ board, type, rating, description }: { board: string; type?: string; rating?: string; description?: string }) => {
+        if (!formContext) return 'No form is currently open';
+        const success = formContext.executeAction('add_circuit_to_board', { board, type, rating, description });
+        return success ? `Added circuit to ${board}` : `Could not add circuit to ${board}`;
+      },
+
+      set_board_field_all_circuits: async ({ board, field, value }: { board: string; field: string; value: string }) => {
+        if (!formContext) return 'No form is currently open';
+        const success = formContext.executeAction('set_board_field_all_circuits', { board, field, value });
+        return success ? `Set ${field} to ${value} for all circuits on ${board}` : `Could not update ${board} circuits`;
+      },
+
+      get_board_status: async ({ board }: { board?: string }) => {
+        if (!formContext) return 'No form is currently open';
+        const result = formContext.executeAction('get_board_status', { board });
+        return result || 'Could not get board status';
+      },
+
+      scan_board: async ({ board }: { board: string }) => {
+        if (!formContext) return 'No form is currently open';
+        const success = formContext.executeAction('scan_board', { board });
+        return success ? `Scanning ${board} board...` : `Could not start scan for ${board}`;
+      },
+
       // Query tools for electrician
       get_quote_info: async ({ client, status }: { client?: string; status?: string }) => executeServerTool('get_quote_info', { client, status }),
       get_invoice_info: async ({ client, status }: { client?: string; status?: string }) => executeServerTool('get_invoice_info', { client, status }),

@@ -2,6 +2,7 @@ import { useState, useCallback, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { PhotoViewer } from "@/components/employer/PhotoViewer";
 import { PhotoTimeline, type TimelinePhoto } from "@/components/employer/PhotoTimeline";
 import { PhotoMapView, type MapPhoto } from "@/components/employer/PhotoMapView";
@@ -9,8 +10,10 @@ import { PhotoCompareSlider, type ComparePhoto } from "@/components/employer/Pho
 import { PhotoGalleryHeader } from "@/components/employer/PhotoGalleryHeader";
 import { PhotoFilterSheet } from "@/components/employer/PhotoFilterSheet";
 import { PhotoViewModeSheet } from "@/components/employer/PhotoViewModeSheet";
+import { UploadPhotoSheet } from "@/components/employer/dialogs/UploadPhotoSheet";
 import { FloatingActionButton } from "@/components/ui/floating-action-button";
-import { jobPhotos, jobs, PhotoCategory } from "@/data/employerMockData";
+import { useJobPhotos, useTogglePhotoApproval, useTogglePhotoSharing, type PhotoCategory } from "@/hooks/useJobPhotos";
+import { useJobs } from "@/hooks/useJobs";
 import { toast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { PullToRefresh } from "@/components/ui/pull-to-refresh";
@@ -41,6 +44,11 @@ interface FilterState {
 
 export function PhotoGallerySection() {
   const isMobile = useIsMobile();
+  const { data: photosData = [], isLoading, refetch } = useJobPhotos();
+  const { data: jobs = [] } = useJobs();
+  const toggleApproval = useTogglePhotoApproval();
+  const toggleSharing = useTogglePhotoSharing();
+
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState<FilterState>({
     categories: [],
@@ -51,31 +59,35 @@ export function PhotoGallerySection() {
   const [viewMode, setViewMode] = useState<"grid" | "list" | "timeline" | "map">("grid");
   const [viewerOpen, setViewerOpen] = useState(false);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
-  const [photos, setPhotos] = useState(jobPhotos);
   const [compareOpen, setCompareOpen] = useState(false);
   const [comparePhotos, setComparePhotos] = useState<{ before: ComparePhoto; after: ComparePhoto } | null>(null);
-  
+
   // Sheet states
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
   const [viewModeSheetOpen, setViewModeSheetOpen] = useState(false);
+  const [uploadSheetOpen, setUploadSheetOpen] = useState(false);
+
+  // Use photos from database
+  const photos = photosData;
 
   const handleRefresh = useCallback(async () => {
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await refetch();
     toast({ title: "Photos refreshed" });
-  }, []);
+  }, [refetch]);
 
   // Get unique jobs from photos
-  const uniqueJobs = useMemo(() => 
+  const uniqueJobs = useMemo(() =>
     Array.from(new Set(photos.map(p => p.jobId)))
+      .filter(jobId => jobId) // Filter out empty job IDs
       .map(jobId => {
         const job = jobs.find(j => j.id === jobId);
-        return { 
-          value: jobId, 
+        return {
+          value: jobId,
           label: job?.title || photos.find(p => p.jobId === jobId)?.jobTitle || "Unknown",
           count: photos.filter(p => p.jobId === jobId).length
         };
-      }), 
-    [photos]
+      }),
+    [photos, jobs]
   );
 
   // Category counts
@@ -179,17 +191,15 @@ export function PhotoGallerySection() {
   };
 
   const handleToggleApproval = (photoId: string) => {
-    setPhotos(prev => prev.map(p => 
-      p.id === photoId ? { ...p, approved: !p.approved } : p
-    ));
-    toast({ title: "Photo approval updated" });
+    toggleApproval.mutate(photoId, {
+      onSuccess: () => toast({ title: "Photo approval updated" }),
+    });
   };
 
   const handleToggleSharing = (photoId: string) => {
-    setPhotos(prev => prev.map(p => 
-      p.id === photoId ? { ...p, sharedWithClient: !p.sharedWithClient } : p
-    ));
-    toast({ title: "Photo sharing updated" });
+    toggleSharing.mutate(photoId, {
+      onSuccess: () => toast({ title: "Photo sharing updated" }),
+    });
   };
 
   const handleCompareClick = () => {
@@ -224,7 +234,7 @@ export function PhotoGallerySection() {
   };
 
   const handleUploadClick = () => {
-    toast({ title: "Upload photo", description: "Photo upload coming soon" });
+    setUploadSheetOpen(true);
   };
 
   const formatDate = (dateStr: string) => {
@@ -235,6 +245,23 @@ export function PhotoGallerySection() {
       minute: "2-digit"
     });
   };
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="space-y-4 pb-20">
+        <div className="flex items-center justify-between">
+          <Skeleton className="h-8 w-32" />
+          <Skeleton className="h-8 w-20" />
+        </div>
+        <div className="grid grid-cols-3 gap-2">
+          {Array.from({ length: 9 }).map((_, i) => (
+            <Skeleton key={i} className="aspect-square rounded-lg" />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   const content = (
     <div className="space-y-4 pb-20">
@@ -487,6 +514,12 @@ export function PhotoGallerySection() {
         currentMode={viewMode}
         onModeChange={setViewMode}
         onCompareClick={handleCompareClick}
+      />
+
+      {/* Upload Photo Sheet */}
+      <UploadPhotoSheet
+        open={uploadSheetOpen}
+        onOpenChange={setUploadSheetOpen}
       />
 
       {/* Floating Action Button for Upload */}

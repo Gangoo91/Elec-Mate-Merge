@@ -7,21 +7,27 @@ interface SidebarNavSectionProps {
   title?: string;
   items: NavItem[];
   userRole: string;
+  adminRole?: 'super_admin' | 'admin' | null;
   className?: string;
   onItemClick?: () => void;
 }
 
-const SidebarNavSection = ({ 
-  title, 
-  items, 
+const SidebarNavSection = ({
+  title,
+  items,
   userRole,
+  adminRole,
   className,
-  onItemClick 
+  onItemClick
 }: SidebarNavSectionProps) => {
-  // Filter items based on user role
-  const filteredItems = items.filter((item) => 
-    item.roles.includes(userRole)
-  );
+  // Filter items based on user role and admin status
+  const filteredItems = items.filter((item) => {
+    // Check if item requires admin access
+    if (item.adminOnly && !adminRole) {
+      return false;
+    }
+    return item.roles.includes(userRole);
+  });
   
   // If there are no items to display, don't render the section
   if (filteredItems.length === 0) return null;

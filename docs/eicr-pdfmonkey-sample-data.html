@@ -1,0 +1,2865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EICR Certificate</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 8mm 10mm 12mm 10mm;
+        }
+
+        @page schedule {
+            size: A4 landscape;
+            margin: 6mm;
+        }
+
+        .schedule-page {
+            page: schedule;
+            page-break-before: always;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 8.5px;
+            line-height: 1.4;
+            color: #1a1a1a;
+            background: #fff;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* =============================================
+           DOCUMENT HEADER
+           ============================================= */
+        .doc-header {
+            background: linear-gradient(180deg, #0a1628 0%, #152238 100%);
+            color: #fff;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .doc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
+        }
+
+        .doc-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .doc-title-section {
+            flex: 1;
+        }
+
+        .doc-title {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .doc-subtitle {
+            font-size: 7.5px;
+            font-weight: 400;
+            opacity: 0.85;
+            letter-spacing: 0.3px;
+        }
+
+        .doc-meta {
+            text-align: right;
+        }
+
+        .cert-number {
+            font-size: 11px;
+            font-weight: 700;
+            color: #fbbf24;
+            letter-spacing: 0.5px;
+        }
+
+        .page-number {
+            font-size: 8px;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+
+        .company-logo {
+            flex-shrink: 0;
+            margin-right: 12px;
+        }
+
+        .company-logo img {
+            max-height: 45px;
+            max-width: 120px;
+            object-fit: contain;
+        }
+
+        .company-name {
+            font-size: 9px;
+            font-weight: 600;
+            color: #fbbf24;
+            margin-top: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        /* =============================================
+           SECTION STYLING
+           ============================================= */
+        .section {
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 6px 12px;
+            margin-bottom: 6px;
+            border-left: 3px solid #f59e0b;
+        }
+
+        .section-subtitle {
+            background: #f1f5f9;
+            color: #334155;
+            font-size: 8px;
+            font-weight: 600;
+            padding: 5px 12px;
+            margin-bottom: 4px;
+            border-left: 3px solid #64748b;
+        }
+
+        /* =============================================
+           FORM LAYOUTS
+           ============================================= */
+        .form-grid {
+            display: table;
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 6px;
+        }
+
+        .form-row {
+            display: table-row;
+        }
+
+        .form-label {
+            display: table-cell;
+            font-size: 7.5px;
+            font-weight: 600;
+            color: #475569;
+            padding: 5px 8px;
+            width: 130px;
+            vertical-align: middle;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .form-value {
+            display: table-cell;
+            font-size: 8.5px;
+            color: #1e293b;
+            padding: 5px 8px;
+            vertical-align: middle;
+            border: 1px solid #e2e8f0;
+            background: #fff;
+        }
+
+        .form-value input,
+        .form-value select {
+            border: none;
+            background: transparent;
+            font-size: 8.5px;
+            color: #1e293b;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        /* Inline form layout */
+        .inline-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 6px;
+            background: #fafbfc;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+        }
+
+        .inline-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .inline-label {
+            font-size: 7.5px;
+            font-weight: 600;
+            color: #64748b;
+            white-space: nowrap;
+        }
+
+        .inline-value {
+            font-size: 8px;
+            color: #1e293b;
+            padding: 4px 6px;
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            border-radius: 2px;
+            min-width: 60px;
+            min-height: 22px;
+            line-height: 1.4;
+        }
+
+        .inline-value.wide {
+            min-width: 120px;
+            flex: 1;
+        }
+
+        /* =============================================
+           CHECKBOX STYLING
+           ============================================= */
+        .checkbox-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 11px;
+            height: 11px;
+            accent-color: #0f172a;
+        }
+
+        .checkbox-item label {
+            font-size: 7.5px;
+            color: #334155;
+        }
+
+        /* =============================================
+           TWO COLUMN LAYOUT
+           ============================================= */
+        .two-col {
+            display: flex;
+            gap: 8px;
+        }
+
+        .two-col > .col {
+            flex: 1;
+        }
+
+        /* =============================================
+           DATA TABLE (Supply/Earthing)
+           ============================================= */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8px;
+            margin-bottom: 6px;
+        }
+
+        .data-table th {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            font-weight: 600;
+            font-size: 8px;
+            padding: 6px 10px;
+            text-align: left;
+            border: 1px solid #0f172a;
+        }
+
+        .data-table td {
+            padding: 8px 10px;
+            border: 1px solid #e2e8f0;
+            vertical-align: top;
+            background: #fff;
+        }
+
+        .data-field {
+            margin-bottom: 6px;
+        }
+
+        .data-field:last-child {
+            margin-bottom: 0;
+        }
+
+        .data-field-label {
+            font-size: 7px;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 2px;
+        }
+
+        .data-field-value {
+            font-size: 8.5px;
+            color: #1e293b;
+            padding: 3px 6px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+        }
+
+        /* =============================================
+           DISTRIBUTION BOARD CARDS
+           ============================================= */
+        .board-card {
+            border: 1px solid #cbd5e1;
+            border-radius: 3px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .board-card-header {
+            background: linear-gradient(135deg, #334155 0%, #475569 100%);
+            color: #fff;
+            padding: 6px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .board-card-title {
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        .board-card-badge {
+            font-size: 7px;
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .board-card-body {
+            padding: 8px;
+            background: #fafbfc;
+        }
+
+        /* =============================================
+           INSPECTION TABLE
+           ============================================= */
+        .inspection-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 7px;
+            margin-bottom: 6px;
+        }
+
+        .inspection-table thead th {
+            background: #0f172a;
+            color: #fff;
+            font-weight: 600;
+            padding: 5px 4px;
+            text-align: center;
+            border: 1px solid #0f172a;
+            font-size: 6.5px;
+        }
+
+        .inspection-table thead th.desc-header {
+            text-align: left;
+            padding-left: 8px;
+        }
+
+        .inspection-table tbody td {
+            padding: 4px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            font-size: 7px;
+        }
+
+        .inspection-table tbody td.item-num {
+            width: 35px;
+            font-weight: 600;
+            color: #475569;
+            background: #f8fafc;
+        }
+
+        .inspection-table tbody td.item-desc {
+            text-align: left;
+            padding-left: 6px;
+            color: #334155;
+        }
+
+        .inspection-table tbody td.outcome {
+            width: 28px;
+        }
+
+        .inspection-table tbody td.outcome input[type="checkbox"] {
+            width: 10px;
+            height: 10px;
+        }
+
+        .inspection-table tbody td.outcome-text {
+            width: 35px;
+            font-weight: 600;
+        }
+
+        .inspection-table .section-header-row td {
+            background: #e2e8f0;
+            font-weight: 700;
+            color: #1e293b;
+            text-align: left;
+            padding: 5px 8px;
+            font-size: 7.5px;
+        }
+
+        .inspection-table tbody tr:nth-child(even) td:not(.item-num) {
+            background: #fafbfc;
+        }
+
+        /* =============================================
+           BOARD INFO HEADER
+           ============================================= */
+        .board-info-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            border-radius: 2px;
+            border-left: 3px solid #f59e0b;
+        }
+
+        .board-info-header .board-title {
+            font-size: 10px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .board-info-header .board-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 7.5px;
+            margin-bottom: 4px;
+        }
+
+        .board-info-header .board-verification {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 7.5px;
+            padding-top: 4px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* =============================================
+           CIRCUIT TABLE (Landscape Schedule Page)
+           ============================================= */
+        .circuit-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+        }
+
+        .circuit-table thead tr:first-child th {
+            background: #1e293b;
+            color: #fff;
+            font-size: 10px;
+            padding: 8px 5px;
+            border: 1px solid #0f172a;
+        }
+
+        .circuit-table thead tr:nth-child(2) th {
+            background: #0f172a;
+            color: #fff;
+            font-size: 9px;
+            padding: 6px 4px;
+            border: 1px solid #0f172a;
+            height: 100px;
+            vertical-align: bottom;
+        }
+
+        .circuit-table thead .rotate {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            white-space: nowrap;
+            font-size: 9px;
+        }
+
+        .circuit-table tbody td {
+            padding: 8px 6px;
+            border: 1px solid #d1d5db;
+            text-align: center;
+            font-size: 10px;
+            background: #fff;
+        }
+
+        .circuit-table tbody td.desc {
+            text-align: left;
+            padding-left: 6px;
+            max-width: 120px;
+        }
+
+        .circuit-table tbody td.remarks {
+            text-align: left;
+            padding-left: 6px;
+            font-style: italic;
+            color: #64748b;
+            font-size: 8px;
+        }
+
+        .circuit-table tbody tr:nth-child(even) td {
+            background: #f8fafc;
+        }
+
+        /* =============================================
+           SIGNATURE BOXES
+           ============================================= */
+        .signature-grid {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .signature-box {
+            flex: 1;
+            border: 1px solid #cbd5e1;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .signature-box-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            font-size: 8px;
+            font-weight: 600;
+            padding: 6px 10px;
+            border-bottom: 2px solid #f59e0b;
+        }
+
+        .signature-box-body {
+            padding: 8px;
+            background: #fafbfc;
+        }
+
+        .sig-field {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            gap: 6px;
+        }
+
+        .sig-field:last-child {
+            margin-bottom: 0;
+        }
+
+        .sig-field-label {
+            font-size: 7px;
+            font-weight: 600;
+            color: #64748b;
+            min-width: 65px;
+            flex-shrink: 0;
+        }
+
+        .sig-field-value {
+            flex: 1;
+            font-size: 8px;
+            color: #1e293b;
+            padding: 4px 6px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+            min-height: 22px;
+        }
+
+        .sig-field-value.signature {
+            min-height: 35px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sig-field-value img {
+            max-height: 30px;
+        }
+
+        /* =============================================
+           OBSERVATIONS
+           ============================================= */
+        .observations-summary {
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+
+        .observations-row {
+            display: flex;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .observations-row:last-child {
+            border-bottom: none;
+        }
+
+        .observations-text {
+            flex: 1;
+            padding: 5px 8px;
+            font-size: 8px;
+            color: #334155;
+            background: #fff;
+        }
+
+        .observations-code {
+            width: 60px;
+            padding: 5px 8px;
+            font-size: 8px;
+            font-weight: 700;
+            text-align: center;
+            background: #f8fafc;
+            border-left: 1px solid #e2e8f0;
+        }
+
+        .code-c1 { color: #dc2626; }
+        .code-c2 { color: #ea580c; }
+        .code-c3 { color: #d97706; }
+        .code-fi { color: #7c3aed; }
+
+        .codes-legend {
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            border-radius: 2px;
+            padding: 8px;
+            margin-top: 6px;
+            font-size: 7px;
+            line-height: 1.5;
+        }
+
+        .codes-legend strong {
+            color: #92400e;
+        }
+
+        /* =============================================
+           OBSERVATION DETAIL CARDS
+           ============================================= */
+        .observation-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            page-break-inside: avoid;
+        }
+
+        .observation-card-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .observation-card-title {
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .observation-card-number {
+            font-size: 9px;
+            background: rgba(255,255,255,0.15);
+            padding: 3px 10px;
+            border-radius: 12px;
+        }
+
+        .observation-card-body {
+            padding: 12px;
+            background: #fafbfc;
+        }
+
+        .observation-classification {
+            margin-bottom: 10px;
+        }
+
+        .classification-badge {
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .classification-badge.c1 {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 2px solid #dc2626;
+        }
+
+        .classification-badge.c2 {
+            background: #fff7ed;
+            color: #ea580c;
+            border: 2px solid #ea580c;
+        }
+
+        .classification-badge.c3 {
+            background: #fffbeb;
+            color: #d97706;
+            border: 2px solid #d97706;
+        }
+
+        .classification-badge.fi {
+            background: #f5f3ff;
+            color: #7c3aed;
+            border: 2px solid #7c3aed;
+        }
+
+        .observation-section {
+            margin-bottom: 10px;
+        }
+
+        .observation-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .observation-section-title {
+            font-size: 8px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 4px;
+            padding-bottom: 3px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .observation-section-content {
+            font-size: 8px;
+            color: #334155;
+            line-height: 1.5;
+            padding: 8px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+        }
+
+        .observation-section-content.recommendation {
+            background: #f0fdf4;
+            border-color: #86efac;
+        }
+
+        .photo-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .photo-item {
+            width: calc(33.333% - 4px);
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* =============================================
+           GUIDANCE SECTION
+           ============================================= */
+        .guidance-intro {
+            font-size: 8px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 6px;
+            padding: 6px 8px;
+            background: #f1f5f9;
+            border-left: 3px solid #f59e0b;
+        }
+
+        .guidance-columns {
+            display: flex;
+            gap: 12px;
+        }
+
+        .guidance-col {
+            flex: 1;
+            font-size: 6.5px;
+            line-height: 1.5;
+            color: #475569;
+        }
+
+        .guidance-col p {
+            margin-bottom: 4px;
+            text-align: justify;
+        }
+
+        .guidance-col strong {
+            color: #1e293b;
+        }
+
+        /* =============================================
+           DECLARATION BOX
+           ============================================= */
+        .declaration-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+            padding: 8px 10px;
+            margin-bottom: 6px;
+        }
+
+        .declaration-text {
+            font-size: 7px;
+            color: #475569;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        /* =============================================
+           OVERALL ASSESSMENT
+           ============================================= */
+        .assessment-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+        }
+
+        .assessment-label {
+            font-size: 8px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .assessment-options {
+            display: flex;
+            gap: 20px;
+        }
+
+        .assessment-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .assessment-option input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+        }
+
+        .assessment-option label {
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .assessment-option label.satisfactory {
+            color: #16a34a;
+        }
+
+        .assessment-option label.unsatisfactory {
+            color: #dc2626;
+        }
+
+        /* Final Assessment Box (after signatures) */
+        .final-assessment-box {
+            border: 2px solid #1e293b;
+            border-radius: 4px;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .final-assessment-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .final-assessment-label {
+            font-size: 9px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .final-assessment-options {
+            display: flex;
+            gap: 16px;
+        }
+
+        .final-assessment-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border: 2px solid #cbd5e1;
+            border-radius: 4px;
+            background: #fff;
+        }
+
+        .final-assessment-option.selected {
+            border-width: 3px;
+        }
+
+        .final-assessment-option input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+        }
+
+        .final-assessment-option .option-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .final-assessment-option .satisfactory-label {
+            color: #16a34a;
+        }
+
+        .final-assessment-option .unsatisfactory-label {
+            color: #dc2626;
+        }
+
+        .final-assessment-option.satisfactory-selected {
+            background: #16a34a;
+            border-color: #16a34a;
+        }
+
+        .final-assessment-option.satisfactory-selected .satisfactory-label {
+            color: #fff;
+        }
+
+        .final-assessment-option.unsatisfactory-selected {
+            background: #dc2626;
+            border-color: #dc2626;
+        }
+
+        .final-assessment-option.unsatisfactory-selected .unsatisfactory-label {
+            color: #fff;
+        }
+
+        /* =============================================
+           PAGE BREAKS
+           ============================================= */
+        .page-break {
+            page-break-before: always;
+        }
+
+        .avoid-break {
+            page-break-inside: avoid;
+        }
+
+        /* =============================================
+           UTILITIES
+           ============================================= */
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+        .font-bold { font-weight: 600; }
+        .mt-2 { margin-top: 8px; }
+        .mb-2 { margin-bottom: 8px; }
+        .small { font-size: 7px; }
+
+        /* Special list formatting */
+        .intake-list {
+            margin: 0;
+            padding-left: 12px;
+            font-size: 6.5px;
+        }
+
+        .intake-list li {
+            margin-bottom: 1px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- =============================================
+     PAGE 1: MAIN CERTIFICATE
+     ============================================= -->
+<div class="doc-header">
+    <div class="doc-header-content">
+        <div class="doc-title-section">
+            <div class="doc-title">ELECTRICAL INSTALLATION CONDITION REPORT</div>
+            <div class="doc-subtitle">Condition report for an existing electrical installation in accordance with BS 7671 (IET Wiring Regulations 18th Edition + Amendment 3:2024)</div>
+            <div class="company-name">Smith Electrical Services Ltd</div>
+        </div>
+        <div class="doc-meta">
+            <div class="cert-number">EICR-2024-001247</div>
+            <div class="page-number">Page 1 of 4</div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION A: CLIENT DETAILS -->
+<div class="section">
+    <div class="section-title">Section A: Details of the Client</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Client Name</div>
+            <div class="form-value"><input type="text" value="Mr John Thompson" /></div>
+            <div class="form-label">Telephone</div>
+            <div class="form-value"><input type="text" value="07891 234567" /></div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Client Address</div>
+            <div class="form-value" colspan="3"><input type="text" value="42 Oakwood Drive, Croydon, Surrey, CR0 5AB" /></div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">Email Address</div>
+            <div class="form-value"><input type="text" value="john.thompson@email.co.uk" /></div>
+            <div class="form-label"></div>
+            <div class="form-value"></div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION B: INSTALLATION ADDRESS -->
+<div class="section">
+    <div class="section-title">Section B: Details of the Installation</div>
+    <div class="form-grid">
+        <div class="form-row">
+            <div class="form-label">Installation Address</div>
+            <div class="form-value" style="width: 100%;"><input type="text" value="42 Oakwood Drive, Croydon, Surrey, CR0 5AB" /></div>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION C: DESCRIPTION OF PREMISES -->
+<div class="section">
+    <div class="section-title">Section C: Description of Premises</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">Type:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="domestic" checked />
+                    <label for="domestic">Domestic</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="commercial" />
+                    <label for="commercial">Commercial</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="industrial" />
+                    <label for="industrial">Industrial</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="other" />
+                    <label for="other">Other</label>
+                </div>
+            </div>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Est. Age:</span>
+            <span class="inline-value">35 years</span>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 4px;">
+        <div class="inline-group">
+            <span class="inline-label">Evidence of alterations:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    ✓
+                    <label>Yes</label>
+                </div>
+                <div class="checkbox-item">
+                     
+                    <label>No</label>
+                </div>
+            </div>
+        </div>
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Details:</span>
+            <span class="inline-value wide">Kitchen extension added approx. 10 years ago. New circuits added for kitchen appliances.</span>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 4px;">
+        <div class="inline-group">
+            <span class="inline-label">Date of last inspection:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    ✓
+                    <label>Known</label>
+                </div>
+                <div class="checkbox-item">
+                     
+                    <label>Unknown</label>
+                </div>
+                <div class="checkbox-item">
+                     
+                    <label>N/A (First)</label>
+                </div>
+            </div>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Date:</span>
+            <span class="inline-value">15/03/2019</span>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION D: EXTENT AND LIMITATIONS -->
+<div class="section">
+    <div class="section-title">Section D: Extent and Limitations of the Inspection</div>
+    <div class="inline-form">
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Purpose:</span>
+            <span class="inline-value wide">Periodic inspection and testing - 5 year domestic EICR</span>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 4px;">
+        <div class="inline-group">
+            <span class="inline-label">Date of Inspection:</span>
+            <span class="inline-value">12/01/2024</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Recommended Interval:</span>
+            <span class="inline-value">5 years</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Next Inspection Due:</span>
+            <span class="inline-value">12/01/2029</span>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 4px;">
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Extent:</span>
+            <span class="inline-value wide">100% sampling of all accessible circuits. Full testing of consumer unit and all final circuits.</span>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 4px;">
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Limitations:</span>
+            <span class="inline-value wide">Unable to access loft space due to no loft ladder. Garage sub-board not tested (locked, owner absent).</span>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION E: SUMMARY OF CONDITION -->
+<div class="section">
+    <div class="section-title">Section E: Summary of the Condition of the Installation</div>
+    <div class="assessment-box">
+        <span class="assessment-label">Overall Assessment:</span>
+        <div class="assessment-options">
+            <div class="assessment-option">
+                <input type="checkbox" id="satisfactory" checked />
+                <label for="satisfactory" class="satisfactory">SATISFACTORY</label>
+            </div>
+            <div class="assessment-option">
+                <input type="checkbox" id="unsatisfactory" />
+                <label for="unsatisfactory" class="unsatisfactory">UNSATISFACTORY</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DECLARATION -->
+<div class="section">
+    <div class="declaration-box">
+        <div class="declaration-text">
+            I/We, being the person(s) responsible for the inspection and testing of the electrical installation (as indicated by my/our signatures below), particulars of which are described above, having exercised reasonable skill and care when carrying out the inspection and testing, hereby declare that the information in this report, including the observations and the attached schedules, provides an accurate assessment of the condition of the electrical installation taking into account the stated extent and limitations.
+        </div>
+    </div>
+</div>
+
+<!-- SECTION F: SUPPLY CHARACTERISTICS -->
+<div class="section">
+    <div class="section-title">Section F: Supply Characteristics and Earthing Arrangements</div>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width: 50%;">Earthing Arrangements</th>
+                <th style="width: 50%;">Supply Parameters</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="data-field">
+                        <div class="data-field-label">System Type</div>
+                        <div class="checkbox-row" style="margin-top: 4px;">
+                            <div class="checkbox-item">
+                                 
+                                <label>TN-C</label>
+                            </div>
+                            <div class="checkbox-item">
+                                 
+                                <label>TN-S</label>
+                            </div>
+                            <div class="checkbox-item">
+                                ✓
+                                <label>TN-C-S</label>
+                            </div>
+                            <div class="checkbox-item">
+                                 
+                                <label>TT</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Supply PME</div>
+                        <div class="data-field-value">Yes - Confirmed with DNO</div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Earth Electrode Type</div>
+                        <div class="data-field-value">N/A (PME supply)</div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">DNO (Distribution Network Operator)</div>
+                        <div class="data-field-value">UK Power Networks</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="data-field">
+                        <div class="data-field-label">Nominal Voltage (U&#8320;)</div>
+                        <div class="data-field-value">230 V</div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Nominal Frequency</div>
+                        <div class="data-field-value">50 Hz</div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Number of Phases</div>
+                        <div class="data-field-value">Single Phase</div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Main Protective Device</div>
+                        <div class="data-field-value">BS 88 Fuse (DNO cutout)</div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Main Switch Rating</div>
+                        <div class="data-field-value">100 A</div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Breaking Capacity</div>
+                        <div class="data-field-value">16 kA</div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SECTION G: BONDING -->
+<div class="section">
+    <div class="section-title">Section G: Main Protective Bonding Conductors</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">Main Bonding Size (mm&#178;):</span>
+            <span class="inline-value">10mm&#178;</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Compliance:</span>
+            <span class="inline-value">Satisfactory</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Supplementary Bonding (mm&#178;):</span>
+            <span class="inline-value">4mm&#178;</span>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 4px;">
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Main Bonding Locations:</span>
+            <span class="inline-value wide">Gas meter (under stairs), Water stopcock (kitchen), Oil pipe (N/A)</span>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION H: DISTRIBUTION BOARDS -->
+<div class="section">
+    <div class="section-title">Section H: Consumer Unit / Distribution Board Details</div>
+
+    <!-- Main Board -->
+    <div class="board-card">
+        <div class="board-card-header">
+            <span class="board-card-title">Main Consumer Unit</span>
+            <span class="board-card-badge">DB1</span>
+        </div>
+        <div class="board-card-body">
+            <div class="inline-form" style="border: none; padding: 0; background: transparent;">
+                <div class="inline-group">
+                    <span class="inline-label">Location:</span>
+                    <span class="inline-value">Under stairs cupboard</span>
+                </div>
+                <div class="inline-group">
+                    <span class="inline-label">Manufacturer:</span>
+                    <span class="inline-value">Hager</span>
+                </div>
+                <div class="inline-group">
+                    <span class="inline-label">Type:</span>
+                    <span class="inline-value">Split-load (dual RCD)</span>
+                </div>
+                <div class="inline-group">
+                    <span class="inline-label">Ways:</span>
+                    <span class="inline-value">12</span>
+                </div>
+            </div>
+            <div class="inline-form" style="border: none; padding: 0; background: transparent; margin-top: 4px;">
+                <div class="inline-group">
+                    <span class="inline-label">Zdb (&#937;):</span>
+                    <span class="inline-value">0.18</span>
+                </div>
+                <div class="inline-group">
+                    <span class="inline-label">Ipf (kA):</span>
+                    <span class="inline-value">1.28</span>
+                </div>
+                <div class="inline-group">
+                    <div class="checkbox-item">
+                        ✓
+                        <label>Polarity Confirmed</label>
+                    </div>
+                </div>
+                <div class="inline-group">
+                    <div class="checkbox-item">
+                         
+                        <label>SPD Operational</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cables -->
+    <div class="section-subtitle">Meter & Cable Details</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">Meter Tails Size:</span>
+            <span class="inline-value">25mm&#178; T&E</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Tails Length (m):</span>
+            <span class="inline-value">2.5</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Main Earth Conductor:</span>
+            <span class="inline-value">16mm&#178; Green/Yellow</span>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION K: OBSERVATIONS SUMMARY -->
+<div class="section">
+    <div class="section-title">Section K: Observations</div>
+    <div class="observations-summary">
+        <div class="observations-row" style="background: #f1f5f9; font-weight: 600;">
+            <div class="observations-text">Observation Description</div>
+            <div class="observations-code">Code</div>
+        </div>
+        <div class="observations-row">
+            <div class="observations-text">Bathroom light fitting (IP rating) - fitting not suitable for zone 1 location above bath</div>
+            <div class="observations-code code-c2">C2</div>
+        </div>
+        <div class="observations-row">
+            <div class="observations-text">Consumer unit labelling incomplete - circuit descriptions missing on 3 ways</div>
+            <div class="observations-code code-c3">C3</div>
+        </div>
+        <div class="observations-row">
+            <div class="observations-text">Recommend SPD installation - no surge protection currently fitted</div>
+            <div class="observations-code code-c3">C3</div>
+        </div>
+    </div>
+    <div class="codes-legend">
+        <strong>Classification Codes:</strong><br/>
+        <strong>C1</strong> - Danger present. Risk of injury. Immediate remedial action required.<br/>
+        <strong>C2</strong> - Potentially dangerous. Urgent remedial action required.<br/>
+        <strong>C3</strong> - Improvement recommended.<br/>
+        <strong>FI</strong> - Further investigation required without delay.
+    </div>
+</div>
+
+
+<!-- =============================================
+     PAGE 2: SCHEDULE OF INSPECTION
+     ============================================= -->
+<div class="page-break"></div>
+
+<div class="doc-header">
+    <div class="doc-header-content">
+        <div class="doc-title-section">
+            <div class="doc-title">SCHEDULE OF INSPECTION</div>
+            <div class="doc-subtitle">Inspection checklist in accordance with BS 7671</div>
+        </div>
+        <div class="doc-meta">
+            <div class="cert-number">EICR-2024-001247</div>
+            <div class="page-number">Page 2 of 4</div>
+        </div>
+    </div>
+</div>
+
+<!-- Test Instrument Details -->
+<div class="section">
+    <div class="section-title">Test Instrument Details</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">Instrument:</span>
+            <span class="inline-value wide">Megger MFT1741</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Serial No:</span>
+            <span class="inline-value">412983756</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Calibration:</span>
+            <span class="inline-value">15/06/2023</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Temp (&#176;C):</span>
+            <span class="inline-value">18</span>
+        </div>
+    </div>
+</div>
+
+<!-- Inspection Checklist -->
+<div class="section">
+    <table class="inspection-table">
+        <thead>
+            <tr>
+                <th style="width: 35px;">Item</th>
+                <th class="desc-header" style="width: auto;">Description</th>
+                <th style="width: 28px;">✓</th>
+                <th style="width: 28px;">N/A</th>
+                <th style="width: 35px;">C1/C2</th>
+                <th style="width: 28px;">C3</th>
+                <th style="width: 28px;">N/V</th>
+                <th style="width: 28px;">LIM</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- SECTION 1: INTAKE EQUIPMENT -->
+            <tr class="section-header-row">
+                <td colspan="8">1.0 &nbsp; INTAKE EQUIPMENT (VISUAL INSPECTION ONLY)</td>
+            </tr>
+            <tr>
+                <td class="item-num">1.0</td>
+                <td class="item-desc">
+                    <ul class="intake-list">
+                        <li>Service cable</li>
+                        <li>Service head</li>
+                        <li>Earthing arrangement</li>
+                        <li>Meter tails</li>
+                        <li>Metering equipment</li>
+                        <li>Isolator (where present)</li>
+                    </ul>
+                </td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">1.1</td>
+                <td class="item-desc">Consumer's isolator (where present)</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">1.2</td>
+                <td class="item-desc">Consumer's meter tails</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+
+            <!-- SECTION 2: MICROGENERATORS -->
+            <tr class="section-header-row">
+                <td colspan="8">2.0 &nbsp; PRESENCE OF ADEQUATE ARRANGEMENTS FOR OTHER SOURCES SUCH AS MICROGENERATORS</td>
+            </tr>
+            <tr>
+                <td class="item-num">2.0</td>
+                <td class="item-desc">Presence of adequate arrangements for other sources such as microgenerators</td>
+                <td class="outcome"></td>
+                <td class="outcome">✓</td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+
+            <!-- SECTION 3: EARTHING / BONDING -->
+            <tr class="section-header-row">
+                <td colspan="8">3.0 &nbsp; EARTHING / BONDING ARRANGEMENTS</td>
+            </tr>
+            <tr>
+                <td class="item-num">3.1</td>
+                <td class="item-desc">Presence and condition of distributor's earthing arrangement</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">3.2</td>
+                <td class="item-desc">Presence and condition of earth electrode connection where applicable</td>
+                <td class="outcome"></td>
+                <td class="outcome">✓</td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">3.3</td>
+                <td class="item-desc">Provision of earthing/bonding labels at all appropriate locations</td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">3.4</td>
+                <td class="item-desc">Confirmation of earthing conductor size</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">3.5</td>
+                <td class="item-desc">Accessibility and condition of earthing conductor at MET</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">3.6</td>
+                <td class="item-desc">Confirmation of main protective bonding conductor sizes</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">3.7</td>
+                <td class="item-desc">Condition and accessibility of main protective bonding conductor connections</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">3.8</td>
+                <td class="item-desc">Accessibility and condition of other protective bonding connections</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+
+            <!-- SECTION 4: CONSUMER UNIT(S) / DISTRIBUTION BOARD(S) -->
+            <tr class="section-header-row">
+                <td colspan="8">4.0 &nbsp; CONSUMER UNIT(S) / DISTRIBUTION BOARD(S)</td>
+            </tr>
+            <tr>
+                <td class="item-num">4.1</td>
+                <td class="item-desc">Adequacy of working space/accessibility to consumer unit/distribution board</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.2</td>
+                <td class="item-desc">Security of fixing</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.3</td>
+                <td class="item-desc">Condition of enclosure(s) in terms of IP rating etc.</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.4</td>
+                <td class="item-desc">Condition of enclosure(s) in terms of fire rating etc.</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.5</td>
+                <td class="item-desc">Enclosure not damaged/deteriorated so as to impair safety</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.6</td>
+                <td class="item-desc">Presence of main linked switch (as required by 462.1.201)</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.7</td>
+                <td class="item-desc">Operation of main switch (functional check)</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.8</td>
+                <td class="item-desc">Manual operation of circuit-breakers and RCDs to prove disconnection</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.9</td>
+                <td class="item-desc">Correct identification of circuit details and protective devices</td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.10</td>
+                <td class="item-desc">Presence of RCD six-monthly test notice, where required</td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.11</td>
+                <td class="item-desc">Presence of alternative supply warning notice at or near consumer unit/distribution board</td>
+                <td class="outcome"></td>
+                <td class="outcome">✓</td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.12</td>
+                <td class="item-desc">Presence of other required labelling (please specify)</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.13</td>
+                <td class="item-desc">Compatibility of protective devices, bases and other components; correct type and rating</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.14</td>
+                <td class="item-desc">Single-pole switching or protective devices in line conductor only</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.15</td>
+                <td class="item-desc">Protection against mechanical damage where cables enter consumer unit/distribution board</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.16</td>
+                <td class="item-desc">Protection against electromagnetic effects where cables enter consumer unit/distribution board</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.17</td>
+                <td class="item-desc">RCD(s) provided for fault protection – includes RCBOs</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.18</td>
+                <td class="item-desc">RCD(s) provided for additional protection/requirements – includes RCBOs</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.19</td>
+                <td class="item-desc">Confirmation of indication that SPD is functional</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.20</td>
+                <td class="item-desc">Confirmation that ALL conductor connections are correctly located in terminals and are tight and secure</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.21</td>
+                <td class="item-desc">Adequate arrangements where a generating set operates as switched alternative</td>
+                <td class="outcome"></td>
+                <td class="outcome">✓</td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">4.22</td>
+                <td class="item-desc">Adequate arrangements where a generating set operates in parallel with public supply</td>
+                <td class="outcome"></td>
+                <td class="outcome">✓</td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+
+            <!-- SECTION 5: FINAL CIRCUITS -->
+            <tr class="section-header-row">
+                <td colspan="8">5.0 &nbsp; FINAL CIRCUITS</td>
+            </tr>
+            <tr>
+                <td class="item-num">5.1</td>
+                <td class="item-desc">Identification of conductors</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.2</td>
+                <td class="item-desc">Cables correctly supported throughout their run</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.3</td>
+                <td class="item-desc">Condition of insulation of live parts</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.4</td>
+                <td class="item-desc">Non-sheathed cables protected by enclosure in conduit, ducting or trunking</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.5</td>
+                <td class="item-desc">Adequacy of cables for current-carrying capacity</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.6</td>
+                <td class="item-desc">Coordination between conductors and overload protective devices</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.7</td>
+                <td class="item-desc">Adequacy of protective devices: type and rated current for fault protection</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.8</td>
+                <td class="item-desc">Presence and adequacy of circuit protective conductors</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.9</td>
+                <td class="item-desc">Wiring system(s) appropriate for type and nature of installation</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.10</td>
+                <td class="item-desc">Concealed cables installed in prescribed zones</td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome">✓</td>
+            </tr>
+            <tr>
+                <td class="item-num">5.11</td>
+                <td class="item-desc">Cables concealed under floors, above ceilings or in walls adequately protected</td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome">✓</td>
+            </tr>
+            <tr>
+                <td class="item-num">5.12</td>
+                <td class="item-desc">Provision of additional requirements for protection by RCD not exceeding 30 mA</td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome-text">C2</td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.13</td>
+                <td class="item-desc">Provision of fire barriers, sealing arrangements and protection against thermal effects</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.14</td>
+                <td class="item-desc">Band II cables segregated/separated from Band I cables</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.15</td>
+                <td class="item-desc">Cables segregated/separated from communications cabling</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.16</td>
+                <td class="item-desc">Cables segregated/separated from non-electrical services</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.17</td>
+                <td class="item-desc">Termination of cables at enclosures</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.18</td>
+                <td class="item-desc">Condition of accessories including socket-outlets, switches and joint boxes</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.19</td>
+                <td class="item-desc">Suitability of accessories for external influences</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.20</td>
+                <td class="item-desc">Adequacy of working space/accessibility to equipment</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">5.21</td>
+                <td class="item-desc">Single-pole switching or protective devices in line conductors only</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+
+            <!-- SECTION 6: LOCATION(S) CONTAINING A BATH OR SHOWER -->
+            <tr class="section-header-row">
+                <td colspan="8">6.0 &nbsp; LOCATION(S) CONTAINING A BATH OR SHOWER</td>
+            </tr>
+            <tr>
+                <td class="item-num">6.0</td>
+                <td class="item-desc">Additional protection for all low voltage circuits by RCD not exceeding 30 mA</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">6.1</td>
+                <td class="item-desc">Where used as a protective measure, requirements for SELV or PELV met</td>
+                <td class="outcome"></td>
+                <td class="outcome">✓</td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">6.2</td>
+                <td class="item-desc">Shaver supply units comply with BS EN 61558-2-5</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">6.3</td>
+                <td class="item-desc">Presence of supplementary bonding conductors, unless not required by BS 7671:2018</td>
+                <td class="outcome"></td>
+                <td class="outcome">✓</td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">6.4</td>
+                <td class="item-desc">Low voltage socket-outlets sited at least 2.5 m from zone 1</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">6.5</td>
+                <td class="item-desc">Suitability of equipment for external influences for installed location (IP rating)</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">6.6</td>
+                <td class="item-desc">Suitability of accessories and controlgear etc. for a particular zone</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">6.7</td>
+                <td class="item-desc">Suitability of current-using equipment for particular position within the location</td>
+                <td class="outcome">✓</td>
+                <td class="outcome"></td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+            <tr>
+                <td class="item-num">6.8</td>
+                <td class="item-desc">(Reserved for additional items)</td>
+                <td class="outcome"></td>
+                <td class="outcome">✓</td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+
+            <!-- SECTION 7: OTHER PART 7 SPECIAL INSTALLATIONS -->
+            <tr class="section-header-row">
+                <td colspan="8">7.0 &nbsp; OTHER PART 7 SPECIAL INSTALLATIONS OR LOCATIONS</td>
+            </tr>
+            <tr>
+                <td class="item-num">7.0</td>
+                <td class="item-desc">List all other special installations or locations present, if any</td>
+                <td class="outcome"></td>
+                <td class="outcome">✓</td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+
+            <!-- SECTION 8: PROSUMER'S LOW VOLTAGE ELECTRICAL INSTALLATION(S) -->
+            <tr class="section-header-row">
+                <td colspan="8">8.0 &nbsp; PROSUMER'S LOW VOLTAGE ELECTRICAL INSTALLATION(S)</td>
+            </tr>
+            <tr>
+                <td class="item-num">8.0</td>
+                <td class="item-desc">Additional requirements and recommendations relating to Chapter 82</td>
+                <td class="outcome"></td>
+                <td class="outcome">✓</td>
+                <td class="outcome-text"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+                <td class="outcome"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- =============================================
+     PAGE 3: SCHEDULE OF TEST RESULTS (LANDSCAPE)
+     ============================================= -->
+<div class="schedule-page">
+
+<div class="doc-header">
+    <div class="doc-header-content">
+        <div class="doc-title-section">
+            <div class="doc-title">SCHEDULE OF CIRCUIT DETAILS AND TEST RESULTS</div>
+            <div class="doc-subtitle">Main Consumer Unit - Under stairs cupboard</div>
+        </div>
+        <div class="doc-meta">
+            <div class="cert-number">EICR-2024-001247</div>
+            <div class="page-number">Page 3 of 4</div>
+        </div>
+    </div>
+</div>
+
+<!-- Test Instrument Details -->
+<div class="section" style="margin-bottom: 6px;">
+    <div class="section-title" style="font-size: 9px; padding: 4px 6px;">Test Instrument Details</div>
+    <div class="inline-form" style="font-size: 8px;">
+        <div class="inline-group">
+            <span class="inline-label">Instrument Make/Model:</span>
+            <span class="inline-value wide">Megger MFT1741</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Serial No:</span>
+            <span class="inline-value">MFT-2024-78456</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Calibration Date:</span>
+            <span class="inline-value">15/01/2024</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Test Temperature:</span>
+            <span class="inline-value">18°C</span>
+        </div>
+    </div>
+</div>
+
+<!-- Distribution Board Info Header -->
+<div class="board-info-header">
+    <div class="board-title">Main Consumer Unit</div>
+    <div class="board-details">
+        <span><strong>Location:</strong> Under stairs cupboard</span>
+        <span><strong>Manufacturer:</strong> Hager</span>
+        <span><strong>Type:</strong> Split Load 18th Edition</span>
+        <span><strong>Ways:</strong> 12</span>
+    </div>
+    <div class="board-verification">
+        <span><strong>Zdb:</strong> 0.18 Ω</span>
+        <span><strong>Ipf:</strong> 2.14 kA</span>
+        <span>Polarity: ✓</span>
+        <span>SPD: ✓</span>
+    </div>
+</div>
+
+<table class="circuit-table">
+    <thead>
+        <tr>
+            <th colspan="4">Circuit Details</th>
+            <th colspan="5">Conductor</th>
+            <th colspan="5">Overcurrent Device</th>
+            <th colspan="4">RCD</th>
+            <th colspan="5">Continuity (&#937;)</th>
+            <th colspan="3">Insulation (M&#937;)</th>
+            <th></th>
+            <th>Zs</th>
+            <th colspan="2">RCD Test</th>
+            <th>AFDD</th>
+            <th rowspan="2" style="width: 50px;">Remarks</th>
+        </tr>
+        <tr>
+            <th style="width: 22px;"><span class="rotate">Cct</span></th>
+            <th colspan="3" style="width: 70px;">Description</th>
+            <th><span class="rotate">Wiring</span></th>
+            <th><span class="rotate">Ref</span></th>
+            <th><span class="rotate">Points</span></th>
+            <th><span class="rotate">Live mm&#178;</span></th>
+            <th><span class="rotate">CPC mm&#178;</span></th>
+            <th><span class="rotate">BS(EN)</span></th>
+            <th><span class="rotate">Type</span></th>
+            <th><span class="rotate">Rating A</span></th>
+            <th><span class="rotate">kA</span></th>
+            <th><span class="rotate">Max Zs</span></th>
+            <th><span class="rotate">BS(EN)</span></th>
+            <th><span class="rotate">Type</span></th>
+            <th><span class="rotate">I&#916;n mA</span></th>
+            <th><span class="rotate">Rating A</span></th>
+            <th><span class="rotate">r1 &#937;</span></th>
+            <th><span class="rotate">rn &#937;</span></th>
+            <th><span class="rotate">r2 &#937;</span></th>
+            <th><span class="rotate">R1+R2</span></th>
+            <th><span class="rotate">R2</span></th>
+            <th><span class="rotate">Test V</span></th>
+            <th><span class="rotate">L-L</span></th>
+            <th><span class="rotate">L-E</span></th>
+            <th><span class="rotate">Pol</span></th>
+            <th><span class="rotate">Meas &#937;</span></th>
+            <th><span class="rotate">ms</span></th>
+            <th><span class="rotate">Test Btn</span></th>
+            <th><span class="rotate">AFDD</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td colspan="3" class="desc">Lighting GF</td>
+            <td>T&E</td>
+            <td>C</td>
+            <td>8</td>
+            <td>1.5</td>
+            <td>1.0</td>
+            <td>60898</td>
+            <td>B</td>
+            <td>6</td>
+            <td>6</td>
+            <td>7.67</td>
+            <td>61008</td>
+            <td>A</td>
+            <td>30</td>
+            <td>63</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0.72</td>
+            <td>0.48</td>
+            <td>500</td>
+            <td>>200</td>
+            <td>>200</td>
+            <td>&#10003;</td>
+            <td>0.90</td>
+            <td>18</td>
+            <td>&#10003;</td>
+            <td>-</td>
+            <td class="remarks"></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td colspan="3" class="desc">Lighting FF</td>
+            <td>T&E</td>
+            <td>C</td>
+            <td>6</td>
+            <td>1.5</td>
+            <td>1.0</td>
+            <td>60898</td>
+            <td>B</td>
+            <td>6</td>
+            <td>6</td>
+            <td>7.67</td>
+            <td>61008</td>
+            <td>A</td>
+            <td>30</td>
+            <td>63</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0.85</td>
+            <td>0.56</td>
+            <td>500</td>
+            <td>>200</td>
+            <td>>200</td>
+            <td>&#10003;</td>
+            <td>1.03</td>
+            <td>16</td>
+            <td>&#10003;</td>
+            <td>-</td>
+            <td class="remarks"></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td colspan="3" class="desc">Ring - Lounge</td>
+            <td>T&E</td>
+            <td>A</td>
+            <td>12</td>
+            <td>2.5</td>
+            <td>1.5</td>
+            <td>60898</td>
+            <td>B</td>
+            <td>32</td>
+            <td>6</td>
+            <td>1.09</td>
+            <td>61008</td>
+            <td>A</td>
+            <td>30</td>
+            <td>63</td>
+            <td>0.35</td>
+            <td>0.36</td>
+            <td>0.58</td>
+            <td>0.23</td>
+            <td>0.14</td>
+            <td>500</td>
+            <td>>200</td>
+            <td>>200</td>
+            <td>&#10003;</td>
+            <td>0.41</td>
+            <td>22</td>
+            <td>&#10003;</td>
+            <td>-</td>
+            <td class="remarks">Ring verified</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td colspan="3" class="desc">Ring - Kitchen</td>
+            <td>T&E</td>
+            <td>A</td>
+            <td>8</td>
+            <td>2.5</td>
+            <td>1.5</td>
+            <td>60898</td>
+            <td>B</td>
+            <td>32</td>
+            <td>6</td>
+            <td>1.09</td>
+            <td>61008</td>
+            <td>A</td>
+            <td>30</td>
+            <td>63</td>
+            <td>0.28</td>
+            <td>0.29</td>
+            <td>0.42</td>
+            <td>0.18</td>
+            <td>0.11</td>
+            <td>500</td>
+            <td>>200</td>
+            <td>>200</td>
+            <td>&#10003;</td>
+            <td>0.36</td>
+            <td>19</td>
+            <td>&#10003;</td>
+            <td>-</td>
+            <td class="remarks">Ring verified</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td colspan="3" class="desc">Ring - Bedroom 1 &amp; 2</td>
+            <td>T&E</td>
+            <td>A</td>
+            <td>10</td>
+            <td>2.5</td>
+            <td>1.5</td>
+            <td>60898</td>
+            <td>B</td>
+            <td>32</td>
+            <td>6</td>
+            <td>1.09</td>
+            <td>61008</td>
+            <td>A</td>
+            <td>30</td>
+            <td>63</td>
+            <td>0.42</td>
+            <td>0.44</td>
+            <td>0.68</td>
+            <td>0.28</td>
+            <td>0.17</td>
+            <td>500</td>
+            <td>>200</td>
+            <td>>200</td>
+            <td>&#10003;</td>
+            <td>0.46</td>
+            <td>21</td>
+            <td>&#10003;</td>
+            <td>-</td>
+            <td class="remarks">Ring verified</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td colspan="3" class="desc">Cooker</td>
+            <td>T&E</td>
+            <td>A</td>
+            <td>1</td>
+            <td>6.0</td>
+            <td>2.5</td>
+            <td>60898</td>
+            <td>B</td>
+            <td>32</td>
+            <td>6</td>
+            <td>1.09</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0.15</td>
+            <td>0.10</td>
+            <td>500</td>
+            <td>>200</td>
+            <td>>200</td>
+            <td>&#10003;</td>
+            <td>0.33</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="remarks"></td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td colspan="3" class="desc">Shower</td>
+            <td>T&E</td>
+            <td>A</td>
+            <td>1</td>
+            <td>10.0</td>
+            <td>4.0</td>
+            <td>60898</td>
+            <td>B</td>
+            <td>40</td>
+            <td>6</td>
+            <td>0.87</td>
+            <td>61008</td>
+            <td>A</td>
+            <td>30</td>
+            <td>63</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0.12</td>
+            <td>0.08</td>
+            <td>500</td>
+            <td>>200</td>
+            <td>>200</td>
+            <td>&#10003;</td>
+            <td>0.30</td>
+            <td>15</td>
+            <td>&#10003;</td>
+            <td>-</td>
+            <td class="remarks">9.5kW unit</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td colspan="3" class="desc">Immersion Heater</td>
+            <td>T&E</td>
+            <td>B</td>
+            <td>1</td>
+            <td>2.5</td>
+            <td>1.5</td>
+            <td>60898</td>
+            <td>B</td>
+            <td>16</td>
+            <td>6</td>
+            <td>2.19</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0.38</td>
+            <td>0.25</td>
+            <td>500</td>
+            <td>>200</td>
+            <td>>200</td>
+            <td>&#10003;</td>
+            <td>0.56</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="remarks"></td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td colspan="3" class="desc">Smoke Alarms</td>
+            <td>T&E</td>
+            <td>C</td>
+            <td>4</td>
+            <td>1.5</td>
+            <td>1.0</td>
+            <td>60898</td>
+            <td>B</td>
+            <td>6</td>
+            <td>6</td>
+            <td>7.67</td>
+            <td>61008</td>
+            <td>A</td>
+            <td>30</td>
+            <td>63</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0.65</td>
+            <td>0.43</td>
+            <td>500</td>
+            <td>>200</td>
+            <td>>200</td>
+            <td>&#10003;</td>
+            <td>0.83</td>
+            <td>17</td>
+            <td>&#10003;</td>
+            <td>-</td>
+            <td class="remarks">Interlinked</td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td colspan="3" class="desc">Outside Socket</td>
+            <td>T&E</td>
+            <td>C</td>
+            <td>1</td>
+            <td>2.5</td>
+            <td>1.5</td>
+            <td>60898</td>
+            <td>B</td>
+            <td>20</td>
+            <td>6</td>
+            <td>1.75</td>
+            <td>61008</td>
+            <td>A</td>
+            <td>30</td>
+            <td>63</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>0.52</td>
+            <td>0.35</td>
+            <td>500</td>
+            <td>>200</td>
+            <td>>200</td>
+            <td>&#10003;</td>
+            <td>0.70</td>
+            <td>14</td>
+            <td>&#10003;</td>
+            <td>-</td>
+            <td class="remarks">IP66</td>
+        </tr>
+    </tbody>
+</table>
+
+</div><!-- End schedule-page -->
+
+
+<!-- =============================================
+     PAGE 4: DECLARATIONS & SIGNATURES
+     ============================================= -->
+<div class="page-break"></div>
+
+<div class="doc-header">
+    <div class="doc-header-content">
+        <div class="doc-title-section">
+            <div class="doc-title">DECLARATIONS AND SIGNATURES</div>
+            <div class="doc-subtitle">Completion and certification details</div>
+        </div>
+        <div class="doc-meta">
+            <div class="cert-number">EICR-2024-001247</div>
+            <div class="page-number">Page 4 of 4</div>
+        </div>
+    </div>
+</div>
+
+<!-- Inspector Details -->
+<div class="section">
+    <div class="section-title">Inspector Declaration</div>
+    <div class="declaration-box">
+        <div class="declaration-text">
+            I/We, being the person(s) responsible for the inspection and testing of the electrical installation (as indicated by my/our signatures below), particulars of which are described above, having exercised reasonable skill and care when carrying out the inspection and testing, hereby declare that the information in this report, including the observations and the attached schedules, provides an accurate assessment of the condition of the electrical installation taking into account the stated extent and limitations in Section D of this report.
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 6px;">
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Inspector Name:</span>
+            <span class="inline-value wide">Michael J. Roberts</span>
+        </div>
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Qualifications:</span>
+            <span class="inline-value wide">City & Guilds 2391-52, JIB ECS Gold Card</span>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 4px;">
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Company:</span>
+            <span class="inline-value wide">Smith Electrical Services Ltd</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Date:</span>
+            <span class="inline-value">12/01/2024</span>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 4px;">
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Additional Comments:</span>
+            <span class="inline-value wide" style="min-height: 30px;">Installation generally in good condition. Recommend addressing C2 observation urgently and considering SPD installation for enhanced protection.</span>
+        </div>
+    </div>
+</div>
+
+<!-- Signatures -->
+<div class="signature-grid">
+    <div class="signature-box">
+        <div class="signature-box-header">Inspected and Tested By</div>
+        <div class="signature-box-body">
+            <div class="sig-field">
+                <span class="sig-field-label">Name (CAPITALS)</span>
+                <span class="sig-field-value">MICHAEL J. ROBERTS</span>
+            </div>
+            <div class="sig-field">
+                <span class="sig-field-label">Signature</span>
+                <span class="sig-field-value signature" style="font-family: 'Brush Script MT', cursive; font-size: 14px; color: #1e3a8a;">M. Roberts</span>
+            </div>
+            <div class="sig-field">
+                <span class="sig-field-label">For/on behalf of</span>
+                <span class="sig-field-value">Smith Electrical Services Ltd</span>
+            </div>
+            <div class="sig-field">
+                <span class="sig-field-label">Position</span>
+                <span class="sig-field-value">Lead Electrician</span>
+            </div>
+            <div class="sig-field">
+                <span class="sig-field-label">Address</span>
+                <span class="sig-field-value">Unit 4, Industrial Estate, Bromley, BR1 4XY</span>
+            </div>
+            <div class="sig-field">
+                <span class="sig-field-label">CP Scheme</span>
+                <span class="sig-field-value" style="max-width: 80px;">NICEIC</span>
+                <span style="font-size: 7px; margin-left: 8px;">
+                      N/A
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="signature-box">
+        <div class="signature-box-header">Report Authorised for Issue By</div>
+        <div class="signature-box-body">
+            <div class="sig-field">
+                <span class="sig-field-label">Name (CAPITALS)</span>
+                <span class="sig-field-value">DAVID SMITH</span>
+            </div>
+            <div class="sig-field">
+                <span class="sig-field-label">Date</span>
+                <span class="sig-field-value" style="max-width: 100px;">12/01/2024</span>
+            </div>
+            <div class="sig-field">
+                <span class="sig-field-label">Signature</span>
+                <span class="sig-field-value signature" style="font-family: 'Brush Script MT', cursive; font-size: 14px; color: #1e3a8a;">D. Smith</span>
+            </div>
+            <div class="sig-field">
+                <span class="sig-field-label">For/on behalf of</span>
+                <span class="sig-field-value">Smith Electrical Services Ltd</span>
+            </div>
+            <div class="sig-field">
+                <span class="sig-field-label">Position</span>
+                <span class="sig-field-value">Director / Qualified Supervisor</span>
+            </div>
+            <div class="sig-field">
+                <span class="sig-field-label">Address</span>
+                <span class="sig-field-value">Unit 4, Industrial Estate, Bromley, BR1 4XY</span>
+            </div>
+            <div class="sig-field">
+                <span class="sig-field-label">Membership No</span>
+                <span class="sig-field-value">NICEIC/123456</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Final Overall Assessment -->
+<div class="section" style="margin-top: 12px;">
+    <div class="section-title">Overall Assessment of the Installation</div>
+    <div class="final-assessment-box">
+        <div class="final-assessment-content">
+            <span class="final-assessment-label">The overall condition of the electrical installation is assessed as:</span>
+            <div class="final-assessment-options">
+                <div class="final-assessment-option satisfactory-selected">
+                    ✓
+                    <span class="option-label satisfactory-label">SATISFACTORY</span>
+                </div>
+                <div class="final-assessment-option">
+                     
+                    <span class="option-label unsatisfactory-label">UNSATISFACTORY</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Guidance for Recipients -->
+<div class="section" style="margin-top: 12px;">
+    <div class="section-title">Guidance for Recipients</div>
+    <div class="guidance-intro">This Report is an important and valuable document which should be retained for future reference.</div>
+    <div class="guidance-columns">
+        <div class="guidance-col">
+            <p><strong>1.</strong> The purpose of this Report is to confirm, as far as reasonably practicable, whether or not the electrical installation is in a satisfactory condition for continued service. The Report should identify any damage, deterioration, defects and/or conditions which may give rise to danger.</p>
+            <p><strong>2.</strong> This Report is only valid if accompanied by the Inspection Schedule(s) and the Schedule(s) of Circuit Details and Test Results.</p>
+            <p><strong>3.</strong> The person ordering the Report should have received the 'original' Report and the inspector should have retained a duplicate.</p>
+            <p><strong>4.</strong> The 'original' Report should be retained in a safe place and be made available to any person inspecting or undertaking work on the electrical installation in the future.</p>
+            <p><strong>5.</strong> Section D (Extent and Limitations) should identify fully the extent of the installation covered by this Report and any limitations on the inspection and testing.</p>
+            <p><strong>6.</strong> Some operational limitations such as inability to gain access to parts of the installation may have been encountered during the inspection.</p>
+            <p><strong>7.</strong> For items classified as <strong>C1</strong> ('Danger present') the safety of those using the installation is at risk - immediate remedial action required.</p>
+        </div>
+        <div class="guidance-col">
+            <p><strong>8.</strong> For items classified as <strong>C2</strong> ('Potentially dangerous') the safety of those using the installation may be at risk - urgent remedial action is required.</p>
+            <p><strong>9.</strong> Where <strong>FI</strong> (Further Investigation) is stated, the inspection has revealed an apparent deficiency which could not be fully identified due to the extent or limitations.</p>
+            <p><strong>10.</strong> For safety reasons, the electrical installation should be re-inspected at appropriate intervals by a skilled person. The recommended date is stated in Section D.</p>
+            <p><strong>11.</strong> Where the installation includes an RCD it should be tested six-monthly by pressing the button marked 'T' or 'Test'.</p>
+            <p><strong>12.</strong> Where the installation includes an AFDD having a manual test facility it should be tested six-monthly.</p>
+            <p><strong>13.</strong> Where the installation includes an SPD the status indicator should be checked to confirm operational condition.</p>
+            <p><strong>14.</strong> Where the installation includes alternative sources of supply, warning notices should be found at the origin or meter position.</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- =============================================
+     APPENDIX: OBSERVATION DETAILS
+     ============================================= -->
+<div class="page-break"></div>
+
+<div class="doc-header">
+    <div class="doc-header-content">
+        <div class="doc-title-section">
+            <div class="doc-title">OBSERVATION DETAILS</div>
+            <div class="doc-subtitle">Detailed descriptions with photographic evidence and recommendations</div>
+        </div>
+        <div class="doc-meta">
+            <div class="cert-number">EICR-2024-001247</div>
+            <div class="page-number">Appendix</div>
+        </div>
+    </div>
+</div>
+
+<div class="observation-card avoid-break">
+    <div class="observation-card-header">
+        <span class="observation-card-title">Observation Item</span>
+        <span class="observation-card-number">#1</span>
+    </div>
+    <div class="observation-card-body">
+        <div class="observation-classification">
+            <span class="classification-badge c2">C2 - POTENTIALLY DANGEROUS</span>
+        </div>
+
+        <div class="observation-section">
+            <div class="observation-section-title">Location / Item Reference</div>
+            <div class="observation-section-content">Bathroom - Light fitting above bath (Zone 1)</div>
+        </div>
+
+        <div class="observation-section">
+            <div class="observation-section-title">Description</div>
+            <div class="observation-section-content">The light fitting located directly above the bath is a standard pendant fitting (IP20) which is not suitable for installation in Zone 1 of the bathroom. Zone 1 requires a minimum IP rating of IPX4 to protect against water splashes. This presents a risk of electric shock when the fitting becomes wet during bathing.</div>
+        </div>
+
+        <div class="observation-section">
+            <div class="observation-section-title">Recommendation</div>
+            <div class="observation-section-content recommendation">Replace the existing pendant light fitting with an IP44 or higher rated fitting suitable for Zone 1 bathroom installation. Recommend fitting an LED downlight with integral driver and appropriate IP rating. Work to be carried out by a competent electrician within 28 days.</div>
+        </div>
+    </div>
+</div>
+
+<div class="observation-card avoid-break">
+    <div class="observation-card-header">
+        <span class="observation-card-title">Observation Item</span>
+        <span class="observation-card-number">#2</span>
+    </div>
+    <div class="observation-card-body">
+        <div class="observation-classification">
+            <span class="classification-badge c3">C3 - IMPROVEMENT RECOMMENDED</span>
+        </div>
+
+        <div class="observation-section">
+            <div class="observation-section-title">Location / Item Reference</div>
+            <div class="observation-section-content">Consumer Unit - Under stairs cupboard</div>
+        </div>
+
+        <div class="observation-section">
+            <div class="observation-section-title">Description</div>
+            <div class="observation-section-content">The circuit chart/schedule of circuits within the consumer unit is incomplete. Three circuit ways are not labelled, making identification of circuits difficult in an emergency situation. BS 7671 requires that a durable schedule of circuits be provided within or adjacent to each distribution board.</div>
+        </div>
+
+        <div class="observation-section">
+            <div class="observation-section-title">Recommendation</div>
+            <div class="observation-section-content recommendation">Update the circuit chart to include descriptions of all circuits. Ensure all circuit breakers are clearly labelled with durable labels. A comprehensive circuit schedule should be fixed inside the consumer unit cover or immediately adjacent to it.</div>
+        </div>
+    </div>
+</div>
+
+<div class="observation-card avoid-break">
+    <div class="observation-card-header">
+        <span class="observation-card-title">Observation Item</span>
+        <span class="observation-card-number">#3</span>
+    </div>
+    <div class="observation-card-body">
+        <div class="observation-classification">
+            <span class="classification-badge c3">C3 - IMPROVEMENT RECOMMENDED</span>
+        </div>
+
+        <div class="observation-section">
+            <div class="observation-section-title">Location / Item Reference</div>
+            <div class="observation-section-content">Consumer Unit - Main Distribution Board</div>
+        </div>
+
+        <div class="observation-section">
+            <div class="observation-section-title">Description</div>
+            <div class="observation-section-content">No Surge Protection Device (SPD) is currently installed at the origin of the installation. BS 7671:2018 Amendment 3:2024 requires a risk assessment to be carried out to determine whether SPDs should be fitted. Given the presence of sensitive electronic equipment in the property, SPD installation is recommended.</div>
+        </div>
+
+        <div class="observation-section">
+            <div class="observation-section-title">Recommendation</div>
+            <div class="observation-section-content recommendation">Install a Type 2 SPD at the consumer unit to protect against transient overvoltages from the supply and indirect lightning strikes. This will provide protection for sensitive electronic equipment including computers, smart TVs, and internet routers.</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

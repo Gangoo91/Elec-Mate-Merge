@@ -61,13 +61,66 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       return [];
     }
     if (!Array.isArray(parsed)) return [];
-    
+
     return parsed.map((item: any) => ({
       id: item.id || "",
       item_number: item.itemNumber || "",
       description: item.item || item.description || "",
       outcome: item.outcome || "",
       notes: item.notes || ""
+    }));
+  };
+
+  // Format inspection items grouped by section for PDF template
+  const formatInspectionItemsBySections = () => {
+    const items = get('inspectionItems', []);
+    let parsed;
+    try {
+      parsed = typeof items === 'string' ? JSON.parse(items) : items;
+    } catch (e) {
+      console.error('[formatEICRJson] Failed to parse inspectionItems:', e);
+      return [];
+    }
+    if (!Array.isArray(parsed)) return [];
+
+    // Group items by section
+    const sectionMap: Record<string, { section_name: string; clause: string; items: any[] }> = {};
+
+    parsed.forEach((item: any) => {
+      const sectionName = item.section || 'General';
+      if (!sectionMap[sectionName]) {
+        sectionMap[sectionName] = {
+          section_name: sectionName,
+          clause: item.clause || '',
+          items: []
+        };
+      }
+      sectionMap[sectionName].items.push({
+        id: item.id || "",
+        item: item.item || item.description || "",
+        clause: item.clause || "",
+        outcome: item.outcome || "",
+        notes: item.notes || ""
+      });
+    });
+
+    return Object.values(sectionMap);
+  };
+
+  // Format additional distribution boards
+  const formatAdditionalBoards = () => {
+    const boards = formData['distributionBoards'] || [];
+    if (!Array.isArray(boards) || boards.length <= 1) return [];
+
+    // Skip the first board (main board) and return the rest
+    return boards.slice(1).map((board: any) => ({
+      designation: board.designation || board.boardDesignation || '',
+      location: board.location || board.boardLocation || '',
+      manufacturer: board.manufacturer || board.boardManufacturer || '',
+      board_type: board.boardType || board.cuType || '',
+      ways: board.ways || board.numberOfWays || '',
+      zdb: board.zdb || '',
+      ipf: board.ipf || ''
     }));
   };
 
@@ -274,7 +327,8 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       phases: get('phases'),
       earthing_arrangement: get('earthingArrangement'),
       supply_type: get('supplyType'),
-      supply_pme: get('supplyPME')
+      supply_pme: get('supplyPME'),
+      dno_name: get('dnoName')
     },
     
     main_protective_device: {
@@ -291,6 +345,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     },
     
     distribution_board: {
+      board_designation: get('boardDesignation', 'Main DB'),
       board_size: get('boardSize'),
       board_type: get('cuType'),
       board_location: get('cuLocation'),
@@ -308,6 +363,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     earthing_bonding: {
       earth_electrode_type: get('earthElectrodeType'),
       earth_electrode_resistance: get('earthElectrodeResistance'),
+      main_earthing_conductor: get('mainEarthingConductor'),
       main_bonding_conductor: get('mainBondingConductor'),
       main_bonding_size: get('mainBondingSizeCustom') || get('mainBondingSize'),
       main_bonding_size_custom: get('mainBondingSizeCustom'),
@@ -320,7 +376,13 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     },
     
     inspection_checklist: formatInspectionItems(),
-    
+
+    // Inspection items grouped by section for PDF template
+    inspection_items: formatInspectionItemsBySections(),
+
+    // Additional distribution boards (beyond the main board)
+    additional_boards: formatAdditionalBoards(),
+
     schedule_of_tests: formatCircuits(),
     
     test_instrument_details: {

@@ -18,7 +18,7 @@ import {
   CheckCircle,
   Award
 } from "lucide-react";
-import { jobs } from "@/data/employerMockData";
+import { useJobs } from "@/hooks/useJobs";
 import { useEmployer, type BookingDuration, type ShiftPattern, type UrgencyPremium } from "@/contexts/EmployerContext";
 import { toast } from "@/hooks/use-toast";
 import { useHireTracking } from "@/hooks/useHireTracking";
@@ -71,6 +71,7 @@ export function BookLabourBankDialog({
 }: BookLabourBankDialogProps) {
   const { createBooking } = useEmployer();
   const { recordHire, isRecording } = useHireTracking();
+  const { data: jobs = [] } = useJobs();
   const activeJobs = jobs.filter(j => j.status === 'Active');
 
   // Form state

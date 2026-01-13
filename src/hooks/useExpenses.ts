@@ -45,8 +45,8 @@ export interface ExpenseStats {
 // Get all expense claims (employer view)
 async function fetchExpenseClaims(): Promise<ExpenseClaim[]> {
   const { data, error } = await supabase
-    .from('expense_claims')
-    .select('*, employees(name, avatar_initials)')
+    .from('employer_expense_claims')
+    .select('*, employer_employees(name, avatar_initials)')
     .order('submitted_date', { ascending: false });
   if (error) throw error;
   return data || [];
@@ -55,8 +55,8 @@ async function fetchExpenseClaims(): Promise<ExpenseClaim[]> {
 // Get expense claims for a specific employee (electrician view)
 async function fetchMyExpenseClaims(employeeId: string): Promise<ExpenseClaim[]> {
   const { data, error } = await supabase
-    .from('expense_claims')
-    .select('*, employees(name, avatar_initials)')
+    .from('employer_expense_claims')
+    .select('*, employer_employees(name, avatar_initials)')
     .eq('employee_id', employeeId)
     .order('submitted_date', { ascending: false });
   if (error) throw error;
@@ -171,14 +171,14 @@ export function useExpenses(filters?: ExpenseFilters) {
   const approveMutation = useMutation({
     mutationFn: async (id: string) => {
       const { data, error } = await supabase
-        .from('expense_claims')
+        .from('employer_expense_claims')
         .update({
           status: 'Approved',
           approved_by: profile?.full_name || 'Manager',
           approved_date: new Date().toISOString(),
         })
         .eq('id', id)
-        .select('*, employees(name, avatar_initials)')
+        .select('*, employer_employees(name, avatar_initials)')
         .single();
       if (error) throw error;
       return data;
@@ -196,7 +196,7 @@ export function useExpenses(filters?: ExpenseFilters) {
   const rejectMutation = useMutation({
     mutationFn: async ({ id, reason }: { id: string; reason: string }) => {
       const { data, error } = await supabase
-        .from('expense_claims')
+        .from('employer_expense_claims')
         .update({
           status: 'Rejected',
           approved_by: profile?.full_name || 'Manager',
@@ -204,7 +204,7 @@ export function useExpenses(filters?: ExpenseFilters) {
           rejection_reason: reason,
         })
         .eq('id', id)
-        .select('*, employees(name, avatar_initials)')
+        .select('*, employer_employees(name, avatar_initials)')
         .single();
       if (error) throw error;
       return data;
@@ -222,13 +222,13 @@ export function useExpenses(filters?: ExpenseFilters) {
   const markPaidMutation = useMutation({
     mutationFn: async (id: string) => {
       const { data, error } = await supabase
-        .from('expense_claims')
+        .from('employer_expense_claims')
         .update({
           status: 'Paid',
           paid_date: new Date().toISOString().split('T')[0],
         })
         .eq('id', id)
-        .select('*, employees(name, avatar_initials)')
+        .select('*, employer_employees(name, avatar_initials)')
         .single();
       if (error) throw error;
       return data;
@@ -246,7 +246,7 @@ export function useExpenses(filters?: ExpenseFilters) {
   const bulkApproveMutation = useMutation({
     mutationFn: async (ids: string[]) => {
       const { error } = await supabase
-        .from('expense_claims')
+        .from('employer_expense_claims')
         .update({
           status: 'Approved',
           approved_by: profile?.full_name || 'Manager',
@@ -268,7 +268,7 @@ export function useExpenses(filters?: ExpenseFilters) {
   const bulkRejectMutation = useMutation({
     mutationFn: async ({ ids, reason }: { ids: string[]; reason: string }) => {
       const { error } = await supabase
-        .from('expense_claims')
+        .from('employer_expense_claims')
         .update({
           status: 'Rejected',
           approved_by: profile?.full_name || 'Manager',
@@ -291,9 +291,9 @@ export function useExpenses(filters?: ExpenseFilters) {
   const createMutation = useMutation({
     mutationFn: async (claim: Omit<ExpenseClaim, 'id' | 'created_at' | 'updated_at' | 'employees'>) => {
       const { data, error } = await supabase
-        .from('expense_claims')
+        .from('employer_expense_claims')
         .insert(claim)
-        .select('*, employees(name, avatar_initials)')
+        .select('*, employer_employees(name, avatar_initials)')
         .single();
       if (error) throw error;
       return data;
@@ -311,10 +311,10 @@ export function useExpenses(filters?: ExpenseFilters) {
   const updateMutation = useMutation({
     mutationFn: async ({ id, updates }: { id: string; updates: Partial<ExpenseClaim> }) => {
       const { data, error } = await supabase
-        .from('expense_claims')
+        .from('employer_expense_claims')
         .update(updates)
         .eq('id', id)
-        .select('*, employees(name, avatar_initials)')
+        .select('*, employer_employees(name, avatar_initials)')
         .single();
       if (error) throw error;
       return data;
@@ -332,7 +332,7 @@ export function useExpenses(filters?: ExpenseFilters) {
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
       const { error } = await supabase
-        .from('expense_claims')
+        .from('employer_expense_claims')
         .delete()
         .eq('id', id);
       if (error) throw error;
@@ -417,13 +417,13 @@ export function useMyExpenses(employeeId?: string) {
   const submitMutation = useMutation({
     mutationFn: async (claim: Omit<ExpenseClaim, 'id' | 'created_at' | 'updated_at' | 'employees'>) => {
       const { data, error } = await supabase
-        .from('expense_claims')
+        .from('employer_expense_claims')
         .insert({
           ...claim,
           status: 'Pending',
           submitted_date: new Date().toISOString().split('T')[0],
         })
-        .select('*, employees(name, avatar_initials)')
+        .select('*, employer_employees(name, avatar_initials)')
         .single();
       if (error) throw error;
       return data;
@@ -442,11 +442,11 @@ export function useMyExpenses(employeeId?: string) {
   const updateMutation = useMutation({
     mutationFn: async ({ id, updates }: { id: string; updates: Partial<ExpenseClaim> }) => {
       const { data, error } = await supabase
-        .from('expense_claims')
+        .from('employer_expense_claims')
         .update(updates)
         .eq('id', id)
         .eq('status', 'Pending') // Can only update pending expenses
-        .select('*, employees(name, avatar_initials)')
+        .select('*, employer_employees(name, avatar_initials)')
         .single();
       if (error) throw error;
       return data;
@@ -464,7 +464,7 @@ export function useMyExpenses(employeeId?: string) {
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
       const { error } = await supabase
-        .from('expense_claims')
+        .from('employer_expense_claims')
         .delete()
         .eq('id', id)
         .eq('status', 'Pending'); // Can only delete pending expenses
@@ -522,8 +522,8 @@ export function useExpensesByJob(jobId: string | undefined) {
       if (!jobId) return [];
 
       const { data, error } = await supabase
-        .from('expense_claims')
-        .select('*, employees(name, avatar_initials)')
+        .from('employer_expense_claims')
+        .select('*, employer_employees(name, avatar_initials)')
         .eq('job_id', jobId)
         .order('submitted_date', { ascending: false });
 
@@ -540,8 +540,8 @@ export function useExpensesByDateRange(startDate: Date | undefined, endDate: Dat
     queryKey: ['expense_claims', 'dateRange', startDate?.toISOString(), endDate?.toISOString()],
     queryFn: async (): Promise<ExpenseClaim[]> => {
       let query = supabase
-        .from('expense_claims')
-        .select('*, employees(name, avatar_initials)')
+        .from('employer_expense_claims')
+        .select('*, employer_employees(name, avatar_initials)')
         .order('submitted_date', { ascending: false });
 
       if (startDate) {
@@ -587,7 +587,7 @@ export function useUploadReceipt() {
 
       // Update expense with receipt URL
       const { error: updateError } = await supabase
-        .from('expense_claims')
+        .from('employer_expense_claims')
         .update({ receipt_url: publicUrl })
         .eq('id', expenseId);
 

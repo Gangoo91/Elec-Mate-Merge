@@ -250,7 +250,9 @@ export function LiveStatsBar() {
                 index === 0 && 'snap-start',
                 index === filteredStats.length - 1 && 'snap-end mr-4 sm:mr-0',
                 // Desktop: equal width columns
-                'sm:w-full sm:flex-shrink'
+                'sm:w-full sm:flex-shrink',
+                // Transform hint for smooth animations
+                'will-change-transform'
               )}
             >
               <StatCard
@@ -270,7 +272,7 @@ export function LiveStatsBar() {
       </motion.div>
 
       {/* Pagination dots - mobile only */}
-      <div className="flex justify-center gap-1.5 mt-3 sm:hidden">
+      <div className="flex justify-center gap-0.5 mt-3 sm:hidden">
         {filteredStats.map((_, i) => (
           <button
             key={i}
@@ -281,14 +283,18 @@ export function LiveStatsBar() {
                 el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
               }
             }}
-            className={cn(
-              'transition-all duration-200 touch-target-sm',
-              i === 0
-                ? 'w-4 h-1.5 rounded-full bg-elec-yellow'
-                : 'w-1.5 h-1.5 rounded-full bg-white/20 hover:bg-white/40'
-            )}
+            className="min-h-11 min-w-8 flex items-center justify-center touch-manipulation active:scale-95"
             aria-label={`View stat ${i + 1}`}
-          />
+          >
+            <span
+              className={cn(
+                'transition-all duration-200',
+                i === 0
+                  ? 'w-5 h-2 rounded-full bg-elec-yellow'
+                  : 'w-2 h-2 rounded-full bg-white/20'
+              )}
+            />
+          </button>
         ))}
       </div>
     </div>

@@ -73,7 +73,7 @@ async function fetchInvoices() {
 // Fetch expenses for trends
 async function fetchExpenses() {
   const { data, error } = await supabase
-    .from("expense_claims")
+    .from("employer_expense_claims")
     .select("id, amount, category, status, submitted_date, paid_date")
     .order("submitted_date", { ascending: false });
 
@@ -84,10 +84,10 @@ async function fetchExpenses() {
 // Fetch job financials for profitability
 async function fetchJobFinancials() {
   const { data, error } = await supabase
-    .from("job_financials")
+    .from("employer_job_financials")
     .select(`
       *,
-      job:jobs(id, title, client, status)
+      job:employer_jobs(id, title, client, status)
     `)
     .order("created_at", { ascending: false });
 
