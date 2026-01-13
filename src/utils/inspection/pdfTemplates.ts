@@ -147,14 +147,14 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
     pdf.setFontSize(9);
     pdf.setFont('helvetica', 'bold');
     pdf.setTextColor(0, 0, 0);
-    pdf.text(`Page ${pageNumber} of ${totalPages}`, pageWidth - 20, pageHeight - 8, { align: 'right' });
-    
+    pdf.text(toSafeString(`Page ${pageNumber} of ${totalPages}`), pageWidth - 20, pageHeight - 8, { align: 'right' });
+
     // Certificate validation
     if (pageNumber === 1) {
       const timestamp = new Date().toISOString();
       pdf.setFontSize(6);
       pdf.setTextColor(150, 150, 150);
-      pdf.text(`Generated: ${timestamp}`, 20, pageHeight - 8);
+      pdf.text(toSafeString(`Generated: ${timestamp}`), 20, pageHeight - 8);
     }
     
     pdf.setTextColor(0, 0, 0);
@@ -382,14 +382,14 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
     pdf.setFont('helvetica', 'bold');
     pdf.text('INSPECTION SUMMARY:', 20, summaryY);
     pdf.setFont('helvetica', 'normal');
-    pdf.text(`Total Items: ${totalItems}`, 50, summaryY);
-    pdf.text(`Satisfactory: ${satisfactoryCount}`, 90, summaryY);
-    pdf.text(`Defects Found: ${defectCount}`, 130, summaryY);
-    
+    pdf.text(toSafeString(`Total Items: ${totalItems}`), 50, summaryY);
+    pdf.text(toSafeString(`Satisfactory: ${satisfactoryCount}`), 90, summaryY);
+    pdf.text(toSafeString(`Defects Found: ${defectCount}`), 130, summaryY);
+
     const completionRate = totalItems > 0 ? Math.round((satisfactoryCount / totalItems) * 100) : 0;
     pdf.setFont('helvetica', 'bold');
     pdf.setTextColor(completionRate >= 90 ? 0 : completionRate >= 70 ? 255 : 204, completionRate >= 70 ? 150 : 102, 0);
-    pdf.text(`${completionRate}% Satisfactory`, 170, summaryY);
+    pdf.text(toSafeString(`${completionRate}% Satisfactory`), 170, summaryY);
     pdf.setTextColor(0, 0, 0);
     yPosition += 15;
     
