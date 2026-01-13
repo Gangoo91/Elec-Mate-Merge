@@ -204,19 +204,25 @@ export const formatCompanyBranding = (formData: any): any => {
 
 export const formatSupplyCharacteristics = (formData: any): string[] => {
   const characteristics = [];
-  
+
+  // DNO / Supply Authority Details
+  if (formData.dnoName) characteristics.push(`DNO: ${formData.dnoName}`);
+  if (formData.mpan) characteristics.push(`MPAN: ${formData.mpan}`);
+  if (formData.cutoutLocation) characteristics.push(`Cutout location: ${formData.cutoutLocation}`);
+  if (formData.serviceEntry) characteristics.push(`Service entry: ${formData.serviceEntry}`);
+
   // Basic supply details
   if (formData.phases) characteristics.push(`Phases: ${formData.phases === '1' ? 'Single' : 'Three'} Phase`);
   if (formData.supplyVoltage) characteristics.push(`Voltage: ${formData.supplyVoltage}V`);
   if (formData.supplyFrequency) characteristics.push(`Frequency: ${formData.supplyFrequency}Hz`);
   if (formData.supplyPME) characteristics.push(`PME: ${formData.supplyPME.toUpperCase()}`);
-  
+
   // Earthing system
   if (formData.earthingArrangement) characteristics.push(`Earthing: ${formData.earthingArrangement}`);
   if (formData.earthElectrodeType && formData.earthElectrodeType !== 'n/a') {
     characteristics.push(`Earth electrode: ${formData.earthElectrodeType}`);
   }
-  
+
   // Protective devices
   if (formData.mainProtectiveDevice) characteristics.push(`Main protective device: ${formData.mainProtectiveDevice}`);
   if (formData.rcdMainSwitch === 'yes' && formData.rcdRating) {
@@ -224,7 +230,7 @@ export const formatSupplyCharacteristics = (formData: any): string[] => {
   } else if (formData.rcdMainSwitch === 'no') {
     characteristics.push(`RCD main switch: No`);
   }
-  
+
   // Legacy support
   if (formData.supplyType) characteristics.push(`Supply Type: ${formData.supplyType}`);
   if (formData.nominalVoltage) characteristics.push(`Voltage: ${formData.nominalVoltage}V`);
@@ -235,7 +241,7 @@ export const formatSupplyCharacteristics = (formData: any): string[] => {
   if (formData.installationEarthElectrode) characteristics.push(`Earth electrode: ${formData.installationEarthElectrode}`);
   if (formData.mainEarthingConductor) characteristics.push(`Main earthing conductor: ${formData.mainEarthingConductor}`);
   if (formData.mainBondingLocations) characteristics.push(`Main bonding locations: ${formData.mainBondingLocations}`);
-  
+
   return characteristics.length > 0 ? characteristics : ['Supply characteristics to be confirmed'];
 };
 

@@ -4,6 +4,22 @@ import { bs7671InspectionSections } from '@/data/bs7671ChecklistData';
 import { safeAutoTable } from './pdfEnhancements';
 import { BoardGroupedCircuits } from './pdfDataFormatters';
 
+// Helper to safely convert any value to string for PDF
+const toSafeString = (value: any): string => {
+  if (value === null || value === undefined) return '';
+  if (typeof value === 'string') return value;
+  if (typeof value === 'number') return String(value);
+  if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+  if (typeof value === 'object') {
+    try {
+      return JSON.stringify(value);
+    } catch {
+      return String(value);
+    }
+  }
+  return String(value);
+};
+
 // Extend jsPDF interface to include autoTable
 declare module 'jspdf' {
   interface jsPDF {
@@ -46,14 +62,14 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
       pdf.setFontSize(12);
       pdf.setFont('helvetica', 'bold');
       pdf.setTextColor(51, 51, 51);
-      pdf.text(formData.brandingCompanyName, 20, yPos);
+      pdf.text(toSafeString(formData.brandingCompanyName), 20, yPos);
       yPos += 6;
-      
+
       if (formData.brandingTagline) {
         pdf.setFontSize(8);
         pdf.setFont('helvetica', 'normal');
         pdf.setTextColor(102, 102, 102);
-        pdf.text(formData.brandingTagline, 20, yPos);
+        pdf.text(toSafeString(formData.brandingTagline), 20, yPos);
         yPos += 4;
       }
     }
@@ -84,12 +100,12 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
     pdf.setFont('helvetica', 'bold');
     pdf.text('Certificate No.', pageWidth - 62, 16);
     pdf.setFont('helvetica', 'normal');
-    pdf.text(certRef, pageWidth - 62, 22);
-    
+    pdf.text(toSafeString(certRef), pageWidth - 62, 22);
+
     pdf.setFont('helvetica', 'bold');
     pdf.text('Date Issued:', pageWidth - 62, 28);
     pdf.setFont('helvetica', 'normal');
-    pdf.text(new Date().toLocaleDateString('en-GB'), pageWidth - 62, 32);
+    pdf.text(toSafeString(new Date().toLocaleDateString('en-GB')), pageWidth - 62, 32);
 
     // Professional accent line
     pdf.setDrawColor(255, 204, 0);
@@ -117,11 +133,11 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
     
     // Company footer information
     if (formData?.brandingCompanyName) {
-      let footerText = formData.brandingCompanyName;
-      if (formData.companyPhone) footerText += ` | Tel: ${formData.companyPhone}`;
-      if (formData.companyEmail) footerText += ` | Email: ${formData.companyEmail}`;
-      if (formData.brandingWebsite) footerText += ` | ${formData.brandingWebsite}`;
-      
+      let footerText = toSafeString(formData.brandingCompanyName);
+      if (formData.companyPhone) footerText += ` | Tel: ${toSafeString(formData.companyPhone)}`;
+      if (formData.companyEmail) footerText += ` | Email: ${toSafeString(formData.companyEmail)}`;
+      if (formData.brandingWebsite) footerText += ` | ${toSafeString(formData.brandingWebsite)}`;
+
       pdf.setFontSize(7);
       pdf.setTextColor(51, 51, 51);
       pdf.text(footerText, pageWidth / 2, pageHeight - 12, { align: 'center' });
@@ -131,14 +147,14 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
     pdf.setFontSize(9);
     pdf.setFont('helvetica', 'bold');
     pdf.setTextColor(0, 0, 0);
-    pdf.text(`Page ${pageNumber} of ${totalPages}`, pageWidth - 20, pageHeight - 8, { align: 'right' });
-    
+    pdf.text(toSafeString(`Page ${pageNumber} of ${totalPages}`), pageWidth - 20, pageHeight - 8, { align: 'right' });
+
     // Certificate validation
     if (pageNumber === 1) {
       const timestamp = new Date().toISOString();
       pdf.setFontSize(6);
       pdf.setTextColor(150, 150, 150);
-      pdf.text(`Generated: ${timestamp}`, 20, pageHeight - 8);
+      pdf.text(toSafeString(`Generated: ${timestamp}`), 20, pageHeight - 8);
     }
     
     pdf.setTextColor(0, 0, 0);
@@ -291,26 +307,26 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
     // Add company branding elements if available
     if (formData?.companyName || formData?.companyTagline) {
       const startY = formData?.companyLogo ? 35 : 15;
-      
+
       if (formData.companyName) {
         pdf.setFontSize(10);
         pdf.setFont('helvetica', 'bold');
-        pdf.text(formData.companyName, 150, startY);
+        pdf.text(toSafeString(formData.companyName), 150, startY);
       }
-      
+
       if (formData.companyTagline) {
         pdf.setFontSize(8);
         pdf.setFont('helvetica', 'normal');
         const taglineY = formData.companyName ? startY + 5 : startY;
-        pdf.text(formData.companyTagline, 150, taglineY);
+        pdf.text(toSafeString(formData.companyTagline), 150, taglineY);
       }
-      
+
       if (formData.companyWebsite) {
         pdf.setFontSize(8);
         pdf.setFont('helvetica', 'normal');
-        const websiteY = (formData.companyName && formData.companyTagline) ? startY + 10 : 
+        const websiteY = (formData.companyName && formData.companyTagline) ? startY + 10 :
                         (formData.companyName || formData.companyTagline) ? startY + 5 : startY;
-        pdf.text(formData.companyWebsite, 150, websiteY);
+        pdf.text(toSafeString(formData.companyWebsite), 150, websiteY);
       }
     }
   };
@@ -366,14 +382,14 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
     pdf.setFont('helvetica', 'bold');
     pdf.text('INSPECTION SUMMARY:', 20, summaryY);
     pdf.setFont('helvetica', 'normal');
-    pdf.text(`Total Items: ${totalItems}`, 50, summaryY);
-    pdf.text(`Satisfactory: ${satisfactoryCount}`, 90, summaryY);
-    pdf.text(`Defects Found: ${defectCount}`, 130, summaryY);
-    
+    pdf.text(toSafeString(`Total Items: ${totalItems}`), 50, summaryY);
+    pdf.text(toSafeString(`Satisfactory: ${satisfactoryCount}`), 90, summaryY);
+    pdf.text(toSafeString(`Defects Found: ${defectCount}`), 130, summaryY);
+
     const completionRate = totalItems > 0 ? Math.round((satisfactoryCount / totalItems) * 100) : 0;
     pdf.setFont('helvetica', 'bold');
     pdf.setTextColor(completionRate >= 90 ? 0 : completionRate >= 70 ? 255 : 204, completionRate >= 70 ? 150 : 102, 0);
-    pdf.text(`${completionRate}% Satisfactory`, 170, summaryY);
+    pdf.text(toSafeString(`${completionRate}% Satisfactory`), 170, summaryY);
     pdf.setTextColor(0, 0, 0);
     yPosition += 15;
     
@@ -560,13 +576,13 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
       pdf.setFontSize(11);
       pdf.setFont('helvetica', 'bold');
       pdf.setTextColor(255, 255, 255);
-      pdf.text(group.board.name || group.board.reference || 'Distribution Board', 20, yPos + 8);
+      pdf.text(toSafeString(group.board.name || group.board.reference || 'Distribution Board'), 20, yPos + 8);
 
       // Board reference on the right
       if (group.board.reference) {
         pdf.setFontSize(9);
         pdf.setFont('helvetica', 'normal');
-        pdf.text(`Ref: ${group.board.reference}`, pageWidth - 50, yPos + 8);
+        pdf.text(toSafeString(`Ref: ${group.board.reference}`), pageWidth - 50, yPos + 8);
       }
 
       yPos += 16;
@@ -580,8 +596,8 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
       pdf.setTextColor(51, 51, 51);
 
       const verificationItems = [
-        `Zdb: ${group.verificationData.zdb || '-'} Ohms`,
-        `Ipf: ${group.verificationData.ipf || '-'} kA`,
+        `Zdb: ${toSafeString(group.verificationData.zdb) || '-'} Ohms`,
+        `Ipf: ${toSafeString(group.verificationData.ipf) || '-'} kA`,
         `Polarity: ${group.verificationData.polarity ? 'OK' : '-'}`,
         `Phase Seq: ${group.verificationData.phaseSequence ? 'OK' : '-'}`,
         group.verificationData.spdNA ? 'SPD: N/A' : `SPD: ${group.verificationData.spdStatus ? 'OK' : '-'}`
@@ -589,7 +605,7 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
 
       const itemWidth = (pageWidth - 40) / verificationItems.length;
       verificationItems.forEach((item, index) => {
-        pdf.text(item, 20 + (index * itemWidth), yPos + 7);
+        pdf.text(toSafeString(item), 20 + (index * itemWidth), yPos + 7);
       });
 
       yPos += 14;

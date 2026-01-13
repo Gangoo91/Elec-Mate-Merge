@@ -122,7 +122,13 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     mainProtectiveDeviceCustom: '',
     rcdMainSwitch: '',
     rcdRating: '',
-    
+
+    // DNO / Supply Authority Details
+    dnoName: '',
+    mpan: '',
+    cutoutLocation: '',
+    serviceEntry: '',
+
     // Earthing & Bonding
     earthElectrodeResistance: '',
     mainBondingSize: '',
@@ -530,6 +536,10 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       mainProtectiveDeviceCustom: '',
       rcdMainSwitch: '',
       rcdRating: '',
+      dnoName: '',
+      mpan: '',
+      cutoutLocation: '',
+      serviceEntry: '',
       earthElectrodeResistance: '',
       mainBondingSize: '',
       mainBondingSizeCustom: '',
