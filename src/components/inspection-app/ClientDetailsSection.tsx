@@ -174,6 +174,63 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
               </Select>
             </div>
           </div>
+
+          {/* DNO / Supply Authority Details */}
+          <div className="space-y-3 sm:space-y-4 mt-6">
+            <h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-elec-gray pb-2 flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
+              Supply Authority / DNO Details
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="dnoName">DNO (Distribution Network Operator)</Label>
+                <Select value={formData.dnoName || ''} onValueChange={(value) => onUpdate('dnoName', value)}>
+                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                    <SelectValue placeholder="Select DNO" />
+                  </SelectTrigger>
+                  <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
+                    <SelectItem value="electricity-north-west">Electricity North West</SelectItem>
+                    <SelectItem value="northern-powergrid">Northern Powergrid</SelectItem>
+                    <SelectItem value="sp-energy-networks">SP Energy Networks</SelectItem>
+                    <SelectItem value="sse-networks">SSE Networks</SelectItem>
+                    <SelectItem value="uk-power-networks">UK Power Networks</SelectItem>
+                    <SelectItem value="western-power-distribution">Western Power Distribution</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="mpan">MPAN (Meter Point Administration Number)</Label>
+                <Input
+                  id="mpan"
+                  value={formData.mpan || ''}
+                  onChange={(e) => onUpdate('mpan', e.target.value)}
+                  placeholder="Enter MPAN number"
+                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="cutoutLocation">Cutout Location</Label>
+                <Input
+                  id="cutoutLocation"
+                  value={formData.cutoutLocation || ''}
+                  onChange={(e) => onUpdate('cutoutLocation', e.target.value)}
+                  placeholder="Location of cutout/service head"
+                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="serviceEntry">Service Entry Point</Label>
+                <Input
+                  id="serviceEntry"
+                  value={formData.serviceEntry || ''}
+                  onChange={(e) => onUpdate('serviceEntry', e.target.value)}
+                  placeholder="Where supply enters premises"
+                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
         <Separator className="my-6" />

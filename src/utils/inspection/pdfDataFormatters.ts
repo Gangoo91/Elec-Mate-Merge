@@ -1,6 +1,22 @@
 import { DistributionBoard, MAIN_BOARD_ID, createDefaultBoard } from '@/types/distributionBoard';
 import { TestResult } from '@/types/testResult';
 
+// Helper to safely convert any value to string
+const toSafeString = (value: any): string => {
+  if (value === null || value === undefined) return '';
+  if (typeof value === 'string') return value;
+  if (typeof value === 'number') return String(value);
+  if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+  if (typeof value === 'object') {
+    try {
+      return JSON.stringify(value);
+    } catch {
+      return String(value);
+    }
+  }
+  return String(value);
+};
+
 export interface FormattedInspectionData {
   satisfactoryItems: any[];
   criticalDefects: any[];
@@ -215,7 +231,7 @@ export const formatSupplyCharacteristics = (formData: any): string[] => {
   if (formData.phases) characteristics.push(`Phases: ${formData.phases === '1' ? 'Single' : 'Three'} Phase`);
   if (formData.supplyVoltage) characteristics.push(`Voltage: ${formData.supplyVoltage}V`);
   if (formData.supplyFrequency) characteristics.push(`Frequency: ${formData.supplyFrequency}Hz`);
-  if (formData.supplyPME) characteristics.push(`PME: ${formData.supplyPME.toUpperCase()}`);
+  if (formData.supplyPME) characteristics.push(`PME: ${toSafeString(formData.supplyPME).toUpperCase()}`);
 
   // Earthing system
   if (formData.earthingArrangement) characteristics.push(`Earthing: ${formData.earthingArrangement}`);
@@ -249,8 +265,8 @@ export const formatInstallationDetails = (formData: any): string[] => {
   const details = [];
   
   // Basic installation info
-  if (formData.description) details.push(`Property type: ${formData.description.replace(/-/g, ' ')}`);
-  if (formData.installationType) details.push(`Installation type: ${formData.installationType.replace(/-/g, ' ')}`);
+  if (formData.description) details.push(`Property type: ${toSafeString(formData.description).replace(/-/g, ' ')}`);
+  if (formData.installationType) details.push(`Installation type: ${toSafeString(formData.installationType).replace(/-/g, ' ')}`);
   if (formData.estimatedAge) details.push(`Estimated age: ${formData.estimatedAge} ${formData.ageUnit || 'years'}`);
   
   // Installation history
@@ -271,13 +287,19 @@ export const formatInstallationDetails = (formData: any): string[] => {
   
   // Purpose and scope
   if (formData.purposeOfInspection) {
-    const purpose = formData.purposeOfInspection === 'other' ? 
-      formData.otherPurpose || 'Other purpose' : 
-      formData.purposeOfInspection.replace(/-/g, ' ');
+    const purpose = formData.purposeOfInspection === 'other' ?
+      toSafeString(formData.otherPurpose || 'Other purpose') :
+      toSafeString(formData.purposeOfInspection).replace(/-/g, ' ');
     details.push(`Purpose: ${purpose}`);
   }
-  if (formData.extentOfInspection) details.push(`Extent: ${formData.extentOfInspection.substring(0, 100)}${formData.extentOfInspection.length > 100 ? '...' : ''}`);
-  if (formData.limitationsOfInspection) details.push(`Limitations: ${formData.limitationsOfInspection.substring(0, 100)}${formData.limitationsOfInspection.length > 100 ? '...' : ''}`);
+  if (formData.extentOfInspection) {
+    const extentStr = toSafeString(formData.extentOfInspection);
+    details.push(`Extent: ${extentStr.substring(0, 100)}${extentStr.length > 100 ? '...' : ''}`);
+  }
+  if (formData.limitationsOfInspection) {
+    const limitStr = toSafeString(formData.limitationsOfInspection);
+    details.push(`Limitations: ${limitStr.substring(0, 100)}${limitStr.length > 100 ? '...' : ''}`);
+  }
   
   // Legacy support
   if (formData.mainSwitchLocation) details.push(`Main switch: ${formData.mainSwitchLocation}`);
