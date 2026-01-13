@@ -288,7 +288,7 @@ export const exportObservationsToPDF = async (
           yPosition += 5;
           pdf.setFontSize(9);
           pdf.setFont('helvetica', 'italic');
-          pdf.text(`Photo Evidence (${photos.length} photo${photos.length > 1 ? 's' : ''}):`, margin + 5, yPosition);
+          pdf.text(toSafeString(`Photo Evidence (${photos.length} photo${photos.length > 1 ? 's' : ''}):`), margin + 5, yPosition);
           yPosition += 8;
           
           for (const photoUrl of photos) {
@@ -638,7 +638,7 @@ export const exportCompleteEICRToPDF = async (
           pdf.setFontSize(9);
           pdf.setFont('helvetica', 'italic');
           pdf.setTextColor(0, 0, 0);
-          pdf.text(`Photo Evidence (${photos.length} photo${photos.length > 1 ? 's' : ''}):`, margin + 5, yPosition);
+          pdf.text(toSafeString(`Photo Evidence (${photos.length} photo${photos.length > 1 ? 's' : ''}):`), margin + 5, yPosition);
           yPosition += 6;
           
           for (const photoUrl of photos) {

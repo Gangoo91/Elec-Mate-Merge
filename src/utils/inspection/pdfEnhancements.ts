@@ -1,6 +1,22 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
+// Helper to safely convert any value to string for PDF
+const toSafeString = (value: any): string => {
+  if (value === null || value === undefined) return '';
+  if (typeof value === 'string') return value;
+  if (typeof value === 'number') return String(value);
+  if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+  if (typeof value === 'object') {
+    try {
+      return JSON.stringify(value);
+    } catch {
+      return String(value);
+    }
+  }
+  return String(value);
+};
+
 export interface DigitalSignatureOptions {
   signature: string;
   timestamp?: Date;
@@ -38,15 +54,15 @@ export const addDigitalSignature = async (
       pdf.setFontSize(7);
       pdf.setFont('helvetica', 'normal');
       pdf.setTextColor(100, 100, 100);
-      
-      pdf.text(`Digitally signed: ${timestamp.toLocaleString('en-GB')}`, x, y + height + 3);
-      
+
+      pdf.text(toSafeString(`Digitally signed: ${timestamp.toLocaleString('en-GB')}`), x, y + height + 3);
+
       if (options.location) {
-        pdf.text(`Location: ${options.location}`, x, y + height + 8);
+        pdf.text(toSafeString(`Location: ${options.location}`), x, y + height + 8);
       }
-      
+
       if (options.reason) {
-        pdf.text(`Reason: ${options.reason}`, x, y + height + 13);
+        pdf.text(toSafeString(`Reason: ${options.reason}`), x, y + height + 13);
       }
       
       // Reset text color
@@ -87,7 +103,7 @@ export const addProfessionalWatermark = (
     const centerY = pageHeight / 2;
     
     // Add rotated watermark text
-    pdf.text(text, centerX, centerY, {
+    pdf.text(toSafeString(text), centerX, centerY, {
       angle: 45,
       align: 'center',
       baseline: 'middle'
@@ -119,7 +135,7 @@ export const addQRCodeVerification = (
     pdf.setFontSize(6);
     pdf.setFont('helvetica', 'normal');
     pdf.text('Scan to verify', x, y + size + 3);
-    pdf.text(`Cert ID: ${certificateId}`, x, y + size + 8);
+    pdf.text(toSafeString(`Cert ID: ${certificateId}`), x, y + size + 8);
     
   } catch (error) {
     console.warn('Failed to add QR verification:', error);
@@ -231,16 +247,16 @@ export const addCertificateValidation = (
   pdf.setFontSize(7);
   pdf.setFont('helvetica', 'bold');
   pdf.text('CERTIFICATE VALIDATION', boxX + 2, boxY + 4);
-  
+
   pdf.setFont('helvetica', 'normal');
-  pdf.text(`ID: ${certificateData.id}`, boxX + 2, boxY + 8);
-  pdf.text(`Issued: ${formatDateTime(certificateData.issueDate)}`, boxX + 2, boxY + 12);
-  
+  pdf.text(toSafeString(`ID: ${certificateData.id}`), boxX + 2, boxY + 8);
+  pdf.text(toSafeString(`Issued: ${formatDateTime(certificateData.issueDate)}`), boxX + 2, boxY + 12);
+
   if (certificateData.expiryDate) {
-    pdf.text(`Expires: ${formatDateTime(certificateData.expiryDate)}`, boxX + 2, boxY + 16);
+    pdf.text(toSafeString(`Expires: ${formatDateTime(certificateData.expiryDate)}`), boxX + 2, boxY + 16);
   }
-  
-  pdf.text(`v${certificateData.version}`, boxX + 2, boxY + 20);
+
+  pdf.text(toSafeString(`v${certificateData.version}`), boxX + 2, boxY + 20);
 };
 
 // Normalise jspdf-autotable options to avoid non-string content errors
@@ -279,10 +295,13 @@ export const safeAutoTable = (pdf: jsPDF, options: any): void => {
 };
 
 export const generateCertificateMetadata = (formData: any): any => {
+  const clientName = formData?.clientName || 'Unknown Client';
+  const author = formData?.inspectorName || formData?.companyName || 'Unknown Inspector';
+
   return {
-    title: `EICR Certificate - ${formData.clientName || 'Unknown Client'}`,
+    title: `EICR Certificate - ${clientName}`,
     subject: 'Electrical Installation Condition Report',
-    author: formData.inspectorName || formData.companyName || 'Unknown Inspector',
+    author: author,
     creator: 'Professional EICR System',
     producer: 'Enhanced jsPDF Generator',
     keywords: ['EICR', 'BS7671', 'Electrical', 'Inspection', 'Certificate'],
