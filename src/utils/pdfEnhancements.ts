@@ -186,10 +186,14 @@ export const formatCurrency = (amount: number | string, currency: string = 'GBP'
   }).format(numAmount);
 };
 
-export const formatDateTime = (date: Date | string, includeTime: boolean = false): string => {
+export const formatDateTime = (date: Date | string | null | undefined, includeTime: boolean = false): string => {
+  // Handle null/undefined safely
+  if (date === null || date === undefined) return '';
+
   const dateObj = typeof date === 'string' ? new Date(date) : date;
-  
-  if (isNaN(dateObj.getTime())) return 'Invalid Date';
+
+  // Handle invalid dates
+  if (!dateObj || isNaN(dateObj.getTime())) return '';
   
   const options: Intl.DateTimeFormatOptions = {
     day: '2-digit',

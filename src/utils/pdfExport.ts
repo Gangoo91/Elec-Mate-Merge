@@ -66,6 +66,13 @@ const getSymbol = (type: 'squared' | 'ohm' | 'degree'): string => {
   }
 };
 
+// Helper to ensure any value is a safe string for pdf.text()
+const toSafeString = (val: any): string => {
+  if (val === null || val === undefined) return '';
+  if (typeof val === 'string') return val;
+  return String(val);
+};
+
 // Helper to add signature image
 const addSignatureToPDF = async (pdf: jsPDF, signatureData: string, x: number, y: number, width: number = 60, height: number = 20): Promise<void> => {
   return new Promise((resolve) => {
@@ -516,7 +523,7 @@ export const exportCompleteEICRToPDF = async (
   pdf.text('N/A (First)', col1X + 106, yPos + 3);
 
   if (sanitizedFormData.dateOfLastInspection) {
-    pdf.text(`Date: ${formatDateTime(sanitizedFormData.dateOfLastInspection)}`, col1X + 140, yPos + 3);
+    pdf.text(`Date: ${toSafeString(formatDateTime(sanitizedFormData.dateOfLastInspection))}`, col1X + 140, yPos + 3);
   }
   yPos += 10;
 
@@ -798,7 +805,7 @@ export const exportCompleteEICRToPDF = async (
     pdf.setFont(getFont(), 'bold');
     pdf.text('Next inspection recommended by:', margin + 5, yPos + 28);
     pdf.setFont(getFont(), 'normal');
-    pdf.text(formatDateTime(sanitizedFormData.nextInspectionDate), margin + 60, yPos + 28);
+    pdf.text(toSafeString(formatDateTime(sanitizedFormData.nextInspectionDate)), margin + 60, yPos + 28);
   }
 
   yPos += assessBoxHeight + 8;
@@ -1200,7 +1207,7 @@ export const exportCompleteEICRToPDF = async (
   pdf.setFontSize(7);
   pdf.setFont(getFont(), 'normal');
   pdf.text('Name (Capitals):', margin + 3, sigY);
-  pdf.text(sanitizedFormData.inspectedByName || '', margin + 35, sigY);
+  pdf.text(toSafeString(sanitizedFormData.inspectedByName), margin + 35, sigY);
 
   sigY += 6;
   pdf.text('Signature:', margin + 3, sigY);
@@ -1215,20 +1222,20 @@ export const exportCompleteEICRToPDF = async (
 
   sigY += 18;
   pdf.text('For/on behalf of:', margin + 3, sigY);
-  pdf.text(sanitizedFormData.inspectedByForOnBehalfOf || '', margin + 35, sigY);
+  pdf.text(toSafeString(sanitizedFormData.inspectedByForOnBehalfOf), margin + 35, sigY);
 
   sigY += 6;
   pdf.text('Position:', margin + 3, sigY);
-  pdf.text(sanitizedFormData.inspectedByPosition || '', margin + 25, sigY);
+  pdf.text(toSafeString(sanitizedFormData.inspectedByPosition), margin + 25, sigY);
 
   sigY += 6;
   pdf.text('Address:', margin + 3, sigY);
-  const inspAddr = (sanitizedFormData.inspectedByAddress || '').substring(0, 50);
+  const inspAddr = toSafeString(sanitizedFormData.inspectedByAddress).substring(0, 50);
   pdf.text(inspAddr, margin + 22, sigY);
 
   sigY += 6;
   pdf.text('CP Scheme:', margin + 3, sigY);
-  pdf.text(sanitizedFormData.inspectedByCpScheme || (sanitizedFormData.inspectedByCpSchemeNA ? 'N/A' : ''), margin + 28, sigY);
+  pdf.text(toSafeString(sanitizedFormData.inspectedByCpScheme || (sanitizedFormData.inspectedByCpSchemeNA ? 'N/A' : '')), margin + 28, sigY);
 
   // Report Authorised By box
   const rightBoxX = margin + sigBoxWidth + 10;
@@ -1242,9 +1249,9 @@ export const exportCompleteEICRToPDF = async (
   pdf.setFontSize(7);
   pdf.setFont(getFont(), 'normal');
   pdf.text('Name (Capitals):', rightBoxX + 3, sigY);
-  pdf.text(sanitizedFormData.reportAuthorisedByName || '', rightBoxX + 35, sigY);
+  pdf.text(toSafeString(sanitizedFormData.reportAuthorisedByName), rightBoxX + 35, sigY);
   pdf.text('Date:', rightBoxX + sigBoxWidth - 30, sigY);
-  pdf.text(sanitizedFormData.reportAuthorisedByDate ? formatDateTime(sanitizedFormData.reportAuthorisedByDate) : '', rightBoxX + sigBoxWidth - 15, sigY);
+  pdf.text(toSafeString(formatDateTime(sanitizedFormData.reportAuthorisedByDate)), rightBoxX + sigBoxWidth - 15, sigY);
 
   sigY += 6;
   pdf.text('Signature:', rightBoxX + 3, sigY);
@@ -1258,20 +1265,20 @@ export const exportCompleteEICRToPDF = async (
 
   sigY += 18;
   pdf.text('For/on behalf of:', rightBoxX + 3, sigY);
-  pdf.text(sanitizedFormData.reportAuthorisedByForOnBehalfOf || '', rightBoxX + 35, sigY);
+  pdf.text(toSafeString(sanitizedFormData.reportAuthorisedByForOnBehalfOf), rightBoxX + 35, sigY);
 
   sigY += 6;
   pdf.text('Position:', rightBoxX + 3, sigY);
-  pdf.text(sanitizedFormData.reportAuthorisedByPosition || '', rightBoxX + 25, sigY);
+  pdf.text(toSafeString(sanitizedFormData.reportAuthorisedByPosition), rightBoxX + 25, sigY);
 
   sigY += 6;
   pdf.text('Address:', rightBoxX + 3, sigY);
-  const authAddr = (sanitizedFormData.reportAuthorisedByAddress || '').substring(0, 50);
+  const authAddr = toSafeString(sanitizedFormData.reportAuthorisedByAddress).substring(0, 50);
   pdf.text(authAddr, rightBoxX + 22, sigY);
 
   sigY += 6;
   pdf.text('Membership No:', rightBoxX + 3, sigY);
-  pdf.text(sanitizedFormData.reportAuthorisedByMembershipNo || '', rightBoxX + 35, sigY);
+  pdf.text(toSafeString(sanitizedFormData.reportAuthorisedByMembershipNo), rightBoxX + 35, sigY);
 
   yPos += sigBoxHeight + 10;
 
@@ -1297,9 +1304,9 @@ export const exportCompleteEICRToPDF = async (
   pdf.setFontSize(12);
   pdf.setFont(getFont(), 'bold');
   const nextDate = sanitizedFormData.nextInspectionDate
-    ? formatDateTime(sanitizedFormData.nextInspectionDate)
+    ? toSafeString(formatDateTime(sanitizedFormData.nextInspectionDate))
     : 'Date to be confirmed';
-  pdf.text(nextDate, pageWidth / 2, yPos + 21, { align: 'center' });
+  pdf.text(nextDate || 'Date to be confirmed', pageWidth / 2, yPos + 21, { align: 'center' });
 
   yPos += 30;
 
