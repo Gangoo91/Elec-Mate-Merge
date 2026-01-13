@@ -1,6 +1,22 @@
 import { DistributionBoard, MAIN_BOARD_ID, createDefaultBoard } from '@/types/distributionBoard';
 import { TestResult } from '@/types/testResult';
 
+// Helper to safely convert any value to string
+const toSafeString = (value: any): string => {
+  if (value === null || value === undefined) return '';
+  if (typeof value === 'string') return value;
+  if (typeof value === 'number') return String(value);
+  if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+  if (typeof value === 'object') {
+    try {
+      return JSON.stringify(value);
+    } catch {
+      return String(value);
+    }
+  }
+  return String(value);
+};
+
 export interface FormattedInspectionData {
   satisfactoryItems: any[];
   criticalDefects: any[];
@@ -206,41 +222,41 @@ export const formatSupplyCharacteristics = (formData: any): string[] => {
   const characteristics = [];
 
   // DNO / Supply Authority Details
-  if (formData.dnoName) characteristics.push(`DNO: ${formData.dnoName}`);
-  if (formData.mpan) characteristics.push(`MPAN: ${formData.mpan}`);
-  if (formData.cutoutLocation) characteristics.push(`Cutout location: ${formData.cutoutLocation}`);
-  if (formData.serviceEntry) characteristics.push(`Service entry: ${formData.serviceEntry}`);
+  if (formData.dnoName) characteristics.push(`DNO: ${toSafeString(formData.dnoName)}`);
+  if (formData.mpan) characteristics.push(`MPAN: ${toSafeString(formData.mpan)}`);
+  if (formData.cutoutLocation) characteristics.push(`Cutout location: ${toSafeString(formData.cutoutLocation)}`);
+  if (formData.serviceEntry) characteristics.push(`Service entry: ${toSafeString(formData.serviceEntry)}`);
 
   // Basic supply details
-  if (formData.phases) characteristics.push(`Phases: ${formData.phases === '1' ? 'Single' : 'Three'} Phase`);
-  if (formData.supplyVoltage) characteristics.push(`Voltage: ${formData.supplyVoltage}V`);
-  if (formData.supplyFrequency) characteristics.push(`Frequency: ${formData.supplyFrequency}Hz`);
-  if (formData.supplyPME) characteristics.push(`PME: ${formData.supplyPME.toUpperCase()}`);
+  if (formData.phases) characteristics.push(`Phases: ${toSafeString(formData.phases === '1' ? 'Single' : 'Three')} Phase`);
+  if (formData.supplyVoltage) characteristics.push(`Voltage: ${toSafeString(formData.supplyVoltage)}V`);
+  if (formData.supplyFrequency) characteristics.push(`Frequency: ${toSafeString(formData.supplyFrequency)}Hz`);
+  if (formData.supplyPME) characteristics.push(`PME: ${toSafeString(formData.supplyPME).toUpperCase()}`);
 
   // Earthing system
-  if (formData.earthingArrangement) characteristics.push(`Earthing: ${formData.earthingArrangement}`);
+  if (formData.earthingArrangement) characteristics.push(`Earthing: ${toSafeString(formData.earthingArrangement)}`);
   if (formData.earthElectrodeType && formData.earthElectrodeType !== 'n/a') {
-    characteristics.push(`Earth electrode: ${formData.earthElectrodeType}`);
+    characteristics.push(`Earth electrode: ${toSafeString(formData.earthElectrodeType)}`);
   }
 
   // Protective devices
-  if (formData.mainProtectiveDevice) characteristics.push(`Main protective device: ${formData.mainProtectiveDevice}`);
+  if (formData.mainProtectiveDevice) characteristics.push(`Main protective device: ${toSafeString(formData.mainProtectiveDevice)}`);
   if (formData.rcdMainSwitch === 'yes' && formData.rcdRating) {
-    characteristics.push(`RCD main switch: ${formData.rcdRating}`);
+    characteristics.push(`RCD main switch: ${toSafeString(formData.rcdRating)}`);
   } else if (formData.rcdMainSwitch === 'no') {
     characteristics.push(`RCD main switch: No`);
   }
 
   // Legacy support
-  if (formData.supplyType) characteristics.push(`Supply Type: ${formData.supplyType}`);
-  if (formData.nominalVoltage) characteristics.push(`Voltage: ${formData.nominalVoltage}V`);
-  if (formData.frequency) characteristics.push(`Frequency: ${formData.frequency}Hz`);
-  if (formData.prospectiveFaultCurrent) characteristics.push(`PSCC: ${formData.prospectiveFaultCurrent}kA`);
-  if (formData.externalEarthFaultLoopImpedance) characteristics.push(`Ze: ${formData.externalEarthFaultLoopImpedance} Ohms`);
-  if (formData.suppliedFrom) characteristics.push(`Supplied from: ${formData.suppliedFrom}`);
-  if (formData.installationEarthElectrode) characteristics.push(`Earth electrode: ${formData.installationEarthElectrode}`);
-  if (formData.mainEarthingConductor) characteristics.push(`Main earthing conductor: ${formData.mainEarthingConductor}`);
-  if (formData.mainBondingLocations) characteristics.push(`Main bonding locations: ${formData.mainBondingLocations}`);
+  if (formData.supplyType) characteristics.push(`Supply Type: ${toSafeString(formData.supplyType)}`);
+  if (formData.nominalVoltage) characteristics.push(`Voltage: ${toSafeString(formData.nominalVoltage)}V`);
+  if (formData.frequency) characteristics.push(`Frequency: ${toSafeString(formData.frequency)}Hz`);
+  if (formData.prospectiveFaultCurrent) characteristics.push(`PSCC: ${toSafeString(formData.prospectiveFaultCurrent)}kA`);
+  if (formData.externalEarthFaultLoopImpedance) characteristics.push(`Ze: ${toSafeString(formData.externalEarthFaultLoopImpedance)} Ohms`);
+  if (formData.suppliedFrom) characteristics.push(`Supplied from: ${toSafeString(formData.suppliedFrom)}`);
+  if (formData.installationEarthElectrode) characteristics.push(`Earth electrode: ${toSafeString(formData.installationEarthElectrode)}`);
+  if (formData.mainEarthingConductor) characteristics.push(`Main earthing conductor: ${toSafeString(formData.mainEarthingConductor)}`);
+  if (formData.mainBondingLocations) characteristics.push(`Main bonding locations: ${toSafeString(formData.mainBondingLocations)}`);
 
   return characteristics.length > 0 ? characteristics : ['Supply characteristics to be confirmed'];
 };
@@ -249,40 +265,50 @@ export const formatInstallationDetails = (formData: any): string[] => {
   const details = [];
   
   // Basic installation info
-  if (formData.description) details.push(`Property type: ${formData.description.replace(/-/g, ' ')}`);
-  if (formData.installationType) details.push(`Installation type: ${formData.installationType.replace(/-/g, ' ')}`);
-  if (formData.estimatedAge) details.push(`Estimated age: ${formData.estimatedAge} ${formData.ageUnit || 'years'}`);
-  
+  if (formData.description) details.push(`Property type: ${toSafeString(formData.description).replace(/-/g, ' ')}`);
+  if (formData.installationType) details.push(`Installation type: ${toSafeString(formData.installationType).replace(/-/g, ' ')}`);
+  if (formData.estimatedAge) details.push(`Estimated age: ${toSafeString(formData.estimatedAge)} ${toSafeString(formData.ageUnit || 'years')}`);
+
   // Installation history
   if (formData.evidenceOfAlterations === 'yes') {
-    details.push(`Alterations: ${formData.alterationsDetails || 'Evidence of alterations observed'}`);
+    details.push(`Alterations: ${toSafeString(formData.alterationsDetails || 'Evidence of alterations observed')}`);
   }
   if (formData.lastInspectionType === 'known' && formData.dateOfLastInspection) {
     details.push(`Last inspection: ${new Date(formData.dateOfLastInspection).toLocaleDateString('en-GB')}`);
   }
-  
+
   // Electrical installation details
-  if (formData.boardSize) details.push(`Consumer unit: ${formData.boardSize}`);
+  if (formData.boardSize) details.push(`Consumer unit: ${toSafeString(formData.boardSize)}`);
   if (formData.intakeCableSize && formData.intakeCableType) {
-    details.push(`Intake cable: ${formData.intakeCableSize} ${formData.intakeCableType}`);
+    details.push(`Intake cable: ${toSafeString(formData.intakeCableSize)} ${toSafeString(formData.intakeCableType)}`);
   }
-  if (formData.tailsSize) details.push(`Meter tails: ${formData.tailsSize}`);
-  if (formData.tailsLength) details.push(`Tails length: ${formData.tailsLength}m`);
+  if (formData.tailsSize) details.push(`Meter tails: ${toSafeString(formData.tailsSize)}`);
+  if (formData.tailsLength) details.push(`Tails length: ${toSafeString(formData.tailsLength)}m`);
   
   // Purpose and scope
   if (formData.purposeOfInspection) {
-    const purpose = formData.purposeOfInspection === 'other' ? 
-      formData.otherPurpose || 'Other purpose' : 
-      formData.purposeOfInspection.replace(/-/g, ' ');
+    const purpose = formData.purposeOfInspection === 'other' ?
+      toSafeString(formData.otherPurpose || 'Other purpose') :
+      toSafeString(formData.purposeOfInspection).replace(/-/g, ' ');
     details.push(`Purpose: ${purpose}`);
   }
-  if (formData.extentOfInspection) details.push(`Extent: ${formData.extentOfInspection.substring(0, 100)}${formData.extentOfInspection.length > 100 ? '...' : ''}`);
-  if (formData.limitationsOfInspection) details.push(`Limitations: ${formData.limitationsOfInspection.substring(0, 100)}${formData.limitationsOfInspection.length > 100 ? '...' : ''}`);
+  if (formData.extentOfInspection) {
+    const extentStr = toSafeString(formData.extentOfInspection);
+    details.push(`Extent: ${extentStr.substring(0, 100)}${extentStr.length > 100 ? '...' : ''}`);
+  }
+  if (formData.limitationsOfInspection) {
+    const limitStr = toSafeString(formData.limitationsOfInspection);
+    details.push(`Limitations: ${limitStr.substring(0, 100)}${limitStr.length > 100 ? '...' : ''}`);
+  }
   
   // Legacy support
-  if (formData.mainSwitchLocation) details.push(`Main switch: ${formData.mainSwitchLocation}`);
-  if (formData.consumerUnitMake) details.push(`Consumer unit: ${formData.consumerUnitMake} ${formData.consumerUnitModel || ''}`.trim());
-  if (formData.numberOfCircuits) details.push(`Number of circuits: ${formData.numberOfCircuits}`);
+  if (formData.mainSwitchLocation) details.push(`Main switch: ${toSafeString(formData.mainSwitchLocation)}`);
+  if (formData.consumerUnitMake) {
+    const make = toSafeString(formData.consumerUnitMake);
+    const model = toSafeString(formData.consumerUnitModel || '');
+    details.push(`Consumer unit: ${make} ${model}`.trim());
+  }
+  if (formData.numberOfCircuits) details.push(`Number of circuits: ${toSafeString(formData.numberOfCircuits)}`);
   
   return details.length > 0 ? details : ['Installation details to be confirmed'];
 };
