@@ -200,6 +200,10 @@ export const exportObservationsToPDF = async (
   formData: any,
   options: ExportOptions = {}
 ): Promise<void> => {
+  // Sanitize all form data before PDF generation
+  const { sanitizeObject } = await import('./inputSanitization');
+  const sanitizedFormData = sanitizeObject(formData);
+
   // This function remains the same for observations-only reports
   const {
     includeHeader = true,
@@ -221,9 +225,9 @@ export const exportObservationsToPDF = async (
 
   // Professional header
   if (includeHeader) {
-    yPosition = template.addHeader(pdf, { 
-      ...formData, 
-      certificateReference: `OBS-${Date.now().toString().slice(-6)}` 
+    yPosition = template.addHeader(pdf, {
+      ...sanitizedFormData,
+      certificateReference: `OBS-${Date.now().toString().slice(-6)}`
     });
   }
 
@@ -234,11 +238,11 @@ export const exportObservationsToPDF = async (
   yPosition += 10;
 
   const installationDetails = [
-    `Client: ${formData.clientName || 'Not specified'}`,
-    `Installation Address: ${formData.installationAddress || 'Not specified'}`,
-    `Description: ${formData.description || 'Not specified'}`,
-    `Inspection Date: ${formData.inspectionDate ? new Date(formData.inspectionDate).toLocaleDateString('en-GB') : 'Not specified'}`,
-    `Inspector: ${formData.inspectorName || 'Not specified'}`
+    `Client: ${sanitizedFormData.clientName || 'Not specified'}`,
+    `Installation Address: ${sanitizedFormData.installationAddress || 'Not specified'}`,
+    `Description: ${sanitizedFormData.description || 'Not specified'}`,
+    `Inspection Date: ${sanitizedFormData.inspectionDate ? new Date(sanitizedFormData.inspectionDate).toLocaleDateString('en-GB') : 'Not specified'}`,
+    `Inspector: ${sanitizedFormData.inspectorName || 'Not specified'}`
   ];
 
   pdf.setFontSize(10);
@@ -310,15 +314,15 @@ export const exportObservationsToPDF = async (
     const totalPages = pdf.getNumberOfPages();
     for (let i = 1; i <= totalPages; i++) {
       pdf.setPage(i);
-      template.addFooter(pdf, i, totalPages, formData);
+      template.addFooter(pdf, i, totalPages, sanitizedFormData);
     }
   }
 
   const { generateObservationsFilename } = await import('./pdfFilenameGenerator');
   const filename = generateObservationsFilename(
-    formData.certificateNumber || formData.certificateReference || 'EICR',
-    formData.clientName || 'Client',
-    formData.inspectionDate || new Date()
+    sanitizedFormData.certificateNumber || sanitizedFormData.certificateReference || 'EICR',
+    sanitizedFormData.clientName || 'Client',
+    sanitizedFormData.inspectionDate || new Date()
   );
   pdf.save(filename);
 };
@@ -455,12 +459,12 @@ export const exportCompleteEICRToPDF = async (
   yPosition += 8;
 
   const purposeInfo = [
-    ['Inspection Date:', formatDateTime(formData.inspectionDate || new Date())],
+    ['Inspection Date:', formatDateTime(sanitizedFormData.inspectionDate || new Date())],
     ['Inspector:', inspectorDetails.name],
     ['Qualifications:', inspectorDetails.qualifications],
-    ['Purpose:', formData.purposeOfInspection || 'Periodic inspection'],
-    ['Extent:', formData.extentOfInspection || 'Full installation'],
-    ['Limitations:', formData.limitationsOfInspection || 'None specified']
+    ['Purpose:', sanitizedFormData.purposeOfInspection || 'Periodic inspection'],
+    ['Extent:', sanitizedFormData.extentOfInspection || 'Full installation'],
+    ['Limitations:', sanitizedFormData.limitationsOfInspection || 'None specified']
   ];
 
   pdf.setFontSize(9);
@@ -559,11 +563,11 @@ export const exportCompleteEICRToPDF = async (
   }
 
   // INSPECTION CHECKLIST (Enhanced)
-  if (includeInspectionChecklist && (formData.inspectionItems?.length > 0 || inspectionItems.length > 0)) {
+  if (includeInspectionChecklist && (sanitizedFormData.inspectionItems?.length > 0 || inspectionItems.length > 0)) {
     pdf.addPage();
     yPosition = 25;
-    
-    const itemsToUse = formData.inspectionItems?.length > 0 ? formData.inspectionItems : inspectionItems;
+
+    const itemsToUse = sanitizedFormData.inspectionItems?.length > 0 ? sanitizedFormData.inspectionItems : inspectionItems;
     yPosition = template.addInspectionChecklistSection(pdf, itemsToUse, yPosition);
   }
 
@@ -629,7 +633,7 @@ export const exportCompleteEICRToPDF = async (
       yPosition += 6;
       
       // Fetch and add photos for this observation
-      const originalObs = (formData.observations || observations)[index];
+      const originalObs = (sanitizedFormData.observations || observations)[index];
       if (originalObs?.id) {
         const photos = await fetchObservationPhotos(originalObs.id);
         
@@ -727,9 +731,9 @@ export const exportCompleteEICRToPDF = async (
   yPosition += 5;
 
   // Digital signature integration
-  if (includeDigitalSignatures && formData.inspectorSignature) {
+  if (includeDigitalSignatures && sanitizedFormData.inspectorSignature) {
     await addDigitalSignature(pdf, {
-      signature: formData.inspectorSignature,
+      signature: sanitizedFormData.inspectorSignature,
       timestamp: new Date(),
       location: inspectorDetails.company,
       reason: 'EICR Certification'
@@ -753,8 +757,8 @@ export const exportCompleteEICRToPDF = async (
     const totalPages = pdf.getNumberOfPages();
     for (let i = 1; i <= totalPages; i++) {
       pdf.setPage(i);
-      template.addFooter(pdf, i, totalPages, { 
-        ...formData, 
+      template.addFooter(pdf, i, totalPages, {
+        ...sanitizedFormData,
         ...companyBranding,
         qualityScore: qualityMetrics.overallScore
       });
@@ -774,10 +778,10 @@ export const exportCompleteEICRToPDF = async (
   const filename = generatePdfFilename(
     'EICR',
     certificateId,
-    formData.clientName || 'Client',
-    formData.inspectionDate || new Date()
+    sanitizedFormData.clientName || 'Client',
+    sanitizedFormData.inspectionDate || new Date()
   );
-  
+
   pdf.save(filename);
   console.log(`Professional EICR certificate saved: ${filename}`);
   console.log(`Quality Score: ${qualityMetrics.overallScore}% | Completion: ${validation.completionScore}%`);
