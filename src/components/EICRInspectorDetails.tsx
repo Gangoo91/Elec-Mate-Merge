@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AlertTriangle, User, Copy, Trash2, Upload, X, Palette } from 'lucide-react';
 import { useInspectorProfiles, InspectorProfile } from '@/hooks/useInspectorProfiles';
 import InspectorProfileDialog from './InspectorProfileDialog';
@@ -295,6 +296,52 @@ const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInsp
             </div>
           </div>
 
+          {/* Professional Registration */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 pb-3 border-b border-border/50">
+              <div className="w-2 h-2 rounded-full bg-green-400"></div>
+              <h3 className="text-lg font-semibold text-foreground">Professional Registration</h3>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="registrationScheme">Registration Scheme</Label>
+                <Select value={formData.registrationScheme || ''} onValueChange={(value) => onUpdate('registrationScheme', value)}>
+                  <SelectTrigger className="h-11 touch-manipulation">
+                    <SelectValue placeholder="Select scheme" />
+                  </SelectTrigger>
+                  <SelectContent className="z-[100]">
+                    <SelectItem value="NICEIC">NICEIC</SelectItem>
+                    <SelectItem value="NAPIT">NAPIT</SelectItem>
+                    <SelectItem value="ELECSA">ELECSA</SelectItem>
+                    <SelectItem value="STROMA">STROMA</SelectItem>
+                    <SelectItem value="BRE">BRE</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="registrationNumber">Registration Number</Label>
+                <Input
+                  id="registrationNumber"
+                  value={formData.registrationNumber || ''}
+                  onChange={(e) => onUpdate('registrationNumber', e.target.value)}
+                  placeholder="e.g., NICEIC/12345"
+                  className="h-11 text-base touch-manipulation"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="registrationExpiry">Registration Expiry</Label>
+                <Input
+                  id="registrationExpiry"
+                  type="date"
+                  value={formData.registrationExpiry || ''}
+                  onChange={(e) => onUpdate('registrationExpiry', e.target.value)}
+                  className="h-11 text-base touch-manipulation"
+                />
+              </div>
+            </div>
+          </div>
+
           <Separator className="my-6" />
 
           {/* Company Branding */}
@@ -487,16 +534,6 @@ const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInsp
                     className="h-11 text-base touch-manipulation"
                   />
                 </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="registrationNumber" className="font-medium text-sm">Registration Number</Label>
-                <Input
-                  id="registrationNumber"
-                  value={formData.registrationNumber || ''}
-                  onChange={(e) => onUpdate('registrationNumber', e.target.value)}
-                  placeholder="NICEIC/NAPIT/Company registration number"
-                  className="h-11 text-base touch-manipulation"
-                />
               </div>
             </div>
           </div>
