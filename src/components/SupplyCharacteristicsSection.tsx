@@ -92,6 +92,67 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
         />
         <CollapsibleContent>
           <CardContent className="p-4 space-y-6">
+            {/* DNO / Supply Authority Details */}
+            <div className="space-y-4">
+              <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
+                <div className="w-1 h-1 rounded-full bg-blue-400"></div>
+                Supply Authority
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <Label htmlFor="dnoName">DNO (Distribution Network Operator)</Label>
+                  <Select value={formData.dnoName || ''} onValueChange={(value) => onUpdate('dnoName', value)}>
+                    <SelectTrigger className="h-11 touch-manipulation">
+                      <SelectValue placeholder="Select DNO" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
+                      <SelectItem value="UK Power Networks">UK Power Networks</SelectItem>
+                      <SelectItem value="Western Power Distribution">Western Power Distribution</SelectItem>
+                      <SelectItem value="Scottish Power Energy Networks">Scottish Power Energy Networks</SelectItem>
+                      <SelectItem value="Northern Powergrid">Northern Powergrid</SelectItem>
+                      <SelectItem value="Electricity North West">Electricity North West</SelectItem>
+                      <SelectItem value="SSE Networks">SSE Networks (SSEN)</SelectItem>
+                      <SelectItem value="National Grid Electricity Distribution">National Grid Electricity Distribution</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="mpan">MPAN (Meter Point Admin Number)</Label>
+                  <Input
+                    id="mpan"
+                    value={formData.mpan || ''}
+                    onChange={(e) => onUpdate('mpan', e.target.value)}
+                    placeholder="e.g., 12 345 678 901 234"
+                    className="h-11 text-base touch-manipulation"
+                  />
+                  <p className="text-xs text-muted-foreground">Found on electricity bill (optional)</p>
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="cutoutLocation">Cutout Location</Label>
+                  <Input
+                    id="cutoutLocation"
+                    value={formData.cutoutLocation || ''}
+                    onChange={(e) => onUpdate('cutoutLocation', e.target.value)}
+                    placeholder="e.g., Under stairs cupboard"
+                    className="h-11 text-base touch-manipulation"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="serviceEntry">Service Entry Point</Label>
+                  <Input
+                    id="serviceEntry"
+                    value={formData.serviceEntry || ''}
+                    onChange={(e) => onUpdate('serviceEntry', e.target.value)}
+                    placeholder="e.g., Front of property"
+                    className="h-11 text-base touch-manipulation"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <Separator />
+
             {/* Supply Details */}
             <div className="space-y-4">
               <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
