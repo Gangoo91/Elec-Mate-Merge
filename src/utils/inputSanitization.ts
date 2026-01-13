@@ -138,10 +138,11 @@ export const sanitizeFilename = (filename: string | null | undefined): string =>
  */
 export const sanitizeObject = <T extends Record<string, any>>(obj: T): T => {
   const sanitized = {} as T;
-  
+
   for (const [key, value] of Object.entries(obj)) {
     if (value === null || value === undefined) {
-      sanitized[key as keyof T] = value;
+      // Convert null/undefined to empty string for PDF safety
+      sanitized[key as keyof T] = '' as any;
     } else if (Array.isArray(value)) {
       sanitized[key as keyof T] = value.map(item => 
         typeof item === 'object' ? sanitizeObject(item) : sanitizeTextInputForDisplay(String(item))
@@ -159,11 +160,14 @@ export const sanitizeObject = <T extends Record<string, any>>(obj: T): T => {
       } else {
         sanitized[key as keyof T] = sanitizeTextInputForDisplay(value) as any;
       }
+    } else if (typeof value === 'number' || typeof value === 'boolean') {
+      // Convert numbers/booleans to strings for PDF safety
+      sanitized[key as keyof T] = String(value) as any;
     } else {
       sanitized[key as keyof T] = value;
     }
   }
-  
+
   return sanitized;
 };
 
