@@ -303,7 +303,11 @@ export const formatInstallationDetails = (formData: any): string[] => {
   
   // Legacy support
   if (formData.mainSwitchLocation) details.push(`Main switch: ${formData.mainSwitchLocation}`);
-  if (formData.consumerUnitMake) details.push(`Consumer unit: ${formData.consumerUnitMake} ${formData.consumerUnitModel || ''}`.trim());
+  if (formData.consumerUnitMake) {
+    const make = toSafeString(formData.consumerUnitMake);
+    const model = toSafeString(formData.consumerUnitModel || '');
+    details.push(`Consumer unit: ${make} ${model}`.trim());
+  }
   if (formData.numberOfCircuits) details.push(`Number of circuits: ${formData.numberOfCircuits}`);
   
   return details.length > 0 ? details : ['Installation details to be confirmed'];
