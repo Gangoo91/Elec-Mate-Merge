@@ -80,27 +80,43 @@ const drawCheckbox = (pdf: jsPDF, x: number, y: number, checked: boolean = false
   if (label) {
     pdf.setFontSize(9);
     pdf.setFont('helvetica', 'normal');
-    pdf.text(label, x + 6, y + 3);
+    pdf.text(toSafeString(label), x + 6, y + 3);
   }
 };
 
 // Helper function to add form fields with labels
+// Helper to safely convert any value to string for PDF
+const toSafeString = (value: any): string => {
+  if (value === null || value === undefined) return '';
+  if (typeof value === 'string') return value;
+  if (typeof value === 'number') return String(value);
+  if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+  if (typeof value === 'object') {
+    try {
+      return JSON.stringify(value);
+    } catch {
+      return String(value);
+    }
+  }
+  return String(value);
+};
+
 const addFormField = (pdf: jsPDF, x: number, y: number, width: number, height: number, label: string, value: string = '', bold: boolean = false) => {
   // Field box
   pdf.setDrawColor(0, 0, 0);
   pdf.setLineWidth(0.3);
   pdf.rect(x, y, width, height);
-  
+
   // Label
   pdf.setFontSize(8);
   pdf.setFont('helvetica', bold ? 'bold' : 'normal');
-  pdf.text(label, x, y - 2);
-  
+  pdf.text(toSafeString(label), x, y - 2);
+
   // Value
   if (value) {
     pdf.setFontSize(9);
     pdf.setFont('helvetica', 'normal');
-    pdf.text(value, x + 2, y + height - 2);
+    pdf.text(toSafeString(value), x + 2, y + height - 2);
   }
 };
 
@@ -228,7 +244,7 @@ export const exportObservationsToPDF = async (
   pdf.setFontSize(10);
   pdf.setFont('helvetica', 'normal');
   installationDetails.forEach(detail => {
-    pdf.text(detail, margin, yPosition);
+    pdf.text(toSafeString(detail), margin, yPosition);
     yPosition += 6;
   });
 
@@ -253,12 +269,12 @@ export const exportObservationsToPDF = async (
       
       pdf.setFontSize(10);
       pdf.setFont('helvetica', 'bold');
-      pdf.text(`${index + 1}. [${obs.defectCode}] ${obs.item}`, margin, yPosition);
+      pdf.text(toSafeString(`${index + 1}. [${obs.defectCode}] ${obs.item}`), margin, yPosition);
       yPosition += 6;
-      
+
       if (obs.description) {
         pdf.setFont('helvetica', 'normal');
-        const descLines = pdf.splitTextToSize(obs.description, pageWidth - 2 * margin - 5);
+        const descLines = pdf.splitTextToSize(toSafeString(obs.description), pageWidth - 2 * margin - 5);
         pdf.text(descLines, margin + 5, yPosition);
         yPosition += descLines.length * 5;
       }
@@ -423,10 +439,10 @@ export const exportCompleteEICRToPDF = async (
   clientInfo.forEach(([label, value]) => {
     pdf.setFont('helvetica', 'bold');
     pdf.setTextColor(51, 51, 51);
-    pdf.text(label, margin, yPosition);
+    pdf.text(toSafeString(label), margin, yPosition);
     pdf.setFont('helvetica', 'normal');
     pdf.setTextColor(0, 0, 0);
-    pdf.text(value, margin + 45, yPosition);
+    pdf.text(toSafeString(value), margin + 45, yPosition);
     yPosition += 6;
   });
 
@@ -449,21 +465,22 @@ export const exportCompleteEICRToPDF = async (
 
   pdf.setFontSize(9);
   purposeInfo.forEach(([label, value]) => {
-    if (value && value !== 'Not specified') {
+    const safeValue = toSafeString(value);
+    if (safeValue && safeValue !== 'Not specified') {
       pdf.setFont('helvetica', 'bold');
       pdf.setTextColor(51, 51, 51);
-      pdf.text(label, margin, yPosition);
+      pdf.text(toSafeString(label), margin, yPosition);
       pdf.setFont('helvetica', 'normal');
       pdf.setTextColor(0, 0, 0);
-      
+
       // Handle long text with wrapping
       const maxWidth = pageWidth - margin - 50;
-      if (pdf.getTextWidth(value) > maxWidth) {
-        const lines = pdf.splitTextToSize(value, maxWidth);
+      if (pdf.getTextWidth(safeValue) > maxWidth) {
+        const lines = pdf.splitTextToSize(safeValue, maxWidth);
         pdf.text(lines, margin + 45, yPosition);
         yPosition += (lines.length - 1) * 4;
       } else {
-        pdf.text(value, margin + 45, yPosition);
+        pdf.text(safeValue, margin + 45, yPosition);
       }
       yPosition += 6;
     }
@@ -572,33 +589,33 @@ export const exportCompleteEICRToPDF = async (
       pdf.setFontSize(11);
       pdf.setFont('helvetica', 'bold');
       pdf.setTextColor(51, 51, 51);
-      pdf.text(`${index + 1}. [${obs.defectCode}] ${obs.item}`, margin, yPosition);
+      pdf.text(toSafeString(`${index + 1}. [${obs.defectCode}] ${obs.item}`), margin, yPosition);
       yPosition += 7;
-      
+
       // Classification
       pdf.setFontSize(9);
       pdf.setFont('helvetica', 'normal');
       pdf.setTextColor(80, 80, 80);
-      pdf.text(`Classification: ${obs.codeDescription}`, margin + 5, yPosition);
+      pdf.text(toSafeString(`Classification: ${obs.codeDescription}`), margin + 5, yPosition);
       yPosition += 6;
-      
+
       // Description
       if (obs.description) {
         pdf.setTextColor(0, 0, 0);
-        const descLines = pdf.splitTextToSize(`Description: ${obs.description}`, pageWidth - 2 * margin - 5);
+        const descLines = pdf.splitTextToSize(toSafeString(`Description: ${obs.description}`), pageWidth - 2 * margin - 5);
         pdf.text(descLines, margin + 5, yPosition);
         yPosition += descLines.length * 5;
       }
-      
+
       // Recommendation
       if (obs.recommendation) {
         yPosition += 2;
         pdf.setTextColor(0, 0, 0);
-        const recLines = pdf.splitTextToSize(`Recommendation: ${obs.recommendation}`, pageWidth - 2 * margin - 5);
+        const recLines = pdf.splitTextToSize(toSafeString(`Recommendation: ${obs.recommendation}`), pageWidth - 2 * margin - 5);
         pdf.text(recLines, margin + 5, yPosition);
         yPosition += recLines.length * 5;
       }
-      
+
       // Rectified status
       pdf.setFontSize(8);
       pdf.setFont('helvetica', 'bold');
@@ -607,7 +624,7 @@ export const exportCompleteEICRToPDF = async (
       } else {
         pdf.setTextColor(178, 34, 34); // Red for not rectified
       }
-      pdf.text(`Status: ${obs.rectified ? 'Rectified' : 'Not Rectified'}`, margin + 5, yPosition);
+      pdf.text(toSafeString(`Status: ${obs.rectified ? 'Rectified' : 'Not Rectified'}`), margin + 5, yPosition);
       pdf.setTextColor(0, 0, 0); // Reset to black
       yPosition += 6;
       
@@ -678,7 +695,7 @@ export const exportCompleteEICRToPDF = async (
   pdf.setFont('helvetica', 'normal');
   declarationText.forEach((line, index) => {
     if (line.trim() !== '') {
-      pdf.text(line, margin, yPosition + (index * 5));
+      pdf.text(toSafeString(line), margin, yPosition + (index * 5));
     }
   });
   yPosition += declarationText.length * 5 + 10;
@@ -701,9 +718,9 @@ export const exportCompleteEICRToPDF = async (
   pdf.setFontSize(9);
   sigFields.forEach(([label, value]) => {
     pdf.setFont('helvetica', 'bold');
-    pdf.text(label, margin, yPosition);
+    pdf.text(toSafeString(label), margin, yPosition);
     pdf.setFont('helvetica', 'normal');
-    pdf.text(value, margin + 35, yPosition);
+    pdf.text(toSafeString(value), margin + 35, yPosition);
     yPosition += 8;
   });
 
