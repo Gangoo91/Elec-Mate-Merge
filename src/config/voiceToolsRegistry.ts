@@ -2759,24 +2759,38 @@ export const voiceToolsRegistry: VoiceTool[] = [
   },
   {
     name: 'create_and_send_quote',
-    description: 'Create a quote and save it as a draft for review. By default saves to the dashboard WITHOUT sending email. Only set sendNow=true if the user explicitly asks to send it immediately. Example: "Create a quote for John Smith, email john@example.com, kitchen rewire, £500" saves as draft. "Create and send a quote now" requires sendNow=true.',
+    description: 'Create a quote and save it as a draft for review. By default saves WITHOUT sending email. Set sendNow=true only if user explicitly asks to send immediately.',
     category: 'Creation',
     parameters: [
-      { name: 'client', type: 'string', required: true, description: 'Client full name' },
-      { name: 'clientAddress', type: 'string', required: true, description: 'Client address including postcode' },
-      { name: 'clientEmail', type: 'string', required: true, description: 'Client email for sending the quote' },
+      // Client details - MUST match edge function param names exactly
+      { name: 'clientName', type: 'string', required: true, description: 'Client full name' },
+      { name: 'clientEmail', type: 'string', required: true, description: 'Client email address' },
       { name: 'clientPhone', type: 'string', required: false, description: 'Client phone number' },
-      { name: 'jobTitle', type: 'string', required: true, description: 'Short job title e.g. "Kitchen Rewire", "Consumer Unit Upgrade"' },
-      { name: 'description', type: 'string', required: false, description: 'Detailed scope of work description' },
-      { name: 'labourHours', type: 'number', required: false, description: 'Total labour hours' },
-      { name: 'labourRate', type: 'number', required: false, description: 'Hourly rate in pounds (default £45)' },
-      { name: 'labourDescription', type: 'string', required: false, description: 'Labour description (default "Labour")' },
-      { name: 'materialsTotal', type: 'number', required: false, description: 'Total materials cost in pounds' },
-      { name: 'materialsDescription', type: 'string', required: false, description: 'Materials description (default "Materials")' },
-      { name: 'includeVat', type: 'boolean', required: false, description: 'Include 20% VAT (default true)' },
-      { name: 'validDays', type: 'number', required: false, description: 'Days until quote expires (default 30)' },
-      { name: 'sendNow', type: 'boolean', required: false, description: 'Set to true to send immediately via email. Default is false which saves as draft for review.' },
-      { name: 'notes', type: 'string', required: false, description: 'Additional notes for the quote' }
+      { name: 'clientAddress', type: 'string', required: false, description: 'Client street address' },
+      { name: 'clientPostcode', type: 'string', required: false, description: 'Client postcode' },
+      // Job details
+      { name: 'jobTitle', type: 'string', required: true, description: 'Short job title e.g. Kitchen Rewire' },
+      { name: 'jobDescription', type: 'string', required: false, description: 'Detailed scope of work' },
+      { name: 'jobLocation', type: 'string', required: false, description: 'Job site address if different from client' },
+      { name: 'estimatedDuration', type: 'string', required: false, description: 'e.g. 2 days' },
+      { name: 'workStartDate', type: 'string', required: false, description: 'Proposed start date' },
+      { name: 'specialRequirements', type: 'string', required: false, description: 'Any special requirements' },
+      // Line item - use these for the quote total
+      { name: 'itemDescription', type: 'string', required: true, description: 'Work item description e.g. Consumer unit upgrade' },
+      { name: 'itemQuantity', type: 'number', required: false, description: 'Quantity (default 1)' },
+      { name: 'itemUnitPrice', type: 'number', required: true, description: 'Unit price in pounds' },
+      { name: 'itemCategory', type: 'string', required: false, description: 'labour, materials, or other', enumValues: ['labour', 'materials', 'other'] },
+      // Financial settings
+      { name: 'labourRate', type: 'number', required: false, description: 'Labour rate per hour (default 45)' },
+      { name: 'overheadPercentage', type: 'number', required: false, description: 'Overhead percentage (default 10)' },
+      { name: 'profitMargin', type: 'number', required: false, description: 'Profit margin percentage (default 15)' },
+      { name: 'vatRate', type: 'number', required: false, description: 'VAT rate percentage (default 20)' },
+      { name: 'vatRegistered', type: 'boolean', required: false, description: 'Include VAT in quote (default true)' },
+      { name: 'breakdownMaterials', type: 'boolean', required: false, description: 'Show materials breakdown (default false)' },
+      // Extras
+      { name: 'notes', type: 'string', required: false, description: 'Additional notes for the quote' },
+      { name: 'expiryDays', type: 'number', required: false, description: 'Days until quote expires (default 30)' },
+      { name: 'sendNow', type: 'boolean', required: false, description: 'Send email immediately (true) or save as draft (false, default)' }
     ],
     waitForResponse: true,
     disableInterruptions: true,

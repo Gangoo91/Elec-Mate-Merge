@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Plus, FileText, Clock, CheckCircle, TrendingUp, XCircle, Send, Search, ArrowLeft, X, RefreshCw, Mic } from "lucide-react";
+import { Plus, FileText, Clock, CheckCircle, TrendingUp, XCircle, Send, Search, ArrowLeft, X, RefreshCw } from "lucide-react";
 import { VoiceHeaderButton } from "@/components/electrician/VoiceHeaderButton";
 import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
@@ -10,7 +10,6 @@ import FinancialSnapshot from "@/components/electrician/quote-builder/FinancialS
 import { EmptyStateGuide } from "@/components/electrician/shared/EmptyStateGuide";
 import React, { useState, useMemo, useCallback } from "react";
 import { VoiceFormProvider } from "@/contexts/VoiceFormContext";
-import { ElectricianVoiceAssistant } from "@/components/electrician/ElectricianVoiceAssistant";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
@@ -63,32 +62,6 @@ const QuoteBuilder = () => {
 
     return filtered;
   }, [savedQuotes, activeFilter, searchQuery]);
-
-  // Voice navigation handler
-  const handleVoiceNavigate = (section: string) => {
-    const sectionLower = section.toLowerCase().replace(/\s+/g, '-');
-    switch (sectionLower) {
-      case 'create':
-      case 'new-quote':
-      case 'new':
-        navigate('/electrician/quote-builder/create');
-        break;
-      case 'pending':
-      case 'sent':
-      case 'approved':
-      case 'rejected':
-        setSearchParams({ filter: sectionLower });
-        break;
-      case 'back':
-        navigate('/electrician');
-        break;
-      case 'business':
-        navigate('/electrician/business');
-        break;
-      default:
-        navigate(`/electrician/${sectionLower}`);
-    }
-  };
 
   const handleFilterChange = (filter: string) => {
     if (filter === 'all') {
@@ -349,12 +322,6 @@ const QuoteBuilder = () => {
           isOpen={showFinancialSnapshot}
           onClose={() => setShowFinancialSnapshot(false)}
           quotes={savedQuotes}
-        />
-
-        {/* Voice Assistant */}
-        <ElectricianVoiceAssistant
-          onNavigate={handleVoiceNavigate}
-          currentSection="quote-builder"
         />
       </div>
     </VoiceFormProvider>
