@@ -5,6 +5,18 @@ import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/b
 
 const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
 
+// Initialize Supabase admin client for RAG queries
+const supabaseAdmin = createClient(
+  Deno.env.get('SUPABASE_URL') ?? '',
+  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  }
+);
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -67,6 +79,114 @@ const parseAIResponse = (content: string, context: string = 'AI response') => {
   
   throw new Error(`Could not parse ${context} as JSON. Check edge function logs for full response.`);
 };
+
+/**
+ * Fetch practical work intelligence using fast keyword search
+ * Returns relevant installation data, best practices, and guidance
+ */
+async function fetchPracticalWorkRAG(keywords: string[]): Promise<{
+  sources: any[];
+  contextText: string;
+  sourceCount: number;
+}> {
+  try {
+    // Limit to 10 keywords (most relevant) to keep query fast
+    const limitedKeywords = keywords.slice(0, 10);
+
+    console.log('🔍 Fetching RAG with keywords:', limitedKeywords);
+
+    const startTime = Date.now();
+
+    // Call fast keyword search function
+    const { data: ragData, error } = await supabaseAdmin
+      .rpc('search_practical_work_fast', {
+        keywords: limitedKeywords
+      });
+
+    const fetchTime = Date.now() - startTime;
+    console.log(`✅ RAG fetch completed in ${fetchTime}ms, returned ${ragData?.length || 0} results`);
+
+    if (error) {
+      console.error('❌ RAG fetch error:', error);
+      return { sources: [], contextText: '', sourceCount: 0 };
+    }
+
+    if (!ragData || ragData.length === 0) {
+      console.log('⚠️ No RAG results found for keywords');
+      return { sources: [], contextText: '', sourceCount: 0 };
+    }
+
+    // Build context text from top results - increased to 15 for more information
+    const contextParts: string[] = [];
+
+    ragData.slice(0, 15).forEach((doc: any, idx: number) => {
+      contextParts.push(
+        `[${idx + 1}] ${doc.title}\n` +
+        `Category: ${doc.category || 'General'}\n` +
+        `${doc.content}\n` +
+        `Difficulty: ${doc.difficulty_level || 'Standard'} | Tags: ${doc.tags?.join(', ') || 'N/A'}\n`
+      );
+    });
+
+    const contextText = contextParts.join('\n---\n\n');
+
+    return {
+      sources: ragData.slice(0, 20), // Keep top 20 for metadata
+      contextText,
+      sourceCount: ragData.length
+    };
+
+  } catch (error) {
+    console.error('❌ Exception in fetchPracticalWorkRAG:', error);
+    return { sources: [], contextText: '', sourceCount: 0 };
+  }
+}
+
+/**
+ * Extract relevant keywords from analysis settings and mode
+ * Used to query practical work intelligence database
+ */
+function extractKeywordsFromSettings(
+  mode: string,
+  analysisSettings: any
+): string[] {
+  const keywords: string[] = [];
+
+  // Add mode-specific base keywords
+  switch (mode) {
+    case 'component_identify':
+      keywords.push('component', 'identification', 'specifications', 'bs7671');
+      break;
+    case 'wiring_instruction':
+      keywords.push('wiring', 'installation', 'connections', 'terminal', 'cable');
+      break;
+    case 'fault_diagnosis':
+      keywords.push('fault', 'diagnosis', 'testing', 'troubleshooting', 'eicr');
+      break;
+    case 'installation_verify':
+      keywords.push('installation', 'verification', 'compliance', 'testing', 'commissioning');
+      break;
+  }
+
+  // Add keywords from focus_areas if present
+  if (analysisSettings.focus_areas && Array.isArray(analysisSettings.focus_areas)) {
+    analysisSettings.focus_areas.forEach((area: string) => {
+      // Extract meaningful words (lowercase, remove special chars)
+      const words = area.toLowerCase()
+        .replace(/[^a-z0-9\s]/g, ' ')
+        .split(/\s+/)
+        .filter((w: string) => w.length > 3); // Only words > 3 chars
+
+      keywords.push(...words);
+    });
+  }
+
+  // Add common electrical keywords
+  keywords.push('uk', 'electrical', 'electrician', 'regulations', 'safety');
+
+  // Deduplicate and return
+  return [...new Set(keywords)];
+}
 
 type AnalysisMode = 'fault_diagnosis' | 'component_identify' | 'wiring_instruction' | 'installation_verify';
 
@@ -162,10 +282,32 @@ serve(async (req) => {
       timestamp: new Date().toISOString()
     });
 
-    const getSystemPrompt = (mode: AnalysisMode, fast: boolean): string => {
-      const baseContext = `You are a UK electrical expert specialising in BS 7671 18th Edition.`;
+    const getSystemPrompt = (mode: AnalysisMode, fast: boolean, ragContext: { contextText: string; sourceCount: number }): string => {
+      const baseContext = `You are a UK electrical expert specialising in BS 7671 18th Edition.
+
+${ragContext.contextText ? `
+## Practical Work Intelligence Database
+
+You have access to verified, real-world UK electrical installation data, best practices, and practical guidance from ${ragContext.sourceCount} professional sources:
+
+${ragContext.contextText}
+
+CRITICAL INSTRUCTIONS FOR USING RAG DATA:
+1. Cross-reference your analysis with the practical work intelligence above
+2. Include specific technical details from these sources (torque settings, clearances, typical ratings)
+3. Reference regulation numbers with context from the RAG data
+4. Provide comprehensive, detailed guidance - use the full depth of information available
+5. Align your terminology and technical language with UK standards shown in the sources
+6. When specifications or installation notes are relevant, include detailed guidance from the sources
+7. Prioritise practical, real-world advice over generic information
+
+The more detailed and aligned with practical work intelligence your response, the better.
+` : ''}
+
+Today's date: ${new Date().toISOString().split('T')[0]}
+Analysis confidence must reflect clarity of image and certainty of identification.`;
       const responseFormat = `Respond in valid JSON only. ${fast ? 'Be concise.' : ''}`;
-      
+
       switch (mode) {
         case 'fault_diagnosis':
           return `${baseContext}
@@ -335,26 +477,72 @@ Response format:
           return `${baseContext}
 ${responseFormat}
 
-Provide wiring instructions:
-- Terminal identification (L, N, E)
-- UK colour codes (Brown=Live, Blue=Neutral, Green/Yellow=Earth)
-- Connection procedure (isolation first)
-- Cable requirements
-${fast ? '' : '- Testing procedures'}
+Provide comprehensive UK wiring instructions following BS 7671:2018+A3:2024.
 
 Response format:
 {
-  "analysis": {
-    "component_name": "Component",
-    "wiring_steps": [{
-      "step": 1,
-      "instruction": "Isolate supply",
-      "safety_critical": true
+  "wiring_schematic": {
+    "component_name": "Full component name",
+    "component_details": "Detailed description of what this component is and its purpose",
+    "wiring_scenarios": [{
+      "scenario_id": "standard",
+      "scenario_name": "Standard Installation",
+      "use_case": "When to use this wiring method",
+      "complexity": "simple|intermediate|advanced",
+      "recommended": true,
+      "wiring_steps": [{
+        "step": 1,
+        "title": "Step title",
+        "instruction": "Detailed instruction",
+        "what_to_check": "What to verify",
+        "common_mistakes": "What to avoid",
+        "safety_critical": true|false,
+        "bs7671_reference": "BS 7671 regulation reference"
+      }],
+      "terminal_connections": [{
+        "terminal": "L1",
+        "wire_colour": "Brown",
+        "connection_point": "Live terminal",
+        "notes": "Additional notes"
+      }],
+      "safety_warnings": ["Warning 1", "Warning 2"],
+      "required_tests": ["Test 1", "Test 2"]
     }],
-    "cable_requirements": {"minimum_size": "2.5mm²"},
-    "summary": "Procedure overview"
+    "comparison": {
+      "key_differences": ["Difference between scenarios"],
+      "decision_factors": ["Factors to consider"]
+    },
+    "rag_sources": {
+      "installation_docs_count": 5,
+      "regulations_count": 3
+    },
+    "pre_installation_tasks": [{
+      "task": "Task name",
+      "description": "What to do",
+      "why": "Why it's important",
+      "tools_needed": ["Tool 1", "Tool 2"]
+    }],
+    "board_layout_guide": {
+      "mcb_arrangement": "Left to right guidance",
+      "earth_bar_numbering": "Numbering system",
+      "neutral_bar_numbering": "Numbering system"
+    },
+    "wiring_sequence_strategy": {
+      "order": ["First step", "Second step"],
+      "rationale": "Why this order"
+    },
+    "practical_tips": ["Tip 1", "Tip 2"],
+    "common_mistakes": ["Mistake 1", "Mistake 2"]
   }
-}`;
+}
+
+CRITICAL REQUIREMENTS:
+- UK colour codes: Brown=Live, Blue=Neutral, Green/Yellow=Earth
+- Always start with isolation
+- Include BS 7671 references
+- Provide clear, actionable steps
+- Include safety warnings
+- Specify required tests`;
 
         case 'installation_verify':
           return `${baseContext}
@@ -451,17 +639,16 @@ ${fast ? '' : `
 
 ENHANCED RESPONSE FORMAT:
 {
-  "analysis": {
-    "overall_result": "compliant_visual|non_compliant|requires_physical_testing|insufficient_image_quality",
-    "confidence": 85,
-    "image_quality_assessment": "Image clarity and what IS/ISN'T visible",
-    "installation_context": {
-      "installation_type": "Domestic consumer unit / Commercial DB / etc",
-      "visible_circuits": "5 MCBs, 2 RCBOs visible",
-      "board_make_model": "Manufacturer and model if identifiable",
-      "installation_age_estimate": "Modern (post-2018) / Older"
-    },
-    "verification_checks": [{
+  "overall_result": "compliant_visual|non_compliant|requires_physical_testing|insufficient_image_quality",
+  "confidence": 85,
+  "image_quality_assessment": "Image clarity and what IS/ISN'T visible",
+  "installation_context": {
+    "installation_type": "Domestic consumer unit / Commercial DB / etc",
+    "visible_circuits": "5 MCBs, 2 RCBOs visible",
+    "board_make_model": "Manufacturer and model if identifiable",
+    "installation_age_estimate": "Modern (post-2018) / Older"
+  },
+  "verification_checks": [{
       "category": "Protective Devices / Earthing / Cable Installation / Workmanship",
       "check_name": "Clear, specific check name",
       "regulation_reference": "BS 7671 regulation number",
@@ -495,7 +682,6 @@ ENHANCED RESPONSE FORMAT:
     "summary": "Comprehensive 3-4 sentence assessment",
     "limitations": "What CANNOT be verified visually",
     "next_steps": "Clear guidance on what should happen next"
-  }
 }
 
 RESPONSE REQUIREMENTS:
@@ -512,7 +698,22 @@ RESPONSE REQUIREMENTS:
       }
     };
 
-    const systemPrompt = getSystemPrompt(analysis_settings.mode, analysis_settings.fast_mode || false);
+    // Extract keywords for RAG search
+    const ragKeywords = extractKeywordsFromSettings(
+      analysis_settings.mode,
+      analysis_settings
+    );
+
+    // Fetch practical work intelligence
+    const ragContext = await fetchPracticalWorkRAG(ragKeywords);
+
+    console.log('📚 RAG Context:', {
+      sourceCount: ragContext.sourceCount,
+      contextLength: ragContext.contextText.length,
+      keywords: ragKeywords.slice(0, 5)
+    });
+
+    const systemPrompt = getSystemPrompt(analysis_settings.mode, analysis_settings.fast_mode || false, ragContext);
 
     const getUserPrompt = (mode: AnalysisMode, fast: boolean): string => {
       const focusAreas = analysis_settings.focus_areas?.join(', ') || 'general';
@@ -533,14 +734,11 @@ RESPONSE REQUIREMENTS:
 
     console.log(`🚀 Calling Direct Gemini API (gemini-2.0-flash)...`);
 
-    // All modes now use 4000 tokens in full mode, so all need extended timeout
-    // Increased to match board-read-stream which uses 60s successfully
-    const timeout = analysis_settings.fast_mode ? 45000 : 60000; // 45s fast, 60s full (match board scanner)
-    // Component identification needs more tokens due to comprehensive structured response
-    // Gemini 2.5 Flash uses internal reasoning (thoughts) that count against token limit
-    const maxTokens = analysis_settings.mode === 'component_identify' 
-      ? (analysis_settings.fast_mode ? 2500 : 4000)  // 2500 fast, 4000 full
-      : (analysis_settings.fast_mode ? 2500 : 4000);   // INCREASED: fault_diagnosis needs more tokens for reasoning
+    // All AI photo tools use consistent 7000 tokens (increased to accommodate RAG context)
+    // Timeout of 60s to ensure enough time for comprehensive analysis
+    const timeout = 60000; // 60s timeout for all modes
+    // Token limit increased from 5000 to 7000 to accommodate RAG context (~1500-2500 tokens)
+    const maxTokens = 7000; // Consistent 7000 tokens for all AI photo analysis tools with RAG
 
     // Convert images to Gemini inlineData format (camelCase for REST API)
     const parts: any[] = [{ text: systemPrompt + '\n\n' + userPrompt }];
@@ -711,8 +909,25 @@ RESPONSE REQUIREMENTS:
         throw new Error('Invalid analysis result');
       }
 
-      if (!analysisResult.analysis) {
-        analysisResult = { analysis: analysisResult };
+      // Handle different response structures per mode
+      if (analysis_settings.mode === 'wiring_instruction') {
+        // Wiring instruction frontend expects top-level wiring_schematic
+        if (!analysisResult.wiring_schematic && analysisResult.analysis?.wiring_schematic) {
+          analysisResult = analysisResult.analysis;
+        }
+        if (!analysisResult.wiring_schematic) {
+          console.error('❌ Missing wiring_schematic in response');
+        }
+      } else if (analysis_settings.mode === 'installation_verify') {
+        // Installation verify frontend expects top-level verification_checks
+        if (!analysisResult.verification_checks && analysisResult.analysis?.verification_checks) {
+          analysisResult = analysisResult.analysis;
+        }
+      } else {
+        // Other modes wrap in analysis
+        if (!analysisResult.analysis) {
+          analysisResult = { analysis: analysisResult };
+        }
       }
 
       // Ensure findings array exists for fault_diagnosis
@@ -739,35 +954,58 @@ RESPONSE REQUIREMENTS:
 
     } catch (parseError) {
       console.error('❌ Parse error:', parseError);
-      
-      // Return helpful error with actionable guidance
-      analysisResult = {
-        analysis: {
-          findings: [{
-            description: "Unable to complete analysis - image may be too complex or unclear. The AI response couldn't be processed properly.",
-            eicr_code: "FI",
-            confidence: 0.3,
-            bs7671_clauses: ["Manual inspection required"],
-            fix_guidance: "Try: 1) Retake photo in better lighting, 2) Focus on a specific area, 3) Use fewer images, or 4) Enable Quick mode for faster processing"
-          }],
-          helpful_tips: [
-            "✓ Ensure images are well-lit and in focus",
-            "✓ Capture equipment from multiple angles if complex",
-            "✓ Avoid reflections or obstructions in photos",
-            "✓ Try Quick mode for simpler, faster analysis"
-          ],
-          compliance_summary: {
-            overall_assessment: "unsatisfactory",
-            c1_count: 0,
-            c2_count: 0,
-            c3_count: 0,
-            fi_count: 1,
-            safety_rating: 5.0
-          },
-          summary: "Analysis could not be completed due to processing error. Please review image quality and try again.",
-          parse_error: true
-        }
-      };
+      console.error('❌ Raw content:', content);
+
+      // Return mode-appropriate error response
+      if (analysis_settings.mode === 'component_identify') {
+        analysisResult = {
+          analysis: {
+            component: {
+              name: 'Identification Failed',
+              type: 'Parse Error',
+              confidence: 0,
+              plain_english: 'The AI response could not be processed. This usually happens when the image is unclear or the component is not clearly visible.',
+              notes: [
+                'Technical issue: AI response could not be parsed',
+                'Try: Retake photo in better lighting',
+                'Try: Get closer to the component',
+                'Try: Ensure labels and markings are visible',
+                'Try: Use Quick mode for faster processing'
+              ],
+              error_details: String(parseError).substring(0, 200)
+            }
+          }
+        };
+      } else {
+        // Existing fault_diagnosis fallback
+        analysisResult = {
+          analysis: {
+            findings: [{
+              description: "Unable to complete analysis - image may be too complex or unclear. The AI response couldn't be processed properly.",
+              eicr_code: "FI",
+              confidence: 0.3,
+              bs7671_clauses: ["Manual inspection required"],
+              fix_guidance: "Try: 1) Retake photo in better lighting, 2) Focus on a specific area, 3) Use fewer images, or 4) Enable Quick mode for faster processing"
+            }],
+            helpful_tips: [
+              "✓ Ensure images are well-lit and in focus",
+              "✓ Capture equipment from multiple angles if complex",
+              "✓ Avoid reflections or obstructions in photos",
+              "✓ Try Quick mode for simpler, faster analysis"
+            ],
+            compliance_summary: {
+              overall_assessment: "unsatisfactory",
+              c1_count: 0,
+              c2_count: 0,
+              c3_count: 0,
+              fi_count: 1,
+              safety_rating: 5.0
+            },
+            summary: "Analysis could not be completed due to processing error. Please review image quality and try again.",
+            parse_error: true
+          }
+        };
+      }
     }
 
     // Helper: Normalize component data
@@ -849,6 +1087,26 @@ RESPONSE REQUIREMENTS:
       // Last resort: check for any specification fields
       else {
         console.log(`⚠️ Still no component after restructure — keys present: ${Object.keys(ana).join(', ')}`);
+
+        // Create minimal fallback component from available data
+        console.warn('⚠️ Creating minimal fallback component from available fields');
+
+        // Extract whatever information exists
+        const summary = ana.summary || ana.description || ana.findings?.[0]?.description;
+        const componentType = ana.type || ana.category || ana.equipment_type;
+
+        ana.component = {
+          name: componentType || 'Electrical Component',
+          type: componentType || 'Unknown Type',
+          confidence: 30,
+          plain_english: summary || 'Component could not be fully identified from the image. Try retaking the photo in better lighting with visible labels.',
+          notes: [
+            'Limited identification: AI response did not contain complete component data',
+            'Suggestion: Retake photo ensuring all labels and markings are clearly visible'
+          ],
+          identification_quality: 'low',
+          raw_response_keys: Object.keys(ana).join(', ')
+        };
       }
     }
 
@@ -859,7 +1117,35 @@ RESPONSE REQUIREMENTS:
     analysisResult.analysis.processing_time_ms = duration;
     analysisResult.analysis.fast_mode = analysis_settings.fast_mode || false;
 
-    return new Response(JSON.stringify(analysisResult), {
+    // Validate response structure for component_identify mode
+    if (analysis_settings.mode === 'component_identify') {
+      if (!analysisResult.analysis?.component) {
+        console.error('❌ No component in response for component_identify mode');
+        console.error('❌ Response structure:', JSON.stringify(analysisResult, null, 2).substring(0, 500));
+
+        throw new Error('Component identification failed: No component data in AI response. Please try again with a clearer image showing component labels and markings.');
+      }
+
+      // Log successful component identification
+      console.log(`✅ Component identified: ${analysisResult.analysis.component.name} (confidence: ${analysisResult.analysis.component.confidence}%)`);
+    }
+
+    // Add RAG metadata to response
+    const responseWithRAG = {
+      ...analysisResult,
+      rag_metadata: {
+        sources_used: ragContext.sourceCount,
+        keywords_searched: ragKeywords.slice(0, 10),
+        context_length: ragContext.contextText.length,
+        top_sources: ragContext.sources.slice(0, 5).map((s: any) => ({
+          title: s.title,
+          category: s.category,
+          tags: s.tags
+        }))
+      }
+    };
+
+    return new Response(JSON.stringify(responseWithRAG), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 

@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import UserManagementSheet from "@/components/admin/UserManagementSheet";
 
@@ -63,6 +64,7 @@ const pricingTiers = {
 
 export default function AdminDashboard() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any>(null);
 
@@ -72,97 +74,69 @@ export default function AdminDashboard() {
     setTimeout(() => setIsRefreshing(false), 500);
   }, [queryClient]);
 
-  // Fetch dashboard stats
+  // Fetch dashboard stats - batch queries for performance
   const { data: stats, isLoading, isFetching } = useQuery({
     queryKey: ["admin-dashboard-stats"],
     queryFn: async () => {
-      // Get total users
-      const { count: totalUsers } = await supabase
-        .from("profiles")
-        .select("*", { count: "exact", head: true });
-
-      // Get users signed up today
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      const { count: signupsToday } = await supabase
-        .from("profiles")
-        .select("*", { count: "exact", head: true })
-        .gte("created_at", today.toISOString());
+      const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+      const monthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+      const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
 
-      // Get users signed up this week
-      const weekAgo = new Date();
-      weekAgo.setDate(weekAgo.getDate() - 7);
-      const { count: signupsThisWeek } = await supabase
-        .from("profiles")
-        .select("*", { count: "exact", head: true })
-        .gte("created_at", weekAgo.toISOString());
+      // Batch all count queries in parallel
+      const [
+        totalUsersRes,
+        signupsTodayRes,
+        signupsWeekRes,
+        signupsMonthRes,
+        activeTodayRes,
+        elecIdCompleteRes,
+        subscribedDataRes,
+        recentActivityRes,
+        edgeDataRes,
+      ] = await Promise.all([
+        supabase.from("profiles").select("*", { count: "exact", head: true }),
+        supabase.from("profiles").select("*", { count: "exact", head: true }).gte("created_at", today.toISOString()),
+        supabase.from("profiles").select("*", { count: "exact", head: true }).gte("created_at", weekAgo.toISOString()),
+        supabase.from("profiles").select("*", { count: "exact", head: true }).gte("created_at", monthAgo.toISOString()),
+        supabase.from("user_presence").select("*", { count: "exact", head: true }).gte("last_seen", dayAgo.toISOString()),
+        supabase.from("employer_elec_id_profiles").select("*", { count: "exact", head: true }),
+        supabase.from("profiles").select("subscription_tier").eq("subscribed", true),
+        supabase.from("user_presence").select("user_id, last_seen, profiles(full_name, role, avatar_url)").order("last_seen", { ascending: false }).limit(10),
+        supabase.functions.invoke("admin-get-users"),
+      ]);
 
-      // Get users signed up this month
-      const monthAgo = new Date();
-      monthAgo.setDate(monthAgo.getDate() - 30);
-      const { count: signupsThisMonth } = await supabase
-        .from("profiles")
-        .select("*", { count: "exact", head: true })
-        .gte("created_at", monthAgo.toISOString());
-
-      // Get active users (last 24 hours) from presence
-      const dayAgo = new Date();
-      dayAgo.setDate(dayAgo.getDate() - 1);
-      const { count: activeToday } = await supabase
-        .from("user_presence")
-        .select("*", { count: "exact", head: true })
-        .gte("last_seen", dayAgo.toISOString());
-
-      // Get Elec-ID completion stats
-      const { count: elecIdComplete } = await supabase
-        .from("employer_elec_id_profiles")
-        .select("*", { count: "exact", head: true });
-
-      // Get all subscribed users with tiers
-      const { data: subscribedData } = await supabase
-        .from("profiles")
-        .select("subscription_tier")
-        .eq("subscribed", true);
-
-      const subscribedUsers = subscribedData?.length || 0;
+      const subscribedData = subscribedDataRes.data || [];
+      const subscribedUsers = subscribedData.length;
       const tierCounts = {
-        apprentice: subscribedData?.filter(u => u.subscription_tier === "Apprentice").length || 0,
-        electrician: subscribedData?.filter(u => u.subscription_tier === "Electrician").length || 0,
-        employer: subscribedData?.filter(u => u.subscription_tier === "Employer").length || 0,
+        apprentice: subscribedData.filter(u => u.subscription_tier === "Apprentice").length,
+        electrician: subscribedData.filter(u => u.subscription_tier === "Electrician").length,
+        employer: subscribedData.filter(u => u.subscription_tier === "Employer").length,
       };
 
-      // Calculate MRR (Monthly Recurring Revenue)
       const mrr = (tierCounts.apprentice * 4.99) +
                   (tierCounts.electrician * 9.99) +
                   (tierCounts.employer * 29.99);
 
-      // Get recent signups with emails via edge function
-      const { data: edgeData } = await supabase.functions.invoke("admin-get-users");
-      const usersWithEmails = edgeData?.users || [];
-      const recentSignups = usersWithEmails.slice(0, 8);
-
-      // Get recent activity from presence
-      const { data: recentActivity } = await supabase
-        .from("user_presence")
-        .select("user_id, last_seen, profiles(full_name)")
-        .order("last_seen", { ascending: false })
-        .limit(5);
+      const usersWithEmails = edgeDataRes.data?.users || [];
 
       return {
-        totalUsers: totalUsers || 0,
-        signupsToday: signupsToday || 0,
-        signupsThisWeek: signupsThisWeek || 0,
-        signupsThisMonth: signupsThisMonth || 0,
-        activeToday: activeToday || 0,
-        elecIdComplete: elecIdComplete || 0,
+        totalUsers: totalUsersRes.count || 0,
+        signupsToday: signupsTodayRes.count || 0,
+        signupsThisWeek: signupsWeekRes.count || 0,
+        signupsThisMonth: signupsMonthRes.count || 0,
+        activeToday: activeTodayRes.count || 0,
+        elecIdComplete: elecIdCompleteRes.count || 0,
         subscribedUsers,
         tierCounts,
         mrr,
-        recentSignups: recentSignups || [],
-        recentActivity: recentActivity || [],
+        recentSignups: usersWithEmails.slice(0, 8),
+        recentActivity: recentActivityRes.data || [],
       };
     },
-    refetchInterval: 30000, // Refresh every 30 seconds
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
+    refetchInterval: 60000, // Refresh every 60 seconds
   });
 
   if (isLoading) {
@@ -200,7 +174,10 @@ export default function AdminDashboard() {
       </div>
 
       {/* Revenue Hero Card */}
-      <Card className="bg-gradient-to-br from-emerald-500/20 to-green-600/10 border-emerald-500/30 touch-manipulation">
+      <Card
+        className="bg-gradient-to-br from-emerald-500/20 to-green-600/10 border-emerald-500/30 touch-manipulation cursor-pointer hover:border-emerald-500/50 transition-colors"
+        onClick={() => navigate("/admin/revenue")}
+      >
         <CardContent className="pt-5 pb-5">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
@@ -218,19 +195,28 @@ export default function AdminDashboard() {
           </div>
           {/* Tier Breakdown */}
           <div className="grid grid-cols-3 gap-2 mt-4">
-            <div className="bg-purple-500/10 rounded-xl p-3 text-center">
+            <div
+              className="bg-purple-500/10 rounded-xl p-3 text-center cursor-pointer hover:bg-purple-500/20 transition-colors active:scale-[0.98]"
+              onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=apprentice"); }}
+            >
               <GraduationCap className="h-4 w-4 text-purple-400 mx-auto mb-1" />
               <p className="text-lg font-bold text-purple-400">{stats?.tierCounts?.apprentice || 0}</p>
               <p className="text-[10px] text-muted-foreground">Apprentice</p>
               <p className="text-[10px] text-purple-400/70">{pricingTiers.apprentice.monthly}/mo</p>
             </div>
-            <div className="bg-yellow-500/10 rounded-xl p-3 text-center">
+            <div
+              className="bg-yellow-500/10 rounded-xl p-3 text-center cursor-pointer hover:bg-yellow-500/20 transition-colors active:scale-[0.98]"
+              onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=electrician"); }}
+            >
               <Zap className="h-4 w-4 text-yellow-400 mx-auto mb-1" />
               <p className="text-lg font-bold text-yellow-400">{stats?.tierCounts?.electrician || 0}</p>
               <p className="text-[10px] text-muted-foreground">Electrician</p>
               <p className="text-[10px] text-yellow-400/70">{pricingTiers.electrician.monthly}/mo</p>
             </div>
-            <div className="bg-blue-500/10 rounded-xl p-3 text-center">
+            <div
+              className="bg-blue-500/10 rounded-xl p-3 text-center cursor-pointer hover:bg-blue-500/20 transition-colors active:scale-[0.98]"
+              onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=employer"); }}
+            >
               <Building2 className="h-4 w-4 text-blue-400 mx-auto mb-1" />
               <p className="text-lg font-bold text-blue-400">{stats?.tierCounts?.employer || 0}</p>
               <p className="text-[10px] text-muted-foreground">Employer</p>
@@ -242,7 +228,10 @@ export default function AdminDashboard() {
 
       {/* Quick Stats Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20 touch-manipulation active:scale-[0.98] transition-transform">
+        <Card
+          className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20 touch-manipulation active:scale-[0.98] transition-transform cursor-pointer hover:border-blue-500/40"
+          onClick={() => navigate("/admin/users")}
+        >
           <CardContent className="pt-4 pb-4">
             <div className="flex items-center justify-between">
               <div>
@@ -254,7 +243,10 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20 touch-manipulation active:scale-[0.98] transition-transform">
+        <Card
+          className="bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20 touch-manipulation active:scale-[0.98] transition-transform cursor-pointer hover:border-green-500/40"
+          onClick={() => navigate("/admin/users?filter=active")}
+        >
           <CardContent className="pt-4 pb-4">
             <div className="flex items-center justify-between">
               <div>
@@ -266,7 +258,10 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 border-purple-500/20 touch-manipulation active:scale-[0.98] transition-transform">
+        <Card
+          className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 border-purple-500/20 touch-manipulation active:scale-[0.98] transition-transform cursor-pointer hover:border-purple-500/40"
+          onClick={() => navigate("/admin/users?filter=today")}
+        >
           <CardContent className="pt-4 pb-4">
             <div className="flex items-center justify-between">
               <div>
@@ -278,7 +273,10 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border-amber-500/20 touch-manipulation active:scale-[0.98] transition-transform">
+        <Card
+          className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border-amber-500/20 touch-manipulation active:scale-[0.98] transition-transform cursor-pointer hover:border-amber-500/40"
+          onClick={() => navigate("/admin/users?filter=week")}
+        >
           <CardContent className="pt-4 pb-4">
             <div className="flex items-center justify-between">
               <div>
@@ -290,7 +288,10 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 border-cyan-500/20 touch-manipulation active:scale-[0.98] transition-transform">
+        <Card
+          className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 border-cyan-500/20 touch-manipulation active:scale-[0.98] transition-transform cursor-pointer hover:border-cyan-500/40"
+          onClick={() => navigate("/admin/users?filter=month")}
+        >
           <CardContent className="pt-4 pb-4">
             <div className="flex items-center justify-between">
               <div>
@@ -302,7 +303,10 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-pink-500/10 to-pink-600/5 border-pink-500/20 touch-manipulation active:scale-[0.98] transition-transform">
+        <Card
+          className="bg-gradient-to-br from-pink-500/10 to-pink-600/5 border-pink-500/20 touch-manipulation active:scale-[0.98] transition-transform cursor-pointer hover:border-pink-500/40"
+          onClick={() => navigate("/admin/elec-ids")}
+        >
           <CardContent className="pt-4 pb-4">
             <div className="flex items-center justify-between">
               <div>
@@ -314,7 +318,10 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 border-orange-500/20 touch-manipulation active:scale-[0.98] transition-transform">
+        <Card
+          className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 border-orange-500/20 touch-manipulation active:scale-[0.98] transition-transform cursor-pointer hover:border-orange-500/40"
+          onClick={() => navigate("/admin/analytics")}
+        >
           <CardContent className="pt-4 pb-4">
             <div className="flex items-center justify-between">
               <div>
@@ -328,7 +335,10 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-red-500/10 to-red-600/5 border-red-500/20 touch-manipulation active:scale-[0.98] transition-transform">
+        <Card
+          className="bg-gradient-to-br from-red-500/10 to-red-600/5 border-red-500/20 touch-manipulation active:scale-[0.98] transition-transform cursor-pointer hover:border-red-500/40"
+          onClick={() => navigate("/admin/subscriptions")}
+        >
           <CardContent className="pt-4 pb-4">
             <div className="flex items-center justify-between">
               <div>
@@ -423,41 +433,67 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        {/* Recent Activity */}
-        <Card>
+        {/* Online Now */}
+        <Card className="border-green-500/30">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm flex items-center gap-2">
-              <Clock className="h-4 w-4 text-green-400" />
-              Recent Activity
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-green-400">Online Now</span>
+              <Badge className="ml-auto bg-green-500/20 text-green-400 text-[10px]">
+                {stats?.recentActivity?.filter((a: any) =>
+                  new Date(a.last_seen).getTime() > Date.now() - 5 * 60 * 1000
+                ).length || 0} users
+              </Badge>
             </CardTitle>
           </CardHeader>
           <CardContent className="p-0">
-            <div className="divide-y divide-border">
+            <div className="divide-y divide-border max-h-[300px] overflow-y-auto">
               {stats?.recentActivity?.length === 0 ? (
-                <p className="text-sm text-muted-foreground p-4">No recent activity</p>
+                <p className="text-sm text-muted-foreground p-4">No one online</p>
               ) : (
-                stats?.recentActivity?.map((activity: any) => (
-                  <div
-                    key={activity.user_id}
-                    className="flex items-center justify-between p-3 touch-manipulation active:bg-muted/50 transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center relative">
-                        <Activity className="h-4 w-4 text-green-400" />
-                        <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-green-500 border-2 border-background" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-sm">
-                          {(activity.profiles as any)?.full_name || "Unknown User"}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {formatDistanceToNow(new Date(activity.last_seen), { addSuffix: true })}
-                        </p>
+                stats?.recentActivity?.map((activity: any) => {
+                  const isOnline = new Date(activity.last_seen).getTime() > Date.now() - 5 * 60 * 1000;
+                  const profile = activity.profiles as any;
+                  const roleColor = roleColors[profile?.role?.toLowerCase()] || roleColors.visitor;
+                  return (
+                    <div
+                      key={activity.user_id}
+                      className="flex items-center justify-between p-3 touch-manipulation active:bg-muted/50 transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={cn(
+                          "w-10 h-10 rounded-xl flex items-center justify-center relative font-bold text-sm",
+                          roleColor.bg, roleColor.text
+                        )}>
+                          {getInitials(profile?.full_name)}
+                          <div className={cn(
+                            "absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-background",
+                            isOnline ? "bg-green-500" : "bg-gray-500"
+                          )} />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <p className="font-medium text-sm">
+                              {profile?.full_name || "Unknown User"}
+                            </p>
+                            {profile?.role && (
+                              <Badge className={cn("text-[10px] capitalize", roleColor.badge)}>
+                                {profile.role}
+                              </Badge>
+                            )}
+                          </div>
+                          <p className="text-xs text-muted-foreground">
+                            {isOnline ? (
+                              <span className="text-green-400">Active now</span>
+                            ) : (
+                              formatDistanceToNow(new Date(activity.last_seen), { addSuffix: true })
+                            )}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
           </CardContent>

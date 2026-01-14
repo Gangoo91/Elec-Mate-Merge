@@ -105,6 +105,7 @@ export default function AdminElecIds() {
 
       return filtered;
     },
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
 
   // Fetch stats
@@ -125,6 +126,7 @@ export default function AdminElecIds() {
         hireable: hireableRes.count || 0,
       };
     },
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
 
   const getVerificationBadge = (profile: ElecIdProfile) => {

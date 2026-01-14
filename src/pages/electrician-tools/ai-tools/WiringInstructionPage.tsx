@@ -218,9 +218,34 @@ const WiringInstructionPage = () => {
         }
       });
 
-      if (error) throw error;
+      // Handle both wrapped and unwrapped responses
+      const wiringData = data?.wiring_schematic || data?.analysis?.wiring_schematic;
+
+      console.log('🔍 Wiring Analysis Response:', {
+        data,
+        error,
+        hasWiringSchematic: !!wiringData,
+        dataStructure: data?.wiring_schematic ? 'unwrapped' : data?.analysis?.wiring_schematic ? 'wrapped' : 'missing'
+      });
+
+      if (error) {
+        console.error('❌ Wiring analysis error:', error);
+        throw error;
+      }
+
+      if (!wiringData) {
+        console.error('❌ Response missing wiring_schematic:', data);
+        toast({
+          title: "Invalid Response",
+          description: "The analysis didn't return wiring instructions. Check console for details.",
+          variant: "destructive"
+        });
+        return;
+      }
+
       setAnalysisProgress(100);
-      setAnalysisResult(data);
+      // Unwrap if needed
+      setAnalysisResult(data?.wiring_schematic ? data : data.analysis);
 
     } catch (error) {
       console.error('Analysis error:', error);
@@ -250,7 +275,7 @@ const WiringInstructionPage = () => {
         </div>
       </div>
 
-      <main className="px-4 py-5 space-y-5 max-w-2xl mx-auto">
+      <main className="px-4 py-5 space-y-5 max-w-5xl mx-auto">
         {/* Hero - Changes based on property type */}
         <div className={cn(
           "rounded-2xl border bg-gradient-to-br backdrop-blur-xl p-5 overflow-hidden relative",

@@ -83,6 +83,7 @@ export default function AdminFeatureFlags() {
       if (error) throw error;
       return data as FeatureFlag[];
     },
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
 
   // Create flag

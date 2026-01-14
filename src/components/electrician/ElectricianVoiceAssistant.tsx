@@ -17,8 +17,8 @@ interface ElectricianVoiceAssistantProps {
 // Electrician-specific settings key - separate from employer
 const ELECTRICIAN_AGENT_SETTINGS_KEY = 'elevenlabs_electrician_agent_id';
 
-// Default agent ID - works out of the box
-const DEFAULT_ELECTRICIAN_AGENT_ID = 'agent_9901ke9rd48cf6jva60jd90sgx1y';
+// Default agent ID - Quote/Invoice voice assistant
+const DEFAULT_ELECTRICIAN_AGENT_ID = 'agent_0801kdxbb7hhepg80gfpgq8kgpgs';
 
 type ConnectionStep = 'idle' | 'mic' | 'token' | 'connecting' | 'connected' | 'error';
 
@@ -456,6 +456,28 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
       get_invoice_info: async ({ client, status }: { client?: string; status?: string }) => executeServerTool('get_invoice_info', { client, status }),
       get_overdue_invoices: async () => executeServerTool('get_overdue_invoices', {}),
       lookup_price: async ({ searchTerm }: { searchTerm: string }) => executeServerTool('lookup_price', { searchTerm }),
+
+      // Quote/Invoice send tools
+      send_quote: async ({ quoteId, clientName, quoteNumber }: { quoteId?: string; clientName?: string; quoteNumber?: string }) =>
+        executeServerTool('send_quote', { quoteId, clientName, quoteNumber }),
+
+      send_invoice: async ({ invoiceId, clientName, invoiceNumber }: { invoiceId?: string; clientName?: string; invoiceNumber?: string }) =>
+        executeServerTool('send_invoice', { invoiceId, clientName, invoiceNumber }),
+
+      create_and_send_quote: async (params: {
+        clientName: string;
+        clientEmail: string;
+        clientPhone?: string;
+        jobTitle?: string;
+        jobDescription?: string;
+        items: Array<{ description: string; quantity: number; unitPrice: number }>;
+        overheadPercent?: number;
+        profitPercent?: number;
+        vatPercent?: number;
+      }) => executeServerTool('create_and_send_quote', params),
+
+      create_and_send_invoice: async ({ quoteId, clientName, quoteNumber }: { quoteId?: string; clientName?: string; quoteNumber?: string }) =>
+        executeServerTool('create_and_send_invoice', { quoteId, clientName, quoteNumber }),
 
       // Certificate query tools
       get_cert_info: async ({ certNumber, status }: { certNumber?: string; status?: string }) => executeServerTool('get_cert_info', { certNumber, status }),

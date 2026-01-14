@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,7 +33,20 @@ import {
   Mail,
   User,
   MoreHorizontal,
+  Trash2,
+  Gift,
+  AlertTriangle,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { formatDistanceToNow, format } from "date-fns";
 import { toast } from "@/hooks/use-toast";
 
@@ -72,18 +86,37 @@ const roleFilters = [
   { value: "college", label: "College" },
 ];
 
+const timeFilters = [
+  { value: "all", label: "All Time" },
+  { value: "active", label: "Active Today" },
+  { value: "today", label: "Signed Up Today" },
+  { value: "week", label: "This Week" },
+  { value: "month", label: "This Month" },
+];
+
 export default function AdminUsers() {
   const { profile } = useAuth();
   const queryClient = useQueryClient();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
+  const [timeFilter, setTimeFilter] = useState(() => searchParams.get("filter") || "all");
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
+  // Sync timeFilter with URL params
+  useEffect(() => {
+    const urlFilter = searchParams.get("filter");
+    if (urlFilter && timeFilters.some(f => f.value === urlFilter)) {
+      setTimeFilter(urlFilter);
+    }
+  }, [searchParams]);
 
   const isSuperAdmin = profile?.admin_role === "super_admin";
 
   // Fetch users with emails via edge function
   const { data: users, isLoading, refetch, isFetching } = useQuery({
-    queryKey: ["admin-users", search, roleFilter],
+    queryKey: ["admin-users", search, roleFilter, timeFilter],
     queryFn: async () => {
       // Use edge function to get users with emails
       const { data: edgeData, error: edgeError } = await supabase.functions.invoke("admin-get-users");
@@ -95,21 +128,7 @@ export default function AdminUsers() {
 
       let allUsers = edgeData?.users || [];
 
-      // Apply filters client-side
-      if (search) {
-        const searchLower = search.toLowerCase();
-        allUsers = allUsers.filter((u: UserProfile) =>
-          u.full_name?.toLowerCase().includes(searchLower) ||
-          u.username?.toLowerCase().includes(searchLower) ||
-          u.email?.toLowerCase().includes(searchLower)
-        );
-      }
-
-      if (roleFilter !== "all") {
-        allUsers = allUsers.filter((u: UserProfile) => u.role === roleFilter);
-      }
-
-      // Get presence data
+      // Get presence data first (needed for active filter)
       const { data: presenceData } = await supabase
         .from("user_presence")
         .select("user_id, last_seen")
@@ -119,14 +138,65 @@ export default function AdminUsers() {
         presenceData?.map((p) => [p.user_id, p.last_seen]) || []
       );
 
-      return allUsers?.map((user: UserProfile) => ({
+      // Enrich users with presence data
+      allUsers = allUsers.map((user: UserProfile) => ({
         ...user,
         last_seen: presenceMap.get(user.id) || user.last_seen,
         isOnline:
           presenceMap.get(user.id) &&
           new Date(presenceMap.get(user.id)!).getTime() > Date.now() - 5 * 60 * 1000,
-      })) as UserProfile[];
+      }));
+
+      // Apply search filter
+      if (search) {
+        const searchLower = search.toLowerCase();
+        allUsers = allUsers.filter((u: UserProfile) =>
+          u.full_name?.toLowerCase().includes(searchLower) ||
+          u.username?.toLowerCase().includes(searchLower) ||
+          u.email?.toLowerCase().includes(searchLower)
+        );
+      }
+
+      // Apply role filter
+      if (roleFilter !== "all") {
+        allUsers = allUsers.filter((u: UserProfile) => u.role === roleFilter);
+      }
+
+      // Apply time filter
+      if (timeFilter !== "all") {
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        const dayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+
+        switch (timeFilter) {
+          case "active":
+            allUsers = allUsers.filter((u: UserProfile) =>
+              u.last_seen && new Date(u.last_seen) >= dayAgo
+            );
+            break;
+          case "today":
+            allUsers = allUsers.filter((u: UserProfile) =>
+              u.created_at && new Date(u.created_at) >= today
+            );
+            break;
+          case "week":
+            allUsers = allUsers.filter((u: UserProfile) =>
+              u.created_at && new Date(u.created_at) >= weekAgo
+            );
+            break;
+          case "month":
+            allUsers = allUsers.filter((u: UserProfile) =>
+              u.created_at && new Date(u.created_at) >= monthAgo
+            );
+            break;
+        }
+      }
+
+      return allUsers as UserProfile[];
     },
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
 
   // Get stats
@@ -158,6 +228,66 @@ export default function AdminUsers() {
       queryClient.invalidateQueries({ queryKey: ["admin-users"] });
       setSelectedUser(null);
       toast({ title: "Admin access updated" });
+    },
+    onError: (error) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+
+  // Grant free subscription mutation
+  const grantSubscriptionMutation = useMutation({
+    mutationFn: async ({ userId, tier }: { userId: string; tier: string }) => {
+      const { error } = await supabase
+        .from("profiles")
+        .update({
+          subscribed: true,
+          subscription_tier: tier,
+          subscription_start: new Date().toISOString(),
+        })
+        .eq("id", userId);
+      if (error) throw error;
+
+      // Log the action
+      await supabase.from("admin_audit_logs").insert({
+        user_id: profile?.id,
+        action: "grant_subscription",
+        entity_type: "profile",
+        entity_id: userId,
+        details: { tier },
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      setSelectedUser(null);
+      toast({ title: "Subscription granted", description: "User now has free access" });
+    },
+    onError: (error) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+
+  // Delete user mutation (super admin only)
+  const deleteUserMutation = useMutation({
+    mutationFn: async (userId: string) => {
+      // Call edge function to delete user (requires admin privileges)
+      const { error } = await supabase.functions.invoke("admin-delete-user", {
+        body: { userId },
+      });
+      if (error) throw error;
+
+      // Log the action
+      await supabase.from("admin_audit_logs").insert({
+        user_id: profile?.id,
+        action: "delete_user",
+        entity_type: "profile",
+        entity_id: userId,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      setSelectedUser(null);
+      setDeleteDialogOpen(false);
+      toast({ title: "User deleted", description: "The user has been permanently removed" });
     },
     onError: (error) => {
       toast({ title: "Error", description: error.message, variant: "destructive" });
@@ -249,6 +379,35 @@ export default function AdminUsers() {
           <RefreshCw className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`} />
         </Button>
       </div>
+
+      {/* Time Filter Pills */}
+      {timeFilter !== "all" && (
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+          {timeFilters.map((filter) => (
+            <Button
+              key={filter.value}
+              variant={timeFilter === filter.value ? "default" : "outline"}
+              size="sm"
+              onClick={() => {
+                setTimeFilter(filter.value);
+                if (filter.value === "all") {
+                  searchParams.delete("filter");
+                } else {
+                  searchParams.set("filter", filter.value);
+                }
+                setSearchParams(searchParams);
+              }}
+              className={`shrink-0 h-9 px-4 rounded-full touch-manipulation ${
+                timeFilter === filter.value
+                  ? "bg-blue-500 text-white hover:bg-blue-600"
+                  : "bg-muted/50"
+              }`}
+            >
+              {filter.label}
+            </Button>
+          ))}
+        </div>
+      )}
 
       {/* Role Filter Pills */}
       <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
@@ -528,13 +687,34 @@ export default function AdminUsers() {
             </div>
 
             {/* Actions Footer */}
-            {isSuperAdmin && selectedUser?.admin_role !== "super_admin" && (
-              <SheetFooter className="p-4 border-t border-border">
+            <SheetFooter className="p-4 border-t border-border space-y-2">
+              {/* Grant Free Access - for non-subscribed users */}
+              {!selectedUser?.subscribed && (
                 <Button
-                  className={`w-full h-14 touch-manipulation rounded-2xl text-base font-semibold ${
+                  className="w-full h-12 touch-manipulation rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
+                  onClick={() =>
+                    selectedUser &&
+                    grantSubscriptionMutation.mutate({
+                      userId: selectedUser.id,
+                      tier: selectedUser.role === "employer" ? "Employer" :
+                            selectedUser.role === "apprentice" ? "Apprentice" : "Electrician",
+                    })
+                  }
+                  disabled={grantSubscriptionMutation.isPending}
+                >
+                  <Gift className="h-5 w-5 mr-2" />
+                  Grant Free Access
+                </Button>
+              )}
+
+              {/* Admin toggle - super admin only */}
+              {isSuperAdmin && selectedUser?.admin_role !== "super_admin" && (
+                <Button
+                  variant="outline"
+                  className={`w-full h-12 touch-manipulation rounded-xl ${
                     selectedUser?.admin_role
-                      ? "bg-red-500 hover:bg-red-600"
-                      : "bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600"
+                      ? "border-red-500/50 text-red-400 hover:bg-red-500/10"
+                      : "border-orange-500/50 text-orange-400 hover:bg-orange-500/10"
                   }`}
                   onClick={() =>
                     selectedUser &&
@@ -548,20 +728,57 @@ export default function AdminUsers() {
                   {selectedUser?.admin_role ? (
                     <>
                       <ShieldOff className="h-5 w-5 mr-2" />
-                      Remove Admin Access
+                      Remove Admin
                     </>
                   ) : (
                     <>
                       <Shield className="h-5 w-5 mr-2" />
-                      Grant Admin Access
+                      Make Admin
                     </>
                   )}
                 </Button>
-              </SheetFooter>
-            )}
+              )}
+
+              {/* Delete user - super admin only, can't delete other super admins */}
+              {isSuperAdmin && selectedUser?.admin_role !== "super_admin" && (
+                <Button
+                  variant="ghost"
+                  className="w-full h-10 touch-manipulation rounded-xl text-red-400 hover:text-red-500 hover:bg-red-500/10"
+                  onClick={() => setDeleteDialogOpen(true)}
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Delete User
+                </Button>
+              )}
+            </SheetFooter>
           </div>
         </SheetContent>
       </Sheet>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="h-5 w-5 text-red-500" />
+              Delete User Permanently?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete <strong>{selectedUser?.full_name || selectedUser?.email}</strong> and all their data. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-500 hover:bg-red-600"
+              onClick={() => selectedUser && deleteUserMutation.mutate(selectedUser.id)}
+              disabled={deleteUserMutation.isPending}
+            >
+              {deleteUserMutation.isPending ? "Deleting..." : "Delete User"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

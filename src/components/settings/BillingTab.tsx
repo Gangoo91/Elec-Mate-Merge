@@ -16,6 +16,7 @@ import {
   CheckCircle,
   Info,
 } from "lucide-react";
+import StripeConnectSetup from '@/components/electrician/settings/StripeConnectSetup';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -122,6 +123,11 @@ const BillingTab = () => {
             </div>
           </div>
         </div>
+      </motion.div>
+
+      {/* Stripe Connect - Accept Card Payments */}
+      <motion.div variants={itemVariants}>
+        <StripeConnectSetup />
       </motion.div>
 
       {/* Billing Actions */}

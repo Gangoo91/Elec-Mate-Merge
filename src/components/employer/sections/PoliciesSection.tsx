@@ -1,54 +1,131 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { FeatureTile } from "@/components/employer/FeatureTile";
 import { SectionHeader } from "@/components/employer/SectionHeader";
 import { Input } from "@/components/ui/input";
-import { QuickStats, QuickStat } from "@/components/employer/QuickStats";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { QuickStats } from "@/components/employer/QuickStats";
+import { Skeleton } from "@/components/ui/skeleton";
+import { PolicyViewer } from "@/components/employer/PolicyViewer";
+import {
+  usePolicyTemplates,
+  useUserPolicies,
+  useAdoptedTemplateIds,
+  type PolicyTemplate,
+  type UserPolicy,
+} from "@/hooks/usePolicies";
 import {
   BookOpen,
   Shield,
-  Zap,
-  HardHat,
-  User,
-  Car,
   Users,
   FileText,
   Search,
   CheckCircle2,
-  Clock
+  Clock,
+  Sparkles,
+  ChevronRight,
+  Scale,
 } from "lucide-react";
-
-const policies = [
-  { id: "1", name: "Health & Safety Policy", category: "Safety", lastUpdated: "2024-02-01", status: "Current" },
-  { id: "2", name: "Electrical Safety Policy", category: "Safety", lastUpdated: "2024-01-15", status: "Current" },
-  { id: "3", name: "Safe Isolation Policy", category: "Safety", lastUpdated: "2024-01-15", status: "Current" },
-  { id: "4", name: "PPE Policy", category: "Safety", lastUpdated: "2024-01-10", status: "Current" },
-  { id: "5", name: "Lone Working Policy", category: "Safety", lastUpdated: "2023-12-01", status: "Review Due" },
-  { id: "6", name: "Working at Height Policy", category: "Safety", lastUpdated: "2024-01-20", status: "Current" },
-  { id: "7", name: "Manual Handling Policy", category: "Safety", lastUpdated: "2024-01-05", status: "Current" },
-  { id: "8", name: "Alcohol & Drugs Policy", category: "HR", lastUpdated: "2023-11-15", status: "Review Due" },
-  { id: "9", name: "Equality & Diversity Policy", category: "HR", lastUpdated: "2024-02-01", status: "Current" },
-  { id: "10", name: "Anti-Harassment Policy", category: "HR", lastUpdated: "2024-02-01", status: "Current" },
-  { id: "11", name: "Data Protection / GDPR Policy", category: "Legal", lastUpdated: "2024-01-01", status: "Current" },
-  { id: "12", name: "Social Media Policy", category: "HR", lastUpdated: "2023-10-01", status: "Review Due" },
-  { id: "13", name: "Vehicle Use Policy", category: "Operations", lastUpdated: "2024-01-15", status: "Current" },
-];
 
 export function PoliciesSection() {
   const [searchQuery, setSearchQuery] = useState("");
-  
-  const currentPolicies = policies.filter(p => p.status === "Current").length;
-  const reviewDue = policies.filter(p => p.status === "Review Due").length;
-  const totalPolicies = policies.length;
+  const [selectedTemplate, setSelectedTemplate] = useState<PolicyTemplate | null>(null);
+  const [selectedUserPolicy, setSelectedUserPolicy] = useState<UserPolicy | null>(null);
+  const [viewerOpen, setViewerOpen] = useState(false);
 
-  const filteredPolicies = policies.filter(p =>
-    p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.category.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Fetch data
+  const { data: templates = [], isLoading: templatesLoading } = usePolicyTemplates();
+  const { data: userPolicies = [], isLoading: userPoliciesLoading } = useUserPolicies();
+  const { data: adoptedTemplateIds = [] } = useAdoptedTemplateIds();
 
-  const safetyPolicies = filteredPolicies.filter(p => p.category === "Safety");
-  const hrPolicies = filteredPolicies.filter(p => p.category === "HR");
-  const otherPolicies = filteredPolicies.filter(p => !["Safety", "HR"].includes(p.category));
+  const isLoading = templatesLoading || userPoliciesLoading;
+
+  // Filter templates and user policies
+  const filteredTemplates = useMemo(() => {
+    return templates.filter(t =>
+      t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      t.category.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [templates, searchQuery]);
+
+  const filteredUserPolicies = useMemo(() => {
+    return userPolicies.filter(p =>
+      p.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [userPolicies, searchQuery]);
+
+  // Group templates by category
+  const safetyTemplates = filteredTemplates.filter(t => t.category === "Safety");
+  const hrTemplates = filteredTemplates.filter(t => t.category === "HR");
+  const legalTemplates = filteredTemplates.filter(t => t.category === "Legal");
+
+  // Stats
+  const totalTemplates = templates.length;
+  const adoptedCount = userPolicies.length;
+  const reviewDue = userPolicies.filter(p =>
+    p.status === "Review Due" ||
+    (p.review_date && new Date(p.review_date) <= new Date())
+  ).length;
+
+  const handleViewTemplate = (template: PolicyTemplate) => {
+    setSelectedTemplate(template);
+    setSelectedUserPolicy(null);
+    setViewerOpen(true);
+  };
+
+  const handleViewUserPolicy = (policy: UserPolicy) => {
+    setSelectedUserPolicy(policy);
+    setSelectedTemplate(null);
+    setViewerOpen(true);
+  };
+
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case "Safety":
+        return Shield;
+      case "HR":
+        return Users;
+      case "Legal":
+        return Scale;
+      default:
+        return FileText;
+    }
+  };
+
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case "Safety":
+        return "text-success";
+      case "HR":
+        return "text-elec-yellow";
+      case "Legal":
+        return "text-info";
+      default:
+        return "text-muted-foreground";
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-4 md:space-y-6 animate-fade-in">
+        <SectionHeader
+          title="Policies & Procedures"
+          description="Company policies, pre-written and editable"
+        />
+        <Skeleton className="h-11 w-full" />
+        <div className="flex gap-2 overflow-x-auto hide-scrollbar">
+          <Skeleton className="h-16 w-24 shrink-0" />
+          <Skeleton className="h-16 w-24 shrink-0" />
+          <Skeleton className="h-16 w-24 shrink-0" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          {[1, 2, 3, 4].map(i => (
+            <Skeleton key={i} className="h-20" />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4 md:space-y-6 animate-fade-in">
@@ -64,7 +141,7 @@ export function PoliciesSection() {
           placeholder="Search policies..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-9"
+          className="pl-9 h-11"
         />
       </div>
 
@@ -72,9 +149,15 @@ export function PoliciesSection() {
       <QuickStats
         stats={[
           {
+            icon: BookOpen,
+            value: totalTemplates,
+            label: "Available",
+            color: "blue",
+          },
+          {
             icon: CheckCircle2,
-            value: currentPolicies,
-            label: "Current",
+            value: adoptedCount,
+            label: "Adopted",
             color: "green",
           },
           ...(reviewDue > 0 ? [{
@@ -84,116 +167,283 @@ export function PoliciesSection() {
             color: "yellow" as const,
             pulse: true,
           }] : []),
-          {
-            icon: BookOpen,
-            value: totalPolicies,
-            label: "Total",
-            color: "blue",
-          },
         ]}
       />
 
-      {/* Safety Policies */}
-      {safetyPolicies.length > 0 && (
+      {/* My Policies (User's adopted policies) */}
+      {filteredUserPolicies.length > 0 && (
+        <div>
+          <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
+            <span className="w-1 h-5 bg-elec-yellow rounded-full"></span>
+            My Policies
+            <Badge variant="secondary" className="ml-2">
+              {filteredUserPolicies.length}
+            </Badge>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            {filteredUserPolicies.map((policy) => {
+              const CategoryIcon = getCategoryIcon(
+                policy.template?.category || "Other"
+              );
+              return (
+                <Card
+                  key={policy.id}
+                  className="hover:bg-muted/50 transition-colors cursor-pointer border-elec-yellow/20"
+                  onClick={() => handleViewUserPolicy(policy)}
+                >
+                  <CardContent className="p-3 md:p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <CategoryIcon
+                          className={`h-5 w-5 ${getCategoryColor(
+                            policy.template?.category || "Other"
+                          )}`}
+                        />
+                        <div className="min-w-0">
+                          <p className="font-medium text-foreground text-sm truncate">
+                            {policy.name}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {policy.company_name || "No company set"}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Badge
+                          variant="secondary"
+                          className={
+                            policy.status === "Active"
+                              ? "bg-success/10 text-success"
+                              : policy.status === "Review Due"
+                              ? "bg-warning/10 text-warning"
+                              : "bg-muted"
+                          }
+                        >
+                          {policy.status}
+                        </Badge>
+                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Info Banner for New Users */}
+      {userPolicies.length === 0 && (
+        <Card className="border-info/20 bg-info/5">
+          <CardContent className="p-4">
+            <div className="flex gap-3">
+              <div className="p-2 rounded-lg bg-info/10 h-fit">
+                <Sparkles className="h-5 w-5 text-info" />
+              </div>
+              <div>
+                <h3 className="font-medium text-foreground mb-1">
+                  Pre-Written Policies
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Browse the templates below and click <strong>Adopt</strong> to
+                  add them to your company policies. You can customise them with
+                  your company name.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Safety Policy Templates */}
+      {safetyTemplates.length > 0 && (
         <div>
           <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
             <span className="w-1 h-5 bg-success rounded-full"></span>
             Safety Policies
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {safetyPolicies.map((policy) => (
-              <Card key={policy.id} className="hover:bg-muted/50 transition-colors cursor-pointer">
-                <CardContent className="p-3 md:p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Shield className="h-5 w-5 text-success" />
-                      <div>
-                        <p className="font-medium text-foreground text-sm">{policy.name}</p>
-                        <p className="text-xs text-muted-foreground">Updated {policy.lastUpdated}</p>
+            {safetyTemplates.map((template) => {
+              const isAdopted = adoptedTemplateIds.includes(template.id);
+              return (
+                <Card
+                  key={template.id}
+                  className={`hover:bg-muted/50 transition-colors cursor-pointer ${
+                    isAdopted ? "border-success/20 bg-success/5" : ""
+                  }`}
+                  onClick={() => handleViewTemplate(template)}
+                >
+                  <CardContent className="p-3 md:p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <Shield className="h-5 w-5 text-success" />
+                        <div className="min-w-0">
+                          <p className="font-medium text-foreground text-sm truncate">
+                            {template.name}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            v{template.version}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {isAdopted ? (
+                          <Badge
+                            variant="secondary"
+                            className="bg-success/10 text-success"
+                          >
+                            <CheckCircle2 className="h-3 w-3 mr-1" />
+                            Adopted
+                          </Badge>
+                        ) : (
+                          <Badge variant="outline">View</Badge>
+                        )}
+                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
                       </div>
                     </div>
-                    <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      policy.status === "Current" 
-                        ? "bg-success/10 text-success" 
-                        : "bg-warning/10 text-warning"
-                    }`}>
-                      {policy.status}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       )}
 
-      {/* HR Policies */}
-      {hrPolicies.length > 0 && (
+      {/* HR Policy Templates */}
+      {hrTemplates.length > 0 && (
         <div>
           <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
             <span className="w-1 h-5 bg-elec-yellow rounded-full"></span>
             HR Policies
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {hrPolicies.map((policy) => (
-              <Card key={policy.id} className="hover:bg-muted/50 transition-colors cursor-pointer">
-                <CardContent className="p-3 md:p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Users className="h-5 w-5 text-elec-yellow" />
-                      <div>
-                        <p className="font-medium text-foreground text-sm">{policy.name}</p>
-                        <p className="text-xs text-muted-foreground">Updated {policy.lastUpdated}</p>
+            {hrTemplates.map((template) => {
+              const isAdopted = adoptedTemplateIds.includes(template.id);
+              return (
+                <Card
+                  key={template.id}
+                  className={`hover:bg-muted/50 transition-colors cursor-pointer ${
+                    isAdopted ? "border-success/20 bg-success/5" : ""
+                  }`}
+                  onClick={() => handleViewTemplate(template)}
+                >
+                  <CardContent className="p-3 md:p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <Users className="h-5 w-5 text-elec-yellow" />
+                        <div className="min-w-0">
+                          <p className="font-medium text-foreground text-sm truncate">
+                            {template.name}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            v{template.version}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {isAdopted ? (
+                          <Badge
+                            variant="secondary"
+                            className="bg-success/10 text-success"
+                          >
+                            <CheckCircle2 className="h-3 w-3 mr-1" />
+                            Adopted
+                          </Badge>
+                        ) : (
+                          <Badge variant="outline">View</Badge>
+                        )}
+                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
                       </div>
                     </div>
-                    <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      policy.status === "Current" 
-                        ? "bg-success/10 text-success" 
-                        : "bg-warning/10 text-warning"
-                    }`}>
-                      {policy.status}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       )}
 
-      {/* Other Policies */}
-      {otherPolicies.length > 0 && (
+      {/* Legal Policy Templates */}
+      {legalTemplates.length > 0 && (
         <div>
           <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
             <span className="w-1 h-5 bg-info rounded-full"></span>
-            Other Policies
+            Legal & Compliance
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {otherPolicies.map((policy) => (
-              <Card key={policy.id} className="hover:bg-muted/50 transition-colors cursor-pointer">
-                <CardContent className="p-3 md:p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <FileText className="h-5 w-5 text-info" />
-                      <div>
-                        <p className="font-medium text-foreground text-sm">{policy.name}</p>
-                        <p className="text-xs text-muted-foreground">Updated {policy.lastUpdated}</p>
+            {legalTemplates.map((template) => {
+              const isAdopted = adoptedTemplateIds.includes(template.id);
+              return (
+                <Card
+                  key={template.id}
+                  className={`hover:bg-muted/50 transition-colors cursor-pointer ${
+                    isAdopted ? "border-success/20 bg-success/5" : ""
+                  }`}
+                  onClick={() => handleViewTemplate(template)}
+                >
+                  <CardContent className="p-3 md:p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <Scale className="h-5 w-5 text-info" />
+                        <div className="min-w-0">
+                          <p className="font-medium text-foreground text-sm truncate">
+                            {template.name}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            v{template.version}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {isAdopted ? (
+                          <Badge
+                            variant="secondary"
+                            className="bg-success/10 text-success"
+                          >
+                            <CheckCircle2 className="h-3 w-3 mr-1" />
+                            Adopted
+                          </Badge>
+                        ) : (
+                          <Badge variant="outline">View</Badge>
+                        )}
+                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
                       </div>
                     </div>
-                    <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      policy.status === "Current" 
-                        ? "bg-success/10 text-success" 
-                        : "bg-warning/10 text-warning"
-                    }`}>
-                      {policy.status}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       )}
+
+      {/* Empty State */}
+      {filteredTemplates.length === 0 && filteredUserPolicies.length === 0 && (
+        <Card className="border-dashed">
+          <CardContent className="p-8 text-center">
+            <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="font-medium text-foreground mb-2">
+              No policies found
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              Try adjusting your search query
+            </p>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Policy Viewer Modal */}
+      <PolicyViewer
+        open={viewerOpen}
+        onOpenChange={setViewerOpen}
+        template={selectedTemplate}
+        userPolicy={selectedUserPolicy}
+        isAdopted={
+          selectedTemplate
+            ? adoptedTemplateIds.includes(selectedTemplate.id)
+            : false
+        }
+      />
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { AlertCircle, Calendar, ChevronRight } from 'lucide-react';
+import { AlertCircle, Calendar, ChevronRight, User } from 'lucide-react';
 import { useExpiryReminders } from '@/hooks/useExpiryReminders';
 import { formatExpiryStatus, getExpiryUrgency, getExpiryColorClasses, filterByTimeRange } from '@/utils/expiryHelper';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -114,10 +114,21 @@ export const ExpiringCertificatesCard = () => {
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="font-medium text-foreground text-sm truncate">
-                        {reminder.client_name || 'Unknown Client'}
-                      </span>
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      {reminder.customer ? (
+                        <Link
+                          to={`/customers/${reminder.customer.id}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs font-medium hover:bg-elec-yellow/30 transition-colors shrink-0"
+                        >
+                          <User className="h-3 w-3" />
+                          {reminder.customer.name}
+                        </Link>
+                      ) : (
+                        <span className="font-medium text-foreground text-sm truncate">
+                          {reminder.client_name || 'Unknown Client'}
+                        </span>
+                      )}
                       <Badge className={`${colors.badge} text-xs shrink-0`}>
                         {urgency === 'expired' ? 'Expired' : statusText}
                       </Badge>

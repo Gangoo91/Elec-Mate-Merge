@@ -40,7 +40,7 @@ export function useStudyStreak() {
         .from('user_study_streaks')
         .select('*')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
 
       // Silently handle all errors - table may not exist
       if (error) {
@@ -102,7 +102,7 @@ export function useStudyStreak() {
         .from('user_study_streaks')
         .select('*')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
 
       if (existing) {
         // Calculate new streak

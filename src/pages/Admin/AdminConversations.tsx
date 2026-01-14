@@ -91,6 +91,7 @@ export default function AdminConversations() {
         categories: categories.size,
       };
     },
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
     refetchInterval: 30000,
   });
 
@@ -123,6 +124,7 @@ export default function AdminConversations() {
 
       return filtered;
     },
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
 
   // Get unique categories for filter
@@ -137,6 +139,7 @@ export default function AdminConversations() {
       const uniqueCategories = [...new Set(data?.map(m => m.category).filter(Boolean))];
       return uniqueCategories as string[];
     },
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
 
   // Delete message mutation

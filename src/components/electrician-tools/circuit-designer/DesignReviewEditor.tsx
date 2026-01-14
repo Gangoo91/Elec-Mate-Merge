@@ -210,6 +210,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const [justificationsPatchVersion, setJustificationsPatchVersion] = useState(0);
   const [showSuccessAnimation, setShowSuccessAnimation] = useState(true);
   const [isSendingToEIC, setIsSendingToEIC] = useState(false);
+  const [showSendToEICDialog, setShowSendToEICDialog] = useState(false);
+  const [includeExpectedResults, setIncludeExpectedResults] = useState(false);
 
   // Responsive breakpoint detection
   useEffect(() => {
@@ -956,75 +958,100 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   
   
   const handleProceedToInstaller = () => {
-    // Build context from selected circuits (Phase 2: Structured protection data)
-    const context = {
-      design: design,
-      selectedCircuits: selectedCircuitsForInstall.map(idx => {
-        const circuit = design.circuits[idx];
-        return {
-          circuitIndex: idx,
-          name: circuit.name,
-          loadType: circuit.loadType,
-          loadPower: circuit.loadPower,
-          cableSize: circuit.cableSize,
-          cpcSize: circuit.cpcSize,
-          cableType: circuit.cableType || `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² CPC`,
-          cableLength: circuit.cableLength,
-          installationMethod: circuit.installationMethod,
-          
-          // Structured protection device
-          protectionDevice: {
-            type: circuit.protectionDevice.type,
-            rating: circuit.protectionDevice.rating,
-            curve: circuit.protectionDevice.curve,
-            kaRating: circuit.protectionDevice.kaRating
+    try {
+      // Validate we have circuits selected
+      if (!selectedCircuitsForInstall || selectedCircuitsForInstall.length === 0) {
+        toast.error('Please select at least one circuit');
+        return;
+      }
+
+      // Validate design has circuits
+      if (!design.circuits || design.circuits.length === 0) {
+        toast.error('No circuits available');
+        return;
+      }
+
+      // Build context from selected circuits (Phase 2: Structured protection data)
+      const context = {
+        design: design,
+        selectedCircuits: selectedCircuitsForInstall.map(idx => {
+          const circuit = design.circuits[idx];
+          if (!circuit) {
+            console.warn(`Circuit at index ${idx} not found`);
+            return null;
+          }
+          return {
+            circuitIndex: idx,
+            name: circuit.name,
+            loadType: circuit.loadType,
+            loadPower: circuit.loadPower,
+            cableSize: circuit.cableSize,
+            cpcSize: circuit.cpcSize,
+            cableType: circuit.cableType || `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² CPC`,
+            cableLength: circuit.cableLength,
+            installationMethod: circuit.installationMethod,
+
+            // Structured protection device (with safe fallbacks)
+            protectionDevice: {
+              type: circuit.protectionDevice?.type || 'MCB',
+              rating: circuit.protectionDevice?.rating || 0,
+              curve: circuit.protectionDevice?.curve || 'B',
+              kaRating: circuit.protectionDevice?.kaRating || 6
+            },
+
+            // Protection summary string for display
+            protectionSummary: circuit.protectionDevice
+              ? `${circuit.protectionDevice.rating}A ${circuit.protectionDevice.type} Type ${circuit.protectionDevice.curve} (${circuit.protectionDevice.kaRating}kA)`
+              : 'Not specified',
+
+            rcdProtected: circuit.rcdProtected,
+            voltage: circuit.voltage,
+            phases: circuit.phases,
+
+            // Include calculations for validation (with safe fallbacks)
+            calculations: circuit.calculations ? {
+              designCurrent: circuit.calculations.Ib,
+              voltageDrop: circuit.calculations.voltageDrop,
+              zs: circuit.calculations.zs,
+              maxZs: circuit.calculations.maxZs
+            } : null
+          };
+        }).filter(Boolean), // Remove any null entries
+
+        previousOutputs: [{
+          agent: 'designer',
+          response: {
+            structuredData: {
+              circuitCount: selectedCircuitsForInstall.length,
+              projectName: design.projectName,
+              location: design.location,
+              installationType: design.installationType
+            }
           },
-          
-          // Protection summary string for display
-          protectionSummary: `${circuit.protectionDevice.rating}A ${circuit.protectionDevice.type} Type ${circuit.protectionDevice.curve} (${circuit.protectionDevice.kaRating}kA)`,
-          
-          rcdProtected: circuit.rcdProtected,
-          voltage: circuit.voltage,
-          phases: circuit.phases,
-          
-          // Include calculations for validation
-          calculations: {
-            designCurrent: circuit.calculations.Ib,
-            voltageDrop: circuit.calculations.voltageDrop,
-            zs: circuit.calculations.zs,
-            maxZs: circuit.calculations.maxZs
-          }
-        };
-      }),
-      
-      previousOutputs: [{
-        agent: 'designer',
-        response: {
-          structuredData: {
-            circuitCount: selectedCircuitsForInstall.length,
-            projectName: design.projectName,
-            location: design.location,
-            installationType: design.installationType
-          }
-        },
-        timestamp: new Date().toISOString()
-      }],
-      
-      // Extract unique regulations (avoid duplicates)
-      regulations: Array.from(new Set(
-        design.circuits
-          ?.filter((_, idx) => selectedCircuitsForInstall.includes(idx))
-          .flatMap(c => c.justifications ? Object.values(c.justifications) : [])
-          .filter(Boolean)
-      )) || []
-    };
-    
-    // Phase 3: Use sessionStorage instead of URL params
-    const sessionId = `design-context-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    sessionStorage.setItem(sessionId, JSON.stringify(context));
-    
-    navigate(`/electrician/installation-specialist?sessionId=${sessionId}`);
-    toast.success(`Opening Installation Specialist with ${selectedCircuitsForInstall.length} circuit(s)`);
+          timestamp: new Date().toISOString()
+        }],
+
+        // Extract unique regulations (avoid duplicates)
+        regulations: Array.from(new Set(
+          design.circuits
+            ?.filter((_, idx) => selectedCircuitsForInstall.includes(idx))
+            .flatMap(c => c.justifications ? Object.values(c.justifications) : [])
+            .filter(Boolean)
+        )) || []
+      };
+
+      // Phase 3: Use sessionStorage instead of URL params
+      const sessionId = `design-context-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      sessionStorage.setItem(sessionId, JSON.stringify(context));
+
+      navigate(`/electrician/installation-specialist?sessionId=${sessionId}`);
+      toast.success(`Opening Installation Specialist with ${selectedCircuitsForInstall.length} circuit(s)`);
+    } catch (error) {
+      console.error('Failed to proceed to installer:', error);
+      toast.error('Failed to open Installation Specialist', {
+        description: error instanceof Error ? error.message : 'Unknown error'
+      });
+    }
   };
   
   const handleCreateInstallationMethod = () => {
@@ -1038,8 +1065,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
     }
   };
 
+  // Open Send to EIC dialog
+  const openSendToEICDialog = () => {
+    setIncludeExpectedResults(false);
+    setShowSendToEICDialog(true);
+  };
+
   // Send design to EIC Schedule
   const handleSendToEIC = async () => {
+    setShowSendToEICDialog(false);
     setIsSendingToEIC(true);
 
     try {
@@ -1049,38 +1083,109 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         return;
       }
 
+      // Helper function to get BS standard based on device type
+      const getBsStandard = (deviceType: string | undefined) => {
+        switch (deviceType) {
+          case 'RCBO': return 'BS EN 61009';
+          case 'MCCB': return 'BS EN 60947-2';
+          case 'BS88': return 'BS 88-2';
+          case 'BS1361': return 'BS 1361';
+          case 'BS3036': return 'BS 3036';
+          default: return 'BS EN 60898';
+        }
+      };
+
+      // Helper function to map wiring type to code
+      const getWiringTypeCode = (cableType: string | undefined) => {
+        if (!cableType) return '';
+        if (cableType.includes('SWA') || cableType.includes('armoured')) return 'D';
+        if (cableType.includes('MICC') || cableType.includes('mineral')) return 'E';
+        if (cableType.includes('flat') || cableType.includes('T&E')) return 'A';
+        if (cableType.includes('singles') || cableType.includes('conduit')) return 'B';
+        if (cableType.includes('flexible')) return 'F';
+        return 'A'; // Default to twin & earth
+      };
+
+      // Helper function to get points served based on load type
+      const getPointsServed = (loadType: string, socketCount?: number) => {
+        if (socketCount) return socketCount.toString();
+        switch (loadType) {
+          case 'lighting': return '8';
+          case 'socket': return '6';
+          case 'ring': return '∞';
+          case 'cooker': return '1';
+          case 'shower': return '1';
+          case 'ev-charger': return '1';
+          case 'immersion': return '1';
+          default: return '1';
+        }
+      };
+
       // Transform design circuits to EIC schedule format
+      // Expected test results (r1r2, zs, maxZs) are conditional based on user choice
       const scheduleCircuits = design.circuits.map((circuit, idx) => ({
+        // Circuit identification
         circuitNumber: (circuit.circuitNumber || idx + 1).toString(),
-        phaseType: circuit.phases === 'three' ? '3-phase' : 'single-phase',
         circuitDescription: circuit.name,
-        referenceMethod: circuit.installationMethod || 'Reference Method C',
-        pointsServed: circuit.loadType === 'lighting' ? '8' : circuit.loadType === 'socket' ? '6' : '1',
+
+        // Phase type - formatted for EIC table
+        phaseType: circuit.phases === 'three' ? '3-phase' : 'single-phase',
+
+        // Cable details
         liveSize: circuit.cableSize?.toString() || '',
         cpcSize: circuit.cpcSize?.toString() || '',
+        cableType: circuit.cableType || `${circuit.cableSize}mm² T&E`,
+        cableLength: circuit.cableLength?.toString() || '',
+
+        // Installation method and wiring type
+        referenceMethod: circuit.installationMethod || 'Reference Method C',
+        typeOfWiring: getWiringTypeCode(circuit.cableType),
+        pointsServed: getPointsServed(circuit.loadType, circuit.socketCount),
+
+        // Protective device - complete details
         protectiveDeviceType: circuit.protectionDevice?.type || 'MCB',
         protectiveDeviceCurve: circuit.protectionDevice?.curve || 'B',
         protectiveDeviceRating: circuit.protectionDevice?.rating?.toString() || '',
         protectiveDeviceKaRating: circuit.protectionDevice?.kaRating?.toString() || '6',
-        bsStandard: 'BS EN 60898',
-        r1r2: circuit.expectedTestResults?.r1r2?.at20C ||
-              circuit.expectedTests?.r1r2?.at20C || '',
-        zs: circuit.calculations?.zs?.toFixed(2) || '',
+        bsStandard: getBsStandard(circuit.protectionDevice?.type),
+
+        // RCD details (if applicable)
+        rcdProtected: circuit.rcdProtected || false,
+        rcdRating: circuit.rcdProtected
+          ? (circuit.protectionDevice?.rcdRating?.toString() || '30') + 'mA'
+          : '',
+        rcdType: circuit.rcdProtected ? 'Type A' : '',
+        rcdBsStandard: circuit.rcdProtected ? 'BS EN 62423' : '',
+
+        // Expected test results (conditional based on user checkbox)
+        r1r2: includeExpectedResults
+          ? (circuit.expectedTestResults?.r1r2?.at20C ||
+             circuit.expectedTests?.r1r2?.at20C ||
+             circuit.expectedTests?.r1r2?.value || '')
+          : '',
+        zs: includeExpectedResults
+          ? (circuit.calculations?.zs?.toFixed(2) || '')
+          : '',
         maxZs: circuit.calculations?.maxZs?.toFixed(2) ||
-               circuit.expectedTests?.zs?.maxPermitted || '',
+               circuit.expectedTests?.zs?.maxPermitted?.toString() || '',
+
+        // Insulation test defaults
         insulationTestVoltage: '500V DC',
         insulationResistance: '≥1.0MΩ',
+
+        // On-site verification required
         polarity: 'Verify on-site',
-        rcdRating: circuit.rcdProtected ? '30mA' : undefined,
-        rcdOneX: circuit.rcdProtected ? '≤300ms' : undefined,
         pfc: 'Test on-site',
-        functionalTesting: 'Test on-site'
+        functionalTesting: 'Test on-site',
+
+        // Circuit topology for ring circuits
+        circuitTopology: circuit.circuitTopology || (circuit.loadType === 'ring' ? 'ring' : 'radial')
       }));
 
       // Generate a unique installation ID
       const installationId = `INST-${Date.now()}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
 
-      // Build schedule_data JSON matching EIC format
+      // Build schedule_data JSON matching EIC format with comprehensive data
       const scheduleData = {
         circuits: scheduleCircuits,
         supply: {
@@ -1088,16 +1193,22 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           phases: design.consumerUnit?.incomingSupply?.phases || 'single',
           earthingSystem: design.consumerUnit?.incomingSupply?.earthingSystem || 'TN-C-S',
           ze: design.consumerUnit?.incomingSupply?.Ze || 0.35,
-          pscc: design.consumerUnit?.incomingSupply?.incomingPFC || 6000
+          pscc: design.consumerUnit?.incomingSupply?.incomingPFC || 6000,
+          mainSwitchRating: design.consumerUnit?.mainSwitchRating || 100,
+          consumerUnitType: design.consumerUnit?.type || 'main-switch'
         },
         projectInfo: {
           projectName: design.projectName,
           installationType: design.installationType,
           clientName: design.clientName,
+          location: design.location,
+          electricianName: design.electricianName,
           totalLoad: design.totalLoad,
-          diversifiedLoad: (design as any).diversifiedLoad || design.totalLoad
+          diversifiedLoad: (design as any).diversifiedLoad || design.totalLoad,
+          diversityFactor: design.diversityFactor
         },
         source: 'circuit-designer',
+        includesExpectedResults: includeExpectedResults,
         generatedAt: new Date().toISOString()
       };
 
@@ -1118,12 +1229,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
       if (error) throw error;
 
-      toast.success('Design saved to EIC', {
-        description: 'Opening EIC form with pre-filled circuits...'
+      // Success - stay on current page, show toast
+      toast.success('Design saved to EIC schedule', {
+        description: 'Find it in your Designed Circuits under Inspection & Testing'
       });
-
-      // Navigate to EIC form with the design ID
-      navigate(`/electrician/inspection-testing?section=eic&designId=${schedule.id}`);
 
     } catch (error) {
       console.error('Failed to save design to EIC:', error);
@@ -1477,9 +1586,78 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           design={design}
           onReset={onReset}
           onExport={handleExportPDF}
-          onSendToEIC={handleSendToEIC}
+          onSendToEIC={openSendToEICDialog}
           isSendingToEIC={isSendingToEIC}
         />
+
+        {/* Send to EIC Confirmation Dialog (Mobile) */}
+        <Dialog open={showSendToEICDialog} onOpenChange={setShowSendToEICDialog}>
+          <DialogContent className="max-w-[calc(100vw-2rem)] rounded-xl">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <FileCheck className="h-5 w-5 text-elec-yellow" />
+                Send to EIC Schedule
+              </DialogTitle>
+              <DialogDescription>
+                This design will be saved to your EIC schedule for testing and certification.
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-4 py-2">
+              {/* Summary of what will be sent */}
+              <div className="text-sm text-muted-foreground">
+                <p><strong>{design.circuits?.length || 0} circuit(s)</strong> will be added including:</p>
+                <ul className="mt-2 space-y-1 ml-4 list-disc">
+                  <li>Cable sizes and CPC</li>
+                  <li>Protective device details</li>
+                  <li>Reference methods</li>
+                </ul>
+              </div>
+
+              {/* Expected results checkbox with warning */}
+              <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                <Checkbox
+                  id="includeExpectedResultsMobile"
+                  checked={includeExpectedResults}
+                  onCheckedChange={(checked) => setIncludeExpectedResults(checked as boolean)}
+                  className="mt-0.5 border-amber-500/50 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+                />
+                <div className="flex-1">
+                  <label htmlFor="includeExpectedResultsMobile" className="text-sm font-medium cursor-pointer">
+                    Include expected test results
+                  </label>
+                  <p className="text-xs text-amber-400 mt-1 flex items-start gap-1">
+                    <AlertTriangle className="h-3.5 w-3.5 mt-0.5 shrink-0" />
+                    <span>All calculated values (R1+R2, Zs) must be verified on-site during testing</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <DialogFooter className="flex-col gap-2">
+              <Button
+                onClick={handleSendToEIC}
+                disabled={isSendingToEIC}
+                className="w-full min-h-[44px] touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+              >
+                {isSendingToEIC ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <FileCheck className="h-4 w-4 mr-2" />
+                    Send to EIC
+                  </>
+                )}
+              </Button>
+              <Button variant="outline" onClick={() => setShowSendToEICDialog(false)} className="w-full min-h-[44px] touch-manipulation">
+                Cancel
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </>
     );
   }
@@ -2507,7 +2685,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         <Button
           size="lg"
           variant="outline"
-          onClick={handleSendToEIC}
+          onClick={openSendToEICDialog}
           disabled={isSendingToEIC}
           className="w-full sm:flex-1 min-h-[44px] touch-manipulation bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 hover:border-elec-yellow/50"
         >
@@ -2574,6 +2752,76 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             </DialogFooter>
           </DialogContent>
         </Dialog>
+
+        {/* Send to EIC Confirmation Dialog */}
+        <Dialog open={showSendToEICDialog} onOpenChange={setShowSendToEICDialog}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <FileCheck className="h-5 w-5 text-elec-yellow" />
+                Send to EIC Schedule
+              </DialogTitle>
+              <DialogDescription>
+                This design will be saved to your EIC schedule for testing and certification.
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-4 py-2">
+              {/* Summary of what will be sent */}
+              <div className="text-sm text-muted-foreground">
+                <p><strong>{design.circuits?.length || 0} circuit(s)</strong> will be added including:</p>
+                <ul className="mt-2 space-y-1 ml-4 list-disc">
+                  <li>Cable sizes and CPC</li>
+                  <li>Protective device details</li>
+                  <li>Reference methods</li>
+                </ul>
+              </div>
+
+              {/* Expected results checkbox with warning */}
+              <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                <Checkbox
+                  id="includeExpectedResults"
+                  checked={includeExpectedResults}
+                  onCheckedChange={(checked) => setIncludeExpectedResults(checked as boolean)}
+                  className="mt-0.5 border-amber-500/50 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+                />
+                <div className="flex-1">
+                  <label htmlFor="includeExpectedResults" className="text-sm font-medium cursor-pointer">
+                    Include expected test results
+                  </label>
+                  <p className="text-xs text-amber-400 mt-1 flex items-start gap-1">
+                    <AlertTriangle className="h-3.5 w-3.5 mt-0.5 shrink-0" />
+                    <span>All calculated values (R1+R2, Zs) must be verified on-site during testing</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-0">
+              <Button variant="outline" onClick={() => setShowSendToEICDialog(false)} className="w-full sm:w-auto min-h-[44px] touch-manipulation">
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSendToEIC}
+                disabled={isSendingToEIC}
+                className="w-full sm:w-auto min-h-[44px] touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+              >
+                {isSendingToEIC ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <FileCheck className="h-4 w-4 mr-2" />
+                    Send to EIC
+                  </>
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
         <Button size="lg" variant="outline" onClick={onReset} className="w-full sm:w-auto min-h-[44px] touch-manipulation">
           New Design
         </Button>

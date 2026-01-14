@@ -828,19 +828,52 @@ export interface VacancyTemplate {
  * Get all vacancy templates (system + user created)
  */
 export const getVacancyTemplates = async (): Promise<VacancyTemplate[]> => {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  // Get user's custom templates (stored as JSONB)
   const { data, error } = await supabase
     .from('employer_vacancy_templates')
     .select('*')
-    .order('is_system_template', { ascending: false })
-    .order('name', { ascending: true });
+    .eq('user_id', user?.id || '')
+    .order('updated_at', { ascending: false });
 
   if (error) {
     console.error('Error fetching vacancy templates:', error);
-    // Return built-in templates if table doesn't exist
-    return getBuiltInTemplates();
   }
 
-  return data || getBuiltInTemplates();
+  // Transform JSONB template_data to flat VacancyTemplate structure
+  const userTemplates: VacancyTemplate[] = (data || []).map((row: {
+    id: string;
+    name: string;
+    template_data: Record<string, unknown>;
+    created_at: string;
+    updated_at: string;
+  }) => {
+    const td = row.template_data || {};
+    return {
+      id: row.id,
+      name: row.name,
+      title: (td.title as string) || row.name,
+      type: (td.type as EmploymentType) || 'Full-time',
+      location: (td.location as string) || null,
+      work_arrangement: (td.workArrangement as string) || 'On-site',
+      salary_min: (td.salaryMin as number) || null,
+      salary_max: (td.salaryMax as number) || null,
+      salary_period: (td.salaryPeriod as string) || 'year',
+      benefits: (td.benefits as string[]) || [],
+      requirements: (td.requirements as string[]) || [],
+      experience_level: (td.experienceLevel as string) || 'Mid',
+      description: (td.description as string) || null,
+      nice_to_have: (td.niceToHave as string[]) || [],
+      schedule: (td.schedule as string) || null,
+      is_system_template: false,
+      created_at: row.created_at,
+      updated_at: row.updated_at,
+    };
+  });
+
+  // Return built-in templates first, then user templates
+  return [...getBuiltInTemplates(), ...userTemplates];
 };
 
 /**
@@ -855,27 +888,36 @@ export const saveVacancyAsTemplate = async (
     schedule?: string;
   }
 ): Promise<VacancyTemplate | null> => {
-  const template = {
-    name,
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    console.error('No authenticated user');
+    return null;
+  }
+
+  // Store as JSONB template_data with camelCase keys
+  const template_data = {
     title: vacancyData.title || '',
     type: vacancyData.type || 'Full-time',
     location: vacancyData.location || null,
-    work_arrangement: vacancyData.work_arrangement || 'On-site',
-    salary_min: vacancyData.salary_min || null,
-    salary_max: vacancyData.salary_max || null,
-    salary_period: vacancyData.salary_period || 'year',
+    workArrangement: vacancyData.work_arrangement || 'On-site',
+    salaryMin: vacancyData.salary_min || null,
+    salaryMax: vacancyData.salary_max || null,
+    salaryPeriod: vacancyData.salary_period || 'year',
     benefits: vacancyData.benefits || [],
     requirements: vacancyData.requirements || [],
-    experience_level: vacancyData.experience_level || 'Mid',
+    experienceLevel: vacancyData.experience_level || 'Mid',
     description: vacancyData.description || null,
-    nice_to_have: vacancyData.nice_to_have || [],
+    niceToHave: vacancyData.nice_to_have || [],
     schedule: vacancyData.schedule || null,
-    is_system_template: false,
   };
 
   const { data, error } = await supabase
     .from('employer_vacancy_templates')
-    .insert(template)
+    .insert({
+      user_id: user.id,
+      name,
+      template_data,
+    })
     .select()
     .single();
 
@@ -884,18 +926,44 @@ export const saveVacancyAsTemplate = async (
     return null;
   }
 
-  return data;
+  // Transform the returned JSONB to flat structure
+  const td = data.template_data || {};
+  return {
+    id: data.id,
+    name: data.name,
+    title: (td.title as string) || name,
+    type: (td.type as EmploymentType) || 'Full-time',
+    location: (td.location as string) || null,
+    work_arrangement: (td.workArrangement as string) || 'On-site',
+    salary_min: (td.salaryMin as number) || null,
+    salary_max: (td.salaryMax as number) || null,
+    salary_period: (td.salaryPeriod as string) || 'year',
+    benefits: (td.benefits as string[]) || [],
+    requirements: (td.requirements as string[]) || [],
+    experience_level: (td.experienceLevel as string) || 'Mid',
+    description: (td.description as string) || null,
+    nice_to_have: (td.niceToHave as string[]) || [],
+    schedule: (td.schedule as string) || null,
+    is_system_template: false,
+    created_at: data.created_at,
+    updated_at: data.updated_at,
+  };
 };
 
 /**
  * Delete a user-created template
  */
 export const deleteVacancyTemplate = async (id: string): Promise<boolean> => {
+  // Don't allow deleting built-in templates (they have 'template-' prefix)
+  if (id.startsWith('template-')) {
+    console.error('Cannot delete built-in templates');
+    return false;
+  }
+
   const { error } = await supabase
     .from('employer_vacancy_templates')
     .delete()
-    .eq('id', id)
-    .eq('is_system_template', false); // Can only delete user templates
+    .eq('id', id);
 
   if (error) {
     console.error('Error deleting vacancy template:', error);

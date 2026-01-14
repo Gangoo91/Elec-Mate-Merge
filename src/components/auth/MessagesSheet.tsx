@@ -348,7 +348,9 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
     queryFn: () => peerConversationService.getMyConversations(),
   });
   const teamChatUnread = useTeamChatUnread(employerId);
-  const { data: collegeConversations = [], totalUnread: collegeUnread } = useCollegeConversations();
+
+  // College chat - only fetch when in college context to avoid 400 errors
+  const { data: collegeConversations = [], totalUnread: collegeUnread } = useCollegeConversations(isCollegeContext);
 
   // Calculate unreads
   const jobConversations = isEmployerContext ? employerConversations : electricianConversations;

@@ -1,10 +1,11 @@
 // useReportSync - Best-in-Class Report Sync Hook
 // Local-first, offline-capable, never loses data
+// With concurrent edit detection using optimistic locking
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { reportCloud } from '@/utils/reportCloud';
+import { reportCloud, VersionConflict } from '@/utils/reportCloud';
 import { draftStorage } from '@/utils/draftStorage';
 import { syncQueue, SyncOperation } from '@/utils/syncQueue';
 
@@ -12,7 +13,7 @@ import { syncQueue, SyncOperation } from '@/utils/syncQueue';
 
 export interface SyncStatus {
   local: 'saved' | 'saving' | 'unsaved';
-  cloud: 'synced' | 'syncing' | 'queued' | 'offline' | 'error';
+  cloud: 'synced' | 'syncing' | 'queued' | 'offline' | 'error' | 'conflict';
   lastLocalSave: Date | null;
   lastCloudSync: Date | null;
   queuedChanges: number;
@@ -25,6 +26,7 @@ interface UseReportSyncOptions {
   formData: any;
   enabled?: boolean;
   customerId?: string;
+  onConflict?: (conflict: VersionConflict, localData: any) => void;
 }
 
 interface UseReportSyncReturn {
@@ -38,10 +40,16 @@ interface UseReportSyncReturn {
   loadReport: (id: string) => Promise<any | null>;
   recoverDraft: () => any | null;
   discardDraft: () => void;
+  forceSave: () => Promise<{ success: boolean; reportId: string | null }>;
+  retrySync: () => Promise<void>;
 
   // Draft recovery
   hasRecoverableDraft: boolean;
   draftPreview: { clientName?: string; installationAddress?: string; lastModified: Date } | null;
+
+  // Conflict resolution
+  activeConflict: VersionConflict | null;
+  resolveConflict: (useServerVersion: boolean) => void;
 }
 
 // === HOOK ===
@@ -52,6 +60,7 @@ export const useReportSync = ({
   formData,
   enabled = true,
   customerId,
+  onConflict,
 }: UseReportSyncOptions): UseReportSyncReturn => {
   const { toast } = useToast();
 
@@ -70,11 +79,14 @@ export const useReportSync = ({
   const [userId, setUserId] = useState<string | null>(null);
   const [hasRecoverableDraft, setHasRecoverableDraft] = useState(false);
   const [draftPreview, setDraftPreview] = useState<{ clientName?: string; installationAddress?: string; lastModified: Date } | null>(null);
+  const [activeConflict, setActiveConflict] = useState<VersionConflict | null>(null);
 
   // Refs for tracking changes and preventing race conditions
   const lastFormDataRef = useRef<string>('');
   const isSyncingRef = useRef(false);
   const currentReportIdRef = useRef(reportId);
+  const expectedVersionRef = useRef<number>(1);
+  const localDataRef = useRef<any>(null);
 
   // Keep reportId ref in sync
   useEffect(() => {
@@ -271,7 +283,7 @@ export const useReportSync = ({
   }, [isOnline, userId, updateQueueCount, processQueue]);
 
   // === SYNC TO CLOUD ===
-  const syncToCloud = useCallback(async (showToast: boolean): Promise<{ success: boolean; reportId: string | null }> => {
+  const syncToCloud = useCallback(async (showToast: boolean, forceOverwrite: boolean = false): Promise<{ success: boolean; reportId: string | null }> => {
     if (isSyncingRef.current) {
       return { success: false, reportId: currentReportIdRef.current };
     }
@@ -306,20 +318,74 @@ export const useReportSync = ({
 
     isSyncingRef.current = true;
     setStatus(prev => ({ ...prev, cloud: 'syncing' }));
+    localDataRef.current = formData;
 
     try {
       let savedReportId = currentReportIdRef.current;
 
       if (savedReportId) {
-        // Update existing report
-        const result = await reportCloud.updateReport(savedReportId, userId, formData, customerId);
-        if (!result.success) throw new Error(result.error || 'Update failed');
+        // Update existing report with version check (unless forcing overwrite)
+        if (forceOverwrite) {
+          // Force save - skip version check
+          const result = await reportCloud.updateReport(savedReportId, userId, formData, customerId);
+          if (!result.success) throw new Error(result.error || 'Update failed');
+          // Fetch new version after successful update
+          const newVersion = await reportCloud.getEditVersion(savedReportId, userId);
+          if (newVersion) {
+            expectedVersionRef.current = newVersion.version;
+          }
+        } else {
+          // Normal save - check for conflicts
+          const result = await reportCloud.updateReportWithVersionCheck(
+            savedReportId,
+            userId,
+            formData,
+            expectedVersionRef.current,
+            customerId
+          );
+
+          if (result.conflict) {
+            // Version conflict detected
+            console.log('[ReportSync] Conflict detected:', result.conflict);
+            isSyncingRef.current = false;
+            setActiveConflict(result.conflict);
+            setStatus(prev => ({
+              ...prev,
+              cloud: 'conflict',
+              errorMessage: 'Someone else edited this report. Please resolve the conflict.',
+            }));
+
+            // Notify parent component if callback provided
+            if (onConflict) {
+              onConflict(result.conflict, formData);
+            }
+
+            if (showToast) {
+              toast({
+                title: 'Edit conflict detected',
+                description: 'This report was edited elsewhere. Please review the changes.',
+                variant: 'destructive',
+              });
+            }
+
+            return { success: false, reportId: savedReportId };
+          }
+
+          if (!result.success) throw new Error(result.error || 'Update failed');
+
+          // Update expected version after successful save
+          expectedVersionRef.current += 1;
+        }
       } else {
-        // Create new report
+        // Create new report (no version conflict possible)
         const result = await reportCloud.createReport(userId, reportType, formData, customerId);
         if (!result.success || !result.reportId) throw new Error(result.error || 'Create failed');
         savedReportId = result.reportId;
+        expectedVersionRef.current = 1;
       }
+
+      // Clear any active conflict
+      setActiveConflict(null);
 
       // Clear local draft after successful sync
       draftStorage.clearDraft(reportType, savedReportId);
@@ -377,7 +443,7 @@ export const useReportSync = ({
 
       return { success: false, reportId: currentReportIdRef.current };
     }
-  }, [userId, formData, reportType, customerId, isOnline, toast, updateQueueCount]);
+  }, [userId, formData, reportType, customerId, isOnline, toast, updateQueueCount, onConflict]);
 
   // === MANUAL SAVE ===
   const saveNow = useCallback(async (): Promise<{ success: boolean; reportId: string | null }> => {
@@ -394,7 +460,18 @@ export const useReportSync = ({
     if (!userId) return null;
 
     try {
-      const data = await reportCloud.getReportData(loadReportId, userId);
+      // Get report data and edit version together
+      const [data, versionInfo] = await Promise.all([
+        reportCloud.getReportData(loadReportId, userId),
+        reportCloud.getEditVersion(loadReportId, userId),
+      ]);
+
+      // Track the expected version for conflict detection
+      if (versionInfo) {
+        expectedVersionRef.current = versionInfo.version;
+        console.log('[ReportSync] Loaded report with version:', versionInfo.version);
+      }
+
       return data;
     } catch (error) {
       toast({
@@ -423,6 +500,59 @@ export const useReportSync = ({
     setDraftPreview(null);
   }, [reportType]);
 
+  // === FORCE SAVE (skip version check) ===
+  const forceSave = useCallback(async (): Promise<{ success: boolean; reportId: string | null }> => {
+    // Save locally first
+    draftStorage.saveDraft(reportType, currentReportIdRef.current, formData);
+    setStatus(prev => ({ ...prev, local: 'saved', lastLocalSave: new Date() }));
+
+    // Force sync to cloud, overwriting any conflicts
+    return await syncToCloud(true, true);
+  }, [formData, reportType, syncToCloud]);
+
+  // === RETRY SYNC ===
+  const retrySync = useCallback(async (): Promise<void> => {
+    if (status.cloud === 'error' || status.cloud === 'queued') {
+      await syncToCloud(true, false);
+    }
+    // Also process any queued operations
+    if (userId) {
+      await processQueue();
+    }
+  }, [status.cloud, syncToCloud, userId, processQueue]);
+
+  // === RESOLVE CONFLICT ===
+  const resolveConflict = useCallback((useServerVersion: boolean) => {
+    if (!activeConflict) return;
+
+    if (useServerVersion) {
+      // User chose to use the server version - they'll need to reload
+      // Clear the conflict and mark as needing refresh
+      setActiveConflict(null);
+      setStatus(prev => ({
+        ...prev,
+        cloud: 'synced',
+        errorMessage: undefined,
+      }));
+      // Update expected version to server version
+      expectedVersionRef.current = activeConflict.serverVersion;
+
+      toast({
+        title: 'Using server version',
+        description: 'The page will reload with the latest changes.',
+      });
+
+      // Trigger a reload after a short delay
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } else {
+      // User chose to keep their local changes - force save
+      setActiveConflict(null);
+      forceSave();
+    }
+  }, [activeConflict, forceSave, toast]);
+
   // === RETURN ===
   return {
     status,
@@ -432,7 +562,11 @@ export const useReportSync = ({
     loadReport,
     recoverDraft,
     discardDraft,
+    forceSave,
+    retrySync,
     hasRecoverableDraft,
     draftPreview,
+    activeConflict,
+    resolveConflict,
   };
 };

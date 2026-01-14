@@ -23,7 +23,8 @@ export function CollegeChatList({
   currentUserType,
 }: CollegeChatListProps) {
   const { user } = useAuth();
-  const { data: conversations = [], isLoading, totalUnread } = useCollegeConversations();
+  // Always enabled in college chat view
+  const { data: conversations = [], isLoading, totalUnread } = useCollegeConversations(true);
 
   const getConversationDisplay = (conv: CollegeConversation) => {
     const type = conv.conversation_type;

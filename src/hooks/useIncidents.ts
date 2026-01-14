@@ -58,17 +58,23 @@ export function useIncidents() {
   return useQuery({
     queryKey: ["incidents"],
     queryFn: async (): Promise<Incident[]> => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return [];
 
-      const { data, error } = await supabase
-        .from("employer_incidents")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("date_occurred", { ascending: false });
+        const { data, error } = await supabase
+          .from("employer_incidents")
+          .select("*")
+          .eq("user_id", user.id)
+          .order("date_occurred", { ascending: false });
 
-      if (error) throw error;
-      return data as Incident[];
+        // Table may not exist or user may not have access - return empty array
+        if (error) return [];
+        return data as Incident[];
+      } catch {
+        // Graceful degradation for non-employer users
+        return [];
+      }
     },
   });
 }
@@ -119,27 +125,39 @@ export function useIncidentStats() {
   return useQuery({
     queryKey: ["incidents", "stats"],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return {
+          total: 0, open: 0, resolved: 0, closed: 0, nearMisses: 0, critical: 0, high: 0
+        };
 
-      const { data, error } = await supabase
-        .from("employer_incidents")
-        .select("status, severity")
-        .eq("user_id", user.id);
+        const { data, error } = await supabase
+          .from("employer_incidents")
+          .select("status, severity")
+          .eq("user_id", user.id);
 
-      if (error) throw error;
+        // Table may not exist or user may not have access - return empty stats
+        if (error || !data) return {
+          total: 0, open: 0, resolved: 0, closed: 0, nearMisses: 0, critical: 0, high: 0
+        };
 
-      const stats = {
-        total: data.length,
-        open: data.filter(i => !["resolved", "closed"].includes(i.status)).length,
-        resolved: data.filter(i => i.status === "resolved").length,
-        closed: data.filter(i => i.status === "closed").length,
-        nearMisses: data.filter(i => i.status === "near_miss").length,
-        critical: data.filter(i => i.severity === "critical").length,
-        high: data.filter(i => i.severity === "high").length,
-      };
+        const stats = {
+          total: data.length,
+          open: data.filter(i => !["resolved", "closed"].includes(i.status)).length,
+          resolved: data.filter(i => i.status === "resolved").length,
+          closed: data.filter(i => i.status === "closed").length,
+          nearMisses: data.filter(i => i.status === "near_miss").length,
+          critical: data.filter(i => i.severity === "critical").length,
+          high: data.filter(i => i.severity === "high").length,
+        };
 
-      return stats;
+        return stats;
+      } catch {
+        // Graceful degradation for non-employer users
+        return {
+          total: 0, open: 0, resolved: 0, closed: 0, nearMisses: 0, critical: 0, high: 0
+        };
+      }
     },
   });
 }

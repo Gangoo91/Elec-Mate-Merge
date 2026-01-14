@@ -2759,7 +2759,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
   },
   {
     name: 'create_and_send_quote',
-    description: 'Create a comprehensive quote with full client details, labour, materials, and optionally send it immediately via email. This is the preferred tool for voice-driven quote creation. Example: "Create a quote for John Smith at 45 Oak Lane, London, email john@example.com. Kitchen rewire, 8 hours at £45 per hour plus £180 materials. Send it now."',
+    description: 'Create a quote and save it as a draft for review. By default saves to the dashboard WITHOUT sending email. Only set sendNow=true if the user explicitly asks to send it immediately. Example: "Create a quote for John Smith, email john@example.com, kitchen rewire, £500" saves as draft. "Create and send a quote now" requires sendNow=true.',
     category: 'Creation',
     parameters: [
       { name: 'client', type: 'string', required: true, description: 'Client full name' },
@@ -2775,7 +2775,7 @@ export const voiceToolsRegistry: VoiceTool[] = [
       { name: 'materialsDescription', type: 'string', required: false, description: 'Materials description (default "Materials")' },
       { name: 'includeVat', type: 'boolean', required: false, description: 'Include 20% VAT (default true)' },
       { name: 'validDays', type: 'number', required: false, description: 'Days until quote expires (default 30)' },
-      { name: 'sendNow', type: 'boolean', required: false, description: 'Send immediately via email (default true)' },
+      { name: 'sendNow', type: 'boolean', required: false, description: 'Set to true to send immediately via email. Default is false which saves as draft for review.' },
       { name: 'notes', type: 'string', required: false, description: 'Additional notes for the quote' }
     ],
     waitForResponse: true,

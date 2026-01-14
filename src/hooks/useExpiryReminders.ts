@@ -22,6 +22,11 @@ export interface ExpiryReminder {
   status_history?: any[];
   tags?: string[];
   response_time_hours?: number;
+  customer_id?: string | null;
+  customer?: {
+    id: string;
+    name: string;
+  } | null;
 }
 
 export const useExpiryReminders = () => {
@@ -36,7 +41,13 @@ export const useExpiryReminders = () => {
 
       const { data, error } = await supabase
         .from('certificate_expiry_reminders')
-        .select('*')
+        .select(`
+          *,
+          customer:customers!certificate_expiry_reminders_customer_id_fkey (
+            id,
+            name
+          )
+        `)
         .eq('user_id', user.id)
         .order('expiry_date', { ascending: true });
 

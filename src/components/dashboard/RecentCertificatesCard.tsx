@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { FileText, ArrowRight, Clock } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
-import { reportCloud, CloudReport, ReportsResponse } from '@/utils/reportCloud';
+import { reportCloud, CloudReport } from '@/utils/reportCloud';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 
 interface RecentCertificatesCardProps {
@@ -26,7 +26,7 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
       return await reportCloud.getUserReports(user.id, { limit: 5 });
     },
     enabled: !!user,
-    staleTime: 10 * 1000, // Cache for 10 seconds - allows immediate refresh after saves
+    staleTime: 10 * 1000,
     refetchOnWindowFocus: true,
   });
 
@@ -36,8 +36,8 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
     switch (status) {
       case 'draft':
         return (
-          <Badge 
-            variant="outline" 
+          <Badge
+            variant="outline"
             className="bg-yellow-500/10 text-yellow-500 border-yellow-500/20 text-xs whitespace-nowrap"
           >
             Draft
@@ -45,8 +45,8 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
         );
       case 'in-progress':
         return (
-          <Badge 
-            variant="outline" 
+          <Badge
+            variant="outline"
             className="bg-blue-500/10 text-blue-500 border-blue-500/20 text-xs whitespace-nowrap"
           >
             In Progress
@@ -54,8 +54,8 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
         );
       case 'completed':
         return (
-          <Badge 
-            variant="outline" 
+          <Badge
+            variant="outline"
             className="bg-green-500/10 text-green-500 border-green-500/20 text-xs whitespace-nowrap"
           >
             Completed

@@ -37,8 +37,11 @@ import {
   Loader2,
   RefreshCw,
   AlertTriangle,
-  Trash2
+  Trash2,
+  Copy,
+  Link,
 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const statusColors: Record<string, string> = {
   "Pending": "bg-yellow-500/20 text-yellow-400",
@@ -83,6 +86,25 @@ export function SignaturesSection() {
   const resendRequest = useResendSignatureRequest();
   const markAsSigned = useMarkAsSigned();
   const deleteRequest = useDeleteSignatureRequest();
+  const { toast } = useToast();
+
+  const handleCopyLink = async (accessToken: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const signingUrl = `${window.location.origin}/sign/${accessToken}`;
+    try {
+      await navigator.clipboard.writeText(signingUrl);
+      toast({
+        title: "Link copied",
+        description: "Signing link copied to clipboard",
+      });
+    } catch {
+      toast({
+        title: "Copy failed",
+        description: "Could not copy link",
+        variant: "destructive",
+      });
+    }
+  };
 
   const filteredSignatures = signatures?.filter(sig => {
     const matchesSearch =
@@ -474,21 +496,48 @@ export function SignaturesSection() {
                             <PenTool className="h-4 w-4 text-success" />
                             <span className="text-sm font-medium text-success">Signature Captured</span>
                           </div>
-                          <div className="h-16 bg-muted rounded flex items-center justify-center">
-                            <span className="text-muted-foreground text-sm italic">Signature on file</span>
+                          <div className="bg-white rounded overflow-hidden">
+                            <img
+                              src={sig.signature_url}
+                              alt="Customer signature"
+                              className="w-full h-20 object-contain"
+                            />
                           </div>
+                          {sig.signed_at && (
+                            <p className="text-xs text-muted-foreground mt-2">
+                              Signed: {new Date(sig.signed_at).toLocaleDateString("en-GB", {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit"
+                              })}
+                            </p>
+                          )}
                         </div>
                       )}
 
                       <div className="flex gap-2 flex-wrap">
                         {!["Signed", "Declined", "Expired"].includes(sig.status) && (
                           <>
+                            {(sig as any).access_token && (
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="h-10 touch-manipulation"
+                                onClick={(e) => handleCopyLink((sig as any).access_token, e)}
+                              >
+                                <Link className="h-4 w-4 mr-2" />
+                                Copy Link
+                              </Button>
+                            )}
                             <Button
                               variant="outline"
                               size="sm"
                               className="flex-1 h-10 touch-manipulation"
                               onClick={(e) => handleResend(sig.id, e)}
-                              disabled={resendRequest.isPending}
+                              disabled={resendRequest.isPending || !sig.signer_email}
+                              title={!sig.signer_email ? "No email address" : undefined}
                             >
                               {resendRequest.isPending ? (
                                 <Loader2 className="h-4 w-4 animate-spin" />

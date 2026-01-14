@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Search, FileText, Plus, X, ChevronDown, Upload, CheckSquare, Loader2, Users } from 'lucide-react';
+import { Search, FileText, Plus, X, ChevronDown, Upload, CheckSquare, Loader2, Users, Archive } from 'lucide-react';
 import { SortDropdown, SortOption } from './reports/SortDropdown';
 import { BulkActionsBar } from './reports/BulkActionsBar';
 import { reportCloud, CloudReport, ReportsResponse } from '@/utils/reportCloud';
@@ -15,6 +16,7 @@ import { EmptyState } from '@/components/ui/empty-state';
 import { cn } from '@/lib/utils';
 import { CertificateImportDialog } from '@/components/certificates/CertificateImportDialog';
 import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
+import { ExportToEICDialog } from '@/components/inspection-app/ExportToEICDialog';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useCustomers } from '@/hooks/useCustomers';
 import { linkCustomerToReport } from '@/utils/customerHelper';
@@ -66,6 +68,7 @@ interface MyReportsProps {
 const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport }) => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -92,6 +95,10 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   const [reportToLink, setReportToLink] = useState<CloudReport | null>(null);
   const [customerSearchQuery, setCustomerSearchQuery] = useState('');
   const [isLinking, setIsLinking] = useState(false);
+
+  // Export to EIC state
+  const [exportToEICDialogOpen, setExportToEICDialogOpen] = useState(false);
+  const [exportToEICReportId, setExportToEICReportId] = useState<string | null>(null);
 
   // Get customers for linking
   const { customers, isLoading: isLoadingCustomers } = useCustomers();
@@ -224,6 +231,20 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       setCustomerSearchQuery('');
       setLinkCustomerDialogOpen(true);
     }
+  };
+
+  // Handle export EICR to EIC
+  const handleExportToEIC = (reportId: string) => {
+    setExportToEICReportId(reportId);
+    setExportToEICDialogOpen(true);
+  };
+
+  // Handle export complete - navigate to new EIC
+  const handleExportToEICComplete = (eicReportId: string) => {
+    // Refresh reports list to show the new EIC
+    refetchReports();
+    // Navigate to the new EIC form
+    navigate(`/electrician/inspection-testing?section=eic&reportId=${eicReportId}`);
   };
 
   // Confirm linking customer to report
@@ -641,6 +662,36 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
           }
         />
 
+        {/* Quick Actions Bar */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 border-b border-border/50">
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                navigator.vibrate?.(10);
+                setShowImportDialog(true);
+              }}
+              className="gap-2 h-10 touch-manipulation border-elec-yellow/30 hover:border-elec-yellow hover:bg-elec-yellow/10"
+            >
+              <Upload className="h-4 w-4 text-elec-yellow" />
+              Import CSV
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                navigator.vibrate?.(10);
+                navigate('/electrician/inspection-testing/legacy-certificates');
+              }}
+              className="gap-2 h-10 touch-manipulation border-elec-yellow/30 hover:border-elec-yellow hover:bg-elec-yellow/10"
+            >
+              <Archive className="h-4 w-4 text-elec-yellow" />
+              Legacy PDFs
+            </Button>
+          </div>
+        </div>
+
         {/* Search Bar and Sort */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
           <div className="flex items-center gap-3">
@@ -806,15 +857,22 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                     lastModified: new Date(report.updated_at).getTime(),
                     created: new Date(report.updated_at).getTime(),
                     inspectorName: report.data?.inspectorName || '',
+                    satisfactoryForContinuedUse: report.data?.satisfactoryForContinuedUse,
                   }}
                   onEdit={() => { navigator.vibrate?.(10); onEditReport(report.report_id, report.report_type); }}
                   onDelete={() => { navigator.vibrate?.(50); handleDeleteReport(report.report_id); }}
                   onPreview={handlePreviewReport}
                   onLinkCustomer={() => { navigator.vibrate?.(10); handleLinkCustomer(report.report_id); }}
+                  onExportToEIC={() => { navigator.vibrate?.(10); handleExportToEIC(report.report_id); }}
                   hasCustomer={!!report.customer_id}
                   isSelected={selectedReports.has(report.report_id)}
                   isBulkMode={isBulkMode}
                   onSelectToggle={handleSelectToggle}
+                  canExportToEIC={
+                    report.report_type === 'eicr' &&
+                    report.status === 'completed' &&
+                    report.data?.satisfactoryForContinuedUse?.toLowerCase() === 'yes'
+                  }
                 />
               ))}
             </div>
@@ -995,6 +1053,16 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
           reportId={selectedReportId}
           open={showPdfViewer}
           onOpenChange={setShowPdfViewer}
+        />
+      )}
+
+      {/* Export EICR to EIC Dialog */}
+      {exportToEICReportId && (
+        <ExportToEICDialog
+          open={exportToEICDialogOpen}
+          onOpenChange={setExportToEICDialogOpen}
+          reportId={exportToEICReportId}
+          onExportComplete={handleExportToEICComplete}
         />
       )}
     </>

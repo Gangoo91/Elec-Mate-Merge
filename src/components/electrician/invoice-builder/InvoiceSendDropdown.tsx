@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Quote } from '@/types/quote';
 import { Button } from '@/components/ui/button';
-import { FEATURES } from '@/config/features';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +8,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
-import { Mail, MessageCircle, Loader2, MailOpen, AlertCircle } from 'lucide-react';
+import { Mail, MessageCircle, Loader2 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
@@ -28,10 +26,8 @@ export const InvoiceSendDropdown = ({
   disabled = false,
   className = '',
 }: InvoiceSendDropdownProps) => {
-  const navigate = useNavigate();
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
-  const [isGeneratingMailtoLink, setIsGeneratingMailtoLink] = useState(false);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
   const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
@@ -53,7 +49,7 @@ export const InvoiceSendDropdown = ({
     try {
       setIsSendingEmail(true);
 
-      // Validate client email FIRST
+      // Validate client email
       const cleanTo = invoice.client?.email?.trim();
       if (!cleanTo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanTo)) {
         toast({
@@ -67,7 +63,7 @@ export const InvoiceSendDropdown = ({
 
       // Get current session
       let { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      
+
       if (sessionError || !session) {
         const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession();
         if (refreshError || !refreshData.session) {
@@ -76,59 +72,21 @@ export const InvoiceSendDropdown = ({
         session = refreshData.session;
       }
 
-      // Check if user has connected email
-      const { data: configData, error: configError } = await supabase.functions.invoke('get-email-config', {
-        headers: { Authorization: `Bearer ${session.access_token}` }
-      });
-
-      const hasEmailConfig = configData?.configs?.length > 0 && 
-                            configData.configs.some((c: any) => c.is_active);
-
-      if (!hasEmailConfig) {
-        toast({
-          title: "Email Not Connected",
-          description: "Connect your Gmail or Outlook in Settings → Email Integration to send invoices",
-          variant: "destructive",
-        });
-        
-        // Navigate after a brief delay
-        setTimeout(() => {
-          navigate('/electrician/settings?tab=email');
-        }, 2000);
-        
-        return;
-      }
-
-      // Send via backend (PDF generation happens automatically)
-      const { error } = await supabase.functions.invoke('send-invoice-smart', {
-        body: { 
-          documentType: 'invoice',
-          invoiceId: invoice.id,
-          to: cleanTo,
-          // NO PDF attachment needed - backend generates it!
-        },
+      // Send via Resend (generates PDF automatically)
+      const { error } = await supabase.functions.invoke('send-invoice-resend', {
+        body: { invoiceId: invoice.id },
         headers: {
           Authorization: `Bearer ${session.access_token}`
         }
       });
 
       if (error) {
-        const errorMsg = error.message || '';
-        
-        if (errorMsg.includes('Invalid email address')) {
-          throw new Error('Client email address looks invalid. Edit the Client email and save the invoice.');
-        } else if (errorMsg.includes('No email account connected')) {
-          throw new Error('Connect Gmail/Outlook in Settings → Email Integration.');
-        } else if (errorMsg.includes('Daily email limit reached')) {
-          throw new Error('Daily email limit reached (100/day). Resets at midnight UTC.');
-        } else {
-          throw error;
-        }
+        throw error;
       }
 
       toast({
-        title: 'Invoice sent successfully',
-        description: `Invoice ${invoice.invoice_number} sent to ${cleanTo} with PDF attachment`,
+        title: 'Invoice sent',
+        description: `Invoice ${invoice.invoice_number} sent to ${cleanTo}`,
         variant: 'success',
         duration: 4000,
       });
@@ -136,7 +94,7 @@ export const InvoiceSendDropdown = ({
       // Update status to sent with timestamp
       await supabase
         .from('quotes')
-        .update({ 
+        .update({
           invoice_status: 'sent',
           invoice_sent_at: new Date().toISOString()
         })
@@ -145,20 +103,10 @@ export const InvoiceSendDropdown = ({
       onSuccess?.();
     } catch (error: any) {
       console.error('Error sending invoice:', error);
-      
-      let errorMessage = 'Failed to send invoice. Please try again.';
-      
-      if (error.message?.includes('email account')) {
-        errorMessage = 'Please connect your email account in Settings first.';
-      } else if (error.message?.includes('rate limit')) {
-        errorMessage = 'Daily email limit reached (100/day). Resets at midnight UTC.';
-      } else if (error.message?.includes('token')) {
-        errorMessage = 'Email authentication expired. Please reconnect your email in Settings.';
-      }
-      
+
       toast({
         title: 'Error sending invoice',
-        description: errorMessage,
+        description: error.message || 'Failed to send invoice. Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -166,130 +114,6 @@ export const InvoiceSendDropdown = ({
     }
   };
 
-
-  const handleSendViaEmailClient = async () => {
-    try {
-      setIsGeneratingMailtoLink(true);
-
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        throw new Error('User not authenticated');
-      }
-
-      // Generate temporary PDF link
-      const { data: pdfData, error: pdfError } = await supabase.functions.invoke(
-        'generate-temporary-pdf-link',
-        {
-          body: {
-            documentId: invoice.id,
-            documentType: 'invoice'
-          },
-          headers: {
-            Authorization: `Bearer ${session.access_token}`
-          }
-        }
-      );
-
-      if (pdfError || !pdfData?.success) {
-        console.error('PDF generation error:', pdfError);
-        throw new Error('Failed to generate PDF');
-      }
-
-      const pdfUrl = pdfData.publicUrl;
-
-      // Get client and company data
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        throw new Error('User not authenticated');
-      }
-
-      const { data: companyData } = await supabase
-        .from('company_profiles')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
-
-      const clientData = invoice.client;
-      const clientEmail = clientData?.email || '';
-      const clientName = clientData?.name || 'Valued Client';
-      const companyName = companyData?.company_name || 'Your Company';
-      const companyPhone = companyData?.company_phone || '';
-      const companyEmail = companyData?.company_email || '';
-      const totalAmount = invoice.total || 0;
-      const dueDate = invoice.invoice_due_date 
-        ? format(new Date(invoice.invoice_due_date), 'dd MMMM yyyy')
-        : format(new Date(), 'dd MMMM yyyy');
-
-      // Format currency
-      const formatCurrency = (amount: number) =>
-        new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
-
-      // Create email subject
-      const subject = `Invoice ${invoice.invoice_number} from ${companyName}`;
-
-      // Create email body with PDF link and payment details
-      const settings = invoice.settings as any; // Type assertion for bankDetails
-      const bankDetails = settings?.bankDetails;
-      const paymentDetailsText = bankDetails ? `
-
-💳 Payment Details:
-• Bank Name: ${bankDetails.bankName}
-• Account Name: ${bankDetails.accountName}
-• Account Number: ${bankDetails.accountNumber}
-• Sort Code: ${bankDetails.sortCode}` : '';
-
-      const body = `Dear ${clientName},
-
-Please find your invoice for ${formatCurrency(totalAmount)}.
-
-📄 Invoice Details:
-• Invoice Number: ${invoice.invoice_number}
-• Amount Due: ${formatCurrency(totalAmount)}
-• Due Date: ${dueDate}
-
-📥 Download Invoice (PDF):
-${pdfUrl}${paymentDetailsText}
-
-Payment is due by ${dueDate}. If you have any questions about this invoice, please don't hesitate to contact us.
-
-Best regards,
-${companyName}${companyPhone ? `\n📞 ${companyPhone}` : ''}${companyEmail ? `\n✉️ ${companyEmail}` : ''}
-
----
-⚡ Powered by ElecMate Professional Suite`;
-
-      // Open mailto link
-      const mailtoLink = `mailto:${clientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailtoLink;
-
-      toast({
-        title: 'Email draft opened',
-        description: 'Your email app should open with a pre-filled invoice email',
-        variant: 'success',
-        duration: 4000,
-      });
-
-      // Update invoice status to sent with timestamp
-      await supabase
-        .from('quotes')
-        .update({ 
-          invoice_status: 'sent',
-          invoice_sent_at: new Date().toISOString()
-        })
-        .eq('id', invoice.id);
-
-      onSuccess?.();
-    } catch (error: any) {
-      console.error('Error generating mailto link:', error);
-      toast({
-        title: 'Error',
-        description: error.message || 'Failed to open email draft',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsGeneratingMailtoLink(false);
-    }
-  };
 
   const handleShareWhatsApp = async () => {
     try {
@@ -431,7 +255,7 @@ ${companyName}`;
     }
   };
 
-  const isLoading = isSendingEmail || isSharingWhatsApp || isGeneratingMailtoLink;
+  const isLoading = isSendingEmail || isSharingWhatsApp;
 
   return (
     <DropdownMenu>
@@ -444,12 +268,12 @@ ${companyName}`;
           {isLoading ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              {isSendingEmail ? 'Sending...' : 'Preparing...'}
+              {isSendingEmail ? 'Sending...' : 'Loading...'}
             </>
           ) : (
             <>
-              <MessageCircle className="mr-2 h-4 w-4" />
-              {FEATURES.EMAIL_INTEGRATION_ENABLED ? 'Send' : 'Share'}
+              <Mail className="mr-2 h-4 w-4" />
+              Send
             </>
           )}
         </Button>
@@ -462,53 +286,23 @@ ${companyName}`;
         <DropdownMenuLabel className="text-[10px] font-semibold text-muted-foreground px-3 py-2 uppercase tracking-wider">
           Send Invoice
         </DropdownMenuLabel>
-
-        {!FEATURES.EMAIL_INTEGRATION_ENABLED && (
-          <div className="px-3 py-2 text-xs text-muted-foreground bg-amber-500/10 rounded-xl mx-1 mb-2 border border-amber-500/20">
-            <AlertCircle className="h-3 w-3 inline mr-1" />
-            Email sending temporarily disabled
+        <DropdownMenuItem
+          onClick={handleSendEmail}
+          disabled={isSendingEmail}
+          className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-blue-500/10 touch-manipulation"
+        >
+          <div className="h-10 w-10 rounded-xl bg-blue-500/15 flex items-center justify-center mr-3 flex-shrink-0">
+            {isSendingEmail ? (
+              <Loader2 className="h-5 w-5 text-blue-500 animate-spin" />
+            ) : (
+              <Mail className="h-5 w-5 text-blue-500" />
+            )}
           </div>
-        )}
-
-        {FEATURES.EMAIL_INTEGRATION_ENABLED && (
-          <>
-            <DropdownMenuItem
-              onClick={handleSendEmail}
-              disabled={isSendingEmail}
-              className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-purple-500/10 touch-manipulation"
-            >
-              <div className="h-10 w-10 rounded-xl bg-purple-500/15 flex items-center justify-center mr-3 flex-shrink-0">
-                {isSendingEmail ? (
-                  <Loader2 className="h-5 w-5 text-purple-500 animate-spin" />
-                ) : (
-                  <Mail className="h-5 w-5 text-purple-500" />
-                )}
-              </div>
-              <div className="flex flex-col">
-                <span className="font-semibold text-sm">Send via Gmail/Outlook</span>
-                <span className="text-xs text-muted-foreground">With PDF attachment</span>
-              </div>
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={handleSendViaEmailClient}
-              disabled={isGeneratingMailtoLink}
-              className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-blue-500/10 touch-manipulation"
-            >
-              <div className="h-10 w-10 rounded-xl bg-blue-500/15 flex items-center justify-center mr-3 flex-shrink-0">
-                {isGeneratingMailtoLink ? (
-                  <Loader2 className="h-5 w-5 text-blue-500 animate-spin" />
-                ) : (
-                  <MailOpen className="h-5 w-5 text-blue-500" />
-                )}
-              </div>
-              <div className="flex flex-col">
-                <span className="font-semibold text-sm">Send via Email App</span>
-                <span className="text-xs text-muted-foreground">Opens your email client</span>
-              </div>
-            </DropdownMenuItem>
-          </>
-        )}
-
+          <div className="flex flex-col">
+            <span className="font-semibold text-sm">Send via Email</span>
+            <span className="text-xs text-muted-foreground">Sends with PDF attachment</span>
+          </div>
+        </DropdownMenuItem>
         <DropdownMenuItem
           onClick={handleShareWhatsApp}
           disabled={isSharingWhatsApp}

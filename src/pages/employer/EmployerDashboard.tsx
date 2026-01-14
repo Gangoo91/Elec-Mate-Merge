@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, lazy, Suspense } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useQueryClient } from "@tanstack/react-query";
@@ -9,70 +9,80 @@ import {
   PoundSterling, FileText, Receipt, ShoppingCart, BarChart3, FileSignature,
   Tag, Truck, Camera, Folder, MapPin, ListChecks, AlertCircle, PlayCircle,
   CheckCircle, Users2, ShieldCheck, BookOpen, ClipboardList, GraduationCap,
-  FileCheck, Sparkles, Cpu, Zap, Settings, type LucideIcon,
+  FileCheck, Sparkles, Cpu, Zap, Settings, Loader2, type LucideIcon,
 } from "lucide-react";
-import { OverviewSection } from "@/components/employer/sections/OverviewSection";
-import { EmployeesSection } from "@/components/employer/sections/EmployeesSection";
-import { JobsSection } from "@/components/employer/sections/JobsSection";
 import DraggableVoiceAssistant from "@/components/DraggableVoiceAssistant";
-
-import { SafetyHRSection } from "@/components/employer/sections/SafetyHRSection";
-import { RAMSSection } from "@/components/employer/sections/RAMSSection";
-import { IncidentsSection } from "@/components/employer/sections/IncidentsSection";
-import { PoliciesSection } from "@/components/employer/sections/PoliciesSection";
-import { ContractsSection } from "@/components/employer/sections/ContractsSection";
-import { TrainingRecordsSection } from "@/components/employer/sections/TrainingRecordsSection";
-import { BriefingsSection } from "@/components/employer/sections/BriefingsSection";
-import { ComplianceSection } from "@/components/employer/sections/ComplianceSection";
-import { QuotesInvoicesSection } from "@/components/employer/sections/QuotesInvoicesSection";
-import { TenderSection } from "@/components/employer/sections/TenderSection";
-import { ReportsSection } from "@/components/employer/sections/ReportsSection";
-import { SettingsSection } from "@/components/employer/sections/SettingsSection";
-import { JobPacksSection } from "@/components/employer/sections/JobPacksSection";
-import { ElecIDSection } from "@/components/employer/sections/ElecIDSection";
-import { TimesheetsSection } from "@/components/employer/sections/TimesheetsSection";
-import { CommunicationsSection } from "@/components/employer/sections/CommunicationsSection";
-import { QualitySection } from "@/components/employer/sections/QualitySection";
-import { JobBoardSection } from "@/components/employer/sections/JobBoardSection";
-import { JobTimelineSection } from "@/components/employer/sections/JobTimelineSection";
-import { WorkerTrackingSection } from "@/components/employer/sections/WorkerTrackingSection";
-import { ProgressLogsSection } from "@/components/employer/sections/ProgressLogsSection";
-import { JobIssuesSection } from "@/components/employer/sections/JobIssuesSection";
-import { JobFinancialsSection } from "@/components/employer/sections/JobFinancialsSection";
-import { TestingWorkflowSection } from "@/components/employer/sections/TestingWorkflowSection";
-import { ClientPortalSection } from "@/components/employer/sections/ClientPortalSection";
-import { TalentPoolSection } from "@/components/employer/sections/TalentPoolSection";
-import { JobVacanciesSection } from "@/components/employer/sections/JobVacanciesSection";
-import { ProcurementSection } from "@/components/employer/sections/ProcurementSection";
-import { ExpensesSection } from "@/components/employer/sections/ExpensesSection";
-import { SignaturesSection } from "@/components/employer/sections/SignaturesSection";
-import { PriceBookSection } from "@/components/employer/sections/PriceBookSection";
-import { FleetSection } from "@/components/employer/sections/FleetSection";
-import { PhotoGallerySection } from "@/components/employer/sections/PhotoGallerySection";
-import { PeopleHub } from "@/components/employer/hubs/PeopleHub";
-import { FinanceHub } from "@/components/employer/hubs/FinanceHub";
-import { JobsHub } from "@/components/employer/hubs/JobsHub";
-import { SafetyHub } from "@/components/employer/hubs/SafetyHub";
-import { SmartDocsHub } from "@/components/employer/hubs/SmartDocsHub";
-import { AutomationsSection } from "@/components/employer/sections/AutomationsSection";
-import { AIDesignSpecSection } from "@/components/employer/sections/AIDesignSpecSection";
-import { AIRAMSSection } from "@/components/employer/sections/AIRAMSSection";
-import { AIMethodStatementSection } from "@/components/employer/sections/AIMethodStatementSection";
-import { AIBriefingPackSection } from "@/components/employer/sections/AIBriefingPackSection";
-import { AIQuoteSection } from "@/components/employer/sections/AIQuoteSection";
 import { EmployerProvider } from "@/contexts/EmployerContext";
 
-// Import dialogs for voice control
-import { CreateQuoteDialog } from "@/components/employer/dialogs/CreateQuoteDialog";
-import { AddJobDialog } from "@/components/employer/dialogs/AddJobDialog";
-import { AddEmployeeDialog } from "@/components/employer/dialogs/AddEmployeeDialog";
-import { CreateInvoiceDialog } from "@/components/employer/dialogs/CreateInvoiceDialog";
-import { CreateExpenseDialog } from "@/components/employer/dialogs/CreateExpenseDialog";
-import { ManualTimeEntryDialog } from "@/components/employer/dialogs/ManualTimeEntryDialog";
-import { AddCertificationDialog } from "@/components/employer/dialogs/AddCertificationDialog";
-import { CreateOrderDialog } from "@/components/employer/dialogs/CreateOrderDialog";
-import { CreateSupplierDialog } from "@/components/employer/dialogs/CreateSupplierDialog";
-import { PostVacancyDialog } from "@/components/employer/dialogs/PostVacancyDialog";
+// Lazy-loaded sections for code splitting
+const OverviewSection = lazy(() => import("@/components/employer/sections/OverviewSection").then(m => ({ default: m.OverviewSection })));
+const EmployeesSection = lazy(() => import("@/components/employer/sections/EmployeesSection").then(m => ({ default: m.EmployeesSection })));
+const JobsSection = lazy(() => import("@/components/employer/sections/JobsSection").then(m => ({ default: m.JobsSection })));
+const SafetyHRSection = lazy(() => import("@/components/employer/sections/SafetyHRSection").then(m => ({ default: m.SafetyHRSection })));
+const RAMSSection = lazy(() => import("@/components/employer/sections/RAMSSection").then(m => ({ default: m.RAMSSection })));
+const IncidentsSection = lazy(() => import("@/components/employer/sections/IncidentsSection").then(m => ({ default: m.IncidentsSection })));
+const PoliciesSection = lazy(() => import("@/components/employer/sections/PoliciesSection").then(m => ({ default: m.PoliciesSection })));
+const ContractsSection = lazy(() => import("@/components/employer/sections/ContractsSection").then(m => ({ default: m.ContractsSection })));
+const TrainingRecordsSection = lazy(() => import("@/components/employer/sections/TrainingRecordsSection").then(m => ({ default: m.TrainingRecordsSection })));
+const BriefingsSection = lazy(() => import("@/components/employer/sections/BriefingsSection").then(m => ({ default: m.BriefingsSection })));
+const ComplianceSection = lazy(() => import("@/components/employer/sections/ComplianceSection").then(m => ({ default: m.ComplianceSection })));
+const QuotesInvoicesSection = lazy(() => import("@/components/employer/sections/QuotesInvoicesSection").then(m => ({ default: m.QuotesInvoicesSection })));
+const TenderSection = lazy(() => import("@/components/employer/sections/TenderSection").then(m => ({ default: m.TenderSection })));
+const ReportsSection = lazy(() => import("@/components/employer/sections/ReportsSection").then(m => ({ default: m.ReportsSection })));
+const SettingsSection = lazy(() => import("@/components/employer/sections/SettingsSection").then(m => ({ default: m.SettingsSection })));
+const JobPacksSection = lazy(() => import("@/components/employer/sections/JobPacksSection").then(m => ({ default: m.JobPacksSection })));
+const ElecIDSection = lazy(() => import("@/components/employer/sections/ElecIDSection").then(m => ({ default: m.ElecIDSection })));
+const TimesheetsSection = lazy(() => import("@/components/employer/sections/TimesheetsSection").then(m => ({ default: m.TimesheetsSection })));
+const CommunicationsSection = lazy(() => import("@/components/employer/sections/CommunicationsSection").then(m => ({ default: m.CommunicationsSection })));
+const QualitySection = lazy(() => import("@/components/employer/sections/QualitySection").then(m => ({ default: m.QualitySection })));
+const JobBoardSection = lazy(() => import("@/components/employer/sections/JobBoardSection").then(m => ({ default: m.JobBoardSection })));
+const JobTimelineSection = lazy(() => import("@/components/employer/sections/JobTimelineSection").then(m => ({ default: m.JobTimelineSection })));
+const WorkerTrackingSection = lazy(() => import("@/components/employer/sections/WorkerTrackingSection").then(m => ({ default: m.WorkerTrackingSection })));
+const ProgressLogsSection = lazy(() => import("@/components/employer/sections/ProgressLogsSection").then(m => ({ default: m.ProgressLogsSection })));
+const JobIssuesSection = lazy(() => import("@/components/employer/sections/JobIssuesSection").then(m => ({ default: m.JobIssuesSection })));
+const JobFinancialsSection = lazy(() => import("@/components/employer/sections/JobFinancialsSection").then(m => ({ default: m.JobFinancialsSection })));
+const TestingWorkflowSection = lazy(() => import("@/components/employer/sections/TestingWorkflowSection").then(m => ({ default: m.TestingWorkflowSection })));
+const ClientPortalSection = lazy(() => import("@/components/employer/sections/ClientPortalSection").then(m => ({ default: m.ClientPortalSection })));
+const TalentPoolSection = lazy(() => import("@/components/employer/sections/TalentPoolSection").then(m => ({ default: m.TalentPoolSection })));
+const JobVacanciesSection = lazy(() => import("@/components/employer/sections/JobVacanciesSection").then(m => ({ default: m.JobVacanciesSection })));
+const ProcurementSection = lazy(() => import("@/components/employer/sections/ProcurementSection").then(m => ({ default: m.ProcurementSection })));
+const ExpensesSection = lazy(() => import("@/components/employer/sections/ExpensesSection").then(m => ({ default: m.ExpensesSection })));
+const SignaturesSection = lazy(() => import("@/components/employer/sections/SignaturesSection").then(m => ({ default: m.SignaturesSection })));
+const PriceBookSection = lazy(() => import("@/components/employer/sections/PriceBookSection").then(m => ({ default: m.PriceBookSection })));
+const FleetSection = lazy(() => import("@/components/employer/sections/FleetSection").then(m => ({ default: m.FleetSection })));
+const PhotoGallerySection = lazy(() => import("@/components/employer/sections/PhotoGallerySection").then(m => ({ default: m.PhotoGallerySection })));
+const AutomationsSection = lazy(() => import("@/components/employer/sections/AutomationsSection").then(m => ({ default: m.AutomationsSection })));
+const AIDesignSpecSection = lazy(() => import("@/components/employer/sections/AIDesignSpecSection").then(m => ({ default: m.AIDesignSpecSection })));
+const AIRAMSSection = lazy(() => import("@/components/employer/sections/AIRAMSSection").then(m => ({ default: m.AIRAMSSection })));
+const AIMethodStatementSection = lazy(() => import("@/components/employer/sections/AIMethodStatementSection").then(m => ({ default: m.AIMethodStatementSection })));
+const AIBriefingPackSection = lazy(() => import("@/components/employer/sections/AIBriefingPackSection").then(m => ({ default: m.AIBriefingPackSection })));
+const AIQuoteSection = lazy(() => import("@/components/employer/sections/AIQuoteSection").then(m => ({ default: m.AIQuoteSection })));
+
+// Lazy-loaded hubs
+const PeopleHub = lazy(() => import("@/components/employer/hubs/PeopleHub").then(m => ({ default: m.PeopleHub })));
+const FinanceHub = lazy(() => import("@/components/employer/hubs/FinanceHub").then(m => ({ default: m.FinanceHub })));
+const JobsHub = lazy(() => import("@/components/employer/hubs/JobsHub").then(m => ({ default: m.JobsHub })));
+const SafetyHub = lazy(() => import("@/components/employer/hubs/SafetyHub").then(m => ({ default: m.SafetyHub })));
+const SmartDocsHub = lazy(() => import("@/components/employer/hubs/SmartDocsHub").then(m => ({ default: m.SmartDocsHub })));
+
+// Lazy-loaded dialogs for voice control
+const CreateQuoteDialog = lazy(() => import("@/components/employer/dialogs/CreateQuoteDialog").then(m => ({ default: m.CreateQuoteDialog })));
+const AddJobDialog = lazy(() => import("@/components/employer/dialogs/AddJobDialog").then(m => ({ default: m.AddJobDialog })));
+const AddEmployeeDialog = lazy(() => import("@/components/employer/dialogs/AddEmployeeDialog").then(m => ({ default: m.AddEmployeeDialog })));
+const CreateInvoiceDialog = lazy(() => import("@/components/employer/dialogs/CreateInvoiceDialog").then(m => ({ default: m.CreateInvoiceDialog })));
+const CreateExpenseDialog = lazy(() => import("@/components/employer/dialogs/CreateExpenseDialog").then(m => ({ default: m.CreateExpenseDialog })));
+const ManualTimeEntryDialog = lazy(() => import("@/components/employer/dialogs/ManualTimeEntryDialog").then(m => ({ default: m.ManualTimeEntryDialog })));
+const AddCertificationDialog = lazy(() => import("@/components/employer/dialogs/AddCertificationDialog").then(m => ({ default: m.AddCertificationDialog })));
+const CreateOrderDialog = lazy(() => import("@/components/employer/dialogs/CreateOrderDialog").then(m => ({ default: m.CreateOrderDialog })));
+const CreateSupplierDialog = lazy(() => import("@/components/employer/dialogs/CreateSupplierDialog").then(m => ({ default: m.CreateSupplierDialog })));
+const PostVacancyDialog = lazy(() => import("@/components/employer/dialogs/PostVacancyDialog").then(m => ({ default: m.PostVacancyDialog })));
+
+// Loading spinner for lazy components
+const SectionLoader = () => (
+  <div className="flex items-center justify-center py-20">
+    <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+  </div>
+);
 
 export type Section =
   | "overview" 
@@ -303,8 +313,7 @@ const EmployerDashboard = () => {
   useEffect(() => {
     const handleOpenDialog = (e: CustomEvent<{ dialogName: string }>) => {
       const { dialogName } = e.detail;
-      console.log('Voice open dialog:', dialogName);
-      
+
       const dialogMap: Record<string, () => void> = {
         'quote': () => setQuoteDialogOpen(true),
         'create-quote': () => setQuoteDialogOpen(true),
@@ -536,7 +545,6 @@ const EmployerDashboard = () => {
     };
     
     const mappedSection = sectionMap[section.toLowerCase()] || section as Section;
-    console.log(`Voice navigation: "${section}" -> "${mappedSection}"`);
     setActiveSection(mappedSection);
   }, []);
 
@@ -677,22 +685,26 @@ const EmployerDashboard = () => {
             transition={pageTransition}
             className="w-full"
           >
-            {renderSection()}
+            <Suspense fallback={<SectionLoader />}>
+              {renderSection()}
+            </Suspense>
           </motion.div>
         </AnimatePresence>
       </NativePageWrapper>
 
       {/* Voice-controlled dialogs - outside NativePageWrapper */}
-      <CreateQuoteDialog open={quoteDialogOpen} onOpenChange={setQuoteDialogOpen} />
-      <AddJobDialog open={jobDialogOpen} onOpenChange={setJobDialogOpen} trigger={null} />
-      <AddEmployeeDialog open={employeeDialogOpen} onOpenChange={setEmployeeDialogOpen} trigger={null} />
-      <CreateInvoiceDialog open={invoiceDialogOpen} onOpenChange={setInvoiceDialogOpen} />
-      <CreateExpenseDialog open={expenseDialogOpen} onOpenChange={setExpenseDialogOpen} />
-      <ManualTimeEntryDialog open={timeEntryDialogOpen} onOpenChange={setTimeEntryDialogOpen} trigger={null} />
-      <AddCertificationDialog open={certificationDialogOpen} onOpenChange={setCertificationDialogOpen} trigger={null} />
-      <CreateOrderDialog open={orderDialogOpen} onOpenChange={setOrderDialogOpen} />
-      <CreateSupplierDialog open={supplierDialogOpen} onOpenChange={setSupplierDialogOpen} />
-      <PostVacancyDialog open={vacancyDialogOpen} onOpenChange={setVacancyDialogOpen} trigger={null} />
+      <Suspense fallback={null}>
+        {quoteDialogOpen && <CreateQuoteDialog open={quoteDialogOpen} onOpenChange={setQuoteDialogOpen} />}
+        {jobDialogOpen && <AddJobDialog open={jobDialogOpen} onOpenChange={setJobDialogOpen} trigger={null} />}
+        {employeeDialogOpen && <AddEmployeeDialog open={employeeDialogOpen} onOpenChange={setEmployeeDialogOpen} trigger={null} />}
+        {invoiceDialogOpen && <CreateInvoiceDialog open={invoiceDialogOpen} onOpenChange={setInvoiceDialogOpen} />}
+        {expenseDialogOpen && <CreateExpenseDialog open={expenseDialogOpen} onOpenChange={setExpenseDialogOpen} />}
+        {timeEntryDialogOpen && <ManualTimeEntryDialog open={timeEntryDialogOpen} onOpenChange={setTimeEntryDialogOpen} trigger={null} />}
+        {certificationDialogOpen && <AddCertificationDialog open={certificationDialogOpen} onOpenChange={setCertificationDialogOpen} trigger={null} />}
+        {orderDialogOpen && <CreateOrderDialog open={orderDialogOpen} onOpenChange={setOrderDialogOpen} />}
+        {supplierDialogOpen && <CreateSupplierDialog open={supplierDialogOpen} onOpenChange={setSupplierDialogOpen} />}
+        {vacancyDialogOpen && <PostVacancyDialog open={vacancyDialogOpen} onOpenChange={setVacancyDialogOpen} trigger={null} />}
+      </Suspense>
 
       {/* Draggable Voice Assistant */}
       <DraggableVoiceAssistant onNavigate={handleNavigate} currentSection={activeSection} />

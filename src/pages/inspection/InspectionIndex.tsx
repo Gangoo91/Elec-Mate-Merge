@@ -1,13 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Dashboard from '@/components/Dashboard';
-import EICRForm from '@/components/EICRForm';
-import EICForm from '@/components/EICForm';
-import MinorWorksForm from '@/components/MinorWorksForm';
-import MyReports from '@/components/MyReports';
-import LearningHub from '@/components/LearningHub';
+import { Loader2 } from 'lucide-react';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { NotificationsManager } from '@/components/inspection-app/notifications/NotificationsManager';
+
+// Lazy-loaded components for code splitting
+const Dashboard = lazy(() => import('@/components/Dashboard'));
+const EICRForm = lazy(() => import('@/components/EICRForm'));
+const EICForm = lazy(() => import('@/components/EICForm'));
+const MinorWorksForm = lazy(() => import('@/components/MinorWorksForm'));
+const MyReports = lazy(() => import('@/components/MyReports'));
+const LearningHub = lazy(() => import('@/components/LearningHub'));
+
+// Loading spinner for lazy components
+const SectionLoader = () => (
+  <div className="flex items-center justify-center py-20 min-h-screen bg-background">
+    <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+  </div>
+);
 
 const InspectionIndex = () => {
   const location = useLocation();
@@ -169,7 +179,9 @@ const InspectionIndex = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {renderCurrentSection()}
+      <Suspense fallback={<SectionLoader />}>
+        {renderCurrentSection()}
+      </Suspense>
     </div>
   );
 };

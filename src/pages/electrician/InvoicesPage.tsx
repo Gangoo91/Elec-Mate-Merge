@@ -17,9 +17,9 @@ import InvoiceCardView from "@/components/electrician/InvoiceCardView";
 import InvoiceTableView from "@/components/electrician/InvoiceTableView";
 import { EmptyStateGuide } from "@/components/electrician/shared/EmptyStateGuide";
 import { cn } from "@/lib/utils";
-import { VoiceFormProvider } from "@/contexts/VoiceFormContext";
-import { ElectricianVoiceAssistant } from "@/components/electrician/ElectricianVoiceAssistant";
+import { VoiceHeaderButton } from "@/components/electrician/VoiceHeaderButton";
 import { QuoteInvoiceAnalytics } from "@/components/electrician/analytics";
+import StripeConnectBanner from "@/components/electrician/StripeConnectBanner";
 
 const InvoicesPage = () => {
   const { invoices, isLoading, fetchInvoices, deleteInvoice } = useInvoiceStorage();
@@ -70,30 +70,6 @@ const InvoicesPage = () => {
       setSearchParams({});
     } else {
       setSearchParams({ filter });
-    }
-  };
-
-  // Voice navigation handler
-  const handleVoiceNavigate = (section: string) => {
-    const sectionLower = section.toLowerCase().replace(/\s+/g, '-');
-    switch (sectionLower) {
-      case 'create':
-      case 'new-invoice':
-      case 'new':
-        navigate('/electrician/invoice-builder/create');
-        break;
-      case 'draft':
-      case 'sent':
-      case 'overdue':
-      case 'paid':
-        setSearchParams({ filter: sectionLower });
-        break;
-      case 'back':
-      case 'business':
-        navigate('/electrician/business');
-        break;
-      default:
-        navigate(`/electrician/${sectionLower}`);
     }
   };
 
@@ -348,8 +324,7 @@ const InvoicesPage = () => {
   const canonical = `${window.location.origin}/electrician/invoices`;
 
   return (
-    <VoiceFormProvider>
-      <div className="min-h-screen bg-background pb-safe pt-safe animate-fade-in">
+    <div className="min-h-screen bg-background pb-safe pt-safe animate-fade-in">
         <Helmet>
           <title>Invoices | Elec-Mate</title>
           <meta name="description" content="Manage all your electrical invoices. Track drafts, sent invoices, payments and overdue invoices." />
@@ -397,26 +372,33 @@ const InvoicesPage = () => {
             ) : (
               <>
                 <h1 className="flex-1 text-lg font-bold">Invoices</h1>
-                <Button
-                  onClick={() => navigate('/electrician/invoice-builder/create')}
-                  className="bg-emerald-500 text-white hover:bg-emerald-600 gap-1.5 h-11 px-3 touch-manipulation active:scale-[0.98]"
-                >
-                  <Plus className="h-4 w-4" />
-                  <span className="hidden sm:inline">New Invoice</span>
-                </Button>
-                <button
-                  onClick={() => setIsSearchOpen(true)}
-                  className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation"
-                >
-                  <Search className="h-5 w-5" />
-                </button>
-                <button
-                  onClick={handleRefresh}
-                  disabled={isRefreshing}
-                  className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
-                >
-                  <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
-                </button>
+                <div className="flex items-center gap-2">
+                  <VoiceHeaderButton
+                    hint="Send invoice"
+                    currentSection="invoices"
+                    onToolResult={handleRefresh}
+                  />
+                  <button
+                    onClick={() => setIsSearchOpen(true)}
+                    className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation"
+                  >
+                    <Search className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={handleRefresh}
+                    disabled={isRefreshing}
+                    className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
+                  >
+                    <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
+                  </button>
+                  <Button
+                    onClick={() => navigate('/electrician/invoice-builder/create')}
+                    className="bg-emerald-500 text-white hover:bg-emerald-600 gap-1.5 h-11 px-3 touch-manipulation active:scale-[0.98]"
+                  >
+                    <Plus className="h-4 w-4" />
+                    <span className="hidden sm:inline">New</span>
+                  </Button>
+                </div>
                 {/* View Toggle - Hidden on mobile */}
                 <div className="hidden lg:flex items-center gap-1 bg-elec-gray/30 rounded-lg p-1">
                   <button
@@ -473,6 +455,9 @@ const InvoicesPage = () => {
 
         {/* Main Content */}
         <main className="px-4 py-4 space-y-4">
+          {/* Stripe Connect Banner - Prompt to enable card payments */}
+          <StripeConnectBanner />
+
           {/* Stats Summary - Tappable Cards */}
           <div className="grid grid-cols-2 gap-3">
             {/* Monthly Revenue Card */}
@@ -617,13 +602,7 @@ const InvoicesPage = () => {
           </section>
         </main>
 
-        {/* Voice Assistant */}
-        <ElectricianVoiceAssistant
-          onNavigate={handleVoiceNavigate}
-          currentSection="invoices"
-        />
-      </div>
-    </VoiceFormProvider>
+    </div>
   );
 };
 

@@ -1,37 +1,48 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, lazy, Suspense } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { CollegeOverviewSection } from "@/components/college/sections/CollegeOverviewSection";
-import { TutorsSection } from "@/components/college/sections/TutorsSection";
-import { StudentsSection } from "@/components/college/sections/StudentsSection";
-import { CohortsSection } from "@/components/college/sections/CohortsSection";
-import { SupportStaffSection } from "@/components/college/sections/SupportStaffSection";
-import { CoursesSection } from "@/components/college/sections/CoursesSection";
-import { LessonPlansSection } from "@/components/college/sections/LessonPlansSection";
-import { TeachingResourcesSection } from "@/components/college/sections/TeachingResourcesSection";
-import { SchemesOfWorkSection } from "@/components/college/sections/SchemesOfWorkSection";
-import { GradingSection } from "@/components/college/sections/GradingSection";
-import { AttendanceSection } from "@/components/college/sections/AttendanceSection";
-import { ILPManagementSection } from "@/components/college/sections/ILPManagementSection";
-import { EPATrackingSection } from "@/components/college/sections/EPATrackingSection";
-import { ProgressTrackingSection } from "@/components/college/sections/ProgressTrackingSection";
-import { PortfolioSection } from "@/components/college/sections/PortfolioSection";
-import { WorkQueueSection } from "@/components/college/sections/WorkQueueSection";
-import { DocumentLibrarySection } from "@/components/college/sections/DocumentLibrarySection";
-import { ComplianceDocsSection } from "@/components/college/sections/ComplianceDocsSection";
-import { LTISettingsSection } from "@/components/college/sections/LTISettingsSection";
-import { CollegeSettingsSection } from "@/components/college/sections/CollegeSettingsSection";
-import { TutorNotebookSection } from "@/components/college/sections/TutorNotebookSection";
-import { EmployerPortalSection } from "@/components/college/sections/EmployerPortalSection";
-import { CollegePeopleHub } from "@/components/college/hubs/CollegePeopleHub";
-import { CurriculumHub } from "@/components/college/hubs/CurriculumHub";
-import { AssessmentHub } from "@/components/college/hubs/AssessmentHub";
-import { ResourcesHub } from "@/components/college/hubs/ResourcesHub";
 import { CollegeProvider } from "@/contexts/CollegeContext";
 import { CommandPalette } from "@/components/college/CommandPalette";
 import { QuickActions } from "@/components/college/QuickActions";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { Button } from "@/components/ui/button";
-import { Search, ArrowLeft, School, Settings } from "lucide-react";
+import { Search, ArrowLeft, School, Settings, Loader2 } from "lucide-react";
+
+// Lazy-loaded sections for code splitting
+const CollegeOverviewSection = lazy(() => import("@/components/college/sections/CollegeOverviewSection").then(m => ({ default: m.CollegeOverviewSection })));
+const TutorsSection = lazy(() => import("@/components/college/sections/TutorsSection").then(m => ({ default: m.TutorsSection })));
+const StudentsSection = lazy(() => import("@/components/college/sections/StudentsSection").then(m => ({ default: m.StudentsSection })));
+const CohortsSection = lazy(() => import("@/components/college/sections/CohortsSection").then(m => ({ default: m.CohortsSection })));
+const SupportStaffSection = lazy(() => import("@/components/college/sections/SupportStaffSection").then(m => ({ default: m.SupportStaffSection })));
+const CoursesSection = lazy(() => import("@/components/college/sections/CoursesSection").then(m => ({ default: m.CoursesSection })));
+const LessonPlansSection = lazy(() => import("@/components/college/sections/LessonPlansSection").then(m => ({ default: m.LessonPlansSection })));
+const TeachingResourcesSection = lazy(() => import("@/components/college/sections/TeachingResourcesSection").then(m => ({ default: m.TeachingResourcesSection })));
+const SchemesOfWorkSection = lazy(() => import("@/components/college/sections/SchemesOfWorkSection").then(m => ({ default: m.SchemesOfWorkSection })));
+const GradingSection = lazy(() => import("@/components/college/sections/GradingSection").then(m => ({ default: m.GradingSection })));
+const AttendanceSection = lazy(() => import("@/components/college/sections/AttendanceSection").then(m => ({ default: m.AttendanceSection })));
+const ILPManagementSection = lazy(() => import("@/components/college/sections/ILPManagementSection").then(m => ({ default: m.ILPManagementSection })));
+const EPATrackingSection = lazy(() => import("@/components/college/sections/EPATrackingSection").then(m => ({ default: m.EPATrackingSection })));
+const ProgressTrackingSection = lazy(() => import("@/components/college/sections/ProgressTrackingSection").then(m => ({ default: m.ProgressTrackingSection })));
+const PortfolioSection = lazy(() => import("@/components/college/sections/PortfolioSection").then(m => ({ default: m.PortfolioSection })));
+const WorkQueueSection = lazy(() => import("@/components/college/sections/WorkQueueSection").then(m => ({ default: m.WorkQueueSection })));
+const DocumentLibrarySection = lazy(() => import("@/components/college/sections/DocumentLibrarySection").then(m => ({ default: m.DocumentLibrarySection })));
+const ComplianceDocsSection = lazy(() => import("@/components/college/sections/ComplianceDocsSection").then(m => ({ default: m.ComplianceDocsSection })));
+const LTISettingsSection = lazy(() => import("@/components/college/sections/LTISettingsSection").then(m => ({ default: m.LTISettingsSection })));
+const CollegeSettingsSection = lazy(() => import("@/components/college/sections/CollegeSettingsSection").then(m => ({ default: m.CollegeSettingsSection })));
+const TutorNotebookSection = lazy(() => import("@/components/college/sections/TutorNotebookSection").then(m => ({ default: m.TutorNotebookSection })));
+const EmployerPortalSection = lazy(() => import("@/components/college/sections/EmployerPortalSection").then(m => ({ default: m.EmployerPortalSection })));
+
+// Lazy-loaded hubs
+const CollegePeopleHub = lazy(() => import("@/components/college/hubs/CollegePeopleHub").then(m => ({ default: m.CollegePeopleHub })));
+const CurriculumHub = lazy(() => import("@/components/college/hubs/CurriculumHub").then(m => ({ default: m.CurriculumHub })));
+const AssessmentHub = lazy(() => import("@/components/college/hubs/AssessmentHub").then(m => ({ default: m.AssessmentHub })));
+const ResourcesHub = lazy(() => import("@/components/college/hubs/ResourcesHub").then(m => ({ default: m.ResourcesHub })));
+
+// Loading spinner for lazy components
+const SectionLoader = () => (
+  <div className="flex items-center justify-center py-20">
+    <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+  </div>
+);
 
 export type CollegeSection =
   | "overview"
@@ -399,7 +410,9 @@ const CollegeDashboard = () => {
           </div>
 
           {/* Main Content */}
-          {renderSection()}
+          <Suspense fallback={<SectionLoader />}>
+            {renderSection()}
+          </Suspense>
 
           {/* Command Palette */}
           <CommandPalette open={commandPaletteOpen} onOpenChange={setCommandPaletteOpen} onNavigate={handleNavigate} />

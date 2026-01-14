@@ -15,6 +15,15 @@ export interface CloudReport {
   pdf_url?: string;
   pdf_generated_at?: string;
   version?: number;
+  edit_version?: number;
+}
+
+export interface VersionConflict {
+  hasConflict: boolean;
+  localVersion: number;
+  serverVersion: number;
+  serverData?: any;
+  serverUpdatedAt?: string;
 }
 
 export interface ReportsResponse {
@@ -289,12 +298,129 @@ export const reportCloud = {
         .eq('user_id', userId)
         .is('deleted_at', null)
         .single();
-      
+
       if (error) throw error;
       return data as CloudReport;
     } catch (error) {
       console.error('[reportCloud] Failed to fetch report:', error);
       return null;
+    }
+  },
+
+  /**
+   * Get current edit version of a report
+   */
+  getEditVersion: async (reportId: string, userId: string): Promise<{ version: number; updatedAt: string } | null> => {
+    try {
+      const { data, error } = await supabase
+        .from('reports')
+        .select('edit_version, updated_at')
+        .eq('report_id', reportId)
+        .eq('user_id', userId)
+        .is('deleted_at', null)
+        .single();
+
+      if (error) throw error;
+      return {
+        version: data?.edit_version || 1,
+        updatedAt: data?.updated_at
+      };
+    } catch (error) {
+      console.error('[reportCloud] Failed to get edit version:', error);
+      return null;
+    }
+  },
+
+  /**
+   * Check for version conflict before update
+   */
+  checkVersionConflict: async (
+    reportId: string,
+    userId: string,
+    expectedVersion: number
+  ): Promise<VersionConflict> => {
+    try {
+      const { data, error } = await supabase
+        .from('reports')
+        .select('edit_version, updated_at, data')
+        .eq('report_id', reportId)
+        .eq('user_id', userId)
+        .is('deleted_at', null)
+        .single();
+
+      if (error) throw error;
+
+      const serverVersion = data?.edit_version || 1;
+      const hasConflict = serverVersion > expectedVersion;
+
+      return {
+        hasConflict,
+        localVersion: expectedVersion,
+        serverVersion,
+        serverData: hasConflict ? data?.data : undefined,
+        serverUpdatedAt: hasConflict ? data?.updated_at : undefined,
+      };
+    } catch (error) {
+      console.error('[reportCloud] Failed to check version conflict:', error);
+      // If we can't check, assume no conflict to avoid blocking saves
+      return {
+        hasConflict: false,
+        localVersion: expectedVersion,
+        serverVersion: expectedVersion,
+      };
+    }
+  },
+
+  /**
+   * Update with version check (optimistic locking)
+   */
+  updateReportWithVersionCheck: async (
+    reportId: string,
+    userId: string,
+    data: any,
+    expectedVersion: number,
+    customerId?: string
+  ): Promise<{ success: boolean; conflict?: VersionConflict; error?: any }> => {
+    try {
+      // First check for conflicts
+      const conflict = await reportCloud.checkVersionConflict(reportId, userId, expectedVersion);
+
+      if (conflict.hasConflict) {
+        console.log('[reportCloud] Version conflict detected:', conflict);
+        return { success: false, conflict };
+      }
+
+      // No conflict, proceed with update
+      const updateData: any = {
+        status: data.status === 'completed' ? 'completed' :
+                data.certificateGenerated ? 'completed' :
+                data.satisfactoryForContinuedUse && data.inspectorSignature ? 'completed' :
+                (data.clientName || data.inspectionDate || data.workDate) ? 'in-progress' : 'draft',
+        client_name: data.clientName || null,
+        installation_address: data.installationAddress || data.propertyAddress || null,
+        inspection_date: data.inspectionDate || data.workDate || null,
+        inspector_name: data.inspectorName || data.contractorName || null,
+        data: data,
+        last_synced_at: new Date().toISOString(),
+      };
+
+      if (customerId !== undefined) {
+        updateData.customer_id = customerId;
+      }
+
+      const { error } = await supabase
+        .from('reports')
+        .update(updateData)
+        .eq('report_id', reportId)
+        .eq('user_id', userId);
+
+      if (error) throw error;
+
+      console.log('[reportCloud] Report updated with version check:', reportId);
+      return { success: true };
+    } catch (error) {
+      console.error('[reportCloud] Failed to update report with version check:', error);
+      return { success: false, error };
     }
   },
 };

@@ -25,6 +25,7 @@ const ApprenticeMentalHealth = lazy(() => import("@/pages/apprentice/ApprenticeM
 const RightsAndPay = lazy(() => import("@/pages/apprentice/RightsAndPay"));
 const NotificationsPage = lazy(() => import("@/pages/NotificationsPage"));
 const PublicQuote = lazy(() => import("@/pages/PublicQuote"));
+const PublicSignature = lazy(() => import("@/pages/PublicSignature"));
 const LaTeXPDFGeneratorPage = lazy(() => import("@/pages/LaTeXPDFGeneratorPage"));
 const InvoiceQuoteBuilder = lazy(() => import("@/pages/electrician/InvoiceQuoteBuilder"));
 const InvoiceViewPage = lazy(() => import("@/pages/electrician/InvoiceViewPage"));
@@ -58,6 +59,7 @@ const AdminEmployerModeration = lazy(() => import("@/pages/Admin/AdminEmployerMo
 const AdminDataExport = lazy(() => import("@/pages/Admin/AdminDataExport"));
 const AdminPricingModeration = lazy(() => import("@/pages/Admin/AdminPricingModeration"));
 const CustomersPage = lazy(() => import("@/pages/CustomersPage"));
+const CustomerDetailPage = lazy(() => import("@/pages/CustomerDetailPage"));
 const CertificateExpiryPage = lazy(() => import("@/pages/CertificateExpiryPage"));
 const EmployerDashboard = lazy(() => import("@/pages/employer/EmployerDashboard"));
 const CollegeDashboard = lazy(() => import("@/pages/college/CollegeDashboard"));
@@ -98,6 +100,7 @@ const AppRouter = () => {
       <Route path="/terms" element={<LazyRoute><TermsOfService /></LazyRoute>} />
       <Route path="/quote/:token" element={<LazyRoute><PublicQuote /></LazyRoute>} />
       <Route path="/public-quote/:token" element={<LazyRoute><PublicQuote /></LazyRoute>} />
+      <Route path="/sign/:token" element={<LazyRoute><PublicSignature /></LazyRoute>} />
       <Route path="/pdf-generator" element={<LazyRoute><LaTeXPDFGeneratorPage /></LazyRoute>} />
 
       {/* Legacy/Direct Access Routes - Redirect to proper paths */}
@@ -114,6 +117,7 @@ const AppRouter = () => {
         <Route path="settings" element={<LazyRoute><Settings /></LazyRoute>} />
         <Route path="notifications" element={<LazyRoute><NotificationsPage /></LazyRoute>} />
         <Route path="customers" element={<LazyRoute><CustomersPage /></LazyRoute>} />
+        <Route path="customers/:customerId" element={<LazyRoute><CustomerDetailPage /></LazyRoute>} />
         <Route path="certificate-expiry" element={<LazyRoute><CertificateExpiryPage /></LazyRoute>} />
         <Route path="subscriptions" element={<LazyRoute><Subscriptions /></LazyRoute>} />
         <Route path="payment-success" element={<LazyRoute><PaymentSuccess /></LazyRoute>} />

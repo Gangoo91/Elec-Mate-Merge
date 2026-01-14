@@ -223,8 +223,8 @@ export function MessagesDropdown() {
   // Team chat (for employer context)
   const teamChatUnread = useTeamChatUnread(employerId);
 
-  // College chat
-  const { data: collegeConversations = [], totalUnread: collegeUnread } = useCollegeConversations();
+  // College chat - only fetch when in college context to avoid 400 errors
+  const { data: collegeConversations = [], totalUnread: collegeUnread } = useCollegeConversations(isCollegeContext);
 
   // Determine college user type
   const collegeUserType: 'student' | 'staff' | 'employer' = isCollegeContext

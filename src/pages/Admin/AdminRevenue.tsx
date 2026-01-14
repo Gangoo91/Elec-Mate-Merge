@@ -112,32 +112,38 @@ export default function AdminRevenue() {
         roleBreakdown[role] = (roleBreakdown[role] || 0) + 1;
       });
 
-      // Daily revenue for chart (last 14 days)
-      const dailyRevenue: { date: string; amount: number; count: number }[] = [];
-      for (let i = 13; i >= 0; i--) {
-        const date = subDays(now, i);
+      // Daily revenue for chart (last 14 days) - batch all queries in parallel
+      const dailyDates = Array.from({ length: 14 }, (_, i) => {
+        const date = subDays(now, 13 - i);
         const start = startOfDay(date);
         const end = new Date(start);
         end.setHours(23, 59, 59, 999);
+        return { date, start, end };
+      });
 
-        const { data: dayProfiles } = await supabase
-          .from("profiles")
-          .select("subscription_tier")
-          .eq("subscribed", true)
-          .gte("subscription_start", start.toISOString())
-          .lte("subscription_start", end.toISOString());
+      const dailyResults = await Promise.all(
+        dailyDates.map(({ start, end }) =>
+          supabase
+            .from("profiles")
+            .select("subscription_tier")
+            .eq("subscribed", true)
+            .gte("subscription_start", start.toISOString())
+            .lte("subscription_start", end.toISOString())
+        )
+      );
 
-        const dayRevenue = (dayProfiles || []).reduce((total, p) => {
+      const dailyRevenue = dailyDates.map(({ date }, i) => {
+        const dayProfiles = dailyResults[i].data || [];
+        const dayRevenue = dayProfiles.reduce((total, p) => {
           const tier = p.subscription_tier || "basic";
           return total + (tierPricing[tier] || 9.99);
         }, 0);
-
-        dailyRevenue.push({
+        return {
           date: format(date, "dd MMM"),
           amount: dayRevenue,
-          count: dayProfiles?.length || 0,
-        });
-      }
+          count: dayProfiles.length,
+        };
+      });
 
       return {
         mrr,
@@ -154,6 +160,7 @@ export default function AdminRevenue() {
         avgRevenuePerUser: subscribedProfiles.length > 0 ? mrr / subscribedProfiles.length : 0,
       };
     },
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
     refetchInterval: 120000, // Refresh every 2 minutes
   });
 

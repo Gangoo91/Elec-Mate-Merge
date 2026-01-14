@@ -1,4 +1,4 @@
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Plus, ArrowLeft, PoundSterling, TrendingUp, FileText, Clock, CheckCircle, XCircle, Send, RefreshCw } from "lucide-react";
@@ -7,8 +7,7 @@ import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuote
 import { filterQuotesByStatus } from "@/utils/quote-analytics";
 import { useMemo, useState, useCallback } from "react";
 import { cn } from "@/lib/utils";
-import { VoiceFormProvider } from "@/contexts/VoiceFormContext";
-import { ElectricianVoiceAssistant } from "@/components/electrician/ElectricianVoiceAssistant";
+import { VoiceHeaderButton } from "@/components/electrician/VoiceHeaderButton";
 import { EmptyStateGuide } from "@/components/electrician/shared/EmptyStateGuide";
 import { Card, CardContent } from "@/components/ui/card";
 import { QuoteInvoiceAnalytics } from "@/components/electrician/analytics";
@@ -34,30 +33,6 @@ const QuotesPage = () => {
     await refreshQuotes();
     setTimeout(() => setIsRefreshing(false), 500);
   }, [refreshQuotes]);
-
-  // Voice navigation handler
-  const handleVoiceNavigate = (section: string) => {
-    const sectionLower = section.toLowerCase().replace(/\s+/g, '-');
-    switch (sectionLower) {
-      case 'create':
-      case 'new-quote':
-      case 'new':
-        navigate('/electrician/quote-builder/create');
-        break;
-      case 'draft':
-      case 'sent':
-      case 'approved':
-      case 'rejected':
-        setSearchParams({ filter: sectionLower });
-        break;
-      case 'back':
-      case 'home':
-        navigate('/electrician');
-        break;
-      default:
-        navigate(`/electrician/${sectionLower}`);
-    }
-  };
 
   const filteredQuotes = useMemo(() => {
     if (!filter || filter === 'all') return savedQuotes;
@@ -108,8 +83,7 @@ const QuotesPage = () => {
   const canonical = `${window.location.origin}/electrician/quotes`;
 
   return (
-    <VoiceFormProvider>
-      <div className="min-h-screen bg-background pt-safe pb-safe animate-fade-in">
+    <div className="min-h-screen bg-background pt-safe pb-safe animate-fade-in">
         <Helmet>
         <title>All Quotes | Professional Quote Management for Electricians</title>
         <meta
@@ -119,30 +93,70 @@ const QuotesPage = () => {
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      {/* Compact Header */}
-      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b">
-        <div className="px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link to="/electrician">
-              <Button variant="ghost" size="icon" className="h-11 w-11 touch-manipulation active:scale-[0.98]">
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-            </Link>
-            <h1 className="text-xl font-bold">Quotes</h1>
-          </div>
-          <Link to="/electrician/quote-builder/create">
-            <Button size="sm" className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-11 gap-1.5 touch-manipulation active:scale-[0.98]">
-              <Plus className="h-4 w-4" />
-              New
-            </Button>
-          </Link>
+      {/* Compact Mobile Header - Matches InvoicesPage */}
+      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border/50">
+        <div className="flex items-center h-14 px-4 gap-3">
+          {/* Back Button */}
           <button
-            onClick={handleRefresh}
-            disabled={isRefreshing}
-            className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-muted active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
+            onClick={() => navigate('/electrician')}
+            className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation -ml-1"
           >
-            <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
+            <ArrowLeft className="h-5 w-5" />
           </button>
+
+          {/* Title */}
+          <h1 className="flex-1 text-lg font-bold">Quotes</h1>
+
+          {/* Right Side Buttons */}
+          <div className="flex items-center gap-2">
+            <VoiceHeaderButton
+              hint="Send quote"
+              currentSection="quotes"
+              onToolResult={handleRefresh}
+            />
+            <button
+              onClick={handleRefresh}
+              disabled={isRefreshing}
+              className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
+            >
+              <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
+            </button>
+            <Button
+              onClick={() => navigate('/electrician/quote-builder/create')}
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 gap-1.5 h-11 px-3 touch-manipulation active:scale-[0.98]"
+            >
+              <Plus className="h-4 w-4" />
+              <span className="hidden sm:inline">New</span>
+            </Button>
+          </div>
+        </div>
+
+        {/* Filter Pills - Horizontal Scroll */}
+        <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
+          {filterOptions.map((option) => {
+            const Icon = option.icon;
+            return (
+              <button
+                key={option.id}
+                onClick={() => setFilter(option.id)}
+                className={cn(
+                  "shrink-0 h-11 px-4 rounded-full text-sm font-medium transition-all active:scale-[0.98] touch-manipulation flex items-center gap-2",
+                  filter === option.id
+                    ? "bg-elec-yellow text-black"
+                    : "bg-elec-gray/50 text-foreground hover:bg-elec-gray"
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                {option.label}
+                <span className={cn(
+                  "text-xs px-1.5 py-0.5 rounded-full min-w-[20px] text-center",
+                  filter === option.id ? "bg-black/20" : "bg-muted"
+                )}>
+                  {option.count}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </header>
 
@@ -177,38 +191,6 @@ const QuotesPage = () => {
           </div>
         </section>
 
-        {/* Filter Pills */}
-        <section className="overflow-x-auto scrollbar-hide -mx-4 px-4">
-          <div className="flex gap-2 min-w-max pb-1">
-            {filterOptions.map((option) => {
-              const isActive = filter === option.id;
-              const Icon = option.icon;
-              return (
-                <button
-                  key={option.id}
-                  onClick={() => setFilter(option.id)}
-                  className={cn(
-                    "flex items-center gap-2 h-9 px-4 rounded-full text-sm font-medium transition-all touch-manipulation",
-                    isActive
-                      ? "bg-elec-yellow text-black shadow-sm"
-                      : "bg-card border border-border text-muted-foreground hover:text-foreground hover:bg-muted"
-                  )}
-                >
-                  <Icon className="h-4 w-4" />
-                  <span>{option.label}</span>
-                  {option.count > 0 && (
-                    <span className={cn(
-                      "text-xs px-1.5 py-0.5 rounded-full min-w-[20px] text-center",
-                      isActive ? "bg-black/20" : "bg-muted"
-                    )}>
-                      {option.count}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </section>
 
         {/* Quick Stats Row */}
         <section className="grid grid-cols-3 gap-3">
@@ -280,13 +262,7 @@ const QuotesPage = () => {
         </section>
       </div>
 
-      {/* Voice Assistant */}
-      <ElectricianVoiceAssistant
-        onNavigate={handleVoiceNavigate}
-        currentSection="quotes"
-      />
     </div>
-    </VoiceFormProvider>
   );
 };
 

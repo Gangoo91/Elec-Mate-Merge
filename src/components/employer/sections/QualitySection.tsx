@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import {
   useJobIssuesByType,
   useJobIssueStats,
@@ -32,7 +34,9 @@ import {
   Calendar,
   Briefcase,
   Loader2,
-  RefreshCw
+  RefreshCw,
+  X,
+  Image,
 } from "lucide-react";
 
 const statusColors: Record<string, string> = {
@@ -60,6 +64,10 @@ export const QualitySection = () => {
   const [snagDescription, setSnagDescription] = useState("");
   const [snagSeverity, setSnagSeverity] = useState<IssueSeverity>("Medium");
   const [snagLocation, setSnagLocation] = useState("");
+  const [snagPhotos, setSnagPhotos] = useState<string[]>([]);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
 
   // Fetch snags and defects using the real hook
   const { data: snagIssues, isLoading, error, refetch } = useJobIssuesByType(["Snag", "Defect"]);
@@ -79,6 +87,49 @@ export const QualitySection = () => {
   const openSnags = filteredSnags.filter(s => s.status === "Open" || s.status === "In Progress");
   const resolvedSnags = filteredSnags.filter(s => s.status === "Resolved" || s.status === "Closed");
 
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setUploadingPhoto(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Not authenticated");
+
+      const uploadedUrls: string[] = [];
+
+      for (const file of Array.from(files)) {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${user.id}/snags/${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExt}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from("visual-uploads")
+          .upload(fileName, file);
+
+        if (uploadError) throw uploadError;
+
+        const { data: { publicUrl } } = supabase.storage
+          .from("visual-uploads")
+          .getPublicUrl(fileName);
+
+        uploadedUrls.push(publicUrl);
+      }
+
+      setSnagPhotos(prev => [...prev, ...uploadedUrls]);
+      toast({ title: "Photo uploaded", description: `${uploadedUrls.length} photo(s) added` });
+    } catch (error) {
+      console.error("Photo upload error:", error);
+      toast({ title: "Upload failed", description: "Could not upload photo", variant: "destructive" });
+    } finally {
+      setUploadingPhoto(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
+  const removePhoto = (index: number) => {
+    setSnagPhotos(prev => prev.filter((_, i) => i !== index));
+  };
+
   const handleCreateSnag = async () => {
     if (!selectedJobId || !snagTitle) return;
 
@@ -90,7 +141,7 @@ export const QualitySection = () => {
       severity: snagSeverity,
       status: "Open",
       location: snagLocation,
-      photos: [],
+      photos: snagPhotos,
     });
 
     // Reset form
@@ -99,6 +150,7 @@ export const QualitySection = () => {
     setSnagDescription("");
     setSnagSeverity("Medium");
     setSnagLocation("");
+    setSnagPhotos([]);
     setShowNewSnag(false);
   };
 
@@ -210,10 +262,50 @@ export const QualitySection = () => {
                   />
                 </div>
 
-                <Button variant="outline" className="w-full gap-2 h-11 touch-manipulation">
-                  <Camera className="h-4 w-4" />
-                  Add Photo (Coming Soon)
-                </Button>
+                {/* Photo Upload */}
+                <div className="space-y-2">
+                  <Label>Photos</Label>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                    onChange={handlePhotoUpload}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full gap-2 h-11 touch-manipulation"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploadingPhoto}
+                  >
+                    {uploadingPhoto ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Camera className="h-4 w-4" />
+                    )}
+                    {uploadingPhoto ? "Uploading..." : "Add Photos"}
+                  </Button>
+
+                  {/* Photo Previews */}
+                  {snagPhotos.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {snagPhotos.map((url, index) => (
+                        <div key={index} className="relative w-20 h-20 rounded-lg overflow-hidden border border-border">
+                          <img src={url} alt={`Snag photo ${index + 1}`} className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={() => removePhoto(index)}
+                            className="absolute top-1 right-1 bg-black/60 rounded-full p-0.5"
+                          >
+                            <X className="h-3 w-3 text-white" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="p-4 border-t border-border bg-background">
@@ -359,6 +451,17 @@ export const QualitySection = () => {
                     <p className="text-sm text-muted-foreground bg-surface p-3 rounded-lg">
                       {issue.description}
                     </p>
+                  )}
+
+                  {/* Display photos if any */}
+                  {issue.photos && issue.photos.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {issue.photos.map((url, idx) => (
+                        <div key={idx} className="w-16 h-16 rounded-lg overflow-hidden border border-border">
+                          <img src={url} alt={`Issue photo ${idx + 1}`} className="w-full h-full object-cover" />
+                        </div>
+                      ))}
+                    </div>
                   )}
 
                   <div className="flex items-center justify-between text-xs text-muted-foreground">

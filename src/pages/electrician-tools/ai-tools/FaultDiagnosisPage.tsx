@@ -157,9 +157,21 @@ const FaultDiagnosisPage = () => {
         }
       });
 
-      if (error) throw error;
+      console.log('🔍 Fault Diagnosis Response:', {
+        data,
+        error,
+        hasAnalysis: !!data?.analysis,
+        hasComplianceSummary: !!(data?.compliance_summary || data?.analysis?.compliance_summary)
+      });
+
+      if (error) {
+        console.error('❌ Fault diagnosis error:', error);
+        throw error;
+      }
+
       setAnalysisProgress(100);
-      setAnalysisResult(data);
+      // Unwrap if wrapped in analysis
+      setAnalysisResult(data?.analysis || data);
 
     } catch (error) {
       console.error('Analysis error:', error);
@@ -189,7 +201,7 @@ const FaultDiagnosisPage = () => {
         </div>
       </div>
 
-      <main className="px-4 py-5 space-y-5 max-w-2xl mx-auto">
+      <main className="px-4 py-5 space-y-5 max-w-5xl mx-auto">
         {/* Hero with Urgency Indicator */}
         <div className={cn(
           "rounded-2xl border bg-gradient-to-br backdrop-blur-xl p-5 overflow-hidden relative",

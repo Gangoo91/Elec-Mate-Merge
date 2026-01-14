@@ -2,12 +2,16 @@ import { useState, useEffect } from 'react';
 import { NotificationsList } from './NotificationsList';
 import { NotificationDetailModal } from './NotificationDetailModal';
 import { BuildingControlFormGuide } from './BuildingControlFormGuide';
+import { BuildingControlFinder } from './BuildingControlFinder';
+import { NonRegisteredUserGuide } from './NonRegisteredUserGuide';
+import { RegisteredUserGuide } from './RegisteredUserGuide';
 import { useNotifications, Notification } from '@/hooks/useNotifications';
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2 } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface NotificationsManagerProps {
   onNavigate: (section: string, reportId?: string, reportType?: string) => void;
@@ -15,16 +19,22 @@ interface NotificationsManagerProps {
 
 export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) => {
   const { notifications, isLoading, updateNotification, deleteNotification } = useNotifications();
+  const { toast } = useToast();
   const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
   const [showNiceic, setShowNiceic] = useState(true);
   const [showNapit, setShowNapit] = useState(true);
   const [isFormGuideOpen, setIsFormGuideOpen] = useState(false);
+  const [isRegistered, setIsRegistered] = useState<boolean | null>(null);
+  const [showBuildingControlFinder, setShowBuildingControlFinder] = useState(false);
 
   // Check company profile for scheme membership
   useEffect(() => {
     const checkSchemeMembership = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user) {
+        setIsRegistered(false);
+        return;
+      }
 
       const { data: companyProfile } = await supabase
         .from('company_profiles')
@@ -33,8 +43,13 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
         .single();
 
       if (companyProfile) {
-        setShowNiceic(!!companyProfile.niceic_number);
-        setShowNapit(!!companyProfile.napit_number);
+        const hasNiceic = !!companyProfile.niceic_number;
+        const hasNapit = !!companyProfile.napit_number;
+        setShowNiceic(hasNiceic);
+        setShowNapit(hasNapit);
+        setIsRegistered(hasNiceic || hasNapit);
+      } else {
+        setIsRegistered(false);
       }
     };
 
@@ -63,9 +78,20 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
 
   return (
     <>
-      {/* Building Control Form Guide - Collapsible */}
-      <Collapsible 
-        open={isFormGuideOpen} 
+      {/* User-specific guidance based on scheme membership */}
+      {isRegistered === false && (
+        <NonRegisteredUserGuide
+          onFindBuildingControl={() => setShowBuildingControlFinder(true)}
+        />
+      )}
+
+      {isRegistered === true && (
+        <RegisteredUserGuide showNiceic={showNiceic} showNapit={showNapit} />
+      )}
+
+      {/* Building Control Form Guide - Collapsible (supplementary details) */}
+      <Collapsible
+        open={isFormGuideOpen}
         onOpenChange={setIsFormGuideOpen}
         className="mb-6"
       >
@@ -73,7 +99,7 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
           <span className="text-sm font-medium text-foreground">
             📋 What to Submit to Building Control
           </span>
-          <ChevronDown 
+          <ChevronDown
             className={`w-5 h-5 text-neutral-400 transition-transform duration-200 ${
               isFormGuideOpen ? 'rotate-180' : ''
             }`}
@@ -104,6 +130,18 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
         onClose={() => setSelectedNotification(null)}
         onUpdate={updateNotification}
         onViewCertificate={handleViewCertificate}
+      />
+
+      {/* Global Building Control Finder Dialog */}
+      <BuildingControlFinder
+        open={showBuildingControlFinder}
+        onOpenChange={setShowBuildingControlFinder}
+        onSelect={(authority) => {
+          toast({
+            title: 'Building Control Found',
+            description: `${authority} - Use the contact details to submit your notification directly.`,
+          });
+        }}
       />
     </>
   );

@@ -98,6 +98,7 @@ export default function AdminSubscriptions() {
         conversionRate: totalRes.count ? ((subscribedRes.count || 0) / totalRes.count * 100).toFixed(1) : "0",
       };
     },
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
     refetchInterval: 30000,
   });
 
@@ -130,6 +131,7 @@ export default function AdminSubscriptions() {
 
       return filtered;
     },
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
 
   // Fetch active promo offers
@@ -145,6 +147,7 @@ export default function AdminSubscriptions() {
       if (error) throw error;
       return data as PromoOffer[];
     },
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
 
   const getRoleIcon = (role: string) => {

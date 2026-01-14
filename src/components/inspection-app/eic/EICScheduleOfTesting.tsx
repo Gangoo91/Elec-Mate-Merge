@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useOptionalVoiceFormContext, FormField } from '@/contexts/VoiceFormContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -265,27 +265,46 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     await setTableViewPreference(newView);
   };
 
-  // Initialize test results from form data
+  // Track if we've loaded data from designer to prevent re-initialization
+  const hasLoadedDesignerData = useRef(false);
+
+  // Initialize and sync test results from form data
+  // This runs when formData.scheduleOfTests changes (e.g., when design data loads)
   useEffect(() => {
     if (formData.scheduleOfTests && formData.scheduleOfTests.length > 0) {
-      // Normalize legacy data - remove K/Z curves for MCB/RCBO devices
-      const bsStandardRequiresCurve = (bs: string): boolean => bs === 'MCB' || bs === 'RCBO';
-      const normalizedResults = formData.scheduleOfTests.map((result: TestResult) => {
-        const needsCurve = bsStandardRequiresCurve(result.bsStandard || '');
-        const validCurves = ['B', 'C', 'D'];
-        
-        if (needsCurve && result.protectiveDeviceCurve && !validCurves.includes(result.protectiveDeviceCurve)) {
-          // Clear invalid curves (K, Z, etc.) for MCB/RCBO
-          return { ...result, protectiveDeviceCurve: '' };
-        } else if (!needsCurve && result.protectiveDeviceCurve) {
-          // Clear curve for fuses/other devices
-          return { ...result, protectiveDeviceCurve: '' };
+      // Check if this is designer data (has fromDesigner flag)
+      const isDesignerData = formData.scheduleOfTests.some((r: any) => r.fromDesigner);
+
+      // Only re-initialize if:
+      // 1. We haven't loaded designer data yet AND this is designer data, OR
+      // 2. This is the first load (testResults is empty or just has blank initial)
+      const isInitialLoad = testResults.length === 0 ||
+        (testResults.length === 1 && !testResults[0].circuitDescription);
+
+      if ((isDesignerData && !hasLoadedDesignerData.current) || isInitialLoad) {
+        // Normalize legacy data - remove K/Z curves for MCB/RCBO devices
+        const bsStandardRequiresCurve = (bs: string): boolean => bs === 'MCB' || bs === 'RCBO';
+        const normalizedResults = formData.scheduleOfTests.map((result: TestResult) => {
+          const needsCurve = bsStandardRequiresCurve(result.bsStandard || '');
+          const validCurves = ['B', 'C', 'D'];
+
+          if (needsCurve && result.protectiveDeviceCurve && !validCurves.includes(result.protectiveDeviceCurve)) {
+            // Clear invalid curves (K, Z, etc.) for MCB/RCBO
+            return { ...result, protectiveDeviceCurve: '' };
+          } else if (!needsCurve && result.protectiveDeviceCurve) {
+            // Clear curve for fuses/other devices
+            return { ...result, protectiveDeviceCurve: '' };
+          }
+          return result;
+        });
+        setTestResults(normalizedResults);
+
+        if (isDesignerData) {
+          hasLoadedDesignerData.current = true;
         }
-        return result;
-      });
-      setTestResults(normalizedResults);
-    } else {
-      // Initial result with basic defaults for EIC
+      }
+    } else if (testResults.length === 0) {
+      // Initial result with basic defaults for EIC (only if no results exist)
       const initialResult: TestResult = {
         id: '1',
         circuitDesignation: 'C1',
@@ -335,7 +354,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       };
       setTestResults([initialResult]);
     }
-  }, []);
+  }, [formData.scheduleOfTests]);
 
   // Voice form fields for circuit testing
   const voiceFields: FormField[] = useMemo(() => [

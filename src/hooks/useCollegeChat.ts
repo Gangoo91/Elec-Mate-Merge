@@ -20,11 +20,13 @@ const COLLEGE_MESSAGES_KEY = ['college-messages'];
 /**
  * Hook to get all college conversations for current user
  */
-export function useCollegeConversations() {
+export function useCollegeConversations(enabled: boolean = true) {
   const queryClient = useQueryClient();
 
-  // Real-time subscription
+  // Real-time subscription - only when enabled
   useEffect(() => {
+    if (!enabled) return;
+
     const channel = supabase
       .channel('college-conversations-changes')
       .on(
@@ -43,11 +45,12 @@ export function useCollegeConversations() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [queryClient]);
+  }, [queryClient, enabled]);
 
   const query = useQuery({
     queryKey: COLLEGE_CONVERSATIONS_KEY,
     queryFn: collegeConversationService.getMyConversations,
+    enabled, // Only run query when enabled
   });
 
   // Compute total unread

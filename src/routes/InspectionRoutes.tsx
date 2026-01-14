@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react";
 
 // Lazy load the main inspection app page
 const InspectionIndex = lazy(() => import("@/pages/inspection/InspectionIndex"));
+const LegacyCertificates = lazy(() => import("@/pages/inspection/LegacyCertificates"));
 
 // Loading component
 const LoadingFallback = () => (
@@ -18,7 +19,9 @@ export default function InspectionRoutes() {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <Routes>
-        {/* All inspection routes handled by InspectionIndex with query params */}
+        {/* Legacy certificates - standalone page */}
+        <Route path="legacy-certificates" element={<LegacyCertificates />} />
+        {/* All other inspection routes handled by InspectionIndex with query params */}
         <Route path="*" element={<InspectionIndex />} />
       </Routes>
     </Suspense>

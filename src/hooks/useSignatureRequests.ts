@@ -22,6 +22,7 @@ export interface SignatureRequest {
   expires_at?: string;
   message?: string;
   linked_invoice?: string;
+  access_token?: string;
   created_at: string;
   updated_at: string;
   // Joined data
@@ -122,9 +123,12 @@ export function useCreateSignatureRequest() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
+      // Generate a unique access token for public signing URL
+      const accessToken = crypto.randomUUID();
+
       const { data, error } = await supabase
         .from("signature_requests")
-        .insert({ ...input, user_id: user.id })
+        .insert({ ...input, user_id: user.id, access_token: accessToken })
         .select(`
           *,
           job:employer_jobs(id, title, client)
@@ -132,6 +136,19 @@ export function useCreateSignatureRequest() {
         .single();
 
       if (error) throw error;
+
+      // If email provided, send signing request email
+      if (input.signer_email && data) {
+        try {
+          await supabase.functions.invoke("send-signature-request", {
+            body: { signatureRequestId: data.id }
+          });
+        } catch (emailError) {
+          console.warn("Could not send signature request email:", emailError);
+          // Don't fail the overall operation
+        }
+      }
+
       return data as SignatureRequest;
     },
     onSuccess: (data) => {
@@ -209,6 +226,18 @@ export function useResendSignatureRequest() {
         .single();
 
       if (error) throw error;
+
+      // Send signing request email
+      if (data?.signer_email) {
+        try {
+          await supabase.functions.invoke("send-signature-request", {
+            body: { signatureRequestId: data.id }
+          });
+        } catch (emailError) {
+          console.warn("Could not send signature request email:", emailError);
+        }
+      }
+
       return data as SignatureRequest;
     },
     onSuccess: (data) => {

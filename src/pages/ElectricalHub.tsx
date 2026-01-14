@@ -405,7 +405,7 @@ function SectionHeader({ title }: { title: string }) {
   );
 }
 
-// Main resources
+// Main resources - Core Daily Tools
 const mainResources: ToolCardProps[] = [
   {
     title: 'Inspection & Testing',
@@ -414,10 +414,22 @@ const mainResources: ToolCardProps[] = [
     link: '/electrician/inspection-testing',
   },
   {
+    title: 'Quote Builder',
+    description: 'Create professional quotes',
+    icon: FileText,
+    link: '/electrician/quote-builder',
+  },
+  {
     title: 'AI Tooling',
     description: 'Smart analysis and design tools',
     icon: Brain,
     link: '/electrician-tools/ai-tooling',
+  },
+  {
+    title: 'Invoices',
+    description: 'Manage billing & payments',
+    icon: PoundSterling,
+    link: '/electrician/invoices',
   },
   {
     title: 'Site Safety & RAMS',
@@ -433,48 +445,36 @@ const mainResources: ToolCardProps[] = [
   },
 ];
 
-// Company resources - employer integration features
-const companyResources: ToolCardProps[] = [
-  {
-    title: 'My Expenses',
-    description: 'Submit & track claims',
-    icon: Receipt,
-    link: '/employer?section=expenses',
-  },
-  {
-    title: 'Timesheets',
-    description: 'Log work hours',
-    icon: Clock,
-    link: '/employer?section=timesheets',
-  },
-  {
-    title: 'Team Comms',
-    description: 'Messages & updates',
-    icon: MessageSquare,
-    link: '/employer?section=comms',
-  },
-  {
-    title: 'My Elec-ID',
-    description: 'Professional profile',
-    icon: BadgeCheck,
-    link: '/employer?section=elecid',
-  },
-];
+// Company resources - employer integration features (Hidden until employer area launches)
+// const companyResources: ToolCardProps[] = [
+//   {
+//     title: 'My Expenses',
+//     description: 'Submit & track claims',
+//     icon: Receipt,
+//     link: '/employer?section=expenses',
+//   },
+//   {
+//     title: 'Timesheets',
+//     description: 'Log work hours',
+//     icon: Clock,
+//     link: '/employer?section=timesheets',
+//   },
+//   {
+//     title: 'Team Comms',
+//     description: 'Messages & updates',
+//     icon: MessageSquare,
+//     link: '/employer?section=comms',
+//   },
+//   {
+//     title: 'My Elec-ID',
+//     description: 'Professional profile',
+//     icon: BadgeCheck,
+//     link: '/employer?section=elecid',
+//   },
+// ];
 
-// Additional resources - business development
+// Additional resources - business development (Quote Builder & Invoices moved to Core Daily Tools)
 const additionalResources: ToolCardProps[] = [
-  {
-    title: 'Quote Builder',
-    description: 'Create professional quotes',
-    icon: FileText,
-    link: '/electrician/quote-builder',
-  },
-  {
-    title: 'Invoices',
-    description: 'Manage billing',
-    icon: PoundSterling,
-    link: '/electrician/invoices',
-  },
   {
     title: 'Business Hub',
     description: 'Business management',
@@ -556,7 +556,7 @@ const ElectricalHub = () => {
               </div>
             </motion.section>
 
-            {/* Company - Employer Integration */}
+            {/* Company - Employer Integration (Hidden until employer area launches)
             <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
               <div className="flex items-center gap-2 px-1">
                 <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
@@ -569,11 +569,12 @@ const ElectricalHub = () => {
                 ))}
               </div>
             </motion.section>
+            */}
 
             {/* Business & Development */}
             <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
               <SectionHeader title="Business & Development" />
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 touch-grid">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 touch-grid">
                 {additionalResources.map((resource) => (
                   <CompactToolCard key={resource.link} {...resource} />
                 ))}

@@ -9,6 +9,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { BookLabourBankDialog } from "@/components/employer/dialogs/BookLabourBankDialog";
 import { SparkProfileSheet, type EnhancedElectrician, type VerificationTier } from "@/components/employer/SparkProfileSheet";
 import { TalentMapView } from "@/components/employer/TalentMapView";
+import { GoogleMapsProvider } from "@/contexts/GoogleMapsContext";
 import { AvailabilityCalendar } from "@/components/employer/AvailabilityCalendar";
 import { PremiumTalentCard } from "@/components/employer/talent-pool/PremiumTalentCard";
 import { TalentProfileCardSkeletonGrid } from "@/components/employer/talent-pool/TalentProfileCardSkeleton";
@@ -556,12 +557,14 @@ export function TalentPoolSection() {
               </div>
             </Card>
           ) : (
-            <TalentMapView
-              electricians={filteredElectricians}
-              savedCandidates={savedCandidates}
-              labourBankIds={labourBankIds}
-              onSelectElectrician={handleOpenProfile}
-            />
+            <GoogleMapsProvider>
+              <TalentMapView
+                electricians={filteredElectricians}
+                savedCandidates={savedCandidates}
+                labourBankIds={labourBankIds}
+                onSelectElectrician={handleOpenProfile}
+              />
+            </GoogleMapsProvider>
           )}
         </>
       )}

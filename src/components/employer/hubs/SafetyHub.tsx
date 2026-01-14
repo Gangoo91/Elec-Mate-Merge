@@ -1,6 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { Section } from "@/pages/employer/EmployerDashboard";
+import { useIncidentStats } from "@/hooks/useIncidents";
+import { useRAMSDocumentStats } from "@/hooks/useRAMSDocuments";
+import { useContractStats } from "@/hooks/useContracts";
+import { useTrainingStats } from "@/hooks/useTrainingRecords";
 import {
   Shield,
   AlertTriangle,
@@ -22,12 +27,23 @@ interface SafetyHubProps {
 }
 
 export function SafetyHub({ onNavigate }: SafetyHubProps) {
-  // Mock data - replace with real data from context
-  const safetyScore = 98;
-  const openIncidents = 1;
-  const activeRAMS = 12;
-  const hrDocuments = 24;
-  const expiringCerts = 3;
+  // Real data from hooks
+  const { data: incidentStats, isLoading: incidentsLoading } = useIncidentStats();
+  const { data: ramsStats, isLoading: ramsLoading } = useRAMSDocumentStats();
+  const { data: contractStats, isLoading: contractsLoading } = useContractStats();
+  const { data: trainingStats, isLoading: trainingLoading } = useTrainingStats();
+
+  const isLoading = incidentsLoading || ramsLoading || contractsLoading || trainingLoading;
+
+  // Calculate safety score based on incidents
+  const safetyScore = incidentStats
+    ? Math.max(0, 100 - ((incidentStats.critical || 0) * 15) - ((incidentStats.high || 0) * 10) - ((incidentStats.open || 0) * 5))
+    : 100;
+
+  const openIncidents = incidentStats?.open || 0;
+  const activeRAMS = ramsStats?.total || 0;
+  const hrDocuments = contractStats?.templates || 0;
+  const expiringCerts = trainingStats?.expiringsSoon || 0;
 
   // Stats configuration
   const statsConfig = [
@@ -107,9 +123,13 @@ export function SafetyHub({ onNavigate }: SafetyHubProps) {
                 <div className="p-2 md:p-2.5 rounded-xl bg-background/60 backdrop-blur-sm mb-2">
                   <Icon className={`h-5 w-5 md:h-6 md:w-6 ${stat.textClass}`} />
                 </div>
-                <p className={`text-xl md:text-2xl font-bold ${stat.textClass} tabular-nums`}>
-                  {stat.value}
-                </p>
+                {isLoading ? (
+                  <Skeleton className="h-7 w-8 mb-1" />
+                ) : (
+                  <p className={`text-xl md:text-2xl font-bold ${stat.textClass} tabular-nums`}>
+                    {stat.value}
+                  </p>
+                )}
                 <p className="text-[10px] md:text-xs text-muted-foreground mt-0.5 font-medium">
                   {stat.label}
                 </p>

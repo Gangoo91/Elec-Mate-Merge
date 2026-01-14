@@ -8,7 +8,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { isNotifiableWork, createNotificationFromCertificate } from '@/utils/notificationHelper';
-import { useLinkDesignToCertificate } from '@/hooks/useDesignedCircuits';
+import { useLinkDesignToCertificate, useDesignedCircuit, useUpdateDesignedCircuitStatus } from '@/hooks/useDesignedCircuits';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
 import { checkAllResultsCompliance } from '@/utils/autoRegChecker';
 import EICFormHeader from './eic/EICFormHeader';
@@ -29,6 +29,11 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
 
   // Link design to certificate when EIC is completed
   const linkDesignToCertificate = useLinkDesignToCertificate();
+
+  // Load design data if designId is provided (from Circuit Designer)
+  const { data: designData, isLoading: isLoadingDesign } = useDesignedCircuit(designId || '');
+  const updateDesignStatus = useUpdateDesignedCircuitStatus();
+  const [hasLoadedDesign, setHasLoadedDesign] = useState(false);
 
   // Capture customer data from navigation state
   const customerIdFromNav = location.state?.customerId;
@@ -294,6 +299,95 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
       });
     }
   }, [initialReportId, authChecked, isAuthenticated, isOnline, loadReport]);
+
+  // Load and populate form from Circuit Designer design data
+  useEffect(() => {
+    if (designData && !hasLoadedDesign && !initialReportId) {
+      const scheduleData = designData.schedule_data;
+
+      // Transform design circuits to test results format for EIC schedule
+      const transformedCircuits = scheduleData.circuits?.map((circuit: any, idx: number) => ({
+        id: `design-${Date.now()}-${idx}`,
+        circuitNumber: circuit.circuitNumber || (idx + 1).toString(),
+        circuitDesignation: `C${idx + 1}`,
+        circuitDescription: circuit.circuitDescription || circuit.name || '',
+        // Phase type handling
+        phaseType: circuit.phaseType === '3-phase' ? '3P' : '1P',
+        // Installation details
+        referenceMethod: circuit.referenceMethod || '',
+        typeOfWiring: circuit.typeOfWiring || '',
+        pointsServed: circuit.pointsServed || '',
+        // Cable sizes
+        liveSize: circuit.liveSize || '',
+        cpcSize: circuit.cpcSize || '',
+        // Protective device details
+        bsStandard: circuit.bsStandard || 'BS EN 60898',
+        protectiveDeviceType: circuit.protectiveDeviceType || 'MCB',
+        protectiveDeviceCurve: circuit.protectiveDeviceCurve || 'B',
+        protectiveDeviceRating: circuit.protectiveDeviceRating || '',
+        protectiveDeviceKaRating: circuit.protectiveDeviceKaRating || '6',
+        maxZs: circuit.maxZs || '',
+        // RCD details
+        rcdBsStandard: circuit.rcdBsStandard || '',
+        rcdType: circuit.rcdType || '',
+        rcdRating: circuit.rcdRating || '',
+        // Expected values from design (for reference)
+        expectedR1R2: circuit.r1r2 || '',
+        expectedZs: circuit.zs || '',
+        // Actual test values (blank - to be filled on-site)
+        r1r2: '',
+        zs: '',
+        insulationTestVoltage: circuit.insulationTestVoltage || '500V DC',
+        insulationResistance: '',
+        insulationLiveNeutral: '',
+        insulationLiveEarth: '',
+        insulationNeutralEarth: '',
+        polarity: '',
+        rcdOneX: '',
+        rcdTestButton: '',
+        pfc: '',
+        functionalTesting: '',
+        // Metadata
+        fromDesigner: true,
+        notes: scheduleData.includesExpectedResults
+          ? 'Pre-filled from Circuit Designer - expected values shown for reference, verify on-site'
+          : 'Pre-filled from Circuit Designer'
+      })) || [];
+
+      // Pre-fill form with design data
+      setFormData(prev => ({
+        ...prev,
+        // Client/Installation info
+        clientName: prev.clientName || scheduleData.projectInfo?.clientName || '',
+        installationAddress: prev.installationAddress || designData.installation_address || '',
+        description: prev.description || scheduleData.projectInfo?.projectName || '',
+        installationType: scheduleData.projectInfo?.installationType || prev.installationType || 'domestic',
+        // Supply info
+        supplyVoltage: scheduleData.supply?.voltage?.toString() || prev.supplyVoltage || '230',
+        phases: scheduleData.supply?.phases === 'three' ? '3' : '1',
+        earthingArrangement: scheduleData.supply?.earthingSystem || prev.earthingArrangement || 'TN-C-S',
+        mainSwitchRating: scheduleData.supply?.mainSwitchRating?.toString() || prev.mainSwitchRating || '',
+        // Supply test values (Ze and PSCC)
+        earthElectrodeResistance: scheduleData.supply?.ze?.toString() || '',
+        // Schedule of tests
+        scheduleOfTests: transformedCircuits,
+        // Designer info
+        designerName: prev.designerName || scheduleData.projectInfo?.electricianName || '',
+      }));
+
+      setHasLoadedDesign(true);
+
+      // Update design status to in-progress
+      if (designId) {
+        updateDesignStatus.mutate({ id: designId, status: 'in-progress' });
+      }
+
+      toast({
+        title: 'Design loaded',
+        description: `Loaded ${transformedCircuits.length} circuit(s) from Circuit Designer`,
+      });
+    }
+  }, [designData, hasLoadedDesign, initialReportId, designId, updateDesignStatus, toast]);
 
   // Observations hook
   const {

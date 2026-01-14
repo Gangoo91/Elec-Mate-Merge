@@ -11,16 +11,25 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { FeatureTile } from "@/components/employer/FeatureTile";
 import { SectionHeader } from "@/components/employer/SectionHeader";
 import { QuickStats } from "@/components/employer/QuickStats";
+import { ToolboxTalkLibrary } from "@/components/employer/ToolboxTalkLibrary";
+import { BriefingEditor } from "@/components/employer/BriefingEditor";
+import { DigitalSignOff } from "@/components/employer/DigitalSignOff";
+import { BriefingViewer } from "@/components/employer/BriefingViewer";
+import { downloadBriefingPDF } from "@/utils/briefing-pdf";
 import {
   useBriefings,
   useBriefingStats,
   useCreateBriefing,
+  useCreateBriefingFromTemplate,
   useCompleteBriefing,
   useDeleteBriefing,
   type Briefing,
   type BriefingType,
 } from "@/hooks/useBriefings";
+import { useBriefingAttendees } from "@/hooks/useBriefingSignatures";
+import { type ToolboxTalkTemplate } from "@/hooks/useToolboxTalkTemplates";
 import { useEmployees } from "@/hooks/useEmployees";
+import { useToast } from "@/hooks/use-toast";
 import {
   Users,
   Plus,
@@ -36,7 +45,12 @@ import {
   AlertTriangle,
   Trash2,
   Clock,
-  MapPin
+  MapPin,
+  BookOpen,
+  PenTool,
+  Eye,
+  Download,
+  Edit3,
 } from "lucide-react";
 
 const statusColors: Record<string, string> = {
@@ -55,8 +69,15 @@ const briefingTypes: BriefingType[] = [
 ];
 
 export function BriefingsSection() {
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [showNewBriefing, setShowNewBriefing] = useState(false);
+  const [showTemplateLibrary, setShowTemplateLibrary] = useState(false);
+  const [selectedBriefingId, setSelectedBriefingId] = useState<string | null>(null);
+  const [showViewer, setShowViewer] = useState(false);
+  const [showEditor, setShowEditor] = useState(false);
+  const [showSignOff, setShowSignOff] = useState(false);
+  const [selectedBriefing, setSelectedBriefing] = useState<Briefing | null>(null);
 
   // Form state
   const [title, setTitle] = useState("");
@@ -72,8 +93,10 @@ export function BriefingsSection() {
   const { data: stats } = useBriefingStats();
   const { data: employees } = useEmployees();
   const createBriefing = useCreateBriefing();
+  const createFromTemplate = useCreateBriefingFromTemplate();
   const completeBriefing = useCompleteBriefing();
   const deleteBriefing = useDeleteBriefing();
+  const { data: attendees } = useBriefingAttendees(selectedBriefingId || undefined);
 
   // Filter by search
   const filteredBriefings = briefings?.filter(b =>

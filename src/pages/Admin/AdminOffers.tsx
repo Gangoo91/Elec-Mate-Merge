@@ -103,6 +103,7 @@ export default function AdminOffers() {
       }
       return data as Offer[];
     },
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
 
   // Fetch redemptions for selected offer
@@ -128,6 +129,7 @@ export default function AdminOffers() {
       return data as Redemption[];
     },
     enabled: !!selectedOffer?.id,
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
 
   // Create offer mutation

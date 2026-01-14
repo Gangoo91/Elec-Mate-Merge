@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Quote } from '@/types/quote';
 import { Button } from '@/components/ui/button';
-import { generateClientQuotePDF } from '@/utils/client-quote-pdf';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +8,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
-import { Mail, MessageCircle, Loader2, MailOpen, RefreshCw } from 'lucide-react';
+import { Mail, MessageCircle, Loader2, RefreshCw } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
@@ -31,10 +29,8 @@ export const QuoteSendDropdown = ({
   className = '',
   variant = 'default',
 }: QuoteSendDropdownProps) => {
-  const navigate = useNavigate();
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
-  const [isGeneratingMailtoLink, setIsGeneratingMailtoLink] = useState(false);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
   const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
@@ -152,11 +148,11 @@ export const QuoteSendDropdown = ({
     }
   };
 
-  const handleSendEmail = async (preferExistingPdf = false) => {
+  const handleSendEmail = async () => {
     try {
       setIsSendingEmail(true);
 
-      // Validate client email FIRST
+      // Validate client email
       const cleanTo = quote.client?.email?.trim();
       if (!cleanTo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanTo)) {
         toast({
@@ -170,7 +166,7 @@ export const QuoteSendDropdown = ({
 
       // Get current session
       let { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      
+
       if (sessionError || !session) {
         const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession();
         if (refreshError || !refreshData.session) {
@@ -179,101 +175,25 @@ export const QuoteSendDropdown = ({
         session = refreshData.session;
       }
 
-      // Check if user has connected email
-      const { data: configData, error: configError } = await supabase.functions.invoke('get-email-config', {
-        headers: { Authorization: `Bearer ${session.access_token}` }
-      });
-
-      const hasEmailConfig = configData?.configs?.length > 0 && 
-                            configData.configs.some((c: any) => c.is_active);
-
-      if (!hasEmailConfig) {
-        toast({
-          title: "Email Not Connected",
-          description: "Connect your Gmail or Outlook in Settings → Email Integration to send quotes",
-          variant: "destructive",
-        });
-        
-        setTimeout(() => {
-          navigate('/electrician/settings?tab=email');
-        }, 2000);
-        
-        return;
-      }
-
-      // If user wants to use existing PDF, check if it exists
-      if (preferExistingPdf) {
-        const { data: freshQuote } = await supabase
-          .from('quotes')
-          .select('pdf_document_id, pdf_generated_at, updated_at')
-          .eq('id', quote.id)
-          .single();
-
-        const hasPdf = freshQuote?.pdf_document_id;
-        const pdfIsCurrent = hasPdf && 
-                            freshQuote?.pdf_generated_at && 
-                            new Date(freshQuote.pdf_generated_at) >= new Date(freshQuote.updated_at);
-
-        if (!hasPdf || !pdfIsCurrent) {
-          toast({
-            title: "No saved PDF",
-            description: "Tap Download PDF first, then send via Gmail.",
-            variant: "destructive",
-          });
-          setIsSendingEmail(false);
-          return;
-        }
-      }
-
-      // Get latest quote data
-      const { data: freshQuote, error: fetchError } = await supabase
-        .from('quotes')
-        .select('*')
-        .eq('id', quote.id)
-        .single();
-
-      if (fetchError) throw fetchError;
-
-      // Ensure client_data in DB is current
-      await supabase
-        .from('quotes')
-        .update({ client_data: quote.client as any })
-        .eq('id', quote.id);
-
-      // Send via smart sender (uses your connected Gmail/Outlook account)
-      const { error } = await supabase.functions.invoke('send-invoice-smart', {
-        body: { 
-          documentType: 'quote',
-          quoteId: quote.id,
-          preferExistingPdf
-        },
+      // Send via Resend (generates PDF automatically)
+      const { error } = await supabase.functions.invoke('send-quote-resend', {
+        body: { quoteId: quote.id },
         headers: {
           Authorization: `Bearer ${session.access_token}`
         }
       });
 
       if (error) {
-        // Map backend errors to user-friendly messages
-        const errorMsg = error.message || '';
-        
-        if (errorMsg.includes('Invalid email address')) {
-          throw new Error('Client email address looks invalid. Edit the Client email and save the quote.');
-        } else if (errorMsg.includes('No email account connected')) {
-          throw new Error('Connect Gmail/Outlook in Settings → Email Integration.');
-        } else if (errorMsg.includes('Daily email limit reached')) {
-          throw new Error('Daily email limit reached (100/day). Resets at midnight UTC.');
-        } else {
-          throw error;
-        }
+        throw error;
       }
 
       toast({
-        title: 'Quote sent with PDF',
-        description: `Quote ${quote.quoteNumber} sent to ${cleanTo} with attached PDF`,
+        title: 'Quote sent',
+        description: `Quote ${quote.quoteNumber} sent to ${cleanTo}`,
         variant: 'success',
         duration: 4000,
       });
-      
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       // Update status to sent
@@ -285,204 +205,16 @@ export const QuoteSendDropdown = ({
       onSuccess?.();
     } catch (error: any) {
       console.error('Error sending quote:', error);
-      
-      let errorMessage = 'Failed to send quote. Please try again.';
-      
-      if (error.message?.includes('email account')) {
-        errorMessage = 'Please connect your email account in Settings first.';
-      } else if (error.message?.includes('rate limit')) {
-        errorMessage = 'Daily email limit reached (100/day). Resets at midnight UTC.';
-      } else if (error.message?.includes('token')) {
-        errorMessage = 'Email authentication expired. Please reconnect your email in Settings.';
-      }
-      
+
       toast({
         title: 'Error sending quote',
-        description: errorMessage,
+        description: error.message || 'Failed to send quote. Please try again.',
         variant: 'destructive',
       });
-      
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } finally {
       setIsSendingEmail(false);
-    }
-  };
-
-  const handleSendViaEmailClient = async () => {
-    try {
-      setIsGeneratingMailtoLink(true);
-
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        throw new Error('User not authenticated');
-      }
-
-      // Get latest quote data
-      const { data: freshQuote, error: fetchError } = await supabase
-        .from('quotes')
-        .select('*')
-        .eq('id', quote.id)
-        .single();
-
-      if (fetchError) throw fetchError;
-
-      // Check if PDF is current
-      const pdfIsCurrent = freshQuote?.pdf_url && 
-                           freshQuote?.pdf_generated_at && 
-                           new Date(freshQuote.pdf_generated_at) >= new Date(freshQuote.updated_at);
-
-      let pdfUrl = freshQuote.pdf_url;
-      let documentId = freshQuote.pdf_document_id;
-
-      // If PDF not current, try to refresh URL first
-      if (!pdfIsCurrent && freshQuote.pdf_document_id) {
-        console.log('[MAILTO] Attempting to refresh PDF URL...');
-        
-        const { data: statusData } = await supabase.functions.invoke('generate-pdf-monkey', {
-          body: { mode: 'status', documentId: freshQuote.pdf_document_id }
-        });
-
-        if (statusData?.downloadUrl) {
-          pdfUrl = statusData.downloadUrl;
-          documentId = freshQuote.pdf_document_id;
-          
-          await supabase
-            .from('quotes')
-            .update({
-              pdf_url: pdfUrl,
-              pdf_generated_at: new Date().toISOString()
-            })
-            .eq('id', quote.id);
-          
-          console.log('[MAILTO] ✅ PDF URL refreshed');
-        }
-      }
-
-      // If still no URL, regenerate PDF
-      if (!pdfUrl) {
-        console.log('[MAILTO] Generating fresh PDF...');
-        
-        const { data: { user } } = await supabase.auth.getUser();
-        let companyProfileData = null;
-        
-        if (user) {
-          const { data: profile } = await supabase
-            .from('company_profiles')
-            .select('*')
-            .eq('user_id', user.id)
-            .maybeSingle();
-          companyProfileData = profile;
-        }
-
-        const result = await generateFreshPDF(freshQuote as any, companyProfileData);
-        
-        if (!result.downloadUrl) {
-          throw new Error('Failed to generate PDF');
-        }
-
-        pdfUrl = result.downloadUrl;
-        documentId = result.documentId;
-
-        await supabase
-          .from('quotes')
-          .update({
-            pdf_document_id: documentId,
-            pdf_url: pdfUrl,
-            pdf_generated_at: new Date().toISOString(),
-            pdf_version: (freshQuote.pdf_version || 0) + 1
-          })
-          .eq('id', quote.id);
-
-        console.log('[MAILTO] ✅ Fresh PDF generated');
-      }
-
-      // Get client and company data
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        throw new Error('User not authenticated');
-      }
-
-      const { data: companyData } = await supabase
-        .from('company_profiles')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
-
-      const clientData = quote.client;
-      const jobDetails = quote.jobDetails;
-
-      const clientEmail = clientData?.email || '';
-      const clientName = clientData?.name || 'Valued Client';
-      const companyName = companyData?.company_name || 'Your Company';
-      const companyPhone = companyData?.company_phone || '';
-      const companyEmail = companyData?.company_email || '';
-      const jobTitle = jobDetails?.title || 'Electrical Work';
-      const totalAmount = quote.total || 0;
-      const validityDate = quote.expiryDate 
-        ? format(new Date(quote.expiryDate), 'dd MMMM yyyy')
-        : format(new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 'dd MMMM yyyy');
-
-      // Format currency
-      const formatCurrency = (amount: number) =>
-        new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
-
-      // Create email subject
-      const subject = `Quote ${quote.quoteNumber} from ${companyName}`;
-
-      // Get or create public token for acceptance link
-      const publicToken = await getOrCreatePublicToken();
-      const acceptanceLink = publicToken 
-        ? `${window.location.origin}/public-quote/${publicToken}`
-        : null;
-
-      // Create email body with PDF link and acceptance link
-      const body = `Dear ${clientName},
-
-Thank you for your enquiry. Please find your quotation for ${jobTitle}.
-
-📋 Quote Details:
-• Quote Number: ${quote.quoteNumber}
-• Total Amount: ${formatCurrency(totalAmount)}
-• Valid Until: ${validityDate}
-
-${acceptanceLink ? `✍️ Review & Accept Quote Online:\n${acceptanceLink}\n\n` : ''}📥 Download Quote (PDF):
-${pdfUrl}
-
-This quote is valid for 30 days from the date of issue. If you have any questions or would like to proceed, please don't hesitate to contact us.
-
-Best regards,
-${companyName}${companyPhone ? `\n📞 ${companyPhone}` : ''}${companyEmail ? `\n✉️ ${companyEmail}` : ''}
-
----
-⚡ Powered by ElecMate Professional Suite`;
-
-      // Open mailto link
-      const mailtoLink = `mailto:${clientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailtoLink;
-
-      toast({
-        title: 'Email draft opened',
-        description: 'Your email app should open with a pre-filled quote email',
-        variant: 'success',
-        duration: 4000,
-      });
-
-      // Update quote status to sent
-      await supabase
-        .from('quotes')
-        .update({ status: 'sent' })
-        .eq('id', quote.id);
-
-      onSuccess?.();
-    } catch (error: any) {
-      console.error('Error generating mailto link:', error);
-      toast({
-        title: 'Error',
-        description: error.message || 'Failed to open email draft',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsGeneratingMailtoLink(false);
     }
   };
 
@@ -673,7 +405,7 @@ ${companyName}`;
     }
   };
 
-  const isLoading = isSendingEmail || isSharingWhatsApp || isGeneratingMailtoLink;
+  const isLoading = isSendingEmail || isSharingWhatsApp;
 
   const isResendVariant = variant === 'resend';
 
@@ -694,7 +426,7 @@ ${companyName}`;
           {isLoading ? (
             <>
               <Loader2 className="h-3.5 w-3.5 animate-spin" />
-              {isSendingEmail ? 'Sending...' : isGeneratingMailtoLink ? 'Preparing...' : 'Loading...'}
+              {isSendingEmail ? 'Sending...' : 'Loading...'}
             </>
           ) : isResendVariant ? (
             <>
@@ -718,20 +450,20 @@ ${companyName}`;
           {isResendVariant ? 'Resend Quote' : 'Send Quote'}
         </DropdownMenuLabel>
         <DropdownMenuItem
-          onClick={handleSendViaEmailClient}
-          disabled={isGeneratingMailtoLink}
+          onClick={handleSendEmail}
+          disabled={isSendingEmail}
           className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-blue-500/10 touch-manipulation"
         >
           <div className="h-10 w-10 rounded-xl bg-blue-500/15 flex items-center justify-center mr-3 flex-shrink-0">
-            {isGeneratingMailtoLink ? (
+            {isSendingEmail ? (
               <Loader2 className="h-5 w-5 animate-spin text-blue-500" />
             ) : (
-              <MailOpen className="h-5 w-5 text-blue-500" />
+              <Mail className="h-5 w-5 text-blue-500" />
             )}
           </div>
           <div className="flex flex-col">
             <span className="font-semibold text-sm">Send via Email</span>
-            <span className="text-xs text-muted-foreground">Opens your email app</span>
+            <span className="text-xs text-muted-foreground">Sends with PDF attachment</span>
           </div>
         </DropdownMenuItem>
         <DropdownMenuItem

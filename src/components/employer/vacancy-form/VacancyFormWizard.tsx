@@ -25,6 +25,7 @@ import { RequirementsStep } from "./steps/RequirementsStep";
 import { ReviewStep } from "./steps/ReviewStep";
 import { TemplateSelector } from "./TemplateSelector";
 import { useCreateVacancy, useUpdateVacancy } from "@/hooks/useVacancies";
+import { saveVacancyAsTemplate } from "@/services/vacancyService";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
@@ -51,6 +52,7 @@ export function VacancyFormWizard({
 
   const createVacancy = useCreateVacancy();
   const updateVacancy = useUpdateVacancy();
+  const [isSavingTemplate, setIsSavingTemplate] = useState(false);
 
   const isEditing = !!editData?.id;
 
@@ -189,10 +191,37 @@ export function VacancyFormWizard({
           <ReviewStep
             onPublish={handleSubmit(onSubmit)}
             onSaveDraft={handleSaveDraft}
-            onSaveAsTemplate={() => {
+            onSaveAsTemplate={async () => {
               const values = methods.getValues();
-              // TODO: Implement save as template functionality
-              toast({ title: "Template saved", description: "Your vacancy has been saved as a template." });
+              const templateName = values.title || `Template ${new Date().toLocaleDateString('en-GB')}`;
+              setIsSavingTemplate(true);
+              try {
+                // Convert camelCase form data to snake_case for service
+                const result = await saveVacancyAsTemplate(templateName, {
+                  title: values.title,
+                  type: values.type,
+                  location: values.location,
+                  work_arrangement: values.workArrangement,
+                  salary_min: values.salaryMin,
+                  salary_max: values.salaryMax,
+                  salary_period: values.salaryPeriod,
+                  benefits: values.benefits,
+                  requirements: values.requirements,
+                  experience_level: values.experienceLevel,
+                  description: values.description,
+                  nice_to_have: values.niceToHave,
+                  schedule: values.schedule,
+                });
+                if (result) {
+                  toast({ title: "Template saved", description: `"${templateName}" has been saved as a template.` });
+                } else {
+                  throw new Error('Failed to save');
+                }
+              } catch (error) {
+                toast({ title: "Error", description: "Failed to save template", variant: "destructive" });
+              } finally {
+                setIsSavingTemplate(false);
+              }
             }}
             isSubmitting={createVacancy.isPending || updateVacancy.isPending}
           />

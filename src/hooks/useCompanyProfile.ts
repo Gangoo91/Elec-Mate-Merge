@@ -18,9 +18,9 @@ export const useCompanyProfile = () => {
         .from('company_profiles')
         .select('*')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
 
-      if (error && error.code !== 'PGRST116') {
+      if (error) {
         console.error('Error fetching company profile:', error);
         return;
       }

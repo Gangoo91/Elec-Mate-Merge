@@ -4,16 +4,26 @@ import { useToast } from "@/hooks/use-toast";
 
 export type BriefingType = "Toolbox Talk" | "Site Induction" | "Safety Briefing" | "Method Statement" | "Emergency Procedures" | "PPE Reminder";
 export type BriefingStatus = "Scheduled" | "Completed" | "Cancelled";
+export type RiskLevel = "low" | "medium" | "high";
+export type RecurringPattern = "daily" | "weekly" | "monthly";
 
 export interface BriefingAttendee {
   id: string;
   briefing_id: string;
-  employee_id: string;
+  employee_id?: string;
   acknowledged: boolean;
   acknowledged_at?: string;
   signature_url?: string;
+  signed_via?: "manual" | "qr_code" | "app" | "link";
+  device_info?: string;
+  location_lat?: number;
+  location_lng?: number;
+  photo_url?: string;
+  guest_name?: string;
+  guest_company?: string;
   notes?: string;
   created_at: string;
+  updated_at?: string;
   // Joined data
   employee?: {
     id: string;
@@ -25,6 +35,8 @@ export interface Briefing {
   id: string;
   user_id: string;
   job_id?: string;
+  template_id?: string;
+  toolbox_template_id?: string;
   title: string;
   briefing_type?: BriefingType;
   content?: string;
@@ -34,12 +46,28 @@ export interface Briefing {
   presenter?: string;
   status: BriefingStatus;
   notes?: string;
+  ai_generated?: boolean;
+  recurring?: boolean;
+  recurring_pattern?: RecurringPattern;
+  parent_briefing_id?: string;
+  qr_code_url?: string;
+  pdf_url?: string;
+  photo_evidence?: string[];
+  risk_level?: RiskLevel;
+  weather_conditions?: string;
+  duration_minutes?: number;
+  presenter_signature_url?: string;
   created_at: string;
   updated_at: string;
   // Joined data
   job?: {
     id: string;
     title: string;
+  };
+  toolbox_template?: {
+    id: string;
+    name: string;
+    category: string;
   };
   attendees?: BriefingAttendee[];
   attendee_count?: number;
@@ -506,6 +534,223 @@ export function useAddMultipleAttendees() {
       toast({
         title: "Attendees added",
         description: `${variables.employeeIds.length} team members added to the briefing.`,
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+}
+
+// Create briefing from toolbox talk template
+export function useCreateBriefingFromTemplate() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async ({
+      templateId,
+      date,
+      time,
+      location,
+      presenter,
+      jobId,
+    }: {
+      templateId: string;
+      date: string;
+      time?: string;
+      location?: string;
+      presenter?: string;
+      jobId?: string;
+    }): Promise<Briefing> => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Not authenticated");
+
+      // Fetch the template
+      const { data: template, error: templateError } = await supabase
+        .from("toolbox_talk_templates")
+        .select("*")
+        .eq("id", templateId)
+        .single();
+
+      if (templateError) throw templateError;
+
+      // Create the briefing
+      const { data, error } = await supabase
+        .from("briefings")
+        .insert({
+          user_id: user.id,
+          toolbox_template_id: templateId,
+          title: template.name,
+          briefing_type: "Toolbox Talk",
+          content: template.content,
+          date,
+          time,
+          location,
+          presenter,
+          job_id: jobId,
+          status: "Scheduled",
+          risk_level: template.risk_level,
+          duration_minutes: template.duration_minutes,
+        })
+        .select(`
+          *,
+          job:employer_jobs(id, title)
+        `)
+        .single();
+
+      if (error) throw error;
+
+      // Increment template usage count
+      await supabase
+        .from("toolbox_talk_templates")
+        .update({ usage_count: (template.usage_count || 0) + 1 })
+        .eq("id", templateId);
+
+      return data as Briefing;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      queryClient.invalidateQueries({ queryKey: ["toolbox-talk-templates"] });
+      toast({
+        title: "Briefing created",
+        description: `${data.title} has been scheduled.`,
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+}
+
+// Update briefing with presenter signature
+export function useAddPresenterSignature() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async ({ id, signatureUrl }: { id: string; signatureUrl: string }): Promise<Briefing> => {
+      const { data, error } = await supabase
+        .from("briefings")
+        .update({
+          presenter_signature_url: signatureUrl,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", id)
+        .select(`
+          *,
+          job:employer_jobs(id, title)
+        `)
+        .single();
+
+      if (error) throw error;
+      return data as Briefing;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      toast({
+        title: "Signature saved",
+        description: "Presenter signature has been recorded.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+}
+
+// Update briefing content (for editing)
+export function useUpdateBriefingContent() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async ({ id, content }: { id: string; content: string }): Promise<Briefing> => {
+      const { data, error } = await supabase
+        .from("briefings")
+        .update({
+          content,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", id)
+        .select(`
+          *,
+          job:employer_jobs(id, title)
+        `)
+        .single();
+
+      if (error) throw error;
+      return data as Briefing;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      toast({
+        title: "Content saved",
+        description: "Briefing content has been updated.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+}
+
+// Add photo evidence to briefing
+export function useAddBriefingPhoto() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async ({ id, photoUrl }: { id: string; photoUrl: string }): Promise<Briefing> => {
+      // First get current photos
+      const { data: current, error: fetchError } = await supabase
+        .from("briefings")
+        .select("photo_evidence")
+        .eq("id", id)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      const photos = current?.photo_evidence || [];
+      photos.push(photoUrl);
+
+      const { data, error } = await supabase
+        .from("briefings")
+        .update({
+          photo_evidence: photos,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", id)
+        .select(`
+          *,
+          job:employer_jobs(id, title)
+        `)
+        .single();
+
+      if (error) throw error;
+      return data as Briefing;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["briefings"] });
+      toast({
+        title: "Photo added",
+        description: "Photo evidence has been added to the briefing.",
       });
     },
     onError: (error) => {

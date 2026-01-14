@@ -34,7 +34,7 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
           <motion.label
             initial={false}
             animate={{
-              color: error ? "rgb(248 113 113)" : isFocused ? "hsl(var(--elec-yellow))" : "rgba(255,255,255,0.8)"
+              color: error ? "rgb(248, 113, 113)" : isFocused ? "hsl(47, 100%, 50%)" : "rgba(255, 255, 255, 0.8)"
             }}
             transition={{ duration: 0.2 }}
             className="block text-ios-subhead font-medium"
@@ -54,12 +54,12 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
                 x: shouldFloatLabel ? (icon ? -32 : 0) : 0,
                 scale: shouldFloatLabel ? 0.85 : 1,
                 color: error
-                  ? "rgb(248 113 113)"
+                  ? "rgb(248, 113, 113)"
                   : isFocused
-                    ? "hsl(var(--elec-yellow))"
+                    ? "hsl(47, 100%, 50%)"
                     : shouldFloatLabel
-                      ? "rgba(255,255,255,0.7)"
-                      : "rgba(255,255,255,0.4)"
+                      ? "rgba(255, 255, 255, 0.7)"
+                      : "rgba(255, 255, 255, 0.4)"
               }}
               transition={{
                 type: "spring",
@@ -82,10 +82,10 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
               initial={false}
               animate={{
                 color: error
-                  ? "rgb(248 113 113)"
+                  ? "rgb(248, 113, 113)"
                   : isFocused
-                    ? "hsl(var(--elec-yellow))"
-                    : "rgba(255,255,255,0.4)",
+                    ? "hsl(47, 100%, 50%)"
+                    : "rgba(255, 255, 255, 0.4)",
                 scale: isFocused ? 1.05 : 1
               }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
@@ -117,10 +117,10 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
                 : success
                   ? "rgba(34, 197, 94, 0.6)"
                   : isFocused
-                    ? "hsla(var(--elec-yellow-hsl), 0.6)"
-                    : "rgba(255,255,255,0.1)",
+                    ? "hsla(47, 100%, 50%, 0.6)"
+                    : "rgba(255, 255, 255, 0.1)",
               boxShadow: isFocused && !error
-                ? "0 0 0 4px hsla(var(--elec-yellow-hsl), 0.1), 0 4px 12px rgba(0,0,0,0.1)"
+                ? "0 0 0 4px hsla(47, 100%, 50%, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1)"
                 : error
                   ? "0 0 0 4px rgba(248, 113, 113, 0.1)"
                   : success

@@ -155,10 +155,34 @@ const ComponentIdentifyPage = () => {
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Analysis error:', error);
+        console.error('Request settings:', {
+          mode: 'component_identify',
+          category: selectedCategory,
+          info: selectedInfo,
+          imageUrl: publicUrl
+        });
+
+        toast({ title: "Analysis Failed", description: "Please try again with a clearer photo", variant: "destructive" });
+        return;
+      }
+
+      console.log('Analysis response received:', {
+        hasAnalysis: !!data?.analysis,
+        hasComponent: !!data?.analysis?.component,
+        componentName: data?.analysis?.component?.name,
+        responseKeys: Object.keys(data || {})
+      });
+
+      if (!data?.analysis?.component) {
+        console.error('Response missing component:', data);
+        toast({ title: "Component Not Identified", description: "Please try again with a clearer photo", variant: "destructive" });
+        return;
+      }
 
       setAnalysisProgress(100);
-      setAnalysisResult(data);
+      setAnalysisResult(data.analysis);
 
     } catch (error) {
       console.error('Analysis error:', error);
@@ -191,7 +215,7 @@ const ComponentIdentifyPage = () => {
         </div>
       </div>
 
-      <main className="px-4 py-5 space-y-5 max-w-2xl mx-auto">
+      <main className="px-4 py-5 space-y-5 max-w-5xl mx-auto">
         {/* Hero */}
         <div className="rounded-2xl border border-blue-500/30 bg-gradient-to-br from-blue-500/10 via-card to-card/90 backdrop-blur-xl p-5 overflow-hidden relative">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.05] via-transparent to-transparent pointer-events-none" />
@@ -209,7 +233,7 @@ const ComponentIdentifyPage = () => {
         {/* Results */}
         {analysisResult ? (
           <div className="space-y-4">
-            <ComponentIdentificationResults analysisResult={analysisResult} />
+            <ComponentIdentificationResults analysisResult={analysisResult} onRetry={resetAnalysis} />
             <Button onClick={resetAnalysis} variant="outline" className="w-full h-12">
               Identify Another Component
             </Button>

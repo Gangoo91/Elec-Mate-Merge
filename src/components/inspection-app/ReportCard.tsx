@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { FileText, Calendar, User, MapPin, Trash2, Edit, Eye, Users } from 'lucide-react';
+import { FileText, Calendar, User, MapPin, Trash2, Edit, Eye, Users, ArrowRightCircle } from 'lucide-react';
 
 export interface ReportMetadata {
   id: string;
@@ -18,6 +18,7 @@ export interface ReportMetadata {
   inspectorName: string;
   overallAssessment?: string;
   satisfactoryForContinuedUse?: string;
+  reportType?: string;
 }
 
 interface ReportCardProps {
@@ -26,10 +27,12 @@ interface ReportCardProps {
   onDelete: (id: string) => void;
   onPreview?: (id: string) => void;
   onLinkCustomer?: (id: string) => void;
+  onExportToEIC?: (id: string) => void;
   hasCustomer?: boolean;
   isSelected?: boolean;
   isBulkMode?: boolean;
   onSelectToggle?: (id: string) => void;
+  canExportToEIC?: boolean;
 }
 
 const ReportCard = ({
@@ -38,10 +41,12 @@ const ReportCard = ({
   onDelete,
   onPreview,
   onLinkCustomer,
+  onExportToEIC,
   hasCustomer = false,
   isSelected = false,
   isBulkMode = false,
   onSelectToggle,
+  canExportToEIC = false,
 }: ReportCardProps) => {
   const formatDate = (timestamp: number | string) => {
     const date = typeof timestamp === 'string' ? new Date(timestamp) : new Date(timestamp);
@@ -163,6 +168,21 @@ const ReportCard = ({
                 <Eye className="h-4 w-4 sm:mr-1" />
                 <span className="hidden sm:inline">Preview</span>
               </Button>
+              {canExportToEIC && onExportToEIC && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigator.vibrate?.(10);
+                    onExportToEIC(metadata.id);
+                  }}
+                  className="flex-shrink-0 min-h-[44px] min-w-[44px] sm:h-9 sm:w-9 text-elec-yellow hover:text-elec-yellow/80"
+                  title="Export to EIC"
+                >
+                  <ArrowRightCircle className="h-4 w-4" />
+                </Button>
+              )}
               {onLinkCustomer && !hasCustomer && (
                 <Button
                   size="sm"

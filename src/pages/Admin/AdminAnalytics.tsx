@@ -60,10 +60,8 @@ export default function AdminAnalytics() {
           .gte("last_seen", subDays(now, 1).toISOString()),
       ]);
 
-      // Get role breakdown
-      const { data: roleData } = await supabase
-        .from("profiles")
-        .select("role");
+      // Get role breakdown - include in main parallel batch
+      const { data: roleData } = await supabase.from("profiles").select("role");
 
       const roleBreakdown: Record<string, number> = {};
       roleData?.forEach((r) => {
@@ -71,24 +69,26 @@ export default function AdminAnalytics() {
         roleBreakdown[role] = (roleBreakdown[role] || 0) + 1;
       });
 
-      // Get daily signups for the last 7 days
-      const dailySignups: { date: string; count: number }[] = [];
-      for (let i = 6; i >= 0; i--) {
-        const date = subDays(now, i);
-        const start = startOfDay(date);
-        const end = endOfDay(date);
+      // Get daily signups for the last 7 days - batch all queries in parallel
+      const dailyDates = Array.from({ length: 7 }, (_, i) => {
+        const date = subDays(now, 6 - i);
+        return { date, start: startOfDay(date), end: endOfDay(date) };
+      });
 
-        const { count } = await supabase
-          .from("profiles")
-          .select("*", { count: "exact", head: true })
-          .gte("created_at", start.toISOString())
-          .lte("created_at", end.toISOString());
+      const dailyResults = await Promise.all(
+        dailyDates.map(({ start, end }) =>
+          supabase
+            .from("profiles")
+            .select("*", { count: "exact", head: true })
+            .gte("created_at", start.toISOString())
+            .lte("created_at", end.toISOString())
+        )
+      );
 
-        dailySignups.push({
-          date: format(date, "EEE"),
-          count: count || 0,
-        });
-      }
+      const dailySignups = dailyDates.map(({ date }, i) => ({
+        date: format(date, "EEE"),
+        count: dailyResults[i].count || 0,
+      }));
 
       // Calculate growth rates
       const weekGrowth = prevWeekSignupsRes.count
@@ -109,6 +109,7 @@ export default function AdminAnalytics() {
         conversionRate: totalUsersRes.count ? ((subscribedRes.count || 0) / totalUsersRes.count * 100) : 0,
       };
     },
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
     refetchInterval: 60000,
   });
 

@@ -4,6 +4,9 @@ import { getSetting, setSetting, clearSetting } from '@/services/settingsService
 
 const SETTINGS_KEY = 'google_maps_api_key';
 
+// Check for environment variable first (for app-wide API key)
+const ENV_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
+
 interface GoogleMapsContextType {
   isLoaded: boolean;
   loadError: Error | undefined;
@@ -43,10 +46,18 @@ export function GoogleMapsProvider({ children }: { children: ReactNode }) {
   const [apiKey, setApiKeyState] = useState<string>('');
   const [isLoadingKey, setIsLoadingKey] = useState(true);
 
-  // Load API key from Supabase on mount
+  // Load API key - check env variable first, then Supabase
   useEffect(() => {
     const loadApiKey = async () => {
       try {
+        // Use environment variable if available (app-wide key)
+        if (ENV_API_KEY) {
+          setApiKeyState(ENV_API_KEY);
+          setIsLoadingKey(false);
+          return;
+        }
+
+        // Fall back to user-specific key from Supabase
         const value = await getSetting(SETTINGS_KEY);
         if (value) {
           setApiKeyState(value);

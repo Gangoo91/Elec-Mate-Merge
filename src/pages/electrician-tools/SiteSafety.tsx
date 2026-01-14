@@ -1,24 +1,32 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Shield, FileText, AlertTriangle, Camera, Users, ClipboardCheck, Wrench, Phone, ArrowRight, Zap, Star, FolderOpen } from "lucide-react";
+import { Shield, FileText, AlertTriangle, Camera, Users, ClipboardCheck, Wrench, Phone, ArrowRight, Zap, Star, FolderOpen, Loader2 } from "lucide-react";
 import BackButton from "@/components/common/BackButton";
 import { RAMSProvider } from "@/components/electrician-tools/site-safety/rams/RAMSContext";
-import { RAMSQuickAdd } from "@/components/electrician-tools/site-safety/RAMSQuickAdd";
-import RAMSGenerator from "@/components/electrician-tools/site-safety/RAMSGenerator";
-import MethodStatementGenerator from "@/components/electrician-tools/site-safety/MethodStatementGenerator";
-import IntegratedRAMSGenerator from "@/components/electrician-tools/site-safety/IntegratedRAMSGenerator";
-import { EnhancedHazardDatabase } from "@/components/electrician-tools/site-safety/enhanced/EnhancedHazardDatabase";
-import PhotoDocumentation from "@/components/electrician-tools/site-safety/PhotoDocumentation";
-import TeamBriefingTemplates from "@/components/electrician-tools/site-safety/TeamBriefingTemplates";
-import { NearMissReporting } from "@/components/electrician-tools/site-safety/NearMissReporting";
-import SafetyEquipmentTracker from "@/components/electrician-tools/site-safety/SafetyEquipmentTracker";
-import EmergencyProcedures from "@/components/electrician-tools/site-safety/EmergencyProcedures";
-import { AIRAMSGenerator } from "@/components/electrician-tools/site-safety/ai-rams/AIRAMSGenerator";
-import { SavedRAMSLibrary } from "@/components/electrician-tools/site-safety/SavedRAMSLibrary";
+
+// Lazy-loaded tool components for code splitting
+const RAMSGenerator = lazy(() => import("@/components/electrician-tools/site-safety/RAMSGenerator"));
+const MethodStatementGenerator = lazy(() => import("@/components/electrician-tools/site-safety/MethodStatementGenerator"));
+const IntegratedRAMSGenerator = lazy(() => import("@/components/electrician-tools/site-safety/IntegratedRAMSGenerator"));
+const EnhancedHazardDatabase = lazy(() => import("@/components/electrician-tools/site-safety/enhanced/EnhancedHazardDatabase").then(m => ({ default: m.EnhancedHazardDatabase })));
+const PhotoDocumentation = lazy(() => import("@/components/electrician-tools/site-safety/PhotoDocumentation"));
+const TeamBriefingTemplates = lazy(() => import("@/components/electrician-tools/site-safety/TeamBriefingTemplates"));
+const NearMissReporting = lazy(() => import("@/components/electrician-tools/site-safety/NearMissReporting").then(m => ({ default: m.NearMissReporting })));
+const SafetyEquipmentTracker = lazy(() => import("@/components/electrician-tools/site-safety/SafetyEquipmentTracker"));
+const EmergencyProcedures = lazy(() => import("@/components/electrician-tools/site-safety/EmergencyProcedures"));
+const AIRAMSGenerator = lazy(() => import("@/components/electrician-tools/site-safety/ai-rams/AIRAMSGenerator").then(m => ({ default: m.AIRAMSGenerator })));
+const SavedRAMSLibrary = lazy(() => import("@/components/electrician-tools/site-safety/SavedRAMSLibrary").then(m => ({ default: m.SavedRAMSLibrary })));
+
+// Loading spinner for lazy components
+const ToolLoader = () => (
+  <div className="flex items-center justify-center py-20">
+    <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+  </div>
+);
 
 const SiteSafety = () => {
   const [searchParams] = useSearchParams();
@@ -152,7 +160,9 @@ const SiteSafety = () => {
                 Back to Site Safety
               </Button>
             </div>
-            {renderToolContent()}
+            <Suspense fallback={<ToolLoader />}>
+              {renderToolContent()}
+            </Suspense>
           </div>
         </div>
       </RAMSProvider>

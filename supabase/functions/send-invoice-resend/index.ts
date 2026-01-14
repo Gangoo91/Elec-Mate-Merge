@@ -82,9 +82,49 @@ const handler = async (req: Request): Promise<Response> => {
     // Fetch company profile for sender details
     const { data: companyProfile } = await supabaseClient
       .from('company_profiles')
-      .select('*')
+      .select('*, stripe_account_id, stripe_account_status')
       .eq('user_id', user.id)
       .single();
+
+    // Check if Stripe Connect is active for online payments
+    const stripeConnectActive = companyProfile?.stripe_account_id &&
+                                 companyProfile?.stripe_account_status === 'active';
+
+    let stripePaymentUrl: string | null = null;
+
+    if (stripeConnectActive) {
+      // Use existing payment link or create new one
+      if (invoice.stripe_payment_link_url) {
+        stripePaymentUrl = invoice.stripe_payment_link_url;
+        console.log('📱 Using existing Stripe payment link');
+      } else {
+        // Generate new payment link
+        try {
+          console.log('💳 Generating Stripe payment link...');
+          const paymentLinkResponse = await fetch(
+            `${Deno.env.get('SUPABASE_URL')}/functions/v1/create-invoice-payment-link`,
+            {
+              method: 'POST',
+              headers: {
+                'Authorization': req.headers.get('Authorization') || '',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ invoiceId }),
+            }
+          );
+
+          if (paymentLinkResponse.ok) {
+            const paymentData = await paymentLinkResponse.json();
+            stripePaymentUrl = paymentData.url;
+            console.log('✅ Payment link generated:', stripePaymentUrl);
+          } else {
+            console.warn('⚠️ Could not generate payment link - will send without Pay Now button');
+          }
+        } catch (paymentLinkError) {
+          console.warn('⚠️ Payment link generation error:', paymentLinkError);
+        }
+      }
+    }
 
     const clientEmail = invoice.client_data?.email;
     if (!clientEmail) {
@@ -138,19 +178,28 @@ const handler = async (req: Request): Promise<Response> => {
       }
     }
 
-    // Download PDF as binary data for attachment
-    if (!pdfUrl) {
-      throw new Error('PDF URL is missing - cannot send invoice without PDF');
+    // Download PDF as binary data for attachment (with fallback)
+    let pdfBase64: string | null = null;
+    let pdfAttachmentSuccess = false;
+
+    if (pdfUrl) {
+      try {
+        console.log('📥 Downloading PDF for attachment...');
+        const pdfFileResponse = await fetch(pdfUrl);
+        if (pdfFileResponse.ok) {
+          const pdfArrayBuffer = await pdfFileResponse.arrayBuffer();
+          pdfBase64 = btoa(String.fromCharCode(...new Uint8Array(pdfArrayBuffer)));
+          pdfAttachmentSuccess = true;
+          console.log(`✅ PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
+        } else {
+          console.warn(`⚠️ PDF download failed: ${pdfFileResponse.status} - will send email with link only`);
+        }
+      } catch (pdfError) {
+        console.warn(`⚠️ PDF download error: ${pdfError} - will send email with link only`);
+      }
+    } else {
+      console.warn('⚠️ No PDF URL available - will send email with link only');
     }
-    
-    console.log('📥 Downloading PDF for attachment...');
-    const pdfFileResponse = await fetch(pdfUrl);
-    if (!pdfFileResponse.ok) {
-      throw new Error('Failed to download PDF from PDF Monkey');
-    }
-    const pdfArrayBuffer = await pdfFileResponse.arrayBuffer();
-    const pdfBase64 = btoa(String.fromCharCode(...new Uint8Array(pdfArrayBuffer)));
-    console.log(`✅ PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
 
     // Format currency
     const formatCurrency = (amount: number) => {
@@ -273,10 +322,30 @@ const handler = async (req: Request): Promise<Response> => {
                 </tr>
               </table>
               <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280; line-height: 1.4;">
-                Invoice_${invoice.invoice_number}.pdf is attached to this email
+                ${pdfAttachmentSuccess ? `Invoice_${invoice.invoice_number}.pdf is attached to this email` : 'Click above to view and download your invoice'}
               </p>
             </td>
           </tr>
+
+          ${stripePaymentUrl ? `
+          <!-- Pay Now Button (Stripe Checkout) -->
+          <tr>
+            <td style="padding: 0 24px 24px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td>
+                    <a href="${stripePaymentUrl}" target="_blank" style="display: block; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 20px 24px; border-radius: 12px; font-size: 18px; font-weight: 700; box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4); -webkit-tap-highlight-color: transparent;">
+                      💳 Pay Now - Secure Card Payment
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280; line-height: 1.4;">
+                Fast, secure payment via Stripe. Bank transfer details also provided below.
+              </p>
+            </td>
+          </tr>
+          ` : ''}
 
           ${invoice.settings?.bankDetails ? `
           <!-- Bank Details (Highlighted) -->
@@ -443,17 +512,34 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`📧 Sending invoice via Resend to: ${clientEmail}`);
     console.log(`📧 Reply-to set to: ${replyToEmail}`);
 
-    const { data: emailData, error: emailError } = await resend.emails.send({
-      from: 'ElecMate <Founder@elec-mate.com>',
+    // Build email options with optional attachment
+    const emailOptions: {
+      from: string;
+      replyTo: string;
+      to: string[];
+      subject: string;
+      html: string;
+      attachments?: Array<{ filename: string; content: string }>;
+    } = {
+      from: `${companyProfile?.company_name || 'ElecMate'} <founder@elec-mate.com>`,
       replyTo: replyToEmail,
       to: [clientEmail],
       subject: subject,
       html: emailHtml,
-      attachments: [{
+    };
+
+    // Add PDF attachment if available
+    if (pdfAttachmentSuccess && pdfBase64) {
+      emailOptions.attachments = [{
         filename: pdfFilename,
         content: pdfBase64,
-      }],
-    });
+      }];
+      console.log('📎 Including PDF attachment');
+    } else {
+      console.log('📧 Sending email without PDF attachment (link only)');
+    }
+
+    const { data: emailData, error: emailError } = await resend.emails.send(emailOptions);
 
     if (emailError) {
       console.error('❌ Resend API error:', emailError);
@@ -472,7 +558,14 @@ const handler = async (req: Request): Promise<Response> => {
       .eq('id', invoiceId);
 
     return new Response(
-      JSON.stringify({ success: true, message: 'Invoice sent successfully', emailId: emailData.id }),
+      JSON.stringify({
+        success: true,
+        message: pdfAttachmentSuccess ? 'Invoice sent successfully with PDF attachment' : 'Invoice sent successfully (link only, PDF attachment unavailable)',
+        emailId: emailData.id,
+        pdfAttached: pdfAttachmentSuccess,
+        payNowIncluded: !!stripePaymentUrl,
+        paymentUrl: stripePaymentUrl || null,
+      }),
       {
         status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

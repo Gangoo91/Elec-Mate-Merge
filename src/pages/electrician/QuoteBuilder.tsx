@@ -2,7 +2,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Plus, FileText, Clock, CheckCircle, TrendingUp, XCircle, Send, Search, ArrowLeft, X, RefreshCw } from "lucide-react";
+import { Plus, FileText, Clock, CheckCircle, TrendingUp, XCircle, Send, Search, ArrowLeft, X, RefreshCw, Mic } from "lucide-react";
+import { VoiceHeaderButton } from "@/components/electrician/VoiceHeaderButton";
 import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import FinancialSnapshot from "@/components/electrician/quote-builder/FinancialSnapshot";
@@ -163,6 +164,11 @@ const QuoteBuilder = () => {
             ) : (
               <>
                 <h1 className="flex-1 text-lg font-bold">Quotes</h1>
+                <VoiceHeaderButton
+                  hint="Create quote"
+                  currentSection="quotes"
+                  onToolResult={handleRefresh}
+                />
                 <button
                   onClick={() => setIsSearchOpen(true)}
                   className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation"
@@ -176,6 +182,13 @@ const QuoteBuilder = () => {
                 >
                   <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
                 </button>
+                <Button
+                  onClick={() => navigate('/electrician/quote-builder/create')}
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 gap-1.5 h-11 px-3 touch-manipulation active:scale-[0.98]"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span className="hidden sm:inline">New</span>
+                </Button>
               </>
             )}
           </div>
@@ -330,17 +343,6 @@ const QuoteBuilder = () => {
             )}
           </section>
         </main>
-
-        {/* Floating Action Button - New Quote */}
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30">
-          <Button
-            onClick={() => navigate('/electrician/quote-builder/create')}
-            className="h-14 px-6 rounded-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 shadow-2xl shadow-elec-yellow/30 font-semibold text-base gap-2 active:scale-95 transition-transform"
-          >
-            <Plus className="h-5 w-5" />
-            New Quote
-          </Button>
-        </div>
 
         {/* Financial Snapshot Modal */}
         <FinancialSnapshot

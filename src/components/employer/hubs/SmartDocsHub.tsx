@@ -4,6 +4,8 @@ import { FeatureTile } from "@/components/employer/FeatureTile";
 import { HubSkeleton } from "@/components/employer/skeletons";
 import type { Section } from "@/pages/employer/EmployerDashboard";
 import { useJobPacks } from "@/hooks/useJobPacks";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Sparkles,
   FileText,
@@ -17,12 +19,87 @@ import {
   AlertTriangle
 } from "lucide-react";
 
+// Format relative time (e.g., "2 hours ago", "Yesterday")
+function formatRelativeTime(date: Date): string {
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / (1000 * 60));
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffMins < 60) return `${diffMins} min ago`;
+  if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+  if (diffDays === 1) return 'Yesterday';
+  if (diffDays < 7) return `${diffDays} days ago`;
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
+interface RecentDocument {
+  id: string;
+  type: 'RAMS' | 'Method Statement';
+  title: string;
+  generatedAt: string;
+  createdAt: Date;
+}
+
+// Hook to fetch recent documents
+function useRecentDocuments() {
+  return useQuery({
+    queryKey: ['recent-documents'],
+    queryFn: async (): Promise<RecentDocument[]> => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return [];
+
+      // Fetch recent RAMS documents
+      const { data: rams } = await supabase
+        .from('rams_documents')
+        .select('id, project_name, created_at')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      // Fetch recent method statements
+      const { data: methods } = await supabase
+        .from('method_statements')
+        .select('id, job_title, created_at')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      // Combine and sort by date
+      const documents: RecentDocument[] = [
+        ...(rams || []).map(r => ({
+          id: r.id,
+          type: 'RAMS' as const,
+          title: r.project_name || 'Untitled RAMS',
+          createdAt: new Date(r.created_at),
+          generatedAt: formatRelativeTime(new Date(r.created_at)),
+        })),
+        ...(methods || []).map(m => ({
+          id: m.id,
+          type: 'Method Statement' as const,
+          title: m.job_title || 'Untitled Method Statement',
+          createdAt: new Date(m.created_at),
+          generatedAt: formatRelativeTime(new Date(m.created_at)),
+        })),
+      ];
+
+      // Sort by most recent and limit to 3
+      return documents
+        .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+        .slice(0, 3);
+    },
+    staleTime: 30000, // Cache for 30 seconds
+  });
+}
+
 interface SmartDocsHubProps {
   onNavigate: (section: Section) => void;
 }
 
 export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
   const { data: jobPacks = [], isLoading } = useJobPacks();
+  const { data: recentDocuments = [] } = useRecentDocuments();
 
   // Calculate stats
   const totalJobPacks = jobPacks.length;
@@ -35,13 +112,6 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
     jp.briefing_pack_generated &&
     jp.status === 'In Progress'
   ).length;
-
-  // Recently generated documents (simulated for now - would come from job_pack_documents)
-  const recentDocuments = [
-    { id: '1', type: 'RAMS', title: 'Office Rewire - ABC Corp', generatedAt: '2 hours ago', jobPack: 'Office Rewire' },
-    { id: '2', type: 'Method Statement', title: 'Kitchen Refit', generatedAt: 'Yesterday', jobPack: 'Kitchen Refit' },
-    { id: '3', type: 'Design Spec', title: 'EV Charging Points', generatedAt: '2 days ago', jobPack: 'NCP Car Parks' },
-  ];
 
   if (isLoading) {
     return <HubSkeleton statCount={4} cardCount={5} columns={3} />;
@@ -190,17 +260,23 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
                 <Clock className="h-5 w-5 text-muted-foreground" />
               </div>
               <div className="space-y-2">
-                {recentDocuments.map(doc => (
-                  <div key={doc.id} className="flex items-center justify-between p-2 rounded-lg hover:bg-elec-dark/50 transition-colors">
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium text-foreground truncate">{doc.type}</p>
-                      <p className="text-xs text-muted-foreground truncate">{doc.jobPack}</p>
+                {recentDocuments.length > 0 ? (
+                  recentDocuments.map(doc => (
+                    <div key={doc.id} className="flex items-center justify-between p-2 rounded-lg hover:bg-elec-dark/50 transition-colors">
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium text-foreground truncate">{doc.type}</p>
+                        <p className="text-xs text-muted-foreground truncate">{doc.title}</p>
+                      </div>
+                      <Badge variant="secondary" className="shrink-0 text-xs">
+                        {doc.generatedAt}
+                      </Badge>
                     </div>
-                    <Badge variant="secondary" className="shrink-0 text-xs">
-                      {doc.generatedAt}
-                    </Badge>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <p className="text-sm text-muted-foreground text-center py-4">
+                    No documents yet. Use the AI tools above to generate your first document.
+                  </p>
+                )}
               </div>
             </CardContent>
           </Card>

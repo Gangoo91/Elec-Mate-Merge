@@ -22,6 +22,7 @@ export const useCombinedUnread = (): CombinedUnreadResult => {
 
   // Determine context
   const isEmployerContext = location.pathname.startsWith('/employer');
+  const isCollegeContext = location.pathname.startsWith('/college');
   const employerId = isEmployerContext ? user?.id : undefined;
 
   // Notification unread count - try to get from context
@@ -33,7 +34,9 @@ export const useCombinedUnread = (): CombinedUnreadResult => {
   const { totalUnread: employerUnread = 0 } = useConversations();
   const { totalUnread: electricianUnread = 0 } = useElectricianConversations(elecIdProfile?.id);
   const teamChatUnread = useTeamChatUnread(employerId) || 0;
-  const { totalUnread: collegeUnread = 0 } = useCollegeConversations();
+
+  // Only fetch college conversations when in college context to avoid 400 errors on electrician pages
+  const { totalUnread: collegeUnread = 0 } = useCollegeConversations(isCollegeContext);
 
   // Peer support conversations
   const { data: peerConversations = [] } = useQuery({

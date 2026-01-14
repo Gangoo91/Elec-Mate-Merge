@@ -178,9 +178,34 @@ const InstallationVerifyPage = () => {
         }
       });
 
-      if (error) throw error;
+      // Handle both wrapped and unwrapped responses
+      const verificationData = data?.verification_checks || data?.analysis?.verification_checks;
+
+      console.log('🔍 Installation Verify Response:', {
+        data,
+        error,
+        hasVerificationChecks: !!verificationData,
+        dataStructure: data?.verification_checks ? 'unwrapped' : data?.analysis?.verification_checks ? 'wrapped' : 'missing'
+      });
+
+      if (error) {
+        console.error('❌ Installation verify error:', error);
+        throw error;
+      }
+
+      if (!verificationData) {
+        console.error('❌ Response missing verification_checks:', data);
+        toast({
+          title: "Invalid Response",
+          description: "The analysis didn't return verification results. Check console for details.",
+          variant: "destructive"
+        });
+        return;
+      }
+
       setAnalysisProgress(100);
-      setAnalysisResult(data);
+      // Unwrap if needed
+      setAnalysisResult(data?.verification_checks ? data : data.analysis);
 
     } catch (error) {
       console.error('Analysis error:', error);
@@ -211,7 +236,7 @@ const InstallationVerifyPage = () => {
         </div>
       </div>
 
-      <main className="px-4 py-5 space-y-5 max-w-2xl mx-auto">
+      <main className="px-4 py-5 space-y-5 max-w-5xl mx-auto">
         {/* Hero */}
         <div className="rounded-2xl border border-cyan-500/30 bg-gradient-to-br from-cyan-500/10 via-card to-card/90 backdrop-blur-xl p-5 overflow-hidden relative">
           <div className="relative flex items-center gap-4">
