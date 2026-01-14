@@ -44,7 +44,6 @@ export interface Conversation {
       id: string;
       name: string;
       email: string;
-      avatar_url: string | null;
     };
   };
   vacancy?: {
@@ -145,8 +144,7 @@ export const getConversations = async (): Promise<Conversation[]> => {
         employee:employer_employees (
           id,
           name,
-          email,
-          avatar_url
+          email
         )
       ),
       vacancy:employer_vacancies (
@@ -185,8 +183,7 @@ export const getConversationById = async (id: string): Promise<Conversation | nu
         employee:employer_employees (
           id,
           name,
-          email,
-          avatar_url
+          email
         )
       ),
       vacancy:employer_vacancies (
@@ -735,7 +732,7 @@ export const getElectricianConversations = async (
     .from('employer_conversations')
     .select(`
       *,
-      employer:employers (
+      employer:employer_profiles (
         id,
         company_name,
         contact_name,

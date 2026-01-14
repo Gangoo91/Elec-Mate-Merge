@@ -42,9 +42,12 @@ export function useStudyStreak() {
         .eq('user_id', user.id)
         .single();
 
-      if (error && error.code !== 'PGRST116') {
+      if (error && error.code !== 'PGRST116' && error.code !== '42P01' && error.code !== 'PGRST204') {
         // PGRST116 means no rows returned, which is fine for new users
-        throw error;
+        // 42P01 means table doesn't exist - fail silently
+        // PGRST204 means table doesn't exist (PostgREST)
+        console.warn('Study streak table may not exist:', error.code);
+        return;
       }
 
       if (data) {

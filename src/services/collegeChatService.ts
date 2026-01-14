@@ -86,10 +86,10 @@ export const collegeConversationService = {
     if (!user) return [];
 
     const { data, error } = await supabase
-      .from('college.conversations')
+      .from('college_conversations')
       .select(`
         *,
-        student:college.students(id, first_name, last_name)
+        student:college_students(id, first_name, last_name)
       `)
       .or(`participant_1_id.eq.${user.id},participant_2_id.eq.${user.id}`)
       .eq('status', 'active')
@@ -104,7 +104,7 @@ export const collegeConversationService = {
    */
   async getStudentConversations(studentId: string): Promise<CollegeConversation[]> {
     const { data, error } = await supabase
-      .from('college.conversations')
+      .from('college_conversations')
       .select('*')
       .eq('student_id', studentId)
       .order('last_message_at', { ascending: false });
@@ -124,7 +124,7 @@ export const collegeConversationService = {
   ): Promise<CollegeConversation> {
     // Try to find existing
     const { data: existing } = await supabase
-      .from('college.conversations')
+      .from('college_conversations')
       .select('*')
       .eq('institution_id', institutionId)
       .eq('conversation_type', 'student_tutor')
@@ -135,7 +135,7 @@ export const collegeConversationService = {
 
     // Create new
     const { data, error } = await supabase
-      .from('college.conversations')
+      .from('college_conversations')
       .insert({
         institution_id: institutionId,
         conversation_type: 'student_tutor',
@@ -163,7 +163,7 @@ export const collegeConversationService = {
   ): Promise<CollegeConversation> {
     // Try to find existing
     const { data: existing } = await supabase
-      .from('college.conversations')
+      .from('college_conversations')
       .select('*')
       .eq('institution_id', institutionId)
       .eq('conversation_type', 'college_employer')
@@ -174,7 +174,7 @@ export const collegeConversationService = {
 
     // Create new
     const { data, error } = await supabase
-      .from('college.conversations')
+      .from('college_conversations')
       .insert({
         institution_id: institutionId,
         conversation_type: 'college_employer',
@@ -196,7 +196,7 @@ export const collegeConversationService = {
    */
   async archiveConversation(conversationId: string): Promise<void> {
     const { error } = await supabase
-      .from('college.conversations')
+      .from('college_conversations')
       .update({ status: 'archived' })
       .eq('id', conversationId);
 
@@ -211,7 +211,7 @@ export const collegeConversationService = {
     if (!user) return { total: 0, unread: 0 };
 
     const { data, error } = await supabase
-      .from('college.conversations')
+      .from('college_conversations')
       .select('id, unread_1, unread_2, participant_1_id')
       .or(`participant_1_id.eq.${user.id},participant_2_id.eq.${user.id}`)
       .eq('status', 'active');
@@ -238,7 +238,7 @@ export const collegeMessageService = {
    */
   async getMessages(conversationId: string, limit = 50): Promise<CollegeMessage[]> {
     const { data, error } = await supabase
-      .from('college.messages')
+      .from('college_messages')
       .select('*')
       .eq('conversation_id', conversationId)
       .order('sent_at', { ascending: true })
@@ -263,7 +263,7 @@ export const collegeMessageService = {
     if (!user) throw new Error('Not authenticated');
 
     const { data, error } = await supabase
-      .from('college.messages')
+      .from('college_messages')
       .insert({
         conversation_id: params.conversation_id,
         sender_id: user.id,
@@ -293,7 +293,7 @@ export const collegeMessageService = {
 
     // Update messages
     await supabase
-      .from('college.messages')
+      .from('college_messages')
       .update({ read_at: new Date().toISOString() })
       .eq('conversation_id', conversationId)
       .neq('sender_id', user.id)
@@ -301,7 +301,7 @@ export const collegeMessageService = {
 
     // Reset unread count
     const { data: conv } = await supabase
-      .from('college.conversations')
+      .from('college_conversations')
       .select('participant_1_id, participant_2_id')
       .eq('id', conversationId)
       .single();
@@ -309,7 +309,7 @@ export const collegeMessageService = {
     if (conv) {
       const updateField = (conv as any).participant_1_id === user.id ? 'unread_1' : 'unread_2';
       await supabase
-        .from('college.conversations')
+        .from('college_conversations')
         .update({ [updateField]: 0 })
         .eq('id', conversationId);
     }
@@ -365,7 +365,7 @@ export const collegeChatHelpers = {
   async getUserType(userId: string): Promise<ParticipantType | null> {
     // Check if student
     const { data: student } = await supabase
-      .from('college.students')
+      .from('college_students')
       .select('id')
       .eq('user_id', userId)
       .single();
@@ -374,7 +374,7 @@ export const collegeChatHelpers = {
 
     // Check if staff
     const { data: staff } = await supabase
-      .from('college.staff')
+      .from('college_staff')
       .select('id')
       .eq('user_id', userId)
       .single();
@@ -383,7 +383,7 @@ export const collegeChatHelpers = {
 
     // Check if employer
     const { data: employer } = await supabase
-      .from('college.employers')
+      .from('college_employers')
       .select('id')
       .eq('portal_user_id', userId)
       .single();
@@ -403,7 +403,7 @@ export const collegeChatHelpers = {
   }> {
     if (type === 'student') {
       const { data } = await supabase
-        .from('college.students')
+        .from('college_students')
         .select('first_name, last_name, avatar_url')
         .eq('user_id', userId)
         .single();
@@ -416,7 +416,7 @@ export const collegeChatHelpers = {
 
     if (type === 'staff') {
       const { data } = await supabase
-        .from('college.staff')
+        .from('college_staff')
         .select('first_name, last_name, avatar_url, role')
         .eq('user_id', userId)
         .single();
@@ -430,7 +430,7 @@ export const collegeChatHelpers = {
 
     if (type === 'employer') {
       const { data } = await supabase
-        .from('college.employers')
+        .from('college_employers')
         .select('company_name, contact_name')
         .eq('portal_user_id', userId)
         .single();
@@ -456,7 +456,7 @@ async function sendCollegeMessagePush(conversationId: string, senderId: string, 
   try {
     // Get conversation to find recipient
     const { data: conv } = await supabase
-      .from('college.conversations')
+      .from('college_conversations')
       .select('participant_1_id, participant_2_id, participant_1_type, participant_2_type')
       .eq('id', conversationId)
       .single();
