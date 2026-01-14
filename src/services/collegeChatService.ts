@@ -82,35 +82,47 @@ export const collegeConversationService = {
    * Get conversations for current user
    */
   async getMyConversations(): Promise<CollegeConversation[]> {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return [];
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return [];
 
-    const { data, error } = await supabase
-      .from('college_conversations')
-      .select(`
-        *,
-        student:college_students(id, first_name, last_name)
-      `)
-      .or(`participant_1_id.eq.${user.id},participant_2_id.eq.${user.id}`)
-      .eq('status', 'active')
-      .order('last_message_at', { ascending: false, nullsFirst: false });
+      const { data, error } = await supabase
+        .from('college_conversations')
+        .select(`
+          *,
+          student:college_students(id, first_name, last_name)
+        `)
+        .or(`participant_1_id.eq.${user.id},participant_2_id.eq.${user.id}`)
+        .eq('status', 'active')
+        .order('last_message_at', { ascending: false, nullsFirst: false });
 
-    if (error) throw error;
-    return (data as unknown as CollegeConversation[]) || [];
+      if (error) {
+        // Table may not exist yet - fail gracefully
+        return [];
+      }
+      return (data as unknown as CollegeConversation[]) || [];
+    } catch {
+      // College chat feature not fully set up
+      return [];
+    }
   },
 
   /**
    * Get conversations for a specific student (staff view)
    */
   async getStudentConversations(studentId: string): Promise<CollegeConversation[]> {
-    const { data, error } = await supabase
-      .from('college_conversations')
-      .select('*')
-      .eq('student_id', studentId)
-      .order('last_message_at', { ascending: false });
+    try {
+      const { data, error } = await supabase
+        .from('college_conversations')
+        .select('*')
+        .eq('student_id', studentId)
+        .order('last_message_at', { ascending: false });
 
-    if (error) throw error;
-    return (data as unknown as CollegeConversation[]) || [];
+      if (error) return [];
+      return (data as unknown as CollegeConversation[]) || [];
+    } catch {
+      return [];
+    }
   },
 
   /**

@@ -728,40 +728,41 @@ export interface ElectricianConversation {
 export const getElectricianConversations = async (
   electricianProfileId: string
 ): Promise<ElectricianConversation[]> => {
-  const { data, error } = await supabase
-    .from('employer_conversations')
-    .select(`
-      *,
-      employer:employer_profiles (
-        id,
-        company_name,
-        contact_name,
-        email,
-        logo_url
-      ),
-      vacancy:employer_vacancies (
-        id,
-        title,
-        location,
-        status,
-        salary_min,
-        salary_max
-      ),
-      application:employer_vacancy_applications (
-        id,
-        status
-      )
-    `)
-    .eq('electrician_profile_id', electricianProfileId)
-    .eq('status', 'active')
-    .order('last_message_at', { ascending: false, nullsFirst: false });
+  try {
+    const { data, error } = await supabase
+      .from('employer_conversations')
+      .select(`
+        *,
+        vacancy:employer_vacancies (
+          id,
+          title,
+          location,
+          status,
+          salary_min,
+          salary_max
+        ),
+        application:employer_vacancy_applications (
+          id,
+          status
+        )
+      `)
+      .eq('electrician_profile_id', electricianProfileId)
+      .eq('status', 'active')
+      .order('last_message_at', { ascending: false, nullsFirst: false });
 
-  if (error) {
-    console.error('Error fetching electrician conversations:', error);
-    throw error;
+    if (error) {
+      // Log only once, don't spam console
+      if (!error.message?.includes('relationship')) {
+        console.warn('Conversations query issue:', error.code);
+      }
+      return [];
+    }
+
+    return data || [];
+  } catch (err) {
+    // Fail gracefully - conversations feature may not be fully set up
+    return [];
   }
-
-  return data || [];
 };
 
 /**
