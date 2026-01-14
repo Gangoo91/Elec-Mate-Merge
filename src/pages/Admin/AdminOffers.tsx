@@ -23,6 +23,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import {
   Plus,
   Copy,
   Gift,
@@ -31,9 +37,13 @@ import {
   Check,
   Link2,
   Trash2,
+  ChevronRight,
+  User,
+  Mail,
 } from "lucide-react";
-import { format } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 interface Offer {
   id: string;
@@ -48,11 +58,23 @@ interface Offer {
   created_at: string;
 }
 
+interface Redemption {
+  id: string;
+  redeemed_at: string;
+  amount_paid: number | null;
+  profiles: {
+    id: string;
+    full_name: string | null;
+    email?: string;
+  } | null;
+}
+
 export default function AdminOffers() {
   const { profile } = useAuth();
   const queryClient = useQueryClient();
   const [createOpen, setCreateOpen] = useState(false);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
 
   // Form state
   const [newOffer, setNewOffer] = useState({
@@ -81,6 +103,31 @@ export default function AdminOffers() {
       }
       return data as Offer[];
     },
+  });
+
+  // Fetch redemptions for selected offer
+  const { data: redemptions } = useQuery({
+    queryKey: ["offer-redemptions", selectedOffer?.id],
+    queryFn: async () => {
+      if (!selectedOffer?.id) return [];
+      const { data, error } = await supabase
+        .from("offer_redemptions")
+        .select(`
+          id,
+          redeemed_at,
+          amount_paid,
+          profiles:user_id (id, full_name)
+        `)
+        .eq("offer_id", selectedOffer.id)
+        .order("redeemed_at", { ascending: false });
+
+      if (error) {
+        console.log("Error fetching redemptions:", error);
+        return [];
+      }
+      return data as Redemption[];
+    },
+    enabled: !!selectedOffer?.id,
   });
 
   // Create offer mutation
@@ -332,11 +379,17 @@ export default function AdminOffers() {
                     </div>
                     <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                       <span className="font-mono text-foreground">£{offer.price}/mo</span>
-                      <span className="flex items-center gap-1">
+                      <button
+                        onClick={() => setSelectedOffer(offer)}
+                        className="flex items-center gap-1 touch-manipulation active:opacity-70 transition-opacity"
+                      >
                         <Users className="h-4 w-4" />
-                        {offer.redemptions}
-                        {offer.max_redemptions && `/${offer.max_redemptions}`} used
-                      </span>
+                        <span className="underline underline-offset-2">
+                          {offer.redemptions}
+                          {offer.max_redemptions && `/${offer.max_redemptions}`} used
+                        </span>
+                        <ChevronRight className="h-3 w-3" />
+                      </button>
                       {offer.expires_at && (
                         <span className="flex items-center gap-1">
                           <Calendar className="h-4 w-4" />
@@ -394,6 +447,63 @@ export default function AdminOffers() {
           ))}
         </div>
       )}
+
+      {/* Redemptions Sheet */}
+      <Sheet open={!!selectedOffer} onOpenChange={() => setSelectedOffer(null)}>
+        <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl p-0">
+          <div className="flex flex-col h-full">
+            {/* Drag Handle */}
+            <div className="flex justify-center pt-3 pb-2">
+              <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+            </div>
+
+            <SheetHeader className="px-4 pb-4 border-b border-border">
+              <SheetTitle className="text-left flex items-center gap-2">
+                <Gift className="h-5 w-5 text-purple-400" />
+                {selectedOffer?.name} Redemptions
+              </SheetTitle>
+              <p className="text-sm text-muted-foreground text-left">
+                {selectedOffer?.redemptions || 0} total redemptions · £{selectedOffer?.price}/mo
+              </p>
+            </SheetHeader>
+
+            <div className="flex-1 overflow-y-auto p-4">
+              {redemptions?.length === 0 ? (
+                <div className="text-center py-8">
+                  <Users className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
+                  <p className="text-sm text-muted-foreground">No redemptions yet</p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {redemptions?.map((redemption) => (
+                    <div
+                      key={redemption.id}
+                      className="flex items-center gap-3 p-3 rounded-xl bg-muted/50"
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0">
+                        <User className="h-5 w-5 text-purple-400" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-sm truncate">
+                          {redemption.profiles?.full_name || "Unknown User"}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {formatDistanceToNow(new Date(redemption.redeemed_at), { addSuffix: true })}
+                        </p>
+                      </div>
+                      {redemption.amount_paid && (
+                        <Badge className="bg-green-500/20 text-green-400">
+                          £{redemption.amount_paid}
+                        </Badge>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

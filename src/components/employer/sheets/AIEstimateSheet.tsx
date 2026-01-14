@@ -6,6 +6,13 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
   Loader2,
   Sparkles,
   PoundSterling,
@@ -21,6 +28,8 @@ import {
   MapPin,
   Building2,
   FileText,
+  UserCog,
+  HardHat,
 } from 'lucide-react';
 import { type TenderOpportunity } from '@/hooks/useOpportunities';
 import { supabase } from '@/integrations/supabase/client';
@@ -54,6 +63,13 @@ interface EstimateData {
   };
   regional_adjustment?: number;
   citations?: Array<{ source: string; item: string; price: number }>;
+  team_size?: number;
+  team_composition?: {
+    electricians: number;
+    mates: number;
+    supervisors: number;
+  };
+  labour_rate_used?: number;
 }
 
 interface EstimateMetadata {
@@ -63,6 +79,13 @@ interface EstimateMetadata {
   regional_multiplier: number;
   rag_pricing_items: number;
   rag_labour_items: number;
+  team_size?: number;
+  team_composition?: {
+    electricians: number;
+    mates: number;
+    supervisors: number;
+  };
+  labour_rate?: number;
 }
 
 export function AIEstimateSheet({
@@ -83,6 +106,8 @@ export function AIEstimateSheet({
   });
   const [isEditing, setIsEditing] = useState(false);
   const [editedEstimate, setEditedEstimate] = useState<EstimateData | null>(null);
+  const [overheadPercent, setOverheadPercent] = useState('12');
+  const [profitPercent, setProfitPercent] = useState('12');
 
   const generateEstimate = async () => {
     if (!opportunity) return;
@@ -108,6 +133,16 @@ export function AIEstimateSheet({
         setEstimate(data.estimate);
         setEditedEstimate(data.estimate);
         setMetadata(data.metadata);
+
+        // Set initial percentage values from estimate
+        const subtotal = data.estimate.labour_cost + data.estimate.materials_cost + data.estimate.equipment_cost;
+        if (subtotal > 0) {
+          const ohPct = Math.round((data.estimate.overheads / subtotal) * 100);
+          const profPct = Math.round((data.estimate.profit / (subtotal + data.estimate.overheads)) * 100);
+          setOverheadPercent(String(ohPct || 12));
+          setProfitPercent(String(profPct || 12));
+        }
+
         toast.success('AI estimate generated');
       } else {
         throw new Error(data?.error || 'Failed to generate estimate');
@@ -130,11 +165,43 @@ export function AIEstimateSheet({
 
     const updated = { ...editedEstimate, [field]: value };
 
-    // Recalculate total
+    // Recalculate total with current percentages
     const subtotal = updated.labour_cost + updated.materials_cost + updated.equipment_cost;
+    updated.overheads = Math.round(subtotal * (parseInt(overheadPercent) / 100));
+    updated.profit = Math.round((subtotal + updated.overheads) * (parseInt(profitPercent) / 100));
     updated.total_estimate = subtotal + updated.overheads + updated.profit;
 
     setEditedEstimate(updated);
+  };
+
+  const handleOverheadChange = (pct: string) => {
+    setOverheadPercent(pct);
+    if (!editedEstimate) return;
+
+    const subtotal = editedEstimate.labour_cost + editedEstimate.materials_cost + editedEstimate.equipment_cost;
+    const newOverheads = Math.round(subtotal * (parseInt(pct) / 100));
+    const newProfit = Math.round((subtotal + newOverheads) * (parseInt(profitPercent) / 100));
+
+    setEditedEstimate({
+      ...editedEstimate,
+      overheads: newOverheads,
+      profit: newProfit,
+      total_estimate: subtotal + newOverheads + newProfit,
+    });
+  };
+
+  const handleProfitChange = (pct: string) => {
+    setProfitPercent(pct);
+    if (!editedEstimate) return;
+
+    const subtotal = editedEstimate.labour_cost + editedEstimate.materials_cost + editedEstimate.equipment_cost;
+    const newProfit = Math.round((subtotal + editedEstimate.overheads) * (parseInt(pct) / 100));
+
+    setEditedEstimate({
+      ...editedEstimate,
+      profit: newProfit,
+      total_estimate: subtotal + editedEstimate.overheads + newProfit,
+    });
   };
 
   const getConfidenceColor = (confidence: string) => {
@@ -147,6 +214,8 @@ export function AIEstimateSheet({
   };
 
   const displayEstimate = isEditing ? editedEstimate : estimate;
+  const teamData = displayEstimate?.team_composition || metadata?.team_composition;
+  const teamTotal = displayEstimate?.team_size || metadata?.team_size || teamData?.electricians || 1;
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange} modal={true}>
@@ -160,8 +229,8 @@ export function AIEstimateSheet({
                   <Sparkles className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div>
-                  <SheetTitle className="text-lg">AI Cost Estimate</SheetTitle>
-                  <p className="text-sm text-muted-foreground">
+                  <SheetTitle className="text-lg text-foreground">AI Cost Estimate</SheetTitle>
+                  <p className="text-sm text-white/70">
                     {opportunity?.title?.substring(0, 40)}...
                   </p>
                 </div>
@@ -188,30 +257,30 @@ export function AIEstimateSheet({
                   <div className="p-4 rounded-full bg-elec-yellow/10 w-fit mx-auto mb-4">
                     <Sparkles className="h-12 w-12 text-elec-yellow" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">AI-Powered Estimation</h3>
-                  <p className="text-muted-foreground max-w-sm mx-auto mb-6">
+                  <h3 className="text-lg font-semibold mb-2 text-foreground">AI-Powered Estimation</h3>
+                  <p className="text-white/70 max-w-sm mx-auto mb-6">
                     Generate a detailed cost breakdown using our pricing database, labour standards, and regional adjustments.
                   </p>
 
                   {/* Project Context */}
-                  <div className="bg-card/50 rounded-lg p-4 mb-6 text-left max-w-md mx-auto">
-                    <h4 className="text-sm font-medium mb-3 flex items-center gap-2">
+                  <div className="bg-card/50 rounded-lg p-4 mb-6 text-left max-w-md mx-auto border border-white/10">
+                    <h4 className="text-sm font-medium mb-3 flex items-center gap-2 text-foreground">
                       <FileText className="h-4 w-4 text-elec-yellow" />
                       Project Context
                     </h4>
                     <div className="space-y-2 text-sm">
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Building2 className="h-4 w-4" />
+                      <div className="flex items-center gap-2 text-white/80">
+                        <Building2 className="h-4 w-4 text-white/60" />
                         <span>{opportunity?.client_name}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <MapPin className="h-4 w-4" />
+                      <div className="flex items-center gap-2 text-white/80">
+                        <MapPin className="h-4 w-4 text-white/60" />
                         <span>{opportunity?.location_text || opportunity?.postcode || 'UK'}</span>
                       </div>
                       {opportunity?.categories && (
                         <div className="flex flex-wrap gap-1 mt-2">
                           {opportunity.categories.map(cat => (
-                            <Badge key={cat} variant="outline" className="text-xs">
+                            <Badge key={cat} variant="outline" className="text-xs text-white/80 border-white/30">
                               {cat.replace('_', ' ')}
                             </Badge>
                           ))}
@@ -222,7 +291,7 @@ export function AIEstimateSheet({
 
                   <Button
                     onClick={generateEstimate}
-                    className="h-12 px-8 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                    className="h-12 px-8 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
                   >
                     <Sparkles className="h-5 w-5 mr-2" />
                     Generate AI Estimate
@@ -234,8 +303,8 @@ export function AIEstimateSheet({
               {isLoading && (
                 <div className="text-center py-12">
                   <Loader2 className="h-12 w-12 animate-spin text-elec-yellow mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">Generating Estimate...</h3>
-                  <p className="text-sm text-muted-foreground max-w-sm mx-auto">
+                  <h3 className="text-lg font-medium mb-2 text-foreground">Generating Estimate...</h3>
+                  <p className="text-sm text-white/70 max-w-sm mx-auto">
                     Searching pricing database, calculating labour times, applying regional adjustments...
                   </p>
                 </div>
@@ -245,8 +314,8 @@ export function AIEstimateSheet({
               {error && (
                 <div className="text-center py-12">
                   <AlertTriangle className="h-12 w-12 text-red-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">Estimation Failed</h3>
-                  <p className="text-sm text-muted-foreground mb-6">{error}</p>
+                  <h3 className="text-lg font-medium mb-2 text-foreground">Estimation Failed</h3>
+                  <p className="text-sm text-white/70 mb-6">{error}</p>
                   <Button onClick={generateEstimate} variant="outline">
                     Try Again
                   </Button>
@@ -259,7 +328,7 @@ export function AIEstimateSheet({
                   {/* Total & Confidence */}
                   <div className="bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30 rounded-xl p-4">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-muted-foreground">Total Estimate</span>
+                      <span className="text-sm text-white/80">Total Estimate</span>
                       <Badge variant="outline" className={getConfidenceColor(displayEstimate.confidence)}>
                         {displayEstimate.confidence} Confidence
                       </Badge>
@@ -269,12 +338,12 @@ export function AIEstimateSheet({
                         £{displayEstimate.total_estimate?.toLocaleString()}
                       </span>
                       {metadata?.regional_multiplier && metadata.regional_multiplier !== 1 && (
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-white/70">
                           ({metadata.region} rates)
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-4 mt-3 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-4 mt-3 text-sm text-white/80">
                       <span className="flex items-center gap-1">
                         <Clock className="h-4 w-4" />
                         {displayEstimate.programme}
@@ -285,6 +354,36 @@ export function AIEstimateSheet({
                       </span>
                     </div>
                   </div>
+
+                  {/* Team Composition Card - NEW */}
+                  {teamData && (
+                    <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl p-4 border border-blue-500/30">
+                      <h4 className="text-sm font-medium text-foreground mb-3 flex items-center gap-2">
+                        <HardHat className="h-4 w-4 text-blue-400" />
+                        Team Composition
+                      </h4>
+                      <div className="grid grid-cols-3 gap-3">
+                        <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
+                          <p className="text-2xl font-bold text-foreground">{teamData.electricians}</p>
+                          <p className="text-xs text-white/70">Electricians</p>
+                        </div>
+                        <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
+                          <p className="text-2xl font-bold text-foreground">{teamData.mates}</p>
+                          <p className="text-xs text-white/70">Mates</p>
+                        </div>
+                        <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
+                          <p className="text-2xl font-bold text-foreground">{teamData.supervisors}</p>
+                          <p className="text-xs text-white/70">Supervisors</p>
+                        </div>
+                      </div>
+                      {displayEstimate.labour_rate_used && (
+                        <div className="mt-3 flex items-center justify-between text-sm">
+                          <span className="text-white/70">Labour rate</span>
+                          <span className="text-foreground font-medium">£{displayEstimate.labour_rate_used}/hr</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   {/* Cost Summary */}
                   <div className="grid grid-cols-2 gap-3">
@@ -309,40 +408,81 @@ export function AIEstimateSheet({
                       isEditing={isEditing}
                       onEdit={(v) => handleEditValue('equipment_cost', v)}
                     />
-                    <CostCard
-                      icon={<PoundSterling className="h-4 w-4" />}
-                      label="Overheads & Profit"
-                      value={displayEstimate.overheads + displayEstimate.profit}
-                      isEditing={isEditing}
-                      onEdit={(v) => {
-                        handleEditValue('overheads', Math.round(v * 0.5));
-                        handleEditValue('profit', Math.round(v * 0.5));
-                      }}
-                    />
+                    {/* Subtotal display */}
+                    <div className="p-3 rounded-lg bg-card/50 border border-white/10">
+                      <div className="flex items-center gap-2 text-white/70 mb-1">
+                        <PoundSterling className="h-4 w-4" />
+                        <span className="text-xs">Subtotal</span>
+                      </div>
+                      <p className="font-semibold text-base text-foreground">
+                        £{(displayEstimate.labour_cost + displayEstimate.materials_cost + displayEstimate.equipment_cost).toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Editable Percentages - NEW */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-3 rounded-lg bg-card/50 border border-white/10">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm text-white/70">Overheads</span>
+                        <Select value={overheadPercent} onValueChange={handleOverheadChange}>
+                          <SelectTrigger className="w-20 h-9 text-sm bg-background border-white/20">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="bg-card border-white/20">
+                            {[8, 10, 12, 15, 18, 20].map(p => (
+                              <SelectItem key={p} value={p.toString()}>{p}%</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <p className="text-lg font-semibold text-foreground">
+                        £{displayEstimate.overheads?.toLocaleString()}
+                      </p>
+                    </div>
+
+                    <div className="p-3 rounded-lg bg-card/50 border border-white/10">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm text-white/70">Profit</span>
+                        <Select value={profitPercent} onValueChange={handleProfitChange}>
+                          <SelectTrigger className="w-20 h-9 text-sm bg-background border-white/20">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="bg-card border-white/20">
+                            {[8, 10, 12, 15, 18, 20, 25].map(p => (
+                              <SelectItem key={p} value={p.toString()}>{p}%</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <p className="text-lg font-semibold text-foreground">
+                        £{displayEstimate.profit?.toLocaleString()}
+                      </p>
+                    </div>
                   </div>
 
                   {/* Detailed Breakdown */}
                   {displayEstimate.breakdown && (
                     <>
-                      <Separator />
+                      <Separator className="bg-white/10" />
 
                       {/* Labour Breakdown */}
                       <Collapsible open={expandedSections.labour} onOpenChange={() => toggleSection('labour')}>
-                        <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-lg bg-card/50 hover:bg-card transition-colors touch-manipulation active:scale-[0.99]">
+                        <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-lg bg-card/50 hover:bg-card transition-colors touch-manipulation active:scale-[0.99] border border-white/10">
                           <div className="flex items-center gap-2">
                             <Users className="h-4 w-4 text-blue-400" />
-                            <span className="font-medium">Labour Breakdown</span>
+                            <span className="font-medium text-foreground">Labour Breakdown</span>
                           </div>
-                          {expandedSections.labour ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                          {expandedSections.labour ? <ChevronUp className="h-4 w-4 text-white/70" /> : <ChevronDown className="h-4 w-4 text-white/70" />}
                         </CollapsibleTrigger>
                         <CollapsibleContent className="pt-2">
-                          <div className="space-y-2 pl-6">
+                          <div className="space-y-2 pl-2">
                             {displayEstimate.breakdown.labour.map((item, idx) => (
-                              <div key={idx} className="flex items-center justify-between text-sm py-2 border-b border-border/50">
-                                <span className="text-muted-foreground">{item.task}</span>
+                              <div key={idx} className="flex items-center justify-between text-sm py-3 px-3 rounded-lg bg-card/30 border border-white/5">
+                                <span className="text-foreground font-medium">{item.task}</span>
                                 <div className="flex items-center gap-4">
-                                  <span className="text-xs text-muted-foreground">{item.hours}hrs @ £{item.rate}/hr</span>
-                                  <span className="font-medium">£{item.cost.toLocaleString()}</span>
+                                  <span className="text-xs text-white/60">{item.hours}hrs @ £{item.rate}/hr</span>
+                                  <span className="font-semibold text-foreground">£{item.cost.toLocaleString()}</span>
                                 </div>
                               </div>
                             ))}
@@ -352,23 +492,23 @@ export function AIEstimateSheet({
 
                       {/* Materials Breakdown */}
                       <Collapsible open={expandedSections.materials} onOpenChange={() => toggleSection('materials')}>
-                        <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-lg bg-card/50 hover:bg-card transition-colors touch-manipulation active:scale-[0.99]">
+                        <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-lg bg-card/50 hover:bg-card transition-colors touch-manipulation active:scale-[0.99] border border-white/10">
                           <div className="flex items-center gap-2">
                             <Package className="h-4 w-4 text-green-400" />
-                            <span className="font-medium">Materials Breakdown</span>
+                            <span className="font-medium text-foreground">Materials Breakdown</span>
                           </div>
-                          {expandedSections.materials ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                          {expandedSections.materials ? <ChevronUp className="h-4 w-4 text-white/70" /> : <ChevronDown className="h-4 w-4 text-white/70" />}
                         </CollapsibleTrigger>
                         <CollapsibleContent className="pt-2">
-                          <div className="space-y-2 pl-6">
+                          <div className="space-y-2 pl-2">
                             {displayEstimate.breakdown.materials.map((item, idx) => (
-                              <div key={idx} className="flex items-center justify-between text-sm py-2 border-b border-border/50">
-                                <span className="text-muted-foreground">{item.item}</span>
+                              <div key={idx} className="flex items-center justify-between text-sm py-3 px-3 rounded-lg bg-card/30 border border-white/5">
+                                <span className="text-foreground font-medium">{item.item}</span>
                                 <div className="flex items-center gap-4">
-                                  <span className="text-xs text-muted-foreground">
+                                  <span className="text-xs text-white/60">
                                     {item.quantity} {item.unit} @ £{item.unit_price}
                                   </span>
-                                  <span className="font-medium">£{item.cost.toLocaleString()}</span>
+                                  <span className="font-semibold text-foreground">£{item.cost.toLocaleString()}</span>
                                 </div>
                               </div>
                             ))}
@@ -388,14 +528,14 @@ export function AIEstimateSheet({
                             {displayEstimate.hazards.length} Hazards Identified
                           </span>
                         </div>
-                        {expandedSections.hazards ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                        {expandedSections.hazards ? <ChevronUp className="h-4 w-4 text-orange-400" /> : <ChevronDown className="h-4 w-4 text-orange-400" />}
                       </CollapsibleTrigger>
                       <CollapsibleContent className="pt-2">
-                        <div className="space-y-2 pl-6">
+                        <div className="space-y-2 pl-2">
                           {displayEstimate.hazards.map((hazard, idx) => (
-                            <div key={idx} className="flex items-start gap-2 text-sm py-1">
+                            <div key={idx} className="flex items-start gap-2 text-sm py-2 px-3 rounded-lg bg-orange-500/5 border border-orange-500/20">
                               <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
-                              <span>{hazard}</span>
+                              <span className="text-foreground">{hazard}</span>
                             </div>
                           ))}
                         </div>
@@ -405,12 +545,12 @@ export function AIEstimateSheet({
 
                   {/* Confidence Factors */}
                   {displayEstimate.confidence_factors && displayEstimate.confidence_factors.length > 0 && (
-                    <div className="p-4 rounded-lg bg-card/50 border border-border">
-                      <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
+                    <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                      <h4 className="text-sm font-medium mb-2 flex items-center gap-2 text-foreground">
                         <CheckCircle2 className="h-4 w-4 text-blue-400" />
                         Confidence Factors
                       </h4>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
+                      <ul className="space-y-1 text-sm text-white/80">
                         {displayEstimate.confidence_factors.map((factor, idx) => (
                           <li key={idx}>• {factor}</li>
                         ))}
@@ -420,24 +560,29 @@ export function AIEstimateSheet({
 
                   {/* Notes */}
                   {displayEstimate.notes && (
-                    <div className="p-4 rounded-lg bg-card/50 border border-border">
-                      <h4 className="text-sm font-medium mb-2">Notes & Assumptions</h4>
-                      <p className="text-sm text-muted-foreground">{displayEstimate.notes}</p>
+                    <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                      <h4 className="text-sm font-medium mb-2 text-foreground">Notes & Assumptions</h4>
+                      <p className="text-sm text-white/80">{displayEstimate.notes}</p>
                     </div>
                   )}
 
                   {/* RAG Metadata */}
                   {metadata && (
-                    <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
-                      <Badge variant="outline" className="bg-card/50">
+                    <div className="flex flex-wrap gap-2 text-xs">
+                      <Badge variant="outline" className="bg-card/50 text-white/70 border-white/20">
                         Complexity: {metadata.complexity} ({metadata.complexity_score}/100)
                       </Badge>
-                      <Badge variant="outline" className="bg-card/50">
-                        {metadata.rag_pricing_items} pricing items used
+                      <Badge variant="outline" className="bg-card/50 text-white/70 border-white/20">
+                        {metadata.rag_pricing_items} pricing items
                       </Badge>
-                      <Badge variant="outline" className="bg-card/50">
+                      <Badge variant="outline" className="bg-card/50 text-white/70 border-white/20">
                         {metadata.rag_labour_items} labour standards
                       </Badge>
+                      {metadata.labour_rate && (
+                        <Badge variant="outline" className="bg-card/50 text-white/70 border-white/20">
+                          £{metadata.labour_rate}/hr rate
+                        </Badge>
+                      )}
                     </div>
                   )}
 
@@ -450,11 +595,11 @@ export function AIEstimateSheet({
 
           {/* Fixed Footer */}
           {estimate && (
-            <div className="absolute bottom-0 left-0 right-0 p-4 pb-safe bg-background/95 backdrop-blur border-t border-border">
+            <div className="absolute bottom-0 left-0 right-0 p-4 pb-safe bg-background/95 backdrop-blur border-t border-white/10">
               <div className="flex gap-3">
                 <Button
                   variant="outline"
-                  className="flex-1 h-12 touch-manipulation active:scale-[0.98] transition-transform"
+                  className="flex-1 h-12 touch-manipulation active:scale-[0.98] transition-transform border-white/20"
                   onClick={generateEstimate}
                   disabled={isLoading}
                 >
@@ -462,7 +607,7 @@ export function AIEstimateSheet({
                   Regenerate
                 </Button>
                 <Button
-                  className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] transition-transform"
+                  className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] transition-transform font-semibold"
                   onClick={() => {
                     onUseEstimate?.(editedEstimate || estimate);
                     onOpenChange(false);
@@ -490,8 +635,8 @@ interface CostCardProps {
 
 function CostCard({ icon, label, value, isEditing, onEdit }: CostCardProps) {
   return (
-    <div className="p-3 rounded-lg bg-card border border-border">
-      <div className="flex items-center gap-2 text-muted-foreground mb-1">
+    <div className="p-3 rounded-lg bg-card border border-white/10">
+      <div className="flex items-center gap-2 text-white/70 mb-1">
         {icon}
         <span className="text-xs">{label}</span>
       </div>
@@ -500,10 +645,10 @@ function CostCard({ icon, label, value, isEditing, onEdit }: CostCardProps) {
           type="number"
           value={value}
           onChange={(e) => onEdit(Number(e.target.value))}
-          className="h-10 text-base font-semibold touch-manipulation"
+          className="h-10 text-base font-semibold touch-manipulation bg-background border-white/20"
         />
       ) : (
-        <p className="font-semibold text-base">£{value?.toLocaleString()}</p>
+        <p className="font-semibold text-base text-foreground">£{value?.toLocaleString()}</p>
       )}
     </div>
   );

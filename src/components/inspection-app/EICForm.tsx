@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useEICTabs } from '@/hooks/useEICTabs';
 import { useEICObservations } from '@/hooks/useEICObservations';
 import { useReportSync } from '@/hooks/useReportSync';
@@ -8,26 +8,49 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { isNotifiableWork, createNotificationFromCertificate } from '@/utils/notificationHelper';
+import { useLinkDesignToCertificate } from '@/hooks/useDesignedCircuits';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
 import { checkAllResultsCompliance } from '@/utils/autoRegChecker';
 import EICFormHeader from './eic/EICFormHeader';
 import EICFormTabs from './eic/EICFormTabs';
 import StartNewEICRDialog from './StartNewEICRDialog';
 import { DraftRecoveryDialog } from '@/components/ui/DraftRecoveryDialog';
+import CustomerSelector from './CustomerSelector';
+import { Customer } from '@/hooks/useCustomers';
 import { Button } from '@/components/ui/button';
 import { Bell } from 'lucide-react';
 
-const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialReportId?: string | null }) => {
+const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; initialReportId?: string | null; designId?: string | null }) => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
   const queryClient = useQueryClient();
   const lastSaveErrorToastRef = useRef<number>(0);
 
+  // Link design to certificate when EIC is completed
+  const linkDesignToCertificate = useLinkDesignToCertificate();
+
   // Capture customer data from navigation state
   const customerIdFromNav = location.state?.customerId;
   const customerDataFromNav = location.state?.customerData;
-  
+
+  // Customer selection state - can be set via navigation OR via CustomerSelector UI
+  const [selectedCustomerId, setSelectedCustomerId] = useState<string | null>(customerIdFromNav || null);
+
+  // Handle customer selection from CustomerSelector
+  const handleCustomerSelect = useCallback((customerId: string | null, customer: Customer | null) => {
+    setSelectedCustomerId(customerId);
+    // Prefill form data from selected customer
+    if (customer) {
+      setFormData(prev => ({
+        ...prev,
+        clientName: prev.clientName || customer.name || '',
+        clientAddress: prev.clientAddress || customer.address || '',
+        installationAddress: prev.installationAddress || customer.address || '',
+      }));
+    }
+  }, []);
+
   const [formData, setFormData] = useState({
     // Certificate Details
     certificateNumber: '',  // Will be generated asynchronously
@@ -144,7 +167,7 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
     reportType: 'eic',
     formData,
     enabled: true,
-    customerId: customerIdFromNav,
+    customerId: selectedCustomerId,
   });
 
   // Map new status to legacy syncState format for backwards compatibility
@@ -518,9 +541,21 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
       const result = await saveNow();
       if (result && typeof result === 'object' && 'reportId' in result) {
         setCurrentReportId(result.reportId as string);
+
+        // Link design to certificate if this EIC was created from a circuit design
+        if (designId) {
+          try {
+            await linkDesignToCertificate.mutateAsync({
+              designId,
+              certificateId: result.reportId as string
+            });
+          } catch (linkError) {
+            console.error('Failed to link design to certificate:', linkError);
+            // Non-blocking - certificate was still saved successfully
+          }
+        }
       }
-      
-      
+
       // Check if work is notifiable under Part P
       const isNotifiable = isNotifiableWork(
         formData.description || '',
@@ -739,7 +774,13 @@ const EICForm = ({ onBack, initialReportId }: { onBack: () => void; initialRepor
           isOnline={isOnline}
           isAuthenticated={isAuthenticated}
         />
-        
+
+        {/* Customer Selection */}
+        <CustomerSelector
+          selectedCustomerId={selectedCustomerId}
+          onCustomerSelect={handleCustomerSelect}
+        />
+
         <EICFormTabs
           currentTab={currentTab}
           onTabChange={handleTabChange}

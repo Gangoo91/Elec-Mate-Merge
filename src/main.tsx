@@ -5,8 +5,12 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import ErrorBoundary from "./components/common/ErrorBoundary.tsx";
+import { initPostHog } from "./components/analytics/PostHogProvider.tsx";
 
 console.log("[Elec-Mate] All imports loaded");
+
+// Initialize PostHog analytics early
+initPostHog();
 
 const rootElement = document.getElementById("root");
 

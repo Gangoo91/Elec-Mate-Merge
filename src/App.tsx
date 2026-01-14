@@ -13,6 +13,7 @@ import ScrollToTop from '@/components/ScrollToTop';
 import { PWAUpdatePrompt } from '@/components/PWAUpdatePrompt';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Analytics } from '@vercel/analytics/react';
+import PostHogProvider from '@/components/analytics/PostHogProvider';
 
 function App() {
   return (
@@ -20,16 +21,18 @@ function App() {
       <ScrollToTop />
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <ThemeProvider defaultTheme="dark" storageKey="elec-ui-theme">
-            <NotificationProvider>
-              <TrainingActivityMonitor />
-              <AppRouter />
-              <Toaster />
-              <PWAUpdatePrompt />
-              <SpeedInsights />
-              <Analytics />
-            </NotificationProvider>
-          </ThemeProvider>
+          <PostHogProvider>
+            <ThemeProvider defaultTheme="dark" storageKey="elec-ui-theme">
+              <NotificationProvider>
+                <TrainingActivityMonitor />
+                <AppRouter />
+                <Toaster />
+                <PWAUpdatePrompt />
+                <SpeedInsights />
+                <Analytics />
+              </NotificationProvider>
+            </ThemeProvider>
+          </PostHogProvider>
         </AuthProvider>
       </QueryClientProvider>
     </BrowserRouter>

@@ -7,6 +7,7 @@ import MinorWorksForm from '@/components/MinorWorksForm';
 import MyReports from '@/components/MyReports';
 import LearningHub from '@/components/LearningHub';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import { NotificationsManager } from '@/components/inspection-app/notifications/NotificationsManager';
 
 const InspectionIndex = () => {
   const location = useLocation();
@@ -139,6 +140,28 @@ const InspectionIndex = () => {
         );
       case 'learning-hub':
         return <LearningHub onBack={() => handleNavigate('dashboard')} />;
+      case 'notifications':
+        return (
+          <div className="min-h-screen bg-background text-foreground">
+            <div className="sticky top-0 z-50 w-full border-b border-border/50 bg-sidebar/95 backdrop-blur supports-[backdrop-filter]:bg-sidebar/80">
+              <div className="px-3 sm:px-4">
+                <div className="flex h-12 items-center justify-between">
+                  <button
+                    onClick={() => handleNavigate('dashboard')}
+                    className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground -ml-2 px-2 py-1 rounded"
+                  >
+                    <span className="text-sm">Back</span>
+                  </button>
+                  <span className="font-semibold">Part P Notifications</span>
+                  <div className="w-16" />
+                </div>
+              </div>
+            </div>
+            <main className="px-3 sm:px-4 py-4 pb-20 sm:pb-6">
+              <NotificationsManager onNavigate={handleNavigate} />
+            </main>
+          </div>
+        );
       default:
         return <Dashboard onNavigate={handleNavigate} />;
     }

@@ -83,10 +83,14 @@ export const useCustomers = () => {
       });
 
       await loadCustomers();
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Customer save error:', error);
+      const errorMsg = error?.message || error?.code || 'Unknown error';
       toast({
         title: 'Save failed',
-        description: 'Failed to save customer.',
+        description: errorMsg.includes('unique_user_customer_email')
+          ? 'A customer with this email already exists.'
+          : `Failed to save customer: ${errorMsg}`,
         variant: 'destructive',
       });
     }

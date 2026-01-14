@@ -110,7 +110,7 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
 
         // Available talent in talent pool
         supabase
-          .from("elec_id_profiles")
+          .from("employer_elec_id_profiles")
           .select("id")
           .eq("opt_out", false)
           .eq("available_for_hire", true)

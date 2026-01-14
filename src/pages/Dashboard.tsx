@@ -16,6 +16,7 @@ import { SmartActions } from '@/components/dashboard/SmartActions';
 import { SecondaryQuickAccess } from '@/components/dashboard/SecondaryQuickAccess';
 import TrialBanner from '@/components/dashboard/TrialBanner';
 import WelcomeModal from '@/components/onboarding/WelcomeModal';
+import { DesignedCircuitsCard } from '@/components/dashboard/DesignedCircuitsCard';
 import { useAuth } from '@/contexts/AuthContext';
 
 const sectionVariants = {
@@ -100,12 +101,22 @@ const Dashboard = () => {
           <SmartActions />
         </motion.section>
 
-        {/* Secondary Quick Access */}
+        {/* Designed Circuits from Circuit Designer */}
         <motion.section
           variants={sectionVariants}
           initial="hidden"
           animate="visible"
           custom={5}
+        >
+          <DesignedCircuitsCard />
+        </motion.section>
+
+        {/* Secondary Quick Access */}
+        <motion.section
+          variants={sectionVariants}
+          initial="hidden"
+          animate="visible"
+          custom={6}
         >
           <SecondaryQuickAccess />
         </motion.section>

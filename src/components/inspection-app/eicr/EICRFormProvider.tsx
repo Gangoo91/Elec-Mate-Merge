@@ -35,6 +35,8 @@ interface EICRFormContextType {
   isOnline: boolean;
   isAuthenticated: boolean;
   isLoadingReport: boolean;
+  selectedCustomerId: string | null;
+  setSelectedCustomerId: (id: string | null) => void;
 }
 
 const EICRFormContext = createContext<EICRFormContextType | undefined>(undefined);
@@ -73,6 +75,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   // Capture customer data from navigation state
   const customerIdFromNav = location.state?.customerId;
   const customerDataFromNav = location.state?.customerData;
+
+  // Customer selection state - can be set via navigation OR via CustomerSelector UI
+  const [selectedCustomerId, setSelectedCustomerId] = useState<string | null>(customerIdFromNav || null);
 
   // Generate and manage temporary report ID for photo uploads
   const { effectiveReportId } = useReportId({
@@ -227,7 +232,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     reportType: 'eicr',
     formData,
     enabled: true,
-    customerId: customerIdFromNav,
+    customerId: selectedCustomerId,
   });
 
   // Map new status to legacy syncState format for backwards compatibility
@@ -460,13 +465,13 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       if (result.reportId) {
         setCurrentReportId(result.reportId);
 
-        // Link to customer if navigated from customer page
-        if (customerIdFromNav && result.reportId) {
-          await linkCustomerToReport(result.reportId, customerIdFromNav);
+        // Link to customer if selected via navigation or CustomerSelector
+        if (selectedCustomerId && result.reportId) {
+          await linkCustomerToReport(result.reportId, selectedCustomerId);
         }
 
         // Check if we should prompt to create customer
-        if (userId && formData.clientName && !customerIdFromNav) {
+        if (userId && formData.clientName && !selectedCustomerId) {
           const existingCustomer = await findCustomerByName(userId, formData.clientName);
           if (!existingCustomer) {
             setPendingReportId(result.reportId);
@@ -713,6 +718,8 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     isOnline,
     isAuthenticated,
     isLoadingReport,
+    selectedCustomerId,
+    setSelectedCustomerId,
   };
 
   return (

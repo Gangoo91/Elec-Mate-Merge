@@ -2,6 +2,7 @@ import React, { Suspense, useState, useCallback } from 'react';
 import { EICRFormProvider, useEICRForm } from './eicr/EICRFormProvider';
 import EICRFormHeader from './eicr/EICRFormHeader';
 import EICRFormContent from './eicr/EICRFormContent';
+import { Customer } from '@/hooks/useCustomers';
 
 const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   const {
@@ -19,7 +20,14 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     isOnline,
     isAuthenticated,
     isLoadingReport,
+    selectedCustomerId,
+    setSelectedCustomerId,
   } = useEICRForm();
+
+  // Handle customer selection from CustomerSelector
+  const handleCustomerSelect = useCallback((customerId: string | null, customer: Customer | null) => {
+    setSelectedCustomerId(customerId);
+  }, [setSelectedCustomerId]);
 
   // Progress state for header
   const [progressPercentage, setProgressPercentage] = useState(0);
@@ -90,6 +98,8 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
           onConfirmStartNew={confirmStartNew}
           onConfirmDuplicate={confirmDuplicate}
           onProgressChange={handleProgressChange}
+          selectedCustomerId={selectedCustomerId}
+          onCustomerSelect={handleCustomerSelect}
         />
       </div>
     </div>

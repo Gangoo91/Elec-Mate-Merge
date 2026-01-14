@@ -64,8 +64,14 @@ export function PremiumVacancyCard({
 }: PremiumVacancyCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const statusConfig = {
+  const statusConfig: Record<string, { bg: string; text: string; border: string; dot: string }> = {
     Open: {
+      bg: "bg-emerald-500/10",
+      text: "text-emerald-500",
+      border: "border-emerald-500/30",
+      dot: "bg-emerald-500",
+    },
+    open: {
       bg: "bg-emerald-500/10",
       text: "text-emerald-500",
       border: "border-emerald-500/30",
@@ -77,7 +83,19 @@ export function PremiumVacancyCard({
       border: "border-gray-500/30",
       dot: "bg-gray-500",
     },
+    closed: {
+      bg: "bg-gray-500/10",
+      text: "text-gray-400",
+      border: "border-gray-500/30",
+      dot: "bg-gray-500",
+    },
     Draft: {
+      bg: "bg-amber-500/10",
+      text: "text-amber-500",
+      border: "border-amber-500/30",
+      dot: "bg-amber-500",
+    },
+    draft: {
       bg: "bg-amber-500/10",
       text: "text-amber-500",
       border: "border-amber-500/30",
@@ -85,7 +103,15 @@ export function PremiumVacancyCard({
     },
   };
 
-  const config = statusConfig[status];
+  // Fallback for unknown status
+  const defaultConfig = {
+    bg: "bg-gray-500/10",
+    text: "text-gray-400",
+    border: "border-gray-500/30",
+    dot: "bg-gray-500",
+  };
+
+  const config = statusConfig[status] || defaultConfig;
 
   const formatSalary = (min?: number, max?: number, period?: string) => {
     if (!min && !max) return null;

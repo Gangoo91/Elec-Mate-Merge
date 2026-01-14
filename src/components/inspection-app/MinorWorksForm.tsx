@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import StartNewEICRDialog from '@/components/StartNewEICRDialog';
@@ -31,6 +31,8 @@ import IntelligentInput from '@/components/minor-works/IntelligentInput';
 import { ComplianceCheckpoint } from '@/components/minor-works/ComplianceCheckpoint';
 import { useSmartDefaults } from '@/hooks/useSmartDefaults';
 import { useFormValidation } from '@/hooks/useFormValidation';
+import CustomerSelector from './CustomerSelector';
+import { Customer } from '@/hooks/useCustomers';
 
 interface ZsLimits {
   [key: string]: { [rating: string]: number };
@@ -76,6 +78,23 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
   // Capture customer data from navigation state
   const customerIdFromNav = location.state?.customerId;
   const customerDataFromNav = location.state?.customerData;
+
+  // Customer selection state
+  const [selectedCustomerId, setSelectedCustomerId] = useState<string | null>(customerIdFromNav || null);
+
+  // Handle customer selection and auto-prefill
+  const handleCustomerSelect = useCallback((customerId: string | null, customer: Customer | null) => {
+    setSelectedCustomerId(customerId);
+    // Prefill form fields from customer data
+    if (customer) {
+      setFormData((prev: any) => ({
+        ...prev,
+        clientName: prev.clientName || customer.name || '',
+        propertyAddress: prev.propertyAddress || customer.address || '',
+      }));
+    }
+  }, []);
+
   const [formData, setFormData] = useState<any>({
     // Certificate Header
     certificateNumber: '',  // Will be generated asynchronously
@@ -244,7 +263,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     reportType: 'minor-works',
     formData,
     enabled: true,
-    customerId: customerIdFromNav,
+    customerId: selectedCustomerId,
   });
 
   // Derive saving state from sync status
@@ -828,6 +847,13 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
             <Progress value={getCompletionPercentage()} className="h-2" />
           </div>
         </div>
+
+        {/* Customer Selection */}
+        <CustomerSelector
+          selectedCustomerId={selectedCustomerId}
+          onCustomerSelect={handleCustomerSelect}
+          className="mb-2"
+        />
 
         {/* Smart Defaults Alert */}
         {hasDefaults && !formData.contractorName && (

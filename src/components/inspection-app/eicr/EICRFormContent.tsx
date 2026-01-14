@@ -3,6 +3,8 @@ import EICRFormTabs from '../EICRFormTabs';
 import DraftHeaderActions from '../DraftHeaderActions';
 import StartNewEICRDialog from '../StartNewEICRDialog';
 import QuickRcdPresets from '../QuickRcdPresets';
+import CustomerSelector from '../CustomerSelector';
+import { Customer } from '@/hooks/useCustomers';
 
 interface EICRFormContentProps {
   formData: any;
@@ -17,6 +19,8 @@ interface EICRFormContentProps {
   onConfirmStartNew: () => void;
   onConfirmDuplicate?: () => void;
   onProgressChange?: (progress: number, tabLabel: string) => void;
+  selectedCustomerId?: string | null;
+  onCustomerSelect?: (customerId: string | null, customer: Customer | null) => void;
 }
 
 const EICRFormContent: React.FC<EICRFormContentProps> = ({
@@ -31,8 +35,26 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
   onCloseStartNewDialog,
   onConfirmStartNew,
   onConfirmDuplicate,
-  onProgressChange
+  onProgressChange,
+  selectedCustomerId,
+  onCustomerSelect
 }) => {
+  // Handle prefilling form data from selected customer
+  const handlePrefillFromCustomer = (customer: Customer) => {
+    if (customer.name && !formData.clientName) {
+      onUpdate('clientName', customer.name);
+    }
+    if (customer.address && !formData.clientAddress) {
+      onUpdate('clientAddress', customer.address);
+    }
+    if (customer.phone && !formData.clientPhone) {
+      onUpdate('clientPhone', customer.phone);
+    }
+    if (customer.email && !formData.clientEmail) {
+      onUpdate('clientEmail', customer.email);
+    }
+  };
+
   const handleApplyRcdPreset = (circuitIds: string[], preset: any) => {
     const currentResults = formData.testResults || [];
     const updatedResults = currentResults.map((result: any) => {
@@ -60,6 +82,15 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
         onStartNew={onStartNewFromDraft}
         hasUnsavedChanges={hasUnsavedChanges}
       />
+
+      {/* Customer Selection */}
+      {onCustomerSelect && (
+        <CustomerSelector
+          selectedCustomerId={selectedCustomerId}
+          onCustomerSelect={onCustomerSelect}
+          onPrefillFromCustomer={handlePrefillFromCustomer}
+        />
+      )}
 
       {formData.testResults && formData.testResults.length > 0 && (
         <div className="mb-6">

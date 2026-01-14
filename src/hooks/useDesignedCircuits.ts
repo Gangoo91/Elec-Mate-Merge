@@ -13,7 +13,8 @@ export interface DesignedCircuit {
   installation_id: string;
   designer_name: string;
   design_date: string;
-  status: string;
+  status: 'pending' | 'in-progress' | 'completed' | 'archived';
+  certificate_id?: string;
   created_at: string;
   schedule_data: {
     circuits: Array<{
@@ -132,6 +133,55 @@ export function useUpdateDesignedCircuitStatus() {
         .from('eic_schedules')
         .update({ status, updated_at: new Date().toISOString() })
         .eq('id', id);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['designed-circuits'] });
+    }
+  });
+}
+
+/**
+ * Link a design to a completed certificate and mark as completed
+ */
+export function useLinkDesignToCertificate() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ designId, certificateId }: { designId: string; certificateId: string }) => {
+      const { error } = await supabase
+        .from('eic_schedules')
+        .update({
+          certificate_id: certificateId,
+          status: 'completed',
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', designId);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['designed-circuits'] });
+    }
+  });
+}
+
+/**
+ * Archive a completed design
+ */
+export function useArchiveDesign() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (designId: string) => {
+      const { error } = await supabase
+        .from('eic_schedules')
+        .update({
+          status: 'archived',
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', designId);
 
       if (error) throw error;
     },

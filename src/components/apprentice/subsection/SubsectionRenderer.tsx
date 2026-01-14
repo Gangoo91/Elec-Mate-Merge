@@ -14,39 +14,31 @@ interface SubsectionRendererProps {
   isElectricalTheory?: boolean;
 }
 
-const SubsectionRenderer = ({ 
-  subsectionId, 
-  isCompleted, 
+const SubsectionRenderer = ({
+  subsectionId,
+  isCompleted,
   markAsComplete,
   isElectricalTheory = false
 }: SubsectionRendererProps) => {
-  console.log("SubsectionRenderer called with ID:", subsectionId);
-  
   // Get section part from subsectionId
   let sectionPart: string = "1";
   let sectionFromUrl: string | null = null;
-  
+
   // Check URL for section ID
   const urlPath = window.location.pathname;
   const sectionMatch = urlPath.match(/\/section\/(\d+)/);
   if (sectionMatch) {
     sectionFromUrl = sectionMatch[1];
-    console.log("Section from URL:", sectionFromUrl);
   }
-  
+
   // For subsections with dot notation (e.g., "1.1")
   if (subsectionId.includes(".")) {
     sectionPart = subsectionId.split(".")[0];
-    console.log("Processing subsection with dot notation. Section part:", sectionPart);
-  } 
+  }
   // For simple numeric subsections (e.g., "1")
   else if (sectionFromUrl) {
     sectionPart = sectionFromUrl;
-    console.log("Processing simple numeric subsection with section from URL:", sectionPart);
   }
-  
-  // Render content based on section part
-  console.log("Rendering Section", sectionPart, "content for", subsectionId);
   
   // Add wrapper with consistent styling
   const renderContent = () => {

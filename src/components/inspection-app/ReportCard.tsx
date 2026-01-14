@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { FileText, Calendar, User, MapPin, Trash2, Edit, Eye } from 'lucide-react';
+import { FileText, Calendar, User, MapPin, Trash2, Edit, Eye, Users } from 'lucide-react';
 
 export interface ReportMetadata {
   id: string;
@@ -25,16 +25,20 @@ interface ReportCardProps {
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
   onPreview?: (id: string) => void;
+  onLinkCustomer?: (id: string) => void;
+  hasCustomer?: boolean;
   isSelected?: boolean;
   isBulkMode?: boolean;
   onSelectToggle?: (id: string) => void;
 }
 
-const ReportCard = ({ 
-  metadata, 
-  onEdit, 
+const ReportCard = ({
+  metadata,
+  onEdit,
   onDelete,
   onPreview,
+  onLinkCustomer,
+  hasCustomer = false,
   isSelected = false,
   isBulkMode = false,
   onSelectToggle,
@@ -136,10 +140,10 @@ const ReportCard = ({
               <Button
                 size="sm"
                 variant="outline"
-                onClick={(e) => { 
+                onClick={(e) => {
                   e.stopPropagation();
-                  navigator.vibrate?.(10); 
-                  onEdit(metadata.id); 
+                  navigator.vibrate?.(10);
+                  onEdit(metadata.id);
                 }}
                 className="flex-1 sm:flex-initial min-h-[44px] sm:h-9"
               >
@@ -149,23 +153,38 @@ const ReportCard = ({
               <Button
                 size="sm"
                 variant="outline"
-                onClick={(e) => { 
+                onClick={(e) => {
                   e.stopPropagation();
-                  navigator.vibrate?.(10); 
-                  onPreview?.(metadata.id); 
+                  navigator.vibrate?.(10);
+                  onPreview?.(metadata.id);
                 }}
                 className="flex-1 sm:flex-initial min-h-[44px] sm:h-9"
               >
                 <Eye className="h-4 w-4 sm:mr-1" />
                 <span className="hidden sm:inline">Preview</span>
               </Button>
+              {onLinkCustomer && !hasCustomer && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigator.vibrate?.(10);
+                    onLinkCustomer(metadata.id);
+                  }}
+                  className="flex-shrink-0 min-h-[44px] min-w-[44px] sm:h-9 sm:w-9 text-elec-yellow hover:text-elec-yellow/80"
+                  title="Link to Customer"
+                >
+                  <Users className="h-4 w-4" />
+                </Button>
+              )}
               <Button
                 size="sm"
                 variant="outline"
-                onClick={(e) => { 
+                onClick={(e) => {
                   e.stopPropagation();
-                  navigator.vibrate?.(50); 
-                  onDelete(metadata.id); 
+                  navigator.vibrate?.(50);
+                  onDelete(metadata.id);
                 }}
                 className="text-red-600 hover:text-red-700 flex-shrink-0 min-h-[44px] min-w-[44px] sm:h-9 sm:w-9"
               >

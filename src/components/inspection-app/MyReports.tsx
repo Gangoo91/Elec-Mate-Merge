@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Search, FileText, Plus, X, ChevronDown, Upload, CheckSquare, Loader2 } from 'lucide-react';
+import { Search, FileText, Plus, X, ChevronDown, Upload, CheckSquare, Loader2, Users } from 'lucide-react';
 import { SortDropdown, SortOption } from './reports/SortDropdown';
 import { BulkActionsBar } from './reports/BulkActionsBar';
 import { reportCloud, CloudReport, ReportsResponse } from '@/utils/reportCloud';
@@ -16,6 +16,23 @@ import { cn } from '@/lib/utils';
 import { CertificateImportDialog } from '@/components/certificates/CertificateImportDialog';
 import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useCustomers } from '@/hooks/useCustomers';
+import { linkCustomerToReport } from '@/utils/customerHelper';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -69,6 +86,15 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   const [isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState(0);
   const [exportTotal, setExportTotal] = useState(0);
+
+  // Customer linking state
+  const [linkCustomerDialogOpen, setLinkCustomerDialogOpen] = useState(false);
+  const [reportToLink, setReportToLink] = useState<CloudReport | null>(null);
+  const [customerSearchQuery, setCustomerSearchQuery] = useState('');
+  const [isLinking, setIsLinking] = useState(false);
+
+  // Get customers for linking
+  const { customers, isLoading: isLoadingCustomers } = useCustomers();
 
   useEffect(() => {
     // Get initial session
@@ -189,6 +215,74 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
       setDeleteDialogOpen(true);
     }
   };
+
+  // Handle link customer action
+  const handleLinkCustomer = (reportId: string) => {
+    const report = reports.find(r => r.report_id === reportId);
+    if (report) {
+      setReportToLink(report);
+      setCustomerSearchQuery('');
+      setLinkCustomerDialogOpen(true);
+    }
+  };
+
+  // Confirm linking customer to report
+  const confirmLinkCustomer = async (customerId: string) => {
+    if (!reportToLink || !user) return;
+
+    setIsLinking(true);
+
+    try {
+      const result = await linkCustomerToReport(reportToLink.report_id, customerId);
+
+      if (result.success) {
+        // Update local state to reflect the link
+        setAllReports(prev =>
+          prev.map(r =>
+            r.report_id === reportToLink.report_id
+              ? { ...r, customer_id: customerId }
+              : r
+          )
+        );
+
+        const customer = customers.find(c => c.id === customerId);
+        toast({
+          title: 'Customer linked',
+          description: `Report linked to ${customer?.name || 'customer'} successfully.`,
+        });
+
+        setLinkCustomerDialogOpen(false);
+        setReportToLink(null);
+      } else {
+        toast({
+          title: 'Link failed',
+          description: 'Failed to link customer to report. Please try again.',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('Error linking customer:', error);
+      toast({
+        title: 'Link failed',
+        description: 'An unexpected error occurred. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLinking(false);
+    }
+  };
+
+  // Filter customers by search query
+  const filteredCustomers = useMemo(() => {
+    if (!customerSearchQuery.trim()) return customers;
+    const query = customerSearchQuery.toLowerCase();
+    return customers.filter(
+      c =>
+        c.name.toLowerCase().includes(query) ||
+        c.email?.toLowerCase().includes(query) ||
+        c.address?.toLowerCase().includes(query)
+    );
+  }, [customers, customerSearchQuery]);
 
   const confirmDelete = async () => {
     if (!reportToDelete || !user) return;
@@ -716,6 +810,8 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   onEdit={() => { navigator.vibrate?.(10); onEditReport(report.report_id, report.report_type); }}
                   onDelete={() => { navigator.vibrate?.(50); handleDeleteReport(report.report_id); }}
                   onPreview={handlePreviewReport}
+                  onLinkCustomer={() => { navigator.vibrate?.(10); handleLinkCustomer(report.report_id); }}
+                  hasCustomer={!!report.customer_id}
                   isSelected={selectedReports.has(report.report_id)}
                   isBulkMode={isBulkMode}
                   onSelectToggle={handleSelectToggle}
@@ -826,6 +922,73 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
           setShowImportDialog(false);
         }}
       />
+
+      {/* Link Customer Dialog */}
+      <Dialog open={linkCustomerDialogOpen} onOpenChange={setLinkCustomerDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Users className="h-5 w-5 text-elec-yellow" />
+              Link to Customer
+            </DialogTitle>
+            <DialogDescription>
+              {reportToLink && (
+                <>Link report <span className="font-mono text-elec-yellow">{reportToLink.report_id}</span> to a customer</>
+              )}
+            </DialogDescription>
+          </DialogHeader>
+
+          <Command className="border rounded-lg">
+            <CommandInput
+              placeholder="Search customers..."
+              value={customerSearchQuery}
+              onValueChange={setCustomerSearchQuery}
+            />
+            <CommandList className="max-h-[300px]">
+              <CommandEmpty>
+                <div className="py-6 text-center">
+                  <Users className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
+                  <p className="text-sm text-muted-foreground">
+                    {isLoadingCustomers ? 'Loading customers...' : 'No customers found'}
+                  </p>
+                </div>
+              </CommandEmpty>
+              <CommandGroup heading="Your Customers">
+                {filteredCustomers.map((customer) => (
+                  <CommandItem
+                    key={customer.id}
+                    value={customer.name}
+                    onSelect={() => confirmLinkCustomer(customer.id)}
+                    className="cursor-pointer"
+                    disabled={isLinking}
+                  >
+                    <div className="flex items-center gap-2 w-full">
+                      <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                        <Users className="h-4 w-4 text-elec-yellow" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-sm truncate">{customer.name}</p>
+                        {customer.address && (
+                          <p className="text-xs text-muted-foreground truncate">
+                            {customer.address}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+
+          {isLinking && (
+            <div className="flex items-center justify-center gap-2 py-2">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span className="text-sm text-muted-foreground">Linking...</span>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {selectedReportId && (
         <ReportPdfViewer

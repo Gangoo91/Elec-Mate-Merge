@@ -25,7 +25,7 @@ async function notifyAvailableElectricians(vacancy: Vacancy) {
 
     // Get all electricians marked as available for hire
     const { data: availableProfiles, error } = await supabase
-      .from('elec_id_profiles')
+      .from('employer_elec_id_profiles')
       .select('user_id')
       .eq('available_for_hire', true);
 
@@ -405,7 +405,7 @@ async function notifyApplicantStatusChange(
 
     // Get the user ID from the elec_id profile
     const { data: profile } = await supabase
-      .from('elec_id_profiles')
+      .from('employer_elec_id_profiles')
       .select('user_id')
       .eq('id', existingApp.applicant_profile_id)
       .single();

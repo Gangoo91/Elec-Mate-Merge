@@ -50,11 +50,17 @@ export default function AdminRevenue() {
       ]);
 
       // Calculate MRR based on subscription tiers
-      // Using UK pricing: Basic £9.99/mo, Pro £19.99/mo, Enterprise £49.99/mo
+      // UK pricing: Apprentice £4.99/mo, Electrician £9.99/mo, Employer £29.99/mo
       const tierPricing: Record<string, number> = {
-        basic: 9.99,
-        pro: 19.99,
-        enterprise: 49.99,
+        Apprentice: 4.99,
+        apprentice: 4.99,
+        Electrician: 9.99,
+        electrician: 9.99,
+        Employer: 29.99,
+        employer: 29.99,
+        basic: 9.99, // Legacy fallback
+        pro: 9.99,
+        enterprise: 29.99,
         free: 0,
       };
 
@@ -86,11 +92,16 @@ export default function AdminRevenue() {
         : 0;
 
       // Subscription by tier
-      const tierBreakdown: Record<string, number> = { basic: 0, pro: 0, enterprise: 0 };
+      const tierBreakdown: Record<string, number> = { Apprentice: 0, Electrician: 0, Employer: 0 };
       subscribedProfiles.forEach(p => {
-        const tier = p.subscription_tier || "basic";
+        const tier = p.subscription_tier || "Electrician";
         if (tierBreakdown[tier] !== undefined) {
           tierBreakdown[tier]++;
+        } else {
+          // Handle legacy tier names
+          if (tier === "basic" || tier === "apprentice") tierBreakdown["Apprentice"]++;
+          else if (tier === "pro" || tier === "electrician") tierBreakdown["Electrician"]++;
+          else if (tier === "enterprise" || tier === "employer") tierBreakdown["Employer"]++;
         }
       });
 
@@ -288,14 +299,14 @@ export default function AdminRevenue() {
             {Object.entries(revenue?.tierBreakdown || {}).map(([tier, count]) => {
               const percentage = revenue?.totalSubscribers ? (count / revenue.totalSubscribers * 100) : 0;
               const colors: Record<string, string> = {
-                basic: "bg-gray-500",
-                pro: "bg-purple-500",
-                enterprise: "bg-amber-500",
+                Apprentice: "bg-purple-500",
+                Electrician: "bg-yellow-500",
+                Employer: "bg-blue-500",
               };
               const prices: Record<string, string> = {
-                basic: "£9.99",
-                pro: "£19.99",
-                enterprise: "£49.99",
+                Apprentice: "£4.99",
+                Electrician: "£9.99",
+                Employer: "£29.99",
               };
               return (
                 <div key={tier} className="space-y-1">

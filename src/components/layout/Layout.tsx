@@ -6,6 +6,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import Header from "@/components/layout/Header";
 import { useState, useEffect } from "react";
 import { PageTransition } from "@/components/layout/PageTransition";
+import AnnouncementBanner from "@/components/announcements/AnnouncementBanner";
 
 const Layout = () => {
   const isMobile = useIsMobile();
@@ -39,6 +40,9 @@ const Layout = () => {
         >
           {/* Reduced padding for more native feel - minimal on mobile, moderate on desktop */}
           <div className="px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6">
+            {/* Announcements Banner */}
+            <AnnouncementBanner />
+
             <div className={cn("min-w-0")}>
               <PageTransition key={location.pathname}>
                 <Outlet />

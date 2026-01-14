@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useNotifications } from '@/components/notifications/NotificationProvider';
+import SupportTicketForm from "@/components/support/SupportTicketForm";
 import {
   HelpCircle,
   MessageSquare,
@@ -238,6 +239,13 @@ const HelpSupportTab = () => {
               </span>
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* Support Tickets */}
+      <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+        <div className="p-4 md:p-6">
+          <SupportTicketForm />
         </div>
       </div>
 
