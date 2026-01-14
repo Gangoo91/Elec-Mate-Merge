@@ -322,7 +322,7 @@ export function useMyApplications() {
             location,
             type,
             status,
-            employer:employers (
+            employer:employer_profiles (
               company_name,
               logo_url
             )
@@ -391,7 +391,7 @@ export function useMyInvitations() {
             title,
             location,
             type,
-            employer:employers (
+            employer:employer_profiles (
               company_name,
               logo_url
             )
