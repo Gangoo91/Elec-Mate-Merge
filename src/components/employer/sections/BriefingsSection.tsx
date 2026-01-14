@@ -141,6 +141,61 @@ export function BriefingsSection() {
     await deleteBriefing.mutateAsync(id);
   };
 
+  // Handle selecting a template from the library
+  const handleSelectTemplate = async (template: ToolboxTalkTemplate) => {
+    // Set today's date as default
+    const today = new Date().toISOString().split("T")[0];
+
+    await createFromTemplate.mutateAsync({
+      templateId: template.id,
+      date: today,
+    });
+
+    setShowTemplateLibrary(false);
+  };
+
+  // Handle viewing a briefing
+  const handleViewBriefing = (briefing: Briefing) => {
+    setSelectedBriefingId(briefing.id);
+    setSelectedBriefing(briefing);
+    setShowViewer(true);
+  };
+
+  // Handle editing a briefing
+  const handleEditBriefing = (briefing: Briefing) => {
+    setSelectedBriefing(briefing);
+    setShowViewer(false);
+    setShowEditor(true);
+  };
+
+  // Handle sign-off
+  const handleSignOff = (briefing: Briefing) => {
+    setSelectedBriefing(briefing);
+    setShowViewer(false);
+    setShowSignOff(true);
+  };
+
+  // Handle PDF export
+  const handleExportPdf = async (briefing: Briefing) => {
+    try {
+      await downloadBriefingPDF({
+        briefing,
+        attendees: attendees || [],
+        companyName: "Your Company", // TODO: Get from user profile
+      });
+      toast({
+        title: "PDF exported",
+        description: "Briefing document has been downloaded.",
+      });
+    } catch {
+      toast({
+        title: "Export failed",
+        description: "Failed to generate PDF. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center py-12 space-y-4">
@@ -334,24 +389,43 @@ export function BriefingsSection() {
             compact
           />
           <FeatureTile
-            icon={QrCode}
-            title="QR Attendance"
-            description="Generate QR code"
-            onClick={() => {}}
+            icon={BookOpen}
+            title="Template Library"
+            description="50+ toolbox talks"
+            onClick={() => setShowTemplateLibrary(true)}
             compact
           />
           <FeatureTile
-            icon={ClipboardCheck}
+            icon={PenTool}
             title="Sign-off Sheet"
-            description="Record attendance"
-            onClick={() => {}}
+            description="Digital signatures"
+            onClick={() => {
+              if (scheduledBriefings.length > 0) {
+                handleSignOff(scheduledBriefings[0]);
+              } else {
+                toast({
+                  title: "No scheduled briefings",
+                  description: "Schedule a briefing first to use sign-off.",
+                });
+              }
+            }}
             compact
           />
           <FeatureTile
-            icon={FileText}
-            title="Templates"
-            description="Briefing templates"
-            onClick={() => {}}
+            icon={Download}
+            title="Export PDF"
+            description="Download reports"
+            onClick={() => {
+              if (completedBriefings.length > 0) {
+                setSelectedBriefingId(completedBriefings[0].id);
+                handleExportPdf(completedBriefings[0]);
+              } else {
+                toast({
+                  title: "No completed briefings",
+                  description: "Complete a briefing first to export.",
+                });
+              }
+            }}
             compact
           />
         </div>
@@ -433,6 +507,33 @@ export function BriefingsSection() {
                       <div className="flex items-center gap-1">
                         <Button
                           size="sm"
+                          variant="ghost"
+                          onClick={() => handleViewBriefing(briefing)}
+                          className="h-8 w-8 p-0 touch-manipulation"
+                          title="View"
+                        >
+                          <Eye className="h-3.5 w-3.5" />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => handleEditBriefing(briefing)}
+                          className="h-8 w-8 p-0 touch-manipulation"
+                          title="Edit"
+                        >
+                          <Edit3 className="h-3.5 w-3.5" />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleSignOff(briefing)}
+                          className="h-8 text-xs touch-manipulation bg-blue-500/10 border-blue-500/30 text-blue-400"
+                        >
+                          <PenTool className="h-3 w-3 mr-1" />
+                          Sign-off
+                        </Button>
+                        <Button
+                          size="sm"
                           variant="outline"
                           onClick={() => handleComplete(briefing)}
                           disabled={completeBriefing.isPending}
@@ -452,7 +553,7 @@ export function BriefingsSection() {
                           variant="ghost"
                           onClick={() => handleDelete(briefing.id)}
                           disabled={deleteBriefing.isPending}
-                          className="h-8 text-xs text-destructive hover:text-destructive touch-manipulation"
+                          className="h-8 w-8 p-0 text-destructive hover:text-destructive touch-manipulation"
                         >
                           <Trash2 className="h-3 w-3" />
                         </Button>
@@ -527,15 +628,38 @@ export function BriefingsSection() {
                             ? `${attendancePercent}%`
                             : "Complete"}
                         </Badge>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => handleDelete(briefing.id)}
-                          disabled={deleteBriefing.isPending}
-                          className="h-8 text-xs text-destructive hover:text-destructive touch-manipulation"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
+                        <div className="flex items-center gap-1">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => handleViewBriefing(briefing)}
+                            className="h-8 w-8 p-0 touch-manipulation"
+                            title="View"
+                          >
+                            <Eye className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => {
+                              setSelectedBriefingId(briefing.id);
+                              handleExportPdf(briefing);
+                            }}
+                            className="h-8 w-8 p-0 touch-manipulation"
+                            title="Export PDF"
+                          >
+                            <Download className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => handleDelete(briefing.id)}
+                            disabled={deleteBriefing.isPending}
+                            className="h-8 w-8 p-0 text-destructive hover:text-destructive touch-manipulation"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -545,6 +669,77 @@ export function BriefingsSection() {
           </div>
         )}
       </div>
+
+      {/* Template Library Sheet */}
+      <Sheet open={showTemplateLibrary} onOpenChange={setShowTemplateLibrary}>
+        <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0">
+          <div className="flex flex-col h-full">
+            <SheetHeader className="p-4 border-b border-border shrink-0">
+              <SheetTitle className="flex items-center gap-2">
+                <BookOpen className="h-5 w-5 text-elec-yellow" />
+                Toolbox Talk Templates
+              </SheetTitle>
+            </SheetHeader>
+            <div className="flex-1 overflow-y-auto p-4">
+              <ToolboxTalkLibrary
+                onSelectTemplate={handleSelectTemplate}
+              />
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Briefing Viewer */}
+      {selectedBriefingId && (
+        <BriefingViewer
+          open={showViewer}
+          onOpenChange={(open) => {
+            setShowViewer(open);
+            if (!open) {
+              setSelectedBriefingId(null);
+              setSelectedBriefing(null);
+            }
+          }}
+          briefingId={selectedBriefingId}
+          onEdit={handleEditBriefing}
+          onSignOff={handleSignOff}
+          onExportPdf={handleExportPdf}
+        />
+      )}
+
+      {/* Briefing Editor */}
+      {selectedBriefing && (
+        <BriefingEditor
+          open={showEditor}
+          onOpenChange={(open) => {
+            setShowEditor(open);
+            if (!open) {
+              setSelectedBriefing(null);
+            }
+          }}
+          briefing={selectedBriefing}
+          onSaved={() => {
+            refetch();
+          }}
+        />
+      )}
+
+      {/* Digital Sign-Off */}
+      {selectedBriefing && (
+        <DigitalSignOff
+          open={showSignOff}
+          onOpenChange={(open) => {
+            setShowSignOff(open);
+            if (!open) {
+              setSelectedBriefing(null);
+            }
+          }}
+          briefing={selectedBriefing}
+          onComplete={() => {
+            refetch();
+          }}
+        />
+      )}
     </div>
   );
 }

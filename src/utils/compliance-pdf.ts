@@ -1,0 +1,705 @@
+import jsPDF from "jspdf";
+import { format } from "date-fns";
+
+// Types
+interface EmployeeQualification {
+  id: string;
+  employee_id: string;
+  qualification_type: string;
+  qualification_name: string;
+  issuing_body?: string;
+  certificate_number?: string;
+  issue_date?: string;
+  expiry_date?: string;
+  status: string;
+  file_url?: string;
+  employee?: {
+    name: string;
+  };
+}
+
+interface BusinessCompliance {
+  id: string;
+  compliance_type: string;
+  name: string;
+  provider?: string;
+  policy_number?: string;
+  cover_amount?: number;
+  expiry_date?: string;
+  status: string;
+  file_url?: string;
+}
+
+interface ComplianceDocument {
+  id: string;
+  title: string;
+  document_type?: string;
+  expiry_date?: string;
+  status: string;
+  file_url?: string;
+}
+
+interface AuditPackOptions {
+  companyName: string;
+  companyAddress?: string;
+  companyPhone?: string;
+  companyEmail?: string;
+  employeeQualifications?: EmployeeQualification[];
+  businessCompliance?: BusinessCompliance[];
+  complianceDocuments?: ComplianceDocument[];
+  includeCategories?: string[];
+  generatedFor?: string; // Who is requesting the audit pack (client name)
+  projectName?: string;
+}
+
+// Professional colour palette
+const COLORS = {
+  PRIMARY: [24, 51, 138] as [number, number, number],
+  PRIMARY_LIGHT: [59, 89, 182] as [number, number, number],
+  SUCCESS: [22, 163, 74] as [number, number, number],
+  WARNING: [217, 119, 6] as [number, number, number],
+  DANGER: [185, 28, 28] as [number, number, number],
+  INFO: [79, 70, 229] as [number, number, number],
+  LIGHT_BG: [248, 250, 252] as [number, number, number],
+  LIGHTER_BG: [252, 252, 253] as [number, number, number],
+  BORDER: [203, 213, 225] as [number, number, number],
+  BORDER_LIGHT: [226, 232, 240] as [number, number, number],
+  TEXT_DARK: [15, 23, 42] as [number, number, number],
+  TEXT_BODY: [51, 65, 85] as [number, number, number],
+  TEXT_MUTED: [100, 116, 139] as [number, number, number],
+  WHITE: [255, 255, 255] as [number, number, number],
+  YELLOW: [234, 179, 8] as [number, number, number],
+};
+
+// Status colours
+function getStatusColor(status: string): [number, number, number] {
+  switch (status?.toLowerCase()) {
+    case "active":
+    case "valid":
+      return COLORS.SUCCESS;
+    case "expiring":
+    case "expiring_soon":
+      return COLORS.WARNING;
+    case "expired":
+    case "inactive":
+      return COLORS.DANGER;
+    default:
+      return COLORS.TEXT_MUTED;
+  }
+}
+
+export function generateComplianceAuditPack(options: AuditPackOptions): jsPDF {
+  const {
+    companyName,
+    companyAddress = "",
+    companyPhone = "",
+    companyEmail = "",
+    employeeQualifications = [],
+    businessCompliance = [],
+    complianceDocuments = [],
+    generatedFor = "",
+    projectName = "",
+  } = options;
+
+  const doc = new jsPDF("portrait", "mm", "a4");
+  const pageWidth = doc.internal.pageSize.width;
+  const pageHeight = doc.internal.pageSize.height;
+  const margin = 15;
+  const contentWidth = pageWidth - margin * 2;
+  let yPos = 0;
+  let currentPage = 1;
+
+  const generatedDate = format(new Date(), "dd MMMM yyyy");
+  const generatedTime = format(new Date(), "HH:mm");
+
+  // ============================================
+  // HELPER FUNCTIONS
+  // ============================================
+
+  const checkPageBreak = (requiredSpace: number): boolean => {
+    if (yPos + requiredSpace > pageHeight - 25) {
+      doc.addPage();
+      currentPage++;
+      yPos = margin + 5;
+      addContinuationHeader();
+      return true;
+    }
+    return false;
+  };
+
+  const addContinuationHeader = () => {
+    // Top accent bar
+    doc.setFillColor(...COLORS.PRIMARY);
+    doc.rect(0, 0, pageWidth, 2, "F");
+
+    // Yellow accent
+    doc.setFillColor(...COLORS.YELLOW);
+    doc.rect(0, 2, pageWidth, 0.8, "F");
+
+    // Company name
+    doc.setTextColor(...COLORS.TEXT_MUTED);
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    doc.text(`${companyName} - Compliance Audit Pack`, margin, 8);
+
+    // Generated date on right
+    doc.text(generatedDate, pageWidth - margin, 8, { align: "right" });
+
+    yPos = 14;
+  };
+
+  const addFooter = (pageNum: number, totalPages: number) => {
+    const footerY = pageHeight - 15;
+
+    doc.setDrawColor(...COLORS.BORDER_LIGHT);
+    doc.setLineWidth(0.3);
+    doc.line(margin, footerY, pageWidth - margin, footerY);
+
+    doc.setFontSize(7);
+    doc.setTextColor(...COLORS.TEXT_MUTED);
+    doc.setFont("helvetica", "normal");
+
+    doc.text("Compliance Audit Pack", margin, footerY + 4);
+
+    doc.setFont("helvetica", "bold");
+    doc.text(companyName, pageWidth / 2, footerY + 4, { align: "center" });
+
+    doc.setFont("helvetica", "normal");
+    doc.text(`Page ${pageNum} of ${totalPages}`, pageWidth - margin, footerY + 4, { align: "right" });
+
+    doc.setFontSize(6);
+    doc.setTextColor(...COLORS.BORDER);
+    doc.text(`Generated by Elec-Mate | ${generatedDate} ${generatedTime}`, pageWidth / 2, footerY + 8, { align: "center" });
+  };
+
+  const addSectionHeader = (title: string, icon?: string) => {
+    checkPageBreak(15);
+
+    doc.setFillColor(...COLORS.PRIMARY);
+    doc.roundedRect(margin, yPos, contentWidth, 10, 3, 3, "F");
+    doc.rect(margin, yPos + 5, contentWidth, 5, "F");
+
+    doc.setTextColor(...COLORS.WHITE);
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text(title.toUpperCase(), margin + 8, yPos + 7);
+
+    yPos += 14;
+  };
+
+  // ============================================
+  // COVER PAGE
+  // ============================================
+
+  // Header with company branding
+  doc.setFillColor(...COLORS.PRIMARY);
+  doc.rect(0, 0, pageWidth, 60, "F");
+
+  // Yellow accent stripe
+  doc.setFillColor(...COLORS.YELLOW);
+  doc.rect(0, 60, pageWidth, 3, "F");
+
+  // Company name
+  doc.setTextColor(...COLORS.WHITE);
+  doc.setFontSize(24);
+  doc.setFont("helvetica", "bold");
+  doc.text(companyName.toUpperCase(), pageWidth / 2, 30, { align: "center" });
+
+  // Subtitle
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "normal");
+  if (companyAddress) {
+    doc.text(companyAddress, pageWidth / 2, 40, { align: "center" });
+  }
+  if (companyPhone || companyEmail) {
+    const contactLine = [companyPhone, companyEmail].filter(Boolean).join(" | ");
+    doc.text(contactLine, pageWidth / 2, 48, { align: "center" });
+  }
+
+  // Title section
+  yPos = 90;
+
+  doc.setTextColor(...COLORS.TEXT_DARK);
+  doc.setFontSize(28);
+  doc.setFont("helvetica", "bold");
+  doc.text("COMPLIANCE", pageWidth / 2, yPos, { align: "center" });
+  yPos += 12;
+  doc.text("AUDIT PACK", pageWidth / 2, yPos, { align: "center" });
+
+  yPos += 20;
+
+  // Info box
+  doc.setFillColor(...COLORS.LIGHT_BG);
+  doc.roundedRect(margin + 20, yPos, contentWidth - 40, 50, 4, 4, "F");
+
+  doc.setFontSize(10);
+  doc.setTextColor(...COLORS.TEXT_MUTED);
+  doc.setFont("helvetica", "normal");
+
+  let infoY = yPos + 12;
+  doc.text("Generated:", margin + 30, infoY);
+  doc.setTextColor(...COLORS.TEXT_DARK);
+  doc.setFont("helvetica", "bold");
+  doc.text(generatedDate, margin + 60, infoY);
+
+  if (generatedFor) {
+    infoY += 10;
+    doc.setTextColor(...COLORS.TEXT_MUTED);
+    doc.setFont("helvetica", "normal");
+    doc.text("Prepared For:", margin + 30, infoY);
+    doc.setTextColor(...COLORS.TEXT_DARK);
+    doc.setFont("helvetica", "bold");
+    doc.text(generatedFor, margin + 60, infoY);
+  }
+
+  if (projectName) {
+    infoY += 10;
+    doc.setTextColor(...COLORS.TEXT_MUTED);
+    doc.setFont("helvetica", "normal");
+    doc.text("Project:", margin + 30, infoY);
+    doc.setTextColor(...COLORS.TEXT_DARK);
+    doc.setFont("helvetica", "bold");
+    doc.text(projectName, margin + 60, infoY);
+  }
+
+  infoY += 10;
+  doc.setTextColor(...COLORS.TEXT_MUTED);
+  doc.setFont("helvetica", "normal");
+  doc.text("Reference:", margin + 30, infoY);
+  doc.setTextColor(...COLORS.TEXT_DARK);
+  doc.setFont("helvetica", "bold");
+  doc.text(`CP-${format(new Date(), "yyyyMMdd")}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`, margin + 60, infoY);
+
+  // Summary stats
+  yPos += 70;
+
+  const totalQualifications = employeeQualifications.length;
+  const totalBusinessDocs = businessCompliance.length;
+  const totalComplianceDocs = complianceDocuments.length;
+  const totalItems = totalQualifications + totalBusinessDocs + totalComplianceDocs;
+
+  doc.setFontSize(9);
+  doc.setTextColor(...COLORS.TEXT_BODY);
+  doc.setFont("helvetica", "normal");
+  doc.text("This audit pack contains:", pageWidth / 2, yPos, { align: "center" });
+
+  yPos += 12;
+  const statsWidth = 45;
+  const statsGap = 10;
+  const statsStart = (pageWidth - (statsWidth * 3 + statsGap * 2)) / 2;
+
+  // Employee Qualifications box
+  doc.setFillColor(...COLORS.INFO);
+  doc.roundedRect(statsStart, yPos, statsWidth, 25, 3, 3, "F");
+  doc.setTextColor(...COLORS.WHITE);
+  doc.setFontSize(18);
+  doc.setFont("helvetica", "bold");
+  doc.text(String(totalQualifications), statsStart + statsWidth / 2, yPos + 12, { align: "center" });
+  doc.setFontSize(7);
+  doc.setFont("helvetica", "normal");
+  doc.text("Employee", statsStart + statsWidth / 2, yPos + 18, { align: "center" });
+  doc.text("Qualifications", statsStart + statsWidth / 2, yPos + 22, { align: "center" });
+
+  // Business Compliance box
+  doc.setFillColor(...COLORS.SUCCESS);
+  doc.roundedRect(statsStart + statsWidth + statsGap, yPos, statsWidth, 25, 3, 3, "F");
+  doc.setTextColor(...COLORS.WHITE);
+  doc.setFontSize(18);
+  doc.setFont("helvetica", "bold");
+  doc.text(String(totalBusinessDocs), statsStart + statsWidth + statsGap + statsWidth / 2, yPos + 12, { align: "center" });
+  doc.setFontSize(7);
+  doc.setFont("helvetica", "normal");
+  doc.text("Business", statsStart + statsWidth + statsGap + statsWidth / 2, yPos + 18, { align: "center" });
+  doc.text("Documents", statsStart + statsWidth + statsGap + statsWidth / 2, yPos + 22, { align: "center" });
+
+  // Other Documents box
+  doc.setFillColor(...COLORS.PRIMARY);
+  doc.roundedRect(statsStart + (statsWidth + statsGap) * 2, yPos, statsWidth, 25, 3, 3, "F");
+  doc.setTextColor(...COLORS.WHITE);
+  doc.setFontSize(18);
+  doc.setFont("helvetica", "bold");
+  doc.text(String(totalComplianceDocs), statsStart + (statsWidth + statsGap) * 2 + statsWidth / 2, yPos + 12, { align: "center" });
+  doc.setFontSize(7);
+  doc.setFont("helvetica", "normal");
+  doc.text("Compliance", statsStart + (statsWidth + statsGap) * 2 + statsWidth / 2, yPos + 18, { align: "center" });
+  doc.text("Documents", statsStart + (statsWidth + statsGap) * 2 + statsWidth / 2, yPos + 22, { align: "center" });
+
+  // Footer note
+  yPos = pageHeight - 40;
+  doc.setFontSize(8);
+  doc.setTextColor(...COLORS.TEXT_MUTED);
+  doc.setFont("helvetica", "italic");
+  doc.text(
+    "This document is a summary of compliance records held by the above company.",
+    pageWidth / 2,
+    yPos,
+    { align: "center" }
+  );
+  doc.text(
+    "Original certificates should be requested for verification purposes.",
+    pageWidth / 2,
+    yPos + 5,
+    { align: "center" }
+  );
+
+  // ============================================
+  // TABLE OF CONTENTS
+  // ============================================
+
+  doc.addPage();
+  yPos = margin;
+
+  addContinuationHeader();
+  yPos += 5;
+
+  doc.setTextColor(...COLORS.TEXT_DARK);
+  doc.setFontSize(16);
+  doc.setFont("helvetica", "bold");
+  doc.text("Contents", margin, yPos);
+
+  yPos += 12;
+
+  const tocItems: { title: string; page: number }[] = [];
+  let currentTocPage = 3; // After cover and TOC
+
+  if (employeeQualifications.length > 0) {
+    tocItems.push({ title: "1. Employee Qualifications", page: currentTocPage });
+    currentTocPage += Math.ceil(employeeQualifications.length / 10) + 1;
+  }
+  if (businessCompliance.length > 0) {
+    tocItems.push({ title: "2. Business Insurance & Memberships", page: currentTocPage });
+    currentTocPage += Math.ceil(businessCompliance.length / 10) + 1;
+  }
+  if (complianceDocuments.length > 0) {
+    tocItems.push({ title: "3. Compliance Documents", page: currentTocPage });
+  }
+
+  doc.setFontSize(10);
+  tocItems.forEach((item) => {
+    doc.setTextColor(...COLORS.TEXT_BODY);
+    doc.setFont("helvetica", "normal");
+    doc.text(item.title, margin, yPos);
+
+    // Dotted line
+    doc.setDrawColor(...COLORS.BORDER_LIGHT);
+    doc.setLineDashPattern([1, 1], 0);
+    doc.line(margin + doc.getTextWidth(item.title) + 5, yPos - 1, pageWidth - margin - 15, yPos - 1);
+    doc.setLineDashPattern([], 0);
+
+    // Page number
+    doc.text(String(item.page), pageWidth - margin - 5, yPos, { align: "right" });
+
+    yPos += 8;
+  });
+
+  // ============================================
+  // EMPLOYEE QUALIFICATIONS SECTION
+  // ============================================
+
+  if (employeeQualifications.length > 0) {
+    doc.addPage();
+    yPos = margin;
+    addContinuationHeader();
+
+    addSectionHeader("Employee Qualifications");
+
+    // Table header
+    doc.setFillColor(...COLORS.BORDER_LIGHT);
+    doc.rect(margin, yPos, contentWidth, 8, "F");
+
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(...COLORS.TEXT_DARK);
+
+    const qColName = margin + 3;
+    const qColType = margin + 45;
+    const qColIssuer = margin + 85;
+    const qColExpiry = margin + 130;
+    const qColStatus = margin + 160;
+
+    doc.text("EMPLOYEE", qColName, yPos + 5.5);
+    doc.text("QUALIFICATION", qColType, yPos + 5.5);
+    doc.text("ISSUING BODY", qColIssuer, yPos + 5.5);
+    doc.text("EXPIRY", qColExpiry, yPos + 5.5);
+    doc.text("STATUS", qColStatus, yPos + 5.5);
+
+    yPos += 10;
+
+    // Rows
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(8);
+
+    employeeQualifications.forEach((qual, index) => {
+      checkPageBreak(12);
+
+      // Row background
+      const rowBg = index % 2 === 0 ? COLORS.WHITE : COLORS.LIGHTER_BG;
+      doc.setFillColor(...rowBg);
+      doc.rect(margin, yPos - 1, contentWidth, 10, "F");
+
+      // Border
+      doc.setDrawColor(...COLORS.BORDER_LIGHT);
+      doc.setLineWidth(0.2);
+      doc.line(margin, yPos + 9, margin + contentWidth, yPos + 9);
+
+      // Data
+      doc.setTextColor(...COLORS.TEXT_DARK);
+      const empName = qual.employee?.name || "Unknown";
+      doc.text(empName.substring(0, 20), qColName, yPos + 5);
+
+      doc.setTextColor(...COLORS.TEXT_BODY);
+      doc.text(qual.qualification_name.substring(0, 25), qColType, yPos + 5);
+      doc.text((qual.issuing_body || "-").substring(0, 22), qColIssuer, yPos + 5);
+
+      // Expiry
+      if (qual.expiry_date) {
+        doc.text(format(new Date(qual.expiry_date), "dd/MM/yyyy"), qColExpiry, yPos + 5);
+      } else {
+        doc.text("No expiry", qColExpiry, yPos + 5);
+      }
+
+      // Status badge
+      const statusColor = getStatusColor(qual.status);
+      doc.setFillColor(...statusColor);
+      const statusText = (qual.status || "unknown").toUpperCase();
+      const statusWidth = Math.min(doc.getTextWidth(statusText) + 6, 25);
+      doc.roundedRect(qColStatus, yPos + 1, statusWidth, 6, 2, 2, "F");
+      doc.setTextColor(...COLORS.WHITE);
+      doc.setFontSize(6);
+      doc.text(statusText.substring(0, 10), qColStatus + statusWidth / 2, yPos + 5, { align: "center" });
+      doc.setFontSize(8);
+
+      yPos += 10;
+    });
+  }
+
+  // ============================================
+  // BUSINESS COMPLIANCE SECTION
+  // ============================================
+
+  if (businessCompliance.length > 0) {
+    doc.addPage();
+    yPos = margin;
+    addContinuationHeader();
+
+    addSectionHeader("Business Insurance & Memberships");
+
+    // Table header
+    doc.setFillColor(...COLORS.BORDER_LIGHT);
+    doc.rect(margin, yPos, contentWidth, 8, "F");
+
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(...COLORS.TEXT_DARK);
+
+    const bColName = margin + 3;
+    const bColProvider = margin + 55;
+    const bColPolicy = margin + 100;
+    const bColExpiry = margin + 140;
+    const bColStatus = margin + 165;
+
+    doc.text("DOCUMENT", bColName, yPos + 5.5);
+    doc.text("PROVIDER", bColProvider, yPos + 5.5);
+    doc.text("POLICY/REF", bColPolicy, yPos + 5.5);
+    doc.text("EXPIRY", bColExpiry, yPos + 5.5);
+    doc.text("STATUS", bColStatus, yPos + 5.5);
+
+    yPos += 10;
+
+    // Rows
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(8);
+
+    businessCompliance.forEach((item, index) => {
+      checkPageBreak(12);
+
+      const rowBg = index % 2 === 0 ? COLORS.WHITE : COLORS.LIGHTER_BG;
+      doc.setFillColor(...rowBg);
+      doc.rect(margin, yPos - 1, contentWidth, 10, "F");
+
+      doc.setDrawColor(...COLORS.BORDER_LIGHT);
+      doc.setLineWidth(0.2);
+      doc.line(margin, yPos + 9, margin + contentWidth, yPos + 9);
+
+      doc.setTextColor(...COLORS.TEXT_DARK);
+      doc.text(item.name.substring(0, 30), bColName, yPos + 5);
+
+      doc.setTextColor(...COLORS.TEXT_BODY);
+      doc.text((item.provider || "-").substring(0, 22), bColProvider, yPos + 5);
+      doc.text((item.policy_number || "-").substring(0, 20), bColPolicy, yPos + 5);
+
+      if (item.expiry_date) {
+        doc.text(format(new Date(item.expiry_date), "dd/MM/yyyy"), bColExpiry, yPos + 5);
+      } else {
+        doc.text("-", bColExpiry, yPos + 5);
+      }
+
+      const statusColor = getStatusColor(item.status);
+      doc.setFillColor(...statusColor);
+      const statusText = (item.status || "unknown").toUpperCase();
+      const statusWidth = Math.min(doc.getTextWidth(statusText) + 6, 20);
+      doc.roundedRect(bColStatus, yPos + 1, statusWidth, 6, 2, 2, "F");
+      doc.setTextColor(...COLORS.WHITE);
+      doc.setFontSize(6);
+      doc.text(statusText.substring(0, 8), bColStatus + statusWidth / 2, yPos + 5, { align: "center" });
+      doc.setFontSize(8);
+
+      yPos += 10;
+    });
+  }
+
+  // ============================================
+  // OTHER COMPLIANCE DOCUMENTS
+  // ============================================
+
+  if (complianceDocuments.length > 0) {
+    doc.addPage();
+    yPos = margin;
+    addContinuationHeader();
+
+    addSectionHeader("Compliance Documents");
+
+    // Table header
+    doc.setFillColor(...COLORS.BORDER_LIGHT);
+    doc.rect(margin, yPos, contentWidth, 8, "F");
+
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(...COLORS.TEXT_DARK);
+
+    const cColTitle = margin + 3;
+    const cColType = margin + 80;
+    const cColExpiry = margin + 130;
+    const cColStatus = margin + 165;
+
+    doc.text("DOCUMENT TITLE", cColTitle, yPos + 5.5);
+    doc.text("TYPE", cColType, yPos + 5.5);
+    doc.text("EXPIRY", cColExpiry, yPos + 5.5);
+    doc.text("STATUS", cColStatus, yPos + 5.5);
+
+    yPos += 10;
+
+    // Rows
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(8);
+
+    complianceDocuments.forEach((doc_item, index) => {
+      checkPageBreak(12);
+
+      const rowBg = index % 2 === 0 ? COLORS.WHITE : COLORS.LIGHTER_BG;
+      doc.setFillColor(...rowBg);
+      doc.rect(margin, yPos - 1, contentWidth, 10, "F");
+
+      doc.setDrawColor(...COLORS.BORDER_LIGHT);
+      doc.setLineWidth(0.2);
+      doc.line(margin, yPos + 9, margin + contentWidth, yPos + 9);
+
+      doc.setTextColor(...COLORS.TEXT_DARK);
+      doc.text(doc_item.title.substring(0, 45), cColTitle, yPos + 5);
+
+      doc.setTextColor(...COLORS.TEXT_BODY);
+      doc.text((doc_item.document_type || "-").substring(0, 25), cColType, yPos + 5);
+
+      if (doc_item.expiry_date) {
+        doc.text(format(new Date(doc_item.expiry_date), "dd/MM/yyyy"), cColExpiry, yPos + 5);
+      } else {
+        doc.text("-", cColExpiry, yPos + 5);
+      }
+
+      const statusColor = getStatusColor(doc_item.status);
+      doc.setFillColor(...statusColor);
+      const statusText = (doc_item.status || "unknown").toUpperCase();
+      const statusWidth = Math.min(doc.getTextWidth(statusText) + 6, 20);
+      doc.roundedRect(cColStatus, yPos + 1, statusWidth, 6, 2, 2, "F");
+      doc.setTextColor(...COLORS.WHITE);
+      doc.setFontSize(6);
+      doc.text(statusText.substring(0, 8), cColStatus + statusWidth / 2, yPos + 5, { align: "center" });
+      doc.setFontSize(8);
+
+      yPos += 10;
+    });
+  }
+
+  // ============================================
+  // DECLARATION PAGE
+  // ============================================
+
+  doc.addPage();
+  yPos = margin;
+  addContinuationHeader();
+
+  addSectionHeader("Declaration");
+
+  yPos += 5;
+  doc.setFontSize(10);
+  doc.setTextColor(...COLORS.TEXT_BODY);
+  doc.setFont("helvetica", "normal");
+
+  const declarationText = `I confirm that the information contained in this Compliance Audit Pack is accurate to the best of my knowledge and that ${companyName} maintains all necessary qualifications, insurance, and certifications required for electrical contracting work.
+
+All original documents are available for inspection upon request.`;
+
+  const declarationLines = doc.splitTextToSize(declarationText, contentWidth - 10);
+  declarationLines.forEach((line: string) => {
+    checkPageBreak(6);
+    doc.text(line, margin + 5, yPos);
+    yPos += 6;
+  });
+
+  yPos += 20;
+
+  // Signature boxes
+  doc.setFillColor(...COLORS.LIGHTER_BG);
+  doc.setDrawColor(...COLORS.BORDER);
+  doc.setLineWidth(0.5);
+  doc.roundedRect(margin, yPos, contentWidth, 40, 3, 3, "FD");
+
+  doc.setTextColor(...COLORS.TEXT_BODY);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+
+  doc.text("Signed:", margin + 10, yPos + 12);
+  doc.setDrawColor(...COLORS.PRIMARY);
+  doc.line(margin + 35, yPos + 12, margin + 90, yPos + 12);
+
+  doc.text("Name:", margin + 10, yPos + 24);
+  doc.line(margin + 35, yPos + 24, margin + 90, yPos + 24);
+
+  doc.text("Position:", margin + 10, yPos + 36);
+  doc.line(margin + 35, yPos + 36, margin + 90, yPos + 36);
+
+  doc.text("Date:", margin + 110, yPos + 12);
+  doc.line(margin + 130, yPos + 12, contentWidth, yPos + 12);
+
+  doc.text("Company Stamp:", margin + 110, yPos + 24);
+
+  // ============================================
+  // ADD FOOTERS TO ALL PAGES
+  // ============================================
+
+  const totalPages = doc.internal.pages.length - 1;
+  for (let i = 1; i <= totalPages; i++) {
+    doc.setPage(i);
+    addFooter(i, totalPages);
+  }
+
+  return doc;
+}
+
+export async function downloadComplianceAuditPack(options: AuditPackOptions): Promise<void> {
+  const doc = generateComplianceAuditPack(options);
+
+  const safeCompanyName = options.companyName
+    .replace(/[^a-zA-Z0-9\s]/g, "")
+    .replace(/\s+/g, "_")
+    .substring(0, 30);
+  const dateStr = format(new Date(), "yyyyMMdd");
+  const fileName = `Compliance_Audit_Pack_${safeCompanyName}_${dateStr}.pdf`;
+
+  doc.save(fileName);
+}
+
+export function getComplianceAuditPackBlob(options: AuditPackOptions): Blob {
+  const doc = generateComplianceAuditPack(options);
+  return doc.output("blob");
+}

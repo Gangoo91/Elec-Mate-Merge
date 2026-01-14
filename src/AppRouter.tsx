@@ -26,6 +26,7 @@ const RightsAndPay = lazy(() => import("@/pages/apprentice/RightsAndPay"));
 const NotificationsPage = lazy(() => import("@/pages/NotificationsPage"));
 const PublicQuote = lazy(() => import("@/pages/PublicQuote"));
 const PublicSignature = lazy(() => import("@/pages/PublicSignature"));
+const BriefingSignOff = lazy(() => import("@/pages/BriefingSignOff"));
 const LaTeXPDFGeneratorPage = lazy(() => import("@/pages/LaTeXPDFGeneratorPage"));
 const InvoiceQuoteBuilder = lazy(() => import("@/pages/electrician/InvoiceQuoteBuilder"));
 const InvoiceViewPage = lazy(() => import("@/pages/electrician/InvoiceViewPage"));
@@ -101,6 +102,7 @@ const AppRouter = () => {
       <Route path="/quote/:token" element={<LazyRoute><PublicQuote /></LazyRoute>} />
       <Route path="/public-quote/:token" element={<LazyRoute><PublicQuote /></LazyRoute>} />
       <Route path="/sign/:token" element={<LazyRoute><PublicSignature /></LazyRoute>} />
+      <Route path="/briefing-signoff/:briefingId" element={<LazyRoute><BriefingSignOff /></LazyRoute>} />
       <Route path="/pdf-generator" element={<LazyRoute><LaTeXPDFGeneratorPage /></LazyRoute>} />
 
       {/* Legacy/Direct Access Routes - Redirect to proper paths */}
