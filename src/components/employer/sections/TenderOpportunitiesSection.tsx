@@ -7,7 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   useSearchOpportunities,
   useSavedOpportunities,
@@ -37,6 +36,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
     status: 'live',
     sort_by: 'deadline',
     limit: 20,
+    categories: ['electrical'], // Default to electrical jobs only
   });
   const [showFilters, setShowFilters] = useState(false);
   const [selectedOpportunity, setSelectedOpportunity] = useState<TenderOpportunity | null>(null);
@@ -167,9 +167,9 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
           </TabsTrigger>
         </TabsList>
 
-        <ScrollArea className="flex-1 h-full overflow-auto">
+        <div className="flex-1 min-h-0 overflow-auto">
           {/* Search Results */}
-          <TabsContent value="search" className="m-0 p-4">
+          <TabsContent value="search" className="m-0 p-4 min-h-full">
             {!activePostcode ? (
               <div className="text-center py-12">
                 <MapPin className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
@@ -230,7 +230,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
           </TabsContent>
 
           {/* Saved Opportunities */}
-          <TabsContent value="saved" className="m-0 p-4">
+          <TabsContent value="saved" className="m-0 p-4 min-h-full">
             {savedQuery.isLoading ? (
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
@@ -260,7 +260,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
           </TabsContent>
 
           {/* Sources */}
-          <TabsContent value="sources" className="m-0 p-4">
+          <TabsContent value="sources" className="m-0 p-4 min-h-full">
             <div className="mb-4">
               <h3 className="font-medium mb-1">20 Integrated Tender Sources</h3>
               <p className="text-sm text-muted-foreground">
@@ -323,7 +323,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
               ))}
             </div>
           </TabsContent>
-        </ScrollArea>
+        </div>
       </Tabs>
 
       {/* Filter Sheet */}

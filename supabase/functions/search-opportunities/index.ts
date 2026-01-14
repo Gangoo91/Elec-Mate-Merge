@@ -87,6 +87,26 @@ function mapRegion(adminArea: string): string {
   return 'uk_wide';
 }
 
+function getRegionFromPostcodePrefix(prefix: string): string {
+  const regionMap: Record<string, string> = {
+    'B': 'west_midlands', 'CV': 'west_midlands', 'DY': 'west_midlands', 'WS': 'west_midlands', 'WV': 'west_midlands', 'ST': 'west_midlands', 'HR': 'west_midlands', 'TF': 'west_midlands', 'WR': 'west_midlands',
+    'M': 'northwest', 'L': 'northwest', 'WA': 'northwest', 'WN': 'northwest', 'BL': 'northwest', 'OL': 'northwest', 'PR': 'northwest', 'FY': 'northwest', 'BB': 'northwest', 'SK': 'northwest', 'CW': 'northwest', 'CH': 'northwest', 'CA': 'northwest', 'LA': 'northwest',
+    'LS': 'yorkshire', 'BD': 'yorkshire', 'HX': 'yorkshire', 'HD': 'yorkshire', 'WF': 'yorkshire', 'S': 'yorkshire', 'DN': 'yorkshire', 'HU': 'yorkshire', 'YO': 'yorkshire', 'HG': 'yorkshire',
+    'NE': 'northeast', 'DH': 'northeast', 'SR': 'northeast', 'TS': 'northeast', 'DL': 'northeast',
+    'NG': 'east_midlands', 'DE': 'east_midlands', 'LE': 'east_midlands', 'NN': 'east_midlands', 'LN': 'east_midlands',
+    'BS': 'southwest', 'BA': 'southwest', 'EX': 'southwest', 'PL': 'southwest', 'TQ': 'southwest', 'TR': 'southwest', 'GL': 'southwest', 'TA': 'southwest', 'DT': 'southwest', 'BH': 'southwest', 'SP': 'southwest', 'SN': 'southwest',
+    'CB': 'east_england', 'CO': 'east_england', 'IP': 'east_england', 'NR': 'east_england', 'PE': 'east_england', 'CM': 'east_england', 'SS': 'east_england', 'AL': 'east_england', 'SG': 'east_england', 'LU': 'east_england',
+    'RG': 'southeast', 'SL': 'southeast', 'HP': 'southeast', 'MK': 'southeast', 'OX': 'southeast', 'GU': 'southeast', 'PO': 'southeast', 'BN': 'southeast', 'TN': 'southeast', 'ME': 'southeast', 'CT': 'southeast', 'SO': 'southeast', 'RH': 'southeast',
+    'SW': 'london', 'SE': 'london', 'NW': 'london', 'N': 'london', 'E': 'london', 'W': 'london', 'EC': 'london', 'WC': 'london', 'CR': 'london', 'BR': 'london', 'DA': 'london', 'EN': 'london', 'HA': 'london', 'IG': 'london', 'KT': 'london', 'RM': 'london', 'SM': 'london', 'TW': 'london', 'UB': 'london', 'WD': 'london',
+    'CF': 'wales', 'SA': 'wales', 'LL': 'wales', 'SY': 'wales', 'NP': 'wales', 'LD': 'wales',
+    'G': 'scotland', 'EH': 'scotland', 'AB': 'scotland', 'DD': 'scotland', 'KY': 'scotland', 'FK': 'scotland', 'PA': 'scotland', 'IV': 'scotland', 'PH': 'scotland', 'ML': 'scotland', 'KA': 'scotland', 'DG': 'scotland', 'TD': 'scotland',
+    'BT': 'northern_ireland',
+  };
+
+  // Try both single and double letter prefixes
+  return regionMap[prefix] || regionMap[prefix.charAt(0)] || 'uk_wide';
+}
+
 function calculateRelevanceScore(
   opportunity: any,
   userPreferences?: any,
@@ -173,10 +193,16 @@ Deno.serve(async (req) => {
         userRegion = geocoded.region;
         console.log('[SEARCH] Geocoded:', { postcode, lat: searchLat, lng: searchLng, region: userRegion });
       } else {
-        return new Response(
-          JSON.stringify({ error: 'Invalid postcode', opportunities: [], total: 0 }),
-          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
+        // Instead of returning error, try to extract region from postcode prefix
+        // and show UK-wide results filtered by region
+        const postcodePrefix = postcode.replace(/\s+/g, '').toUpperCase().match(/^[A-Z]{1,2}/)?.[0];
+        if (postcodePrefix) {
+          userRegion = getRegionFromPostcodePrefix(postcodePrefix);
+          console.log('[SEARCH] Could not geocode, using region fallback:', { postcode, region: userRegion });
+        } else {
+          // Show all UK opportunities if we can't determine region
+          console.log('[SEARCH] Could not geocode or determine region, showing all UK opportunities');
+        }
       }
     }
 

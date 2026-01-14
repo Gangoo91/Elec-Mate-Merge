@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
@@ -12,16 +12,51 @@ import {
   Activity,
   Shield,
   ShieldCheck,
+  Megaphone,
+  DollarSign,
+  HeadphonesIcon,
+  History,
+  Mail,
+  BarChart3,
+  Flag,
+  Settings,
+  CheckSquare,
+  Briefcase,
+  Download,
+  ChevronDown,
+  ChevronUp,
+  PoundSterling,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const adminNavItems = [
+// Primary navigation items - always visible
+const primaryNavItems = [
   { name: "Dashboard", path: "/admin", icon: LayoutDashboard },
   { name: "Users", path: "/admin/users", icon: Users },
-  { name: "Offers", path: "/admin/offers", icon: Gift },
+  { name: "Revenue", path: "/admin/revenue", icon: DollarSign },
+  { name: "Analytics", path: "/admin/analytics", icon: BarChart3 },
+];
+
+// Secondary navigation items - in expandable section
+const secondaryNavItems = [
   { name: "Elec-IDs", path: "/admin/elec-ids", icon: IdCard },
+  { name: "Verification", path: "/admin/verification", icon: CheckSquare },
+  { name: "Vacancies", path: "/admin/vacancies", icon: Briefcase },
+  { name: "Pricing", path: "/admin/pricing", icon: PoundSterling },
   { name: "Subscriptions", path: "/admin/subscriptions", icon: CreditCard },
+  { name: "Offers", path: "/admin/offers", icon: Gift },
   { name: "Chats", path: "/admin/conversations", icon: MessageSquare },
+];
+
+// Admin tools - in expandable section
+const adminToolItems = [
+  { name: "Announcements", path: "/admin/announcements", icon: Megaphone },
+  { name: "Support", path: "/admin/support", icon: HeadphonesIcon },
+  { name: "Flags", path: "/admin/feature-flags", icon: Flag },
+  { name: "Settings", path: "/admin/settings", icon: Settings },
+  { name: "Audit", path: "/admin/audit", icon: History },
+  { name: "Emails", path: "/admin/emails", icon: Mail },
+  { name: "Export", path: "/admin/export", icon: Download },
   { name: "System", path: "/admin/system", icon: Activity },
 ];
 
@@ -29,6 +64,8 @@ export default function AdminPanel() {
   const { profile, isLoading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [showMore, setShowMore] = useState(false);
+  const [showTools, setShowTools] = useState(false);
 
   // Protect admin routes
   useEffect(() => {
@@ -36,6 +73,18 @@ export default function AdminPanel() {
       navigate("/dashboard", { replace: true });
     }
   }, [profile, isLoading, navigate]);
+
+  // Auto-expand sections based on current path
+  useEffect(() => {
+    const isInSecondary = secondaryNavItems.some(
+      (item) => location.pathname === item.path || location.pathname.startsWith(item.path + "/")
+    );
+    const isInTools = adminToolItems.some(
+      (item) => location.pathname === item.path || location.pathname.startsWith(item.path + "/")
+    );
+    if (isInSecondary) setShowMore(true);
+    if (isInTools) setShowTools(true);
+  }, [location.pathname]);
 
   if (isLoading) {
     return (
@@ -50,6 +99,31 @@ export default function AdminPanel() {
   }
 
   const isSuperAdmin = profile.admin_role === "super_admin";
+
+  const renderNavItem = (item: { name: string; path: string; icon: any }) => {
+    const isActive =
+      location.pathname === item.path ||
+      (item.path !== "/admin" && location.pathname.startsWith(item.path + "/"));
+    const Icon = item.icon;
+
+    return (
+      <Button
+        key={item.path}
+        variant={isActive ? "default" : "ghost"}
+        size="sm"
+        onClick={() => navigate(item.path)}
+        className={cn(
+          "shrink-0 gap-2 touch-manipulation h-9",
+          isActive
+            ? "bg-red-500/20 text-red-400 hover:bg-red-500/30"
+            : "text-muted-foreground hover:text-foreground"
+        )}
+      >
+        <Icon className="h-4 w-4" />
+        {item.name}
+      </Button>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -78,35 +152,52 @@ export default function AdminPanel() {
           </div>
         </div>
 
-        {/* Admin Navigation - Horizontal scroll on mobile */}
-        <div className="px-4 pb-3">
+        {/* Primary Navigation */}
+        <div className="px-4 pb-2">
           <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-            {adminNavItems.map((item) => {
-              const isActive =
-                location.pathname === item.path ||
-                (item.path !== "/admin" && location.pathname.startsWith(item.path));
-              const Icon = item.icon;
+            {primaryNavItems.map(renderNavItem)}
 
-              return (
-                <Button
-                  key={item.path}
-                  variant={isActive ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => navigate(item.path)}
-                  className={cn(
-                    "shrink-0 gap-2 touch-manipulation",
-                    isActive
-                      ? "bg-red-500/20 text-red-400 hover:bg-red-500/30"
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  <Icon className="h-4 w-4" />
-                  {item.name}
-                </Button>
-              );
-            })}
+            {/* More Button */}
+            <Button
+              variant={showMore ? "secondary" : "ghost"}
+              size="sm"
+              onClick={() => setShowMore(!showMore)}
+              className="shrink-0 gap-1 touch-manipulation h-9 text-muted-foreground"
+            >
+              More
+              {showMore ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+            </Button>
+
+            {/* Tools Button */}
+            <Button
+              variant={showTools ? "secondary" : "ghost"}
+              size="sm"
+              onClick={() => setShowTools(!showTools)}
+              className="shrink-0 gap-1 touch-manipulation h-9 text-muted-foreground"
+            >
+              Tools
+              {showTools ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+            </Button>
           </div>
         </div>
+
+        {/* Secondary Navigation - Expandable */}
+        {showMore && (
+          <div className="px-4 pb-2 border-t border-border/50 pt-2">
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+              {secondaryNavItems.map(renderNavItem)}
+            </div>
+          </div>
+        )}
+
+        {/* Tools Navigation - Expandable */}
+        {showTools && (
+          <div className="px-4 pb-2 border-t border-border/50 pt-2">
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+              {adminToolItems.map(renderNavItem)}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Admin Content */}

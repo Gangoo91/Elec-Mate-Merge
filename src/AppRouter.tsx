@@ -45,6 +45,18 @@ const AdminElecIds = lazy(() => import("@/pages/admin/AdminElecIds"));
 const AdminSubscriptions = lazy(() => import("@/pages/admin/AdminSubscriptions"));
 const AdminConversations = lazy(() => import("@/pages/admin/AdminConversations"));
 const AdminSystem = lazy(() => import("@/pages/admin/AdminSystem"));
+const AdminAnnouncements = lazy(() => import("@/pages/admin/AdminAnnouncements"));
+const AdminSupport = lazy(() => import("@/pages/admin/AdminSupport"));
+const AdminAuditLogs = lazy(() => import("@/pages/admin/AdminAuditLogs"));
+const AdminFeatureFlags = lazy(() => import("@/pages/admin/AdminFeatureFlags"));
+const AdminSettings = lazy(() => import("@/pages/admin/AdminSettings"));
+const AdminAnalytics = lazy(() => import("@/pages/admin/AdminAnalytics"));
+const AdminVerificationQueue = lazy(() => import("@/pages/admin/AdminVerificationQueue"));
+const AdminRevenue = lazy(() => import("@/pages/admin/AdminRevenue"));
+const AdminEmailLogs = lazy(() => import("@/pages/admin/AdminEmailLogs"));
+const AdminEmployerModeration = lazy(() => import("@/pages/admin/AdminEmployerModeration"));
+const AdminDataExport = lazy(() => import("@/pages/admin/AdminDataExport"));
+const AdminPricingModeration = lazy(() => import("@/pages/admin/AdminPricingModeration"));
 const CustomersPage = lazy(() => import("@/pages/CustomersPage"));
 const CertificateExpiryPage = lazy(() => import("@/pages/CertificateExpiryPage"));
 const EmployerDashboard = lazy(() => import("@/pages/employer/EmployerDashboard"));
@@ -115,10 +127,22 @@ const AppRouter = () => {
         <Route path="admin" element={<LazyRoute><AdminPanel /></LazyRoute>}>
           <Route index element={<LazyRoute><AdminDashboard /></LazyRoute>} />
           <Route path="users" element={<LazyRoute><AdminUsers /></LazyRoute>} />
+          <Route path="revenue" element={<LazyRoute><AdminRevenue /></LazyRoute>} />
+          <Route path="analytics" element={<LazyRoute><AdminAnalytics /></LazyRoute>} />
           <Route path="offers" element={<LazyRoute><AdminOffers /></LazyRoute>} />
           <Route path="elec-ids" element={<LazyRoute><AdminElecIds /></LazyRoute>} />
+          <Route path="verification" element={<LazyRoute><AdminVerificationQueue /></LazyRoute>} />
+          <Route path="vacancies" element={<LazyRoute><AdminEmployerModeration /></LazyRoute>} />
+          <Route path="pricing" element={<LazyRoute><AdminPricingModeration /></LazyRoute>} />
           <Route path="subscriptions" element={<LazyRoute><AdminSubscriptions /></LazyRoute>} />
           <Route path="conversations" element={<LazyRoute><AdminConversations /></LazyRoute>} />
+          <Route path="announcements" element={<LazyRoute><AdminAnnouncements /></LazyRoute>} />
+          <Route path="support" element={<LazyRoute><AdminSupport /></LazyRoute>} />
+          <Route path="feature-flags" element={<LazyRoute><AdminFeatureFlags /></LazyRoute>} />
+          <Route path="settings" element={<LazyRoute><AdminSettings /></LazyRoute>} />
+          <Route path="audit" element={<LazyRoute><AdminAuditLogs /></LazyRoute>} />
+          <Route path="emails" element={<LazyRoute><AdminEmailLogs /></LazyRoute>} />
+          <Route path="export" element={<LazyRoute><AdminDataExport /></LazyRoute>} />
           <Route path="system" element={<LazyRoute><AdminSystem /></LazyRoute>} />
         </Route>
 

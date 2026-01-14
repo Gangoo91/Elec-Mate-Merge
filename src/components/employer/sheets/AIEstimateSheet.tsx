@@ -149,8 +149,8 @@ export function AIEstimateSheet({
   const displayEstimate = isEditing ? editedEstimate : estimate;
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[95vh] p-0 rounded-t-2xl overflow-hidden">
+    <Sheet open={open} onOpenChange={onOpenChange} modal={true}>
+      <SheetContent side="bottom" className="h-[95vh] p-0 rounded-t-2xl overflow-hidden z-[60]">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="p-4 pb-2 flex-shrink-0 border-b border-border">
