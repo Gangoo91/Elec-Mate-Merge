@@ -137,6 +137,8 @@ export class PresenceManager {
   private userId: string;
   private intervalId: NodeJS.Timeout | null = null;
   private visibilityHandler: (() => void) | null = null;
+  private activityHandler: (() => void) | null = null;
+  private unloadHandler: (() => void) | null = null;
   private activityTimeout: NodeJS.Timeout | null = null;
 
   constructor(userId: string) {
@@ -146,6 +148,15 @@ export class PresenceManager {
   start(): void {
     // Initial presence update
     updatePresence(this.userId, 'online');
+
+    // Track page unload to set offline immediately
+    this.unloadHandler = () => {
+      // Fallback: update visibility to away on unload
+      // The actual offline status will be determined by the 10-min threshold
+      updatePresence(this.userId, 'away');
+    };
+    window.addEventListener('beforeunload', this.unloadHandler);
+    window.addEventListener('pagehide', this.unloadHandler);
 
     // Set up heartbeat interval
     this.intervalId = setInterval(() => {
@@ -162,8 +173,14 @@ export class PresenceManager {
     };
     document.addEventListener('visibilitychange', this.visibilityHandler);
 
-    // Track activity (mouse, keyboard)
-    const activityHandler = () => {
+    // Track activity (mouse, keyboard) - throttled to avoid spamming updates
+    let lastUpdate = 0;
+    this.activityHandler = () => {
+      const now = Date.now();
+      // Only update if more than 10 seconds since last activity update
+      if (now - lastUpdate < 10000) return;
+      lastUpdate = now;
+
       if (this.activityTimeout) {
         clearTimeout(this.activityTimeout);
       }
@@ -173,10 +190,11 @@ export class PresenceManager {
       }, AWAY_THRESHOLD);
     };
 
-    window.addEventListener('mousemove', activityHandler);
-    window.addEventListener('keydown', activityHandler);
-    window.addEventListener('click', activityHandler);
-    window.addEventListener('scroll', activityHandler);
+    window.addEventListener('mousemove', this.activityHandler, { passive: true });
+    window.addEventListener('keydown', this.activityHandler, { passive: true });
+    window.addEventListener('click', this.activityHandler, { passive: true });
+    window.addEventListener('scroll', this.activityHandler, { passive: true });
+    window.addEventListener('touchstart', this.activityHandler, { passive: true });
   }
 
   stop(): void {
@@ -188,6 +206,21 @@ export class PresenceManager {
     if (this.visibilityHandler) {
       document.removeEventListener('visibilitychange', this.visibilityHandler);
       this.visibilityHandler = null;
+    }
+
+    if (this.activityHandler) {
+      window.removeEventListener('mousemove', this.activityHandler);
+      window.removeEventListener('keydown', this.activityHandler);
+      window.removeEventListener('click', this.activityHandler);
+      window.removeEventListener('scroll', this.activityHandler);
+      window.removeEventListener('touchstart', this.activityHandler);
+      this.activityHandler = null;
+    }
+
+    if (this.unloadHandler) {
+      window.removeEventListener('beforeunload', this.unloadHandler);
+      window.removeEventListener('pagehide', this.unloadHandler);
+      this.unloadHandler = null;
     }
 
     if (this.activityTimeout) {

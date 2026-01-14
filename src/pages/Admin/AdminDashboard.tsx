@@ -93,7 +93,6 @@ export default function AdminDashboard() {
         activeTodayRes,
         elecIdCompleteRes,
         subscribedDataRes,
-        recentActivityRes,
         edgeDataRes,
       ] = await Promise.all([
         supabase.from("profiles").select("*", { count: "exact", head: true }),
@@ -103,7 +102,6 @@ export default function AdminDashboard() {
         supabase.from("user_presence").select("*", { count: "exact", head: true }).gte("last_seen", dayAgo.toISOString()),
         supabase.from("employer_elec_id_profiles").select("*", { count: "exact", head: true }),
         supabase.from("profiles").select("subscription_tier").eq("subscribed", true),
-        supabase.from("user_presence").select("user_id, last_seen, profiles(full_name, role, avatar_url)").order("last_seen", { ascending: false }).limit(10),
         supabase.functions.invoke("admin-get-users"),
       ]);
 
@@ -132,11 +130,25 @@ export default function AdminDashboard() {
         tierCounts,
         mrr,
         recentSignups: usersWithEmails.slice(0, 8),
-        recentActivity: recentActivityRes.data || [],
       };
     },
     staleTime: 2 * 60 * 1000, // Cache for 2 minutes
     refetchInterval: 60000, // Refresh every 60 seconds
+  });
+
+  // Separate query for online users - refreshes more frequently for real-time feel
+  const { data: onlineUsers } = useQuery({
+    queryKey: ["admin-online-users"],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("user_presence")
+        .select("user_id, last_seen, status, profiles(full_name, role, avatar_url)")
+        .order("last_seen", { ascending: false })
+        .limit(15);
+      return data || [];
+    },
+    staleTime: 10 * 1000, // 10 second cache
+    refetchInterval: 15000, // Refresh every 15 seconds for real-time feel
   });
 
   if (isLoading) {
@@ -440,7 +452,7 @@ export default function AdminDashboard() {
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
               <span className="text-green-400">Online Now</span>
               <Badge className="ml-auto bg-green-500/20 text-green-400 text-[10px]">
-                {stats?.recentActivity?.filter((a: any) =>
+                {onlineUsers?.filter((a: any) =>
                   new Date(a.last_seen).getTime() > Date.now() - 5 * 60 * 1000
                 ).length || 0} users
               </Badge>
@@ -448,13 +460,24 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent className="p-0">
             <div className="divide-y divide-border max-h-[300px] overflow-y-auto">
-              {stats?.recentActivity?.length === 0 ? (
+              {onlineUsers?.length === 0 ? (
                 <p className="text-sm text-muted-foreground p-4">No one online</p>
               ) : (
-                stats?.recentActivity?.map((activity: any) => {
-                  const isOnline = new Date(activity.last_seen).getTime() > Date.now() - 5 * 60 * 1000;
+                onlineUsers?.map((activity: any) => {
+                  const lastSeenMs = new Date(activity.last_seen).getTime();
+                  const nowMs = Date.now();
+                  const diffMins = Math.floor((nowMs - lastSeenMs) / 60000);
+
+                  // Calculate status from last_seen time
+                  const isOnline = diffMins < 5;
+                  const isAway = diffMins >= 5 && diffMins < 10;
+
                   const profile = activity.profiles as any;
-                  const roleColor = roleColors[profile?.role?.toLowerCase()] || roleColors.visitor;
+                  const roleColor = roleColors[profile?.role?.toLowerCase()] || { bg: "bg-gray-500/20", text: "text-gray-400", badge: "bg-gray-500/20 text-gray-400 border-gray-500/30" };
+
+                  // Status indicator color
+                  const statusColor = isOnline ? "bg-green-500" : isAway ? "bg-yellow-500" : "bg-gray-500";
+
                   return (
                     <div
                       key={activity.user_id}
@@ -468,7 +491,7 @@ export default function AdminDashboard() {
                           {getInitials(profile?.full_name)}
                           <div className={cn(
                             "absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-background",
-                            isOnline ? "bg-green-500" : "bg-gray-500"
+                            statusColor
                           )} />
                         </div>
                         <div>
@@ -485,6 +508,12 @@ export default function AdminDashboard() {
                           <p className="text-xs text-muted-foreground">
                             {isOnline ? (
                               <span className="text-green-400">Active now</span>
+                            ) : isAway ? (
+                              <span className="text-yellow-400">Away ({diffMins}m)</span>
+                            ) : diffMins < 60 ? (
+                              `${diffMins}m ago`
+                            ) : diffMins < 1440 ? (
+                              `${Math.floor(diffMins / 60)}h ago`
                             ) : (
                               formatDistanceToNow(new Date(activity.last_seen), { addSuffix: true })
                             )}
