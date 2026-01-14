@@ -1,8 +1,10 @@
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 
 interface VoiceToolRequest {
-  tool: string;
-  params: Record<string, unknown>;
+  tool?: string;
+  tool_name?: string;
+  params?: Record<string, unknown>;
+  [key: string]: unknown;
 }
 
 serve(async (req: Request) => {
@@ -41,7 +43,17 @@ serve(async (req: Request) => {
       userId = user?.id ?? null;
     }
 
-    const { tool, params }: VoiceToolRequest = await req.json();
+    const requestBody: VoiceToolRequest = await req.json();
+
+    // Handle both formats:
+    // 1. Old format: { tool: "name", params: {...} }
+    // 2. ElevenLabs format: { tool_name: "name", clientName: "...", ... } (params at top level)
+    const tool = requestBody.tool || requestBody.tool_name;
+    const params = requestBody.params || (() => {
+      // Extract params from top-level (ElevenLabs format)
+      const { tool: _t, tool_name: _tn, params: _p, ...rest } = requestBody;
+      return rest;
+    })();
 
     if (!tool) {
       return new Response(
@@ -493,6 +505,226 @@ serve(async (req: Request) => {
         break;
       }
 
+      // ============================================
+      // CREATE QUOTE/INVOICE (DRAFT - NO EMAIL)
+      // ============================================
+
+      case 'create_quote': {
+        // Create quote as draft (same as create_and_send_quote but sendNow=false)
+        const {
+          clientName: draftClientName,
+          clientEmail: draftClientEmail,
+          clientPhone: draftClientPhone,
+          clientAddress: draftClientAddress,
+          jobTitle: draftJobTitle,
+          jobDescription: draftJobDescription,
+          itemDescription: draftItemDescription,
+          itemQuantity: draftItemQuantity = 1,
+          itemUnitPrice: draftItemUnitPrice,
+          vatRegistered: draftVatRegistered = true,
+          notes: draftNotes,
+          expiryDays: draftExpiryDays = 30
+        } = params as {
+          clientName: string;
+          clientEmail: string;
+          clientPhone?: string;
+          clientAddress?: string;
+          jobTitle: string;
+          jobDescription?: string;
+          itemDescription: string;
+          itemQuantity?: number;
+          itemUnitPrice: number;
+          vatRegistered?: boolean;
+          notes?: string;
+          expiryDays?: number;
+        };
+
+        if (!userId) {
+          result = 'Authentication required to create quotes';
+          break;
+        }
+
+        if (!draftClientName || !draftClientEmail) {
+          result = 'Need client name and email to create a quote';
+          break;
+        }
+
+        if (!draftItemDescription || !draftItemUnitPrice) {
+          result = 'Need item description and price to create a quote';
+          break;
+        }
+
+        // Generate quote number
+        const draftQuoteNumber = `Q-${Date.now().toString(36).toUpperCase()}`;
+
+        // Calculate totals
+        const draftSubtotal = draftItemQuantity * draftItemUnitPrice;
+        const draftVatAmount = draftVatRegistered ? draftSubtotal * 0.2 : 0;
+        const draftTotal = draftSubtotal + draftVatAmount;
+
+        // Format items
+        const draftItems = [{
+          id: 'item-1',
+          description: draftItemDescription,
+          quantity: draftItemQuantity,
+          unit: 'each',
+          unitPrice: draftItemUnitPrice,
+          total: draftSubtotal,
+          type: 'line',
+          category: 'labour'
+        }];
+
+        // Create the quote as draft
+        const { data: draftQuote, error: draftInsertError } = await supabase
+          .from('quotes')
+          .insert({
+            user_id: userId,
+            quote_number: draftQuoteNumber,
+            client_data: {
+              name: draftClientName,
+              email: draftClientEmail,
+              phone: draftClientPhone || '',
+              address: draftClientAddress || ''
+            },
+            job_details: {
+              title: draftJobTitle || 'Electrical Work',
+              description: draftJobDescription || ''
+            },
+            items: draftItems,
+            settings: {
+              showVat: draftVatRegistered,
+              vatPercent: 20,
+              vatRegistered: draftVatRegistered
+            },
+            notes: draftNotes || '',
+            subtotal: draftSubtotal,
+            vat_amount: draftVatAmount,
+            total: draftTotal,
+            status: 'draft',
+            acceptance_status: null,
+            expiry_date: new Date(Date.now() + draftExpiryDays * 24 * 60 * 60 * 1000).toISOString()
+          })
+          .select()
+          .single();
+
+        if (draftInsertError || !draftQuote) {
+          result = `Failed to create quote: ${draftInsertError?.message || 'Unknown error'}`;
+          break;
+        }
+
+        result = `Quote ${draftQuoteNumber} for £${draftTotal.toFixed(2)} saved as draft for ${draftClientName}. You can review and send it from the Quotes section.`;
+        break;
+      }
+
+      case 'create_invoice': {
+        // Create invoice as draft (same as create_and_send_invoice MODE 2 but sendNow=false)
+        const {
+          clientName: invDraftClientName,
+          clientEmail: invDraftClientEmail,
+          clientPhone: invDraftClientPhone,
+          clientAddress: invDraftClientAddress,
+          jobTitle: invDraftJobTitle,
+          itemDescription: invDraftItemDescription,
+          itemQuantity: invDraftItemQuantity = 1,
+          itemUnitPrice: invDraftItemUnitPrice,
+          vatRegistered: invDraftVatRegistered = true,
+          paymentDays: invDraftPaymentDays = 14,
+          notes: invDraftNotes
+        } = params as {
+          clientName: string;
+          clientEmail: string;
+          clientPhone?: string;
+          clientAddress?: string;
+          jobTitle?: string;
+          itemDescription: string;
+          itemQuantity?: number;
+          itemUnitPrice: number;
+          vatRegistered?: boolean;
+          paymentDays?: number;
+          notes?: string;
+        };
+
+        if (!userId) {
+          result = 'Authentication required to create invoices';
+          break;
+        }
+
+        if (!invDraftClientName || !invDraftClientEmail) {
+          result = 'Need client name and email to create an invoice';
+          break;
+        }
+
+        if (!invDraftItemDescription || !invDraftItemUnitPrice) {
+          result = 'Need item description and price to create an invoice';
+          break;
+        }
+
+        // Generate invoice number
+        const draftInvoiceNumber = `INV-${Date.now().toString(36).toUpperCase()}`;
+
+        // Calculate totals
+        const invDraftSubtotal = invDraftItemQuantity * invDraftItemUnitPrice;
+        const invDraftVatAmount = invDraftVatRegistered ? invDraftSubtotal * 0.2 : 0;
+        const invDraftTotal = invDraftSubtotal + invDraftVatAmount;
+
+        // Format items
+        const invDraftItems = [{
+          id: 'item-1',
+          description: invDraftItemDescription,
+          quantity: invDraftItemQuantity,
+          unit: 'each',
+          unitPrice: invDraftItemUnitPrice,
+          total: invDraftSubtotal,
+          type: 'line',
+          category: 'labour'
+        }];
+
+        // Create the invoice as draft
+        const { data: draftInvoice, error: invDraftInsertError } = await supabase
+          .from('quotes')
+          .insert({
+            user_id: userId,
+            quote_number: `Q-${Date.now().toString(36).toUpperCase()}`,
+            invoice_number: draftInvoiceNumber,
+            client_data: {
+              name: invDraftClientName,
+              email: invDraftClientEmail,
+              phone: invDraftClientPhone || '',
+              address: invDraftClientAddress || ''
+            },
+            job_details: {
+              title: invDraftJobTitle || 'Electrical Work'
+            },
+            items: invDraftItems,
+            settings: {
+              showVat: invDraftVatRegistered,
+              vatPercent: 20,
+              vatRegistered: invDraftVatRegistered,
+              paymentTerms: `Payment due within ${invDraftPaymentDays} days`
+            },
+            notes: invDraftNotes || '',
+            subtotal: invDraftSubtotal,
+            vat_amount: invDraftVatAmount,
+            total: invDraftTotal,
+            status: 'approved',
+            acceptance_status: 'accepted',
+            invoice_date: new Date().toISOString(),
+            invoice_due_date: new Date(Date.now() + invDraftPaymentDays * 24 * 60 * 60 * 1000).toISOString(),
+            invoice_status: 'draft',
+            invoice_raised: true
+          })
+          .select()
+          .single();
+
+        if (invDraftInsertError || !draftInvoice) {
+          result = `Failed to create invoice: ${invDraftInsertError?.message || 'Unknown error'}`;
+          break;
+        }
+
+        result = `Invoice ${draftInvoiceNumber} for £${invDraftTotal.toFixed(2)} saved as draft for ${invDraftClientName}. You can review and send it from the Invoices section.`;
+        break;
+      }
+
       case 'create_and_send_quote': {
         // Full parameters matching ElevenLabs tool definition
         const {
@@ -926,7 +1158,7 @@ serve(async (req: Request) => {
       }
 
       default:
-        result = `Unknown tool: ${tool}. Available tools are: get_quote_info, get_invoice_info, get_overdue_invoices, lookup_price, get_dashboard_summary, get_cert_info, get_recent_certificates, send_quote, send_invoice, create_and_send_quote, create_and_send_invoice`;
+        result = `Unknown tool: ${tool}. Available tools are: create_quote, create_invoice, send_quote, send_invoice, create_and_send_quote, create_and_send_invoice`;
     }
 
     return new Response(
