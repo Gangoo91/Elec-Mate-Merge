@@ -64,32 +64,27 @@ export default function AdminSettings() {
 
   const isSuperAdmin = profile?.admin_role === "super_admin";
 
-  // Fetch settings
+  // Fetch settings via edge function to bypass RLS
   const { data: settings, isLoading, refetch } = useQuery({
     queryKey: ["admin-app-settings"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("app_settings")
-        .select("*")
-        .order("category")
-        .order("key");
+      const { data, error } = await supabase.functions.invoke("admin-manage-settings", {
+        body: { action: "list" },
+      });
       if (error) throw error;
-      return data as AppSetting[];
+      if (data?.error) throw new Error(data.error);
+      return (data?.settings || []) as AppSetting[];
     },
   });
 
-  // Update setting
+  // Update setting via edge function
   const updateMutation = useMutation({
     mutationFn: async ({ key, value }: { key: string; value: string }) => {
-      const { error } = await supabase
-        .from("app_settings")
-        .update({
-          value,
-          updated_at: new Date().toISOString(),
-          updated_by: profile?.id
-        })
-        .eq("key", key);
+      const { data, error } = await supabase.functions.invoke("admin-manage-settings", {
+        body: { action: "update", key, value },
+      });
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-app-settings"] });

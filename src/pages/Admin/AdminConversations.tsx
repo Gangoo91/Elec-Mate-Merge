@@ -68,51 +68,32 @@ export default function AdminConversations() {
 
   const isSuperAdmin = profile?.admin_role === "super_admin";
 
-  // Fetch chat stats
+  // Fetch chat stats via edge function
   const { data: stats } = useQuery({
     queryKey: ["admin-chat-stats"],
     queryFn: async () => {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      const [totalRes, todayRes, categoriesRes] = await Promise.all([
-        supabase.from("global_chat_messages").select("*", { count: "exact", head: true }),
-        supabase.from("global_chat_messages").select("*", { count: "exact", head: true })
-          .gte("created_at", today.toISOString()),
-        supabase.from("global_chat_messages").select("category"),
-      ]);
-
-      // Count unique categories
-      const categories = new Set(categoriesRes.data?.map(m => m.category).filter(Boolean));
-
-      return {
-        total: totalRes.count || 0,
-        today: todayRes.count || 0,
-        categories: categories.size,
-      };
+      const { data, error } = await supabase.functions.invoke("admin-manage-conversations", {
+        body: { action: "stats" },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data as { total: number; today: number; categories: number };
     },
-    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
+    staleTime: 2 * 60 * 1000,
     refetchInterval: 30000,
   });
 
-  // Fetch messages
+  // Fetch messages via edge function
   const { data: messages, isLoading, refetch } = useQuery({
     queryKey: ["admin-chat-messages", search, categoryFilter],
     queryFn: async () => {
-      let query = supabase
-        .from("global_chat_messages")
-        .select("*")
-        .order("created_at", { ascending: false })
-        .limit(100);
-
-      if (categoryFilter !== "all") {
-        query = query.eq("category", categoryFilter);
-      }
-
-      const { data, error } = await query;
+      const { data, error } = await supabase.functions.invoke("admin-manage-conversations", {
+        body: { action: "list", category: categoryFilter, limit: 100 },
+      });
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
 
-      let filtered = data as ChatMessage[];
+      let filtered = (data?.messages || []) as ChatMessage[];
       if (search) {
         const searchLower = search.toLowerCase();
         filtered = filtered.filter(
@@ -124,32 +105,20 @@ export default function AdminConversations() {
 
       return filtered;
     },
-    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
+    staleTime: 2 * 60 * 1000,
   });
 
-  // Get unique categories for filter
-  const { data: categories } = useQuery({
-    queryKey: ["admin-chat-categories"],
-    queryFn: async () => {
-      const { data } = await supabase
-        .from("global_chat_messages")
-        .select("category")
-        .not("category", "is", null);
+  // Get unique categories from messages
+  const categories = [...new Set(messages?.map(m => m.category).filter(Boolean))] as string[];
 
-      const uniqueCategories = [...new Set(data?.map(m => m.category).filter(Boolean))];
-      return uniqueCategories as string[];
-    },
-    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
-  });
-
-  // Delete message mutation
+  // Delete message mutation via edge function
   const deleteMessageMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from("global_chat_messages")
-        .delete()
-        .eq("id", id);
+      const { data, error } = await supabase.functions.invoke("admin-manage-conversations", {
+        body: { action: "delete", messageId: id },
+      });
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-chat-messages"] });

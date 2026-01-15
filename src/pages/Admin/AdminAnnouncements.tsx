@@ -86,48 +86,28 @@ export default function AdminAnnouncements() {
 
   const isSuperAdmin = profile?.admin_role === "super_admin";
 
-  // Fetch announcements
+  // Fetch announcements via edge function
   const { data: announcements, isLoading } = useQuery({
     queryKey: ["admin-announcements"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("admin_announcements")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) throw error;
-
-      // Get dismissal counts
-      const { data: dismissals } = await supabase
-        .from("admin_announcement_dismissals")
-        .select("announcement_id");
-
-      const dismissalCounts: Record<string, number> = {};
-      dismissals?.forEach((d) => {
-        dismissalCounts[d.announcement_id] = (dismissalCounts[d.announcement_id] || 0) + 1;
+      const { data, error } = await supabase.functions.invoke("admin-manage-announcements", {
+        body: { action: "list" },
       });
-
-      return (data as Announcement[]).map((a) => ({
-        ...a,
-        dismissal_count: dismissalCounts[a.id] || 0,
-      }));
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return (data?.announcements || []) as Announcement[];
     },
-    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
+    staleTime: 2 * 60 * 1000,
   });
 
-  // Create announcement
+  // Create announcement via edge function
   const createMutation = useMutation({
-    mutationFn: async (data: typeof formData) => {
-      const { error } = await supabase.from("admin_announcements").insert({
-        title: data.title,
-        message: data.message,
-        type: data.type,
-        target_roles: data.target_roles,
-        is_dismissible: data.is_dismissible,
-        ends_at: data.ends_at || null,
-        created_by: profile?.id,
+    mutationFn: async (formData: typeof defaultAnnouncement) => {
+      const { data, error } = await supabase.functions.invoke("admin-manage-announcements", {
+        body: { action: "create", announcement: formData },
       });
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-announcements"] });
@@ -140,14 +120,14 @@ export default function AdminAnnouncements() {
     },
   });
 
-  // Update announcement
+  // Update announcement via edge function
   const updateMutation = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<Announcement> }) => {
-      const { error } = await supabase
-        .from("admin_announcements")
-        .update(data)
-        .eq("id", id);
+      const { data: result, error } = await supabase.functions.invoke("admin-manage-announcements", {
+        body: { action: "update", announcement: { id, ...data } },
+      });
       if (error) throw error;
+      if (result?.error) throw new Error(result.error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-announcements"] });
@@ -156,11 +136,14 @@ export default function AdminAnnouncements() {
     },
   });
 
-  // Delete announcement
+  // Delete announcement via edge function
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("admin_announcements").delete().eq("id", id);
+      const { data, error } = await supabase.functions.invoke("admin-manage-announcements", {
+        body: { action: "delete", announcement: { id } },
+      });
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-announcements"] });

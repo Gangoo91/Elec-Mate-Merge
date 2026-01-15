@@ -72,32 +72,28 @@ export default function AdminFeatureFlags() {
 
   const isSuperAdmin = profile?.admin_role === "super_admin";
 
-  // Fetch feature flags
+  // Fetch feature flags via edge function
   const { data: flags, isLoading, refetch } = useQuery({
     queryKey: ["admin-feature-flags"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("feature_flags")
-        .select("*")
-        .order("name");
-      if (error) throw error;
-      return data as FeatureFlag[];
-    },
-    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
-  });
-
-  // Create flag
-  const createMutation = useMutation({
-    mutationFn: async (data: typeof formData) => {
-      const { error } = await supabase.from("feature_flags").insert({
-        name: data.name.toLowerCase().replace(/\s+/g, "_"),
-        description: data.description || null,
-        is_enabled: data.is_enabled,
-        enabled_for_roles: data.enabled_for_roles,
-        percentage_rollout: data.percentage_rollout,
-        created_by: profile?.id,
+      const { data, error } = await supabase.functions.invoke("admin-manage-feature-flags", {
+        body: { action: "list" },
       });
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return (data?.flags || []) as FeatureFlag[];
+    },
+    staleTime: 2 * 60 * 1000,
+  });
+
+  // Create flag via edge function
+  const createMutation = useMutation({
+    mutationFn: async (formData: typeof defaultFlag) => {
+      const { data, error } = await supabase.functions.invoke("admin-manage-feature-flags", {
+        body: { action: "create", flag: formData },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-feature-flags"] });
@@ -110,14 +106,14 @@ export default function AdminFeatureFlags() {
     },
   });
 
-  // Toggle flag
+  // Toggle flag via edge function
   const toggleMutation = useMutation({
     mutationFn: async ({ id, is_enabled }: { id: string; is_enabled: boolean }) => {
-      const { error } = await supabase
-        .from("feature_flags")
-        .update({ is_enabled, updated_at: new Date().toISOString() })
-        .eq("id", id);
+      const { data, error } = await supabase.functions.invoke("admin-manage-feature-flags", {
+        body: { action: "toggle", flag: { id, is_enabled } },
+      });
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-feature-flags"] });
@@ -125,14 +121,14 @@ export default function AdminFeatureFlags() {
     },
   });
 
-  // Update flag
+  // Update flag via edge function
   const updateMutation = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<FeatureFlag> }) => {
-      const { error } = await supabase
-        .from("feature_flags")
-        .update({ ...data, updated_at: new Date().toISOString() })
-        .eq("id", id);
+      const { data: result, error } = await supabase.functions.invoke("admin-manage-feature-flags", {
+        body: { action: "update", flag: { id, ...data } },
+      });
       if (error) throw error;
+      if (result?.error) throw new Error(result.error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-feature-flags"] });
@@ -141,11 +137,14 @@ export default function AdminFeatureFlags() {
     },
   });
 
-  // Delete flag
+  // Delete flag via edge function
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("feature_flags").delete().eq("id", id);
+      const { data, error } = await supabase.functions.invoke("admin-manage-feature-flags", {
+        body: { action: "delete", flag: { id } },
+      });
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-feature-flags"] });
