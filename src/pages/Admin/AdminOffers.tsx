@@ -87,74 +87,59 @@ export default function AdminOffers() {
 
   const isSuperAdmin = profile?.admin_role === "super_admin";
 
-  // Fetch offers
+  // Fetch offers via edge function to bypass RLS
   const { data: offers, isLoading } = useQuery({
     queryKey: ["admin-offers"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("promo_offers")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) {
-        // Table might not exist yet, return empty array
-        console.log("Offers table not found, will create on first offer");
-        return [];
-      }
-      return data as Offer[];
+      const { data, error } = await supabase.functions.invoke("admin-manage-offers", {
+        body: { action: "list" },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return (data?.offers || []) as Offer[];
     },
     staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
 
-  // Fetch redemptions for selected offer
+  // Fetch redemptions for selected offer via edge function
   const { data: redemptions } = useQuery({
     queryKey: ["offer-redemptions", selectedOffer?.id],
     queryFn: async () => {
       if (!selectedOffer?.id) return [];
-      const { data, error } = await supabase
-        .from("offer_redemptions")
-        .select(`
-          id,
-          redeemed_at,
-          amount_paid,
-          profiles:user_id (id, full_name)
-        `)
-        .eq("offer_id", selectedOffer.id)
-        .order("redeemed_at", { ascending: false });
-
-      if (error) {
-        console.log("Error fetching redemptions:", error);
-        return [];
-      }
-      return data as Redemption[];
+      const { data, error } = await supabase.functions.invoke("admin-manage-offers", {
+        body: { action: "get_redemptions", offer: { id: selectedOffer.id } },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return (data?.redemptions || []) as Redemption[];
     },
     enabled: !!selectedOffer?.id,
     staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
 
-  // Create offer mutation
+  // Create offer mutation via edge function
   const createOfferMutation = useMutation({
     mutationFn: async () => {
-      // Generate unique code
-      const code = `${newOffer.name.toUpperCase().replace(/\s+/g, "").slice(0, 8)}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-
       const expiresAt = newOffer.expires_days
         ? new Date(Date.now() + parseInt(newOffer.expires_days) * 24 * 60 * 60 * 1000).toISOString()
         : null;
 
-      const { data, error } = await supabase.from("promo_offers").insert({
-        name: newOffer.name,
-        code,
-        price: parseFloat(newOffer.price),
-        plan_id: newOffer.plan_id,
-        max_redemptions: newOffer.max_redemptions ? parseInt(newOffer.max_redemptions) : null,
-        expires_at: expiresAt,
-        is_active: true,
-        redemptions: 0,
-      }).select().single();
+      const { data, error } = await supabase.functions.invoke("admin-manage-offers", {
+        body: {
+          action: "create",
+          offer: {
+            name: newOffer.name,
+            price: parseFloat(newOffer.price),
+            plan_id: newOffer.plan_id,
+            max_redemptions: newOffer.max_redemptions ? parseInt(newOffer.max_redemptions) : null,
+            expires_at: expiresAt,
+          },
+        },
+      });
 
       if (error) throw error;
-      return data;
+      if (data?.error) throw new Error(data.error);
+      return data.offer;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-offers"] });
@@ -180,25 +165,31 @@ export default function AdminOffers() {
     },
   });
 
-  // Toggle offer active status
+  // Toggle offer active status via edge function
   const toggleOfferMutation = useMutation({
     mutationFn: async ({ id, isActive }: { id: string; isActive: boolean }) => {
-      const { error } = await supabase
-        .from("promo_offers")
-        .update({ is_active: isActive })
-        .eq("id", id);
+      const { data, error } = await supabase.functions.invoke("admin-manage-offers", {
+        body: { action: "update", offer: { id, is_active: isActive } },
+      });
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-offers"] });
     },
+    onError: (error) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
   });
 
-  // Delete offer mutation
+  // Delete offer mutation via edge function
   const deleteOfferMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("promo_offers").delete().eq("id", id);
+      const { data, error } = await supabase.functions.invoke("admin-manage-offers", {
+        body: { action: "delete", offer: { id } },
+      });
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-offers"] });
@@ -206,6 +197,9 @@ export default function AdminOffers() {
         title: "Offer deleted",
         description: "The promo offer has been removed.",
       });
+    },
+    onError: (error) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
     },
   });
 

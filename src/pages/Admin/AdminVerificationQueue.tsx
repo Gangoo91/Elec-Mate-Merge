@@ -72,23 +72,17 @@ export default function AdminVerificationQueue() {
   const [rejectReason, setRejectReason] = useState("");
   const [showRejectDialog, setShowRejectDialog] = useState(false);
 
-  // Fetch verification queue
+  // Fetch verification queue via edge function to bypass RLS
   const { data: queue, isLoading, refetch } = useQuery({
     queryKey: ["admin-verification-queue", statusFilter],
     queryFn: async () => {
-      let query = supabase
-        .from("employer_elec_id_profiles")
-        .select(`*, profiles:employee_id (full_name, username, role)`)
-        .order("created_at", { ascending: true });
-
-      if (statusFilter !== "all") {
-        query = query.eq("verification_status", statusFilter);
-      }
-
-      const { data, error } = await query;
+      const { data, error } = await supabase.functions.invoke("admin-verify-elecid", {
+        body: { action: "list", reason: statusFilter },
+      });
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
 
-      let filtered = data as ElecIdProfile[];
+      let filtered = (data?.profiles || []) as ElecIdProfile[];
       if (search) {
         const s = search.toLowerCase();
         filtered = filtered.filter(
@@ -102,56 +96,33 @@ export default function AdminVerificationQueue() {
     },
   });
 
-  // Approve mutation
+  // Approve mutation via edge function
   const approveMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from("employer_elec_id_profiles")
-        .update({
-          verification_status: "approved",
-          is_verified: true,
-          verified_at: new Date().toISOString(),
-          reviewed_by: profile?.id,
-          reviewed_at: new Date().toISOString(),
-        })
-        .eq("id", id);
-      if (error) throw error;
-
-      // Log the action
-      await supabase.from("elec_id_verification_history").insert({
-        elec_id_profile_id: id,
-        action: "approved",
-        performed_by: profile?.id,
+      const { data, error } = await supabase.functions.invoke("admin-verify-elecid", {
+        body: { action: "approve", profileId: id },
       });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-verification-queue"] });
       setSelectedProfile(null);
       toast({ title: "Profile approved", description: "Elec-ID has been verified." });
     },
+    onError: (error) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
   });
 
-  // Reject mutation
+  // Reject mutation via edge function
   const rejectMutation = useMutation({
     mutationFn: async ({ id, reason }: { id: string; reason: string }) => {
-      const { error } = await supabase
-        .from("employer_elec_id_profiles")
-        .update({
-          verification_status: "rejected",
-          is_verified: false,
-          rejection_reason: reason,
-          reviewed_by: profile?.id,
-          reviewed_at: new Date().toISOString(),
-        })
-        .eq("id", id);
-      if (error) throw error;
-
-      await supabase.from("elec_id_verification_history").insert({
-        elec_id_profile_id: id,
-        action: "rejected",
-        performed_by: profile?.id,
-        notes: reason,
+      const { data, error } = await supabase.functions.invoke("admin-verify-elecid", {
+        body: { action: "reject", profileId: id, reason },
       });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-verification-queue"] });
@@ -159,6 +130,9 @@ export default function AdminVerificationQueue() {
       setShowRejectDialog(false);
       setRejectReason("");
       toast({ title: "Profile rejected" });
+    },
+    onError: (error) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
     },
   });
 
