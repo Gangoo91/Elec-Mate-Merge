@@ -38,6 +38,88 @@ const PASSWORD_REQUIREMENTS = [
 
 type OnboardingStep = 'account' | 'profile' | 'elec-id' | 'consent' | 'complete';
 
+// InputField component - MUST be outside SignUp to prevent re-creation on every render
+interface InputFieldProps {
+  label: string;
+  type?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder: string;
+  icon: React.ComponentType<{ className?: string }>;
+  field: string;
+  focusedField: string | null;
+  setFocusedField: (field: string | null) => void;
+  showToggle?: boolean;
+  isVisible?: boolean;
+  onToggle?: () => void;
+  showSuccess?: boolean;
+}
+
+const InputField = ({
+  label,
+  type = "text",
+  value,
+  onChange,
+  placeholder,
+  icon: Icon,
+  field,
+  focusedField,
+  setFocusedField,
+  showToggle = false,
+  isVisible = false,
+  onToggle = () => {},
+  showSuccess = false
+}: InputFieldProps) => (
+  <div className="space-y-2">
+    <label className="block text-[13px] font-medium text-white/70 ml-1">{label}</label>
+    <div className="relative">
+      <div className={cn(
+        "absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200",
+        focusedField === field ? "text-elec-yellow" : "text-white/40"
+      )}>
+        <Icon className="h-5 w-5" />
+      </div>
+      <input
+        type={showToggle ? (isVisible ? "text" : "password") : type}
+        value={value}
+        onChange={onChange}
+        onFocus={() => setFocusedField(field)}
+        onBlur={() => setFocusedField(null)}
+        placeholder={placeholder}
+        autoComplete={type === "email" ? "email" : type === "password" ? "new-password" : "off"}
+        className={cn(
+          "w-full h-14 pl-12 pr-12 rounded-2xl",
+          "bg-white/[0.06] border-2 text-white placeholder:text-white/30",
+          "text-[16px] outline-none transition-all duration-200",
+          focusedField === field
+            ? "border-elec-yellow/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(255,209,0,0.1)]"
+            : "border-white/10 hover:border-white/20"
+        )}
+      />
+      {showToggle && (
+        <button
+          type="button"
+          onClick={onToggle}
+          className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 transition-colors p-1"
+        >
+          {isVisible ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+        </button>
+      )}
+      {showSuccess && (
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="absolute right-4 top-1/2 -translate-y-1/2"
+        >
+          <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center">
+            <CheckCircle2 className="h-4 w-4 text-green-400" />
+          </div>
+        </motion.div>
+      )}
+    </div>
+  </div>
+);
+
 const SignUp = () => {
   const [step, setStep] = useState<OnboardingStep>('account');
   const [email, setEmail] = useState('');
@@ -222,70 +304,6 @@ const SignUp = () => {
     );
   }
 
-  // Input field component matching SignIn style
-  const InputField = ({
-    label,
-    type = "text",
-    value,
-    onChange,
-    placeholder,
-    icon: Icon,
-    field,
-    showToggle = false,
-    isVisible = false,
-    onToggle = () => {},
-    showSuccess = false
-  }: any) => (
-    <div className="space-y-2">
-      <label className="block text-[13px] font-medium text-white/70 ml-1">{label}</label>
-      <div className="relative">
-        <div className={cn(
-          "absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200",
-          focusedField === field ? "text-elec-yellow" : "text-white/40"
-        )}>
-          <Icon className="h-5 w-5" />
-        </div>
-        <input
-          type={showToggle ? (isVisible ? "text" : "password") : type}
-          value={value}
-          onChange={onChange}
-          onFocus={() => setFocusedField(field)}
-          onBlur={() => setFocusedField(null)}
-          placeholder={placeholder}
-          autoComplete={type === "email" ? "email" : type === "password" ? "new-password" : "off"}
-          className={cn(
-            "w-full h-14 pl-12 pr-12 rounded-2xl",
-            "bg-white/[0.06] border-2 text-white placeholder:text-white/30",
-            "text-[16px] outline-none transition-all duration-200",
-            focusedField === field
-              ? "border-elec-yellow/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(255,209,0,0.1)]"
-              : "border-white/10 hover:border-white/20"
-          )}
-        />
-        {showToggle && (
-          <button
-            type="button"
-            onClick={onToggle}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 transition-colors p-1"
-          >
-            {isVisible ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-          </button>
-        )}
-        {showSuccess && (
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="absolute right-4 top-1/2 -translate-y-1/2"
-          >
-            <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center">
-              <CheckCircle2 className="h-4 w-4 text-green-400" />
-            </div>
-          </motion.div>
-        )}
-      </div>
-    </div>
-  );
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col safe-top safe-bottom overflow-hidden">
       <SuccessOverlay />
@@ -379,20 +397,24 @@ const SignUp = () => {
                   <InputField
                     label="Full Name"
                     value={fullName}
-                    onChange={(e: any) => setFullName(e.target.value)}
+                    onChange={(e) => setFullName(e.target.value)}
                     placeholder="John Smith"
                     icon={User}
                     field="name"
+                    focusedField={focusedField}
+                    setFocusedField={setFocusedField}
                   />
 
                   <InputField
                     label="Email address"
                     type="email"
                     value={email}
-                    onChange={(e: any) => setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
                     icon={Mail}
                     field="email"
+                    focusedField={focusedField}
+                    setFocusedField={setFocusedField}
                     showSuccess={isEmailValid && email.length > 0}
                   />
 
@@ -401,10 +423,12 @@ const SignUp = () => {
                       label="Password"
                       type="password"
                       value={password}
-                      onChange={(e: any) => setPassword(e.target.value)}
+                      onChange={(e) => setPassword(e.target.value)}
                       placeholder="Create password"
                       icon={Lock}
                       field="password"
+                      focusedField={focusedField}
+                      setFocusedField={setFocusedField}
                       showToggle
                       isVisible={showPassword}
                       onToggle={() => setShowPassword(!showPassword)}
@@ -427,10 +451,12 @@ const SignUp = () => {
                     label="Confirm Password"
                     type="password"
                     value={confirmPassword}
-                    onChange={(e: any) => setConfirmPassword(e.target.value)}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Confirm password"
                     icon={Lock}
                     field="confirmPassword"
+                    focusedField={focusedField}
+                    setFocusedField={setFocusedField}
                     showToggle
                     isVisible={showConfirmPassword}
                     onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
