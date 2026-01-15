@@ -1,6 +1,7 @@
 {
   "name": "elec-mate-scraper",
   "version": "1.0.0",
+  "type": "module",
   "description": "Custom web scraper for electrical supplier product data",
   "main": "dist/index.js",
   "scripts": {
@@ -9,8 +10,22 @@
     "start": "node dist/index.js",
     "scrape:screwfix": "tsx src/cli.ts screwfix",
     "scrape:toolstation": "tsx src/cli.ts toolstation",
+    "scrape:cef": "tsx src/cli.ts cef",
+    "scrape:electrical-direct": "tsx src/cli.ts electrical-direct",
+    "scrape:rs-components": "tsx src/cli.ts rs-components",
+    "scrape:tlc-electrical": "tsx src/cli.ts tlc-electrical",
+    "scrape:edmundson": "tsx src/cli.ts edmundson",
+    "scrape:yesss": "tsx src/cli.ts yesss",
+    "scrape:electric-center": "tsx src/cli.ts electric-center",
+    "scrape:rexel": "tsx src/cli.ts rexel",
     "scrape:all": "tsx src/cli.ts all",
-    "scrape:deals": "tsx src/cli.ts deals"
+    "scrape:materials": "tsx src/cli.ts materials",
+    "scrape:tools": "tsx src/cli.ts tools",
+    "scrape:deals": "tsx src/cli.ts deals",
+    "scrape:coupons": "tsx src/cli.ts coupons",
+    "migrate": "node scripts/apply-migration.js",
+    "test:connection": "tsx scripts/test-connection.ts",
+    "setup": "chmod +x setup.sh && ./setup.sh"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",
@@ -18,6 +33,7 @@
     "cron": "^3.1.7",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "pg": "^8.17.1",
     "playwright": "^1.48.0",
     "puppeteer": "^23.5.0",
     "puppeteer-extra": "^3.3.6",

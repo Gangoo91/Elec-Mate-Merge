@@ -13,12 +13,9 @@ import {
   CheckCircle2,
   Zap,
   Hammer,
-  
+
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import React from "react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -179,7 +176,7 @@ const quizQuestions = [
 
 const Module3Section3_1: React.FC = () => {
   console.log("Module3Section3_1 component loaded");
-  
+
   useSEO(
     "Essential Hand Tools (Strippers, Cutters, Drivers) – Module 3 (3.3.1)",
     "Complete guide to essential electrical hand tools. Cable strippers, cutters, screwdrivers, pliers and best practices for safe, efficient work."
@@ -205,13 +202,13 @@ const Module3Section3_1: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -223,34 +220,32 @@ const Module3Section3_1: React.FC = () => {
       </div>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Wrench className="w-6 h-6 text-white" />
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <header className="mb-6 sm:mb-8 text-center">
+          <div className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
+            <span className="text-elec-yellow text-sm font-medium">Module 3 - Section 3.3.1</span>
+          </div>
+          <div className="flex justify-center mb-4">
+            <div className="p-3 rounded-full bg-white/5">
+              <Wrench className="w-8 h-8 text-white" />
             </div>
-            <Badge
-              variant="outline"
-              className="border-elec-yellow/30 text-elec-yellow"
-            >
-              Section 3.3.1
-            </Badge>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Essential Hand Tools (Strippers, Cutters, Drivers)
           </h1>
-          <p className="text-white">
+          <p className="text-white/70">
             Master the essential hand tools for safe, efficient electrical installation work.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             Introduction
           </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Cable strippers: remove insulation cleanly without conductor damage.</li>
@@ -259,7 +254,7 @@ const Module3Section3_1: React.FC = () => {
                 <li>Pliers: grip, twist, bend - choose type for job (long-nose for tight spaces).</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
@@ -274,11 +269,12 @@ const Module3Section3_1: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             Learning outcomes
           </h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
@@ -287,14 +283,17 @@ const Module3Section3_1: React.FC = () => {
             <li>Apply correct handling techniques to ensure safe and efficient work.</li>
             <li>Recognise the importance of maintaining hand tools in good condition.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Content
+          </h2>
 
           {/* Cable Tools */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Scissors className="w-5 h-5" /> Cable Preparation Tools
             </h3>
@@ -362,13 +361,13 @@ const Module3Section3_1: React.FC = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[0]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* Hand Tools */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Wrench className="w-5 h-5" /> Essential Hand Tools
             </h3>
@@ -437,13 +436,13 @@ const Module3Section3_1: React.FC = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[1]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* Other Essential Tools */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Hammer className="w-5 h-5" /> Other Essential Tools
             </h3>
@@ -470,14 +469,15 @@ const Module3Section3_1: React.FC = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[2]} />
-        </Card>
+        </section>
 
         {/* What this means on site */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             <Building className="w-5 h-5" /> What this means on site
           </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
@@ -500,11 +500,12 @@ const Module3Section3_1: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Installation Practices */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             <Settings className="w-5 h-5" /> Installation Practices
           </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
@@ -529,11 +530,12 @@ const Module3Section3_1: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Common Mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
             <AlertTriangle className="w-5 h-5 text-elec-yellow" /> Common Mistakes
           </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
@@ -556,11 +558,12 @@ const Module3Section3_1: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* BS 7671 Context */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
             <Shield className="w-5 h-5" /> BS 7671 Context
           </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
@@ -583,20 +586,21 @@ const Module3Section3_1: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[3]} />
 
         {/* Real-world Scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">08</span>
             <Factory className="w-5 h-5" /> Real-world Scenario
           </h2>
           <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
             <p className="font-medium mb-2">Scenario: Non-VDE Tool Incident</p>
             <p className="text-sm mb-4">
-              An electrician used a non-insulated screwdriver when tightening a live terminal on a lighting circuit. 
-              A short circuit occurred, damaging the screwdriver tip and causing a minor burn to the electrician's hand. 
+              An electrician used a non-insulated screwdriver when tightening a live terminal on a lighting circuit.
+              A short circuit occurred, damaging the screwdriver tip and causing a minor burn to the electrician's hand.
               The incident would have been avoided with a VDE-rated insulated screwdriver.
             </p>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -620,11 +624,12 @@ const Module3Section3_1: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">09</span>
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
@@ -632,18 +637,21 @@ const Module3Section3_1: React.FC = () => {
               <div key={index}>
                 <p className="font-medium text-white mb-1">{faq.q}</p>
                 <p className="text-sm text-white">{faq.a}</p>
-                {index < faqs.length - 1 && <Separator className="mt-4" />}
+                {index < faqs.length - 1 && <div className="mt-4 border-t border-white/10" />}
               </div>
             ))}
           </div>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">10</span>
+            Summary
+          </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <p>
-              Essential hand tools are the backbone of electrical work. Knowing how to select, use, and maintain them 
+              Essential hand tools are the backbone of electrical work. Knowing how to select, use, and maintain them
               ensures safe, precise, and efficient installations, while also protecting both the tools and the materials you're working with.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
@@ -667,11 +675,12 @@ const Module3Section3_1: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Apprentice Do's and Don'ts */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">11</span>
             <Target className="w-5 h-5" /> Apprentice Do's and Don'ts
           </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
@@ -680,12 +689,12 @@ const Module3Section3_1: React.FC = () => {
                 <CheckCircle2 className="w-4 h-4" /> DO
               </p>
               <ul className="space-y-2 text-sm text-white">
-                <li>✓ Always use VDE-rated tools for electrical work</li>
-                <li>✓ Check tool condition before each use</li>
-                <li>✓ Select the correct size and type for each task</li>
-                <li>✓ Keep tools clean and properly stored</li>
-                <li>✓ Replace worn or damaged tools immediately</li>
-                <li>✓ Use proper technique to avoid damage</li>
+                <li>Always use VDE-rated tools for electrical work</li>
+                <li>Check tool condition before each use</li>
+                <li>Select the correct size and type for each task</li>
+                <li>Keep tools clean and properly stored</li>
+                <li>Replace worn or damaged tools immediately</li>
+                <li>Use proper technique to avoid damage</li>
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
@@ -693,20 +702,21 @@ const Module3Section3_1: React.FC = () => {
                 <AlertTriangle className="w-4 h-4" /> DON'T
               </p>
               <ul className="space-y-2 text-sm text-white">
-                <li>✗ Use non-insulated tools on live circuits</li>
-                <li>✗ Force wrong-sized tools onto components</li>
-                <li>✗ Use damaged or worn cutting tools</li>
-                <li>✗ Use pliers in place of proper spanners</li>
-                <li>✗ Leave tools exposed to weather or moisture</li>
-                <li>✗ Skip safety checks to save time</li>
+                <li>Use non-insulated tools on live circuits</li>
+                <li>Force wrong-sized tools onto components</li>
+                <li>Use damaged or worn cutting tools</li>
+                <li>Use pliers in place of proper spanners</li>
+                <li>Leave tools exposed to weather or moisture</li>
+                <li>Skip safety checks to save time</li>
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Pocket Card Quick Reference */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">12</span>
             Pocket Card Quick Reference
           </h2>
           <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30 text-sm">
@@ -714,59 +724,63 @@ const Module3Section3_1: React.FC = () => {
               <div>
                 <p className="font-medium mb-2">Essential Tool Checklist</p>
                 <ul className="space-y-1">
-                  <li>• Cable strippers (adjustable)</li>
-                  <li>• Side cutters (small cables)</li>
-                  <li>• Ratchet cutters (large cables)</li>
-                  <li>• VDE screwdrivers (slotted, Phillips)</li>
-                  <li>• Long-nose pliers</li>
-                  <li>• Combination pliers</li>
-                  <li>• Adjustable spanner</li>
-                  <li>• Tape measure</li>
+                  <li>Cable strippers (adjustable)</li>
+                  <li>Side cutters (small cables)</li>
+                  <li>Ratchet cutters (large cables)</li>
+                  <li>VDE screwdrivers (slotted, Phillips)</li>
+                  <li>Long-nose pliers</li>
+                  <li>Combination pliers</li>
+                  <li>Adjustable spanner</li>
+                  <li>Tape measure</li>
                 </ul>
               </div>
               <div>
                 <p className="font-medium mb-2">Safety Reminders</p>
                 <ul className="space-y-1">
-                  <li>• VDE = 1,000V insulated protection</li>
-                  <li>• Check insulation before use</li>
-                  <li>• Right tool for cable size/type</li>
-                  <li>• Clean cuts prevent poor connections</li>
-                  <li>• Maintain tools for safety & efficiency</li>
-                  <li>• Store tools properly when not in use</li>
+                  <li>VDE = 1,000V insulated protection</li>
+                  <li>Check insulation before use</li>
+                  <li>Right tool for cable size/type</li>
+                  <li>Clean cuts prevent poor connections</li>
+                  <li>Maintain tools for safety & efficiency</li>
+                  <li>Store tools properly when not in use</li>
                 </ul>
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Key References */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Key References</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">13</span>
+            Key References
+          </h2>
           <div className="text-xs sm:text-sm text-white space-y-2">
             <p><strong>BS 7671:</strong> IET Wiring Regulations (18th Edition)</p>
             <p><strong>GS38:</strong> Electrical test equipment for use by electricians</p>
             <p><strong>HSE Guidance:</strong> Safe working practices with electrical tools</p>
             <p><strong>Tool Standards:</strong> VDE 0682 for insulated hand tools</p>
           </div>
-        </Card>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">14</span>
             Knowledge Check
           </h2>
           <Quiz questions={quizQuestions} />
-        </Card>
+        </section>
 
         {/* Navigation */}
-        <div className="flex justify-between">
-          <Button variant="outline" asChild>
+        <div className="flex flex-col-reverse sm:flex-row justify-between gap-3">
+          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.3
             </Link>
           </Button>
-          <Button asChild>
+          <Button className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../3-2">
               Next: Power Tools
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

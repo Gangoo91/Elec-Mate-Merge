@@ -1,6 +1,5 @@
 import { ArrowLeft, Zap, CheckCircle, AlertTriangle, Shield, TestTube, Battery } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -148,11 +147,11 @@ const Module2Section5_1 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.5
@@ -162,29 +161,28 @@ const Module2Section5_1 = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Zap className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 2.5.1
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                Conductors and Insulators
-              </h1>
-              <p className="text-xl text-white max-w-3xl mt-2">
-                Learn the fundamental properties of electrical materials and their applications
-              </p>
-            </div>
-          </div>
+      <div className="max-w-3xl mx-auto px-6 py-12">
+        {/* Centered Header */}
+        <div className="mb-12 text-center">
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Module 2.5.1
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Conductors and Insulators
+          </h1>
+          <p className="text-white/80 max-w-2xl mx-auto">
+            Learn the fundamental properties of electrical materials and their applications
+          </p>
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Conductors:</strong> Low resistivity (ρ) - copper, aluminium allow current flow</li>
@@ -194,7 +192,7 @@ const Module2Section5_1 = () => {
                 <li><strong>Safety:</strong> Good insulation prevents shock and fire risk</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> T&E copper cores, PVC sheathing, SWA armour, XLPE insulation</li>
@@ -203,11 +201,14 @@ const Module2Section5_1 = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning Outcomes
+          </h2>
           <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -231,22 +232,22 @@ const Module2Section5_1 = () => {
               <span>Recognise temperature effects on conductor performance</span>
             </li>
           </ul>
-        </Card>
+        </section>
 
         {/* Section 1: Definitions and Properties */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+        <section className="mb-10">
+          <div className="border-l-2 border-elec-yellow bg-card/30 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
               Understanding Conductors and Insulators
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                Electrical materials are classified by their ability to conduct electricity. This fundamental property, 
-                measured as resistivity (ρ), determines how and where materials are used in electrical installations. 
+                Electrical materials are classified by their ability to conduct electricity. This fundamental property,
+                measured as resistivity (ρ), determines how and where materials are used in electrical installations.
                 Understanding these properties is essential for safe cable selection, current capacity calculations, and fault analysis.
               </p>
-              
+
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
@@ -282,7 +283,7 @@ const Module2Section5_1 = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="bg-card border border-border/30 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
                     <Shield className="w-4 h-4" />
@@ -319,7 +320,7 @@ const Module2Section5_1 = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <div className="space-y-2">
                   <p className="text-yellow-300">
@@ -360,24 +361,24 @@ const Module2Section5_1 = () => {
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[0]} />
 
         {/* Section 2: Temperature Effects */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+        <section className="mb-10">
+          <div className="border-l-2 border-elec-yellow bg-card/30 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
               Temperature Effects on Materials
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                Temperature significantly affects both conductors and insulators. Understanding these effects is 
-                crucial for safe installation design, current capacity calculations, and long-term reliability. 
+                Temperature significantly affects both conductors and insulators. Understanding these effects is
+                crucial for safe installation design, current capacity calculations, and long-term reliability.
                 BS 7671 provides detailed guidance on temperature considerations in Appendix 4.
               </p>
-              
+
               <div className="space-y-4">
                 <div>
                   <h4 className="font-bold text-elec-yellow mb-3">Conductor Temperature Effects</h4>
@@ -397,7 +398,7 @@ const Module2Section5_1 = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">Current Capacity Impact</h5>
                       <div className="space-y-2 text-elec-yellow text-sm">
@@ -429,7 +430,7 @@ const Module2Section5_1 = () => {
                         </ul>
                       </div>
                     </div>
-                    
+
                     <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">XLPE Systems</h5>
                       <div className="text-elec-yellow text-sm space-y-1">
@@ -442,7 +443,7 @@ const Module2Section5_1 = () => {
                         </ul>
                       </div>
                     </div>
-                    
+
                     <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">Special Applications</h5>
                       <div className="text-elec-yellow text-sm space-y-1">
@@ -472,7 +473,7 @@ const Module2Section5_1 = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-card border border-border/30 p-4 rounded-lg">
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -490,23 +491,23 @@ const Module2Section5_1 = () => {
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[1]} />
 
         {/* Section 3: Practical Selection and Installation */}
-        <div className="mb-8">
-          <div className="border-l-4 border-purple-500 dark:bg-card p-6 rounded-r-lg">
+        <section className="mb-10">
+          <div className="border-l-2 border-purple-500 bg-card/30 p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
               <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
               Practical Selection and Installation
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                Proper material selection requires systematic analysis of electrical, environmental, and economic factors. 
+                Proper material selection requires systematic analysis of electrical, environmental, and economic factors.
                 BS 7671 Part 5 provides comprehensive guidance on selection and erection of electrical equipment and wiring systems.
               </p>
-              
+
               <div className="space-y-4">
                 <div>
                   <h4 className="font-bold text-elec-yellow mb-3">Systematic Selection Process</h4>
@@ -529,7 +530,7 @@ const Module2Section5_1 = () => {
                         </ul>
                       </div>
                     </div>
-                    
+
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">Environmental Assessment</h5>
                       <div className="space-y-2 text-white text-sm">
@@ -571,7 +572,7 @@ const Module2Section5_1 = () => {
                         </ul>
                       </div>
                     </div>
-                    
+
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">Termination Quality</h5>
                       <div className="text-white text-sm space-y-1">
@@ -590,7 +591,7 @@ const Module2Section5_1 = () => {
                         </ul>
                       </div>
                     </div>
-                    
+
                     <div className="bg-card border border-border/30 p-4 rounded-lg">
                       <h5 className="font-semibold text-elec-yellow mb-2">Testing and Verification</h5>
                       <div className="text-white text-sm space-y-1">
@@ -632,13 +633,16 @@ const Module2Section5_1 = () => {
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[2]} />
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance for Apprentices</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Practical Guidance for Apprentices
+          </h2>
           <div className="space-y-6">
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">Material Identification</h3>
@@ -663,7 +667,7 @@ const Module2Section5_1 = () => {
                 </div>
               </div>
             </div>
-            
+
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">Common Mistakes to Avoid</h3>
               <div className="bg-card border border-border/30 p-4 rounded-lg">
@@ -690,36 +694,37 @@ const Module2Section5_1 = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* FAQs */}
-        <Card className="mb-8 p-0 bg-transparent border-white/20 bg-none shadow-none overflow-hidden">
-          <div className="p-6 border-b border-white/10">
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Frequently Asked Questions</h2>
-          </div>
-          <div className="divide-y divide-border/20">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Frequently Asked Questions
+          </h2>
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="p-6">
+              <div key={index} className="bg-card/30 border border-border/30 rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
-        </Card>
+        </section>
 
         {/* Pocket Guide */}
-        <div className="mb-8 space-y-6">
-          <Card className="p-6 bg-transparent border-white/20 bg-none shadow-none">
+        <section className="mb-10">
+          <div className="bg-card/30 border border-border/30 rounded-lg p-6">
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <Shield className="h-5 w-5 text-elec-yellow" />
                 <h2 className="text-lg sm:text-xl font-semibold text-white">Conductors & Insulators Pocket Guide</h2>
               </div>
-              <p className="text-sm text-white">
+              <p className="text-sm text-white/80">
                 Essential material properties and selection reference
               </p>
             </div>
-            
+
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
               <div className="space-y-4">
                 <div className="bg-card border border-border/30 p-3 rounded-lg">
@@ -734,7 +739,7 @@ const Module2Section5_1 = () => {
                     <li>• <strong>R = ρL/A:</strong> Bigger CSA = lower resistance</li>
                   </ul>
                 </div>
-                
+
                 <div className="bg-card border border-border/30 p-3 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
                     <Shield className="w-4 h-4" />
@@ -748,7 +753,7 @@ const Module2Section5_1 = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className="space-y-4">
                 <div className="bg-card border border-elec-yellow/30 p-3 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Key Checks</h4>
@@ -760,7 +765,7 @@ const Module2Section5_1 = () => {
                     <li>• <strong>Testing:</strong> IR ≥1MΩ, continuity checks</li>
                   </ul>
                 </div>
-                
+
                 <div className="bg-card border border-border/30 p-3 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
                     <AlertTriangle className="w-4 h-4" />
@@ -775,42 +780,42 @@ const Module2Section5_1 = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-4 pt-4 border-t border-white/10">
               <div className="grid grid-cols-4 gap-4 text-xs">
                 <div className="text-center">
                   <p className="font-semibold text-white">Copper ρ</p>
-                  <p className="text-white">17.2 nΩ·m</p>
+                  <p className="text-white/80">17.2 nΩ·m</p>
                 </div>
                 <div className="text-center">
                   <p className="font-semibold text-white">Aluminium ρ</p>
-                  <p className="text-white">28.2 nΩ·m</p>
+                  <p className="text-white/80">28.2 nΩ·m</p>
                 </div>
                 <div className="text-center">
                   <p className="font-semibold text-white">PVC Rating</p>
-                  <p className="text-white">70°C</p>
+                  <p className="text-white/80">70°C</p>
                 </div>
                 <div className="text-center">
                   <p className="font-semibold text-white">XLPE Rating</p>
-                  <p className="text-white">90°C</p>
+                  <p className="text-white/80">90°C</p>
                 </div>
               </div>
             </div>
-          </Card>
-        </div>
+          </div>
+        </section>
 
         {/* Quiz */}
-        <Quiz 
+        <Quiz
           title="Test Your Knowledge: Conductors and Insulators"
           questions={quizQuestions}
         />
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5" asChild>
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5" asChild>
             <Link to=".."><ArrowLeft className="w-4 h-4 mr-2" />Back to Module</Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a]" asChild>
+          <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]" asChild>
             <Link to="../5-2">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
           </Button>
         </nav>

@@ -1,8 +1,6 @@
 import useSEO from "@/hooks/useSEO";
 import { ArrowLeft, TrendingDown, CheckCircle, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -117,11 +115,11 @@ const Module2Section5_5: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.5
@@ -131,29 +129,31 @@ const Module2Section5_5: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        {/* Header */}
+        <div className="mb-12 text-center">
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Module 2.5.5
+          </span>
+          <div className="flex items-center justify-center gap-3 mb-4">
             <TrendingDown className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 2.5.5
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                Resistance and Voltage Drop
-              </h1>
-              <p className="text-xl text-white max-w-3xl mt-2">
-                Methods, limits and simple worked examples aligned with BS 7671
-              </p>
-            </div>
           </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Resistance and Voltage Drop
+          </h1>
+          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
+            Methods, limits and simple worked examples aligned with BS 7671
+          </p>
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Voltage drop:</strong> Lost voltage in cable resistance</li>
@@ -163,7 +163,7 @@ const Module2Section5_5: React.FC = () => {
                 <li><strong>Solutions:</strong> Shorter runs, larger CSA</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Long runs, small CSA, high current</li>
@@ -172,11 +172,14 @@ const Module2Section5_5: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning Outcomes
+          </h2>
           <div className="space-y-3">
             {[
               "Understand what voltage drop is and why it matters for electrical installations",
@@ -193,11 +196,14 @@ const Module2Section5_5: React.FC = () => {
               </div>
             ))}
           </div>
-        </Card>
+        </section>
 
         {/* Core content - How to estimate voltage drop */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">How to estimate voltage drop</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            How to Estimate Voltage Drop
+          </h2>
           <div className="text-white text-sm space-y-4">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
               <h3 className="font-semibold mb-1 flex items-center gap-2"><TrendingDown className="w-4 h-4"/> Method A – Using resistance</h3>
@@ -217,11 +223,14 @@ const Module2Section5_5: React.FC = () => {
             </div>
             <div className="text-xs text-white">Always verify against Appendix 4. Consider temperature, grouping and supply characteristics where relevant.</div>
           </div>
-        </Card>
+        </section>
 
         {/* Simple Apprentice Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">For Apprentices: How to work out voltage drop (dead simple)</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            For Apprentices: How to Work Out Voltage Drop
+          </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
               <h3 className="font-semibold text-elec-yellow mb-2">Think of it like a water pipe:</h3>
@@ -273,11 +282,14 @@ const Module2Section5_5: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Method B - The Tables (What apprentices actually use) */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Method B: Using the tables (BS 7671 Appendix 4)</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Method B: Using the Tables (BS 7671 Appendix 4)
+          </h2>
           <p className="text-xs sm:text-sm text-white mb-4">This is what you'll actually use on site. The tables give you "mV/A/m" values - millivolts per amp per metre.</p>
           
           <div className="space-y-6">
@@ -357,18 +369,21 @@ const Module2Section5_5: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
 
         {/* Voltage drop in plain English */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Voltage drop in plain English</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Voltage Drop in Plain English
+          </h2>
           <ul className="list-disc pl-6 space-y-2 text-white text-sm">
             <li>Electricity needs a push (voltage). Cables resist a little, so some push is lost on the way – that's voltage drop.</li>
             <li>Longer and thinner cables lose more; shorter and thicker lose less.</li>
             <li>We keep the loss small so equipment still gets close to 230 V at the terminals.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Quick Knowledge Check */}
         <InlineCheck
@@ -379,12 +394,12 @@ const Module2Section5_5: React.FC = () => {
         />
 
         {/* Enhanced Voltage Drop Calculator */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <VoltageDropCalculator />
-        </Card>
+        </section>
 
         {/* What this means on site */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">What this means on site</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
             <div className="bg-card border border-amber-400/30 p-4 rounded-lg">
@@ -408,10 +423,10 @@ const Module2Section5_5: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Advanced Topics */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Advanced considerations</h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-4 bg-indigo-500/10 border border-indigo-400/30">
@@ -427,10 +442,10 @@ const Module2Section5_5: React.FC = () => {
               <p>Motor starting currents are typically 6-8 times full load current. This can cause significant temporary voltage drop affecting other equipment. Consider starting methods and dedicated feeders for large motors.</p>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Practical Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Step-by-step examples</h2>
           <div className="space-y-6 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
@@ -511,17 +526,17 @@ const Module2Section5_5: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Practice Tasks */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practice tasks</h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
               <p className="font-medium">Task 1: Office lighting circuit</p>
               <p>Calculate voltage drop for: 35m run, 1.5mm² T&E clipped direct, 6A load, lighting circuit.</p>
               <Collapsible>
-                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline">Show solution</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline min-h-[44px] touch-manipulation">Show solution</CollapsibleTrigger>
                 <CollapsibleContent className="mt-2">
                   <p>mV/A/m = 29, Total length = 70m, Vd = (29 × 6 × 70) ÷ 1000 = 12.18V, %Vd = 5.3% - FAILS (&gt;3%). Need 2.5mm².</p>
                 </CollapsibleContent>
@@ -532,7 +547,7 @@ const Module2Section5_5: React.FC = () => {
               <p className="font-medium">Task 2: Workshop socket</p>
               <p>Calculate for: 20m run, 4mm² SWA clipped direct, 25A load, socket circuit.</p>
               <Collapsible>
-                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline">Show solution</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline min-h-[44px] touch-manipulation">Show solution</CollapsibleTrigger>
                 <CollapsibleContent className="mt-2">
                   <p>mV/A/m = 11, Total length = 40m, Vd = (11 × 25 × 40) ÷ 1000 = 11V, %Vd = 4.8% - PASSES (≤5%).</p>
                 </CollapsibleContent>
@@ -543,7 +558,7 @@ const Module2Section5_5: React.FC = () => {
               <p className="font-medium">Task 3: Submain feeder</p>
               <p>60m run, 16mm² XLPE in tray, 80A load. What's the voltage drop percentage?</p>
               <Collapsible>
-                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline">Show solution</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline min-h-[44px] touch-manipulation">Show solution</CollapsibleTrigger>
                 <CollapsibleContent className="mt-2">
                   <p>mV/A/m = 2.8, Total length = 120m, Vd = (2.8 × 80 × 120) ÷ 1000 = 26.9V, %Vd = 11.7% - Excessive for final circuits.</p>
                 </CollapsibleContent>
@@ -554,17 +569,17 @@ const Module2Section5_5: React.FC = () => {
               <p className="font-medium">Task 4: Ring final circuit</p>
               <p>Ring circuit with 30m total length, 2.5mm² T&E, 20A balanced load at midpoint. Calculate voltage drop.</p>
               <Collapsible>
-                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline">Show solution</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline min-h-[44px] touch-manipulation">Show solution</CollapsibleTrigger>
                 <CollapsibleContent className="mt-2">
                   <p>For balanced load at midpoint, effective length = 30/4 = 7.5m. Current per leg = 10A. Vd = (18 × 10 × 15) ÷ 1000 = 2.7V, %Vd = 1.2% - PASSES.</p>
                 </CollapsibleContent>
               </Collapsible>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Design checklist */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">6-step design checklist</h2>
           <ol className="list-decimal pl-6 space-y-2 text-white text-sm">
             <li><strong>Determine load:</strong> Calculate design current including diversity factors</li>
@@ -574,10 +589,10 @@ const Module2Section5_5: React.FC = () => {
             <li><strong>Calculate Vd:</strong> Apply formula and check percentage against limits</li>
             <li><strong>Document:</strong> Record calculations and upsize cable if necessary</li>
           </ol>
-        </Card>
+        </section>
 
         {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide: Voltage Drop Essentials</h2>
           <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm text-white">
             <div className="bg-card border border-white/10 p-4 rounded-lg">
@@ -609,15 +624,15 @@ const Module2Section5_5: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* FAQ Section */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, i) => (
               <Collapsible key={i}>
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-3 text-left hover:bg-[#121212]/20 rounded-lg border border-white/10 transition-colors">
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-3 text-left hover:bg-[#121212]/20 rounded-lg border border-white/10 transition-colors min-h-[44px] touch-manipulation">
                   <span className="font-medium text-white">{faq.q}</span>
                   <TrendingDown className="w-4 h-4 text-white" />
                 </CollapsibleTrigger>
@@ -627,10 +642,10 @@ const Module2Section5_5: React.FC = () => {
               </Collapsible>
             ))}
           </div>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
             <div>
@@ -655,13 +670,13 @@ const Module2Section5_5: React.FC = () => {
               </ol>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Comprehensive Quiz */}
-        <Card className="mb-20 p-6 bg-transparent border-white/20">
+        <section className="mb-20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check Quiz (10 Questions)</h2>
           <Quiz questions={quizQuestions} />
-        </Card>
+        </section>
 
         {/* Another InlineCheck */}
         <InlineCheck
@@ -673,10 +688,10 @@ const Module2Section5_5: React.FC = () => {
 
         {/* Bottom nav */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5" asChild>
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5" asChild>
             <Link to="../5-4"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a]" asChild>
+          <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]" asChild>
             <Link to="../5-6">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
           </Button>
         </nav>

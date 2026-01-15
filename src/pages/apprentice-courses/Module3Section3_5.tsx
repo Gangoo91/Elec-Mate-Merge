@@ -19,9 +19,6 @@ import {
   Truck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import React from "react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -182,7 +179,7 @@ const quizQuestions = [
 
 const Module3Section3_5: React.FC = () => {
   console.log("Module3Section3_5 component loaded");
-  
+
   useSEO(
     "Safe Use, Transport, and Storage of Tools – Module 3 (3.3.5)",
     "Complete guide to safe tool handling, transport methods and storage practices. PPE requirements and workplace safety compliance."
@@ -208,13 +205,13 @@ const Module3Section3_5: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -226,34 +223,32 @@ const Module3Section3_5: React.FC = () => {
       </div>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Truck className="w-6 h-6 text-white" />
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <header className="mb-6 sm:mb-8 text-center">
+          <div className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
+            <span className="text-elec-yellow text-sm font-medium">Module 3 - Section 3.3.5</span>
+          </div>
+          <div className="flex justify-center mb-4">
+            <div className="p-3 rounded-full bg-white/5">
+              <Truck className="w-8 h-8 text-white" />
             </div>
-            <Badge
-              variant="outline"
-              className="border-elec-yellow/30 text-elec-yellow"
-            >
-              Section 3.3.5
-            </Badge>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Safe Use, Transport, and Storage of Tools
           </h1>
-          <p className="text-white">
+          <p className="text-white/70">
             Essential practices for safe tool handling, transport methods and storage to prevent injury and extend tool life.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             Introduction
           </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Safe use: right tool, right PPE, follow instructions, stable position.</li>
@@ -262,7 +257,7 @@ const Module3Section3_5: React.FC = () => {
                 <li>Height work: tool lanyards essential, never leave tools unsecured.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
@@ -277,11 +272,12 @@ const Module3Section3_5: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             Learning outcomes
           </h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
@@ -290,14 +286,17 @@ const Module3Section3_5: React.FC = () => {
             <li>Explain how proper storage helps maintain tool condition and safety.</li>
             <li>Identify PPE requirements for tool operation.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Content
+          </h2>
 
           {/* Safe Use */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> Safe Use of Tools
             </h3>
@@ -336,13 +335,13 @@ const Module3Section3_5: React.FC = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[0]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* Safe Transport */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Truck className="w-5 h-5" /> Safe Transport of Tools
             </h3>
@@ -398,13 +397,13 @@ const Module3Section3_5: React.FC = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[1]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* Safe Storage */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Home className="w-5 h-5" /> Safe Storage of Tools
             </h3>
@@ -443,14 +442,15 @@ const Module3Section3_5: React.FC = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[2]} />
-        </Card>
+        </section>
 
         {/* What this means on site */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             <Building className="w-5 h-5" /> What this means on site
           </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
@@ -473,11 +473,12 @@ const Module3Section3_5: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Installation Practices */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             <Settings className="w-5 h-5" /> Installation Practices
           </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
@@ -502,11 +503,12 @@ const Module3Section3_5: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Common Mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
             <AlertTriangle className="w-5 h-5 text-elec-yellow" /> Common Mistakes
           </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
@@ -529,11 +531,12 @@ const Module3Section3_5: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Health & Safety Context */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
             <Shield className="w-5 h-5" /> Health & Safety Context
           </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
@@ -556,20 +559,21 @@ const Module3Section3_5: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[3]} />
 
         {/* Real-world Scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">08</span>
             <Factory className="w-5 h-5" /> Real-world Scenario
           </h2>
           <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
             <p className="font-medium mb-2">Scenario: Falling Angle Grinder Near Miss</p>
             <p className="text-sm mb-4">
-              On a commercial site, an unsecured angle grinder fell from a scaffold platform after being left on the edge. 
-              It narrowly missed a worker below. Following the incident, the company implemented a mandatory tool lanyard policy 
+              On a commercial site, an unsecured angle grinder fell from a scaffold platform after being left on the edge.
+              It narrowly missed a worker below. Following the incident, the company implemented a mandatory tool lanyard policy
               for elevated work and introduced tool storage racks on scaffolds to prevent recurrence.
             </p>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -593,11 +597,12 @@ const Module3Section3_5: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">09</span>
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
@@ -605,18 +610,21 @@ const Module3Section3_5: React.FC = () => {
               <div key={index}>
                 <p className="font-medium text-white mb-1">{faq.q}</p>
                 <p className="text-sm text-white">{faq.a}</p>
-                {index < faqs.length - 1 && <Separator className="mt-4" />}
+                {index < faqs.length - 1 && <div className="my-4 border-t border-white/10" />}
               </div>
             ))}
           </div>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">10</span>
+            Summary
+          </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <p>
-              Safe use, transport, and storage of tools are key elements of site safety and professionalism. 
+              Safe use, transport, and storage of tools are key elements of site safety and professionalism.
               Proper handling prevents accidents, protects tools from damage, and ensures they are ready for work when needed.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
@@ -640,11 +648,12 @@ const Module3Section3_5: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Apprentice Do's and Don'ts */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">11</span>
             <Target className="w-5 h-5" /> Apprentice Do's and Don'ts
           </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
@@ -653,12 +662,12 @@ const Module3Section3_5: React.FC = () => {
                 <CheckCircle2 className="w-4 h-4" /> DO
               </p>
               <ul className="space-y-2 text-sm text-white">
-                <li>✓ Use tool lanyards when working at height</li>
-                <li>✓ Secure tools in proper containers during transport</li>
-                <li>✓ Store insulated tools separately</li>
-                <li>✓ Wear appropriate PPE for each tool</li>
-                <li>✓ Remove batteries before transport</li>
-                <li>✓ Inspect tools after transport before use</li>
+                <li>Use tool lanyards when working at height</li>
+                <li>Secure tools in proper containers during transport</li>
+                <li>Store insulated tools separately</li>
+                <li>Wear appropriate PPE for each tool</li>
+                <li>Remove batteries before transport</li>
+                <li>Inspect tools after transport before use</li>
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
@@ -666,20 +675,21 @@ const Module3Section3_5: React.FC = () => {
                 <AlertTriangle className="w-4 h-4" /> DON'T
               </p>
               <ul className="space-y-2 text-sm text-white">
-                <li>✗ Carry sharp tools loose in pockets</li>
-                <li>✗ Leave tools unsecured at height</li>
-                <li>✗ Store tools in damp conditions</li>
-                <li>✗ Mix insulated and non-insulated tools</li>
-                <li>✗ Transport tools without proper securing</li>
-                <li>✗ Use wrong tools for the job</li>
+                <li>Carry sharp tools loose in pockets</li>
+                <li>Leave tools unsecured at height</li>
+                <li>Store tools in damp conditions</li>
+                <li>Mix insulated and non-insulated tools</li>
+                <li>Transport tools without proper securing</li>
+                <li>Use wrong tools for the job</li>
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Pocket Card Quick Reference */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">12</span>
             Pocket Card Quick Reference
           </h2>
           <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30 text-sm">
@@ -708,36 +718,40 @@ const Module3Section3_5: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Key References */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Key References</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">13</span>
+            Key References
+          </h2>
           <div className="text-xs sm:text-sm text-white space-y-2">
             <p><strong>PUWER 1998:</strong> Provision and Use of Work Equipment Regulations</p>
             <p><strong>Work at Height Regulations 2005:</strong> Prevention of falls and dropped objects</p>
             <p><strong>MHSWR 1999:</strong> Management of Health and Safety at Work Regulations</p>
             <p><strong>PPE Regulations 2002:</strong> Personal Protective Equipment at Work</p>
           </div>
-        </Card>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">14</span>
             Knowledge Check
           </h2>
           <Quiz questions={quizQuestions} />
-        </Card>
+        </section>
 
         {/* Navigation */}
-        <div className="flex justify-between">
-          <Button variant="outline" asChild>
+        <div className="flex flex-col-reverse sm:flex-row justify-between gap-3">
+          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../3-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Tool Inspection
             </Link>
           </Button>
-          <Button asChild>
+          <Button className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               Back to Section 3.3
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

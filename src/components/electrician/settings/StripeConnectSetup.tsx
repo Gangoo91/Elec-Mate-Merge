@@ -30,10 +30,31 @@ const StripeConnectSetup: React.FC = () => {
   const [status, setStatus] = useState<StripeConnectStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [connecting, setConnecting] = useState(false);
+  const [previousStatus, setPreviousStatus] = useState<string | null>(null);
 
   useEffect(() => {
     checkStatus();
+
+    // Check for status changes when returning from Stripe onboarding
+    const handleFocus = () => {
+      checkStatus();
+    };
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
   }, []);
+
+  // Show success toast when status changes to active
+  useEffect(() => {
+    if (previousStatus && previousStatus !== 'active' && status?.status === 'active') {
+      toast.success('Stripe Connected Successfully!', {
+        description: 'You can now accept card payments on invoices. Clients will see a "Pay Now" button.',
+        duration: 6000,
+      });
+    }
+    if (status?.status) {
+      setPreviousStatus(status.status);
+    }
+  }, [status?.status]);
 
   const checkStatus = async () => {
     try {

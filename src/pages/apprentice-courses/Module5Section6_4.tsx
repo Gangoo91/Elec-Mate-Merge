@@ -1,8 +1,5 @@
 import { ArrowLeft, ArrowRight, MessageCircle, Target, CheckCircle2, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -135,7 +132,7 @@ const quickCheckQuestions = [
     explanation: "Always ask for clarification immediately if instructions are unclear. Guessing can lead to errors, rework, and potential safety hazards."
   },
   {
-    id: "clarify2", 
+    id: "clarify2",
     question: "What is the 'Repeat Back' method?",
     options: [
       "Repeating instructions word for word",
@@ -194,11 +191,15 @@ const Module5Section6_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6
@@ -208,415 +209,397 @@ const Module5Section6_4 = () => {
       </div>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-12">
-        {/* Page Header */}
-        <header className="mb-12">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="p-2 rounded ">
-              <MessageCircle className="w-6 h-6 text-white" />
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 6.4</span>
             </div>
-            <div>
-              <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow mb-2">
-                Section 5.6.4
-              </Badge>
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                Resolving Misunderstandings and Asking for Clarification
-              </h1>
-              <p className="text-white mt-2">
-                Essential skills for clear communication and preventing errors on site
-              </p>
-            </div>
-          </div>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Resolving Misunderstandings and Asking for Clarification
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Essential skills for clear communication and preventing errors on site
+            </p>
+          </header>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Always clarify if unsure — don't assume</li>
-                <li>Use the "Repeat Back" method to confirm instructions</li>
-                <li>Ask specific, polite questions</li>
-                <li>Stop work if instructions conflict or seem unsafe</li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Confused expressions or hesitation from colleagues</li>
-                <li><strong>Use:</strong> "Repeat Back" method for confirmation</li>
-                <li><strong>Check:</strong> Against drawings and specifications when uncertain</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-2xl font-bold mb-4 text-white">Learning Outcomes</h2>
-          <p className="text-base text-white mb-4">
-            By the end of this subsection, you will be able to:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>Recognise signs of miscommunication on site</li>
-            <li>Use effective techniques to ask for clarification</li>
-            <li>Apply strategies to resolve misunderstandings quickly</li>
-            <li>Appreciate the importance of clear communication to prevent errors and accidents</li>
-          </ul>
-        </Card>
-
-        {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-2xl font-bold mb-6 text-white">Content / Learning</h2>
-          
-          {/* Section 1 - Blue */}
-          <div className="border-l-4 border-l-elec-yellow p-4 mb-6">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-elec-yellow text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
-                1
+          {/* Introduction */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">00</span>
+              Introduction
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4 text-white/90">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
+                <ul className="list-disc pl-5 space-y-1 text-sm">
+                  <li>Always clarify if unsure — don't assume</li>
+                  <li>Use the "Repeat Back" method to confirm instructions</li>
+                  <li>Ask specific, polite questions</li>
+                  <li>Stop work if instructions conflict or seem unsafe</li>
+                </ul>
               </div>
-              <div>
-                <h3 className="text-lg sm:text-xl font-semibold text-elec-yellow mb-3">
-                  Causes of Misunderstandings
-                </h3>
-                <p className="text-base text-white mb-3">
-                  On construction sites, communication breakdowns can happen easily. Understanding the common causes helps prevent them:
-                </p>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-base text-white mb-2"><strong>Communication Issues:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                      <li>Poorly explained instructions or unclear technical language</li>
-                      <li>Use of jargon without checking understanding</li>
-                      <li>Assumptions made instead of checking facts</li>
-                      <li>Information passed through multiple people</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-base text-white mb-2"><strong>Environmental Factors:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                      <li>Noise or distractions on site affecting concentration</li>
-                      <li>Poor lighting making drawings difficult to read</li>
-                      <li>Time pressure leading to rushed explanations</li>
-                      <li>Multiple tasks being explained at once</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-base text-white mb-2"><strong>Personal Factors:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                      <li>Cultural or language differences affecting understanding</li>
-                      <li>Different levels of experience and knowledge</li>
-                      <li>Reluctance to admit not understanding</li>
-                      <li>Fatigue affecting concentration and comprehension</li>
-                    </ul>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
+                <ul className="list-disc pl-5 space-y-1 text-sm">
+                  <li><strong>Spot:</strong> Confused expressions or hesitation from colleagues</li>
+                  <li><strong>Use:</strong> "Repeat Back" method for confirmation</li>
+                  <li><strong>Check:</strong> Against drawings and specifications when uncertain</li>
+                </ul>
               </div>
             </div>
-          </div>
+          </section>
 
-          {/* Section 2 - Green */}
-          <div className="border-l-4 border-l-green-500 p-4 mb-6">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
-                2
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <MessageCircle className="w-5 h-5 text-elec-yellow/80" />
+              Learning Outcomes
+            </h2>
+            <p className="text-white/90 mb-4">
+              By the end of this subsection, you will be able to:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 text-white/80">
+              <li>Recognise signs of miscommunication on site</li>
+              <li>Use effective techniques to ask for clarification</li>
+              <li>Apply strategies to resolve misunderstandings quickly</li>
+              <li>Appreciate the importance of clear communication to prevent errors and accidents</li>
+            </ul>
+          </section>
+
+          {/* Section 1 */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Causes of Misunderstandings
+            </h2>
+            <p className="text-white/80 mb-4 leading-relaxed">
+              On construction sites, communication breakdowns can happen easily. Understanding the common causes helps prevent them:
+            </p>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">Communication Issues:</p>
+                <ul className="text-white/80 ml-4 list-disc space-y-1 text-sm">
+                  <li>Poorly explained instructions or unclear technical language</li>
+                  <li>Use of jargon without checking understanding</li>
+                  <li>Assumptions made instead of checking facts</li>
+                  <li>Information passed through multiple people</li>
+                </ul>
               </div>
-              <div>
-                <h3 className="text-lg sm:text-xl font-semibold text-green-600 mb-3">
-                  Spotting Signs of Misunderstanding
-                </h3>
-                <p className="text-base text-white mb-3">
-                  Early recognition of misunderstandings prevents errors and accidents:
-                </p>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-base text-white mb-2"><strong>Verbal and Non-Verbal Signs:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                      <li>Confused expressions or hesitation from team members</li>
-                      <li>Requests to repeat instructions multiple times</li>
-                      <li>Vague responses like "I think so" or "probably"</li>
-                      <li>Body language showing uncertainty or confusion</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-base text-white mb-2"><strong>Work Performance Indicators:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                      <li>Work being done incorrectly or differently than instructed</li>
-                      <li>Repeated questions on the same task</li>
-                      <li>Lack of progress due to uncertainty</li>
-                      <li>Unusual delays or apparent avoidance of tasks</li>
-                    </ul>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
+                <p className="font-medium text-white mb-2">Environmental Factors:</p>
+                <ul className="text-white/80 ml-4 list-disc space-y-1 text-sm">
+                  <li>Noise or distractions on site affecting concentration</li>
+                  <li>Poor lighting making drawings difficult to read</li>
+                  <li>Time pressure leading to rushed explanations</li>
+                  <li>Multiple tasks being explained at once</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                <p className="font-medium text-white mb-2">Personal Factors:</p>
+                <ul className="text-white/80 ml-4 list-disc space-y-1 text-sm">
+                  <li>Cultural or language differences affecting understanding</li>
+                  <li>Different levels of experience and knowledge</li>
+                  <li>Reluctance to admit not understanding</li>
+                  <li>Fatigue affecting concentration and comprehension</li>
+                </ul>
               </div>
             </div>
-          </div>
+          </section>
+
+          {/* Section 2 */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Spotting Signs of Misunderstanding
+            </h2>
+            <p className="text-white/80 mb-4 leading-relaxed">
+              Early recognition of misunderstandings prevents errors and accidents:
+            </p>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                <p className="font-medium text-white mb-2">Verbal and Non-Verbal Signs:</p>
+                <ul className="text-white/80 ml-4 list-disc space-y-1 text-sm">
+                  <li>Confused expressions or hesitation from team members</li>
+                  <li>Requests to repeat instructions multiple times</li>
+                  <li>Vague responses like "I think so" or "probably"</li>
+                  <li>Body language showing uncertainty or confusion</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
+                <p className="font-medium text-white mb-2">Work Performance Indicators:</p>
+                <ul className="text-white/80 ml-4 list-disc space-y-1 text-sm">
+                  <li>Work being done incorrectly or differently than instructed</li>
+                  <li>Repeated questions on the same task</li>
+                  <li>Lack of progress due to uncertainty</li>
+                  <li>Unusual delays or apparent avoidance of tasks</li>
+                </ul>
+              </div>
+            </div>
+          </section>
 
           <InlineCheck {...quickCheckQuestions[0]} />
-          <Separator className="my-6" />
 
-          {/* Section 3 - Purple */}
-          <div className="border-l-4 border-l-purple-500 p-4 mb-6">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
-                3
+          {/* Section 3 */}
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Asking for Clarification Effectively
+            </h2>
+            <p className="text-white/80 mb-4 leading-relaxed">
+              Professional communication techniques ensure clarity and prevent mistakes:
+            </p>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">The "Repeat Back" Method:</p>
+                <ul className="text-white/80 ml-4 list-disc space-y-1 text-sm">
+                  <li>Summarise instructions in your own words for confirmation</li>
+                  <li>Example: "Just to confirm, you want this conduit run along the ceiling and dropped into the riser?"</li>
+                  <li>Helps identify misunderstandings before work begins</li>
+                  <li>Shows active listening and professionalism</li>
+                </ul>
               </div>
-              <div>
-                <h3 className="text-lg sm:text-xl font-semibold text-purple-600 mb-3">
-                  Asking for Clarification Effectively
-                </h3>
-                <p className="text-base text-white mb-3">
-                  Professional communication techniques ensure clarity and prevent mistakes:
-                </p>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-base text-white mb-2"><strong>The "Repeat Back" Method:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                      <li>Summarise instructions in your own words for confirmation</li>
-                      <li>Example: "Just to confirm, you want this conduit run along the ceiling and dropped into the riser?"</li>
-                      <li>Helps identify misunderstandings before work begins</li>
-                      <li>Shows active listening and professionalism</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-base text-white mb-2"><strong>Effective Questioning Techniques:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                      <li>Be polite and professional — avoid sounding confrontational</li>
-                      <li>Ask for examples, drawings, or demonstrations if unsure</li>
-                      <li>Confirm deadlines and priorities clearly</li>
-                      <li>Request specific information rather than general explanations</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-base text-white mb-2"><strong>Professional Language:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                      <li>Use phrases like "Could you clarify..." rather than "I don't understand"</li>
-                      <li>Focus on the task, not the person giving instructions</li>
-                      <li>Keep questions short, clear, and specific</li>
-                      <li>Thank supervisors for their time and clarification</li>
-                    </ul>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
+                <p className="font-medium text-white mb-2">Effective Questioning Techniques:</p>
+                <ul className="text-white/80 ml-4 list-disc space-y-1 text-sm">
+                  <li>Be polite and professional — avoid sounding confrontational</li>
+                  <li>Ask for examples, drawings, or demonstrations if unsure</li>
+                  <li>Confirm deadlines and priorities clearly</li>
+                  <li>Request specific information rather than general explanations</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                <p className="font-medium text-white mb-2">Professional Language:</p>
+                <ul className="text-white/80 ml-4 list-disc space-y-1 text-sm">
+                  <li>Use phrases like "Could you clarify..." rather than "I don't understand"</li>
+                  <li>Focus on the task, not the person giving instructions</li>
+                  <li>Keep questions short, clear, and specific</li>
+                  <li>Thank supervisors for their time and clarification</li>
+                </ul>
               </div>
             </div>
-          </div>
+          </section>
 
           <InlineCheck {...quickCheckQuestions[1]} />
-          <Separator className="my-6" />
 
-          {/* Section 4 - Orange */}
-          <div className="border-l-4 border-l-orange-500 p-4 mb-6">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
-                4
+          {/* Section 4 */}
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Strategies for Resolving Misunderstandings
+            </h2>
+            <p className="text-white/80 mb-4 leading-relaxed">
+              When misunderstandings occur, quick and effective resolution is essential:
+            </p>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
+                <p className="font-medium text-white mb-2">Immediate Actions:</p>
+                <ul className="text-white/80 ml-4 list-disc space-y-1 text-sm">
+                  <li>Stop work if unsure — mistakes cost time and can be unsafe</li>
+                  <li>Acknowledge the misunderstanding without blaming anyone</li>
+                  <li>Seek clarification from the original source of instructions</li>
+                  <li>Document the clarification to prevent future confusion</li>
+                </ul>
               </div>
-              <div>
-                <h3 className="text-lg sm:text-xl font-semibold text-orange-600 mb-3">
-                  Strategies for Resolving Misunderstandings
-                </h3>
-                <p className="text-base text-white mb-3">
-                  When misunderstandings occur, quick and effective resolution is essential:
-                </p>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-base text-white mb-2"><strong>Immediate Actions:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                      <li>Stop work if unsure — mistakes cost time and can be unsafe</li>
-                      <li>Acknowledge the misunderstanding without blaming anyone</li>
-                      <li>Seek clarification from the original source of instructions</li>
-                      <li>Document the clarification to prevent future confusion</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-base text-white mb-2"><strong>Reference Materials:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                      <li>Refer back to site drawings, specifications, or method statements</li>
-                      <li>Check against BS 7671 Wiring Regulations when applicable</li>
-                      <li>Use manufacturer's instructions for specific equipment</li>
-                      <li>Consult site-specific safety procedures and protocols</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-base text-white mb-2"><strong>Escalation Procedures:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                      <li>If conflicting instructions are given, escalate to the foreman or manager</li>
-                      <li>Ask supervisors or experienced colleagues for confirmation</li>
-                      <li>Request written clarification for complex or critical tasks</li>
-                      <li>Follow site hierarchy for decision-making</li>
-                    </ul>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">Reference Materials:</p>
+                <ul className="text-white/80 ml-4 list-disc space-y-1 text-sm">
+                  <li>Refer back to site drawings, specifications, or method statements</li>
+                  <li>Check against BS 7671 Wiring Regulations when applicable</li>
+                  <li>Use manufacturer's instructions for specific equipment</li>
+                  <li>Consult site-specific safety procedures and protocols</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-teal-500/50">
+                <p className="font-medium text-white mb-2">Escalation Procedures:</p>
+                <ul className="text-white/80 ml-4 list-disc space-y-1 text-sm">
+                  <li>If conflicting instructions are given, escalate to the foreman or manager</li>
+                  <li>Ask supervisors or experienced colleagues for confirmation</li>
+                  <li>Request written clarification for complex or critical tasks</li>
+                  <li>Follow site hierarchy for decision-making</li>
+                </ul>
               </div>
             </div>
-          </div>
+          </section>
 
           <InlineCheck {...quickCheckQuestions[2]} />
-          <Separator className="my-6" />
 
-          {/* Section 5 - Teal */}
-          <div className="border-l-4 border-l-teal-500 bg-teal-500/5 p-4 mb-6">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-full bg-teal-500 text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
-                5
+          {/* Section 5 */}
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Benefits of Clarification
+            </h2>
+            <p className="text-white/80 mb-4 leading-relaxed">
+              Effective clarification provides multiple benefits for individuals, teams, and projects:
+            </p>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
+                <p className="font-medium text-white mb-2">Safety and Quality Benefits:</p>
+                <ul className="text-white/80 ml-4 list-disc space-y-1 text-sm">
+                  <li>Prevents errors and rework, saving time and materials</li>
+                  <li>Reduces the risk of accidents caused by misunderstandings</li>
+                  <li>Ensures work meets specifications and quality standards</li>
+                  <li>Improves compliance with safety regulations and procedures</li>
+                </ul>
               </div>
-              <div>
-                <h3 className="text-lg sm:text-xl font-semibold text-teal-600 mb-3">
-                  Benefits of Clarification
-                </h3>
-                <p className="text-base text-white mb-3">
-                  Effective clarification provides multiple benefits for individuals, teams, and projects:
+              <div className="p-4 rounded-lg bg-blue-500/5 border-l-2 border-blue-500/50">
+                <p className="font-medium text-white mb-2">Professional and Team Benefits:</p>
+                <ul className="text-white/80 ml-4 list-disc space-y-1 text-sm">
+                  <li>Strengthens teamwork and trust between colleagues</li>
+                  <li>Demonstrates professionalism and commitment to quality</li>
+                  <li>Builds reputation for reliability and attention to detail</li>
+                  <li>Creates a positive work environment where questions are welcomed</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50">
+                <p className="font-medium text-white mb-2">Project Benefits:</p>
+                <ul className="text-white/80 ml-4 list-disc space-y-1 text-sm">
+                  <li>Saves time and reduces costs through fewer mistakes</li>
+                  <li>Keeps projects on schedule and within budget</li>
+                  <li>Improves client satisfaction with quality outcomes</li>
+                  <li>Reduces stress and pressure on all team members</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          {/* Practical Guidance */}
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <Target className="w-5 h-5 text-elec-yellow/80" />
+              Practical Guidance
+            </h2>
+            <div className="space-y-4 text-white/80 leading-relaxed">
+              <p><strong className="text-white">If instructions are unclear, always ask immediately rather than guessing.</strong> Guessing can lead to costly errors and safety risks.</p>
+
+              <p><strong className="text-white">Use the "Repeat Back" method:</strong> summarise instructions to confirm understanding. For example: "So you want me to install three sockets on this wall, with the cables run behind the plasterboard?"</p>
+
+              <p><strong className="text-white">Keep questions short, clear, and specific.</strong> Instead of "I don't understand," ask "Could you show me exactly where this cable should terminate?"</p>
+
+              <p><strong className="text-white">Avoid blaming language — focus on the task, not the person.</strong> Say "Could you clarify the connection sequence?" rather than "You didn't explain this properly."</p>
+
+              <p><strong className="text-white">When in doubt, check against drawings or the BS 7671 Wiring Regulations.</strong> These provide authoritative guidance when verbal instructions are unclear.</p>
+            </div>
+          </section>
+
+          {/* Real World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Real World Example
+            </h2>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+                <h3 className="font-semibold text-red-400 mb-2">Communication Breakdown</h3>
+                <p className="text-white/80 text-sm leading-relaxed">
+                  An apprentice is told to "terminate the cable in the distribution board." He assumes this means connecting it to the main switch, but the supervisor intended it to be connected to an outgoing circuit breaker. Because he didn't clarify, the result was a wasted hour of rework and an unnecessary safety risk.
                 </p>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-base text-white mb-2"><strong>Safety and Quality Benefits:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                      <li>Prevents errors and rework, saving time and materials</li>
-                      <li>Reduces the risk of accidents caused by misunderstandings</li>
-                      <li>Ensures work meets specifications and quality standards</li>
-                      <li>Improves compliance with safety regulations and procedures</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-base text-white mb-2"><strong>Professional and Team Benefits:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                      <li>Strengthens teamwork and trust between colleagues</li>
-                      <li>Demonstrates professionalism and commitment to quality</li>
-                      <li>Builds reputation for reliability and attention to detail</li>
-                      <li>Creates a positive work environment where questions are welcomed</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-base text-white mb-2"><strong>Project Benefits:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                      <li>Saves time and reduces costs through fewer mistakes</li>
-                      <li>Keeps projects on schedule and within budget</li>
-                      <li>Improves client satisfaction with quality outcomes</li>
-                      <li>Reduces stress and pressure on all team members</li>
-                    </ul>
-                  </div>
+              </div>
+              <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
+                <h3 className="font-semibold text-green-400 mb-2">Successful Resolution</h3>
+                <p className="text-white/80 text-sm leading-relaxed">
+                  By simply repeating back the instruction for confirmation - "Just to confirm, you want me to connect this cable to the main switch in the board?" - the mistake would have been avoided. The supervisor could then clarify: "No, connect it to the spare MCB in position 6."
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                  <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
+                  <p className="text-white/80 text-sm">A: {faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Pocket Guide */}
+          <section className="mb-10">
+            <div className="p-5 rounded-lg bg-gradient-to-br from-elec-yellow/10 to-amber-600/5 border border-elec-yellow/30">
+              <div className="flex items-center gap-3 mb-4">
+                <BookOpen className="w-5 h-5 text-elec-yellow" />
+                <h2 className="text-xl font-semibold text-white">Pocket Guide</h2>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <h3 className="font-medium text-white mb-2">Quick Clarification Steps:</h3>
+                  <ul className="list-disc pl-5 space-y-1 text-white/80 text-sm">
+                    <li>Always clarify if unsure — don't assume</li>
+                    <li>Use the "Repeat Back" method to confirm instructions</li>
+                    <li>Ask specific, polite questions</li>
+                    <li>Stop work if instructions conflict or seem unsafe</li>
+                    <li>Check against drawings and specifications</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-medium text-white mb-2">Professional Phrases:</h3>
+                  <ul className="list-disc pl-5 space-y-1 text-white/80 text-sm">
+                    <li>"Could you clarify..."</li>
+                    <li>"Just to confirm..."</li>
+                    <li>"Could you show me exactly where..."</li>
+                    <li>"Is this correct..."</li>
+                    <li>"Which should take priority..."</li>
+                  </ul>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
 
-          <InlineCheck {...quickCheckQuestions[3]} />
-        </Card>
-
-        {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-start gap-3 mb-4">
-            <Target className="w-6 h-6 text-elec-yellow mt-1" />
-            <h2 className="text-2xl font-bold text-white">Practical Guidance</h2>
-          </div>
-          <div className="space-y-4 text-base text-white">
-            <p><strong>If instructions are unclear, always ask immediately rather than guessing.</strong> Guessing can lead to costly errors and safety risks.</p>
-            
-            <p><strong>Use the "Repeat Back" method:</strong> summarise instructions to confirm understanding. For example: "So you want me to install three sockets on this wall, with the cables run behind the plasterboard?"</p>
-            
-            <p><strong>Keep questions short, clear, and specific.</strong> Instead of "I don't understand," ask "Could you show me exactly where this cable should terminate?"</p>
-            
-            <p><strong>Avoid blaming language — focus on the task, not the person.</strong> Say "Could you clarify the connection sequence?" rather than "You didn't explain this properly."</p>
-            
-            <p><strong>When in doubt, check against drawings or the BS 7671 Wiring Regulations.</strong> These provide authoritative guidance when verbal instructions are unclear.</p>
-          </div>
-        </Card>
-
-        {/* Real World Example */}
-        <Card className="mb-8 p-6 bg-transparent border-white/20">
-          <h2 className="text-2xl font-bold mb-4 text-white">Real World Example</h2>
-          <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-4">
-            <h3 className="font-semibold text-red-800 text-elec-yellow mb-2">Communication Breakdown</h3>
-            <p className="text-base text-white">
-              An apprentice is told to "terminate the cable in the distribution board." He assumes this means connecting it to the main switch, but the supervisor intended it to be connected to an outgoing circuit breaker. Because he didn't clarify, the result was a wasted hour of rework and an unnecessary safety risk.
-            </p>
-          </div>
-          <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h3 className="font-semibold text-green-800 dark:text-green-300 mb-2">Successful Resolution</h3>
-            <p className="text-base text-white">
-              By simply repeating back the instruction for confirmation - "Just to confirm, you want me to connect this cable to the main switch in the board?" - the mistake would have been avoided. The supervisor could then clarify: "No, connect it to the spare MCB in position 6."
-            </p>
-          </div>
-        </Card>
-
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-2xl font-bold mb-6 text-white">Frequently Asked Questions</h2>
-          <div className="space-y-6">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-l-elec-yellow pl-4">
-                <h3 className="font-semibold text-white mb-2">Q: {faq.question}</h3>
-                <p className="text-white">A: {faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
-
-        {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-card/10 to-elec-yellow/10 border-elec-yellow/30">
-          <div className="flex items-start gap-3 mb-4">
-            <BookOpen className="w-6 h-6 text-elec-yellow mt-1" />
-            <h2 className="text-2xl font-bold text-white">Pocket Guide</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base">
-            <div>
-              <h3 className="font-semibold text-white mb-2">Quick Clarification Steps:</h3>
-              <ul className="list-disc pl-6 space-y-1 text-white">
-                <li>Always clarify if unsure — don't assume</li>
-                <li>Use the "Repeat Back" method to confirm instructions</li>
-                <li>Ask specific, polite questions</li>
-                <li>Stop work if instructions conflict or seem unsafe</li>
-                <li>Check against drawings and specifications</li>
-              </ul>
+          {/* Recap */}
+          <section className="mb-10">
+            <div className="flex items-center gap-3 mb-4">
+              <CheckCircle2 className="w-5 h-5 text-green-500" />
+              <h2 className="text-xl font-semibold text-white">Recap</h2>
             </div>
-            <div>
-              <h3 className="font-semibold text-white mb-2">Professional Phrases:</h3>
-              <ul className="list-disc pl-6 space-y-1 text-white">
-                <li>"Could you clarify..."</li>
-                <li>"Just to confirm..."</li>
-                <li>"Could you show me exactly where..."</li>
-                <li>"Is this correct..."</li>
-                <li>"Which should take priority..."</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+            <p className="text-white/80 mb-4">In this subsection, you've learned:</p>
+            <ul className="list-disc pl-6 space-y-2 text-white/80">
+              <li>Common causes and signs of misunderstandings on construction sites</li>
+              <li>Effective ways to ask for clarification professionally and politely</li>
+              <li>Strategies to resolve confusion quickly and safely before errors occur</li>
+              <li>Why clarification is vital for saving time, avoiding rework, and ensuring safety</li>
+            </ul>
+          </section>
 
-        {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-start gap-3 mb-4">
-            <CheckCircle2 className="w-6 h-6 text-green-600 mt-1" />
-            <h2 className="text-2xl font-bold text-white">Recap</h2>
-          </div>
-          <p className="text-base text-white mb-4">In this subsection, you've learned:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>Common causes and signs of misunderstandings on construction sites</li>
-            <li>Effective ways to ask for clarification professionally and politely</li>
-            <li>Strategies to resolve confusion quickly and safely before errors occur</li>
-            <li>Why clarification is vital for saving time, avoiding rework, and ensuring safety</li>
-          </ul>
-        </Card>
+          {/* Quiz */}
+          <Quiz questions={quizQuestions} title="Test Your Knowledge: Resolving Misunderstandings" />
 
-        {/* Quiz */}
-        <Quiz questions={quizQuestions} title="Test Your Knowledge: Resolving Misunderstandings" />
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center mt-12 pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
-            <Link to="../6-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Communicating Faults, Risks, and Task Progress
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link to="../6-5">
-              Next: Documentation and Record Keeping
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 mt-8 border-t border-white/10">
+            <Button
+              variant="outline"
+              className="border-white/20 hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../6-3">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Communicating Faults
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../../section7">
+                Next: Section 7
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

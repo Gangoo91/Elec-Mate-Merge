@@ -5,6 +5,7 @@ import { SUPPLIERS } from '../config/suppliers.js';
 /**
  * RS Components Scraper
  * Large B2B supplier - huge product range (10,000+ electrical products)
+ * Updated 2026-01-15 with working selectors
  */
 
 export class RSComponentsScraper extends BaseScraper {
@@ -87,6 +88,7 @@ export class RSComponentsScraper extends BaseScraper {
 
   /**
    * Scrape a single product listing page
+   * RS Components uses embedded JSON data in script tags (React hydration data)
    */
   private async scrapeProductPage(
     page: Page,
@@ -98,63 +100,187 @@ export class RSComponentsScraper extends BaseScraper {
     const success = await this.navigateWithRetry(page, url);
     if (!success) return products;
 
-    await this.waitForSelector(page, '.product-tile, [data-testid="product-tile"]', 5000);
+    // Wait for React hydration
+    await new Promise(r => setTimeout(r, 8000));
+
+    // Try to wait for products to render
+    try {
+      await page.waitForFunction(() => {
+        return document.body.innerText.includes('£') ||
+               document.querySelectorAll('a[href*="/web/p/"]').length > 3;
+      }, { timeout: 15000 });
+    } catch {
+      // Continue anyway
+    }
+
     await this.scrollToLoadAll(page);
 
+    // Extract products - RS embeds JSON data in script tags
     const extractedProducts = await page.evaluate(() => {
-      const cards = document.querySelectorAll('.product-tile, [data-testid="product-tile"], .product-card');
       const items: Array<{
         sku: string;
         name: string;
-        brand: string | null;
         currentPrice: string | null;
         regularPrice: string | null;
         imageUrl: string | null;
         productUrl: string | null;
         stockStatus: string;
+        brand?: string | null;
       }> = [];
 
-      cards.forEach((card) => {
+      const seenSkus = new Set<string>();
+
+      // Method 1: Extract from embedded JSON data (RS uses __NEXT_DATA__ or similar)
+      const scripts = document.querySelectorAll('script');
+      scripts.forEach((script) => {
         try {
-          const nameEl = card.querySelector('.product-tile__name, .product-name, h3, h4');
-          const priceEl = card.querySelector('.price__current, .product-price, .price');
-          const wasPriceEl = card.querySelector('.price__was, .was-price');
-          const imageEl = card.querySelector('img') as HTMLImageElement | null;
-          const linkEl = card.querySelector('a.product-tile__link, a[href*="/p/"]') as HTMLAnchorElement | null;
-          const skuEl = card.querySelector('[data-stock-number], .stock-number');
-          const stockEl = card.querySelector('.availability-status, .stock-status');
-          const brandEl = card.querySelector('.product-brand, .manufacturer');
-
-          let sku = skuEl?.textContent?.trim() ||
-                    skuEl?.getAttribute('data-stock-number') ||
-                    card.getAttribute('data-stock-number') || '';
-
-          // Extract from URL
-          if (!sku && linkEl?.href) {
-            const match = linkEl.href.match(/\/p\/(\d+)/);
-            if (match) sku = match[1];
-          }
-
-          const name = nameEl?.textContent?.trim() || '';
-
-          if (name) {
-            if (!sku) {
-              sku = `RS-${name.replace(/[^a-zA-Z0-9]/g, '').substring(0, 20)}`;
+          const content = script.textContent || '';
+          // Look for product data patterns in JSON
+          if (content.includes('"displayPrice"') || content.includes('"stockNumber"') || content.includes('"products"')) {
+            // Try to find product arrays
+            const productMatches = content.matchAll(/"stockNumber"\s*:\s*"?(\d+)"?\s*,[\s\S]*?"displayPrice"\s*:\s*"([^"]+)"[\s\S]*?"title"\s*:\s*"([^"]+)"/g);
+            for (const match of productMatches) {
+              const sku = match[1];
+              if (!seenSkus.has(sku)) {
+                seenSkus.add(sku);
+                items.push({
+                  sku,
+                  name: match[3],
+                  currentPrice: match[2],
+                  regularPrice: null,
+                  imageUrl: null,
+                  productUrl: `https://uk.rs-online.com/web/p/${sku}`,
+                  stockStatus: 'Unknown',
+                });
+              }
             }
 
-            items.push({
-              sku,
-              name,
-              brand: brandEl?.textContent?.trim() || null,
-              currentPrice: priceEl?.textContent?.trim() || null,
-              regularPrice: wasPriceEl?.textContent?.trim() || null,
-              imageUrl: imageEl?.src || imageEl?.getAttribute('data-src') || null,
-              productUrl: linkEl?.href || null,
-              stockStatus: stockEl?.textContent?.trim() || 'Unknown',
-            });
+            // Alternative format
+            const altMatches = content.matchAll(/"id"\s*:\s*"?(\d{6,})"?[\s\S]*?"name"\s*:\s*"([^"]+)"[\s\S]*?"price"\s*:\s*"?([0-9.]+)"?/g);
+            for (const match of altMatches) {
+              const sku = match[1];
+              if (!seenSkus.has(sku)) {
+                seenSkus.add(sku);
+                items.push({
+                  sku,
+                  name: match[2],
+                  currentPrice: `£${match[3]}`,
+                  regularPrice: null,
+                  imageUrl: null,
+                  productUrl: `https://uk.rs-online.com/web/p/${sku}`,
+                  stockStatus: 'Unknown',
+                });
+              }
+            }
           }
         } catch (e) {
-          console.error('Error extracting RS product:', e);
+          // JSON parse failed, continue
+        }
+      });
+
+      if (items.length > 0) return items;
+
+      // Method 2: DOM-based extraction
+      // RS uses data-testid attributes and /web/p/ URL pattern
+      const cardSelectors = [
+        '[data-testid*="product"]',
+        '[class*="product-card"]',
+        '[class*="ProductCard"]',
+        'article',
+        '[class*="searchResult"]',
+      ];
+
+      for (const selector of cardSelectors) {
+        const cards = document.querySelectorAll(selector);
+        if (cards.length > 2) {
+          cards.forEach((card) => {
+            try {
+              const link = card.querySelector('a[href*="/web/p/"]') as HTMLAnchorElement;
+              if (!link?.href) return;
+
+              const skuMatch = link.href.match(/\/web\/p\/[^\/]+\/(\d+)/);
+              if (!skuMatch) return;
+
+              const sku = skuMatch[1];
+              if (seenSkus.has(sku)) return;
+              seenSkus.add(sku);
+
+              // Get name
+              const nameEl = card.querySelector('h2, h3, h4, [class*="title"], [class*="name"], [class*="Title"]');
+              const name = nameEl?.textContent?.trim() || link.textContent?.trim() || '';
+              if (!name || name.length < 3) return;
+
+              // Get price (RS format: "£XX.XX (exc. VAT)")
+              const text = card.textContent || '';
+              const priceMatch = text.match(/£(\d+\.?\d*)/);
+
+              // Get stock status
+              let stockStatus = 'Unknown';
+              const lowerText = text.toLowerCase();
+              if (lowerText.includes('in stock')) stockStatus = 'In Stock';
+              else if (lowerText.includes('limited')) stockStatus = 'Limited Stock';
+              else if (lowerText.includes('back order')) stockStatus = 'Back Order';
+              else if (lowerText.includes('discontinued')) stockStatus = 'Discontinued';
+
+              // Get image
+              const img = card.querySelector('img') as HTMLImageElement;
+
+              items.push({
+                sku,
+                name,
+                currentPrice: priceMatch ? priceMatch[0] : null,
+                regularPrice: null,
+                imageUrl: img?.src || img?.getAttribute('data-src') || null,
+                productUrl: link.href,
+                stockStatus,
+              });
+            } catch (e) {
+              // Continue
+            }
+          });
+          if (items.length > 0) break;
+        }
+      }
+
+      if (items.length > 0) return items;
+
+      // Method 3: Find all /web/p/ links and extract from nearby content
+      const productLinks = document.querySelectorAll('a[href*="/web/p/"]');
+      productLinks.forEach((link) => {
+        try {
+          const anchor = link as HTMLAnchorElement;
+          const skuMatch = anchor.href.match(/\/web\/p\/[^\/]+\/(\d+)/);
+          if (!skuMatch) return;
+
+          const sku = skuMatch[1];
+          if (seenSkus.has(sku)) return;
+          seenSkus.add(sku);
+
+          // Find container
+          let container = anchor.parentElement;
+          for (let i = 0; i < 8 && container; i++) {
+            if (container.textContent?.match(/£\d/)) break;
+            container = container.parentElement;
+          }
+
+          const name = anchor.textContent?.trim() || anchor.title ||
+                      container?.querySelector('h2, h3, h4')?.textContent?.trim() || '';
+          if (!name || name.length < 3) return;
+
+          const text = container?.textContent || '';
+          const priceMatch = text.match(/£(\d+\.?\d*)/);
+
+          items.push({
+            sku,
+            name,
+            currentPrice: priceMatch ? priceMatch[0] : null,
+            regularPrice: null,
+            imageUrl: container?.querySelector('img')?.getAttribute('src') || null,
+            productUrl: anchor.href,
+            stockStatus: text.toLowerCase().includes('in stock') ? 'In Stock' : 'Unknown',
+          });
+        } catch (e) {
+          // Continue
         }
       });
 

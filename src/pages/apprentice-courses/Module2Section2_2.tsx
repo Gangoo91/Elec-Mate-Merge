@@ -1,9 +1,6 @@
 import useSEO from "@/hooks/useSEO";
-import { ArrowLeft, Calculator, Info, AlertTriangle, Ruler, Gauge, Zap, Activity, Target, CheckCircle, Users, BookOpen, HelpCircle } from "lucide-react";
+import { ArrowLeft, Calculator, AlertTriangle, Target, Activity, Gauge, CheckCircle, BookOpen, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import React from "react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -25,7 +22,7 @@ const Module2Section2_2: React.FC = () => {
       explanation: "150 mA = 0.15 A (divide by 1000)."
     },
     {
-      id: "q2", 
+      id: "q2",
       question: "You cover V in the triangle. What formula do you see?",
       options: ["I = V/R", "V = I×R", "R = V/I", "V = R/I"],
       correctIndex: 1,
@@ -102,11 +99,11 @@ const Module2Section2_2: React.FC = () => {
   ] as const;
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2
@@ -116,29 +113,28 @@ const Module2Section2_2: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Calculator className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 2.2.2
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                Triangle Method for Ohm's Law
-              </h1>
-              <p className="text-xl text-white max-w-3xl mt-2">
-                Cover what you want to find, read the formula that remains
-              </p>
-            </div>
-          </div>
+      <div className="max-w-3xl mx-auto px-6 py-12">
+        {/* Centered Header */}
+        <div className="mb-12 text-center">
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Module 2.2.2
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Triangle Method for Ohm's Law
+          </h1>
+          <p className="text-lg text-white/80 max-w-2xl mx-auto">
+            Cover what you want to find, read the formula that remains
+          </p>
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Triangle Method:</strong> Visual aid to remember Ohm's Law rearrangements.</li>
@@ -149,7 +145,7 @@ const Module2Section2_2: React.FC = () => {
                 <li><strong>Practice:</strong> Essential skill for all electrical calculations.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Any time you need V, I, or R from the other two values.</li>
@@ -158,11 +154,14 @@ const Module2Section2_2: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning Outcomes
+          </h2>
           <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -190,109 +189,105 @@ const Module2Section2_2: React.FC = () => {
               <span>Choose between triangle method and algebraic rearrangement</span>
             </li>
           </ul>
-        </Card>
+        </section>
 
-        {/* Section 1: Why the Triangle Method */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
-              Why Use the Triangle Method?
-            </h2>
-            <div className="space-y-4 text-white">
-              <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Target className="w-5 h-5 text-elec-yellow" />
-                    <h3 className="font-semibold">Visual Memory Aid</h3>
-                  </div>
-                  <p className="text-sm">Easier to remember than three separate formulas. One triangle, all combinations.</p>
+        {/* Section: Why the Triangle Method */}
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Why Use the Triangle Method?
+          </h2>
+          <div className="space-y-4 text-white">
+            <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <div className="flex items-center gap-2 mb-2">
+                  <Target className="w-5 h-5 text-elec-yellow" />
+                  <h3 className="font-semibold">Visual Memory Aid</h3>
                 </div>
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Activity className="w-5 h-5 text-green-600" />
-                    <h3 className="font-semibold">Quick Reference</h3>
-                  </div>
-                  <p className="text-sm">No need to think which formula. Cover what you want, read what remains.</p>
+                <p className="text-sm">Easier to remember than three separate formulas. One triangle, all combinations.</p>
+              </div>
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <div className="flex items-center gap-2 mb-2">
+                  <Activity className="w-5 h-5 text-green-600" />
+                  <h3 className="font-semibold">Quick Reference</h3>
                 </div>
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Gauge className="w-5 h-5 text-red-600" />
-                    <h3 className="font-semibold">Mistake Prevention</h3>
-                  </div>
-                  <p className="text-sm">Reduces wrong formula errors. Same method every time builds confidence.</p>
+                <p className="text-sm">No need to think which formula. Cover what you want, read what remains.</p>
+              </div>
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <div className="flex items-center gap-2 mb-2">
+                  <Gauge className="w-5 h-5 text-red-600" />
+                  <h3 className="font-semibold">Mistake Prevention</h3>
                 </div>
+                <p className="text-sm">Reduces wrong formula errors. Same method every time builds confidence.</p>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Section 2: The Triangle Explained */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow bg-[#121212]/80 ring-1 ring-white/5 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-6 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
-              The Triangle & How to Use It
-            </h2>
-            <div className="space-y-6 text-white">
-              <div className="flex items-center justify-center mb-8">
-                {/* SVG Triangle */}
-                <svg width="300" height="240" viewBox="0 0 300 240" className="mx-auto" role="img" aria-label="Ohm's Law Triangle showing V at top, I and R at bottom">
-                  <title>Ohm's Law Triangle</title>
-                  
-                  {/* Triangle outline */}
-                  <path 
-                    d="M150 30 L60 190 L240 190 Z" 
-                    fill="none" 
-                    stroke="white" 
-                    strokeWidth="3"
-                    strokeLinejoin="round"
-                  />
-                  
-                  {/* Horizontal dividing line */}
-                  <line 
-                    x1="105" 
-                    y1="140" 
-                    x2="195" 
-                    y2="140" 
-                    stroke="white" 
-                    strokeWidth="2"
-                  />
-                  
-                  {/* V label - positioned lower */}
-                  <text x="150" y="120" textAnchor="middle" className="fill-white text-5xl font-bold font-sans">V</text>
-                  
-                  {/* I label */}
-                  <text x="105" y="175" textAnchor="middle" className="fill-white text-4xl font-bold font-sans">I</text>
-                  
-                  {/* R label */}
-                  <text x="195" y="175" textAnchor="middle" className="fill-white text-4xl font-bold font-sans">R</text>
-                </svg>
+        {/* Section: The Triangle Explained */}
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            The Triangle & How to Use It
+          </h2>
+          <div className="space-y-6 text-white">
+            <div className="flex items-center justify-center mb-8">
+              {/* SVG Triangle */}
+              <svg width="300" height="240" viewBox="0 0 300 240" className="mx-auto" role="img" aria-label="Ohm's Law Triangle showing V at top, I and R at bottom">
+                <title>Ohm's Law Triangle</title>
+
+                {/* Triangle outline */}
+                <path
+                  d="M150 30 L60 190 L240 190 Z"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="3"
+                  strokeLinejoin="round"
+                />
+
+                {/* Horizontal dividing line */}
+                <line
+                  x1="105"
+                  y1="140"
+                  x2="195"
+                  y2="140"
+                  stroke="white"
+                  strokeWidth="2"
+                />
+
+                {/* V label - positioned lower */}
+                <text x="150" y="120" textAnchor="middle" className="fill-white text-5xl font-bold font-sans">V</text>
+
+                {/* I label */}
+                <text x="105" y="175" textAnchor="middle" className="fill-white text-4xl font-bold font-sans">I</text>
+
+                {/* R label */}
+                <text x="195" y="175" textAnchor="middle" className="fill-white text-4xl font-bold font-sans">R</text>
+              </svg>
+            </div>
+            <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-sm">
+              <div className="text-center p-4 bg-elec-yellow/20 border border-elec-yellow/30 rounded-lg">
+                <p className="font-semibold text-elec-yellow mb-2">Cover V, see:</p>
+                <p className="text-white text-lg font-mono">V = I × R</p>
               </div>
-              <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-sm">
-                <div className="text-center p-4 bg-elec-yellow/20 border border-elec-yellow/30 rounded-lg">
-                  <p className="font-semibold text-elec-yellow mb-2">Cover V, see:</p>
-                  <p className="text-white text-lg font-mono">V = I × R</p>
-                </div>
-                <div className="text-center p-4 bg-elec-yellow/20 border border-border/30 rounded-lg">
-                  <p className="font-semibold text-elec-yellow mb-2">Cover I, see:</p>
-                  <p className="text-white text-lg font-mono">I = V ÷ R</p>
-                </div>
-                <div className="text-center p-4 bg-orange-600/20 border border-border/30 rounded-lg">
-                  <p className="font-semibold text-elec-yellow mb-2">Cover R, see:</p>
-                  <p className="text-white text-lg font-mono">R = V ÷ I</p>
-                </div>
+              <div className="text-center p-4 bg-elec-yellow/20 border border-white/10 rounded-lg">
+                <p className="font-semibold text-elec-yellow mb-2">Cover I, see:</p>
+                <p className="text-white text-lg font-mono">I = V ÷ R</p>
               </div>
-              <div className="bg-slate-700/50 border border-slate-600 p-4 rounded-lg">
-                <p className="text-sm text-white"><strong>Memory tip:</strong> V always goes at the top. I and R share the bottom. Cover what you need to find!</p>
+              <div className="text-center p-4 bg-orange-600/20 border border-white/10 rounded-lg">
+                <p className="font-semibold text-elec-yellow mb-2">Cover R, see:</p>
+                <p className="text-white text-lg font-mono">R = V ÷ I</p>
               </div>
             </div>
+            <div className="bg-slate-700/50 border border-slate-600 p-4 rounded-lg">
+              <p className="text-sm text-white"><strong>Memory tip:</strong> V always goes at the top. I and R share the bottom. Cover what you need to find!</p>
+            </div>
           </div>
-        </div>
+        </section>
 
         {/* Quick Check after Triangle */}
-        <div className="mb-8">
-          <InlineCheck 
+        <div className="mb-10">
+          <InlineCheck
             id={quickCheckQuestions[1].id}
             question={quickCheckQuestions[1].question}
             options={quickCheckQuestions[1].options}
@@ -301,43 +296,41 @@ const Module2Section2_2: React.FC = () => {
           />
         </div>
 
-        {/* Section 3: Unit Conversions */}
-        <div className="mb-8">
-          <div className="border-l-4 border-green-500 dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
-              Critical Step: Unit Conversions
-            </h2>
-            <div className="space-y-4 text-white">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <h3 className="font-semibold mb-3">Current Conversions</h3>
-                  <ul className="space-y-2 text-sm">
-                    <li>• mA → A: divide by 1000</li>
-                    <li>• 250 mA = 0.25 A</li>
-                    <li>• 50 mA = 0.05 A</li>
-                    <li>• 1500 mA = 1.5 A</li>
-                  </ul>
-                </div>
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <h3 className="font-semibold mb-3">Resistance Conversions</h3>
-                  <ul className="space-y-2 text-sm">
-                    <li>• kΩ → Ω: multiply by 1000</li>
-                    <li>• 3.3 kΩ = 3300 Ω</li>
-                    <li>• 0.47 kΩ = 470 Ω</li>
-                    <li>• 22 kΩ = 22,000 Ω</li>
-                  </ul>
-                </div>
+        {/* Section: Unit Conversions */}
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Critical Step: Unit Conversions
+          </h2>
+          <div className="space-y-4 text-white">
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <h3 className="font-semibold mb-3">Current Conversions</h3>
+                <ul className="space-y-2 text-sm">
+                  <li>• mA → A: divide by 1000</li>
+                  <li>• 250 mA = 0.25 A</li>
+                  <li>• 50 mA = 0.05 A</li>
+                  <li>• 1500 mA = 1.5 A</li>
+                </ul>
               </div>
-              <div className="bg-yellow-50 dark:bg-yellow-950/30 p-4 rounded-lg border border-yellow-200 dark:border-yellow-800">
-                <p className="text-sm"><strong>Critical Rule:</strong> Triangle method only works with base units (V, A, Ω). Convert first, calculate second!</p>
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <h3 className="font-semibold mb-3">Resistance Conversions</h3>
+                <ul className="space-y-2 text-sm">
+                  <li>• kΩ → Ω: multiply by 1000</li>
+                  <li>• 3.3 kΩ = 3300 Ω</li>
+                  <li>• 0.47 kΩ = 470 Ω</li>
+                  <li>• 22 kΩ = 22,000 Ω</li>
+                </ul>
               </div>
+            </div>
+            <div className="bg-yellow-950/30 p-4 rounded-lg border border-yellow-800">
+              <p className="text-sm"><strong>Critical Rule:</strong> Triangle method only works with base units (V, A, Ω). Convert first, calculate second!</p>
             </div>
           </div>
 
           {/* Quick Check for Unit Conversions */}
           <div className="mt-6">
-            <InlineCheck 
+            <InlineCheck
               id={quickCheckQuestions[0].id}
               question={quickCheckQuestions[0].question}
               options={quickCheckQuestions[0].options}
@@ -345,45 +338,43 @@ const Module2Section2_2: React.FC = () => {
               explanation={quickCheckQuestions[0].explanation}
             />
           </div>
-        </div>
+        </section>
 
-        {/* Section 4: Worked Examples */}
-        <div className="mb-8">
-          <div className="border-l-4 border-teal-500 bg-teal-500/10 dark:bg-teal-500/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
-              Step-by-Step Examples
-            </h2>
-            <div className="space-y-4 text-white">
-              <div className="grid gap-4">
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <h3 className="font-semibold text-teal-600 mb-2">Example 1: Finding Voltage</h3>
-                  <p className="text-sm mb-2"><strong>Given:</strong> I = 0.5A, R = 220Ω. Find V.</p>
-                  <p className="text-sm mb-2"><strong>Method:</strong> Cover V in triangle → see I×R</p>
-                  <p className="text-sm mb-2"><strong>Solution:</strong> V = I × R = 0.5 × 220 = 110V</p>
-                  <p className="text-sm text-white"><strong>Check:</strong> 110V with 0.5A sounds reasonable for a heater.</p>
-                </div>
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <h3 className="font-semibold text-teal-600 mb-2">Example 2: Finding Current (with conversion)</h3>
-                  <p className="text-sm mb-2"><strong>Given:</strong> V = 24V, R = 4.7kΩ. Find I.</p>
-                  <p className="text-sm mb-2"><strong>Convert:</strong> 4.7kΩ = 4700Ω</p>
-                  <p className="text-sm mb-2"><strong>Method:</strong> Cover I in triangle → see V÷R</p>
-                  <p className="text-sm mb-2"><strong>Solution:</strong> I = V ÷ R = 24 ÷ 4700 = 0.0051A (5.1mA)</p>
-                </div>
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <h3 className="font-semibold text-teal-600 mb-2">Example 3: Finding Resistance</h3>
-                  <p className="text-sm mb-2"><strong>Given:</strong> V = 230V, I = 10A. Find R.</p>
-                  <p className="text-sm mb-2"><strong>Method:</strong> Cover R in triangle → see V÷I</p>
-                  <p className="text-sm mb-2"><strong>Solution:</strong> R = V ÷ I = 230 ÷ 10 = 23Ω</p>
-                  <p className="text-sm text-white"><strong>Check:</strong> 10A at 230V suggests 2.3kW heater - makes sense!</p>
-                </div>
+        {/* Section: Worked Examples */}
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Step-by-Step Examples
+          </h2>
+          <div className="space-y-4 text-white">
+            <div className="grid gap-4">
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <h3 className="font-semibold text-teal-400 mb-2">Example 1: Finding Voltage</h3>
+                <p className="text-sm mb-2"><strong>Given:</strong> I = 0.5A, R = 220Ω. Find V.</p>
+                <p className="text-sm mb-2"><strong>Method:</strong> Cover V in triangle → see I×R</p>
+                <p className="text-sm mb-2"><strong>Solution:</strong> V = I × R = 0.5 × 220 = 110V</p>
+                <p className="text-sm text-white"><strong>Check:</strong> 110V with 0.5A sounds reasonable for a heater.</p>
+              </div>
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <h3 className="font-semibold text-teal-400 mb-2">Example 2: Finding Current (with conversion)</h3>
+                <p className="text-sm mb-2"><strong>Given:</strong> V = 24V, R = 4.7kΩ. Find I.</p>
+                <p className="text-sm mb-2"><strong>Convert:</strong> 4.7kΩ = 4700Ω</p>
+                <p className="text-sm mb-2"><strong>Method:</strong> Cover I in triangle → see V÷R</p>
+                <p className="text-sm mb-2"><strong>Solution:</strong> I = V ÷ R = 24 ÷ 4700 = 0.0051A (5.1mA)</p>
+              </div>
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <h3 className="font-semibold text-teal-400 mb-2">Example 3: Finding Resistance</h3>
+                <p className="text-sm mb-2"><strong>Given:</strong> V = 230V, I = 10A. Find R.</p>
+                <p className="text-sm mb-2"><strong>Method:</strong> Cover R in triangle → see V÷I</p>
+                <p className="text-sm mb-2"><strong>Solution:</strong> R = V ÷ I = 230 ÷ 10 = 23Ω</p>
+                <p className="text-sm text-white"><strong>Check:</strong> 10A at 230V suggests 2.3kW heater - makes sense!</p>
               </div>
             </div>
           </div>
 
           {/* Quick Check for Examples */}
           <div className="mt-6">
-            <InlineCheck 
+            <InlineCheck
               id={quickCheckQuestions[2].id}
               question={quickCheckQuestions[2].question}
               options={quickCheckQuestions[2].options}
@@ -391,37 +382,35 @@ const Module2Section2_2: React.FC = () => {
               explanation={quickCheckQuestions[2].explanation}
             />
           </div>
-        </div>
+        </section>
 
-        {/* Section 5: Common Mistakes */}
-        <div className="mb-8">
-          <div className="border-l-4 border-red-500 dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">5</span>
-              Common Triangle Method Mistakes
-            </h2>
-            <div className="space-y-4 text-white">
-              <div className="grid gap-3">
-                <div className="flex items-start gap-3 p-3 bg-red-50 dark:bg-red-950/30 rounded border border-red-200 dark:border-red-800">
-                  <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="font-medium text-sm">Using Wrong Units in Triangle</p>
-                    <p className="text-sm text-white">Putting mA and kΩ directly into triangle without converting. Always use V, A, Ω only!</p>
-                  </div>
+        {/* Section: Common Mistakes */}
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+            Common Triangle Method Mistakes
+          </h2>
+          <div className="space-y-4 text-white">
+            <div className="grid gap-3">
+              <div className="flex items-start gap-3 p-3 bg-red-950/30 rounded border border-red-800">
+                <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-sm">Using Wrong Units in Triangle</p>
+                  <p className="text-sm text-white">Putting mA and kΩ directly into triangle without converting. Always use V, A, Ω only!</p>
                 </div>
-                <div className="flex items-start gap-3 p-3 bg-red-50 dark:bg-red-950/30 rounded border border-red-200 dark:border-red-800">
-                  <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="font-medium text-sm">Misreading the Triangle Layout</p>
-                    <p className="text-sm text-white">Putting I or R at the top instead of V. V always goes at the top of the triangle.</p>
-                  </div>
+              </div>
+              <div className="flex items-start gap-3 p-3 bg-red-950/30 rounded border border-red-800">
+                <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-sm">Misreading the Triangle Layout</p>
+                  <p className="text-sm text-white">Putting I or R at the top instead of V. V always goes at the top of the triangle.</p>
                 </div>
-                <div className="flex items-start gap-3 p-3 bg-red-50 dark:bg-red-950/30 rounded border border-red-200 dark:border-red-800">
-                  <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="font-medium text-sm">No Reality Check</p>
-                    <p className="text-sm text-white">Getting 2000A for a light bulb and not questioning it. Always sense-check your answer!</p>
-                  </div>
+              </div>
+              <div className="flex items-start gap-3 p-3 bg-red-950/30 rounded border border-red-800">
+                <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-sm">No Reality Check</p>
+                  <p className="text-sm text-white">Getting 2000A for a light bulb and not questioning it. Always sense-check your answer!</p>
                 </div>
               </div>
             </div>
@@ -429,7 +418,7 @@ const Module2Section2_2: React.FC = () => {
 
           {/* Quick Check for Mistakes */}
           <div className="mt-6">
-            <InlineCheck 
+            <InlineCheck
               id={quickCheckQuestions[3].id}
               question={quickCheckQuestions[3].question}
               options={quickCheckQuestions[3].options}
@@ -437,40 +426,38 @@ const Module2Section2_2: React.FC = () => {
               explanation={quickCheckQuestions[3].explanation}
             />
           </div>
-        </div>
+        </section>
 
-        {/* Section 6: Real-World Applications */}
-        <div className="mb-8">
-          <div className="border-l-4 border-orange-500 dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">6</span>
-              Triangle Method on Site
-            </h2>
-            <div className="space-y-4 text-white">
-              <div className="grid gap-4">
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <h3 className="font-semibold text-orange-600 mb-2">Quick Current Calculations</h3>
-                  <p className="text-sm">Need to size an MCB? Measure voltage, calculate resistance from nameplate power, use triangle to find current.</p>
-                </div>
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <h3 className="font-semibold text-orange-600 mb-2">Fault Finding with Resistance</h3>
-                  <p className="text-sm">Measure voltage and current, use triangle to find resistance. Compare with expected values to find faults.</p>
-                </div>
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <h3 className="font-semibold text-orange-600 mb-2">LED Circuit Design</h3>
-                  <p className="text-sm">Know supply voltage and LED current rating? Triangle gives you the resistor value needed.</p>
-                </div>
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <h3 className="font-semibold text-orange-600 mb-2">Testing Components</h3>
-                  <p className="text-sm">Apply known voltage, measure current, triangle gives actual resistance. Compare with rated value.</p>
-                </div>
+        {/* Section: Real-World Applications */}
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+            Triangle Method on Site
+          </h2>
+          <div className="space-y-4 text-white">
+            <div className="grid gap-4">
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <h3 className="font-semibold text-orange-400 mb-2">Quick Current Calculations</h3>
+                <p className="text-sm">Need to size an MCB? Measure voltage, calculate resistance from nameplate power, use triangle to find current.</p>
+              </div>
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <h3 className="font-semibold text-orange-400 mb-2">Fault Finding with Resistance</h3>
+                <p className="text-sm">Measure voltage and current, use triangle to find resistance. Compare with expected values to find faults.</p>
+              </div>
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <h3 className="font-semibold text-orange-400 mb-2">LED Circuit Design</h3>
+                <p className="text-sm">Know supply voltage and LED current rating? Triangle gives you the resistor value needed.</p>
+              </div>
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <h3 className="font-semibold text-orange-400 mb-2">Testing Components</h3>
+                <p className="text-sm">Apply known voltage, measure current, triangle gives actual resistance. Compare with rated value.</p>
               </div>
             </div>
           </div>
 
           {/* Quick Check for Applications */}
           <div className="mt-6">
-            <InlineCheck 
+            <InlineCheck
               id={quickCheckQuestions[4].id}
               question={quickCheckQuestions[4].question}
               options={quickCheckQuestions[4].options}
@@ -478,40 +465,38 @@ const Module2Section2_2: React.FC = () => {
               explanation={quickCheckQuestions[4].explanation}
             />
           </div>
-        </div>
+        </section>
 
-        {/* Section 7: Sanity Checks */}
-        <div className="mb-8">
-          <div className="border-l-4 border-indigo-500 bg-indigo-500/10 dark:bg-indigo-500/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-indigo-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">7</span>
-              Reality Checks for Triangle Results
-            </h2>
-            <div className="space-y-4 text-white">
-              <div className="grid gap-3">
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <h3 className="font-semibold text-indigo-600 mb-2">Order of Magnitude Check</h3>
-                  <p className="text-sm">Rough mental maths first: 240V ÷ 24Ω ≈ 10A. If triangle gives 100A or 0.1A, check your working.</p>
-                </div>
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <h3 className="font-semibold text-indigo-600 mb-2">Reverse Check</h3>
-                  <p className="text-sm">Found I = 5A? Put it back: V = I × R should give your original voltage. No match = error somewhere.</p>
-                </div>
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <h3 className="font-semibold text-indigo-600 mb-2">Compare with Typical Values</h3>
-                  <p className="text-sm">House lights: few amps. Kettles: 10-13A. Industrial motors: tens to hundreds. Does your answer fit?</p>
-                </div>
-                <div className="bg-white/50 dark:bg-card/50 p-4 rounded-lg border">
-                  <h3 className="font-semibold text-indigo-600 mb-2">Unit Sense Check</h3>
-                  <p className="text-sm">A 12V car circuit won't have thousands of ohms resistance. A control circuit won't draw hundreds of amps.</p>
-                </div>
+        {/* Section: Sanity Checks */}
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+            Reality Checks for Triangle Results
+          </h2>
+          <div className="space-y-4 text-white">
+            <div className="grid gap-3">
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <h3 className="font-semibold text-indigo-400 mb-2">Order of Magnitude Check</h3>
+                <p className="text-sm">Rough mental maths first: 240V ÷ 24Ω ≈ 10A. If triangle gives 100A or 0.1A, check your working.</p>
+              </div>
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <h3 className="font-semibold text-indigo-400 mb-2">Reverse Check</h3>
+                <p className="text-sm">Found I = 5A? Put it back: V = I × R should give your original voltage. No match = error somewhere.</p>
+              </div>
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <h3 className="font-semibold text-indigo-400 mb-2">Compare with Typical Values</h3>
+                <p className="text-sm">House lights: few amps. Kettles: 10-13A. Industrial motors: tens to hundreds. Does your answer fit?</p>
+              </div>
+              <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                <h3 className="font-semibold text-indigo-400 mb-2">Unit Sense Check</h3>
+                <p className="text-sm">A 12V car circuit won't have thousands of ohms resistance. A control circuit won't draw hundreds of amps.</p>
               </div>
             </div>
           </div>
 
           {/* Quick Check for Sanity Checks */}
           <div className="mt-6">
-            <InlineCheck 
+            <InlineCheck
               id={quickCheckQuestions[5].id}
               question={quickCheckQuestions[5].question}
               options={quickCheckQuestions[5].options}
@@ -519,87 +504,89 @@ const Module2Section2_2: React.FC = () => {
               explanation={quickCheckQuestions[5].explanation}
             />
           </div>
-        </div>
+        </section>
 
         {/* Pocket Guide */}
-        <div className="mb-8">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <BookOpen className="w-5 h-5" />
             Pocket Guide
           </h2>
           <UnitsPocketCard />
-        </div>
+        </section>
 
         {/* FAQ Section */}
-        <Card className="mb-8 p-6">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <HelpCircle className="w-5 h-5" />
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-blue-200 dark:border-blue-800 bg-elec-yellow/5/50 dark:bg-elec-yellow/10 p-4 rounded-r-lg">
+              <div key={index} className="border-l-2 border-blue-800 bg-elec-yellow/10 p-4 rounded-r-lg">
                 <p className="font-medium text-white mb-2">{faq.q}</p>
                 <p className="text-sm text-white">{faq.a}</p>
               </div>
             ))}
           </div>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-8 p-6 bg-gradient-to-r from-green-50 to-elec-yellow/5 dark:from-green-950/20 dark:to-elec-yellow/10 border-green-200 dark:border-green-800">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <CheckCircle className="w-5 h-5 text-green-600" />
             Key Takeaways
           </h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            <ul className="space-y-2 text-xs sm:text-sm text-white">
-              <li className="flex items-start gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                Triangle method is a memory aid for Ohm's Law rearrangements
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                Always convert to base units (V, A, Ω) before applying triangle
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                Cover what you want to find, read what remains
-              </li>
-            </ul>
-            <ul className="space-y-2 text-xs sm:text-sm text-white">
-              <li className="flex items-start gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                Always perform reality checks on your calculated results
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                V always goes at the top; I and R share the bottom
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                Practice makes perfect - use daily for confidence building
-              </li>
-            </ul>
-          </div>
-          <div className="mt-4 p-4 bg-yellow-100 dark:bg-yellow-900/30 border border-yellow-300 dark:border-yellow-700 rounded-lg">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
-              <p className="text-xs sm:text-sm text-white">
-                <strong>Safety Reminder:</strong> Always isolate and prove dead before work. Follow BS 7671 and manufacturer instructions.
-              </p>
+          <div className="bg-gradient-to-r from-green-950/20 to-elec-yellow/10 border border-green-800 rounded-lg p-6">
+            <div className="grid md:grid-cols-2 gap-4">
+              <ul className="space-y-2 text-xs sm:text-sm text-white">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Triangle method is a memory aid for Ohm's Law rearrangements
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Always convert to base units (V, A, Ω) before applying triangle
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Cover what you want to find, read what remains
+                </li>
+              </ul>
+              <ul className="space-y-2 text-xs sm:text-sm text-white">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Always perform reality checks on your calculated results
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  V always goes at the top; I and R share the bottom
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Practice makes perfect - use daily for confidence building
+                </li>
+              </ul>
+            </div>
+            <div className="mt-4 p-4 bg-yellow-900/30 border border-yellow-700 rounded-lg">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <p className="text-xs sm:text-sm text-white">
+                  <strong>Safety Reminder:</strong> Always isolate and prove dead before work. Follow BS 7671 and manufacturer instructions.
+                </p>
+              </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Quiz Section */}
-        <Card className="mb-8 p-6">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-            <Users className="w-5 h-5" />
+            <Calculator className="w-5 h-5" />
             Test Your Knowledge
           </h2>
           <Quiz questions={quizQuestions as any} title="Triangle Method Mastery Quiz" />
-        </Card>
+        </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
@@ -618,17 +605,17 @@ const Module2Section2_2: React.FC = () => {
         </nav>
 
         {/* Structured Data */}
-        <script 
-          type="application/ld+json" 
-          dangerouslySetInnerHTML={{ 
-            __html: JSON.stringify(articleJsonLd) 
-          }} 
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(articleJsonLd)
+          }}
         />
-        <script 
-          type="application/ld+json" 
-          dangerouslySetInnerHTML={{ 
-            __html: JSON.stringify(faqJsonLd) 
-          }} 
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqJsonLd)
+          }}
         />
       </div>
     </div>

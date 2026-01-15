@@ -40,7 +40,7 @@ const QuoteBuilderCreate = () => {
 
   const handleQuoteGenerated = () => {
     refreshQuotes();
-    navigate('/electrician/quote-builder');
+    navigate('/electrician/quotes');
   };
 
   const handleBack = () => {
@@ -48,7 +48,7 @@ const QuoteBuilderCreate = () => {
   };
 
   const confirmExit = () => {
-    navigate('/electrician/quote-builder');
+    navigate('/electrician/quotes');
   };
 
   // Voice navigation handler

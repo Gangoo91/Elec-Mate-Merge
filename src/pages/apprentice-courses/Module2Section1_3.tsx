@@ -1,6 +1,5 @@
 import { ArrowLeft, Ruler, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -169,11 +168,11 @@ const Module2Section1_3 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 2.1
@@ -183,29 +182,29 @@ const Module2Section1_3 = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Ruler className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 2.1.3
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                Units of Measurement
-              </h1>
-              <p className="text-xl text-white max-w-3xl mt-2">
-                Master electrical units (V, A, Ω, W, kWh, Hz) and prefixes for safe installation work
-              </p>
-            </div>
-          </div>
+      <div className="max-w-3xl mx-auto px-6 py-12">
+        {/* Centered Header */}
+        <div className="mb-12 text-center">
+          <Ruler className="h-10 w-10 text-elec-yellow mx-auto mb-4" />
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Module 2.1.3
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Units of Measurement
+          </h1>
+          <p className="text-white/80 max-w-xl mx-auto">
+            Master electrical units (V, A, Ω, W, kWh, Hz) and prefixes for safe installation work
+          </p>
         </div>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        {/* Introduction Section */}
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow/50 border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>V (Volts):</strong> Electrical pressure that pushes current through circuits.</li>
@@ -216,7 +215,7 @@ const Module2Section1_3 = () => {
                 <li><strong>Prefixes:</strong> k = ×1000, m = ÷1000, M = ×1,000,000</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow/50 border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Equipment labels, circuit breaker ratings, test results, cable specifications.</li>
@@ -225,11 +224,14 @@ const Module2Section1_3 = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
-        {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+        {/* Learning Outcomes Section */}
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning Outcomes
+          </h2>
           <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -261,67 +263,67 @@ const Module2Section1_3 = () => {
               <span>Select appropriate measuring instruments based on expected unit ranges</span>
             </li>
           </ul>
-        </Card>
+        </section>
 
         {/* Section 1: Key Electrical Units */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+        <section className="mb-10">
+          <div className="border-l-2 border-elec-yellow/50 pl-4 sm:pl-6">
             <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Key Electrical Units (V, A, Ω, W, kWh, Hz)
             </h2>
             <div className="space-y-4 text-white">
               <p>
-                Understanding electrical units is like learning a language — know what each one means and when to use it. 
+                Understanding electrical units is like learning a language — know what each one means and when to use it.
                 These units appear on every piece of equipment, every drawing, and every test result.
               </p>
-              
+
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="rounded-md border border-white/10 p-3 flex items-center justify-between">
                   <div>
                     <p className="font-medium">Voltage</p>
-                    <p className="text-xs text-white">Volt — electrical pressure</p>
+                    <p className="text-xs text-white/70">Volt — electrical pressure</p>
                   </div>
                   <span className="font-mono text-elec-yellow text-lg">V</span>
                 </div>
                 <div className="rounded-md border border-white/10 p-3 flex items-center justify-between">
                   <div>
                     <p className="font-medium">Current</p>
-                    <p className="text-xs text-white">Ampere — flow of charge</p>
+                    <p className="text-xs text-white/70">Ampere — flow of charge</p>
                   </div>
                   <span className="font-mono text-elec-yellow text-lg">A</span>
                 </div>
                 <div className="rounded-md border border-white/10 p-3 flex items-center justify-between">
                   <div>
                     <p className="font-medium">Resistance</p>
-                    <p className="text-xs text-white">Ohm — opposition to current</p>
+                    <p className="text-xs text-white/70">Ohm — opposition to current</p>
                   </div>
                   <span className="font-mono text-elec-yellow text-lg">Ω</span>
                 </div>
                 <div className="rounded-md border border-white/10 p-3 flex items-center justify-between">
                   <div>
                     <p className="font-medium">Power</p>
-                    <p className="text-xs text-white">Watt — rate of energy</p>
+                    <p className="text-xs text-white/70">Watt — rate of energy</p>
                   </div>
                   <span className="font-mono text-elec-yellow text-lg">W</span>
                 </div>
                 <div className="rounded-md border border-white/10 p-3 flex items-center justify-between">
                   <div>
                     <p className="font-medium">Energy</p>
-                    <p className="text-xs text-white">Kilowatt-hour — consumption</p>
+                    <p className="text-xs text-white/70">Kilowatt-hour — consumption</p>
                   </div>
                   <span className="font-mono text-elec-yellow text-lg">kWh</span>
                 </div>
                 <div className="rounded-md border border-white/10 p-3 flex items-center justify-between">
                   <div>
                     <p className="font-medium">Frequency</p>
-                    <p className="text-xs text-white">Hertz — AC cycles/second</p>
+                    <p className="text-xs text-white/70">Hertz — AC cycles/second</p>
                   </div>
                   <span className="font-mono text-elec-yellow text-lg">Hz</span>
                 </div>
               </div>
 
-              <div className="rounded-md border border-border/30 p-3">
+              <div className="rounded-md border border-white/10 p-3 bg-white/5">
                 <p className="text-sm">
                   <strong>Professional tip:</strong> These units appear on drawings, labels, and test results.
                   Master them early and work more safely and efficiently.
@@ -329,15 +331,15 @@ const Module2Section1_3 = () => {
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[0]} />
 
         {/* Section 2: Unit Prefixes */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+        <section className="mb-10">
+          <div className="border-l-2 border-elec-yellow/50 pl-4 sm:pl-6">
             <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Unit Prefixes (k, M, m, μ, n)
             </h2>
             <div className="space-y-4 text-white">
@@ -345,65 +347,65 @@ const Module2Section1_3 = () => {
                 Electrical quantities can be very large or very small, so we use prefixes to make them easier to work with.
                 These are essential for interpreting test results and equipment specifications.
               </p>
-              
+
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold">Large Values</h3>
                   <div className="space-y-3">
-                    <div className="bg-card border border-white/10 p-3 rounded">
+                    <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <p><strong>kilo (k):</strong> × 1,000</p>
-                      <p className="text-sm text-white">Example: 3kW = 3,000W</p>
+                      <p className="text-sm text-white/70">Example: 3kW = 3,000W</p>
                     </div>
-                    <div className="bg-card border border-white/10 p-3 rounded">
+                    <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <p><strong>Mega (M):</strong> × 1,000,000</p>
-                      <p className="text-sm text-white">Example: 2MΩ = 2,000,000Ω</p>
+                      <p className="text-sm text-white/70">Example: 2MΩ = 2,000,000Ω</p>
                     </div>
-                    <div className="bg-card border border-white/10 p-3 rounded">
+                    <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <p><strong>Giga (G):</strong> × 1,000,000,000</p>
-                      <p className="text-sm text-white">Example: 1GΩ = 1,000,000,000Ω</p>
+                      <p className="text-sm text-white/70">Example: 1GΩ = 1,000,000,000Ω</p>
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold">Small Values</h3>
                   <div className="space-y-3">
-                    <div className="bg-card border border-white/10 p-3 rounded">
+                    <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <p><strong>milli (m):</strong> ÷ 1,000</p>
-                      <p className="text-sm text-white">Example: 500mA = 0.5A</p>
+                      <p className="text-sm text-white/70">Example: 500mA = 0.5A</p>
                     </div>
-                    <div className="bg-card border border-white/10 p-3 rounded">
+                    <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <p><strong>micro (μ):</strong> ÷ 1,000,000</p>
-                      <p className="text-sm text-white">Example: 100μA = 0.0001A</p>
+                      <p className="text-sm text-white/70">Example: 100μA = 0.0001A</p>
                     </div>
-                    <div className="bg-card border border-white/10 p-3 rounded">
+                    <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <p><strong>nano (n):</strong> ÷ 1,000,000,000</p>
-                      <p className="text-sm text-white">Example: 50nF = 0.00000005F</p>
+                      <p className="text-sm text-white/70">Example: 50nF = 0.00000005F</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[1]} />
 
         {/* Section 3: How Units Are Used In Practice */}
-        <div className="mb-8">
-          <div className="border-l-4 border-purple-500 dark:bg-card p-6 rounded-r-lg">
+        <section className="mb-10">
+          <div className="border-l-2 border-purple-500/50 pl-4 sm:pl-6">
             <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
+              <span className="text-purple-400/80 text-sm font-normal">05</span>
               How Units Are Used In Practice
             </h2>
             <div className="space-y-4 text-white">
               <p>
                 Understanding units isn't just theory — you'll encounter them constantly in real electrical work:
               </p>
-              
+
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-4">
-                  <div className="bg-card border border-border/30 p-4 rounded-lg">
+                  <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <h3 className="text-lg font-semibold mb-3">Volts (V)</h3>
                     <ul className="space-y-2 text-sm">
                       <li>• Equipment labels (230V supply voltage)</li>
@@ -413,8 +415,8 @@ const Module2Section1_3 = () => {
                       <li>• Test instrument readings (multimeter displays)</li>
                     </ul>
                   </div>
-                  
-                  <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
+
+                  <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg">
                     <h3 className="text-lg font-semibold mb-3">Amps (A)</h3>
                     <ul className="space-y-2 text-sm">
                       <li>• Fuse ratings (13A plug fuse)</li>
@@ -425,9 +427,9 @@ const Module2Section1_3 = () => {
                     </ul>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
-                  <div className="bg-card border border-amber-400/30 p-4 rounded-lg">
+                  <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                     <h3 className="text-lg font-semibold mb-3">Ohms (Ω)</h3>
                     <ul className="space-y-2 text-sm">
                       <li>• Insulation resistance testing (&gt;1MΩ)</li>
@@ -437,8 +439,8 @@ const Module2Section1_3 = () => {
                       <li>• Component resistance measurements</li>
                     </ul>
                   </div>
-                  
-                  <div className="bg-card border border-border/30 p-4 rounded-lg">
+
+                  <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <h3 className="text-lg font-semibold mb-3">Watts (W) & kWh</h3>
                     <ul className="space-y-2 text-sm">
                       <li>• Equipment power ratings (2000W heater)</li>
@@ -452,23 +454,23 @@ const Module2Section1_3 = () => {
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[2]} />
 
         {/* Section 4: Ohm's Law & Relationships */}
-        <div className="mb-8">
-          <div className="border-l-4 border-teal-500 bg-teal-500/10 dark:bg-teal-500/10 p-6 rounded-r-lg">
+        <section className="mb-10">
+          <div className="border-l-2 border-teal-500/50 pl-4 sm:pl-6">
             <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
+              <span className="text-teal-400/80 text-sm font-normal">06</span>
               Ohm's Law & Relationships
             </h2>
             <div className="space-y-6 text-white">
               <p>
-                Units come together in electrical formulas. Understanding how V, I, R, and P relate helps with 
+                Units come together in electrical formulas. Understanding how V, I, R, and P relate helps with
                 calculations and understanding circuit behaviour.
               </p>
-              
+
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold">Key Formulas</h3>
                 <FormulaList items={[
@@ -482,29 +484,32 @@ const Module2Section1_3 = () => {
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold">Try it</h3>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <Card className="p-4 bg-transparent border-white/20 bg-none shadow-none">
+                  <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
                     <h4 className="font-semibold mb-2">Ohm's Law Calculator</h4>
-                    <p className="text-sm text-white mb-3">Enter any two values to calculate the others</p>
+                    <p className="text-sm text-white/70 mb-3">Enter any two values to calculate the others</p>
                     <OhmsCalculator />
-                  </Card>
-                  
-                  <Card className="p-4 bg-transparent border-white/20 bg-none shadow-none">
+                  </div>
+
+                  <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
                     <h4 className="font-semibold mb-2">Unit Converter</h4>
-                    <p className="text-sm text-white mb-3">Convert between different unit prefixes</p>
+                    <p className="text-sm text-white/70 mb-3">Convert between different unit prefixes</p>
                     <UnitPrefixConverter />
-                  </Card>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Practical Guidance for Apprentices</h2>
-          
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+            Practical Guidance for Apprentices
+          </h2>
+
           <div className="space-y-6">
-            <div className="bg-card border border-border/30 p-4 rounded-lg">
+            <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h3 className="text-lg font-semibold text-white mb-3">On Site Application</h3>
               <ul className="space-y-2 text-white text-sm">
                 <li>• Always check equipment labels for correct voltage and current ratings</li>
@@ -515,7 +520,7 @@ const Module2Section1_3 = () => {
               </ul>
             </div>
 
-            <div className="bg-card border border-border/30 p-4 rounded-lg">
+            <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h3 className="text-lg font-semibold text-white mb-3">Common Mistakes to Avoid</h3>
               <ul className="space-y-2 text-white text-sm">
                 <li>• Confusing kW (power) with kWh (energy) - they're completely different</li>
@@ -537,69 +542,75 @@ const Module2Section1_3 = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">  
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+            Frequently Asked Questions
+          </h2>
           <div className="space-y-1 border border-white/10 rounded-lg overflow-hidden">
             {faqs.map((faq, index) => (
               <details key={index} className="group">
-                <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/30 transition-colors">
+                <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-white/5 transition-colors touch-manipulation">
                   <span className="font-medium text-white">{faq.question}</span>
                   <span className="ml-2 transform transition-transform group-open:rotate-180">▼</span>
                 </summary>
                 <div className="px-4 pb-4">
-                  <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
+                  <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
                 </div>
               </details>
             ))}
           </div>
-        </Card>
+        </section>
 
         {/* Units Pocket Card */}
         <UnitsPocketCard />
 
         {/* Quick Reference Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Reference Card</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+            Quick Reference Card
+          </h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 p-4 bg-white/5 border border-white/10 rounded-lg">
             <div>
               <h3 className="font-semibold text-white mb-3">Common UK Values</h3>
-              <ul className="space-y-1 text-xs sm:text-sm text-white">
-                <li>• Single-phase supply: <strong>230V</strong></li>
-                <li>• Three-phase supply: <strong>400V</strong></li>
-                <li>• Standard RCD rating: <strong>30mA</strong></li>
-                <li>• Plug fuse: <strong>13A</strong></li>
-                <li>• Ring circuit MCB: <strong>32A</strong></li>
-                <li>• Mains frequency: <strong>50Hz</strong></li>
+              <ul className="space-y-1 text-xs sm:text-sm text-white/80">
+                <li>• Single-phase supply: <strong className="text-white">230V</strong></li>
+                <li>• Three-phase supply: <strong className="text-white">400V</strong></li>
+                <li>• Standard RCD rating: <strong className="text-white">30mA</strong></li>
+                <li>• Plug fuse: <strong className="text-white">13A</strong></li>
+                <li>• Ring circuit MCB: <strong className="text-white">32A</strong></li>
+                <li>• Mains frequency: <strong className="text-white">50Hz</strong></li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-white mb-3">Test Limits (typical)</h3>
-              <ul className="space-y-1 text-xs sm:text-sm text-white">
-                <li>• Insulation resistance: <strong>&gt;1MΩ</strong></li>
-                <li>• Continuity: <strong>&lt;0.05Ω</strong></li>
-                <li>• Earth loop (socket): <strong>&lt;1.44Ω</strong></li>
-                <li>• RCD trip time: <strong>&lt;300ms</strong></li>
-                <li>• RCD trip current: <strong>15-30mA</strong></li>
+              <ul className="space-y-1 text-xs sm:text-sm text-white/80">
+                <li>• Insulation resistance: <strong className="text-white">&gt;1MΩ</strong></li>
+                <li>• Continuity: <strong className="text-white">&lt;0.05Ω</strong></li>
+                <li>• Earth loop (socket): <strong className="text-white">&lt;1.44Ω</strong></li>
+                <li>• RCD trip time: <strong className="text-white">&lt;300ms</strong></li>
+                <li>• RCD trip current: <strong className="text-white">15-30mA</strong></li>
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Quiz */}
         <Quiz title="Test Your Knowledge: Units and Measurements" questions={quizQuestions} />
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../1-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Voltage, Current & Resistance
             </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+          <Button size="lg" className="w-full sm:w-auto min-h-[44px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../1-4">
               Next: Ohm's Law
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

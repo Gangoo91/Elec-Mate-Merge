@@ -197,6 +197,8 @@ interface Document {
   issue_date?: string;
   expiry_date?: string;
   file_url?: string;
+  file_path?: string;
+  display_url?: string;  // Generated signed URL for display
   verification_status: keyof typeof VERIFICATION_STATUS;
   verification_confidence?: number;
   extracted_data?: Record<string, any>;
@@ -273,7 +275,31 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setDocuments(data || []);
+
+      // Generate signed URLs for documents that have file_path stored
+      // file_url/file_path now stores the storage path, not a signed URL
+      const docsWithUrls = await Promise.all(
+        (data || []).map(async (doc) => {
+          if (doc.file_path || doc.file_url) {
+            const filePath = doc.file_path || doc.file_url;
+            // Skip if it's already a full URL (legacy data)
+            if (filePath.startsWith('http')) {
+              return doc;
+            }
+            // Generate signed URL for display (valid for 1 hour)
+            const { data: urlData } = await supabase.storage
+              .from("elec-id-documents")
+              .createSignedUrl(filePath, 3600);
+            return {
+              ...doc,
+              display_url: urlData?.signedUrl || null
+            };
+          }
+          return doc;
+        })
+      );
+
+      setDocuments(docsWithUrls || []);
     } catch (err) {
       console.error("Error fetching documents:", err);
     }
@@ -384,17 +410,46 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
       setIsUploading(false);
       setIsVerifying(true);
 
-      // Get public URL
-      const { data: urlData } = supabase.storage
-        .from("elec-id-documents")
-        .getPublicUrl(fileName);
+      // INSERT document record into database BEFORE verification
+      // This is critical - the verify-document function needs a record to UPDATE
+      const { data: docRecord, error: insertError } = await supabase
+        .from("elec_id_documents")
+        .insert({
+          profile_id: profile.id,
+          document_type: selectedDocType,
+          document_name: documentName || uploadFile.name,
+          file_path: fileName,  // Store permanent path, NOT signed URL
+          file_url: fileName,   // Store path - generate signed URL when displaying
+          verification_status: "processing",
+          issuing_body: issuingBody || null,
+          document_number: documentNumber || null,
+          issue_date: issueDate || null,
+          expiry_date: expiryDate || null,
+        })
+        .select()
+        .single();
 
-      // Call verification Edge Function
+      if (insertError) {
+        console.error("Failed to create document record:", insertError);
+        throw new Error("Failed to save document record");
+      }
+
+      // Get signed URL for AI verification (1 hour expiry)
+      const { data: urlData, error: urlError } = await supabase.storage
+        .from("elec-id-documents")
+        .createSignedUrl(fileName, 3600);
+
+      if (urlError || !urlData?.signedUrl) {
+        throw new Error("Failed to generate document URL for verification");
+      }
+
+      // Call verification Edge Function with documentId for reliable UPDATE
       const { data: verifyResult, error: verifyError } = await supabase.functions.invoke(
         "verify-document",
         {
           body: {
-            fileUrl: urlData.publicUrl,
+            documentId: docRecord.id,  // Pass document ID for UPDATE by ID
+            fileUrl: urlData.signedUrl,
             documentType: selectedDocType,
             documentName: documentName || uploadFile.name,
             issuingBody,

@@ -134,6 +134,7 @@ export const TimesheetsSection = () => {
   const [filterEmployee, setFilterEmployee] = useState<string>("all");
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [selectedJobId, setSelectedJobId] = useState<string>("");
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState<string>("");
   const [activeTab, setActiveTab] = useState("time-entries");
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
   const [isWorkerBreakdownOpen, setIsWorkerBreakdownOpen] = useState(false);
@@ -300,17 +301,19 @@ export const TimesheetsSection = () => {
 
   // Handlers
   const handleClockIn = () => {
+    if (!selectedEmployeeId) {
+      toast.error("Please select an employee before clocking in.");
+      return;
+    }
     if (!selectedJobId) {
       toast.error("Please select a job before clocking in.");
       return;
     }
-    
+
     const job = jobs.find(j => j.id === selectedJobId);
-    if (job) {
-      // For now, use a placeholder employee ID - in real app, get from auth
-      const defaultEmployeeId = employees[0]?.id || '';
-      const defaultEmployeeName = employees[0]?.name || 'Worker';
-      clockIn(defaultEmployeeId, defaultEmployeeName, selectedJobId, job.title);
+    const employee = employees.find(e => e.id === selectedEmployeeId);
+    if (job && employee) {
+      clockIn(employee.id, employee.name, selectedJobId, job.title);
     }
   };
 
@@ -719,9 +722,24 @@ export const TimesheetsSection = () => {
           ) : (
             // Ready to Clock In State - Compact
             <div className="flex flex-col sm:flex-row items-stretch gap-3">
+              <Select value={selectedEmployeeId} onValueChange={setSelectedEmployeeId}>
+                <SelectTrigger className="flex-1 bg-surface h-12">
+                  <SelectValue placeholder="Select employee..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {employees.filter(e => e.status === 'Active' || e.status === 'active').map(emp => (
+                    <SelectItem key={emp.id} value={emp.id}>
+                      <div className="flex items-center gap-2">
+                        <User className="h-4 w-4 text-muted-foreground" />
+                        {emp.name}
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <Select value={selectedJobId} onValueChange={setSelectedJobId}>
                 <SelectTrigger className="flex-1 bg-surface h-12">
-                  <SelectValue placeholder="Select job to clock in..." />
+                  <SelectValue placeholder="Select job..." />
                 </SelectTrigger>
                 <SelectContent>
                   {activeJobs.map(job => (

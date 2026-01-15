@@ -1,9 +1,6 @@
 import { ArrowLeft, Calculator, CheckCircle, Zap, Flame, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
@@ -19,7 +16,7 @@ const quickCheckQuestions = [
     question: "For V = 230V and I = 13A, power is…",
     options: [
       "2990 W",
-      "17.7 W", 
+      "17.7 W",
       "243 W",
       "299 kW"
     ],
@@ -136,11 +133,11 @@ const Module2Section2_4: React.FC = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -150,29 +147,28 @@ const Module2Section2_4: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Zap className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 2.2.4
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                Power calculations (P=VI, I²R, V²/R)
-              </h1>
-              <p className="text-xl text-white max-w-3xl mt-2">
-                Choose the right power formula for real jobs and understand where heat occurs.
-              </p>
-            </div>
-          </div>
-        </div>
+      <div className="max-w-3xl mx-auto px-6 py-12">
+        {/* Page Header */}
+        <header className="mb-12 text-center">
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Module 2.2.4
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Power calculations (P=VI, I²R, V²/R)
+          </h1>
+          <p className="text-white/80 max-w-2xl mx-auto">
+            Choose the right power formula for real jobs and understand where heat occurs.
+          </p>
+        </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Power formulas:</strong> P = V×I (most common), P = I²R (heating), P = V²/R (fixed voltage).</li>
@@ -182,7 +178,7 @@ const Module2Section2_4: React.FC = () => {
                 <li><strong>Safety focus:</strong> Avoid overheating through proper calculation and component selection.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Appliance nameplates (230V, 13A), heating elements, cable specifications, circuit breakers.</li>
@@ -191,11 +187,14 @@ const Module2Section2_4: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning Outcomes
+          </h2>
           <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -223,27 +222,27 @@ const Module2Section2_4: React.FC = () => {
               <span>Use the power calculator for quick calculations</span>
             </li>
           </ul>
-        </Card>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[0]} />
 
         {/* Understanding Power Formulas */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+        <section className="mb-10">
+          <div className="border-l-2 border-elec-yellow p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Understanding Power Formulas
             </h2>
             <div className="space-y-6 text-white">
               <p className="text-base leading-relaxed">
-                <strong>Power</strong> is the rate of energy consumption or conversion. In electrical circuits, 
+                <strong>Power</strong> is the rate of energy consumption or conversion. In electrical circuits,
                 power can be calculated using three formulas, each suited to different scenarios.
               </p>
-              
+
               <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl p-6 border border-primary/20 shadow-sm">
                 <h3 className="font-bold text-white mb-6 text-center text-lg">The Three Power Formulas</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  
+
                   {/* P = V × I */}
                   <div className="group relative">
                     <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/10 rounded-xl blur-sm group-hover:blur-none transition-all duration-300"></div>
@@ -256,10 +255,10 @@ const Module2Section2_4: React.FC = () => {
                       <h4 className="font-semibold text-white mb-2">Most Common</h4>
                       <p className="text-sm text-white mb-3">When you know voltage and current</p>
                       <div className="bg-card rounded-lg p-3">
-                        <p className="text-xs text-blue-700 text-elec-yellow font-medium">
-                          ✓ Nameplate data<br/>
-                          ✓ Meter readings<br/>
-                          ✓ Quick estimates
+                        <p className="text-xs text-elec-yellow font-medium">
+                          Nameplate data<br/>
+                          Meter readings<br/>
+                          Quick estimates
                         </p>
                       </div>
                     </div>
@@ -277,10 +276,10 @@ const Module2Section2_4: React.FC = () => {
                       <h4 className="font-semibold text-white mb-2">For Heating</h4>
                       <p className="text-sm text-white mb-3">When you know current and resistance</p>
                       <div className="bg-card rounded-lg p-3">
-                        <p className="text-xs text-orange-700 text-elec-yellow font-medium">
-                          🔥 Cable losses<br/>
-                          🔥 Heat generation<br/>
-                          🔥 I²R calculations
+                        <p className="text-xs text-elec-yellow font-medium">
+                          Cable losses<br/>
+                          Heat generation<br/>
+                          I²R calculations
                         </p>
                       </div>
                     </div>
@@ -298,17 +297,17 @@ const Module2Section2_4: React.FC = () => {
                       <h4 className="font-semibold text-white mb-2">Fixed Voltage</h4>
                       <p className="text-sm text-white mb-3">When you know voltage and resistance</p>
                       <div className="bg-card rounded-lg p-3">
-                        <p className="text-xs text-purple-700 text-elec-yellow font-medium">
-                          ⚡ Heater elements<br/>
-                          ⚡ Resistive loads<br/>
-                          ⚡ Component sizing
+                        <p className="text-xs text-elec-yellow font-medium">
+                          Heater elements<br/>
+                          Resistive loads<br/>
+                          Component sizing
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
-                
-                <div className="mt-6 bg-gradient-to-r from-elec-yellow/20 to-elec-yellow/10 border-l-4 border-elec-yellow p-4 rounded-r-lg">
+
+                <div className="mt-6 bg-gradient-to-r from-elec-yellow/20 to-elec-yellow/10 border-l-2 border-elec-yellow p-4 rounded-r-lg">
                   <div className="flex items-start gap-3">
                     <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-xs font-bold">!</span>
@@ -316,7 +315,7 @@ const Module2Section2_4: React.FC = () => {
                     <div>
                       <p className="text-white text-sm font-medium mb-1">Key Insight</p>
                       <p className="text-white text-sm">
-                        All three formulas give the same answer for the same circuit. 
+                        All three formulas give the same answer for the same circuit.
                         Choose based on what values you have available and what you're trying to find.
                       </p>
                     </div>
@@ -325,20 +324,20 @@ const Module2Section2_4: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Step-by-Step Process */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
+        <section className="mb-10">
+          <div className="border-l-2 border-elec-yellow p-6 rounded-r-lg">
             <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Step-by-Step Calculation Process
             </h2>
             <div className="space-y-4 text-white">
               <p className="text-sm text-white mb-4">
                 Power calculations follow a systematic approach. Master this process and you'll confidently handle any power-related scenario on site.
               </p>
-              
+
               <ol className="list-decimal pl-6 space-y-2">
                 <li><strong>Identify what you know:</strong> voltage, current, or resistance values from nameplates, measurements, or specifications.</li>
                 <li><strong>Choose the appropriate formula:</strong> P = V×I, P = I²R, or P = V²/R based on available data.</li>
@@ -347,7 +346,7 @@ const Module2Section2_4: React.FC = () => {
                 <li><strong>Sanity‑check:</strong> does the result make practical sense for the application?</li>
                 <li><strong>Apply safety margin:</strong> consider derating factors and safety requirements.</li>
               </ol>
-              
+
               <div className="bg-accent/5 rounded-lg p-4 border border-accent/20 mt-4">
                 <h4 className="font-semibold mb-2">Example: Kettle Power Check</h4>
                 <p className="text-sm mb-2">A kettle nameplate shows 230V, 8.7A. Find the power:</p>
@@ -356,22 +355,25 @@ const Module2Section2_4: React.FC = () => {
                   <li>Use P = V × I (we have voltage and current directly)</li>
                   <li>Units check: V and A are already in base units</li>
                   <li>Calculate: P = 230 × 8.7 = 2001W ≈ 2kW</li>
-                  <li>Sanity check: 2kW is typical for a domestic kettle ✓</li>
+                  <li>Sanity check: 2kW is typical for a domestic kettle</li>
                   <li>Application: This kettle will draw 8.7A, suitable for a 13A socket</li>
                 </ol>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         {/* When to Use Each Formula */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">When to Use Each Formula</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            When to Use Each Formula
+          </h2>
           <div className="space-y-6">
             <div className="grid md:grid-cols-1 gap-6">
-              
+
               {/* P = V × I */}
-              <div className="bg-card border-l-4 border-elec-yellow p-4 rounded-r-lg">
+              <div className="bg-card border-l-2 border-elec-yellow p-4 rounded-r-lg">
                 <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
                   <span className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">P = V × I</span>
                   Most Common - Use First
@@ -389,18 +391,18 @@ const Module2Section2_4: React.FC = () => {
                   <div>
                     <p className="font-medium text-white mb-2">Example scenario:</p>
                     <p className="text-white">
-                      "The washing machine shows 230V, 10A on its nameplate. 
+                      "The washing machine shows 230V, 10A on its nameplate.
                       Is this suitable for a 13A socket circuit?"
                     </p>
                     <p className="text-green-600 text-xs mt-1">
-                      P = 230 × 10 = 2.3kW ✓ Well within 13A limit
+                      P = 230 × 10 = 2.3kW - Well within 13A limit
                     </p>
                   </div>
                 </div>
               </div>
 
               {/* P = I²R */}
-              <div className="bg-card border-l-4 border-orange-500 p-4 rounded-r-lg">
+              <div className="bg-card border-l-2 border-orange-500 p-4 rounded-r-lg">
                 <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
                   <span className="bg-orange-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">I²R</span>
                   For Heating Analysis
@@ -418,7 +420,7 @@ const Module2Section2_4: React.FC = () => {
                   <div>
                     <p className="font-medium text-white mb-2">Example scenario:</p>
                     <p className="text-white">
-                      "A 32A circuit uses 30m of 6mm² cable. 
+                      "A 32A circuit uses 30m of 6mm² cable.
                       How much power is lost as heat?"
                     </p>
                     <p className="text-orange-600 text-xs mt-1">
@@ -430,7 +432,7 @@ const Module2Section2_4: React.FC = () => {
               </div>
 
               {/* P = V²/R */}
-              <div className="bg-card border-l-4 border-purple-500 p-4 rounded-r-lg">
+              <div className="bg-card border-l-2 border-purple-500 p-4 rounded-r-lg">
                 <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
                   <span className="bg-purple-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">V²/R</span>
                   For Fixed Voltage Loads
@@ -448,7 +450,7 @@ const Module2Section2_4: React.FC = () => {
                   <div>
                     <p className="font-medium text-white mb-2">Example scenario:</p>
                     <p className="text-white">
-                      "Customer wants to replace a broken 3kW 
+                      "Customer wants to replace a broken 3kW
                       immersion heater element. What resistance should it be?"
                     </p>
                     <p className="text-purple-600 text-xs mt-1">
@@ -460,11 +462,14 @@ const Module2Section2_4: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Common Mistakes and How to Avoid Them */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Common Mistakes and How to Avoid Them</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Common Mistakes and How to Avoid Them
+          </h2>
           <div className="space-y-4">
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div className="space-y-4">
@@ -473,15 +478,15 @@ const Module2Section2_4: React.FC = () => {
                   Common Mistakes
                 </h3>
                 <ul className="space-y-3 text-sm">
-                  <li className="bg-card border-l-4 border-red-500 p-3 rounded-r">
+                  <li className="bg-card border-l-2 border-red-500 p-3 rounded-r">
                     <p className="font-medium text-white">Unit confusion</p>
                     <p className="text-white">Using kW instead of W, or mA instead of A in calculations</p>
                   </li>
-                  <li className="bg-card border-l-4 border-red-500 p-3 rounded-r">
+                  <li className="bg-card border-l-2 border-red-500 p-3 rounded-r">
                     <p className="font-medium text-white">Wrong formula choice</p>
                     <p className="text-white">Using P = V²/R when you don't actually know the resistance</p>
                   </li>
-                  <li className="bg-card border-l-4 border-red-500 p-3 rounded-r">
+                  <li className="bg-card border-l-2 border-red-500 p-3 rounded-r">
                     <p className="font-medium text-white">Ignoring power factor</p>
                     <p className="text-white">Applying DC formulas to AC inductive loads without consideration</p>
                   </li>
@@ -493,15 +498,15 @@ const Module2Section2_4: React.FC = () => {
                   Best Practices
                 </h3>
                 <ul className="space-y-3 text-sm">
-                  <li className="bg-card border-l-4 border-green-500 p-3 rounded-r">
+                  <li className="bg-card border-l-2 border-green-500 p-3 rounded-r">
                     <p className="font-medium text-white">Always convert to base units first</p>
-                    <p className="text-white">Convert kW→W, mA→A, kΩ→Ω before calculating</p>
+                    <p className="text-white">Convert kW to W, mA to A, kΩ to Ω before calculating</p>
                   </li>
-                  <li className="bg-card border-l-4 border-green-500 p-3 rounded-r">
+                  <li className="bg-card border-l-2 border-green-500 p-3 rounded-r">
                     <p className="font-medium text-white">Double-check your knowns</p>
                     <p className="text-white">Verify you actually have reliable values for V, I, or R</p>
                   </li>
-                  <li className="bg-card border-l-4 border-green-500 p-3 rounded-r">
+                  <li className="bg-card border-l-2 border-green-500 p-3 rounded-r">
                     <p className="font-medium text-white">Sanity check results</p>
                     <p className="text-white">Does a 100kW kettle make sense? Always verify reasonableness</p>
                   </li>
@@ -509,16 +514,19 @@ const Module2Section2_4: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Interactive Power Calculator */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Interactive Power Calculator</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+            Interactive Power Calculator
+          </h2>
           <p className="text-white mb-6">
             Practice with this calculator. Enter any two values and it will calculate power using the appropriate formula.
           </p>
           <PowerCalculator />
-        </Card>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[1]} />
 
@@ -526,70 +534,76 @@ const Module2Section2_4: React.FC = () => {
         <UnitsPocketCard />
 
         {/* Real-World Scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Scenario</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+            Real-World Scenario
+          </h2>
           <div className="bg-accent/5 rounded-lg p-4 border border-accent/20">
             <h3 className="font-semibold text-white mb-3">Cable Heating Assessment</h3>
             <p className="text-xs sm:text-sm text-white mb-3">
-              You're installing a 32A radial circuit using 6mm² T&E cable over a 40m run. The client is concerned 
+              You're installing a 32A radial circuit using 6mm² T&E cable over a 40m run. The client is concerned
               about cable heating and wants to understand the power loss.
             </p>
             <div className="space-y-2 text-sm">
               <p><strong>Given:</strong> I = 32A, Cable resistance ≈ 3.08mΩ/m, Length = 40m</p>
               <p><strong>Step 1:</strong> Calculate total resistance: R = 3.08 × 40 = 123.2mΩ = 0.1232Ω</p>
               <p><strong>Step 2:</strong> Calculate power loss: P = I²R = 32² × 0.1232 = 126W</p>
-              <p><strong>Check:</strong> 126W heating in 40m of 6mm² cable - within acceptable limits ✓</p>
+              <p><strong>Check:</strong> 126W heating in 40m of 6mm² cable - within acceptable limits</p>
               <p className="text-white italic">
                 This demonstrates how I²R calculations help assess cable suitability and heating effects.
               </p>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Detailed Worked Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Detailed Worked Examples</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+            Detailed Worked Examples
+          </h2>
           <div className="space-y-6">
-            
+
             {/* Example 1: Kitchen Circuit Loading */}
             <div className="border border-white/10 rounded-lg p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="bg-elec-yellow text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">1</div>
                 <h3 className="text-lg font-semibold text-white">Kitchen Circuit Loading Assessment</h3>
               </div>
-              
+
               <div className="bg-card rounded-lg p-4 mb-4 border border-elec-yellow/20">
                 <p className="text-xs sm:text-sm text-white mb-2">
-                  <strong>Scenario:</strong> A client wants to add a dishwasher (2.5kW) to a kitchen ring final circuit 
+                  <strong>Scenario:</strong> A client wants to add a dishwasher (2.5kW) to a kitchen ring final circuit
                   that already has a kettle (2kW), microwave (800W), and toaster (1.2kW). Will the 32A circuit cope?
                 </p>
               </div>
-              
+
               <div className="space-y-3 text-sm">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="font-semibold text-white mb-2">Step 1: Calculate individual currents</p>
                     <ul className="space-y-1 text-white pl-4">
-                      <li>• Dishwasher: I = P/V = 2500/230 = 10.9A</li>
-                      <li>• Kettle: I = P/V = 2000/230 = 8.7A</li>
-                      <li>• Microwave: I = P/V = 800/230 = 3.5A</li>
-                      <li>• Toaster: I = P/V = 1200/230 = 5.2A</li>
+                      <li>Dishwasher: I = P/V = 2500/230 = 10.9A</li>
+                      <li>Kettle: I = P/V = 2000/230 = 8.7A</li>
+                      <li>Microwave: I = P/V = 800/230 = 3.5A</li>
+                      <li>Toaster: I = P/V = 1200/230 = 5.2A</li>
                     </ul>
                   </div>
                   <div>
                     <p className="font-semibold text-white mb-2">Step 2: Assess simultaneous use</p>
                     <ul className="space-y-1 text-white pl-4">
-                      <li>• Worst case: All on = 28.3A</li>
-                      <li>• Realistic: Kettle + Dishwasher = 19.6A</li>
-                      <li>• Circuit rating: 32A</li>
-                      <li>• Outcome: ✓ Circuit adequate</li>
+                      <li>Worst case: All on = 28.3A</li>
+                      <li>Realistic: Kettle + Dishwasher = 19.6A</li>
+                      <li>Circuit rating: 32A</li>
+                      <li>Outcome: Circuit adequate</li>
                     </ul>
                   </div>
                 </div>
-                
-                <div className="bg-card border-l-4 border-green-500 p-3 rounded-r mt-4">
+
+                <div className="bg-card border-l-2 border-green-500 p-3 rounded-r mt-4">
                   <p className="text-white text-sm">
-                    <strong>Conclusion:</strong> The 32A ring final can handle the additional dishwasher. 
+                    <strong>Conclusion:</strong> The 32A ring final can handle the additional dishwasher.
                     Even with simultaneous operation of major appliances, current stays well below circuit capacity.
                   </p>
                 </div>
@@ -602,39 +616,39 @@ const Module2Section2_4: React.FC = () => {
                 <div className="bg-purple-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">2</div>
                 <h3 className="text-lg font-semibold text-white">Immersion Heater Element Replacement</h3>
               </div>
-              
+
               <div className="bg-card rounded-lg p-4 mb-4 border border-purple-500/20">
                 <p className="text-xs sm:text-sm text-white mb-2">
-                  <strong>Scenario:</strong> A customer's 3kW immersion heater element has failed. They want to upgrade 
+                  <strong>Scenario:</strong> A customer's 3kW immersion heater element has failed. They want to upgrade
                   to a more powerful 4kW element but are concerned about their existing 20A circuit and cable sizing.
                 </p>
               </div>
-              
+
               <div className="space-y-3 text-sm">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="font-semibold text-white mb-2">Original 3kW element:</p>
                     <ul className="space-y-1 text-white pl-4">
-                      <li>• Current: I = P/V = 3000/230 = 13A</li>
-                      <li>• Resistance: R = V²/P = 230²/3000 = 17.6Ω</li>
-                      <li>• Circuit: 20A MCB, 2.5mm² cable</li>
-                      <li>• Status: ✓ Well within limits</li>
+                      <li>Current: I = P/V = 3000/230 = 13A</li>
+                      <li>Resistance: R = V²/P = 230²/3000 = 17.6Ω</li>
+                      <li>Circuit: 20A MCB, 2.5mm² cable</li>
+                      <li>Status: Well within limits</li>
                     </ul>
                   </div>
                   <div>
                     <p className="font-semibold text-white mb-2">Proposed 4kW element:</p>
                     <ul className="space-y-1 text-white pl-4">
-                      <li>• Current: I = P/V = 4000/230 = 17.4A</li>
-                      <li>• Resistance: R = V²/P = 230²/4000 = 13.2Ω</li>
-                      <li>• Circuit requirement: 20A MCB, 2.5mm²</li>
-                      <li>• Status: ✓ Still acceptable</li>
+                      <li>Current: I = P/V = 4000/230 = 17.4A</li>
+                      <li>Resistance: R = V²/P = 230²/4000 = 13.2Ω</li>
+                      <li>Circuit requirement: 20A MCB, 2.5mm²</li>
+                      <li>Status: Still acceptable</li>
                     </ul>
                   </div>
                 </div>
-                
-                <div className="bg-card border-l-4 border-orange-500 p-3 rounded-r mt-4">
+
+                <div className="bg-card border-l-2 border-orange-500 p-3 rounded-r mt-4">
                   <p className="text-white text-sm">
-                    <strong>Conclusion:</strong> The upgrade to 4kW is possible with the existing installation. 
+                    <strong>Conclusion:</strong> The upgrade to 4kW is possible with the existing installation.
                     Current increases to 17.4A, still comfortably within the 20A circuit rating.
                   </p>
                 </div>
@@ -647,95 +661,101 @@ const Module2Section2_4: React.FC = () => {
                 <div className="bg-orange-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">3</div>
                 <h3 className="text-lg font-semibold text-white">Workshop Motor Installation</h3>
               </div>
-              
+
               <div className="bg-card rounded-lg p-4 mb-4 border border-orange-500/20">
                 <p className="text-xs sm:text-sm text-white mb-2">
-                  <strong>Scenario:</strong> Installing a 5kW three-phase motor in a workshop. The cable run is 50m from the 
+                  <strong>Scenario:</strong> Installing a 5kW three-phase motor in a workshop. The cable run is 50m from the
                   distribution board to the motor starter. Calculate current and assess 6mm² SWA cable heating.
                 </p>
               </div>
-              
+
               <div className="space-y-3 text-sm">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="font-semibold text-white mb-2">Motor calculations:</p>
                     <ul className="space-y-1 text-white pl-4">
-                      <li>• Power: 5kW (5000W)</li>
-                      <li>• Supply: 400V three-phase</li>
-                      <li>• Line current: I = P/(√3×V) = 5000/(1.73×400) = 7.2A</li>
-                      <li>• With efficiency (≈90%): I = 8A per line</li>
+                      <li>Power: 5kW (5000W)</li>
+                      <li>Supply: 400V three-phase</li>
+                      <li>Line current: I = P/(√3×V) = 5000/(1.73×400) = 7.2A</li>
+                      <li>With efficiency (≈90%): I = 8A per line</li>
                     </ul>
                   </div>
                   <div>
                     <p className="font-semibold text-white mb-2">Cable heating assessment:</p>
                     <ul className="space-y-1 text-white pl-4">
-                      <li>• 6mm² SWA resistance: ≈3.08mΩ/m</li>
-                      <li>• 50m run resistance: R = 50 × 3.08 = 154mΩ</li>
-                      <li>• Power loss per core: P = I²R = 8² × 0.154 = 9.9W</li>
-                      <li>• Total 3-phase loss: 3 × 9.9 = 29.7W</li>
+                      <li>6mm² SWA resistance: ≈3.08mΩ/m</li>
+                      <li>50m run resistance: R = 50 × 3.08 = 154mΩ</li>
+                      <li>Power loss per core: P = I²R = 8² × 0.154 = 9.9W</li>
+                      <li>Total 3-phase loss: 3 × 9.9 = 29.7W</li>
                     </ul>
                   </div>
                 </div>
-                
-                <div className="bg-card border-l-4 border-green-500 p-3 rounded-r mt-4">
+
+                <div className="bg-card border-l-2 border-green-500 p-3 rounded-r mt-4">
                   <p className="text-white text-sm">
-                    <strong>Conclusion:</strong> 6mm² SWA cable is more than adequate. Total power loss is only 29.7W (less than 0.6% of motor power), 
+                    <strong>Conclusion:</strong> 6mm² SWA cable is more than adequate. Total power loss is only 29.7W (less than 0.6% of motor power),
                     resulting in minimal heating and excellent efficiency.
                   </p>
                 </div>
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Power and Energy Relationship */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Understanding Power vs Energy</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">10</span>
+            Understanding Power vs Energy
+          </h2>
           <div className="space-y-4">
             <p className="text-white">
-              It's crucial to understand the difference between power (rate of energy use) and energy (total consumption over time). 
+              It's crucial to understand the difference between power (rate of energy use) and energy (total consumption over time).
               This affects customer bills and installation sizing.
             </p>
-            
+
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-              <div className="bg-card border-l-4 border-elec-yellow p-4 rounded-r">
+              <div className="bg-card border-l-2 border-elec-yellow p-4 rounded-r">
                 <h3 className="font-semibold text-white mb-3">Power (P) - Instantaneous</h3>
                 <ul className="text-sm text-white space-y-2">
-                  <li>• <strong>Unit:</strong> Watts (W) or Kilowatts (kW)</li>
-                  <li>• <strong>What it tells us:</strong> How fast energy is being used right now</li>
-                  <li>• <strong>Determines:</strong> Cable sizing, protective device ratings</li>
-                  <li>• <strong>Example:</strong> A 3kW kettle draws 3000W while heating</li>
+                  <li><strong>Unit:</strong> Watts (W) or Kilowatts (kW)</li>
+                  <li><strong>What it tells us:</strong> How fast energy is being used right now</li>
+                  <li><strong>Determines:</strong> Cable sizing, protective device ratings</li>
+                  <li><strong>Example:</strong> A 3kW kettle draws 3000W while heating</li>
                 </ul>
               </div>
-              
-              <div className="bg-card border-l-4 border-green-500 p-4 rounded-r">
+
+              <div className="bg-card border-l-2 border-green-500 p-4 rounded-r">
                 <h3 className="font-semibold text-white mb-3">Energy (E) - Over Time</h3>
                 <ul className="text-sm text-white space-y-2">
-                  <li>• <strong>Unit:</strong> Kilowatt-hours (kWh)</li>
-                  <li>• <strong>What it tells us:</strong> Total energy consumed over a period</li>
-                  <li>• <strong>Determines:</strong> Electricity bills, environmental impact</li>
-                  <li>• <strong>Example:</strong> Kettle on for 0.1 hours = 3kW × 0.1h = 0.3kWh</li>
+                  <li><strong>Unit:</strong> Kilowatt-hours (kWh)</li>
+                  <li><strong>What it tells us:</strong> Total energy consumed over a period</li>
+                  <li><strong>Determines:</strong> Electricity bills, environmental impact</li>
+                  <li><strong>Example:</strong> Kettle on for 0.1 hours = 3kW × 0.1h = 0.3kWh</li>
                 </ul>
               </div>
             </div>
-            
+
             <div className="bg-accent/5 rounded-lg p-4 border border-accent/20">
               <h4 className="font-semibold text-white mb-2">Practical Example: Cost Comparison</h4>
               <div className="text-sm text-white space-y-1">
                 <p>Two customers ask about running costs:</p>
-                <p>• <strong>Customer A:</strong> 3kW immersion heater, 2 hours/day = 6kWh/day</p>
-                <p>• <strong>Customer B:</strong> 1kW space heater, 8 hours/day = 8kWh/day</p>
+                <p><strong>Customer A:</strong> 3kW immersion heater, 2 hours/day = 6kWh/day</p>
+                <p><strong>Customer B:</strong> 1kW space heater, 8 hours/day = 8kWh/day</p>
                 <p className="text-green-600 mt-2">
                   <strong>Result:</strong> Despite lower power rating, Customer B pays more (higher energy consumption)
                 </p>
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">11</span>
+            Frequently Asked Questions
+          </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
@@ -744,30 +764,33 @@ const Module2Section2_4: React.FC = () => {
               </div>
             ))}
           </div>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">12</span>
+            Summary
+          </h2>
           <p className="text-white mb-4">
-            Power calculations are essential for safe electrical installations. Choose P = V×I for nameplate verification, 
-            P = I²R for heating analysis, and P = V²/R for fixed voltage scenarios. Always consider the practical 
+            Power calculations are essential for safe electrical installations. Choose P = V×I for nameplate verification,
+            P = I²R for heating analysis, and P = V²/R for fixed voltage scenarios. Always consider the practical
             implications of your calculations.
           </p>
           <p className="text-white text-sm">
             Remember: Heat is proportional to I² - small increases in current create large increases in heating!
           </p>
-        </Card>
+        </section>
 
         {/* Quiz */}
         <Quiz questions={quizQuestions} title="Test Your Understanding: Power Calculations" />
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5" asChild>
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../2-3"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a]" asChild>
+          <Button size="lg" className="w-full sm:w-auto min-h-[44px] bg-elec-yellow text-[#1a1a1a] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../2-5">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
           </Button>
         </nav>

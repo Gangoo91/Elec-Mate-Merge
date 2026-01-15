@@ -1,7 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -166,13 +163,13 @@ export default function Module3Section6_6() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white hover:text-white active:text-white p-0 -ml-1"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -184,18 +181,15 @@ export default function Module3Section6_6() {
       </div>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <header className="mb-6 sm:mb-8 text-center">
+          <div className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
+            <span className="text-elec-yellow text-sm font-medium">Module 3.6.6</span>
+          </div>
+          <div className="flex justify-center mb-4">
+            <div className="p-2 rounded-lg">
               <FileText className="w-6 h-6 text-white" />
             </div>
-            <Badge
-              variant="outline"
-              className="border-elec-yellow/30 text-elec-yellow"
-            >
-              Section 3.6.6
-            </Badge>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Following Manufacturer Instructions and Site Specs
@@ -206,10 +200,13 @@ export default function Module3Section6_6() {
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Manufacturer instructions are mandatory under BS 7671 and contractual obligations.</li>
@@ -218,7 +215,7 @@ export default function Module3Section6_6() {
                 <li>Always follow the most stringent requirement when multiple standards apply.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Missing manuals, ignored torque specs, non-compliant mounting, warranty voids.</li>
@@ -227,11 +224,14 @@ export default function Module3Section6_6() {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning Outcomes
+          </h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Understand the legal and contractual importance of following manufacturer installation instructions.</li>
             <li>Identify sources and interpret manufacturer guidance for electrical equipment.</li>
@@ -239,14 +239,17 @@ export default function Module3Section6_6() {
             <li>Apply integrated compliance approach using standards, instructions and site specifications.</li>
             <li>Recognise and mitigate consequences of non-compliance with instructions and specifications.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Content / Learning
+          </h2>
 
           {/* 1. Legal and Safety Imperatives for Following Instructions */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> 1. Legal and Safety Imperatives for Following Instructions
             </h3>
@@ -350,13 +353,13 @@ export default function Module3Section6_6() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[0]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* 2. Manufacturer Documentation and Information Sources */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Settings className="w-5 h-5" /> 2. Manufacturer Documentation and Information Sources
             </h3>
@@ -457,13 +460,13 @@ export default function Module3Section6_6() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[1]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* 3. Site Specifications and Project Requirements */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" /> 3. Site Specifications and Project Requirements
             </h3>
@@ -573,13 +576,13 @@ export default function Module3Section6_6() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[2]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* 4. Integration and Best Practice Implementation */}
-          <section className="mb-2">
+          <div className="mb-2">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <CheckSquare className="w-5 h-5" /> 4. Integration and Best Practice Implementation
             </h3>
@@ -654,20 +657,23 @@ export default function Module3Section6_6() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           {/* Real-World Example */}
-          <div className="mt-6 p-4 bg-transparent border border-border/30 rounded-lg">
+          <div className="mt-6 p-4 bg-transparent border-l-2 border-elec-yellow rounded-lg border border-white/10">
             <h5 className="font-medium text-elec-yellow mb-2">Real-World Example</h5>
             <p className="text-xs sm:text-sm text-white">
               A contractor installed a high-integrity consumer unit without following the manufacturer's specific torque settings for busbar terminals. Six months later, loose connections caused overheating, arcing, and eventual failure of the main switch. The manufacturer rejected the warranty claim because installation records showed non-compliance with their specified 25Nm torque requirement. The contractor faced £15,000 in replacement costs, project delays, and potential legal action from the client.
             </p>
           </div>
-        </Card>
+        </section>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Frequently Asked Questions
+          </h2>
           <div className="space-y-4">
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
               <h3 className="font-medium text-white mb-2">Q: Can site specifications override BS 7671 requirements?</h3>
@@ -694,31 +700,39 @@ export default function Module3Section6_6() {
               </p>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
-          <p className="text-white/90">
-            Following manufacturer instructions and site specifications is legally mandated under BS 7671 and forms essential contractual obligations. These requirements protect safety, ensure warranty coverage, and maintain professional standards. A systematic approach integrating regulatory requirements, manufacturer instructions, and site specifications ensures compliant, safe, and high-quality electrical installations while protecting all stakeholders from legal and financial risks.
-          </p>
-        </Card>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Summary
+          </h2>
+          <div className="p-4 bg-transparent border-l-2 border-elec-yellow rounded-lg border border-white/10">
+            <p className="text-white/90">
+              Following manufacturer instructions and site specifications is legally mandated under BS 7671 and forms essential contractual obligations. These requirements protect safety, ensure warranty coverage, and maintain professional standards. A systematic approach integrating regulatory requirements, manufacturer instructions, and site specifications ensures compliant, safe, and high-quality electrical installations while protecting all stakeholders from legal and financial risks.
+            </p>
+          </div>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Quiz (8 Questions)
+          </h2>
           <Quiz questions={quizQuestions} />
-        </Card>
+        </section>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
+        <div className="flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-3 pt-8 border-t border-white/10">
+          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../6-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button asChild>
+          <Button className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../module3">
               Back to Module 3
               <ArrowRight className="w-4 h-4 ml-2" />

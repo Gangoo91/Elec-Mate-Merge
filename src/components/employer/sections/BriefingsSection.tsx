@@ -29,6 +29,7 @@ import {
 import { useBriefingAttendees } from "@/hooks/useBriefingSignatures";
 import { type ToolboxTalkTemplate } from "@/hooks/useToolboxTalkTemplates";
 import { useEmployees } from "@/hooks/useEmployees";
+import { useCompanyProfile } from "@/hooks/useCompanyProfile";
 import { useToast } from "@/hooks/use-toast";
 import {
   Users,
@@ -92,6 +93,7 @@ export function BriefingsSection() {
   const { data: briefings, isLoading, error, refetch } = useBriefings();
   const { data: stats } = useBriefingStats();
   const { data: employees } = useEmployees();
+  const { companyProfile } = useCompanyProfile();
   const createBriefing = useCreateBriefing();
   const createFromTemplate = useCreateBriefingFromTemplate();
   const completeBriefing = useCompleteBriefing();
@@ -181,7 +183,7 @@ export function BriefingsSection() {
       await downloadBriefingPDF({
         briefing,
         attendees: attendees || [],
-        companyName: "Your Company", // TODO: Get from user profile
+        companyName: companyProfile?.company_name || "Your Company"
       });
       toast({
         title: "PDF exported",

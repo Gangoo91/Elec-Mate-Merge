@@ -46,10 +46,10 @@ const AM2Module6 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Header */}
       <div className="border-b border-white/10 backdrop-blur-md bg-black/20 sticky top-0 z-50">
-        <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16 py-4">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
           <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
@@ -60,7 +60,8 @@ const AM2Module6 = () => {
       </div>
 
       {/* Main Content */}
-      <div className="w-full px-4 md:px-8 lg:px-12 xl:px-16 py-12">
+      <div className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
         {/* Hero Section */}
         <div className="mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-elec-yellow/10 border border-elec-yellow/20 rounded-full mb-4">
@@ -76,7 +77,7 @@ const AM2Module6 = () => {
         </div>
 
         {/* Sections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-4">
           {sections.map((section) => (
             <ModuleCard
               key={section.id}
@@ -87,6 +88,7 @@ const AM2Module6 = () => {
               href={section.path}
             />
           ))}
+        </div>
         </div>
       </div>
     </div>

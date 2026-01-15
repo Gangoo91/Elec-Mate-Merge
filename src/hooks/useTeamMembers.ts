@@ -87,6 +87,17 @@ export function useInviteTeamMember() {
         .single();
 
       if (error) throw error;
+
+      // Send invitation email via edge function
+      try {
+        await supabase.functions.invoke("send-team-invite", {
+          body: { teamMemberId: data.id },
+        });
+      } catch (emailError) {
+        console.error("Failed to send invitation email:", emailError);
+        // Don't fail the mutation - team member was created successfully
+      }
+
       return data as TeamMember;
     },
     onSuccess: (data) => {
@@ -188,7 +199,16 @@ export function useResendInvitation() {
 
       if (error) throw error;
 
-      // TODO: Actually send invitation email via edge function
+      // Send invitation email via edge function
+      try {
+        await supabase.functions.invoke("send-team-invite", {
+          body: { teamMemberId: data.id },
+        });
+      } catch (emailError) {
+        console.error("Failed to send invitation email:", emailError);
+        // Don't fail the mutation - record was updated successfully
+      }
+
       return data as TeamMember;
     },
     onSuccess: (data) => {

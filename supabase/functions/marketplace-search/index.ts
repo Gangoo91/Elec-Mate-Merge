@@ -1,56 +1,15 @@
-import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
-interface SearchRequest {
-  query?: string;
-  category?: string;
-  suppliers?: string[]; // supplier slugs
-  minPrice?: number;
-  maxPrice?: number;
-  dealsOnly?: boolean;
-  sort?: 'relevance' | 'price-low' | 'price-high' | 'discount';
-  page?: number;
-  pageSize?: number;
-}
-
-interface SearchResponse {
-  products: Product[];
-  total: number;
-  page: number;
-  pageSize: number;
-  totalPages: number;
-  facets: {
-    categories: { name: string; count: number }[];
-    suppliers: { slug: string; name: string; count: number }[];
-    priceRange: { min: number; max: number };
-  };
-}
-
-interface Product {
-  id: string;
-  supplier_id: string;
-  supplier_name: string;
-  supplier_slug: string;
-  sku: string;
-  name: string;
-  brand: string;
-  category: string;
-  subcategory: string;
-  current_price: number;
-  regular_price: number;
-  is_on_sale: boolean;
-  discount_percentage: number;
-  description: string;
-  highlights: string[];
-  image_url: string;
-  product_url: string;
-  stock_status: string;
-  search_rank?: number;
-}
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
 
 serve(async (req: Request) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+    return new Response('ok', { headers: corsHeaders });
   }
 
   try {
@@ -59,7 +18,7 @@ serve(async (req: Request) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
-    const body: SearchRequest = await req.json().catch(() => ({}));
+    const body = await req.json().catch(() => ({}));
 
     const {
       query = '',
@@ -68,52 +27,167 @@ serve(async (req: Request) => {
       minPrice = null,
       maxPrice = null,
       dealsOnly = false,
+      productType = null, // 'tools' | 'materials' | null
       sort = 'relevance',
       page = 1,
-      pageSize = 20,
+      pageSize = 24,
     } = body;
 
-    // Get supplier IDs from slugs if provided
-    let supplierIds: string[] | null = null;
+    // Define category groups for filtering
+    const TOOL_CATEGORIES = [
+      'hand-tools', 'power-tools', 'test-equipment', 'ppe', 'tool-storage'
+    ];
+    const MATERIAL_CATEGORIES = [
+      'cables', 'consumer-units', 'circuit-protection', 'wiring-accessories',
+      'lighting', 'containment', 'earthing', 'fire-security', 'ev-charging',
+      'data-networking', 'fixings', 'hvac'
+    ];
+
+    // Build the query
+    let productsQuery = supabase
+      .from('marketplace_products')
+      .select(`
+        id,
+        sku,
+        name,
+        brand,
+        category,
+        subcategory,
+        current_price,
+        regular_price,
+        is_on_sale,
+        discount_percentage,
+        description,
+        highlights,
+        image_url,
+        product_url,
+        stock_status,
+        supplier_id,
+        marketplace_suppliers (
+          id,
+          name,
+          slug
+        )
+      `);
+
+    // Apply filters
+    if (query && query.length > 0) {
+      productsQuery = productsQuery.ilike('name', `%${query}%`);
+    }
+
+    if (category) {
+      productsQuery = productsQuery.eq('category', category);
+    }
+
     if (suppliers && suppliers.length > 0) {
+      // Get supplier IDs from slugs
       const { data: supplierData } = await supabase
         .from('marketplace_suppliers')
         .select('id')
         .in('slug', suppliers);
 
       if (supplierData && supplierData.length > 0) {
-        supplierIds = supplierData.map((s: { id: string }) => s.id);
+        const supplierIds = supplierData.map((s: { id: string }) => s.id);
+        productsQuery = productsQuery.in('supplier_id', supplierIds);
       }
     }
 
-    // Use the search function we created in the migration
-    const { data: results, error: searchError } = await supabase.rpc(
-      'search_marketplace_products',
-      {
-        search_query: query || null,
-        category_filter: category || null,
-        supplier_ids: supplierIds,
-        min_price: minPrice,
-        max_price: maxPrice,
-        deals_only: dealsOnly,
-        sort_by: sort,
-        page_num: page,
-        page_size: pageSize,
-      }
-    );
-
-    if (searchError) {
-      console.error('Search error:', searchError);
-      throw new Error(`Search failed: ${searchError.message}`);
+    if (minPrice !== null) {
+      productsQuery = productsQuery.gte('current_price', minPrice);
     }
 
-    // Get total count from first result
-    const total = results && results.length > 0 ? Number(results[0].total_count) : 0;
-    const totalPages = Math.ceil(total / pageSize);
+    if (maxPrice !== null) {
+      productsQuery = productsQuery.lte('current_price', maxPrice);
+    }
 
-    // Get facets (category and supplier counts)
-    const [categoryFacets, supplierFacets, priceRange] = await Promise.all([
-      // Category counts
+    if (dealsOnly) {
+      productsQuery = productsQuery.eq('is_on_sale', true);
+    }
+
+    // Filter by product type (tools vs materials)
+    if (productType === 'tools') {
+      productsQuery = productsQuery.in('category', TOOL_CATEGORIES);
+    } else if (productType === 'materials') {
+      productsQuery = productsQuery.in('category', MATERIAL_CATEGORIES);
+    }
+
+    // Apply sorting
+    switch (sort) {
+      case 'price-low':
+        productsQuery = productsQuery.order('current_price', { ascending: true });
+        break;
+      case 'price-high':
+        productsQuery = productsQuery.order('current_price', { ascending: false });
+        break;
+      case 'discount':
+        productsQuery = productsQuery.order('discount_percentage', { ascending: false, nullsFirst: false });
+        break;
+      default:
+        productsQuery = productsQuery.order('is_on_sale', { ascending: false }).order('name', { ascending: true });
+    }
+
+    // Get total count with same filters
+    let countQuery = supabase
+      .from('marketplace_products')
+      .select('*', { count: 'exact', head: true });
+
+    // Apply same filters to count query
+    if (query && query.length > 0) {
+      countQuery = countQuery.ilike('name', `%${query}%`);
+    }
+    if (category) {
+      countQuery = countQuery.eq('category', category);
+    }
+    if (dealsOnly) {
+      countQuery = countQuery.eq('is_on_sale', true);
+    }
+    if (productType === 'tools') {
+      countQuery = countQuery.in('category', TOOL_CATEGORIES);
+    } else if (productType === 'materials') {
+      countQuery = countQuery.in('category', MATERIAL_CATEGORIES);
+    }
+
+    const { count: total } = await countQuery;
+
+    // Apply pagination
+    const offset = (page - 1) * pageSize;
+    productsQuery = productsQuery.range(offset, offset + pageSize - 1);
+
+    // Execute query
+    const { data: products, error } = await productsQuery;
+
+    if (error) {
+      console.error('Query error:', error);
+      throw error;
+    }
+
+    // Transform products to include supplier info
+    const transformedProducts = (products || []).map((p: any) => ({
+      id: p.id,
+      supplier_id: p.supplier_id,
+      supplier_name: p.marketplace_suppliers?.name || 'Unknown',
+      supplier_slug: p.marketplace_suppliers?.slug || 'unknown',
+      sku: p.sku,
+      name: p.name,
+      brand: p.brand,
+      category: p.category,
+      subcategory: p.subcategory,
+      current_price: p.current_price,
+      regular_price: p.regular_price,
+      is_on_sale: p.is_on_sale,
+      discount_percentage: p.discount_percentage,
+      description: p.description,
+      highlights: p.highlights || [],
+      image_url: p.image_url,
+      product_url: p.product_url,
+      stock_status: p.stock_status,
+    }));
+
+    const totalCount = total || 0;
+    const totalPages = Math.ceil(totalCount / pageSize);
+
+    // Get facets
+    const [categoryFacets, supplierFacets] = await Promise.all([
       supabase
         .from('marketplace_products')
         .select('category')
@@ -130,79 +204,29 @@ serve(async (req: Request) => {
             .slice(0, 10);
         }),
 
-      // Supplier counts
       supabase
-        .from('marketplace_products')
-        .select('supplier_id, marketplace_suppliers(name, slug)')
+        .from('marketplace_suppliers')
+        .select('id, name, slug')
+        .eq('scrape_enabled', true)
         .then(({ data }) => {
-          if (!data) return [];
-          const counts: Record<string, { name: string; slug: string; count: number }> = {};
-          data.forEach((p: any) => {
-            const supplier = p.marketplace_suppliers;
-            if (supplier) {
-              if (!counts[supplier.slug]) {
-                counts[supplier.slug] = { name: supplier.name, slug: supplier.slug, count: 0 };
-              }
-              counts[supplier.slug].count++;
-            }
-          });
-          return Object.values(counts).sort((a, b) => b.count - a.count);
-        }),
-
-      // Price range
-      supabase
-        .from('marketplace_products')
-        .select('current_price')
-        .not('current_price', 'is', null)
-        .order('current_price', { ascending: true })
-        .limit(1)
-        .single()
-        .then(async ({ data: minData }) => {
-          const { data: maxData } = await supabase
-            .from('marketplace_products')
-            .select('current_price')
-            .not('current_price', 'is', null)
-            .order('current_price', { ascending: false })
-            .limit(1)
-            .single();
-
-          return {
-            min: minData?.current_price ?? 0,
-            max: maxData?.current_price ?? 1000,
-          };
+          return (data || []).map((s: any) => ({
+            slug: s.slug,
+            name: s.name,
+            count: 0
+          }));
         }),
     ]);
 
-    const response: SearchResponse = {
-      products: results?.map((r: any) => ({
-        id: r.id,
-        supplier_id: r.supplier_id,
-        supplier_name: r.supplier_name,
-        supplier_slug: r.supplier_slug,
-        sku: r.sku,
-        name: r.name,
-        brand: r.brand,
-        category: r.category,
-        subcategory: r.subcategory,
-        current_price: r.current_price,
-        regular_price: r.regular_price,
-        is_on_sale: r.is_on_sale,
-        discount_percentage: r.discount_percentage,
-        description: r.description,
-        highlights: r.highlights,
-        image_url: r.image_url,
-        product_url: r.product_url,
-        stock_status: r.stock_status,
-        search_rank: r.search_rank,
-      })) ?? [],
-      total,
+    const response = {
+      products: transformedProducts,
+      total: totalCount,
       page,
       pageSize,
       totalPages,
       facets: {
         categories: categoryFacets,
         suppliers: supplierFacets,
-        priceRange,
+        priceRange: { min: 0, max: 1000 },
       },
     };
 
@@ -218,7 +242,7 @@ serve(async (req: Request) => {
         products: [],
         total: 0,
         page: 1,
-        pageSize: 20,
+        pageSize: 24,
         totalPages: 0,
         facets: { categories: [], suppliers: [], priceRange: { min: 0, max: 1000 } }
       }),

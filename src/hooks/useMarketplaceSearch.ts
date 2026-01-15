@@ -26,12 +26,15 @@ export interface MarketplaceProduct {
   search_rank?: number;
 }
 
+export type ProductType = 'tools' | 'materials';
+
 export interface SearchFilters {
   category?: string;
   suppliers?: string[];
   minPrice?: number;
   maxPrice?: number;
   dealsOnly?: boolean;
+  productType?: ProductType;
 }
 
 export interface SearchFacets {
@@ -73,6 +76,7 @@ export function useMarketplaceSearch(
           minPrice: filters.minPrice ?? null,
           maxPrice: filters.maxPrice ?? null,
           dealsOnly: filters.dealsOnly ?? false,
+          productType: filters.productType || null,
           sort,
           page,
           pageSize,
@@ -86,8 +90,11 @@ export function useMarketplaceSearch(
 
       return data as SearchResponse;
     },
-    staleTime: 30000, // 30 seconds
+    staleTime: 5 * 60 * 1000, // 5 minutes - products don't change often
+    gcTime: 30 * 60 * 1000, // 30 minutes - keep in cache when navigating away
     placeholderData: (previousData) => previousData,
+    retry: 2,
+    retryDelay: 1000,
   });
 }
 

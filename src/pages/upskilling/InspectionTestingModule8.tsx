@@ -46,21 +46,21 @@ export default function InspectionTestingModule8() {
   });
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* iOS-style sticky header */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#0a0a0a]/95 border-b border-gray-800/50">
-        <div className="px-4 py-3 flex items-center gap-3">
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#1a1a1a]/95 border-b border-white/10">
+        <div className="px-4 py-3 flex items-center gap-3 max-w-3xl mx-auto">
           <Link to="../inspection-testing">
             <Button
               variant="ios-ghost"
               size="icon"
-              className="h-12 w-12 min-h-[48px] min-w-[48px]"
+              className="h-12 w-12 min-h-[48px] min-w-[48px] touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-gray-400">Module 8</p>
+            <p className="text-xs text-white/60">Module 8</p>
             <h1 className="text-lg font-semibold text-white truncate">
               Visual Inspection & Documentation
             </h1>
@@ -68,24 +68,24 @@ export default function InspectionTestingModule8() {
         </div>
       </header>
 
-      <main className="px-4 py-6 pb-safe">
+      <main className="px-4 py-6 pb-safe max-w-3xl mx-auto">
         {/* Hero section */}
         <section className="mb-8">
           <div className="flex items-center justify-center mb-6">
-            <div className="h-20 w-20 rounded-3xl bg-gradient-to-br from-elec-yellow to-yellow-600 flex items-center justify-center shadow-lg">
+            <div className="h-20 w-20 rounded-3xl bg-gradient-to-br from-elec-yellow to-amber-500 flex items-center justify-center shadow-lg shadow-elec-yellow/20">
               <Eye className="h-10 w-10 text-black" />
             </div>
           </div>
           <h2 className="text-[34px] font-bold text-center text-white mb-3 leading-tight">
             Visual Inspection & Documentation
           </h2>
-          <p className="text-center text-gray-400 max-w-md mx-auto">
+          <p className="text-center text-white/70 max-w-md mx-auto">
             Learn systematic visual inspection techniques and master the documentation
             required for electrical installation certification.
           </p>
           <div className="flex items-center justify-center gap-2 mt-4">
             <Target className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm text-gray-400">
+            <span className="text-sm text-white/60">
               5 sections • Documentation essentials
             </span>
           </div>
@@ -93,10 +93,10 @@ export default function InspectionTestingModule8() {
 
         {/* Section navigation grid */}
         <section className="mb-8">
-          <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-4 px-1">
+          <h3 className="text-sm font-medium text-white/60 uppercase tracking-wide mb-4 px-1">
             Module Sections
           </h3>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3">
             {sections.map((section, index) => (
               <motion.div
                 key={section.id}
@@ -138,7 +138,7 @@ export default function InspectionTestingModule8() {
                       </h3>
 
                       {/* Description */}
-                      <p className="text-white/50 text-xs leading-relaxed line-clamp-2">
+                      <p className="text-white/60 text-xs leading-relaxed line-clamp-2">
                         {section.description}
                       </p>
                     </CardContent>
@@ -151,7 +151,7 @@ export default function InspectionTestingModule8() {
 
         {/* Quick start CTA */}
         <section className="mb-8">
-          <Card variant="ios" className="p-6 bg-gradient-to-br from-elec-yellow to-yellow-600 border-0">
+          <Card variant="ios" className="p-6 bg-gradient-to-br from-elec-yellow to-amber-500 border-0">
             <div className="text-center">
               <h3 className="text-xl font-bold text-black mb-2">
                 Ready to Begin?
@@ -162,7 +162,7 @@ export default function InspectionTestingModule8() {
               <Link to="section1">
                 <Button
                   variant="ios-primary"
-                  className="min-h-[48px] bg-black text-elec-yellow hover:bg-gray-900"
+                  className="min-h-[48px] bg-black text-elec-yellow hover:bg-black/90 touch-manipulation active:scale-[0.98]"
                 >
                   Start Section 1
                   <ChevronRight className="h-4 w-4 ml-1" />

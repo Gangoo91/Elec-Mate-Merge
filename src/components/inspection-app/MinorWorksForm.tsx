@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import StartNewEICRDialog from '@/components/StartNewEICRDialog';
@@ -31,6 +31,7 @@ import IntelligentInput from '@/components/minor-works/IntelligentInput';
 import { ComplianceCheckpoint } from '@/components/minor-works/ComplianceCheckpoint';
 import { useSmartDefaults } from '@/hooks/useSmartDefaults';
 import { useFormValidation } from '@/hooks/useFormValidation';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import CustomerSelector from './CustomerSelector';
 import { Customer } from '@/hooks/useCustomers';
 
@@ -74,7 +75,9 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
   const [userId, setUserId] = useState<string | null>(null);
   const [currentReportId, setCurrentReportId] = useState<string | null>(initialReportId || null);
   const [authChecked, setAuthChecked] = useState(false);
-  
+  const { companyProfile, loading: companyProfileLoading } = useCompanyProfile();
+  const companyAutoFillDone = useRef(false);
+
   // Capture customer data from navigation state
   const customerIdFromNav = location.state?.customerId;
   const customerDataFromNav = location.state?.customerData;
@@ -309,6 +312,26 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       }));
     }
   }, [customerDataFromNav, initialReportId]);
+
+  // Auto-populate contractor fields from company_profiles (Settings > Company)
+  useEffect(() => {
+    if (companyProfile && !companyProfileLoading && !companyAutoFillDone.current) {
+      // Only auto-fill if contractor fields are empty (don't overwrite existing data)
+      setFormData((prev: any) => {
+        const isContractorEmpty = !prev.contractorName?.trim();
+        if (isContractorEmpty) {
+          companyAutoFillDone.current = true;
+          return {
+            ...prev,
+            contractorName: companyProfile.company_name || '',
+            contractorAddress: companyProfile.company_address || '',
+          };
+        }
+        companyAutoFillDone.current = true;
+        return prev;
+      });
+    }
+  }, [companyProfile, companyProfileLoading]);
 
   // Fetch user ID on mount
   useEffect(() => {

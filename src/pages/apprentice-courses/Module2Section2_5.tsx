@@ -1,9 +1,6 @@
 import useSEO from "@/hooks/useSEO";
 import { ArrowLeft, Battery, Clock, AlertTriangle, Coins, CheckCircle, XCircle, BookOpen, Calculator, Zap, Eye, CircuitBoard } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import React from "react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -114,29 +111,29 @@ const Module2Section2_5: React.FC = () => {
   ];
 
   const faqs = [
-    { 
-      q: "What exactly is a kilowatt-hour (kWh)?", 
-      a: "A kWh is the amount of energy consumed when 1 kilowatt of power is used for 1 hour. It's the standard billing unit for electricity in the UK." 
+    {
+      q: "What exactly is a kilowatt-hour (kWh)?",
+      a: "A kWh is the amount of energy consumed when 1 kilowatt of power is used for 1 hour. It's the standard billing unit for electricity in the UK."
     },
-    { 
-      q: "Why do identical appliances have different running costs?", 
-      a: "Running costs depend on usage patterns, not just power rating. A 2kW heater used 2 hours daily costs twice as much as one used 1 hour daily." 
+    {
+      q: "Why do identical appliances have different running costs?",
+      a: "Running costs depend on usage patterns, not just power rating. A 2kW heater used 2 hours daily costs twice as much as one used 1 hour daily."
     },
-    { 
-      q: "How much do voltage fluctuations affect energy consumption?", 
-      a: "Small voltage variations (±6%) have minimal impact on energy calculations. Usage time and actual power consumption are the dominant factors." 
+    {
+      q: "How much do voltage fluctuations affect energy consumption?",
+      a: "Small voltage variations (±6%) have minimal impact on energy calculations. Usage time and actual power consumption are the dominant factors."
     },
-    { 
-      q: "How accurate are energy cost estimates?", 
-      a: "Estimates are good for planning and comparisons. For precise figures, use energy monitoring equipment to measure actual consumption patterns." 
+    {
+      q: "How accurate are energy cost estimates?",
+      a: "Estimates are good for planning and comparisons. For precise figures, use energy monitoring equipment to measure actual consumption patterns."
     },
-    { 
-      q: "What's the difference between power and energy?", 
-      a: "Power (kW) is the rate of energy use - how fast electricity is consumed. Energy (kWh) is the total amount consumed over time - what you pay for." 
+    {
+      q: "What's the difference between power and energy?",
+      a: "Power (kW) is the rate of energy use - how fast electricity is consumed. Energy (kWh) is the total amount consumed over time - what you pay for."
     },
-    { 
-      q: "How do time-of-use tariffs affect calculations?", 
-      a: "Different rates apply at different times. Peak rates can be 2-3 times higher than off-peak. Always check which rate applies when calculating costs." 
+    {
+      q: "How do time-of-use tariffs affect calculations?",
+      a: "Different rates apply at different times. Peak rates can be 2-3 times higher than off-peak. Always check which rate applies when calculating costs."
     }
   ];
 
@@ -150,11 +147,11 @@ const Module2Section2_5: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2
@@ -163,45 +160,48 @@ const Module2Section2_5: React.FC = () => {
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <main className="max-w-3xl mx-auto px-6 py-12">
         {/* Page Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Battery className="w-6 h-6 text-white" />
-            </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 2.5
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">{TITLE}</h1>
-          <p className="text-white">Energy is power over time. Calculate kWh and estimate costs for electrical installations and efficiency improvements.</p>
+        <header className="mb-12 text-center">
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Section 2.5
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">{TITLE}</h1>
+          <p className="text-white/80 max-w-2xl mx-auto">
+            Energy is power over time. Calculate kWh and estimate costs for electrical installations and efficiency improvements.
+          </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <p className="text-sm">
-                Energy (kWh) = Power (kW) × Time (hours). Convert watts to kilowatts (÷1000) and minutes to hours (÷60). 
+                Energy (kWh) = Power (kW) × Time (hours). Convert watts to kilowatts (÷1000) and minutes to hours (÷60).
                 Multiply kWh by your unit rate (p/kWh) plus standing charge for total cost. Essential for client advice on running costs.
               </p>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <p className="text-sm">
-                Check appliance nameplates for power ratings. Time usage patterns (daily/weekly). Apply correct tariff rates 
+                Check appliance nameplates for power ratings. Time usage patterns (daily/weekly). Apply correct tariff rates
                 (Economy 7, peak/off-peak). Calculate payback periods for energy-efficient upgrades.
               </p>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning Outcomes
+          </h2>
           <ul className="list-disc pl-6 space-y-2 text-base text-white">
             <li>Calculate energy using E = P × t formula</li>
             <li>Convert power and time units accurately</li>
@@ -210,53 +210,59 @@ const Module2Section2_5: React.FC = () => {
             <li>Compare appliance efficiency and running costs</li>
             <li>Use energy monitoring for verification</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Interactive Calculator */}
         <EnergyCostCalc />
 
         {/* Understanding Energy vs Power */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Understanding Energy vs Power</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Understanding Energy vs Power
+          </h2>
           <div className="space-y-4">
             <p className="text-white">
               Energy and power are often confused, but understanding the difference is crucial for accurate calculations and client advice.
             </p>
-            
+
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-card p-4 rounded-lg border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Power (kW)</h3>
                 <p className="text-sm text-white mb-2">Rate of energy consumption</p>
                 <ul className="text-xs text-white space-y-1">
-                  <li>• How fast electricity is used</li>
-                  <li>• Nameplate rating on appliances</li>
-                  <li>• Units: Watts (W) or Kilowatts (kW)</li>
+                  <li>How fast electricity is used</li>
+                  <li>Nameplate rating on appliances</li>
+                  <li>Units: Watts (W) or Kilowatts (kW)</li>
                 </ul>
               </div>
               <div className="bg-card p-4 rounded-lg border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Energy (kWh)</h3>
                 <p className="text-sm text-white mb-2">Total electricity consumed</p>
                 <ul className="text-xs text-white space-y-1">
-                  <li>• Power multiplied by time</li>
-                  <li>• What appears on electricity bills</li>
-                  <li>• Units: Kilowatt-hours (kWh)</li>
+                  <li>Power multiplied by time</li>
+                  <li>What appears on electricity bills</li>
+                  <li>Units: Kilowatt-hours (kWh)</li>
                 </ul>
               </div>
             </div>
-            
-            <div className="bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded">
+
+            <div className="bg-[#121212]/20 border-l-2 border-elec-yellow p-4 rounded">
               <p className="text-white text-sm">
                 <strong>Key Formula:</strong> Energy (kWh) = Power (kW) × Time (hours)
               </p>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Step-by-Step Worked Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Step-by-Step Worked Examples</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Step-by-Step Worked Examples
+          </h2>
           <div className="space-y-6">
-            
+
             {/* Example 1 */}
             <div className="bg-[#121212]/50 p-4 rounded-lg border border-white/10">
               <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
@@ -265,7 +271,7 @@ const Module2Section2_5: React.FC = () => {
               </h3>
               <div className="space-y-3 text-sm">
                 <p className="text-white"><strong>Scenario:</strong> Customer asks about the cost of boiling their 2kW kettle 4 times daily.</p>
-                <div className="bg-card p-3 rounded border-l-4 border-elec-yellow">
+                <div className="bg-card p-3 rounded border-l-2 border-elec-yellow">
                   <p className="text-white"><strong>Given:</strong> P = 2kW, 4 boils per day, 3 minutes each</p>
                   <p className="text-white"><strong>Step 1:</strong> Convert time: 3 minutes = 3÷60 = 0.05 hours</p>
                   <p className="text-white"><strong>Step 2:</strong> Daily time: 4 × 0.05 = 0.2 hours</p>
@@ -283,7 +289,7 @@ const Module2Section2_5: React.FC = () => {
               </h3>
               <div className="space-y-3 text-sm">
                 <p className="text-white"><strong>Scenario:</strong> 3kW immersion heater runs 1.5 hours daily. What's the monthly cost?</p>
-                <div className="bg-card p-3 rounded border-l-4 border-elec-yellow">
+                <div className="bg-card p-3 rounded border-l-2 border-elec-yellow">
                   <p className="text-white"><strong>Given:</strong> P = 3kW, t = 1.5h daily, tariff = 30p/kWh</p>
                   <p className="text-white"><strong>Step 1:</strong> Daily energy: 3kW × 1.5h = 4.5 kWh</p>
                   <p className="text-white"><strong>Step 2:</strong> Monthly energy: 4.5 × 30 = 135 kWh</p>
@@ -301,7 +307,7 @@ const Module2Section2_5: React.FC = () => {
               </h3>
               <div className="space-y-3 text-sm">
                 <p className="text-white"><strong>Scenario:</strong> Storage heater using 6kW for 7 hours (night rate) vs day rate.</p>
-                <div className="bg-card p-3 rounded border-l-4 border-elec-yellow">
+                <div className="bg-card p-3 rounded border-l-2 border-elec-yellow">
                   <p className="text-white"><strong>Energy:</strong> 6kW × 7h = 42 kWh daily</p>
                   <p className="text-white"><strong>Night rate:</strong> 42 × £0.20 = £8.40</p>
                   <p className="text-white"><strong>Day rate:</strong> 42 × £0.35 = £14.70</p>
@@ -310,51 +316,54 @@ const Module2Section2_5: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* UK Electricity Tariffs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">UK Electricity Tariffs</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            UK Electricity Tariffs
+          </h2>
           <div className="space-y-4">
             <p className="text-white">Understanding tariff structures is essential for accurate cost calculations and client advice.</p>
-            
+
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
               <div className="bg-card p-4 rounded-lg border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Standard Rate</h3>
                 <p className="text-sm text-white mb-2">Single rate 24/7</p>
                 <ul className="text-xs text-white space-y-1">
-                  <li>• 25-35p/kWh typical</li>
-                  <li>• £0.30-0.50 daily standing charge</li>
-                  <li>• Most common domestic tariff</li>
+                  <li>25-35p/kWh typical</li>
+                  <li>£0.30-0.50 daily standing charge</li>
+                  <li>Most common domestic tariff</li>
                 </ul>
               </div>
               <div className="bg-card p-4 rounded-lg border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Economy 7</h3>
                 <p className="text-sm text-white mb-2">Dual rate tariff</p>
                 <ul className="text-xs text-white space-y-1">
-                  <li>• Night: 15-25p/kWh</li>
-                  <li>• Day: 30-40p/kWh</li>
-                  <li>• Good for storage heating</li>
+                  <li>Night: 15-25p/kWh</li>
+                  <li>Day: 30-40p/kWh</li>
+                  <li>Good for storage heating</li>
                 </ul>
               </div>
               <div className="bg-card p-4 rounded-lg border border-white/10">
                 <h3 className="font-semibold text-white mb-2">Time of Use</h3>
                 <p className="text-sm text-white mb-2">Smart meter required</p>
                 <ul className="text-xs text-white space-y-1">
-                  <li>• Peak: 40-60p/kWh</li>
-                  <li>• Off-peak: 10-20p/kWh</li>
-                  <li>• Rewards demand shifting</li>
+                  <li>Peak: 40-60p/kWh</li>
+                  <li>Off-peak: 10-20p/kWh</li>
+                  <li>Rewards demand shifting</li>
                 </ul>
               </div>
             </div>
-            
-            <div className="bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded">
+
+            <div className="bg-[#121212]/20 border-l-2 border-elec-yellow p-4 rounded">
               <p className="text-white text-sm">
                 <strong>Billing Formula:</strong> Total Cost = (kWh × unit rate) + (daily standing charge × days)
               </p>
             </div>
           </div>
-        </Card>
+        </section>
 
         <InlineCheck
           id="ic-25-energy"
@@ -363,7 +372,8 @@ const Module2Section2_5: React.FC = () => {
           correctIndex={2}
           explanation="Energy = Power × Time. 1kW × 2h = 2kWh."
         />
-        <Separator className="my-6" />
+
+        <div className="my-6 border-t border-white/10" />
 
         <InlineCheck
           id="ic-25-cost"
@@ -374,8 +384,11 @@ const Module2Section2_5: React.FC = () => {
         />
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Summary
+          </h2>
           <div className="space-y-3 text-xs sm:text-sm text-white">
             <p><strong>Energy Formula Selection:</strong></p>
             <ul className="list-disc pl-6 space-y-1">
@@ -385,16 +398,19 @@ const Module2Section2_5: React.FC = () => {
               <li>Check tariff type: standard, Economy 7, or time-of-use rates</li>
               <li>Document assumptions for professional cost estimates</li>
             </ul>
-            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
+            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-2 border-elec-yellow p-4 rounded mt-4" role="alert">
               <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
               <p className="text-white text-sm">Always verify power ratings from nameplates and consider actual usage patterns for accurate client advice.</p>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* FAQ */}
-        <Card className="my-8 p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+            FAQs
+          </h2>
           <ul className="space-y-3 text-xs sm:text-sm text-white">
             {faqs.map((f, i) => (
               <li key={i} className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
@@ -403,20 +419,23 @@ const Module2Section2_5: React.FC = () => {
               </li>
             ))}
           </ul>
-        </Card>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-12 p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick check quiz</h2>
+        <section className="mb-12">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+            Quick Check Quiz
+          </h2>
           <Quiz questions={quizQuestions as any} title="Energy, kWh and Cost" />
-        </Card>
+        </section>
 
         {/* Bottom nav */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mb-24">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5" asChild>
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mb-24">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../2-4"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a]" asChild>
+          <Button size="lg" className="w-full sm:w-auto min-h-[44px] bg-elec-yellow text-[#1a1a1a] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../2-6">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
           </Button>
         </nav>

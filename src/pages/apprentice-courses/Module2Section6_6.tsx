@@ -1,9 +1,6 @@
 import useSEO from "@/hooks/useSEO";
 import { ArrowLeft, Receipt, Activity, Smartphone, AlertTriangle, BarChart3, PlugZap, Percent } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import React from "react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -121,11 +118,11 @@ const Module2Section6_6: React.FC = () => {
   ] as const;
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.6
@@ -135,23 +132,26 @@ const Module2Section6_6: React.FC = () => {
       </div>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Receipt className="w-6 h-6 text-white" />
-            </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 2.6.6</Badge>
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <header className="mb-12 text-center">
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Module 2.6.6
+          </span>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Receipt className="h-8 w-8 text-elec-yellow" />
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Real‑Life Applications (Energy Bills, Load Monitoring, Smart Tech)</h1>
-          <p className="text-white">Turn the ideas into action: understand your bill, measure what matters and use smart control to reduce costs while staying safe.</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Real‑Life Applications (Energy Bills, Load Monitoring, Smart Tech)</h1>
+          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">Turn the ideas into action: understand your bill, measure what matters and use smart control to reduce costs while staying safe.</p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Your bill charges per kWh used plus a daily standing charge.</li>
@@ -159,7 +159,7 @@ const Module2Section6_6: React.FC = () => {
                 <li>Smart control shifts or reduces run‑time safely.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> High‑duty heaters, always‑on IT kit, refrigeration cycling too often.</li>
@@ -168,22 +168,28 @@ const Module2Section6_6: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning outcomes
+          </h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Read key items on a UK electricity bill and relate them to usage.</li>
             <li>Estimate running cost from appliance power and run‑time in plain English.</li>
             <li>Select safe, suitable monitoring methods for common loads.</li>
             <li>Apply smart control to shift or reduce energy use without affecting protection.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Content
+          </h2>
 
           {/* Understanding the bill */}
           <section className="mb-6">
@@ -203,8 +209,7 @@ const Module2Section6_6: React.FC = () => {
             correctIndex={1}
             explanation="The standing charge applies per day regardless of usage."
           />
-          <Separator className="my-6" />
-
+          
           {/* Monitoring and verification */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Activity className="w-5 h-5" /> Monitoring loads</h3>
@@ -216,8 +221,7 @@ const Module2Section6_6: React.FC = () => {
             </ul>
           </section>
 
-          <Separator className="my-6" />
-
+          
           {/* Smart control */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Smartphone className="w-5 h-5" /> Smart tech and automations</h3>
@@ -229,8 +233,7 @@ const Module2Section6_6: React.FC = () => {
             </ul>
           </section>
 
-          <Separator className="my-6" />
-
+          
           {/* Case studies */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><PlugZap className="w-5 h-5" /> Practical examples</h3>
@@ -250,8 +253,7 @@ const Module2Section6_6: React.FC = () => {
             </ul>
           </section>
 
-          <Separator className="my-6" />
-
+          
           <InlineCheck
             id="ic-266-smart"
             question="You add a smart plug to control a 2 kW heater. Which statement is correct?"
@@ -260,8 +262,7 @@ const Module2Section6_6: React.FC = () => {
             explanation="Select appropriately rated equipment and do not alter protection or ventilation."
           />
 
-          <Separator className="my-6" />
-
+          
           {/* BS 7671 context */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Percent className="w-5 h-5" /> BS 7671 context and good practice</h3>
@@ -270,16 +271,19 @@ const Module2Section6_6: React.FC = () => {
               <li>Consider grouping, ambient temperature and enclosure space for any extra devices installed.</li>
               <li>Keep records of settings, schedules and any measured savings as part of the job documentation.</li>
             </ul>
-            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
+            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-2 border-elec-yellow p-4 rounded mt-4" role="alert">
               <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
               <p className="text-white text-sm">Isolate, lock‑off and prove dead. Never bypass protective devices to attach monitors or controls.</p>
             </div>
           </section>
-        </Card>
+        </section>
 
         {/* Extra content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">More real‑life tips and methods</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            More real‑life tips and methods
+          </h2>
 
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><BarChart3 className="w-5 h-5" /> Bill deep‑dive: tariff notes</h3>
@@ -290,8 +294,7 @@ const Module2Section6_6: React.FC = () => {
             </ul>
           </section>
 
-          <Separator className="my-6" />
-
+          
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Activity className="w-5 h-5" /> Monitoring checklist</h3>
             <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
@@ -301,8 +304,7 @@ const Module2Section6_6: React.FC = () => {
             </ul>
           </section>
 
-          <Separator className="my-6" />
-
+          
           <InlineCheck
             id="ic-266-ct"
             question="A CT clamp for a single‑phase circuit should be installed…"
@@ -311,8 +313,7 @@ const Module2Section6_6: React.FC = () => {
             explanation="Clamping both conductors cancels the reading. Follow instructions and isolate where required."
           />
 
-          <Separator className="my-6" />
-
+          
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Smartphone className="w-5 h-5" /> Smart tech pitfalls and fixes</h3>
             <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
@@ -322,8 +323,7 @@ const Module2Section6_6: React.FC = () => {
             </ul>
           </section>
           
-          <Separator className="my-6" />
-
+          
           {/* Additional comprehensive content */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Advanced monitoring and control techniques</h3>
@@ -361,8 +361,7 @@ const Module2Section6_6: React.FC = () => {
             </div>
           </section>
 
-          <Separator className="my-6" />
-
+          
           <section className="mb-2">
             <h3 className="font-medium text-white mb-2">Troubleshooting common monitoring issues</h3>
             
@@ -390,10 +389,10 @@ const Module2Section6_6: React.FC = () => {
               </div>
             </div>
           </section>
-        </Card>
+        </section>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10 border-2 border-elec-yellow/30">
+        <section className="mb-10 p-6 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10 border-2 border-elec-yellow/30 rounded-lg">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Receipt className="w-5 h-5 text-elec-yellow" />
             Energy Monitoring & Smart Tech - Pocket Guide
@@ -448,11 +447,14 @@ const Module2Section6_6: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* FAQ */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            FAQs
+          </h2>
           <ul className="space-y-3 text-xs sm:text-sm text-white">
             {faqs.map((f, i) => (
               <li key={i} className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
@@ -461,13 +463,32 @@ const Module2Section6_6: React.FC = () => {
               </li>
             ))}
           </ul>
-        </Card>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-16 p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick check quiz</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Quick check quiz
+          </h2>
           <Quiz questions={quizQuestions as any} title="Real‑life applications" />
-        </Card>
+        </section>
+
+        {/* Navigation Footer */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5" asChild>
+            <Link to="../6-5">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous: 2.6.5
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90" asChild>
+            <Link to="..">
+              Complete Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
 
         {/* Structured data */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />

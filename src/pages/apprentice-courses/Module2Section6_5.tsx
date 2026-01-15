@@ -1,9 +1,6 @@
 import useSEO from "@/hooks/useSEO";
 import { ArrowLeft, SlidersHorizontal, Settings, Lightbulb, Timer, Network, AlertTriangle, BadgePercent } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import React from "react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -121,11 +118,11 @@ const Module2Section6_5: React.FC = () => {
   ] as const;
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.6
@@ -135,23 +132,28 @@ const Module2Section6_5: React.FC = () => {
       </div>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <SlidersHorizontal className="w-6 h-6 text-white" />
-            </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 2.6.5</Badge>
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        {/* Header */}
+        <div className="mb-12 text-center">
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Module 2.6.5
+          </span>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <SlidersHorizontal className="h-8 w-8 text-elec-yellow" />
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Reducing Energy Waste (Smart Design and Load Control)</h1>
-          <p className="text-white">Practical steps to cut wasted energy: design choices, correct sizing and simple controls that reduce run‑time and heat while staying within BS 7671.</p>
-        </header>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Reducing Energy Waste
+          </h1>
+          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
+            Practical steps to cut wasted energy: design choices, correct sizing and simple controls that reduce run-time and heat while staying within BS 7671
+          </p>
+        </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Waste shows up as unwanted heat or running when not needed.</li>
@@ -159,7 +161,7 @@ const Module2Section6_5: React.FC = () => {
                 <li>Document choices; follow manufacturer data and BS 7671.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Warm enclosures, kit left on, compressors short‑cycling, lights on in empty rooms.</li>
@@ -168,10 +170,10 @@ const Module2Section6_5: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify common causes of wasted energy and heat on real jobs.</li>
@@ -179,10 +181,10 @@ const Module2Section6_5: React.FC = () => {
             <li>Select and install efficient equipment following manufacturer guidance.</li>
             <li>Relate choices to BS 7671: current‑carrying capacity, voltage drop, grouping and protection coordination.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Design choices */}
@@ -203,8 +205,7 @@ const Module2Section6_5: React.FC = () => {
             correctIndex={1}
             explanation="Lower resistance and good workmanship reduce heating and voltage drop; verify design to BS 7671."
           />
-          <Separator className="my-6" />
-
+          
           {/* Load control */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Timer className="w-5 h-5" /> Control strategies (simple wins)</h3>
@@ -216,8 +217,7 @@ const Module2Section6_5: React.FC = () => {
             </ul>
           </section>
 
-          <Separator className="my-6" />
-
+          
           {/* Examples */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Lightbulb className="w-5 h-5" /> Examples you’ll recognise</h3>
@@ -237,8 +237,7 @@ const Module2Section6_5: React.FC = () => {
             </ul>
           </section>
 
-          <Separator className="my-6" />
-
+          
           <InlineCheck
             id="ic-265-smart"
             question="Which is the safest statement about adding a smart relay to control a heater?"
@@ -247,8 +246,7 @@ const Module2Section6_5: React.FC = () => {
             explanation="Controls add functionality but do not replace protective devices. Follow ratings and instructions."
           />
 
-          <Separator className="my-6" />
-
+          
           {/* BS 7671 context */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Network className="w-5 h-5" /> BS 7671 context and good practice</h3>
@@ -258,15 +256,15 @@ const Module2Section6_5: React.FC = () => {
               <li>Coordination of protective devices; control gear must not compromise disconnection times.</li>
               <li>Follow manufacturer instructions, maintain access to joints, and document settings/schedules.</li>
             </ul>
-            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
+            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-2 border-elec-yellow p-4 rounded mt-4" role="alert">
               <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
               <p className="text-white text-sm">Isolate, lock‑off and prove dead before work. Test, label and record changes to controls and timings.</p>
             </div>
           </section>
-        </Card>
+        </section>
 
         {/* Extra content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">More ways to reduce waste (hands‑on)</h2>
 
           <section className="mb-6">
@@ -278,8 +276,7 @@ const Module2Section6_5: React.FC = () => {
             </ul>
           </section>
 
-          <Separator className="my-6" />
-
+          
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Lightbulb className="w-5 h-5" /> Common mistakes and quick fixes</h3>
             <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
@@ -289,8 +286,7 @@ const Module2Section6_5: React.FC = () => {
             </ul>
           </section>
 
-          <Separator className="my-6" />
-
+          
           <InlineCheck
             id="ic-265-verify"
             question="You’ve added timers to two water heaters. What should you document?"
@@ -299,8 +295,7 @@ const Module2Section6_5: React.FC = () => {
             explanation="Good records help maintain savings and demonstrate compliance and competence."
           />
 
-          <Separator className="my-6" />
-
+          
           <section className="mb-2">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><BadgePercent className="w-5 h-5" /> Estimating savings quickly</h3>
             <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
@@ -309,10 +304,10 @@ const Module2Section6_5: React.FC = () => {
               <li>Prioritise measures with short payback that do not reduce safety or comfort.</li>
             </ul>
           </section>
-        </Card>
+        </section>
 
         {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10 border-2 border-elec-yellow/30">
+        <section className="mb-10 p-6 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10 border-2 border-elec-yellow/30 rounded-lg">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Timer className="w-5 h-5 text-elec-yellow" />
             Energy Waste Reduction - Pocket Guide
@@ -367,10 +362,10 @@ const Module2Section6_5: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* FAQ */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
           <ul className="space-y-3 text-xs sm:text-sm text-white">
             {faqs.map((f, i) => (
@@ -380,13 +375,23 @@ const Module2Section6_5: React.FC = () => {
               </li>
             ))}
           </ul>
-        </Card>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-16 p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick check quiz</h2>
           <Quiz questions={quizQuestions as any} title="Reducing energy waste" />
-        </Card>
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5" asChild>
+            <Link to="../6-4"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]" asChild>
+            <Link to="../6-6">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+          </Button>
+        </nav>
 
         {/* Structured data */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />

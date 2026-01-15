@@ -1,9 +1,6 @@
 import useSEO from "@/hooks/useSEO";
-import { ArrowLeft, Cable, Zap, Shield, AlertTriangle, CheckCircle2, Home, Factory, Wrench, Scissors, Settings } from "lucide-react";
+import { ArrowLeft, Cable, Zap, Wrench, AlertTriangle, CheckCircle2, Home, Scissors, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import React from "react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -151,11 +148,16 @@ const Module3Section1_2: React.FC = () => {
   } as const;
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.1
@@ -164,76 +166,87 @@ const Module3Section1_2: React.FC = () => {
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Cable className="w-6 h-6 text-white" />
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 3</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 3.1.2</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 3.1.2</Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Twin and Earth Cable (T&E)</h1>
-          <p className="text-white">Understanding flat PVC sheathed cable construction, applications and installation requirements for UK electrical work.</p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Twin and Earth Cable (T&E)
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Understanding flat PVC sheathed cable construction, applications and installation requirements for UK electrical work.
+            </p>
+          </header>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>T&E cable contains live (brown), neutral (blue), and bare earth conductors in flat PVC sheath.</li>
-                <li>Most common cable for UK domestic installations - cost-effective and easy to install.</li>
-                <li>Common sizes: 1.0mm² (lighting), 1.5mm² (lighting), 2.5mm² (sockets), 4-6mm² (high loads).</li>
-              </ul>
+          {/* Introduction */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Introduction
+            </h2>
+            <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
+                <ul className="list-disc pl-6 space-y-1">
+                  <li>T&E cable contains live (brown), neutral (blue), and bare earth conductors in flat PVC sheath.</li>
+                  <li>Most common cable for UK domestic installations - cost-effective and easy to install.</li>
+                  <li>Common sizes: 1.0mm² (lighting), 1.5mm² (lighting), 2.5mm² (sockets), 4-6mm² (high loads).</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
+                <ul className="list-disc pl-6 space-y-1">
+                  <li><strong>Spot:</strong> Flat grey cable with three conductors visible at cut ends.</li>
+                  <li><strong>Use:</strong> Domestic circuits, light commercial where mechanical protection isn't critical.</li>
+                  <li><strong>Check:</strong> CPC sleeved green/yellow, proper clip spacing, protected where at risk.</li>
+                </ul>
+              </div>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Flat grey cable with three conductors visible at cut ends.</li>
-                <li><strong>Use:</strong> Domestic circuits, light commercial where mechanical protection isn't critical.</li>
-                <li><strong>Check:</strong> CPC sleeved green/yellow, proper clip spacing, protected where at risk.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-            <li>Identify the construction and components of Twin and Earth cable.</li>
-            <li>Explain the common sizes and their typical applications in UK installations.</li>
-            <li>Recognise the benefits and limitations of T&E compared to other wiring types.</li>
-            <li>Select appropriate uses for T&E in line with BS 7671 regulations.</li>
-            <li>Describe installation considerations for protecting and terminating T&E cable.</li>
-            <li>Apply proper termination techniques including CPC sleeving requirements.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Learning Outcomes
+            </h2>
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white/80">
+              <li>Identify the construction and components of Twin and Earth cable.</li>
+              <li>Explain the common sizes and their typical applications in UK installations.</li>
+              <li>Recognise the benefits and limitations of T&E compared to other wiring types.</li>
+              <li>Select appropriate uses for T&E in line with BS 7671 regulations.</li>
+              <li>Describe installation considerations for protecting and terminating T&E cable.</li>
+              <li>Apply proper termination techniques including CPC sleeving requirements.</li>
+            </ul>
+          </section>
 
           {/* Construction */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Wrench className="w-5 h-5" /> Construction of T&E Cable</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              <Wrench className="w-5 h-5" />
+              Construction of T&E Cable
+            </h2>
+            <div className="space-y-4 text-sm text-white/80">
               <p><strong>Description:</strong> Twin and Earth cable consists of two insulated conductors plus a bare earth wire, all contained within a flat PVC sheath.</p>
-              
+
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Conductor Components</p>
+                <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                  <p className="font-medium text-white mb-2">Conductor Components</p>
                   <ul className="space-y-2">
                     <li><strong>Live conductor:</strong> Brown PVC insulated (was red pre-2004)</li>
                     <li><strong>Neutral conductor:</strong> Blue PVC insulated (was black pre-2004)</li>
                     <li><strong>CPC (earth):</strong> Bare copper wire, requires green/yellow sleeving at terminations</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                  <p className="font-medium mb-2">Protection & Design</p>
+                <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
+                  <p className="font-medium text-white mb-2">Protection & Design</p>
                   <ul className="space-y-2">
                     <li><strong>Sheath:</strong> Flat grey PVC for mechanical protection</li>
                     <li><strong>Profile:</strong> Flat design for easy surface mounting and under-floor installation</li>
@@ -242,8 +255,8 @@ const Module3Section1_2: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-card border border-amber-400/30 rounded-lg p-4">
-                <p className="font-medium mb-2">Important Design Features:</p>
+              <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-400/30">
+                <p className="font-medium text-white mb-2">Important Design Features:</p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Flat profile allows neat installation against surfaces and through floor joists</li>
                   <li>Bare earth conductor reduces cable size and cost while maintaining functionality</li>
@@ -252,23 +265,28 @@ const Module3Section1_2: React.FC = () => {
                 </ul>
               </div>
             </div>
+
+            <div className="mt-6">
+              <InlineCheck
+                id="ic-te-construction"
+                question="What colour is the live conductor in modern T&E cable?"
+                options={["Red", "Brown", "Blue", "Black"]}
+                correctIndex={1}
+                explanation="The live conductor in modern T&E cable is brown, changed from red during the 2004 harmonisation."
+              />
+            </div>
           </section>
 
-          <InlineCheck
-            id="ic-te-construction"
-            question="What colour is the live conductor in modern T&E cable?"
-            options={["Red", "Brown", "Blue", "Black"]}
-            correctIndex={1}
-            explanation="The live conductor in modern T&E cable is brown, changed from red during the 2004 harmonisation."
-          />
-          <Separator className="my-6" />
-
           {/* Common Sizes and Applications */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Zap className="w-5 h-5" /> Common Sizes and Applications</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              <Zap className="w-5 h-5" />
+              Common Sizes and Applications
+            </h2>
+            <div className="space-y-4 text-sm text-white/80">
               <p><strong>Description:</strong> T&E cable is available in various conductor sizes to suit different circuit requirements and current ratings.</p>
-              
+
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
                   <thead className="text-white border-b border-white/10">
@@ -279,7 +297,7 @@ const Module3Section1_2: React.FC = () => {
                       <th className="py-3 pr-4">Typical Protection</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white">
+                  <tbody className="text-white/80">
                     <tr className="border-t border-white/10">
                       <td className="py-3 pr-4 font-medium">1.0 mm²</td>
                       <td className="py-3 pr-4">11A (clipped direct)</td>
@@ -320,8 +338,8 @@ const Module3Section1_2: React.FC = () => {
                 </table>
               </div>
 
-              <div className="bg-card border border-border/30 rounded-lg p-4">
-                <p className="font-medium mb-2">Important Selection Notes:</p>
+              <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                <p className="font-medium text-white mb-2">Important Selection Notes:</p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Current ratings are for reference installation (Method C) at 30°C ambient</li>
                   <li>Apply derating factors for different installation methods and grouping</li>
@@ -330,24 +348,28 @@ const Module3Section1_2: React.FC = () => {
                 </ul>
               </div>
             </div>
+
+            <div className="mt-6">
+              <InlineCheck
+                id="ic-te-sizing"
+                question="Which size T&E cable is typically used for a domestic socket ring circuit?"
+                options={["1.5 mm²", "2.5 mm²", "4.0 mm²", "6.0 mm²"]}
+                correctIndex={1}
+                explanation="2.5 mm² T&E is the standard size for domestic socket ring circuits, providing adequate current capacity when protected by a 32A device."
+              />
+            </div>
           </section>
 
-          <InlineCheck
-            id="ic-te-sizing"
-            question="Which size T&E cable is typically used for a domestic socket ring circuit?"
-            options={["1.5 mm²", "2.5 mm²", "4.0 mm²", "6.0 mm²"]}
-            correctIndex={1}
-            explanation="2.5 mm² T&E is the standard size for domestic socket ring circuits, providing adequate current capacity when protected by a 32A device."
-          />
-          <Separator className="my-6" />
-
           {/* Advantages */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3">Advantages of T&E Cable</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Advantages of T&E Cable
+            </h2>
+            <div className="space-y-4 text-sm text-white/80">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                  <p className="font-medium mb-2">Installation Benefits</p>
+                <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
+                  <p className="font-medium text-white mb-2">Installation Benefits</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Easy to handle and route due to flat profile</li>
                     <li>Simple termination with standard accessories</li>
@@ -356,8 +378,8 @@ const Module3Section1_2: React.FC = () => {
                     <li>Wide range of accessories available</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Economic Advantages</p>
+                <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                  <p className="font-medium text-white mb-2">Economic Advantages</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Cost-effective compared to other cable types</li>
                     <li>Readily available from electrical wholesalers</li>
@@ -368,8 +390,8 @@ const Module3Section1_2: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
-                <p className="font-medium mb-2">Technical Advantages:</p>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">Technical Advantages:</p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Suitable for most domestic and light commercial applications</li>
                   <li>Good current-carrying capacity for its size</li>
@@ -382,11 +404,14 @@ const Module3Section1_2: React.FC = () => {
           </section>
 
           {/* Limitations */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3">Limitations and Restrictions</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium mb-2">Environmental Limitations</p>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Limitations and Restrictions
+            </h2>
+            <div className="space-y-4 text-sm text-white/80">
+              <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                <p className="font-medium text-white mb-2">Environmental Limitations</p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Not suitable for outdoor direct burial without protection</li>
                   <li>Limited resistance to mechanical damage</li>
@@ -396,8 +421,8 @@ const Module3Section1_2: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium mb-2">Installation Restrictions</p>
+              <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                <p className="font-medium text-white mb-2">Installation Restrictions</p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Requires additional containment in areas at risk of damage</li>
                   <li>Cannot be used for flexible connections to equipment</li>
@@ -407,8 +432,8 @@ const Module3Section1_2: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="bg-card border border-amber-400/30 rounded-lg p-4">
-                <p className="font-medium mb-2">Where Additional Protection is Required:</p>
+              <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-400/30">
+                <p className="font-medium text-white mb-2">Where Additional Protection is Required:</p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Workshops and industrial areas with machinery</li>
                   <li>Areas accessible to the public where damage could occur</li>
@@ -418,24 +443,28 @@ const Module3Section1_2: React.FC = () => {
                 </ul>
               </div>
             </div>
+
+            <div className="mt-6">
+              <InlineCheck
+                id="ic-te-limitations"
+                question="What must be done when T&E cable is at risk of mechanical damage?"
+                options={["Use larger cable size", "Install in conduit or trunking", "Increase circuit protection", "Use different colours"]}
+                correctIndex={1}
+                explanation="T&E cable must be protected with conduit or trunking when there's risk of mechanical damage, as the PVC sheath offers limited protection."
+              />
+            </div>
           </section>
 
-          <InlineCheck
-            id="ic-te-limitations"
-            question="What must be done when T&E cable is at risk of mechanical damage?"
-            options={["Use larger cable size", "Install in conduit or trunking", "Increase circuit protection", "Use different colours"]}
-            correctIndex={1}
-            explanation="T&E cable must be protected with conduit or trunking when there's risk of mechanical damage, as the PVC sheath offers limited protection."
-          />
-          <Separator className="my-6" />
-
           {/* Installation Considerations */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3">Installation Considerations and Best Practice</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Installation Considerations
+            </h2>
+            <div className="space-y-4 text-sm text-white/80">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Fixing and Support</p>
+                <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                  <p className="font-medium text-white mb-2">Fixing and Support</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Use flat T&E cable clips at maximum 300mm horizontal spacing</li>
                     <li>Maximum 400mm vertical spacing for vertical runs</li>
@@ -444,8 +473,8 @@ const Module3Section1_2: React.FC = () => {
                     <li>Use appropriate clip size for cable dimensions</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Routing and Protection</p>
+                <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                  <p className="font-medium text-white mb-2">Routing and Protection</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Avoid sharp bends that could damage insulation</li>
                     <li>Maintain minimum bending radius (typically 4x cable width)</li>
@@ -456,8 +485,8 @@ const Module3Section1_2: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-card border border-green-400/30 rounded-lg p-4">
-                <p className="font-medium mb-2">Termination Requirements:</p>
+              <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
+                <p className="font-medium text-white mb-2">Termination Requirements:</p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li>Strip outer sheath carefully to avoid nicking conductor insulation</li>
                   <li>Sleeve bare CPC with green/yellow sleeving before termination</li>
@@ -468,8 +497,8 @@ const Module3Section1_2: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="bg-card border border-cyan-400/30 rounded-lg p-4">
-                <p className="font-medium mb-2">Special Installation Considerations:</p>
+              <div className="p-4 rounded-lg bg-cyan-500/10 border border-cyan-400/30">
+                <p className="font-medium text-white mb-2">Special Installation Considerations:</p>
                 <ul className="list-disc pl-4 space-y-1">
                   <li><strong>Under floors:</strong> Run through joist centres or use protection plates</li>
                   <li><strong>In walls:</strong> Use safe zones as defined in BS 7671</li>
@@ -481,19 +510,21 @@ const Module3Section1_2: React.FC = () => {
             </div>
           </section>
 
-          <Separator className="my-6" />
-
           {/* Practical Installation Guide */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Settings className="w-5 h-5" /> Practical Installation Guide</h3>
-            <div className="space-y-6 text-xs sm:text-sm text-white">
-              
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+              <Settings className="w-5 h-5" />
+              Practical Installation Guide
+            </h2>
+            <div className="space-y-6 text-sm text-white/80">
+
               {/* Cable Clips and Fixings */}
               <div className="space-y-4">
-                <h4 className="font-medium text-white">Cable Clips and Fixings</h4>
+                <h3 className="font-medium text-white">Cable Clips and Fixings</h3>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                    <p className="font-medium mb-2">Clip Types and Sizes</p>
+                  <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                    <p className="font-medium text-white mb-2">Clip Types and Sizes</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>Flat T&E clips:</strong> White or grey plastic, sized for cable width</li>
                       <li><strong>1.0-1.5mm²:</strong> 6mm clips with 3.5-4.0mm screws</li>
@@ -502,8 +533,8 @@ const Module3Section1_2: React.FC = () => {
                       <li><strong>Heavy-duty clips:</strong> Metal clips for industrial applications</li>
                     </ul>
                   </div>
-                  <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                    <p className="font-medium mb-2">Installation Technique</p>
+                  <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
+                    <p className="font-medium text-white mb-2">Installation Technique</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Mark clip positions with pencil before drilling</li>
                       <li>Use appropriate wall plugs for masonry/plasterboard</li>
@@ -514,8 +545,8 @@ const Module3Section1_2: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="bg-card border border-amber-400/30 rounded-lg p-4">
-                  <p className="font-medium mb-2">Clip Spacing Guidelines:</p>
+                <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-400/30">
+                  <p className="font-medium text-white mb-2">Clip Spacing Guidelines:</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Horizontal runs:</strong> 300mm maximum, 250mm preferred</li>
                     <li><strong>Vertical runs:</strong> 400mm maximum, 350mm preferred</li>
@@ -528,13 +559,13 @@ const Module3Section1_2: React.FC = () => {
 
               {/* Cable Stripping and Preparation */}
               <div className="space-y-4">
-                <h4 className="font-medium text-white flex items-center gap-2">
+                <h3 className="font-medium text-white flex items-center gap-2">
                   <Scissors className="w-4 h-4" />
                   Cable Stripping and Preparation
-                </h4>
+                </h3>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                    <p className="font-medium mb-2">Tools Required</p>
+                  <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                    <p className="font-medium text-white mb-2">Tools Required</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>Cable knife:</strong> Sharp, retractable blade</li>
                       <li><strong>Wire strippers:</strong> Adjustable for conductor sizes</li>
@@ -543,8 +574,8 @@ const Module3Section1_2: React.FC = () => {
                       <li><strong>Green/yellow sleeving:</strong> Various sizes</li>
                     </ul>
                   </div>
-                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                    <p className="font-medium mb-2">Stripping Technique</p>
+                  <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                    <p className="font-medium text-white mb-2">Stripping Technique</p>
                     <ol className="list-decimal pl-4 space-y-1">
                       <li>Measure required strip length (typically 15-20mm)</li>
                       <li>Score outer sheath lightly - don&apos;t cut through</li>
@@ -556,8 +587,8 @@ const Module3Section1_2: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="bg-card border border-border/30 rounded-lg p-4">
-                  <p className="font-medium mb-2 flex items-center gap-2">
+                <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                  <p className="font-medium text-white mb-2 flex items-center gap-2">
                     <AlertTriangle className="w-4 h-4" />
                     Critical Safety Points:
                   </p>
@@ -572,10 +603,10 @@ const Module3Section1_2: React.FC = () => {
 
               {/* Sleeving Requirements */}
               <div className="space-y-4">
-                <h4 className="font-medium text-white">Sleeving Requirements and Techniques</h4>
+                <h3 className="font-medium text-white">Sleeving Requirements and Techniques</h3>
                 <div className="space-y-3">
-                  <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                    <p className="font-medium mb-2">When Sleeving is Required</p>
+                  <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
+                    <p className="font-medium text-white mb-2">When Sleeving is Required</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>All CPC terminations:</strong> Must be sleeved green/yellow</li>
                       <li><strong>Consumer units:</strong> CPC sleeving throughout</li>
@@ -585,8 +616,8 @@ const Module3Section1_2: React.FC = () => {
                     </ul>
                   </div>
 
-                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                    <p className="font-medium mb-2">Sleeving Selection and Application</p>
+                  <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                    <p className="font-medium text-white mb-2">Sleeving Selection and Application</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>Size selection:</strong> Snug fit over conductor, not too tight</li>
                       <li><strong>Length:</strong> Cover all exposed copper plus 5-10mm extra</li>
@@ -600,10 +631,10 @@ const Module3Section1_2: React.FC = () => {
 
               {/* Termination Techniques */}
               <div className="space-y-4">
-                <h4 className="font-medium text-white">Termination Techniques</h4>
+                <h3 className="font-medium text-white">Termination Techniques</h3>
                 <div className="space-y-3">
-                  <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
-                    <p className="font-medium mb-2">Socket Outlet Termination</p>
+                  <div className="p-4 rounded-lg bg-cyan-500/10 border border-cyan-400/30">
+                    <p className="font-medium text-white mb-2">Socket Outlet Termination</p>
                     <ol className="list-decimal pl-4 space-y-1">
                       <li>Strip cable sheath 25-30mm, individual conductors 12mm</li>
                       <li>Sleeve CPC with green/yellow sleeving</li>
@@ -614,8 +645,8 @@ const Module3Section1_2: React.FC = () => {
                     </ol>
                   </div>
 
-                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                    <p className="font-medium mb-2">Consumer Unit Termination</p>
+                  <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                    <p className="font-medium text-white mb-2">Consumer Unit Termination</p>
                     <ol className="list-decimal pl-4 space-y-1">
                       <li>Strip cable for entry into enclosure (typically 40-50mm)</li>
                       <li>Route live to MCB/RCBO, neutral to neutral bar</li>
@@ -626,8 +657,8 @@ const Module3Section1_2: React.FC = () => {
                     </ol>
                   </div>
 
-                  <div className="rounded-lg p-4 bg-elec-yellow/10 border border-elec-yellow/30">
-                    <p className="font-medium mb-2">Junction Box Connections</p>
+                  <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                    <p className="font-medium text-white mb-2">Junction Box Connections</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Use maintenance-free connectors (Wago, choc blocks with covers)</li>
                       <li>Ensure all connections are accessible for inspection</li>
@@ -641,10 +672,10 @@ const Module3Section1_2: React.FC = () => {
 
               {/* Common Tools and Equipment */}
               <div className="space-y-4">
-                <h4 className="font-medium text-white">Essential Tools and Equipment</h4>
-                <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                    <p className="font-medium mb-2">Cutting Tools</p>
+                <h3 className="font-medium text-white">Essential Tools and Equipment</h3>
+                <div className="grid md:grid-cols-3 gap-3">
+                  <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                    <p className="font-medium text-white mb-2">Cutting Tools</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Cable knife/stripping tool</li>
                       <li>Wire strippers (adjustable)</li>
@@ -652,8 +683,8 @@ const Module3Section1_2: React.FC = () => {
                       <li>Electrical scissors</li>
                     </ul>
                   </div>
-                  <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                    <p className="font-medium mb-2">Installation Tools</p>
+                  <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
+                    <p className="font-medium text-white mb-2">Installation Tools</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Cordless drill/driver</li>
                       <li>Various drill bits</li>
@@ -662,8 +693,8 @@ const Module3Section1_2: React.FC = () => {
                       <li>Tape measure</li>
                     </ul>
                   </div>
-                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                    <p className="font-medium mb-2">Testing Equipment</p>
+                  <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                    <p className="font-medium text-white mb-2">Testing Equipment</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Multifunction tester</li>
                       <li>Voltage indicator</li>
@@ -675,16 +706,17 @@ const Module3Section1_2: React.FC = () => {
               </div>
             </div>
           </section>
-        </Card>
 
-        {/* Real-world scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-world scenario: Kitchen Rewire</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-white">
-            <div className="flex items-start gap-3 border-l-4 border-elec-yellow p-4 rounded">
-              <Home className="w-5 h-5 text-elec-yellow mt-0.5" />
-              <div>
-                <p className="font-medium mb-2">The Project</p>
+          {/* Real-world scenario */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+              <Home className="w-5 h-5" />
+              Real-World Scenario: Kitchen Rewire
+            </h2>
+            <div className="space-y-4 text-sm text-white/80">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">The Project</p>
                 <p>A domestic property kitchen rewire required complete electrical installation to serve:</p>
                 <ul className="list-disc pl-6 mt-2 space-y-1">
                   <li>Socket ring circuit for general appliances</li>
@@ -694,179 +726,203 @@ const Module3Section1_2: React.FC = () => {
                   <li>Extractor fan connection</li>
                 </ul>
               </div>
-            </div>
 
-            <div className="space-y-3">
-              <p className="font-medium">T&E Cable Selection and Installation Strategy:</p>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                  <p className="font-medium mb-2">Cable Selection</p>
-                  <ul className="list-disc pl-4 space-y-1">
-                    <li><strong>2.5mm² T&E:</strong> Socket ring circuit (32A protection)</li>
-                    <li><strong>1.5mm² T&E:</strong> LED lighting circuits (10A protection)</li>
-                    <li><strong>6.0mm² T&E:</strong> Electric cooker circuit (32A protection)</li>
-                    <li><strong>1.0mm² T&E:</strong> Extractor fan (6A protection)</li>
-                  </ul>
+              <div className="space-y-3">
+                <p className="font-medium text-white">T&E Cable Selection and Installation Strategy:</p>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
+                    <p className="font-medium text-white mb-2">Cable Selection</p>
+                    <ul className="list-disc pl-4 space-y-1">
+                      <li><strong>2.5mm² T&E:</strong> Socket ring circuit (32A protection)</li>
+                      <li><strong>1.5mm² T&E:</strong> LED lighting circuits (10A protection)</li>
+                      <li><strong>6.0mm² T&E:</strong> Electric cooker circuit (32A protection)</li>
+                      <li><strong>1.0mm² T&E:</strong> Extractor fan (6A protection)</li>
+                    </ul>
+                  </div>
+                  <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                    <p className="font-medium text-white mb-2">Protection Strategy</p>
+                    <ul className="list-disc pl-4 space-y-1">
+                      <li><strong>Behind units:</strong> Mini-trunking for mechanical protection</li>
+                      <li><strong>Under floors:</strong> Through joist centres with protection plates</li>
+                      <li><strong>In walls:</strong> Safe zones with RCD protection</li>
+                      <li><strong>At terminations:</strong> All CPCs sleeved green/yellow</li>
+                    </ul>
+                  </div>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Protection Strategy</p>
-                  <ul className="list-disc pl-4 space-y-1">
-                    <li><strong>Behind units:</strong> Mini-trunking for mechanical protection</li>
-                    <li><strong>Under floors:</strong> Through joist centres with protection plates</li>
-                    <li><strong>In walls:</strong> Safe zones with RCD protection</li>
-                    <li><strong>At terminations:</strong> All CPCs sleeved green/yellow</li>
-                  </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">Key Success Factors:</p>
+                <ul className="list-disc pl-6 space-y-1">
+                  <li>Proper cable sizing calculations including voltage drop for longer runs</li>
+                  <li>Mechanical protection where cables could be damaged by fitted units</li>
+                  <li>Compliance with kitchen IP rating requirements near water sources</li>
+                  <li>All installation within BS 7671 safe zones for concealed cables</li>
+                  <li>Comprehensive testing including insulation resistance and earth loop impedance</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Common mistakes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">10</span>
+              Common Mistakes and How to Avoid Them
+            </h2>
+            <div className="space-y-4 text-sm text-white/80">
+              <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                <p className="font-medium text-white mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Termination Errors</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li><strong>Wrong:</strong> Leaving CPC bare at terminations</li>
+                  <li><strong>Right:</strong> Always sleeve CPC with green/yellow identification</li>
+                  <li><strong>Wrong:</strong> Nicking conductor insulation when stripping outer sheath</li>
+                  <li><strong>Right:</strong> Use proper cable stripping tools and techniques</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                <p className="font-medium text-white mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Installation Mistakes</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li><strong>Wrong:</strong> Excessive clip spacing causing cable sag</li>
+                  <li><strong>Right:</strong> Follow BS 7671 maximum spacing requirements (300mm horizontal)</li>
+                  <li><strong>Wrong:</strong> Sharp bends damaging cable insulation</li>
+                  <li><strong>Right:</strong> Maintain minimum bending radius throughout installation</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2 flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Best Practice Tips</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>Always calculate voltage drop for longer cable runs</li>
+                  <li>Provide mechanical protection where cables may be disturbed</li>
+                  <li>Use appropriate glands and grommets for enclosure entries</li>
+                  <li>Test installations thoroughly before energising</li>
+                  <li>Document cable routes for future maintenance</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* BS 7671 Context */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">11</span>
+              BS 7671 Context and Compliance
+            </h2>
+            <div className="space-y-4 text-sm text-white/80">
+              <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                <p className="font-medium text-white mb-2">Cable Selection (Chapter 52)</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>T&E cables must be suitable for environmental conditions</li>
+                  <li>Consider external influences when selecting cable type</li>
+                  <li>Ensure adequate current-carrying capacity with derating factors</li>
+                  <li>Check voltage drop limits (typically 3% for lighting, 5% for power)</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
+                <p className="font-medium text-white mb-2">Installation Methods (Chapter 52)</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>Follow prescribed installation methods for current ratings</li>
+                  <li>Maintain safe zones for concealed cables in walls</li>
+                  <li>Provide RCD protection for cables in walls at less than 50mm depth</li>
+                  <li>Use mechanical protection where cables may be damaged</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                <p className="font-medium text-white mb-2">Earth Arrangements (Chapter 54)</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>CPC must be identified with green/yellow sleeving</li>
+                  <li>Ensure adequate CPC size for fault protection</li>
+                  <li>Maintain earth continuity throughout installation</li>
+                  <li>Test earth loop impedance for protective device operation</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-400/50" role="alert">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5" />
+                  <p className="text-white/80">Isolate, lock-off and prove dead before work. Follow manufacturer instructions and BS 7671 requirements for all T&E installations.</p>
                 </div>
               </div>
             </div>
+          </section>
 
-            <div className="bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded">
-              <p className="font-medium mb-2">Key Success Factors:</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Proper cable sizing calculations including voltage drop for longer runs</li>
-                <li>Mechanical protection where cables could be damaged by fitted units</li>
-                <li>Compliance with kitchen IP rating requirements near water sources</li>
-                <li>All installation within BS 7671 safe zones for concealed cables</li>
-                <li>Comprehensive testing including insulation resistance and earth loop impedance</li>
-              </ul>
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">12</span>
+              Frequently Asked Questions
+            </h2>
+            <ul className="space-y-3 text-sm text-white/80">
+              {faqs.map((f, i) => (
+                <li key={i} className="p-4 rounded-lg bg-card/50 border border-white/10">
+                  <p className="font-medium text-white mb-1">{f.q}</p>
+                  <p className="text-white/70">{f.a}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* Quick Knowledge Check */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">13</span>
+              Quick Knowledge Check
+            </h2>
+            <div className="space-y-6">
+              {quickCheckQuestions.map((q) => (
+                <InlineCheck
+                  key={q.id}
+                  id={`quick-check-${q.id}`}
+                  question={q.question}
+                  options={q.options}
+                  correctIndex={q.correctAnswer}
+                  explanation={q.explanation}
+                />
+              ))}
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Common mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Common Mistakes and How to Avoid Them</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Termination Errors</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li><strong>Wrong:</strong> Leaving CPC bare at terminations</li>
-                <li><strong>Right:</strong> Always sleeve CPC with green/yellow identification</li>
-                <li><strong>Wrong:</strong> Nicking conductor insulation when stripping outer sheath</li>
-                <li><strong>Right:</strong> Use proper cable stripping tools and techniques</li>
-              </ul>
-            </div>
+          {/* Quiz */}
+          <section className="mb-16">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">14</span>
+              Section Quiz
+            </h2>
+            <Quiz questions={quizQuestions as any} title="Twin and Earth Cable Knowledge Check" />
+          </section>
 
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Installation Mistakes</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li><strong>Wrong:</strong> Excessive clip spacing causing cable sag</li>
-                <li><strong>Right:</strong> Follow BS 7671 maximum spacing requirements (300mm horizontal)</li>
-                <li><strong>Wrong:</strong> Sharp bends damaging cable insulation</li>
-                <li><strong>Right:</strong> Maintain minimum bending radius throughout installation</li>
-              </ul>
-            </div>
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+            <Button
+              variant="ghost"
+              className="min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../1-1">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Wiring Systems Overview
+              </Link>
+            </Button>
+            <Button
+              className="min-h-[48px] bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../1-3">
+                Next: Single Core Cables
+                <CheckCircle2 className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
 
-            <div className="rounded-lg p-4 bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="font-medium mb-2 flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Best Practice Tips</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>Always calculate voltage drop for longer cable runs</li>
-                <li>Provide mechanical protection where cables may be disturbed</li>
-                <li>Use appropriate glands and grommets for enclosure entries</li>
-                <li>Test installations thoroughly before energising</li>
-                <li>Document cable routes for future maintenance</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* BS 7671 Context */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">BS 7671 Context and Compliance</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-2">Cable Selection (Chapter 52)</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>T&E cables must be suitable for environmental conditions</li>
-                <li>Consider external influences when selecting cable type</li>
-                <li>Ensure adequate current-carrying capacity with derating factors</li>
-                <li>Check voltage drop limits (typically 3% for lighting, 5% for power)</li>
-              </ul>
-            </div>
-
-            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-              <p className="font-medium mb-2">Installation Methods (Chapter 52)</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>Follow prescribed installation methods for current ratings</li>
-                <li>Maintain safe zones for concealed cables in walls</li>
-                <li>Provide RCD protection for cables in walls at less than 50mm depth</li>
-                <li>Use mechanical protection where cables may be damaged</li>
-              </ul>
-            </div>
-
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-2">Earth Arrangements (Chapter 54)</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>CPC must be identified with green/yellow sleeving</li>
-                <li>Ensure adequate CPC size for fault protection</li>
-                <li>Maintain earth continuity throughout installation</li>
-                <li>Test earth loop impedance for protective device operation</li>
-              </ul>
-            </div>
-
-            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
-              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
-              <p className="text-white">Isolate, lock-off and prove dead before work. Follow manufacturer instructions and BS 7671 requirements for all T&E installations.</p>
-            </div>
-          </div>
-        </Card>
-
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
-          <ul className="space-y-3 text-xs sm:text-sm text-white">
-            {faqs.map((f, i) => (
-              <li key={i} className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
-                <p className="font-medium mb-1">{f.q}</p>
-                <p className="text-white">{f.a}</p>
-              </li>
-            ))}
-          </ul>
-        </Card>
-
-        {/* Quick Knowledge Check */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Knowledge Check</h2>
-          <div className="space-y-6">
-            {quickCheckQuestions.map((q, index) => (
-              <InlineCheck
-                key={q.id}
-                id={`quick-check-${q.id}`}
-                question={q.question}
-                options={q.options}
-                correctIndex={q.correctAnswer}
-                explanation={q.explanation}
-              />
-            ))}
-          </div>
-        </Card>
-
-        {/* Quiz */}
-        <Card className="mb-16 p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Section Quiz</h2>
-          <Quiz questions={quizQuestions as any} title="Twin and Earth Cable Knowledge Check" />
-        </Card>
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
-            <Link to="../1-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Wiring Systems Overview
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link to="../1-3">
-              Next: Single Core Cables
-              <CheckCircle2 className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+          {/* Structured data */}
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
         </div>
-
-        {/* Structured data */}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      </main>
+      </article>
     </div>
   );
 };

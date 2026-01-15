@@ -93,22 +93,21 @@ export function CouponCodeCard({ coupon, className }: CouponCodeCardProps) {
           </div>
           <Button
             variant="outline"
-            size="sm"
             onClick={handleCopy}
             className={cn(
-              'h-9 touch-manipulation',
+              'h-11 px-4 touch-manipulation font-medium',
               copied && 'bg-green-500/10 border-green-500/30 text-green-500'
             )}
           >
             {copied ? (
               <>
-                <Check className="h-4 w-4 mr-1" />
+                <Check className="h-4 w-4 mr-1.5" />
                 Copied!
               </>
             ) : (
               <>
-                <Copy className="h-4 w-4 mr-1" />
-                Copy
+                <Copy className="h-4 w-4 mr-1.5" />
+                Copy Code
               </>
             )}
           </Button>

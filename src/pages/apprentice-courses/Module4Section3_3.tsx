@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, Package, Target, CheckCircle, AlertTriangle, Eye, TrendingUp, Shield, Search, Zap } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -16,7 +13,7 @@ const quickCheckQuestions = [
     question: "What tool is inserted inside PVC conduit to prevent collapse during bending?",
     options: [
       "Heat gun",
-      "Bending spring", 
+      "Bending spring",
       "Pipe vice",
       "Hickey bender"
     ],
@@ -28,7 +25,7 @@ const quickCheckQuestions = [
     options: [
       "Hand bender",
       "Hickey bender",
-      "Pipe vice", 
+      "Pipe vice",
       "Bending spring"
     ],
     correctIndex: 1,
@@ -63,7 +60,7 @@ const quizQuestions = [
     id: 2,
     question: "Which tool is used for small bend adjustments in metal conduit?",
     options: [
-      "Hand bender", 
+      "Hand bender",
       "Hickey bender",
       "Pipe vice"
     ],
@@ -141,11 +138,15 @@ const Module4Section3_3 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3
@@ -154,407 +155,329 @@ const Module4Section3_3 = () => {
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Package className="w-6 h-6 text-white" />
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 3.3</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 4.3.3
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Manual Bending Tools and Techniques
-          </h1>
-          <p className="text-white">
-            Learn manual bending tools and techniques for conduit installation without heavy equipment.
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Manual Bending Tools and Techniques
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Learn manual bending tools and techniques for conduit installation without heavy equipment.
+            </p>
+          </header>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Manual tools allow accurate bends on site without heavy equipment.</li>
-                <li>Essential for smaller jobs, tight spaces, and quick adjustments.</li>
-                <li>Proper technique produces clean, regulation-compliant bends.</li>
-              </ul>
+          {/* Introduction */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Introduction
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>Manual tools allow accurate bends on site without heavy equipment</li>
+                  <li>Essential for smaller jobs, tight spaces, and quick adjustments</li>
+                  <li>Proper technique produces clean, regulation-compliant bends</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-elec-yellow mb-2">Spot it / Use it</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><strong>Spot:</strong> Small jobs, tight spaces, quick adjustments needed</li>
+                  <li><strong>Use:</strong> Hand benders, springs, heat guns, hickey benders</li>
+                  <li><strong>Check:</strong> Bend radius, alignment, material integrity</li>
+                </ul>
+              </div>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Small jobs, tight spaces, quick adjustments needed.</li>
-                <li><strong>Use:</strong> Hand benders, springs, heat guns, hickey benders.</li>
-                <li><strong>Check:</strong> Bend radius, alignment, material integrity.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-            <li>Identify different types of manual bending tools and their uses.</li>
-            <li>Apply correct techniques for bending PVC and metal conduit manually.</li>
-            <li>Avoid common bending faults when working without a machine.</li>
-            <li>Check and adjust bends for accuracy.</li>
-            <li>Work safely with manual bending equipment.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Learning Outcomes
+            </h2>
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white/80">
+              <li>Identify different types of manual bending tools and their uses</li>
+              <li>Apply correct techniques for bending PVC and metal conduit manually</li>
+              <li>Avoid common bending faults when working without a machine</li>
+              <li>Check and adjust bends for accuracy</li>
+              <li>Work safely with manual bending equipment</li>
+            </ul>
+          </section>
 
           {/* Common Manual Bending Tools */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Common Manual Bending Tools</h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Common Manual Bending Tools
+            </h2>
+            <p className="text-sm text-white/80 mb-4">
               Manual bending tools provide flexibility and precision for on-site work:
             </p>
-            
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Hand Bender (Conduit Bender)</p>
-                    <p className="text-xs sm:text-sm text-white mb-2">Lever-operated tool with a bending shoe and handle for small-diameter conduit (typically 16–25 mm).</p>
-                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Best for:</strong> Standard bends in metal conduit, precise angle control
-                    </div>
-                  </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-elec-yellow mb-2">Hand Bender (Conduit Bender)</p>
+                <p className="text-sm text-white/80 mb-2">Lever-operated tool with a bending shoe and handle for small-diameter conduit (typically 16-25mm).</p>
+                <div className="text-xs text-white/60">
+                  <strong>Best for:</strong> Standard bends in metal conduit, precise angle control
                 </div>
               </div>
-
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Bending Spring</p>
-                    <p className="text-xs sm:text-sm text-white mb-2">Internal or external spring used to support PVC conduit during heating and bending.</p>
-                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Best for:</strong> PVC conduit support, preventing collapse during bending
-                    </div>
-                  </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-elec-yellow mb-2">Bending Spring</p>
+                <p className="text-sm text-white/80 mb-2">Internal or external spring used to support PVC conduit during heating and bending.</p>
+                <div className="text-xs text-white/60">
+                  <strong>Best for:</strong> PVC conduit support, preventing collapse during bending
                 </div>
               </div>
-
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Pipe Vice and Former</p>
-                    <p className="text-xs sm:text-sm text-white mb-2">Used for holding and shaping conduit manually during bending operations.</p>
-                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Best for:</strong> Securing conduit, manual forming operations
-                    </div>
-                  </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-elec-yellow mb-2">Pipe Vice and Former</p>
+                <p className="text-sm text-white/80 mb-2">Used for holding and shaping conduit manually during bending operations.</p>
+                <div className="text-xs text-white/60">
+                  <strong>Best for:</strong> Securing conduit, manual forming operations
                 </div>
               </div>
-
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Hickey Bender</p>
-                    <p className="text-xs sm:text-sm text-white mb-2">Short-handled bender for small adjustments and kick bends in metal conduit.</p>
-                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Best for:</strong> Fine adjustments, small corrections, kick bends
-                    </div>
-                  </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-elec-yellow mb-2">Hickey Bender</p>
+                <p className="text-sm text-white/80 mb-2">Short-handled bender for small adjustments and kick bends in metal conduit.</p>
+                <div className="text-xs text-white/60">
+                  <strong>Best for:</strong> Fine adjustments, small corrections, kick bends
                 </div>
               </div>
             </div>
           </section>
 
           {/* Manual Bending for PVC Conduit */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Manual Bending for PVC Conduit</h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Manual Bending for PVC Conduit
+            </h2>
+            <p className="text-sm text-white/80 mb-4">
               PVC requires heating and proper support for successful manual bending:
             </p>
-            
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Heating</p>
-                    <p className="text-xs sm:text-sm text-white">Use a heat gun or bending box to soften PVC before bending. Apply heat evenly to avoid weak spots.</p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                <p className="font-medium text-green-400 mb-2">1. Heating</p>
+                <p className="text-sm text-white/80">Use a heat gun or bending box to soften PVC before bending. Apply heat evenly to avoid weak spots.</p>
               </div>
-
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Support</p>
-                    <p className="text-xs sm:text-sm text-white">Insert an internal bending spring to maintain shape and prevent collapse during the bending process.</p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                <p className="font-medium text-green-400 mb-2">2. Support</p>
+                <p className="text-sm text-white/80">Insert an internal bending spring to maintain shape and prevent collapse during the bending process.</p>
               </div>
-
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Forming the Bend</p>
-                    <p className="text-xs sm:text-sm text-white">Bend slowly to avoid kinks, checking alignment as you go. Apply steady, even pressure.</p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                <p className="font-medium text-green-400 mb-2">3. Forming the Bend</p>
+                <p className="text-sm text-white/80">Bend slowly to avoid kinks, checking alignment as you go. Apply steady, even pressure.</p>
               </div>
-
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Cooling</p>
-                    <p className="text-xs sm:text-sm text-white">Hold the bend until the PVC cools to retain the shape. Allow complete cooling before handling.</p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                <p className="font-medium text-green-400 mb-2">4. Cooling</p>
+                <p className="text-sm text-white/80">Hold the bend until the PVC cools to retain the shape. Allow complete cooling before handling.</p>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="tools-check"
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
-          <Separator className="my-6" />
+          <div className="mb-10">
+            <InlineCheck
+              id="tools-check"
+              question={quickCheckQuestions[0].question}
+              options={quickCheckQuestions[0].options}
+              correctIndex={quickCheckQuestions[0].correctIndex}
+              explanation={quickCheckQuestions[0].explanation}
+            />
+          </div>
 
           {/* Manual Bending for Metal Conduit */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Manual Bending for Metal Conduit</h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Manual Bending for Metal Conduit
+            </h2>
+            <p className="text-sm text-white/80 mb-4">
               Metal conduit requires precise marking and controlled force application:
             </p>
-            
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Marking</p>
-                    <p className="text-xs sm:text-sm text-white">Mark the start and end points of the bend before starting. Use a measuring tape and marker for accuracy.</p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                <p className="font-medium text-purple-400 mb-2">1. Marking</p>
+                <p className="text-sm text-white/80">Mark the start and end points of the bend before starting. Use a measuring tape and marker for accuracy.</p>
               </div>
-
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Forming</p>
-                    <p className="text-xs sm:text-sm text-white">Use a hand bender with smooth, steady pressure. Avoid jerky movements that can cause kinks.</p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                <p className="font-medium text-purple-400 mb-2">2. Forming</p>
+                <p className="text-sm text-white/80">Use a hand bender with smooth, steady pressure. Avoid jerky movements that can cause kinks.</p>
               </div>
-
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Adjustment</p>
-                    <p className="text-xs sm:text-sm text-white">Hickey benders can fine-tune bends without damaging the conduit. Make small corrections as needed.</p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                <p className="font-medium text-purple-400 mb-2">3. Adjustment</p>
+                <p className="text-sm text-white/80">Hickey benders can fine-tune bends without damaging the conduit. Make small corrections as needed.</p>
               </div>
-
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Checks</p>
-                    <p className="text-xs sm:text-sm text-white">Ensure bend radius meets BS 7671 requirements to protect cables and maintain installation integrity.</p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                <p className="font-medium text-purple-400 mb-2">4. Checks</p>
+                <p className="text-sm text-white/80">Ensure bend radius meets BS 7671 requirements to protect cables and maintain installation integrity.</p>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="metal-technique-check"
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-          <Separator className="my-6" />
+          <div className="mb-10">
+            <InlineCheck
+              id="metal-technique-check"
+              question={quickCheckQuestions[1].question}
+              options={quickCheckQuestions[1].options}
+              correctIndex={quickCheckQuestions[1].correctIndex}
+              explanation={quickCheckQuestions[1].explanation}
+            />
+          </div>
 
           {/* Safety Considerations */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Safety Considerations</h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Safety Considerations
+            </h2>
+            <p className="text-sm text-white/80 mb-4">
               Manual bending requires attention to personal safety and equipment protection:
             </p>
-            
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Personal Protection</p>
-                    <p className="text-xs sm:text-sm text-white">Wear gloves to protect hands from sharp edges and heated PVC. Use safety glasses when using heat guns.</p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
+                <p className="font-medium text-orange-400 mb-2">Personal Protection</p>
+                <p className="text-sm text-white/80">Wear gloves to protect hands from sharp edges and heated PVC. Use safety glasses when using heat guns.</p>
               </div>
-
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Work Position</p>
-                    <p className="text-xs sm:text-sm text-white">Keep work at waist height for better control and reduced strain. Use proper lifting techniques.</p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
+                <p className="font-medium text-orange-400 mb-2">Work Position</p>
+                <p className="text-sm text-white/80">Keep work at waist height for better control and reduced strain. Use proper lifting techniques.</p>
               </div>
-
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Controlled Force</p>
-                    <p className="text-xs sm:text-sm text-white">Avoid forcing bends too quickly — this can damage the conduit and tools, and cause injury.</p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
+                <p className="font-medium text-orange-400 mb-2">Controlled Force</p>
+                <p className="text-sm text-white/80">Avoid forcing bends too quickly - this can damage the conduit and tools, and cause injury.</p>
               </div>
             </div>
           </section>
 
           {/* Checking and Adjusting Bends */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Checking and Adjusting Bends</h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Checking and Adjusting Bends
+            </h2>
+            <p className="text-sm text-white/80 mb-4">
               Accurate measurement and adjustment ensure professional results:
             </p>
-            
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Angle Verification</p>
-                    <p className="text-xs sm:text-sm text-white">Use a level or protractor to confirm the angle meets specifications.</p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
+                <p className="font-medium text-red-400 mb-2">Angle Verification</p>
+                <p className="text-sm text-white/80">Use a level or protractor to confirm the angle meets specifications.</p>
               </div>
-
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Symmetry Check</p>
-                    <p className="text-xs sm:text-sm text-white">Check for symmetry in saddle bends and offsets to ensure professional appearance.</p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
+                <p className="font-medium text-red-400 mb-2">Symmetry Check</p>
+                <p className="text-sm text-white/80">Check for symmetry in saddle bends and offsets to ensure professional appearance.</p>
               </div>
-
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Careful Adjustment</p>
-                    <p className="text-xs sm:text-sm text-white">Small adjustments can be made, but avoid repeated bending in the same spot to prevent weakening.</p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
+                <p className="font-medium text-red-400 mb-2">Careful Adjustment</p>
+                <p className="text-sm text-white/80">Small adjustments can be made, but avoid repeated bending in the same spot to prevent weakening.</p>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="safety-check"
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-        </Card>
+          <div className="mb-10">
+            <InlineCheck
+              id="safety-check"
+              question={quickCheckQuestions[2].question}
+              options={quickCheckQuestions[2].options}
+              correctIndex={quickCheckQuestions[2].correctIndex}
+              explanation={quickCheckQuestions[2].explanation}
+            />
+          </div>
 
-        {/* Real-world example */}
-        <Card className="mb-8 p-6 bg-[#121212] border-white/10">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="md:col-span-2">
-              <p className="text-xs sm:text-sm text-white leading-relaxed mb-4">
+          {/* Real-World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+              Real-World Example
+            </h2>
+            <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-500/50">
+              <p className="text-sm text-white/80 mb-4">
                 On a domestic job, an installer needed to route PVC conduit around a tight corner without access to a bending machine. The space was too restricted for standard equipment, and time was limited.
               </p>
-              <p className="text-xs sm:text-sm text-white leading-relaxed mb-4">
+              <p className="text-sm text-white/80 mb-4">
                 Using a heat gun and bending spring, they formed a smooth bend that fitted perfectly, avoiding the need for multiple joins and keeping the installation neat. The key was taking time to heat the PVC evenly and using the spring to maintain the conduit's integrity.
               </p>
-              <p className="text-xs sm:text-sm text-white leading-relaxed">
-                This demonstrates how proper manual technique can deliver professional results even in challenging conditions.
-              </p>
-            </div>
-            <div className="bg-gradient-to-br from-green-50 to-elec-yellow/5 dark:from-green-950/20 dark:to-elec-yellow/10 p-4 rounded-lg border border-green-200 dark:border-green-800">
-              <div className="flex items-center gap-2 mb-2">
-                <CheckCircle className="w-4 h-4 text-green-600" />
-                <span className="font-medium text-green-700 dark:text-green-300">Lesson Learned</span>
+              <div className="flex items-start gap-2 p-3 rounded bg-green-500/10 border-l-2 border-green-500/50">
+                <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                <p className="text-xs text-white/70">
+                  <strong className="text-green-400">Lesson Learned:</strong> Manual tools provide flexibility for site-specific challenges. Proper technique and patience deliver professional results without heavy equipment.
+                </p>
               </div>
-              <p className="text-xs text-green-700 dark:text-green-300">
-                Manual tools provide flexibility for site-specific challenges. Proper technique and patience deliver professional results without heavy equipment.
+            </div>
+          </section>
+
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-white/5">
+                <p className="font-medium text-white mb-1">Q: Can I bend PVC conduit without heating?</p>
+                <p className="text-sm text-white/70">A: Only for very shallow bends; heating is needed for sharper bends to avoid cracking or collapse.</p>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5">
+                <p className="font-medium text-white mb-1">Q: How do I know if my bend radius is correct?</p>
+                <p className="text-sm text-white/70">A: Measure against a bend radius guide or follow the manufacturer's recommendations and BS 7671 requirements.</p>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5">
+                <p className="font-medium text-white mb-1">Q: Are manual methods suitable for large-diameter conduit?</p>
+                <p className="text-sm text-white/70">A: Not usually - larger diameters require machine bending for consistent results and to prevent damage.</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Summary */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">10</span>
+              Summary
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm text-white/80">
+                Manual bending tools are versatile and practical for smaller-scale or on-the-spot bending work. With the right technique, they produce professional results while maintaining compliance with regulations. Slow, controlled bending with correct support is key to avoiding faults.
               </p>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* FAQs */}
-        <Card className="mb-8 p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            <div>
-              <h3 className="font-medium text-white mb-2">Can I bend PVC conduit without heating?</h3>
-              <p className="text-sm text-white">Only for very shallow bends; heating is needed for sharper bends to avoid cracking or collapse.</p>
-            </div>
-            <div>
-              <h3 className="font-medium text-white mb-2">How do I know if my bend radius is correct?</h3>
-              <p className="text-sm text-white">Measure against a bend radius guide or follow the manufacturer's recommendations and BS 7671 requirements.</p>
-            </div>
-            <div>
-              <h3 className="font-medium text-white mb-2">Are manual methods suitable for large-diameter conduit?</h3>
-              <p className="text-sm text-white">Not usually — larger diameters require machine bending for consistent results and to prevent damage.</p>
-            </div>
-          </div>
-        </Card>
+          {/* Quiz */}
+          <section className="mb-10">
+            <Quiz questions={quizQuestions} />
+          </section>
 
-        {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
-          <p className="text-xs sm:text-sm text-white leading-relaxed">
-            Manual bending tools are versatile and practical for smaller-scale or on-the-spot bending work. With the right technique, they produce professional results while maintaining compliance with regulations. Slow, controlled bending with correct support is key to avoiding faults.
-          </p>
-        </Card>
-
-        {/* Quiz */}
-        <Quiz questions={quizQuestions} />
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center mt-8">
-          <Button variant="outline" asChild>
-            <Link to="../3-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Machine Bending
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link to="../3-4">
-              Next Section
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+          {/* Navigation Footer */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 mt-8 border-t border-white/10">
+            <Button
+              variant="outline"
+              className="border-white/20 hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../3-2">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Bending Machines
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../3-4">
+                Next: Cutting and Preparing
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

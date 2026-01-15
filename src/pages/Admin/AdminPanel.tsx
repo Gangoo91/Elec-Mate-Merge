@@ -27,6 +27,7 @@ import {
   ChevronUp,
   PoundSterling,
   Crown,
+  FileCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -42,6 +43,7 @@ const primaryNavItems = [
 const secondaryNavItems = [
   { name: "Elec-IDs", path: "/admin/elec-ids", icon: IdCard },
   { name: "Verification", path: "/admin/verification", icon: CheckSquare },
+  { name: "Doc Review", path: "/admin/document-review", icon: FileCheck },
   { name: "Vacancies", path: "/admin/vacancies", icon: Briefcase },
   { name: "Pricing", path: "/admin/pricing", icon: PoundSterling },
   { name: "Subscriptions", path: "/admin/subscriptions", icon: CreditCard },

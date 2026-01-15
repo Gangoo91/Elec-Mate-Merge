@@ -1,7 +1,5 @@
-import React from "react";
 import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -22,7 +20,7 @@ const quickCheckQuestions = [
     explanation: "In series circuits, there's only one path for current, so it must be identical through every component."
   },
   {
-    id: "voltage-divider", 
+    id: "voltage-divider",
     question: "How does voltage behave in a series circuit?",
     options: ["Same across all components", "Divides according to resistance values", "Is always zero", "Doubles at each component"],
     correctIndex: 1,
@@ -134,428 +132,381 @@ const Module2Section3_2 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 2.3
+              Back
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Zap className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 2.3.2
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                Series Circuits - Current and Voltage
-              </h1>
-              <p className="text-xl text-white max-w-3xl mt-2">
-                Master current flow and voltage division in series electrical circuits
-              </p>
-            </div>
+      {/* Main Content - Full width, minimal padding */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+
+        {/* Centered Title */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 2.3.2</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Series Circuits - Current and Voltage
+          </h1>
+          <p className="text-white/80">
+            Master current flow and voltage division in series electrical circuits
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Current:</strong> Same everywhere in series (single path)</li>
+              <li><strong>Voltage:</strong> Divides between components according to resistance</li>
+              <li><strong>Total resistance:</strong> Rt = R1 + R2 + R3... (adds up)</li>
+              <li><strong>Voltage divider:</strong> Vx = Vs × Rx/Rtotal</li>
+              <li><strong>Failure mode:</strong> One open circuit stops everything</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> LED strings, Christmas lights, sensor dividers</li>
+              <li><strong>Use:</strong> Voltage calculations, current predictions, fault finding</li>
+              <li><strong>Apply:</strong> LED installations, control circuits, voltage drop calculations</li>
+            </ul>
           </div>
         </div>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Current:</strong> Same everywhere in series (single path).</li>
-                <li><strong>Voltage:</strong> Divides between components according to resistance.</li>
-                <li><strong>Total resistance:</strong> Rt = R1 + R2 + R3... (adds up)</li>
-                <li><strong>Voltage divider:</strong> Vx = Vs × Rx/Rtotal</li>
-                <li><strong>Failure mode:</strong> One open circuit stops everything.</li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> LED strings, Christmas lights, sensor dividers.</li>
-                <li><strong>Use:</strong> Voltage calculations, current predictions, fault finding.</li>
-                <li><strong>Apply:</strong> LED installations, control circuits, voltage drop calculations.</li>
-              </ul>
-            </div>
+        {/* Learning Outcomes - Simple list */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "State how current and voltage behave in series circuits",
+              "Calculate total resistance using Rt = R1 + R2 + R3...",
+              "Apply the voltage divider rule to find component voltages",
+              "Use Ohm's Law with series circuit calculations",
+              "Predict series circuit behaviour and fault conditions",
+              "Relate calculations to BS 7671 checks and safe practice"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
           </div>
-        </Card>
+        </section>
 
-        {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>State how current and voltage behave in series circuits</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Calculate total resistance using Rt = R1 + R2 + R3...</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Apply the voltage divider rule to find component voltages</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Use Ohm's Law with series circuit calculations</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Predict series circuit behaviour and fault conditions</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Relate calculations to BS 7671 checks and safe practice</span>
-            </li>
-          </ul>
-        </Card>
+        {/* Divider */}
+        <hr className="border-white/5 mb-12" />
 
         {/* Section 1: Series Circuit Fundamentals */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
-              Series Circuit Rules - Current and Resistance
-            </h2>
-            <div className="space-y-4 text-white">
-              <p>
-                In a series circuit, there is only one path for current to flow. This single path means:
-              </p>
-              
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold">Key rules for series circuits:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>Current:</strong> Identical through every component (I₁ = I₂ = I₃ = Itotal)</li>
-                    <li><strong>Resistance:</strong> Values add together (Rtotal = R₁ + R₂ + R₃...)</li>
-                    <li><strong>Path:</strong> Components connected end-to-end in a chain</li>
-                    <li><strong>Current calculation:</strong> I = Vsupply / Rtotal</li>
-                  </ul>
-                </div>
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Series Circuit Rules - Current and Resistance
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              In a series circuit, there is only one path for current to flow. This single path means:
+            </p>
 
-                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
-                  <p className="text-yellow-300">
-                    <strong>Example:</strong> Three 10Ω resistors in series = 30Ω total. 
-                    On 12V supply: I = 12V ÷ 30Ω = 0.4A through each resistor.
-                  </p>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Key rules for series circuits:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Current:</strong> Identical through every component (I₁ = I₂ = I₃ = Itotal)</li>
+                <li><strong>Resistance:</strong> Values add together (Rtotal = R₁ + R₂ + R₃...)</li>
+                <li><strong>Path:</strong> Components connected end-to-end in a chain</li>
+                <li><strong>Current calculation:</strong> I = Vsupply / Rtotal</li>
+              </ul>
             </div>
+
+            <p className="text-sm text-elec-yellow/70">
+              <strong>Example:</strong> Three 10Ω resistors in series = 30Ω total.
+              On 12V supply: I = 12V ÷ 30Ω = 0.4A through each resistor.
+            </p>
           </div>
-        </div>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[0]} />
 
         {/* Section 2: Voltage Division */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
-              Voltage Division and the Voltage Divider Rule
-            </h2>
-            <div className="space-y-4 text-white">
-              <p>
-                In series circuits, supply voltage divides between components according to their resistance values. 
-                Higher resistance takes a larger share of the voltage.
-              </p>
-              
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold">Voltage divider rule:</p>
-                  <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
-                    <p className="text-elec-yellow font-mono">Vx = Vsupply × Rx / Rtotal</p>
-                    <p className="text-elec-yellow text-sm mt-2">Where Vx is voltage across component x</p>
-                  </div>
-                </div>
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Voltage Division and the Voltage Divider Rule
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              In series circuits, supply voltage divides between components according to their resistance values.
+              Higher resistance takes a larger share of the voltage.
+            </p>
 
-                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
-                  <p className="text-yellow-300">
-                    <strong>Worked Example:</strong> 24V supply, R1=150Ω, R2=450Ω in series<br/>
-                    • Rtotal = 150 + 450 = 600Ω<br/>
-                    • V1 = 24V × 150Ω/600Ω = 6V<br/>
-                    • V2 = 24V × 450Ω/600Ω = 18V<br/>
-                    • Check: 6V + 18V = 24V ✓
-                  </p>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Voltage divider rule:</p>
+              <p className="text-elec-yellow font-mono text-sm">Vx = Vsupply × Rx / Rtotal</p>
+              <p className="text-white/70 text-sm mt-1">Where Vx is voltage across component x</p>
             </div>
+
+            <p className="text-sm text-elec-yellow/70">
+              <strong>Worked Example:</strong> 24V supply, R1=150Ω, R2=450Ω in series<br />
+              Rtotal = 150 + 450 = 600Ω<br />
+              V1 = 24V × 150Ω/600Ω = 6V<br />
+              V2 = 24V × 450Ω/600Ω = 18V<br />
+              Check: 6V + 18V = 24V
+            </p>
           </div>
-        </div>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Calculations and Tools */}
-        <div className="mb-8">
-          <div className="border-l-4 border-teal-500 bg-teal-500/10 dark:bg-teal-500/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
-              Series Circuit Calculations and Problem Solving
-            </h2>
-            <div className="space-y-6 text-white">
-              
-              {/* Step-by-step approach */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-teal-300">Step-by-Step Calculation Method</h3>
-                <div className="bg-teal-500/10 border border-teal-400/30 p-4 rounded-lg">
-                  <ol className="list-decimal pl-6 space-y-2 text-sm">
-                    <li><strong>Identify the circuit:</strong> Confirm components are in series (end-to-end chain)</li>
-                    <li><strong>Calculate total resistance:</strong> Rt = R₁ + R₂ + R₃... (simply add all values)</li>
-                    <li><strong>Find total current:</strong> I = Vsupply ÷ Rtotal (same current everywhere)</li>
-                    <li><strong>Calculate individual voltages:</strong> V = I × R for each component</li>
-                    <li><strong>Verify your answer:</strong> All voltages should add up to supply voltage</li>
-                  </ol>
-                </div>
-              </div>
+        {/* Section 3: Calculations and Problem Solving */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Series Circuit Calculations and Problem Solving
+          </h2>
+          <div className="text-white space-y-6 leading-relaxed">
 
-              {/* Worked examples */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-teal-300">Worked Examples</h3>
-                
-                <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                  <h4 className="font-bold text-white mb-2">Example 1: Three Resistor Series Circuit</h4>
-                  <p className="text-slate-300 text-sm mb-2">Given: 12V supply, R₁ = 100Ω, R₂ = 200Ω, R₃ = 300Ω</p>
-                  <div className="space-y-1 text-sm text-white">
-                    <p><strong>Step 1:</strong> Rt = 100 + 200 + 300 = 600Ω</p>
-                    <p><strong>Step 2:</strong> I = 12V ÷ 600Ω = 0.02A (20mA)</p>
-                    <p><strong>Step 3:</strong> V₁ = 0.02A × 100Ω = 2V</p>
-                    <p><strong>Step 4:</strong> V₂ = 0.02A × 200Ω = 4V</p>
-                    <p><strong>Step 5:</strong> V₃ = 0.02A × 300Ω = 6V</p>
-                    <p><strong>Check:</strong> 2V + 4V + 6V = 12V ✓</p>
-                  </div>
-                </div>
+            {/* Step-by-step approach */}
+            <div>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Step-by-Step Calculation Method</p>
+              <ol className="text-sm text-white space-y-1 ml-4 list-decimal">
+                <li>Identify the circuit: Confirm components are in series (end-to-end chain)</li>
+                <li>Calculate total resistance: Rt = R₁ + R₂ + R₃... (simply add all values)</li>
+                <li>Find total current: I = Vsupply ÷ Rtotal (same current everywhere)</li>
+                <li>Calculate individual voltages: V = I × R for each component</li>
+                <li>Verify your answer: All voltages should add up to supply voltage</li>
+              </ol>
+            </div>
 
-                <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                  <h4 className="font-bold text-white mb-2">Example 2: LED String Calculation</h4>
-                  <p className="text-slate-300 text-sm mb-2">Given: 24V supply, 8 identical LEDs each needing 2.5V, 20mA</p>
-                  <div className="space-y-1 text-sm text-white">
-                    <p><strong>Analysis:</strong> 8 × 2.5V = 20V (4V remaining for current limiting resistor)</p>
-                    <p><strong>Required resistor:</strong> R = 4V ÷ 0.02A = 200Ω</p>
-                    <p><strong>Power rating:</strong> P = 4V × 0.02A = 0.08W (use 0.25W resistor)</p>
-                    <p><strong>Total circuit:</strong> 8 LEDs + 200Ω resistor in series</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-                <div className="space-y-3">
-                  <h4 className="font-bold text-teal-300">Quick Reference Formulas</h4>
-                  <div className="bg-teal-500/10 border border-teal-400/30 p-4 rounded-lg">
-                    <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li><strong>Total resistance:</strong> Rt = R₁ + R₂ + R₃...</li>
-                      <li><strong>Current (same everywhere):</strong> I = V/Rt</li>
-                      <li><strong>Voltage across each:</strong> V = I × R</li>
-                      <li><strong>Voltage divider:</strong> Vx = Vs × Rx/Rt</li>
-                      <li><strong>Power in each:</strong> P = V × I = I²R</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="space-y-3">
-                  <h4 className="font-bold text-teal-300">Calculation Checkpoints</h4>
-                  <div className="bg-teal-500/10 border border-teal-400/30 p-4 rounded-lg">
-                    <ul className="list-disc pl-6 space-y-1 text-sm">
-                      <li>Check units: V, A, Ω consistently</li>
-                      <li>Verify voltages add to supply</li>
-                      <li>Current must be identical everywhere</li>
-                      <li>Consider component tolerances (±5%, ±10%)</li>
-                      <li>Check power ratings aren't exceeded</li>
-                      <li>Follow safe isolation procedures</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* Problem-solving strategies */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-teal-300">Problem-Solving Strategies</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-card border border-border/30 p-4 rounded-lg">
-                    <h4 className="font-bold text-elec-yellow mb-2">When values are missing:</h4>
-                    <ul className="list-disc pl-6 space-y-1 text-sm text-white">
-                      <li>Use Ohm's Law: V = I × R</li>
-                      <li>Apply voltage divider rule</li>
-                      <li>Remember: voltages must sum to supply</li>
-                      <li>Current is identical throughout</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card border border-green-400/30 p-4 rounded-lg">
-                    <h4 className="font-bold text-green-300 mb-2">Fault finding approach:</h4>
-                    <ul className="list-disc pl-6 space-y-1 text-sm text-white">
-                      <li>No current = open circuit somewhere</li>
-                      <li>Measure voltage across each component</li>
-                      <li>Full supply voltage across one = it's open</li>
-                      <li>Zero voltage across one = it's shorted</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* Practice problems */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-teal-300">Practice Problems</h3>
-                <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <h4 className="font-bold text-elec-yellow mb-2">Try these calculations:</h4>
-                  <div className="space-y-2 text-sm text-white">
-                    <p><strong>Problem 1:</strong> 9V battery, three 1kΩ resistors in series. Find current and voltage across each.</p>
-                    <p><strong>Problem 2:</strong> 230V supply, R₁ = 50Ω, R₂ = 100Ω, current = 1.5A. What's the third resistor R₃?</p>
-                    <p><strong>Problem 3:</strong> LED needs 2.1V at 15mA, supply is 12V. Calculate limiting resistor value and power.</p>
-                  </div>
-                </div>
-              </div>
+            {/* Worked examples */}
+            <div>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Worked Examples</p>
 
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-white">Interactive Calculators</h3>
-                <div className="space-y-4">
-                  <OhmsCalculator />
-                  <SeriesParallelCalculators />
+                <div className="p-4 rounded-lg bg-white/5">
+                  <p className="font-medium text-white mb-1">Example 1: Three Resistor Series Circuit</p>
+                  <p className="text-white/70 text-sm mb-2">Given: 12V supply, R₁ = 100Ω, R₂ = 200Ω, R₃ = 300Ω</p>
+                  <ul className="text-sm text-white space-y-0.5">
+                    <li>Step 1: Rt = 100 + 200 + 300 = 600Ω</li>
+                    <li>Step 2: I = 12V ÷ 600Ω = 0.02A (20mA)</li>
+                    <li>Step 3: V₁ = 0.02A × 100Ω = 2V</li>
+                    <li>Step 4: V₂ = 0.02A × 200Ω = 4V</li>
+                    <li>Step 5: V₃ = 0.02A × 300Ω = 6V</li>
+                    <li>Check: 2V + 4V + 6V = 12V</li>
+                  </ul>
                 </div>
-                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-3 rounded">
-                  <p className="text-yellow-200 text-sm">
-                    <strong>Guidance:</strong> These calculators support understanding only. 
-                    Always verify against manufacturer data and apply BS 7671 design rules for real installations.
-                  </p>
+
+                <div className="p-4 rounded-lg bg-white/5">
+                  <p className="font-medium text-white mb-1">Example 2: LED String Calculation</p>
+                  <p className="text-white/70 text-sm mb-2">Given: 24V supply, 8 identical LEDs each needing 2.5V, 20mA</p>
+                  <ul className="text-sm text-white space-y-0.5">
+                    <li>Analysis: 8 × 2.5V = 20V (4V remaining for current limiting resistor)</li>
+                    <li>Required resistor: R = 4V ÷ 0.02A = 200Ω</li>
+                    <li>Power rating: P = 4V × 0.02A = 0.08W (use 0.25W resistor)</li>
+                    <li>Total circuit: 8 LEDs + 200Ω resistor in series</li>
+                  </ul>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Section 4: Practical Applications */}
-        <div className="mb-8">
-          <div className="border-l-4 border-amber-500 dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
-              Practical Applications and BS 7671
-            </h2>
-            <div className="space-y-4 text-white">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-card border border-amber-400/30 p-4 rounded-lg space-y-2">
-                  <h3 className="text-amber-300 font-semibold">Where you'll find series circuits</h3>
-                  <ul className="text-white text-sm list-disc pl-6 space-y-1">
-                    <li>LED strings and strips</li>
-                    <li>Christmas lights (older types)</li>
-                    <li>Sensor voltage dividers</li>
-                    <li>Internal equipment circuits</li>
-                  </ul>
-                </div>
-                <div className="bg-card border border-amber-400/30 p-4 rounded-lg space-y-2">
-                  <h3 className="text-amber-300 font-semibold">BS 7671 considerations</h3>
-                  <ul className="text-white text-sm list-disc pl-6 space-y-1">
-                    <li>Voltage drop calculations</li>
-                    <li>Component ratings and limits</li>
-                    <li>Fault loop impedance</li>
-                    <li>Manufacturer specifications</li>
-                  </ul>
-                </div>
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Quick Reference Formulas</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Total resistance:</strong> Rt = R₁ + R₂ + R₃...</li>
+                  <li><strong>Current (same everywhere):</strong> I = V/Rt</li>
+                  <li><strong>Voltage across each:</strong> V = I × R</li>
+                  <li><strong>Voltage divider:</strong> Vx = Vs × Rx/Rt</li>
+                  <li><strong>Power in each:</strong> P = V × I = I²R</li>
+                </ul>
               </div>
-
-              <div className="bg-card border border-border/30 p-4 rounded-lg">
-                <h3 className="text-elec-yellow font-semibold">Real-world example: LED string installation</h3>
-                <p className="text-white text-sm mt-2">
-                  LED tape with series segments must respect driver voltage/current limits. 
-                  If one segment fails open, the whole string stops. Calculate total current with I = V/Rt 
-                  and check cable voltage drop. Always follow manufacturer wiring guidance and verify polarity before energising.
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                <h4 className="font-bold">Measurement and testing</h4>
-                <ul className="list-disc pl-6 space-y-1 text-sm">
-                  <li>Measure current by inserting meter in series (after safe isolation)</li>
-                  <li>Measure voltage across each component to verify voltage division</li>
-                  <li>Check continuity to identify open circuits</li>
-                  <li>Consider voltage drop over long cable runs</li>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Calculation Checkpoints</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Check units: V, A, Ω consistently</li>
+                  <li>Verify voltages add to supply</li>
+                  <li>Current must be identical everywhere</li>
+                  <li>Consider component tolerances (±5%, ±10%)</li>
+                  <li>Check power ratings aren't exceeded</li>
+                  <li>Follow safe isolation procedures</li>
                 </ul>
               </div>
             </div>
+
+            {/* Problem-solving strategies */}
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">When values are missing:</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li>Use Ohm's Law: V = I × R</li>
+                  <li>Apply voltage divider rule</li>
+                  <li>Remember: voltages must sum to supply</li>
+                  <li>Current is identical throughout</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-green-400/80 mb-2">Fault finding approach:</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li>No current = open circuit somewhere</li>
+                  <li>Measure voltage across each component</li>
+                  <li>Full supply voltage across one = it's open</li>
+                  <li>Zero voltage across one = it's shorted</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Practice problems */}
+            <div>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Practice Problems</p>
+              <ul className="text-sm text-white space-y-1">
+                <li><strong>Problem 1:</strong> 9V battery, three 1kΩ resistors in series. Find current and voltage across each.</li>
+                <li><strong>Problem 2:</strong> 230V supply, R₁ = 50Ω, R₂ = 100Ω, current = 1.5A. What's the third resistor R₃?</li>
+                <li><strong>Problem 3:</strong> LED needs 2.1V at 15mA, supply is 12V. Calculate limiting resistor value and power.</li>
+              </ul>
+            </div>
+
+            {/* Interactive Calculators */}
+            <div className="space-y-4">
+              <p className="text-sm font-medium text-white">Interactive Calculators</p>
+              <OhmsCalculator />
+              <SeriesParallelCalculators />
+              <p className="text-sm text-elec-yellow/70">
+                <strong>Guidance:</strong> These calculators support understanding only.
+                Always verify against manufacturer data and apply BS 7671 design rules for real installations.
+              </p>
+            </div>
           </div>
-        </div>
+        </section>
+
+        {/* Section 4: Practical Applications */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Practical Applications and BS 7671
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Where you'll find series circuits</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>LED strings and strips</li>
+                  <li>Christmas lights (older types)</li>
+                  <li>Sensor voltage dividers</li>
+                  <li>Internal equipment circuits</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">BS 7671 considerations</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Voltage drop calculations</li>
+                  <li>Component ratings and limits</li>
+                  <li>Fault loop impedance</li>
+                  <li>Manufacturer specifications</li>
+                </ul>
+              </div>
+            </div>
+
+            <p className="text-sm text-elec-yellow/70">
+              <strong>Real-world example: LED string installation</strong><br />
+              LED tape with series segments must respect driver voltage/current limits.
+              If one segment fails open, the whole string stops. Calculate total current with I = V/Rt
+              and check cable voltage drop. Always follow manufacturer wiring guidance and verify polarity before energising.
+            </p>
+
+            <div>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Measurement and testing</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Measure current by inserting meter in series (after safe isolation)</li>
+                <li>Measure voltage across each component to verify voltage division</li>
+                <li>Check continuity to identify open circuits</li>
+                <li>Consider voltage drop over long cable runs</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
-                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                <p className="text-white text-sm">{faq.answer}</p>
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
-        </Card>
+        </section>
 
-        {/* Units Pocket Card */}
-        <div className="mb-8">
-          <h3 className="text-lg font-semibold text-white mb-4">Pocket card</h3>
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Reference Cards */}
+        <section className="mb-10">
           <UnitsPocketCard />
-        </div>
 
-        {/* Quick Reference Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Reference Card - Series Circuits</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
-            <div className="space-y-3">
-              <h4 className="font-bold text-elec-yellow">Essential Rules</h4>
-              <div className="bg-card border border-border/30 p-4 rounded-lg">
-                <ul className="text-white space-y-1">
-                  <li>• Current: Same everywhere (I₁ = I₂ = I₃)</li>
-                  <li>• Voltage: Divides (V₁ + V₂ + V₃ = Vs)</li>
-                  <li>• Resistance: Adds (Rt = R₁ + R₂ + R₃)</li>
-                  <li>• Failure: One open stops all</li>
+          <div className="mt-6 p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference Card - Series Circuits</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-white mb-1">Essential Rules</p>
+                <ul className="space-y-0.5">
+                  <li>Current: Same everywhere (I₁ = I₂ = I₃)</li>
+                  <li>Voltage: Divides (V₁ + V₂ + V₃ = Vs)</li>
+                  <li>Resistance: Adds (Rt = R₁ + R₂ + R₃)</li>
+                  <li>Failure: One open stops all</li>
                 </ul>
               </div>
-            </div>
-            <div className="space-y-3">
-              <h4 className="font-bold text-elec-yellow">Key Formulas</h4>
-              <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
-                <ul className="text-elec-yellow space-y-1 font-mono text-xs">
-                  <li>• I = Vs / Rt</li>
-                  <li>• Vx = Vs × Rx / Rt</li>
-                  <li>• Rt = R₁ + R₂ + R₃...</li>
-                  <li>• P = V × I = I²R</li>
+              <div>
+                <p className="font-medium text-white mb-1">Key Formulas</p>
+                <ul className="space-y-0.5 font-mono">
+                  <li>I = Vs / Rt</li>
+                  <li>Vx = Vs × Rx / Rt</li>
+                  <li>Rt = R₁ + R₂ + R₃...</li>
+                  <li>P = V × I = I²R</li>
                 </ul>
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+        <section className="mb-10">
           <Quiz
             title="Test Your Knowledge - Series Circuits"
             questions={quizQuestions}
           />
-        </Card>
+        </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
           <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../3-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Series and Parallel Circuits
+              Back
             </Link>
           </Button>
           <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../3-3">
-              Next: Parallel Circuits - Current and Voltage
+              Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </nav>
-      </div>
+
+      </article>
     </div>
   );
 };

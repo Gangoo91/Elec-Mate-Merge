@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -9,6 +9,7 @@ import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { AlertTriangle, User, Upload, X, Palette, Shield, Zap } from 'lucide-react';
 import { useInspectorProfiles, InspectorProfile } from '@/hooks/useInspectorProfiles';
 import { useProfileDataService } from '@/hooks/useProfileDataService';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { getSourceDisplayInfo } from '@/services/profileDataService';
 import InspectorProfileDialog from './InspectorProfileDialog';
 import { Separator } from '@/components/ui/separator';
@@ -28,7 +29,9 @@ interface EICRInspectorDetailsProps {
 const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInspectorDetailsProps) => {
   const { profiles, getDefaultProfile } = useInspectorProfiles();
   const { profileData, dataSource, isVerified, inspectorDetails, isLoading: profileDataLoading } = useProfileDataService();
+  const { companyProfile, loading: companyProfileLoading } = useCompanyProfile();
   const { toast } = useToast();
+  const companyAutoFillDone = useRef(false);
   const [availableQualifications] = useState([
     '18th Edition BS7671',
     'City & Guilds 2391-52',
@@ -55,6 +58,30 @@ const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInsp
       setIsInitialMount(false);
     }
   }, [isInitialMount]);
+
+  // Auto-populate company fields from company_profiles (Settings > Company)
+  // This runs after company profile loads and takes priority over inspector_profiles for company data
+  useEffect(() => {
+    if (companyProfile && !companyProfileLoading && !companyAutoFillDone.current) {
+      // Only auto-fill if company fields are empty (don't overwrite existing data)
+      const isCompanyEmpty = !formData.companyName?.trim();
+      if (isCompanyEmpty) {
+        onUpdate('companyName', companyProfile.company_name || '');
+        onUpdate('companyAddress', companyProfile.company_address || '');
+        onUpdate('companyPhone', companyProfile.company_phone || '');
+        onUpdate('companyEmail', companyProfile.company_email || '');
+        onUpdate('companyWebsite', companyProfile.company_website || '');
+        if (companyProfile.logo_data_url || companyProfile.logo_url) {
+          onUpdate('companyLogo', companyProfile.logo_data_url || companyProfile.logo_url || '');
+        }
+        // Also populate registration if available
+        if (companyProfile.niceic_number) {
+          onUpdate('registrationNumber', companyProfile.niceic_number);
+        }
+      }
+      companyAutoFillDone.current = true;
+    }
+  }, [companyProfile, companyProfileLoading, formData.companyName, onUpdate]);
 
   // Parse qualifications from form data
   useEffect(() => {

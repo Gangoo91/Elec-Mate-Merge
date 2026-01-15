@@ -1,8 +1,6 @@
 import useSEO from "@/hooks/useSEO";
 import { ArrowLeft, AlertTriangle, Thermometer, Wrench, Plug, TrendingDown, CheckCircle, Calculator, Zap, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -116,11 +114,11 @@ const Module2Section5_6: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.5
@@ -130,29 +128,28 @@ const Module2Section5_6: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        {/* Header */}
+        <div className="mb-12 text-center">
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Module 2.5.6
+          </span>
+          <div className="flex items-center justify-center gap-3 mb-4">
             <AlertTriangle className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 2.5.6
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                Real-World Impacts of Resistance
-              </h1>
-              <p className="text-xl text-white max-w-3xl mt-2">
-                Identifying and solving resistance problems: overheating, voltage drop, and equipment failures
-              </p>
-            </div>
           </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Real-World Impacts of Resistance
+          </h1>
+          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
+            Identifying and solving resistance problems: overheating, voltage drop, and equipment failures
+          </p>
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Real problems:</strong> Overheating, dim lights, equipment failures</li>
@@ -161,7 +158,7 @@ const Module2Section5_6: React.FC = () => {
                 <li><strong>Solutions:</strong> Proper sizing, good connections, regular checks</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Warm outlets, dim lights, nuisance tripping</li>
@@ -170,10 +167,10 @@ const Module2Section5_6: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning Objectives */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
           <div className="space-y-3">
             {[
@@ -191,10 +188,10 @@ const Module2Section5_6: React.FC = () => {
               </div>
             ))}
           </div>
-        </Card>
+        </section>
 
         {/* The Problem: What Goes Wrong */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">The Problem: What Goes Wrong</h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
@@ -225,10 +222,10 @@ const Module2Section5_6: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Comprehensive Real-World Scenarios */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Comprehensive Real-World Scenarios</h2>
           
           <div className="space-y-6">
@@ -259,7 +256,7 @@ const Module2Section5_6: React.FC = () => {
                 </div>
               </div>
               <Collapsible>
-                <CollapsibleTrigger className="mt-3 inline-flex text-elec-yellow text-sm underline">Show solution & calculation</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-3 inline-flex text-elec-yellow text-sm underline min-h-[44px] touch-manipulation">Show solution & calculation</CollapsibleTrigger>
                 <CollapsibleContent className="mt-3 p-3 border border-elec-yellow/30 rounded text-sm">
                   <p className="font-medium mb-2">Solution Analysis:</p>
                   <div className="space-y-2">
@@ -300,7 +297,7 @@ const Module2Section5_6: React.FC = () => {
                 </div>
               </div>
               <Collapsible>
-                <CollapsibleTrigger className="mt-3 inline-flex text-elec-yellow text-sm underline">Show solution & calculation</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-3 inline-flex text-elec-yellow text-sm underline min-h-[44px] touch-manipulation">Show solution & calculation</CollapsibleTrigger>
                 <CollapsibleContent className="mt-3 p-3 border border-elec-yellow/30 rounded text-sm">
                   <p className="font-medium mb-2">Solution Analysis:</p>
                   <div className="space-y-2">
@@ -343,7 +340,7 @@ const Module2Section5_6: React.FC = () => {
                 </div>
               </div>
               <Collapsible>
-                <CollapsibleTrigger className="mt-3 inline-flex text-elec-yellow text-sm underline">Show solution & calculation</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-3 inline-flex text-elec-yellow text-sm underline min-h-[44px] touch-manipulation">Show solution & calculation</CollapsibleTrigger>
                 <CollapsibleContent className="mt-3 p-3 border border-elec-yellow/30 rounded text-sm">
                   <p className="font-medium mb-2">Solution Analysis:</p>
                   <div className="space-y-2">
@@ -387,7 +384,7 @@ const Module2Section5_6: React.FC = () => {
                 </div>
               </div>
               <Collapsible>
-                <CollapsibleTrigger className="mt-3 inline-flex text-elec-yellow text-sm underline">Show solution & safety action</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-3 inline-flex text-elec-yellow text-sm underline min-h-[44px] touch-manipulation">Show solution & safety action</CollapsibleTrigger>
                 <CollapsibleContent className="mt-3 p-3 border border-border/30 rounded text-sm">
                   <p className="font-medium mb-2 text-elec-yellow">IMMEDIATE DANGER - ISOLATE SUPPLY</p>
                   <div className="space-y-2">
@@ -403,10 +400,10 @@ const Module2Section5_6: React.FC = () => {
               </Collapsible>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Diagnostic Techniques */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Diagnostic Techniques</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
             <div className="bg-card border border-border/30 p-4 rounded-lg">
@@ -446,7 +443,7 @@ const Module2Section5_6: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Quick Knowledge Check */}
         <InlineCheck
@@ -457,7 +454,7 @@ const Module2Section5_6: React.FC = () => {
         />
 
         {/* Troubleshooting Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Step-by-Step Troubleshooting Guide</h2>
           
           <div className="space-y-4 text-xs sm:text-sm text-white">
@@ -497,10 +494,10 @@ const Module2Section5_6: React.FC = () => {
               </ol>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Solutions and Prevention */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Solutions and Prevention</h2>
           <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm text-white">
             <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
@@ -534,10 +531,10 @@ const Module2Section5_6: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Industry Case Studies */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Industry Case Studies</h2>
           
           <div className="space-y-4 text-xs sm:text-sm text-white">
@@ -565,10 +562,10 @@ const Module2Section5_6: React.FC = () => {
               <p><strong>Result:</strong> 25% reduction in energy costs, 80% reduction in maintenance, better customer experience.</p>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* BS 7671 Compliance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">BS 7671 Compliance Requirements</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
             <div className="bg-card border border-white/10 p-4 rounded-lg">
@@ -592,17 +589,17 @@ const Module2Section5_6: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Practice Exercises */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practice Exercises</h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
               <p className="font-medium">Exercise 1: School Extension - Voltage Drop Analysis</p>
               <p>New classroom block 45m from main panel. 20A lighting load, using 2.5mm² T&E clipped direct. Calculate voltage drop and determine if acceptable for lighting circuit.</p>
               <Collapsible>
-                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline">Show solution</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline min-h-[44px] touch-manipulation">Show solution</CollapsibleTrigger>
                 <CollapsibleContent className="mt-2">
                   <p>mV/A/m = 18, Length = 90m total, Vd = (18 × 20 × 90) ÷ 1000 = 32.4V = 14.1%. FAILS - needs 4mm² minimum.</p>
                 </CollapsibleContent>
@@ -613,7 +610,7 @@ const Module2Section5_6: React.FC = () => {
               <p className="font-medium">Exercise 2: Overheating Investigation</p>
               <p>Socket outlet reads 85°C on thermal camera, serving 25A load. Normal temperature should be &lt;60°C. What's the most likely cause and solution?</p>
               <Collapsible>
-                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline">Show solution</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline min-h-[44px] touch-manipulation">Show solution</CollapsibleTrigger>
                 <CollapsibleContent className="mt-2">
                   <p>Likely cause: Loose connection creating contact resistance. Solution: Isolate, check/retighten all connections, replace any heat-damaged components, retest.</p>
                 </CollapsibleContent>
@@ -624,22 +621,22 @@ const Module2Section5_6: React.FC = () => {
               <p className="font-medium">Exercise 3: Motor Starting Problem</p>
               <p>15kW motor won't start on 70m cable run. Starting current 90A, cable is 10mm² SWA. Calculate starting voltage and suggest solutions.</p>
               <Collapsible>
-                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline">Show solution</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline min-h-[44px] touch-manipulation">Show solution</CollapsibleTrigger>
                 <CollapsibleContent className="mt-2">
                   <p>Vd = (4.4 × 90 × 140) ÷ 1000 = 55.4V. Starting voltage = 175V (24% drop). Solutions: 25mm² cable, star-delta starter, or soft starter.</p>
                 </CollapsibleContent>
               </Collapsible>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, i) => (
               <Collapsible key={i}>
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-3 text-left hover:bg-[#121212]/20 rounded-lg border border-white/10 transition-colors">
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-3 text-left hover:bg-[#121212]/20 rounded-lg border border-white/10 transition-colors min-h-[44px] touch-manipulation">
                   <span className="font-medium text-white">{faq.q}</span>
                   <TrendingDown className="w-4 h-4 text-white" />
                 </CollapsibleTrigger>
@@ -649,10 +646,10 @@ const Module2Section5_6: React.FC = () => {
               </Collapsible>
             ))}
           </div>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
             <div>
@@ -676,13 +673,13 @@ const Module2Section5_6: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Comprehensive Quiz */}
-        <Card className="mb-20 p-6 bg-transparent border-white/20">
+        <section className="mb-20">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check Quiz (10 Questions)</h2>
           <Quiz questions={quizQuestions} />
-        </Card>
+        </section>
 
         {/* Another InlineCheck */}
         <InlineCheck
@@ -694,10 +691,10 @@ const Module2Section5_6: React.FC = () => {
 
         {/* Bottom nav */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5" asChild>
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5" asChild>
             <Link to="../5-5"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a]" asChild>
+          <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]" asChild>
             <Link to="../6-1">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
           </Button>
         </nav>

@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, Users, Target, CheckCircle, Shield, MessageSquare, BookOpen, Clipboard, Clock } from "lucide-react";
+import { ArrowLeft, ArrowRight, Users, CheckCircle, Shield, Clock, Clipboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -11,7 +8,6 @@ import useSEO from "@/hooks/useSEO";
 const TITLE = "Attending Briefings, Toolbox Talks, and Site Meetings - Module 5.5.5 | Level 2 Electrical Course";
 const DESCRIPTION = "Learn the importance of attending briefings, toolbox talks, and site meetings. Essential communication skills and responsibilities for electrical professionals.";
 
-// Inline check questions
 const quickCheckQuestions = [
   {
     id: 1,
@@ -162,35 +158,16 @@ const Module5Section5_5 = () => {
     }
   ];
 
-  const faqs = [
-    {
-      question: "Are toolbox talks optional?",
-      answer: "No — toolbox talks are mandatory safety briefings that all workers must attend. They are legal requirements for site safety and ensure everyone is informed about current hazards and procedures."
-    },
-    {
-      question: "What if I don't understand something in the meeting?",
-      answer: "Ask your supervisor or raise it during the session. Never guess or assume what instructions mean - always seek clarification to ensure you understand your responsibilities completely."
-    },
-    {
-      question: "Why do meetings often repeat the same safety topics?",
-      answer: "Repetition reinforces safe habits and ensures new workers are updated. Safety messages need constant reinforcement to maintain awareness and prevent complacency."
-    },
-    {
-      question: "What should I do if I arrive late to a briefing?",
-      answer: "Speak to your supervisor immediately after the meeting to get the key information you missed. Never assume you can catch up by asking colleagues - get official confirmation of what was discussed."
-    },
-    {
-      question: "How should I follow up on actions given in meetings?",
-      answer: "Note down your specific actions with deadlines, confirm understanding with your supervisor if needed, and complete tasks promptly. Report back when actions are completed or if you encounter problems."
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 5
@@ -199,102 +176,86 @@ const Module5Section5_5 = () => {
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Users className="w-6 h-6 text-white" />
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 5.5</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 5.5.5
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Attending Briefings, Toolbox Talks, and Site Meetings
-          </h1>
-          <p className="text-white">
-            Essential communication and safety practices for professional electrical work on construction sites.
-          </p>
-        </header>
-
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Briefings keep everyone informed about site rules and safety.</li>
-                <li>Toolbox talks are mandatory safety sessions focusing on current hazards.</li>
-                <li>Active participation demonstrates professionalism and prevents accidents.</li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Meeting schedules, safety notices, briefing areas.</li>
-                <li><strong>Use:</strong> Listen actively, take notes, ask questions, follow instructions.</li>
-                <li><strong>Check:</strong> Attendance recorded, actions understood, deadlines noted.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>Explain the purpose of briefings, toolbox talks, and site meetings.</li>
-            <li>Recognise the importance of active participation.</li>
-            <li>Apply communication and listening skills during meetings.</li>
-            <li>Identify your responsibilities when attending.</li>
-            <li>Use information from meetings to plan and carry out tasks effectively.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
-
-          {/* Purpose of Site Meetings */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">1. Purpose of Site Meetings</h3>
-            <p className="text-base text-white mb-4">
-              Different types of meetings serve specific purposes in maintaining site coordination and safety:
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Attending Briefings, Toolbox Talks, and Site Meetings
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Essential communication and safety practices for professional electrical work on construction sites
             </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Types of Site Communications</p>
-                    <p className="text-base text-white mb-2"><strong>Briefings:</strong> Provide daily updates on site activities, progress, and immediate concerns.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Daily work priorities and task allocation</li>
-                      <li>Site access changes and restrictions</li>
-                      <li>Weather-related work adjustments</li>
-                      <li>Material deliveries and equipment availability</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Toolbox Talks:</strong> Short sessions focused on safety topics (e.g., working at height, manual handling).</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Specific safety hazards and prevention measures</li>
-                      <li>New safety procedures and equipment</li>
-                      <li>Recent incidents and lessons learned</li>
-                      <li>Personal protective equipment requirements</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Formal Site Meetings:</strong> Cover wider project progress, coordination between trades, and future planning.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Overall project timeline and milestones</li>
-                      <li>Inter-trade coordination and sequencing</li>
-                      <li>Quality standards and inspection schedules</li>
-                      <li>Problem resolution and decision making</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Key principle:</strong> Each meeting type serves a specific purpose - understanding this helps you prepare and participate effectively
-                    </div>
+          </header>
+
+          {/* Quick Reference */}
+          <section className="mb-10">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
+                <ul className="text-white/80 text-sm space-y-1">
+                  <li>• Briefings keep everyone informed about site rules and safety</li>
+                  <li>• Toolbox talks are mandatory safety sessions</li>
+                  <li>• Active participation demonstrates professionalism</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
+                <ul className="text-white/80 text-sm space-y-1">
+                  <li>• <strong>Spot:</strong> Meeting schedules, safety notices</li>
+                  <li>• <strong>Use:</strong> Listen actively, take notes, ask questions</li>
+                  <li>• <strong>Check:</strong> Attendance recorded, actions understood</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">00</span>
+              Learning Outcomes
+            </h2>
+            <ul className="text-white/80 space-y-2 leading-relaxed">
+              <li>• Explain the purpose of briefings, toolbox talks, and site meetings</li>
+              <li>• Recognise the importance of active participation</li>
+              <li>• Apply communication and listening skills during meetings</li>
+              <li>• Identify your responsibilities when attending</li>
+              <li>• Use information from meetings to plan and carry out tasks effectively</li>
+            </ul>
+          </section>
+
+          {/* Section 1 - Purpose of Site Meetings */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Purpose of Site Meetings
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Different types of meetings serve specific purposes in maintaining site coordination and safety:
+              </p>
+
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-semibold text-elec-yellow mb-2">Types of Site Communications</p>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <p className="font-medium text-white mb-1">Briefings</p>
+                    <p className="text-white/70">Provide daily updates on site activities, progress, and immediate concerns including work priorities, site access changes, and material deliveries.</p>
+                  </div>
+                  <div>
+                    <p className="font-medium text-white mb-1">Toolbox Talks</p>
+                    <p className="text-white/70">Short sessions focused on safety topics such as working at height, manual handling, specific hazards, and PPE requirements.</p>
+                  </div>
+                  <div>
+                    <p className="font-medium text-white mb-1">Formal Site Meetings</p>
+                    <p className="text-white/70">Cover wider project progress, coordination between trades, quality standards, and future planning.</p>
                   </div>
                 </div>
               </div>
@@ -308,54 +269,31 @@ const Module5Section5_5 = () => {
             correctIndex={quickCheckQuestions[0].correctIndex}
             explanation={quickCheckQuestions[0].explanation}
           />
-          <Separator className="my-6" />
 
-          {/* Why Attendance Matters */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">2. Why Attendance Matters</h3>
-            <p className="text-base text-white mb-4">
-              Regular attendance at briefings and meetings is crucial for safety, efficiency, and professionalism:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Critical Benefits of Attendance</p>
-                    <p className="text-base text-white mb-2"><strong>Keeps you informed about site rules and hazards:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>New hazards and exclusion zones</li>
-                      <li>Updated safety procedures and requirements</li>
-                      <li>Site access changes and restrictions</li>
-                      <li>Emergency procedures and assembly points</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Ensures you understand your tasks and responsibilities:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Daily work priorities and deadlines</li>
-                      <li>Quality standards and specification requirements</li>
-                      <li>Coordination with other trades</li>
-                      <li>Resource allocation and material availability</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Promotes team awareness and coordination:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Understanding of overall project progress</li>
-                      <li>Awareness of other trades' activities</li>
-                      <li>Shared problem-solving and solutions</li>
-                      <li>Collective responsibility for site safety</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Demonstrates professionalism and compliance:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Shows commitment to safety and quality</li>
-                      <li>Meets legal and contractual obligations</li>
-                      <li>Builds trust with supervisors and colleagues</li>
-                      <li>Supports career development and reputation</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Remember:</strong> Missing meetings can lead to accidents, mistakes, and missed opportunities - attendance is not optional
-                    </div>
-                  </div>
-                </div>
+          {/* Section 2 - Why Attendance Matters */}
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Why Attendance Matters
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Regular attendance at briefings and meetings is crucial for safety, efficiency, and professionalism:
+              </p>
+
+              <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
+                <p className="font-semibold text-green-400 mb-2">Critical Benefits of Attendance</p>
+                <ul className="text-sm space-y-2">
+                  <li><strong className="text-white">Safety awareness:</strong> <span className="text-white/70">Keeps you informed about site rules, hazards, exclusion zones, and emergency procedures</span></li>
+                  <li><strong className="text-white">Task clarity:</strong> <span className="text-white/70">Ensures you understand your tasks, responsibilities, and coordination requirements</span></li>
+                  <li><strong className="text-white">Team coordination:</strong> <span className="text-white/70">Promotes awareness of other trades' activities and overall project progress</span></li>
+                  <li><strong className="text-white">Professionalism:</strong> <span className="text-white/70">Demonstrates commitment to safety and quality, building trust with supervisors</span></li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
+                <p className="font-semibold text-red-400 mb-2">Remember</p>
+                <p className="text-sm text-white/70">Missing meetings can lead to accidents, mistakes, and missed opportunities — attendance is not optional.</p>
               </div>
             </div>
           </section>
@@ -367,52 +305,36 @@ const Module5Section5_5 = () => {
             correctIndex={quickCheckQuestions[1].correctIndex}
             explanation={quickCheckQuestions[1].explanation}
           />
-          <Separator className="my-6" />
 
-          {/* Responsibilities When Attending */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">3. Responsibilities When Attending</h3>
-            <p className="text-base text-white mb-4">
-              Active and professional participation requires understanding your responsibilities:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Professional Meeting Behaviour</p>
-                    <p className="text-base text-white mb-2"><strong>Arrive on time and prepared:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Check meeting times and locations daily</li>
-                      <li>Bring notebook and pen for taking notes</li>
-                      <li>Review previous day's actions and progress</li>
-                      <li>Have questions ready about unclear instructions</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Listen carefully and take notes if needed:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Focus on safety information and new hazards</li>
-                      <li>Record specific tasks and deadlines</li>
-                      <li>Note any changes to procedures or requirements</li>
-                      <li>Write down contact details for coordination</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Ask questions if instructions are unclear:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Seek clarification immediately during the meeting</li>
-                      <li>Don't assume or guess what instructions mean</li>
-                      <li>Ask for specific examples if needed</li>
-                      <li>Confirm understanding by repeating back key points</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Follow up on any actions you are given:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Understand deadlines and priorities</li>
-                      <li>Report progress and any problems encountered</li>
-                      <li>Coordinate with other trades as required</li>
-                      <li>Confirm completion of tasks with supervisor</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Professional tip:</strong> Active participation shows respect for colleagues and commitment to project success
-                    </div>
+          {/* Section 3 - Responsibilities When Attending */}
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Responsibilities When Attending
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Active and professional participation requires understanding your responsibilities:
+              </p>
+
+              <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50">
+                <p className="font-semibold text-purple-400 mb-2">Professional Meeting Behaviour</p>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <p className="font-medium text-white mb-1">Arrive on time and prepared</p>
+                    <p className="text-white/70">Check meeting times, bring notebook and pen, review previous day's actions, have questions ready.</p>
+                  </div>
+                  <div>
+                    <p className="font-medium text-white mb-1">Listen carefully and take notes</p>
+                    <p className="text-white/70">Focus on safety information, record specific tasks and deadlines, note any changes to procedures.</p>
+                  </div>
+                  <div>
+                    <p className="font-medium text-white mb-1">Ask questions if instructions are unclear</p>
+                    <p className="text-white/70">Seek clarification immediately, don't assume or guess, confirm understanding by repeating back.</p>
+                  </div>
+                  <div>
+                    <p className="font-medium text-white mb-1">Follow up on actions</p>
+                    <p className="text-white/70">Understand deadlines, report progress and problems, coordinate with other trades as required.</p>
                   </div>
                 </div>
               </div>
@@ -426,341 +348,150 @@ const Module5Section5_5 = () => {
             correctIndex={quickCheckQuestions[2].correctIndex}
             explanation={quickCheckQuestions[2].explanation}
           />
-          <Separator className="my-6" />
 
-          {/* Common Mistakes to Avoid */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">4. Common Mistakes to Avoid</h3>
-            <p className="text-base text-white mb-4">
-              Understanding common pitfalls helps ensure professional behaviour and effective communication:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Behaviours That Undermine Safety and Professionalism</p>
-                    <p className="text-base text-white mb-2"><strong>Not paying attention and missing key safety points:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Using phone or having side conversations</li>
-                      <li>Arriving late and disrupting proceedings</li>
-                      <li>Assuming you know what will be said</li>
-                      <li>Failing to make eye contact with speaker</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Talking over others and causing distractions:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Interrupting speakers or other participants</li>
-                      <li>Having loud side conversations</li>
-                      <li>Making jokes during serious safety discussions</li>
-                      <li>Creating noise with tools or equipment</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Failing to act on what was agreed:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Not following through on assigned tasks</li>
-                      <li>Ignoring new safety procedures</li>
-                      <li>Forgetting deadlines and commitments</li>
-                      <li>Not communicating problems or delays</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Warning:</strong> These behaviours can lead to accidents, disciplinary action, and damage to professional reputation
-                    </div>
-                  </div>
-                </div>
+          {/* Section 4 - Common Mistakes to Avoid */}
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Common Mistakes to Avoid
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Understanding common pitfalls helps ensure professional behaviour and effective communication:
+              </p>
+
+              <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
+                <p className="font-semibold text-red-400 mb-2">Behaviours That Undermine Safety and Professionalism</p>
+                <ul className="text-sm space-y-2 text-white/70">
+                  <li>• <strong className="text-white">Not paying attention:</strong> Using phone, side conversations, assuming you know what will be said</li>
+                  <li>• <strong className="text-white">Causing distractions:</strong> Interrupting speakers, loud conversations, making jokes during safety discussions</li>
+                  <li>• <strong className="text-white">Failing to act:</strong> Not following through on tasks, ignoring new procedures, forgetting deadlines</li>
+                </ul>
+                <p className="mt-3 text-sm font-medium text-red-300">Warning: These behaviours can lead to accidents, disciplinary action, and damage to professional reputation.</p>
               </div>
             </div>
           </section>
-        </Card>
 
-        {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
-          
-          <div className="grid gap-6">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <h3 className="font-medium text-elec-yellow text-elec-yellow mb-2">📝 Meeting Preparation</h3>
-              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-6">
-                <li>Keep a small notebook or use your phone (if permitted) to record key points</li>
-                <li>Review previous meeting notes before attending</li>
-                <li>Prepare any questions about ongoing work or safety concerns</li>
-                <li>Know the meeting location and arrive 5 minutes early</li>
-              </ul>
-            </div>
-
-            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-              <h3 className="font-medium text-green-600 dark:text-green-400 mb-2">🤝 Professional Conduct</h3>
-              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-6">
-                <li>Show respect by being punctual and attentive</li>
-                <li>Make eye contact with speakers and avoid distractions</li>
-                <li>Ask questions respectfully if something is unclear</li>
-                <li>Thank organisers and speakers for their time</li>
-              </ul>
-            </div>
-
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <h3 className="font-medium text-purple-600 text-elec-yellow mb-2">⚠️ Safety Priority</h3>
-              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-6">
-                <li>Treat toolbox talks seriously — they are legal requirements for site safety</li>
-                <li>Pay special attention to new hazards and exclusion zones</li>
-                <li>Understand emergency procedures and assembly points</li>
-                <li>Report any safety concerns immediately after meetings</li>
-              </ul>
-            </div>
-
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <h3 className="font-medium text-orange-600 text-elec-yellow mb-2">✅ Follow-Through</h3>
-              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-6">
-                <li>Always act on instructions promptly to avoid delays</li>
-                <li>Set reminders for deadlines and action items</li>
-                <li>Coordinate with other trades as instructed</li>
-                <li>Report completion of tasks to your supervisor</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* Communication Skills Section */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Effective Communication During Meetings</h2>
-          <div className="space-y-4">
-            <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-              <div className="flex items-start gap-3 mb-2">
-                <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                <div className="flex-1">
-                  <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Active Listening Skills</p>
-                  <p className="text-base text-white mb-2"><strong>Listen with intent:</strong></p>
-                  <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                    <li>Focus completely on the speaker without distractions</li>
-                    <li>Avoid planning your response whilst others are talking</li>
-                    <li>Watch for non-verbal cues and emphasis</li>
-                    <li>Ask clarifying questions if you're unsure</li>
-                  </ul>
-                  <p className="text-base text-white mb-2"><strong>Note-taking strategies:</strong></p>
-                  <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                    <li>Record key action points with deadlines</li>
-                    <li>Note safety alerts and new procedures</li>
-                    <li>Write down contact information for follow-ups</li>
-                    <li>Use abbreviations and symbols for speed</li>
-                  </ul>
-                  <p className="text-base text-white mb-2"><strong>Asking effective questions:</strong></p>
-                  <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                    <li>Be specific about what you need clarification on</li>
-                    <li>Ask open-ended questions to gain understanding</li>
-                    <li>Confirm your understanding by paraphrasing</li>
-                    <li>Don't hesitate to ask - it shows engagement</li>
-                  </ul>
-                  <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                    <strong>Professional tip:</strong> Good communication skills in meetings demonstrate competence and build trust with supervisors and colleagues
+          {/* Section 5 - Legal Requirements */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Legal Requirements and Compliance
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-semibold text-elec-yellow mb-2">Health and Safety Legal Framework</p>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <p className="font-medium text-white mb-1">Health and Safety at Work Act 1974</p>
+                    <p className="text-white/70">Employers must provide information, instruction, training and supervision. Employees have a duty to take care of their own and others' safety. Toolbox talks fulfil legal requirements for ongoing safety training.</p>
+                  </div>
+                  <div>
+                    <p className="font-medium text-white mb-1">Construction (Design and Management) Regulations 2015</p>
+                    <p className="text-white/70">Principal contractors must ensure worker competence and training. Workers must report unsafe conditions. Induction and ongoing briefings are legal requirements.</p>
                   </div>
                 </div>
+                <p className="mt-3 text-sm font-medium text-amber-300">Legal warning: Failure to attend mandatory safety briefings or follow instructions can result in prosecution under health and safety legislation.</p>
               </div>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Legal and Compliance Section */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Legal Requirements and Compliance</h2>
-          <div className="space-y-4">
-            <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-              <div className="flex items-start gap-3 mb-2">
-                <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                <div className="flex-1">
-                  <p className="font-semibold text-red-600 text-elec-yellow mb-1">Health and Safety Legal Framework</p>
-                  <p className="text-base text-white mb-2"><strong>Health and Safety at Work Act 1974:</strong></p>
-                  <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                    <li>Employers must provide information, instruction, training and supervision</li>
-                    <li>Employees have a duty to take care of their own and others' safety</li>
-                    <li>Toolbox talks fulfil the legal requirement for ongoing safety training</li>
-                    <li>Non-attendance can be grounds for disciplinary action</li>
-                  </ul>
-                  <p className="text-base text-white mb-2"><strong>Construction (Design and Management) Regulations 2015:</strong></p>
-                  <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                    <li>Principal contractors must ensure worker competence and training</li>
-                    <li>Workers must report unsafe conditions and practices</li>
-                    <li>Induction and ongoing briefings are legal requirements</li>
-                    <li>Failure to attend safety briefings can result in site exclusion</li>
-                  </ul>
-                  <p className="text-base text-white mb-2"><strong>Your legal obligations:</strong></p>
-                  <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                    <li>Attend all mandatory safety briefings and toolbox talks</li>
-                    <li>Follow instructions given during briefings</li>
-                    <li>Report concerns raised during meetings to supervisors</li>
-                    <li>Maintain competence through ongoing training</li>
-                  </ul>
-                  <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                    <strong>Legal warning:</strong> Failure to attend mandatory safety briefings or follow instructions can result in prosecution under health and safety legislation
-                  </div>
-                </div>
+          {/* Real-World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Real-World Example
+            </h2>
+            <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50">
+              <p className="font-semibold text-amber-400 mb-2">Case Study: The Importance of Attending Briefings</p>
+              <p className="text-white/80 text-sm mb-3">
+                <strong>Situation:</strong> At a refurbishment site, a toolbox talk highlighted a new exclusion zone due to overhead work. An electrician who missed the briefing entered the area and risked serious injury.
+              </p>
+              <p className="text-white/80 text-sm mb-3">
+                <strong>Consequence:</strong> The near-miss required incident reporting, work stoppage for investigation, and additional safety training for all trades.
+              </p>
+              <p className="text-white/80 text-sm">
+                <strong>Lesson:</strong> Attendance would have prevented the near-miss. This incident shows how missing briefings can lead to serious safety risks and project delays.
+              </p>
+            </div>
+          </section>
+
+          {/* Pocket Guide */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <Clipboard className="w-5 h-5 text-elec-yellow" />
+              Pocket Guide
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <h3 className="font-medium text-white mb-2">Meeting Essentials</h3>
+                <ul className="text-white/70 text-sm space-y-1">
+                  <li>• <strong className="text-white">Always attend</strong> — safety depends on it</li>
+                  <li>• <strong className="text-white">Arrive on time</strong> and prepared with notebook</li>
+                  <li>• <strong className="text-white">Listen carefully</strong> and take notes</li>
+                  <li>• <strong className="text-white">Ask questions</strong> if anything is unclear</li>
+                  <li>• <strong className="text-white">Follow up</strong> on all agreed actions</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <h3 className="font-medium text-white mb-2">Professional Behaviour</h3>
+                <ul className="text-white/70 text-sm space-y-1">
+                  <li>• Respect others by avoiding distractions</li>
+                  <li>• Participate actively and constructively</li>
+                  <li>• Take toolbox talks seriously</li>
+                  <li>• Demonstrate commitment to safety and quality</li>
+                </ul>
               </div>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Meeting Scenarios Section */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Common Meeting Scenarios and Responses</h2>
-          <div className="space-y-4">
-            <div className="rounded-lg p-5 border-l-4 border-l-indigo-500 bg-indigo-500/5">
-              <div className="flex items-start gap-3 mb-2">
-                <span className="flex-shrink-0 w-8 h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                <div className="flex-1">
-                  <p className="font-semibold text-indigo-600 dark:text-indigo-400 mb-1">Scenario-Based Learning</p>
-                  
-                  <div className="mb-4 p-3 bg-[#121212]/50 rounded border">
-                    <p className="font-medium text-white mb-2">Scenario 1: Emergency Procedure Changes</p>
-                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Situation:</strong> Fire assembly point has been moved due to site layout changes.</p>
-                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Your response:</strong></p>
-                    <ul className="text-xs text-white ml-4 list-disc space-y-1">
-                      <li>Note the new location and route clearly</li>
-                      <li>Ask questions about evacuation procedures if unclear</li>
-                      <li>Inform your immediate work team of the changes</li>
-                      <li>Practice the new route during your next break</li>
-                    </ul>
-                  </div>
-
-                  <div className="mb-4 p-3 bg-[#121212]/50 rounded border">
-                    <p className="font-medium text-white mb-2">Scenario 2: New Hazard Identification</p>
-                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Situation:</strong> Asbestos has been discovered in an area where you need to work.</p>
-                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Your response:</strong></p>
-                    <ul className="text-xs text-white ml-4 list-disc space-y-1">
-                      <li>Understand the exact location and boundaries of the hazard</li>
-                      <li>Confirm what PPE or procedures are now required</li>
-                      <li>Ask about alternative access routes or work methods</li>
-                      <li>Never enter the area until given clear permission</li>
-                    </ul>
-                  </div>
-
-                  <div className="mb-4 p-3 bg-[#121212]/50 rounded border">
-                    <p className="font-medium text-white mb-2">Scenario 3: Work Sequence Changes</p>
-                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Situation:</strong> Your electrical work must be delayed to allow plumbing installation.</p>
-                    <p className="text-xs sm:text-sm text-white mb-2"><strong>Your response:</strong></p>
-                    <ul className="text-xs text-white ml-4 list-disc space-y-1">
-                      <li>Confirm the new timeline and start date</li>
-                      <li>Understand what alternative work you can do</li>
-                      <li>Ask about material storage and site access</li>
-                      <li>Coordinate with your supervisor on resource allocation</li>
-                    </ul>
-                  </div>
-
-                  <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                    <strong>Key principle:</strong> Every meeting scenario requires active listening, clear understanding, and appropriate follow-up action
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
-          <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
-            <h3 className="font-medium text-amber-600 dark:text-amber-400 mb-2">⚠️ Case Study: The Importance of Attending Briefings</h3>
-            <p className="text-base text-white mb-3">
-              <strong>Situation:</strong> At a refurbishment site, a toolbox talk highlighted a new exclusion zone due to overhead work. An electrician who missed the briefing entered the area and risked serious injury.
-            </p>
-            <p className="text-base text-white mb-3">
-              <strong>Consequence:</strong> The near-miss required incident reporting, work stoppage for investigation, and additional safety training for all trades.
-            </p>
-            <p className="text-base text-white">
-              <strong>Lesson:</strong> Attendance would have prevented the near-miss. This incident shows how missing briefings can lead to serious safety risks and project delays.
-            </p>
-          </div>
-        </Card>
-
-        {/* Pocket Guide */}
-        <Card className="mb-8 p-6 border-elec-yellow/30">
-          <div className="flex items-center gap-3 mb-4">
-            <Clipboard className="w-6 h-6 text-elec-yellow" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Pocket Guide</h2>
-          </div>
-          <div className="grid gap-4">
-            <div className="rounded-lg p-4 bg-[#121212]/50 border border-white/10">
-              <h3 className="font-medium text-white mb-2">📋 Meeting Essentials</h3>
-              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-6">
-                <li><strong>Always attend</strong> — safety and updates depend on it</li>
-                <li><strong>Arrive on time</strong> and prepared with notebook</li>
-                <li><strong>Listen carefully</strong> and take notes on key points</li>
-                <li><strong>Ask questions</strong> if anything is unclear</li>
-                <li><strong>Follow up</strong> on all agreed actions promptly</li>
+          {/* Recap */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400" />
+              Recap
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="font-semibold text-elec-yellow mb-2">Key Learning Points</p>
+              <ul className="text-white/80 text-sm space-y-1">
+                <li>• Briefings, toolbox talks, and site meetings are vital for communication and safety</li>
+                <li>• Different meeting types serve specific purposes and all require attendance</li>
+                <li>• Active participation demonstrates professionalism and prevents accidents</li>
+                <li>• Your responsibilities include punctuality, attention, and follow-through</li>
+                <li>• Avoiding common mistakes protects safety and your professional reputation</li>
               </ul>
             </div>
+          </section>
 
-            <div className="rounded-lg p-4 bg-[#121212]/50 border border-white/10">
-              <h3 className="font-medium text-white mb-2">🎯 Professional Behaviour</h3>
-              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-6">
-                <li>Respect others by avoiding distractions</li>
-                <li>Participate actively and constructively</li>
-                <li>Take toolbox talks seriously</li>
-                <li>Demonstrate commitment to safety and quality</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+          {/* Quiz */}
+          <section className="mb-10">
+            <Quiz questions={quizQuestions} />
+          </section>
 
-        {/* Recap */}
-        <Card className="mb-8 p-6 border-elec-yellow/30">
-          <div className="flex items-center gap-3 mb-4">
-            <CheckCircle className="w-6 h-6 text-elec-yellow text-elec-yellow" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Recap</h2>
-          </div>
-          <div className="grid gap-4">
-            <div className="rounded-lg p-4 bg-[#121212]/50 border border-white/10">
-              <h3 className="font-medium text-white mb-2">📚 Key Learning Points</h3>
-              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-6">
-                <li>Briefings, toolbox talks, and site meetings are vital for communication and safety</li>
-                <li>Different meeting types serve specific purposes and all require attendance</li>
-                <li>Active participation demonstrates professionalism and prevents accidents</li>
-                <li>Your responsibilities include punctuality, attention, and follow-through</li>
-                <li>Avoiding common mistakes protects safety and your professional reputation</li>
-              </ul>
-            </div>
-
-            <div className="rounded-lg p-4 bg-[#121212]/50 border border-white/10">
-              <h3 className="font-medium text-white mb-2">💡 Professional Development</h3>
-              <ul className="text-xs sm:text-sm text-white space-y-1 list-disc ml-6">
-                <li>Attending and participating builds trust with supervisors</li>
-                <li>Good communication skills enhance career prospects</li>
-                <li>Understanding project coordination improves work quality</li>
-                <li>Safety awareness protects you and your colleagues</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quiz (10 Questions)</h2>
-          <Quiz questions={quizQuestions} />
-        </Card>
-
-        {/* Bottom Navigation */}
-        <div className="flex justify-start">
-          <Button variant="outline" asChild>
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 5
-            </Link>
-          </Button>
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+            <Button
+              variant="outline"
+              className="border-white/20 hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../5-4">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Avoiding Installation Conflicts
+              </Link>
+            </Button>
+            <Button
+              variant="outline"
+              className="border-white/20 hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="..">
+                Back to Section 5
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
-
-      {/* Structured data for FAQs */}
-      <script type="application/ld+json">
-        {JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": faqs.map((faq, index) => ({
-            "@type": "Question",
-            "name": faq.question,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": faq.answer
-            }
-          }))
-        })}
-      </script>
+      </article>
     </div>
   );
 };

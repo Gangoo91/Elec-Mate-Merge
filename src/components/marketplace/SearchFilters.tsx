@@ -360,7 +360,7 @@ export function SortDropdown({
     <select
       value={sort}
       onChange={(e) => onSortChange(e.target.value as SortOption)}
-      className="h-10 px-3 bg-background border border-border rounded-lg text-sm focus:border-elec-yellow focus:ring-elec-yellow touch-manipulation"
+      className="h-11 px-3 bg-elec-gray border border-elec-gray rounded-lg text-sm text-base focus:border-elec-yellow focus:ring-elec-yellow touch-manipulation"
     >
       {options.map((option) => (
         <option key={option.value} value={option.value}>

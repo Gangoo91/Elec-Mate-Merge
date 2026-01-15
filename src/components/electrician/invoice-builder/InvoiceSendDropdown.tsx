@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Quote } from '@/types/quote';
 import { Button } from '@/components/ui/button';
 import {
@@ -7,11 +7,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import { Mail, MessageCircle, Loader2 } from 'lucide-react';
+import { Mail, MessageCircle, Loader2, CreditCard, Zap } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 interface InvoiceSendDropdownProps {
   invoice: Quote;
@@ -26,8 +28,32 @@ export const InvoiceSendDropdown = ({
   disabled = false,
   className = '',
 }: InvoiceSendDropdownProps) => {
+  const navigate = useNavigate();
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
+  const [stripeConnected, setStripeConnected] = useState<boolean | null>(null);
+
+  // Check if user has Stripe connected
+  useEffect(() => {
+    const checkStripeStatus = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+
+        const { data: profile } = await supabase
+          .from('company_profiles')
+          .select('stripe_account_id, stripe_account_status')
+          .eq('user_id', user.id)
+          .single();
+
+        setStripeConnected(profile?.stripe_account_status === 'active');
+      } catch (error) {
+        console.error('Error checking Stripe status:', error);
+      }
+    };
+
+    checkStripeStatus();
+  }, []);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
   const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
@@ -72,24 +98,72 @@ export const InvoiceSendDropdown = ({
         session = refreshData.session;
       }
 
-      // Send via Resend (generates PDF automatically)
-      const { error } = await supabase.functions.invoke('send-invoice-resend', {
-        body: { invoiceId: invoice.id },
-        headers: {
-          Authorization: `Bearer ${session.access_token}`
-        }
-      });
+      // Send via Resend - use fetch directly to get full error details
+      console.log('📧 Calling send-invoice-resend with invoiceId:', invoice.id);
 
-      if (error) {
-        throw error;
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL || 'https://jtwygbeceundfgnkirof.supabase.co'}/functions/v1/send-invoice-resend`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({ invoiceId: invoice.id }),
+        }
+      );
+
+      const data = await response.json();
+      console.log('📧 Response status:', response.status);
+      console.log('📧 Response data:', data);
+
+      if (!response.ok) {
+        console.error('📧 Function error:', data);
+        throw new Error(data.error || data.message || `Server error: ${response.status}`);
       }
 
+      if (data?.error) {
+        console.error('📧 Function returned error in data:', data);
+        throw new Error(data.error + (data.hint ? ` (${data.hint})` : ''));
+      }
+
+      if (!data?.success) {
+        console.error('📧 Function did not return success:', data);
+        throw new Error(data?.message || 'Unknown error sending invoice');
+      }
+
+      // Show success message with payment link status
+      const payNowIncluded = data?.payNowIncluded;
       toast({
         title: 'Invoice sent',
-        description: `Invoice ${invoice.invoice_number} sent to ${cleanTo}`,
+        description: payNowIncluded
+          ? `Invoice ${invoice.invoice_number} sent to ${cleanTo} with Pay Now button`
+          : `Invoice ${invoice.invoice_number} sent to ${cleanTo}`,
         variant: 'success',
         duration: 4000,
       });
+
+      // Prompt to connect Stripe if not connected
+      if (!payNowIncluded && stripeConnected === false) {
+        setTimeout(() => {
+          toast({
+            title: 'Get paid faster with card payments',
+            description: 'Connect Stripe to add a "Pay Now" button to invoices',
+            action: (
+              <Button
+                size="sm"
+                variant="outline"
+                className="border-indigo-500/30 hover:bg-indigo-500/10"
+                onClick={() => navigate('/electrician/settings')}
+              >
+                <CreditCard className="h-4 w-4 mr-1" />
+                Set up
+              </Button>
+            ),
+            duration: 8000,
+          });
+        }, 1000);
+      }
 
       // Update status to sent with timestamp
       await supabase
@@ -320,6 +394,27 @@ ${companyName}`;
             <span className="text-xs text-muted-foreground">Send with PDF link</span>
           </div>
         </DropdownMenuItem>
+
+        {/* Stripe Connect Prompt - only show if not connected */}
+        {stripeConnected === false && (
+          <>
+            <DropdownMenuSeparator className="my-2 bg-border/30" />
+            <DropdownMenuItem
+              onClick={() => navigate('/electrician/settings')}
+              className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-indigo-500/10 touch-manipulation bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20"
+            >
+              <div className="h-10 w-10 rounded-xl bg-indigo-500/20 flex items-center justify-center mr-3 flex-shrink-0">
+                <CreditCard className="h-5 w-5 text-indigo-400" />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-semibold text-sm flex items-center gap-1">
+                  Enable Card Payments <Zap className="h-3 w-3 text-elec-yellow" />
+                </span>
+                <span className="text-xs text-muted-foreground">Get paid faster with Stripe</span>
+              </div>
+            </DropdownMenuItem>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

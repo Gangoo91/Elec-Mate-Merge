@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, FileText, Target, CheckCircle, AlertTriangle, Users, BookOpen, Clipboard, Shield, Clock } from "lucide-react";
+import { ArrowLeft, ArrowRight, FileText, Target, CheckCircle, AlertTriangle, Clipboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -11,7 +8,6 @@ import useSEO from "@/hooks/useSEO";
 const TITLE = "Maintaining Work Logs and Handover Sheets - Module 5.7.3 | Level 2 Electrical Course";
 const DESCRIPTION = "Learn the importance of work logs and handover sheets for safety, accountability, and efficient project management in electrical installations.";
 
-// Inline check questions
 const quickCheckQuestions = [
   {
     id: 1,
@@ -40,157 +36,32 @@ export default function Module5Section7_3() {
   useSEO(TITLE, DESCRIPTION);
 
   const quizQuestions = [
-    {
-      id: 1,
-      question: "What is the primary purpose of work logs?",
-      options: [
-        "To record tasks, progress, and responsibility",
-        "To decorate the site office",
-        "To reduce paperwork",
-        "To replace verbal communication"
-      ],
-      correctAnswer: 0,
-      explanation: "Work logs are essential for recording tasks, progress, and responsibility to ensure accountability and traceability."
-    },
-    {
-      id: 2,
-      question: "Which of the following should NOT be included in a work log?",
-      options: [
-        "Materials used",
-        "Completed tasks",
-        "Lunch break details",
-        "Safety observations"
-      ],
-      correctAnswer: 2,
-      explanation: "Work logs should focus on work-related activities, safety observations, and project progress, not personal break details."
-    },
-    {
-      id: 3,
-      question: "What key information must a handover sheet contain?",
-      options: [
-        "Outstanding tasks and safety notes",
-        "Weather conditions",
-        "Delivery schedules only",
-        "Personal contact numbers"
-      ],
-      correctAnswer: 0,
-      explanation: "Handover sheets must contain outstanding tasks and safety notes to ensure continuity and safety for the next team."
-    },
-    {
-      id: 4,
-      question: "Why are handover sheets important for safety?",
-      options: [
-        "They identify isolations and hazards for the next team",
-        "They reduce the amount of writing needed",
-        "They are optional under regulations",
-        "They improve team morale"
-      ],
-      correctAnswer: 0,
-      explanation: "Handover sheets are crucial for safety as they identify isolations and hazards for the incoming team to prevent accidents."
-    },
-    {
-      id: 5,
-      question: "In the real-world scenario, what caused the electrical fault?",
-      options: [
-        "Poor installation materials",
-        "No handover notes left for the night shift",
-        "Incorrect testing procedure",
-        "Equipment failure"
-      ],
-      correctAnswer: 1,
-      explanation: "The electrical fault was caused by lack of proper handover documentation between shifts."
-    },
-    {
-      id: 6,
-      question: "What risk can arise from poor record keeping?",
-      options: [
-        "Missed hazards and duplicated work",
-        "Increased energy efficiency",
-        "Fewer site inspections",
-        "Better team coordination"
-      ],
-      correctAnswer: 0,
-      explanation: "Poor record keeping can lead to missed hazards and duplicated work, causing safety risks and inefficiency."
-    },
-    {
-      id: 7,
-      question: "When should work logs and handovers be completed?",
-      options: [
-        "At the end of each week",
-        "At the end of every shift",
-        "Only at project completion",
-        "When the supervisor asks"
-      ],
-      correctAnswer: 1,
-      explanation: "Work logs and handovers should be completed at the end of every shift to maintain continuity."
-    },
-    {
-      id: 8,
-      question: "Why should standardised forms be used for logs and handovers?",
-      options: [
-        "To save money on printing",
-        "To ensure consistency and clarity",
-        "To reduce the number of supervisors needed",
-        "To make filing easier"
-      ],
-      correctAnswer: 1,
-      explanation: "Standardised forms ensure consistency and clarity across all documentation and team communications."
-    },
-    {
-      id: 9,
-      question: "Where should work logs and handover sheets be stored?",
-      options: [
-        "In a safe, accessible location (physical or digital)",
-        "Thrown away after use",
-        "Kept in personal tool bags",
-        "Left on the work bench"
-      ],
-      correctAnswer: 0,
-      explanation: "Work logs and handover sheets must be stored in safe, accessible locations for future reference and compliance."
-    },
-    {
-      id: 10,
-      question: "Who should be made aware of handover details?",
-      options: [
-        "The next team, via toolbox talks or briefings",
-        "Only the site manager",
-        "Nobody, as long as it's written down",
-        "Just the apprentices"
-      ],
-      correctAnswer: 0,
-      explanation: "Handover details should be communicated to the next team through toolbox talks or briefings to ensure awareness."
-    }
+    { id: 1, question: "What is the primary purpose of work logs?", options: ["To record tasks, progress, and responsibility", "To decorate the site office", "To reduce paperwork", "To replace verbal communication"], correctAnswer: 0 },
+    { id: 2, question: "Which of the following should NOT be included in a work log?", options: ["Materials used", "Completed tasks", "Lunch break details", "Safety observations"], correctAnswer: 2 },
+    { id: 3, question: "What key information must a handover sheet contain?", options: ["Outstanding tasks and safety notes", "Weather conditions", "Delivery schedules only", "Personal contact numbers"], correctAnswer: 0 },
+    { id: 4, question: "Why are handover sheets important for safety?", options: ["They identify isolations and hazards for the next team", "They reduce writing needed", "They are optional under regulations", "They improve team morale"], correctAnswer: 0 },
+    { id: 5, question: "In the real-world scenario, what caused the electrical fault?", options: ["Poor installation materials", "No handover notes left for the night shift", "Incorrect testing procedure", "Equipment failure"], correctAnswer: 1 },
+    { id: 6, question: "What risk can arise from poor record keeping?", options: ["Missed hazards and duplicated work", "Increased energy efficiency", "Fewer site inspections", "Better team coordination"], correctAnswer: 0 },
+    { id: 7, question: "When should work logs and handovers be completed?", options: ["At the end of each week", "At the end of every shift", "Only at project completion", "When the supervisor asks"], correctAnswer: 1 },
+    { id: 8, question: "Why should standardised forms be used for logs and handovers?", options: ["To save money on printing", "To ensure consistency and clarity", "To reduce supervisors needed", "To make filing easier"], correctAnswer: 1 },
+    { id: 9, question: "Where should work logs and handover sheets be stored?", options: ["In a safe, accessible location (physical or digital)", "Thrown away after use", "Kept in personal tool bags", "Left on the work bench"], correctAnswer: 0 },
+    { id: 10, question: "Who should be made aware of handover details?", options: ["The next team, via toolbox talks or briefings", "Only the site manager", "Nobody, as long as it's written down", "Just the apprentices"], correctAnswer: 0 }
   ];
 
   const faqs = [
-    {
-      question: "What information should be included in work logs?",
-      answer: "Work logs should include date and time, worker names, tasks completed, materials used, problems encountered, and health and safety observations."
-    },
-    {
-      question: "How often should handover sheets be completed?",
-      answer: "Handover sheets should be completed at the end of every shift to ensure continuity and safety for the incoming team."
-    },
-    {
-      question: "What are the consequences of poor record keeping?",
-      answer: "Poor record keeping can lead to missed safety hazards, duplicated work, disputes over progress or responsibility, and failed audits or inspections."
-    },
-    {
-      question: "Can digital systems be used for work logs and handovers?",
-      answer: "Yes, digital systems can be used as long as they provide secure storage, easy access for authorised personnel, and maintain proper backup procedures."
-    },
-    {
-      question: "What should I do if I find incomplete handover information?",
-      answer: "Contact the previous shift or responsible person immediately to clarify any missing or unclear information before starting work."
-    }
+    { question: "What information should be included in work logs?", answer: "Work logs should include date and time, worker names, tasks completed, materials used, problems encountered, and health and safety observations." },
+    { question: "How often should handover sheets be completed?", answer: "Handover sheets should be completed at the end of every shift to ensure continuity and safety for the incoming team." },
+    { question: "What are the consequences of poor record keeping?", answer: "Poor record keeping can lead to missed safety hazards, duplicated work, disputes over progress or responsibility, and failed audits or inspections." },
+    { question: "Can digital systems be used for work logs and handovers?", answer: "Yes, digital systems can be used as long as they provide secure storage, easy access for authorised personnel, and maintain proper backup procedures." },
+    { question: "What should I do if I find incomplete handover information?", answer: "Contact the previous shift or responsible person immediately to clarify any missing or unclear information before starting work." }
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-6 py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button variant="ghost" className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 7
@@ -199,452 +70,416 @@ export default function Module5Section7_3() {
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-4xl mx-auto px-6 py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <FileText className="w-6 h-6 text-white" />
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 7.3</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 5.7.3
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Maintaining Work Logs and Handover Sheets
-          </h1>
-          <p className="text-white">
-            Understanding the importance of work logs and handover sheets for safety, accountability, and efficient project management.
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Maintaining Work Logs and Handover Sheets
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Understanding the importance of work logs and handover sheets for safety, accountability, and efficient project management
+            </p>
+          </header>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Work logs and handover sheets track progress and ensure accountability.</li>
-                <li>They provide critical safety information for incoming teams.</li>
-                <li>Poor record keeping can lead to accidents and costly delays.</li>
-              </ul>
+          {/* Introduction */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">00</span>
+              Introduction
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4 text-white/90">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
+                <ul className="list-disc pl-5 space-y-1 text-sm">
+                  <li>Work logs and handover sheets track progress and ensure accountability</li>
+                  <li>They provide critical safety information for incoming teams</li>
+                  <li>Poor record keeping can lead to accidents and costly delays</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
+                <ul className="list-disc pl-5 space-y-1 text-sm">
+                  <li><strong>Spot:</strong> Work log books, handover sheets, shift briefings</li>
+                  <li><strong>Use:</strong> Complete logs daily, note safety concerns, list outstanding tasks</li>
+                  <li><strong>Check:</strong> Information is clear, complete, and accessible</li>
+                </ul>
+              </div>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Work log books, handover sheets, shift briefings, safety notices.</li>
-                <li><strong>Use:</strong> Complete logs daily, note safety concerns, list outstanding tasks.</li>
-                <li><strong>Check:</strong> Information is clear, complete, and accessible to next shift.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>Explain the importance of work logs and handover sheets.</li>
-            <li>Identify key information that must be included in logs.</li>
-            <li>Understand how handover sheets improve safety and efficiency.</li>
-            <li>Apply best practices for maintaining accurate records.</li>
-            <li>Recognise how poor record keeping affects projects.</li>
-          </ul>
-        </Card>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <FileText className="w-5 h-5 text-elec-yellow/80" />
+              Learning Outcomes
+            </h2>
+            <ul className="list-disc pl-6 space-y-2 text-white/80">
+              <li>Explain the importance of work logs and handover sheets</li>
+              <li>Identify key information that must be included in logs</li>
+              <li>Understand how handover sheets improve safety and efficiency</li>
+              <li>Apply best practices for maintaining accurate records</li>
+              <li>Recognise how poor record keeping affects projects</li>
+            </ul>
+          </section>
 
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
-
-          {/* Why Work Logs and Handover Sheets Matter */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Why Work Logs and Handover Sheets Matter</h3>
-            <p className="text-base text-white mb-4">
+          {/* Section 1 - Why Work Logs and Handover Sheets Matter */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Why Work Logs and Handover Sheets Matter
+            </h2>
+            <p className="text-white/80 mb-4 leading-relaxed">
               Work logs and handover sheets are essential documents that ensure continuity, safety, and accountability on electrical projects:
             </p>
-            
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Safety and Communication</p>
-                    <p className="text-base text-white mb-2"><strong>Safety:</strong> Ensures critical safety information is passed between teams.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Identifies circuits that are isolated or energised</li>
-                      <li>Records location of hazards or incomplete work</li>
-                      <li>Documents safety concerns for incoming teams</li>
-                      <li>Prevents accidents from miscommunication</li>
-                      <li>Supports emergency response procedures</li>
-                      <li>Maintains continuity during shift changes</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Accountability:</strong> Records who did what work and when.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Tracks individual and team responsibilities</li>
-                      <li>Provides evidence of work completion</li>
-                      <li>Supports quality control processes</li>
-                      <li>Assists with progress monitoring</li>
-                      <li>Helps resolve disputes or queries</li>
-                      <li>Supports performance reviews and training needs</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Efficiency:</strong> Prevents duplication and ensures smooth project flow.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Avoids repeating completed tasks</li>
-                      <li>Identifies materials already used or needed</li>
-                      <li>Highlights problems requiring attention</li>
-                      <li>Facilitates better planning and scheduling</li>
-                      <li>Reduces time spent on status updates</li>
-                      <li>Improves coordination between trades</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Legal requirement:</strong> Proper documentation supports health and safety compliance and contractual obligations
-                    </div>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">Safety and Communication</p>
+                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                  <li>Identifies circuits that are isolated or energised</li>
+                  <li>Records location of hazards or incomplete work</li>
+                  <li>Documents safety concerns for incoming teams</li>
+                  <li>Prevents accidents from miscommunication</li>
+                  <li>Supports emergency response procedures</li>
+                </ul>
               </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
+                <p className="font-medium text-white mb-2">Accountability</p>
+                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                  <li>Tracks individual and team responsibilities</li>
+                  <li>Provides evidence of work completion</li>
+                  <li>Supports quality control processes</li>
+                  <li>Assists with progress monitoring</li>
+                  <li>Helps resolve disputes or queries</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                <p className="font-medium text-white mb-2">Efficiency</p>
+                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                  <li>Avoids repeating completed tasks</li>
+                  <li>Identifies materials already used or needed</li>
+                  <li>Highlights problems requiring attention</li>
+                  <li>Facilitates better planning and scheduling</li>
+                  <li>Improves coordination between trades</li>
+                </ul>
+              </div>
+            </div>
+            <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+              <p className="text-sm text-white/90"><strong className="text-red-400">Legal requirement:</strong> Proper documentation supports health and safety compliance and contractual obligations</p>
             </div>
           </section>
 
-          <InlineCheck
-            id="work-logs-purpose-check"
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
-          <Separator className="my-6" />
+          <InlineCheck id="work-logs-purpose-check" question={quickCheckQuestions[0].question} options={quickCheckQuestions[0].options} correctIndex={quickCheckQuestions[0].correctIndex} explanation={quickCheckQuestions[0].explanation} />
 
-          {/* What to Include */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">What to Include in Work Logs and Handover Sheets</h3>
-            <p className="text-base text-white mb-4">
+          {/* Section 2 - What to Include */}
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              What to Include in Work Logs
+            </h2>
+            <p className="text-white/80 mb-4 leading-relaxed">
               Comprehensive documentation requires specific information to be effective and useful:
             </p>
-            
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Work Log Content</p>
-                    <p className="text-base text-white mb-2"><strong>Basic Information:</strong> Date, time, and personnel details.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Date and time of work performed</li>
-                      <li>Names of all operatives involved</li>
-                      <li>Supervisor or responsible person</li>
-                      <li>Work location or area reference</li>
-                      <li>Weather conditions if relevant (outdoor work)</li>
-                      <li>Shift information (day, night, weekend)</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Work Details:</strong> Tasks completed and materials used.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Detailed description of tasks completed</li>
-                      <li>Materials and equipment used</li>
-                      <li>Progress percentage or milestones achieved</li>
-                      <li>Testing or inspection results</li>
-                      <li>Problems encountered and solutions applied</li>
-                      <li>Quality checks performed</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Safety Observations:</strong> Hazards and safety measures.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Safety concerns identified</li>
-                      <li>Near misses or incidents</li>
-                      <li>PPE used and condition</li>
-                      <li>Environmental hazards noted</li>
-                      <li>Safety briefings conducted</li>
-                      <li>First aid incidents or requirements</li>
-                    </ul>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">Basic Information</p>
+                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                  <li>Date and time of work performed</li>
+                  <li>Names of all operatives involved</li>
+                  <li>Supervisor or responsible person</li>
+                  <li>Work location or area reference</li>
+                  <li>Shift information (day, night, weekend)</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
+                <p className="font-medium text-white mb-2">Work Details</p>
+                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                  <li>Detailed description of tasks completed</li>
+                  <li>Materials and equipment used</li>
+                  <li>Progress percentage or milestones achieved</li>
+                  <li>Testing or inspection results</li>
+                  <li>Problems encountered and solutions applied</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                <p className="font-medium text-white mb-2">Safety Observations</p>
+                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                  <li>Safety concerns identified</li>
+                  <li>Near misses or incidents</li>
+                  <li>PPE used and condition</li>
+                  <li>Environmental hazards noted</li>
+                  <li>Safety briefings conducted</li>
+                </ul>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="work-log-content-check"
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-          <Separator className="my-6" />
+          <InlineCheck id="work-log-content-check" question={quickCheckQuestions[1].question} options={quickCheckQuestions[1].options} correctIndex={quickCheckQuestions[1].correctIndex} explanation={quickCheckQuestions[1].explanation} />
 
-          {/* Handover Sheet Information */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Handover Sheet Information</h3>
-            <p className="text-base text-white mb-4">
+          {/* Section 3 - Handover Sheet Information */}
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Handover Sheet Information
+            </h2>
+            <p className="text-white/80 mb-4 leading-relaxed">
               Handover sheets bridge the gap between shifts and teams, ensuring critical information is not lost:
             </p>
-            
             <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Critical Handover Content</p>
-                    <p className="text-base text-white mb-2"><strong>Outstanding Tasks:</strong> Work that needs completion.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Tasks started but not completed</li>
-                      <li>Priority order for outstanding work</li>
-                      <li>Estimated time to complete tasks</li>
-                      <li>Required materials or tools</li>
-                      <li>Dependencies on other trades or activities</li>
-                      <li>Quality checks needed</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Safety Information:</strong> Isolations and hazards.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Circuits isolated and locked off</li>
-                      <li>Location of isolation points and keys</li>
-                      <li>Live circuits or equipment in area</li>
-                      <li>Temporary safety measures in place</li>
-                      <li>Access restrictions or permits required</li>
-                      <li>Environmental hazards (confined spaces, heights)</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Communication:</strong> Contact details and updates.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Responsible person contact details</li>
-                      <li>Client or site manager updates needed</li>
-                      <li>Coordination with other trades</li>
-                      <li>Delivery schedules or material requirements</li>
-                      <li>Inspection or testing appointments</li>
-                      <li>Any changes to original plans or specifications</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Remember:</strong> Handover information must be communicated verbally as well as in writing
-                    </div>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                <p className="font-medium text-white mb-2">Outstanding Tasks</p>
+                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                  <li>Tasks started but not completed</li>
+                  <li>Priority order for outstanding work</li>
+                  <li>Estimated time to complete tasks</li>
+                  <li>Required materials or tools</li>
+                  <li>Dependencies on other trades</li>
+                </ul>
               </div>
+              <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+                <p className="font-medium text-white mb-2">Safety Information</p>
+                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                  <li>Circuits isolated and locked off</li>
+                  <li>Location of isolation points and keys</li>
+                  <li>Live circuits or equipment in area</li>
+                  <li>Temporary safety measures in place</li>
+                  <li>Access restrictions or permits required</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
+                <p className="font-medium text-white mb-2">Communication</p>
+                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                  <li>Responsible person contact details</li>
+                  <li>Client or site manager updates needed</li>
+                  <li>Coordination with other trades</li>
+                  <li>Inspection or testing appointments</li>
+                  <li>Any changes to original plans</li>
+                </ul>
+              </div>
+            </div>
+            <div className="mt-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
+              <p className="text-sm text-white/90"><strong className="text-blue-400">Remember:</strong> Handover information must be communicated verbally as well as in writing</p>
             </div>
           </section>
 
-          <InlineCheck
-            id="handover-content-check"
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-          <Separator className="my-6" />
+          <InlineCheck id="handover-content-check" question={quickCheckQuestions[2].question} options={quickCheckQuestions[2].options} correctIndex={quickCheckQuestions[2].correctIndex} explanation={quickCheckQuestions[2].explanation} />
 
-          {/* Risks of Poor Record Keeping */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Risks of Poor Record Keeping</h3>
-            <p className="text-base text-white mb-4">
+          {/* Section 4 - Risks of Poor Record Keeping */}
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Risks of Poor Record Keeping
+            </h2>
+            <p className="text-white/80 mb-4 leading-relaxed">
               Inadequate documentation can have serious consequences for safety, efficiency, and project success:
             </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Consequences of Poor Documentation</p>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Safety Risks:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 mb-3 list-disc space-y-1">
-                          <li>Missed safety hazards leading to accidents</li>
-                          <li>Unaware of circuit isolations</li>
-                          <li>Working on live circuits unknowingly</li>
-                          <li>Inadequate risk assessments</li>
-                        </ul>
-                        <p className="text-base text-white mb-2"><strong>Project Risks:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                          <li>Work duplicated or left incomplete</li>
-                          <li>Materials wasted or lost</li>
-                          <li>Delays in project completion</li>
-                          <li>Failed quality inspections</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Business Risks:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 mb-3 list-disc space-y-1">
-                          <li>Disputes over progress or responsibility</li>
-                          <li>Failed audits or inspections</li>
-                          <li>Legal liability issues</li>
-                          <li>Reputation damage</li>
-                        </ul>
-                        <p className="text-base text-white mb-2"><strong>Financial Risks:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                          <li>Increased labour costs</li>
-                          <li>Equipment damage</li>
-                          <li>Insurance claims</li>
-                          <li>Penalty clauses</li>
-                        </ul>
-                      </div>
-                    </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+                <p className="font-medium text-white mb-2">Safety Risks</p>
+                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                  <li>Missed safety hazards</li>
+                  <li>Unaware of circuit isolations</li>
+                  <li>Working on live circuits unknowingly</li>
+                  <li>Inadequate risk assessments</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-orange-500/10 border-l-2 border-orange-500/50">
+                <p className="font-medium text-white mb-2">Project Risks</p>
+                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                  <li>Work duplicated or left incomplete</li>
+                  <li>Materials wasted or lost</li>
+                  <li>Delays in project completion</li>
+                  <li>Failed quality inspections</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
+                <p className="font-medium text-white mb-2">Business Risks</p>
+                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                  <li>Disputes over progress</li>
+                  <li>Failed audits or inspections</li>
+                  <li>Legal liability issues</li>
+                  <li>Reputation damage</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-500/50">
+                <p className="font-medium text-white mb-2">Financial Risks</p>
+                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                  <li>Increased labour costs</li>
+                  <li>Equipment damage</li>
+                  <li>Insurance claims</li>
+                  <li>Penalty clauses</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Real-World Scenario */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Real-World Scenario
+            </h2>
+            <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-medium text-white mb-2">The Missing Handover</h3>
+                  <p className="text-white/80 text-sm mb-3">
+                    On a commercial installation, the day shift completed containment and partially wired lighting circuits but failed to record which circuits were live and which were still isolated. The night shift, unaware of this, attempted to energise a circuit that was incomplete, causing an electrical fault and damaging equipment.
+                  </p>
+                  <div className="bg-red-500/10 p-3 rounded-lg mb-3">
+                    <p className="font-medium text-red-400 text-sm mb-1">Consequences:</p>
+                    <ul className="text-white/70 list-disc ml-4 space-y-1 text-xs">
+                      <li>£15,000 equipment damage</li>
+                      <li>12-hour project delay</li>
+                      <li>Safety investigation required</li>
+                      <li>Client relationship damage</li>
+                    </ul>
+                  </div>
+                  <div className="bg-green-500/10 p-3 rounded-lg">
+                    <p className="font-medium text-green-400 text-sm mb-1">Lesson Learned:</p>
+                    <p className="text-white/70 text-xs">Proper handover notes identifying circuit status would have prevented the fault and ensured a safe, smooth transition between shifts.</p>
                   </div>
                 </div>
               </div>
             </div>
           </section>
-        </Card>
 
-        {/* Real-World Scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Scenario</h2>
-          <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg p-6">
-            <h3 className="font-semibold text-amber-800 dark:text-white mb-3">
-              Case Study: The Missing Handover
-            </h3>
-            <p className="text-white mb-4">
-              On a commercial installation, the day shift completed containment and partially wired lighting circuits but failed to record which circuits were live and which were still isolated. The night shift, unaware of this, attempted to energise a circuit that was incomplete, causing an electrical fault and damaging equipment.
-            </p>
-            <div className="bg-amber-100 dark:bg-amber-900/50 rounded-lg p-4">
-              <p className="font-medium text-amber-800 dark:text-white mb-2">Consequences:</p>
-              <ul className="text-sm text-amber-700 dark:text-amber-300 list-disc pl-5 space-y-1">
-                <li>£15,000 equipment damage</li>
-                <li>12-hour project delay</li>
-                <li>Safety investigation required</li>
-                <li>Client relationship damage</li>
-              </ul>
-            </div>
-            <div className="mt-4 p-4 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg">
-              <p className="font-medium text-green-800 dark:text-white mb-2">Lesson Learned:</p>
-              <p className="text-green-700 dark:text-green-300 text-sm">
-                Proper handover notes identifying circuit status would have prevented the fault and ensured a safe, smooth transition between shifts.
-              </p>
-            </div>
-          </div>
-        </Card>
-
-        {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div>
-              <h3 className="font-medium text-white mb-3">Best Practices</h3>
-              <ul className="space-y-2 text-xs sm:text-sm text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  Always complete logs and handovers at the end of a shift
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  Be specific – vague notes create confusion
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  Use standard forms where possible for consistency
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  Include sketches or photos when helpful
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-medium text-white mb-3">Communication Tips</h3>
-              <ul className="space-y-2 text-xs sm:text-sm text-white">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  Share handover sheets during toolbox talks or briefings
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  Store documents securely, either in physical folders or digital systems
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  Ensure incoming team understands all handover points
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  Follow up on critical safety information
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
-                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                <p className="text-sm text-white">{faq.answer}</p>
+          {/* Practical Guidance */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <Target className="w-5 h-5 text-elec-yellow/80" />
+              Practical Guidance
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
+                <h3 className="font-medium text-white mb-3 flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500" />
+                  Best Practices
+                </h3>
+                <ul className="text-white/70 space-y-1 text-sm">
+                  <li>• Always complete logs and handovers at shift end</li>
+                  <li>• Be specific – vague notes create confusion</li>
+                  <li>• Use standard forms where possible</li>
+                  <li>• Include sketches or photos when helpful</li>
+                </ul>
               </div>
-            ))}
-          </div>
-        </Card>
-
-        {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide</h2>
-          <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-            <div className="space-y-2">
-              <h3 className="font-medium text-white text-sm">Work Log Essentials</h3>
-              <ul className="text-xs text-white space-y-1">
-                <li>• Date, time, personnel</li>
-                <li>• Tasks completed</li>
-                <li>• Materials used</li>
-                <li>• Problems encountered</li>
-                <li>• Safety observations</li>
-              </ul>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h3 className="font-medium text-white mb-3 flex items-center gap-2">
+                  <Target className="w-4 h-4 text-elec-yellow" />
+                  Communication Tips
+                </h3>
+                <ul className="text-white/70 space-y-1 text-sm">
+                  <li>• Share handover sheets during toolbox talks</li>
+                  <li>• Store documents securely (physical or digital)</li>
+                  <li>• Ensure incoming team understands all points</li>
+                  <li>• Follow up on critical safety information</li>
+                </ul>
+              </div>
             </div>
-            <div className="space-y-2">
-              <h3 className="font-medium text-white text-sm">Handover Must-Haves</h3>
-              <ul className="text-xs text-white space-y-1">
-                <li>• Outstanding tasks</li>
-                <li>• Safety concerns</li>
-                <li>• Isolations in place</li>
-                <li>• Contact details</li>
-                <li>• Access issues</li>
-              </ul>
+          </section>
+
+          {/* Pocket Guide */}
+          <section className="mb-10">
+            <div className="p-5 rounded-lg bg-gradient-to-br from-elec-yellow/10 to-amber-600/5 border border-elec-yellow/30">
+              <div className="flex items-center gap-3 mb-4">
+                <Clipboard className="w-5 h-5 text-elec-yellow" />
+                <h2 className="text-xl font-semibold text-white">Pocket Guide</h2>
+              </div>
+              <div className="grid sm:grid-cols-3 gap-4 text-sm">
+                <div>
+                  <h3 className="font-medium text-white mb-2">Work Log Essentials</h3>
+                  <ul className="text-white/70 space-y-1 text-xs">
+                    <li>• Date, time, personnel</li>
+                    <li>• Tasks completed</li>
+                    <li>• Materials used</li>
+                    <li>• Problems encountered</li>
+                    <li>• Safety observations</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-medium text-white mb-2">Handover Must-Haves</h3>
+                  <ul className="text-white/70 space-y-1 text-xs">
+                    <li>• Outstanding tasks</li>
+                    <li>• Safety concerns</li>
+                    <li>• Isolations in place</li>
+                    <li>• Contact details</li>
+                    <li>• Access issues</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-medium text-white mb-2">Key Reminders</h3>
+                  <ul className="text-white/70 space-y-1 text-xs">
+                    <li>• Complete at shift end</li>
+                    <li>• Be specific and clear</li>
+                    <li>• Communicate verbally too</li>
+                    <li>• Store securely</li>
+                    <li>• Follow up on critical items</li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div className="space-y-2">
-              <h3 className="font-medium text-white text-sm">Key Reminders</h3>
-              <ul className="text-xs text-white space-y-1">
-                <li>• Complete at shift end</li>
-                <li>• Be specific and clear</li>
-                <li>• Communicate verbally too</li>
-                <li>• Store securely</li>
-                <li>• Follow up on critical items</li>
-              </ul>
+          </section>
+
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                  <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
+                  <p className="text-white/80 text-sm">A: {faq.answer}</p>
+                </div>
+              ))}
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
-          <p className="text-base text-white">
-            In this subsection, you learned why maintaining work logs and handover sheets is critical for safety, accountability, and efficiency. You also saw how poor documentation can cause accidents, delays, and disputes. Remember: good documentation protects everyone and keeps projects running smoothly.
-          </p>
-        </Card>
+          {/* Recap */}
+          <section className="mb-10">
+            <div className="flex items-center gap-3 mb-4">
+              <CheckCircle className="w-5 h-5 text-green-500" />
+              <h2 className="text-xl font-semibold text-white">Recap</h2>
+            </div>
+            <p className="text-white/80 mb-4">
+              In this subsection, you learned why maintaining work logs and handover sheets is critical for safety, accountability, and efficiency. Good documentation protects everyone and keeps projects running smoothly.
+            </p>
+            <ul className="list-disc pl-6 space-y-2 text-white/80">
+              <li>Work logs record tasks, progress, and responsibility</li>
+              <li>Handover sheets ensure critical safety information is passed between teams</li>
+              <li>Poor documentation causes safety risks, delays, and disputes</li>
+              <li>Complete logs at the end of every shift using standardised forms</li>
+            </ul>
+          </section>
 
-        <Separator className="my-8" />
+          {/* Quiz */}
+          <Quiz questions={quizQuestions} title="Work Logs and Handover Sheets" />
 
-        {/* Quiz */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Knowledge Check</h2>
-          <Quiz 
-            questions={quizQuestions}
-            title="Work Logs and Handover Sheets"
-          />
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 mt-8 border-t border-white/10">
+            <Button variant="outline" className="border-white/20 hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]" asChild>
+              <Link to="../7-2">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Cable Labelling
+              </Link>
+            </Button>
+            <Button className="bg-elec-yellow hover:bg-elec-yellow/90 text-black min-h-[48px] touch-manipulation active:scale-[0.98]" asChild>
+              <Link to="../7-4">
+                Next: As-Built Drawings
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
-            <Link to="../7-2" className="flex items-center gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              Previous: Cable and Circuit Labelling
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link to=".." className="flex items-center gap-2">
-              Back to Section 7
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </Button>
-        </div>
-      </main>
+      </article>
     </div>
   );
 }

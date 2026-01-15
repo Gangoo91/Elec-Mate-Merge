@@ -58,52 +58,52 @@ export default function InspectionTestingModule2() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* iOS-style sticky header */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-gray-200/50 dark:border-gray-800/50">
-        <div className="px-4 py-3 flex items-center gap-3">
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#1a1a1a]/95 border-b border-white/10">
+        <div className="px-4 py-3 flex items-center gap-3 max-w-3xl mx-auto">
           <Link to="../inspection-testing">
             <Button
               variant="ios-ghost"
               size="icon"
-              className="h-12 w-12 min-h-[48px] min-w-[48px]"
+              className="h-12 w-12 min-h-[48px] min-w-[48px] touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
           <div className="flex-1">
-            <p className="text-xs text-gray-500 dark:text-gray-400">Inspection & Testing</p>
-            <h1 className="text-lg font-semibold text-gray-900 dark:text-white">Module 2</h1>
+            <p className="text-xs text-white/60">Inspection & Testing</p>
+            <h1 className="text-lg font-semibold text-white">Module 2</h1>
           </div>
         </div>
       </header>
 
-      <main className="px-4 py-6 pb-safe">
+      <main className="px-4 py-6 pb-safe max-w-3xl mx-auto">
         {/* Hero section */}
         <section className="mb-8">
           <div className="flex items-center justify-center mb-6">
-            <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shadow-lg">
-              <Shield className="h-10 w-10 text-white" />
+            <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-elec-yellow to-amber-600 flex items-center justify-center shadow-lg">
+              <Shield className="h-10 w-10 text-black" />
             </div>
           </div>
-          <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-3">
+          <h2 className="text-3xl font-bold text-center text-white mb-3">
             Safe Isolation Procedures
           </h2>
-          <p className="text-center text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+          <p className="text-center text-white/70 max-w-md mx-auto">
             Master the critical procedures for safely isolating electrical circuits before carrying out any work.
           </p>
           <div className="flex items-center justify-center gap-2 mt-4">
-            <Target className="h-4 w-4 text-orange-500" />
-            <span className="text-sm text-gray-500 dark:text-gray-400">6 Sections</span>
+            <Target className="h-4 w-4 text-elec-yellow" />
+            <span className="text-sm text-white/60">6 Sections</span>
           </div>
         </section>
 
         {/* iOS card grid for section navigation */}
         <section className="space-y-3">
-          <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide px-1">
+          <h3 className="text-sm font-medium text-white/60 uppercase tracking-wide px-1">
             Sections
           </h3>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3">
             {sections.map((section, index) => (
               <motion.div
                 key={section.id}
@@ -145,7 +145,7 @@ export default function InspectionTestingModule2() {
                       </h3>
 
                       {/* Description */}
-                      <p className="text-white/50 text-xs leading-relaxed line-clamp-2">
+                      <p className="text-white/60 text-xs leading-relaxed line-clamp-2">
                         {section.description}
                       </p>
                     </CardContent>
@@ -161,7 +161,7 @@ export default function InspectionTestingModule2() {
           <Link to="section1">
             <Button
               variant="ios-primary"
-              className="w-full h-14 min-h-[48px] text-lg font-semibold"
+              className="w-full h-14 min-h-[48px] text-lg font-semibold touch-manipulation active:scale-[0.98]"
             >
               Start Learning
               <ChevronRight className="h-5 w-5 ml-2" />

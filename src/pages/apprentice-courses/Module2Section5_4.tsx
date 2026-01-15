@@ -1,8 +1,6 @@
 import useSEO from "@/hooks/useSEO";
 import { ArrowLeft, Wrench, CheckCircle2, AlertTriangle, Thermometer, Ruler, Plug, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import ResistanceCalculator from "@/components/apprentice-courses/ResistanceCalculator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -115,11 +113,11 @@ const Module2Section5_4: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.5
@@ -129,29 +127,31 @@ const Module2Section5_4: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        {/* Header */}
+        <div className="mb-12 text-center">
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Module 2.5.4
+          </span>
+          <div className="flex items-center justify-center gap-3 mb-4">
             <Wrench className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 2.5.4
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                Resistance in Practice
-              </h1>
-              <p className="text-xl text-white max-w-3xl mt-2">
-                Real-world tips for cable runs, joints and testing in line with BS 7671
-              </p>
-            </div>
           </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Resistance in Practice
+          </h1>
+          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
+            Real-world tips for cable runs, joints and testing in line with BS 7671
+          </p>
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
+          <div className="grid gap-4 text-xs sm:text-sm text-white">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Quick estimate:</strong> Copper R ≈ 0.0172 × L ÷ A</li>
@@ -161,7 +161,7 @@ const Module2Section5_4: React.FC = () => {
                 <li><strong>Testing:</strong> Use continuity tester, follow BS 7671</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Long runs, loose terminals, overheating joints</li>
@@ -170,11 +170,14 @@ const Module2Section5_4: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* What it means on site */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">What this means on site</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            What this means on site
+          </h2>
           <ul className="list-disc pl-6 space-y-2 text-white text-sm">
             <li><strong>Longer</strong> runs have more resistance; keep runs sensible and plan routes.</li>
             <li><strong>Thicker</strong> cables (bigger CSA) have less resistance; upsize to limit heating and voltage drop.</li>
@@ -182,7 +185,7 @@ const Module2Section5_4: React.FC = () => {
             <li><strong>Heat</strong> raises resistance; avoid bunching, poor ventilation and overloaded enclosures.</li>
             <li><strong>Joints/terminations</strong> add contact resistance; poor joints overheat – a safety risk.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Quick Knowledge Check */}
         <InlineCheck
@@ -193,10 +196,13 @@ const Module2Section5_4: React.FC = () => {
         />
 
         {/* Quick estimator */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-2 flex items-center gap-2"><Calculator className="w-5 h-5"/>Quick resistance estimator</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-2 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            <Calculator className="w-5 h-5"/>Quick resistance estimator
+          </h2>
           <p className="text-xs sm:text-sm text-white mb-4">Use these constants with <strong>L</strong> in metres and <strong>A</strong> in mm² (20°C reference):</p>
-          <div className="grid md:grid-cols-2 gap-4 text-xs sm:text-sm text-white">
+          <div className="grid gap-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
               <p className="font-medium">Copper</p>
               <p>R (Ω) ≈ <strong>0.0172 × L ÷ A</strong></p>
@@ -207,15 +213,18 @@ const Module2Section5_4: React.FC = () => {
             </div>
           </div>
           <div className="text-xs text-white mt-3">For a complete loop (out and back), use the total path length. Always verify design with Appendix 4 tables.</div>
-        </Card>
+        </section>
 
         {/* Calculator */}
         <ResistanceCalculator />
 
         {/* Practical guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 no-accent border-white/10">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Practical guidance</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Practical guidance
+          </h2>
+          <div className="grid gap-4 text-xs sm:text-sm text-white">
             <div className="bg-card border border-border/30 p-4 rounded-lg space-y-2">
               <h3 className="font-semibold text-elec-yellow mb-1 flex items-center gap-2"><Ruler className="w-4 h-4"/> Cable runs</h3>
               <ul className="list-disc pl-6 space-y-1">
@@ -249,17 +258,20 @@ const Module2Section5_4: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Simple practice tasks */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practice tasks</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Practice tasks
+          </h2>
           <div className="space-y-4 text-xs sm:text-sm text-white">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
               <p className="font-medium">Task 1</p>
               <p>Find R for 20 m of copper, 4 mm² at 20°C.</p>
               <Collapsible>
-                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline">Show answer</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline min-h-[44px] touch-manipulation">Show answer</CollapsibleTrigger>
                 <CollapsibleContent className="mt-2">
                   <p>R ≈ 0.0172 × 20 ÷ 4 = 0.086 Ω</p>
                 </CollapsibleContent>
@@ -270,7 +282,7 @@ const Module2Section5_4: React.FC = () => {
               <p className="font-medium">Task 2</p>
               <p>Estimate the loop resistance for a 15 m radial (out and back) in copper, 2.5 mm².</p>
               <Collapsible>
-                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline">Show answer</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline min-h-[44px] touch-manipulation">Show answer</CollapsibleTrigger>
                 <CollapsibleContent className="mt-2">
                   <p>Total path length = 30 m. R ≈ 0.0172 × 30 ÷ 2.5 = 0.206 Ω</p>
                 </CollapsibleContent>
@@ -281,14 +293,14 @@ const Module2Section5_4: React.FC = () => {
               <p className="font-medium">Task 3</p>
               <p>Which will have lower resistance: 10 m of 1.5 mm² copper or 10 m of 2.5 mm² copper?</p>
               <Collapsible>
-                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline">Show answer</CollapsibleTrigger>
+                <CollapsibleTrigger className="mt-2 inline-flex text-elec-yellow text-sm underline min-h-[44px] touch-manipulation">Show answer</CollapsibleTrigger>
                 <CollapsibleContent className="mt-2">
                   <p>2.5 mm² is thicker, so lower R for the same length and material.</p>
                 </CollapsibleContent>
               </Collapsible>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Another InlineCheck */}
         <InlineCheck
@@ -299,21 +311,24 @@ const Module2Section5_4: React.FC = () => {
         />
 
         {/* Comprehensive Quiz */}
-        <Card className="mb-6 sm:mb-8 p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check Quiz (10 Questions)</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Knowledge Check Quiz (10 Questions)
+          </h2>
           <Quiz questions={quizQuestions} />
-        </Card>
+        </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5" asChild>
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5" asChild>
             <Link to="../5-3"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a]" asChild>
+          <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]" asChild>
             <Link to="../5-5">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
           </Button>
         </nav>
-        </div>
+      </div>
 
       {/* Structured data */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />

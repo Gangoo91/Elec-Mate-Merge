@@ -1,9 +1,6 @@
 import useSEO from "@/hooks/useSEO";
 import { ArrowLeft, TrendingUp, Calculator, ThermometerSun, Settings, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import React from "react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -119,11 +116,11 @@ const Module2Section6_3: React.FC = () => {
   ] as const;
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.6
@@ -133,23 +130,28 @@ const Module2Section6_3: React.FC = () => {
       </div>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <TrendingUp className="w-6 h-6 text-white" />
-            </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 2.6.3</Badge>
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        {/* Header */}
+        <div className="mb-12 text-center">
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Module 2.6.3
+          </span>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <TrendingUp className="h-8 w-8 text-elec-yellow" />
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Efficiency – what it means and why it matters</h1>
-          <p className="text-white">Plain‑English efficiency for Level 2: input vs useful output, where losses go, and how it affects current, sizing and costs.</p>
-        </header>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Efficiency - Why it Matters
+          </h1>
+          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
+            Plain-English efficiency for Level 2: input vs useful output, where losses go, and how it affects current, sizing and costs
+          </p>
+        </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Efficiency tells you how much of the input becomes useful output.</li>
@@ -157,7 +159,7 @@ const Module2Section6_3: React.FC = () => {
                 <li>Better efficiency → less input power for the same job → lower current and cost.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Motor and transformer datasheets list efficiency.</li>
@@ -166,10 +168,10 @@ const Module2Section6_3: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Define efficiency and identify common losses (I²R, core losses, friction).</li>
@@ -177,10 +179,10 @@ const Module2Section6_3: React.FC = () => {
             <li>Estimate output from known input and efficiency (and vice‑versa).</li>
             <li>Relate efficiency to current draw, heat, cable sizing and BS 7671 considerations.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Plain-English overview */}
@@ -226,8 +228,7 @@ const Module2Section6_3: React.FC = () => {
             correctIndex={2}
             explanation="η = 600/800 × 100 = 75%."
           />
-          <Separator className="my-6" />
-
+          
           {/* Try it: Efficiency calculator */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Settings className="w-5 h-5" /> Try it: Efficiency calculator</h3>
@@ -235,8 +236,7 @@ const Module2Section6_3: React.FC = () => {
             <EfficiencyCalculator />
           </section>
 
-          <Separator className="my-6" />
-
+          
           {/* Examples */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Worked examples</h3>
@@ -270,8 +270,7 @@ const Module2Section6_3: React.FC = () => {
             </ul>
           </section>
 
-          <Separator className="my-6" />
-
+          
           {/* Real-world applications */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Settings className="w-5 h-5" /> Real-world applications and considerations</h3>
@@ -297,8 +296,7 @@ const Module2Section6_3: React.FC = () => {
             </div>
           </section>
 
-          <Separator className="my-6" />
-
+          
           {/* Detailed efficiency concepts */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Understanding efficiency in different equipment types</h3>
@@ -339,8 +337,7 @@ const Module2Section6_3: React.FC = () => {
             </div>
           </section>
 
-          <Separator className="my-6" />
-
+          
           {/* Economic and environmental impact */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Economic and environmental considerations</h3>
@@ -368,8 +365,7 @@ const Module2Section6_3: React.FC = () => {
             </div>
           </section>
 
-          <Separator className="my-6" />
-
+          
           {/* Measurement and testing */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Measuring and verifying efficiency</h3>
@@ -389,8 +385,7 @@ const Module2Section6_3: React.FC = () => {
             </div>
           </section>
 
-          <Separator className="my-6" />
-
+          
           <InlineCheck
             id="ic-loss"
             question="A device input is 500 W at 80% efficiency. Approx. loss is…"
@@ -398,8 +393,7 @@ const Module2Section6_3: React.FC = () => {
             correctIndex={0}
             explanation="Pout = 500 × 0.8 = 400 W, so Loss = 500 − 400 = 100 W."
           />
-          <Separator className="my-6" />
-
+          
           {/* Safety & BS 7671 context */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><ThermometerSun className="w-5 h-5" /> BS 7671 context and good practice</h3>
@@ -408,15 +402,15 @@ const Module2Section6_3: React.FC = () => {
               <li>Consider heat build‑up: enclosures and lofts can reduce efficiency further; allow for ventilation and manufacturer instructions.</li>
               <li>Document choices; where motors are involved, note efficiency class where available.</li>
             </ul>
-            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
+            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-2 border-elec-yellow p-4 rounded mt-4" role="alert">
               <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
               <p className="text-white text-sm">Isolate, lock‑off and prove dead before work. Follow manufacturer instructions and BS 7671.</p>
             </div>
           </section>
-        </Card>
+        </section>
 
         {/* FAQ */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
           <ul className="space-y-3 text-xs sm:text-sm text-white">
             {faqs.map((f, i) => (
@@ -426,13 +420,23 @@ const Module2Section6_3: React.FC = () => {
               </li>
             ))}
           </ul>
-        </Card>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-16 p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick check quiz</h2>
           <Quiz questions={quizQuestions as any} title="Efficiency – why it matters" />
-        </Card>
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5" asChild>
+            <Link to="../6-2"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]" asChild>
+            <Link to="../6-4">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+          </Button>
+        </nav>
 
         {/* Structured data */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />

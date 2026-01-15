@@ -1,7 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -121,13 +118,13 @@ const Module3Section4_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -139,32 +136,30 @@ const Module3Section4_4 = () => {
       </div>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Wrench className="w-6 h-6 text-white" />
-            </div>
-            <Badge
-              variant="outline"
-              className="border-elec-yellow/30 text-elec-yellow"
-            >
-              Section 3.4.4
-            </Badge>
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <header className="mb-6 sm:mb-8 text-center">
+          <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
+            <Wrench className="w-4 h-4 text-elec-yellow" />
+            <span className="text-elec-yellow text-sm font-medium">Module 3</span>
+            <span className="text-white/50">|</span>
+            <span className="text-white/70 text-sm">Section 3.4.4</span>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Jointing and Glanding Techniques
           </h1>
-          <p className="text-white">
+          <p className="text-white/80">
             How to joint and gland cables correctly for safe, durable installations aligned to BS 7671.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Joints must maintain electrical performance and mechanical strength.</li>
@@ -173,7 +168,7 @@ const Module3Section4_4 = () => {
                 <li>Follow manufacturer instructions and torque settings; test earth continuity.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> BW (indoor), CW (outdoor), E1W (hazardous); shrouds and earth tags.</li>
@@ -182,25 +177,31 @@ const Module3Section4_4 = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning Outcomes
+          </h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Explain the purpose of cable jointing and glanding.</li>
             <li>Identify jointing types and when to use them.</li>
             <li>Select, assemble and test SWA cable glands correctly.</li>
             <li>Apply safe, compliant practices in line with BS 7671.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Content
+          </h2>
 
           {/* Cable Jointing */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Cable className="w-5 h-5" /> 1) Cable Jointing
             </h3>
@@ -257,7 +258,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck
             id="joint-purpose"
@@ -272,10 +273,10 @@ const Module3Section4_4 = () => {
             explanation="Cable jointing maintains continuous electrical and mechanical integrity when extending or repairing cables."
           />
 
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* Cable Glanding */}
-          <section className="mb-2">
+          <div className="mb-2">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> 2) Cable Glanding
             </h3>
@@ -302,7 +303,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck
             id="gland-outdoor"
@@ -311,11 +312,14 @@ const Module3Section4_4 = () => {
             correctIndex={1}
             explanation="CW glands are designed for outdoor use with SWA cable, providing weatherproof sealing."
           />
-        </Card>
+        </section>
 
         {/* Safety considerations */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Safety considerations</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Safety Considerations
+          </h2>
           <div className="grid gap-3 text-sm">
             {["Ensure joints and glands are mechanically sound and electrically continuous",
               "For SWA cables, test earth continuity after fitting glands",
@@ -329,18 +333,23 @@ const Module3Section4_4 = () => {
             ))}
           </div>
 
-          <InlineCheck
-            id="swa-testing"
-            question="What must be tested after fitting SWA cable glands?"
-            options={["Voltage rating", "Earth continuity", "Cable temperature", "Installation time"]}
-            correctIndex={1}
-            explanation="Earth continuity must be tested after fitting SWA glands to ensure proper earthing through the armour."
-          />
-        </Card>
+          <div className="mt-6">
+            <InlineCheck
+              id="swa-testing"
+              question="What must be tested after fitting SWA cable glands?"
+              options={["Voltage rating", "Earth continuity", "Cable temperature", "Installation time"]}
+              correctIndex={1}
+              explanation="Earth continuity must be tested after fitting SWA glands to ensure proper earthing through the armour."
+            />
+          </div>
+        </section>
 
         {/* Common mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Common mistakes to avoid</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Common Mistakes to Avoid
+          </h2>
           <div className="grid gap-3 text-sm">
             {["Leaving exposed copper strands outside the joint",
               "Over-tightening gland nuts, damaging armour or sheath",
@@ -353,11 +362,14 @@ const Module3Section4_4 = () => {
               </div>
             ))}
           </div>
-        </Card>
+        </section>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            FAQs
+          </h2>
           <div className="space-y-4 text-sm">
             {faqs.map((f, idx) => (
               <div key={idx}>
@@ -366,15 +378,18 @@ const Module3Section4_4 = () => {
                   <p className="font-medium">{f.q}</p>
                 </div>
                 <p className="ml-8 text-white/90">{f.a}</p>
-                <Separator className="my-4" />
+                <div className="my-4 border-t border-white/10" />
               </div>
             ))}
           </div>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+            Summary
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 text-sm">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
               <p className="font-medium mb-2">Key Benefits</p>
@@ -393,11 +408,14 @@ const Module3Section4_4 = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Do's and Don'ts */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Apprentice Do’s and Don’ts</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+            Apprentice Do's and Don'ts
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 text-sm">
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
               <p className="font-medium mb-2">Do</p>
@@ -409,7 +427,7 @@ const Module3Section4_4 = () => {
               </ul>
             </div>
             <div className="rounded-lg p-4 bg-destructive/10 border border-destructive/20">
-              <p className="font-medium mb-2">Don’t</p>
+              <p className="font-medium mb-2">Don't</p>
               <ul className="space-y-1">
                 <li>✗ Overtighten glands or crush conductors</li>
                 <li>✗ Leave exposed strands or compromised insulation</li>
@@ -418,11 +436,14 @@ const Module3Section4_4 = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Pocket Card Quick Reference */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Card Quick Reference</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+            Pocket Card Quick Reference
+          </h2>
           <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30 text-sm">
             <div className="grid md:grid-cols-2 gap-4">
               <div>
@@ -445,28 +466,34 @@ const Module3Section4_4 = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Key References */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Key References</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">10</span>
+            Key References
+          </h2>
           <div className="text-xs sm:text-sm text-white space-y-2">
             <p><strong>BS 7671:</strong> 526 (Electrical connections), 522 (Selection and erection), 543 (Earthing arrangements), Part 6 (Inspection & testing)</p>
             <p><strong>Manufacturer data:</strong> Gland and joint kit instructions incl. torque settings</p>
             <p><strong>HSE/GS38:</strong> Safe working practices, test equipment guidance</p>
           </div>
-        </Card>
+        </section>
 
         {/* Practical Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Examples</h2>
-          
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">11</span>
+            Practical Examples
+          </h2>
+
           {/* Example 1: SWA CW Gland Step-by-Step */}
-          <section className="mb-8">
+          <div className="mb-8">
             <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <Wrench className="w-5 h-5" /> 1) SWA CW Gland Installation with Torque Checklist
             </h3>
-            
+
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Step-by-Step Process</p>
@@ -501,7 +528,7 @@ const Module3Section4_4 = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                 <p className="font-medium mb-3">Torque & Safety Checklist</p>
                 <div className="space-y-2 text-sm">
@@ -540,7 +567,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck
             id="gland-torque"
@@ -550,14 +577,14 @@ const Module3Section4_4 = () => {
             explanation="Most SWA CW glands require 25-30 Nm torque, but always check the manufacturer's specification sheet."
           />
 
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* Example 2: Resin Joint Step-by-Step */}
-          <section className="mb-8">
+          <div className="mb-8">
             <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <Cable className="w-5 h-5" /> 2) Resin Joint Installation
             </h3>
-            
+
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium mb-3">Preparation & Assembly</p>
@@ -588,7 +615,7 @@ const Module3Section4_4 = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Critical Points</p>
                 <div className="space-y-3 text-sm">
@@ -611,7 +638,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck
             id="resin-temp"
@@ -621,14 +648,14 @@ const Module3Section4_4 = () => {
             explanation="5°C is the minimum ambient temperature. Below this, the resin may not cure properly."
           />
 
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* Example 3: Heat-shrink Crimp Joint */}
-          <section className="mb-8">
+          <div className="mb-8">
             <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" /> 3) Heat-shrink Crimp Joint with Inspection
             </h3>
-            
+
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Installation Process</p>
@@ -659,7 +686,7 @@ const Module3Section4_4 = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Quality Inspection</p>
                 <div className="space-y-2 text-sm">
@@ -682,7 +709,7 @@ const Module3Section4_4 = () => {
                     <span className="w-2 h-2 bg-orange-400 rounded-full"></span>
                     <span>Adhesive visible at tubing ends</span>
                   </div>
-                  
+
                   <div className="border-b border-orange-400/20 pb-2 mb-2 mt-4">
                     <p className="font-medium">Pull Test</p>
                   </div>
@@ -697,7 +724,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck
             id="crimp-pull"
@@ -707,14 +734,14 @@ const Module3Section4_4 = () => {
             explanation="No conductor movement during a gentle pull test indicates the crimp has properly gripped the conductor."
           />
 
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* Example 4: Fault-finding Ingress Case */}
-          <section className="mb-8">
+          <div className="mb-8">
             <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" /> 4) Fault-finding: Water Ingress Case Study
             </h3>
-            
+
             <div className="grid md:grid-cols-2 gap-4">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Scenario: External SWA Joint Failure</p>
@@ -739,7 +766,7 @@ const Module3Section4_4 = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
                 <p className="font-medium mb-3">Diagnostic Tests & Repair</p>
                 <div className="space-y-3 text-sm">
@@ -771,7 +798,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck
             id="ingress-repair"
@@ -781,14 +808,14 @@ const Module3Section4_4 = () => {
             explanation="IP68 rating is required for underground joints to prevent water ingress under pressure."
           />
 
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* Example 5: Gland Selection Guide */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <HelpCircle className="w-5 h-5" /> 5) Quick Gland Selection by Cable OD & IP Rating
             </h3>
-            
+
             <div className="grid gap-4">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
                 <p className="font-medium mb-3">Common SWA Cable Sizes & Glands</p>
@@ -850,7 +877,7 @@ const Module3Section4_4 = () => {
                   </table>
                 </div>
               </div>
-              
+
               <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
                 <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                   <p className="font-medium mb-2">Selection Tips</p>
@@ -861,7 +888,7 @@ const Module3Section4_4 = () => {
                     <li>Consider environmental conditions</li>
                   </ul>
                 </div>
-                
+
                 <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                   <p className="font-medium mb-2">Environmental Guide</p>
                   <ul className="list-disc pl-4 space-y-1 text-sm">
@@ -871,7 +898,7 @@ const Module3Section4_4 = () => {
                     <li><strong>Hazardous areas:</strong> E1W glands</li>
                   </ul>
                 </div>
-                
+
                 <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
                   <p className="font-medium mb-2">Common Mistakes</p>
                   <ul className="list-disc pl-4 space-y-1 text-sm">
@@ -883,7 +910,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck
             id="gland-selection"
@@ -892,17 +919,20 @@ const Module3Section4_4 = () => {
             correctIndex={1}
             explanation="CW25s glands are typically used for 10mm² 3C+E SWA cable which has an overall diameter of approximately 17.3mm."
           />
-        </Card>
+        </section>
 
         {/* Technical Specifications & Standards */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Technical Specifications & Standards</h2>
-          
-          <section className="mb-8">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">12</span>
+            Technical Specifications & Standards
+          </h2>
+
+          <div className="mb-8">
             <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <Shield className="w-5 h-5" /> Cable Gland Technical Data
             </h3>
-            
+
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
                 <p className="font-medium mb-3">Material Specifications</p>
@@ -936,7 +966,7 @@ const Module3Section4_4 = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
                 <p className="font-medium mb-3">Performance Ratings</p>
                 <div className="space-y-3 text-sm">
@@ -970,7 +1000,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck
             id="material-temp"
@@ -979,352 +1009,23 @@ const Module3Section4_4 = () => {
             correctIndex={1}
             explanation="Standard brass cable glands have a maximum operating temperature of 100°C, suitable for most electrical applications."
           />
-
-          <Separator className="my-6" />
-
-          <section className="mb-8">
-            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
-              <Cable className="w-5 h-5" /> Joint Types & Applications
-            </h3>
-            
-            <div className="grid gap-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium mb-3">Joint Classification by Application</p>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-border/30">
-                        <th className="text-left p-2">Joint Type</th>
-                        <th className="text-left p-2">Voltage Rating</th>
-                        <th className="text-left p-2">Environment</th>
-                        <th className="text-left p-2">Typical Use</th>
-                        <th className="text-left p-2">BS Standard</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-purple-400/20">
-                      <tr>
-                        <td className="p-2">Mechanical Connector</td>
-                        <td className="p-2">Up to 1kV</td>
-                        <td className="p-2">Dry indoor</td>
-                        <td className="p-2">Panel connections</td>
-                        <td className="p-2">BS EN 60947-7</td>
-                      </tr>
-                      <tr>
-                        <td className="p-2">Crimp Joint</td>
-                        <td className="p-2">Up to 35kV</td>
-                        <td className="p-2">Indoor/outdoor</td>
-                        <td className="p-2">Through joints</td>
-                        <td className="p-2">BS EN 61238</td>
-                      </tr>
-                      <tr>
-                        <td className="p-2">Resin Joint</td>
-                        <td className="p-2">Up to 25kV</td>
-                        <td className="p-2">Underground</td>
-                        <td className="p-2">Permanent joints</td>
-                        <td className="p-2">BS 6622</td>
-                      </tr>
-                      <tr>
-                        <td className="p-2">Heat-shrink Joint</td>
-                        <td className="p-2">Up to 11kV</td>
-                        <td className="p-2">Outdoor/buried</td>
-                        <td className="p-2">LV distribution</td>
-                        <td className="p-2">BS EN 50393</td>
-                      </tr>
-                      <tr>
-                        <td className="p-2">Compression Joint</td>
-                        <td className="p-2">Up to 132kV</td>
-                        <td className="p-2">Substation</td>
-                        <td className="p-2">HV applications</td>
-                        <td className="p-2">BS EN 50181</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
-                  <p className="font-medium mb-3">Low Voltage (230V-1000V)</p>
-                  <div className="space-y-2 text-sm">
-                    <div>
-                      <p className="font-medium text-white mb-1">Permitted Methods</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Screw terminals in IP-rated enclosure</li>
-                        <li>Maintenance-free connectors (WAGO type)</li>
-                        <li>Crimp connectors with heat-shrink</li>
-                        <li>Resin-filled kits for external use</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-medium text-white mb-1">Key Requirements</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Accessible for inspection (except resin)</li>
-                        <li>Enclosed to prevent accidental contact</li>
-                        <li>Adequate current carrying capacity</li>
-                        <li>Protection against ingress per location</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-3">Extra Low Voltage (SELV/PELV)</p>
-                  <div className="space-y-2 text-sm">
-                    <div>
-                      <p className="font-medium text-white mb-1">Simplified Requirements</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Basic protection against accidental contact</li>
-                        <li>Twist and tape acceptable in dry locations</li>
-                        <li>Chocolate block connectors widely used</li>
-                        <li>Junction boxes with maintenance access</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-medium text-white mb-1">Good Practice</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Use proper connector blocks</li>
-                        <li>Maintain IP rating of equipment</li>
-                        <li>Consider future maintenance needs</li>
-                        <li>Document joint locations clearly</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            id="joint-standard"
-            question="Which BS standard covers crimp joint performance requirements?"
-            options={["BS EN 60947-7", "BS EN 61238", "BS 6622", "BS EN 50393"]}
-            correctIndex={1}
-            explanation="BS EN 61238 covers the performance requirements and testing of crimp joints and connections."
-          />
-        </Card>
-
-        {/* Environmental & Installation Conditions */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Environmental & Installation Conditions</h2>
-          
-          <section className="mb-8">
-            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5" /> Environmental Classification
-            </h3>
-            
-            <div className="grid gap-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium mb-3">Aggressive Environments</p>
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="font-medium text-white mb-2">Chemical Plants</p>
-                    <ul className="list-disc pl-4 space-y-1">
-                      <li>316L stainless steel glands mandatory</li>
-                      <li>PTFE seals for chemical resistance</li>
-                      <li>Regular inspection schedule required</li>
-                      <li>Material compatibility assessment needed</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium text-white mb-2">Marine Environments</p>
-                    <ul className="list-disc pl-4 space-y-1">
-                      <li>316L stainless steel or polyamide</li>
-                      <li>IP68 rating minimum requirement</li>
-                      <li>Salt spray resistance certification</li>
-                      <li>Regular washing and maintenance</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium text-white mb-2">High Temperature</p>
-                    <ul className="list-disc pl-4 space-y-1">
-                      <li>Check temperature rating vs ambient</li>
-                      <li>Consider cable heat generation</li>
-                      <li>PTFE or silicone seals above 100°C</li>
-                      <li>Thermal expansion considerations</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium text-white mb-2">Underground/Buried</p>
-                    <ul className="list-disc pl-4 space-y-1">
-                      <li>IP68 rated resin-filled joints</li>
-                      <li>Cathodic protection compatibility</li>
-                      <li>Warning tape installation required</li>
-                      <li>Drawing records essential</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                <p className="font-medium mb-3">Installation Environment Assessment</p>
-                <div className="space-y-3 text-sm">
-                  <div>
-                    <p className="font-medium text-white mb-1">Pre-Installation Checklist</p>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <input type="checkbox" className="rounded" />
-                          <span>Ambient temperature range identified</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <input type="checkbox" className="rounded" />
-                          <span>Humidity levels assessed</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <input type="checkbox" className="rounded" />
-                          <span>Chemical exposure evaluated</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <input type="checkbox" className="rounded" />
-                          <span>UV exposure considered</span>
-                        </div>
-                      </div>
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <input type="checkbox" className="rounded" />
-                          <span>Vibration/shock levels checked</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <input type="checkbox" className="rounded" />
-                          <span>Water/dust ingress risk assessed</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <input type="checkbox" className="rounded" />
-                          <span>Material compatibility verified</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <input type="checkbox" className="rounded" />
-                          <span>Maintenance access planned</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            id="marine-gland"
-            question="What material is recommended for cable glands in marine environments?"
-            options={["Brass with nickel plating", "316L stainless steel", "Galvanised steel", "Standard plastic"]}
-            correctIndex={1}
-            explanation="316L stainless steel provides the best corrosion resistance for marine environments with salt spray exposure."
-          />
-
-          <Separator className="my-6" />
-
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
-              <Wrench className="w-5 h-5" /> Installation Tools & Equipment
-            </h3>
-            
-            <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium mb-3">Essential Tools</p>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-elec-yellow rounded-full"></span>
-                    <span>Adjustable spanners (various sizes)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-elec-yellow rounded-full"></span>
-                    <span>Torque wrench (0-50 Nm range)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-elec-yellow rounded-full"></span>
-                    <span>Cable stripping tools</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-elec-yellow rounded-full"></span>
-                    <span>Junior hacksaw for armour cutting</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-elec-yellow rounded-full"></span>
-                    <span>Wire brush for cleaning</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-elec-yellow rounded-full"></span>
-                    <span>Digital callipers</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
-                <p className="font-medium mb-3">Crimping Equipment</p>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
-                    <span>Ratchet crimping tool</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
-                    <span>Correct die sets for cable sizes</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
-                    <span>Go/no-go gauge for crimp quality</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
-                    <span>Heat gun for heat-shrink</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
-                    <span>Insulation tape (various types)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
-                    <span>Cable pulling grips</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                <p className="font-medium mb-3">Testing Equipment</p>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                    <span>Low resistance ohmmeter</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                    <span>Insulation resistance tester</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                    <span>Earth fault loop impedance tester</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                    <span>RCD tester</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                    <span>Multimeter</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                    <span>Phase rotation indicator</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </Card>
+        </section>
 
         {/* Advanced Troubleshooting Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Advanced Troubleshooting Guide</h2>
-          
-          <section className="mb-8">
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">13</span>
+            Advanced Troubleshooting Guide
+          </h2>
+
+          <div className="mb-8">
             <h3 className="font-medium text-white mb-4 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" /> Common Fault Scenarios
             </h3>
-            
+
             <div className="grid gap-6">
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium mb-3">🔧 Fault 1: High Earth Loop Impedance</p>
+                <p className="font-medium mb-3">Fault 1: High Earth Loop Impedance</p>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="font-medium text-white mb-2">Symptoms</p>
@@ -1352,9 +1053,9 @@ const Module3Section4_4 = () => {
                   <p className="text-sm">Poor gland earth connections, corroded armour, loose earth tags, inadequate bonding at joints, high source impedance.</p>
                 </div>
               </div>
-              
+
               <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium mb-3">🔧 Fault 2: Intermittent RCD Tripping</p>
+                <p className="font-medium mb-3">Fault 2: Intermittent RCD Tripping</p>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="font-medium text-white mb-2">Symptoms</p>
@@ -1382,9 +1083,9 @@ const Module3Section4_4 = () => {
                   <p className="text-sm">IR tester, clamp-on leakage meter, thermal imaging camera, moisture meter, cable fault locator.</p>
                 </div>
               </div>
-              
+
               <div className="rounded-lg p-4 bg-elec-yellow/10 border border-elec-yellow/30">
-                <p className="font-medium mb-3">🔧 Fault 3: Cable Joint Overheating</p>
+                <p className="font-medium mb-3">Fault 3: Cable Joint Overheating</p>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="font-medium text-yellow-200 mb-2">Warning Signs</p>
@@ -1411,7 +1112,7 @@ const Module3Section4_4 = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck
             id="fault-impedance"
@@ -1420,17 +1121,20 @@ const Module3Section4_4 = () => {
             correctIndex={1}
             explanation="The maximum Zs for a 32A Type B MCB is 1.44Ω to ensure disconnection within 0.4 seconds under fault conditions."
           />
-        </Card>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">14</span>
+            Knowledge Check
+          </h2>
           <Quiz questions={quizQuestions} title="Knowledge Check" />
-        </Card>
+        </section>
 
         {/* Navigation */}
-        <div className="flex justify-between">
-          <Button variant="outline" asChild>
+        <div className="flex flex-col-reverse sm:flex-row justify-between gap-3 pt-6 border-t border-white/10">
+          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.4

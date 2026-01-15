@@ -47,10 +47,11 @@ const AM2Module1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10 safe-top">
         <div className="px-4 sm:px-6 py-3">
+          <div className="max-w-3xl mx-auto">
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"
@@ -68,12 +69,13 @@ const AM2Module1 = () => {
             </Button>
             <span className="text-ios-footnote text-white/50">AM2 Course</span>
           </div>
+          </div>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="px-4 sm:px-6 py-6 safe-bottom">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           {/* Hero Section */}
           <div className="pb-6 sm:pb-8">
             {/* Icon with Glow Effect */}
@@ -101,7 +103,7 @@ const AM2Module1 = () => {
           </div>
 
           {/* Sections Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ios-stagger-children">
+          <div className="grid grid-cols-1 gap-4 ios-stagger-children">
             {sections.map((section) => (
               <ModuleCard
                 key={section.id}

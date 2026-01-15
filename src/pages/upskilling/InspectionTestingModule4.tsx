@@ -58,11 +58,11 @@ const InspectionTestingModule4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* iOS-style Sticky Header */}
-      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-4xl mx-auto">
-          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1 min-h-[48px] min-w-[48px]">
+      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
+          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1 min-h-[48px] min-w-[48px] touch-manipulation active:scale-[0.98]">
             <Link to="../inspection-testing">
               <ArrowLeft className="h-5 w-5" />
               <span className="hidden sm:inline">Back</span>
@@ -74,7 +74,7 @@ const InspectionTestingModule4 = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="px-4 pt-8 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
         <div className="flex items-center gap-3 mb-4">
           <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
             <Zap className="h-8 w-8 text-elec-yellow" />
@@ -101,9 +101,9 @@ const InspectionTestingModule4 = () => {
       </section>
 
       {/* Section Navigation */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <h2 className="text-[22px] font-semibold text-white mb-4">Module Sections</h2>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3">
           {sections.map((section, index) => (
             <motion.div
               key={section.id}
@@ -145,7 +145,7 @@ const InspectionTestingModule4 = () => {
                     </h3>
 
                     {/* Description */}
-                    <p className="text-white/50 text-xs leading-relaxed line-clamp-2">
+                    <p className="text-white/60 text-xs leading-relaxed line-clamp-2">
                       {section.description}
                     </p>
                   </CardContent>
@@ -157,8 +157,8 @@ const InspectionTestingModule4 = () => {
       </section>
 
       {/* Start Learning CTA */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
-        <Button variant="ios-primary" size="ios" asChild className="w-full min-h-[48px]">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
+        <Button variant="ios-primary" size="ios" asChild className="w-full min-h-[48px] touch-manipulation active:scale-[0.98]">
           <Link to="section1">
             Start Learning
             <ChevronRight className="h-5 w-5 ml-2" />

@@ -185,22 +185,21 @@ export abstract class BaseScraper {
    * Scroll page to load lazy content
    */
   protected async scrollToLoadAll(page: Page): Promise<void> {
-    await page.evaluate(async () => {
-      const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+    await page.evaluate(`
+      (async () => {
+        let lastHeight = 0;
+        let currentHeight = document.body.scrollHeight;
 
-      let lastHeight = 0;
-      let currentHeight = document.body.scrollHeight;
+        while (lastHeight !== currentHeight) {
+          lastHeight = currentHeight;
+          window.scrollTo(0, currentHeight);
+          await new Promise(r => setTimeout(r, 500));
+          currentHeight = document.body.scrollHeight;
+        }
 
-      while (lastHeight !== currentHeight) {
-        lastHeight = currentHeight;
-        window.scrollTo(0, currentHeight);
-        await delay(500);
-        currentHeight = document.body.scrollHeight;
-      }
-
-      // Scroll back to top
-      window.scrollTo(0, 0);
-    });
+        window.scrollTo(0, 0);
+      })()
+    `);
   }
 
   /**

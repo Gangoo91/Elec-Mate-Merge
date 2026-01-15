@@ -1,9 +1,9 @@
 import { useInspectorProfiles, InspectorProfile } from "@/hooks/useInspectorProfiles";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { FormSection } from "./FormSection";
 import { RegistrationSchemeSelect } from "./RegistrationSchemeSelect";
@@ -12,7 +12,7 @@ import { SignatureGenerator } from "./SignatureGenerator";
 import SignaturePad, { SignaturePadRef } from "@/components/signature/SignaturePad";
 import { ProfilePhotoUpload } from "./ProfilePhotoUpload";
 import { InspectorProfileViewCard } from "./InspectorProfileViewCard";
-import { User, Award, Building2, FileText, PenTool, Globe } from "lucide-react";
+import { User, Award, Building2, FileText, PenTool, Settings } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
@@ -28,23 +28,17 @@ const qualificationOptions = [
 ];
 
 export default function InspectorProfileForm() {
+  const navigate = useNavigate();
   const { profiles, addProfile, updateProfile, isLoading } = useInspectorProfiles();
   const currentProfile = profiles[0] || null;
   const [isEditing, setIsEditing] = useState(false);
   const [hasInitialized, setHasInitialized] = useState(false);
-  
+
+  // Personal inspector details only - company details are managed in Settings > Company
   const [formData, setFormData] = useState({
     name: "",
     photoUrl: "",
     qualifications: [] as string[],
-    companyName: "",
-    companyAddress: "",
-    companyPhone: "",
-    companyEmail: "",
-    companyLogo: "",
-    companyWebsite: "",
-    companyRegistrationNumber: "",
-    vatNumber: "",
     registrationScheme: "none",
     registrationNumber: "",
     registrationExpiry: "",
@@ -65,20 +59,13 @@ export default function InspectorProfileForm() {
     }
   }, [isLoading, currentProfile, hasInitialized]);
 
+  // Populate form from existing profile (personal details only - no company fields)
   useEffect(() => {
     if (currentProfile) {
       setFormData({
         name: currentProfile.name,
         photoUrl: currentProfile.photoUrl || "",
-        qualifications: currentProfile.qualifications,
-        companyName: currentProfile.companyName,
-        companyAddress: currentProfile.companyAddress,
-        companyPhone: currentProfile.companyPhone,
-        companyEmail: currentProfile.companyEmail,
-        companyLogo: currentProfile.companyLogo || "",
-        companyWebsite: currentProfile.companyWebsite || "",
-        companyRegistrationNumber: currentProfile.companyRegistrationNumber || "",
-        vatNumber: currentProfile.vatNumber || "",
+        qualifications: currentProfile.qualifications || [],
         registrationScheme: currentProfile.registrationScheme || "none",
         registrationNumber: currentProfile.registrationNumber || "",
         registrationExpiry: currentProfile.registrationExpiry || "",
@@ -161,10 +148,9 @@ export default function InspectorProfileForm() {
 
   const completionPercentage = () => {
     let completed = 0;
-    let total = 5;
+    let total = 4; // Name, qualifications, registration, signature
     if (formData.name) completed++;
     if (formData.qualifications.length > 0) completed++;
-    if (formData.companyName) completed++;
     if (formData.registrationScheme !== 'none') completed++;
     if (formData.signatureData) completed++;
     return Math.round((completed / total) * 100);
@@ -219,107 +205,24 @@ export default function InspectorProfileForm() {
           </div>
         </FormSection>
 
-        {/* Section 2: Company & Branding */}
-        <FormSection 
-          icon={Building2} 
-          title="2. Company & Branding"
-          description="Optional company details and branding (skip if not applicable)"
+        {/* Section 2: Company Details - Link to Settings */}
+        <FormSection
+          icon={Building2}
+          title="2. Company Details"
+          description="Company branding and contact information"
         >
-          <div className="space-y-5">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div>
-                <Label htmlFor="companyName" className="text-foreground font-semibold">Company Name</Label>
-                <Input
-                  id="companyName"
-                  value={formData.companyName}
-                  onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                  placeholder="Company or organisation name"
-                  className="mt-1.5 min-h-[48px]"
-                />
-              </div>
-              <div>
-                <Label htmlFor="companyPhone" className="text-foreground font-semibold">Phone Number</Label>
-                <Input
-                  id="companyPhone"
-                  type="tel"
-                  inputMode="tel"
-                  value={formData.companyPhone}
-                  onChange={(e) => setFormData({ ...formData, companyPhone: e.target.value })}
-                  placeholder="Company phone number"
-                  className="mt-1.5 min-h-[48px]"
-                />
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div>
-                <Label htmlFor="companyEmail" className="text-foreground font-semibold">Email Address</Label>
-                <Input
-                  id="companyEmail"
-                  type="email"
-                  inputMode="email"
-                  value={formData.companyEmail}
-                  onChange={(e) => setFormData({ ...formData, companyEmail: e.target.value })}
-                  placeholder="Company email address"
-                  className="mt-1.5 min-h-[48px]"
-                />
-              </div>
-              <div>
-                <Label htmlFor="companyWebsite" className="text-foreground font-semibold">Website</Label>
-                <div className="relative mt-1.5">
-                  <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/70" />
-                  <Input
-                    id="companyWebsite"
-                    value={formData.companyWebsite}
-                    onChange={(e) => setFormData({ ...formData, companyWebsite: e.target.value })}
-                    placeholder="www.example.co.uk"
-                    className="pl-10 min-h-[48px]"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <Label htmlFor="companyAddress" className="text-foreground font-semibold">Company Address</Label>
-              <Textarea
-                id="companyAddress"
-                value={formData.companyAddress}
-                onChange={(e) => setFormData({ ...formData, companyAddress: e.target.value })}
-                placeholder="Full company address"
-                rows={3}
-                className="mt-1.5"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div>
-                <Label htmlFor="companyRegNumber" className="text-foreground font-semibold">Company Registration Number</Label>
-                <Input
-                  id="companyRegNumber"
-                  value={formData.companyRegistrationNumber}
-                  onChange={(e) => setFormData({ ...formData, companyRegistrationNumber: e.target.value })}
-                  placeholder="e.g., 12345678"
-                  className="mt-1.5 min-h-[48px]"
-                />
-              </div>
-              <div>
-                <Label htmlFor="vatNumber" className="text-foreground font-semibold">VAT Number</Label>
-                <Input
-                  id="vatNumber"
-                  value={formData.vatNumber}
-                  onChange={(e) => setFormData({ ...formData, vatNumber: e.target.value })}
-                  placeholder="e.g., GB123456789"
-                  className="mt-1.5 min-h-[48px]"
-                />
-              </div>
-            </div>
-
-            <ProfilePhotoUpload
-              photoUrl={formData.companyLogo}
-              onPhotoChange={(url) => setFormData({ ...formData, companyLogo: url || "" })}
-              label="Company Logo"
-              isLogo={true}
-            />
+          <div className="p-4 bg-elec-gray-dark rounded-lg border border-elec-gray-light">
+            <p className="text-sm text-white/70 mb-4">
+              Company details are managed centrally and apply to all your certificates, quotes, and invoices.
+            </p>
+            <Button
+              variant="outline"
+              onClick={() => navigate('/settings?tab=company')}
+              className="border-elec-gray-light text-foreground hover:bg-elec-gray min-h-[48px]"
+            >
+              <Settings className="h-4 w-4 mr-2" />
+              Edit Company Details
+            </Button>
           </div>
         </FormSection>
 

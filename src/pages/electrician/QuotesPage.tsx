@@ -404,7 +404,7 @@ const QuotesPage = () => {
                     key={quote.id}
                     quote={quote}
                     onDelete={() => setQuoteToDelete(quote.id)}
-                    onEdit={() => navigate(`/electrician/quote-builder/edit/${quote.id}`)}
+                    onEdit={() => navigate(`/electrician/quote-builder/${quote.id}`)}
                     onView={() => navigate(`/electrician/quotes/view/${quote.id}`)}
                     delay={idx * 0.05}
                   />

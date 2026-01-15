@@ -28,7 +28,7 @@ export const AM2SectionLayout = memo(function AM2SectionLayout({
   className,
 }: AM2SectionLayoutProps) {
   return (
-    <div className={cn('min-h-screen bg-background', className)}>
+    <div className={cn('min-h-screen overflow-x-hidden bg-[#1a1a1a]', className)}>
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10 safe-top">
         <div className="px-4 sm:px-6 py-3">
@@ -91,7 +91,7 @@ export const AM2SectionLayout = memo(function AM2SectionLayout({
 
       {/* Main Content with Safe Area Padding and Stagger Animation */}
       <main className="px-4 sm:px-6 py-6 safe-bottom">
-        <div className="max-w-4xl mx-auto ios-stagger-children">
+        <div className="max-w-3xl mx-auto ios-stagger-children">
           {children}
         </div>
       </main>

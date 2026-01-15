@@ -1,7 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -48,7 +45,7 @@ const quizQuestions = [
     options: ["True", "False"],
     correctAnswer: 0,
     explanation:
-      "Glands secure the cable mechanically and, when rated, provide environmental sealing to maintain the enclosure’s IP rating.",
+      "Glands secure the cable mechanically and, when rated, provide environmental sealing to maintain the enclosure's IP rating.",
   },
   {
     id: 4,
@@ -97,7 +94,7 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: "What’s one risk of over‑tightening a cable gland?",
+    question: "What's one risk of over-tightening a cable gland?",
     options: [
       "Improved sealing",
       "Damaging the cable sheath, leading to premature failure",
@@ -106,7 +103,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "Over‑tightening can cut into or deform the sheath, stressing conductors and shortening cable life.",
+      "Over-tightening can cut into or deform the sheath, stressing conductors and shortening cable life.",
   },
 ];
 
@@ -131,12 +128,12 @@ const quickCheckQuestions = [
     options: [
       "Standard rubber grommet",
       "Plastic bush only",
-      "IP‑rated cable gland sized to the cable OD",
+      "IP-rated cable gland sized to the cable OD",
       "Open entry with silicone",
     ],
     correctIndex: 2,
     explanation:
-      "An IP‑rated gland provides sealing and mechanical retention while maintaining the enclosure’s IP rating.",
+      "An IP-rated gland provides sealing and mechanical retention while maintaining the enclosure's IP rating.",
   },
   {
     id: "sizing-gland",
@@ -145,7 +142,7 @@ const quickCheckQuestions = [
       "It makes labels fit better",
       "To ensure compression seal works without damaging the sheath",
       "To reduce cable capacitance",
-      "It’s only cosmetic",
+      "It's only cosmetic",
     ],
     correctIndex: 1,
     explanation:
@@ -157,13 +154,13 @@ export default function Module3Section6_4() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -175,32 +172,27 @@ export default function Module3Section6_4() {
       </div>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Wrench className="w-6 h-6 text-white" />
-            </div>
-            <Badge
-              variant="outline"
-              className="border-elec-yellow/30 text-elec-yellow"
-            >
-              Section 3.6.4
-            </Badge>
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <header className="mb-6 sm:mb-8 text-center">
+          <div className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
+            <span className="text-elec-yellow text-sm font-medium">Module 3.6.4</span>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Safe Entry to Enclosures (Grommets, Bushes, Glands)
           </h1>
-          <p className="text-white">
-            Prevent insulation damage, maintain environmental sealing and provide mechanical stability when cables enter consumer units, junction boxes, panels and switchgear — in line with BS 7671.
+          <p className="text-white/80">
+            Prevent insulation damage, maintain environmental sealing and provide mechanical stability when cables enter consumer units, junction boxes, panels and switchgear - in line with BS 7671.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Unprotected entries chafe cable sheaths and compromise safety.</li>
@@ -209,34 +201,40 @@ export default function Module3Section6_4() {
                 <li>BS 7671 requires preventing damage during installation, use and maintenance.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Sharp knockout edges, missing grommets, loose glands, open entries.</li>
-                <li><strong>Use:</strong> Sized grommets/bushes, IP‑rated glands, sealing plugs for unused entries.</li>
+                <li><strong>Use:</strong> Sized grommets/bushes, IP-rated glands, sealing plugs for unused entries.</li>
                 <li><strong>Check:</strong> Gland torque, bend radius, strain relief, enclosure rating maintained.</li>
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning Outcomes
+          </h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify safe cable entry methods for different enclosure types.</li>
             <li>Select appropriate grommets, bushes or glands by environment and cable.</li>
             <li>Maintain IP ratings and strain relief without damaging the sheath.</li>
-            <li>Apply best‑practice installation to comply with BS 7671.</li>
+            <li>Apply best-practice installation to comply with BS 7671.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Content / Learning
+          </h2>
 
           {/* 1. Why Safe Cable Entry Matters */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> 1. Why Safe Cable Entry Matters
             </h3>
@@ -252,21 +250,21 @@ export default function Module3Section6_4() {
                   <div>
                     <h6 className="font-medium text-white mb-2">Immediate Protection Functions</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Mechanical protection:</strong> Shield cable sheath from sharp knockout edges</li>
-                      <li>• <strong>Strain relief:</strong> Transfer mechanical loads to outer sheath, not cores</li>
-                      <li>• <strong>Environmental sealing:</strong> Maintain IP rating against dust/moisture</li>
-                      <li>• <strong>Arc prevention:</strong> Prevent conductor exposure leading to flashover</li>
-                      <li>• <strong>Chemical protection:</strong> Shield from cleaning agents and contaminants</li>
+                      <li>* <strong>Mechanical protection:</strong> Shield cable sheath from sharp knockout edges</li>
+                      <li>* <strong>Strain relief:</strong> Transfer mechanical loads to outer sheath, not cores</li>
+                      <li>* <strong>Environmental sealing:</strong> Maintain IP rating against dust/moisture</li>
+                      <li>* <strong>Arc prevention:</strong> Prevent conductor exposure leading to flashover</li>
+                      <li>* <strong>Chemical protection:</strong> Shield from cleaning agents and contaminants</li>
                     </ul>
                   </div>
                   <div>
                     <h6 className="font-medium text-white mb-2">Long-term Reliability Benefits</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Extended cable life:</strong> Prevent premature insulation degradation</li>
-                      <li>• <strong>Reduced maintenance:</strong> Lower fault rates and inspection requirements</li>
-                      <li>• <strong>System integrity:</strong> Maintain design safety margins over installation life</li>
-                      <li>• <strong>Compliance continuity:</strong> Ensure ongoing regulatory conformance</li>
-                      <li>• <strong>Cost effectiveness:</strong> Avoid expensive emergency repairs and downtime</li>
+                      <li>* <strong>Extended cable life:</strong> Prevent premature insulation degradation</li>
+                      <li>* <strong>Reduced maintenance:</strong> Lower fault rates and inspection requirements</li>
+                      <li>* <strong>System integrity:</strong> Maintain design safety margins over installation life</li>
+                      <li>* <strong>Compliance continuity:</strong> Ensure ongoing regulatory conformance</li>
+                      <li>* <strong>Cost effectiveness:</strong> Avoid expensive emergency repairs and downtime</li>
                     </ul>
                   </div>
                 </div>
@@ -325,33 +323,33 @@ export default function Module3Section6_4() {
                   <div>
                     <h6 className="font-medium text-white mb-2">Prevention Costs (per entry point)</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Basic grommet:</strong> £0.10-£0.50</li>
-                      <li>• <strong>Plastic bush:</strong> £0.50-£2.00</li>
-                      <li>• <strong>Standard gland:</strong> £2.00-£15.00</li>
-                      <li>• <strong>IP67/68 gland:</strong> £5.00-£30.00</li>
-                      <li>• <strong>ATEX rated gland:</strong> £20.00-£100.00</li>
+                      <li>* <strong>Basic grommet:</strong> 0.10-0.50 GBP</li>
+                      <li>* <strong>Plastic bush:</strong> 0.50-2.00 GBP</li>
+                      <li>* <strong>Standard gland:</strong> 2.00-15.00 GBP</li>
+                      <li>* <strong>IP67/68 gland:</strong> 5.00-30.00 GBP</li>
+                      <li>* <strong>ATEX rated gland:</strong> 20.00-100.00 GBP</li>
                     </ul>
                   </div>
                   <div>
                     <h6 className="font-medium text-white mb-2">Failure Remediation Costs</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Emergency callout:</strong> £150-£300</li>
-                      <li>• <strong>Cable replacement:</strong> £50-£500+ per circuit</li>
-                      <li>• <strong>Downtime costs:</strong> £500-£5000+ per hour</li>
-                      <li>• <strong>Fire damage:</strong> £10,000-£1M+</li>
-                      <li>• <strong>Insurance excess:</strong> £1000-£25,000</li>
+                      <li>* <strong>Emergency callout:</strong> 150-300 GBP</li>
+                      <li>* <strong>Cable replacement:</strong> 50-500+ GBP per circuit</li>
+                      <li>* <strong>Downtime costs:</strong> 500-5000+ GBP per hour</li>
+                      <li>* <strong>Fire damage:</strong> 10,000-1M+ GBP</li>
+                      <li>* <strong>Insurance excess:</strong> 1000-25,000 GBP</li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[0]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* 2. Methods and selection */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Wrench className="w-5 h-5" /> 2. Cable Entry Methods and Selection
             </h3>
@@ -359,9 +357,9 @@ export default function Module3Section6_4() {
             <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
               <h5 className="font-medium text-elec-yellow mb-2">Overview</h5>
               <ul className="space-y-1 text-sm">
-                <li>• <strong>Grommets:</strong> Flexible inserts for knockouts; low/medium protection.</li>
-                <li>• <strong>Bushes:</strong> Rigid (often threaded) smooth entry; common with conduit.</li>
-                <li>• <strong>Glands:</strong> Provide sealing and strain relief; choose by material and IP.</li>
+                <li>* <strong>Grommets:</strong> Flexible inserts for knockouts; low/medium protection.</li>
+                <li>* <strong>Bushes:</strong> Rigid (often threaded) smooth entry; common with conduit.</li>
+                <li>* <strong>Glands:</strong> Provide sealing and strain relief; choose by material and IP.</li>
               </ul>
             </div>
 
@@ -394,19 +392,19 @@ export default function Module3Section6_4() {
                   <tr>
                     <td className="border border-white/10 p-2">Nylon gland</td>
                     <td className="border border-white/10 p-2">Flexes/round cables</td>
-                    <td className="border border-white/10 p-2">IP65–IP68</td>
+                    <td className="border border-white/10 p-2">IP65-IP68</td>
                     <td className="border border-white/10 p-2">Outdoor/general</td>
-                    <td className="border border-white/10 p-2">Lightweight, non‑metallic</td>
+                    <td className="border border-white/10 p-2">Lightweight, non-metallic</td>
                   </tr>
                   <tr className="bg-muted/5">
                     <td className="border border-white/10 p-2">Brass/stainless gland</td>
                     <td className="border border-white/10 p-2">Round armoured/unarmoured</td>
-                    <td className="border border-white/10 p-2">IP66–IP68</td>
+                    <td className="border border-white/10 p-2">IP66-IP68</td>
                     <td className="border border-white/10 p-2">Harsh/marine/industrial</td>
-                    <td className="border border-white/10 p-2">Robust, corrosion‑resistant</td>
+                    <td className="border border-white/10 p-2">Robust, corrosion-resistant</td>
                   </tr>
                   <tr>
-                    <td className="border border-white/10 p-2">Explosion‑proof gland</td>
+                    <td className="border border-white/10 p-2">Explosion-proof gland</td>
                     <td className="border border-white/10 p-2">As specified</td>
                     <td className="border border-white/10 p-2">Per ATEX/IECEx</td>
                     <td className="border border-white/10 p-2">Hazardous areas</td>
@@ -415,13 +413,13 @@ export default function Module3Section6_4() {
                 </tbody>
               </table>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[1]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* 3. IP Ratings and Environmental Sealing */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <FileText className="w-5 h-5" /> 3. IP Ratings and Environmental Sealing
             </h3>
@@ -434,21 +432,21 @@ export default function Module3Section6_4() {
                   <div>
                     <h6 className="font-medium text-white mb-2">First Digit: Solid Particle Protection</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>0:</strong> No protection</li>
-                      <li>• <strong>4:</strong> Protected against solid objects ≥1.0mm</li>
-                      <li>• <strong>5:</strong> Dust protected (limited ingress permitted)</li>
-                      <li>• <strong>6:</strong> Dust tight (no ingress of dust)</li>
+                      <li>* <strong>0:</strong> No protection</li>
+                      <li>* <strong>4:</strong> Protected against solid objects 1.0mm or larger</li>
+                      <li>* <strong>5:</strong> Dust protected (limited ingress permitted)</li>
+                      <li>* <strong>6:</strong> Dust tight (no ingress of dust)</li>
                     </ul>
                   </div>
                   <div>
                     <h6 className="font-medium text-white mb-2">Second Digit: Liquid Ingress Protection</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>0:</strong> No protection</li>
-                      <li>• <strong>4:</strong> Splashing water from any direction</li>
-                      <li>• <strong>5:</strong> Water jets from any direction</li>
-                      <li>• <strong>6:</strong> Powerful water jets</li>
-                      <li>• <strong>7:</strong> Immersion up to 1m depth</li>
-                      <li>• <strong>8:</strong> Immersion beyond 1m depth</li>
+                      <li>* <strong>0:</strong> No protection</li>
+                      <li>* <strong>4:</strong> Splashing water from any direction</li>
+                      <li>* <strong>5:</strong> Water jets from any direction</li>
+                      <li>* <strong>6:</strong> Powerful water jets</li>
+                      <li>* <strong>7:</strong> Immersion up to 1m depth</li>
+                      <li>* <strong>8:</strong> Immersion beyond 1m depth</li>
                     </ul>
                   </div>
                 </div>
@@ -497,25 +495,25 @@ export default function Module3Section6_4() {
                 <h5 className="font-medium text-amber-400 mb-2">Installation Best Practices</h5>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <ul className="space-y-1">
-                    <li>• Size to the cable OD; follow manufacturer's torque figures</li>
-                    <li>• Maintain bend radius; avoid forcing tight angles at entry</li>
-                    <li>• Provide strain relief; check clamping on outer sheath (not cores)</li>
+                    <li>* Size to the cable OD; follow manufacturer's torque figures</li>
+                    <li>* Maintain bend radius; avoid forcing tight angles at entry</li>
+                    <li>* Provide strain relief; check clamping on outer sheath (not cores)</li>
                   </ul>
                   <ul className="space-y-1">
-                    <li>• Seal unused entries with blanks or rated plugs</li>
-                    <li>• Inspect sealing elements before installation</li>
-                    <li>• Use calibrated torque wrench for critical applications</li>
+                    <li>* Seal unused entries with blanks or rated plugs</li>
+                    <li>* Inspect sealing elements before installation</li>
+                    <li>* Use calibrated torque wrench for critical applications</li>
                   </ul>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[2]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* 4. Regulatory Requirements and Compliance Framework */}
-          <section className="mb-2">
+          <div className="mb-2">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <FileText className="w-5 h-5" /> 4. Regulatory Requirements and Compliance Framework
             </h3>
@@ -562,156 +560,33 @@ export default function Module3Section6_4() {
                         <td className="border border-white/10 p-3">Regulation 4: Systems to prevent danger</td>
                         <td className="border border-white/10 p-3">HSE, criminal sanctions</td>
                       </tr>
-                      <tr>
-                        <td className="border border-white/10 p-3"><strong>IET Wiring Regulations</strong></td>
-                        <td className="border border-white/10 p-3">Industry best practice</td>
-                        <td className="border border-white/10 p-3">Detailed technical guidance on implementation</td>
-                        <td className="border border-white/10 p-3">Professional standards, insurance requirements</td>
-                      </tr>
                     </tbody>
                   </table>
-                </div>
-              </div>
-
-              <div className="p-4 bg-transparent border border-green-400/30 rounded-lg mb-4">
-                <h5 className="font-medium text-green-400 mb-3">BS 7671 Specific Requirements</h5>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <h6 className="font-medium text-white mb-2">Section 527: Selection and Erection of Wiring Systems</h6>
-                    <ul className="space-y-1 text-sm">
-                      <li>• <strong>527.1.2:</strong> Current-carrying capacity not impaired by installation method</li>
-                      <li>• <strong>527.1.3:</strong> Cables supported to avoid stress on conductors/connections</li>
-                      <li>• <strong>527.2:</strong> Protection against external influences per appendix 5</li>
-                      <li>• <strong>527.2.1:</strong> Suitable for ambient temperature and external influences</li>
-                      <li>• <strong>527.2.3:</strong> Protection against mechanical damage during installation/service</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="font-medium text-white mb-2">18th Edition Updates (Amendment 2)</h6>
-                    <ul className="space-y-1 text-sm">
-                      <li>• <strong>421.1.201:</strong> Arc fault protection in final circuits</li>
-                      <li>• <strong>526.5:</strong> Consumer unit installations in domestic premises</li>
-                      <li>• <strong>Ferrous enclosures:</strong> Mandatory for domestic installations</li>
-                      <li>• <strong>Non-combustible requirement:</strong> Higher fire safety standards</li>
-                      <li>• <strong>Entry protection:</strong> Critical for metal enclosure compliance</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
-                <h5 className="font-medium text-elec-yellow mb-3">Competent Person Schemes and Certification</h5>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <h6 className="font-medium text-white mb-2">Approved Schemes</h6>
-                    <ul className="space-y-1 text-sm">
-                      <li>• <strong>NICEIC:</strong> Domestic and commercial electrical installation</li>
-                      <li>• <strong>NAPIT:</strong> Part P competent person scheme</li>
-                      <li>• <strong>ELECSA:</strong> Electrical safety certification</li>
-                      <li>• <strong>BSI:</strong> British Standards compliance certification</li>
-                      <li>• <strong>JIB:</strong> Joint Industry Board grading and standards</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="font-medium text-white mb-2">Installation Certificates</h6>
-                    <ul className="space-y-1 text-sm">
-                      <li>• <strong>EIC:</strong> Electrical Installation Certificate for new work</li>
-                      <li>• <strong>MEIWC:</strong> Minor Electrical Installation Works Certificate</li>
-                      <li>• <strong>EICR:</strong> Electrical Installation Condition Report</li>
-                      <li>• <strong>Schedule of test results:</strong> Technical verification</li>
-                      <li>• <strong>Building control notification:</strong> Part P compliance</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg mb-4">
-                <h5 className="font-medium text-amber-400 mb-3">Industry-Specific Requirements</h5>
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse border border-white/10 text-sm">
-                    <thead>
-                      <tr className="">
-                        <th className="border border-white/10 p-3 text-left">Industry Sector</th>
-                        <th className="border border-white/10 p-3 text-left">Additional Standards</th>
-                        <th className="border border-white/10 p-3 text-left">Entry Protection Requirements</th>
-                        <th className="border border-white/10 p-3 text-left">Inspection Frequency</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="border border-white/10 p-3"><strong>Healthcare</strong></td>
-                        <td className="border border-white/10 p-3">HTM 06-01, BS EN 60601</td>
-                        <td className="border border-white/10 p-3">Medical grade sealing, easy cleaning</td>
-                        <td className="border border-white/10 p-3">Annual electrical safety testing</td>
-                      </tr>
-                      <tr className="bg-muted/5">
-                        <td className="border border-white/10 p-3"><strong>Food & Pharmaceutical</strong></td>
-                        <td className="border border-white/10 p-3">EHEDG guidelines, FDA 21 CFR</td>
-                        <td className="border border-white/10 p-3">Washdown rated (IP67/69K), hygienic design</td>
-                        <td className="border border-white/10 p-3">Daily cleaning validation</td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 p-3"><strong>Hazardous Areas</strong></td>
-                        <td className="border border-white/10 p-3">ATEX 2014/34/EU, IECEx</td>
-                        <td className="border border-white/10 p-3">Explosion-proof certified glands</td>
-                        <td className="border border-white/10 p-3">6-monthly certification review</td>
-                      </tr>
-                      <tr className="bg-muted/5">
-                        <td className="border border-white/10 p-3"><strong>Marine/Offshore</strong></td>
-                        <td className="border border-white/10 p-3">DNV GL, Lloyds Register</td>
-                        <td className="border border-white/10 p-3">Salt spray tested, immersion rated</td>
-                        <td className="border border-white/10 p-3">Monthly visual, annual certification</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div className="p-4 bg-transparent border border-border/30 rounded-lg">
-                <h5 className="font-medium text-elec-yellow mb-3">Compliance Consequences and Risk Management</h5>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <h6 className="font-medium text-white mb-2">Non-Compliance Consequences</h6>
-                    <ul className="space-y-1 text-sm">
-                      <li>• <strong>Criminal prosecution:</strong> HSE enforcement under EAWR</li>
-                      <li>• <strong>Civil liability:</strong> Personal injury claims, property damage</li>
-                      <li>• <strong>Insurance voidance:</strong> Non-compliant installations excluded</li>
-                      <li>• <strong>Professional sanctions:</strong> Loss of competent person status</li>
-                      <li>• <strong>Business closure:</strong> Prohibition notices, licence revocation</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h6 className="font-medium text-white mb-2">Risk Mitigation Strategies</h6>
-                    <ul className="space-y-1 text-sm">
-                      <li>• <strong>Design verification:</strong> Third-party technical review</li>
-                      <li>• <strong>Installation oversight:</strong> Competent person supervision</li>
-                      <li>• <strong>Testing protocols:</strong> Comprehensive commissioning programme</li>
-                      <li>• <strong>Documentation control:</strong> Audit trail maintenance</li>
-                      <li>• <strong>Continuing professional development:</strong> Staff training updates</li>
-                    </ul>
-                  </div>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
-          {/* Real‑World Example */}
+          {/* Real-World Example */}
           <div className="mt-6 p-4 bg-transparent border border-border/30 rounded-lg">
-            <h5 className="font-medium text-elec-yellow mb-2">Real‑World Example</h5>
+            <h5 className="font-medium text-elec-yellow mb-2">Real-World Example</h5>
             <p className="text-xs sm:text-sm text-white">
-              A metal consumer unit was installed without grommets on knockout entries. After a year of vibration, the sheath abraded leading to a live‑to‑earth fault that tripped the RCD. Retrofitting proper grommets and sealing unused entries restored integrity and prevented recurrence.
+              A metal consumer unit was installed without grommets on knockout entries. After a year of vibration, the sheath abraded leading to a live-to-earth fault that tripped the RCD. Retrofitting proper grommets and sealing unused entries restored integrity and prevented recurrence.
             </p>
           </div>
-        </Card>
+        </section>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Frequently Asked Questions
+          </h2>
           <div className="space-y-4">
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
               <h3 className="font-medium text-white mb-2">Q: Can I use plastic grommets in outdoor enclosures?</h3>
               <p className="text-xs sm:text-sm text-white">
-                A: Only if the enclosure’s IP rating is maintained — outdoor installations usually require IP‑rated glands instead.
+                A: Only if the enclosure's IP rating is maintained - outdoor installations usually require IP-rated glands instead.
               </p>
             </div>
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
@@ -721,37 +596,45 @@ export default function Module3Section6_4() {
               </p>
             </div>
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
-              <h3 className="font-medium text-white mb-2">Q: What’s the difference between a bush and a grommet?</h3>
+              <h3 className="font-medium text-white mb-2">Q: What's the difference between a bush and a grommet?</h3>
               <p className="text-xs sm:text-sm text-white">
                 A: A bush is a rigid fitting (often threaded) providing a smooth entry; a grommet is a flexible insert that protects the cable on a knockout edge.
               </p>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
-          <p className="text-white/90">
-            Safe cable entry prevents insulation damage, ensures mechanical security and maintains enclosure integrity. Choose grommets, bushes or glands to suit cable type and environment, and maintain required IP ratings per BS 7671 and BS EN 60529.
-          </p>
-        </Card>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Summary
+          </h2>
+          <div className="p-4 bg-transparent border-l-2 border-elec-yellow rounded-lg border border-white/10">
+            <p className="text-white/90">
+              Safe cable entry prevents insulation damage, ensures mechanical security and maintains enclosure integrity. Choose grommets, bushes or glands to suit cable type and environment, and maintain required IP ratings per BS 7671 and BS EN 60529.
+            </p>
+          </div>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Quiz (8 Questions)
+          </h2>
           <Quiz questions={quizQuestions} />
-        </Card>
+        </section>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
+        <div className="flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-3 pt-8 border-t border-white/10">
+          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../6-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
-          <Button asChild>
+          <Button className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../6-5">
               Next
               <ArrowRight className="w-4 h-4 ml-2" />

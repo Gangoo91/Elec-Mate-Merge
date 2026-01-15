@@ -1,6 +1,5 @@
 import { ArrowLeft, Zap, CheckCircle, AlertTriangle, Shield, TestTube, Battery } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -157,11 +156,11 @@ const Module2Section5_2 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.5
@@ -171,29 +170,28 @@ const Module2Section5_2 = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Zap className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 2.5.2
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                Common Materials in Electrical Work
-              </h1>
-              <p className="text-xl text-white max-w-3xl mt-2">
-                Compare conductor and insulation materials for practical electrical applications
-              </p>
-            </div>
-          </div>
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Header with Module Badge */}
+        <div className="mb-12 text-center">
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Module 2.5.2
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Common Materials in Electrical Work
+          </h1>
+          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
+            Compare conductor and insulation materials for practical electrical applications
+          </p>
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Copper vs Aluminium:</strong> Copper = lower resistance, Al = lighter/cheaper</li>
@@ -203,7 +201,7 @@ const Module2Section5_2 = () => {
                 <li><strong>Selection:</strong> Match material to environment and application</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Cable markings, SWA armour, termination types, sheath materials</li>
@@ -212,11 +210,14 @@ const Module2Section5_2 = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning Outcomes
+          </h2>
           <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -240,289 +241,286 @@ const Module2Section5_2 = () => {
               <span>Understand the impact of material choice on voltage drop and current capacity</span>
             </li>
           </ul>
-        </Card>
+        </section>
 
         {/* Section 1: Conductor Materials */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
-              Conductor Materials Comparison
-            </h2>
-            <div className="space-y-4 text-white">
-              <p>
-                Choosing the right conductor material affects current capacity, voltage drop, cost, installation complexity, 
-                and long-term reliability. Understanding the properties and trade-offs is essential for optimal design decisions 
-                that balance technical performance with economic considerations.
-              </p>
-              
-              <div className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-                  <div className="bg-card border border-border/30 p-4 rounded-lg">
-                    <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
-                      <Zap className="w-4 h-4" />
-                      Copper - The Standard Choice
-                    </h4>
-                    <div className="space-y-2 text-white text-sm">
-                      <div>
-                        <p><strong>Physical Properties:</strong></p>
-                        <ul className="list-disc pl-4 space-y-1">
-                          <li>Resistivity: 17.2 nΩ·m at 20°C</li>
-                          <li>Density: 8.96 g/cm³</li>
-                          <li>Excellent ductility and workability</li>
-                          <li>Good corrosion resistance</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p><strong>Applications and Benefits:</strong></p>
-                        <ul className="list-disc pl-4 space-y-1">
-                          <li>T&E cables (domestic/commercial)</li>
-                          <li>Flexible cords and appliance wiring</li>
-                          <li>Control and instrumentation circuits</li>
-                          <li>Reliable terminations with standard accessories</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p><strong>Economic Considerations:</strong></p>
-                        <ul className="list-disc pl-4 space-y-1">
-                          <li>Higher material cost per metre</li>
-                          <li>Lower installation labour costs</li>
-                          <li>Smaller cable sizes reduce containment costs</li>
-                          <li>Long-term reliability reduces maintenance</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-card border border-amber-400/30 p-4 rounded-lg">
-                    <h4 className="font-semibold text-amber-300 mb-2 flex items-center gap-2">
-                      <Battery className="w-4 h-4" />
-                      Aluminium - The Efficient Alternative
-                    </h4>
-                    <div className="space-y-2 text-white text-sm">
-                      <div>
-                        <p><strong>Physical Properties:</strong></p>
-                        <ul className="list-disc pl-4 space-y-1">
-                          <li>Resistivity: 28.2 nΩ·m at 20°C</li>
-                          <li>Density: 2.70 g/cm³ (70% lighter than copper)</li>
-                          <li>Excellent strength-to-weight ratio</li>
-                          <li>Forms protective oxide layer</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p><strong>Applications and Benefits:</strong></p>
-                        <ul className="list-disc pl-4 space-y-1">
-                          <li>Overhead transmission and distribution</li>
-                          <li>Large commercial and industrial feeders</li>
-                          <li>Long cable runs where weight matters</li>
-                          <li>Significant cost savings on large projects</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p><strong>Technical Challenges:</strong></p>
-                        <ul className="list-disc pl-4 space-y-1">
-                          <li>Thermal expansion and 'creep' under load</li>
-                          <li>Oxide formation affects connections</li>
-                          <li>Requires aluminium-compatible terminations</li>
-                          <li>More complex installation procedures</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Conductor Materials Comparison
+          </h2>
+          <div className="space-y-4 text-white">
+            <p>
+              Choosing the right conductor material affects current capacity, voltage drop, cost, installation complexity,
+              and long-term reliability. Understanding the properties and trade-offs is essential for optimal design decisions
+              that balance technical performance with economic considerations.
+            </p>
 
-                <div className="bg-teal-500/10 border border-teal-400/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-teal-300 mb-2">Detailed Comparison Analysis</h4>
-                  <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-white text-sm">
+            <div className="space-y-4">
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+                <div className="bg-card border border-border/30 p-4 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
+                    <Zap className="w-4 h-4" />
+                    Copper - The Standard Choice
+                  </h4>
+                  <div className="space-y-2 text-white text-sm">
                     <div>
-                      <p><strong>Electrical Performance:</strong></p>
+                      <p><strong>Physical Properties:</strong></p>
                       <ul className="list-disc pl-4 space-y-1">
-                        <li>Copper: 1.6× current capacity per CSA</li>
-                        <li>Aluminium: Lower voltage drop per kg</li>
-                        <li>Both: Similar temperature coefficients</li>
+                        <li>Resistivity: 17.2 nΩ·m at 20°C</li>
+                        <li>Density: 8.96 g/cm³</li>
+                        <li>Excellent ductility and workability</li>
+                        <li>Good corrosion resistance</li>
                       </ul>
                     </div>
                     <div>
-                      <p><strong>Mechanical Properties:</strong></p>
+                      <p><strong>Applications and Benefits:</strong></p>
                       <ul className="list-disc pl-4 space-y-1">
-                        <li>Copper: Higher tensile strength</li>
-                        <li>Aluminium: Better corrosion resistance</li>
-                        <li>Both: Good fatigue resistance when properly installed</li>
+                        <li>T&E cables (domestic/commercial)</li>
+                        <li>Flexible cords and appliance wiring</li>
+                        <li>Control and instrumentation circuits</li>
+                        <li>Reliable terminations with standard accessories</li>
                       </ul>
                     </div>
                     <div>
-                      <p><strong>Environmental Impact:</strong></p>
+                      <p><strong>Economic Considerations:</strong></p>
                       <ul className="list-disc pl-4 space-y-1">
-                        <li>Copper: Higher embodied energy</li>
-                        <li>Aluminium: Abundant raw material</li>
-                        <li>Both: Highly recyclable materials</li>
+                        <li>Higher material cost per metre</li>
+                        <li>Lower installation labour costs</li>
+                        <li>Smaller cable sizes reduce containment costs</li>
+                        <li>Long-term reliability reduces maintenance</li>
                       </ul>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-indigo-500/10 border border-indigo-400/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-indigo-300 mb-2">Practical Example: 100A Feeder Comparison</h4>
-                  <div className="text-indigo-200 text-sm space-y-2">
-                    <p><strong>Application:</strong> 150m three-phase feeder, 100A load, reference method D (buried)</p>
-                    <div className="bg-indigo-600/20 p-3 rounded space-y-2">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <p><strong>Copper Solution:</strong></p>
-                          <ul className="list-disc pl-4 space-y-1">
-                            <li>Cable: 25mm² Cu SWA</li>
-                            <li>Weight: ~8.5 kg/m × 150m = 1,275kg</li>
-                            <li>Voltage drop: 2.4V/A/km × 100A × 0.15km = 36V (8%)</li>
-                            <li>Material cost: Higher per metre</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <p><strong>Aluminium Solution:</strong></p>
-                          <ul className="list-disc pl-4 space-y-1">
-                            <li>Cable: 35mm² Al SWA</li>
-                            <li>Weight: ~6.2 kg/m × 150m = 930kg</li>
-                            <li>Voltage drop: 2.4V/A/km × 100A × 0.15km = 36V (8%)</li>
-                            <li>Material cost: Lower per metre</li>
-                          </ul>
-                        </div>
-                      </div>
-                      <p><strong>Key Insight:</strong> Both achieve same electrical performance; choose based on cost, weight, and termination complexity</p>
+                <div className="bg-card border border-amber-400/30 p-4 rounded-lg">
+                  <h4 className="font-semibold text-amber-300 mb-2 flex items-center gap-2">
+                    <Battery className="w-4 h-4" />
+                    Aluminium - The Efficient Alternative
+                  </h4>
+                  <div className="space-y-2 text-white text-sm">
+                    <div>
+                      <p><strong>Physical Properties:</strong></p>
+                      <ul className="list-disc pl-4 space-y-1">
+                        <li>Resistivity: 28.2 nΩ·m at 20°C</li>
+                        <li>Density: 2.70 g/cm³ (70% lighter than copper)</li>
+                        <li>Excellent strength-to-weight ratio</li>
+                        <li>Forms protective oxide layer</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <p><strong>Applications and Benefits:</strong></p>
+                      <ul className="list-disc pl-4 space-y-1">
+                        <li>Overhead transmission and distribution</li>
+                        <li>Large commercial and industrial feeders</li>
+                        <li>Long cable runs where weight matters</li>
+                        <li>Significant cost savings on large projects</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <p><strong>Technical Challenges:</strong></p>
+                      <ul className="list-disc pl-4 space-y-1">
+                        <li>Thermal expansion and 'creep' under load</li>
+                        <li>Oxide formation affects connections</li>
+                        <li>Requires aluminium-compatible terminations</li>
+                        <li>More complex installation procedures</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
-                <div className="space-y-2">
-                  <p className="text-yellow-300 font-semibold">
-                    Critical Design Rule: CSA Equivalence
-                  </p>
-                  <div className="text-yellow-200 text-sm">
-                    <p>For equivalent current-carrying capacity: <strong>Al CSA ≈ 1.6 × Cu CSA</strong></p>
-                    <p>This factor accounts for the resistivity difference and ensures similar electrical performance</p>
+
+              <div className="bg-teal-500/10 border border-teal-400/30 p-4 rounded-lg">
+                <h4 className="font-semibold text-teal-300 mb-2">Detailed Comparison Analysis</h4>
+                <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-white text-sm">
+                  <div>
+                    <p><strong>Electrical Performance:</strong></p>
+                    <ul className="list-disc pl-4 space-y-1">
+                      <li>Copper: 1.6× current capacity per CSA</li>
+                      <li>Aluminium: Lower voltage drop per kg</li>
+                      <li>Both: Similar temperature coefficients</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p><strong>Mechanical Properties:</strong></p>
+                    <ul className="list-disc pl-4 space-y-1">
+                      <li>Copper: Higher tensile strength</li>
+                      <li>Aluminium: Better corrosion resistance</li>
+                      <li>Both: Good fatigue resistance when properly installed</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p><strong>Environmental Impact:</strong></p>
+                    <ul className="list-disc pl-4 space-y-1">
+                      <li>Copper: Higher embodied energy</li>
+                      <li>Aluminium: Abundant raw material</li>
+                      <li>Both: Highly recyclable materials</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-indigo-500/10 border border-indigo-400/30 p-4 rounded-lg">
+                <h4 className="font-semibold text-indigo-300 mb-2">Practical Example: 100A Feeder Comparison</h4>
+                <div className="text-indigo-200 text-sm space-y-2">
+                  <p><strong>Application:</strong> 150m three-phase feeder, 100A load, reference method D (buried)</p>
+                  <div className="bg-indigo-600/20 p-3 rounded space-y-2">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <p><strong>Copper Solution:</strong></p>
+                        <ul className="list-disc pl-4 space-y-1">
+                          <li>Cable: 25mm² Cu SWA</li>
+                          <li>Weight: ~8.5 kg/m × 150m = 1,275kg</li>
+                          <li>Voltage drop: 2.4V/A/km × 100A × 0.15km = 36V (8%)</li>
+                          <li>Material cost: Higher per metre</li>
+                        </ul>
+                      </div>
+                      <div>
+                        <p><strong>Aluminium Solution:</strong></p>
+                        <ul className="list-disc pl-4 space-y-1">
+                          <li>Cable: 35mm² Al SWA</li>
+                          <li>Weight: ~6.2 kg/m × 150m = 930kg</li>
+                          <li>Voltage drop: 2.4V/A/km × 100A × 0.15km = 36V (8%)</li>
+                          <li>Material cost: Lower per metre</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <p><strong>Key Insight:</strong> Both achieve same electrical performance; choose based on cost, weight, and termination complexity</p>
                   </div>
                 </div>
               </div>
             </div>
+
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
+              <div className="space-y-2">
+                <p className="text-yellow-300 font-semibold">
+                  Critical Design Rule: CSA Equivalence
+                </p>
+                <div className="text-yellow-200 text-sm">
+                  <p>For equivalent current-carrying capacity: <strong>Al CSA ≈ 1.6 × Cu CSA</strong></p>
+                  <p>This factor accounts for the resistivity difference and ensures similar electrical performance</p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[0]} />
 
         {/* Section 2: Insulation Materials */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
-              Insulation and Sheath Materials
-            </h2>
-            <div className="space-y-4 text-white">
-              <p>
-                Insulation material selection affects cable temperature rating, current capacity, environmental resistance, 
-                and fire performance. Understanding these properties is essential for safe installations.
-              </p>
-              
-              <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                <div className="bg-card border border-border/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-elec-yellow mb-2">PVC / LSF</h4>
-                  <ul className="space-y-1 text-white text-sm">
-                    <li>• <strong>Rating:</strong> Typically 70°C</li>
-                    <li>• <strong>Uses:</strong> T&E, flex, general wiring</li>
-                    <li>• <strong>LSF:</strong> Low smoke properties</li>
-                    <li>• <strong>Cost:</strong> Economical option</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-elec-yellow mb-2">XLPE</h4>
-                  <ul className="space-y-1 text-elec-yellow text-sm">
-                    <li>• <strong>Rating:</strong> Typically 90°C</li>
-                    <li>• <strong>Uses:</strong> SWA, high-performance cables</li>
-                    <li>• <strong>Benefit:</strong> Higher current capacity</li>
-                    <li>• <strong>Applications:</strong> Industrial, distribution</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-rose-500/10 border border-rose-400/30 p-4 rounded-lg">
-                  <h4 className="font-semibold text-rose-300 mb-2">Rubber / Elastomers</h4>
-                  <ul className="space-y-1 text-rose-200 text-sm">
-                    <li>• <strong>Uses:</strong> Flexible cords, mobile equipment</li>
-                    <li>• <strong>Benefits:</strong> Flexibility, low-temp performance</li>
-                    <li>• <strong>Varieties:</strong> Natural, synthetic rubber</li>
-                    <li>• <strong>Environment:</strong> Oil/chemical resistance options</li>
-                  </ul>
-                </div>
-              </div>
-              
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Insulation and Sheath Materials
+          </h2>
+          <div className="space-y-4 text-white">
+            <p>
+              Insulation material selection affects cable temperature rating, current capacity, environmental resistance,
+              and fire performance. Understanding these properties is essential for safe installations.
+            </p>
+
+            <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
               <div className="bg-card border border-border/30 p-4 rounded-lg">
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <p className="text-elec-yellow">
-                    <strong>Important:</strong> LSZH (Low Smoke Zero Halogen) cables may be required in certain applications 
-                    for improved fire performance and reduced toxic emissions.
-                  </p>
-                </div>
+                <h4 className="font-semibold text-elec-yellow mb-2">PVC / LSF</h4>
+                <ul className="space-y-1 text-white text-sm">
+                  <li>• <strong>Rating:</strong> Typically 70°C</li>
+                  <li>• <strong>Uses:</strong> T&E, flex, general wiring</li>
+                  <li>• <strong>LSF:</strong> Low smoke properties</li>
+                  <li>• <strong>Cost:</strong> Economical option</li>
+                </ul>
+              </div>
+
+              <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
+                <h4 className="font-semibold text-elec-yellow mb-2">XLPE</h4>
+                <ul className="space-y-1 text-elec-yellow text-sm">
+                  <li>• <strong>Rating:</strong> Typically 90°C</li>
+                  <li>• <strong>Uses:</strong> SWA, high-performance cables</li>
+                  <li>• <strong>Benefit:</strong> Higher current capacity</li>
+                  <li>• <strong>Applications:</strong> Industrial, distribution</li>
+                </ul>
+              </div>
+
+              <div className="bg-rose-500/10 border border-rose-400/30 p-4 rounded-lg">
+                <h4 className="font-semibold text-rose-300 mb-2">Rubber / Elastomers</h4>
+                <ul className="space-y-1 text-rose-200 text-sm">
+                  <li>• <strong>Uses:</strong> Flexible cords, mobile equipment</li>
+                  <li>• <strong>Benefits:</strong> Flexibility, low-temp performance</li>
+                  <li>• <strong>Varieties:</strong> Natural, synthetic rubber</li>
+                  <li>• <strong>Environment:</strong> Oil/chemical resistance options</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="bg-card border border-border/30 p-4 rounded-lg">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <p className="text-elec-yellow">
+                  <strong>Important:</strong> LSZH (Low Smoke Zero Halogen) cables may be required in certain applications
+                  for improved fire performance and reduced toxic emissions.
+                </p>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[1]} />
 
         {/* Section 3: Termination and Connection Methods */}
-        <div className="mb-8">
-          <div className="border-l-4 border-purple-500 dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
-              Termination and Connection Considerations
-            </h2>
-            <div className="space-y-4 text-white">
-              <p>
-                Proper termination methods are critical for safety and reliability. Different materials require 
-                specific techniques and components to ensure lasting, safe connections.
-              </p>
-              
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-bold text-elec-yellow">Critical Termination Factors</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>Material Compatibility:</strong> Use approved terminals for conductor material (Cu/Al rating)</li>
-                    <li><strong>Torque Values:</strong> Follow manufacturer specifications - over/under-torquing causes failures</li>
-                    <li><strong>Surface Preparation:</strong> Remove oxidation, apply compounds where specified</li>
-                    <li><strong>Creep and Expansion:</strong> Consider thermal movement, especially with aluminium</li>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Termination and Connection Considerations
+          </h2>
+          <div className="space-y-4 text-white">
+            <p>
+              Proper termination methods are critical for safety and reliability. Different materials require
+              specific techniques and components to ensure lasting, safe connections.
+            </p>
+
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-bold text-elec-yellow">Critical Termination Factors</h4>
+                <ul className="list-disc pl-6 space-y-1 text-sm">
+                  <li><strong>Material Compatibility:</strong> Use approved terminals for conductor material (Cu/Al rating)</li>
+                  <li><strong>Torque Values:</strong> Follow manufacturer specifications - over/under-torquing causes failures</li>
+                  <li><strong>Surface Preparation:</strong> Remove oxidation, apply compounds where specified</li>
+                  <li><strong>Creep and Expansion:</strong> Consider thermal movement, especially with aluminium</li>
+                </ul>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="bg-card border border-border/30 p-4 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-2">Copper Terminations</h4>
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
+                    <li>Standard copper-rated terminals</li>
+                    <li>Stable connections, minimal maintenance</li>
+                    <li>Good resistance to corrosion</li>
+                    <li>Wide variety of connector types</li>
                   </ul>
                 </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-card border border-border/30 p-4 rounded-lg">
-                    <h4 className="font-semibold text-elec-yellow mb-2">Copper Terminations</h4>
-                    <ul className="list-disc pl-4 space-y-1 text-sm text-white">
-                      <li>Standard copper-rated terminals</li>
-                      <li>Stable connections, minimal maintenance</li>
-                      <li>Good resistance to corrosion</li>
-                      <li>Wide variety of connector types</li>
-                    </ul>
-                  </div>
-                  <div className="bg-card border border-border/30 p-4 rounded-lg">
-                    <h4 className="font-semibold text-elec-yellow mb-2">Aluminium Terminations</h4>
-                    <ul className="list-disc pl-4 space-y-1 text-sm text-white">
-                      <li>Al-rated or bimetallic lugs required</li>
-                      <li>Anti-oxidant compound where specified</li>
-                      <li>Regular inspection and re-torque schedule</li>
-                      <li>Special surface preparation procedures</li>
-                    </ul>
-                  </div>
+                <div className="bg-card border border-border/30 p-4 rounded-lg">
+                  <h4 className="font-semibold text-elec-yellow mb-2">Aluminium Terminations</h4>
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
+                    <li>Al-rated or bimetallic lugs required</li>
+                    <li>Anti-oxidant compound where specified</li>
+                    <li>Regular inspection and re-torque schedule</li>
+                    <li>Special surface preparation procedures</li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[2]} />
 
         {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance for Apprentices</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Practical Guidance for Apprentices
+          </h2>
           <div className="space-y-6">
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">Material Selection Process</h3>
@@ -536,7 +534,7 @@ const Module2Section5_2 = () => {
                     <li>Cost considerations and project budget</li>
                   </ul>
                 </div>
-                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
+                <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
                   <h4 className="font-semibold text-elec-yellow mb-2">Decision Factors</h4>
                   <ul className="list-disc pl-4 space-y-1 text-sm text-elec-yellow/80">
                     <li>Voltage drop limits (longer runs may need larger Al)</li>
@@ -547,7 +545,7 @@ const Module2Section5_2 = () => {
                 </div>
               </div>
             </div>
-            
+
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">Installation Best Practices</h3>
               <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
@@ -581,26 +579,27 @@ const Module2Section5_2 = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* FAQs */}
-        <Card className="mb-8 p-0 bg-transparent border-white/20 bg-none shadow-none overflow-hidden">
-          <div className="p-6 border-b border-white/10">
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Frequently Asked Questions</h2>
-          </div>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+            Frequently Asked Questions
+          </h2>
           <div className="divide-y divide-border/20">
             {faqs.map((faq, index) => (
-              <div key={index} className="p-6">
+              <div key={index} className="py-4">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
                 <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
-        </Card>
+        </section>
 
         {/* Pocket Guide */}
-        <div className="mb-8 space-y-6">
-          <Card className="p-6 bg-transparent border-white/20 bg-none shadow-none">
+        <section className="mb-10">
+          <div className="bg-card border border-border/30 p-4 sm:p-6 rounded-lg">
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <Shield className="h-5 w-5 text-elec-yellow" />
@@ -610,7 +609,7 @@ const Module2Section5_2 = () => {
                 Quick reference for common electrical materials and their applications
               </p>
             </div>
-            
+
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
               <div className="space-y-4">
                 <div className="bg-card border border-border/30 p-3 rounded-lg">
@@ -625,7 +624,7 @@ const Module2Section5_2 = () => {
                     <li>• <strong>Cost:</strong> Al cheaper per metre, Cu per ampere</li>
                   </ul>
                 </div>
-                
+
                 <div className="bg-card border border-border/30 p-3 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
                     <Shield className="w-4 h-4" />
@@ -639,7 +638,7 @@ const Module2Section5_2 = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className="space-y-4">
                 <div className="bg-card border border-elec-yellow/30 p-3 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Selection Checklist</h4>
@@ -651,7 +650,7 @@ const Module2Section5_2 = () => {
                     <li>• <strong>Fire:</strong> Consider LSF/LSZH requirements</li>
                   </ul>
                 </div>
-                
+
                 <div className="bg-card border border-border/30 p-3 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
                     <AlertTriangle className="w-4 h-4" />
@@ -666,7 +665,7 @@ const Module2Section5_2 = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-4 pt-4 border-t border-white/10">
               <div className="grid grid-cols-4 gap-4 text-xs">
                 <div className="text-center">
@@ -687,21 +686,21 @@ const Module2Section5_2 = () => {
                 </div>
               </div>
             </div>
-          </Card>
-        </div>
+          </div>
+        </section>
 
         {/* Quiz */}
-        <Quiz 
+        <Quiz
           title="Test Your Knowledge: Common Electrical Materials"
           questions={quizQuestions}
         />
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5" asChild>
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5" asChild>
             <Link to="../5-1"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a]" asChild>
+          <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]" asChild>
             <Link to="../5-3">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
           </Button>
         </nav>

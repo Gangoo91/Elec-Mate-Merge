@@ -101,12 +101,39 @@ export function WorkerTrackingSection() {
     }
 
     try {
-      // Use a default location (can be enhanced with GPS)
+      // Try to get GPS location, fallback to job location or default
+      let lat = 53.4808; // Default Manchester
+      let lng = -2.2426;
+
+      // Get selected job's location if available
+      const selectedJobData = jobsData.find(j => j.id === selectedJob);
+      if (selectedJobData?.lat && selectedJobData?.lng) {
+        lat = selectedJobData.lat;
+        lng = selectedJobData.lng;
+      }
+
+      // Try GPS location (async, don't block if unavailable)
+      if (navigator.geolocation) {
+        try {
+          const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject, {
+              enableHighAccuracy: true,
+              timeout: 5000,
+              maximumAge: 60000,
+            });
+          });
+          lat = position.coords.latitude;
+          lng = position.coords.longitude;
+        } catch {
+          // GPS unavailable, use job location or default
+        }
+      }
+
       await checkInMutation.mutateAsync({
         employeeId: selectedEmployee,
         jobId: selectedJob,
-        lat: 53.4808, // Default Manchester
-        lng: -2.2426,
+        lat,
+        lng,
       });
 
       toast({ title: "Worker checked in", description: "Location recorded successfully" });

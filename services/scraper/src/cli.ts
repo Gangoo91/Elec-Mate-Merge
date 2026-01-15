@@ -6,14 +6,29 @@ import { CEFScraper } from './scrapers/cef-scraper.js';
 import { ElectricalDirectScraper } from './scrapers/electrical-direct-scraper.js';
 import { RSComponentsScraper } from './scrapers/rs-components-scraper.js';
 import { TLCElectricalScraper } from './scrapers/tlc-electrical-scraper.js';
+import { EdmundsonScraper } from './scrapers/edmundson-scraper.js';
+import { YesssScraper } from './scrapers/yesss-scraper.js';
+import { ElectricCenterScraper } from './scrapers/electric-center-scraper.js';
+import { RexelScraper } from './scrapers/rexel-scraper.js';
 import { CouponAggregatorScraper } from './scrapers/coupon-aggregator-scraper.js';
 import { DatabaseClient } from './database/supabase-client.js';
 import { BaseScraper } from './scrapers/base-scraper.js';
 
 /**
  * CLI for running scrapers manually
- * Usage: tsx src/cli.ts <supplier|all|deals|coupons> [category]
+ * Usage: tsx src/cli.ts <supplier|all|deals|coupons|materials|tools> [category]
  */
+
+// Define materials vs tools categories
+const MATERIALS_CATEGORIES = [
+  'cables', 'consumer-units', 'circuit-protection', 'wiring-accessories',
+  'lighting', 'containment', 'earthing', 'fire-security', 'ev-charging',
+  'data-networking', 'fixings', 'hvac'
+];
+
+const TOOLS_CATEGORIES = [
+  'hand-tools', 'power-tools', 'test-equipment', 'ppe', 'tool-storage'
+];
 
 const scrapers: Record<string, () => BaseScraper> = {
   screwfix: () => new ScrewfixScraper(),
@@ -22,6 +37,10 @@ const scrapers: Record<string, () => BaseScraper> = {
   'electrical-direct': () => new ElectricalDirectScraper(),
   'rs-components': () => new RSComponentsScraper(),
   'tlc-electrical': () => new TLCElectricalScraper(),
+  edmundson: () => new EdmundsonScraper(),
+  yesss: () => new YesssScraper(),
+  'electric-center': () => new ElectricCenterScraper(),
+  rexel: () => new RexelScraper(),
   'coupon-aggregator': () => new CouponAggregatorScraper(),
 };
 
@@ -45,8 +64,14 @@ Commands:
   electrical-direct [cat]   Scrape ElectricalDirect products
   rs-components [category]  Scrape RS Components products
   tlc-electrical [category] Scrape TLC Electrical products
+  edmundson [category]      Scrape Edmundson Electrical products
+  yesss [category]          Scrape Yesss Electrical products
+  electric-center [cat]     Scrape Electric Center products
+  rexel [category]          Scrape Rexel/RFR Electrical products
   coupon-aggregator         Scrape coupons from aggregator sites
-  all                       Scrape all suppliers
+  all                       Scrape all suppliers (10 suppliers)
+  materials                 Scrape ONLY materials from all suppliers
+  tools                     Scrape ONLY tools from all suppliers
   deals                     Scrape deals only from all suppliers
   coupons                   Scrape coupons only (aggregator + suppliers)
 
@@ -96,6 +121,80 @@ Examples:
       if (result.errors.length > 0) {
         console.log(`  Error details: ${result.errors.join(', ')}`);
       }
+
+      await db.updateSupplierLastScraped(slug);
+    }
+
+    const deactivated = await db.deactivateExpiredDeals();
+    console.log(`\nDeactivated ${deactivated} expired deals`);
+
+  } else if (command === 'materials') {
+    // Scrape ONLY materials categories from all suppliers
+    console.log('Running MATERIALS-ONLY scrape for all suppliers...\n');
+    console.log('Categories:', MATERIALS_CATEGORIES.join(', '));
+
+    for (const [slug, factory] of Object.entries(scrapers)) {
+      if (slug === 'coupon-aggregator') continue; // Skip coupon aggregator
+
+      console.log(`\n--- Scraping ${slug} (materials only) ---\n`);
+      const scraper = factory();
+      await scraper.init();
+
+      let allProducts: Awaited<ReturnType<typeof scraper.scrapeProducts>> = [];
+
+      // Scrape each materials category
+      for (const category of MATERIALS_CATEGORIES) {
+        const products = await scraper.scrapeProducts(category);
+        if (products.length > 0) {
+          allProducts = allProducts.concat(products);
+        }
+      }
+
+      await scraper.close();
+
+      if (allProducts.length > 0) {
+        await db.saveProducts(slug, allProducts);
+      }
+
+      console.log(`\nResults for ${slug}:`);
+      console.log(`  Materials: ${allProducts.length}`);
+
+      await db.updateSupplierLastScraped(slug);
+    }
+
+    const deactivated = await db.deactivateExpiredDeals();
+    console.log(`\nDeactivated ${deactivated} expired deals`);
+
+  } else if (command === 'tools') {
+    // Scrape ONLY tools categories from all suppliers
+    console.log('Running TOOLS-ONLY scrape for all suppliers...\n');
+    console.log('Categories:', TOOLS_CATEGORIES.join(', '));
+
+    for (const [slug, factory] of Object.entries(scrapers)) {
+      if (slug === 'coupon-aggregator') continue; // Skip coupon aggregator
+
+      console.log(`\n--- Scraping ${slug} (tools only) ---\n`);
+      const scraper = factory();
+      await scraper.init();
+
+      let allProducts: Awaited<ReturnType<typeof scraper.scrapeProducts>> = [];
+
+      // Scrape each tools category
+      for (const category of TOOLS_CATEGORIES) {
+        const products = await scraper.scrapeProducts(category);
+        if (products.length > 0) {
+          allProducts = allProducts.concat(products);
+        }
+      }
+
+      await scraper.close();
+
+      if (allProducts.length > 0) {
+        await db.saveProducts(slug, allProducts);
+      }
+
+      console.log(`\nResults for ${slug}:`);
+      console.log(`  Tools: ${allProducts.length}`);
 
       await db.updateSupplierLastScraped(slug);
     }

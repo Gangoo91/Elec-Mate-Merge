@@ -66,63 +66,63 @@ export default function InspectionTestingModule1() {
   }, 0);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* iOS-style Sticky Header */}
-      <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50">
-        <div className="max-w-4xl mx-auto px-4 h-14 flex items-center gap-3">
+      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center gap-3">
           <Link to="../inspection-testing">
             <Button
               variant="ios-ghost"
               size="icon"
-              className="h-12 w-12 min-h-[48px] min-w-[48px]"
+              className="h-12 w-12 min-h-[48px] min-w-[48px] touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
           <div className="flex-1 min-w-0">
-            <h1 className="text-base font-semibold text-gray-900 dark:text-white truncate">
+            <h1 className="text-base font-semibold text-white/90 truncate">
               Module 1
             </h1>
-            <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+            <p className="text-xs text-white/60 truncate">
               Introduction to Inspection & Testing
             </p>
           </div>
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-6 pb-safe">
+      <main className="max-w-3xl mx-auto px-4 py-6 pb-safe">
         {/* Hero Section */}
         <section className="mb-8">
           <div className="flex items-start gap-4 mb-4">
-            <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/25">
-              <BookOpen className="h-8 w-8 text-white" />
+            <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-elec-yellow to-amber-500 flex items-center justify-center shadow-lg shadow-elec-yellow/25">
+              <BookOpen className="h-8 w-8 text-black" />
             </div>
             <div className="flex-1">
-              <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
+              <span className="text-sm font-medium text-elec-yellow">
                 Module 1 of 8
               </span>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+              <h2 className="text-2xl font-bold text-white/90 mt-1">
                 Introduction to Inspection & Testing
               </h2>
             </div>
           </div>
 
-          <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed mb-4">
+          <p className="text-white/70 text-base leading-relaxed mb-4">
             Master the foundational knowledge required for electrical inspection and testing.
             This module covers legal requirements, BS 7671 standards, equipment, safety procedures,
             and proper documentation practices.
           </p>
 
           <div className="flex flex-wrap gap-3">
-            <div className="flex items-center gap-2 px-3 py-2 bg-blue-50 dark:bg-blue-900/30 rounded-xl">
-              <Target className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-              <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
+            <div className="flex items-center gap-2 px-3 py-2 bg-elec-yellow/10 rounded-xl">
+              <Target className="h-4 w-4 text-elec-yellow" />
+              <span className="text-sm font-medium text-elec-yellow">
                 5 Sections
               </span>
             </div>
-            <div className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-xl">
-              <BookOpen className="h-4 w-4 text-gray-600 dark:text-gray-400" />
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <div className="flex items-center gap-2 px-3 py-2 bg-white/5 rounded-xl">
+              <BookOpen className="h-4 w-4 text-white/60" />
+              <span className="text-sm font-medium text-white/70">
                 {totalDuration} mins total
               </span>
             </div>
@@ -131,48 +131,48 @@ export default function InspectionTestingModule1() {
 
         {/* Learning Objectives */}
         <section className="mb-8">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+          <h3 className="text-lg font-semibold text-white/90 mb-3">
             Learning Objectives
           </h3>
-          <Card variant="ios" className="p-4">
+          <Card variant="ios" className="p-4 bg-white/5 border-white/10">
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
-                <div className="h-6 w-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-xs font-bold text-green-600 dark:text-green-400">1</span>
+                <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-xs font-bold text-elec-yellow">1</span>
                 </div>
-                <span className="text-gray-700 dark:text-gray-300">
+                <span className="text-white/70">
                   Understand the legal framework and requirements for electrical testing
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="h-6 w-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-xs font-bold text-green-600 dark:text-green-400">2</span>
+                <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-xs font-bold text-elec-yellow">2</span>
                 </div>
-                <span className="text-gray-700 dark:text-gray-300">
+                <span className="text-white/70">
                   Identify the testing requirements specified in BS 7671
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="h-6 w-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-xs font-bold text-green-600 dark:text-green-400">3</span>
+                <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-xs font-bold text-elec-yellow">3</span>
                 </div>
-                <span className="text-gray-700 dark:text-gray-300">
+                <span className="text-white/70">
                   Select and verify appropriate test equipment for different tests
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="h-6 w-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-xs font-bold text-green-600 dark:text-green-400">4</span>
+                <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-xs font-bold text-elec-yellow">4</span>
                 </div>
-                <span className="text-gray-700 dark:text-gray-300">
+                <span className="text-white/70">
                   Apply safe working practices during electrical testing
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="h-6 w-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-xs font-bold text-green-600 dark:text-green-400">5</span>
+                <div className="h-6 w-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-xs font-bold text-elec-yellow">5</span>
                 </div>
-                <span className="text-gray-700 dark:text-gray-300">
+                <span className="text-white/70">
                   Complete electrical certificates and documentation correctly
                 </span>
               </li>
@@ -182,10 +182,10 @@ export default function InspectionTestingModule1() {
 
         {/* Section Navigation Grid */}
         <section className="mb-8">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+          <h3 className="text-lg font-semibold text-white/90 mb-3">
             Module Sections
           </h3>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-4">
             {sections.map((section, index) => (
               <motion.div
                 key={section.id}
@@ -240,18 +240,18 @@ export default function InspectionTestingModule1() {
 
         {/* Start Module CTA */}
         <section className="pb-6">
-          <Card variant="ios" className="p-6 bg-gradient-to-br from-blue-500 to-blue-600 border-0">
+          <Card variant="ios" className="p-6 bg-gradient-to-br from-elec-yellow to-amber-500 border-0">
             <div className="text-center">
-              <h3 className="text-xl font-bold text-white mb-2">
+              <h3 className="text-xl font-bold text-black mb-2">
                 Ready to Begin?
               </h3>
-              <p className="text-blue-100 mb-4">
+              <p className="text-black/70 mb-4">
                 Start with Section 1 and work through each section in order for the best learning experience.
               </p>
               <Link to="section1">
                 <Button
                   variant="ios-primary"
-                  className="w-full sm:w-auto min-h-[48px] bg-white text-blue-600 hover:bg-blue-50"
+                  className="w-full sm:w-auto min-h-[48px] bg-black text-elec-yellow hover:bg-black/90 touch-manipulation active:scale-[0.98]"
                 >
                   Start Section 1
                   <ChevronRight className="h-5 w-5 ml-1" />

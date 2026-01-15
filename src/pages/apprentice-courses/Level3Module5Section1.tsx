@@ -49,10 +49,10 @@ const Level3Module5Section1 = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
             size="lg"
@@ -69,6 +69,7 @@ const Level3Module5Section1 = () => {
 
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
         {/* Hero Section */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -98,7 +99,7 @@ const Level3Module5Section1 = () => {
         {/* Subsections Grid */}
         <section>
           <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-4">
             {subsections.map((subsection, index) => (
               <ModuleCard
                 key={index}
@@ -111,6 +112,7 @@ const Level3Module5Section1 = () => {
             ))}
           </div>
         </section>
+        </div>
       </div>
     </div>
   );

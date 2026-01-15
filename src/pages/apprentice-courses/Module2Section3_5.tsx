@@ -1,13 +1,8 @@
-import React from "react";
-import { ArrowLeft, ArrowRight, Scale, CheckCircle } from "lucide-react";
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
-import SeriesParallelCalculators from "@/components/apprentice-courses/SeriesParallelCalculators";
-import OhmsCalculator from "@/components/apprentice-courses/OhmsCalculator";
 import useSEO from "@/hooks/useSEO";
 
 const TITLE = "Series vs Parallel: Pros and Cons - Level 2 Module 2 Section 3.5";
@@ -22,7 +17,7 @@ const quickCheckQuestions = [
     explanation: "In series circuits, one failure breaks the single current path, stopping all components."
   },
   {
-    id: "parallel-independence", 
+    id: "parallel-independence",
     question: "Why do parallel circuits offer better reliability?",
     options: ["They use less current", "Each branch operates independently", "They're easier to wire", "They cost less"],
     correctIndex: 1,
@@ -134,429 +129,326 @@ const Module2Section3_5 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 2.3
+              Back
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Scale className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 2.3.5
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                Series vs Parallel: Pros and Cons
-              </h1>
-              <p className="text-xl text-white max-w-3xl mt-2">
-                Compare advantages and disadvantages to choose the right circuit configuration
-              </p>
-            </div>
+      {/* Main Content - Full width, minimal padding */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+
+        {/* Centered Title */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 2.3.5</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Series vs Parallel: Pros and Cons
+          </h1>
+          <p className="text-white/80">
+            Compare advantages and disadvantages to choose the right circuit configuration
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Series:</strong> Simple, low cost, but one failure stops all</li>
+              <li><strong>Parallel:</strong> Independent operation, full voltage, fault tolerant</li>
+              <li><strong>Current:</strong> Series limits total, parallel adds branches</li>
+              <li><strong>Applications:</strong> Series for decorative lights, parallel for mains circuits</li>
+              <li><strong>BS 7671:</strong> Favours parallel for circuit division and reliability</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Socket outlets, lighting points, radial/ring finals</li>
+              <li><strong>Use:</strong> Circuit design decisions, fault tolerance planning</li>
+              <li><strong>Apply:</strong> Installation design, upgrade planning, fault diagnosis</li>
+            </ul>
           </div>
         </div>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Series:</strong> Simple, low cost, but one failure stops all.</li>
-                <li><strong>Parallel:</strong> Independent operation, full voltage, fault tolerant.</li>
-                <li><strong>Current:</strong> Series limits total, parallel adds branches.</li>
-                <li><strong>Applications:</strong> Series for decorative lights, parallel for mains circuits.</li>
-                <li><strong>BS 7671:</strong> Favours parallel for circuit division and reliability.</li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Socket outlets, lighting points, radial/ring finals.</li>
-                <li><strong>Use:</strong> Circuit design decisions, fault tolerance planning.</li>
-                <li><strong>Apply:</strong> Installation design, upgrade planning, fault diagnosis.</li>
-              </ul>
-            </div>
+        {/* Learning Outcomes - Simple list */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Compare advantages and disadvantages of series and parallel circuits",
+              "Select appropriate circuit configurations for different applications",
+              "Evaluate fault tolerance and reliability implications",
+              "Apply BS 7671 requirements for circuit division",
+              "Consider cost and complexity factors in circuit design",
+              "Justify circuit type choices for real installations"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
           </div>
-        </Card>
+        </section>
 
-        {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-white">
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Compare advantages and disadvantages of series and parallel circuits</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Select appropriate circuit configurations for different applications</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Evaluate fault tolerance and reliability implications</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Apply BS 7671 requirements for circuit division</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Consider cost and complexity factors in circuit design</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Justify circuit type choices for real installations</span>
-            </li>
-          </ul>
-        </Card>
+        {/* Divider */}
+        <hr className="border-white/5 mb-12" />
 
         {/* Section 1: Series Circuit Analysis */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
-              Series Circuits - Advantages and Disadvantages
-            </h2>
-            <div className="space-y-4 text-white">
-              <p>
-                Series circuits connect components end-to-end in a single chain. This simple arrangement has both benefits and significant limitations.
-              </p>
-              
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold text-elec-yellow">Advantages of series circuits:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>Simple design:</strong> Easy to understand and wire</li>
-                    <li><strong>Low material cost:</strong> Minimal cabling required</li>
-                    <li><strong>Current limiting:</strong> Total current limited by total resistance</li>
-                    <li><strong>Voltage division:</strong> Useful for dropping voltage to components</li>
-                  </ul>
-                </div>
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Series Circuits - Advantages and Disadvantages
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Series circuits connect components end-to-end in a single chain. This simple arrangement has both benefits and significant limitations.
+            </p>
 
-                <div>
-                  <p className="font-bold text-elec-yellow">Disadvantages of series circuits:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>Poor fault tolerance:</strong> One failure stops entire circuit</li>
-                    <li><strong>Voltage sharing:</strong> Components don't get full supply voltage</li>
-                    <li><strong>Interdependence:</strong> Adding/removing components affects all others</li>
-                    <li><strong>Limited applications:</strong> Not suitable for most mains installations</li>
-                  </ul>
-                </div>
-
-                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
-                  <p className="text-yellow-300">
-                    <strong>Real example:</strong> Christmas lights with 50 LEDs in series on 230V means each LED gets about 4.6V.
-                    If one LED fails open-circuit, the entire string goes dark.
-                  </p>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Advantages of series circuits:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Simple design:</strong> Easy to understand and wire</li>
+                <li><strong>Low material cost:</strong> Minimal cabling required</li>
+                <li><strong>Current limiting:</strong> Total current limited by total resistance</li>
+                <li><strong>Voltage division:</strong> Useful for dropping voltage to components</li>
+              </ul>
             </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-red-400/80 mb-2">Disadvantages of series circuits:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Poor fault tolerance:</strong> One failure stops entire circuit</li>
+                <li><strong>Voltage sharing:</strong> Components don't get full supply voltage</li>
+                <li><strong>Interdependence:</strong> Adding/removing components affects all others</li>
+                <li><strong>Limited applications:</strong> Not suitable for most mains installations</li>
+              </ul>
+            </div>
+
+            <p className="text-sm text-elec-yellow/70">
+              <strong>Real example:</strong> Christmas lights with 50 LEDs in series on 230V means each LED gets about 4.6V.
+              If one LED fails open-circuit, the entire string goes dark.
+            </p>
           </div>
-        </div>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[0]} />
 
         {/* Section 2: Parallel Circuit Analysis */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
-              Parallel Circuits - Advantages and Disadvantages
-            </h2>
-            <div className="space-y-4 text-white">
-              <p>
-                Parallel circuits provide separate paths for current to each component. This configuration is standard for most electrical installations.
-              </p>
-              
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold text-elec-yellow">Advantages of parallel circuits:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>Independent operation:</strong> Each component works separately</li>
-                    <li><strong>Full voltage:</strong> Every component gets full supply voltage</li>
-                    <li><strong>Fault tolerance:</strong> One failure doesn't affect others</li>
-                    <li><strong>Flexible control:</strong> Individual switching possible</li>
-                    <li><strong>BS 7671 compliance:</strong> Meets circuit division requirements</li>
-                  </ul>
-                </div>
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Parallel Circuits - Advantages and Disadvantages
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Parallel circuits provide separate paths for current to each component. This configuration is standard for most electrical installations.
+            </p>
 
-                <div>
-                  <p className="font-bold text-elec-yellow">Disadvantages of parallel circuits:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><strong>Complex wiring:</strong> More cables and connections needed</li>
-                    <li><strong>Higher cost:</strong> More materials and labour required</li>
-                    <li><strong>Current summation:</strong> Total current is sum of all branches</li>
-                    <li><strong>Protection complexity:</strong> Need to consider total load</li>
-                  </ul>
-                </div>
-
-                <div className="bg-card border border-elec-yellow/30 p-4 rounded-lg">
-                  <p className="text-elec-yellow">
-                    <strong>Circuit calculation example:</strong><br/>
-                    Three 100W loads in parallel on 230V:<br/>
-                    • Each load: I = 100W ÷ 230V = 0.43A<br/>
-                    • Total current: 3 × 0.43A = 1.3A<br/>
-                    • Each load operates at full power independently
-                  </p>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Advantages of parallel circuits:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Independent operation:</strong> Each component works separately</li>
+                <li><strong>Full voltage:</strong> Every component gets full supply voltage</li>
+                <li><strong>Fault tolerance:</strong> One failure doesn't affect others</li>
+                <li><strong>Flexible control:</strong> Individual switching possible</li>
+                <li><strong>BS 7671 compliance:</strong> Meets circuit division requirements</li>
+              </ul>
             </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-red-400/80 mb-2">Disadvantages of parallel circuits:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Complex wiring:</strong> More cables and connections needed</li>
+                <li><strong>Higher cost:</strong> More materials and labour required</li>
+                <li><strong>Current summation:</strong> Total current is sum of all branches</li>
+                <li><strong>Protection complexity:</strong> Need to consider total load</li>
+              </ul>
+            </div>
+
+            <p className="text-sm text-elec-yellow/70">
+              <strong>Circuit calculation example:</strong><br />
+              Three 100W loads in parallel on 230V:<br />
+              Each load: I = 100W ÷ 230V = 0.43A<br />
+              Total current: 3 × 0.43A = 1.3A<br />
+              Each load operates at full power independently
+            </p>
           </div>
-        </div>
+        </section>
 
         <InlineCheck {...quickCheckQuestions[1]} />
 
         {/* Section 3: Decision Matrix and Comparison */}
-        <div className="mb-8">
-          <div className="border-l-4 border-teal-500 bg-teal-500/10 dark:bg-teal-500/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
-              Circuit Selection Decision Matrix
-            </h2>
-            <div className="space-y-6 text-white">
-              
-              {/* Decision criteria */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-teal-300">Selection Criteria Analysis</h3>
-                <div className="bg-teal-500/10 border border-teal-400/30 p-4 rounded-lg">
-                  <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
-                    <div>
-                      <p className="font-bold text-teal-300 mb-3">Cost Considerations:</p>
-                      <ul className="list-disc pl-6 space-y-1">
-                        <li><strong>Series:</strong> Lower material costs, simple installation</li>
-                        <li><strong>Parallel:</strong> Higher cable costs, more labour intensive</li>
-                        <li><strong>Long-term:</strong> Parallel reduces maintenance call-outs</li>
-                        <li><strong>Compliance:</strong> BS 7671 requirements favour parallel</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-bold text-teal-300 mb-3">Performance Factors:</p>
-                      <ul className="list-disc pl-6 space-y-1">
-                        <li><strong>Reliability:</strong> Parallel wins for fault tolerance</li>
-                        <li><strong>Flexibility:</strong> Parallel allows individual control</li>
-                        <li><strong>Efficiency:</strong> Parallel operates at rated voltages</li>
-                        <li><strong>Maintenance:</strong> Parallel enables partial shutdowns</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Circuit Selection Decision Matrix
+          </h2>
+          <div className="text-white space-y-6 leading-relaxed">
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cost Considerations:</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li><strong>Series:</strong> Lower material costs, simple installation</li>
+                  <li><strong>Parallel:</strong> Higher cable costs, more labour intensive</li>
+                  <li><strong>Long-term:</strong> Parallel reduces maintenance call-outs</li>
+                  <li><strong>Compliance:</strong> BS 7671 requirements favour parallel</li>
+                </ul>
               </div>
-
-              {/* Practical comparison */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-teal-300">Real-World Impact Assessment</h3>
-                
-                <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                  <h4 className="font-bold text-white mb-3">Customer Satisfaction Analysis</h4>
-                  <div className="grid md:grid-cols-2 gap-4 text-sm text-slate-300">
-                    <div>
-                      <p className="font-medium mb-2">Series Circuit Issues:</p>
-                      <ul className="list-disc pl-6 space-y-1">
-                        <li>Complete failure from single fault</li>
-                        <li>Difficult fault location</li>
-                        <li>Reduced appliance performance</li>
-                        <li>Frequent service calls</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-medium mb-2">Parallel Circuit Benefits:</p>
-                      <ul className="list-disc pl-6 space-y-1">
-                        <li>Isolated failures, others work</li>
-                        <li>Easy fault identification</li>
-                        <li>Full voltage to all loads</li>
-                        <li>Minimal disruption</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card/30 border border-slate-600/30 p-4 rounded-lg">
-                  <h4 className="font-bold text-white mb-3">Installation Planning Considerations</h4>
-                  <div className="text-sm text-slate-300">
-                    <p className="mb-3">When planning circuit configurations, consider:</p>
-                    <ul className="list-disc pl-6 space-y-1">
-                      <li><strong>Load requirements:</strong> Do devices need full supply voltage?</li>
-                      <li><strong>Control needs:</strong> Independent switching required?</li>
-                      <li><strong>Future expansion:</strong> Will circuits need modification?</li>
-                      <li><strong>Regulatory compliance:</strong> BS 7671 circuit division requirements</li>
-                      <li><strong>Safety implications:</strong> Emergency lighting and essential circuits</li>
-                      <li><strong>Maintenance access:</strong> Partial isolation for servicing</li>
-                    </ul>
-                  </div>
-                </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Performance Factors:</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li><strong>Reliability:</strong> Parallel wins for fault tolerance</li>
+                  <li><strong>Flexibility:</strong> Parallel allows individual control</li>
+                  <li><strong>Efficiency:</strong> Parallel operates at rated voltages</li>
+                  <li><strong>Maintenance:</strong> Parallel enables partial shutdowns</li>
+                </ul>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Section 4: BS 7671 Context and Safety */}
-        <div className="mb-8">
-          <div className="border-l-4 border-amber-500 dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">4</span>
-              BS 7671 Requirements and Practical Application
-            </h2>
-            <div className="space-y-4 text-white">
-              <p>
-                BS 7671 strongly influences circuit configuration choices through regulations on circuit division, protection, and reliability.
-              </p>
-              
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-amber-300">Key BS 7671 Considerations</h3>
-                
-                <div className="bg-card border border-amber-400/30 p-4 rounded-lg">
-                  <ul className="list-disc pl-6 space-y-2 text-sm">
-                    <li><strong>Regulation 314.1:</strong> Divide installation to minimise inconvenience - favours parallel</li>
-                    <li><strong>Regulation 132.16:</strong> Assess existing installations before modifications</li>
-                    <li><strong>Part 4 Protection:</strong> Consider fault current and protection coordination</li>
-                    <li><strong>Part 5 Selection:</strong> Cable sizing must account for total load</li>
+            <div className="p-4 rounded-lg bg-white/5">
+              <p className="font-medium text-white mb-2">Customer Satisfaction Analysis</p>
+              <div className="grid sm:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p className="font-medium text-white/70 mb-1">Series Circuit Issues:</p>
+                  <ul className="text-white space-y-0.5">
+                    <li>Complete failure from single fault</li>
+                    <li>Difficult fault location</li>
+                    <li>Reduced appliance performance</li>
+                    <li>Frequent service calls</li>
                   </ul>
                 </div>
-                
-                <h3 className="text-lg font-semibold text-amber-300">Safety and Maintenance</h3>
-                
-                <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
-                  <p className="text-yellow-300">
-                    <strong>Important:</strong> Always consider the impact of circuit configuration on:
-                    • Fault finding and maintenance access • Emergency lighting and essential services
-                    • User convenience and safety • Future modification requirements
-                  </p>
+                <div>
+                  <p className="font-medium text-white/70 mb-1">Parallel Circuit Benefits:</p>
+                  <ul className="text-white space-y-0.5">
+                    <li>Isolated failures, others work</li>
+                    <li>Easy fault identification</li>
+                    <li>Full voltage to all loads</li>
+                    <li>Minimal disruption</li>
+                  </ul>
                 </div>
               </div>
             </div>
+
+            <div>
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Planning Considerations</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Load requirements:</strong> Do devices need full supply voltage?</li>
+                <li><strong>Control needs:</strong> Independent switching required?</li>
+                <li><strong>Future expansion:</strong> Will circuits need modification?</li>
+                <li><strong>Regulatory compliance:</strong> BS 7671 circuit division requirements</li>
+                <li><strong>Safety implications:</strong> Emergency lighting and essential circuits</li>
+                <li><strong>Maintenance access:</strong> Partial isolation for servicing</li>
+              </ul>
+            </div>
           </div>
-        </div>
+        </section>
+
+        {/* Section 4: BS 7671 Context and Safety */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            BS 7671 Requirements and Practical Application
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              BS 7671 strongly influences circuit configuration choices through regulations on circuit division, protection, and reliability.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key BS 7671 Considerations</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Regulation 314.1:</strong> Divide installation to minimise inconvenience - favours parallel</li>
+                <li><strong>Regulation 132.16:</strong> Assess existing installations before modifications</li>
+                <li><strong>Part 4 Protection:</strong> Consider fault current and protection coordination</li>
+                <li><strong>Part 5 Selection:</strong> Cable sizing must account for total load</li>
+              </ul>
+            </div>
+
+            <p className="text-sm text-elec-yellow/70">
+              <strong>Important:</strong> Always consider the impact of circuit configuration on:
+              fault finding and maintenance access, emergency lighting and essential services,
+              user convenience and safety, and future modification requirements.
+            </p>
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
-                <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white text-sm">{faq.answer}</p>
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
-        </Card>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
 
         {/* Circuit Selection Pocket Guide */}
-        <div className="mb-8">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Circuit Selection Quick Guide</h2>
-          <Card className="p-6 bg-transparent border-white/20 bg-none shadow-none">
-            <div className="grid md:grid-cols-3 gap-6 text-sm">
-              <div className="space-y-3">
-                <h3 className="font-semibold text-white flex items-center gap-2">
-                  <span className="bg-elec-yellow text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">S</span>
-                  Series Selection
-                </h3>
-                <div className="bg-card border border-border/30 p-3 rounded">
-                  <p className="font-medium text-elec-yellow mb-2">Use When:</p>
-                  <ul className="list-disc pl-4 space-y-1 text-white text-xs">
-                    <li>Decorative lighting chains</li>
-                    <li>Voltage division needed</li>
-                    <li>Current limiting required</li>
-                    <li>Temporary installations</li>
-                  </ul>
-                </div>
+        <section className="mb-10">
+          <div className="p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Circuit Selection Quick Guide</h3>
+            <div className="grid grid-cols-3 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-white mb-1">Series Selection</p>
+                <p className="text-white/70">Use for decorative lighting chains, voltage division needed, current limiting required, temporary installations</p>
               </div>
-              
-              <div className="space-y-3">
-                <h3 className="font-semibold text-white flex items-center gap-2">
-                  <span className="bg-elec-yellow text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">P</span>
-                  Parallel Selection
-                </h3>
-                <div className="bg-card border border-elec-yellow/30 p-3 rounded">
-                  <p className="font-medium text-elec-yellow mb-2">Use When:</p>
-                  <ul className="list-disc pl-4 space-y-1 text-elec-yellow text-xs">
-                    <li>Socket outlet circuits</li>
-                    <li>Lighting final circuits</li>
-                    <li>Independent control needed</li>
-                    <li>BS 7671 compliance required</li>
-                  </ul>
-                </div>
+              <div>
+                <p className="font-medium text-white mb-1">Parallel Selection</p>
+                <p className="text-white/70">Use for socket outlet circuits, lighting final circuits, independent control needed, BS 7671 compliance required</p>
               </div>
-
-              <div className="space-y-3">
-                <h3 className="font-semibold text-white flex items-center gap-2">
-                  <span className="bg-amber-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">!</span>
-                  Key Questions
-                </h3>
-                <div className="bg-card border border-amber-400/30 p-3 rounded">
-                  <p className="font-medium text-amber-300 mb-2">Ask Yourself:</p>
-                  <ul className="list-disc pl-4 space-y-1 text-white text-xs">
-                    <li>Fault tolerance critical?</li>
-                    <li>Individual control needed?</li>
-                    <li>Full voltage required?</li>
-                    <li>Future expansion likely?</li>
-                  </ul>
-                </div>
+              <div>
+                <p className="font-medium text-white mb-1">Key Questions</p>
+                <p className="text-white/70">Fault tolerance critical? Individual control needed? Full voltage required? Future expansion likely?</p>
               </div>
             </div>
-            
-            <div className="mt-6 pt-4 border-t border-white/10">
-              <p className="text-center text-white text-sm">
-                <strong>BS 7671 Reminder:</strong> Regulation 314.1 requires circuit division to minimise inconvenience - parallel circuits are preferred for final circuits
-              </p>
-            </div>
-          </Card>
-        </div>
-
-        {/* Quick Reference Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Reference: Circuit Selection Guide</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
-            <div className="space-y-3">
-              <h3 className="font-semibold text-white">Series Circuit Checklist</h3>
-              <ul className="list-disc pl-6 space-y-1 text-white">
-                <li>Simple installation acceptable?</li>
-                <li>Voltage division required?</li>
-                <li>Low current draw needed?</li>
-                <li>Fault tolerance not critical?</li>
-                <li>Decorative/temporary use?</li>
-              </ul>
-            </div>
-            <div className="space-y-3">
-              <h3 className="font-semibold text-white">Parallel Circuit Checklist</h3>
-              <ul className="list-disc pl-6 space-y-1 text-white">
-                <li>Full voltage to all loads?</li>
-                <li>Independent operation required?</li>
-                <li>Fault tolerance important?</li>
-                <li>Individual control needed?</li>
-                <li>BS 7671 compliance required?</li>
-              </ul>
-            </div>
+            <p className="text-center text-white text-xs mt-4">
+              <strong>BS 7671 Reminder:</strong> Regulation 314.1 requires circuit division to minimise inconvenience - parallel circuits are preferred for final circuits
+            </p>
           </div>
-        </Card>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
+        <section className="mb-10">
           <Quiz title="Circuit Configuration Knowledge Check" questions={quizQuestions} />
-        </Card>
+        </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5" asChild>
-            <Link to="../3-4"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../3-4">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
           </Button>
-          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a]" asChild>
-            <Link to="../3-6">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../3-6">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
           </Button>
         </nav>
-      </div>
+
+      </article>
     </div>
   );
 };

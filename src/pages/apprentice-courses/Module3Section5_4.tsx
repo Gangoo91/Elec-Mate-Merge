@@ -1,7 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -10,8 +7,6 @@ import {
   Droplets,
   Beaker,
   Wrench,
-  CheckCircle,
-  AlertTriangle,
 } from "lucide-react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -54,7 +49,7 @@ const quizQuestions = [
   {
     id: 4,
     question:
-      "Why fit a ‘drip loop’ before cable entry into an outdoor enclosure?",
+      "Why fit a 'drip loop' before cable entry into an outdoor enclosure?",
     options: [
       "To reduce voltage drop",
       "To manage spare length",
@@ -156,13 +151,13 @@ export default function Module3Section5_4() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -174,18 +169,15 @@ export default function Module3Section5_4() {
       </div>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <header className="mb-6 sm:mb-8 text-center">
+          <div className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-medium mb-4">
+            Module 3 - Section 3.5.4
+          </div>
+          <div className="flex justify-center mb-4">
+            <div className="p-2 rounded-lg">
               <Shield className="w-6 h-6 text-white" />
             </div>
-            <Badge
-              variant="outline"
-              className="border-elec-yellow/30 text-elec-yellow"
-            >
-              Section 3.5.4
-            </Badge>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Material Selection for Corrosive and Damp Environments
@@ -196,10 +188,13 @@ export default function Module3Section5_4() {
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Moisture and chemicals rapidly degrade unsuitable materials.</li>
@@ -208,7 +203,7 @@ export default function Module3Section5_4() {
                 <li>Assess external influences as required by BS 7671.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Salt air, condensation, chemical washdowns, existing corrosion.</li>
@@ -217,29 +212,35 @@ export default function Module3Section5_4() {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning Outcomes
+          </h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify common corrosive and damp environments and their risks.</li>
             <li>Select compliant materials for the environment and duty.</li>
             <li>Apply installation details to prevent water/chemical ingress.</li>
             <li>Plan maintenance to sustain protective measures.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Content / Learning
+          </h2>
 
           {/* 1. Environmental Influences and Assessment */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Droplets className="w-5 h-5" /> 1. Environmental Influences and Assessment (BS 7671)
             </h3>
-            
+
             <div className="mb-6">
               <h4 className="font-medium text-white mb-3">BS 7671 External Influences Classification</h4>
               <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
@@ -413,13 +414,13 @@ export default function Module3Section5_4() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[0]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* 2. Material Selection */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Wrench className="w-5 h-5" /> 2. Material Selection and Compatibility
             </h3>
@@ -627,13 +628,13 @@ export default function Module3Section5_4() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[1]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* 3. Installation Details and Good Practice */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Beaker className="w-5 h-5" /> 3. Installation Details and Good Practice
             </h3>
@@ -764,8 +765,8 @@ export default function Module3Section5_4() {
                 </div>
 
                 <div className="mt-4 p-3 bg-white/5 rounded-lg">
-                  <h6 className="font-medium text-white mb-2">Galvanic Series (Anodic ↑ to Cathodic ↓)</h6>
-                  <div className="grid md:grid-cols-4 gap-2 text-sm">
+                  <h6 className="font-medium text-white mb-2">Galvanic Series (Anodic to Cathodic)</h6>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
                     <div className="text-center p-2 bg-red-500/20 rounded">Magnesium</div>
                     <div className="text-center p-2 bg-orange-500/20 rounded">Zinc</div>
                     <div className="text-center p-2 bg-elec-yellow/20 rounded">Aluminium</div>
@@ -888,14 +889,17 @@ export default function Module3Section5_4() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[2]} />
-        </Card>
+        </section>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Frequently Asked Questions
+          </h2>
           <div className="space-y-4">
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
               <h3 className="font-medium text-white mb-2">Q: Do I always need stainless steel outdoors?</h3>
@@ -916,31 +920,39 @@ export default function Module3Section5_4() {
               </p>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
-          <p className="text-white/90">
-            Correct material selection and installation detail are essential in damp and corrosive areas. Assess external influences, choose compatible metals/non‑metals, protect against ingress and galvanic action, and maintain seals and coatings. Following BS 7671 principles ensures safe, durable installations.
-          </p>
-        </Card>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Summary
+          </h2>
+          <div className="rounded-lg p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
+            <p className="text-white/90">
+              Correct material selection and installation detail are essential in damp and corrosive areas. Assess external influences, choose compatible metals/non‑metals, protect against ingress and galvanic action, and maintain seals and coatings. Following BS 7671 principles ensures safe, durable installations.
+            </p>
+          </div>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Quiz (8 Questions)
+          </h2>
           <Quiz questions={quizQuestions} />
-        </Card>
+        </section>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
+        <div className="flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-3 pt-8 border-t border-white/10">
+          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../5-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Environmental Risks
             </Link>
           </Button>
-          <Button asChild>
+          <Button className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../5-5">
               Next: Special Locations
               <ArrowRight className="w-4 h-4 ml-2" />

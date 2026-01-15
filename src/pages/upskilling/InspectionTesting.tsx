@@ -88,10 +88,10 @@ const InspectionTesting = () => {
   const totalSections = modules.reduce((acc, m) => acc + m.sections, 0);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* iOS-style Sticky Header */}
-      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-4xl mx-auto">
+      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
           <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
             <Link to="/electrician/upskilling">
               <ArrowLeft className="h-5 w-5" />
@@ -104,7 +104,7 @@ const InspectionTesting = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="px-4 pt-8 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
         <div className="flex items-center gap-3 mb-4">
           <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
             <Zap className="h-8 w-8 text-elec-yellow" />
@@ -135,7 +135,7 @@ const InspectionTesting = () => {
       </section>
 
       {/* Course Highlights */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <Card variant="ios-elevated" className="border-elec-yellow/20">
           <CardHeader className="pb-2">
             <CardTitle className="text-[17px] font-semibold flex items-center gap-2">
@@ -165,7 +165,7 @@ const InspectionTesting = () => {
       </section>
 
       {/* Module List */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <h2 className="text-[22px] font-semibold text-white mb-4">Course Modules</h2>
         <div className="space-y-3">
           {modules.map((module) => {

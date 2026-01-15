@@ -44,6 +44,27 @@ serve(async (req) => {
     
     logger.info("User authenticated", { userId: user.id, email: user.email });
 
+    // First check if user has admin-granted free access
+    const { data: profileData } = await supabaseClient
+      .from("profiles")
+      .select("free_access_granted, subscription_tier, subscribed")
+      .eq("id", user.id)
+      .single();
+
+    if (profileData?.free_access_granted === true) {
+      logger.info("User has admin-granted free access", {
+        userId: user.id,
+        tier: profileData.subscription_tier
+      });
+      return new Response(JSON.stringify({
+        subscribed: true,
+        subscription_tier: profileData.subscription_tier || "Employer"
+      }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
+    }
+
     const stripe = new Stripe(stripeKey, { apiVersion: "2023-10-16" });
     
     // Fetch Stripe customers with retry and timeout

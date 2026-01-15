@@ -5,6 +5,7 @@ import { SUPPLIERS } from '../config/suppliers.js';
 /**
  * CEF (City Electrical Factors) Scraper
  * Large UK electrical wholesaler
+ * Updated 2026-01-15 with working selectors
  */
 
 export class CEFScraper extends BaseScraper {
@@ -84,7 +85,8 @@ export class CEFScraper extends BaseScraper {
   }
 
   /**
-   * Scrape a single product listing page
+   * Scrape a single product listing page using direct DOM queries
+   * CEF uses a React/Next.js based site with dynamic content loading
    */
   private async scrapeProductPage(
     page: Page,
@@ -96,64 +98,171 @@ export class CEFScraper extends BaseScraper {
     const success = await this.navigateWithRetry(page, url);
     if (!success) return products;
 
-    // Wait for products
-    await this.waitForSelector(page, '.product-item, .product-card, [data-product-id]', 5000);
+    // CEF is a heavy React site - wait longer for hydration
+    await new Promise(r => setTimeout(r, 8000));
+
+    // Try to wait for product content to appear
+    try {
+      await page.waitForFunction(() => {
+        return document.body.innerText.includes('£') ||
+               document.querySelectorAll('a[href*="/catalogue/"]').length > 5;
+      }, { timeout: 10000 });
+    } catch {
+      // Continue anyway
+    }
+
     await this.scrollToLoadAll(page);
 
-    // Extract products
+    // Extract products using multiple methods
     const extractedProducts = await page.evaluate(() => {
-      const cards = document.querySelectorAll('.product-item, .product-card, [data-product-id]');
       const items: Array<{
         sku: string;
         name: string;
-        brand: string | null;
         currentPrice: string | null;
         regularPrice: string | null;
         imageUrl: string | null;
         productUrl: string | null;
-        stockStatus: string;
+        stockStatus?: string;
       }> = [];
 
-      cards.forEach((card) => {
+      const seenSkus = new Set<string>();
+
+      // Method 1: Look for embedded JSON data in script tags (modern React sites)
+      const scripts = document.querySelectorAll('script[type="application/json"], script:not([src])');
+      scripts.forEach((script) => {
         try {
-          const nameEl = card.querySelector('.product-item-name, .product-title, h3, h4');
-          const priceEl = card.querySelector('.price-box .price, .product-price, .price');
-          const wasPriceEl = card.querySelector('.old-price .price, .was-price');
-          const imageEl = card.querySelector('img') as HTMLImageElement | null;
-          const linkEl = card.querySelector('a[href*="/product"], a.product-link') as HTMLAnchorElement | null;
-          const skuEl = card.querySelector('[data-product-sku], .product-code');
-          const stockEl = card.querySelector('.stock-status, .availability');
-
-          let sku = skuEl?.textContent?.trim() ||
-                    skuEl?.getAttribute('data-product-sku') ||
-                    card.getAttribute('data-product-id') || '';
-
-          // Extract from URL if needed
-          if (!sku && linkEl?.href) {
-            const match = linkEl.href.match(/\/product\/([^\/]+)/);
-            if (match) sku = match[1];
-          }
-
-          const name = nameEl?.textContent?.trim() || '';
-
-          if (name) {
-            if (!sku) {
-              sku = `CEF-${name.replace(/[^a-zA-Z0-9]/g, '').substring(0, 20)}`;
+          const content = script.textContent || '';
+          // Look for product data patterns
+          if (content.includes('"products"') || content.includes('"items"') || content.includes('"sku"')) {
+            // Try to find product arrays
+            const productMatch = content.match(/"products"\s*:\s*(\[[\s\S]*?\])/);
+            if (productMatch) {
+              const products = JSON.parse(productMatch[1]);
+              for (const p of products) {
+                if (p.sku && !seenSkus.has(p.sku)) {
+                  seenSkus.add(p.sku);
+                  items.push({
+                    sku: p.sku,
+                    name: p.name || p.title || p.description || '',
+                    currentPrice: p.price ? `£${p.price}` : null,
+                    regularPrice: p.wasPrice ? `£${p.wasPrice}` : null,
+                    imageUrl: p.image || p.imageUrl || null,
+                    productUrl: p.url || null,
+                  });
+                }
+              }
             }
-
-            items.push({
-              sku,
-              name,
-              brand: null,
-              currentPrice: priceEl?.textContent?.trim() || null,
-              regularPrice: wasPriceEl?.textContent?.trim() || null,
-              imageUrl: imageEl?.src || imageEl?.getAttribute('data-src') || null,
-              productUrl: linkEl?.href || null,
-              stockStatus: stockEl?.textContent?.trim() || 'Unknown',
-            });
           }
         } catch (e) {
-          console.error('Error extracting CEF product:', e);
+          // JSON parse failed, continue
+        }
+      });
+
+      if (items.length > 0) return items;
+
+      // Method 2: Find product cards/tiles by common class patterns
+      const cardSelectors = [
+        '[class*="product-card"]',
+        '[class*="product-tile"]',
+        '[class*="ProductCard"]',
+        '[class*="product-item"]',
+        'article[class*="product"]',
+        '[data-component="ProductCard"]',
+        '[data-testid*="product"]',
+      ];
+
+      for (const selector of cardSelectors) {
+        const cards = document.querySelectorAll(selector);
+        if (cards.length > 0) {
+          cards.forEach((card) => {
+            try {
+              // Find link to product
+              const link = card.querySelector('a[href*="/catalogue/"], a[href*="/product/"], a[href*="/p/"]') as HTMLAnchorElement;
+              if (!link?.href) return;
+
+              // Extract SKU from URL or data attribute
+              const skuFromUrl = link.href.match(/\/([A-Z0-9-]+)(?:\/|\?|$)/i);
+              const sku = card.getAttribute('data-sku') ||
+                         card.getAttribute('data-product-id') ||
+                         (skuFromUrl ? skuFromUrl[1] : `CEF-${Math.random().toString(36).substr(2, 8)}`);
+
+              if (seenSkus.has(sku)) return;
+              seenSkus.add(sku);
+
+              // Get name
+              const nameEl = card.querySelector('h2, h3, h4, [class*="name"], [class*="title"], [class*="Name"], [class*="Title"]');
+              const name = nameEl?.textContent?.trim() || link.textContent?.trim() || '';
+              if (!name || name.length < 3) return;
+
+              // Get price
+              const text = card.textContent || '';
+              const priceMatches = text.match(/£(\d+\.?\d*)/g);
+
+              // Get image
+              const img = card.querySelector('img') as HTMLImageElement;
+
+              items.push({
+                sku,
+                name,
+                currentPrice: priceMatches?.[0] || null,
+                regularPrice: priceMatches && priceMatches.length > 1 ? priceMatches[1] : null,
+                imageUrl: img?.src || img?.getAttribute('data-src') || null,
+                productUrl: link.href,
+              });
+            } catch (e) {
+              // Continue
+            }
+          });
+          if (items.length > 0) break;
+        }
+      }
+
+      if (items.length > 0) return items;
+
+      // Method 3: Find all catalogue links and build products from nearby content
+      const catalogueLinks = document.querySelectorAll('a[href*="/catalogue/"]');
+      catalogueLinks.forEach((link) => {
+        try {
+          const anchor = link as HTMLAnchorElement;
+          const href = anchor.href;
+
+          // Skip navigation/category links
+          if (href.includes('/categories') || href.includes('/search') || !href.match(/\/[A-Z0-9]{3,}/i)) return;
+
+          const skuMatch = href.match(/\/([A-Z0-9]{4,})/i);
+          if (!skuMatch) return;
+
+          const sku = skuMatch[1].toUpperCase();
+          if (seenSkus.has(sku)) return;
+          seenSkus.add(sku);
+
+          // Find containing element
+          let container = anchor.parentElement;
+          for (let i = 0; i < 8 && container; i++) {
+            if (container.textContent?.match(/£\d/)) break;
+            container = container.parentElement;
+          }
+          if (!container) container = anchor.parentElement;
+
+          const name = anchor.textContent?.trim() ||
+                      container?.querySelector('h2, h3, h4')?.textContent?.trim() || '';
+          if (!name || name.length < 3) return;
+
+          const text = container?.textContent || '';
+          const priceMatch = text.match(/£(\d+\.?\d*)/);
+
+          const img = container?.querySelector('img') as HTMLImageElement;
+
+          items.push({
+            sku,
+            name,
+            currentPrice: priceMatch ? priceMatch[0] : null,
+            regularPrice: null,
+            imageUrl: img?.src || null,
+            productUrl: href,
+          });
+        } catch (e) {
+          // Continue
         }
       });
 

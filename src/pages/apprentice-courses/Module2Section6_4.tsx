@@ -1,9 +1,6 @@
 import useSEO from "@/hooks/useSEO";
 import { ArrowLeft, ThermometerSun, Plug, Settings, AlertTriangle, Gauge } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import React from "react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -117,11 +114,11 @@ const Module2Section6_4: React.FC = () => {
   ] as const;
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.6
@@ -131,23 +128,28 @@ const Module2Section6_4: React.FC = () => {
       </div>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <ThermometerSun className="w-6 h-6 text-white" />
-            </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 2.6.4</Badge>
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        {/* Header */}
+        <div className="mb-12 text-center">
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Module 2.6.4
+          </span>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <ThermometerSun className="h-8 w-8 text-elec-yellow" />
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Losses in electrical systems (heat and load)</h1>
-          <p className="text-white">Where energy goes when it is not doing useful work, how to spot problem areas, and practical ways to keep losses low.</p>
-        </header>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Losses in Electrical Systems
+          </h1>
+          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
+            Where energy goes when it is not doing useful work, how to spot problem areas, and practical ways to keep losses low
+          </p>
+        </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Losses are unavoidable, but good design and installation minimise them.</li>
@@ -155,7 +157,7 @@ const Module2Section6_4: React.FC = () => {
                 <li>Lower losses mean cooler kit, better performance and lower energy bills.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Warm cables, discoloured terminations, humming transformers, devices warm when idle.</li>
@@ -164,10 +166,10 @@ const Module2Section6_4: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify common sources of electrical losses and their signs.</li>
@@ -175,10 +177,10 @@ const Module2Section6_4: React.FC = () => {
             <li>Relate losses to current draw, voltage drop, equipment life and energy cost.</li>
             <li>Apply BS 7671 context: current‑carrying capacity, voltage drop limits and connection quality.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Types of loss (plain English) */}
@@ -202,8 +204,7 @@ const Module2Section6_4: React.FC = () => {
             correctIndex={1}
             explanation="Long runs, small cross‑section and grouping raise conductor temperature and voltage drop."
           />
-          <Separator className="my-6" />
-
+          
           {/* Reducing losses */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Settings className="w-5 h-5" /> Practical ways to reduce losses</h3>
@@ -217,8 +218,7 @@ const Module2Section6_4: React.FC = () => {
             </ul>
           </section>
 
-          <Separator className="my-6" />
-
+          
           {/* Examples */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Worked examples (conceptual)</h3>
@@ -249,8 +249,7 @@ const Module2Section6_4: React.FC = () => {
             </ul>
           </section>
 
-          <Separator className="my-6" />
-
+          
           {/* Environmental and installation factors */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Environmental factors affecting losses</h3>
@@ -280,8 +279,7 @@ const Module2Section6_4: React.FC = () => {
             </div>
           </section>
 
-          <Separator className="my-6" />
-
+          
           {/* Cost and energy impact */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Economic impact of losses</h3>
@@ -313,8 +311,7 @@ const Module2Section6_4: React.FC = () => {
             </div>
           </section>
 
-          <Separator className="my-6" />
-
+          
           {/* Troubleshooting losses */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Identifying and troubleshooting excessive losses</h3>
@@ -376,8 +373,7 @@ const Module2Section6_4: React.FC = () => {
             </div>
           </section>
 
-          <Separator className="my-6" />
-
+          
           {/* Quantifying losses */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Quantifying losses - practical examples</h3>
@@ -391,8 +387,7 @@ const Module2Section6_4: React.FC = () => {
             </div>
           </section>
 
-          <Separator className="my-6" />
-
+          
           <InlineCheck
             id="ic-volt-drop"
             question="For a long final circuit with noticeable voltage drop, the best first step is to…"
@@ -401,8 +396,7 @@ const Module2Section6_4: React.FC = () => {
             explanation="Bigger conductors or shorter runs reduce resistance and losses; always check BS 7671 voltage drop limits."
           />
 
-          <Separator className="my-6" />
-
+          
           {/* Safety & BS 7671 context */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Gauge className="w-5 h-5" /> BS 7671 context and good practice</h3>
@@ -411,15 +405,15 @@ const Module2Section6_4: React.FC = () => {
               <li>Voltage drop limits for final circuits: follow BS 7671 guidance to protect performance and safety.</li>
               <li>Connections: workmanship and accessibility matter; poor joints are a common source of overheating.</li>
             </ul>
-            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
+            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-2 border-elec-yellow p-4 rounded mt-4" role="alert">
               <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
               <p className="text-white text-sm">Isolate, lock‑off and prove dead before work. Follow manufacturer instructions and BS 7671.</p>
             </div>
           </section>
-        </Card>
+        </section>
 
         {/* FAQ */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
           <ul className="space-y-3 text-xs sm:text-sm text-white">
             {faqs.map((f, i) => (
@@ -429,13 +423,23 @@ const Module2Section6_4: React.FC = () => {
               </li>
             ))}
           </ul>
-        </Card>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-16 p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick check quiz</h2>
           <Quiz questions={quizQuestions as any} title="Losses in electrical systems" />
-        </Card>
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5" asChild>
+            <Link to="../6-3"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]" asChild>
+            <Link to="../6-5">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+          </Button>
+        </nav>
 
         {/* Structured data */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />

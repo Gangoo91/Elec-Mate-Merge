@@ -1,9 +1,6 @@
 import useSEO from "@/hooks/useSEO";
 import { ArrowLeft, Zap, Calculator, Gauge, Plug, AlertTriangle, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import React from "react";
@@ -105,11 +102,11 @@ const Module2Section6_1: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.6
@@ -119,23 +116,28 @@ const Module2Section6_1: React.FC = () => {
       </div>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <Zap className="w-6 h-6 text-elec-yellow" />
-            </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow bg-elec-yellow/5">Section 2.6.1</Badge>
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        {/* Header */}
+        <div className="mb-12 text-center">
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Module 2.6.1
+          </span>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Zap className="h-8 w-8 text-elec-yellow" />
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">What is Electrical Power? (Watts Explained)</h1>
-          <p className="text-white">A practical, BS 7671-aligned guide to watts, kW and kWh with simple examples you can use on site.</p>
-        </header>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            What is Electrical Power? (Watts Explained)
+          </h1>
+          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
+            A practical, BS 7671-aligned guide to watts, kW and kWh with simple examples you can use on site
+          </p>
+        </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Power is how fast energy is used or produced. More watts = more energy per second.</li>
@@ -143,7 +145,7 @@ const Module2Section6_1: React.FC = () => {
                 <li>kW is thousands of watts; kWh is energy over time (used for billing).</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Nameplates show W or kW. High W usually means higher current on 230 V.</li>
@@ -152,10 +154,10 @@ const Module2Section6_1: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Explain the watt (W) and distinguish power (kW) from energy (kWh).</li>
@@ -165,10 +167,10 @@ const Module2Section6_1: React.FC = () => {
             <li>Evaluate simple energy use and running cost from kWh and tariff.</li>
             <li>Relate decisions to BS 7671 guidance on maximum demand, cable sizing and protection.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Key formulas */}
@@ -206,8 +208,7 @@ const Module2Section6_1: React.FC = () => {
             correctIndex={1}
             explanation="When resistance is known, use P = V² / R (or P = I²R if current is known)."
           />
-          <Separator className="my-6" />
-
+          
           {/* AC power and power factor */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Gauge className="w-5 h-5 text-elec-yellow" /> AC power and power factor (quick view)</h3>
@@ -232,8 +233,7 @@ const Module2Section6_1: React.FC = () => {
             <p className="text-sm text-white mb-3">Estimate power or current quickly for single‑phase or three‑phase (uses RMS values and pf).</p>
             <PowerQuickCalc />
           </section>
-          <Separator className="my-6" />
-
+          
           {/* Three‑phase basics */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Three‑phase basics (UK 400/230 V)</h3>
@@ -245,8 +245,7 @@ const Module2Section6_1: React.FC = () => {
             </ul>
             <p className="mt-2 text-sm text-white"><strong>Example:</strong> 400 V 3φ motor, 16 A, pf 0.9 → P ≈ 1.732 × 400 × 16 × 0.9 ≈ 9.98 kW.</p>
           </section>
-          <Separator className="my-6" />
-
+          
           {/* Worked examples */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Worked examples</h3>
@@ -283,8 +282,7 @@ const Module2Section6_1: React.FC = () => {
               </li>
             </ul>
           </section>
-          <Separator className="my-6" />
-
+          
           {/* UK household examples */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Everyday UK examples (typical)</h3>
@@ -323,8 +321,7 @@ const Module2Section6_1: React.FC = () => {
             </div>
             <p className="text-xs text-white mt-3">Always verify nameplate ratings. Consider start currents and power factor for motors and electronic supplies.</p>
           </section>
-          <Separator className="my-6" />
-
+          
           {/* Energy and running cost */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Energy and running cost</h3>
@@ -334,8 +331,7 @@ const Module2Section6_1: React.FC = () => {
               <p><strong>Tip:</strong> For intermittent loads, consider duty cycle when estimating energy.</p>
             </div>
           </section>
-          <Separator className="my-6" />
-
+          
           {/* Safety & BS 7671 context */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Plug className="w-5 h-5 text-elec-yellow" /> Safety and BS 7671 context (guidance)</h3>
@@ -344,13 +340,12 @@ const Module2Section6_1: React.FC = () => {
               <li>Assess maximum demand/diversity (Part 3) and protective device selection (Part 4).</li>
               <li>Document and test in line with Part 6 inspection and testing requirements.</li>
             </ul>
-            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
+            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-2 border-elec-yellow p-4 rounded mt-4" role="alert">
               <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
               <p className="text-white text-sm">Isolate, lock‑off and prove dead before work. Follow manufacturer instructions and BS 7671.</p>
             </div>
           </section>
-          <Separator className="my-6" />
-
+          
           {/* Common mistakes */}
           <section>
             <h3 className="font-medium text-white mb-2">Common mistakes (avoid)</h3>
@@ -361,10 +356,10 @@ const Module2Section6_1: React.FC = () => {
               <li>Overlooking cable sizing, volt drop and protective device coordination when power increases.</li>
             </ul>
           </section>
-        </Card>
+        </section>
 
         {/* Power Quick Reference Pocket Guide */}
-        <Card className="mb-8 p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Calculator className="w-5 h-5 text-elec-yellow" />
             Power Quick Reference (Pocket Guide)
@@ -420,10 +415,10 @@ const Module2Section6_1: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Enhanced Real-world Scenarios */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
             <Zap className="w-5 h-5 text-amber-400" />
             Real-World Power Scenarios
@@ -516,10 +511,10 @@ const Module2Section6_1: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Real‑world scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Power Factor in Practice</h2>
           <div className="space-y-3 text-xs sm:text-sm text-white">
             <p><strong>Job:</strong> Fit a 2 kW panel heater and a small 0.75 kW single‑phase extractor (pf 0.8) in a utility room.</p>
@@ -531,10 +526,10 @@ const Module2Section6_1: React.FC = () => {
               <li><strong>Documentation:</strong> Test, record and update schedules in line with Part 6.</li>
             </ol>
           </div>
-        </Card>
+        </section>
 
         {/* FAQ */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <ul className="space-y-3 text-xs sm:text-sm text-white">
             {faqs.map((f, i) => (
@@ -544,10 +539,10 @@ const Module2Section6_1: React.FC = () => {
               </li>
             ))}
           </ul>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Power (W/kW) is the rate of energy use; energy (kWh) is power over time.</li>
@@ -564,13 +559,23 @@ const Module2Section6_1: React.FC = () => {
               <li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5" /> Re‑test and record to BS 7671 after modifications.</li>
             </ul>
           </div>
-        </Card>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-16 p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick check quiz</h2>
           <Quiz questions={quizQuestions} title="Electrical Power (Watts)" />
-        </Card>
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5" asChild>
+            <Link to=".."><ArrowLeft className="w-4 h-4 mr-2" />Back to Section 2.6</Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]" asChild>
+            <Link to="../6-2">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+          </Button>
+        </nav>
 
         {/* Structured data */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />

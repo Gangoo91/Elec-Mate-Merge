@@ -8,20 +8,24 @@ export interface InspectorProfile {
   name: string;
   photoUrl?: string;
   qualifications: string[];
-  companyName: string;
-  companyAddress: string;
-  companyPhone: string;
-  companyEmail: string;
+  // Company fields are deprecated - use company_profiles (Settings > Company) instead
+  // Kept for backwards compatibility with existing data
+  companyName?: string;
+  companyAddress?: string;
+  companyPhone?: string;
+  companyEmail?: string;
   companyLogo?: string;
   companyWebsite?: string;
   companyRegistrationNumber?: string;
   vatNumber?: string;
-  registrationScheme: string;
-  registrationNumber: string;
+  // Professional registration
+  registrationScheme?: string;
+  registrationNumber?: string;
   registrationExpiry?: string;
-  insuranceProvider: string;
-  insurancePolicyNumber: string;
-  insuranceCoverage: string;
+  // Insurance details
+  insuranceProvider?: string;
+  insurancePolicyNumber?: string;
+  insuranceCoverage?: string;
   insuranceExpiry?: string;
   signatureData?: string;
   isDefault: boolean;

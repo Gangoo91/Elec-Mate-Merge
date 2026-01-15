@@ -1,9 +1,6 @@
 import useSEO from "@/hooks/useSEO";
-import { ArrowLeft, Cable, Wrench, Shield, AlertTriangle, CheckCircle2, Home, Factory } from "lucide-react";
+import { ArrowLeft, Cable, Wrench, Shield, AlertTriangle, CheckCircle2, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import React from "react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -18,7 +15,7 @@ const quickCheckQuestions = [
     explanation: "Steel conduit provides excellent mechanical and fire protection but requires careful planning for routing and earthing continuity."
   },
   {
-    id: 2, 
+    id: 2,
     question: "When is surface wiring most appropriate?",
     options: ["New builds", "Temporary installations", "Underground", "High-risk environments"],
     correctAnswer: 1,
@@ -123,82 +120,94 @@ const Module3Section1_1: React.FC = () => {
   } as const;
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 3.1
+              Back
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Cable className="w-6 h-6 text-white" />
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Title */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <Cable className="h-4 w-4" />
+              <span>Module 3.1.1</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 3.1.1</Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Common Wiring Systems Overview</h1>
-          <p className="text-white">Understanding surface wiring, conduit, trunking, SWA and flexible systems for practical UK installations.</p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+              Common Wiring Systems Overview
+            </h1>
+            <p className="text-white/80">
+              Understanding surface wiring, conduit, trunking, SWA and flexible systems for practical UK installations
+            </p>
+          </header>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Choose wiring systems based on protection needed, environment, and accessibility requirements.</li>
-                <li>Surface = quick/temporary; Conduit = protection; Trunking = access; SWA = outdoor/underground.</li>
-                <li>All systems must comply with BS 7671 and maintain earth continuity.</li>
+          {/* Quick Summary Boxes */}
+          <div className="grid sm:grid-cols-2 gap-4 mb-12">
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+              <ul className="text-sm text-white space-y-1">
+                <li>Choose wiring systems based on protection needed, environment, and accessibility requirements</li>
+                <li>Surface = quick/temporary; Conduit = protection; Trunking = access; SWA = outdoor/underground</li>
+                <li>All systems must comply with BS 7671 and maintain earth continuity</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Look for environmental conditions, mechanical risk, and access needs.</li>
-                <li><strong>Use:</strong> Match system to application: industrial = steel conduit, office = trunking.</li>
-                <li><strong>Check:</strong> Earth continuity, appropriate glands, and cable support spacing.</li>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+              <ul className="text-sm text-white space-y-1">
+                <li><strong>Spot:</strong> Look for environmental conditions, mechanical risk, and access needs</li>
+                <li><strong>Use:</strong> Match system to application: industrial = steel conduit, office = trunking</li>
+                <li><strong>Check:</strong> Earth continuity, appropriate glands, and cable support spacing</li>
               </ul>
             </div>
           </div>
-        </Card>
 
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-            <li>Compare and select appropriate wiring systems for different applications and environments.</li>
-            <li>Understand installation requirements, advantages and limitations of each system type.</li>
-            <li>Apply BS 7671 requirements for cable support, protection and earthing continuity.</li>
-            <li>Assess cost, installation time and maintenance implications of wiring system choices.</li>
-            <li>Identify common mistakes and compliance issues with each wiring method.</li>
-            <li>Plan system transitions and ensure proper termination techniques.</li>
-          </ul>
-        </Card>
+          {/* Learning Outcomes */}
+          <section className="mb-12">
+            <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+            <div className="grid sm:grid-cols-2 gap-2">
+              {[
+                "Compare and select appropriate wiring systems for different applications",
+                "Understand installation requirements for each system type",
+                "Apply BS 7671 requirements for cable support and protection",
+                "Assess cost, installation time and maintenance implications",
+                "Identify common mistakes and compliance issues",
+                "Plan system transitions and proper termination techniques"
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-2 text-sm text-white">
+                  <CheckCircle2 className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </section>
 
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
+          {/* Divider */}
+          <hr className="border-white/5 mb-12" />
 
-          {/* Surface Wiring */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Wrench className="w-5 h-5" /> Surface Wiring Systems</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <p><strong>Description:</strong> Cables run on the surface of walls, ceilings or structures, secured with clips or cleats.</p>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Advantages</p>
-                  <ul className="list-disc pl-4 space-y-1">
+          {/* Section 1: Surface Wiring */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Surface Wiring Systems
+            </h2>
+            <div className="text-white space-y-4 leading-relaxed">
+              <p>
+                <strong>Description:</strong> Cables run on the surface of walls, ceilings or structures, secured with clips or cleats.
+              </p>
+
+              <div className="grid sm:grid-cols-2 gap-4 my-6">
+                <div className="p-4 rounded-lg bg-white/5">
+                  <p className="text-sm font-medium text-white mb-2">Advantages</p>
+                  <ul className="text-sm text-white/90 space-y-1">
                     <li>Quick installation and low cost</li>
                     <li>Easy inspection and maintenance</li>
                     <li>Suitable for temporary installations</li>
@@ -206,9 +215,9 @@ const Module3Section1_1: React.FC = () => {
                     <li>Easy cable identification</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
-                  <p className="font-medium mb-2">Limitations</p>
-                  <ul className="list-disc pl-4 space-y-1">
+                <div className="p-4 rounded-lg bg-amber-500/10">
+                  <p className="text-sm font-medium text-white mb-2">Limitations</p>
+                  <ul className="text-sm text-white/90 space-y-1">
                     <li>Poor aesthetic appearance</li>
                     <li>Vulnerable to mechanical damage</li>
                     <li>Limited to certain environments</li>
@@ -218,9 +227,9 @@ const Module3Section1_1: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-card border border-white/10 rounded-lg p-4">
-                <p className="font-medium mb-2">BS 7671 Requirements:</p>
-                <ul className="list-disc pl-4 space-y-1">
+              <div className="p-4 rounded-lg bg-white/5">
+                <p className="text-sm font-medium text-white mb-2">BS 7671 Requirements:</p>
+                <ul className="text-sm text-white/90 space-y-1 ml-4">
                   <li>Cable clips maximum 300mm apart horizontally, 400mm vertically</li>
                   <li>Appropriate cable type for environmental conditions</li>
                   <li>Protection against mechanical damage where necessary</li>
@@ -228,9 +237,9 @@ const Module3Section1_1: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
-                <p className="font-medium mb-2">Typical Applications:</p>
-                <ul className="list-disc pl-4 space-y-1">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="text-sm font-medium text-white mb-2">Typical Applications:</p>
+                <ul className="text-sm text-white/90 space-y-1 ml-4">
                   <li>Temporary installations and building sites</li>
                   <li>Industrial areas with easy access requirements</li>
                   <li>Retrofit installations in existing buildings</li>
@@ -248,18 +257,22 @@ const Module3Section1_1: React.FC = () => {
             correctIndex={1}
             explanation="BS 7671 requires cable clips at maximum 300mm spacing for horizontal runs and 400mm for vertical runs."
           />
-          <Separator className="my-6" />
 
-          {/* PVC Conduit */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Shield className="w-5 h-5" /> PVC Conduit Systems</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <p><strong>Description:</strong> Plastic conduit providing mechanical protection and allowing cable changes. Available in heavy and light gauge versions.</p>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Construction Features</p>
-                  <ul className="list-disc pl-4 space-y-1">
+          {/* Section 2: PVC Conduit */}
+          <section className="mb-10 mt-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              PVC Conduit Systems
+            </h2>
+            <div className="text-white space-y-4 leading-relaxed">
+              <p>
+                <strong>Description:</strong> Plastic conduit providing mechanical protection and allowing cable changes. Available in heavy and light gauge versions.
+              </p>
+
+              <div className="grid sm:grid-cols-2 gap-4 my-6">
+                <div className="p-4 rounded-lg bg-white/5">
+                  <p className="text-sm font-medium text-white mb-2">Construction Features</p>
+                  <ul className="text-sm text-white/90 space-y-1">
                     <li>Corrosion resistant PVC material</li>
                     <li>Self-extinguishing properties</li>
                     <li>Smooth internal bore for cable pulling</li>
@@ -267,9 +280,9 @@ const Module3Section1_1: React.FC = () => {
                     <li>Light and heavy gauge options</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                  <p className="font-medium mb-2">Installation Benefits</p>
-                  <ul className="list-disc pl-4 space-y-1">
+                <div className="p-4 rounded-lg bg-green-500/10">
+                  <p className="text-sm font-medium text-white mb-2">Installation Benefits</p>
+                  <ul className="text-sm text-white/90 space-y-1">
                     <li>Easy to cut and join</li>
                     <li>Wide range of accessories</li>
                     <li>Can be bent with spring or former</li>
@@ -279,9 +292,9 @@ const Module3Section1_1: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-card border border-amber-400/30 rounded-lg p-4">
-                <p className="font-medium mb-2">Environmental Considerations:</p>
-                <ul className="list-disc pl-4 space-y-1">
+              <div className="p-4 rounded-lg bg-amber-500/10">
+                <p className="text-sm font-medium text-white mb-2">Environmental Considerations:</p>
+                <ul className="text-sm text-white/90 space-y-1 ml-4">
                   <li><strong>Temperature:</strong> Standard PVC: -5°C to +60°C</li>
                   <li><strong>UV exposure:</strong> Requires UV-stabilised grade for outdoor use</li>
                   <li><strong>Mechanical stress:</strong> Heavy gauge for areas at risk</li>
@@ -291,16 +304,21 @@ const Module3Section1_1: React.FC = () => {
             </div>
           </section>
 
-          {/* Steel Conduit */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3">Steel Conduit Systems</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <p><strong>Description:</strong> Metal conduit providing maximum mechanical and fire protection. Requires careful earthing and corrosion protection.</p>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Superior Protection</p>
-                  <ul className="list-disc pl-4 space-y-1">
+          {/* Section 3: Steel Conduit */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Steel Conduit Systems
+            </h2>
+            <div className="text-white space-y-4 leading-relaxed">
+              <p>
+                <strong>Description:</strong> Metal conduit providing maximum mechanical and fire protection. Requires careful earthing and corrosion protection.
+              </p>
+
+              <div className="grid sm:grid-cols-2 gap-4 my-6">
+                <div className="p-4 rounded-lg bg-white/5">
+                  <p className="text-sm font-medium text-white mb-2">Superior Protection</p>
+                  <ul className="text-sm text-white/90 space-y-1">
                     <li>Excellent mechanical protection</li>
                     <li>Fire resistant construction</li>
                     <li>EMC screening properties</li>
@@ -308,9 +326,9 @@ const Module3Section1_1: React.FC = () => {
                     <li>Long service life when properly installed</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Installation Requirements</p>
-                  <ul className="list-disc pl-4 space-y-1">
+                <div className="p-4 rounded-lg bg-white/5">
+                  <p className="text-sm font-medium text-white mb-2">Installation Requirements</p>
+                  <ul className="text-sm text-white/90 space-y-1">
                     <li>Continuous earth path essential</li>
                     <li>Proper coupling and bonding</li>
                     <li>Corrosion protection needed</li>
@@ -320,9 +338,9 @@ const Module3Section1_1: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-card border border-border/30 rounded-lg p-4">
-                <p className="font-medium mb-2">Critical Earthing Requirements:</p>
-                <ul className="list-disc pl-4 space-y-1">
+              <div className="p-4 rounded-lg bg-white/5">
+                <p className="text-sm font-medium text-white mb-2">Critical Earthing Requirements:</p>
+                <ul className="text-sm text-white/90 space-y-1 ml-4">
                   <li>All joints must maintain electrical continuity</li>
                   <li>Use proper steel conduit couplers and fittings</li>
                   <li>Test earth loop impedance through conduit</li>
@@ -340,42 +358,44 @@ const Module3Section1_1: React.FC = () => {
             correctIndex={1}
             explanation="Maintaining continuous earthing throughout the steel conduit system is critical for both safety and BS 7671 compliance."
           />
-          <Separator className="my-6" />
 
-          {/* Trunking Systems */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3">Trunking Systems</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <p><strong>Description:</strong> Large rectangular cable containment allowing easy access for cable management, changes and additions.</p>
-              
-              <div className="space-y-3">
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Cable Management Advantages</p>
-                  <ul className="list-disc pl-4 space-y-1">
-                    <li>Easy cable additions and changes</li>
-                    <li>Large cable capacity</li>
-                    <li>Good ventilation for heat dissipation</li>
-                    <li>Cable segregation possibilities</li>
-                    <li>Professional appearance</li>
-                    <li>Accessible for maintenance</li>
-                  </ul>
-                </div>
+          {/* Section 4: Trunking Systems */}
+          <section className="mb-10 mt-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Trunking Systems
+            </h2>
+            <div className="text-white space-y-4 leading-relaxed">
+              <p>
+                <strong>Description:</strong> Large rectangular cable containment allowing easy access for cable management, changes and additions.
+              </p>
 
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Derating Considerations</p>
-                  <ul className="list-disc pl-4 space-y-1">
-                    <li>Apply grouping factors for multiple cables</li>
-                    <li>Consider thermal effects of enclosed installation</li>
-                    <li>Use BS 7671 Appendix 4 derating tables</li>
-                    <li>Ensure adequate ventilation where possible</li>
-                    <li>Monitor cable loading and temperature</li>
-                  </ul>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 mb-4">
+                <p className="text-sm font-medium text-white mb-2">Cable Management Advantages</p>
+                <ul className="text-sm text-white/90 space-y-1">
+                  <li>Easy cable additions and changes</li>
+                  <li>Large cable capacity</li>
+                  <li>Good ventilation for heat dissipation</li>
+                  <li>Cable segregation possibilities</li>
+                  <li>Professional appearance</li>
+                  <li>Accessible for maintenance</li>
+                </ul>
               </div>
 
-              <div className="bg-card border border-green-400/30 rounded-lg p-4">
-                <p className="font-medium mb-2">Typical Commercial Applications:</p>
-                <ul className="list-disc pl-4 space-y-1">
+              <div className="p-4 rounded-lg bg-white/5 mb-4">
+                <p className="text-sm font-medium text-white mb-2">Derating Considerations</p>
+                <ul className="text-sm text-white/90 space-y-1">
+                  <li>Apply grouping factors for multiple cables</li>
+                  <li>Consider thermal effects of enclosed installation</li>
+                  <li>Use BS 7671 Appendix 4 derating tables</li>
+                  <li>Ensure adequate ventilation where possible</li>
+                  <li>Monitor cable loading and temperature</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-green-500/10">
+                <p className="text-sm font-medium text-white mb-2">Typical Commercial Applications:</p>
+                <ul className="text-sm text-white/90 space-y-1 ml-4">
                   <li>Office buildings with changing layouts</li>
                   <li>Industrial installations requiring access</li>
                   <li>Data centres and IT environments</li>
@@ -386,16 +406,21 @@ const Module3Section1_1: React.FC = () => {
             </div>
           </section>
 
-          {/* SWA Cable */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3">SWA (Steel Wire Armoured) Cable</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <p><strong>Description:</strong> Armoured cable with integral protection suitable for direct burial, outdoor installation and high-risk environments.</p>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
-                  <p className="font-medium mb-2">Construction</p>
-                  <ul className="list-disc pl-4 space-y-1">
+          {/* Section 5: SWA Cable */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              SWA (Steel Wire Armoured) Cable
+            </h2>
+            <div className="text-white space-y-4 leading-relaxed">
+              <p>
+                <strong>Description:</strong> Armoured cable with integral protection suitable for direct burial, outdoor installation and high-risk environments.
+              </p>
+
+              <div className="grid sm:grid-cols-2 gap-4 my-6">
+                <div className="p-4 rounded-lg bg-cyan-500/10">
+                  <p className="text-sm font-medium text-white mb-2">Construction</p>
+                  <ul className="text-sm text-white/90 space-y-1">
                     <li>Copper or aluminium conductors</li>
                     <li>XLPE or PVC insulation</li>
                     <li>Steel wire armour protection</li>
@@ -403,9 +428,9 @@ const Module3Section1_1: React.FC = () => {
                     <li>Various core configurations</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-4 bg-teal-500/10 border border-teal-400/30">
-                  <p className="font-medium mb-2">Applications</p>
-                  <ul className="list-disc pl-4 space-y-1">
+                <div className="p-4 rounded-lg bg-teal-500/10">
+                  <p className="text-sm font-medium text-white mb-2">Applications</p>
+                  <ul className="text-sm text-white/90 space-y-1">
                     <li>Underground cable runs</li>
                     <li>External building connections</li>
                     <li>Industrial harsh environments</li>
@@ -415,9 +440,9 @@ const Module3Section1_1: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-card border border-cyan-400/30 rounded-lg p-4">
-                <p className="font-medium mb-2">Installation Requirements:</p>
-                <ul className="list-disc pl-4 space-y-1">
+              <div className="p-4 rounded-lg bg-cyan-500/10">
+                <p className="text-sm font-medium text-white mb-2">Installation Requirements:</p>
+                <ul className="text-sm text-white/90 space-y-1 ml-4">
                   <li>Appropriate glands for indoor/outdoor termination</li>
                   <li>Armour earthing at both ends (or one end with earth link)</li>
                   <li>Burial depth minimum 450mm (or protection)</li>
@@ -428,15 +453,20 @@ const Module3Section1_1: React.FC = () => {
             </div>
           </section>
 
-          {/* Flexible Cord */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3">Flexible Cord and Cable</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <p><strong>Description:</strong> Flexible cables for temporary connections and movable equipment. Not suitable for permanent fixed wiring.</p>
-              
-              <div className="bg-card border border-amber-400/30 rounded-lg p-4">
-                <p className="font-medium mb-2">Limitations and Restrictions:</p>
-                <ul className="list-disc pl-4 space-y-1">
+          {/* Section 6: Flexible Cord */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Flexible Cord and Cable
+            </h2>
+            <div className="text-white space-y-4 leading-relaxed">
+              <p>
+                <strong>Description:</strong> Flexible cables for temporary connections and movable equipment. Not suitable for permanent fixed wiring.
+              </p>
+
+              <div className="p-4 rounded-lg bg-amber-500/10 mb-4">
+                <p className="text-sm font-medium text-white mb-2">Limitations and Restrictions:</p>
+                <ul className="text-sm text-white/90 space-y-1 ml-4">
                   <li>Maximum length typically 2 metres</li>
                   <li>Not for permanent installation</li>
                   <li>Requires mechanical protection where at risk</li>
@@ -445,9 +475,9 @@ const Module3Section1_1: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="bg-card border border-green-400/30 rounded-lg p-4">
-                <p className="font-medium mb-2">Appropriate Uses:</p>
-                <ul className="list-disc pl-4 space-y-1">
+              <div className="p-4 rounded-lg bg-green-500/10">
+                <p className="text-sm font-medium text-white mb-2">Appropriate Uses:</p>
+                <ul className="text-sm text-white/90 space-y-1 ml-4">
                   <li>Portable appliance connections</li>
                   <li>Temporary lighting and power</li>
                   <li>Extension leads and adaptors</li>
@@ -457,271 +487,286 @@ const Module3Section1_1: React.FC = () => {
               </div>
             </div>
           </section>
-        </Card>
 
-        {/* System Comparison */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">System Comparison Matrix</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="text-white border-b border-white/10">
-                <tr>
-                  <th className="py-3 pr-4">System</th>
-                  <th className="py-3 pr-4">Protection</th>
-                  <th className="py-3 pr-4">Cost</th>
-                  <th className="py-3 pr-4">Installation</th>
-                  <th className="py-3 pr-4">Access</th>
-                  <th className="py-3 pr-4">Best Use</th>
-                </tr>
-              </thead>
-              <tbody className="text-white">
-                <tr className="border-t border-white/10">
-                  <td className="py-3 pr-4 font-medium">Surface</td>
-                  <td className="py-3 pr-4">Low</td>
-                  <td className="py-3 pr-4">Low</td>
-                  <td className="py-3 pr-4">Quick</td>
-                  <td className="py-3 pr-4">Excellent</td>
-                  <td className="py-3 pr-4">Temporary/Industrial</td>
-                </tr>
-                <tr className="border-t border-white/10">
-                  <td className="py-3 pr-4 font-medium">PVC Conduit</td>
-                  <td className="py-3 pr-4">Good</td>
-                  <td className="py-3 pr-4">Medium</td>
-                  <td className="py-3 pr-4">Moderate</td>
-                  <td className="py-3 pr-4">Limited</td>
-                  <td className="py-3 pr-4">Domestic/Light Commercial</td>
-                </tr>
-                <tr className="border-t border-white/10">
-                  <td className="py-3 pr-4 font-medium">Steel Conduit</td>
-                  <td className="py-3 pr-4">Excellent</td>
-                  <td className="py-3 pr-4">High</td>
-                  <td className="py-3 pr-4">Skilled</td>
-                  <td className="py-3 pr-4">Limited</td>
-                  <td className="py-3 pr-4">Industrial/High Risk</td>
-                </tr>
-                <tr className="border-t border-white/10">
-                  <td className="py-3 pr-4 font-medium">Trunking</td>
-                  <td className="py-3 pr-4">Good</td>
-                  <td className="py-3 pr-4">Medium-High</td>
-                  <td className="py-3 pr-4">Moderate</td>
-                  <td className="py-3 pr-4">Excellent</td>
-                  <td className="py-3 pr-4">Commercial/Office</td>
-                </tr>
-                <tr className="border-t border-white/10">
-                  <td className="py-3 pr-4 font-medium">SWA</td>
-                  <td className="py-3 pr-4">Excellent</td>
-                  <td className="py-3 pr-4">High</td>
-                  <td className="py-3 pr-4">Specialised</td>
-                  <td className="py-3 pr-4">Poor</td>
-                  <td className="py-3 pr-4">Underground/Outdoor</td>
-                </tr>
-                <tr className="border-t border-white/10">
-                  <td className="py-3 pr-4 font-medium">Flexible</td>
-                  <td className="py-3 pr-4">Variable</td>
-                  <td className="py-3 pr-4">Low</td>
-                  <td className="py-3 pr-4">Simple</td>
-                  <td className="py-3 pr-4">Full</td>
-                  <td className="py-3 pr-4">Portable/Temporary</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </Card>
+          {/* Divider */}
+          <hr className="border-white/5 my-12" />
 
-        {/* Real-world scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-world scenario: Commercial Kitchen Renovation</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-white">
-            <div className="flex items-start gap-3 border-l-4 border-elec-yellow p-4 rounded">
-              <Home className="w-5 h-5 text-elec-yellow mt-0.5" />
-              <div>
-                <p className="font-medium mb-2">The Challenge</p>
-                <p>A restaurant kitchen needs complete electrical renovation. The space includes:</p>
-                <ul className="list-disc pl-6 mt-2 space-y-1">
-                  <li>High-power cooking equipment (three-phase)</li>
-                  <li>Wash areas with water exposure risk</li>
-                  <li>Food preparation areas requiring easy cleaning</li>
-                  <li>Extraction systems and refrigeration</li>
-                  <li>Future flexibility for equipment changes</li>
-                </ul>
-              </div>
+          {/* System Comparison Matrix */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-6">System Comparison Matrix</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead className="text-white border-b border-white/10">
+                  <tr>
+                    <th className="py-3 pr-4">System</th>
+                    <th className="py-3 pr-4">Protection</th>
+                    <th className="py-3 pr-4">Cost</th>
+                    <th className="py-3 pr-4">Installation</th>
+                    <th className="py-3 pr-4">Access</th>
+                    <th className="py-3 pr-4">Best Use</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white/90">
+                  <tr className="border-t border-white/10">
+                    <td className="py-3 pr-4 font-medium">Surface</td>
+                    <td className="py-3 pr-4">Low</td>
+                    <td className="py-3 pr-4">Low</td>
+                    <td className="py-3 pr-4">Quick</td>
+                    <td className="py-3 pr-4">Excellent</td>
+                    <td className="py-3 pr-4">Temporary/Industrial</td>
+                  </tr>
+                  <tr className="border-t border-white/10">
+                    <td className="py-3 pr-4 font-medium">PVC Conduit</td>
+                    <td className="py-3 pr-4">Good</td>
+                    <td className="py-3 pr-4">Medium</td>
+                    <td className="py-3 pr-4">Moderate</td>
+                    <td className="py-3 pr-4">Limited</td>
+                    <td className="py-3 pr-4">Domestic/Light Commercial</td>
+                  </tr>
+                  <tr className="border-t border-white/10">
+                    <td className="py-3 pr-4 font-medium">Steel Conduit</td>
+                    <td className="py-3 pr-4">Excellent</td>
+                    <td className="py-3 pr-4">High</td>
+                    <td className="py-3 pr-4">Skilled</td>
+                    <td className="py-3 pr-4">Limited</td>
+                    <td className="py-3 pr-4">Industrial/High Risk</td>
+                  </tr>
+                  <tr className="border-t border-white/10">
+                    <td className="py-3 pr-4 font-medium">Trunking</td>
+                    <td className="py-3 pr-4">Good</td>
+                    <td className="py-3 pr-4">Medium-High</td>
+                    <td className="py-3 pr-4">Moderate</td>
+                    <td className="py-3 pr-4">Excellent</td>
+                    <td className="py-3 pr-4">Commercial/Office</td>
+                  </tr>
+                  <tr className="border-t border-white/10">
+                    <td className="py-3 pr-4 font-medium">SWA</td>
+                    <td className="py-3 pr-4">Excellent</td>
+                    <td className="py-3 pr-4">High</td>
+                    <td className="py-3 pr-4">Specialised</td>
+                    <td className="py-3 pr-4">Poor</td>
+                    <td className="py-3 pr-4">Underground/Outdoor</td>
+                  </tr>
+                  <tr className="border-t border-white/10">
+                    <td className="py-3 pr-4 font-medium">Flexible</td>
+                    <td className="py-3 pr-4">Variable</td>
+                    <td className="py-3 pr-4">Low</td>
+                    <td className="py-3 pr-4">Simple</td>
+                    <td className="py-3 pr-4">Full</td>
+                    <td className="py-3 pr-4">Portable/Temporary</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </section>
 
-            <div className="space-y-3">
-              <p className="font-medium">Wiring System Selection Strategy:</p>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                  <p className="font-medium mb-2">Main Distribution</p>
-                  <ul className="list-disc pl-4 space-y-1">
+          {/* Real-world Scenario */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-6">Real-world Scenario: Commercial Kitchen Renovation</h2>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <div className="flex items-start gap-3">
+                  <Home className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-white mb-2">The Challenge</p>
+                    <p className="text-sm text-white/90">A restaurant kitchen needs complete electrical renovation. The space includes:</p>
+                    <ul className="text-sm text-white/90 list-disc pl-6 mt-2 space-y-1">
+                      <li>High-power cooking equipment (three-phase)</li>
+                      <li>Wash areas with water exposure risk</li>
+                      <li>Food preparation areas requiring easy cleaning</li>
+                      <li>Extraction systems and refrigeration</li>
+                      <li>Future flexibility for equipment changes</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="p-4 rounded-lg bg-green-500/10">
+                  <p className="text-sm font-medium text-white mb-2">Main Distribution</p>
+                  <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
                     <li><strong>SWA cable</strong> for supply from external meter</li>
                     <li>Steel conduit for main panel feeds</li>
                     <li>Mechanical protection in high-traffic areas</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Equipment Circuits</p>
-                  <ul className="list-disc pl-4 space-y-1">
+                <div className="p-4 rounded-lg bg-white/5">
+                  <p className="text-sm font-medium text-white mb-2">Equipment Circuits</p>
+                  <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
                     <li><strong>Steel conduit</strong> for fixed cooking equipment</li>
                     <li>IP65-rated outlets for cleaning resilience</li>
                     <li>Separate circuits for each major appliance</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Lighting & Sockets</p>
-                  <ul className="list-disc pl-4 space-y-1">
+                <div className="p-4 rounded-lg bg-white/5">
+                  <p className="text-sm font-medium text-white mb-2">Lighting & Sockets</p>
+                  <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
                     <li><strong>Trunking system</strong> above service areas</li>
                     <li>Easy access for future changes</li>
                     <li>Segregated power and data routes</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
-                  <p className="font-medium mb-2">Temporary/Flexible</p>
-                  <ul className="list-disc pl-4 space-y-1">
+                <div className="p-4 rounded-lg bg-amber-500/10">
+                  <p className="text-sm font-medium text-white mb-2">Temporary/Flexible</p>
+                  <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
                     <li><strong>Armoured flexibles</strong> to mobile equipment</li>
                     <li>Specialist food-grade cable types</li>
                     <li>Regular inspection schedule</li>
                   </ul>
                 </div>
               </div>
+
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="text-sm font-medium text-white mb-2">Key Success Factors:</p>
+                <ul className="text-sm text-white/90 list-disc pl-6 space-y-1">
+                  <li>Match system to specific environmental demands</li>
+                  <li>Plan for future equipment changes and maintenance</li>
+                  <li>Ensure compliance with food safety regulations</li>
+                  <li>Consider cleaning procedures and chemical resistance</li>
+                  <li>Provide appropriate IP ratings for each area</li>
+                </ul>
+              </div>
             </div>
+          </section>
 
-            <div className="bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded">
-              <p className="font-medium mb-2">Key Success Factors:</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Match system to specific environmental demands</li>
-                <li>Plan for future equipment changes and maintenance</li>
-                <li>Ensure compliance with food safety regulations</li>
-                <li>Consider cleaning procedures and chemical resistance</li>
-                <li>Provide appropriate IP ratings for each area</li>
-              </ul>
+          {/* Common Mistakes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-6">Common Mistakes and How to Avoid Them</h2>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-white/5">
+                <p className="text-sm font-medium text-white mb-2 flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4" />
+                  System Selection Errors
+                </p>
+                <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
+                  <li><strong>Wrong:</strong> Using surface wiring in areas requiring concealment</li>
+                  <li><strong>Right:</strong> Check building regulations and aesthetic requirements first</li>
+                  <li><strong>Wrong:</strong> PVC conduit in high-temperature environments</li>
+                  <li><strong>Right:</strong> Use appropriate temperature ratings for all components</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5">
+                <p className="text-sm font-medium text-white mb-2 flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4" />
+                  Installation Mistakes
+                </p>
+                <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
+                  <li><strong>Wrong:</strong> Poor earthing continuity in steel conduit systems</li>
+                  <li><strong>Right:</strong> Test continuity and use proper bonding techniques</li>
+                  <li><strong>Wrong:</strong> Inadequate cable support spacing</li>
+                  <li><strong>Right:</strong> Follow BS 7671 maximum spacing requirements</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="text-sm font-medium text-white mb-2 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4" />
+                  Best Practice Tips
+                </p>
+                <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
+                  <li>Always consider future access and maintenance requirements</li>
+                  <li>Plan cable routes to minimise mechanical damage risk</li>
+                  <li>Use appropriate IP ratings for environmental conditions</li>
+                  <li>Document wiring systems for future reference</li>
+                  <li>Consider cable capacity and derating factors early</li>
+                </ul>
+              </div>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Common mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Common Mistakes and How to Avoid Them</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> System Selection Errors</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li><strong>Wrong:</strong> Using surface wiring in areas requiring concealment</li>
-                <li><strong>Right:</strong> Check building regulations and aesthetic requirements first</li>
-                <li><strong>Wrong:</strong> PVC conduit in high-temperature environments</li>
-                <li><strong>Right:</strong> Use appropriate temperature ratings for all components</li>
-              </ul>
+          {/* BS 7671 Context */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-6">BS 7671 Context and Compliance</h2>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-white/5">
+                <p className="text-sm font-medium text-white mb-2">Selection and Erection (Part 5)</p>
+                <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
+                  <li>Wiring systems must suit environmental conditions</li>
+                  <li>Consider external influences (AD, AE, AF codes)</li>
+                  <li>Maintain appropriate IP ratings</li>
+                  <li>Ensure adequate mechanical protection</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-green-500/10">
+                <p className="text-sm font-medium text-white mb-2">Current-carrying Capacity (Appendix 4)</p>
+                <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
+                  <li>Apply grouping factors for multiple cables</li>
+                  <li>Consider thermal insulation effects</li>
+                  <li>Account for ambient temperature variations</li>
+                  <li>Use appropriate installation methods</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50" role="alert">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-white">Isolate, lock-off and prove dead before work. Follow manufacturer instructions and BS 7671 requirements for all wiring systems.</p>
+                </div>
+              </div>
             </div>
+          </section>
 
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Installation Mistakes</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li><strong>Wrong:</strong> Poor earthing continuity in steel conduit systems</li>
-                <li><strong>Right:</strong> Test continuity and use proper bonding techniques</li>
-                <li><strong>Wrong:</strong> Inadequate cable support spacing</li>
-                <li><strong>Right:</strong> Follow BS 7671 maximum spacing requirements</li>
-              </ul>
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                  <h3 className="text-sm font-medium text-white mb-1">{faq.q}</h3>
+                  <p className="text-sm text-white/90 leading-relaxed">{faq.a}</p>
+                </div>
+              ))}
             </div>
+          </section>
 
-            <div className="rounded-lg p-4 bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="font-medium mb-2 flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Best Practice Tips</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>Always consider future access and maintenance requirements</li>
-                <li>Plan cable routes to minimise mechanical damage risk</li>
-                <li>Use appropriate IP ratings for environmental conditions</li>
-                <li>Document wiring systems for future reference</li>
-                <li>Consider cable capacity and derating factors early</li>
-              </ul>
+          {/* Divider */}
+          <hr className="border-white/5 my-12" />
+
+          {/* Quick Knowledge Check */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-6">Quick Knowledge Check</h2>
+            <div className="space-y-6">
+              {quickCheckQuestions.map((q) => (
+                <InlineCheck
+                  key={q.id}
+                  id={`quick-check-${q.id}`}
+                  question={q.question}
+                  options={q.options}
+                  correctIndex={q.correctAnswer}
+                  explanation={q.explanation}
+                />
+              ))}
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* BS 7671 Context */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">BS 7671 Context and Compliance</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-2">Selection and Erection (Part 5)</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>Wiring systems must suit environmental conditions</li>
-                <li>Consider external influences (AD, AE, AF codes)</li>
-                <li>Maintain appropriate IP ratings</li>
-                <li>Ensure adequate mechanical protection</li>
-              </ul>
-            </div>
+          {/* Quiz */}
+          <section className="mb-10">
+            <Quiz questions={quizQuestions as any} title="Wiring Systems Knowledge Check" />
+          </section>
 
-            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-              <p className="font-medium mb-2">Current-carrying Capacity (Appendix 4)</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>Apply grouping factors for multiple cables</li>
-                <li>Consider thermal insulation effects</li>
-                <li>Account for ambient temperature variations</li>
-                <li>Use appropriate installation methods</li>
-              </ul>
-            </div>
-
-            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
-              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
-              <p className="text-white">Isolate, lock-off and prove dead before work. Follow manufacturer instructions and BS 7671 requirements for all wiring systems.</p>
-            </div>
-          </div>
-        </Card>
-
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
-          <ul className="space-y-3 text-xs sm:text-sm text-white">
-            {faqs.map((f, i) => (
-              <li key={i} className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
-                <p className="font-medium mb-1">{f.q}</p>
-                <p className="text-white">{f.a}</p>
-              </li>
-            ))}
-          </ul>
-        </Card>
-
-        {/* Quick Knowledge Check */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Knowledge Check</h2>
-          <div className="space-y-6">
-            {quickCheckQuestions.map((q, index) => (
-              <InlineCheck
-                key={q.id}
-                id={`quick-check-${q.id}`}
-                question={q.question}
-                options={q.options}
-                correctIndex={q.correctAnswer}
-                explanation={q.explanation}
-              />
-            ))}
-          </div>
-        </Card>
-
-        {/* Quiz */}
-        <Card className="mb-16 p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Section Quiz</h2>
-          <Quiz questions={quizQuestions as any} title="Wiring Systems Knowledge Check" />
-        </Card>
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 3.1
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link to="../1-2">
-              Next: Surface Wiring Details
-              <CheckCircle2 className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+            <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+              <Link to="..">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Section 3.1
+              </Link>
+            </Button>
+            <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+              <Link to="../1-2">
+                Next: Twin and Earth Cable
+                <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+              </Link>
+            </Button>
+          </nav>
         </div>
 
         {/* Structured data */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      </main>
+      </article>
     </div>
   );
 };

@@ -52,46 +52,46 @@ export default function InspectionTestingModule5() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* iOS-style sticky header */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-gray-200/50 dark:border-gray-800/50">
-        <div className="px-4 py-3 flex items-center gap-3">
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#1a1a1a]/95 border-b border-white/10">
+        <div className="px-4 py-3 flex items-center gap-3 max-w-3xl mx-auto">
           <Link to="../inspection-testing">
             <Button
               variant="ios-ghost"
               size="icon"
-              className="h-12 w-12 min-h-[48px] min-w-[48px]"
+              className="h-12 w-12 min-h-[48px] min-w-[48px] touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-gray-500 dark:text-gray-400">Module 5</p>
-            <h1 className="text-lg font-semibold text-gray-900 dark:text-white truncate">
+            <p className="text-xs text-white/60">Module 5</p>
+            <h1 className="text-lg font-semibold text-white truncate">
               Earth Fault Loop Impedance
             </h1>
           </div>
         </div>
       </header>
 
-      <main className="px-4 py-6 pb-safe">
+      <main className="px-4 py-6 pb-safe max-w-3xl mx-auto">
         {/* Hero section */}
         <section className="mb-8">
           <div className="flex items-center justify-center mb-6">
-            <div className="h-20 w-20 rounded-3xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center shadow-lg">
-              <CircleDot className="h-10 w-10 text-white" />
+            <div className="h-20 w-20 rounded-3xl bg-gradient-to-br from-elec-yellow to-amber-500 flex items-center justify-center shadow-lg shadow-elec-yellow/20">
+              <CircleDot className="h-10 w-10 text-black" />
             </div>
           </div>
-          <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-3">
+          <h2 className="text-3xl font-bold text-center text-white mb-3">
             Earth Fault Loop Impedance
           </h2>
-          <p className="text-center text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+          <p className="text-center text-white/70 max-w-md mx-auto">
             Master the measurement and verification of earth fault loop impedance to ensure
             automatic disconnection of supply operates within required times.
           </p>
           <div className="flex items-center justify-center gap-2 mt-4">
-            <Target className="h-4 w-4 text-orange-600 dark:text-orange-400" />
-            <span className="text-sm text-gray-500 dark:text-gray-400">
+            <Target className="h-4 w-4 text-elec-yellow" />
+            <span className="text-sm text-white/60">
               6 sections • Critical safety testing
             </span>
           </div>
@@ -99,10 +99,10 @@ export default function InspectionTestingModule5() {
 
         {/* Section navigation grid */}
         <section className="mb-8">
-          <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4 px-1">
+          <h3 className="text-sm font-medium text-white/60 uppercase tracking-wide mb-4 px-1">
             Module Sections
           </h3>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3">
             {sections.map((section, index) => (
               <motion.div
                 key={section.id}
@@ -144,7 +144,7 @@ export default function InspectionTestingModule5() {
                       </h3>
 
                       {/* Description */}
-                      <p className="text-white/50 text-xs leading-relaxed line-clamp-2">
+                      <p className="text-white/60 text-xs leading-relaxed line-clamp-2">
                         {section.description}
                       </p>
                     </CardContent>
@@ -157,18 +157,18 @@ export default function InspectionTestingModule5() {
 
         {/* Quick start CTA */}
         <section className="mb-8">
-          <Card variant="ios" className="p-6 bg-gradient-to-br from-orange-500 to-amber-600 border-0">
+          <Card variant="ios" className="p-6 bg-gradient-to-br from-elec-yellow to-amber-500 border-0">
             <div className="text-center">
-              <h3 className="text-xl font-bold text-white mb-2">
+              <h3 className="text-xl font-bold text-black mb-2">
                 Ready to Begin?
               </h3>
-              <p className="text-orange-100 text-sm mb-4">
+              <p className="text-black/70 text-sm mb-4">
                 Start with understanding earth fault path principles and their importance.
               </p>
               <Link to="section1">
                 <Button
                   variant="ios-primary"
-                  className="min-h-[48px] bg-white text-orange-600 hover:bg-orange-50"
+                  className="min-h-[48px] bg-black text-elec-yellow hover:bg-black/90 touch-manipulation active:scale-[0.98]"
                 >
                   Start Section 1
                   <ChevronRight className="h-4 w-4 ml-1" />

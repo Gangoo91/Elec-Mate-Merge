@@ -133,7 +133,7 @@ const Level3Module8MockExam8 = () => {
 
   if (!examStarted) {
     return (
-      <div className="min-h-screen bg-[#1a1a1a] p-2 sm:p-4">
+      <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] p-2 sm:p-4">
         <div>
           <Card className="border-elec-yellow/30 bg-transparent">
             <CardHeader className="text-center pb-3 sm:pb-4 px-3 sm:px-6">
@@ -201,7 +201,7 @@ const Level3Module8MockExam8 = () => {
       const filteredQuestions = getFilteredQuestions();
 
       return (
-        <div className="min-h-screen bg-[#1a1a1a] p-2 sm:p-4">
+        <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] p-2 sm:p-4">
           <div className="max-w-6xl mx-auto">
             <div className="mb-4">
               <div className="flex items-center justify-between mb-4">
@@ -341,7 +341,7 @@ const Level3Module8MockExam8 = () => {
     }
 
     return (
-      <div className="min-h-screen bg-[#1a1a1a] p-2 sm:p-4">
+      <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] p-2 sm:p-4">
         <div>
           <Card className="border-elec-yellow/30 bg-transparent">
             <CardHeader className="text-center pb-3 sm:pb-4 px-3 sm:px-6">
@@ -424,7 +424,7 @@ const Level3Module8MockExam8 = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       <div className="border-b border-muted/20 bg-transparent/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">

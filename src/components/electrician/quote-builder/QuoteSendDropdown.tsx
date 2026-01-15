@@ -176,15 +176,49 @@ export const QuoteSendDropdown = ({
       }
 
       // Send via Resend (generates PDF automatically)
-      const { error } = await supabase.functions.invoke('send-quote-resend', {
+      console.log('📧 Calling send-quote-resend with quoteId:', quote.id);
+
+      const { data, error } = await supabase.functions.invoke('send-quote-resend', {
         body: { quoteId: quote.id },
         headers: {
           Authorization: `Bearer ${session.access_token}`
         }
       });
 
+      console.log('📧 Response:', { data, error });
+
+      // Handle errors - extract message from various possible locations
       if (error) {
-        throw error;
+        console.error('📧 Function invoke error:', error);
+        console.error('📧 Error details:', JSON.stringify(error, null, 2));
+
+        let errorMessage = 'Failed to send quote';
+
+        if (typeof error === 'string') {
+          errorMessage = error;
+        } else if (error.message) {
+          errorMessage = error.message;
+        } else if (error.context?.body) {
+          try {
+            const bodyError = JSON.parse(error.context.body);
+            errorMessage = bodyError.error || bodyError.message || errorMessage;
+          } catch {
+            errorMessage = error.context.body;
+          }
+        }
+
+        throw new Error(errorMessage);
+      }
+
+      // Check if the response data indicates an error
+      if (data?.error) {
+        console.error('📧 Function returned error in data:', data);
+        throw new Error(data.error + (data.hint ? ` (${data.hint})` : ''));
+      }
+
+      if (!data?.success) {
+        console.error('📧 Function did not return success:', data);
+        throw new Error(data?.message || 'Unknown error sending quote');
       }
 
       toast({

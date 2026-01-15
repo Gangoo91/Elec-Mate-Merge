@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,6 +10,7 @@ import { AlertTriangle, Shield, FileCheck, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
@@ -21,8 +22,10 @@ interface EICDeclarationsProps {
 const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate }) => {
   const currentYear = new Date().getFullYear();
   const { getDefaultProfile } = useInspectorProfiles();
+  const { companyProfile, loading: companyProfileLoading } = useCompanyProfile();
   const { toast } = useToast();
   const [isInitialMount, setIsInitialMount] = useState(true);
+  const companyAutoFillDone = useRef(false);
   
   // Check if all required fields are completed
   const isDesignerComplete = formData.designerName && formData.designerSignature;
@@ -46,19 +49,36 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
     }
   }, [isInitialMount]);
 
+  // Auto-populate company fields from company_profiles (Settings > Company)
+  // This runs after company profile loads and takes priority over inspector_profiles for company data
+  useEffect(() => {
+    if (companyProfile && !companyProfileLoading && !companyAutoFillDone.current) {
+      // Only auto-fill if company fields are empty (don't overwrite existing data)
+      const isCompanyEmpty = !formData.designerCompany?.trim() && !formData.constructorCompany?.trim() && !formData.inspectorCompany?.trim();
+      if (isCompanyEmpty && companyProfile.company_name) {
+        onUpdate('designerCompany', companyProfile.company_name);
+        onUpdate('constructorCompany', companyProfile.company_name);
+        onUpdate('inspectorCompany', companyProfile.company_name);
+      }
+      companyAutoFillDone.current = true;
+    }
+  }, [companyProfile, companyProfileLoading, formData.designerCompany, formData.constructorCompany, formData.inspectorCompany, onUpdate]);
+
   // Load profile data into a specific declaration section
   const loadProfileToSection = (section: 'designer' | 'constructor' | 'inspector', profile?: any) => {
     const selectedProfile = profile || getDefaultProfile();
     if (!selectedProfile) return;
 
     const today = new Date().toISOString().split('T')[0];
-    const qualifications = Array.isArray(selectedProfile.qualifications) 
-      ? selectedProfile.qualifications.join(', ') 
+    const qualifications = Array.isArray(selectedProfile.qualifications)
+      ? selectedProfile.qualifications.join(', ')
       : '';
 
     onUpdate(`${section}Name`, selectedProfile.name);
     onUpdate(`${section}Qualifications`, qualifications);
-    onUpdate(`${section}Company`, selectedProfile.companyName);
+    // Use company_profiles company name if available, otherwise fall back to inspector_profiles
+    const companyName = companyProfile?.company_name || selectedProfile.companyName || '';
+    onUpdate(`${section}Company`, companyName);
     onUpdate(`${section}Date`, today);
     if (selectedProfile.signatureData) {
       onUpdate(`${section}Signature`, selectedProfile.signatureData);

@@ -1,6 +1,5 @@
-import { ArrowLeft, Calculator, CheckCircle } from "lucide-react";
+import { ArrowLeft, Calculator, CheckCircle, BookOpen, HelpCircle, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -17,7 +16,7 @@ const quickCheckQuestions = [
     question: "For V = 48 V and R = 12 Ω, I is…",
     options: [
       "4 A",
-      "0.25 A", 
+      "0.25 A",
       "36 A",
       "1 A"
     ],
@@ -100,7 +99,7 @@ const quizQuestions = [
     question: "Which step comes first in Ohm's Law calculations?",
     options: [
       "Choose the formula",
-      "Convert to base units", 
+      "Convert to base units",
       "Calculate and round",
       "Sanity check"
     ],
@@ -139,43 +138,42 @@ const Module2Section2_3 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
+              Back to Section 2
             </Link>
           </Button>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Calculator className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 2.2.3
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white">
-                Calculate V, I or R (Step by Step)
-              </h1>
-              <p className="text-xl text-white max-w-3xl mt-2">
-                Identify known values, convert units, pick the formula, calculate, round, and sanity‑check.
-              </p>
-            </div>
-          </div>
+      <div className="max-w-3xl mx-auto px-6 py-12">
+        {/* Centered Header */}
+        <div className="mb-12 text-center">
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Module 2.2.3
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Calculate V, I or R (Step by Step)
+          </h1>
+          <p className="text-lg text-white/80 max-w-2xl mx-auto">
+            Identify known values, convert units, pick the formula, calculate, round, and sanity-check
+          </p>
         </div>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Ohm's Law:</strong> V = I × R relates voltage, current, and resistance.</li>
@@ -185,7 +183,7 @@ const Module2Section2_3 = () => {
                 <li><strong>Applications:</strong> Circuit analysis, fault finding, component sizing, safety checks.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Nameplate data (230V, 13A), meter readings, component values.</li>
@@ -194,11 +192,14 @@ const Module2Section2_3 = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning Outcomes
+          </h2>
           <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
@@ -226,136 +227,192 @@ const Module2Section2_3 = () => {
               <span>Use the Ohm's Law calculator effectively</span>
             </li>
           </ul>
-        </Card>
+        </section>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+        <div className="mb-10">
+          <InlineCheck {...quickCheckQuestions[0]} />
+        </div>
 
         {/* Understanding Ohm's Law */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
-              Understanding Ohm's Law
-            </h2>
-            <div className="space-y-4 text-white">
-              <p>
-                <strong>Ohm's Law</strong> describes the relationship between voltage, current, and resistance in electrical circuits. 
-                It states that current is directly proportional to voltage and inversely proportional to resistance.
-              </p>
-              
-              <div className="bg-primary/5 rounded-lg p-4 border border-primary/20">
-                <h3 className="font-semibold text-white mb-3">The Three Formulas</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                  <div className="bg-card p-4 rounded-lg border border-white/10">
-                    <div className="text-2xl font-bold text-elec-yellow mb-2">V = I × R</div>
-                    <p className="text-sm">To find Voltage</p>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg border border-white/10">
-                    <div className="text-2xl font-bold text-elec-yellow mb-2">I = V ÷ R</div>
-                    <p className="text-sm">To find Current</p>
-                  </div>
-                  <div className="bg-card p-4 rounded-lg border border-white/10">
-                    <div className="text-2xl font-bold text-elec-yellow mb-2">R = V ÷ I</div>
-                    <p className="text-sm">To find Resistance</p>
-                  </div>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Understanding Ohm's Law
+          </h2>
+          <div className="space-y-4 text-white">
+            <p>
+              <strong>Ohm's Law</strong> describes the relationship between voltage, current, and resistance in electrical circuits.
+              It states that current is directly proportional to voltage and inversely proportional to resistance.
+            </p>
+
+            <div className="bg-card/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-semibold text-white mb-3">The Three Formulas</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                  <div className="text-2xl font-bold text-elec-yellow mb-2">V = I × R</div>
+                  <p className="text-sm">To find Voltage</p>
+                </div>
+                <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                  <div className="text-2xl font-bold text-elec-yellow mb-2">I = V ÷ R</div>
+                  <p className="text-sm">To find Current</p>
+                </div>
+                <div className="bg-card/50 p-4 rounded-lg border border-white/10">
+                  <div className="text-2xl font-bold text-elec-yellow mb-2">R = V ÷ I</div>
+                  <p className="text-sm">To find Resistance</p>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Step-by-Step Process */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
-              Step-by-Step Calculation Process
-            </h2>
-            <div className="space-y-4 text-white">
-              <ol className="list-decimal pl-6 space-y-2">
-                <li><strong>Write known values with units;</strong> convert prefixes to base units (V, A, Ω).</li>
-                <li><strong>Choose the formula:</strong> V = I×R, I = V/R, or R = V/I.</li>
-                <li><strong>Calculate and round;</strong> keep at least 2–3 significant figures.</li>
-                <li><strong>Sanity‑check:</strong> does the result fit the scenario?</li>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Step-by-Step Calculation Process
+          </h2>
+          <div className="space-y-4 text-white">
+            <ol className="list-decimal pl-6 space-y-2">
+              <li><strong>Write known values with units;</strong> convert prefixes to base units (V, A, Ω).</li>
+              <li><strong>Choose the formula:</strong> V = I×R, I = V/R, or R = V/I.</li>
+              <li><strong>Calculate and round;</strong> keep at least 2–3 significant figures.</li>
+              <li><strong>Sanity-check:</strong> does the result fit the scenario?</li>
+            </ol>
+
+            <div className="bg-card/50 rounded-lg p-4 border border-white/10 mt-4">
+              <h4 className="font-semibold mb-2 text-teal-400">Example: Finding Current</h4>
+              <p className="text-sm mb-2">A 230V kettle has resistance 23Ω. Find the current:</p>
+              <ol className="list-decimal pl-4 space-y-1 text-sm">
+                <li>Known: V = 230V, R = 23Ω (already in base units)</li>
+                <li>Finding I, so use: I = V ÷ R</li>
+                <li>Calculate: I = 230 ÷ 23 = 10A</li>
+                <li>Sanity check: 10A for a kettle is reasonable</li>
               </ol>
-              
-              <div className="bg-accent/5 rounded-lg p-4 border border-accent/20 mt-4">
-                <h4 className="font-semibold mb-2">Example: Finding Current</h4>
-                <p className="text-sm mb-2">A 230V kettle has resistance 23Ω. Find the current:</p>
-                <ol className="list-decimal pl-4 space-y-1 text-sm">
-                  <li>Known: V = 230V, R = 23Ω (already in base units)</li>
-                  <li>Finding I, so use: I = V ÷ R</li>
-                  <li>Calculate: I = 230 ÷ 23 = 10A</li>
-                  <li>Sanity check: 10A for a kettle is reasonable ✓</li>
-                </ol>
-              </div>
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Interactive Ohm's Law Calculator */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Interactive Ohm's Law Calculator</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <Calculator className="w-5 h-5" />
+            Interactive Ohm's Law Calculator
+          </h2>
           <p className="text-white mb-6">
             Practice with this calculator. Enter any two values and it will calculate the third using Ohm's Law.
           </p>
           <OhmsCalculator />
-        </Card>
+        </section>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+        <div className="mb-10">
+          <InlineCheck {...quickCheckQuestions[1]} />
+        </div>
 
         {/* Units Pocket Card */}
-        <UnitsPocketCard />
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <BookOpen className="w-5 h-5" />
+            Pocket Guide
+          </h2>
+          <UnitsPocketCard />
+        </section>
 
         {/* Real-World Scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Scenario</h2>
-          <div className="bg-accent/5 rounded-lg p-4 border border-accent/20">
-            <h3 className="font-semibold text-white mb-3">Appliance Testing on Site</h3>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Real-World Scenario
+          </h2>
+          <div className="bg-card/50 rounded-lg p-4 border border-white/10">
+            <h3 className="font-semibold text-orange-400 mb-3">Appliance Testing on Site</h3>
             <p className="text-xs sm:text-sm text-white mb-3">
-              You're testing a 3kW immersion heater on a 230V supply. The nameplate is worn and you need to verify 
+              You're testing a 3kW immersion heater on a 230V supply. The nameplate is worn and you need to verify
               it's drawing the correct current and check its resistance.
             </p>
-            <div className="space-y-2 text-sm">
+            <div className="space-y-2 text-sm text-white">
               <p><strong>Given:</strong> P = 3kW, V = 230V</p>
               <p><strong>Step 1:</strong> Find current using P = V × I → I = P/V = 3000/230 = 13.04A</p>
               <p><strong>Step 2:</strong> Find resistance using R = V/I = 230/13.04 = 17.6Ω</p>
-              <p><strong>Check:</strong> Does 13A sound right for a 3kW heater? Yes! ✓</p>
-              <p className="text-white italic">
+              <p><strong>Check:</strong> Does 13A sound right for a 3kW heater? Yes!</p>
+              <p className="text-white/70 italic">
                 This demonstrates how Ohm's Law helps verify equipment performance and spot potential faults.
               </p>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <HelpCircle className="w-5 h-5" />
+            Frequently Asked Questions
+          </h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
-                <p className="font-semibold text-white mb-2">{faq.question}</p>
-                <p className="text-white text-sm">{faq.answer}</p>
+              <div key={index} className="border-l-2 border-blue-800 bg-elec-yellow/10 p-4 rounded-r-lg">
+                <p className="font-medium text-white mb-2">{faq.question}</p>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20 bg-none shadow-none">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
-          <p className="text-white mb-4">
-            Ohm's Law calculations are fundamental to electrical work. By following a systematic process - 
-            converting units, choosing the right formula, calculating carefully, and checking results - 
-            you can confidently solve electrical problems and verify circuit behaviour.
-          </p>
-          <p className="text-white text-sm">
-            Remember: practice makes perfect. Use the calculator regularly and always double-check your work!
-          </p>
-        </Card>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <CheckCircle className="w-5 h-5 text-green-600" />
+            Key Takeaways
+          </h2>
+          <div className="bg-gradient-to-r from-green-950/20 to-elec-yellow/10 border border-green-800 rounded-lg p-6">
+            <div className="grid md:grid-cols-2 gap-4">
+              <ul className="space-y-2 text-xs sm:text-sm text-white">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Follow the systematic process: Convert → Choose → Calculate → Check
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Always convert to base units (V, A, Ω) before calculating
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Select the correct formula based on what you're finding
+                </li>
+              </ul>
+              <ul className="space-y-2 text-xs sm:text-sm text-white">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Round sensibly - usually 2-3 decimal places for site work
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Always sanity-check your results against expected values
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Practice regularly with the calculator to build confidence
+                </li>
+              </ul>
+            </div>
+            <div className="mt-4 p-4 bg-yellow-900/30 border border-yellow-700 rounded-lg">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <p className="text-xs sm:text-sm text-white">
+                  <strong>Safety Reminder:</strong> Always isolate and prove dead before work. Follow BS 7671 and manufacturer instructions.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Quiz */}
-        <Quiz questions={quizQuestions} title="Test Your Understanding: Ohm's Law Calculations" />
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <Calculator className="w-5 h-5" />
+            Test Your Knowledge
+          </h2>
+          <Quiz questions={quizQuestions} title="Ohm's Law Calculations Quiz" />
+        </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
@@ -366,8 +423,8 @@ const Module2Section2_3 = () => {
             </Link>
           </Button>
           <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="..">
-              Back to Section 2
+            <Link to="../2-4">
+              Next: Power Calculations
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>

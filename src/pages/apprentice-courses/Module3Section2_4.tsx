@@ -4,22 +4,19 @@ import {
   Container,
   AlertTriangle,
   Factory,
-  Home,
   Shield,
-  Building,
   Target,
-  Scissors,
   Settings,
-  CheckCircle2,
+  CheckCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import React from "react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
+
+const TITLE = "Cable Tray, Basket and Ladder Systems - Module 3.2.4 | Level 2 Electrical Course";
+const DESCRIPTION = "Complete guide to cable containment systems. Trays, baskets, and ladder systems for electrical installations and BS 7671 compliance.";
 
 const quickCheckQuestions = [
   {
@@ -51,7 +48,7 @@ const quickCheckQuestions = [
     question: "Which containment system offers the highest load capacity?",
     options: [
       "Cable basket",
-      "Cable tray", 
+      "Cable tray",
       "Ladder system",
     ],
     correctIndex: 2,
@@ -78,7 +75,7 @@ const quizQuestions = [
     question: "Which open containment method offers the highest load capacity?",
     options: [
       "Cable basket",
-      "Cable tray", 
+      "Cable tray",
       "Ladder system",
       "PVC trunking",
     ],
@@ -174,415 +171,396 @@ const quizQuestions = [
   },
 ];
 
-const Module3Section2_4: React.FC = () => {
-  console.log("Module3Section2_4 component loaded");
-  
-  useSEO(
-    "Cable Tray, Basket and Ladder Systems – Module 3 (3.2.4)",
-    "Complete guide to cable containment systems. Trays, baskets, and ladder systems for electrical installations and BS 7671 compliance."
-  );
+const faqs = [
+  {
+    question: "What's the difference between perforated and solid cable trays?",
+    answer: "Perforated trays offer better ventilation and easier cable fixing, while solid trays provide better weather protection and support for smaller cables.",
+  },
+  {
+    question: "Can cable baskets be used for power cables?",
+    answer: "Yes, but check load capacity. Baskets are typically rated 50-150 kg/m, suitable for lighter power cables but may require closer support spacing.",
+  },
+  {
+    question: "What's the maximum span for ladder systems?",
+    answer: "Typically 3-6 metres depending on load, but always check manufacturer's load tables and deflection limits for specific applications.",
+  },
+  {
+    question: "Do cable management systems need earthing in non-metallic buildings?",
+    answer: "Yes - metallic cable management systems must be earthed regardless of building type to ensure electrical safety.",
+  },
+];
 
-  const faqs = [
-    {
-      q: "What's the difference between perforated and solid cable trays?",
-      a: "Perforated trays offer better ventilation and easier cable fixing, while solid trays provide better weather protection and support for smaller cables.",
-    },
-    {
-      q: "Can cable baskets be used for power cables?",
-      a: "Yes, but check load capacity. Baskets are typically rated 50-150 kg/m, suitable for lighter power cables but may require closer support spacing.",
-    },
-    {
-      q: "What's the maximum span for ladder systems?",
-      a: "Typically 3-6 metres depending on load, but always check manufacturer's load tables and deflection limits for specific applications.",
-    },
-    {
-      q: "Do cable management systems need earthing in non-metallic buildings?",
-      a: "Yes — metallic cable management systems must be earthed regardless of building type to ensure electrical safety.",
-    },
-  ];
+const Module3Section2_4: React.FC = () => {
+  useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-white active:text-white p-0 -ml-1"
-            asChild
-          >
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 3.2
+              Back
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Container className="w-6 h-6 text-white" />
-            </div>
-            <Badge
-              variant="outline"
-              className="border-elec-yellow/30 text-elec-yellow"
-            >
-              Section 3.2.4
-            </Badge>
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12 max-w-3xl mx-auto">
+
+        {/* Centered Title */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Container className="h-4 w-4" />
+            <span>Module 3.2.4</span>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Cable Tray, Basket and Ladder Systems
           </h1>
-          <p className="text-white">
-            Understanding open cable containment systems, their applications and installation requirements for electrical installations.
+          <p className="text-white/80">
+            Understanding open cable containment systems, their applications and installation requirements for electrical installations
           </p>
         </header>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
-            Introduction
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li>Cable trays: Solid/perforated support, weather protection, medium-high loads</li>
+              <li>Cable baskets: Wire mesh, excellent ventilation, lightweight, easy cutting</li>
+              <li>Ladder systems: Maximum load capacity, long spans, heavy power cables</li>
+              <li>All systems require proper earthing, support spacing and BS 7671 compliance</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Metal mesh (baskets), solid perforated sheets (trays), side rails with rungs (ladders)</li>
+              <li><strong>Use:</strong> Baskets for data/light cables; trays for general purpose; ladders for heavy power</li>
+              <li><strong>Check:</strong> Load capacity, support spacing, earthing continuity, edge protection</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Identify the characteristics and applications of cable trays, baskets and ladder systems",
+              "Select the appropriate containment system based on load, environment and cable type",
+              "Calculate support spacing and loads for different cable containment systems",
+              "Understand installation requirements including earthing and fire safety compliance",
+              "Apply BS EN 61537 and BS 7671 requirements for cable management systems"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1: System Types */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Cable Containment System Types
           </h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Cable trays: Solid/perforated support, weather protection, medium-high loads.</li>
-                <li>Cable baskets: Wire mesh, excellent ventilation, lightweight, easy cutting.</li>
-                <li>Ladder systems: Maximum load capacity, long spans, heavy power cables.</li>
-                <li>All systems require proper earthing, support spacing and BS 7671 compliance.</li>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-3 gap-3">
+              <div className="p-3 rounded bg-white/5">
+                <p className="font-medium text-white text-sm mb-2">Cable Trays</p>
+                <div className="space-y-2">
+                  <div>
+                    <p className="font-medium text-white/80 text-xs mb-1">Construction</p>
+                    <ul className="text-xs text-white/70 space-y-0.5">
+                      <li>Solid or perforated steel/aluminium base</li>
+                      <li>Raised sides for cable retention</li>
+                      <li>Standard widths: 50-900mm</li>
+                      <li>Galvanised or powder coated finish</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-medium text-white/80 text-xs mb-1">Advantages</p>
+                    <ul className="text-xs text-white/70 space-y-0.5">
+                      <li>Weather protection from above</li>
+                      <li>Good support for mixed cable types</li>
+                      <li>Load capacity: 75-300 kg/m</li>
+                      <li>Easy cable access and organisation</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-medium text-white/80 text-xs mb-1">Applications</p>
+                    <ul className="text-xs text-white/70 space-y-0.5">
+                      <li>General building services</li>
+                      <li>Outdoor/weather exposed routes</li>
+                      <li>Mixed power and control cables</li>
+                      <li>Areas requiring cable segregation</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-3 rounded bg-green-500/10 border border-green-400/20">
+                <p className="font-medium text-white text-sm mb-2">Cable Baskets</p>
+                <div className="space-y-2">
+                  <div>
+                    <p className="font-medium text-white/80 text-xs mb-1">Construction</p>
+                    <ul className="text-xs text-white/70 space-y-0.5">
+                      <li>Wire mesh or grid construction</li>
+                      <li>Welded or formed mesh pattern</li>
+                      <li>Lightweight galvanised steel</li>
+                      <li>Easy to cut and modify on site</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-medium text-white/80 text-xs mb-1">Advantages</p>
+                    <ul className="text-xs text-white/70 space-y-0.5">
+                      <li>Excellent ventilation and heat dissipation</li>
+                      <li>Quick installation and modification</li>
+                      <li>Load capacity: 50-150 kg/m</li>
+                      <li>Cost-effective for data installations</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-medium text-white/80 text-xs mb-1">Applications</p>
+                    <ul className="text-xs text-white/70 space-y-0.5">
+                      <li>Data and communication cables</li>
+                      <li>Areas requiring maximum ventilation</li>
+                      <li>Retrofit installations</li>
+                      <li>Suspended ceiling applications</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-3 rounded bg-white/5">
+                <p className="font-medium text-white text-sm mb-2">Ladder Systems</p>
+                <div className="space-y-2">
+                  <div>
+                    <p className="font-medium text-white/80 text-xs mb-1">Construction</p>
+                    <ul className="text-xs text-white/70 space-y-0.5">
+                      <li>Side rails with cross rungs</li>
+                      <li>Heavy-duty galvanised steel</li>
+                      <li>Welded or bolted construction</li>
+                      <li>Available in standard 3m lengths</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-medium text-white/80 text-xs mb-1">Advantages</p>
+                    <ul className="text-xs text-white/70 space-y-0.5">
+                      <li>Maximum load capacity: 150-500 kg/m</li>
+                      <li>Long span capability (3-6m)</li>
+                      <li>Excellent ventilation</li>
+                      <li>Suitable for largest cable sizes</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-medium text-white/80 text-xs mb-1">Applications</p>
+                    <ul className="text-xs text-white/70 space-y-0.5">
+                      <li>Heavy power cable installations</li>
+                      <li>Long span requirements</li>
+                      <li>Industrial high-load applications</li>
+                      <li>Main distribution routes</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2: What this means on site */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            What This Means on Site
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="p-4 rounded bg-white/5">
+              <p className="font-medium text-white text-sm mb-2">Selection Criteria</p>
+              <ul className="text-xs text-white/80 space-y-1">
+                <li>Calculate total cable weight including 25% future capacity</li>
+                <li>Consider environmental conditions (indoor/outdoor, corrosive atmospheres)</li>
+                <li>Evaluate span requirements and available support points</li>
+                <li>Factor in installation time, accessibility and future modifications</li>
+                <li>Consider fire safety requirements for escape routes (BS EN 61537)</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>
-                  <strong>Spot:</strong> Metal mesh (baskets), solid perforated sheets (trays), side rails with rungs (ladders).
-                </li>
-                <li>
-                  <strong>Use:</strong> Baskets for data/light cables; trays for general purpose; ladders for heavy power.
-                </li>
-                <li>
-                  <strong>Check:</strong> Load capacity, support spacing, earthing continuity, edge protection.
-                </li>
+
+            <div className="p-4 rounded bg-cyan-500/10 border border-cyan-400/20">
+              <p className="font-medium text-white text-sm mb-2">Load Calculations</p>
+              <ul className="text-xs text-white/80 space-y-1">
+                <li>Total load = cable weight + system self-weight + 25% safety factor</li>
+                <li>Check manufacturer's load tables for maximum loads per support span</li>
+                <li>Consider point loads from junction boxes and equipment</li>
+                <li>Verify building structure can support total loads including dynamic forces</li>
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">
-            Learning outcomes
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3: Installation Practices */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Installation Practices and Techniques
           </h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-            <li>Identify the characteristics and applications of cable trays, baskets and ladder systems.</li>
-            <li>Select the appropriate containment system based on load, environment and cable type.</li>
-            <li>Calculate support spacing and loads for different cable containment systems.</li>
-            <li>Understand installation requirements including earthing and fire safety compliance.</li>
-            <li>Apply BS EN 61537 and BS 7671 requirements for cable management systems.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
-
-          {/* System Types */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
-              <Shield className="w-5 h-5" /> Cable Containment System Types
-            </h3>
-
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Cable Trays</p>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="font-medium text-white mb-1">Construction</p>
-                      <ul className="list-disc pl-4 space-y-1 text-white">
-                        <li>Solid or perforated steel/aluminium base</li>
-                        <li>Raised sides for cable retention</li>
-                        <li>Standard widths: 50-900mm</li>
-                        <li>Galvanised or powder coated finish</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-medium text-white mb-1">Advantages</p>
-                      <ul className="list-disc pl-4 space-y-1 text-white">
-                        <li>Weather protection from above</li>
-                        <li>Good support for mixed cable types</li>
-                        <li>Load capacity: 75-300 kg/m</li>
-                        <li>Easy cable access and organisation</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-medium text-white mb-1">Applications</p>
-                      <ul className="list-disc pl-4 space-y-1 text-white">
-                        <li>General building services</li>
-                        <li>Outdoor/weather exposed routes</li>
-                        <li>Mixed power and control cables</li>
-                        <li>Areas requiring cable segregation</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                  <p className="font-medium mb-2">Cable Baskets</p>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="font-medium text-white mb-1">Construction</p>
-                      <ul className="list-disc pl-4 space-y-1 text-white">
-                        <li>Wire mesh or grid construction</li>
-                        <li>Welded or formed mesh pattern</li>
-                        <li>Lightweight galvanised steel</li>
-                        <li>Easy to cut and modify on site</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-medium text-white mb-1">Advantages</p>
-                      <ul className="list-disc pl-4 space-y-1 text-white">
-                        <li>Excellent ventilation and heat dissipation</li>
-                        <li>Quick installation and modification</li>
-                        <li>Load capacity: 50-150 kg/m</li>
-                        <li>Cost-effective for data installations</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-medium text-white mb-1">Applications</p>
-                      <ul className="list-disc pl-4 space-y-1 text-white">
-                        <li>Data and communication cables</li>
-                        <li>Areas requiring maximum ventilation</li>
-                        <li>Retrofit installations</li>
-                        <li>Suspended ceiling applications</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Ladder Systems</p>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="font-medium text-white mb-1">Construction</p>
-                      <ul className="list-disc pl-4 space-y-1 text-white">
-                        <li>Side rails with cross rungs</li>
-                        <li>Heavy-duty galvanised steel</li>
-                        <li>Welded or bolted construction</li>
-                        <li>Available in standard 3m lengths</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-medium text-white mb-1">Advantages</p>
-                      <ul className="list-disc pl-4 space-y-1 text-white">
-                        <li>Maximum load capacity: 150-500 kg/m</li>
-                        <li>Long span capability (3-6m)</li>
-                        <li>Excellent ventilation</li>
-                        <li>Suitable for largest cable sizes</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-medium text-white mb-1">Applications</p>
-                      <ul className="list-disc pl-4 space-y-1 text-white">
-                        <li>Heavy power cable installations</li>
-                        <li>Long span requirements</li>
-                        <li>Industrial high-load applications</li>
-                        <li>Main distribution routes</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="p-4 rounded bg-elec-yellow/10 border border-elec-yellow/20">
+              <p className="font-medium text-elec-yellow text-sm mb-2">Support Spacing Requirements</p>
+              <ul className="text-xs text-elec-yellow/80 space-y-1">
+                <li><strong>Cable trays:</strong> 1.2-2.0m depending on width and load</li>
+                <li><strong>Cable baskets:</strong> 1.0-1.5m for typical data cable loads</li>
+                <li><strong>Ladder systems:</strong> 1.5-3.0m for heavy power cables</li>
+                <li>Additional support required near bends, junctions and equipment</li>
+                <li>Maximum deflection: L/200 under full load</li>
+              </ul>
             </div>
-          </section>
 
-          <InlineCheck {...quickCheckQuestions[0]} />
-          <Separator className="my-6" />
-
-          {/* What this means on site */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
-              <Target className="w-5 h-5" /> What this means on site
-            </h3>
-
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-white mb-2">Selection criteria</p>
-                <ul className="list-disc pl-4 space-y-1 text-white">
-                  <li>Calculate total cable weight including 25% future capacity</li>
-                  <li>Consider environmental conditions (indoor/outdoor, corrosive atmospheres)</li>
-                  <li>Evaluate span requirements and available support points</li>
-                  <li>Factor in installation time, accessibility and future modifications</li>
-                  <li>Consider fire safety requirements for escape routes (BS EN 61537)</li>
-                </ul>
-              </div>
-
-              <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
-                <p className="font-medium text-white mb-2">Load calculations</p>
-                <ul className="list-disc pl-4 space-y-1 text-white">
-                  <li>Total load = cable weight + system self-weight + 25% safety factor</li>
-                  <li>Check manufacturer's load tables for maximum loads per support span</li>
-                  <li>Consider point loads from junction boxes and equipment</li>
-                  <li>Verify building structure can support total loads including dynamic forces</li>
-                </ul>
-              </div>
+            <div className="p-4 rounded bg-violet-500/10 border border-violet-400/20">
+              <p className="font-medium text-violet-200 text-sm mb-2">Earthing and Electrical Safety</p>
+              <ul className="text-xs text-violet-200/80 space-y-1">
+                <li>All metallic sections must be electrically continuous</li>
+                <li>Earth continuity conductor minimum 4mm sq for cable management systems</li>
+                <li>Test continuity between sections: resistance less than 0.1 Ohm</li>
+                <li>Connect to main earthing terminal via appropriate earth clamp</li>
+                <li>Maintain earthing integrity through expansion joints</li>
+              </ul>
             </div>
-          </section>
 
-          <InlineCheck {...quickCheckQuestions[1]} />
-          <Separator className="my-6" />
-
-          {/* Installation Practices */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
-              <Settings className="w-5 h-5" /> Installation Practices and Techniques
-            </h3>
-
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
-                <p className="font-medium text-elec-yellow mb-2">Support spacing requirements</p>
-                <ul className="list-disc pl-4 space-y-1 text-elec-yellow">
-                  <li><strong>Cable trays:</strong> 1.2-2.0m depending on width and load</li>
-                  <li><strong>Cable baskets:</strong> 1.0-1.5m for typical data cable loads</li>
-                  <li><strong>Ladder systems:</strong> 1.5-3.0m for heavy power cables</li>
-                  <li>Additional support required near bends, junctions and equipment</li>
-                  <li>Maximum deflection: L/200 under full load</li>
-                </ul>
-              </div>
-
-              <div className="rounded-lg p-4 bg-violet-500/10 border border-violet-400/30">
-                <p className="font-medium text-violet-200 mb-2">Earthing and electrical safety</p>
-                <ul className="list-disc pl-4 space-y-1 text-violet-200">
-                  <li>All metallic sections must be electrically continuous</li>
-                  <li>Earth continuity conductor minimum 4mm² for cable management systems</li>
-                  <li>Test continuity between sections: resistance &lt;0.1Ω</li>
-                  <li>Connect to main earthing terminal via appropriate earth clamp</li>
-                  <li>Maintain earthing integrity through expansion joints</li>
-                </ul>
-              </div>
-
-              <div className="rounded-lg p-4 bg-indigo-500/10 border border-indigo-400/30">
-                <p className="font-medium text-indigo-200 mb-2">Installation best practices</p>
-                <ul className="list-disc pl-4 space-y-1 text-indigo-200">
-                  <li>Plan cable routes to minimise bends and maintain minimum bend radius</li>
-                  <li>Install systems level and square with adequate clearances</li>
-                  <li>Use appropriate fixings rated for the building structure and loads</li>
-                  <li>Provide expansion joints every 30-50m for long runs</li>
-                  <li>Install end caps and covers for cable protection</li>
-                  <li>File smooth or fit grommets at sharp edges to protect cables</li>
-                </ul>
-              </div>
+            <div className="p-4 rounded bg-indigo-500/10 border border-indigo-400/20">
+              <p className="font-medium text-indigo-200 text-sm mb-2">Installation Best Practices</p>
+              <ul className="text-xs text-indigo-200/80 space-y-1">
+                <li>Plan cable routes to minimise bends and maintain minimum bend radius</li>
+                <li>Install systems level and square with adequate clearances</li>
+                <li>Use appropriate fixings rated for the building structure and loads</li>
+                <li>Provide expansion joints every 30-50m for long runs</li>
+                <li>Install end caps and covers for cable protection</li>
+                <li>File smooth or fit grommets at sharp edges to protect cables</li>
+              </ul>
             </div>
-          </section>
+          </div>
+        </section>
 
-          <InlineCheck {...quickCheckQuestions[2]} />
-          <Separator className="my-6" />
+        <InlineCheck {...quickCheckQuestions[2]} />
 
-          {/* Common Mistakes */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5" /> Common Mistakes to Avoid
-            </h3>
-
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-white mb-2">Installation errors</p>
-                <ul className="list-disc pl-4 space-y-1 text-white">
-                  <li><strong>Inadequate support spacing:</strong> Causing excessive deflection and cable stress</li>
-                  <li><strong>Poor earthing connections:</strong> Creating potential safety hazards and non-compliance</li>
-                  <li><strong>Incorrect load calculations:</strong> Leading to system overload and structural failure</li>
-                  <li><strong>Insufficient clearances:</strong> Preventing proper cable installation and maintenance</li>
-                  <li><strong>Mixing components:</strong> Using incompatible manufacturers' parts without checking compatibility</li>
-                </ul>
-              </div>
-
-              <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
-                <p className="font-medium text-white mb-2">Planning oversights</p>
-                <ul className="list-disc pl-4 space-y-1 text-white">
-                  <li><strong>Ignoring thermal expansion:</strong> Not providing expansion joints in long runs</li>
-                  <li><strong>Inadequate access provision:</strong> Making future maintenance difficult or impossible</li>
-                  <li><strong>Wrong system selection:</strong> Using baskets for heavy loads or ladders for light cables</li>
-                  <li><strong>Poor cable segregation:</strong> Mixing power and data cables without proper separation</li>
-                </ul>
-              </div>
+        {/* Section 4: Common Mistakes */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Common Mistakes to Avoid
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="p-3 rounded bg-white/5">
+              <p className="font-medium text-white text-sm mb-2">Installation Errors</p>
+              <ul className="text-xs text-white/80 space-y-1">
+                <li><strong>Inadequate support spacing:</strong> Causing excessive deflection and cable stress</li>
+                <li><strong>Poor earthing connections:</strong> Creating potential safety hazards and non-compliance</li>
+                <li><strong>Incorrect load calculations:</strong> Leading to system overload and structural failure</li>
+                <li><strong>Insufficient clearances:</strong> Preventing proper cable installation and maintenance</li>
+                <li><strong>Mixing components:</strong> Using incompatible manufacturers' parts without checking compatibility</li>
+              </ul>
             </div>
-          </section>
 
-          <InlineCheck {...quickCheckQuestions[3]} />
-          <Separator className="my-6" />
-
-          {/* BS 7671 Context */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3 flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5" /> BS 7671 and Standards Context
-            </h3>
-
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-white mb-2">Key standards and regulations</p>
-                <ul className="list-disc pl-4 space-y-1 text-white">
-                  <li><strong>BS EN 61537:</strong> Cable management systems for electrical installations</li>
-                  <li><strong>BS 7671 Chapter 52:</strong> Selection and erection of wiring systems</li>
-                  <li><strong>521.10.1:</strong> Cable support systems and spacing requirements</li>
-                  <li><strong>543.2:</strong> Earthing requirements for metallic cable management</li>
-                  <li><strong>527.1:</strong> Cable segregation requirements for different circuits</li>
-                </ul>
-              </div>
-
-              <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                <p className="font-medium text-white mb-2">Fire safety requirements</p>
-                <ul className="list-disc pl-4 space-y-1 text-white">
-                  <li>Enhanced fire performance required in escape routes</li>
-                  <li>Reaction to fire classification for non-metallic systems</li>
-                  <li>Smoke and toxicity emission considerations</li>
-                  <li>Fire-resistant coatings for metallic systems in critical areas</li>
-                  <li>Compartmentation integrity around fire barriers</li>
-                </ul>
-              </div>
-
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <p className="font-medium text-white mb-2">Compliance testing</p>
-                <ul className="list-disc pl-4 space-y-1 text-white">
-                  <li>Earth continuity testing: &lt;0.1Ω between all metallic sections</li>
-                  <li>Load testing: Verify systems meet manufacturer's specifications</li>
-                  <li>Visual inspection: Check support spacing, clearances and finish</li>
-                  <li>Cable segregation verification per BS 7671 requirements</li>
-                  <li>Documentation: Installation certificates and test records</li>
-                </ul>
-              </div>
+            <div className="p-3 rounded bg-amber-500/10 border border-amber-400/20">
+              <p className="font-medium text-white text-sm mb-2">Planning Oversights</p>
+              <ul className="text-xs text-white/80 space-y-1">
+                <li><strong>Ignoring thermal expansion:</strong> Not providing expansion joints in long runs</li>
+                <li><strong>Inadequate access provision:</strong> Making future maintenance difficult or impossible</li>
+                <li><strong>Wrong system selection:</strong> Using baskets for heavy loads or ladders for light cables</li>
+                <li><strong>Poor cable segregation:</strong> Mixing power and data cables without proper separation</li>
+              </ul>
             </div>
-          </section>
-        </Card>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* BS 7671 Context */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">BS 7671 and Standards Context</h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="p-4 rounded bg-white/5">
+              <p className="font-medium text-white text-sm mb-2">Key Standards and Regulations</p>
+              <ul className="text-xs text-white/80 space-y-1">
+                <li><strong>BS EN 61537:</strong> Cable management systems for electrical installations</li>
+                <li><strong>BS 7671 Chapter 52:</strong> Selection and erection of wiring systems</li>
+                <li><strong>521.10.1:</strong> Cable support systems and spacing requirements</li>
+                <li><strong>543.2:</strong> Earthing requirements for metallic cable management</li>
+                <li><strong>527.1:</strong> Cable segregation requirements for different circuits</li>
+              </ul>
+            </div>
+
+            <div className="p-4 rounded bg-green-500/10 border border-green-400/20">
+              <p className="font-medium text-white text-sm mb-2">Fire Safety Requirements</p>
+              <ul className="text-xs text-white/80 space-y-1">
+                <li>Enhanced fire performance required in escape routes</li>
+                <li>Reaction to fire classification for non-metallic systems</li>
+                <li>Smoke and toxicity emission considerations</li>
+                <li>Fire-resistant coatings for metallic systems in critical areas</li>
+                <li>Compartmentation integrity around fire barriers</li>
+              </ul>
+            </div>
+
+            <div className="p-4 rounded bg-white/5">
+              <p className="font-medium text-white text-sm mb-2">Compliance Testing</p>
+              <ul className="text-xs text-white/80 space-y-1">
+                <li>Earth continuity testing: less than 0.1 Ohm between all metallic sections</li>
+                <li>Load testing: Verify systems meet manufacturer's specifications</li>
+                <li>Visual inspection: Check support spacing, clearances and finish</li>
+                <li>Cable segregation verification per BS 7671 requirements</li>
+                <li>Documentation: Installation certificates and test records</li>
+              </ul>
+            </div>
+          </div>
+        </section>
 
         {/* Real-world Scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-            <Factory className="w-5 h-5" /> Real-world Scenario
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+            <Target className="w-5 h-5 text-elec-yellow" />
+            Real-world Scenario: Industrial Facility Cable Management
           </h2>
-          <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-slate-400/30">
-            <h3 className="font-medium text-white mb-2">Industrial facility cable management</h3>
-            <p className="text-white text-sm mb-3">
-              A manufacturing facility requires cable containment for the main electrical distribution. 
-              The installation includes 400A three-phase power cables, control circuits, and data networks.
-            </p>
-            <div className="grid md:grid-cols-2 gap-4 text-sm">
+          <div className="p-4 rounded-lg bg-white/5">
+            <div className="flex items-start gap-3 mb-4">
+              <Factory className="w-6 h-6 text-elec-yellow mt-1 flex-shrink-0" />
               <div>
-                <p className="font-medium text-white mb-2">Power distribution route</p>
-                <ul className="list-disc pl-4 space-y-1 text-white">
+                <p className="font-medium text-white mb-2">The Project</p>
+                <p className="text-sm text-white/90 leading-relaxed">
+                  A manufacturing facility requires cable containment for the main electrical distribution.
+                  The installation includes 400A three-phase power cables, control circuits, and data networks.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="p-3 rounded bg-white/5">
+                <p className="font-medium text-white text-sm mb-2">Power Distribution Route</p>
+                <ul className="text-xs text-white/80 space-y-1">
                   <li>Cable ladder system for main 400A feeders</li>
                   <li>3m support spacing due to cable weight (85 kg/m)</li>
                   <li>Galvanised steel construction for corrosion resistance</li>
-                  <li>Earthing via 25mm² earth conductor</li>
+                  <li>Earthing via 25mm sq earth conductor</li>
                 </ul>
               </div>
-              <div>
-                <p className="font-medium text-white mb-2">Control and data circuits</p>
-                <ul className="list-disc pl-4 space-y-1 text-white">
+              <div className="p-3 rounded bg-white/5">
+                <p className="font-medium text-white text-sm mb-2">Control and Data Circuits</p>
+                <ul className="text-xs text-white/80 space-y-1">
                   <li>Cable baskets for control wiring (12 kg/m total load)</li>
                   <li>1.2m support spacing for lighter loads</li>
                   <li>Separate basket for data cables (segregation)</li>
@@ -591,143 +569,168 @@ const Module3Section2_4: React.FC = () => {
               </div>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-l-elec-yellow/50 pl-4">
-                <p className="font-medium text-white mb-1">Q: {faq.q}</p>
-                <p className="text-white text-sm">A: {faq.a}</p>
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
-          <div className="space-y-3 text-xs sm:text-sm text-white">
-            <p>
-              <strong>Cable containment systems</strong> are essential for organised, safe cable installations.
-            </p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li><strong>Cable trays</strong> provide weather protection and good support for mixed loads</li>
-              <li><strong>Cable baskets</strong> offer excellent ventilation and are ideal for data installations</li>
-              <li><strong>Ladder systems</strong> provide maximum load capacity for heavy power cables</li>
-              <li><strong>All systems</strong> require proper earthing, support spacing and BS 7671 compliance</li>
-              <li><strong>Selection depends</strong> on load, environment, span requirements and cost factors</li>
-            </ul>
-            <p>
-              Proper installation with correct support spacing, earthing and edge protection ensures safe, 
-              compliant installations that meet BS EN 61537 and BS 7671 requirements.
-            </p>
+        <section className="mb-10">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <h2 className="text-lg font-semibold text-elec-yellow mb-2">Summary</h2>
+            <div className="text-sm text-white space-y-2">
+              <p>
+                <strong>Cable containment systems</strong> are essential for organised, safe cable installations.
+              </p>
+              <ul className="list-disc pl-6 space-y-1">
+                <li><strong>Cable trays</strong> provide weather protection and good support for mixed loads</li>
+                <li><strong>Cable baskets</strong> offer excellent ventilation and are ideal for data installations</li>
+                <li><strong>Ladder systems</strong> provide maximum load capacity for heavy power cables</li>
+                <li><strong>All systems</strong> require proper earthing, support spacing and BS 7671 compliance</li>
+                <li><strong>Selection depends</strong> on load, environment, span requirements and cost factors</li>
+              </ul>
+              <p>
+                Proper installation with correct support spacing, earthing and edge protection ensures safe,
+                compliant installations that meet BS EN 61537 and BS 7671 requirements.
+              </p>
+            </div>
           </div>
-        </Card>
+        </section>
 
-        {/* Apprentice Do's and Don'ts */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Apprentice Do's and Don'ts</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
-            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-              <h3 className="font-medium text-white mb-3">✓ DO</h3>
-              <ul className="space-y-2 text-white">
-                <li>• Calculate total loads including future capacity</li>
-                <li>• Check manufacturer's load tables and specifications</li>
-                <li>• Ensure all metallic sections are properly earthed</li>
-                <li>• Provide adequate support spacing per regulations</li>
-                <li>• Install expansion joints on long runs</li>
-                <li>• File smooth all sharp edges or fit grommets</li>
-                <li>• Consider environmental factors in system selection</li>
-                <li>• Test earth continuity after installation</li>
+        {/* Do's and Don'ts */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Apprentice Do's and Don'ts</h2>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="p-4 rounded bg-green-500/10 border border-green-400/20">
+              <h3 className="font-medium text-white text-sm mb-3">DO</h3>
+              <ul className="text-xs text-white/80 space-y-1">
+                <li>Calculate total loads including future capacity</li>
+                <li>Check manufacturer's load tables and specifications</li>
+                <li>Ensure all metallic sections are properly earthed</li>
+                <li>Provide adequate support spacing per regulations</li>
+                <li>Install expansion joints on long runs</li>
+                <li>File smooth all sharp edges or fit grommets</li>
+                <li>Consider environmental factors in system selection</li>
+                <li>Test earth continuity after installation</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <h3 className="font-medium text-white mb-3">✗ DON'T</h3>
-              <ul className="space-y-2 text-white">
-                <li>• Exceed manufacturer's load ratings</li>
-                <li>• Use incompatible components from different systems</li>
-                <li>• Ignore thermal expansion requirements</li>
-                <li>• Install without proper earthing connections</li>
-                <li>• Mix power and data cables without segregation</li>
-                <li>• Cut corners on support spacing to save money</li>
-                <li>• Leave sharp edges that could damage cables</li>
-                <li>• Forget to plan for future maintenance access</li>
+            <div className="p-4 rounded bg-red-500/10 border border-red-400/20">
+              <h3 className="font-medium text-white text-sm mb-3">DON'T</h3>
+              <ul className="text-xs text-white/80 space-y-1">
+                <li>Exceed manufacturer's load ratings</li>
+                <li>Use incompatible components from different systems</li>
+                <li>Ignore thermal expansion requirements</li>
+                <li>Install without proper earthing connections</li>
+                <li>Mix power and data cables without segregation</li>
+                <li>Cut corners on support spacing to save money</li>
+                <li>Leave sharp edges that could damage cables</li>
+                <li>Forget to plan for future maintenance access</li>
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Pocket Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Card: Cable Containment Quick Reference</h2>
-          <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs">
-            <div className="rounded-lg p-3 border border-border/30">
-              <h4 className="font-medium text-white mb-2">Cable Trays</h4>
-              <ul className="space-y-1 text-white">
-                <li>• Load: 75-300 kg/m</li>
-                <li>• Support: 1.2-2.0m</li>
-                <li>• Use: General purpose</li>
-                <li>• Benefit: Weather protection</li>
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Quick Reference</h2>
+          <div className="grid sm:grid-cols-3 gap-3">
+            <div className="p-3 rounded bg-white/5">
+              <h4 className="font-medium text-white text-sm mb-2">Cable Trays</h4>
+              <ul className="text-xs text-white/80 space-y-0.5">
+                <li>Load: 75-300 kg/m</li>
+                <li>Support: 1.2-2.0m</li>
+                <li>Use: General purpose</li>
+                <li>Benefit: Weather protection</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 border border-green-400/30">
-              <h4 className="font-medium text-white mb-2">Cable Baskets</h4>
-              <ul className="space-y-1 text-white">
-                <li>• Load: 50-150 kg/m</li>
-                <li>• Support: 1.0-1.5m</li>
-                <li>• Use: Data/light power</li>
-                <li>• Benefit: Easy installation</li>
+            <div className="p-3 rounded bg-green-500/10 border border-green-400/20">
+              <h4 className="font-medium text-white text-sm mb-2">Cable Baskets</h4>
+              <ul className="text-xs text-white/80 space-y-0.5">
+                <li>Load: 50-150 kg/m</li>
+                <li>Support: 1.0-1.5m</li>
+                <li>Use: Data/light power</li>
+                <li>Benefit: Easy installation</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 border border-border/30">
-              <h4 className="font-medium text-white mb-2">Ladder Systems</h4>
-              <ul className="space-y-1 text-white">
-                <li>• Load: 150-500 kg/m</li>
-                <li>• Support: 1.5-3.0m</li>
-                <li>• Use: Heavy power</li>
-                <li>• Benefit: Maximum capacity</li>
+            <div className="p-3 rounded bg-white/5">
+              <h4 className="font-medium text-white text-sm mb-2">Ladder Systems</h4>
+              <ul className="text-xs text-white/80 space-y-0.5">
+                <li>Load: 150-500 kg/m</li>
+                <li>Support: 1.5-3.0m</li>
+                <li>Use: Heavy power</li>
+                <li>Benefit: Maximum capacity</li>
               </ul>
             </div>
           </div>
-          <div className="mt-4 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-            <p className="text-yellow-200 text-xs">
-              <strong>Remember:</strong> All metallic systems need earthing (&lt;0.1Ω). 
+          <div className="mt-4 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+            <p className="text-elec-yellow/80 text-xs">
+              <strong>Remember:</strong> All metallic systems need earthing (less than 0.1 Ohm).
               Support spacing critical for safety. Check BS EN 61537 for fire requirements.
             </p>
           </div>
-        </Card>
+        </section>
 
         {/* Key References */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Key References</h2>
-          <div className="space-y-2 text-xs sm:text-sm text-white">
-            <div className="flex justify-between items-center p-2 rounded bg-muted/10">
-              <span>BS EN 61537:2006</span>
-              <span className="text-white">Cable management systems for electrical installations</span>
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Key References</h2>
+          <div className="space-y-2 text-xs">
+            <div className="flex justify-between items-center p-2 rounded bg-white/5">
+              <span className="text-white">BS EN 61537:2006</span>
+              <span className="text-white/70">Cable management systems for electrical installations</span>
             </div>
-            <div className="flex justify-between items-center p-2 rounded bg-muted/10">
-              <span>BS 7671:2018+A2:2022</span>
-              <span className="text-white">IET Wiring Regulations (Chapter 52)</span>
+            <div className="flex justify-between items-center p-2 rounded bg-white/5">
+              <span className="text-white">BS 7671:2018+A2:2022</span>
+              <span className="text-white/70">IET Wiring Regulations (Chapter 52)</span>
             </div>
-            <div className="flex justify-between items-center p-2 rounded bg-muted/10">
-              <span>BS EN 50085</span>
-              <span className="text-white">Cable trunking and ducting systems</span>
+            <div className="flex justify-between items-center p-2 rounded bg-white/5">
+              <span className="text-white">BS EN 50085</span>
+              <span className="text-white/70">Cable trunking and ducting systems</span>
             </div>
-            <div className="flex justify-between items-center p-2 rounded bg-muted/10">
-              <span>Health & Safety at Work etc. Act 1974</span>
-              <span className="text-white">General workplace safety requirements</span>
+            <div className="flex justify-between items-center p-2 rounded bg-white/5">
+              <span className="text-white">Health & Safety at Work etc. Act 1974</span>
+              <span className="text-white/70">General workplace safety requirements</span>
             </div>
           </div>
-        </Card>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
 
         {/* Quiz */}
-        <Card className="p-6 bg-transparent border-white/20">
-          <Quiz title="Test Your Knowledge: Cable Containment Systems" questions={quizQuestions} />
-        </Card>
-      </main>
+        <section className="mb-10">
+          <Quiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../2-3">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[44px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../2-5">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+
+      </article>
     </div>
   );
 };

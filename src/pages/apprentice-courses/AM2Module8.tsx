@@ -243,7 +243,7 @@ const AM2Module8 = () => {
             </CardHeader>
             
             <CardContent className="px-4 sm:px-6">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+              <div className="grid grid-cols-1 gap-4 mb-6">
                 <Card className="bg-transparent border-green-500/20">
                   <CardContent className="p-4 text-center">
                     <div className="text-2xl font-bold text-green-500">{stats.correct}</div>
@@ -305,7 +305,7 @@ const AM2Module8 = () => {
     
     return (
       <div className="min-h-screen bg-[#1a1a1a] p-2 sm:p-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           {/* Review Header */}
           <div className="mb-4">
             <div className="flex items-center justify-between mb-4">
@@ -325,7 +325,7 @@ const AM2Module8 = () => {
             </div>
             
             {/* Summary Stats - Clickable Filters */}
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-4 mb-4">
+            <div className="grid grid-cols-1 gap-4 mb-4">
               <Card 
                 className={`bg-transparent border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 transition-colors ${
                   reviewFilter === "all" ? "ring-2 ring-elec-yellow/50" : ""
@@ -502,10 +502,10 @@ const AM2Module8 = () => {
   };
   
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
-      <div className="sticky top-0 z-50 backdrop-blur-sm bg-[#1a1a1a]/80 border-b border-elec-yellow/30 p-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="sticky top-0 z-50 backdrop-blur-sm bg-[#1a1a1a]/80 border-b border-elec-yellow/30">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div>
             <Link to=".." className="text-white hover:text-elec-yellow">
               <ArrowLeft className="h-5 w-5" />
@@ -588,10 +588,10 @@ const AM2Module8 = () => {
 
       {/* Desktop Layout */}
       <div className="hidden lg:block">
-        <div className="max-w-7xl mx-auto p-4">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="max-w-3xl mx-auto p-4">
+          <div className="grid grid-cols-1 gap-4">
             {/* Question Panel */}
-            <Card className="lg:col-span-3 border border-elec-yellow/30">
+            <Card className="border border-elec-yellow/30">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-6">
                   <div>

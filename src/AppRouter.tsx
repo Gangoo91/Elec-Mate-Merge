@@ -60,6 +60,7 @@ const AdminEmailLogs = lazy(() => import("@/pages/Admin/AdminEmailLogs"));
 const AdminEmployerModeration = lazy(() => import("@/pages/Admin/AdminEmployerModeration"));
 const AdminDataExport = lazy(() => import("@/pages/Admin/AdminDataExport"));
 const AdminPricingModeration = lazy(() => import("@/pages/Admin/AdminPricingModeration"));
+const AdminDocumentReview = lazy(() => import("@/pages/Admin/AdminDocumentReview"));
 const AdminFounders = lazy(() => import("@/pages/Admin/AdminFounders"));
 const FounderClaim = lazy(() => import("@/pages/founder/FounderClaim"));
 const FounderSuccess = lazy(() => import("@/pages/founder/FounderSuccess"));
@@ -147,6 +148,7 @@ const AppRouter = () => {
           <Route path="verification" element={<LazyRoute><AdminVerificationQueue /></LazyRoute>} />
           <Route path="vacancies" element={<LazyRoute><AdminEmployerModeration /></LazyRoute>} />
           <Route path="pricing" element={<LazyRoute><AdminPricingModeration /></LazyRoute>} />
+          <Route path="document-review" element={<LazyRoute><AdminDocumentReview /></LazyRoute>} />
           <Route path="subscriptions" element={<LazyRoute><AdminSubscriptions /></LazyRoute>} />
           <Route path="conversations" element={<LazyRoute><AdminConversations /></LazyRoute>} />
           <Route path="announcements" element={<LazyRoute><AdminAnnouncements /></LazyRoute>} />

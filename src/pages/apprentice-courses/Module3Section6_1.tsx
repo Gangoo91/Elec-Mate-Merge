@@ -1,7 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -9,10 +6,6 @@ import {
   Anchor,
   Ruler,
   Weight,
-  AlertTriangle,
-  CheckCircle,
-  Wrench,
-  Flame,
 } from "lucide-react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -158,13 +151,13 @@ export default function Module3Section6_1() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -176,32 +169,27 @@ export default function Module3Section6_1() {
       </div>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Anchor className="w-6 h-6 text-white" />
-            </div>
-            <Badge
-              variant="outline"
-              className="border-elec-yellow/30 text-elec-yellow"
-            >
-              Section 3.6.1
-            </Badge>
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <header className="mb-6 sm:mb-8 text-center">
+          <div className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
+            <span className="text-elec-yellow text-sm font-medium">Module 3.6.1</span>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Cable Support Distances (Horizontal/Vertical)
           </h1>
-          <p className="text-white">
+          <p className="text-white/80">
             Essential requirements for proper cable support spacing to ensure mechanical stability, BS 7671 compliance, and fire safety in electrical installations.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Proper cable support prevents sagging, damage, and termination strain.</li>
@@ -210,7 +198,7 @@ export default function Module3Section6_1() {
                 <li>Manufacturer guidance overrides general recommendations where specified.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Cable sag, loose supports, plastic clips in escape routes.</li>
@@ -219,29 +207,35 @@ export default function Module3Section6_1() {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning Outcomes
+          </h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>State the recommended maximum cable support distances for horizontal and vertical runs.</li>
             <li>Explain the factors that influence cable support spacing requirements.</li>
             <li>Identify correct support methods for different cable types and environments.</li>
             <li>Apply BS 7671 requirements for non-combustible fixings in escape routes.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Content / Learning
+          </h2>
 
           {/* 1. Purpose and Principles of Cable Support */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Anchor className="w-5 h-5" /> 1. Purpose and Principles of Cable Support
             </h3>
-            
+
             <div className="mb-6">
               <h4 className="font-medium text-white mb-3">Engineering Principles Behind Cable Support</h4>
               <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
@@ -252,21 +246,21 @@ export default function Module3Section6_1() {
                   <div>
                     <h6 className="font-medium text-white mb-2">Primary Support Functions</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Load distribution:</strong> Transfers cable weight to building structure</li>
-                      <li>• <strong>Deflection control:</strong> Maintains acceptable sag within limits</li>
-                      <li>• <strong>Strain relief:</strong> Prevents mechanical stress at terminations</li>
-                      <li>• <strong>Vibration damping:</strong> Reduces fatigue from building movement</li>
-                      <li>• <strong>Thermal stability:</strong> Accommodates expansion/contraction cycles</li>
+                      <li>* <strong>Load distribution:</strong> Transfers cable weight to building structure</li>
+                      <li>* <strong>Deflection control:</strong> Maintains acceptable sag within limits</li>
+                      <li>* <strong>Strain relief:</strong> Prevents mechanical stress at terminations</li>
+                      <li>* <strong>Vibration damping:</strong> Reduces fatigue from building movement</li>
+                      <li>* <strong>Thermal stability:</strong> Accommodates expansion/contraction cycles</li>
                     </ul>
                   </div>
                   <div>
                     <h6 className="font-medium text-white mb-2">Failure Modes Without Adequate Support</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Excessive sag:</strong> Beyond acceptable aesthetic/functional limits</li>
-                      <li>• <strong>Termination stress:</strong> Pull-out forces at connections</li>
-                      <li>• <strong>Sheath cracking:</strong> Repeated flexing at support points</li>
-                      <li>• <strong>Core stretching:</strong> Conductor elongation in vertical runs</li>
-                      <li>• <strong>Joint separation:</strong> Mechanical failure at splice points</li>
+                      <li>* <strong>Excessive sag:</strong> Beyond acceptable aesthetic/functional limits</li>
+                      <li>* <strong>Termination stress:</strong> Pull-out forces at connections</li>
+                      <li>* <strong>Sheath cracking:</strong> Repeated flexing at support points</li>
+                      <li>* <strong>Core stretching:</strong> Conductor elongation in vertical runs</li>
+                      <li>* <strong>Joint separation:</strong> Mechanical failure at splice points</li>
                     </ul>
                   </div>
                 </div>
@@ -278,19 +272,19 @@ export default function Module3Section6_1() {
                   <div>
                     <h6 className="font-medium text-white mb-2">BS 7671 18th Edition Amendment 2 Requirements</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Escape route protection:</strong> Non-combustible supports mandatory</li>
-                      <li>• <strong>Fire resistance:</strong> Supports must not fail below 750°C</li>
-                      <li>• <strong>Structural integrity:</strong> Maintain support during evacuation period</li>
-                      <li>• <strong>Emergency lighting:</strong> Critical circuit protection priority</li>
+                      <li>* <strong>Escape route protection:</strong> Non-combustible supports mandatory</li>
+                      <li>* <strong>Fire resistance:</strong> Supports must not fail below 750C</li>
+                      <li>* <strong>Structural integrity:</strong> Maintain support during evacuation period</li>
+                      <li>* <strong>Emergency lighting:</strong> Critical circuit protection priority</li>
                     </ul>
                   </div>
                   <div>
                     <h6 className="font-medium text-white mb-2">Regulatory Background</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Grenfell Tower:</strong> Highlighted cable support fire safety risks</li>
-                      <li>• <strong>Building regulations:</strong> Enhanced fire safety requirements</li>
-                      <li>• <strong>Insurance implications:</strong> Non-compliance affects coverage</li>
-                      <li>• <strong>Professional liability:</strong> Designer and installer responsibility</li>
+                      <li>* <strong>Grenfell Tower:</strong> Highlighted cable support fire safety risks</li>
+                      <li>* <strong>Building regulations:</strong> Enhanced fire safety requirements</li>
+                      <li>* <strong>Insurance implications:</strong> Non-compliance affects coverage</li>
+                      <li>* <strong>Professional liability:</strong> Designer and installer responsibility</li>
                     </ul>
                   </div>
                 </div>
@@ -302,33 +296,33 @@ export default function Module3Section6_1() {
                   <div>
                     <h6 className="font-medium text-white mb-2">Periodic Inspection Points</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• Support fixing security and condition</li>
-                      <li>• Cable sag measurement within acceptable limits</li>
-                      <li>• Absence of stress at termination points</li>
-                      <li>• Material compatibility and corrosion resistance</li>
-                      <li>• Compliance with fire safety regulations</li>
+                      <li>* Support fixing security and condition</li>
+                      <li>* Cable sag measurement within acceptable limits</li>
+                      <li>* Absence of stress at termination points</li>
+                      <li>* Material compatibility and corrosion resistance</li>
+                      <li>* Compliance with fire safety regulations</li>
                     </ul>
                   </div>
                   <div>
                     <h6 className="font-medium text-white mb-2">Documentation Requirements</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• Support specification and spacing calculations</li>
-                      <li>• Material certificates for fire-rated applications</li>
-                      <li>• Installation test results and validation</li>
-                      <li>• Maintenance schedules and inspection records</li>
-                      <li>• Compliance statements for special locations</li>
+                      <li>* Support specification and spacing calculations</li>
+                      <li>* Material certificates for fire-rated applications</li>
+                      <li>* Installation test results and validation</li>
+                      <li>* Maintenance schedules and inspection records</li>
+                      <li>* Compliance statements for special locations</li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[0]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* 2. Factors Affecting Support Distance Requirements */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Weight className="w-5 h-5" /> 2. Factors Affecting Support Distance Requirements
             </h3>
@@ -369,7 +363,7 @@ export default function Module3Section6_1() {
                       <tr className="bg-muted/5">
                         <td className="border border-white/10 p-3"><strong>Temperature Rating</strong></td>
                         <td className="border border-white/10 p-3">High temp = thermal expansion</td>
-                        <td className="border border-white/10 p-3">70°C to 90°C typical</td>
+                        <td className="border border-white/10 p-3">70C to 90C typical</td>
                         <td className="border border-white/10 p-3">Expansion coefficient</td>
                       </tr>
                       <tr>
@@ -389,28 +383,28 @@ export default function Module3Section6_1() {
                   <div>
                     <h6 className="font-medium text-white mb-2">Temperature Effects</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Thermal cycling:</strong> Daily heating/cooling stress</li>
-                      <li>• <strong>Material degradation:</strong> UV and ozone effects</li>
-                      <li>• <strong>Expansion coefficients:</strong> PVC 8×10⁻⁵/°C, XLPE 2×10⁻⁴/°C</li>
-                      <li>• <strong>Cold weather brittleness:</strong> Increased support needs</li>
+                      <li>* <strong>Thermal cycling:</strong> Daily heating/cooling stress</li>
+                      <li>* <strong>Material degradation:</strong> UV and ozone effects</li>
+                      <li>* <strong>Expansion coefficients:</strong> PVC 8x10-5/C, XLPE 2x10-4/C</li>
+                      <li>* <strong>Cold weather brittleness:</strong> Increased support needs</li>
                     </ul>
                   </div>
                   <div>
                     <h6 className="font-medium text-white mb-2">Mechanical Environment</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Vibration sources:</strong> Machinery, traffic, wind</li>
-                      <li>• <strong>Dynamic loading:</strong> Short-circuit fault currents</li>
-                      <li>• <strong>Building movement:</strong> Settlement, thermal, seismic</li>
-                      <li>• <strong>Access requirements:</strong> Maintenance and alteration</li>
+                      <li>* <strong>Vibration sources:</strong> Machinery, traffic, wind</li>
+                      <li>* <strong>Dynamic loading:</strong> Short-circuit fault currents</li>
+                      <li>* <strong>Building movement:</strong> Settlement, thermal, seismic</li>
+                      <li>* <strong>Access requirements:</strong> Maintenance and alteration</li>
                     </ul>
                   </div>
                   <div>
                     <h6 className="font-medium text-white mb-2">Chemical and Moisture</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Corrosive atmospheres:</strong> Support material selection</li>
-                      <li>• <strong>Humidity cycles:</strong> Dimensional changes</li>
-                      <li>• <strong>Chemical compatibility:</strong> Support/cable interaction</li>
-                      <li>• <strong>Water absorption:</strong> Weight increase over time</li>
+                      <li>* <strong>Corrosive atmospheres:</strong> Support material selection</li>
+                      <li>* <strong>Humidity cycles:</strong> Dimensional changes</li>
+                      <li>* <strong>Chemical compatibility:</strong> Support/cable interaction</li>
+                      <li>* <strong>Water absorption:</strong> Weight increase over time</li>
                     </ul>
                   </div>
                 </div>
@@ -422,33 +416,33 @@ export default function Module3Section6_1() {
                   <div>
                     <h6 className="font-medium text-white mb-2">High-Risk Locations</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Fire escape routes:</strong> Non-combustible supports mandatory</li>
-                      <li>• <strong>Public areas:</strong> Enhanced mechanical protection</li>
-                      <li>• <strong>Industrial environments:</strong> Vibration and chemical resistance</li>
-                      <li>• <strong>Outdoor installations:</strong> Weather and UV protection</li>
-                      <li>• <strong>Hazardous areas:</strong> Explosion-proof support systems</li>
+                      <li>* <strong>Fire escape routes:</strong> Non-combustible supports mandatory</li>
+                      <li>* <strong>Public areas:</strong> Enhanced mechanical protection</li>
+                      <li>* <strong>Industrial environments:</strong> Vibration and chemical resistance</li>
+                      <li>* <strong>Outdoor installations:</strong> Weather and UV protection</li>
+                      <li>* <strong>Hazardous areas:</strong> Explosion-proof support systems</li>
                     </ul>
                   </div>
                   <div>
                     <h6 className="font-medium text-white mb-2">Cable Bundling Effects</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Grouped cables:</strong> Combined weight considerations</li>
-                      <li>• <strong>Thermal effects:</strong> Heat buildup in bundles</li>
-                      <li>• <strong>Segregation requirements:</strong> Different voltage levels</li>
-                      <li>• <strong>EMC considerations:</strong> Power and data separation</li>
-                      <li>• <strong>Future expansion:</strong> Additional cable accommodation</li>
+                      <li>* <strong>Grouped cables:</strong> Combined weight considerations</li>
+                      <li>* <strong>Thermal effects:</strong> Heat buildup in bundles</li>
+                      <li>* <strong>Segregation requirements:</strong> Different voltage levels</li>
+                      <li>* <strong>EMC considerations:</strong> Power and data separation</li>
+                      <li>* <strong>Future expansion:</strong> Additional cable accommodation</li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[1]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* 3. Standard Support Distances and Methods */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Ruler className="w-5 h-5" /> 3. Standard Support Distances and Installation Methods
             </h3>
@@ -469,25 +463,25 @@ export default function Module3Section6_1() {
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="border border-white/10 p-3"><strong>PVC T&E (2.5-6mm²)</strong></td>
+                        <td className="border border-white/10 p-3"><strong>PVC T&E (2.5-6mm2)</strong></td>
                         <td className="border border-white/10 p-3">300mm</td>
                         <td className="border border-white/10 p-3">400mm</td>
                         <td className="border border-white/10 p-3">Standard domestic installation</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-white/10 p-3"><strong>PVC T&E (10mm² and above)</strong></td>
+                        <td className="border border-white/10 p-3"><strong>PVC T&E (10mm2 and above)</strong></td>
                         <td className="border border-white/10 p-3">250mm</td>
                         <td className="border border-white/10 p-3">350mm</td>
                         <td className="border border-white/10 p-3">Heavier cables need closer spacing</td>
                       </tr>
                       <tr>
-                        <td className="border border-white/10 p-3"><strong>SWA Cable (up to 35mm²)</strong></td>
+                        <td className="border border-white/10 p-3"><strong>SWA Cable (up to 35mm2)</strong></td>
                         <td className="border border-white/10 p-3">450mm</td>
                         <td className="border border-white/10 p-3">600mm</td>
                         <td className="border border-white/10 p-3">Armour provides mechanical strength</td>
                       </tr>
                       <tr className="bg-muted/5">
-                        <td className="border border-white/10 p-3"><strong>SWA Cable (50mm² and above)</strong></td>
+                        <td className="border border-white/10 p-3"><strong>SWA Cable (50mm2 and above)</strong></td>
                         <td className="border border-white/10 p-3">350mm</td>
                         <td className="border border-white/10 p-3">500mm</td>
                         <td className="border border-white/10 p-3">Increased weight requires closer support</td>
@@ -521,21 +515,21 @@ export default function Module3Section6_1() {
                   <div>
                     <h6 className="font-medium text-white mb-2">Domestic and Light Commercial</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Plastic clips:</strong> Standard T&E, indoor use only</li>
-                      <li>• <strong>Metal saddles:</strong> Fire routes, enhanced durability</li>
-                      <li>• <strong>Cable ties with clips:</strong> Bundled cables, temporary runs</li>
-                      <li>• <strong>Adhesive clips:</strong> Masonry fixing, appropriate substrates</li>
-                      <li>• <strong>Nail-in clips:</strong> Timber frame construction</li>
+                      <li>* <strong>Plastic clips:</strong> Standard T&E, indoor use only</li>
+                      <li>* <strong>Metal saddles:</strong> Fire routes, enhanced durability</li>
+                      <li>* <strong>Cable ties with clips:</strong> Bundled cables, temporary runs</li>
+                      <li>* <strong>Adhesive clips:</strong> Masonry fixing, appropriate substrates</li>
+                      <li>* <strong>Nail-in clips:</strong> Timber frame construction</li>
                     </ul>
                   </div>
                   <div>
                     <h6 className="font-medium text-white mb-2">Industrial and Heavy Duty</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Steel cleats:</strong> SWA termination and support</li>
-                      <li>• <strong>Cable trays:</strong> Multiple cable support systems</li>
-                      <li>• <strong>Beam clamps:</strong> Structural steel mounting</li>
-                      <li>• <strong>Threaded rod systems:</strong> Suspended installations</li>
-                      <li>• <strong>Explosion-proof supports:</strong> Hazardous area applications</li>
+                      <li>* <strong>Steel cleats:</strong> SWA termination and support</li>
+                      <li>* <strong>Cable trays:</strong> Multiple cable support systems</li>
+                      <li>* <strong>Beam clamps:</strong> Structural steel mounting</li>
+                      <li>* <strong>Threaded rod systems:</strong> Suspended installations</li>
+                      <li>* <strong>Explosion-proof supports:</strong> Hazardous area applications</li>
                     </ul>
                   </div>
                 </div>
@@ -586,41 +580,44 @@ export default function Module3Section6_1() {
                   <div>
                     <h6 className="font-medium text-white mb-2">Planning and Layout</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• Mark support positions before cable pulling</li>
-                      <li>• Check structural adequacy of mounting surface</li>
-                      <li>• Plan for cable expansion and future access</li>
-                      <li>• Consider segregation requirements between circuits</li>
+                      <li>* Mark support positions before cable pulling</li>
+                      <li>* Check structural adequacy of mounting surface</li>
+                      <li>* Plan for cable expansion and future access</li>
+                      <li>* Consider segregation requirements between circuits</li>
                     </ul>
                   </div>
                   <div>
                     <h6 className="font-medium text-white mb-2">Installation Techniques</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• Use appropriate fixings for substrate material</li>
-                      <li>• Avoid over-tightening causing cable deformation</li>
-                      <li>• Ensure adequate bend radius at support points</li>
-                      <li>• Check cable alignment after installation</li>
+                      <li>* Use appropriate fixings for substrate material</li>
+                      <li>* Avoid over-tightening causing cable deformation</li>
+                      <li>* Ensure adequate bend radius at support points</li>
+                      <li>* Check cable alignment after installation</li>
                     </ul>
                   </div>
                   <div>
                     <h6 className="font-medium text-white mb-2">Quality Control</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• Verify support spacing with measuring tape</li>
-                      <li>• Check fixing torques and security</li>
-                      <li>• Inspect for cable damage during installation</li>
-                      <li>• Document any deviations from standard spacing</li>
+                      <li>* Verify support spacing with measuring tape</li>
+                      <li>* Check fixing torques and security</li>
+                      <li>* Inspect for cable damage during installation</li>
+                      <li>* Document any deviations from standard spacing</li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[2]} />
-        </Card>
+        </section>
 
         {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Frequently Asked Questions
+          </h2>
           <div className="space-y-4">
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
               <h3 className="font-medium text-white mb-2">Q: Can cable ties be used as the only fixing method in escape routes?</h3>
@@ -647,31 +644,39 @@ export default function Module3Section6_1() {
               </p>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
-          <p className="text-white/90">
-            Proper cable support distances are fundamental to electrical installation safety and compliance. Understanding cable properties, environmental factors, and regulatory requirements enables correct selection of support spacing and methods. Fire safety regulations mandate non-combustible supports in escape routes, reflecting the critical importance of maintaining electrical system integrity during emergencies.
-          </p>
-        </Card>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Summary
+          </h2>
+          <div className="p-4 bg-transparent border-l-2 border-elec-yellow rounded-lg border border-white/10">
+            <p className="text-white/90">
+              Proper cable support distances are fundamental to electrical installation safety and compliance. Understanding cable properties, environmental factors, and regulatory requirements enables correct selection of support spacing and methods. Fire safety regulations mandate non-combustible supports in escape routes, reflecting the critical importance of maintaining electrical system integrity during emergencies.
+            </p>
+          </div>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Quiz (8 Questions)
+          </h2>
           <Quiz questions={quizQuestions} />
-        </Card>
+        </section>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
+        <div className="flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-3 pt-8 border-t border-white/10">
+          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.6
             </Link>
           </Button>
-          <Button asChild>
+          <Button className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../6-2">
               Next: Cable Routing Zones
               <ArrowRight className="w-4 h-4 ml-2" />

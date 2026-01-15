@@ -1,9 +1,6 @@
 import useSEO from "@/hooks/useSEO";
 import { ArrowLeft, Cable, Zap, Shield, AlertTriangle, CheckCircle2, Home, Factory, Wrench, Scissors, Settings, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import React from "react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -151,11 +148,16 @@ const Module3Section1_3: React.FC = () => {
   } as const;
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.1
@@ -164,129 +166,143 @@ const Module3Section1_3: React.FC = () => {
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Shield className="w-6 h-6 text-white" />
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 3</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 3.1.3</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">Section 3.1.3</Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Singles in Conduit or Trunking</h1>
-          <p className="text-white">Understanding single-core cable systems in protective containment for commercial and industrial applications.</p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Singles in Conduit or Trunking
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Understanding single-core cable systems in protective containment for commercial and industrial applications.
+            </p>
+          </header>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Individual cables (L, N, E) run through protective conduit or trunking for mechanical protection.</li>
-                <li>Steel conduit offers maximum protection; PVC conduit is cost-effective; trunking allows easy access.</li>
-                <li>Excellent for commercial/industrial where cables need protection and future modifications.</li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Individual insulated cables within protective metal or plastic containment.</li>
-                <li><strong>Use:</strong> Commercial buildings, workshops, areas needing mechanical protection or easy access.</li>
-                <li><strong>Check:</strong> Fill capacity limits, support spacing, earthing continuity (steel systems).</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-            <li>Describe the construction of a singles-in-conduit or trunking wiring system.</li>
-            <li>Identify the differences between PVC and steel containment systems.</li>
-            <li>Select appropriate applications for singles in conduit or trunking installations.</li>
-            <li>Explain the advantages and limitations of this wiring method.</li>
-            <li>Understand installation best practices including cable pulling and fill calculations.</li>
-            <li>Apply BS 7671 requirements for support spacing and earthing continuity.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
-
-          {/* System Components */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Wrench className="w-5 h-5" /> Components of the System</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
-              <p><strong>Description:</strong> Single-core cables run individually through protective containment, providing excellent mechanical protection and installation flexibility.</p>
-              
-              <div className="space-y-4">
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Single-Core Cables</p>
-                  <ul className="list-disc pl-4 space-y-1">
-                    <li><strong>Construction:</strong> Individual PVC-insulated copper conductors</li>
-                    <li><strong>Live conductor:</strong> Brown insulation (harmonised colours)</li>
-                    <li><strong>Neutral conductor:</strong> Blue insulation</li>
-                    <li><strong>Earth conductor:</strong> Green/yellow insulation (not bare like T&E)</li>
-                    <li><strong>Standard:</strong> Manufactured to BS 6004 for PVC insulated cables</li>
-                  </ul>
-                </div>
-
-                <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                  <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                    <p className="font-medium mb-2">PVC Conduit</p>
-                    <ul className="list-disc pl-4 space-y-1">
-                      <li>Lightweight and non-corrosive</li>
-                      <li>Easy to cut and join</li>
-                      <li>Cost-effective solution</li>
-                      <li>Available in various diameters</li>
-                      <li>Requires separate earth conductor</li>
-                    </ul>
-                  </div>
-                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                    <p className="font-medium mb-2">Steel Conduit</p>
-                    <ul className="list-disc pl-4 space-y-1">
-                      <li>Superior mechanical protection</li>
-                      <li>Can act as earth path when bonded</li>
-                      <li>Fire resistant properties</li>
-                      <li>Requires skilled installation</li>
-                      <li>Higher material and labour costs</li>
-                    </ul>
-                  </div>
-                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                    <p className="font-medium mb-2">Trunking Systems</p>
-                    <ul className="list-disc pl-4 space-y-1">
-                      <li>Rectangular cross-section</li>
-                      <li>Easy access for maintenance</li>
-                      <li>High cable capacity</li>
-                      <li>Available in PVC or steel</li>
-                      <li>Professional appearance</li>
-                    </ul>
-                  </div>
-                </div>
+          {/* Introduction */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Introduction
+            </h2>
+            <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
+                <ul className="list-disc pl-6 space-y-1">
+                  <li>Individual cables (L, N, E) run through protective conduit or trunking for mechanical protection.</li>
+                  <li>Steel conduit offers maximum protection; PVC conduit is cost-effective; trunking allows easy access.</li>
+                  <li>Excellent for commercial/industrial where cables need protection and future modifications.</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
+                <ul className="list-disc pl-6 space-y-1">
+                  <li><strong>Spot:</strong> Individual insulated cables within protective metal or plastic containment.</li>
+                  <li><strong>Use:</strong> Commercial buildings, workshops, areas needing mechanical protection or easy access.</li>
+                  <li><strong>Check:</strong> Fill capacity limits, support spacing, earthing continuity (steel systems).</li>
+                </ul>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="ic-system-components"
-            question="What colour insulation does the earth conductor have in a singles system?"
-            options={["Bare copper", "Green/yellow", "Blue", "Brown"]}
-            correctIndex={1}
-            explanation="In singles systems, the earth conductor has green/yellow insulation, unlike T&E where the CPC is bare copper."
-          />
-          <Separator className="my-6" />
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Learning Outcomes
+            </h2>
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white/80">
+              <li>Describe the construction of a singles-in-conduit or trunking wiring system.</li>
+              <li>Identify the differences between PVC and steel containment systems.</li>
+              <li>Select appropriate applications for singles in conduit or trunking installations.</li>
+              <li>Explain the advantages and limitations of this wiring method.</li>
+              <li>Understand installation best practices including cable pulling and fill calculations.</li>
+              <li>Apply BS 7671 requirements for support spacing and earthing continuity.</li>
+            </ul>
+          </section>
+
+          {/* System Components */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              <Wrench className="w-5 h-5" />
+              Components of the System
+            </h2>
+            <div className="space-y-4 text-sm text-white/80">
+              <p><strong>Description:</strong> Single-core cables run individually through protective containment, providing excellent mechanical protection and installation flexibility.</p>
+
+              <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                <p className="font-medium text-white mb-2">Single-Core Cables</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li><strong>Construction:</strong> Individual PVC-insulated copper conductors</li>
+                  <li><strong>Live conductor:</strong> Brown insulation (harmonised colours)</li>
+                  <li><strong>Neutral conductor:</strong> Blue insulation</li>
+                  <li><strong>Earth conductor:</strong> Green/yellow insulation (not bare like T&E)</li>
+                  <li><strong>Standard:</strong> Manufactured to BS 6004 for PVC insulated cables</li>
+                </ul>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-4">
+                <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
+                  <p className="font-medium text-white mb-2">PVC Conduit</p>
+                  <ul className="list-disc pl-4 space-y-1">
+                    <li>Lightweight and non-corrosive</li>
+                    <li>Easy to cut and join</li>
+                    <li>Cost-effective solution</li>
+                    <li>Available in various diameters</li>
+                    <li>Requires separate earth conductor</li>
+                  </ul>
+                </div>
+                <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                  <p className="font-medium text-white mb-2">Steel Conduit</p>
+                  <ul className="list-disc pl-4 space-y-1">
+                    <li>Superior mechanical protection</li>
+                    <li>Can act as earth path when bonded</li>
+                    <li>Fire resistant properties</li>
+                    <li>Requires skilled installation</li>
+                    <li>Higher material and labour costs</li>
+                  </ul>
+                </div>
+                <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                  <p className="font-medium text-white mb-2">Trunking Systems</p>
+                  <ul className="list-disc pl-4 space-y-1">
+                    <li>Rectangular cross-section</li>
+                    <li>Easy access for maintenance</li>
+                    <li>High cable capacity</li>
+                    <li>Available in PVC or steel</li>
+                    <li>Professional appearance</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <InlineCheck
+                id="ic-system-components"
+                question="What colour insulation does the earth conductor have in a singles system?"
+                options={["Bare copper", "Green/yellow", "Blue", "Brown"]}
+                correctIndex={1}
+                explanation="In singles systems, the earth conductor has green/yellow insulation, unlike T&E where the CPC is bare copper."
+              />
+            </div>
+          </section>
 
           {/* Advantages and Applications */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><CheckCircle2 className="w-5 h-5" /> Advantages and Applications</h3>
-            <div className="space-y-4 text-xs sm:text-sm text-white">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              <CheckCircle2 className="w-5 h-5" />
+              Advantages and Applications
+            </h2>
+            <div className="space-y-4 text-sm text-white/80">
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                  <p className="font-medium mb-2">Key Advantages</p>
+                <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
+                  <p className="font-medium text-white mb-2">Key Advantages</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Excellent mechanical protection, especially steel conduit</li>
                     <li>Professional and neat appearance when properly installed</li>
@@ -296,8 +312,8 @@ const Module3Section1_3: React.FC = () => {
                     <li>Good fire resistance properties</li>
                   </ul>
                 </div>
-                <div className="rounded-lg p-4 bg-transparent border border-amber-400/30">
-                  <p className="font-medium mb-2">Limitations</p>
+                <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-400/30">
+                  <p className="font-medium text-white mb-2">Limitations</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>Slower installation compared to surface methods</li>
                     <li>Higher material and labour costs</li>
@@ -309,8 +325,8 @@ const Module3Section1_3: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-card border border-border/30 rounded-lg p-4">
-                <p className="font-medium mb-2">Typical Applications:</p>
+              <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                <p className="font-medium text-white mb-2">Typical Applications:</p>
                 <div className="grid md:grid-cols-2 gap-4 mt-3">
                   <ul className="list-disc pl-4 space-y-1">
                     <li><strong>Commercial offices:</strong> Concealed wiring with future flexibility</li>
@@ -327,28 +343,33 @@ const Module3Section1_3: React.FC = () => {
                 </div>
               </div>
             </div>
+
+            <div className="mt-6">
+              <InlineCheck
+                id="ic-advantages"
+                question="What is a key advantage of singles in trunking over buried T&E cable?"
+                options={["Lower cost", "Easier cable changes", "Faster installation", "Less planning needed"]}
+                correctIndex={1}
+                explanation="Singles in trunking allow easy addition, removal, or replacement of cables without disturbing building structure."
+              />
+            </div>
           </section>
 
-          <InlineCheck
-            id="ic-advantages"
-            question="What is a key advantage of singles in trunking over buried T&E cable?"
-            options={["Lower cost", "Easier cable changes", "Faster installation", "Less planning needed"]}
-            correctIndex={1}
-            explanation="Singles in trunking allow easy addition, removal, or replacement of cables without disturbing building structure."
-          />
-          <Separator className="my-6" />
-
           {/* Installation Best Practices */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-3 flex items-center gap-2"><Settings className="w-5 h-5" /> Installation Best Practices</h3>
-            <div className="space-y-6 text-xs sm:text-sm text-white">
-              
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              <Settings className="w-5 h-5" />
+              Installation Best Practices
+            </h2>
+            <div className="space-y-6 text-sm text-white/80">
+
               {/* Planning and Routing */}
               <div className="space-y-4">
-                <h4 className="font-medium text-white">Planning and Routing</h4>
+                <h3 className="font-medium text-white">Planning and Routing</h3>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                    <p className="font-medium mb-2">Route Planning</p>
+                  <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                    <p className="font-medium text-white mb-2">Route Planning</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Minimise the number of bends in long runs</li>
                       <li>Avoid sharp edges that could damage cables</li>
@@ -357,8 +378,8 @@ const Module3Section1_3: React.FC = () => {
                       <li>Maintain minimum bending radii for containment</li>
                     </ul>
                   </div>
-                  <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                    <p className="font-medium mb-2">Support Requirements</p>
+                  <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
+                    <p className="font-medium text-white mb-2">Support Requirements</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>PVC conduit:</strong> Support every 750mm (20mm), 1m (25mm+)</li>
                       <li><strong>Steel conduit:</strong> Support every 1.25m (20mm), 1.5m (25mm+)</li>
@@ -372,29 +393,29 @@ const Module3Section1_3: React.FC = () => {
 
               {/* Cable Fill Calculations */}
               <div className="space-y-4">
-                <h4 className="font-medium text-white flex items-center gap-2">
+                <h3 className="font-medium text-white flex items-center gap-2">
                   <Calculator className="w-4 h-4" />
                   Cable Fill Calculations
-                </h4>
+                </h3>
                 <div className="space-y-3">
-                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                    <p className="font-medium mb-2">Fill Capacity Guidelines</p>
+                  <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                    <p className="font-medium text-white mb-2">Fill Capacity Guidelines</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>General rule:</strong> Maximum 45% fill of internal cross-sectional area</li>
                       <li><strong>Single cable:</strong> Maximum 53% fill for straight pulls</li>
                       <li><strong>Multiple cables:</strong> Reduce to 40% if multiple circuits</li>
-                      <li><strong>Calculation:</strong> Sum of cable areas ÷ internal area × 100</li>
+                      <li><strong>Calculation:</strong> Sum of cable areas / internal area x 100</li>
                       <li>Always consider heat dissipation requirements</li>
                     </ul>
                   </div>
 
-                  <div className="rounded-lg p-4 bg-transparent border border-cyan-400/30">
-                    <p className="font-medium mb-2">Practical Fill Example</p>
-                    <p className="mb-2">50mm × 50mm trunking (internal area = 2500mm²):</p>
+                  <div className="p-4 rounded-lg bg-cyan-500/10 border border-cyan-400/30">
+                    <p className="font-medium text-white mb-2">Practical Fill Example</p>
+                    <p className="mb-2">50mm x 50mm trunking (internal area = 2500mm2):</p>
                     <ul className="list-disc pl-4 space-y-1">
-                      <li>Maximum cable area = 2500 × 0.45 = 1125mm²</li>
-                      <li>Example: 10 × 2.5mm² cables = 10 × 8.04mm² = 80.4mm² ✓</li>
-                      <li>Example: 20 × 4.0mm² cables = 20 × 12.57mm² = 251.4mm² ✓</li>
+                      <li>Maximum cable area = 2500 x 0.45 = 1125mm2</li>
+                      <li>Example: 10 x 2.5mm2 cables = 10 x 8.04mm2 = 80.4mm2</li>
+                      <li>Example: 20 x 4.0mm2 cables = 20 x 12.57mm2 = 251.4mm2</li>
                       <li>Always check manufacturer tables for exact cable areas</li>
                     </ul>
                   </div>
@@ -403,13 +424,13 @@ const Module3Section1_3: React.FC = () => {
 
               {/* Cable Pulling Techniques */}
               <div className="space-y-4">
-                <h4 className="font-medium text-white flex items-center gap-2">
+                <h3 className="font-medium text-white flex items-center gap-2">
                   <Cable className="w-4 h-4" />
                   Cable Pulling Techniques
-                </h4>
+                </h3>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                    <p className="font-medium mb-2">Preparation and Tools</p>
+                  <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                    <p className="font-medium text-white mb-2">Preparation and Tools</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>Draw tape:</strong> Use proper electrical draw tape</li>
                       <li><strong>Pulling compound:</strong> Reduces friction in long runs</li>
@@ -418,8 +439,8 @@ const Module3Section1_3: React.FC = () => {
                       <li><strong>Pulling eyes:</strong> Secure connection to cables</li>
                     </ul>
                   </div>
-                  <div className="rounded-lg p-4 bg-teal-500/10 border border-teal-400/30">
-                    <p className="font-medium mb-2">Pulling Procedures</p>
+                  <div className="p-4 rounded-lg bg-teal-500/10 border border-teal-400/30">
+                    <p className="font-medium text-white mb-2">Pulling Procedures</p>
                     <ol className="list-decimal pl-4 space-y-1">
                       <li>Install and secure all containment first</li>
                       <li>Thread draw tape through complete route</li>
@@ -431,8 +452,8 @@ const Module3Section1_3: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="bg-card border border-border/30 rounded-lg p-4">
-                  <p className="font-medium mb-2 flex items-center gap-2">
+                <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                  <p className="font-medium text-white mb-2 flex items-center gap-2">
                     <AlertTriangle className="w-4 h-4" />
                     Cable Pulling Safety:
                   </p>
@@ -448,10 +469,10 @@ const Module3Section1_3: React.FC = () => {
 
               {/* Termination and Testing */}
               <div className="space-y-4">
-                <h4 className="font-medium text-white">Termination and Testing</h4>
+                <h3 className="font-medium text-white">Termination and Testing</h3>
                 <div className="space-y-3">
-                  <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                    <p className="font-medium mb-2">Termination Requirements</p>
+                  <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
+                    <p className="font-medium text-white mb-2">Termination Requirements</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li>Use appropriate cable glands for containment entry</li>
                       <li>Maintain colour coding throughout installation</li>
@@ -461,8 +482,8 @@ const Module3Section1_3: React.FC = () => {
                     </ul>
                   </div>
 
-                  <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                    <p className="font-medium mb-2">Testing Requirements</p>
+                  <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                    <p className="font-medium text-white mb-2">Testing Requirements</p>
                     <ul className="list-disc pl-4 space-y-1">
                       <li><strong>Continuity:</strong> Test all conductors end-to-end</li>
                       <li><strong>Insulation resistance:</strong> Between conductors and earth</li>
@@ -475,16 +496,17 @@ const Module3Section1_3: React.FC = () => {
               </div>
             </div>
           </section>
-        </Card>
 
-        {/* Real-world scenario */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-world scenario: Manufacturing Plant Upgrade</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-white">
-            <div className="flex items-start gap-3 border-l-4 border-elec-yellow p-4 rounded">
-              <Factory className="w-5 h-5 text-elec-yellow mt-0.5" />
-              <div>
-                <p className="font-medium mb-2">The Challenge</p>
+          {/* Real-world scenario */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              <Factory className="w-5 h-5" />
+              Real-World Scenario: Manufacturing Plant Upgrade
+            </h2>
+            <div className="space-y-4 text-sm text-white/80">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">The Challenge</p>
                 <p>A manufacturing plant needed to replace aging surface-wiring that was frequently damaged by machinery operations:</p>
                 <ul className="list-disc pl-6 mt-2 space-y-1">
                   <li>Existing surface T&E frequently damaged by forklift impacts</li>
@@ -494,179 +516,203 @@ const Module3Section1_3: React.FC = () => {
                   <li>Insurance requirements for improved fire safety</li>
                 </ul>
               </div>
-            </div>
 
-            <div className="space-y-3">
-              <p className="font-medium">Singles in Steel Conduit Solution:</p>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-                  <p className="font-medium mb-2">System Selection</p>
-                  <ul className="list-disc pl-4 space-y-1">
-                    <li><strong>Steel conduit:</strong> 25mm and 32mm heavy gauge</li>
-                    <li><strong>Single cables:</strong> 2.5mm² and 4.0mm² 600/1000V grade</li>
-                    <li><strong>Routing:</strong> Wall-mounted with drop-downs to machines</li>
-                    <li><strong>Protection:</strong> Steel conduit acts as additional earth path</li>
-                  </ul>
+              <div className="space-y-3">
+                <p className="font-medium text-white">Singles in Steel Conduit Solution:</p>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
+                    <p className="font-medium text-white mb-2">System Selection</p>
+                    <ul className="list-disc pl-4 space-y-1">
+                      <li><strong>Steel conduit:</strong> 25mm and 32mm heavy gauge</li>
+                      <li><strong>Single cables:</strong> 2.5mm2 and 4.0mm2 600/1000V grade</li>
+                      <li><strong>Routing:</strong> Wall-mounted with drop-downs to machines</li>
+                      <li><strong>Protection:</strong> Steel conduit acts as additional earth path</li>
+                    </ul>
+                  </div>
+                  <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                    <p className="font-medium text-white mb-2">Installation Benefits</p>
+                    <ul className="list-disc pl-4 space-y-1">
+                      <li><strong>Impact resistance:</strong> Withstands machinery contact</li>
+                      <li><strong>Future flexibility:</strong> Easy to add circuits for new equipment</li>
+                      <li><strong>Fire safety:</strong> Steel containment improves fire resistance</li>
+                      <li><strong>Maintenance:</strong> Individual circuit isolation possible</li>
+                    </ul>
+                  </div>
                 </div>
-                <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                  <p className="font-medium mb-2">Installation Benefits</p>
-                  <ul className="list-disc pl-4 space-y-1">
-                    <li><strong>Impact resistance:</strong> Withstands machinery contact</li>
-                    <li><strong>Future flexibility:</strong> Easy to add circuits for new equipment</li>
-                    <li><strong>Fire safety:</strong> Steel containment improves fire resistance</li>
-                    <li><strong>Maintenance:</strong> Individual circuit isolation possible</li>
-                  </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">Results and Benefits:</p>
+                <ul className="list-disc pl-6 space-y-1">
+                  <li>Zero electrical damage incidents in first 18 months</li>
+                  <li>50% reduction in electrical maintenance downtime</li>
+                  <li>Easy reconfiguration when production line was reorganised</li>
+                  <li>Improved insurance rating due to enhanced fire safety</li>
+                  <li>Professional appearance enhanced workplace environment</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Common mistakes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Common Mistakes and How to Avoid Them
+            </h2>
+            <div className="space-y-4 text-sm text-white/80">
+              <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                <p className="font-medium text-white mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Installation Errors</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li><strong>Wrong:</strong> Exceeding cable fill capacity in containment</li>
+                  <li><strong>Right:</strong> Calculate fill percentage and stay within 45% limit</li>
+                  <li><strong>Wrong:</strong> Inadequate support spacing causing sagging</li>
+                  <li><strong>Right:</strong> Follow BS 7671 support spacing requirements</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                <p className="font-medium text-white mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Cable Pulling Mistakes</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li><strong>Wrong:</strong> Pulling cables around sharp bends without guides</li>
+                  <li><strong>Right:</strong> Use proper bending radii and cable guides</li>
+                  <li><strong>Wrong:</strong> Exceeding pulling tension limits</li>
+                  <li><strong>Right:</strong> Use intermediate pulling points and proper techniques</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2 flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Best Practice Tips</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>Always test earth continuity in steel conduit systems</li>
+                  <li>Use appropriate cable glands for containment entry</li>
+                  <li>Label circuits clearly for future maintenance</li>
+                  <li>Plan for future capacity requirements during design</li>
+                  <li>Use pulling compound for long or difficult cable runs</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* BS 7671 Context */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+              BS 7671 Context and Compliance
+            </h2>
+            <div className="space-y-4 text-sm text-white/80">
+              <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                <p className="font-medium text-white mb-2">Cable Selection and Installation (Chapter 52)</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>Singles must be contained in appropriate enclosures</li>
+                  <li>Consider environmental conditions for containment selection</li>
+                  <li>Apply derating factors for multiple cables in same containment</li>
+                  <li>Ensure adequate current-carrying capacity with grouping effects</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
+                <p className="font-medium text-white mb-2">Support and Fixing (Section 522)</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>Containment must be adequately supported at prescribed intervals</li>
+                  <li>Avoid excessive stress on cables during and after installation</li>
+                  <li>Provide additional support at changes of direction</li>
+                  <li>Use appropriate fixings for the building structure type</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+                <p className="font-medium text-white mb-2">Earthing and Bonding (Chapter 54)</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>Steel conduit can form part of the earthing system when properly bonded</li>
+                  <li>Ensure continuity of earthing throughout the installation</li>
+                  <li>Test earth loop impedance values for protective device operation</li>
+                  <li>Maintain earth conductor identification throughout system</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-400/50" role="alert">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5" />
+                  <p className="text-white/80">Isolate, lock-off and prove dead before work. Follow manufacturer instructions and BS 7671 requirements for all singles installations.</p>
                 </div>
               </div>
             </div>
+          </section>
 
-            <div className="bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded">
-              <p className="font-medium mb-2">Results and Benefits:</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Zero electrical damage incidents in first 18 months</li>
-                <li>50% reduction in electrical maintenance downtime</li>
-                <li>Easy reconfiguration when production line was reorganised</li>
-                <li>Improved insurance rating due to enhanced fire safety</li>
-                <li>Professional appearance enhanced workplace environment</li>
-              </ul>
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+              Frequently Asked Questions
+            </h2>
+            <ul className="space-y-3 text-sm text-white/80">
+              {faqs.map((f, i) => (
+                <li key={i} className="p-4 rounded-lg bg-card/50 border border-white/10">
+                  <p className="font-medium text-white mb-1">{f.q}</p>
+                  <p className="text-white/70">{f.a}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* Quick Knowledge Check */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">10</span>
+              Quick Knowledge Check
+            </h2>
+            <div className="space-y-6">
+              {quickCheckQuestions.map((q) => (
+                <InlineCheck
+                  key={q.id}
+                  id={`quick-check-${q.id}`}
+                  question={q.question}
+                  options={q.options}
+                  correctIndex={q.correctAnswer}
+                  explanation={q.explanation}
+                />
+              ))}
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Common mistakes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Common Mistakes and How to Avoid Them</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Installation Errors</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li><strong>Wrong:</strong> Exceeding cable fill capacity in containment</li>
-                <li><strong>Right:</strong> Calculate fill percentage and stay within 45% limit</li>
-                <li><strong>Wrong:</strong> Inadequate support spacing causing sagging</li>
-                <li><strong>Right:</strong> Follow BS 7671 support spacing requirements</li>
-              </ul>
-            </div>
+          {/* Quiz */}
+          <section className="mb-16">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">11</span>
+              Section Quiz
+            </h2>
+            <Quiz questions={quizQuestions as any} title="Singles in Conduit and Trunking Knowledge Check" />
+          </section>
 
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-2 flex items-center gap-2"><AlertTriangle className="w-4 h-4" /> Cable Pulling Mistakes</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li><strong>Wrong:</strong> Pulling cables around sharp bends without guides</li>
-                <li><strong>Right:</strong> Use proper bending radii and cable guides</li>
-                <li><strong>Wrong:</strong> Exceeding pulling tension limits</li>
-                <li><strong>Right:</strong> Use intermediate pulling points and proper techniques</li>
-              </ul>
-            </div>
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+            <Button
+              variant="ghost"
+              className="min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../1-2">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Twin and Earth Cable
+              </Link>
+            </Button>
+            <Button
+              className="min-h-[48px] bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../1-4">
+                Next: Cable Selection Factors
+                <CheckCircle2 className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
 
-            <div className="rounded-lg p-4 bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="font-medium mb-2 flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Best Practice Tips</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>Always test earth continuity in steel conduit systems</li>
-                <li>Use appropriate cable glands for containment entry</li>
-                <li>Label circuits clearly for future maintenance</li>
-                <li>Plan for future capacity requirements during design</li>
-                <li>Use pulling compound for long or difficult cable runs</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* BS 7671 Context */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">BS 7671 Context and Compliance</h2>
-          <div className="space-y-4 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-2">Cable Selection and Installation (Chapter 52)</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>Singles must be contained in appropriate enclosures</li>
-                <li>Consider environmental conditions for containment selection</li>
-                <li>Apply derating factors for multiple cables in same containment</li>
-                <li>Ensure adequate current-carrying capacity with grouping effects</li>
-              </ul>
-            </div>
-
-            <div className="rounded-lg p-4 bg-transparent border border-green-400/30">
-              <p className="font-medium mb-2">Support and Fixing (Section 522)</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>Containment must be adequately supported at prescribed intervals</li>
-                <li>Avoid excessive stress on cables during and after installation</li>
-                <li>Provide additional support at changes of direction</li>
-                <li>Use appropriate fixings for the building structure type</li>
-              </ul>
-            </div>
-
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-2">Earthing and Bonding (Chapter 54)</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>Steel conduit can form part of the earthing system when properly bonded</li>
-                <li>Ensure continuity of earthing throughout the installation</li>
-                <li>Test earth loop impedance values for protective device operation</li>
-                <li>Maintain earth conductor identification throughout system</li>
-              </ul>
-            </div>
-
-            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
-              <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
-              <p className="text-white">Isolate, lock-off and prove dead before work. Follow manufacturer instructions and BS 7671 requirements for all singles installations.</p>
-            </div>
-          </div>
-        </Card>
-
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
-          <ul className="space-y-3 text-xs sm:text-sm text-white">
-            {faqs.map((f, i) => (
-              <li key={i} className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
-                <p className="font-medium mb-1">{f.q}</p>
-                <p className="text-white">{f.a}</p>
-              </li>
-            ))}
-          </ul>
-        </Card>
-
-        {/* Quick Knowledge Check */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quick Knowledge Check</h2>
-          <div className="space-y-6">
-            {quickCheckQuestions.map((q, index) => (
-              <InlineCheck
-                key={q.id}
-                id={`quick-check-${q.id}`}
-                question={q.question}
-                options={q.options}
-                correctIndex={q.correctAnswer}
-                explanation={q.explanation}
-              />
-            ))}
-          </div>
-        </Card>
-
-        {/* Quiz */}
-        <Card className="mb-16 p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Section Quiz</h2>
-          <Quiz questions={quizQuestions as any} title="Singles in Conduit and Trunking Knowledge Check" />
-        </Card>
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
-            <Link to="../1-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Twin and Earth Cable
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link to="../1-4">
-              Next: Cable Selection Factors
-              <CheckCircle2 className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+          {/* Structured data */}
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
         </div>
-
-        {/* Structured data */}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      </main>
+      </article>
     </div>
   );
 };

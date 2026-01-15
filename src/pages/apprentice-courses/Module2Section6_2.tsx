@@ -1,9 +1,6 @@
 import useSEO from "@/hooks/useSEO";
 import { ArrowLeft, Calculator, PoundSterling, Clock, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import React from "react";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -123,11 +120,11 @@ const Module2Section6_2: React.FC = () => {
   ] as const;
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2.6
@@ -137,23 +134,28 @@ const Module2Section6_2: React.FC = () => {
       </div>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg border border-elec-yellow/30">
-              <PoundSterling className="w-6 h-6 text-elec-yellow" />
-            </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow bg-elec-yellow/5">Section 2.6.2</Badge>
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        {/* Header */}
+        <div className="mb-12 text-center">
+          <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
+            Module 2.6.2
+          </span>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <PoundSterling className="h-8 w-8 text-elec-yellow" />
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Energy consumption – calculating kWh and costing</h1>
-          <p className="text-white">A practical guide to kWh, tariffs and estimating running costs with UK‑relevant examples.</p>
-        </header>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+            Energy Consumption and Costing
+          </h1>
+          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
+            A practical guide to kWh, tariffs and estimating running costs with UK-relevant examples
+          </p>
+        </div>
 
         {/* Intro */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Energy (kWh) = kW × time (h). Cost ≈ kWh × tariff.</li>
@@ -161,7 +163,7 @@ const Module2Section6_2: React.FC = () => {
                 <li>UK bills also include daily standing charges not shown here.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Nameplates show W or kW; smart meters show kWh.</li>
@@ -170,10 +172,10 @@ const Module2Section6_2: React.FC = () => {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Explain the difference between kW and kWh.</li>
@@ -182,10 +184,10 @@ const Module2Section6_2: React.FC = () => {
             <li>Apply results to common UK appliances and client questions.</li>
             <li>Understand BS 7671 context: maximum demand and diversity when loads add up.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
 
           {/* Key formulas */}
@@ -211,16 +213,14 @@ const Module2Section6_2: React.FC = () => {
             correctIndex={0}
             explanation="Convert 1200 W to 1.2 kW. Energy = 1.2 × 2 = 2.4 kWh."
           />
-          <Separator className="my-6" />
-
+          
           {/* Try it: Energy calculator */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2"><Clock className="w-5 h-5 text-elec-yellow" /> Try it: Energy & cost calculator</h3>
             <p className="text-sm text-white mb-3">Estimate daily and period energy use and cost. Use duty cycle for intermittent loads (e.g., thermostats, lighting controls).</p>
             <EnergyCostCalc />
           </section>
-          <Separator className="my-6" />
-
+          
           {/* Examples */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">Worked examples</h3>
@@ -242,8 +242,7 @@ const Module2Section6_2: React.FC = () => {
               </li>
             </ul>
           </section>
-          <Separator className="my-6" />
-
+          
           <InlineCheck
             id="ic-tariff"
             question="If energy over a month is 45 kWh at 32 p/kWh, approximate cost is…"
@@ -251,8 +250,7 @@ const Module2Section6_2: React.FC = () => {
             correctIndex={1}
             explanation="Cost ≈ kWh × tariff = 45 × £0.32 = £14.40."
           />
-          <Separator className="my-6" />
-
+          
           {/* Energy Cost Pocket Guide */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2">
@@ -311,8 +309,7 @@ const Module2Section6_2: React.FC = () => {
               </div>
             </div>
           </section>
-          <Separator className="my-6" />
-
+          
           {/* Real-World Energy Scenarios */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2 flex items-center gap-2">
@@ -408,8 +405,7 @@ const Module2Section6_2: React.FC = () => {
               </div>
             </div>
           </section>
-          <Separator className="my-6" />
-
+          
           {/* Safety & BS 7671 context */}
           <section className="mb-6">
             <h3 className="font-medium text-white mb-2">BS 7671 context and good practice</h3>
@@ -420,15 +416,15 @@ const Module2Section6_2: React.FC = () => {
               <li>Document energy assessments for Part L compliance and carbon calculations.</li>
               <li>Consider smart controls and timers to optimise energy use and reduce demand charges.</li>
             </ul>
-            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-4 border-elec-yellow p-4 rounded mt-4" role="alert">
+            <div className="flex items-start gap-3 bg-[#121212]/20 border-l-2 border-elec-yellow p-4 rounded mt-4" role="alert">
               <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
               <p className="text-white text-sm">Isolate, lock‑off and prove dead before work. Follow manufacturer instructions and BS 7671.</p>
             </div>
           </section>
-        </Card>
+        </section>
 
         {/* FAQ */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
           <ul className="space-y-3 text-xs sm:text-sm text-white">
             {faqs.map((f, i) => (
@@ -438,13 +434,23 @@ const Module2Section6_2: React.FC = () => {
               </li>
             ))}
           </ul>
-        </Card>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-16 p-6 bg-transparent border-white/20">
+        <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check Quiz (10 Questions)</h2>
           <Quiz questions={quizQuestions as any} title="Energy consumption (kWh and costing)" />
-        </Card>
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5" asChild>
+            <Link to="../6-1"><ArrowLeft className="w-4 h-4 mr-2" />Previous</Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a]" asChild>
+            <Link to="../6-3">Next<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+          </Button>
+        </nav>
 
         {/* Structured data */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />

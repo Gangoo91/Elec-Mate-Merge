@@ -39,7 +39,8 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
 
       const now = new Date();
       const isActive = now < trialEndDate;
-      const isUserSubscribed = profile.subscribed || false;
+      // Check both subscribed AND free_access_granted for beta testers
+      const isUserSubscribed = profile.subscribed || profile.free_access_granted || false;
 
       // Single state update for profile data
       setState(prev => ({
@@ -47,7 +48,7 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
         isTrialActive: isUserSubscribed ? false : (isActive && !isUserSubscribed),
         trialEndsAt: trialEndDate,
         isSubscribed: isUserSubscribed,
-        subscriptionTier: prev.subscriptionTier, // Keep existing tier until Stripe confirms
+        subscriptionTier: profile.subscription_tier || prev.subscriptionTier, // Use profile tier if available
       }));
     } else {
       setState(prev => ({

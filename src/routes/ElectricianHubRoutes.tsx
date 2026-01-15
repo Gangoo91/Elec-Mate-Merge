@@ -17,7 +17,7 @@ const LearningFromExperience = lazy(() => import("@/pages/electrician/safety-sha
 const ApprenticeMentalHealth = lazy(() => import("@/pages/apprentice/ApprenticeMentalHealth"));
 const JobVacancies = lazy(() => import("@/pages/electrician/JobVacancies"));
 const ElectricalMaterials = lazy(() => import("@/pages/electrician/ElectricalMaterials"));
-const ElectricalTools = lazy(() => import("@/pages/electrician/ElectricalTools"));
+const MaterialsMarketplace = lazy(() => import("@/pages/electrician/MaterialsMarketplace"));
 const ToolsMarketplace = lazy(() => import("@/pages/electrician/ToolsMarketplace"));
 const LivePricingHub = lazy(() => import("@/pages/electrician/LivePricingHub"));
 const ElectricalHub = lazy(() => import("@/pages/ElectricalHub"));
@@ -83,12 +83,13 @@ const ElectricianHubRoutes = () => (
     <Route index element={<LazyRoute><ElectricalHub /></LazyRoute>} />
 
     <Route path="job-vacancies" element={<LazyRoute><JobVacancies /></LazyRoute>} />
-    <Route path="materials" element={<LazyRoute><ElectricalMaterials /></LazyRoute>} />
+    <Route path="materials" element={<LazyRoute><MaterialsMarketplace /></LazyRoute>} />
+    <Route path="materials-old" element={<LazyRoute><ElectricalMaterials /></LazyRoute>} />
     <Route path="materials/compare" element={<LazyRoute><MaterialPriceComparisonPage /></LazyRoute>} />
     <Route path="materials/category/:categoryId" element={<LazyRoute><CategoryMaterials /></LazyRoute>} />
     <Route path="materials/supplier/:supplierSlug" element={<LazyRoute><SupplierMaterials /></LazyRoute>} />
     <Route path="materials/:slug" element={<LazyRoute><MaterialsSlugRedirect /></LazyRoute>} />
-    <Route path="tools" element={<LazyRoute><ElectricalTools /></LazyRoute>} />
+    <Route path="tools" element={<LazyRoute><ToolsMarketplace /></LazyRoute>} />
     <Route path="tools-marketplace" element={<LazyRoute><ToolsMarketplace /></LazyRoute>} />
     <Route path="safety-shares" element={<LazyRoute><SafetyShares /></LazyRoute>} />
     <Route path="safety-shares/projects" element={<LazyRoute><MajorProjects /></LazyRoute>} />

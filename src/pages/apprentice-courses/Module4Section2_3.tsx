@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, Wrench, Target, CheckCircle, AlertTriangle, Eye, TrendingUp, Shield, Ruler } from "lucide-react";
+import { ArrowLeft, ArrowRight, Ruler, AlertTriangle, Shield, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -222,11 +219,15 @@ const Module4Section2_3 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2
@@ -235,120 +236,113 @@ const Module4Section2_3 = () => {
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header (matches Module 4.2.1 style) */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Wrench className="w-6 h-6 text-white" />
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 2.3</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 4.2.3
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Following Dimensions, Levels, and Tolerances
-          </h1>
-          <p className="text-white">
-            Master precision in electrical installation by following specified dimensions, levels, and tolerances for compliance and professional results.
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Following Dimensions, Levels, and Tolerances
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Master precision in electrical installation by following specified dimensions, levels, and tolerances
+            </p>
+          </header>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Follow specified dimensions exactly, checking centre vs edge.</li>
-                <li>Maintain tolerances: ±3mm for accessories, ±2mm/m for alignment.</li>
-                <li>Use consistent reference points and recheck long runs.</li>
+          {/* Introduction */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Introduction
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-elec-yellow mb-2 text-sm">In 30 Seconds</p>
+                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                  <li>Follow specified dimensions exactly, checking centre vs edge</li>
+                  <li>Maintain tolerances: ±3mm for accessories, ±2mm/m for alignment</li>
+                  <li>Use consistent reference points and recheck long runs</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-elec-yellow mb-2 text-sm">Spot it / Use it</p>
+                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                  <li><strong>Spot:</strong> Reference points, tolerance requirements, specification details</li>
+                  <li><strong>Use:</strong> Spirit/laser levels, consistent measuring, double-checking</li>
+                  <li><strong>Check:</strong> Accuracy against drawings, compliance with tolerances</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Learning Outcomes
+            </h2>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <ul className="text-white/80 text-sm space-y-2 list-disc pl-4">
+                <li>Interpret dimensions and tolerances from technical drawings and specifications</li>
+                <li>Use levels and measuring equipment to achieve accuracy</li>
+                <li>Apply appropriate tolerances in different installation scenarios</li>
+                <li>Recognise the implications of exceeding tolerances</li>
+                <li>Work to industry standards for accuracy and compliance</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Reference points, tolerance requirements, specification details.</li>
-                <li><strong>Use:</strong> Spirit/laser levels, consistent measuring, double-checking.</li>
-                <li><strong>Check:</strong> Accuracy against drawings, compliance with tolerances.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-            <li>Interpret dimensions and tolerances from technical drawings and specifications.</li>
-            <li>Use levels and measuring equipment to achieve accuracy.</li>
-            <li>Apply appropriate tolerances in different installation scenarios.</li>
-            <li>Recognise the implications of exceeding tolerances.</li>
-            <li>Work to industry standards for accuracy and compliance.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
+          </section>
 
           {/* Understanding Dimensions */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Understanding Dimensions</h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Understanding Dimensions
+            </h2>
+            <p className="text-white/70 text-sm mb-4">
               Precise interpretation and application of dimensions ensures accurate positioning:
             </p>
-            
-            <div className="space-y-4">
+            <div className="space-y-3">
               {dimensionPrinciples.map((principle, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                  <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
-                    <div className="flex-1">
-                      <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">{principle.principle}</p>
-                      <p className="text-xs sm:text-sm text-white mb-2">{principle.description}</p>
-                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                        <strong>Application:</strong> {principle.application} - {principle.keyPoint}
-                      </div>
-                    </div>
-                  </div>
+                <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                  <p className="font-medium text-elec-yellow mb-1">{principle.principle}</p>
+                  <p className="text-white/70 text-sm mb-2">{principle.description}</p>
+                  <p className="text-white/60 text-xs">
+                    <strong>Application:</strong> {principle.application} — {principle.keyPoint}
+                  </p>
                 </div>
               ))}
             </div>
           </section>
 
-          {/* Levels */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
-              <Ruler className="w-5 h-5" /> Levels and Alignment Tools
-            </h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          {/* Levels and Alignment Tools */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-green-400/80 text-sm font-normal">04</span>
+              <Ruler className="w-5 h-5" />
+              Levels and Alignment Tools
+            </h2>
+            <p className="text-white/70 text-sm mb-4">
               Proper levelling ensures professional appearance and functional integrity:
             </p>
-            
-            <div className="space-y-4">
+            <div className="space-y-3">
               {levellingTools.map((tool, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                  <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
-                    <div className="flex-1">
-                      <p className="font-semibold text-green-600 dark:text-green-400 mb-1">{tool.tool}</p>
-                      <p className="text-xs sm:text-sm text-white mb-2">{tool.purpose}</p>
-                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                        <strong>Applications:</strong> {tool.applications.join(', ')} - Advantages: {tool.advantages.join(', ')}
-                      </div>
-                    </div>
-                  </div>
+                <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                  <p className="font-medium text-green-400 mb-1">{tool.tool}</p>
+                  <p className="text-white/70 text-sm mb-2">{tool.purpose}</p>
+                  <p className="text-white/60 text-xs">
+                    <strong>Applications:</strong> {tool.applications.join(', ')} — Advantages: {tool.advantages.join(', ')}
+                  </p>
                 </div>
               ))}
             </div>
-
-            <div className="mt-4 p-4 bg-transparent border border-green-400/30 rounded-lg">
+            <div className="mt-4 p-4 rounded-lg bg-green-500/10 border border-green-500/20">
               <p className="text-sm font-medium text-white mb-1">Levelling Requirements</p>
-              <p className="text-xs text-white">
-                Horizontal runs (trunking) must be straight for appearance and function. 
+              <p className="text-white/60 text-xs">
+                Horizontal runs (trunking) must be straight for appearance and function.
                 Vertical runs (risers) should be perfectly plumb unless specified otherwise.
               </p>
             </div>
@@ -361,35 +355,32 @@ const Module4Section2_3 = () => {
             correctIndex={quickCheckQuestions[0].correctIndex}
             explanation={quickCheckQuestions[0].explanation}
           />
-          <Separator className="my-6" />
 
-          {/* Tolerances */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Tolerance Standards</h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          {/* Tolerance Standards */}
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-purple-400/80 text-sm font-normal">05</span>
+              Tolerance Standards
+            </h2>
+            <p className="text-white/70 text-sm mb-4">
               Understanding and applying appropriate tolerances ensures quality and compliance:
             </p>
-            
-            <div className="space-y-4">
+            <div className="space-y-3">
               {toleranceStandards.map((standard, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-                  <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
-                    <div className="flex-1">
-                      <p className="font-semibold text-purple-600 text-elec-yellow mb-1">{standard.component}</p>
-                      <p className="text-xs sm:text-sm text-white mb-2">Tolerance: <strong>{standard.tolerance}</strong> - {standard.reason}</p>
-                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                        <strong>Impact:</strong> {standard.impact}
-                      </div>
-                    </div>
-                  </div>
+                <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                  <p className="font-medium text-purple-400 mb-1">{standard.component}</p>
+                  <p className="text-white/70 text-sm mb-2">
+                    Tolerance: <strong>{standard.tolerance}</strong> — {standard.reason}
+                  </p>
+                  <p className="text-white/60 text-xs">
+                    <strong>Impact:</strong> {standard.impact}
+                  </p>
                 </div>
               ))}
             </div>
-
-            <div className="mt-4 p-4 bg-transparent border border-border/30 rounded-lg">
+            <div className="mt-4 p-4 rounded-lg bg-white/5 border border-white/10">
               <p className="text-sm font-medium text-white mb-1">Project-Specific Tolerances</p>
-              <p className="text-xs text-white">
+              <p className="text-white/60 text-xs">
                 Always follow project specifications as high-end projects may require much tighter tolerances than standard builds.
               </p>
             </div>
@@ -402,28 +393,24 @@ const Module4Section2_3 = () => {
             correctIndex={quickCheckQuestions[1].correctIndex}
             explanation={quickCheckQuestions[1].explanation}
           />
-          <Separator className="my-6" />
 
           {/* Maintaining Accuracy on Site */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Maintaining Accuracy on Site</h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-orange-400/80 text-sm font-normal">06</span>
+              Maintaining Accuracy on Site
+            </h2>
+            <p className="text-white/70 text-sm mb-4">
               Systematic approaches to maintaining precision throughout installation:
             </p>
-            
-            <div className="space-y-4">
+            <div className="space-y-3">
               {accuracyTechniques.map((technique, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
-                  <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
-                    <div className="flex-1">
-                      <p className="font-semibold text-orange-600 text-elec-yellow mb-1">{technique.technique}</p>
-                      <p className="text-xs sm:text-sm text-white mb-2">{technique.description}</p>
-                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                        <strong>Application:</strong> {technique.application} - <strong>Benefit:</strong> {technique.benefit}
-                      </div>
-                    </div>
-                  </div>
+                <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
+                  <p className="font-medium text-orange-400 mb-1">{technique.technique}</p>
+                  <p className="text-white/70 text-sm mb-2">{technique.description}</p>
+                  <p className="text-white/60 text-xs">
+                    <strong>Application:</strong> {technique.application} — <strong>Benefit:</strong> {technique.benefit}
+                  </p>
                 </div>
               ))}
             </div>
@@ -436,150 +423,149 @@ const Module4Section2_3 = () => {
             correctIndex={quickCheckQuestions[2].correctIndex}
             explanation={quickCheckQuestions[2].explanation}
           />
-          <Separator className="my-6" />
 
           {/* Consequences of Poor Dimensional Control */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5" /> Consequences of Poor Dimensional Control
-            </h3>
-            
-            <div className="space-y-4">
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-red-400/80 text-sm font-normal">07</span>
+              <AlertTriangle className="w-5 h-5" />
+              Consequences of Poor Dimensional Control
+            </h2>
+            <div className="space-y-3">
               {consequences.map((consequence, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-                  <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">!</span>
-                    <div className="flex-1">
-                      <p className="font-semibold text-red-600 text-elec-yellow mb-1">{consequence.issue}</p>
-                      <p className="text-xs sm:text-sm text-white mb-2">Impact: {consequence.impact}</p>
-                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                        <strong>Cost:</strong> {consequence.cost} - <strong>Prevention:</strong> {consequence.prevention}
-                      </div>
-                    </div>
-                  </div>
+                <div key={i} className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+                  <p className="font-medium text-red-400 mb-1">{consequence.issue}</p>
+                  <p className="text-white/70 text-sm mb-2">Impact: {consequence.impact}</p>
+                  <p className="text-white/60 text-xs">
+                    <strong>Cost:</strong> {consequence.cost} — <strong>Prevention:</strong> {consequence.prevention}
+                  </p>
                 </div>
               ))}
             </div>
           </section>
 
           {/* Regulatory Requirements */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
-              <Shield className="w-5 h-5" /> Regulatory Requirements
-            </h3>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">BS 7671 Requirements</p>
-                    <p className="text-xs sm:text-sm text-white mb-2">Requires installations to be "adequately supported and correctly positioned".</p>
-                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Implications:</strong> All dimensional and positional requirements must be met for compliance.
-                    </div>
-                  </div>
-                </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-red-400/80 text-sm font-normal">08</span>
+              <Shield className="w-5 h-5" />
+              Regulatory Requirements
+            </h2>
+            <div className="space-y-3">
+              <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+                <p className="font-medium text-red-400 mb-2">BS 7671 Requirements</p>
+                <p className="text-white/70 text-sm mb-2">Requires installations to be "adequately supported and correctly positioned".</p>
+                <p className="text-white/60 text-xs">
+                  <strong>Implications:</strong> All dimensional and positional requirements must be met for compliance.
+                </p>
               </div>
-
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Building Regulations Part M</p>
-                    <p className="text-xs sm:text-sm text-white mb-2">Stipulates specific mounting heights for accessibility compliance.</p>
-                    <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Requirements:</strong> Switch and socket heights must meet accessibility standards for disabled access.
-                    </div>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+                <p className="font-medium text-red-400 mb-2">Building Regulations Part M</p>
+                <p className="text-white/70 text-sm mb-2">Stipulates specific mounting heights for accessibility compliance.</p>
+                <p className="text-white/60 text-xs">
+                  <strong>Requirements:</strong> Switch and socket heights must meet accessibility standards for disabled access.
+                </p>
               </div>
             </div>
           </section>
-        </Card>
 
-        {/* Real-World Example */}
-        <Card className="mb-8 p-6 bg-elec-yellow/5 dark:bg-elec-yellow/10 border-blue-200 dark:border-blue-800">
-          <h3 className="font-semibold text-blue-800 dark:text-white mb-3 flex items-center gap-2">
-            <Eye className="w-5 h-5" />
-            Real-World Example
-          </h3>
-          <p className="text-blue-900 dark:text-blue-100 text-sm mb-3">
-            On a retail fit-out, a run of sockets was installed 20 mm too high compared to the specified height. 
-            The deviation broke compliance with accessibility requirements, leading to all the outlets being reinstalled at additional cost.
-          </p>
-          <div className="bg-blue-100 dark:bg-blue-900/30 border border-blue-300 dark:border-blue-700 rounded p-3">
-            <p className="text-xs text-blue-800 dark:text-white">
-              <strong>Lesson:</strong> Even small deviations can have serious consequences. 
-              Always work within specified tolerances and verify measurements before installation.
-            </p>
-          </div>
-        </Card>
-
-        {/* FAQs */}
-        <Card className="mb-8 p-6 bg-transparent border-white/20">
-          <h3 className="font-semibold text-white mb-4">Frequently Asked Questions</h3>
-          <div className="space-y-4">
-            <div>
-              <p className="font-medium text-white text-sm mb-1">
-                Q: Can I adjust a dimension slightly if it looks better visually?
+          {/* Real-World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-blue-400/80 text-sm font-normal">09</span>
+              <Eye className="w-5 h-5" />
+              Real-World Example
+            </h2>
+            <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-500/50">
+              <p className="text-white/80 text-sm mb-3">
+                On a retail fit-out, a run of sockets was installed 20 mm too high compared to the specified height.
+                The deviation broke compliance with accessibility requirements, leading to all the outlets being reinstalled at additional cost.
               </p>
-              <p className="text-white text-sm">
-                A: Only if it's within tolerance and approved by the supervisor or client.
+              <div className="p-3 rounded bg-blue-500/10 border border-blue-500/20">
+                <p className="text-blue-300 text-xs">
+                  <strong>Lesson:</strong> Even small deviations can have serious consequences.
+                  Always work within specified tolerances and verify measurements before installation.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-white/40 text-sm font-normal">10</span>
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white text-sm mb-1">
+                  Q: Can I adjust a dimension slightly if it looks better visually?
+                </p>
+                <p className="text-white/70 text-sm">
+                  A: Only if it's within tolerance and approved by the supervisor or client.
+                </p>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white text-sm mb-1">
+                  Q: Are tolerances the same for all projects?
+                </p>
+                <p className="text-white/70 text-sm">
+                  A: No, high-specification projects may require much tighter tolerances than standard builds.
+                </p>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white text-sm mb-1">
+                  Q: How do I measure accurately over long distances?
+                </p>
+                <p className="text-white/70 text-sm">
+                  A: Use a laser level or two-person measurement method to reduce errors.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Summary */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-white/40 text-sm font-normal">11</span>
+              Summary
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-white/80 text-sm">
+                Working within the specified dimensions, levels, and tolerances ensures compliance, safety, and a professional finish.
+                Precision protects the integrity of the installation and avoids costly rework. Remember to use consistent reference points,
+                maintain appropriate tolerances, and always verify measurements before installation.
               </p>
             </div>
-            <div>
-              <p className="font-medium text-white text-sm mb-1">
-                Q: Are tolerances the same for all projects?
-              </p>
-              <p className="text-white text-sm">
-                A: No, high-specification projects may require much tighter tolerances than standard builds.
-              </p>
-            </div>
-            <div>
-              <p className="font-medium text-white text-sm mb-1">
-                Q: How do I measure accurately over long distances?
-              </p>
-              <p className="text-white text-sm">
-                A: Use a laser level or two-person measurement method to reduce errors.
-              </p>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5" />
-            Summary
-          </h3>
-          <p className="text-white text-sm">
-            Working within the specified dimensions, levels, and tolerances ensures compliance, safety, and a professional finish. 
-            Precision protects the integrity of the installation and avoids costly rework. Remember to use consistent reference points, 
-            maintain appropriate tolerances, and always verify measurements before installation.
-          </p>
-        </Card>
+          {/* Quiz */}
+          <Quiz questions={quizQuestions} title="Test Your Knowledge: Following Dimensions, Levels, and Tolerances" />
 
-        {/* Quiz */}
-        <Quiz questions={quizQuestions} title="Test Your Knowledge: Following Dimensions, Levels, and Tolerances" />
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
-            <Link to="../2-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Setting Out
-            </Link>
-          </Button>
-          
-          <Button asChild>
-            <Link to="../2-4">
-              Next: Avoiding Common Errors
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+          {/* Navigation Footer */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 mt-8 border-t border-white/10">
+            <Button
+              variant="outline"
+              className="border-white/20 hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../2-2">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Setting Out
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../2-4">
+                Next: Avoiding Common Errors
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

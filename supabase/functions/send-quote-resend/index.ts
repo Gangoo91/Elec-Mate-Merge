@@ -2,8 +2,6 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "npm:resend@2.0.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
-
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -13,7 +11,82 @@ interface QuoteEmailRequest {
   quoteId: string;
 }
 
+// ============================================================================
+// HELPER FUNCTIONS - Bulletproof utilities
+// ============================================================================
+
+/**
+ * Safely parse JSON - handles string, object, null, undefined
+ */
+function safeJsonParse(data: any, fallback: any = {}): any {
+  if (data === null || data === undefined) return fallback;
+  if (typeof data === 'object') return data;
+  if (typeof data === 'string') {
+    try {
+      return JSON.parse(data);
+    } catch (e) {
+      console.warn('⚠️ JSON parse failed, using fallback:', e);
+      return fallback;
+    }
+  }
+  return fallback;
+}
+
+/**
+ * Validate email format
+ */
+function isValidEmail(email: string | null | undefined): boolean {
+  if (!email || typeof email !== 'string') return false;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email.trim());
+}
+
+/**
+ * Safely format currency - handles NaN, undefined, null, strings
+ */
+function formatCurrency(amount: any): string {
+  let numAmount = 0;
+
+  if (typeof amount === 'number' && !isNaN(amount)) {
+    numAmount = amount;
+  } else if (typeof amount === 'string') {
+    const parsed = parseFloat(amount);
+    if (!isNaN(parsed)) numAmount = parsed;
+  }
+
+  return new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+  }).format(numAmount);
+}
+
+/**
+ * Safely format date - handles invalid dates
+ */
+function formatDate(dateInput: any): string {
+  if (!dateInput) return 'N/A';
+
+  try {
+    const date = new Date(dateInput);
+    if (isNaN(date.getTime())) return 'N/A';
+
+    return date.toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+  } catch (e) {
+    console.warn('⚠️ Date format failed:', e);
+    return 'N/A';
+  }
+}
+
+// ============================================================================
+// MAIN HANDLER
+// ============================================================================
+
 const handler = async (req: Request): Promise<Response> => {
+  const startTime = Date.now();
   console.log('📧 Send Quote via Resend | Started:', new Date().toISOString());
 
   // Handle CORS preflight requests
@@ -22,52 +95,71 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    // Log environment check
-    const hasResendKey = !!Deno.env.get("RESEND_API_KEY");
-    console.log(`🔑 RESEND_API_KEY configured: ${hasResendKey}`);
+    // ========================================================================
+    // STEP 1: Validate environment
+    // ========================================================================
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
 
-    // Check if Authorization header is present
+    if (!resendApiKey) {
+      console.error('❌ RESEND_API_KEY not configured');
+      throw new Error('Email service not configured. Please contact support.');
+    }
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.error('❌ Supabase environment variables missing');
+      throw new Error('Database service not configured. Please contact support.');
+    }
+
+    const resend = new Resend(resendApiKey);
+    console.log('✅ Environment validated');
+
+    // ========================================================================
+    // STEP 2: Authenticate user
+    // ========================================================================
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
       console.error('❌ No Authorization header found');
-      throw new Error('No Authorization header provided');
+      throw new Error('Please log in to send quotes.');
     }
 
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-      {
-        global: {
-          headers: { Authorization: authHeader },
-        },
-      }
-    );
+    const supabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } },
+    });
 
-    // Extract JWT token and authenticate user using it
     const jwt = authHeader.replace('Bearer ', '').trim();
-
-    const {
-      data: { user },
-      error: userError,
-    } = await supabaseClient.auth.getUser(jwt);
+    const { data: { user }, error: userError } = await supabaseClient.auth.getUser(jwt);
 
     if (userError || !user) {
       console.error('❌ User authentication error:', userError);
-      throw new Error('Unauthorized');
+      throw new Error('Session expired. Please log in again.');
     }
 
     console.log('✅ User authenticated:', user.id);
-
-    // Get user email for reply-to fallback
     const userEmail = user.email;
 
-    const { quoteId }: QuoteEmailRequest = await req.json();
-
-    if (!quoteId) {
-      throw new Error('Quote ID is required');
+    // ========================================================================
+    // STEP 3: Parse and validate request
+    // ========================================================================
+    let quoteId: string;
+    try {
+      const body = await req.json();
+      quoteId = body.quoteId;
+    } catch (e) {
+      console.error('❌ Failed to parse request body:', e);
+      throw new Error('Invalid request format.');
     }
 
-    // Fetch quote details
+    if (!quoteId || typeof quoteId !== 'string') {
+      throw new Error('Quote ID is required.');
+    }
+
+    console.log('📄 Processing quote:', quoteId);
+
+    // ========================================================================
+    // STEP 4: Fetch quote from database
+    // ========================================================================
     const { data: quote, error: quoteError } = await supabaseClient
       .from('quotes')
       .select('*')
@@ -75,189 +167,180 @@ const handler = async (req: Request): Promise<Response> => {
       .eq('user_id', user.id)
       .single();
 
-    if (quoteError || !quote) {
-      console.error('❌ Quote not found:', quoteError);
-      console.error('❌ Quote ID attempted:', quoteId);
-      console.error('❌ User ID:', user.id);
-      throw new Error(`Quote not found: ${quoteError?.message || 'No matching quote for this user'}`);
+    if (quoteError) {
+      console.error('❌ Database error fetching quote:', quoteError);
+      throw new Error('Could not find this quote. It may have been deleted.');
     }
 
-    console.log(`📄 Quote fetched: ${quote.quote_number}`);
-    console.log(`📄 Quote client_data type: ${typeof quote.client_data}`);
-    console.log(`📄 Quote client_data:`, JSON.stringify(quote.client_data).substring(0, 200));
+    if (!quote) {
+      throw new Error('Quote not found or you do not have permission to access it.');
+    }
 
-    // Fetch company profile for sender details
+    const quoteNumber = quote.quote_number || `QTE-${quoteId.substring(0, 8)}`;
+    console.log(`✅ Quote fetched: ${quoteNumber}`);
+
+    // ========================================================================
+    // STEP 5: Parse client data safely
+    // ========================================================================
+    const clientData = safeJsonParse(quote.client_data, {});
+    console.log('📄 Client data keys:', Object.keys(clientData));
+
+    const clientEmail = clientData?.email?.trim();
+    const clientName = clientData?.name || 'Valued Client';
+
+    if (!isValidEmail(clientEmail)) {
+      console.error('❌ Invalid client email:', clientEmail);
+      console.error('❌ Client data:', JSON.stringify(clientData).substring(0, 300));
+      throw new Error(`Invalid client email address: "${clientEmail || 'missing'}". Please update the quote with a valid email.`);
+    }
+
+    console.log(`✅ Client: ${clientName} <${clientEmail}>`);
+
+    // ========================================================================
+    // STEP 6: Fetch company profile
+    // ========================================================================
     const { data: companyProfile } = await supabaseClient
       .from('company_profiles')
       .select('*')
       .eq('user_id', user.id)
       .single();
 
-    const clientData = typeof quote.client_data === 'string'
-      ? JSON.parse(quote.client_data)
-      : quote.client_data;
-    console.log(`📄 Parsed clientData:`, JSON.stringify(clientData).substring(0, 200));
-
-    const clientEmail = clientData?.email;
-    if (!clientEmail) {
-      console.error('❌ Client email not found in client_data');
-      console.error('❌ Available keys:', Object.keys(clientData || {}));
-      throw new Error('Client email not found - please add client email to the quote');
-    }
-
-    const clientName = clientData?.name || 'Valued Client';
     const companyName = companyProfile?.company_name || 'ElecMate';
+    console.log(`✅ Company: ${companyName}`);
 
-    console.log(`📧 Client email: ${clientEmail}`);
-
-    // Get or create public token for accept/reject buttons
+    // ========================================================================
+    // STEP 7: Get or create public token for accept/reject
+    // ========================================================================
     let publicToken = quote.public_token;
 
     if (!publicToken) {
-      // Check if quote_views entry exists
-      const { data: existingView } = await supabaseClient
-        .from('quote_views')
-        .select('public_token')
-        .eq('quote_id', quoteId)
-        .single();
-
-      if (existingView?.public_token) {
-        publicToken = existingView.public_token;
-      } else {
-        // Create new quote_views entry with token
-        publicToken = crypto.randomUUID();
-        const expiryDate = new Date();
-        expiryDate.setDate(expiryDate.getDate() + 30); // 30 days expiry
-
-        await supabaseClient
+      try {
+        const { data: existingView } = await supabaseClient
           .from('quote_views')
-          .insert({
-            quote_id: quoteId,
-            public_token: publicToken,
-            expires_at: expiryDate.toISOString(),
-            is_active: true
-          });
+          .select('public_token')
+          .eq('quote_id', quoteId)
+          .single();
 
-        // Update quote with public_token
-        await supabaseClient
-          .from('quotes')
-          .update({ public_token: publicToken })
-          .eq('id', quoteId);
-      }
-    }
+        if (existingView?.public_token) {
+          publicToken = existingView.public_token;
+        } else {
+          publicToken = crypto.randomUUID();
+          const expiryDate = new Date();
+          expiryDate.setDate(expiryDate.getDate() + 30);
 
-    // Generate accept/reject URLs
-    const supabaseUrl = Deno.env.get('SUPABASE_URL');
-    const acceptUrl = `${supabaseUrl}/functions/v1/quote-action?token=${publicToken}&action=accept`;
-    const rejectUrl = `${supabaseUrl}/functions/v1/quote-action?token=${publicToken}&action=reject`;
+          await supabaseClient
+            .from('quote_views')
+            .insert({
+              quote_id: quoteId,
+              public_token: publicToken,
+              expires_at: expiryDate.toISOString(),
+              is_active: true
+            });
 
-    console.log(`🔗 Accept/Reject URLs generated with token: ${publicToken.substring(0, 8)}...`);
-
-    // Ensure we have a fresh PDF - regenerate if missing or stale
-    let pdfUrl = quote.pdf_url;
-    const pdfNeedsRegeneration = !pdfUrl || !quote.pdf_document_id;
-
-    if (pdfNeedsRegeneration) {
-      console.log('🔄 Regenerating PDF for email attachment...');
-
-      // Call generate-pdf-monkey edge function to create fresh PDF
-      const pdfResponse = await fetch(
-        `${Deno.env.get('SUPABASE_URL')}/functions/v1/generate-pdf-monkey`,
-        {
-          method: 'POST',
-          headers: {
-            'Authorization': req.headers.get('Authorization') || '',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            quote: quote,
-            companyProfile: companyProfile,
-            invoice_mode: false,
-            force_regenerate: true,
-          }),
-        }
-      );
-
-      if (pdfResponse.ok) {
-        const pdfData = await pdfResponse.json();
-        pdfUrl = pdfData.downloadUrl;
-        console.log(`✅ PDF regenerated: ${pdfUrl?.substring(0, 100)}...`);
-
-        // Update database with new PDF metadata
-        if (pdfUrl && pdfData.documentId) {
-          const newVersion = (quote.pdf_version || 0) + 1;
           await supabaseClient
             .from('quotes')
-            .update({
-              pdf_url: pdfUrl,
-              pdf_document_id: pdfData.documentId,
-              pdf_generated_at: new Date().toISOString(),
-              pdf_version: newVersion,
-            })
+            .update({ public_token: publicToken })
             .eq('id', quoteId);
         }
-      } else {
-        const errorText = await pdfResponse.text();
-        console.error(`❌ PDF generation failed: ${pdfResponse.status} - ${errorText.substring(0, 500)}`);
+        console.log('✅ Public token ready');
+      } catch (tokenError) {
+        console.warn('⚠️ Token generation error (non-fatal):', tokenError);
+        publicToken = crypto.randomUUID(); // Fallback
       }
     }
 
-    // Download PDF as binary data for attachment (with fallback)
+    // Use the web portal for accept/reject (with signature capture)
+    // instead of direct edge function (one-click without signature)
+    // IMPORTANT: Always use www.elec-mate.com (non-www has no SSL certificate)
+    const appUrl = 'https://www.elec-mate.com';
+    const acceptUrl = `${appUrl}/quote/${publicToken}#accept`;
+    const rejectUrl = `${appUrl}/quote/${publicToken}#reject`;
+    console.log(`🔗 Accept URL: ${acceptUrl}`);
+
+    // ========================================================================
+    // STEP 8: Handle PDF generation (optional, non-blocking)
+    // ========================================================================
+    let pdfUrl = quote.pdf_url;
     let pdfBase64: string | null = null;
     let pdfAttachmentSuccess = false;
 
+    if (!pdfUrl || !quote.pdf_document_id) {
+      console.log('🔄 Regenerating PDF...');
+      try {
+        const pdfResponse = await fetch(
+          `${supabaseUrl}/functions/v1/generate-pdf-monkey`,
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': authHeader,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              quote: quote,
+              companyProfile: companyProfile,
+              invoice_mode: false,
+              force_regenerate: true,
+            }),
+          }
+        );
+
+        if (pdfResponse.ok) {
+          const pdfData = await pdfResponse.json();
+          pdfUrl = pdfData.downloadUrl;
+
+          if (pdfUrl && pdfData.documentId) {
+            await supabaseClient
+              .from('quotes')
+              .update({
+                pdf_url: pdfUrl,
+                pdf_document_id: pdfData.documentId,
+                pdf_generated_at: new Date().toISOString(),
+                pdf_version: (quote.pdf_version || 0) + 1,
+              })
+              .eq('id', quoteId);
+            console.log('✅ PDF regenerated');
+          }
+        } else {
+          console.warn('⚠️ PDF generation failed - continuing without attachment');
+        }
+      } catch (pdfGenError) {
+        console.warn('⚠️ PDF generation error (non-fatal):', pdfGenError);
+      }
+    }
+
+    // Try to download PDF for attachment
     if (pdfUrl) {
       try {
         console.log('📥 Downloading PDF for attachment...');
         const pdfFileResponse = await fetch(pdfUrl);
         if (pdfFileResponse.ok) {
           const pdfArrayBuffer = await pdfFileResponse.arrayBuffer();
-          pdfBase64 = btoa(String.fromCharCode(...new Uint8Array(pdfArrayBuffer)));
+          const uint8Array = new Uint8Array(pdfArrayBuffer);
+          let binary = '';
+          const chunkSize = 0x8000;
+          for (let i = 0; i < uint8Array.length; i += chunkSize) {
+            const chunk = uint8Array.subarray(i, i + chunkSize);
+            binary += String.fromCharCode.apply(null, Array.from(chunk));
+          }
+          pdfBase64 = btoa(binary);
           pdfAttachmentSuccess = true;
           console.log(`✅ PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
-        } else {
-          console.warn(`⚠️ PDF download failed: ${pdfFileResponse.status} - will send email with link only`);
         }
-      } catch (pdfError) {
-        console.warn(`⚠️ PDF download error: ${pdfError} - will send email with link only`);
+      } catch (pdfDownloadError) {
+        console.warn('⚠️ PDF download error (non-fatal):', pdfDownloadError);
       }
-    } else {
-      console.warn('⚠️ No PDF URL available - will send email with link only');
     }
 
-    // Format dates
-    const quoteDate = new Date(quote.created_at).toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    });
-    const expiryDate = quote.expiry_date
-      ? new Date(quote.expiry_date).toLocaleDateString('en-GB', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric'
-        })
-      : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric'
-        });
-
-    // Format currency
-    const formatCurrency = (amount: number) => {
-      return new Intl.NumberFormat('en-GB', {
-        style: 'currency',
-        currency: 'GBP',
-      }).format(amount);
-    };
-
-    const jobDetails = typeof quote.job_details === 'string'
-      ? JSON.parse(quote.job_details)
-      : quote.job_details;
+    // ========================================================================
+    // STEP 9: Parse job details safely
+    // ========================================================================
+    const jobDetails = safeJsonParse(quote.job_details, {});
     const jobTitle = jobDetails?.title || 'Electrical Work';
     const jobDescription = jobDetails?.description || '';
 
-    // Generate professional mobile-first HTML email
+    // ========================================================================
+    // STEP 10: Build email HTML
+    // ========================================================================
     const emailHtml = `
 <!DOCTYPE html>
 <html lang="en">
@@ -275,26 +358,15 @@ const handler = async (req: Request): Promise<Response> => {
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8f9fa; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
 
-  <!-- Wrapper Table -->
   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa; min-height: 100vh;">
     <tr>
       <td style="padding: 20px 10px;">
-
-        <!-- Main Container -->
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden;">
 
-          <!-- Header with Gradient -->
+          <!-- Header -->
           <tr>
             <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td style="text-align: center;">
-                    <h1 style="margin: 0; color: #FFD700; font-size: 26px; font-weight: 700; letter-spacing: 0.5px;">
-                      ⚡ ${companyName}
-                    </h1>
-                  </td>
-                </tr>
-              </table>
+              <h1 style="margin: 0; color: #FFD700; font-size: 26px; font-weight: 700;">⚡ ${companyName}</h1>
             </td>
           </tr>
 
@@ -310,48 +382,17 @@ const handler = async (req: Request): Promise<Response> => {
             </td>
           </tr>
 
-          <!-- Quote Hero Card -->
+          <!-- Quote Card -->
           <tr>
             <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border: 2px solid #e5e7eb; overflow: hidden;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border: 2px solid #e5e7eb;">
                 <tr>
                   <td style="padding: 24px;">
-                    <h2 style="margin: 0 0 16px; font-size: 28px; font-weight: 700; color: #1f2937; letter-spacing: -0.5px;">
-                      Quote #${quote.quote_number}
-                    </h2>
+                    <h2 style="margin: 0 0 16px; font-size: 28px; font-weight: 700; color: #1f2937;">Quote #${quoteNumber}</h2>
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                      <tr>
-                        <td style="padding: 6px 0;">
-                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                            <tr>
-                              <td style="font-size: 14px; color: #6b7280; font-weight: 500;">Quote Date:</td>
-                              <td style="text-align: right; font-size: 14px; color: #1f2937; font-weight: 600;">${quoteDate}</td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="padding: 6px 0;">
-                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                            <tr>
-                              <td style="font-size: 14px; color: #6b7280; font-weight: 500;">Valid Until:</td>
-                              <td style="text-align: right; font-size: 14px; color: #dc2626; font-weight: 600;">${expiryDate}</td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                      ${jobTitle ? `
-                      <tr>
-                        <td style="padding: 6px 0;">
-                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                            <tr>
-                              <td style="font-size: 14px; color: #6b7280; font-weight: 500;">Job:</td>
-                              <td style="text-align: right; font-size: 14px; color: #1f2937; font-weight: 600;">${jobTitle}</td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                      ` : ''}
+                      <tr><td style="padding: 6px 0; font-size: 14px; color: #6b7280;">Quote Date:</td><td style="text-align: right; font-size: 14px; color: #1f2937; font-weight: 600;">${formatDate(quote.created_at)}</td></tr>
+                      <tr><td style="padding: 6px 0; font-size: 14px; color: #6b7280;">Valid Until:</td><td style="text-align: right; font-size: 14px; color: #dc2626; font-weight: 600;">${formatDate(quote.expiry_date)}</td></tr>
+                      ${jobTitle ? `<tr><td style="padding: 6px 0; font-size: 14px; color: #6b7280;">Job:</td><td style="text-align: right; font-size: 14px; color: #1f2937; font-weight: 600;">${jobTitle}</td></tr>` : ''}
                     </table>
                   </td>
                 </tr>
@@ -369,7 +410,7 @@ const handler = async (req: Request): Promise<Response> => {
                       <tr>
                         <td style="font-size: 14px; color: #92400e; font-weight: 500;">Total Quote Amount</td>
                         <td style="text-align: right;">
-                          <span style="font-size: 32px; font-weight: 700; color: #1f2937; letter-spacing: -1px;">${formatCurrency(parseFloat(quote.total))}</span>
+                          <span style="font-size: 32px; font-weight: 700; color: #1f2937;">${formatCurrency(quote.total)}</span>
                         </td>
                       </tr>
                     </table>
@@ -379,35 +420,31 @@ const handler = async (req: Request): Promise<Response> => {
             </td>
           </tr>
 
-          <!-- View Quote Button -->
+          <!-- PDF Attachment Notice -->
+          ${pdfAttachmentSuccess ? `
           <tr>
             <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td>
-                    <a href="${pdfUrl}" target="_blank" style="display: block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); -webkit-tap-highlight-color: transparent;">
-                      📄 View Quote PDF
-                    </a>
-                  </td>
-                </tr>
-              </table>
-              <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280; line-height: 1.4;">
-                ${pdfAttachmentSuccess ? `Quote_${quote.quote_number}.pdf is attached to this email` : 'Click above to view and download your quote'}
+              <div style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600;">
+                📎 Quote PDF Attached
+              </div>
+              <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280;">
+                Quote_${quoteNumber}.pdf is attached to this email
               </p>
             </td>
           </tr>
+          ` : ''}
 
           <!-- Accept/Reject Buttons -->
           <tr>
             <td style="padding: 0 24px 32px;">
               <p style="margin: 0 0 16px; text-align: center; font-size: 15px; color: #374151; font-weight: 600;">
-                Ready to proceed? Let us know:
+                Ready to proceed?
               </p>
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
                   <td style="padding-right: 8px; width: 50%;">
                     <a href="${acceptUrl}" style="display: block; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 16px 12px; border-radius: 10px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);">
-                      ✓ Accept Quote
+                      ✓ Accept & Sign
                     </a>
                   </td>
                   <td style="padding-left: 8px; width: 50%;">
@@ -418,7 +455,7 @@ const handler = async (req: Request): Promise<Response> => {
                 </tr>
               </table>
               <p style="margin: 12px 0 0; text-align: center; font-size: 12px; color: #9ca3af;">
-                Click once to respond - you'll see a confirmation page
+                You'll be taken to a secure page to review and sign
               </p>
             </td>
           </tr>
@@ -439,45 +476,26 @@ const handler = async (req: Request): Promise<Response> => {
           </tr>
           ` : ''}
 
-          <!-- Closing Message -->
+          <!-- Footer -->
           <tr>
             <td style="padding: 0 24px 32px;">
               <p style="margin: 0 0 16px; font-size: 15px; line-height: 1.6; color: #374151;">
                 If you have any questions about this quote, please don't hesitate to contact us.
               </p>
-              <p style="margin: 0 0 4px; font-size: 15px; line-height: 1.6; color: #374151;">
-                Kind regards,
-              </p>
-              <p style="margin: 0 0 16px; font-size: 16px; font-weight: 700; color: #1f2937;">
-                ${companyName}
-              </p>
-              ${companyProfile?.company_phone ? `
-              <p style="margin: 0 0 4px; font-size: 14px; color: #6b7280;">
-                📞 <a href="tel:${companyProfile.company_phone}" style="color: #1f2937; text-decoration: none; font-weight: 500;">${companyProfile.company_phone}</a>
-              </p>
-              ` : ''}
-              ${companyProfile?.company_email ? `
-              <p style="margin: 0; font-size: 14px; color: #6b7280;">
-                ✉️ <a href="mailto:${companyProfile.company_email}" style="color: #1f2937; text-decoration: none; font-weight: 500;">${companyProfile.company_email}</a>
-              </p>
-              ` : ''}
+              <p style="margin: 0; font-size: 16px; font-weight: 700; color: #1f2937;">${companyName}</p>
+              ${companyProfile?.company_phone ? `<p style="margin: 8px 0 0; font-size: 14px; color: #6b7280;">📞 <a href="tel:${companyProfile.company_phone}" style="color: #1f2937; text-decoration: none;">${companyProfile.company_phone}</a></p>` : ''}
+              ${companyProfile?.company_email ? `<p style="margin: 4px 0 0; font-size: 14px; color: #6b7280;">✉️ <a href="mailto:${companyProfile.company_email}" style="color: #1f2937; text-decoration: none;">${companyProfile.company_email}</a></p>` : ''}
             </td>
           </tr>
 
-          <!-- Footer -->
           <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center; border-top: 1px solid #e5e7eb;">
-              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700; letter-spacing: 0.5px;">
-                ⚡ Powered by ElecMate Professional Suite
-              </p>
-              <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
-                Professional electrical contracting tools for modern electricians
-              </p>
+            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
+              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ Powered by ElecMate</p>
+              <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical contracting tools</p>
             </td>
           </tr>
 
         </table>
-
       </td>
     </tr>
   </table>
@@ -486,53 +504,52 @@ const handler = async (req: Request): Promise<Response> => {
 </html>
     `;
 
-    // Send email via Resend with reply-to header
-    const subject = `Quote ${quote.quote_number} - ${companyName}`;
-    const pdfFilename = `Quote_${quote.quote_number}.pdf`;
+    // ========================================================================
+    // STEP 11: Send email via Resend
+    // ========================================================================
+    // Only use company email for Reply-To - never fall back to personal email
+    const replyToEmail = companyProfile?.company_email || 'info@elec-mate.com';
+    const subject = `Quote ${quoteNumber} - ${companyName}`;
 
-    // Build reply-to: company email → user email → support fallback
-    const replyToEmail = companyProfile?.company_email || userEmail || 'support@elec-mate.com';
+    console.log(`📧 Sending to: ${clientEmail}`);
+    console.log(`📧 Reply-to: ${replyToEmail}`);
+    console.log(`📧 Company profile email: ${companyProfile?.company_email || 'NOT SET'}`);
 
-    console.log(`📧 Sending quote via Resend to: ${clientEmail}`);
-    console.log(`📧 Reply-to set to: ${replyToEmail}`);
-
-    // Build email options with optional attachment
     const emailOptions: {
       from: string;
-      replyTo: string;
+      reply_to: string;
       to: string[];
       subject: string;
       html: string;
       attachments?: Array<{ filename: string; content: string }>;
     } = {
-      from: `${companyName} <quotes@elec-mate.dev>`,
-      replyTo: replyToEmail,
+      from: `${companyName} <founder@elec-mate.com>`,
+      reply_to: replyToEmail,
       to: [clientEmail],
       subject: subject,
       html: emailHtml,
     };
 
-    // Add PDF attachment if available
     if (pdfAttachmentSuccess && pdfBase64) {
       emailOptions.attachments = [{
-        filename: pdfFilename,
+        filename: `Quote_${quoteNumber}.pdf`,
         content: pdfBase64,
       }];
-      console.log('📎 Including PDF attachment');
-    } else {
-      console.log('📧 Sending email without PDF attachment (link only)');
+      console.log('📎 PDF attached');
     }
 
     const { data: emailData, error: emailError } = await resend.emails.send(emailOptions);
 
     if (emailError) {
       console.error('❌ Resend API error:', emailError);
-      throw emailError;
+      throw new Error(`Failed to send email: ${emailError.message || 'Unknown error'}`);
     }
 
-    console.log('✅ Email sent successfully:', emailData);
+    console.log('✅ Email sent:', emailData?.id);
 
-    // Update quote status to sent
+    // ========================================================================
+    // STEP 12: Update quote status
+    // ========================================================================
     await supabaseClient
       .from('quotes')
       .update({
@@ -541,26 +558,30 @@ const handler = async (req: Request): Promise<Response> => {
       })
       .eq('id', quoteId);
 
+    const duration = Date.now() - startTime;
+    console.log(`✅ Complete in ${duration}ms`);
+
     return new Response(
       JSON.stringify({
         success: true,
-        message: pdfAttachmentSuccess ? 'Quote sent successfully with PDF attachment' : 'Quote sent successfully (link only, PDF attachment unavailable)',
-        emailId: emailData.id,
+        message: pdfAttachmentSuccess ? 'Quote sent with PDF attachment' : 'Quote sent (link only)',
+        emailId: emailData?.id,
         pdfAttached: pdfAttachmentSuccess,
+        duration: `${duration}ms`,
       }),
-      {
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      }
+      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
+
   } catch (error: any) {
-    console.error('❌ Error in send-quote-resend function:', error);
+    const duration = Date.now() - startTime;
+    console.error(`❌ Error after ${duration}ms:`, error);
+
     return new Response(
-      JSON.stringify({ error: error.message || 'Failed to send quote' }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      }
+      JSON.stringify({
+        error: error.message || 'Failed to send quote',
+        hint: 'Check that the quote has a valid client email address.',
+      }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 };

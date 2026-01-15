@@ -5,6 +5,7 @@ import { SUPPLIERS } from '../config/suppliers.js';
 /**
  * ElectricalDirect Scraper
  * Has both deals AND coupons page
+ * Updated 2026-01-15 with working selectors
  */
 
 export class ElectricalDirectScraper extends BaseScraper {
@@ -79,7 +80,8 @@ export class ElectricalDirectScraper extends BaseScraper {
   }
 
   /**
-   * Scrape a single product listing page
+   * Scrape a single product listing page using multiple extraction methods
+   * ElectricalDirect uses Magento-based structure with aggressive bot protection
    */
   private async scrapeProductPage(
     page: Page,
@@ -88,65 +90,211 @@ export class ElectricalDirectScraper extends BaseScraper {
   ): Promise<ScrapedProduct[]> {
     const products: ScrapedProduct[] = [];
 
-    const success = await this.navigateWithRetry(page, url);
-    if (!success) return products;
+    try {
+      const success = await this.navigateWithRetry(page, url);
+      if (!success) return products;
+    } catch (e) {
+      console.log(`  ElectricalDirect: Navigation failed for ${url}`);
+      return products;
+    }
 
-    await this.waitForSelector(page, '.product-item, .product-card', 5000);
-    await this.scrollToLoadAll(page);
+    // Wait longer for Magento-based sites
+    await new Promise(r => setTimeout(r, 10000));
 
-    const extractedProducts = await page.evaluate(() => {
-      const cards = document.querySelectorAll('.product-item, .product-card, [data-product]');
+    // Try to detect when page has loaded
+    try {
+      await page.waitForFunction(() => {
+        return document.querySelectorAll('[class*="product"]').length > 0 ||
+               document.body.innerText.includes('£');
+      }, { timeout: 10000 });
+    } catch {
+      // Continue anyway
+    }
+
+    try {
+      await this.scrollToLoadAll(page);
+    } catch (e) {
+      console.log(`  ElectricalDirect: Scroll failed for ${url}`);
+    }
+
+    // Extract products using multiple methods
+    let extractedProducts: Array<{
+      sku: string;
+      name: string;
+      currentPrice: string | null;
+      regularPrice: string | null;
+      imageUrl: string | null;
+      productUrl: string | null;
+      stockStatus?: string;
+      brand?: string | null;
+    }> = [];
+
+    try {
+      extractedProducts = await page.evaluate(() => {
       const items: Array<{
         sku: string;
         name: string;
-        brand: string | null;
         currentPrice: string | null;
         regularPrice: string | null;
         imageUrl: string | null;
         productUrl: string | null;
-        stockStatus: string;
+        stockStatus?: string;
+        brand?: string | null;
       }> = [];
 
-      cards.forEach((card) => {
+      const seenSkus = new Set<string>();
+
+      // Method 1: Look for JSON-LD structured data (common in e-commerce)
+      const jsonLdScripts = document.querySelectorAll('script[type="application/ld+json"]');
+      jsonLdScripts.forEach((script) => {
         try {
-          const nameEl = card.querySelector('.product-item-name, .product-name, h3');
-          const priceEl = card.querySelector('.price, .product-price');
-          const wasPriceEl = card.querySelector('.old-price, .was-price');
-          const imageEl = card.querySelector('img') as HTMLImageElement | null;
-          const linkEl = card.querySelector('a[href*="/product"], a.product-link') as HTMLAnchorElement | null;
-          const skuEl = card.querySelector('[data-sku], .product-sku');
-          const stockEl = card.querySelector('.stock, .availability');
-          const brandEl = card.querySelector('.brand, .product-brand');
-
-          let sku = skuEl?.textContent?.trim() ||
-                    skuEl?.getAttribute('data-sku') ||
-                    card.getAttribute('data-product') || '';
-
-          const name = nameEl?.textContent?.trim() || '';
-
-          if (name) {
-            if (!sku) {
-              sku = `ED-${name.replace(/[^a-zA-Z0-9]/g, '').substring(0, 20)}`;
+          const data = JSON.parse(script.textContent || '');
+          if (data['@type'] === 'ItemList' && data.itemListElement) {
+            for (const item of data.itemListElement) {
+              const product = item.item || item;
+              if (product.sku && !seenSkus.has(product.sku)) {
+                seenSkus.add(product.sku);
+                items.push({
+                  sku: product.sku,
+                  name: product.name || '',
+                  currentPrice: product.offers?.price ? `£${product.offers.price}` : null,
+                  regularPrice: null,
+                  imageUrl: product.image || null,
+                  productUrl: product.url || null,
+                });
+              }
             }
-
-            items.push({
-              sku,
-              name,
-              brand: brandEl?.textContent?.trim() || null,
-              currentPrice: priceEl?.textContent?.trim() || null,
-              regularPrice: wasPriceEl?.textContent?.trim() || null,
-              imageUrl: imageEl?.src || imageEl?.getAttribute('data-src') || null,
-              productUrl: linkEl?.href || null,
-              stockStatus: stockEl?.textContent?.trim() || 'Unknown',
-            });
+          } else if (data['@type'] === 'Product') {
+            if (data.sku && !seenSkus.has(data.sku)) {
+              seenSkus.add(data.sku);
+              items.push({
+                sku: data.sku,
+                name: data.name || '',
+                currentPrice: data.offers?.price ? `£${data.offers.price}` : null,
+                regularPrice: null,
+                imageUrl: data.image || null,
+                productUrl: window.location.href,
+              });
+            }
           }
         } catch (e) {
-          console.error('Error extracting ElectricalDirect product:', e);
+          // Continue
+        }
+      });
+
+      if (items.length > 0) return items;
+
+      // Method 2: Find Magento product cards
+      const cardSelectors = [
+        '.product-item',
+        '.product-items .item',
+        '[class*="products-grid"] .item',
+        '[class*="product-list"] .item',
+        'li.product-item',
+        '.products.list .item',
+        '[data-product-id]',
+      ];
+
+      for (const selector of cardSelectors) {
+        const cards = document.querySelectorAll(selector);
+        if (cards.length > 0) {
+          cards.forEach((card) => {
+            try {
+              const link = card.querySelector('a.product-item-link, a.product-item-photo, a[href*="/p/"]') as HTMLAnchorElement;
+              if (!link?.href) return;
+
+              // Get SKU from data attribute or URL
+              const sku = card.getAttribute('data-product-id') ||
+                         card.getAttribute('data-sku') ||
+                         link.href.match(/\/([A-Z0-9-]+)(?:\.html|\/|$)/i)?.[1] ||
+                         `ED-${Math.random().toString(36).substr(2, 8)}`;
+
+              if (seenSkus.has(sku)) return;
+              seenSkus.add(sku);
+
+              // Get name
+              const nameEl = card.querySelector('.product-item-name, .product-item-link, h2, h3');
+              const name = nameEl?.textContent?.trim() || '';
+              if (!name || name.length < 3) return;
+
+              // Get prices (Magento structure)
+              const priceEl = card.querySelector('.price-box .price, .price-final_price .price, [data-price-amount]');
+              const oldPriceEl = card.querySelector('.old-price .price, .price-was .price');
+
+              const currentPrice = priceEl?.textContent?.trim() || priceEl?.getAttribute('data-price-amount') || null;
+              const regularPrice = oldPriceEl?.textContent?.trim() || null;
+
+              // Get image
+              const img = card.querySelector('img.product-image-photo, img') as HTMLImageElement;
+
+              items.push({
+                sku,
+                name,
+                currentPrice: currentPrice?.includes('£') ? currentPrice : (currentPrice ? `£${currentPrice}` : null),
+                regularPrice: regularPrice?.includes('£') ? regularPrice : (regularPrice ? `£${regularPrice}` : null),
+                imageUrl: img?.src || img?.getAttribute('data-src') || null,
+                productUrl: link.href,
+              });
+            } catch (e) {
+              // Continue
+            }
+          });
+          if (items.length > 0) break;
+        }
+      }
+
+      if (items.length > 0) return items;
+
+      // Method 3: Generic fallback - find any product-like content
+      const allLinks = document.querySelectorAll('a[href*="/p/"], a[href*="-p-"], a[href*=".html"]');
+      allLinks.forEach((link) => {
+        try {
+          const anchor = link as HTMLAnchorElement;
+          const href = anchor.href;
+
+          // Skip obvious non-product links
+          if (href.includes('/category') || href.includes('/basket') || href.includes('/account')) return;
+
+          const skuMatch = href.match(/\/([A-Z0-9][A-Z0-9-]{3,})(?:\.html|\/|$)/i);
+          if (!skuMatch) return;
+
+          const sku = skuMatch[1].toUpperCase();
+          if (seenSkus.has(sku)) return;
+          seenSkus.add(sku);
+
+          // Find container
+          let container = anchor.parentElement;
+          for (let i = 0; i < 8 && container; i++) {
+            if (container.textContent?.match(/£\d/)) break;
+            container = container.parentElement;
+          }
+
+          const name = anchor.textContent?.trim() ||
+                      container?.querySelector('h2, h3, h4')?.textContent?.trim() || '';
+          if (!name || name.length < 3) return;
+
+          const text = container?.textContent || '';
+          const priceMatch = text.match(/£(\d+\.?\d*)/);
+
+          items.push({
+            sku,
+            name,
+            currentPrice: priceMatch ? priceMatch[0] : null,
+            regularPrice: null,
+            imageUrl: container?.querySelector('img')?.getAttribute('src') || null,
+            productUrl: href,
+          });
+        } catch (e) {
+          // Continue
         }
       });
 
       return items;
     });
+    } catch (e) {
+      console.log(`  ElectricalDirect: Extraction failed for ${url} - ${e instanceof Error ? e.message : 'Unknown error'}`);
+      return products;
+    }
 
     for (const item of extractedProducts) {
       const currentPrice = this.parsePrice(item.currentPrice);

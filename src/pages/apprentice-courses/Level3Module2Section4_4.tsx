@@ -329,7 +329,7 @@ const Level3Module2Section4_4 = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Navigation Breadcrumb */}
       <div className="bg-[#242424] border-b border-[#333]">
         <div className="max-w-4xl mx-auto px-4 md:px-8">

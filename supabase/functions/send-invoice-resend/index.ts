@@ -557,22 +557,24 @@ const handler = async (req: Request): Promise<Response> => {
     // ========================================================================
     // STEP 12: Send email via Resend
     // ========================================================================
-    const replyToEmail = companyProfile?.company_email || userEmail || 'support@elec-mate.com';
+    // Only use company email for Reply-To - never fall back to personal email
+    const replyToEmail = companyProfile?.company_email || 'info@elec-mate.com';
     const subject = `Invoice ${invoiceNumber} - ${companyName}`;
 
     console.log(`📧 Sending to: ${clientEmail}`);
     console.log(`📧 Reply-to: ${replyToEmail}`);
+    console.log(`📧 Company profile email: ${companyProfile?.company_email || 'NOT SET'}`);
 
     const emailOptions: {
       from: string;
-      replyTo: string;
+      reply_to: string;
       to: string[];
       subject: string;
       html: string;
       attachments?: Array<{ filename: string; content: string }>;
     } = {
-      from: `${companyName} <invoices@elec-mate.dev>`,
-      replyTo: replyToEmail,
+      from: `${companyName} <founder@elec-mate.com>`,
+      reply_to: replyToEmail,
       to: [clientEmail],
       subject: subject,
       html: emailHtml,

@@ -1,7 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -165,13 +162,13 @@ export default function Module3Section4_6() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -183,32 +180,30 @@ export default function Module3Section4_6() {
       </div>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Plug className="w-6 h-6 text-white" />
-            </div>
-            <Badge
-              variant="outline"
-              className="border-elec-yellow/30 text-elec-yellow"
-            >
-              Section 3.4.6
-            </Badge>
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <header className="mb-6 sm:mb-8 text-center">
+          <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
+            <Plug className="w-4 h-4 text-elec-yellow" />
+            <span className="text-elec-yellow text-sm font-medium">Module 3</span>
+            <span className="text-white/50">|</span>
+            <span className="text-white/70 text-sm">Section 3.4.6</span>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Installing Accessories (Sockets, Switches, FCUs)
           </h1>
-          <p className="text-white">
+          <p className="text-white/80 text-sm sm:text-base">
             Master the installation of electrical accessories with proper wiring techniques, mounting heights, and BS 7671 compliance for safe, professional installations.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Sockets, switches, and FCUs are critical Second Fix accessories.</li>
@@ -217,7 +212,7 @@ export default function Module3Section4_6() {
                 <li>Proper termination and torqueing prevents connection failure.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Socket outlets, light switches, FCUs, pull-cord switches.</li>
@@ -226,29 +221,35 @@ export default function Module3Section4_6() {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning Outcomes
+          </h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Identify best practices for installing sockets, switches, and FCUs.</li>
             <li>Apply correct wiring and termination methods for each accessory type.</li>
             <li>Follow regulations for mounting heights, clearances, and circuit protection.</li>
             <li>Recognise common installation faults and how to avoid them.</li>
           </ul>
-        </Card>
+        </section>
 
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
+        {/* Content / Learning */}
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Content / Learning
+          </h2>
 
           {/* 1. Sockets */}
-          <section className="mb-6">
+          <div className="mb-8">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Plug className="w-5 h-5" /> 1. Socket Outlets - Comprehensive Guide
             </h3>
-            
+
             <div className="mb-6">
               <h4 className="font-medium text-white mb-3">Socket Types and Applications</h4>
               <div className="grid md:grid-cols-2 gap-4">
@@ -359,46 +360,46 @@ export default function Module3Section4_6() {
                 <div className="p-3 border border-border/30 rounded-lg">
                   <h5 className="font-medium text-elec-yellow mb-2">Safety Critical</h5>
                   <ul className="space-y-1 text-xs">
-                    <li>• Verify polarity before energising</li>
-                    <li>• Ensure adequate cable support</li>
-                    <li>• Check earth continuity ≤0.05Ω</li>
-                    <li>• Confirm RCD operation ≤40ms</li>
-                    <li>• Test insulation resistance ≥1MΩ</li>
+                    <li>- Verify polarity before energising</li>
+                    <li>- Ensure adequate cable support</li>
+                    <li>- Check earth continuity ≤0.05Ohm</li>
+                    <li>- Confirm RCD operation ≤40ms</li>
+                    <li>- Test insulation resistance ≥1MOhm</li>
                   </ul>
                 </div>
                 <div className="p-3 border border-border/30 rounded-lg">
                   <h5 className="font-medium text-elec-yellow mb-2">Quality Assurance</h5>
                   <ul className="space-y-1 text-xs">
-                    <li>• Level installation using spirit level</li>
-                    <li>• Secure but don't overtighten faceplates</li>
-                    <li>• Ensure gasket integrity (outdoor types)</li>
-                    <li>• Check switching operation smoothness</li>
-                    <li>• Verify USB output voltage (if applicable)</li>
+                    <li>- Level installation using spirit level</li>
+                    <li>- Secure but don't overtighten faceplates</li>
+                    <li>- Ensure gasket integrity (outdoor types)</li>
+                    <li>- Check switching operation smoothness</li>
+                    <li>- Verify USB output voltage (if applicable)</li>
                   </ul>
                 </div>
                 <div className="p-3 border border-green-400/30 rounded-lg">
                   <h5 className="font-medium text-green-400 mb-2">Documentation</h5>
                   <ul className="space-y-1 text-xs">
-                    <li>• Record circuit details on schedule</li>
-                    <li>• Note any deviations from standard</li>
-                    <li>• Complete test certificates</li>
-                    <li>• Photograph complex installations</li>
-                    <li>• Update as-built drawings</li>
+                    <li>- Record circuit details on schedule</li>
+                    <li>- Note any deviations from standard</li>
+                    <li>- Complete test certificates</li>
+                    <li>- Photograph complex installations</li>
+                    <li>- Update as-built drawings</li>
                   </ul>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[0]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* 2. Switches */}
-          <section className="mb-6">
+          <div className="mb-8">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <ToggleLeft className="w-5 h-5" /> 2. Switches - Complete Installation Guide
             </h3>
-            
+
             <div className="mb-6">
               <h4 className="font-medium text-white mb-3">Switch Types and Control Methods</h4>
               <div className="grid md:grid-cols-2 gap-4">
@@ -456,19 +457,19 @@ export default function Module3Section4_6() {
                     <div>
                       <h6 className="font-medium text-white mb-2">Terminal Connections</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>• <strong>L1:</strong> Permanent live (brown core)</li>
-                        <li>• <strong>L2:</strong> Switched live to load (brown or sleeved blue)</li>
-                        <li>• <strong>Earth:</strong> Continuous protective conductor</li>
-                        <li>• <strong>Neutral:</strong> Direct to load (not switched)</li>
+                        <li>- <strong>L1:</strong> Permanent live (brown core)</li>
+                        <li>- <strong>L2:</strong> Switched live to load (brown or sleeved blue)</li>
+                        <li>- <strong>Earth:</strong> Continuous protective conductor</li>
+                        <li>- <strong>Neutral:</strong> Direct to load (not switched)</li>
                       </ul>
                     </div>
                     <div>
                       <h6 className="font-medium text-white mb-2">Cable Requirements</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>• Twin & earth to switch from ceiling rose</li>
-                        <li>• 1.0mm² for lighting circuits ≤6A</li>
-                        <li>• 1.5mm² for circuits &gt;6A up to 10A</li>
-                        <li>• Blue core sleeved brown at both ends</li>
+                        <li>- Twin & earth to switch from ceiling rose</li>
+                        <li>- 1.0mm² for lighting circuits ≤6A</li>
+                        <li>- 1.5mm² for circuits &gt;6A up to 10A</li>
+                        <li>- Blue core sleeved brown at both ends</li>
                       </ul>
                     </div>
                   </div>
@@ -480,19 +481,19 @@ export default function Module3Section4_6() {
                     <div>
                       <h6 className="font-medium text-white mb-2">Switch 1 (Feed End)</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>• <strong>COM:</strong> Permanent live feed</li>
-                        <li>• <strong>L1:</strong> Strapper to other switch L1</li>
-                        <li>• <strong>L2:</strong> Strapper to other switch L2</li>
-                        <li>• Three-core & earth cable to Switch 2</li>
+                        <li>- <strong>COM:</strong> Permanent live feed</li>
+                        <li>- <strong>L1:</strong> Strapper to other switch L1</li>
+                        <li>- <strong>L2:</strong> Strapper to other switch L2</li>
+                        <li>- Three-core & earth cable to Switch 2</li>
                       </ul>
                     </div>
                     <div>
                       <h6 className="font-medium text-white mb-2">Switch 2 (Load End)</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>• <strong>COM:</strong> Switched live to load</li>
-                        <li>• <strong>L1:</strong> Strapper from other switch</li>
-                        <li>• <strong>L2:</strong> Strapper from other switch</li>
-                        <li>• Twin & earth to lighting load</li>
+                        <li>- <strong>COM:</strong> Switched live to load</li>
+                        <li>- <strong>L1:</strong> Strapper from other switch</li>
+                        <li>- <strong>L2:</strong> Strapper from other switch</li>
+                        <li>- Twin & earth to lighting load</li>
                       </ul>
                     </div>
                   </div>
@@ -520,19 +521,19 @@ export default function Module3Section4_6() {
                     <div>
                       <h6 className="font-medium text-white mb-2">LED Compatibility</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>• Leading edge for most LED drivers</li>
-                        <li>• Trailing edge for resistive/inductive loads</li>
-                        <li>• Minimum load requirements (typically 10W)</li>
-                        <li>• Maximum load capacity verification</li>
+                        <li>- Leading edge for most LED drivers</li>
+                        <li>- Trailing edge for resistive/inductive loads</li>
+                        <li>- Minimum load requirements (typically 10W)</li>
+                        <li>- Maximum load capacity verification</li>
                       </ul>
                     </div>
                     <div>
                       <h6 className="font-medium text-white mb-2">Installation Considerations</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>• Heat dissipation requirements</li>
-                        <li>• Two-way dimming limitations</li>
-                        <li>• Neutral requirement for some types</li>
-                        <li>• EMC compliance and filtering</li>
+                        <li>- Heat dissipation requirements</li>
+                        <li>- Two-way dimming limitations</li>
+                        <li>- Neutral requirement for some types</li>
+                        <li>- EMC compliance and filtering</li>
                       </ul>
                     </div>
                   </div>
@@ -546,46 +547,46 @@ export default function Module3Section4_6() {
                 <div className="p-3 border border-border/30 rounded-lg">
                   <h5 className="font-medium text-elec-yellow mb-2">Mechanical Installation</h5>
                   <ul className="space-y-1 text-xs">
-                    <li>• Back box depth: 25mm minimum for standard switch</li>
-                    <li>• Fixing centres: 60.3mm (UK standard)</li>
-                    <li>• Level installation using spirit level</li>
-                    <li>• Secure fixing without overtightening</li>
-                    <li>• Gang alignment for multiple switches</li>
+                    <li>- Back box depth: 25mm minimum for standard switch</li>
+                    <li>- Fixing centres: 60.3mm (UK standard)</li>
+                    <li>- Level installation using spirit level</li>
+                    <li>- Secure fixing without overtightening</li>
+                    <li>- Gang alignment for multiple switches</li>
                   </ul>
                 </div>
                 <div className="p-3 border border-green-400/30 rounded-lg">
                   <h5 className="font-medium text-green-400 mb-2">Electrical Standards</h5>
                   <ul className="space-y-1 text-xs">
-                    <li>• Terminal torque: 1.2-1.5Nm (lighting circuits)</li>
-                    <li>• Core identification: Brown sleeving on blues</li>
-                    <li>• Earth continuity: ≤0.05Ω</li>
-                    <li>• Insulation resistance: ≥2MΩ</li>
-                    <li>• Operation testing under load</li>
+                    <li>- Terminal torque: 1.2-1.5Nm (lighting circuits)</li>
+                    <li>- Core identification: Brown sleeving on blues</li>
+                    <li>- Earth continuity: ≤0.05Ohm</li>
+                    <li>- Insulation resistance: ≥2MOhm</li>
+                    <li>- Operation testing under load</li>
                   </ul>
                 </div>
                 <div className="p-3 border border-border/30 rounded-lg">
                   <h5 className="font-medium text-elec-yellow mb-2">Compliance Testing</h5>
                   <ul className="space-y-1 text-xs">
-                    <li>• Switching function verification</li>
-                    <li>• Load compatibility confirmation</li>
-                    <li>• EMC compliance (dimmers)</li>
-                    <li>• IP rating verification (wet areas)</li>
-                    <li>• Accessibility compliance check</li>
+                    <li>- Switching function verification</li>
+                    <li>- Load compatibility confirmation</li>
+                    <li>- EMC compliance (dimmers)</li>
+                    <li>- IP rating verification (wet areas)</li>
+                    <li>- Accessibility compliance check</li>
                   </ul>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[1]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* 3. Fused Connection Units (FCUs) */}
-          <section className="mb-6">
+          <div className="mb-8">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> 3. Fused Connection Units - Advanced Applications
             </h3>
-            
+
             <div className="mb-6">
               <h4 className="font-medium text-white mb-3">FCU Types and Applications</h4>
               <div className="grid md:grid-cols-2 gap-4">
@@ -643,19 +644,19 @@ export default function Module3Section4_6() {
                     <div>
                       <h6 className="font-medium text-white mb-2">Load Assessment</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>• <strong>Continuous loads:</strong> Fuse rating ≥125% of full load current</li>
-                        <li>• <strong>Motor loads:</strong> Consider starting current (typically 6-8x FL)</li>
-                        <li>• <strong>Inductive loads:</strong> Account for power factor and inrush</li>
-                        <li>• <strong>Resistive loads:</strong> Direct calculation: P = V × I</li>
+                        <li>- <strong>Continuous loads:</strong> Fuse rating ≥125% of full load current</li>
+                        <li>- <strong>Motor loads:</strong> Consider starting current (typically 6-8x FL)</li>
+                        <li>- <strong>Inductive loads:</strong> Account for power factor and inrush</li>
+                        <li>- <strong>Resistive loads:</strong> Direct calculation: P = V x I</li>
                       </ul>
                     </div>
                     <div>
                       <h6 className="font-medium text-white mb-2">Common Fuse Ratings</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>• <strong>3A:</strong> Lighting circuits, small appliances, control circuits</li>
-                        <li>• <strong>5A:</strong> Medium appliances, ventilation fans, pumps</li>
-                        <li>• <strong>10A:</strong> Small heating elements, larger fans</li>
-                        <li>• <strong>13A:</strong> Standard appliances, maximum for FCU</li>
+                        <li>- <strong>3A:</strong> Lighting circuits, small appliances, control circuits</li>
+                        <li>- <strong>5A:</strong> Medium appliances, ventilation fans, pumps</li>
+                        <li>- <strong>10A:</strong> Small heating elements, larger fans</li>
+                        <li>- <strong>13A:</strong> Standard appliances, maximum for FCU</li>
                       </ul>
                     </div>
                   </div>
@@ -668,19 +669,19 @@ export default function Module3Section4_6() {
                       <h6 className="font-medium text-white mb-2">Discrimination and Selectivity</h6>
                       <p className="text-sm mb-2">FCU fuse must operate before upstream protective device:</p>
                       <ul className="space-y-1 text-sm pl-4">
-                        <li>• FCU fuse: 3A (I²t = 4.5 A²s at 5s)</li>
-                        <li>• Ring circuit MCB: 32A (operates at ~1.45 × In = 46.4A)</li>
-                        <li>• Radial circuit MCB: 20A (operates at ~1.45 × In = 29A)</li>
-                        <li>• Time-current characteristic coordination essential</li>
+                        <li>- FCU fuse: 3A (I²t = 4.5 A²s at 5s)</li>
+                        <li>- Ring circuit MCB: 32A (operates at ~1.45 x In = 46.4A)</li>
+                        <li>- Radial circuit MCB: 20A (operates at ~1.45 x In = 29A)</li>
+                        <li>- Time-current characteristic coordination essential</li>
                       </ul>
                     </div>
                     <div>
                       <h6 className="font-medium text-white mb-2">Cable De-rating Factors</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>• Ambient temperature: Factor Ca (Table 4B1)</li>
-                        <li>• Grouping: Factor Cg (Table 4C1)</li>
-                        <li>• Thermal insulation: Factor Ci (Table 4B2)</li>
-                        <li>• Overall factor: Cf = Ca × Cg × Ci</li>
+                        <li>- Ambient temperature: Factor Ca (Table 4B1)</li>
+                        <li>- Grouping: Factor Cg (Table 4C1)</li>
+                        <li>- Thermal insulation: Factor Ci (Table 4B2)</li>
+                        <li>- Overall factor: Cf = Ca x Cg x Ci</li>
                       </ul>
                     </div>
                   </div>
@@ -715,15 +716,15 @@ export default function Module3Section4_6() {
                       </ol>
                     </div>
                   </div>
-                  
+
                   <div className="p-3 border border-amber-400/30 rounded-lg">
                     <h6 className="font-medium text-amber-400 mb-2">Critical Safety Considerations</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• <strong>Isolation:</strong> Ensure complete circuit isolation before work</li>
-                      <li>• <strong>Testing:</strong> Verify continuity, insulation, and polarity</li>
-                      <li>• <strong>Load testing:</strong> Confirm operation under actual load conditions</li>
-                      <li>• <strong>Documentation:</strong> Record fuse rating and load details on circuit schedule</li>
-                      <li>• <strong>Labelling:</strong> Clear identification of controlled appliance/circuit</li>
+                      <li>- <strong>Isolation:</strong> Ensure complete circuit isolation before work</li>
+                      <li>- <strong>Testing:</strong> Verify continuity, insulation, and polarity</li>
+                      <li>- <strong>Load testing:</strong> Confirm operation under actual load conditions</li>
+                      <li>- <strong>Documentation:</strong> Record fuse rating and load details on circuit schedule</li>
+                      <li>- <strong>Labelling:</strong> Clear identification of controlled appliance/circuit</li>
                     </ul>
                   </div>
                 </div>
@@ -777,17 +778,17 @@ export default function Module3Section4_6() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[2]} />
-          <Separator className="my-6" />
+          <div className="my-6 border-t border-white/10" />
 
           {/* 4. General Best Practices for All Accessories */}
-          <section className="mb-6">
+          <div className="mb-8">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Wrench className="w-5 h-5" /> 4. General Best Practices for All Accessories
             </h3>
-            
+
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <div className="p-4 bg-transparent border border-green-400/30 rounded-lg">
                 <h4 className="font-medium text-white mb-2">Safety Practices</h4>
@@ -846,10 +847,10 @@ export default function Module3Section4_6() {
                 </li>
               </ul>
             </div>
-          </section>
+          </div>
 
           {/* 5. Detailed Installation Procedures */}
-          <section className="mb-6">
+          <div className="mb-8">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <FileText className="w-5 h-5" /> 5. Detailed Installation Procedures
             </h3>
@@ -900,10 +901,10 @@ export default function Module3Section4_6() {
                 </ol>
               </div>
             </div>
-          </section>
+          </div>
 
           {/* 6. Common Installation Faults and Solutions */}
-          <section className="mb-6">
+          <div className="mb-8">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5" /> 6. Common Installation Faults and Solutions
             </h3>
@@ -961,10 +962,10 @@ export default function Module3Section4_6() {
                 </ul>
               </div>
             </div>
-          </section>
+          </div>
 
           {/* 7. Tools and Equipment Required */}
-          <section className="mb-6">
+          <div className="mb-8">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Wrench className="w-5 h-5" /> 7. Essential Tools and Equipment
             </h3>
@@ -973,43 +974,43 @@ export default function Module3Section4_6() {
               <div className="p-4 bg-transparent border border-border/30 rounded-lg">
                 <h4 className="font-medium text-elec-yellow mb-3">Hand Tools</h4>
                 <ul className="space-y-1 text-sm">
-                  <li>• Insulated screwdrivers (flathead and Phillips)</li>
-                  <li>• Wire strippers and side cutters</li>
-                  <li>• Adjustable spanner set</li>
-                  <li>• Spirit level for alignment</li>
-                  <li>• Tape measure for positioning</li>
-                  <li>• Pencil for marking</li>
+                  <li>- Insulated screwdrivers (flathead and Phillips)</li>
+                  <li>- Wire strippers and side cutters</li>
+                  <li>- Adjustable spanner set</li>
+                  <li>- Spirit level for alignment</li>
+                  <li>- Tape measure for positioning</li>
+                  <li>- Pencil for marking</li>
                 </ul>
               </div>
 
               <div className="p-4 bg-transparent border border-border/30 rounded-lg">
                 <h4 className="font-medium text-elec-yellow mb-3">Test Equipment</h4>
                 <ul className="space-y-1 text-sm">
-                  <li>• Approved voltage tester (GS38)</li>
-                  <li>• Multimeter for continuity</li>
-                  <li>• Insulation resistance tester</li>
-                  <li>• RCD tester</li>
-                  <li>• Socket tester for polarity</li>
-                  <li>• Torque driver/screwdriver</li>
+                  <li>- Approved voltage tester (GS38)</li>
+                  <li>- Multimeter for continuity</li>
+                  <li>- Insulation resistance tester</li>
+                  <li>- RCD tester</li>
+                  <li>- Socket tester for polarity</li>
+                  <li>- Torque driver/screwdriver</li>
                 </ul>
               </div>
 
               <div className="p-4 bg-transparent border border-green-400/30 rounded-lg">
                 <h4 className="font-medium text-green-400 mb-3">Installation Materials</h4>
                 <ul className="space-y-1 text-sm">
-                  <li>• Appropriate back boxes</li>
-                  <li>• Fixing screws and plugs</li>
-                  <li>• Cable management clips</li>
-                  <li>• Insulation sleeving</li>
-                  <li>• Earth sleeving (green/yellow)</li>
-                  <li>• Appropriate fuses for FCUs</li>
+                  <li>- Appropriate back boxes</li>
+                  <li>- Fixing screws and plugs</li>
+                  <li>- Cable management clips</li>
+                  <li>- Insulation sleeving</li>
+                  <li>- Earth sleeving (green/yellow)</li>
+                  <li>- Appropriate fuses for FCUs</li>
                 </ul>
               </div>
             </div>
-          </section>
+          </div>
 
           {/* 8. Compliance and Standards */}
-          <section className="mb-6">
+          <div className="mb-8">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <FileText className="w-5 h-5" /> 8. Regulatory Compliance and Standards
             </h3>
@@ -1046,12 +1047,15 @@ export default function Module3Section4_6() {
                 </ul>
               </div>
             </div>
-          </section>
-        </Card>
+          </div>
+        </section>
 
         {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Real-World Example
+          </h2>
           <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg">
             <p className="text-xs sm:text-sm text-white mb-3">
               <strong>Case Study: Office Refurbishment Socket Failure</strong>
@@ -1063,11 +1067,14 @@ export default function Module3Section4_6() {
               <strong>Resolution:</strong> The fault was resolved by replacing the socket and retightening all connections to manufacturer specifications. A systematic check of all accessories in the installation was conducted, and a maintenance schedule was implemented to prevent recurrence.
             </p>
           </div>
-        </Card>
+        </section>
 
         {/* Enhanced FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Frequently Asked Questions
+          </h2>
           <div className="space-y-4">
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
               <h3 className="font-medium text-white mb-2">Q: Can I install a socket in a bathroom?</h3>
@@ -1078,7 +1085,7 @@ export default function Module3Section4_6() {
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
               <h3 className="font-medium text-white mb-2">Q: Do dimmer switches require special consideration?</h3>
               <p className="text-xs sm:text-sm text-white">
-                A: Yes — they must match the load type (LED, halogen, incandescent) and wattage. LED dimmers require specific compatibility with LED driver types.
+                A: Yes - they must match the load type (LED, halogen, incandescent) and wattage. LED dimmers require specific compatibility with LED driver types.
               </p>
             </div>
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
@@ -1100,31 +1107,39 @@ export default function Module3Section4_6() {
               </p>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
-          <p className="text-white/90">
-            Sockets, switches, and FCUs are key components of an installation. Correct positioning, secure fixing, accurate wiring, and compliance with regulations ensure these accessories are safe, reliable, and fit for purpose.
-          </p>
-        </Card>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Summary
+          </h2>
+          <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
+            <p className="text-white/90">
+              Sockets, switches, and FCUs are key components of an installation. Correct positioning, secure fixing, accurate wiring, and compliance with regulations ensure these accessories are safe, reliable, and fit for purpose.
+            </p>
+          </div>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+            Quiz (8 Questions)
+          </h2>
           <Quiz questions={quizQuestions} />
-        </Card>
+        </section>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
+        <div className="flex flex-col-reverse sm:flex-row justify-between gap-3 pt-6 border-t border-white/10">
+          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../4-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Supporting and Securing Cables
             </Link>
           </Button>
-          <Button asChild>
+          <Button className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="..">
               Next: Section 3.5
               <ArrowRight className="w-4 h-4 ml-2" />

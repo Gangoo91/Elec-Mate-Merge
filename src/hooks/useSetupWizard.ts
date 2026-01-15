@@ -64,7 +64,7 @@ export function useSetupWizard() {
           payment_terms: data.paymentTerms,
           logo_url: logoUrl,
           primary_color: data.primaryColor,
-          accent_color: data.accentColor,
+          secondary_color: data.accentColor,
           updated_at: new Date().toISOString(),
         }, { onConflict: 'user_id' });
 

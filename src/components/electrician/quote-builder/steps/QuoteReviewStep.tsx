@@ -5,7 +5,6 @@ import { Quote } from "@/types/quote";
 import { useToast } from "@/hooks/use-toast";
 import { useCompanyProfile } from "@/hooks/useCompanyProfile";
 import { supabase } from "@/integrations/supabase/client";
-import { QuoteSendDropdown } from "@/components/electrician/quote-builder/QuoteSendDropdown";
 
 interface QuoteReviewStepProps {
   quote: Partial<Quote>;
@@ -220,13 +219,6 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
           )}
           {isDownloading ? "Generating PDF..." : "Download PDF"}
         </Button>
-
-        <QuoteSendDropdown
-          quote={quote as Quote}
-          onSuccess={() => toast({ title: "Quote sent", variant: "success" })}
-          disabled={!quote.client?.email || !quote.id}
-          className="w-full h-14"
-        />
       </div>
     </div>
   );

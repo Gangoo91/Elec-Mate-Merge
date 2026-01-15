@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, Package, Target, CheckCircle, AlertTriangle, Eye, TrendingUp, Shield, Search, Zap } from "lucide-react";
+import { ArrowLeft, ArrowRight, Package, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -11,7 +8,6 @@ import useSEO from "@/hooks/useSEO";
 const TITLE = "Types of Bends and When to Use Them - Module 4.3.1 | Level 2 Electrical Course";
 const DESCRIPTION = "Learn about different types of conduit bends, their applications, and when to use each bend type for optimal cable routing and professional installation.";
 
-// Quiz questions
 const quizQuestions = [
   {
     id: 1,
@@ -53,7 +49,7 @@ const quizQuestions = [
     question: "Which bend is typically less than 30 degrees and used for fine alignment?",
     options: ["90-degree bend", "Offset bend", "Kick bend", "Saddle bend"],
     correctAnswer: 2,
-    explanation: "A kick bend provides a small directional adjustment (usually &lt;30 degrees) for final alignment into boxes or accessories."
+    explanation: "A kick bend provides a small directional adjustment (usually <30 degrees) for final alignment into boxes or accessories."
   },
   {
     id: 7,
@@ -71,7 +67,6 @@ const quizQuestions = [
   }
 ];
 
-// Inline check questions
 const quickCheckQuestions = [
   {
     id: 1,
@@ -85,7 +80,7 @@ const quickCheckQuestions = [
     question: "What's the main purpose of a kick bend?",
     options: ["Pass over obstacles", "Provide small directional adjustment for final alignment", "Make sharp turns", "Connect multiple conduits"],
     correctIndex: 1,
-    explanation: "A kick bend provides a small directional adjustment (usually &lt;30 degrees) for final alignment into boxes or accessories."
+    explanation: "A kick bend provides a small directional adjustment (usually <30 degrees) for final alignment into boxes or accessories."
   },
   {
     id: 3,
@@ -96,53 +91,45 @@ const quickCheckQuestions = [
   }
 ];
 
-// Common bend types
 const bendTypes = [
   {
     type: "90-Degree Bend (Right-Angle Bend)",
     purpose: "Sharp change in direction in horizontal or vertical plane",
     applications: ["Corner turns", "Changes between floor and wall", "Wall to ceiling transitions"],
-    considerations: "Maintain minimum bend radius to avoid cable damage",
-    icon: "↻"
+    considerations: "Maintain minimum bend radius to avoid cable damage"
   },
   {
     type: "Offset Bend",
     purpose: "Moves conduit out of line to align with fitting or avoid obstacle",
     applications: ["Aligning with socket boxes on uneven walls", "Small obstacle avoidance"],
-    considerations: "Often uses two bends of 10–22.5 degrees",
-    icon: "⤴"
+    considerations: "Often uses two bends of 10-22.5 degrees"
   },
   {
     type: "Single Saddle Bend",
     purpose: "Passes over small obstructions",
     applications: ["Crossing small pipes", "Avoiding minor obstacles"],
-    considerations: "Returns to original line after obstacle",
-    icon: "∩"
+    considerations: "Returns to original line after obstacle"
   },
   {
     type: "Double Saddle Bend",
     purpose: "Passes over larger obstructions while returning to same line",
     applications: ["Crossing larger services", "Major obstacle avoidance"],
-    considerations: "More complex than single saddle but maintains alignment",
-    icon: "∪∩"
+    considerations: "More complex than single saddle but maintains alignment"
   },
   {
     type: "Back-to-Back Bend",
     purpose: "Produces a 'U' shape for tight directional changes",
     applications: ["Drops from ceilings", "Looping around structures", "Space-limited areas"],
-    considerations: "Useful where space is restricted",
-    icon: "⊃"
+    considerations: "Useful where space is restricted"
   },
   {
     type: "Kick Bend",
-    purpose: "Small directional adjustment (usually &lt;30 degrees)",
+    purpose: "Small directional adjustment (usually <30 degrees)",
     applications: ["Final adjustment into boxes", "Minor alignment corrections"],
-    considerations: "Fine-tuning tool for neat terminations",
-    icon: "⤷"
+    considerations: "Fine-tuning tool for neat terminations"
   }
 ];
 
-// Factors influencing bend selection
 const selectionFactors = [
   {
     factor: "Cable Size and Type",
@@ -176,7 +163,6 @@ const selectionFactors = [
   }
 ];
 
-// Best practices
 const bestPractices = [
   {
     practice: "Measure and Mark First",
@@ -214,11 +200,15 @@ const Module4Section3_1 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3
@@ -227,87 +217,83 @@ const Module4Section3_1 = () => {
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Package className="w-6 h-6 text-white" />
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 3.1</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 4.3.1
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Types of Bends and When to Use Them
-          </h1>
-          <p className="text-white">
-            Learn about different types of conduit bends, their applications, and when to use each bend type for optimal cable routing.
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Types of Bends and When to Use Them
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Learn about different types of conduit bends, their applications, and when to use each bend type for optimal cable routing.
+            </p>
+          </header>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Six main bend types: 90-degree, offset, saddle, back-to-back, kick bends.</li>
-                <li>Each bend serves specific purposes: direction changes, obstacle avoidance, alignment.</li>
-                <li>Selection depends on cable size, material, space, and aesthetic requirements.</li>
-              </ul>
+          {/* Introduction */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Introduction
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>Six main bend types: 90-degree, offset, saddle, back-to-back, kick bends</li>
+                  <li>Each bend serves specific purposes: direction changes, obstacle avoidance, alignment</li>
+                  <li>Selection depends on cable size, material, space, and aesthetic requirements</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-elec-yellow mb-2">Spot it / Use it</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><strong>Spot:</strong> Route requirements, obstacles, space constraints, alignment needs</li>
+                  <li><strong>Use:</strong> Appropriate bend type, correct tools, proper technique</li>
+                  <li><strong>Check:</strong> Bend radius, alignment, consistency, cable protection</li>
+                </ul>
+              </div>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Route requirements, obstacles, space constraints, alignment needs.</li>
-                <li><strong>Use:</strong> Appropriate bend type, correct tools, proper technique.</li>
-                <li><strong>Check:</strong> Bend radius, alignment, consistency, cable protection.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-            <li>Identify the main bend types used in electrical conduit installations.</li>
-            <li>Understand the applications and benefits of each bend type.</li>
-            <li>Apply correct bend selection to various site conditions.</li>
-            <li>Recognise the implications of incorrect bending on safety and compliance.</li>
-            <li>Follow best practice for producing accurate, regulation-compliant bends.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Learning Outcomes
+            </h2>
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white/80">
+              <li>Identify the main bend types used in electrical conduit installations</li>
+              <li>Understand the applications and benefits of each bend type</li>
+              <li>Apply correct bend selection to various site conditions</li>
+              <li>Recognise the implications of incorrect bending on safety and compliance</li>
+              <li>Follow best practice for producing accurate, regulation-compliant bends</li>
+            </ul>
+          </section>
 
           {/* Common Bend Types */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Common Bend Types and Applications</h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Common Bend Types and Applications
+            </h2>
+            <p className="text-sm text-white/80 mb-4">
               Understanding the different bend types and their specific applications:
             </p>
-            
             <div className="space-y-4">
               {bendTypes.map((bend, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                  <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
-                    <div className="flex-1">
-                      <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">{bend.type}</p>
-                      <p className="text-xs sm:text-sm text-white mb-2"><strong>Purpose:</strong> {bend.purpose}</p>
-                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mb-2">
-                        <strong>Applications:</strong> {bend.applications.join(", ")}
-                      </div>
-                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                        <strong>Considerations:</strong> {bend.considerations}
-                      </div>
-                    </div>
+                <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                  <p className="font-medium text-elec-yellow mb-2">{bend.type}</p>
+                  <p className="text-sm text-white/80 mb-2"><strong>Purpose:</strong> {bend.purpose}</p>
+                  <div className="text-xs text-white/60 mb-2">
+                    <strong>Applications:</strong> {bend.applications.join(", ")}
+                  </div>
+                  <div className="text-xs text-white/60">
+                    <strong>Considerations:</strong> {bend.considerations}
                   </div>
                 </div>
               ))}
@@ -315,146 +301,156 @@ const Module4Section3_1 = () => {
           </section>
 
           {/* Factors Influencing Selection */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Factors Influencing Bend Selection</h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Factors Influencing Bend Selection
+            </h2>
+            <p className="text-sm text-white/80 mb-4">
               Multiple factors determine the most appropriate bend type for each situation:
             </p>
-            
             <div className="space-y-4">
               {selectionFactors.map((factor, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                  <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
-                    <div className="flex-1">
-                      <p className="font-semibold text-green-600 dark:text-green-400 mb-1">{factor.factor}</p>
-                      <p className="text-xs sm:text-sm text-white mb-2">{factor.description}</p>
-                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                        <strong>Consideration:</strong> {factor.consideration} - <strong>Impact:</strong> {factor.impact}
-                      </div>
-                    </div>
+                <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                  <p className="font-medium text-green-400 mb-2">{factor.factor}</p>
+                  <p className="text-sm text-white/80 mb-2">{factor.description}</p>
+                  <div className="text-xs text-white/60">
+                    <strong>Consideration:</strong> {factor.consideration} - <strong>Impact:</strong> {factor.impact}
                   </div>
                 </div>
               ))}
             </div>
           </section>
 
-          <InlineCheck
-            id="bend-selection-check"
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
-          <Separator className="my-6" />
+          <div className="mb-10">
+            <InlineCheck
+              id="bend-selection-check"
+              question={quickCheckQuestions[0].question}
+              options={quickCheckQuestions[0].options}
+              correctIndex={quickCheckQuestions[0].correctIndex}
+              explanation={quickCheckQuestions[0].explanation}
+            />
+          </div>
 
           {/* Best Practice in Bend Production */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Best Practice in Bend Production</h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Best Practice in Bend Production
+            </h2>
+            <p className="text-sm text-white/80 mb-4">
               Following best practices ensures professional results and compliance:
             </p>
-            
             <div className="space-y-4">
               {bestPractices.map((practice, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-                  <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
-                    <div className="flex-1">
-                      <p className="font-semibold text-purple-600 text-elec-yellow mb-1">{practice.practice}</p>
-                      <p className="text-xs sm:text-sm text-white mb-2">{practice.description}</p>
-                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                        <strong>Application:</strong> {practice.application} - <strong>Benefit:</strong> {practice.benefit}
-                      </div>
-                    </div>
+                <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                  <p className="font-medium text-purple-400 mb-2">{practice.practice}</p>
+                  <p className="text-sm text-white/80 mb-2">{practice.description}</p>
+                  <div className="text-xs text-white/60">
+                    <strong>Application:</strong> {practice.application} - <strong>Benefit:</strong> {practice.benefit}
                   </div>
                 </div>
               ))}
             </div>
           </section>
 
-          <InlineCheck
-            id="kick-bend-check"
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-          <Separator className="my-6" />
-
-          <InlineCheck
-            id="bend-radius-check"
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-        </Card>
-
-        {/* Real-world example */}
-        <Card className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border-blue-200 dark:border-blue-800">
-          <h3 className="font-semibold text-blue-800 dark:text-white mb-3 flex items-center gap-2">
-            <Eye className="w-5 h-5" />
-            Real-World Example
-          </h3>
-          <p className="text-sm text-blue-700 text-elec-yellow">
-            During an office refit, the electrical team had to run conduit above suspended ceilings, with multiple water pipes crossing the planned route. Instead of rerouting the entire run, the installer used double saddle bends, maintaining neatness and avoiding unnecessary joints. The run was installed in half the time compared to an alternative route.
-          </p>
-        </Card>
-
-        {/* FAQs */}
-        <Card className="mb-8 p-6 bg-transparent border-white/20">
-          <h3 className="font-semibold text-white mb-4">Frequently Asked Questions</h3>
-          <div className="space-y-4">
-            <div>
-              <p className="font-medium text-white mb-1">Q: Can I form bends by hand without tools?</p>
-              <p className="text-xs sm:text-sm text-white">A: Only with small adjustments in flexible conduit. Rigid steel or PVC conduit requires bending tools.</p>
-            </div>
-            <div>
-              <p className="font-medium text-white mb-1">Q: What happens if I bend conduit too tightly?</p>
-              <p className="text-xs sm:text-sm text-white">A: It can damage the cable insulation, reduce internal space, and breach BS 7671 requirements.</p>
-            </div>
-            <div>
-              <p className="font-medium text-white mb-1">Q: How can I make sure my bends match?</p>
-              <p className="text-xs sm:text-sm text-white">A: Use consistent measurement marks and the same tool settings each time.</p>
-            </div>
+          <div className="mb-10">
+            <InlineCheck
+              id="kick-bend-check"
+              question={quickCheckQuestions[1].question}
+              options={quickCheckQuestions[1].options}
+              correctIndex={quickCheckQuestions[1].correctIndex}
+              explanation={quickCheckQuestions[1].explanation}
+            />
           </div>
-        </Card>
 
-        {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h3 className="font-semibold text-white mb-3">Summary</h3>
-          <p className="text-xs sm:text-sm text-white">
-            Each bend type serves a specific function. Selecting the correct bend based on site conditions, obstacles, and design requirements is key to efficiency, safety, and compliance. Accurate bending keeps cables safe, maintains installation standards, and creates a professional finish.
-          </p>
-        </Card>
-
-        {/* Quiz */}
-        <Card className="mb-8 bg-transparent border-white/20">
-          <div className="p-6 border-b border-white/10">
-            <h3 className="text-lg sm:text-xl font-semibold text-white">Quiz</h3>
-            <p className="text-sm text-white mt-2">Test your knowledge of conduit bend types</p>
+          <div className="mb-10">
+            <InlineCheck
+              id="bend-radius-check"
+              question={quickCheckQuestions[2].question}
+              options={quickCheckQuestions[2].options}
+              correctIndex={quickCheckQuestions[2].correctIndex}
+              explanation={quickCheckQuestions[2].explanation}
+            />
           </div>
-          <Quiz questions={quizQuestions} />
-        </Card>
 
-        {/* Navigation */}
-        <div className="flex justify-between items-center">
-          <Button variant="outline" asChild>
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 3
-            </Link>
-          </Button>
-          
-          <Button asChild>
-            <Link to="module4-section3/subsection2">
-              Next: Subsection 2
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+          {/* Real-World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <Eye className="w-5 h-5 text-blue-400" />
+              Real-World Example
+            </h2>
+            <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-500/50">
+              <p className="text-sm text-white/80">
+                During an office refit, the electrical team had to run conduit above suspended ceilings, with multiple water pipes crossing the planned route. Instead of rerouting the entire run, the installer used double saddle bends, maintaining neatness and avoiding unnecessary joints. The run was installed in half the time compared to an alternative route.
+              </p>
+            </div>
+          </section>
+
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-white/5">
+                <p className="font-medium text-white mb-1">Q: Can I form bends by hand without tools?</p>
+                <p className="text-sm text-white/70">A: Only with small adjustments in flexible conduit. Rigid steel or PVC conduit requires bending tools.</p>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5">
+                <p className="font-medium text-white mb-1">Q: What happens if I bend conduit too tightly?</p>
+                <p className="text-sm text-white/70">A: It can damage the cable insulation, reduce internal space, and breach BS 7671 requirements.</p>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5">
+                <p className="font-medium text-white mb-1">Q: How can I make sure my bends match?</p>
+                <p className="text-sm text-white/70">A: Use consistent measurement marks and the same tool settings each time.</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Summary */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Summary
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm text-white/80">
+                Each bend type serves a specific function. Selecting the correct bend based on site conditions, obstacles, and design requirements is key to efficiency, safety, and compliance. Accurate bending keeps cables safe, maintains installation standards, and creates a professional finish.
+              </p>
+            </div>
+          </section>
+
+          {/* Quiz */}
+          <section className="mb-10">
+            <Quiz questions={quizQuestions} />
+          </section>
+
+          {/* Navigation Footer */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 mt-8 border-t border-white/10">
+            <Button
+              variant="outline"
+              className="border-white/20 hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../2-4">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Common Measurement Errors
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../3-2">
+                Next: Bending Machines
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

@@ -1,7 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -55,7 +52,7 @@ const quizQuestions = [
     options: ["True", "False"],
     correctAnswer: 1,
     explanation:
-      "False. IP44 provides protection against objects ≥1mm (first digit 4), but dust tight protection requires level 6.",
+      "False. IP44 provides protection against objects >=1mm (first digit 4), but dust tight protection requires level 6.",
   },
   {
     id: 4,
@@ -151,13 +148,13 @@ export default function Module3Section5_2() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -169,32 +166,32 @@ export default function Module3Section5_2() {
       </div>
 
       {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Shield className="w-6 h-6 text-white" />
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <header className="mb-6 sm:mb-8 text-center">
+          <div className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-medium mb-4">
+            Module 3 - Section 3.5.2
+          </div>
+          <div className="flex justify-center mb-4">
+            <div className="p-3 rounded-full bg-white/10">
+              <Shield className="w-8 h-8 text-white" />
             </div>
-            <Badge
-              variant="outline"
-              className="border-elec-yellow/30 text-elec-yellow"
-            >
-              Section 3.5.2
-            </Badge>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             IP Ratings and Water/Dust Protection
           </h1>
-          <p className="text-white">
+          <p className="text-white/80">
             Master IP rating classification systems, enclosure protection levels, and appropriate selection criteria for electrical equipment in various environmental conditions per BS EN 60529.
           </p>
         </header>
 
         {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction
+          </h2>
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>IP ratings indicate protection levels against dust and water ingress.</li>
@@ -203,7 +200,7 @@ export default function Module3Section5_2() {
                 <li>Critical for safety, reliability, and BS 7671 compliance.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
+            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
               <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li><strong>Spot:</strong> Equipment enclosures, IP markings, environmental conditions.</li>
@@ -212,29 +209,35 @@ export default function Module3Section5_2() {
               </ul>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Learning Outcomes
+          </h2>
           <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
             <li>Explain the meaning of an IP rating and its two-digit code system.</li>
             <li>Identify appropriate IP ratings for different environmental conditions.</li>
             <li>Apply IP rating knowledge to select suitable enclosures and accessories.</li>
             <li>Recognise the risks of using incorrect IP-rated equipment in harsh conditions.</li>
           </ul>
-        </Card>
+        </section>
 
         {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Content / Learning
+          </h2>
 
           {/* 1. What is an IP Rating? */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5" /> 1. Understanding IP Ratings - Comprehensive Overview
             </h3>
-            
+
             <div className="mb-6">
               <h4 className="font-medium text-white mb-3">IP Rating Fundamentals</h4>
               <div className="p-4 bg-transparent border border-border/30 rounded-lg mb-4">
@@ -264,19 +267,19 @@ export default function Module3Section5_2() {
                     <div>
                       <h6 className="font-medium text-white mb-2">Domestic Applications</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>• <strong>IP20:</strong> Indoor switches and sockets (living rooms)</li>
-                        <li>• <strong>IP44:</strong> Bathroom light switches outside zones</li>
-                        <li>• <strong>IPX4:</strong> Bathroom zones 1 &amp; 2 minimum</li>
-                        <li>• <strong>IP65:</strong> Outdoor garden sockets and lighting</li>
+                        <li>* <strong>IP20:</strong> Indoor switches and sockets (living rooms)</li>
+                        <li>* <strong>IP44:</strong> Bathroom light switches outside zones</li>
+                        <li>* <strong>IPX4:</strong> Bathroom zones 1 &amp; 2 minimum</li>
+                        <li>* <strong>IP65:</strong> Outdoor garden sockets and lighting</li>
                       </ul>
                     </div>
                     <div>
                       <h6 className="font-medium text-white mb-2">Commercial/Industrial</h6>
                       <ul className="space-y-1 text-sm">
-                        <li>• <strong>IP54:</strong> Office and retail environments</li>
-                        <li>• <strong>IP65:</strong> Food preparation areas</li>
-                        <li>• <strong>IP66:</strong> Industrial washdown areas</li>
-                        <li>• <strong>IP68:</strong> Submerged pumps and underwater lighting</li>
+                        <li>* <strong>IP54:</strong> Office and retail environments</li>
+                        <li>* <strong>IP65:</strong> Food preparation areas</li>
+                        <li>* <strong>IP66:</strong> Industrial washdown areas</li>
+                        <li>* <strong>IP68:</strong> Submerged pumps and underwater lighting</li>
                       </ul>
                     </div>
                   </div>
@@ -294,17 +297,17 @@ export default function Module3Section5_2() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[0]} />
-          <Separator className="my-6" />
+          <div className="border-t border-white/10 my-6" />
 
           {/* 2. First Digit - Solid Object Protection */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Wind className="w-5 h-5" /> 2. First Digit - Solid Object and Dust Protection
             </h3>
-            
+
             <div className="mb-6">
               <h4 className="font-medium text-white mb-3">Protection Levels Against Solid Objects</h4>
               <div className="space-y-3">
@@ -328,25 +331,25 @@ export default function Module3Section5_2() {
                       <tr className="bg-muted/5">
                         <td className="border border-white/10 p-3 font-medium">1</td>
                         <td className="border border-white/10 p-3">Large solid objects</td>
-                        <td className="border border-white/10 p-3">≥ 50mm</td>
+                        <td className="border border-white/10 p-3">&gt;= 50mm</td>
                         <td className="border border-white/10 p-3">Accidental large object contact, overhead equipment</td>
                       </tr>
                       <tr>
                         <td className="border border-white/10 p-3 font-medium">2</td>
                         <td className="border border-white/10 p-3">Medium solid objects</td>
-                        <td className="border border-white/10 p-3">≥ 12.5mm</td>
+                        <td className="border border-white/10 p-3">&gt;= 12.5mm</td>
                         <td className="border border-white/10 p-3">Finger protection, basic enclosures</td>
                       </tr>
                       <tr className="bg-muted/5">
                         <td className="border border-white/10 p-3 font-medium">3</td>
                         <td className="border border-white/10 p-3">Small solid objects</td>
-                        <td className="border border-white/10 p-3">≥ 2.5mm</td>
+                        <td className="border border-white/10 p-3">&gt;= 2.5mm</td>
                         <td className="border border-white/10 p-3">Tools, thick wires, enhanced safety</td>
                       </tr>
                       <tr>
                         <td className="border border-white/10 p-3 font-medium">4</td>
                         <td className="border border-white/10 p-3">Very small objects</td>
-                        <td className="border border-white/10 p-3">≥ 1mm</td>
+                        <td className="border border-white/10 p-3">&gt;= 1mm</td>
                         <td className="border border-white/10 p-3">Small tools, thin wires, precision protection</td>
                       </tr>
                       <tr className="bg-muted/5">
@@ -403,17 +406,17 @@ export default function Module3Section5_2() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[1]} />
-          <Separator className="my-6" />
+          <div className="border-t border-white/10 my-6" />
 
           {/* 3. Second Digit - Water Protection */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <Droplets className="w-5 h-5" /> 3. Second Digit - Water and Moisture Protection
             </h3>
-            
+
             <div className="mb-6">
               <h4 className="font-medium text-white mb-3">Protection Levels Against Water Ingress</h4>
               <div className="space-y-4">
@@ -442,14 +445,14 @@ export default function Module3Section5_2() {
                       </tr>
                       <tr>
                         <td className="border border-white/10 p-3 font-medium">2</td>
-                        <td className="border border-white/10 p-3">Dripping water (15° tilt)</td>
-                        <td className="border border-white/10 p-3">3mm/min at 15° angles</td>
+                        <td className="border border-white/10 p-3">Dripping water (15 deg tilt)</td>
+                        <td className="border border-white/10 p-3">3mm/min at 15 deg angles</td>
                         <td className="border border-white/10 p-3">Slightly angled surfaces</td>
                       </tr>
                       <tr className="bg-muted/5">
                         <td className="border border-white/10 p-3 font-medium">3</td>
-                        <td className="border border-white/10 p-3">Spraying water (60°)</td>
-                        <td className="border border-white/10 p-3">Spray nozzle, 60° arc</td>
+                        <td className="border border-white/10 p-3">Spraying water (60 deg)</td>
+                        <td className="border border-white/10 p-3">Spray nozzle, 60 deg arc</td>
                         <td className="border border-white/10 p-3">Light rain, indoor splashes</td>
                       </tr>
                       <tr>
@@ -493,19 +496,19 @@ export default function Module3Section5_2() {
                       <div>
                         <h6 className="font-medium text-white mb-2">Testing Limitations</h6>
                         <ul className="space-y-1 text-sm">
-                          <li>• <strong>IPX7 vs IPX8:</strong> Equipment rated IPX7 may not pass IPX6 tests</li>
-                          <li>• <strong>Progressive testing:</strong> Not always cumulative - check specific ratings</li>
-                          <li>• <strong>Temperature effects:</strong> Tests conducted at room temperature</li>
-                          <li>• <strong>Pressure variations:</strong> Actual conditions may exceed test parameters</li>
+                          <li>* <strong>IPX7 vs IPX8:</strong> Equipment rated IPX7 may not pass IPX6 tests</li>
+                          <li>* <strong>Progressive testing:</strong> Not always cumulative - check specific ratings</li>
+                          <li>* <strong>Temperature effects:</strong> Tests conducted at room temperature</li>
+                          <li>* <strong>Pressure variations:</strong> Actual conditions may exceed test parameters</li>
                         </ul>
                       </div>
                       <div>
                         <h6 className="font-medium text-white mb-2">Real-world Factors</h6>
                         <ul className="space-y-1 text-sm">
-                          <li>• <strong>Aging effects:</strong> Seals degrade over time</li>
-                          <li>• <strong>Mechanical stress:</strong> Vibration affects seal integrity</li>
-                          <li>• <strong>Chemical exposure:</strong> Cleaning agents can damage seals</li>
-                          <li>• <strong>UV degradation:</strong> Outdoor exposure affects materials</li>
+                          <li>* <strong>Aging effects:</strong> Seals degrade over time</li>
+                          <li>* <strong>Mechanical stress:</strong> Vibration affects seal integrity</li>
+                          <li>* <strong>Chemical exposure:</strong> Cleaning agents can damage seals</li>
+                          <li>* <strong>UV degradation:</strong> Outdoor exposure affects materials</li>
                         </ul>
                       </div>
                     </div>
@@ -524,13 +527,13 @@ export default function Module3Section5_2() {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
 
           <InlineCheck {...quickCheckQuestions[2]} />
-          <Separator className="my-6" />
+          <div className="border-t border-white/10 my-6" />
 
           {/* 4. Selection Criteria and Application */}
-          <section className="mb-6">
+          <div className="mb-6">
             <h3 className="font-medium text-white mb-3 flex items-center gap-2">
               <FileText className="w-5 h-5" /> 4. IP Rating Selection Criteria and Environmental Assessment
             </h3>
@@ -631,30 +634,33 @@ export default function Module3Section5_2() {
                   <div>
                     <h6 className="font-medium text-white mb-2">Installation Documentation</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• Environmental assessment records</li>
-                      <li>• IP rating selection justification</li>
-                      <li>• Equipment certification documents</li>
-                      <li>• Installation method statements</li>
+                      <li>* Environmental assessment records</li>
+                      <li>* IP rating selection justification</li>
+                      <li>* Equipment certification documents</li>
+                      <li>* Installation method statements</li>
                     </ul>
                   </div>
                   <div>
                     <h6 className="font-medium text-white mb-2">Ongoing Verification</h6>
                     <ul className="space-y-1 text-sm">
-                      <li>• Periodic seal integrity testing</li>
-                      <li>• Environmental condition monitoring</li>
-                      <li>• Performance degradation assessment</li>
-                      <li>• Maintenance schedule compliance</li>
+                      <li>* Periodic seal integrity testing</li>
+                      <li>* Environmental condition monitoring</li>
+                      <li>* Performance degradation assessment</li>
+                      <li>* Maintenance schedule compliance</li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
-        </Card>
+          </div>
+        </section>
 
         {/* Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Case Studies</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Real-World Case Studies
+          </h2>
           <div className="space-y-4">
             <div className="p-4 bg-transparent border border-amber-400/30 rounded-lg">
               <h3 className="font-medium text-amber-400 mb-3">Case Study 1: Food Processing Plant Washdown Failure</h3>
@@ -695,11 +701,14 @@ export default function Module3Section5_2() {
               </p>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Enhanced FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Frequently Asked Questions
+          </h2>
           <div className="space-y-4">
             <div className="p-4 bg-transparent border border-white/10 rounded-lg">
               <h3 className="font-medium text-white mb-2">Q: Does a higher IP rating mean better in all cases?</h3>
@@ -732,31 +741,39 @@ export default function Module3Section5_2() {
               </p>
             </div>
           </div>
-        </Card>
+        </section>
 
         {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
-          <p className="text-white/90">
-            IP ratings provide a standardised method for defining protection levels against solid objects and liquids in electrical enclosures. Proper selection based on environmental assessment ensures equipment operates safely and reliably, avoiding costly failures and maintaining compliance with safety standards. Understanding the two-digit system and testing standards enables informed decisions for any installation environment.
-          </p>
-        </Card>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Summary
+          </h2>
+          <div className="rounded-lg p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
+            <p className="text-white/90">
+              IP ratings provide a standardised method for defining protection levels against solid objects and liquids in electrical enclosures. Proper selection based on environmental assessment ensures equipment operates safely and reliably, avoiding costly failures and maintaining compliance with safety standards. Understanding the two-digit system and testing standards enables informed decisions for any installation environment.
+            </p>
+          </div>
+        </section>
 
         {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
+        <section className="mb-10">
+          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+            Quiz (8 Questions)
+          </h2>
           <Quiz questions={quizQuestions} />
-        </Card>
+        </section>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
+        <div className="flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-3 pt-8 border-t border-white/10">
+          <Button variant="outline" className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../5-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Understanding External Influences
             </Link>
           </Button>
-          <Button asChild>
+          <Button className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
             <Link to="../5-3">
               Next: Subsection 5.3
               <ArrowRight className="w-4 h-4 ml-2" />

@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, Package, Target, CheckCircle, AlertTriangle, Eye, TrendingUp, Shield, Search } from "lucide-react";
+import { ArrowLeft, ArrowRight, AlertTriangle, Search, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -246,11 +243,15 @@ const Module4Section2_4 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 2
@@ -259,110 +260,105 @@ const Module4Section2_4 = () => {
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header (matches Module 4.2.1 style) */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Package className="w-6 h-6 text-white" />
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 2.4</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 4.2.4
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Avoiding Common Errors in Measurement and Positioning
-          </h1>
-          <p className="text-white">
-            Learn to identify and prevent common measurement and positioning errors to ensure accuracy, compliance, and professional results.
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Avoiding Common Errors in Measurement and Positioning
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Learn to identify and prevent common measurement and positioning errors for accuracy and professional results
+            </p>
+          </header>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Common errors: wrong reference points, reading mistakes, alignment issues.</li>
-                <li>Golden rule: measure twice, cut/drill once for accuracy.</li>
-                <li>Cross-check with second person and verify against drawings.</li>
+          {/* Introduction */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Introduction
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-elec-yellow mb-2 text-sm">In 30 Seconds</p>
+                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                  <li>Common errors: wrong reference points, reading mistakes, alignment issues</li>
+                  <li>Golden rule: measure twice, cut/drill once for accuracy</li>
+                  <li>Cross-check with second person and verify against drawings</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-elec-yellow mb-2 text-sm">Spot it / Use it</p>
+                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                  <li><strong>Spot:</strong> Error patterns, wrong reference points, alignment issues</li>
+                  <li><strong>Use:</strong> Verification methods, consistent tools, proper lighting</li>
+                  <li><strong>Check:</strong> Measurements twice, alignment before fixing</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Learning Outcomes
+            </h2>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <ul className="text-white/80 text-sm space-y-2 list-disc pl-4">
+                <li>Identify common measurement and positioning errors in electrical work</li>
+                <li>Understand the causes and consequences of these errors</li>
+                <li>Apply best practices to avoid mistakes</li>
+                <li>Use tools and methods that ensure accurate placement of electrical components</li>
+                <li>Cross-check measurements before and after installation</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Error patterns, wrong reference points, alignment issues.</li>
-                <li><strong>Use:</strong> Verification methods, consistent tools, proper lighting.</li>
-                <li><strong>Check:</strong> Measurements twice, alignment before fixing, drawing compliance.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-            <li>Identify common measurement and positioning errors in electrical work.</li>
-            <li>Understand the causes and consequences of these errors.</li>
-            <li>Apply best practices to avoid mistakes.</li>
-            <li>Use tools and methods that ensure accurate placement of electrical components.</li>
-            <li>Cross-check measurements before and after installation.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content</h2>
+          </section>
 
           {/* Common Measurement Errors */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Common Measurement Errors</h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Common Measurement Errors
+            </h2>
+            <p className="text-white/70 text-sm mb-4">
               Understanding typical measurement mistakes helps prevent costly errors:
             </p>
-            
-            <div className="space-y-4">
+            <div className="space-y-3">
               {measurementErrors.map((error, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                  <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
-                    <div className="flex-1">
-                      <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">{error.error}</p>
-                      <p className="text-xs sm:text-sm text-white mb-2">{error.description}</p>
-                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                        <strong>Example:</strong> {error.example} - <strong>Prevention:</strong> {error.prevention}
-                      </div>
-                    </div>
-                  </div>
+                <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                  <p className="font-medium text-elec-yellow mb-1">{error.error}</p>
+                  <p className="text-white/70 text-sm mb-2">{error.description}</p>
+                  <p className="text-white/60 text-xs">
+                    <strong>Example:</strong> {error.example} — <strong>Prevention:</strong> {error.prevention}
+                  </p>
                 </div>
               ))}
             </div>
           </section>
 
           {/* Common Positioning Errors */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Common Positioning Errors</h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-green-400/80 text-sm font-normal">04</span>
+              Common Positioning Errors
+            </h2>
+            <p className="text-white/70 text-sm mb-4">
               Positioning mistakes affect both appearance and compliance:
             </p>
-            
-            <div className="space-y-4">
+            <div className="space-y-3">
               {positioningErrors.map((error, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                  <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
-                    <div className="flex-1">
-                      <p className="font-semibold text-green-600 dark:text-green-400 mb-1">{error.error}</p>
-                      <p className="text-xs sm:text-sm text-white mb-2">{error.description}</p>
-                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                        <strong>Impact:</strong> {error.impact} - <strong>Prevention:</strong> {error.prevention}
-                      </div>
-                    </div>
-                  </div>
+                <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                  <p className="font-medium text-green-400 mb-1">{error.error}</p>
+                  <p className="text-white/70 text-sm mb-2">{error.description}</p>
+                  <p className="text-white/60 text-xs">
+                    <strong>Impact:</strong> {error.impact} — <strong>Prevention:</strong> {error.prevention}
+                  </p>
                 </div>
               ))}
             </div>
@@ -375,28 +371,24 @@ const Module4Section2_4 = () => {
             correctIndex={quickCheckQuestions[0].correctIndex}
             explanation={quickCheckQuestions[0].explanation}
           />
-          <Separator className="my-6" />
 
           {/* Causes of Errors */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Causes of Errors</h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-purple-400/80 text-sm font-normal">05</span>
+              Causes of Errors
+            </h2>
+            <p className="text-white/70 text-sm mb-4">
               Understanding root causes helps develop effective prevention strategies:
             </p>
-            
-            <div className="space-y-4">
+            <div className="space-y-3">
               {errorCauses.map((cause, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-                  <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
-                    <div className="flex-1">
-                      <p className="font-semibold text-purple-600 text-elec-yellow mb-1">{cause.cause}</p>
-                      <p className="text-xs sm:text-sm text-white mb-2">{cause.description}</p>
-                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                        <strong>Consequences:</strong> {cause.consequences.join(', ')} - <strong>Solution:</strong> {cause.solution}
-                      </div>
-                    </div>
-                  </div>
+                <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                  <p className="font-medium text-purple-400 mb-1">{cause.cause}</p>
+                  <p className="text-white/70 text-sm mb-2">{cause.description}</p>
+                  <p className="text-white/60 text-xs">
+                    <strong>Consequences:</strong> {cause.consequences.join(', ')} — <strong>Solution:</strong> {cause.solution}
+                  </p>
                 </div>
               ))}
             </div>
@@ -409,36 +401,31 @@ const Module4Section2_4 = () => {
             correctIndex={quickCheckQuestions[1].correctIndex}
             explanation={quickCheckQuestions[1].explanation}
           />
-          <Separator className="my-6" />
 
           {/* Best Practices to Avoid Errors */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Best Practices to Avoid Errors</h3>
-            <p className="text-xs sm:text-sm text-white mb-4">
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-orange-400/80 text-sm font-normal">06</span>
+              Best Practices to Avoid Errors
+            </h2>
+            <p className="text-white/70 text-sm mb-4">
               Proven methods to maintain accuracy and prevent mistakes:
             </p>
-            
-            <div className="space-y-4">
+            <div className="space-y-3">
               {bestPractices.map((practice, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
-                  <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
-                    <div className="flex-1">
-                      <p className="font-semibold text-orange-600 text-elec-yellow mb-1">{practice.practice}</p>
-                      <p className="text-xs sm:text-sm text-white mb-2">{practice.description}</p>
-                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                        <strong>Application:</strong> {practice.application} - <strong>Benefit:</strong> {practice.benefit}
-                      </div>
-                    </div>
-                  </div>
+                <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
+                  <p className="font-medium text-orange-400 mb-1">{practice.practice}</p>
+                  <p className="text-white/70 text-sm mb-2">{practice.description}</p>
+                  <p className="text-white/60 text-xs">
+                    <strong>Application:</strong> {practice.application} — <strong>Benefit:</strong> {practice.benefit}
+                  </p>
                 </div>
               ))}
             </div>
-
-            <div className="mt-4 p-4 bg-transparent border border-border/30 rounded-lg">
+            <div className="mt-4 p-4 rounded-lg bg-white/5 border border-white/10">
               <p className="text-sm font-medium text-white mb-1">Additional Tips</p>
-              <p className="text-xs text-white">
-                Keep drawings nearby and mark off completed checks. Work in pairs for large-scale measurements 
+              <p className="text-white/60 text-xs">
+                Keep drawings nearby and mark off completed checks. Work in pairs for large-scale measurements
                 to avoid tape sag errors and provide verification.
               </p>
             </div>
@@ -451,140 +438,147 @@ const Module4Section2_4 = () => {
             correctIndex={quickCheckQuestions[2].correctIndex}
             explanation={quickCheckQuestions[2].explanation}
           />
-          <Separator className="my-6" />
 
           {/* Cross-Checking and Verification */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
-              <Search className="w-5 h-5" /> Cross-Checking and Verification
-            </h3>
-            
-            <div className="space-y-4">
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-red-400/80 text-sm font-normal">07</span>
+              <Search className="w-5 h-5" />
+              Cross-Checking and Verification
+            </h2>
+            <div className="space-y-3">
               {crossCheckingMethods.map((method, i) => (
-                <div key={i} className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-                  <div className="flex items-start gap-3 mb-2">
-                    <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">{i + 1}</span>
-                    <div className="flex-1">
-                      <p className="font-semibold text-red-600 text-elec-yellow mb-1">{method.method}</p>
-                      <p className="text-xs sm:text-sm text-white mb-2">{method.description}</p>
-                      <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border">
-                        <strong>When:</strong> {method.when} - <strong>Effectiveness:</strong> {method.effectiveness}
-                      </div>
-                    </div>
-                  </div>
+                <div key={i} className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+                  <p className="font-medium text-red-400 mb-1">{method.method}</p>
+                  <p className="text-white/70 text-sm mb-2">{method.description}</p>
+                  <p className="text-white/60 text-xs">
+                    <strong>When:</strong> {method.when} — <strong>Effectiveness:</strong> {method.effectiveness}
+                  </p>
                 </div>
               ))}
             </div>
           </section>
 
           {/* Consequences of Poor Measurement */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5" /> Consequences of Poor Measurement
-            </h3>
-            
-            <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-              <div className="flex items-start gap-3 mb-2">
-                <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">!</span>
-                <div className="flex-1">
-                  <p className="font-semibold text-red-600 text-elec-yellow mb-1">Impact of Measurement Errors</p>
-                  <div className="text-xs sm:text-sm text-white space-y-2">
-                    <p>• <strong>Project delays</strong> due to rework requirements</p>
-                    <p>• <strong>Failed inspections</strong> from non-compliance issues</p>
-                    <p>• <strong>Increased costs</strong> from material waste and additional labour</p>
-                    <p>• <strong>Safety hazards</strong> if equipment is incorrectly positioned</p>
-                  </div>
-                  <div className="text-xs text-white bg-[#121212]/50 p-2 rounded border mt-3">
-                    <strong>Prevention is key:</strong> The cost of verification is always less than the cost of correction.
-                  </div>
-                </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-red-400/80 text-sm font-normal">08</span>
+              <AlertTriangle className="w-5 h-5" />
+              Consequences of Poor Measurement
+            </h2>
+            <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+              <p className="font-medium text-red-400 mb-2">Impact of Measurement Errors</p>
+              <div className="text-white/80 text-sm space-y-2">
+                <p>• <strong>Project delays</strong> due to rework requirements</p>
+                <p>• <strong>Failed inspections</strong> from non-compliance issues</p>
+                <p>• <strong>Increased costs</strong> from material waste and additional labour</p>
+                <p>• <strong>Safety hazards</strong> if equipment is incorrectly positioned</p>
+              </div>
+              <div className="mt-3 p-3 rounded bg-red-500/10 border border-red-500/20">
+                <p className="text-red-300 text-xs">
+                  <strong>Prevention is key:</strong> The cost of verification is always less than the cost of correction.
+                </p>
               </div>
             </div>
           </section>
-        </Card>
 
-        {/* Real-World Example */}
-        <Card className="mb-8 p-6 bg-elec-yellow/5 dark:bg-elec-yellow/10 border-blue-200 dark:border-blue-800">
-          <h3 className="font-semibold text-blue-800 dark:text-white mb-3 flex items-center gap-2">
-            <Eye className="w-5 h-5" />
-            Real-World Example
-          </h3>
-          <p className="text-blue-900 dark:text-blue-100 text-sm mb-3">
-            On a new office fit-out, an electrician measured socket positions from the subfloor rather than the final raised floor level. 
-            When the flooring was installed, all sockets ended up 50 mm too low, requiring them to be removed and repositioned at a significant cost.
-          </p>
-          <div className="bg-blue-100 dark:bg-blue-900/30 border border-blue-300 dark:border-blue-700 rounded p-3">
-            <p className="text-xs text-blue-800 dark:text-white">
-              <strong>Lesson:</strong> Always confirm reference points from drawings and verify with site conditions. 
-              Using the wrong datum point can cause systematic errors affecting the entire installation.
-            </p>
-          </div>
-        </Card>
-
-        {/* FAQs */}
-        <Card className="mb-8 p-6 bg-transparent border-white/20">
-          <h3 className="font-semibold text-white mb-4">Frequently Asked Questions</h3>
-          <div className="space-y-4">
-            <div>
-              <p className="font-medium text-white text-sm mb-1">
-                Q: If I'm confident in my measuring skills, do I still need to double-check?
+          {/* Real-World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-blue-400/80 text-sm font-normal">09</span>
+              <Eye className="w-5 h-5" />
+              Real-World Example
+            </h2>
+            <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-500/50">
+              <p className="text-white/80 text-sm mb-3">
+                On a new office fit-out, an electrician measured socket positions from the subfloor rather than the final raised floor level.
+                When the flooring was installed, all sockets ended up 50 mm too low, requiring them to be removed and repositioned at a significant cost.
               </p>
-              <p className="text-white text-sm">
-                A: Yes — confidence is not a substitute for verification, especially on critical dimensions.
+              <div className="p-3 rounded bg-blue-500/10 border border-blue-500/20">
+                <p className="text-blue-300 text-xs">
+                  <strong>Lesson:</strong> Always confirm reference points from drawings and verify with site conditions.
+                  Using the wrong datum point can cause systematic errors affecting the entire installation.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-white/40 text-sm font-normal">10</span>
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white text-sm mb-1">
+                  Q: If I'm confident in my measuring skills, do I still need to double-check?
+                </p>
+                <p className="text-white/70 text-sm">
+                  A: Yes — confidence is not a substitute for verification, especially on critical dimensions.
+                </p>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white text-sm mb-1">
+                  Q: Can I use different measuring tools on the same job?
+                </p>
+                <p className="text-white/70 text-sm">
+                  A: It's best to stick to one tool type to avoid variations between devices.
+                </p>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white text-sm mb-1">
+                  Q: What should I do if the drawing measurement conflicts with on-site conditions?
+                </p>
+                <p className="text-white/70 text-sm">
+                  A: Confirm with the site supervisor before making adjustments.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Summary */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-white/40 text-sm font-normal">11</span>
+              Summary
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-white/80 text-sm">
+                Avoiding measurement and positioning errors comes down to preparation, precision, and verification.
+                Consistency in methods, adherence to drawings, and cross-checking will greatly reduce costly mistakes.
+                Remember: measure twice, cut once, and always verify critical measurements before installation.
               </p>
             </div>
-            <div>
-              <p className="font-medium text-white text-sm mb-1">
-                Q: Can I use different measuring tools on the same job?
-              </p>
-              <p className="text-white text-sm">
-                A: It's best to stick to one tool type to avoid variations between devices.
-              </p>
-            </div>
-            <div>
-              <p className="font-medium text-white text-sm mb-1">
-                Q: What should I do if the drawing measurement conflicts with on-site conditions?
-              </p>
-              <p className="text-white text-sm">
-                A: Confirm with the site supervisor before making adjustments.
-              </p>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5" />
-            Summary
-          </h3>
-          <p className="text-white text-sm">
-            Avoiding measurement and positioning errors comes down to preparation, precision, and verification. 
-            Consistency in methods, adherence to drawings, and cross-checking will greatly reduce costly mistakes. 
-            Remember: measure twice, cut once, and always verify critical measurements before installation.
-          </p>
-        </Card>
+          {/* Quiz */}
+          <Quiz questions={quizQuestions} title="Test Your Knowledge: Avoiding Common Errors in Measurement and Positioning" />
 
-        {/* Quiz */}
-        <Quiz questions={quizQuestions} title="Test Your Knowledge: Avoiding Common Errors in Measurement and Positioning" />
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
-            <Link to="../2-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Dimensions and Tolerances
-            </Link>
-          </Button>
-          
-          <Button asChild>
-            <Link to="..">
-              Complete Section 2
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+          {/* Navigation Footer */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 mt-8 border-t border-white/10">
+            <Button
+              variant="outline"
+              className="border-white/20 hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../2-3">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Dimensions & Tolerances
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="..">
+                Complete Section 2
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

@@ -4,7 +4,8 @@ import { SUPPLIERS } from '../config/suppliers.js';
 
 /**
  * Screwfix Scraper
- * Scrapes products, deals from screwfix.com
+ * Scrapes products and deals from screwfix.com
+ * Updated 2026-01-15 with working selectors
  */
 
 export class ScrewfixScraper extends BaseScraper {
@@ -58,67 +59,90 @@ export class ScrewfixScraper extends BaseScraper {
     const success = await this.navigateWithRetry(page, url);
     if (!success) return products;
 
-    // Wait for products to load
-    await this.waitForSelector(page, this.config.selectors.productCard, 5000);
+    // Wait for page to load
+    await new Promise(r => setTimeout(r, 5000));
 
-    // Scroll to load lazy content
+    // Scroll to load all content
     await this.scrollToLoadAll(page);
 
-    // Extract products
-    const extractedProducts = await page.evaluate((selectors) => {
-      const cards = document.querySelectorAll(selectors.productCard);
+    // Extract products using direct page evaluation - Screwfix uses obfuscated classes
+    const extractedProducts = await page.evaluate(() => {
       const items: Array<{
         sku: string;
         name: string;
-        brand: string | null;
         currentPrice: string | null;
         regularPrice: string | null;
         imageUrl: string | null;
         productUrl: string | null;
-        stockStatus: string;
       }> = [];
 
-      cards.forEach((card) => {
-        try {
-          const nameEl = card.querySelector(selectors.productName);
-          const priceEl = card.querySelector(selectors.productPrice);
-          const wasPriceEl = card.querySelector(selectors.originalPrice);
-          const imageEl = card.querySelector(selectors.productImage) as HTMLImageElement | null;
-          const linkEl = card.querySelector(selectors.productUrl) as HTMLAnchorElement | null;
-          const skuEl = card.querySelector(selectors.productSku);
-          const stockEl = card.querySelector(selectors.stockStatus);
+      // Find all product links
+      const productLinks = document.querySelectorAll('a[href*="/p/"]');
+      const seenSkus = new Set<string>();
 
-          // Extract SKU from data attribute or URL
-          let sku = skuEl?.getAttribute('data-product-code') ||
-                    skuEl?.getAttribute('data-sku') ||
-                    card.getAttribute('data-product-id') || '';
+      productLinks.forEach((link) => {
+        const anchor = link as HTMLAnchorElement;
+        const href = anchor.href;
 
-          if (!sku && linkEl?.href) {
-            const match = linkEl.href.match(/\/p\/(\d+)/);
-            if (match) sku = match[1];
+        // Extract SKU from URL (e.g., /p/product-name/956jj -> 956jj)
+        const skuMatch = href.match(/\/p\/[^\/]+\/([a-z0-9]+)/i);
+        if (!skuMatch) return;
+
+        const sku = skuMatch[1].toUpperCase();
+        if (seenSkus.has(sku)) return;
+        seenSkus.add(sku);
+
+        // Find parent container (go up until we find one with price info)
+        let container = anchor.parentElement;
+        for (let i = 0; i < 10 && container; i++) {
+          const text = container.textContent || '';
+          if (text.match(/£\d+\.\d{2}/)) {
+            break;
           }
-
-          const name = nameEl?.textContent?.trim() || '';
-
-          if (name && sku) {
-            items.push({
-              sku,
-              name,
-              brand: null, // Will be extracted from name
-              currentPrice: priceEl?.textContent?.trim() || null,
-              regularPrice: wasPriceEl?.textContent?.trim() || null,
-              imageUrl: imageEl?.src || imageEl?.getAttribute('data-src') || null,
-              productUrl: linkEl?.href || null,
-              stockStatus: stockEl?.textContent?.trim() || 'Unknown',
-            });
-          }
-        } catch (e) {
-          console.error('Error extracting product:', e);
+          container = container.parentElement;
         }
+
+        if (!container) return;
+
+        // Extract name from link text
+        const nameEl = anchor.querySelector('span') || anchor;
+        const name = nameEl.textContent?.trim() || '';
+        if (!name || name.length < 3) return;
+
+        // Extract prices from container text
+        const containerText = container.textContent || '';
+        const priceMatches = containerText.match(/£(\d+\.?\d*)/g);
+        let currentPrice: string | null = null;
+        let regularPrice: string | null = null;
+
+        if (priceMatches && priceMatches.length > 0) {
+          // First price is usually current price
+          currentPrice = priceMatches[0];
+          // If there's a second price, it might be the was price
+          if (priceMatches.length > 1) {
+            // Check if container has "was" text
+            if (containerText.toLowerCase().includes('was')) {
+              regularPrice = priceMatches[1];
+            }
+          }
+        }
+
+        // Find image
+        const img = container.querySelector('img[src*="screwfix.com"]') as HTMLImageElement;
+        const imageUrl = img?.src || null;
+
+        items.push({
+          sku,
+          name,
+          currentPrice,
+          regularPrice,
+          imageUrl,
+          productUrl: href,
+        });
       });
 
       return items;
-    }, this.config.selectors);
+    });
 
     // Process extracted products
     for (const item of extractedProducts) {
@@ -127,8 +151,8 @@ export class ScrewfixScraper extends BaseScraper {
       const isOnSale = regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
       const discount = this.calculateDiscount(currentPrice, regularPrice);
 
-      // Extract brand from product name (common brands)
-      const brands = ['DeWalt', 'Makita', 'Bosch', 'Milwaukee', 'Fluke', 'Stanley', 'Knipex', 'Wera', 'Bahco', 'Irwin'];
+      // Extract brand from product name
+      const brands = ['DeWalt', 'Makita', 'Bosch', 'Milwaukee', 'Fluke', 'Stanley', 'Knipex', 'Wera', 'Bahco', 'Irwin', 'Magnusson', 'Forge Steel'];
       const brand = brands.find(b => item.name.toLowerCase().includes(b.toLowerCase())) || null;
 
       products.push({
@@ -145,7 +169,7 @@ export class ScrewfixScraper extends BaseScraper {
         highlights: [],
         imageUrl: item.imageUrl,
         productUrl: item.productUrl || `${this.config.baseUrl}/p/${item.sku}`,
-        stockStatus: item.stockStatus || 'Unknown',
+        stockStatus: 'Unknown',
       });
     }
 
@@ -170,11 +194,10 @@ export class ScrewfixScraper extends BaseScraper {
       const success = await this.navigateWithRetry(page, dealsUrl);
       if (!success) return deals;
 
-      await this.waitForSelector(page, this.config.selectors.productCard, 5000);
+      await new Promise(r => setTimeout(r, 5000));
       await this.scrollToLoadAll(page);
 
-      const extractedDeals = await page.evaluate((selectors) => {
-        const cards = document.querySelectorAll(selectors.productCard);
+      const extractedDeals = await page.evaluate(() => {
         const items: Array<{
           sku: string | null;
           name: string;
@@ -183,28 +206,45 @@ export class ScrewfixScraper extends BaseScraper {
           productUrl: string | null;
         }> = [];
 
-        cards.forEach((card) => {
-          const nameEl = card.querySelector(selectors.productName);
-          const priceEl = card.querySelector(selectors.productPrice);
-          const wasPriceEl = card.querySelector(selectors.originalPrice);
-          const linkEl = card.querySelector(selectors.productUrl) as HTMLAnchorElement | null;
+        const productLinks = document.querySelectorAll('a[href*="/p/"]');
+        const seenSkus = new Set<string>();
 
-          const name = nameEl?.textContent?.trim() || '';
-          const sku = card.getAttribute('data-product-id');
+        productLinks.forEach((link) => {
+          const anchor = link as HTMLAnchorElement;
+          const href = anchor.href;
 
-          if (name) {
-            items.push({
-              sku,
-              name,
-              currentPrice: priceEl?.textContent?.trim() || null,
-              regularPrice: wasPriceEl?.textContent?.trim() || null,
-              productUrl: linkEl?.href || null,
-            });
+          const skuMatch = href.match(/\/p\/[^\/]+\/([a-z0-9]+)/i);
+          const sku = skuMatch ? skuMatch[1].toUpperCase() : null;
+
+          if (sku && seenSkus.has(sku)) return;
+          if (sku) seenSkus.add(sku);
+
+          let container = anchor.parentElement;
+          for (let i = 0; i < 10 && container; i++) {
+            if ((container.textContent || '').match(/£\d+/)) break;
+            container = container.parentElement;
           }
+
+          if (!container) return;
+
+          const nameEl = anchor.querySelector('span') || anchor;
+          const name = nameEl.textContent?.trim() || '';
+          if (!name || name.length < 3) return;
+
+          const containerText = container.textContent || '';
+          const priceMatches = containerText.match(/£(\d+\.?\d*)/g);
+
+          items.push({
+            sku,
+            name,
+            currentPrice: priceMatches?.[0] || null,
+            regularPrice: priceMatches?.[1] || null,
+            productUrl: href,
+          });
         });
 
         return items;
-      }, this.config.selectors);
+      });
 
       for (const item of extractedDeals) {
         const currentPrice = this.parsePrice(item.currentPrice);
@@ -223,7 +263,7 @@ export class ScrewfixScraper extends BaseScraper {
             dealPrice: currentPrice,
             discountPercentage: discount,
             dealType: 'deal_of_day',
-            expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
+            expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
             sourceUrl: item.productUrl || dealsUrl,
           });
         }
@@ -241,7 +281,6 @@ export class ScrewfixScraper extends BaseScraper {
    * Scrape coupons (Screwfix doesn't have a public coupons page)
    */
   async scrapeCoupons(): Promise<ScrapedCoupon[]> {
-    // Screwfix doesn't have a public coupon page
     return [];
   }
 }

@@ -350,7 +350,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
         </Card>
       )}
 
-      {/* Acceptance Details */}
+      {/* Acceptance Details with Signature */}
       {quote.acceptance_status === 'accepted' && quote.accepted_at && (
         <Card className="glass-premium p-6 border-green-500/30">
           <div className="flex items-start gap-3">
@@ -377,10 +377,37 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                 {quote.acceptance_method && (
                   <p>
                     <span className="text-white/50">Method:</span>{' '}
-                    <span className="font-medium capitalize">{quote.acceptance_method}</span>
+                    <span className="font-medium capitalize">
+                      {quote.acceptance_method.replace(/_/g, ' ')}
+                    </span>
+                  </p>
+                )}
+                {quote.accepted_ip && (
+                  <p>
+                    <span className="text-white/50">IP Address:</span>{' '}
+                    <span className="font-medium font-mono text-xs">{quote.accepted_ip}</span>
                   </p>
                 )}
               </div>
+
+              {/* Digital Signature */}
+              {quote.signature_url && (
+                <div className="mt-4 pt-4 border-t border-white/10">
+                  <p className="text-white/50 text-xs uppercase tracking-wider mb-2">
+                    Digital Signature
+                  </p>
+                  <div className="bg-white rounded-lg p-3 inline-block">
+                    <img
+                      src={quote.signature_url}
+                      alt={`Signature of ${quote.accepted_by_name}`}
+                      className="max-h-20 w-auto"
+                    />
+                  </div>
+                  <p className="text-white/40 text-xs mt-2">
+                    Legally binding digital signature captured at time of acceptance
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </Card>

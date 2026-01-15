@@ -6,7 +6,8 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Shield, Save, X, Pencil } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Shield, Save, X, Pencil, Settings } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -31,19 +32,16 @@ export const InspectorProfileDetails: React.FC<InspectorProfileDetailsProps> = (
   onUpdate,
   className,
 }) => {
+  const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<Partial<InspectorProfile>>({});
   const [isSaving, setIsSaving] = useState(false);
 
-  // Reset form when profile changes
+  // Reset form when profile changes (personal details only - company details are in Settings)
   useEffect(() => {
     if (profile) {
       setFormData({
         name: profile.name,
-        companyName: profile.companyName,
-        companyAddress: profile.companyAddress,
-        companyPhone: profile.companyPhone,
-        companyEmail: profile.companyEmail,
         registrationScheme: profile.registrationScheme,
         registrationNumber: profile.registrationNumber,
         registrationExpiry: profile.registrationExpiry,
@@ -71,10 +69,6 @@ export const InspectorProfileDetails: React.FC<InspectorProfileDetailsProps> = (
     if (profile) {
       setFormData({
         name: profile.name,
-        companyName: profile.companyName,
-        companyAddress: profile.companyAddress,
-        companyPhone: profile.companyPhone,
-        companyEmail: profile.companyEmail,
         registrationScheme: profile.registrationScheme,
         registrationNumber: profile.registrationNumber,
         registrationExpiry: profile.registrationExpiry,
@@ -175,37 +169,22 @@ export const InspectorProfileDetails: React.FC<InspectorProfileDetailsProps> = (
           </div>
         </div>
 
-        {/* Company Details */}
+        {/* Company Details - Link to Settings */}
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-muted-foreground">Company</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormField
-              label="Company Name"
-              value={formData.companyName || ''}
-              onChange={(v) => handleChange('companyName', v)}
-              disabled={!isEditing}
-              className="md:col-span-2"
-            />
-            <FormField
-              label="Company Address"
-              value={formData.companyAddress || ''}
-              onChange={(v) => handleChange('companyAddress', v)}
-              disabled={!isEditing}
-              className="md:col-span-2"
-            />
-            <FormField
-              label="Phone"
-              value={formData.companyPhone || ''}
-              onChange={(v) => handleChange('companyPhone', v)}
-              disabled={!isEditing}
-            />
-            <FormField
-              label="Email"
-              value={formData.companyEmail || ''}
-              onChange={(v) => handleChange('companyEmail', v)}
-              disabled={!isEditing}
-              type="email"
-            />
+          <div className="p-4 bg-muted/30 rounded-lg border border-border">
+            <p className="text-sm text-muted-foreground mb-3">
+              Company details are managed centrally and apply to all your certificates, quotes, and invoices.
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigate('/settings?tab=company')}
+              className="h-9"
+            >
+              <Settings className="h-4 w-4 mr-2" />
+              Edit Company Details
+            </Button>
           </div>
         </div>
       </CardContent>
