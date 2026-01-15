@@ -253,10 +253,10 @@ export function JobsSection() {
         </div>
       </div>
 
-      {/* Stats - Horizontal scrolling on mobile */}
-      <div className="flex gap-3 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0 md:grid md:grid-cols-4">
+      {/* Stats - Grid on all screens */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {/* Total Jobs */}
-        <Card className="shrink-0 w-40 md:w-auto card-hover bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent border-elec-yellow/30 overflow-hidden relative">
+        <Card className="card-hover bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent border-elec-yellow/30 overflow-hidden relative">
           <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 to-transparent opacity-50" />
           <CardContent className="p-4 relative">
             <div className="flex items-center justify-between mb-2">
@@ -270,7 +270,7 @@ export function JobsSection() {
         </Card>
 
         {/* Active Jobs */}
-        <Card className="shrink-0 w-40 md:w-auto card-hover bg-gradient-to-br from-success/15 via-success/5 to-transparent border-success/30 overflow-hidden relative">
+        <Card className=" card-hover bg-gradient-to-br from-success/15 via-success/5 to-transparent border-success/30 overflow-hidden relative">
           <div className="absolute inset-0 bg-gradient-to-br from-success/5 to-transparent opacity-50" />
           <CardContent className="p-4 relative">
             <div className="flex items-center justify-between mb-2">
@@ -285,7 +285,7 @@ export function JobsSection() {
         </Card>
 
         {/* Active Value - Premium Gold */}
-        <Card className="shrink-0 w-40 md:w-auto card-hover bg-gradient-to-br from-gold/20 via-gold/10 to-gold-dark/5 border-gold/40 overflow-hidden relative shadow-lg shadow-gold/10">
+        <Card className=" card-hover bg-gradient-to-br from-gold/20 via-gold/10 to-gold-dark/5 border-gold/40 overflow-hidden relative shadow-lg shadow-gold/10">
           <div className="absolute inset-0 bg-gradient-to-br from-gold/10 via-transparent to-gold-dark/10 opacity-60" />
           <div className="absolute top-0 right-0 w-16 h-16 bg-gold/20 rounded-full blur-2xl -translate-y-4 translate-x-4" />
           <CardContent className="p-4 relative">
@@ -307,7 +307,7 @@ export function JobsSection() {
         </Card>
 
         {/* Total Value - Premium Dark Gold */}
-        <Card className="shrink-0 w-40 md:w-auto card-hover bg-gradient-to-br from-surface-elevated via-surface to-gold/5 border-gold/30 overflow-hidden relative shadow-lg shadow-gold/5">
+        <Card className=" card-hover bg-gradient-to-br from-surface-elevated via-surface to-gold/5 border-gold/30 overflow-hidden relative shadow-lg shadow-gold/5">
           <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-gold/10 opacity-40" />
           <div className="absolute bottom-0 left-0 w-20 h-20 bg-gold/15 rounded-full blur-2xl translate-y-6 -translate-x-6" />
           <CardContent className="p-4 relative">

@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, Target, CheckCircle, AlertTriangle, Users, BookOpen, Clipboard, Clock } from "lucide-react";
+import { ArrowLeft, ArrowRight, Clock, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -11,7 +8,6 @@ import useSEO from "@/hooks/useSEO";
 const TITLE = "Setting Realistic Timescales and Milestones - Module 5.3.2 | Level 2 Electrical Course";
 const DESCRIPTION = "Learn to set realistic timescales and milestones for electrical installations, ensuring quality work and avoiding delays.";
 
-// Inline check questions
 const quickCheckQuestions = [
   {
     id: 1,
@@ -128,180 +124,146 @@ const Module5Section3_2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 3
+              Back to Section 5.3
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Clock className="w-6 h-6 text-white" />
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 5.3.2</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 5.3.2
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Setting Realistic Timescales and Milestones
-          </h1>
-          <p className="text-white">
-            Learn to set achievable timescales and milestones for electrical installations to ensure quality work without compromising safety.
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Setting Realistic Timescales and Milestones
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Learn to set achievable timescales and milestones for electrical installations to ensure quality work without compromising safety.
+            </p>
+          </header>
 
-        {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-white" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Introduction</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
+          {/* In 30 Seconds */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">00</span>
+              In 30 Seconds
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <ul className="text-white/80 space-y-2 list-disc pl-4">
                 <li>Always allow extra time for unexpected delays.</li>
                 <li>Set clear milestones to track project progress.</li>
                 <li>Communicate timescale changes immediately.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Unrealistic deadlines causing rushed work.</li>
-                <li><strong>Use:</strong> Gantt charts, buffer time, weekly reviews.</li>
-                <li><strong>Check:</strong> Milestones met before moving to next phase.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <p className="text-base text-white mb-4">
-            Timescales and milestones are essential in electrical installation projects. They provide structure, help manage resources, and ensure that work is completed on time without rushing or compromising quality. Unrealistic deadlines often lead to mistakes, poor workmanship, and safety risks. Setting achievable timescales ensures projects remain efficient and professional.
-          </p>
-          
-          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
-            <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
-                <p className="text-xs sm:text-sm text-white">
-                  Proper timescale planning in electrical projects reduces installation errors by up to 40% and prevents costly delays that can impact entire construction schedules.
-                </p>
+          {/* Introduction */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Introduction
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Timescales and milestones are essential in electrical installation projects. They provide structure, help manage resources, and ensure that work is completed on time without rushing or compromising quality. Unrealistic deadlines often lead to mistakes, poor workmanship, and safety risks. Setting achievable timescales ensures projects remain efficient and professional.
+              </p>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <div className="flex items-start gap-3">
+                  <Clock className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-medium text-elec-yellow mb-2">Why This Matters</p>
+                    <p className="text-white/70 text-sm">
+                      Proper timescale planning in electrical projects reduces installation errors by up to 40% and prevents costly delays that can impact entire construction schedules.
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          
-          <div className="mt-4 space-y-3">
-            <p className="text-base text-white">
-              <strong>Real Impact:</strong> Projects with realistic timescales and clear milestones show 25% fewer rework instances and improved team satisfaction compared to rushed installations.
-            </p>
-            
-            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
-              <p className="text-xs sm:text-sm text-white">
-                <strong>Industry Standard:</strong> BS 7671 requires that electrical work be planned and executed with sufficient time to ensure safety standards and regulatory compliance.
+              <p>
+                <strong className="text-white">Real Impact:</strong> Projects with realistic timescales and clear milestones show 25% fewer rework instances and improved team satisfaction compared to rushed installations.
+              </p>
+              <p className="text-sm p-3 rounded bg-white/5 border border-white/10">
+                <strong className="text-white">Industry Standard:</strong> BS 7671 requires that electrical work be planned and executed with sufficient time to ensure safety standards and regulatory compliance.
               </p>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-base text-white mb-4">By the end of this subsection, you will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>Explain the importance of timescales in electrical installations.</li>
-            <li>Plan and set realistic deadlines for installation tasks.</li>
-            <li>Identify key project milestones and their role in managing progress.</li>
-            <li>Adjust timescales when unforeseen issues arise.</li>
-            <li>Recognise the risks of unrealistic deadlines.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Learning Outcomes
+            </h2>
+            <div className="text-white/80 space-y-2 leading-relaxed">
+              <p className="mb-3">By the end of this subsection, you will be able to:</p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Explain the importance of timescales in electrical installations.</li>
+                <li>Plan and set realistic deadlines for installation tasks.</li>
+                <li>Identify key project milestones and their role in managing progress.</li>
+                <li>Adjust timescales when unforeseen issues arise.</li>
+                <li>Recognise the risks of unrealistic deadlines.</li>
+              </ul>
+            </div>
+          </section>
 
           {/* What Are Timescales */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">1. What Are Timescales?</h3>
-            <p className="text-base text-white mb-4">
-              The planned duration for completing specific tasks or the whole project:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Purpose of Timescales</p>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Helps organise:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                          <li>Labour allocation and work schedules</li>
-                          <li>Materials deliveries and equipment availability</li>
-                          <li>Coordination with other trades and site activities</li>
-                        </ul>
-                      </div>
-
-                      <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800">
-                        <p className="font-medium text-green-700 dark:text-green-400 mb-2">Key Benefit</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          Clear timescales provide structure and ensure all team members understand project expectations and deadlines.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              What Are Timescales?
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>The planned duration for completing specific tasks or the whole project:</p>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-elec-yellow mb-3">Purpose of Timescales</p>
+                <p className="mb-2"><strong className="text-white">Helps organise:</strong></p>
+                <ul className="list-disc pl-6 space-y-1 text-sm">
+                  <li>Labour allocation and work schedules</li>
+                  <li>Materials deliveries and equipment availability</li>
+                  <li>Coordination with other trades and site activities</li>
+                </ul>
+                <div className="mt-4 p-3 rounded bg-green-500/10 border border-green-500/20">
+                  <p className="font-medium text-green-400 mb-1">Key Benefit</p>
+                  <p className="text-sm text-white/70">
+                    Clear timescales provide structure and ensure all team members understand project expectations and deadlines.
+                  </p>
                 </div>
               </div>
             </div>
           </section>
 
           {/* What Are Milestones */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">2. What Are Milestones?</h3>
-            <p className="text-base text-white mb-4">
-              Key checkpoints in a project that show progress:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-600 dark:text-green-400 mb-3">Milestone Examples</p>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Common Milestones:</strong></p>
-                        <div className="bg-[#121212]/50 p-3 rounded border mb-2">
-                          <ul className="list-disc ml-4 space-y-1 text-xs sm:text-sm text-white">
-                            <li><strong>Completion of containment</strong> - All trunking, conduit, and cable trays installed</li>
-                            <li><strong>Cable installation</strong> - All cables run and routed correctly</li>
-                            <li><strong>Final fix</strong> - All accessories and equipment installed</li>
-                            <li><strong>Testing</strong> - Installation tested and verified safe</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              What Are Milestones?
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>Key checkpoints in a project that show progress:</p>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-green-400 mb-3">Milestone Examples</p>
+                <p className="mb-2"><strong className="text-white">Common Milestones:</strong></p>
+                <ul className="list-disc pl-6 space-y-1 text-sm">
+                  <li><strong className="text-white">Completion of containment</strong> - All trunking, conduit, and cable trays installed</li>
+                  <li><strong className="text-white">Cable installation</strong> - All cables run and routed correctly</li>
+                  <li><strong className="text-white">Final fix</strong> - All accessories and equipment installed</li>
+                  <li><strong className="text-white">Testing</strong> - Installation tested and verified safe</li>
+                </ul>
               </div>
             </div>
           </section>
@@ -313,41 +275,29 @@ const Module5Section3_2 = () => {
             correctIndex={quickCheckQuestions[0].correctIndex}
             explanation={quickCheckQuestions[0].explanation}
           />
-          <Separator className="my-6" />
 
           {/* Setting Realistic Timescales */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">3. Setting Realistic Timescales</h3>
-            <p className="text-base text-white mb-4">
-              Review installation drawings and specifications. Break tasks into smaller steps and estimate time needed. Allow extra time for potential delays:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-amber-600 dark:text-amber-400 mb-3">Planning Process</p>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Steps to set realistic timescales:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                          <li>Review installation drawings and specifications thoroughly</li>
-                          <li>Break tasks into smaller, manageable steps</li>
-                          <li>Estimate time needed for each task based on experience</li>
-                          <li>Allow extra time for delays (weather, late deliveries)</li>
-                        </ul>
-                      </div>
-
-                      <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 text-elec-yellow mb-2">Buffer Time Rule</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          Always add 10-20% extra time to account for unexpected delays like weather, material shortages, or site access issues.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Setting Realistic Timescales
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>Review installation drawings and specifications. Break tasks into smaller steps and estimate time needed. Allow extra time for potential delays:</p>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-amber-400 mb-3">Planning Process</p>
+                <p className="mb-2"><strong className="text-white">Steps to set realistic timescales:</strong></p>
+                <ul className="list-disc pl-6 space-y-1 text-sm">
+                  <li>Review installation drawings and specifications thoroughly</li>
+                  <li>Break tasks into smaller, manageable steps</li>
+                  <li>Estimate time needed for each task based on experience</li>
+                  <li>Allow extra time for delays (weather, late deliveries)</li>
+                </ul>
+                <div className="mt-4 p-3 rounded bg-orange-500/10 border border-orange-500/20">
+                  <p className="font-medium text-elec-yellow mb-1">Buffer Time Rule</p>
+                  <p className="text-sm text-white/70">
+                    Always add 10-20% extra time to account for unexpected delays like weather, material shortages, or site access issues.
+                  </p>
                 </div>
               </div>
             </div>
@@ -360,26 +310,26 @@ const Module5Section3_2 = () => {
             correctIndex={quickCheckQuestions[1].correctIndex}
             explanation={quickCheckQuestions[1].explanation}
           />
-          <Separator className="my-6" />
 
           {/* Benefits and Risks */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">4. Benefits of Realistic Timescales & Risks of Unrealistic Ones</h3>
-            
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-              <div className="rounded-lg p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-                <h4 className="font-medium text-green-700 dark:text-green-400 mb-3">Benefits of Realistic Timescales</h4>
-                <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Benefits of Realistic Timescales & Risks of Unrealistic Ones
+            </h2>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
+                <h3 className="font-medium text-green-400 mb-3">Benefits of Realistic Timescales</h3>
+                <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
                   <li>Ensures steady progress without rushing</li>
                   <li>Improves quality and reduces errors</li>
                   <li>Makes workload manageable</li>
                   <li>Helps coordinate with other trades</li>
                 </ul>
               </div>
-
-              <div className="rounded-lg p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-                <h4 className="font-medium text-red-700 text-elec-yellow mb-3">Risks of Unrealistic Timescales</h4>
-                <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
+              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+                <h3 className="font-medium text-red-400 mb-3">Risks of Unrealistic Timescales</h3>
+                <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
                   <li>Increased mistakes and rework</li>
                   <li>Unsafe working practices from rushing</li>
                   <li>Low morale and stress for workers</li>
@@ -396,120 +346,147 @@ const Module5Section3_2 = () => {
             correctIndex={quickCheckQuestions[2].correctIndex}
             explanation={quickCheckQuestions[2].explanation}
           />
-          <Separator className="my-6" />
 
           {/* Adjusting Timescales */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">5. Adjusting Timescales</h3>
-            <p className="text-base text-white mb-4">
-              When issues arise, timescales may need adjustment:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                <h4 className="font-medium text-blue-700 text-elec-yellow mb-2">When to Adjust</h4>
-                <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
-                  <li>Material shortage or late deliveries</li>
-                  <li>Unforeseen site conditions discovered</li>
-                  <li>Changes to project specifications</li>
-                  <li>Weather delays affecting outdoor work</li>
-                </ul>
-              </div>
-
-              <div className="rounded-lg p-4 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-                <h4 className="font-medium text-purple-700 text-elec-yellow mb-2">How to Adjust</h4>
-                <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
-                  <li>Communicate changes with supervisors immediately</li>
-                  <li>Adjust the programme with supervisor's approval</li>
-                  <li>Reset milestones to reflect the revised plan</li>
-                  <li>Inform all team members of the changes</li>
-                </ul>
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Adjusting Timescales
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>When issues arise, timescales may need adjustment:</p>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <h3 className="font-medium text-elec-yellow mb-2">When to Adjust</h3>
+                  <ul className="list-disc pl-6 space-y-1 text-sm">
+                    <li>Material shortage or late deliveries</li>
+                    <li>Unforeseen site conditions discovered</li>
+                    <li>Changes to project specifications</li>
+                    <li>Weather delays affecting outdoor work</li>
+                  </ul>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <h3 className="font-medium text-elec-yellow mb-2">How to Adjust</h3>
+                  <ul className="list-disc pl-6 space-y-1 text-sm">
+                    <li>Communicate changes with supervisors immediately</li>
+                    <li>Adjust the programme with supervisor's approval</li>
+                    <li>Reset milestones to reflect the revised plan</li>
+                    <li>Inform all team members of the changes</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </section>
-        </Card>
 
-        {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
-          <div className="space-y-4">
-            <ul className="list-disc pl-6 space-y-2 text-base text-white">
-              <li>Use project programmes (like Gantt charts or site schedules) to track progress.</li>
-              <li>Always add a buffer (extra time) for unexpected problems.</li>
-              <li>Mark milestones clearly on site boards so everyone knows progress points.</li>
-              <li>Be realistic about manpower – don't assume tasks will be finished quicker than normal.</li>
-              <li>Reassess timescales weekly and make adjustments if needed.</li>
-            </ul>
-          </div>
-        </Card>
+          {/* Practical Guidance */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+              Practical Guidance
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Use project programmes (like Gantt charts or site schedules) to track progress.</li>
+                <li>Always add a buffer (extra time) for unexpected problems.</li>
+                <li>Mark milestones clearly on site boards so everyone knows progress points.</li>
+                <li>Be realistic about manpower — don't assume tasks will be finished quicker than normal.</li>
+                <li>Reassess timescales weekly and make adjustments if needed.</li>
+              </ul>
+            </div>
+          </section>
 
-        {/* Real-World Example */}
-        <Card className="mb-8 p-6 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-          <h2 className="text-lg sm:text-xl font-semibold text-amber-800 dark:text-white mb-4">Real-World Example</h2>
-          <p className="text-amber-700 dark:text-amber-300">
-            On a commercial office installation, the supervisor set an unrealistic deadline for cable pulling, giving only two days instead of the required four. The team rushed the job, leading to damaged cables and rework. The rework caused a week's delay, which could have been avoided by setting a realistic timescale.
-          </p>
-        </Card>
+          {/* Real-World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+              Real-World Example
+            </h2>
+            <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+              <p className="text-amber-300">
+                On a commercial office installation, the supervisor set an unrealistic deadline for cable pulling, giving only two days instead of the required four. The team rushed the job, leading to damaged cables and rework. The rework caused a week's delay, which could have been avoided by setting a realistic timescale.
+              </p>
+            </div>
+          </section>
 
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-l-elec-yellow pl-4">
-                <p className="font-medium text-white mb-2">Q: {faq.question}</p>
-                <p className="text-white">A: {faq.answer}</p>
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">10</span>
+              FAQs
+            </h2>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                  <p className="font-medium text-white mb-2">Q: {faq.question}</p>
+                  <p className="text-white/70 text-sm">A: {faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Pocket Guide */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">11</span>
+              Pocket Guide
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+              <div className="space-y-2 text-elec-yellow">
+                <p>• <strong>Timescales</strong> = planned duration for tasks.</p>
+                <p>• <strong>Milestones</strong> = key checkpoints to track progress.</p>
+                <p>• Always allow extra time for delays.</p>
+                <p>• Unrealistic deadlines = mistakes and rework.</p>
+                <p>• Communicate and adjust timescales when needed.</p>
               </div>
-            ))}
-          </div>
-        </Card>
+            </div>
+          </section>
 
-        {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-elec-yellow/5 bg-elec-yellow/10 border border-elec-yellow/30 border-elec-yellow/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow dark:text-elec-yellow mb-4">Pocket Guide</h2>
-          <div className="space-y-2 text-elec-yellow text-elec-yellow">
-            <p>• <strong>Timescales</strong> = planned duration for tasks.</p>
-            <p>• <strong>Milestones</strong> = key checkpoints to track progress.</p>
-            <p>• Always allow extra time for delays.</p>
-            <p>• Unrealistic deadlines = mistakes and rework.</p>
-            <p>• Communicate and adjust timescales when needed.</p>
-          </div>
-        </Card>
+          {/* Summary */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">12</span>
+              Summary
+            </h2>
+            <div className="text-white/80 leading-relaxed">
+              <p>
+                In this subsection, you learned about setting realistic timescales and milestones. You now understand how they keep projects on track, improve quality, and prevent unnecessary stress. You also explored how poor timescale planning can lead to mistakes, unsafe work, and costly delays.
+              </p>
+            </div>
+          </section>
 
-        {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
-          <p className="text-base text-white">
-            In this subsection, you learned about setting realistic timescales and milestones. You now understand how they keep projects on track, improve quality, and prevent unnecessary stress. You also explored how poor timescale planning can lead to mistakes, unsafe work, and costly delays.
-          </p>
-        </Card>
+          {/* Knowledge Check */}
+          <section className="mb-10">
+            <div className="flex items-center gap-3 mb-4">
+              <BookOpen className="w-6 h-6 text-elec-yellow" />
+              <h2 className="text-xl font-semibold text-white">Knowledge Check</h2>
+            </div>
+            <Quiz questions={quizQuestions} />
+          </section>
 
-        {/* Knowledge Check */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-4">
-            <BookOpen className="w-6 h-6 text-white" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Knowledge Check</h2>
-          </div>
-          <Quiz questions={quizQuestions} />
-        </Card>
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center pt-8">
-          <Button variant="outline" asChild>
-            <Link to="module5-section3/subsection1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Job Breakdown
-            </Link>
-          </Button>
-          
-          <Button asChild>
-            <Link to="..">
-              <ArrowRight className="w-4 h-4 ml-2" />
-              Back to Section 3
-            </Link>
-          </Button>
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
+            <Button
+              variant="ghost"
+              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../3-1">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../3-3">
+                Next
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

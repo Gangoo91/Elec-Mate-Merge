@@ -7,6 +7,8 @@ export interface Job {
   user_id: string;
   title: string;
   client: string;
+  client_phone: string | null;
+  client_email: string | null;
   location: string;
   lat: number | null;
   lng: number | null;

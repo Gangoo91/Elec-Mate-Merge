@@ -1,0 +1,35 @@
+{
+  "name": "elec-mate-scraper",
+  "version": "1.0.0",
+  "description": "Custom web scraper for electrical supplier product data",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "scrape:screwfix": "tsx src/cli.ts screwfix",
+    "scrape:toolstation": "tsx src/cli.ts toolstation",
+    "scrape:all": "tsx src/cli.ts all",
+    "scrape:deals": "tsx src/cli.ts deals"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.4",
+    "cheerio": "^1.0.0",
+    "cron": "^3.1.7",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "playwright": "^1.48.0",
+    "puppeteer": "^23.5.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/cron": "^2.4.0",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.7.4",
+    "@types/uuid": "^10.0.0",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2"
+  }
+}

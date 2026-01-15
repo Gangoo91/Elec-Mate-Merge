@@ -218,17 +218,17 @@ export function EmployeesSection() {
         <div className="flex items-center justify-between p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl">
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-elec-yellow">{selectedEmployeeIds.length} selected</span>
-            <Button size="sm" variant="ghost" onClick={selectAllEmployees} className="text-xs h-7">Select All</Button>
+            <Button size="sm" variant="ghost" onClick={selectAllEmployees} className="text-sm h-11 touch-manipulation">Select All</Button>
           </div>
           <div className="flex items-center gap-2">
-            <Button size="sm" variant="outline" onClick={handleBulkMessage} disabled={selectedEmployeeIds.length === 0} className="h-8">
-              <MessageSquare className="h-4 w-4 mr-1" />Message
+            <Button size="sm" variant="outline" onClick={handleBulkMessage} disabled={selectedEmployeeIds.length === 0} className="h-11 touch-manipulation">
+              <MessageSquare className="h-4 w-4 mr-1" /><span className="hidden sm:inline">Message</span>
             </Button>
-            <Button size="sm" onClick={() => setBulkAssignDialogOpen(true)} disabled={selectedEmployeeIds.length === 0} className="h-8">
-              <Briefcase className="h-4 w-4 mr-1" />Assign
+            <Button size="sm" onClick={() => setBulkAssignDialogOpen(true)} disabled={selectedEmployeeIds.length === 0} className="h-11 touch-manipulation">
+              <Briefcase className="h-4 w-4 mr-1" /><span className="hidden sm:inline">Assign</span>
             </Button>
-            <Button size="icon" variant="ghost" onClick={exitMultiSelect} className="h-8 w-8">
-              <X className="h-4 w-4" />
+            <Button size="icon" variant="ghost" onClick={exitMultiSelect} className="h-11 w-11 touch-manipulation">
+              <X className="h-5 w-5" />
             </Button>
           </div>
         </div>

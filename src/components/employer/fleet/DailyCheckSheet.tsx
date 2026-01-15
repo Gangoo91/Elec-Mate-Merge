@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Sheet,
   SheetContent,
@@ -73,9 +73,9 @@ export function DailyCheckSheet({
     return state;
   };
 
-  useState(() => {
+  useEffect(() => {
     setCheckState(initializeCheckState());
-  });
+  }, []);
 
   const handleCheckChange = (key: string, checked: boolean) => {
     setCheckState((prev) => ({ ...prev, [key]: checked }));

@@ -143,7 +143,7 @@ export const SupplyDetailsStep = ({
     <div
       className={cn(
         "flex items-start gap-2 p-3 rounded-xl border",
-        "bg-white/5 backdrop-blur",
+        "bg-gradient-to-br from-amber-950/20 to-black/10 backdrop-blur",
         variant === 'warning'
           ? "border-amber-500/30 text-amber-200"
           : "border-blue-500/30 text-blue-200"
@@ -297,8 +297,8 @@ export const SupplyDetailsStep = ({
             variant="ghost"
             className={cn(
               "w-full justify-between h-12 px-4 rounded-xl",
-              "bg-white/5 border border-white/10",
-              "hover:bg-white/10 hover:border-white/20",
+              "bg-gradient-to-br from-amber-950/30 to-black/20 border border-amber-800/20",
+              "hover:bg-amber-900/20 hover:border-amber-600/30",
               "transition-all duration-ios-fast",
               "touch-manipulation"
             )}

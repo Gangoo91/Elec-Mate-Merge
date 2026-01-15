@@ -1,12 +1,10 @@
-import { ArrowLeft, ArrowRight, Lightbulb, Target, CheckCircle, AlertTriangle, Users, BookOpen, Clipboard, Shield, HelpCircle, Book } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import useSEO from "@/hooks/useSEO";
+import { useState } from "react";
 
 const TITLE = "Dealing with Incomplete or Conflicting Information - Module 5.1.6 | Level 2 Electrical Course";
 const DESCRIPTION = "Learn to identify and resolve incomplete or conflicting information in electrical drawings and specifications. Master escalation procedures and best practices for safe installations.";
@@ -38,6 +36,7 @@ const quickCheckQuestions = [
 
 const Module5Section1_6 = () => {
   useSEO(TITLE, DESCRIPTION);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const quizQuestions = [
     {
@@ -182,134 +181,133 @@ const Module5Section1_6 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 1
+              Back to Section 5.1
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <AlertTriangle className="w-6 h-6 text-white" />
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 5.1.6</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 5.1.6
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Dealing with Incomplete or Conflicting Information
-          </h1>
-          <p className="text-white">
-            Learn to identify and resolve incomplete or conflicting information in electrical drawings and specifications.
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Dealing with Incomplete or Conflicting Information
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Learn to identify and resolve incomplete or conflicting information in electrical drawings and specifications.
+            </p>
+          </header>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Not all drawings and specifications are perfect - information may be missing or contradictory.</li>
-                <li>Making assumptions can lead to unsafe installations and costly rework.</li>
-                <li>Always escalate unclear information to supervisors and document all clarifications.</li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Missing dimensions, conflicting symbols, outdated revisions.</li>
-                <li><strong>Use:</strong> Escalation procedures, formal documentation, team communication.</li>
-                <li><strong>Check:</strong> Revision numbers, drawing-specification consistency, site conditions.</li>
-              </ul>
+          {/* Summary Box */}
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
+                <ul className="list-disc pl-5 space-y-1 text-white/80 text-sm">
+                  <li>Not all drawings and specifications are perfect - information may be missing or contradictory.</li>
+                  <li>Making assumptions can lead to unsafe installations and costly rework.</li>
+                  <li>Always escalate unclear information to supervisors and document all clarifications.</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
+                <ul className="list-disc pl-5 space-y-1 text-white/80 text-sm">
+                  <li><strong>Spot:</strong> Missing dimensions, conflicting symbols, outdated revisions.</li>
+                  <li><strong>Use:</strong> Escalation procedures, formal documentation, team communication.</li>
+                  <li><strong>Check:</strong> Revision numbers, drawing-specification consistency, site conditions.</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </Card>
 
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>Recognise signs of incomplete or conflicting information in drawings/specifications.</li>
-            <li>Apply methods to verify and resolve discrepancies.</li>
-            <li>Understand who to escalate issues to on-site.</li>
-            <li>Avoid the risks of making assumptions without confirmation.</li>
-            <li>Work to ensure installations remain safe and compliant despite unclear documentation.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">00</span>
+              Learning Outcomes
+            </h2>
+            <ul className="list-disc pl-6 space-y-2 text-white/80">
+              <li>Recognise signs of incomplete or conflicting information in drawings/specifications.</li>
+              <li>Apply methods to verify and resolve discrepancies.</li>
+              <li>Understand who to escalate issues to on-site.</li>
+              <li>Avoid the risks of making assumptions without confirmation.</li>
+              <li>Work to ensure installations remain safe and compliant despite unclear documentation.</li>
+            </ul>
+          </section>
 
           {/* Common Issues */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">1. Common Issues with Documentation</h3>
-            <p className="text-base text-white mb-4">
-              Documentation problems occur frequently on electrical projects:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Typical Documentation Problems</p>
-                    <div className="grid md:grid-cols-2 gap-4 mb-4">
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Missing information:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                          <li>Missing dimensions or notes</li>
-                          <li>Incomplete circuit details</li>
-                          <li>Absent cable specifications</li>
-                          <li>Missing equipment ratings</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Conflicting information:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                          <li>Socket marked as single in one place, double in another</li>
-                          <li>Different cable types specified in drawing vs schedule</li>
-                          <li>Contradictory installation methods</li>
-                          <li>Inconsistent equipment specifications</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Version control issues:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                          <li>Outdated revisions being used</li>
-                          <li>Superseded drawings still in circulation</li>
-                          <li>Missing revision notifications</li>
-                          <li>Unclear drawing status</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Site condition mismatches:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                          <li>Drawings not matching actual site conditions</li>
-                          <li>Structural changes not reflected</li>
-                          <li>Access issues not considered</li>
-                          <li>Existing services conflicts</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Key principle:</strong> Documentation problems are common - always verify before proceeding
-                    </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Common Issues with Documentation
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Documentation problems occur frequently on electrical projects:
+              </p>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
+                <p className="font-medium text-white mb-3">Typical Documentation Problems</p>
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Missing information:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Missing dimensions or notes</li>
+                      <li>Incomplete circuit details</li>
+                      <li>Absent cable specifications</li>
+                      <li>Missing equipment ratings</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Conflicting information:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Socket marked as single in one place, double in another</li>
+                      <li>Different cable types specified in drawing vs schedule</li>
+                      <li>Contradictory installation methods</li>
+                      <li>Inconsistent equipment specifications</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Version control issues:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Outdated revisions being used</li>
+                      <li>Superseded drawings still in circulation</li>
+                      <li>Missing revision notifications</li>
+                      <li>Unclear drawing status</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Site condition mismatches:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Drawings not matching actual site conditions</li>
+                      <li>Structural changes not reflected</li>
+                      <li>Access issues not considered</li>
+                      <li>Existing services conflicts</li>
+                    </ul>
                   </div>
                 </div>
+
+                <p className="text-sm text-white/60 mt-3">
+                  <strong>Key principle:</strong> Documentation problems are common - always verify before proceeding
+                </p>
               </div>
             </div>
           </section>
@@ -321,64 +319,64 @@ const Module5Section1_6 = () => {
             correctIndex={quickCheckQuestions[0].correctIndex}
             explanation={quickCheckQuestions[0].explanation}
           />
-          <Separator className="my-6" />
+
+          <div className="border-t border-white/10 my-8" />
 
           {/* Risks */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">2. Risks of Proceeding Without Clarification</h3>
-            <p className="text-base text-white mb-4">
-              The consequences of assuming or guessing can be severe:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Serious Consequences</p>
-                    <div className="grid md:grid-cols-2 gap-4 mb-4">
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Safety risks:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                          <li>Unsafe installations</li>
-                          <li>Non-compliant work</li>
-                          <li>Risk to life and property</li>
-                          <li>Professional liability issues</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Commercial impacts:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                          <li>Failed inspections</li>
-                          <li>Costly rework and delays</li>
-                          <li>Material waste</li>
-                          <li>Additional labour costs</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Professional consequences:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                          <li>Breach of contract obligations</li>
-                          <li>Damage to reputation</li>
-                          <li>Potential legal action</li>
-                          <li>Loss of future work</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Project impacts:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                          <li>Programme delays</li>
-                          <li>Budget overruns</li>
-                          <li>Client dissatisfaction</li>
-                          <li>Team morale issues</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Remember:</strong> The cost of stopping to ask is always less than the cost of getting it wrong
-                    </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Risks of Proceeding Without Clarification
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                The consequences of assuming or guessing can be severe:
+              </p>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
+                <p className="font-medium text-white mb-3">Serious Consequences</p>
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Safety risks:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Unsafe installations</li>
+                      <li>Non-compliant work</li>
+                      <li>Risk to life and property</li>
+                      <li>Professional liability issues</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Commercial impacts:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Failed inspections</li>
+                      <li>Costly rework and delays</li>
+                      <li>Material waste</li>
+                      <li>Additional labour costs</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Professional consequences:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Breach of contract obligations</li>
+                      <li>Damage to reputation</li>
+                      <li>Potential legal action</li>
+                      <li>Loss of future work</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Project impacts:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Programme delays</li>
+                      <li>Budget overruns</li>
+                      <li>Client dissatisfaction</li>
+                      <li>Team morale issues</li>
+                    </ul>
                   </div>
                 </div>
+
+                <p className="text-sm text-white/60 mt-3">
+                  <strong>Remember:</strong> The cost of stopping to ask is always less than the cost of getting it wrong
+                </p>
               </div>
             </div>
           </section>
@@ -390,55 +388,55 @@ const Module5Section1_6 = () => {
             correctIndex={quickCheckQuestions[1].correctIndex}
             explanation={quickCheckQuestions[1].explanation}
           />
-          <Separator className="my-6" />
+
+          <div className="border-t border-white/10 my-8" />
 
           {/* Resolution Methods */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">3. Methods of Resolution</h3>
-            <p className="text-base text-white mb-4">
-              Systematic approaches to identifying and resolving documentation issues:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Verification Process</p>
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Document verification:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                          <li>Always check the revision number of drawings</li>
-                          <li>Verify drawing issue dates</li>
-                          <li>Cross-reference with drawing register</li>
-                          <li>Confirm latest versions are being used</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Consistency checks:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                          <li>Compare drawings against specifications for consistency</li>
-                          <li>Check different drawing sheets for conflicts</li>
-                          <li>Verify equipment schedules match drawings</li>
-                          <li>Ensure cable schedules align with installations</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Pre-work identification:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                          <li>Highlight discrepancies before starting work</li>
-                          <li>Mark unclear areas on drawings</li>
-                          <li>List all questions and uncertainties</li>
-                          <li>Prepare detailed queries for resolution</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Best practice:</strong> Spend time at the start checking rather than fixing mistakes later
-                    </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Methods of Resolution
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Systematic approaches to identifying and resolving documentation issues:
+              </p>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-3">Verification Process</p>
+                <div className="space-y-3">
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Document verification:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Always check the revision number of drawings</li>
+                      <li>Verify drawing issue dates</li>
+                      <li>Cross-reference with drawing register</li>
+                      <li>Confirm latest versions are being used</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Consistency checks:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Compare drawings against specifications for consistency</li>
+                      <li>Check different drawing sheets for conflicts</li>
+                      <li>Verify equipment schedules match drawings</li>
+                      <li>Ensure cable schedules align with installations</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Pre-work identification:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Highlight discrepancies before starting work</li>
+                      <li>Mark unclear areas on drawings</li>
+                      <li>List all questions and uncertainties</li>
+                      <li>Prepare detailed queries for resolution</li>
+                    </ul>
                   </div>
                 </div>
+
+                <p className="text-sm text-white/60 mt-3">
+                  <strong>Best practice:</strong> Spend time at the start checking rather than fixing mistakes later
+                </p>
               </div>
             </div>
           </section>
@@ -450,234 +448,267 @@ const Module5Section1_6 = () => {
             correctIndex={quickCheckQuestions[2].correctIndex}
             explanation={quickCheckQuestions[2].explanation}
           />
-        </Card>
 
-        {/* Real-World Example */}
-        <Card className="mb-8 border-slate-300 bg-slate-100 dark:bg-card/50 dark:border-slate-600">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-              <Users className="w-5 h-5" />
+          <div className="border-t border-white/10 my-8" />
+
+          {/* Real-World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Real-World Example
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3 text-slate-700 dark:text-slate-300">
-              <p className="font-medium">Hospital Project Emergency Lighting Conflict</p>
-              <p>
-                On a hospital project, lighting drawings showed emergency lights in one corridor, but the specification 
-                required double the number. The issue wasn't raised, and the work failed compliance checks, requiring 
-                reinstallation.
-              </p>
-              <p className="font-medium">The consequences:</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Two days of additional work to install extra fittings</li>
-                <li>£3,000 in additional materials and labour costs</li>
-                <li>Delayed hospital opening by one week</li>
-                <li>Client dissatisfaction and potential future work loss</li>
-              </ul>
-              <p className="font-medium text-green-600 dark:text-green-400">
-                Proper escalation would have identified the conflict before installation, saving time and money while 
-                ensuring patient safety compliance.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Escalation Process */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">4. Escalation Process</h2>
-          
-          <div className="space-y-4">
-            <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-              <div className="flex items-start gap-3 mb-2">
-                <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
-                <div className="flex-1">
-                  <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Structured Escalation Path</p>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="text-base text-white mb-2"><strong>Step 1 - Site supervisor:</strong></p>
-                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                        <li>Raise questions with the site supervisor first</li>
-                        <li>Explain the specific discrepancy clearly</li>
-                        <li>Provide all relevant documentation</li>
-                        <li>Request written clarification</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-base text-white mb-2"><strong>Step 2 - Project manager:</strong></p>
-                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                        <li>If unresolved, escalate to the project manager</li>
-                        <li>Document previous escalation attempts</li>
-                        <li>Highlight project impact potential</li>
-                        <li>Request urgent resolution</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-base text-white mb-2"><strong>Step 3 - Designer/client:</strong></p>
-                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                        <li>Final escalation to designer or client</li>
-                        <li>Formal documentation required</li>
-                        <li>Clear statement of work stoppage if needed</li>
-                        <li>Request for formal instruction or clarification</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-base text-white mb-2"><strong>Documentation requirements:</strong></p>
-                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                        <li>Record all clarifications formally (emails, site instructions)</li>
-                        <li>Keep copies of all correspondence</li>
-                        <li>Note dates, times, and people involved</li>
-                        <li>Share clarifications with the whole team</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                    <strong>Key rule:</strong> Always get clarifications in writing - verbal instructions can be forgotten or misunderstood
-                  </div>
+            </h2>
+            <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                <div className="text-white/80">
+                  <p className="font-medium text-white mb-2">Hospital Project Emergency Lighting Conflict</p>
+                  <p className="text-sm mb-3">
+                    On a hospital project, lighting drawings showed emergency lights in one corridor, but the specification
+                    required double the number. The issue wasn't raised, and the work failed compliance checks, requiring
+                    reinstallation.
+                  </p>
+                  <p className="font-medium text-white mb-2 text-sm">The consequences:</p>
+                  <ul className="list-disc pl-6 space-y-1 text-sm mb-3">
+                    <li>Two days of additional work to install extra fittings</li>
+                    <li>£3,000 in additional materials and labour costs</li>
+                    <li>Delayed hospital opening by one week</li>
+                    <li>Client dissatisfaction and potential future work loss</li>
+                  </ul>
+                  <p className="text-sm font-medium text-green-400">
+                    Proper escalation would have identified the conflict before installation, saving time and money while
+                    ensuring patient safety compliance.
+                  </p>
                 </div>
               </div>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Best Practice */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">5. Best Practice</h2>
-          
-          <div className="space-y-4">
-            <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-              <div className="flex items-start gap-3 mb-2">
-                <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
-                <div className="flex-1">
-                  <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Professional Standards</p>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="text-base text-white mb-2"><strong>Golden rules:</strong></p>
-                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                        <li>Never guess — stop and ask</li>
-                        <li>Document everything in writing</li>
-                        <li>Share information with the whole team</li>
-                        <li>Don't assume - always verify</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-base text-white mb-2"><strong>Record keeping:</strong></p>
-                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                        <li>Keep records of all discrepancies and how they were resolved</li>
-                        <li>Maintain a project query log</li>
-                        <li>File all email clarifications</li>
-                        <li>Update drawing sets with written instructions</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-base text-white mb-2"><strong>Team communication:</strong></p>
-                      <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                        <li>Share clarifications with the whole team to ensure consistency</li>
-                        <li>Update all affected personnel immediately</li>
-                        <li>Include clarifications in team briefings</li>
-                        <li>Ensure supervisors communicate changes clearly</li>
-                      </ul>
-                    </div>
+          {/* Escalation Process */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Escalation Process
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                <p className="font-medium text-white mb-3">Structured Escalation Path</p>
+                <div className="space-y-3">
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Step 1 - Site supervisor:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Raise questions with the site supervisor first</li>
+                      <li>Explain the specific discrepancy clearly</li>
+                      <li>Provide all relevant documentation</li>
+                      <li>Request written clarification</li>
+                    </ul>
                   </div>
-                  <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                    <strong>Professional approach:</strong> Thorough documentation and communication prevent repeated mistakes
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Step 2 - Project manager:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>If unresolved, escalate to the project manager</li>
+                      <li>Document previous escalation attempts</li>
+                      <li>Highlight project impact potential</li>
+                      <li>Request urgent resolution</li>
+                    </ul>
                   </div>
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Step 3 - Designer/client:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Final escalation to designer or client</li>
+                      <li>Formal documentation required</li>
+                      <li>Clear statement of work stoppage if needed</li>
+                      <li>Request for formal instruction or clarification</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Documentation requirements:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Record all clarifications formally (emails, site instructions)</li>
+                      <li>Keep copies of all correspondence</li>
+                      <li>Note dates, times, and people involved</li>
+                      <li>Share clarifications with the whole team</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <p className="text-sm text-white/60 mt-3">
+                  <strong>Key rule:</strong> Always get clarifications in writing - verbal instructions can be forgotten or misunderstood
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <div className="border-t border-white/10 my-8" />
+
+          {/* Best Practice */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Best Practice
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                <p className="font-medium text-white mb-3">Professional Standards</p>
+                <div className="space-y-3">
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Golden rules:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Never guess — stop and ask</li>
+                      <li>Document everything in writing</li>
+                      <li>Share information with the whole team</li>
+                      <li>Don't assume - always verify</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Record keeping:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Keep records of all discrepancies and how they were resolved</li>
+                      <li>Maintain a project query log</li>
+                      <li>File all email clarifications</li>
+                      <li>Update drawing sets with written instructions</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="mb-2"><strong className="text-white">Team communication:</strong></p>
+                    <ul className="text-sm ml-4 mb-2 list-disc space-y-1">
+                      <li>Share clarifications with the whole team to ensure consistency</li>
+                      <li>Update all affected personnel immediately</li>
+                      <li>Include clarifications in team briefings</li>
+                      <li>Ensure supervisors communicate changes clearly</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <p className="text-sm text-white/60 mt-3">
+                  <strong>Professional approach:</strong> Thorough documentation and communication prevent repeated mistakes
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-2">
+              {faqs.map((faq, index) => (
+                <div key={index} className="border border-white/10 rounded-lg overflow-hidden">
+                  <button
+                    className="w-full flex items-center justify-between p-4 text-left min-h-[48px] touch-manipulation active:bg-white/5"
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  >
+                    <span className="font-medium text-white pr-4">{faq.question}</span>
+                    <ChevronDown className={`w-5 h-5 text-white/60 flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
+                  </button>
+                  {openFaq === index && (
+                    <div className="px-4 pb-4 text-white/70 text-sm border-t border-white/10 pt-3">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Pocket Guide */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+              Pocket Guide
+            </h2>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
+                <div className="space-y-2">
+                  <p className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>Check revision numbers</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>Compare drawings with specifications</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>Escalate issues immediately</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>Record clarifications in writing</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>Never assume — always confirm</span>
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <p className="font-medium text-white">Escalation order:</p>
+                  <p>1. Site supervisor</p>
+                  <p>2. Project manager</p>
+                  <p>3. Designer/client</p>
+                  <p className="font-medium text-elec-yellow mt-2">Remember: Stop work if unclear!</p>
                 </div>
               </div>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <details key={index} className="group border border-white/10 rounded-lg">
-                <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors">
-                  <span className="font-medium text-white">{faq.question}</span>
-                  <HelpCircle className="w-5 h-5 text-white group-open:rotate-180 transition-transform" />
-                </summary>
-                <div className="px-4 pb-4 text-white border-t border-white/10 pt-4">
-                  {faq.answer}
-                </div>
-              </details>
-            ))}
-          </div>
-        </Card>
-
-        {/* Pocket Guide */}
-        <Card className="mb-8 border-slate-300 bg-slate-100 dark:bg-card/50 dark:border-slate-600">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-              <Book className="w-5 h-5" />
-              Pocket Guide: Dealing with Conflicting Information
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-2 gap-4 text-slate-700 dark:text-slate-300">
-              <div className="space-y-2">
-                <p>✅ Check revision numbers</p>
-                <p>✅ Compare drawings with specifications</p>
-                <p>✅ Escalate issues immediately</p>
-                <p>✅ Record clarifications in writing</p>
-                <p>✅ Never assume — always confirm</p>
-              </div>
-              <div className="space-y-2">
-                <p><strong>Escalation order:</strong></p>
-                <p>1. Site supervisor</p>
-                <p>2. Project manager</p>
-                <p>3. Designer/client</p>
-                <p><strong>Remember:</strong> Stop work if unclear!</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
-          <p className="text-base text-white mb-4">In this subsection, you learned:</p>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div>
-              <ul className="list-disc pl-6 space-y-2 text-base text-white">
+          {/* Recap */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+              Recap
+            </h2>
+            <div className="text-white/80 space-y-4">
+              <p>In this subsection, you learned:</p>
+              <ul className="list-disc pl-6 space-y-2">
                 <li>How to spot incomplete or conflicting information</li>
                 <li>Why it's risky to proceed without clarification</li>
                 <li>The correct escalation process for resolving issues</li>
                 <li>Best practice for ensuring safe and compliant work despite unclear documents</li>
               </ul>
+              <div className="mt-4 p-4 rounded-lg bg-white/5">
+                <p className="font-medium text-white mb-2">Key takeaway:</p>
+                <p className="text-sm">
+                  By following these steps, you prevent mistakes and keep installations safe, compliant, and efficient.
+                  The time spent clarifying unclear information is always an investment in quality and safety.
+                </p>
+              </div>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent">
-              <p className="font-medium text-white mb-2">Key takeaway:</p>
-              <p className="text-base text-white">
-                By following these steps, you prevent mistakes and keep installations safe, compliant, and efficient. 
-                The time spent clarifying unclear information is always an investment in quality and safety.
-              </p>
-            </div>
+          </section>
+
+          {/* Quiz */}
+          <div className="mb-10">
+            <Quiz
+              title="Conflicting Information Quiz"
+              questions={quizQuestions}
+            />
           </div>
-        </Card>
 
-        {/* Quiz */}
-        <div className="mb-8">
-          <Quiz questions={quizQuestions} />
+          {/* Navigation Footer */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+            <Button
+              variant="ghost"
+              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../1-5">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="..">
+                Section Complete
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
-            <Link to="../1-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Subsection 5
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link to="..">
-              Section Complete
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
-        </div>
-      </main>
+      </article>
     </div>
   );
 };

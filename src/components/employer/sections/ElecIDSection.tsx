@@ -620,7 +620,12 @@ export const ElecIDSection = () => {
 
       <div className="flex gap-2 flex-wrap">
         <AddCertificationDialog />
-        <Button variant="outline" size="sm" className="gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          className="gap-2"
+          onClick={() => toast({ title: "Training Scheduler", description: "Training scheduling coming soon" })}
+        >
           <BookOpen className="h-4 w-4" />
           Schedule Training
         </Button>

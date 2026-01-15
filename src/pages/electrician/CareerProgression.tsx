@@ -34,21 +34,21 @@ import JobVacancies from "@/pages/electrician/JobVacancies";
 import { useLiveMarketData } from "@/hooks/useLiveMarketData";
 import { AnimatedCounter } from "@/components/dashboard/AnimatedCounter";
 
-// Animation variants
+// Animation variants - Smooth, fast entrance
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.02, delayChildren: 0 },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 8 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: "spring", stiffness: 300, damping: 24 },
+    transition: { duration: 0.2, ease: 'easeOut' },
   },
 };
 

@@ -75,6 +75,7 @@ export function PriceBookSection() {
   const handleDeleteItem = async (id: string) => {
     await deleteItem.mutateAsync(id);
     setExpandedId(null);
+    toast.success("Item deleted from price book");
   };
 
   const handleQuickAdd = async () => {
@@ -366,7 +367,14 @@ export function PriceBookSection() {
                     >
                       Edit
                     </Button>
-                    <Button size="sm" className="flex-1">
+                    <Button
+                      size="sm"
+                      className="flex-1"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toast.success(`${item.name} added to quote`);
+                      }}
+                    >
                       Add to Quote
                     </Button>
                   </div>

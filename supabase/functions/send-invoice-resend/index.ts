@@ -2,8 +2,6 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "npm:resend@2.0.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
-
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -13,7 +11,99 @@ interface InvoiceEmailRequest {
   invoiceId: string;
 }
 
+// ============================================================================
+// HELPER FUNCTIONS - Bulletproof utilities
+// ============================================================================
+
+/**
+ * Safely parse JSON - handles string, object, null, undefined
+ */
+function safeJsonParse(data: any, fallback: any = {}): any {
+  if (data === null || data === undefined) return fallback;
+  if (typeof data === 'object') return data;
+  if (typeof data === 'string') {
+    try {
+      return JSON.parse(data);
+    } catch (e) {
+      console.warn('⚠️ JSON parse failed, using fallback:', e);
+      return fallback;
+    }
+  }
+  return fallback;
+}
+
+/**
+ * Validate email format
+ */
+function isValidEmail(email: string | null | undefined): boolean {
+  if (!email || typeof email !== 'string') return false;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email.trim());
+}
+
+/**
+ * Safely format currency - handles NaN, undefined, null, strings
+ */
+function formatCurrency(amount: any): string {
+  let numAmount = 0;
+
+  if (typeof amount === 'number' && !isNaN(amount)) {
+    numAmount = amount;
+  } else if (typeof amount === 'string') {
+    const parsed = parseFloat(amount);
+    if (!isNaN(parsed)) numAmount = parsed;
+  }
+
+  return new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+  }).format(numAmount);
+}
+
+/**
+ * Safely format date - handles invalid dates
+ */
+function formatDate(dateInput: any): string {
+  if (!dateInput) return 'N/A';
+
+  try {
+    const date = new Date(dateInput);
+    if (isNaN(date.getTime())) return 'N/A';
+
+    return date.toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+  } catch (e) {
+    console.warn('⚠️ Date format failed:', e);
+    return 'N/A';
+  }
+}
+
+/**
+ * Safely get nested property
+ */
+function safeGet(obj: any, path: string, fallback: any = ''): any {
+  try {
+    const keys = path.split('.');
+    let result = obj;
+    for (const key of keys) {
+      if (result === null || result === undefined) return fallback;
+      result = result[key];
+    }
+    return result ?? fallback;
+  } catch (e) {
+    return fallback;
+  }
+}
+
+// ============================================================================
+// MAIN HANDLER
+// ============================================================================
+
 const handler = async (req: Request): Promise<Response> => {
+  const startTime = Date.now();
   console.log('📧 Send Invoice via Resend | Started:', new Date().toISOString());
 
   // Handle CORS preflight requests
@@ -22,48 +112,71 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    // Check if Authorization header is present
+    // ========================================================================
+    // STEP 1: Validate environment
+    // ========================================================================
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
+
+    if (!resendApiKey) {
+      console.error('❌ RESEND_API_KEY not configured');
+      throw new Error('Email service not configured. Please contact support.');
+    }
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.error('❌ Supabase environment variables missing');
+      throw new Error('Database service not configured. Please contact support.');
+    }
+
+    const resend = new Resend(resendApiKey);
+    console.log('✅ Environment validated');
+
+    // ========================================================================
+    // STEP 2: Authenticate user
+    // ========================================================================
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
       console.error('❌ No Authorization header found');
-      throw new Error('No Authorization header provided');
+      throw new Error('Please log in to send invoices.');
     }
 
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-      {
-        global: {
-          headers: { Authorization: authHeader },
-        },
-      }
-    );
+    const supabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } },
+    });
 
-    // Extract JWT token and authenticate user using it
     const jwt = authHeader.replace('Bearer ', '').trim();
-
-    const {
-      data: { user },
-      error: userError,
-    } = await supabaseClient.auth.getUser(jwt);
+    const { data: { user }, error: userError } = await supabaseClient.auth.getUser(jwt);
 
     if (userError || !user) {
       console.error('❌ User authentication error:', userError);
-      throw new Error('Unauthorized');
+      throw new Error('Session expired. Please log in again.');
     }
-    
-    console.log('✅ User authenticated:', user.id);
 
-    // Get user email for reply-to fallback
+    console.log('✅ User authenticated:', user.id);
     const userEmail = user.email;
 
-    const { invoiceId }: InvoiceEmailRequest = await req.json();
-
-    if (!invoiceId) {
-      throw new Error('Invoice ID is required');
+    // ========================================================================
+    // STEP 3: Parse and validate request
+    // ========================================================================
+    let invoiceId: string;
+    try {
+      const body = await req.json();
+      invoiceId = body.invoiceId;
+    } catch (e) {
+      console.error('❌ Failed to parse request body:', e);
+      throw new Error('Invalid request format.');
     }
 
-    // Fetch invoice details
+    if (!invoiceId || typeof invoiceId !== 'string') {
+      throw new Error('Invoice ID is required.');
+    }
+
+    console.log('📄 Processing invoice:', invoiceId);
+
+    // ========================================================================
+    // STEP 4: Fetch invoice from database
+    // ========================================================================
     const { data: invoice, error: invoiceError } = await supabaseClient
       .from('quotes')
       .select('*')
@@ -72,41 +185,67 @@ const handler = async (req: Request): Promise<Response> => {
       .eq('invoice_raised', true)
       .single();
 
-    if (invoiceError || !invoice) {
-      console.error('❌ Invoice not found:', invoiceError);
-      throw new Error('Invoice not found');
+    if (invoiceError) {
+      console.error('❌ Database error fetching invoice:', invoiceError);
+      throw new Error('Could not find this invoice. It may have been deleted.');
     }
 
-    console.log(`📄 Invoice fetched: ${invoice.invoice_number}`);
+    if (!invoice) {
+      throw new Error('Invoice not found or you do not have permission to access it.');
+    }
 
-    // Fetch company profile for sender details
+    const invoiceNumber = invoice.invoice_number || `INV-${invoiceId.substring(0, 8)}`;
+    console.log(`✅ Invoice fetched: ${invoiceNumber}`);
+
+    // ========================================================================
+    // STEP 5: Parse client data safely
+    // ========================================================================
+    const clientData = safeJsonParse(invoice.client_data, {});
+    console.log('📄 Client data keys:', Object.keys(clientData));
+
+    const clientEmail = clientData?.email?.trim();
+    const clientName = clientData?.name || 'Valued Client';
+
+    if (!isValidEmail(clientEmail)) {
+      console.error('❌ Invalid client email:', clientEmail);
+      console.error('❌ Client data:', JSON.stringify(clientData).substring(0, 300));
+      throw new Error(`Invalid client email address: "${clientEmail || 'missing'}". Please update the invoice with a valid email.`);
+    }
+
+    console.log(`✅ Client: ${clientName} <${clientEmail}>`);
+
+    // ========================================================================
+    // STEP 6: Fetch company profile
+    // ========================================================================
     const { data: companyProfile } = await supabaseClient
       .from('company_profiles')
       .select('*, stripe_account_id, stripe_account_status')
       .eq('user_id', user.id)
       .single();
 
-    // Check if Stripe Connect is active for online payments
+    const companyName = companyProfile?.company_name || 'ElecMate';
+    console.log(`✅ Company: ${companyName}`);
+
+    // ========================================================================
+    // STEP 7: Handle Stripe payment link (optional, non-blocking)
+    // ========================================================================
+    let stripePaymentUrl: string | null = null;
     const stripeConnectActive = companyProfile?.stripe_account_id &&
                                  companyProfile?.stripe_account_status === 'active';
 
-    let stripePaymentUrl: string | null = null;
-
     if (stripeConnectActive) {
-      // Use existing payment link or create new one
-      if (invoice.stripe_payment_link_url) {
-        stripePaymentUrl = invoice.stripe_payment_link_url;
-        console.log('📱 Using existing Stripe payment link');
-      } else {
-        // Generate new payment link
-        try {
+      try {
+        if (invoice.stripe_payment_link_url) {
+          stripePaymentUrl = invoice.stripe_payment_link_url;
+          console.log('✅ Using existing Stripe payment link');
+        } else {
           console.log('💳 Generating Stripe payment link...');
           const paymentLinkResponse = await fetch(
-            `${Deno.env.get('SUPABASE_URL')}/functions/v1/create-invoice-payment-link`,
+            `${supabaseUrl}/functions/v1/create-invoice-payment-link`,
             {
               method: 'POST',
               headers: {
-                'Authorization': req.headers.get('Authorization') || '',
+                'Authorization': authHeader,
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({ invoiceId }),
@@ -116,101 +255,122 @@ const handler = async (req: Request): Promise<Response> => {
           if (paymentLinkResponse.ok) {
             const paymentData = await paymentLinkResponse.json();
             stripePaymentUrl = paymentData.url;
-            console.log('✅ Payment link generated:', stripePaymentUrl);
+            console.log('✅ Payment link generated');
           } else {
-            console.warn('⚠️ Could not generate payment link - will send without Pay Now button');
+            console.warn('⚠️ Payment link generation failed - continuing without it');
           }
-        } catch (paymentLinkError) {
-          console.warn('⚠️ Payment link generation error:', paymentLinkError);
         }
+      } catch (paymentLinkError) {
+        console.warn('⚠️ Payment link error (non-fatal):', paymentLinkError);
       }
     }
 
-    const clientEmail = invoice.client_data?.email;
-    if (!clientEmail) {
-      throw new Error('Client email not found');
-    }
-
-    console.log(`📧 Client email: ${clientEmail}`);
-
-    // Ensure we have a fresh PDF - regenerate if missing or stale
+    // ========================================================================
+    // STEP 8: Handle PDF generation (optional, non-blocking)
+    // ========================================================================
     let pdfUrl = invoice.pdf_url;
-    const pdfNeedsRegeneration = !pdfUrl || !invoice.pdf_document_id;
-
-    if (pdfNeedsRegeneration) {
-      console.log('🔄 Regenerating PDF for email attachment...');
-      
-      // Call generate-pdf-monkey edge function to create fresh PDF
-      const pdfResponse = await fetch(
-        `${Deno.env.get('SUPABASE_URL')}/functions/v1/generate-pdf-monkey`,
-        {
-          method: 'POST',
-          headers: {
-            'Authorization': req.headers.get('Authorization') || '',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            quote: invoice,
-            companyProfile: companyProfile,
-            invoice_mode: true,
-            force_regenerate: true,
-          }),
-        }
-      );
-
-      if (pdfResponse.ok) {
-        const pdfData = await pdfResponse.json();
-        pdfUrl = pdfData.downloadUrl;
-        
-        // Update database with new PDF metadata
-        if (pdfUrl && pdfData.documentId) {
-          const newVersion = (invoice.pdf_version || 0) + 1;
-          await supabaseClient
-            .from('quotes')
-            .update({
-              pdf_url: pdfUrl,
-              pdf_document_id: pdfData.documentId,
-              pdf_generated_at: new Date().toISOString(),
-              pdf_version: newVersion,
-            })
-            .eq('id', invoiceId);
-        }
-      }
-    }
-
-    // Download PDF as binary data for attachment (with fallback)
     let pdfBase64: string | null = null;
     let pdfAttachmentSuccess = false;
 
+    // Try to regenerate PDF if missing
+    if (!pdfUrl || !invoice.pdf_document_id) {
+      console.log('🔄 Regenerating PDF...');
+      try {
+        const pdfResponse = await fetch(
+          `${supabaseUrl}/functions/v1/generate-pdf-monkey`,
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': authHeader,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              quote: invoice,
+              companyProfile: companyProfile,
+              invoice_mode: true,
+              force_regenerate: true,
+            }),
+          }
+        );
+
+        if (pdfResponse.ok) {
+          const pdfData = await pdfResponse.json();
+          pdfUrl = pdfData.downloadUrl;
+
+          if (pdfUrl && pdfData.documentId) {
+            await supabaseClient
+              .from('quotes')
+              .update({
+                pdf_url: pdfUrl,
+                pdf_document_id: pdfData.documentId,
+                pdf_generated_at: new Date().toISOString(),
+                pdf_version: (invoice.pdf_version || 0) + 1,
+              })
+              .eq('id', invoiceId);
+            console.log('✅ PDF regenerated');
+          }
+        } else {
+          console.warn('⚠️ PDF generation failed - continuing without attachment');
+        }
+      } catch (pdfGenError) {
+        console.warn('⚠️ PDF generation error (non-fatal):', pdfGenError);
+      }
+    }
+
+    // Try to download PDF for attachment
     if (pdfUrl) {
       try {
         console.log('📥 Downloading PDF for attachment...');
         const pdfFileResponse = await fetch(pdfUrl);
         if (pdfFileResponse.ok) {
           const pdfArrayBuffer = await pdfFileResponse.arrayBuffer();
-          pdfBase64 = btoa(String.fromCharCode(...new Uint8Array(pdfArrayBuffer)));
+          // Safer base64 encoding for large files
+          const uint8Array = new Uint8Array(pdfArrayBuffer);
+          let binary = '';
+          const chunkSize = 0x8000; // 32KB chunks
+          for (let i = 0; i < uint8Array.length; i += chunkSize) {
+            const chunk = uint8Array.subarray(i, i + chunkSize);
+            binary += String.fromCharCode.apply(null, Array.from(chunk));
+          }
+          pdfBase64 = btoa(binary);
           pdfAttachmentSuccess = true;
           console.log(`✅ PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
-        } else {
-          console.warn(`⚠️ PDF download failed: ${pdfFileResponse.status} - will send email with link only`);
         }
-      } catch (pdfError) {
-        console.warn(`⚠️ PDF download error: ${pdfError} - will send email with link only`);
+      } catch (pdfDownloadError) {
+        console.warn('⚠️ PDF download error (non-fatal):', pdfDownloadError);
       }
-    } else {
-      console.warn('⚠️ No PDF URL available - will send email with link only');
     }
 
-    // Format currency with NaN protection
-    const formatCurrency = (amount: number | undefined | null) => {
-      const safeAmount = typeof amount === 'number' && !isNaN(amount) ? amount : 0;
-      return new Intl.NumberFormat('en-GB', {
-        style: 'currency',
-        currency: 'GBP',
-      }).format(safeAmount);
-    };
+    // ========================================================================
+    // STEP 9: Prepare invoice items safely
+    // ========================================================================
+    const items = Array.isArray(invoice.items) ? invoice.items : [];
+    const itemsHtml = items.map((item: any, index: number) => {
+      const description = safeGet(item, 'description', 'Item');
+      const quantity = safeGet(item, 'quantity', 0);
+      const unitPrice = safeGet(item, 'unitPrice', 0);
+      const lineTotal = item.total ?? item.totalPrice ?? (quantity * unitPrice);
 
-    // Generate brilliant mobile-first HTML email
+      return `
+        <tr style="background: ${index % 2 === 0 ? '#ffffff' : '#f9fafb'};">
+          <td style="padding: 12px; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${description}</td>
+          <td style="padding: 12px; text-align: center; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${quantity}</td>
+          <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap;">${formatCurrency(unitPrice)}</td>
+          <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap; font-weight: 600;">${formatCurrency(lineTotal)}</td>
+        </tr>
+      `;
+    }).join('');
+
+    // ========================================================================
+    // STEP 10: Parse settings safely
+    // ========================================================================
+    const settings = safeJsonParse(invoice.settings, {});
+    const bankDetails = settings.bankDetails;
+    const paymentTerms = settings.paymentTerms || 'Due within 30 days';
+
+    // ========================================================================
+    // STEP 11: Build email HTML
+    // ========================================================================
     const emailHtml = `
 <!DOCTYPE html>
 <html lang="en">
@@ -219,7 +379,7 @@ const handler = async (req: Request): Promise<Response> => {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-  <title>Invoice from ${companyProfile?.company_name || 'ElecMate'}</title>
+  <title>Invoice from ${companyName}</title>
   <!--[if mso]>
   <style type="text/css">
     body, table, td {font-family: Arial, sans-serif !important;}
@@ -228,29 +388,16 @@ const handler = async (req: Request): Promise<Response> => {
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8f9fa; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
 
-  <!-- Wrapper Table -->
   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa; min-height: 100vh;">
     <tr>
       <td style="padding: 20px 10px;">
-
-        <!-- Main Container -->
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden;">
 
-          <!-- Header with Gradient -->
+          <!-- Header -->
           <tr>
             <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td style="text-align: center;">
-                    ${companyProfile?.logo_url ? `
-                    <img src="${companyProfile.logo_url}" alt="${companyProfile.company_name || 'Company Logo'}" style="max-height: 60px; max-width: 200px; margin-bottom: 16px; display: block; margin-left: auto; margin-right: auto;" />
-                    ` : ''}
-                    <h1 style="margin: 0; color: #FFD700; font-size: 26px; font-weight: 700; letter-spacing: 0.5px;">
-                      ⚡ ${companyProfile?.company_name || 'ElecMate Professional'}
-                    </h1>
-                  </td>
-                </tr>
-              </table>
+              ${companyProfile?.logo_url ? `<img src="${companyProfile.logo_url}" alt="${companyName}" style="max-height: 60px; max-width: 200px; margin-bottom: 16px; display: block; margin-left: auto; margin-right: auto;" />` : ''}
+              <h1 style="margin: 0; color: #FFD700; font-size: 26px; font-weight: 700;">⚡ ${companyName}</h1>
             </td>
           </tr>
 
@@ -258,7 +405,7 @@ const handler = async (req: Request): Promise<Response> => {
           <tr>
             <td style="padding: 32px 24px 0;">
               <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: #374151;">
-                Dear <strong style="color: #1f2937;">${invoice.client_data?.name || 'Valued Client'}</strong>,
+                Dear <strong style="color: #1f2937;">${clientName}</strong>,
               </p>
               <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #374151;">
                 Thank you for your business. Please find your invoice details below:
@@ -266,46 +413,17 @@ const handler = async (req: Request): Promise<Response> => {
             </td>
           </tr>
 
-          <!-- Invoice Hero Card -->
+          <!-- Invoice Card -->
           <tr>
             <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border: 2px solid #e5e7eb; overflow: hidden;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border: 2px solid #e5e7eb;">
                 <tr>
                   <td style="padding: 24px;">
-                    <h2 style="margin: 0 0 16px; font-size: 28px; font-weight: 700; color: #1f2937; letter-spacing: -0.5px;">
-                      Invoice #${invoice.invoice_number}
-                    </h2>
+                    <h2 style="margin: 0 0 16px; font-size: 28px; font-weight: 700; color: #1f2937;">Invoice #${invoiceNumber}</h2>
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                      <tr>
-                        <td style="padding: 6px 0;">
-                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                            <tr>
-                              <td style="font-size: 14px; color: #6b7280; font-weight: 500;">Invoice Date:</td>
-                              <td style="text-align: right; font-size: 14px; color: #1f2937; font-weight: 600;">${new Date(invoice.invoice_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="padding: 6px 0;">
-                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                            <tr>
-                              <td style="font-size: 14px; color: #6b7280; font-weight: 500;">Due Date:</td>
-                              <td style="text-align: right; font-size: 14px; color: #dc2626; font-weight: 600;">${new Date(invoice.invoice_due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="padding: 6px 0;">
-                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                            <tr>
-                              <td style="font-size: 14px; color: #6b7280; font-weight: 500;">Payment Terms:</td>
-                              <td style="text-align: right; font-size: 14px; color: #1f2937; font-weight: 600;">${invoice.settings?.paymentTerms || 'Due within 30 days'}</td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
+                      <tr><td style="padding: 6px 0; font-size: 14px; color: #6b7280;">Invoice Date:</td><td style="text-align: right; font-size: 14px; color: #1f2937; font-weight: 600;">${formatDate(invoice.invoice_date)}</td></tr>
+                      <tr><td style="padding: 6px 0; font-size: 14px; color: #6b7280;">Due Date:</td><td style="text-align: right; font-size: 14px; color: #dc2626; font-weight: 600;">${formatDate(invoice.invoice_due_date)}</td></tr>
+                      <tr><td style="padding: 6px 0; font-size: 14px; color: #6b7280;">Payment Terms:</td><td style="text-align: right; font-size: 14px; color: #1f2937; font-weight: 600;">${paymentTerms}</td></tr>
                     </table>
                   </td>
                 </tr>
@@ -313,75 +431,48 @@ const handler = async (req: Request): Promise<Response> => {
             </td>
           </tr>
 
-          <!-- View Invoice Button (Mobile-optimized, touch-friendly) -->
+          <!-- View PDF Button -->
+          ${pdfUrl ? `
           <tr>
             <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td>
-                    <a href="${pdfUrl}" target="_blank" style="display: block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); -webkit-tap-highlight-color: transparent;">
-                      📄 View Invoice PDF
-                    </a>
-                  </td>
-                </tr>
-              </table>
-              <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280; line-height: 1.4;">
-                ${pdfAttachmentSuccess ? `Invoice_${invoice.invoice_number}.pdf is attached to this email` : 'Click above to view and download your invoice'}
-              </p>
-            </td>
-          </tr>
-
-          ${stripePaymentUrl ? `
-          <!-- Pay Now Button (Stripe Checkout) -->
-          <tr>
-            <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td>
-                    <a href="${stripePaymentUrl}" target="_blank" style="display: block; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 20px 24px; border-radius: 12px; font-size: 18px; font-weight: 700; box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4); -webkit-tap-highlight-color: transparent;">
-                      💳 Pay Now - Secure Card Payment
-                    </a>
-                  </td>
-                </tr>
-              </table>
-              <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280; line-height: 1.4;">
-                Fast, secure payment via Stripe. Bank transfer details also provided below.
+              <a href="${pdfUrl}" target="_blank" style="display: block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">
+                📄 View Invoice PDF
+              </a>
+              <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280;">
+                ${pdfAttachmentSuccess ? `Invoice_${invoiceNumber}.pdf is attached to this email` : 'Click above to view and download your invoice'}
               </p>
             </td>
           </tr>
           ` : ''}
 
-          ${invoice.settings?.bankDetails ? `
-          <!-- Bank Details (Highlighted) -->
+          <!-- Pay Now Button -->
+          ${stripePaymentUrl ? `
           <tr>
             <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-left: 4px solid #f59e0b; border-radius: 8px; overflow: hidden;">
+              <a href="${stripePaymentUrl}" target="_blank" style="display: block; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 20px 24px; border-radius: 12px; font-size: 18px; font-weight: 700; box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);">
+                💳 Pay Now - Secure Card Payment
+              </a>
+              <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280;">
+                Fast, secure payment via Stripe
+              </p>
+            </td>
+          </tr>
+          ` : ''}
+
+          <!-- Bank Details -->
+          ${bankDetails ? `
+          <tr>
+            <td style="padding: 0 24px 24px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-left: 4px solid #f59e0b; border-radius: 8px;">
                 <tr>
                   <td style="padding: 20px;">
-                    <h3 style="margin: 0 0 16px; font-size: 16px; font-weight: 700; color: #92400e;">
-                      💳 Payment Details (Bank Transfer)
-                    </h3>
+                    <h3 style="margin: 0 0 16px; font-size: 16px; font-weight: 700; color: #92400e;">💳 Payment Details (Bank Transfer)</h3>
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                      <tr>
-                        <td style="padding: 4px 0; font-size: 14px; color: #78350f;"><strong>Bank Name:</strong></td>
-                        <td style="padding: 4px 0; text-align: right; font-size: 14px; color: #78350f; font-weight: 600;">${invoice.settings.bankDetails.bankName}</td>
-                      </tr>
-                      <tr>
-                        <td style="padding: 4px 0; font-size: 14px; color: #78350f;"><strong>Account Name:</strong></td>
-                        <td style="padding: 4px 0; text-align: right; font-size: 14px; color: #78350f; font-weight: 600;">${invoice.settings.bankDetails.accountName}</td>
-                      </tr>
-                      <tr>
-                        <td style="padding: 4px 0; font-size: 14px; color: #78350f;"><strong>Account Number:</strong></td>
-                        <td style="padding: 4px 0; text-align: right; font-size: 14px; color: #78350f; font-weight: 600;">${invoice.settings.bankDetails.accountNumber}</td>
-                      </tr>
-                      <tr>
-                        <td style="padding: 4px 0; font-size: 14px; color: #78350f;"><strong>Sort Code:</strong></td>
-                        <td style="padding: 4px 0; text-align: right; font-size: 14px; color: #78350f; font-weight: 600;">${invoice.settings.bankDetails.sortCode}</td>
-                      </tr>
-                      <tr>
-                        <td style="padding: 8px 0 0; font-size: 14px; color: #78350f;"><strong>Reference:</strong></td>
-                        <td style="padding: 8px 0 0; text-align: right; font-size: 14px; color: #92400e; font-weight: 700;">${invoice.invoice_number}</td>
-                      </tr>
+                      ${bankDetails.bankName ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #78350f;"><strong>Bank:</strong></td><td style="text-align: right; font-size: 14px; color: #78350f; font-weight: 600;">${bankDetails.bankName}</td></tr>` : ''}
+                      ${bankDetails.accountName ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #78350f;"><strong>Account:</strong></td><td style="text-align: right; font-size: 14px; color: #78350f; font-weight: 600;">${bankDetails.accountName}</td></tr>` : ''}
+                      ${bankDetails.accountNumber ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #78350f;"><strong>Acc No:</strong></td><td style="text-align: right; font-size: 14px; color: #78350f; font-weight: 600;">${bankDetails.accountNumber}</td></tr>` : ''}
+                      ${bankDetails.sortCode ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #78350f;"><strong>Sort Code:</strong></td><td style="text-align: right; font-size: 14px; color: #78350f; font-weight: 600;">${bankDetails.sortCode}</td></tr>` : ''}
+                      <tr><td style="padding: 8px 0 0; font-size: 14px; color: #78350f;"><strong>Reference:</strong></td><td style="text-align: right; font-size: 14px; color: #92400e; font-weight: 700;">${invoiceNumber}</td></tr>
                     </table>
                   </td>
                 </tr>
@@ -390,63 +481,37 @@ const handler = async (req: Request): Promise<Response> => {
           </tr>
           ` : ''}
 
-          <!-- Invoice Items Table -->
+          <!-- Items Table -->
+          ${items.length > 0 ? `
           <tr>
             <td style="padding: 0 24px 24px;">
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
-                <!-- Table Header -->
                 <tr style="background: #f9fafb;">
                   <th style="padding: 12px; text-align: left; font-size: 13px; font-weight: 700; color: #374151; border-bottom: 2px solid #e5e7eb;">Description</th>
-                  <th style="padding: 12px; text-align: center; font-size: 13px; font-weight: 700; color: #374151; border-bottom: 2px solid #e5e7eb; white-space: nowrap;">Qty</th>
-                  <th style="padding: 12px; text-align: right; font-size: 13px; font-weight: 700; color: #374151; border-bottom: 2px solid #e5e7eb; white-space: nowrap;">Price</th>
-                  <th style="padding: 12px; text-align: right; font-size: 13px; font-weight: 700; color: #374151; border-bottom: 2px solid #e5e7eb; white-space: nowrap;">Total</th>
+                  <th style="padding: 12px; text-align: center; font-size: 13px; font-weight: 700; color: #374151; border-bottom: 2px solid #e5e7eb;">Qty</th>
+                  <th style="padding: 12px; text-align: right; font-size: 13px; font-weight: 700; color: #374151; border-bottom: 2px solid #e5e7eb;">Price</th>
+                  <th style="padding: 12px; text-align: right; font-size: 13px; font-weight: 700; color: #374151; border-bottom: 2px solid #e5e7eb;">Total</th>
                 </tr>
-                <!-- Table Body -->
-                ${invoice.items.map((item: any, index: number) => {
-                  const lineTotal = item.total ?? item.totalPrice ?? ((item.quantity || 0) * (item.unitPrice || 0));
-                  return `
-                <tr style="background: ${index % 2 === 0 ? '#ffffff' : '#f9fafb'};">
-                  <td style="padding: 12px; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${item.description || ''}</td>
-                  <td style="padding: 12px; text-align: center; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${item.quantity || 0}</td>
-                  <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap;">${formatCurrency(item.unitPrice)}</td>
-                  <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap; font-weight: 600;">${formatCurrency(lineTotal)}</td>
-                </tr>
-                `;}).join('')}
+                ${itemsHtml}
               </table>
             </td>
           </tr>
+          ` : ''}
 
-          <!-- Totals Section -->
+          <!-- Totals -->
           <tr>
             <td style="padding: 0 24px 32px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td style="text-align: right; padding: 8px 0;">
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-left: auto;">
-                      <tr>
-                        <td style="padding: 6px 12px 6px 0; font-size: 15px; color: #6b7280; text-align: right;">Subtotal:</td>
-                        <td style="padding: 6px 0; font-size: 15px; color: #1f2937; font-weight: 600; text-align: right; min-width: 100px;">${formatCurrency(parseFloat(invoice.subtotal))}</td>
-                      </tr>
-                      <tr>
-                        <td style="padding: 6px 12px 6px 0; font-size: 15px; color: #6b7280; text-align: right;">VAT (20%):</td>
-                        <td style="padding: 6px 0; font-size: 15px; color: #1f2937; font-weight: 600; text-align: right;">${formatCurrency(parseFloat(invoice.vat_amount))}</td>
-                      </tr>
-                      <tr>
-                        <td colspan="2" style="padding: 12px 0 0; border-top: 2px solid #e5e7eb;"></td>
-                      </tr>
-                      <tr>
-                        <td style="padding: 12px 12px 0 0; font-size: 16px; color: #374151; font-weight: 700; text-align: right;">Total Amount:</td>
-                        <td style="padding: 12px 0 0; font-size: 36px; color: #FFD700; font-weight: 700; text-align: right; line-height: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">${formatCurrency(parseFloat(invoice.total) || 0)}</td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-left: auto;">
+                <tr><td style="padding: 6px 12px 6px 0; font-size: 15px; color: #6b7280;">Subtotal:</td><td style="font-size: 15px; color: #1f2937; font-weight: 600; text-align: right;">${formatCurrency(invoice.subtotal)}</td></tr>
+                <tr><td style="padding: 6px 12px 6px 0; font-size: 15px; color: #6b7280;">VAT (20%):</td><td style="font-size: 15px; color: #1f2937; font-weight: 600; text-align: right;">${formatCurrency(invoice.vat_amount)}</td></tr>
+                <tr><td colspan="2" style="padding: 12px 0 0; border-top: 2px solid #e5e7eb;"></td></tr>
+                <tr><td style="padding: 12px 12px 0 0; font-size: 16px; color: #374151; font-weight: 700;">Total:</td><td style="padding: 12px 0 0; font-size: 36px; color: #FFD700; font-weight: 700; text-align: right;">${formatCurrency(invoice.total)}</td></tr>
               </table>
             </td>
           </tr>
 
+          <!-- Notes -->
           ${invoice.invoice_notes ? `
-          <!-- Notes Section -->
           <tr>
             <td style="padding: 0 24px 24px;">
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #fffbeb; border-left: 4px solid #FFD700; border-radius: 8px;">
@@ -461,45 +526,26 @@ const handler = async (req: Request): Promise<Response> => {
           </tr>
           ` : ''}
 
-          <!-- Closing Message -->
+          <!-- Footer -->
           <tr>
             <td style="padding: 0 24px 32px;">
               <p style="margin: 0 0 16px; font-size: 15px; line-height: 1.6; color: #374151;">
-                If you have any questions about this invoice, please don't hesitate to contact us.
+                If you have any questions, please don't hesitate to contact us.
               </p>
-              <p style="margin: 0 0 4px; font-size: 15px; line-height: 1.6; color: #374151;">
-                Thank you for your business!
-              </p>
-              <p style="margin: 0 0 16px; font-size: 16px; font-weight: 700; color: #1f2937;">
-                ${companyProfile?.company_name || 'ElecMate Professional'}
-              </p>
-              ${companyProfile?.company_phone ? `
-              <p style="margin: 0 0 4px; font-size: 14px; color: #6b7280;">
-                📞 <a href="tel:${companyProfile.company_phone}" style="color: #1f2937; text-decoration: none; font-weight: 500;">${companyProfile.company_phone}</a>
-              </p>
-              ` : ''}
-              ${companyProfile?.company_email ? `
-              <p style="margin: 0; font-size: 14px; color: #6b7280;">
-                ✉️ <a href="mailto:${companyProfile.company_email}" style="color: #1f2937; text-decoration: none; font-weight: 500;">${companyProfile.company_email}</a>
-              </p>
-              ` : ''}
+              <p style="margin: 0; font-size: 16px; font-weight: 700; color: #1f2937;">${companyName}</p>
+              ${companyProfile?.company_phone ? `<p style="margin: 8px 0 0; font-size: 14px; color: #6b7280;">📞 <a href="tel:${companyProfile.company_phone}" style="color: #1f2937; text-decoration: none;">${companyProfile.company_phone}</a></p>` : ''}
+              ${companyProfile?.company_email ? `<p style="margin: 4px 0 0; font-size: 14px; color: #6b7280;">✉️ <a href="mailto:${companyProfile.company_email}" style="color: #1f2937; text-decoration: none;">${companyProfile.company_email}</a></p>` : ''}
             </td>
           </tr>
 
-          <!-- Footer -->
           <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center; border-top: 1px solid #e5e7eb;">
-              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700; letter-spacing: 0.5px;">
-                ⚡ Powered by ElecMate Professional Suite
-              </p>
-              <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.5;">
-                Professional electrical contracting tools for modern electricians
-              </p>
+            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
+              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ Powered by ElecMate</p>
+              <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical contracting tools</p>
             </td>
           </tr>
 
         </table>
-
       </td>
     </tr>
   </table>
@@ -508,17 +554,15 @@ const handler = async (req: Request): Promise<Response> => {
 </html>
     `;
 
-    // Send email via Resend with reply-to header
-    const subject = `Invoice ${invoice.invoice_number} - ${companyProfile?.company_name || 'ElecMate'}`;
-    const pdfFilename = `Invoice_${invoice.invoice_number}.pdf`;
-
-    // Build reply-to: company email → user email → support fallback
+    // ========================================================================
+    // STEP 12: Send email via Resend
+    // ========================================================================
     const replyToEmail = companyProfile?.company_email || userEmail || 'support@elec-mate.com';
+    const subject = `Invoice ${invoiceNumber} - ${companyName}`;
 
-    console.log(`📧 Sending invoice via Resend to: ${clientEmail}`);
-    console.log(`📧 Reply-to set to: ${replyToEmail}`);
+    console.log(`📧 Sending to: ${clientEmail}`);
+    console.log(`📧 Reply-to: ${replyToEmail}`);
 
-    // Build email options with optional attachment
     const emailOptions: {
       from: string;
       replyTo: string;
@@ -527,64 +571,66 @@ const handler = async (req: Request): Promise<Response> => {
       html: string;
       attachments?: Array<{ filename: string; content: string }>;
     } = {
-      from: `${companyProfile?.company_name || 'ElecMate'} <${replyToEmail}>`,
+      from: `${companyName} <invoices@elec-mate.dev>`,
       replyTo: replyToEmail,
       to: [clientEmail],
       subject: subject,
       html: emailHtml,
     };
 
-    // Add PDF attachment if available
     if (pdfAttachmentSuccess && pdfBase64) {
       emailOptions.attachments = [{
-        filename: pdfFilename,
+        filename: `Invoice_${invoiceNumber}.pdf`,
         content: pdfBase64,
       }];
-      console.log('📎 Including PDF attachment');
-    } else {
-      console.log('📧 Sending email without PDF attachment (link only)');
+      console.log('📎 PDF attached');
     }
 
     const { data: emailData, error: emailError } = await resend.emails.send(emailOptions);
 
     if (emailError) {
       console.error('❌ Resend API error:', emailError);
-      throw emailError;
+      throw new Error(`Failed to send email: ${emailError.message || 'Unknown error'}`);
     }
 
-    console.log('✅ Email sent successfully:', emailData);
+    console.log('✅ Email sent:', emailData?.id);
 
-    // Update invoice status to sent
+    // ========================================================================
+    // STEP 13: Update invoice status
+    // ========================================================================
     await supabaseClient
       .from('quotes')
-      .update({ 
+      .update({
         invoice_status: 'sent',
         invoice_sent_at: new Date().toISOString()
       })
       .eq('id', invoiceId);
 
+    const duration = Date.now() - startTime;
+    console.log(`✅ Complete in ${duration}ms`);
+
     return new Response(
       JSON.stringify({
         success: true,
-        message: pdfAttachmentSuccess ? 'Invoice sent successfully with PDF attachment' : 'Invoice sent successfully (link only, PDF attachment unavailable)',
-        emailId: emailData.id,
+        message: pdfAttachmentSuccess ? 'Invoice sent with PDF attachment' : 'Invoice sent (link only)',
+        emailId: emailData?.id,
         pdfAttached: pdfAttachmentSuccess,
         payNowIncluded: !!stripePaymentUrl,
-        paymentUrl: stripePaymentUrl || null,
+        duration: `${duration}ms`,
       }),
-      {
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      }
+      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
+
   } catch (error: any) {
-    console.error('❌ Error in send-invoice-resend function:', error);
+    const duration = Date.now() - startTime;
+    console.error(`❌ Error after ${duration}ms:`, error);
+
     return new Response(
-      JSON.stringify({ error: error.message || 'Failed to send invoice' }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      }
+      JSON.stringify({
+        error: error.message || 'Failed to send invoice',
+        hint: 'Check that the invoice has a valid client email address.',
+      }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 };

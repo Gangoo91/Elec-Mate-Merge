@@ -66,6 +66,8 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
   
   const [title, setTitle] = useState("");
   const [client, setClient] = useState("");
+  const [clientPhone, setClientPhone] = useState("");
+  const [clientEmail, setClientEmail] = useState("");
   const [location, setLocation] = useState("");
   const [status, setStatus] = useState<JobStatus>("Active");
   const [progress, setProgress] = useState(0);
@@ -88,6 +90,8 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
     if (job) {
       setTitle(job.title);
       setClient(job.client);
+      setClientPhone(job.client_phone || "");
+      setClientEmail(job.client_email || "");
       setLocation(job.location);
       setStatus(job.status);
       setProgress(job.progress);
@@ -112,6 +116,8 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
         updates: {
           title,
           client,
+          client_phone: clientPhone || null,
+          client_email: clientEmail || null,
           location,
           status,
           progress,
@@ -215,7 +221,35 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
     const query = encodeURIComponent(job.location);
     window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
   };
-  
+
+  const handleCall = () => {
+    if (!job) return;
+    if (job.client_phone) {
+      window.location.href = `tel:${job.client_phone}`;
+    } else {
+      toast({
+        title: "No phone number",
+        description: "Add a client phone number to enable calling.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleMessage = () => {
+    if (!job) return;
+    if (job.client_email) {
+      window.location.href = `mailto:${job.client_email}?subject=Re: ${encodeURIComponent(job.title)}`;
+    } else if (job.client_phone) {
+      window.location.href = `sms:${job.client_phone}`;
+    } else {
+      toast({
+        title: "No contact info",
+        description: "Add a client email or phone to enable messaging.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const handleArchive = async () => {
     if (!job) return;
     
@@ -325,11 +359,11 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
               
               {/* Quick Actions */}
               <div className="flex gap-2 pt-2">
-                <Button variant="outline" size="sm" className="flex-1 h-10 gap-2">
+                <Button variant="outline" size="sm" className="flex-1 h-10 gap-2" onClick={handleCall}>
                   <Phone className="h-4 w-4" />
                   Call
                 </Button>
-                <Button variant="outline" size="sm" className="flex-1 h-10 gap-2">
+                <Button variant="outline" size="sm" className="flex-1 h-10 gap-2" onClick={handleMessage}>
                   <MessageSquare className="h-4 w-4" />
                   Message
                 </Button>
@@ -594,19 +628,35 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
             <div className="space-y-2">
               <p className="text-xs text-muted-foreground uppercase tracking-wide px-1">Quick Links</p>
               <div className="grid grid-cols-2 gap-2">
-                <Button variant="outline" className="h-12 justify-start gap-2">
+                <Button
+                  variant="outline"
+                  className="h-12 justify-start gap-2"
+                  onClick={() => toast({ title: "Job Pack", description: "Job pack generation coming soon" })}
+                >
                   <FileText className="h-4 w-4 text-elec-yellow" />
                   Job Pack
                 </Button>
-                <Button variant="outline" className="h-12 justify-start gap-2">
+                <Button
+                  variant="outline"
+                  className="h-12 justify-start gap-2"
+                  onClick={() => toast({ title: "Timesheets", description: "View timesheets in the Timesheets section" })}
+                >
                   <Clock className="h-4 w-4 text-elec-yellow" />
                   Timesheets
                 </Button>
-                <Button variant="outline" className="h-12 justify-start gap-2">
+                <Button
+                  variant="outline"
+                  className="h-12 justify-start gap-2"
+                  onClick={() => toast({ title: "Photos", description: "View photos in the Photo Gallery section" })}
+                >
                   <Camera className="h-4 w-4 text-elec-yellow" />
                   Photos
                 </Button>
-                <Button variant="outline" className="h-12 justify-start gap-2">
+                <Button
+                  variant="outline"
+                  className="h-12 justify-start gap-2"
+                  onClick={() => toast({ title: "Documents", description: "Document management coming soon" })}
+                >
                   <FolderOpen className="h-4 w-4 text-elec-yellow" />
                   Documents
                 </Button>

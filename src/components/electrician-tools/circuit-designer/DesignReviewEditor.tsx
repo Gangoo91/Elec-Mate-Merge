@@ -7,6 +7,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import InstallationSpecialistInterface from '@/components/electrician-tools/installation-specialist/InstallationSpecialistInterface';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { InstallationDesign, CircuitDesign } from '@/types/installation-design';
@@ -206,6 +208,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
   const [selectedCircuitsForInstall, setSelectedCircuitsForInstall] = useState<number[]>([0]);
   const [showCircuitSelector, setShowCircuitSelector] = useState(false);
+  const [showInstallSheet, setShowInstallSheet] = useState(false);
+  const [installContext, setInstallContext] = useState<any>(null);
   const [regeneratingCircuits, setRegeneratingCircuits] = useState<Set<number>>(new Set());
   const [justificationsPatchVersion, setJustificationsPatchVersion] = useState(0);
   const [showSuccessAnimation, setShowSuccessAnimation] = useState(true);
@@ -1040,11 +1044,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         )) || []
       };
 
-      // Phase 3: Use sessionStorage instead of URL params
-      const sessionId = `design-context-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-      sessionStorage.setItem(sessionId, JSON.stringify(context));
-
-      navigate(`/electrician/installation-specialist?sessionId=${sessionId}`);
+      // Phase 4: Open in bottom sheet instead of navigating away
+      // This keeps the user on the results page so they can do other actions (PDF, EIC) after
+      setInstallContext(context);
+      setShowInstallSheet(true);
       toast.success(`Opening Installation Specialist with ${selectedCircuitsForInstall.length} circuit(s)`);
     } catch (error) {
       console.error('Failed to proceed to installer:', error);
@@ -2827,6 +2830,31 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         </Button>
       </div>
     </motion.div>
+
+    {/* Installation Specialist Bottom Sheet */}
+    <Sheet open={showInstallSheet} onOpenChange={setShowInstallSheet}>
+      <SheetContent
+        side="bottom"
+        className="h-[90vh] p-0 rounded-t-2xl overflow-hidden"
+      >
+        <div className="h-full overflow-auto bg-background">
+          <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-white/10 px-4 py-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-500/10 border border-blue-500/20">
+                <Wrench className="h-5 w-5 text-blue-400" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-white">Installation Specialist</h2>
+                <p className="text-xs text-white/50">Step-by-step installation guidance</p>
+              </div>
+            </div>
+          </div>
+          <div className="px-4 py-4">
+            <InstallationSpecialistInterface designerContext={installContext} />
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
     </>
   );
 };

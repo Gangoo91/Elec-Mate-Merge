@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { User, Trash2, FileEdit, Send, CheckCircle, XCircle, MoreVertical, Clock } from 'lucide-react';
+import { User, Trash2, FileEdit, Send, CheckCircle, XCircle, Clock, Eye, Edit, Calendar } from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -27,47 +27,57 @@ export function SwipeableQuoteCard({
 
   const statusConfig = {
     draft: {
-      color: 'bg-slate-500',
+      color: 'bg-slate-100 text-slate-700 dark:bg-slate-950 dark:text-slate-300 border-slate-200 dark:border-slate-800',
       label: 'Draft',
       icon: FileEdit,
-      textColor: 'text-slate-500'
+      borderColor: 'border-slate-500/30 border-l-4 border-l-slate-500/60'
     },
     sent: {
-      color: 'bg-amber-500',
+      color: 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200 dark:border-amber-800',
       label: 'Sent',
       icon: Send,
-      textColor: 'text-amber-500'
+      borderColor: 'border-amber-500/30 border-l-4 border-l-amber-500/60'
     },
     pending: {
-      color: 'bg-amber-500',
+      color: 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200 dark:border-amber-800',
       label: 'Pending',
       icon: Clock,
-      textColor: 'text-amber-500'
+      borderColor: 'border-amber-500/30 border-l-4 border-l-amber-500/60'
     },
     approved: {
-      color: 'bg-green-500',
+      color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
       label: 'Approved',
       icon: CheckCircle,
-      textColor: 'text-green-500'
+      borderColor: 'border-green-500/30 border-l-4 border-l-green-500/60'
     },
     rejected: {
-      color: 'bg-red-500',
+      color: 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300 border-red-200 dark:border-red-800',
       label: 'Declined',
       icon: XCircle,
-      textColor: 'text-red-500'
+      borderColor: 'border-red-500/30 border-l-4 border-l-red-500/60'
     },
   }[quote.status] || {
-    color: 'bg-slate-500',
+    color: 'bg-slate-100 text-slate-700 dark:bg-slate-950 dark:text-slate-300 border-slate-200 dark:border-slate-800',
     label: quote.status,
     icon: FileEdit,
-    textColor: 'text-slate-500'
+    borderColor: 'border-slate-500/30 border-l-4 border-l-slate-500/60'
   };
 
   // Use acceptance_status if available
   const finalStatus = quote.acceptance_status === 'accepted'
-    ? { ...statusConfig, color: 'bg-green-500', label: 'Accepted', icon: CheckCircle, textColor: 'text-green-500' }
+    ? {
+        color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
+        label: 'Accepted',
+        icon: CheckCircle,
+        borderColor: 'border-green-500/30 border-l-4 border-l-green-500/60'
+      }
     : quote.acceptance_status === 'rejected'
-    ? { ...statusConfig, color: 'bg-red-500', label: 'Declined', icon: XCircle, textColor: 'text-red-500' }
+    ? {
+        color: 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300 border-red-200 dark:border-red-800',
+        label: 'Declined',
+        icon: XCircle,
+        borderColor: 'border-red-500/30 border-l-4 border-l-red-500/60'
+      }
     : statusConfig;
 
   const StatusIcon = finalStatus.icon;
@@ -81,7 +91,7 @@ export function SwipeableQuoteCard({
       className="relative"
     >
       {/* Delete action background (revealed on swipe left) */}
-      <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-end px-6 bg-red-500 rounded-xl overflow-hidden">
+      <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-end px-6 bg-red-500 rounded-2xl overflow-hidden">
         <div className="flex items-center gap-2">
           <Trash2 className="h-5 w-5 text-white" />
           <span className="text-white font-medium">Delete</span>
@@ -90,7 +100,10 @@ export function SwipeableQuoteCard({
 
       {/* Card Content */}
       <motion.div
-        className="relative bg-card border border-border/30 rounded-xl p-4 touch-manipulation cursor-pointer"
+        className={cn(
+          "relative bg-elec-card rounded-2xl overflow-hidden touch-manipulation cursor-pointer border",
+          finalStatus.borderColor
+        )}
         animate={{ x: swipeOffset }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         drag="x"
@@ -107,69 +120,106 @@ export function SwipeableQuoteCard({
         }}
         onClick={() => !isDragging && onView()}
       >
-        <div className="flex items-start gap-3">
-          {/* Client Avatar */}
-          <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30 shrink-0">
-            <User className="h-5 w-5 text-elec-yellow" />
-          </div>
-
-          {/* Quote Info */}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-2 mb-1">
-              <div className="min-w-0 flex-1">
-                <h3 className="font-semibold text-foreground truncate text-base">
-                  {quote.client?.name || 'Unknown Client'}
-                </h3>
-                <p className="text-sm text-muted-foreground truncate">
-                  {quote.jobDetails?.title || 'Electrical Work'}
-                </p>
-              </div>
-              <Badge className={cn('shrink-0 text-white', finalStatus.color)}>
+        {/* Header: Quote Number + Status Badge */}
+        <div className="flex items-start justify-between p-4 pb-3 border-b border-primary/20">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className="text-lg sm:text-xl font-bold">
+                {quote.quoteNumber || 'Quote'}
+              </h3>
+              <Badge className={cn('text-xs', finalStatus.color)}>
                 <StatusIcon className="h-3 w-3 mr-1" />
                 {finalStatus.label}
               </Badge>
             </div>
-
-            <div className="mt-3 flex items-center justify-between">
-              <div>
-                <p className="text-xs text-muted-foreground">Quote Value</p>
-                <p className="text-lg font-bold text-elec-yellow">
-                  £{(quote.total || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </p>
+            {quote.jobDetails?.title && (
+              <div className="text-xs text-muted-foreground">
+                {quote.jobDetails.title}
               </div>
-              <div className="text-right">
-                <p className="text-xs text-muted-foreground">Created</p>
-                <p className="text-sm font-medium">
-                  {format(new Date(quote.createdAt), 'dd MMM')}
-                </p>
-              </div>
-              <div className="text-right">
-                <p className="text-xs text-muted-foreground">Expires</p>
-                <p className="text-sm font-medium">
-                  {format(new Date(quote.expiryDate), 'dd MMM')}
-                </p>
-              </div>
-            </div>
-
-            {/* Quote Number */}
-            <div className="mt-2 pt-2 border-t border-border/30">
-              <p className="text-xs text-muted-foreground">
-                {quote.quoteNumber}
-              </p>
-            </div>
+            )}
           </div>
-
-          {/* Quick Actions Button */}
           <Button
             variant="ghost"
             size="icon"
-            className="shrink-0 h-9 w-9"
+            onClick={(e) => {
+              e.stopPropagation();
+              onView();
+            }}
+            className="h-8 w-8 flex-shrink-0"
+          >
+            <Eye className="h-4 w-4" />
+          </Button>
+        </div>
+
+        {/* Client Information */}
+        <div className="flex items-center gap-2 px-4 py-3">
+          <div className="w-12 h-12 flex items-center justify-center flex-shrink-0">
+            <User className="h-12 w-12 text-muted-foreground/40" strokeWidth={1.5} />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="text-xs text-muted-foreground mb-0.5">Client</div>
+            <div className="text-base font-medium truncate">
+              {quote.client?.name || 'Unknown Client'}
+            </div>
+            {quote.client?.email && (
+              <div className="text-xs text-muted-foreground truncate">
+                {quote.client.email}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Amount Display - Centered */}
+        <div className="text-center mx-4 mb-4 py-4 bg-background/40 rounded-lg border border-primary/10">
+          <div className="text-sm text-muted-foreground mb-1">Quote Value</div>
+          <div className="text-3xl sm:text-4xl font-bold text-elec-yellow">
+            £{(quote.total || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          </div>
+        </div>
+
+        {/* Date Grid - 2 columns */}
+        <div className="grid grid-cols-2 gap-4 px-4 mb-4 text-sm">
+          <div>
+            <div className="text-xs text-muted-foreground mb-1">Created</div>
+            <div className="text-foreground font-medium flex items-center gap-1">
+              <Calendar className="h-3 w-3" />
+              {quote.createdAt ? format(new Date(quote.createdAt), 'dd MMM yyyy') : 'N/A'}
+            </div>
+          </div>
+          <div>
+            <div className="text-xs text-muted-foreground mb-1">Expires</div>
+            <div className="text-foreground font-medium flex items-center gap-1">
+              <Calendar className="h-3 w-3" />
+              {quote.expiryDate ? format(new Date(quote.expiryDate), 'dd MMM yyyy') : 'N/A'}
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons - 2 columns */}
+        <div className="grid grid-cols-2 gap-2 px-4 pb-4">
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full"
+            onClick={(e) => {
+              e.stopPropagation();
+              onView();
+            }}
+          >
+            <Eye className="h-4 w-4 mr-2" />
+            View
+          </Button>
+          <Button
+            variant="default"
+            size="sm"
+            className="w-full"
             onClick={(e) => {
               e.stopPropagation();
               onEdit();
             }}
           >
-            <MoreVertical className="h-4 w-4" />
+            <Edit className="h-4 w-4 mr-2" />
+            Edit
           </Button>
         </div>
       </motion.div>

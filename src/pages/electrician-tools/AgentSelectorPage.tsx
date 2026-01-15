@@ -4,21 +4,21 @@ import { ArrowLeft, ArrowRight, Zap, Calculator, Wrench, Shield, CheckCircle2, C
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-// Animation variants
+// Animation variants - Smooth, fast entrance
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.06, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.02, delayChildren: 0 },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: { opacity: 0, y: 8 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: 'spring', stiffness: 300, damping: 24 },
+    transition: { duration: 0.2, ease: 'easeOut' },
   },
 };
 

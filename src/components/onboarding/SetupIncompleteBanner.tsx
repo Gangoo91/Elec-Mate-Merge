@@ -118,11 +118,11 @@ export function SetupIncompleteBanner() {
           <Button
             variant="ghost"
             size="icon"
-            className="shrink-0 h-8 w-8 touch-manipulation"
+            className="shrink-0 h-11 w-11 touch-manipulation"
             onClick={handleDismiss}
             disabled={dismissBanner.isPending}
           >
-            <X className="h-4 w-4" />
+            <X className="h-5 w-5" />
           </Button>
         </div>
       </Card>

@@ -335,7 +335,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
                     "border-2",
                     isActive && "bg-elec-yellow text-black border-elec-yellow shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.2)]",
                     isCompleted && "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40",
-                    !isActive && !isCompleted && "bg-white/5 text-white/40 border-white/10"
+                    !isActive && !isCompleted && "bg-amber-950/30 text-white/40 border-amber-800/20"
                   )}
                 >
                   {isCompleted ? (
@@ -359,7 +359,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
         </div>
 
         {/* Progress bar */}
-        <div className="mt-4 h-1 bg-white/10 rounded-full overflow-hidden">
+        <div className="mt-4 h-1 bg-amber-950/40 rounded-full overflow-hidden">
           <motion.div
             className="h-full bg-gradient-to-r from-elec-yellow to-elec-yellow/80 rounded-full"
             initial={{ width: 0 }}
@@ -370,7 +370,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
       </div>
 
       {/* Step Content with animations */}
-      <Card className="bg-white/5 backdrop-blur-xl border-white/10 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] overflow-hidden">
+      <Card className="bg-gradient-to-br from-amber-950/30 to-black/20 backdrop-blur-xl border-amber-800/20 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] overflow-hidden">
         <div className="p-4 sm:p-6">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
@@ -393,7 +393,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
 
       {/* Premium Navigation */}
       <div className="pb-safe">
-        <Card className="bg-white/5 backdrop-blur-xl border-white/10 rounded-2xl p-3 sm:p-4 sticky bottom-0 sm:static shadow-[0_-4px_20px_rgba(0,0,0,0.3)]">
+        <Card className="bg-gradient-to-br from-amber-950/30 to-black/20 backdrop-blur-xl border-amber-800/20 rounded-2xl p-3 sm:p-4 sticky bottom-0 sm:static shadow-[0_-4px_20px_rgba(0,0,0,0.3)]">
           <div className="flex items-center justify-between gap-3">
             <Button
               variant="ghost"
@@ -401,8 +401,8 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
               disabled={currentStep === 0 || isProcessing}
               className={cn(
                 "gap-2 h-12 px-4 rounded-xl",
-                "bg-white/5 border border-white/10",
-                "hover:bg-white/10 hover:border-white/20",
+                "bg-amber-950/30 border border-amber-800/20",
+                "hover:bg-amber-900/20 hover:border-amber-600/30",
                 "disabled:opacity-30",
                 "transition-all duration-ios-fast",
                 "touch-manipulation"
@@ -414,14 +414,14 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
 
             {/* Step indicator for mobile */}
             <div className="flex-1 flex justify-center sm:hidden">
-              <Badge variant="secondary" className="bg-white/10 text-white/80 border-0">
+              <Badge variant="secondary" className="bg-amber-950/40 text-white/80 border-0">
                 {currentStep + 1} / {STEPS.length}
               </Badge>
             </div>
 
             {/* Progress percentage for desktop */}
             <div className="hidden sm:flex flex-1 justify-center">
-              <Badge variant="secondary" className="bg-white/10 text-white/80 border-0 px-3 py-1">
+              <Badge variant="secondary" className="bg-amber-950/40 text-white/80 border-0 px-3 py-1">
                 {Math.round(progressPercentage)}% Complete
               </Badge>
             </div>
@@ -434,7 +434,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
                   "gap-2 h-12 px-6 rounded-xl",
                   "bg-elec-yellow text-black font-semibold",
                   "hover:bg-elec-yellow/90",
-                  "disabled:opacity-30 disabled:bg-white/10 disabled:text-white/40",
+                  "disabled:opacity-30 disabled:bg-amber-950/30 disabled:text-white/40",
                   "shadow-[0_2px_8px_rgba(0,0,0,0.2)]",
                   "active:scale-[0.98]",
                   "transition-all duration-ios-fast",
@@ -452,7 +452,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
                   "gap-2 h-12 px-6 rounded-xl",
                   "bg-gradient-to-r from-elec-yellow to-amber-500 text-black font-semibold",
                   "hover:from-elec-yellow/90 hover:to-amber-500/90",
-                  "disabled:opacity-30 disabled:from-white/10 disabled:to-white/10 disabled:text-white/40",
+                  "disabled:opacity-30 disabled:from-amber-950/30 disabled:to-amber-950/30 disabled:text-white/40",
                   "shadow-[0_4px_12px_rgba(0,0,0,0.3)]",
                   "active:scale-[0.98]",
                   "transition-all duration-ios-fast",

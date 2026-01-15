@@ -60,12 +60,12 @@ export const ProjectInfoStep = ({
                 key={type.value}
                 className={cn(
                   "relative p-4 rounded-xl cursor-pointer",
-                  "bg-white/5 backdrop-blur border-2",
+                  "bg-gradient-to-br from-amber-950/30 to-black/20 backdrop-blur border-2",
                   "transition-all duration-ios-normal ease-ios-ease",
                   "touch-manipulation active:scale-[0.98]",
                   isSelected
                     ? "border-elec-yellow bg-elec-yellow/10 shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.1)]"
-                    : "border-white/10 hover:border-white/20 hover:bg-white/8"
+                    : "border-amber-800/20 hover:border-amber-600/30 hover:bg-amber-900/20"
                 )}
                 onClick={() => setInstallationType(type.value as any)}
               >

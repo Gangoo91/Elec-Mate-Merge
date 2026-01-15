@@ -1,8 +1,5 @@
-import { ArrowLeft, Eye, Target, CheckCircle, Shield, AlertTriangle, Zap } from "lucide-react";
+import { ArrowLeft, CheckCircle, Shield, AlertTriangle, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import useSEO from "@/hooks/useSEO";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -14,7 +11,6 @@ const Module6Section3_5 = () => {
     "The most reliable way to confirm circuits are dead using proper testing equipment"
   );
 
-  // Quiz questions
   const quizQuestions = [
     {
       id: 1,
@@ -132,11 +128,15 @@ const Module6Section3_5 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.3
@@ -145,532 +145,507 @@ const Module6Section3_5 = () => {
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Zap className="w-6 h-6 text-white" />
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 6.3.5</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 6.3.5
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Using a Proving Unit and Two-Pole Voltage Tester
-          </h1>
-          <p className="text-white">
-            The most reliable way to confirm circuits are dead using proper testing equipment
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Using a Proving Unit and Two-Pole Voltage Tester
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              The most reliable way to confirm circuits are dead using proper testing equipment
+            </p>
+          </header>
 
-        {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-white" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-3">In 30 seconds</p>
-              <ul className="space-y-2 text-sm">
+          {/* Quick Reference Summary */}
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
+            <p className="font-medium text-white mb-3">Spot it in 30 Seconds</p>
+            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+              <ul className="space-y-2">
                 <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
+                  <span className="text-elec-yellow">•</span>
                   <span>Two-pole voltage tester with fused, shrouded leads (GS38)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
+                  <span className="text-elec-yellow">•</span>
                   <span>Proving unit to verify tester operation before and after</span>
                 </li>
+              </ul>
+              <ul className="space-y-2">
                 <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
+                  <span className="text-elec-yellow">•</span>
                   <span>Live-dead-live sequence: prove → test → re-prove</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
+                  <span className="text-elec-yellow">•</span>
                   <span>Never use neon screwdrivers or voltage pens for proving dead</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
-              <p className="font-medium mb-3">Spot it / Use it / Check it</p>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Spot:</strong> GS38-compliant testers; proving units; damaged leads; unsafe tools</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Use:</strong> Live-dead-live sequence; test all conductor combinations; proper PPE</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Check:</strong> Tester function; lead condition; consistent readings; re-prove after use</span>
-                </li>
-              </ul>
-            </div>
           </div>
-        </Card>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <p className="text-base text-white mb-4">
-            The most reliable way to confirm that a circuit is dead and safe to work on is by using a two-pole voltage tester in combination with a proving unit. This method ensures your tester is functioning correctly before and after use, and that circuits are properly verified.
-          </p>
-          <p className="text-base text-white">
-            This subsection will guide you through correct procedures, safety practices, and common pitfalls when using these essential pieces of safety equipment.
-          </p>
-        </Card>
-
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-base text-white mb-4">By the end of this subsection, you will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>Identify the purpose of a proving unit and two-pole tester.</li>
-            <li>Use both devices together as part of safe isolation.</li>
-            <li>Follow the correct sequence for proving before and after testing.</li>
-            <li>Recognise unsafe tools and practices (e.g., neon screwdrivers).</li>
-            <li>Apply GS38 compliance to tester selection and use.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
-
-          {/* 1. Why Use a Proving Unit? */}
-          <section className="mb-6">
-            <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Why Use a Proving Unit?</p>
-                    
-                    <div className="space-y-4">
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Confirms Tester Operation:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Verifies that your voltage tester is working correctly before use</li>
-                           <li>Provides a known voltage source for testing tester function</li>
-                           <li>Confirms tester sensitivity and response to live circuits</li>
-                           <li>Checks both visual and audible indication functions</li>
-                           <li>Ensures batteries and internal components are functioning</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Ensures Live-Dead-Live Check:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Proves tester works before testing the circuit (live)</li>
-                           <li>Tests the circuit to confirm it's dead (dead)</li>
-                           <li>Re-proves tester still works after testing (live)</li>
-                           <li>Identifies if tester fails during the proving process</li>
-                           <li>Provides confidence in the test results</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Prevents False Results:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Detects faulty testers that might give false 'dead' readings</li>
-                           <li>Identifies testers with flat batteries or internal faults</li>
-                           <li>Prevents dangerous assumptions about circuit condition</li>
-                           <li>Ensures consistent and reliable test methodology</li>
-                           <li>Meets GS38 requirements for proving tester function</li>
-                         </ul>
-                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          {/* Introduction */}
+          <section className="mb-10">
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                The most reliable way to confirm that a circuit is dead and safe to work on is by using a two-pole voltage tester in combination with a proving unit. This method ensures your tester is functioning correctly before and after use, and that circuits are properly verified.
+              </p>
+              <p>
+                This subsection will guide you through correct procedures, safety practices, and common pitfalls when using these essential pieces of safety equipment.
+              </p>
             </div>
           </section>
 
-          <InlineCheck
-            id="proving-unit-purpose"
-            question="What is the main purpose of a proving unit?"
-            options={["To test insulation resistance", "To confirm tester operation", "To measure voltage", "To check polarity"]}
-            correctIndex={1}
-            explanation="A proving unit confirms that your voltage tester is working correctly before and after use, ensuring reliable test results."
-          />
-          <Separator className="my-6" />
-
-          {/* 2. Why a Two-Pole Voltage Tester? */}
-          <section className="mb-6">
-            <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-600 dark:text-green-400 mb-3">Why a Two-Pole Voltage Tester?</p>
-                    
-                    <div className="space-y-4">
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Direct Voltage Indication:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Provides direct measurement between two specific points</li>
-                           <li>Shows actual voltage present across conductors</li>
-                           <li>Clear visual and/or audible indication of voltage presence</li>
-                           <li>No ambiguity about circuit condition</li>
-                           <li>Works independently of earth connections</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Safety and Reliability:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Much safer than neon screwdrivers or single-pole devices</li>
-                           <li>Doesn't rely on your body to complete the circuit</li>
-                           <li>Provides consistent results regardless of user</li>
-                           <li>Less susceptible to interference from nearby circuits</li>
-                           <li>Can detect lower voltage levels reliably</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>GS38 Compliance:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Meets all GS38 safety requirements for test equipment</li>
-                           <li>Features fused test leads to limit fault current</li>
-                           <li>Has shrouded or protected probe tips</li>
-                           <li>Designed specifically for electrical safety testing</li>
-                           <li>Appropriate CAT rating for the system voltage</li>
-                         </ul>
-                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            id="two-pole-tester"
-            question="Why are two-pole voltage testers preferred over neon screwdrivers?"
-            options={["They're cheaper", "They don't rely on your body", "They're faster", "They look more professional"]}
-            correctIndex={1}
-            explanation="Two-pole testers don't rely on your body to complete the circuit, making them much safer and more reliable than neon screwdrivers."
-          />
-          <Separator className="my-6" />
-
-          {/* 3. The Correct Sequence */}
-          <section className="mb-6">
-            <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">The Correct Sequence (Live-Dead-Live)</p>
-                    
-                    <div className="space-y-4">
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Step 1: Prove Tester (LIVE)</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Switch on the proving unit to provide known voltage</li>
-                           <li>Test your voltage tester on the proving unit terminals</li>
-                           <li>Verify both visual and audible indications work</li>
-                           <li>Confirm tester responds correctly to live voltage</li>
-                           <li>Check test leads and probes are making good contact</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Step 2: Test Circuit (DEAD)</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Test L–N (Live to Neutral) at the point of work</li>
-                           <li>Test L–E (Live to Earth) at the point of work</li>
-                           <li>Test N–E (Neutral to Earth) at the point of work</li>
-                           <li>All tests should show no voltage present</li>
-                           <li>Test at the exact location where work will be performed</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Step 3: Re-prove Tester (LIVE)</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Return to the proving unit immediately after testing</li>
-                           <li>Test your voltage tester again on the proving unit</li>
-                           <li>Confirm tester still responds to live voltage</li>
-                           <li>Verify no damage occurred during the proving process</li>
-                           <li>Only proceed with work if re-prove is successful</li>
-                         </ul>
-                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            id="live-dead-live-sequence"
-            question="What is the correct sequence for proving dead?"
-            options={["Dead-live-dead", "Live-dead-live", "Lock-off only", "Test then isolate"]}
-            correctIndex={1}
-            explanation="Live-dead-live: prove tester works, test circuit is dead, re-prove tester still works. This ensures reliable results."
-          />
-          <Separator className="my-6" />
-
-          {/* 4. Unsafe Practices to Avoid */}
-          <section className="mb-6">
-            <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Unsafe Practices to Avoid</p>
-                    
-                    <div className="space-y-4">
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Never Use Neon Screwdrivers:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Rely on your body to complete the circuit - unsafe design</li>
-                           <li>Don't meet GS38 safety requirements</li>
-                           <li>Can give false readings due to induced voltages</li>
-                           <li>Provide no indication of voltage level</li>
-                           <li>Can fail to detect dangerous voltages</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Don't Skip Re-proving:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Tester could have failed during the proving process</li>
-                           <li>Internal fuses may have blown due to fault conditions</li>
-                           <li>Test leads could have been damaged</li>
-                           <li>Battery could have failed during testing</li>
-                           <li>Essential step for confirming continued tester function</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Avoid Non-GS38 Equipment:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Damaged or non-compliant test leads are dangerous</li>
-                           <li>Wrong CAT rating could lead to equipment failure</li>
-                           <li>Unfused leads don't provide fault current protection</li>
-                           <li>Non-shrouded probes increase shock risk</li>
-                           <li>Home-made or modified test equipment is prohibited</li>
-                         </ul>
-                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            id="unsafe-practices"
-            question="Which tool should never be used for proving dead?"
-            options={["Two-pole voltage tester", "Proving unit", "Neon screwdriver", "Digital multimeter"]}
-            correctIndex={2}
-            explanation="Neon screwdrivers should never be used for proving dead as they rely on your body to complete the circuit and are not GS38 compliant."
-          />
-          <Separator className="my-6" />
-
-        </Card>
-
-        {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div>
-              <h3 className="font-semibold text-white mb-3">Equipment Requirements</h3>
-              <ul className="space-y-2 text-xs sm:text-sm text-white">
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">00</span>
+              Learning Outcomes
+            </h2>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <p className="text-white/80 mb-3">By the end of this subsection, you will be able to:</p>
+              <ul className="space-y-2 text-white/80">
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Always carry a GS38-compliant two-pole tester and proving unit</span>
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+                  <span>Identify the purpose of a proving unit and two-pole tester</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Keep test leads clean, dry, and free from exposed metal</span>
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+                  <span>Use both devices together as part of safe isolation</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Store proving units properly — avoid extreme temperatures</span>
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+                  <span>Follow the correct sequence for proving before and after testing</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Check equipment calibration and maintenance dates</span>
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+                  <span>Recognise unsafe tools and practices (e.g., neon screwdrivers)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+                  <span>Apply GS38 compliance to tester selection and use</span>
                 </li>
               </ul>
             </div>
-            <div>
-              <h3 className="font-semibold text-white mb-3">Safe Working Practices</h3>
-              <ul className="space-y-2 text-xs sm:text-sm text-white">
-                <li className="flex items-start gap-2">
-                  <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Treat all circuits as live until proven otherwise</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Inspect test equipment before each use</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Follow manufacturer's instructions for all equipment</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Stop work immediately if equipment fails re-prove test</span>
-                </li>
-              </ul>
+          </section>
+
+          {/* Section 1: Why Use a Proving Unit? */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Why Use a Proving Unit?
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div>
+                <p className="font-medium text-white mb-2">Confirms Tester Operation:</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Verifies that your voltage tester is working correctly before use</li>
+                  <li>• Provides a known voltage source for testing tester function</li>
+                  <li>• Confirms tester sensitivity and response to live circuits</li>
+                  <li>• Checks both visual and audible indication functions</li>
+                  <li>• Ensures batteries and internal components are functioning</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-medium text-white mb-2">Ensures Live-Dead-Live Check:</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Proves tester works before testing the circuit (live)</li>
+                  <li>• Tests the circuit to confirm it's dead (dead)</li>
+                  <li>• Re-proves tester still works after testing (live)</li>
+                  <li>• Identifies if tester fails during the proving process</li>
+                  <li>• Provides confidence in the test results</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-medium text-white mb-2">Prevents False Results:</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Detects faulty testers that might give false 'dead' readings</li>
+                  <li>• Identifies testers with flat batteries or internal faults</li>
+                  <li>• Prevents dangerous assumptions about circuit condition</li>
+                  <li>• Ensures consistent and reliable test methodology</li>
+                  <li>• Meets GS38 requirements for proving tester function</li>
+                </ul>
+              </div>
             </div>
+          </section>
+
+          <div className="mb-10">
+            <InlineCheck
+              id="proving-unit-purpose"
+              question="What is the main purpose of a proving unit?"
+              options={["To test insulation resistance", "To confirm tester operation", "To measure voltage", "To check polarity"]}
+              correctIndex={1}
+              explanation="A proving unit confirms that your voltage tester is working correctly before and after use, ensuring reliable test results."
+            />
           </div>
-        </Card>
 
-        {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
-          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-6 rounded-lg">
-            <h3 className="text-amber-700 dark:text-amber-400 font-semibold mb-4">Case Study: The Hidden Tester Failure</h3>
-            <div className="space-y-4">
-              <p className="text-white">
+          {/* Section 2: Why a Two-Pole Voltage Tester? */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Why a Two-Pole Voltage Tester?
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div>
+                <p className="font-medium text-white mb-2">Direct Voltage Indication:</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Provides direct measurement between two specific points</li>
+                  <li>• Shows actual voltage present across conductors</li>
+                  <li>• Clear visual and/or audible indication of voltage presence</li>
+                  <li>• No ambiguity about circuit condition</li>
+                  <li>• Works independently of earth connections</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-medium text-white mb-2">Safety and Reliability:</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Much safer than neon screwdrivers or single-pole devices</li>
+                  <li>• Doesn't rely on your body to complete the circuit</li>
+                  <li>• Provides consistent results regardless of user</li>
+                  <li>• Less susceptible to interference from nearby circuits</li>
+                  <li>• Can detect lower voltage levels reliably</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-medium text-white mb-2">GS38 Compliance:</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Meets all GS38 safety requirements for test equipment</li>
+                  <li>• Features fused test leads to limit fault current</li>
+                  <li>• Has shrouded or protected probe tips</li>
+                  <li>• Designed specifically for electrical safety testing</li>
+                  <li>• Appropriate CAT rating for the system voltage</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <div className="mb-10">
+            <InlineCheck
+              id="two-pole-tester"
+              question="Why are two-pole voltage testers preferred over neon screwdrivers?"
+              options={["They're cheaper", "They don't rely on your body", "They're faster", "They look more professional"]}
+              correctIndex={1}
+              explanation="Two-pole testers don't rely on your body to complete the circuit, making them much safer and more reliable than neon screwdrivers."
+            />
+          </div>
+
+          {/* Section 3: The Correct Sequence */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              The Correct Sequence (Live-Dead-Live)
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+                <p className="font-medium text-white mb-2">Step 1: Prove Tester (LIVE)</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Switch on the proving unit to provide known voltage</li>
+                  <li>• Test your voltage tester on the proving unit terminals</li>
+                  <li>• Verify both visual and audible indications work</li>
+                  <li>• Confirm tester responds correctly to live voltage</li>
+                  <li>• Check test leads and probes are making good contact</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white mb-2">Step 2: Test Circuit (DEAD)</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Test L–N (Live to Neutral) at the point of work</li>
+                  <li>• Test L–E (Live to Earth) at the point of work</li>
+                  <li>• Test N–E (Neutral to Earth) at the point of work</li>
+                  <li>• All tests should show no voltage present</li>
+                  <li>• Test at the exact location where work will be performed</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+                <p className="font-medium text-white mb-2">Step 3: Re-prove Tester (LIVE)</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Return to the proving unit immediately after testing</li>
+                  <li>• Test your voltage tester again on the proving unit</li>
+                  <li>• Confirm tester still responds to live voltage</li>
+                  <li>• Verify no damage occurred during the proving process</li>
+                  <li>• Only proceed with work if re-prove is successful</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <div className="mb-10">
+            <InlineCheck
+              id="live-dead-live-sequence"
+              question="What is the correct sequence for proving dead?"
+              options={["Dead-live-dead", "Live-dead-live", "Lock-off only", "Test then isolate"]}
+              correctIndex={1}
+              explanation="Live-dead-live: prove tester works, test circuit is dead, re-prove tester still works. This ensures reliable results."
+            />
+          </div>
+
+          {/* Section 4: Unsafe Practices to Avoid */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Unsafe Practices to Avoid
+            </h2>
+            <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+              <div className="text-white/80 space-y-4 leading-relaxed">
+                <div>
+                  <p className="font-medium text-white mb-2">Never Use Neon Screwdrivers:</p>
+                  <ul className="ml-4 space-y-1 text-sm">
+                    <li>• Rely on your body to complete the circuit - unsafe design</li>
+                    <li>• Don't meet GS38 safety requirements</li>
+                    <li>• Can give false readings due to induced voltages</li>
+                    <li>• Provide no indication of voltage level</li>
+                    <li>• Can fail to detect dangerous voltages</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <p className="font-medium text-white mb-2">Don't Skip Re-proving:</p>
+                  <ul className="ml-4 space-y-1 text-sm">
+                    <li>• Tester could have failed during the proving process</li>
+                    <li>• Internal fuses may have blown due to fault conditions</li>
+                    <li>• Test leads could have been damaged</li>
+                    <li>• Battery could have failed during testing</li>
+                    <li>• Essential step for confirming continued tester function</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <p className="font-medium text-white mb-2">Avoid Non-GS38 Equipment:</p>
+                  <ul className="ml-4 space-y-1 text-sm">
+                    <li>• Damaged or non-compliant test leads are dangerous</li>
+                    <li>• Wrong CAT rating could lead to equipment failure</li>
+                    <li>• Unfused leads don't provide fault current protection</li>
+                    <li>• Non-shrouded probes increase shock risk</li>
+                    <li>• Home-made or modified test equipment is prohibited</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div className="mb-10">
+            <InlineCheck
+              id="unsafe-practices"
+              question="Which tool should never be used for proving dead?"
+              options={["Two-pole voltage tester", "Proving unit", "Neon screwdriver", "Digital multimeter"]}
+              correctIndex={2}
+              explanation="Neon screwdrivers should never be used for proving dead as they rely on your body to complete the circuit and are not GS38 compliant."
+            />
+          </div>
+
+          {/* Practical Guidance */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Practical Guidance
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <p className="font-medium text-white mb-3">Equipment Requirements:</p>
+                <ul className="space-y-2 text-sm text-white/80">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span>Always carry a GS38-compliant two-pole tester and proving unit</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span>Keep test leads clean, dry, and free from exposed metal</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span>Store proving units properly — avoid extreme temperatures</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span>Check equipment calibration and maintenance dates</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-white mb-3">Safe Working Practices:</p>
+                <ul className="space-y-2 text-sm text-white/80">
+                  <li className="flex items-start gap-2">
+                    <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                    <span>Treat all circuits as live until proven otherwise</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                    <span>Inspect test equipment before each use</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                    <span>Follow manufacturer's instructions for all equipment</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                    <span>Stop work immediately if equipment fails re-prove test</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Real-World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <AlertTriangle className="w-5 h-5 text-amber-500" />
+              Real-World Example
+            </h2>
+            <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
+              <p className="font-medium text-white mb-3">Case Study: The Hidden Tester Failure</p>
+              <p className="text-white/80 mb-4">
                 An electrician isolated a distribution board but skipped the re-prove stage after testing. Unknown to him, the tester's internal fuse had blown during the proving process. He assumed the circuit was dead, but it was still live. He suffered a minor electric shock that could have been fatal.
               </p>
-              <div className="bg-amber-50/50 dark:bg-amber-900/10 p-4 rounded-lg border-l-4 border-l-amber-500">
-                <p className="font-semibold text-white mb-2">Lesson learned:</p>
-                <p className="text-white">
+              <div className="p-3 rounded-lg bg-white/5 border-l-2 border-amber-500">
+                <p className="font-medium text-white mb-2">Lesson learned:</p>
+                <p className="text-sm text-white/80">
                   Always perform the complete live-dead-live testing sequence with a proving unit. The re-prove step is not optional—it's a safety-critical verification that your tester is still functioning correctly.
                 </p>
               </div>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Micro-challenge */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Micro-Challenge</h2>
-          <div className="bg-elec-yellow/5/50 dark:bg-blue-900/20 border border-blue-200/50 p-6 rounded-lg">
-            <div className="space-y-4">
-              <p className="text-white">
+          {/* Micro-Challenge */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <Zap className="w-5 h-5 text-elec-yellow" />
+              Micro-Challenge
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/30">
+              <p className="text-white/80 mb-4">
                 You arrive at a job and your colleague says "Don't worry, I've already tested it with my voltage pen - it's definitely dead." What do you do?
               </p>
-              <div className="bg-elec-yellow/5/50 dark:bg-blue-900/10 p-4 rounded-lg border-l-4 border-l-elec-yellow">
-                <p className="font-semibold text-white mb-2">Answer:</p>
-                <p className="text-white">
+              <div className="p-3 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">Answer:</p>
+                <p className="text-sm text-white/80">
                   Never trust another person's testing, especially with non-GS38 equipment. Always perform your own complete live-dead-live procedure using proper two-pole voltage tester and proving unit. Voltage pens are not acceptable for proving dead.
                 </p>
               </div>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-6">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/30 pb-4 last:border-b-0">
-                <h3 className="font-semibold text-white mb-2">Q: {faq.question}</h3>
-                <p className="text-white">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-2">Q: {faq.question}</p>
+                  <p className="text-sm text-white/70">A: {faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
 
-        {/* Summary Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-elec-yellow rounded-lg flex items-center justify-center mx-auto mb-3">
-                <Shield className="w-6 h-6 text-white" />
+          {/* Recap */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Recap
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+              <div className="p-3 rounded-lg bg-elec-yellow/10 text-center">
+                <Shield className="w-6 h-6 text-elec-yellow mx-auto mb-2" />
+                <p className="text-xs font-medium text-white">Proving Units</p>
+                <p className="text-xs text-white/60">Confirm testers are functional</p>
               </div>
-              <h3 className="font-semibold text-white mb-2">Proving Units</h3>
-              <p className="text-sm text-white">Confirm testers are functional</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mx-auto mb-3">
-                <Zap className="w-6 h-6 text-white" />
+              <div className="p-3 rounded-lg bg-green-500/10 text-center">
+                <Zap className="w-6 h-6 text-green-500 mx-auto mb-2" />
+                <p className="text-xs font-medium text-white">Two-Pole Testers</p>
+                <p className="text-xs text-white/60">Only safe method for proving dead</p>
               </div>
-              <h3 className="font-semibold text-white mb-2">Two-Pole Testers</h3>
-              <p className="text-sm text-white">Only safe method for proving dead</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-3">
-                <CheckCircle className="w-6 h-6 text-white" />
+              <div className="p-3 rounded-lg bg-purple-500/10 text-center">
+                <CheckCircle className="w-6 h-6 text-purple-500 mx-auto mb-2" />
+                <p className="text-xs font-medium text-white">Live-Dead-Live</p>
+                <p className="text-xs text-white/60">Sequence is mandatory</p>
               </div>
-              <h3 className="font-semibold text-white mb-2">Live-Dead-Live</h3>
-              <p className="text-sm text-white">Sequence is mandatory</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center mx-auto mb-3">
-                <AlertTriangle className="w-6 h-6 text-white" />
+              <div className="p-3 rounded-lg bg-red-500/10 text-center">
+                <AlertTriangle className="w-6 h-6 text-red-500 mx-auto mb-2" />
+                <p className="text-xs font-medium text-white">Unsafe Practices</p>
+                <p className="text-xs text-white/60">Neon screwdrivers prohibited</p>
               </div>
-              <h3 className="font-semibold text-white mb-2">Unsafe Practices</h3>
-              <p className="text-sm text-white">Neon screwdrivers prohibited</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-amber-500 rounded-lg flex items-center justify-center mx-auto mb-3">
-                <Eye className="w-6 h-6 text-white" />
+              <div className="p-3 rounded-lg bg-amber-500/10 text-center">
+                <Shield className="w-6 h-6 text-amber-500 mx-auto mb-2" />
+                <p className="text-xs font-medium text-white">Re-proving</p>
+                <p className="text-xs text-white/60">Prevents reliance on faulty instruments</p>
               </div>
-              <h3 className="font-semibold text-white mb-2">Re-proving</h3>
-              <p className="text-sm text-white">Prevents reliance on faulty instruments</p>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide</h2>
-          <div className="bg-card border border-elec-yellow/20 p-6 rounded-lg">
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-              <div>
-                <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">Equipment Checklist</h3>
-                <ul className="space-y-1 text-xs sm:text-sm text-white">
-                  <li>• Use two-pole testers only</li>
-                  <li>• GS38-compliant with fused, shrouded leads</li>
-                  <li>• Proving unit for tester verification</li>
-                  <li>• Inspect equipment before use</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">Testing Sequence</h3>
-                <ul className="space-y-1 text-xs sm:text-sm text-white">
-                  <li>• Always follow live-dead-live sequence</li>
-                  <li>• Prove tester → Test circuit → Re-prove tester</li>
-                  <li>• Test L–N, L–E, N–E combinations</li>
-                  <li>• Never skip the re-prove step</li>
-                </ul>
+          {/* Pocket Guide */}
+          <section className="mb-10">
+            <div className="p-5 rounded-lg bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent border border-elec-yellow/30">
+              <h2 className="text-lg font-semibold text-white mb-4">Pocket Guide</h2>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <p className="font-medium text-elec-yellow mb-2">Equipment Checklist:</p>
+                  <ul className="space-y-1 text-sm text-white/80">
+                    <li>• Use two-pole testers only</li>
+                    <li>• GS38-compliant with fused, shrouded leads</li>
+                    <li>• Proving unit for tester verification</li>
+                    <li>• Inspect equipment before use</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="font-medium text-elec-yellow mb-2">Testing Sequence:</p>
+                  <ul className="space-y-1 text-sm text-white/80">
+                    <li>• Always follow live-dead-live sequence</li>
+                    <li>• Prove tester → Test circuit → Re-prove tester</li>
+                    <li>• Test L–N, L–E, N–E combinations</li>
+                    <li>• Never skip the re-prove step</li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Final Quiz */}
-        <Quiz 
-          title="Test Your Knowledge"
-          questions={quizQuestions}
-        />
+          {/* Quiz */}
+          <section className="mb-10">
+            <Quiz
+              title="Test Your Knowledge"
+              questions={quizQuestions}
+            />
+          </section>
 
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row gap-4 mt-8">
-          <Button variant="outline" className="flex-1 h-auto py-3 px-4" asChild>
-            <Link to="../3-4" className="flex items-center justify-center text-center">
-              <ArrowLeft className="w-4 h-4 mr-2 flex-shrink-0" />
-              <span className="flex-1">
-                <span className="block text-xs text-white">Previous</span>
-                <span className="block font-medium">Proving Dead and Safe to Test</span>
-              </span>
-            </Link>
-          </Button>
-          <Button className="flex-1 h-auto py-3 px-4" asChild>
-            <Link to="../3-6" className="flex items-center justify-center text-center">
-              <span className="flex-1">
-                <span className="block text-xs text-primary-foreground/80">Next</span>
-                <span className="block font-medium">Testing for Earth Continuity</span>
-              </span>
-              <ArrowLeft className="w-4 h-4 ml-2 flex-shrink-0 rotate-180" />
-            </Link>
-          </Button>
+          {/* Navigation Footer */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+            <Button
+              variant="ghost"
+              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../3-4">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Proving Dead and Safe to Test
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../3-6">
+                Next: When to Use Each Instrument
+                <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

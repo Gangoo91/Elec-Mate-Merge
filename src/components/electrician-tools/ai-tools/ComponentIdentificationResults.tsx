@@ -216,7 +216,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
     <div className="space-y-5">
       {/* Hero Section - Animated */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
         className={cn(
@@ -270,7 +270,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.45, type: 'spring', stiffness: 200, damping: 15 }}
+                      transition={{ delay: 0.45, duration: 0.2, ease: 'easeOut' }}
                     >
                       <Badge variant="outline" className="text-xs bg-blue-500/20 text-blue-400 border-blue-500/30">
                         {component.manufacturer}
@@ -372,7 +372,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
           {/* Key Metrics Grid */}
           <motion.div
             className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.35 }}
           >
@@ -536,7 +536,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
       ) : (
         <motion.div
           className="p-6 rounded-xl bg-muted/20 border border-border/20 text-center"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.4 }}
         >
@@ -552,7 +552,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
       {component.visual_identifiers && component.visual_identifiers.length > 0 && (
         <motion.div
           className="rounded-xl border border-elec-yellow/20 bg-card/50 overflow-hidden"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.4 }}
         >
@@ -569,7 +569,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0, opacity: 0 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                    transition={{ duration: 0.2, ease: 'easeOut' }}
                   >
                     <Badge variant="outline" className="text-xs">
                       {checkedCount}/{totalChecks}
@@ -623,7 +623,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
                         initial={{ scale: 0, rotate: -180 }}
                         animate={{ scale: 1, rotate: 0 }}
                         exit={{ scale: 0, rotate: 180 }}
-                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                        transition={{ duration: 0.2, ease: 'easeOut' }}
                       >
                         <CheckCircle2 className="h-4 w-4" />
                       </motion.div>
@@ -669,7 +669,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
       {(component.age_estimate || component.current_compliance) && (
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 gap-3"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.3, duration: 0.4 }}
         >
@@ -724,7 +724,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
       {component.where_found && (
         <motion.div
           className="p-4 rounded-xl bg-card/50 border border-border/30"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.35, duration: 0.4 }}
         >
@@ -743,7 +743,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
       {/* Typical Applications - Expandable */}
       {component.typical_applications && component.typical_applications.length > 0 && (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.4, duration: 0.4 }}
         >
@@ -773,7 +773,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
       {/* BS 7671 Requirements - Expandable */}
       {component.bs7671_requirements && component.bs7671_requirements.length > 0 && (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.45, duration: 0.4 }}
         >
@@ -803,7 +803,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
       {/* Installation & Replacement - Expandable */}
       {(component.installation_notes || component.replacement_notes || component.common_issues) && (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.4 }}
         >
@@ -901,7 +901,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
       {/* Similar Components - Expandable */}
       {analysisResult.similar_components && analysisResult.similar_components.length > 0 && (
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.55, duration: 0.4 }}
         >
@@ -938,7 +938,7 @@ export default function ComponentIdentificationResults({ analysisResult, onRetry
       {analysisResult.summary && (
         <motion.div
           className="rounded-xl bg-gradient-to-br from-muted/40 to-muted/20 border border-border/30 overflow-hidden"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.6, duration: 0.4 }}
         >

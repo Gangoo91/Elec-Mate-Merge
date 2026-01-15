@@ -303,11 +303,11 @@ const InvoicesPage = () => {
   }, [invoices, activeFilter, searchQuery]);
 
   const filters = [
-    { id: 'all', label: 'All', count: invoices.length },
-    { id: 'draft', label: 'Draft', count: stats.draft, icon: Edit, color: 'text-slate-400' },
-    { id: 'sent', label: 'Sent', count: stats.sent, icon: Send, color: 'text-blue-400' },
-    { id: 'overdue', label: 'Overdue', count: stats.overdue, icon: AlertCircle, color: 'text-red-400' },
-    { id: 'paid', label: 'Paid', count: stats.paid, icon: CheckCircle, color: 'text-emerald-400' },
+    { id: 'all', label: 'All', count: invoices.length, icon: FileText },
+    { id: 'draft', label: 'Draft', count: stats.draft, icon: Clock },
+    { id: 'sent', label: 'Sent', count: stats.sent, icon: Send },
+    { id: 'overdue', label: 'Overdue', count: stats.overdue, icon: AlertCircle },
+    { id: 'paid', label: 'Paid', count: stats.paid, icon: CheckCircle },
   ];
 
   // Highlight invoice when navigating from quote
@@ -376,6 +376,17 @@ const InvoicesPage = () => {
               <>
                 <h1 className="flex-1 text-lg font-bold">Invoices</h1>
                 <div className="flex items-center gap-2">
+                  {/* Quick Link to Quotes - Prominent */}
+                  <Button
+                    variant="outline"
+                    onClick={() => navigate('/electrician/quotes')}
+                    className="h-11 px-3 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 touch-manipulation gap-2"
+                    title="View Quotes"
+                  >
+                    <FileText className="h-4 w-4" />
+                    <span className="text-xs font-medium">Quotes</span>
+                  </Button>
+
                   <VoiceHeaderButton
                     hint="Send invoice"
                     currentSection="invoices"
@@ -433,26 +444,30 @@ const InvoicesPage = () => {
 
           {/* Filter Pills - Horizontal Scroll */}
           <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
-            {filters.map((filter) => (
-              <button
-                key={filter.id}
-                onClick={() => handleFilterChange(filter.id)}
-                className={cn(
-                  "shrink-0 h-11 px-4 rounded-full text-sm font-medium transition-all active:scale-[0.98] touch-manipulation",
-                  activeFilter === filter.id
-                    ? "bg-emerald-500 text-white"
-                    : "bg-elec-gray/50 text-foreground hover:bg-elec-gray"
-                )}
-              >
-                {filter.label}
-                <span className={cn(
-                  "ml-1.5",
-                  activeFilter === filter.id ? "text-white/70" : "text-muted-foreground"
-                )}>
-                  {filter.count}
-                </span>
-              </button>
-            ))}
+            {filters.map((filter) => {
+              const Icon = filter.icon;
+              return (
+                <button
+                  key={filter.id}
+                  onClick={() => handleFilterChange(filter.id)}
+                  className={cn(
+                    "shrink-0 h-11 px-4 rounded-full text-sm font-medium transition-all active:scale-[0.98] touch-manipulation flex items-center gap-2",
+                    activeFilter === filter.id
+                      ? "bg-emerald-500 text-white"
+                      : "bg-elec-gray/50 text-foreground hover:bg-elec-gray"
+                  )}
+                >
+                  <Icon className="h-4 w-4" />
+                  {filter.label}
+                  <span className={cn(
+                    "text-xs px-1.5 py-0.5 rounded-full min-w-[20px] text-center",
+                    activeFilter === filter.id ? "bg-black/20" : "bg-muted"
+                  )}>
+                    {filter.count}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </header>
 
@@ -461,67 +476,101 @@ const InvoicesPage = () => {
           {/* Stripe Connect Banner - Prompt to enable card payments */}
           <StripeConnectBanner />
 
-          {/* Hero Stats Card */}
-          <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 via-green-500 to-teal-500 p-5 text-white">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-black/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+          {/* Premium Financial Snapshot - Matches QuotesPage Design */}
+          <section className="relative overflow-hidden rounded-3xl glass-premium p-6 border border-white/[0.08]">
+            {/* Gradient accent line at top */}
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-400 via-green-400 to-emerald-400" />
 
-            <div className="relative space-y-3">
-              <div className="flex items-center gap-2 text-white/70">
-                <PoundSterling className="h-4 w-4" />
-                <span className="text-sm font-medium">Total Paid</span>
-              </div>
+            {/* Decorative blur elements */}
+            <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-400/[0.08] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-green-400/[0.06] rounded-full blur-2xl translate-y-1/2 -translate-x-1/4" />
 
-              <div className="text-4xl font-bold tracking-tight">
-                £{stats.monthlyTotal.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
-              </div>
-
-              <div className="flex items-center justify-between pt-2">
-                <div className="flex items-center gap-4 text-sm">
-                  <div className="flex items-center gap-1.5">
-                    <FileText className="h-4 w-4" />
-                    <span className="font-medium">{stats.total} invoices</span>
+            <div className="relative space-y-5">
+              {/* Header */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="p-2 rounded-xl bg-emerald-400/10">
+                    <PoundSterling className="h-4 w-4 text-emerald-400" />
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle className="h-4 w-4" />
+                  <span className="text-sm font-medium text-white/70">Total Paid Revenue</span>
+                </div>
+                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.08]">
+                  <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                  <span className="text-xs font-medium text-white/70">Live</span>
+                </div>
+              </div>
+
+              {/* Main Value */}
+              <div>
+                <div className="text-5xl font-bold text-white tracking-tight mb-2">
+                  £{stats.monthlyTotal.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="flex items-center gap-1.5 text-white/50">
+                    <FileText className="h-3.5 w-3.5" />
+                    <span>{stats.total} invoices</span>
+                  </div>
+                  <div className="w-1 h-1 rounded-full bg-white/20" />
+                  <div className="flex items-center gap-1.5 text-emerald-400">
+                    <CheckCircle className="h-3.5 w-3.5" />
                     <span className="font-medium">{stats.paid} paid</span>
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
 
-          {/* Quick Stats Row */}
-          <section className="grid grid-cols-3 gap-3">
-            <div
-              className={cn(
-                "bg-card border rounded-xl p-3 text-center cursor-pointer active:scale-[0.98] transition-transform touch-manipulation",
-                activeFilter === 'overdue' && "ring-2 ring-red-400"
-              )}
-              onClick={() => handleFilterChange('overdue')}
-            >
-              <div className="text-lg font-bold text-red-500">{stats.overdue}</div>
-              <div className="text-xs text-muted-foreground">Overdue</div>
-            </div>
-            <div
-              className={cn(
-                "bg-card border rounded-xl p-3 text-center cursor-pointer active:scale-[0.98] transition-transform touch-manipulation",
-                activeFilter === 'sent' && "ring-2 ring-blue-400"
-              )}
-              onClick={() => handleFilterChange('sent')}
-            >
-              <div className="text-lg font-bold text-blue-500">{stats.sent}</div>
-              <div className="text-xs text-muted-foreground">Sent</div>
-            </div>
-            <div
-              className={cn(
-                "bg-card border rounded-xl p-3 text-center cursor-pointer active:scale-[0.98] transition-transform touch-manipulation",
-                activeFilter === 'draft' && "ring-2 ring-slate-400"
-              )}
-              onClick={() => handleFilterChange('draft')}
-            >
-              <div className="text-lg font-bold text-muted-foreground">{stats.draft}</div>
-              <div className="text-xs text-muted-foreground">Drafts</div>
+              {/* Quick Stats Grid */}
+              <div className="grid grid-cols-3 gap-2 pt-3 border-t border-white/[0.08]">
+                <button
+                  onClick={() => handleFilterChange('overdue')}
+                  className={cn(
+                    "group relative p-3 rounded-xl bg-gradient-to-br from-red-500/10 to-red-600/5 border border-red-500/20 hover:border-red-500/40 active:scale-[0.97] transition-all touch-manipulation",
+                    activeFilter === 'overdue' && "ring-2 ring-red-400"
+                  )}
+                >
+                  <div className="flex flex-col items-start gap-1">
+                    <AlertCircle className="h-4 w-4 text-red-400 mb-1" />
+                    <div className="text-xs text-red-400/70 font-medium">Overdue</div>
+                    <div className="text-lg font-bold text-red-400">
+                      {stats.overdue}
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 bg-red-400/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                </button>
+
+                <button
+                  onClick={() => handleFilterChange('sent')}
+                  className={cn(
+                    "group relative p-3 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 hover:border-blue-500/40 active:scale-[0.97] transition-all touch-manipulation",
+                    activeFilter === 'sent' && "ring-2 ring-blue-400"
+                  )}
+                >
+                  <div className="flex flex-col items-start gap-1">
+                    <Send className="h-4 w-4 text-blue-400 mb-1" />
+                    <div className="text-xs text-blue-400/70 font-medium">Sent</div>
+                    <div className="text-lg font-bold text-blue-400">
+                      {stats.sent}
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 bg-blue-400/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                </button>
+
+                <button
+                  onClick={() => handleFilterChange('paid')}
+                  className={cn(
+                    "group relative p-3 rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border border-emerald-500/20 hover:border-emerald-500/40 active:scale-[0.97] transition-all touch-manipulation",
+                    activeFilter === 'paid' && "ring-2 ring-emerald-400"
+                  )}
+                >
+                  <div className="flex flex-col items-start gap-1">
+                    <CheckCircle className="h-4 w-4 text-emerald-400 mb-1" />
+                    <div className="text-xs text-emerald-400/70 font-medium">Paid</div>
+                    <div className="text-lg font-bold text-emerald-400">
+                      {stats.paid}
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 bg-emerald-400/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                </button>
+              </div>
             </div>
           </section>
 

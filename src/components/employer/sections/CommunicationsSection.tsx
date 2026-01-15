@@ -1130,7 +1130,12 @@ export const CommunicationsSection = () => {
 
           {/* Notification bell with badge */}
           <div className="relative">
-            <Button variant="ghost" size="icon" className="h-10 w-10">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-10 w-10"
+              onClick={() => setFilterUnread(!filterUnread)}
+            >
               <Bell className="h-5 w-5" />
             </Button>
             {displayStats.unread > 0 && (

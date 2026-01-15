@@ -32,16 +32,16 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.02, delayChildren: 0 },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 8 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: "spring", stiffness: 300, damping: 24 },
+    transition: { duration: 0.2, ease: 'easeOut' },
   },
 };
 
@@ -73,7 +73,7 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
     <div className="space-y-4 sm:space-y-6">
       {/* Back Button */}
       <motion.div
-        initial={{ opacity: 0, x: -20 }}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, x: 0 }}
       >
         <Button
@@ -88,7 +88,7 @@ const ElectricianAccreditationDetailView = ({ accreditation, onBack }: Electrici
 
       {/* Hero Card */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         className="relative overflow-hidden bg-elec-gray/50 border rounded-2xl"
         style={{ borderColor: brandInfo.brandColor + "40" }}

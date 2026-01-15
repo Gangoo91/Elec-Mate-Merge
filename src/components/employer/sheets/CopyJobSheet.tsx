@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -42,12 +42,12 @@ export function CopyJobSheet({ job, open, onOpenChange }: CopyJobSheetProps) {
   const assignLabel = useAssignLabel();
 
   // Reset form when job changes
-  useState(() => {
+  useEffect(() => {
     if (job) {
       setTitle(`Copy of ${job.title}`);
       setTargetStage("Quoted");
     }
-  });
+  }, [job]);
 
   const handleCopy = async () => {
     if (!job || !title.trim()) return;

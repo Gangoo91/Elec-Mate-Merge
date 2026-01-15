@@ -668,7 +668,7 @@ ${companyName}`;
 
   const handleViewInvoice = (quote: Quote) => {
     if (quote.invoice_raised && quote.id) {
-      navigate(`/electrician/invoices/${quote.id}`);
+      navigate(`/electrician/invoices/${quote.id}/view`);
     }
   };
 

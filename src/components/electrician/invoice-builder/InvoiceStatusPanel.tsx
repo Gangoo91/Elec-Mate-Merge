@@ -167,7 +167,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
           <Button
             variant="outline"
             size="sm"
-            onClick={() => navigate(`/electrician/quote-builder/view/${invoice.id}`)}
+            onClick={() => navigate(`/electrician/quotes/view/${invoice.id}`)}
             className="w-full sm:w-auto min-h-[44px] sm:min-h-0"
           >
             <Eye className="mr-1 h-3 w-3" />

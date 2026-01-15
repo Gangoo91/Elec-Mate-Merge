@@ -10,37 +10,37 @@ export interface IOSInputProps extends React.InputHTMLAttributes<HTMLInputElemen
   icon?: React.ReactNode
   success?: boolean
   floatingLabel?: boolean
+  compact?: boolean
 }
 
 const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
-  ({ label, error, hint, icon, success, floatingLabel = false, className, type, value, ...props }, ref) => {
+  ({ label, error, hint, icon, success, floatingLabel = false, compact = false, className, type, value, ...props }, ref) => {
     const [isFocused, setIsFocused] = React.useState(false)
     const [showPassword, setShowPassword] = React.useState(false)
     const [hasValue, setHasValue] = React.useState(!!value)
     const isPasswordType = type === "password"
     const inputType = isPasswordType && showPassword ? "text" : type
 
-    // Track if input has value
     React.useEffect(() => {
       setHasValue(!!value && String(value).length > 0)
     }, [value])
 
     const shouldFloatLabel = floatingLabel && (isFocused || hasValue)
+    const inputHeight = compact ? "h-12" : "h-14"
 
     return (
-      <div className="space-y-2">
-        {/* Standard label (non-floating) */}
+      <div className={compact ? "space-y-1" : "space-y-1.5"}>
+        {/* Standard label */}
         {!floatingLabel && (
-          <motion.label
-            initial={false}
-            animate={{
-              color: error ? "rgb(248, 113, 113)" : isFocused ? "hsl(47, 100%, 50%)" : "rgba(255, 255, 255, 0.8)"
-            }}
-            transition={{ duration: 0.2 }}
-            className="block text-ios-subhead font-medium"
+          <label
+            className={cn(
+              "block font-medium transition-colors duration-200",
+              compact ? "text-xs" : "text-sm",
+              error ? "text-elec-yellow" : isFocused ? "text-elec-yellow" : "text-white/70"
+            )}
           >
             {label}
-          </motion.label>
+          </label>
         )}
 
         {/* Input container */}
@@ -50,170 +50,101 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
             <motion.label
               initial={false}
               animate={{
-                y: shouldFloatLabel ? -28 : 0,
-                x: shouldFloatLabel ? (icon ? -32 : 0) : 0,
+                y: shouldFloatLabel ? -24 : 0,
+                x: shouldFloatLabel ? (icon ? -28 : 0) : 0,
                 scale: shouldFloatLabel ? 0.85 : 1,
                 color: error
-                  ? "rgb(248, 113, 113)"
+                  ? "hsl(47, 100%, 50%)"
                   : isFocused
                     ? "hsl(47, 100%, 50%)"
                     : shouldFloatLabel
                       ? "rgba(255, 255, 255, 0.7)"
                       : "rgba(255, 255, 255, 0.4)"
               }}
-              transition={{
-                type: "spring",
-                stiffness: 400,
-                damping: 25
-              }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
               className={cn(
-                "absolute top-1/2 -translate-y-1/2 pointer-events-none",
-                "text-ios-body font-medium origin-left",
-                icon ? "left-12" : "left-4"
+                "absolute top-1/2 -translate-y-1/2 pointer-events-none font-medium origin-left",
+                compact ? "text-sm" : "text-base",
+                icon ? "left-11" : "left-4"
               )}
             >
               {label}
             </motion.label>
           )}
 
-          {/* Optional icon */}
+          {/* Icon */}
           {icon && (
-            <motion.div
-              initial={false}
-              animate={{
-                color: error
-                  ? "rgb(248, 113, 113)"
-                  : isFocused
-                    ? "hsl(47, 100%, 50%)"
-                    : "rgba(255, 255, 255, 0.4)",
-                scale: isFocused ? 1.05 : 1
-              }}
-              transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className="absolute left-4 top-1/2 -translate-y-1/2"
+            <div
+              className={cn(
+                "absolute left-3.5 top-1/2 -translate-y-1/2 transition-colors duration-200",
+                error ? "text-elec-yellow" : isFocused ? "text-elec-yellow" : "text-white/40"
+              )}
             >
               {icon}
-            </motion.div>
+            </div>
           )}
 
-          {/* Glow effect on focus */}
-          <AnimatePresence>
-            {isFocused && !error && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-                className="absolute inset-0 rounded-2xl bg-elec-yellow/5 pointer-events-none"
-                style={{ filter: "blur(8px)" }}
-              />
-            )}
-          </AnimatePresence>
-
-          <motion.div
-            initial={false}
-            animate={{
-              borderColor: error
-                ? "rgba(248, 113, 113, 0.6)"
+          {/* Input field */}
+          <input
+            ref={ref}
+            type={inputType}
+            value={value}
+            className={cn(
+              "w-full rounded-xl transition-all duration-200",
+              inputHeight,
+              icon ? "pl-11 pr-4" : "px-4",
+              isPasswordType && "pr-12",
+              // Typography
+              compact ? "text-sm" : "text-base",
+              "text-white placeholder:text-white/30",
+              // Clean dark background - NO red/amber tints
+              "bg-white/[0.06] border",
+              // Border states
+              error
+                ? "border-elec-yellow/50 focus:border-elec-yellow"
                 : success
-                  ? "rgba(34, 197, 94, 0.6)"
+                  ? "border-green-500/50"
                   : isFocused
-                    ? "hsla(47, 100%, 50%, 0.6)"
-                    : "rgba(255, 255, 255, 0.1)",
-              boxShadow: isFocused && !error
-                ? "0 0 0 4px hsla(47, 100%, 50%, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1)"
-                : error
-                  ? "0 0 0 4px rgba(248, 113, 113, 0.1)"
-                  : success
-                    ? "0 0 0 4px rgba(34, 197, 94, 0.1)"
-                    : "none"
+                    ? "border-elec-yellow/60"
+                    : "border-white/10 hover:border-white/20",
+              // Focus ring
+              isFocused && !error && "ring-2 ring-elec-yellow/20",
+              error && "ring-2 ring-elec-yellow/10",
+              success && "ring-2 ring-green-500/10",
+              // Focus state
+              "focus:outline-none focus:bg-white/[0.08]",
+              // Touch
+              "touch-manipulation",
+              // Selection
+              "selection:bg-elec-yellow/30",
+              className
+            )}
+            placeholder={floatingLabel ? "" : props.placeholder}
+            onFocus={(e) => {
+              setIsFocused(true)
+              props.onFocus?.(e)
             }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            className="relative"
-          >
-            <input
-              ref={ref}
-              type={inputType}
-              value={value}
-              className={cn(
-                // Base sizing - 56px height for premium feel
-                "w-full h-[56px] py-3",
-                icon ? "pl-12 pr-4" : "px-4",
-                isPasswordType && "pr-12",
-                // Typography - iOS body style
-                "text-ios-body text-white placeholder:text-white/40",
-                // Background & border - premium rounded
-                "bg-white/10 rounded-2xl border-2 border-transparent",
-                // Focus state - handled by motion wrapper
-                "focus:outline-none",
-                "focus:bg-white/[0.15]",
-                // Animation
-                "transition-colors duration-200",
-                // Touch optimization
-                "touch-manipulation",
-                // Selection
-                "selection:bg-elec-yellow/20",
-                // Autofill styling
-                "[&:-webkit-autofill]:bg-white/10",
-                "[&:-webkit-autofill]:shadow-[0_0_0_30px_rgba(255,255,255,0.1)_inset]",
-                "[&:-webkit-autofill]:[-webkit-text-fill-color:white]",
-                className
-              )}
-              placeholder={floatingLabel ? "" : props.placeholder}
-              onFocus={(e) => {
-                setIsFocused(true)
-                props.onFocus?.(e)
-              }}
-              onBlur={(e) => {
-                setIsFocused(false)
-                props.onBlur?.(e)
-              }}
-              onChange={(e) => {
-                setHasValue(e.target.value.length > 0)
-                props.onChange?.(e)
-              }}
-              {...props}
-            />
-          </motion.div>
+            onBlur={(e) => {
+              setIsFocused(false)
+              props.onBlur?.(e)
+            }}
+            onChange={(e) => {
+              setHasValue(e.target.value.length > 0)
+              props.onChange?.(e)
+            }}
+            {...props}
+          />
 
-          {/* Password toggle button */}
+          {/* Password toggle */}
           {isPasswordType && (
-            <motion.button
+            <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              whileTap={{ scale: 0.9 }}
-              className={cn(
-                "absolute right-4 top-1/2 -translate-y-1/2",
-                "p-1.5 rounded-lg",
-                "text-white/40 hover:text-white/70 active:text-elec-yellow",
-                "transition-colors duration-150",
-                "touch-manipulation"
-              )}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-white/40 hover:text-white/70 active:text-elec-yellow transition-colors touch-manipulation"
               tabIndex={-1}
             >
-              <AnimatePresence mode="wait">
-                {showPassword ? (
-                  <motion.div
-                    key="hide"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <EyeOff className="h-5 w-5" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="show"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <Eye className="h-5 w-5" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
+              {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+            </button>
           )}
 
           {/* Success indicator */}
@@ -223,11 +154,10 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                className="absolute right-4 top-1/2 -translate-y-1/2"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2"
               >
-                <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center">
-                  <Check className="h-4 w-4 text-green-400" />
+                <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center">
+                  <Check className="h-3 w-3 text-green-400" />
                 </div>
               </motion.div>
             )}
@@ -237,32 +167,29 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
           <AnimatePresence>
             {error && !isPasswordType && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                className="absolute right-4 top-1/2 -translate-y-1/2"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2"
               >
-                <div className="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center">
-                  <AlertCircle className="h-4 w-4 text-red-400" />
+                <div className="w-5 h-5 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+                  <AlertCircle className="h-3 w-3 text-elec-yellow" />
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {/* Hint/Error text with animation */}
-        <AnimatePresence mode="wait">
+        {/* Error/hint text */}
+        <AnimatePresence>
           {(hint || error) && (
             <motion.p
-              key={error ? "error" : "hint"}
-              initial={{ opacity: 0, y: -8, height: 0 }}
-              animate={{ opacity: 1, y: 0, height: "auto" }}
-              exit={{ opacity: 0, y: -8, height: 0 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
               className={cn(
-                "text-ios-caption-1 overflow-hidden",
-                error ? "text-red-400" : "text-white/50"
+                "text-xs",
+                error ? "text-elec-yellow" : "text-white/50"
               )}
             >
               {error || hint}

@@ -1,5 +1,20 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,14 +35,17 @@ import {
   Map,
   List,
   Navigation,
-  Signal
+  Signal,
+  LogIn,
+  LogOut,
+  UserPlus,
 } from "lucide-react";
 import { useEmployees } from "@/hooks/useEmployees";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { LiveWorkerMap } from "../LiveWorkerMap";
 import { GoogleMapsProvider } from "@/contexts/GoogleMapsContext";
-import { useWorkerLocations } from "@/hooks/useWorkerLocations";
+import { useWorkerLocations, useCheckInWorker, useCheckOutWorker } from "@/hooks/useWorkerLocations";
 import { useJobs } from "@/hooks/useJobs";
 import { PullToRefresh } from "@/components/ui/pull-to-refresh";
 import { SwipeableRow } from "@/components/ui/swipeable-row";
@@ -40,6 +58,13 @@ export function WorkerTrackingSection() {
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
   const [viewMode, setViewMode] = useState<"list" | "map">("list");
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+  const [isCheckInOpen, setIsCheckInOpen] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState<string>("");
+  const [selectedJob, setSelectedJob] = useState<string>("");
+
+  // Check-in/out mutations
+  const checkInMutation = useCheckInWorker();
+  const checkOutMutation = useCheckOutWorker();
 
   // Fetch real data from Supabase
   const { data: workerLocations = [], isLoading: locationsLoading, refetch: refetchLocations } = useWorkerLocations();
@@ -69,32 +94,87 @@ export function WorkerTrackingSection() {
     toast({ title: `Messaging ${employeeName}...`, description: "Opening message composer" });
   };
 
-  // Transform employees to check-in format for display
-  const workerCheckIns = employees.map(emp => ({
-    id: emp.id,
-    employeeId: emp.id,
-    employeeName: emp.name,
-    status: emp.status === "Active" ? "On Site" : emp.status === "On Leave" ? "On Leave" : "Office",
-    jobTitle: null as string | null,
-    checkInTime: "08:00",
-    avatar: emp.avatar_initials,
-    role: emp.team_role,
-    phone: emp.phone || null,
-  }));
+  const handleCheckIn = async () => {
+    if (!selectedEmployee || !selectedJob) {
+      toast({ title: "Select employee and job", variant: "destructive" });
+      return;
+    }
 
-  const filteredCheckIns = workerCheckIns.filter(c => {
+    try {
+      // Use a default location (can be enhanced with GPS)
+      await checkInMutation.mutateAsync({
+        employeeId: selectedEmployee,
+        jobId: selectedJob,
+        lat: 53.4808, // Default Manchester
+        lng: -2.2426,
+      });
+
+      toast({ title: "Worker checked in", description: "Location recorded successfully" });
+      setIsCheckInOpen(false);
+      setSelectedEmployee("");
+      setSelectedJob("");
+    } catch {
+      toast({ title: "Check-in failed", variant: "destructive" });
+    }
+  };
+
+  const handleCheckOut = async (locationId: string, employeeName: string) => {
+    try {
+      await checkOutMutation.mutateAsync(locationId);
+      toast({ title: `${employeeName} checked out`, description: "Shift ended" });
+    } catch {
+      toast({ title: "Check-out failed", variant: "destructive" });
+    }
+  };
+
+  // Merge location data with employee data for display
+  const workerCheckIns = useMemo(() => {
+    // Create map of employees with their latest location data
+    const locationMap = new Map(
+      workerLocations.map(loc => [loc.employee_id, loc])
+    );
+
+    return employees.map(emp => {
+      const location = locationMap.get(emp.id);
+      // Get job title from location's related job data
+      const jobData = location?.jobs as { title?: string } | null | undefined;
+
+      return {
+        id: emp.id,
+        employeeId: emp.id,
+        employeeName: emp.name,
+        // Use real status from location, fall back to employee status
+        status: location?.status || (emp.status === "On Leave" ? "On Leave" : "Office"),
+        // Get job title from the location's job relation
+        jobTitle: jobData?.title || null,
+        // Format real check-in time
+        checkInTime: location?.checked_in_at
+          ? new Date(location.checked_in_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+          : null,
+        avatar: emp.avatar_initials,
+        role: emp.team_role,
+        phone: emp.phone || null,
+        // Include location data for map
+        lat: location?.lat,
+        lng: location?.lng,
+        locationId: location?.id,
+      };
+    });
+  }, [employees, workerLocations]);
+
+  const filteredCheckIns = useMemo(() => workerCheckIns.filter(c => {
     const matchesSearch = c.employeeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
          (c.jobTitle?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
     const matchesStatus = selectedStatuses.length === 0 || selectedStatuses.includes(c.status);
     return matchesSearch && matchesStatus;
-  });
+  }), [workerCheckIns, searchQuery, selectedStatuses]);
 
-  const statusCounts = {
+  const statusCounts = useMemo(() => ({
     onSite: workerCheckIns.filter(c => c.status === "On Site").length,
-    enRoute: 0,
+    enRoute: workerCheckIns.filter(c => c.status === "En Route").length,
     office: workerCheckIns.filter(c => c.status === "Office").length,
     onLeave: workerCheckIns.filter(c => c.status === "On Leave").length,
-  };
+  }), [workerCheckIns]);
 
   const totalWorkers = workerCheckIns.length;
 
@@ -486,6 +566,18 @@ export function WorkerTrackingSection() {
                           </div>
                           {!isMobile && (
                             <div className="flex items-center gap-2">
+                              {checkIn.locationId && checkIn.status === "On Site" && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="h-9 px-3 text-destructive border-destructive/30 hover:bg-destructive/10"
+                                  onClick={() => handleCheckOut(checkIn.locationId!, checkIn.employeeName)}
+                                  disabled={checkOutMutation.isPending}
+                                >
+                                  <LogOut className="h-4 w-4 mr-1" />
+                                  Out
+                                </Button>
+                              )}
                               <Button
                                 variant="ghost"
                                 size="sm"
@@ -511,6 +603,21 @@ export function WorkerTrackingSection() {
 
                   // Wrap with swipeable on mobile
                   if (isMobile) {
+                    // Show check-out action for workers on site, message for others
+                    const rightAction = checkIn.locationId && checkIn.status === "On Site"
+                      ? {
+                          icon: <LogOut className="h-5 w-5" />,
+                          label: "Check Out",
+                          onClick: () => handleCheckOut(checkIn.locationId!, checkIn.employeeName),
+                          variant: "destructive" as const
+                        }
+                      : {
+                          icon: <MessageSquare className="h-5 w-5" />,
+                          label: "Message",
+                          onClick: () => handleMessage(checkIn.employeeName),
+                          variant: "default" as const
+                        };
+
                     return (
                       <SwipeableRow
                         key={checkIn.id}
@@ -520,12 +627,7 @@ export function WorkerTrackingSection() {
                           onClick: () => handleCall(checkIn.employeeName),
                           variant: "success"
                         }}
-                        rightAction={{
-                          icon: <MessageSquare className="h-5 w-5" />,
-                          label: "Message",
-                          onClick: () => handleMessage(checkIn.employeeName),
-                          variant: "default"
-                        }}
+                        rightAction={rightAction}
                       >
                         {workerCard}
                       </SwipeableRow>
@@ -604,18 +706,112 @@ export function WorkerTrackingSection() {
         </Tabs>
       )}
 
-      {/* Mobile Quick Actions FAB */}
-      {isMobile && viewMode === "list" && filteredCheckIns.length > 0 && (
-        <div className="fixed bottom-24 right-4 z-40">
+      {/* Mobile Quick Actions FABs */}
+      {isMobile && viewMode === "list" && (
+        <div className="fixed bottom-24 right-4 z-40 flex flex-col gap-3">
+          {/* Check-in FAB */}
           <Button
             size="lg"
-            className="h-14 w-14 rounded-full shadow-lg bg-elec-yellow text-black hover:bg-elec-yellow/90"
-            onClick={() => setViewMode("map")}
+            className="h-14 w-14 rounded-full shadow-lg bg-success text-white hover:bg-success/90"
+            onClick={() => setIsCheckInOpen(true)}
           >
-            <MapPin className="h-6 w-6" />
+            <UserPlus className="h-6 w-6" />
+          </Button>
+          {/* Map view FAB */}
+          {filteredCheckIns.length > 0 && (
+            <Button
+              size="lg"
+              className="h-14 w-14 rounded-full shadow-lg bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              onClick={() => setViewMode("map")}
+            >
+              <MapPin className="h-6 w-6" />
+            </Button>
+          )}
+        </div>
+      )}
+
+      {/* Desktop Check-in Button */}
+      {!isMobile && (
+        <div className="fixed bottom-8 right-8 z-40">
+          <Button
+            size="lg"
+            className="h-12 px-6 shadow-lg bg-success text-white hover:bg-success/90"
+            onClick={() => setIsCheckInOpen(true)}
+          >
+            <UserPlus className="h-5 w-5 mr-2" />
+            Check In Worker
           </Button>
         </div>
       )}
+
+      {/* Check-in Sheet */}
+      <Sheet open={isCheckInOpen} onOpenChange={setIsCheckInOpen}>
+        <SheetContent side={isMobile ? "bottom" : "right"} className={isMobile ? "h-[70vh] rounded-t-2xl" : ""}>
+          <SheetHeader>
+            <SheetTitle className="flex items-center gap-2">
+              <LogIn className="h-5 w-5 text-success" />
+              Check In Worker
+            </SheetTitle>
+            <SheetDescription>
+              Record a worker's arrival at a job site
+            </SheetDescription>
+          </SheetHeader>
+
+          <div className="space-y-6 mt-6">
+            {/* Employee Selection */}
+            <div className="space-y-2">
+              <Label>Select Worker</Label>
+              <Select value={selectedEmployee} onValueChange={setSelectedEmployee}>
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Choose a worker..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {employees
+                    .filter(emp => emp.status === "active" || emp.status === "Active")
+                    .map(emp => (
+                      <SelectItem key={emp.id} value={emp.id}>
+                        {emp.name}
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Job Selection */}
+            <div className="space-y-2">
+              <Label>Select Job Site</Label>
+              <Select value={selectedJob} onValueChange={setSelectedJob}>
+                <SelectTrigger className="h-11">
+                  <SelectValue placeholder="Choose a job..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {jobsData
+                    .filter(job => job.status === "In Progress" || job.status === "Scheduled")
+                    .map(job => (
+                      <SelectItem key={job.id} value={job.id}>
+                        {job.title}
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Check-in Button */}
+            <Button
+              className="w-full h-12 bg-success hover:bg-success/90"
+              onClick={handleCheckIn}
+              disabled={!selectedEmployee || !selectedJob || checkInMutation.isPending}
+            >
+              {checkInMutation.isPending ? (
+                <RefreshCw className="h-4 w-4 animate-spin mr-2" />
+              ) : (
+                <LogIn className="h-4 w-4 mr-2" />
+              )}
+              Check In to Site
+            </Button>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 

@@ -14,13 +14,13 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.06,
+      staggerChildren: 0.02,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 8 },
   visible: {
     opacity: 1,
     y: 0,
@@ -75,14 +75,14 @@ const ElectricianCareerPathways = () => {
         {view === "hub" ? (
           <motion.div
             key="hub"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             className="space-y-6"
           >
             {/* Hero Card */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               className="relative overflow-hidden bg-elec-gray/50 border border-elec-yellow/20 rounded-2xl"
             >
@@ -154,14 +154,14 @@ const ElectricianCareerPathways = () => {
             key="section"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
+            exit={{ opacity: 0, y: 8 }}
             className="space-y-6"
           >
             {activeSection && (
               <>
                 {/* Section Header */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="relative overflow-hidden bg-elec-gray/50 border border-white/10 rounded-2xl"
                 >

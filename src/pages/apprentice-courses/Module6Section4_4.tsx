@@ -1,12 +1,10 @@
-import { ArrowLeft, Target, CheckCircle } from "lucide-react";
+import { ArrowLeft, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import useSEO from "@/hooks/useSEO";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { useState } from "react";
 
 const Module6Section4_4 = () => {
   useSEO(
@@ -14,7 +12,8 @@ const Module6Section4_4 = () => {
     "Identifying and understanding common faults discovered during continuity and polarity testing"
   );
 
-  // Quiz questions with 4 options each
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
   const quizQuestions = [
     {
       id: 1,
@@ -104,11 +103,15 @@ const Module6Section4_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.4
@@ -117,602 +120,347 @@ const Module6Section4_4 = () => {
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <CheckCircle className="w-6 h-6 text-white" />
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 6.4.4</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 6.4.4
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Common Faults Found During Continuity/Polarity Tests
-          </h1>
-          <p className="text-white">
-            Recognise common faults found during continuity and polarity tests
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Common Faults Found During Continuity/Polarity Tests
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Recognise common faults found during continuity and polarity tests
+            </p>
+          </header>
 
-        {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-8 p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-white" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
+          {/* Summary Box */}
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
+            <h2 className="font-semibold text-white mb-3">Quick Summary</h2>
+            <ul className="space-y-2 text-sm text-white/80">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Open circuits break conductor continuity</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>High resistance joints cause overheating</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Disconnected CPC = shock hazard</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">•</span>
+                <span>Reversed polarity compromises safety</span>
+              </li>
+            </ul>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-3">In 30 seconds</p>
-              <ul className="space-y-2 text-sm">
+
+          {/* Introduction */}
+          <section className="mb-10">
+            <p className="text-white/80 leading-relaxed">
+              Continuity and polarity testing are designed not only to confirm correct wiring but also to identify common faults that compromise safety and functionality. These tests reveal issues such as open circuits, incorrect polarity, high resistance joints, and missing CPCs. If left undetected, these faults can result in electric shock, fire hazards, or premature equipment failure.
+            </p>
+          </section>
+
+          {/* Section 1: Common Continuity Faults */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Common Continuity Faults
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <h3 className="font-medium text-white mb-3">Open Circuit Conductors</h3>
+                <ul className="text-sm space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Caused by loose terminations at accessories or distribution boards</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Broken wires due to damage during installation or maintenance</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Missing links or connections in ring circuits</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Detected by infinite resistance readings during continuity tests</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                <h3 className="font-medium text-white mb-3">High Resistance Joints</h3>
+                <ul className="text-sm space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-400">⚠</span>
+                    <span>Poor connections due to inadequate tightening of terminals</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-400">⚠</span>
+                    <span>Corroded terminals from moisture ingress or age</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-400">⚠</span>
+                    <span>Causes overheating due to increased I²R losses</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-400">⚠</span>
+                    <span>Creates significant fire risk from excessive heat generation</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+                <h3 className="font-medium text-white mb-3">Disconnected CPC</h3>
+                <ul className="text-sm space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">⚠</span>
+                    <span>Loss of protective earthing creating severe shock risk</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">⚠</span>
+                    <span>Exposed metalwork may become live under fault conditions</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">⚠</span>
+                    <span>Protective devices cannot operate effectively without earth path</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <InlineCheck
+            id="continuity-faults-check"
+            question="Which reading most strongly indicates an open circuit during continuity testing?"
+            options={["Very low resistance", "Infinite resistance", "230 V present", "0 A current"]}
+            correctIndex={1}
+            explanation="An infinite resistance reading (often displayed as 'OL' or no reading) indicates a complete break in the circuit path, confirming an open circuit."
+          />
+
+          {/* Section 2: Common Polarity Faults */}
+          <section className="mb-10 mt-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Common Polarity Faults
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <h3 className="font-medium text-white mb-3">Line and Neutral Reversed</h3>
+                <ul className="text-sm space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Appliances may still operate but protective devices won't function correctly</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Internal fuses and switches in appliances designed to break line conductor only</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>RCD protection effectiveness reduced when polarity is incorrect</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+                <h3 className="font-medium text-white mb-3">Switch Wired in Neutral</h3>
+                <ul className="text-sm space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">⚠</span>
+                    <span>Equipment remains permanently live even when switched off</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">⚠</span>
+                    <span>Serious shock hazard during maintenance, lamp changes, or cleaning</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">⚠</span>
+                    <span>Violates BS 7671 Regulation 132.7 requiring single-pole devices to break line</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <InlineCheck
+            id="polarity-faults-check"
+            question="Why must a single-pole switch break the line conductor rather than the neutral?"
+            options={["To reduce energy bills", "To ensure equipment isn't live when switched off", "To share load on neutrals", "To prevent RCD tripping"]}
+            correctIndex={1}
+            explanation="Single-pole switches must break the line conductor to ensure equipment is truly dead when switched off, preventing shock hazards during maintenance or lamp changes."
+          />
+
+          {/* Section 3: Interpretation of Results */}
+          <section className="mb-10 mt-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Interpretation of Results
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <h3 className="font-medium text-white mb-3">Acceptable Values and Limits</h3>
+                <ul className="text-sm space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>CPC continuity: should not exceed (R1 + R2) values specified in BS 7671</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Ring circuit end-to-end resistance: typically 0.05Ω to 1.67Ω depending on cable size</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>Polarity confirmation: correct at all points - no tolerance for incorrect connections</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <span>High resistance joints: any reading significantly above cable resistance indicates problems</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <InlineCheck
+            id="results-interpretation-check"
+            question="A much higher than expected R1+R2 reading suggests what type of fault?"
+            options={["Short circuit", "High resistance joint", "Correct continuity", "Open circuit in CPC"]}
+            correctIndex={1}
+            explanation="A much higher than expected R1+R2 reading typically indicates a high resistance joint somewhere in the circuit, which could cause overheating and fire risk."
+          />
+
+          {/* Section 4: Real-World Example */}
+          <section className="mb-10 mt-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Real-World Example: Kitchen Circuit Fault
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <h3 className="font-medium text-white mb-3">Scenario</h3>
+              <p className="text-sm text-white/80 mb-4">
+                A domestic kitchen was being rewired with a new 32A ring final circuit. The circuit included 8 socket outlets and was wired with 2.5mm² T&E cable.
+              </p>
+
+              <h4 className="font-medium text-white mb-2">Test Results</h4>
+              <div className="bg-[#121212] rounded p-3 mb-4">
+                <ul className="text-sm text-white/80 space-y-1">
+                  <li>End-to-end line resistance: 0.82Ω (expected ~0.8Ω)</li>
+                  <li>End-to-end neutral resistance: 0.84Ω (expected ~0.8Ω)</li>
+                  <li>End-to-end CPC resistance: Infinite (∞) - FAULT DETECTED</li>
+                </ul>
+              </div>
+
+              <h4 className="font-medium text-white mb-2">Investigation</h4>
+              <p className="text-sm text-white/80 mb-4">
+                Testing each socket in sequence revealed the fault between sockets 4 and 5. Visual inspection at socket 4 showed the CPC terminal screw was finger-tight only - the cable had pulled out during final fitting.
+              </p>
+
+              <h4 className="font-medium text-white mb-2">Corrective Action</h4>
+              <ul className="text-sm text-white/80 space-y-2">
                 <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>Open circuits break conductor continuity</span>
+                  <span className="text-green-400">✓</span>
+                  <span>Terminal properly tightened and retested</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>High resistance joints cause overheating</span>
+                  <span className="text-green-400">✓</span>
+                  <span>Final readings: Line 0.82Ω, Neutral 0.84Ω, CPC 0.85Ω - all acceptable</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>Disconnected CPC = shock hazard</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>Reversed polarity compromises safety</span>
+                  <span className="text-green-400">✓</span>
+                  <span>Circuit successfully energised after completing all tests</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
-              <p className="font-medium mb-3">Spot it / Use it / Check it</p>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Spot:</strong> Open circuits, loose connections, reversed wiring</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Use:</strong> Low resistance ohmmeter, two-pole voltage tester</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Check:</strong> All circuits before energising</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <p className="text-base text-white mb-4">
-            Continuity and polarity testing are designed not only to confirm correct wiring but also to identify common faults that compromise safety and functionality. These tests reveal issues such as open circuits, incorrect polarity, high resistance joints, and missing CPCs. If left undetected, these faults can result in electric shock, fire hazards, or premature equipment failure.
-          </p>
-        </Card>
-
-        {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-base text-white mb-4">By the end of this subsection, learners will be able to:</p>
-          <ul className="space-y-3 text-base text-white">
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-              <span>Recognise common faults found during continuity and polarity tests</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-              <span>Understand the causes and consequences of each fault</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-              <span>Apply test methods to identify and confirm faults</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-              <span>Record and report faults in line with BS 7671 requirements</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-              <span>Outline the corrective actions for common test failures</span>
-            </li>
-          </ul>
-        </Card>
-
-
-        {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
-
-          {/* 1. Common Continuity Faults */}
-          <section className="mb-6">
-            <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Common Continuity Faults</p>
-                    
-                    <div className="space-y-4">
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Open Circuit Conductors:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Caused by loose terminations at accessories or distribution boards</li>
-                           <li>Broken wires due to damage during installation or maintenance</li>
-                           <li>Missing links or connections in ring circuits</li>
-                           <li>Corroded or damaged cable cores</li>
-                           <li>Inadequate termination in connector blocks</li>
-                         </ul>
-                         <div className="mt-3 space-y-2">
-                           <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-white">Prevents current flow through complete circuit path</span>
-                           </div>
-                           <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-white">Detected by infinite resistance readings during continuity tests</span>
-                           </div>
-                           <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-white">Confirms parallel earth paths are properly connected and provide redundancy</span>
-                           </div>
-                         </div>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>High Resistance Joints:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Poor connections due to inadequate tightening of terminals</li>
-                           <li>Corroded terminals from moisture ingress or age</li>
-                           <li>Oxidation at brass or copper connections</li>
-                           <li>Loose connections causing arcing and further deterioration</li>
-                           <li>Inadequate surface area contact in crimped connections</li>
-                         </ul>
-                         <div className="mt-3 space-y-2">
-                           <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-white">Causes overheating due to increased I²R losses</span>
-                           </div>
-                           <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-white">Creates significant fire risk from excessive heat generation</span>
-                           </div>
-                           <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-white">May not be obvious during normal operation but degrades over time</span>
-                           </div>
-                         </div>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Disconnected CPC:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Loss of protective earthing creating severe shock risk</li>
-                           <li>Missing earth connections at socket outlets</li>
-                           <li>Broken earth continuity in ring circuits</li>
-                           <li>Inadequate earth bonding connections</li>
-                           <li>Damaged earth cores during cable installation</li>
-                         </ul>
-                         <div className="mt-3 space-y-2">
-                           <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-white">Exposed metalwork may become live under fault conditions</span>
-                           </div>
-                           <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-white">Protective devices cannot operate effectively without earth path</span>
-                           </div>
-                           <div className="flex items-start gap-2">
-                             <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                             <span className="text-xs sm:text-sm text-white">Creates serious electric shock hazard to users</span>
-                           </div>
-                         </div>
-                       </div>
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-2">
+              {faqs.map((faq, index) => (
+                <div key={index} className="border border-white/10 rounded-lg overflow-hidden">
+                  <button
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                    className="w-full p-4 text-left flex items-center justify-between hover:bg-white/5 transition-colors min-h-[44px] touch-manipulation"
+                  >
+                    <span className="font-medium text-white text-sm">{faq.question}</span>
+                    <ChevronDown className={`w-4 h-4 text-white/60 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
+                  </button>
+                  {openFaq === index && (
+                    <div className="px-4 pb-4">
+                      <p className="text-sm text-white/70">{faq.answer}</p>
                     </div>
-                  </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Key Takeaways */}
+          <section className="mb-10">
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <h2 className="font-semibold text-white mb-3">Key Takeaways</h2>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <h3 className="text-sm font-medium text-white mb-2">Know It</h3>
+                  <p className="text-sm text-white/70">Common faults: open circuits, high resistance joints, disconnected CPCs, and reversed polarity</p>
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium text-white mb-2">Spot It</h3>
+                  <p className="text-sm text-white/70">Visual cues: scorching, loose terminals, incorrect connections, and damaged cables</p>
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium text-white mb-2">Test It</h3>
+                  <p className="text-sm text-white/70">Measurements: infinite resistance = open circuit, high R1+R2 = poor joints</p>
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium text-white mb-2">Fix It</h3>
+                  <p className="text-sm text-white/70">Actions: rectify all faults, document clearly, retest, then safely energise</p>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* InlineCheck after Section 1 */}
-          <div className="mt-6">
-            <InlineCheck
-              id="continuity-faults-check"
-              question="Which reading most strongly indicates an open circuit during continuity testing?"
-              options={[
-                "Very low resistance",
-                "Infinite resistance",
-                "230 V present",
-                "0 A current"
-              ]}
-              correctIndex={1}
-              explanation="An infinite resistance reading (often displayed as 'OL' or no reading) indicates a complete break in the circuit path, confirming an open circuit."
-            />
-          </div>
+          {/* Quiz */}
+          <Quiz questions={quizQuestions} />
 
-          {/* 2. Common Polarity Faults */}
-          <section className="mb-6">
-            <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Common Polarity Faults</p>
-                    
-                    <div className="space-y-4">
-                        <div>
-                          <p className="text-base text-white mb-2"><strong>Line and Neutral Reversed:</strong></p>
-                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                            <li>Appliances may still operate but protective devices won't function correctly</li>
-                            <li>Internal fuses and switches in appliances designed to break line conductor only</li>
-                            <li>RCD protection effectiveness reduced when polarity is incorrect</li>
-                            <li>Creates false sense of security for users and maintenance personnel</li>
-                            <li>Socket outlets with reversed connections compromise appliance safety features</li>
-                            <li>Class I appliances may have exposed metalwork become live</li>
-                            <li>Emergency switches and isolators may not provide true disconnection</li>
-                          </ul>
-                        </div>
-
-                        <div>
-                          <p className="text-base text-white mb-2"><strong>Switch Wired in Neutral:</strong></p>
-                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                            <li>Equipment remains permanently live even when switched off</li>
-                            <li>Serious shock hazard during maintenance, lamp changes, or cleaning</li>
-                            <li>Violates BS 7671 Regulation 132.7 requiring single-pole devices to break line</li>
-                            <li>Creates dangerous working conditions for electricians and users</li>
-                            <li>Light fittings remain energised when switch appears to be off</li>
-                            <li>Smart switches and dimmers may malfunction or become unsafe</li>
-                            <li>Emergency lighting circuits compromised when switching neutral instead of line</li>
-                          </ul>
-                        </div>
-
-                        <div>
-                          <p className="text-base text-white mb-2"><strong>Incorrect Polarity at Multiway Lighting:</strong></p>
-                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                            <li>Can cause flickering, erratic operation, or premature lamp failure</li>
-                            <li>Dangerous energisation of supposedly dead circuits during maintenance</li>
-                            <li>Confusion about circuit status when testing or troubleshooting</li>
-                            <li>Potential for cross-energisation between different lighting circuits</li>
-                            <li>Two-way and intermediate switches may not operate correctly</li>
-                            <li>Strappers incorrectly connected causing permanent live conditions</li>
-                            <li>Mixed polarity in multi-gang switch plates creating hazardous conditions</li>
-                          </ul>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* InlineCheck after Section 2 */}
-          <div className="mt-6">
-            <InlineCheck
-              id="polarity-faults-check"
-              question="Why must a single-pole switch break the line conductor rather than the neutral?"
-              options={[
-                "To reduce energy bills",
-                "To ensure equipment isn't live when switched off",
-                "To share load on neutrals",
-                "To prevent RCD tripping"
-              ]}
-              correctIndex={1}
-              explanation="Single-pole switches must break the line conductor to ensure equipment is truly dead when switched off, preventing shock hazards during maintenance or lamp changes."
-            />
-          </div>
-        </Card>
-
-        {/* Content Card for Section 3 */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          {/* 3. Interpretation of Results */}
-          <section className="mb-6">
-            <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow bg-elec-yellow/5">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Interpretation of Results</p>
-                    
-                    <div className="space-y-4">
-                        <div>
-                          <p className="text-base text-white mb-2"><strong>Acceptable Values and Limits:</strong></p>
-                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                            <li>CPC continuity: should not exceed (R1 + R2) values specified in BS 7671</li>
-                            <li>Ring circuit end-to-end resistance: typically 0.05Ω to 1.67Ω depending on cable size</li>
-                            <li>Polarity confirmation: correct at all points - no tolerance for incorrect connections</li>
-                            <li>High resistance joints: any reading significantly above cable resistance indicates problems</li>
-                            <li>Temperature coefficient considerations for different cable materials and ambient conditions</li>
-                          </ul>
-                          <div className="mt-3 space-y-2">
-                            <div className="flex items-start gap-2">
-                              <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                              <span className="text-xs sm:text-sm text-white">All results must comply with BS 7671 requirements before energisation</span>
-                            </div>
-                            <div className="flex items-start gap-2">
-                              <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                              <span className="text-xs sm:text-sm text-white">Document any readings that appear higher than expected for investigation</span>
-                            </div>
-                            <div className="flex items-start gap-2">
-                              <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                              <span className="text-xs sm:text-sm text-white">Consider cable length, cross-sectional area, and material when evaluating results</span>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* InlineCheck after Section 3 */}
-          <div className="mt-6">
-            <InlineCheck
-              id="results-interpretation-check"
-              question="A much higher than expected R1+R2 reading suggests what type of fault?"
-              options={[
-                "Short circuit",
-                "High resistance joint",
-                "Correct continuity",
-                "Open circuit in CPC"
-              ]}
-              correctIndex={1}
-              explanation="A much higher than expected R1+R2 reading typically indicates a high resistance joint somewhere in the circuit, which could cause overheating and fire risk."
-            />
-          </div>
-
-          {/* 4. Causes and Testing Methods */}
-          <section className="mb-6">
-            <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-amber-600 dark:text-amber-400 mb-3">Causes and Testing Methods</p>
-                    
-                    <div className="space-y-4">
-                        <div>
-                          <p className="text-base text-white mb-2"><strong>Common Causes of Continuity and Polarity Faults:</strong></p>
-                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                            <li>Poor workmanship or inadequate training in electrical installation practices</li>
-                            <li>Incorrect reading of circuit drawings, specifications, or installation instructions</li>
-                            <li>Physical damage to cables during installation from drilling, crushing, or impact</li>
-                            <li>Inadequate inspection and testing procedures before circuit energisation</li>
-                            <li>Time pressure and commercial deadlines leading to installation shortcuts</li>
-                            <li>Lack of understanding of BS 7671 requirements for polarity and continuity</li>
-                            <li>Use of incorrect or damaged installation tools and equipment</li>
-                            <li>Poor communication between design engineers and installation teams</li>
-                            <li>Inadequate supervision of inexperienced or trainee electricians</li>
-                          </ul>
-                        </div>
-
-                        <div>
-                          <p className="text-base text-white mb-2"><strong>Test Methods to Confirm and Diagnose Faults:</strong></p>
-                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                            <li>Low resistance ohmmeter for accurate continuity measurements and CPC verification</li>
-                            <li>Two-pole voltage tester for definitive polarity confirmation at accessories</li>
-                            <li>Comprehensive visual inspection for physical damage before electrical testing</li>
-                            <li>Progressive testing techniques to isolate faults in ring and radial circuits</li>
-                            <li>Insulation resistance testing to identify damaged conductors and poor terminations</li>
-                            <li>Earth fault loop impedance testing to verify complete earth paths</li>
-                            <li>Functional testing of RCDs and other protective devices after fault rectification</li>
-                            <li>Thermal imaging to identify high resistance joints and overheating connections</li>
-                            <li>Sequence testing in complex installations to methodically identify problem areas</li>
-                          </ul>
-                        </div>
-
-                        <div>
-                          <p className="text-base text-white mb-2"><strong>Serious Consequences of Undetected Faults:</strong></p>
-                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                            <li>Increased fire risk from overheating joints causing ignition of surrounding materials</li>
-                            <li>Fatal electric shock hazards due to live exposed metalwork and failed protection</li>
-                            <li>Nuisance tripping or complete failure of protective devices during fault conditions</li>
-                            <li>Costly rework, project delays, and potential legal liability for unsafe installations</li>
-                            <li>Equipment damage from incorrect polarity and inadequate earth protection</li>
-                            <li>Regulatory non-compliance with Building Regulations and electrical safety standards</li>
-                            <li>Insurance claims rejection due to proven electrical defects causing incidents</li>
-                            <li>Professional reputation damage and potential removal from competent person schemes</li>
-                            <li>HSE investigation and prosecution under Health and Safety at Work Act provisions</li>
-                          </ul>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* InlineCheck after Section 4 */}
-          <div className="mt-6">
-            <InlineCheck
-              id="testing-methods-check"
-              question="Which tool confirms polarity at a socket outlet most definitively?"
-              options={[
-                "Clamp meter",
-                "Two-pole voltage tester",
-                "Non-contact voltage pen",
-                "Socket neon tester only"
-              ]}
-              correctIndex={1}
-              explanation="A two-pole voltage tester can definitively confirm polarity by measuring between specific terminals, unlike single-pole testers that only confirm presence of voltage."
-            />
-          </div>
-        </Card>
-
-        {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
-          <div className="space-y-3 text-base text-white">
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-              <span>Always isolate and prove dead before opening circuits for investigation</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-              <span>Check all connections are tight, clean, and accessible before testing</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-              <span>Where faults are suspected, test progressively (e.g., break down ring circuits into halves)</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-              <span>Record faults clearly in test sheets and notify supervisors immediately</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-              <span>Never energise a circuit with a known polarity or CPC fault</span>
-            </div>
-          </div>
-        </Card>
-
-        {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example: Kitchen Circuit Fault</h2>
-          <div className="space-y-4">
-            <div className="p-4 rounded-lg border border-elec-yellow/20">
-              <div className="space-y-3">
-                <div>
-                  <h3 className="font-semibold text-white mb-2">The Scenario</h3>
-                  <p className="text-xs sm:text-sm text-white">
-                    A domestic kitchen was being rewired with a new 32A ring final circuit to BS 7671 standards. The circuit included 8 socket outlets and was wired with 2.5mm² T&E cable. All installation work appeared complete and ready for testing.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-white mb-2">The Testing</h3>
-                  <p className="text-xs sm:text-sm text-white">
-                    During initial continuity testing, the electrician measured:
-                  </p>
-                  <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1 mt-2">
-                    <li>End-to-end line resistance: 0.82Ω (expected ~0.8Ω)</li>
-                    <li>End-to-end neutral resistance: 0.84Ω (expected ~0.8Ω)</li>
-                    <li>End-to-end CPC resistance: Infinite (∞) - FAULT DETECTED</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-white mb-2">The Investigation</h3>
-                  <p className="text-xs sm:text-sm text-white">
-                    The open CPC reading triggered immediate investigation. Testing each socket in sequence revealed the fault between sockets 4 and 5. Visual inspection at socket 4 showed the CPC terminal screw was finger-tight only - the cable had pulled out during final fitting.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-white mb-2">The Corrective Action</h3>
-                  <p className="text-xs sm:text-sm text-white">
-                    The terminal was properly tightened and retested. Final readings: Line 0.82Ω, Neutral 0.84Ω, CPC 0.85Ω - all within acceptable limits. The circuit was then successfully energised after completing insulation resistance and RCD tests.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-white mb-2">The Lesson</h3>
-                  <p className="text-xs sm:text-sm text-white">
-                    Without proper testing, this kitchen would have been energised with no earth protection on half the ring circuit. Any fault in appliances connected to sockets 5-8 could have made their metalwork live, creating fatal shock risks for users.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-primary/50 p-4 rounded-r-lg">
-                <p className="font-medium text-white mb-2">{faq.question}</p>
-                <p className="text-white">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
-
-        {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide (Key Takeaways)</h2>
-          <div className="grid gap-4 text-sm">
-            <div className="p-4 rounded-lg border border-green-500/20">
-              <p className="font-medium text-green-700 dark:text-green-400 mb-2">Common Faults</p>
-              <p>Open circuits, reversed polarity, high resistance joints, and disconnected CPCs</p>
-            </div>
-            <div className="p-4 rounded-lg border border-orange-500/20">
-              <p className="font-medium text-orange-700 text-elec-yellow mb-2">Consequences</p>
-              <p>Shock hazards, fire risk, and failure of protective devices</p>
-            </div>
-            <div className="p-4 rounded-lg border border-elec-yellow/20">
-              <p className="font-medium text-blue-700 text-elec-yellow mb-2">Testing</p>
-              <p>Use continuity and polarity tests to confirm conductor integrity</p>
-            </div>
-            <div className="p-4 rounded-lg border border-purple-500/20">
-              <p className="font-medium text-purple-700 text-elec-yellow mb-2">Action</p>
-              <p>Always rectify and document faults before energising</p>
-            </div>
-          </div>
-        </Card>
-
-        {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
-          <p className="text-base text-white mb-6">Master the four key areas of fault identification and resolution:</p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 rounded-lg border border-red-500/20">
-              <h3 className="font-semibold text-red-600 text-elec-yellow mb-2 flex items-center gap-2">
-                <span className="w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
-                Know It
-              </h3>
-              <p className="text-xs sm:text-sm text-white">Common faults: open circuits, high resistance joints, disconnected CPCs, and reversed polarity</p>
-            </div>
-            
-            <div className="p-4 rounded-lg border border-elec-yellow/20">
-              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-2 flex items-center gap-2">
-                <span className="w-6 h-6 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
-                Spot It
-              </h3>
-              <p className="text-xs sm:text-sm text-white">Visual cues: scorching, loose terminals, incorrect connections, and damaged cables</p>
-            </div>
-            
-            <div className="p-4 rounded-lg border border-elec-yellow/20">
-              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-2 flex items-center gap-2">
-                <span className="w-6 h-6 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
-                Test It
-              </h3>
-              <p className="text-xs sm:text-sm text-white">Measurements: infinite resistance = open circuit, high R1+R2 = poor joints, polarity confirmation</p>
-            </div>
-            
-            <div className="p-4 rounded-lg border border-amber-500/20">
-              <h3 className="font-semibold text-amber-600 dark:text-amber-400 mb-2 flex items-center gap-2">
-                <span className="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold">4</span>
-                Fix It
-              </h3>
-              <p className="text-xs sm:text-sm text-white">Actions: rectify all faults, document clearly, retest, then safely energise the circuit</p>
-            </div>
-          </div>
-        </Card>
-
-        {/* Quiz */}
-        <Quiz questions={quizQuestions} />
-
-        {/* Navigation */}
-        <div className="flex justify-between mt-12">
-          <Button variant="outline" asChild>
-            <Link to="../4-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Polarity Testing
-            </Link>
-          </Button>
-          <Button variant="outline" asChild>
-            <Link to="..">
-              Section Overview
-            </Link>
-          </Button>
+          {/* Navigation Footer */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
+            <Button
+              variant="ghost"
+              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../4-3">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Polarity Testing
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="..">
+                Section Overview
+                <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

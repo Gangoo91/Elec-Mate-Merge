@@ -1,12 +1,8 @@
-import { ArrowLeft, ArrowRight, Target, CheckCircle, AlertTriangle, Users, BookOpen, Clipboard, Wrench } from "lucide-react";
+import { ArrowLeft, ArrowRight, Wrench, CheckCircle, AlertTriangle, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
-import FormulaList from "@/components/apprentice-courses/FormulaList";
 import useSEO from "@/hooks/useSEO";
 
 const TITLE = "Tool Selection and Availability - Module 5.4.3 | Level 2 Electrical Course";
@@ -195,50 +191,54 @@ const pocketGuideItems = [
   "Build strong supplier relationships for procurement, service, and emergency support."
 ];
 
+const faqs = [
+  {
+    question: "Should every electrician have their own full tool kit?",
+    answer: "Ideally yes for personal hand tools and basic equipment. However, expensive specialist tools (torque drivers, cable pullers, testing equipment) can be shared effectively using proper sign-in/out systems and regular calibration schedules."
+  },
+  {
+    question: "How often should tools be inspected for safety and compliance?",
+    answer: "Daily visual inspections before use, weekly functional checks for power tools, and formal inspections according to manufacturer recommendations or company policy. Measuring instruments require calibration certificates maintained to current standards."
+  },
+  {
+    question: "What should I do if the correct tool isn't available on-site?",
+    answer: "Work should pause until the proper tool is sourced. Using inappropriate tools or makeshift alternatives creates safety risks and quality issues that can lead to failed inspections and liability problems."
+  },
+  {
+    question: "How do I handle tool calibration requirements for BS 7671 compliance?",
+    answer: "Maintain calibration certificates for all measuring instruments, schedule regular calibration services with accredited providers, and keep detailed records. Calibrated tools are essential for proving compliance with electrical standards."
+  },
+  {
+    question: "What's the best approach for managing tools across multiple projects?",
+    answer: "Use centralised tool tracking systems with barcode scanning, maintain separate tool allocations per project, and implement clear transfer procedures between sites. Digital systems help track location, condition, and calibration status."
+  },
+  {
+    question: "How do I justify the cost of specialist electrical tools to management?",
+    answer: "Calculate the cost of delays, rework, and non-compliance against tool investment. Specialist tools often pay for themselves through improved efficiency, quality, and compliance with safety standards."
+  },
+  {
+    question: "What storage conditions are required for sensitive measuring equipment?",
+    answer: "Protect from temperature extremes, humidity, vibration, and impact. Use dedicated cases with foam inserts, maintain stable environmental conditions, and avoid storage in vehicles or temporary structures where possible."
+  },
+  {
+    question: "How do I ensure tools meet current safety standards?",
+    answer: "Purchase tools from reputable suppliers with CE marking and relevant safety certifications. Maintain manufacturer documentation, follow maintenance schedules, and replace tools that no longer meet current safety standards."
+  }
+];
+
 const Module5Section4_3 = () => {
   useSEO(TITLE, DESCRIPTION);
 
-  const faqs = [
-    {
-      question: "Should every electrician have their own full tool kit?",
-      answer: "Ideally yes for personal hand tools and basic equipment. However, expensive specialist tools (torque drivers, cable pullers, testing equipment) can be shared effectively using proper sign-in/out systems and regular calibration schedules."
-    },
-    {
-      question: "How often should tools be inspected for safety and compliance?",
-      answer: "Daily visual inspections before use, weekly functional checks for power tools, and formal inspections according to manufacturer recommendations or company policy. Measuring instruments require calibration certificates maintained to current standards."
-    },
-    {
-      question: "What should I do if the correct tool isn't available on-site?",
-      answer: "Work should pause until the proper tool is sourced. Using inappropriate tools or makeshift alternatives creates safety risks and quality issues that can lead to failed inspections and liability problems."
-    },
-    {
-      question: "How do I handle tool calibration requirements for BS 7671 compliance?",
-      answer: "Maintain calibration certificates for all measuring instruments, schedule regular calibration services with accredited providers, and keep detailed records. Calibrated tools are essential for proving compliance with electrical standards."
-    },
-    {
-      question: "What's the best approach for managing tools across multiple projects?",
-      answer: "Use centralised tool tracking systems with barcode scanning, maintain separate tool allocations per project, and implement clear transfer procedures between sites. Digital systems help track location, condition, and calibration status."
-    },
-    {
-      question: "How do I justify the cost of specialist electrical tools to management?",
-      answer: "Calculate the cost of delays, rework, and non-compliance against tool investment. Specialist tools often pay for themselves through improved efficiency, quality, and compliance with safety standards."
-    },
-    {
-      question: "What storage conditions are required for sensitive measuring equipment?",
-      answer: "Protect from temperature extremes, humidity, vibration, and impact. Use dedicated cases with foam inserts, maintain stable environmental conditions, and avoid storage in vehicles or temporary structures where possible."
-    },
-    {
-      question: "How do I ensure tools meet current safety standards?",
-      answer: "Purchase tools from reputable suppliers with CE marking and relevant safety certifications. Maintain manufacturer documentation, follow maintenance schedules, and replace tools that no longer meet current safety standards."
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 4
@@ -247,183 +247,169 @@ const Module5Section4_3 = () => {
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Wrench className="w-6 h-6 text-white" />
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 4.3</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 5.4.3
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Tool Selection and Availability
-          </h1>
-          <p className="text-white">
-            Master proper tool selection and management to ensure safe, efficient electrical installations to professional standards.
-          </p>
-        </header>
-
-        {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-white" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Introduction</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Use the right tool for each task - never compromise on safety.</li>
-                <li>Plan tool availability and maintain spares of essential items.</li>
-                <li>Inspect tools before use and maintain calibration records.</li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Wrong tools being used or missing specialist equipment.</li>
-                <li><strong>Use:</strong> Tool inventories, inspection checklists, calibration schedules.</li>
-                <li><strong>Check:</strong> Tool condition, availability, and compliance requirements.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white mb-4">By the end of this subsection, you will be able to:</p>
-          
-          <div className="grid md:grid-cols-2 gap-4 mb-6">
-            <div className="space-y-3">
-              <h4 className="font-medium text-white">Tool Selection Skills</h4>
-              <ul className="space-y-2 text-white text-sm">
-                <li className="flex items-start">
-                  <span className="text-elec-yellow mr-2 font-bold">•</span>
-                  Select the correct tools for common electrical installation tasks
-                </li>
-                <li className="flex items-start">
-                  <span className="text-elec-yellow mr-2 font-bold">•</span>
-                  Understand safety standards when choosing and using tools
-                </li>
-                <li className="flex items-start">
-                  <span className="text-elec-yellow mr-2 font-bold">•</span>
-                  Recognise risks of using unsuitable or poorly maintained tools
-                </li>
-                <li className="flex items-start">
-                  <span className="text-elec-yellow mr-2 font-bold">•</span>
-                  Apply BS 7671 requirements for specialist electrical tools
-                </li>
-              </ul>
-            </div>
-            
-            <div className="space-y-3">
-              <h4 className="font-medium text-white">Tool Management</h4>
-              <ul className="space-y-2 text-white text-sm">
-                <li className="flex items-start">
-                  <span className="text-elec-yellow mr-2 font-bold">•</span>
-                  Implement systems for managing tool availability on-site
-                </li>
-                <li className="flex items-start">
-                  <span className="text-elec-yellow mr-2 font-bold">•</span>
-                  Maintain tool inspection and calibration schedules
-                </li>
-                <li className="flex items-start">
-                  <span className="text-elec-yellow mr-2 font-bold">•</span>
-                  Create effective storage and security systems for tools
-                </li>
-                <li className="flex items-start">
-                  <span className="text-elec-yellow mr-2 font-bold">•</span>
-                  Develop emergency procurement procedures for critical tools
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="bg-amber-50 dark:bg-amber-900/20 p-3 rounded border border-amber-200 dark:border-amber-800">
-            <p className="text-xs sm:text-sm text-white">
-              <strong>Competency Link:</strong> These outcomes support NVQ Level 2 competencies for tool selection, maintenance, and safe working practices in electrical installations.
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Tool Selection and Availability
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Master proper tool selection and management to ensure safe, efficient electrical installations to professional standards.
             </p>
-          </div>
-        </Card>
+          </header>
 
-        {/* Learning Point 1: Selecting the Right Tool */}
-        <Card className="mb-6 p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-4">
-            <CheckCircle className="w-6 h-6 text-elec-yellow" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Learning Point 1: Selecting the Right Tool</h2>
-          </div>
-          
-          <p className="text-base text-white mb-4">
-            Using the correct tool for each task is fundamental to safe and professional electrical work. Every tool is designed for specific purposes, and using the wrong tool can lead to poor results, damage, or injury.
-          </p>
-          
-          <div className="mb-6">
-            <h3 className="text-lg font-medium text-white mb-3">Why Tool Selection Matters</h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-                <p className="text-sm font-medium text-amber-700 dark:text-amber-400 mb-2">Safety</p>
-                <p className="text-xs sm:text-sm text-white">Wrong tools can slip, break, or cause electrical hazards</p>
-              </div>
-              <div className="p-4 rounded-lg bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                <p className="text-sm font-medium text-blue-700 text-elec-yellow mb-2">Quality</p>
-                <p className="text-xs sm:text-sm text-white">Correct tools ensure precise connections and professional finish</p>
-              </div>
-              <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-                <p className="text-sm font-medium text-green-700 dark:text-green-400 mb-2">Efficiency</p>
-                <p className="text-xs sm:text-sm text-white">Right tools complete tasks faster with better results</p>
-              </div>
-              <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-                <p className="text-sm font-medium text-purple-700 text-elec-yellow mb-2">Compliance</p>
-                <p className="text-xs sm:text-sm text-white">Specialist tools may be required for BS 7671 compliance</p>
-              </div>
+          {/* Introduction */}
+          <section className="mb-10">
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-6">
+              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
+              <ul className="text-white/80 space-y-1 text-sm">
+                <li>• Use the right tool for each task - never compromise on safety.</li>
+                <li>• Plan tool availability and maintain spares of essential items.</li>
+                <li>• Inspect tools before use and maintain calibration records.</li>
+              </ul>
             </div>
-          </div>
-          
-          <div className="rounded-lg p-4 bg-muted/50 border border-border/30 mb-4">
-            <h4 className="font-medium text-white mb-2">Common Tool Categories</h4>
-            <div className="grid md:grid-cols-2 gap-4 text-xs sm:text-sm text-white">
-              <div>
-                <p className="font-medium mb-2">Hand Tools:</p>
-                <ul className="list-disc pl-4 space-y-1">
-                  <li>Screwdrivers (insulated for electrical work)</li>
-                  <li>Pliers (various types for different tasks)</li>
-                  <li>Wire strippers and crimpers</li>
-                  <li>Spanners and socket sets</li>
+          </section>
+
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">00</span>
+              Learning Outcomes
+            </h2>
+            <p className="text-white/80 mb-4">By the end of this subsection, you will be able to:</p>
+
+            <div className="grid sm:grid-cols-2 gap-4 mb-6">
+              <div className="space-y-3">
+                <h4 className="font-medium text-white">Tool Selection Skills</h4>
+                <ul className="space-y-2 text-white/80 text-sm">
+                  <li className="flex items-start">
+                    <span className="text-elec-yellow mr-2">•</span>
+                    Select the correct tools for common electrical installation tasks
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-elec-yellow mr-2">•</span>
+                    Understand safety standards when choosing and using tools
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-elec-yellow mr-2">•</span>
+                    Recognise risks of using unsuitable or poorly maintained tools
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-elec-yellow mr-2">•</span>
+                    Apply BS 7671 requirements for specialist electrical tools
+                  </li>
                 </ul>
               </div>
-              <div>
-                <p className="font-medium mb-2">Specialist Tools:</p>
-                <ul className="list-disc pl-4 space-y-1">
-                  <li>Torque screwdrivers (calibrated)</li>
-                  <li>Cable pulling equipment</li>
-                  <li>Conduit bending tools</li>
-                  <li>Testing and measuring instruments</li>
+
+              <div className="space-y-3">
+                <h4 className="font-medium text-white">Tool Management</h4>
+                <ul className="space-y-2 text-white/80 text-sm">
+                  <li className="flex items-start">
+                    <span className="text-elec-yellow mr-2">•</span>
+                    Implement systems for managing tool availability on-site
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-elec-yellow mr-2">•</span>
+                    Maintain tool inspection and calibration schedules
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-elec-yellow mr-2">•</span>
+                    Create effective storage and security systems for tools
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-elec-yellow mr-2">•</span>
+                    Develop emergency procurement procedures for critical tools
+                  </li>
                 </ul>
               </div>
             </div>
-          </div>
-          
-          <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded border border-red-200 dark:border-red-800">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-medium text-red-700 text-elec-yellow mb-2">Never Use Makeshift Alternatives</p>
-                <p className="text-xs sm:text-sm text-white">
-                  Using the wrong tool or makeshift alternatives significantly increases injury risk and can result in poor workmanship that fails compliance standards. Wait for the correct tool to be available.
-                </p>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm text-white/80">
+                <strong className="text-white">Competency Link:</strong> These outcomes support NVQ Level 2 competencies for tool selection, maintenance, and safe working practices in electrical installations.
+              </p>
+            </div>
+          </section>
+
+          {/* Learning Point 1: Selecting the Right Tool */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Selecting the Right Tool
+            </h2>
+
+            <p className="text-white/80 mb-4 leading-relaxed">
+              Using the correct tool for each task is fundamental to safe and professional electrical work. Every tool is designed for specific purposes, and using the wrong tool can lead to poor results, damage, or injury.
+            </p>
+
+            <div className="mb-6">
+              <h3 className="text-lg font-medium text-white mb-3">Why Tool Selection Matters</h3>
+              <div className="grid sm:grid-cols-2 gap-3">
+                <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                  <p className="text-sm font-medium text-amber-400 mb-2">Safety</p>
+                  <p className="text-sm text-white/70">Wrong tools can slip, break, or cause electrical hazards</p>
+                </div>
+                <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                  <p className="text-sm font-medium text-blue-400 mb-2">Quality</p>
+                  <p className="text-sm text-white/70">Correct tools ensure precise connections and professional finish</p>
+                </div>
+                <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
+                  <p className="text-sm font-medium text-green-400 mb-2">Efficiency</p>
+                  <p className="text-sm text-white/70">Right tools complete tasks faster with better results</p>
+                </div>
+                <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                  <p className="text-sm font-medium text-purple-400 mb-2">Compliance</p>
+                  <p className="text-sm text-white/70">Specialist tools may be required for BS 7671 compliance</p>
+                </div>
               </div>
             </div>
-          </div>
-        </Card>
 
-        {/* Quick Check for Learning Point 1 */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="mb-6">
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10 mb-4">
+              <h4 className="font-medium text-white mb-3">Common Tool Categories</h4>
+              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+                <div>
+                  <p className="font-medium text-white mb-2">Hand Tools:</p>
+                  <ul className="list-disc pl-4 space-y-1">
+                    <li>Screwdrivers (insulated for electrical work)</li>
+                    <li>Pliers (various types for different tasks)</li>
+                    <li>Wire strippers and crimpers</li>
+                    <li>Spanners and socket sets</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="font-medium text-white mb-2">Specialist Tools:</p>
+                  <ul className="list-disc pl-4 space-y-1">
+                    <li>Torque screwdrivers (calibrated)</li>
+                    <li>Cable pulling equipment</li>
+                    <li>Conduit bending tools</li>
+                    <li>Testing and measuring instruments</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-red-400 mb-2">Never Use Makeshift Alternatives</p>
+                  <p className="text-sm text-white/70">
+                    Using the wrong tool or makeshift alternatives significantly increases injury risk and can result in poor workmanship that fails compliance standards. Wait for the correct tool to be available.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Quick Check 1 */}
+          <section className="mb-10">
             <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Tool Selection</h3>
             <InlineCheck
               id="tool-selection-check"
@@ -432,90 +418,88 @@ const Module5Section4_3 = () => {
               correctIndex={quickCheckQuestions[0].correctIndex}
               explanation={quickCheckQuestions[0].explanation}
             />
-          </div>
-        </Card>
+          </section>
 
-        {/* Learning Point 2: Specialist Tools */}
-        <Card className="mb-6 p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-4">
-            <CheckCircle className="w-6 h-6 text-elec-yellow" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Learning Point 2: Specialist Tools</h2>
-          </div>
-          
-          <p className="text-base text-white mb-4">
-            Electrical work often requires specialist tools that may not be needed for general construction tasks. These tools are designed to meet the specific demands of electrical installation and ensure compliance with safety standards.
-          </p>
-          
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-6">
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-white">Essential Specialist Tools</h3>
-              
-              <div className="p-4 rounded-lg bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Torque Screwdrivers</p>
-                <p className="text-xs sm:text-sm text-white mb-2">
-                  Required for terminations that must meet specific torque values (e.g., MCB connections, cable glands).
-                </p>
-                <ul className="text-xs sm:text-sm text-white list-disc pl-4">
-                  <li>Must be calibrated to ensure accuracy</li>
-                  <li>Different ranges for different applications</li>
-                  <li>Essential for BS 7671 compliance</li>
-                </ul>
-              </div>
-              
-              <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-                <p className="font-medium text-green-700 dark:text-green-400 mb-2">Testing Equipment</p>
-                <p className="text-xs sm:text-sm text-white mb-2">
-                  Multimeters, insulation testers, earth loop impedance testers.
-                </p>
-                <ul className="text-xs sm:text-sm text-white list-disc pl-4">
-                  <li>Must be calibrated and certificated</li>
-                  <li>Essential for verification testing</li>
-                  <li>Required for electrical certificates</li>
-                </ul>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-white">When Specialist Tools Are Required</h3>
-              
-              <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-                <p className="font-medium text-amber-700 dark:text-amber-400 mb-2">Mandatory Use</p>
-                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
-                  <li>When manufacturer instructions specify torque values</li>
-                  <li>For safety-critical connections</li>
-                  <li>During verification testing</li>
-                  <li>When required by BS 7671</li>
-                </ul>
-              </div>
-              
-              <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-700 text-elec-yellow mb-2">Quality Benefits</p>
-                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
-                  <li>Consistent, repeatable results</li>
-                  <li>Reduced risk of over-tightening</li>
-                  <li>Professional appearance</li>
-                  <li>Compliance documentation</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded border border-yellow-200 dark:border-yellow-800">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-medium text-yellow-700 text-elec-yellow mb-2">Calibration Requirements</p>
-                <p className="text-xs sm:text-sm text-white">
-                  All measuring and testing equipment must be calibrated regularly and have valid calibration certificates. Uncalibrated equipment cannot be used for compliance testing.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Card>
+          {/* Learning Point 2: Specialist Tools */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Specialist Tools
+            </h2>
 
-        {/* Quick Check for Learning Point 2 */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="mb-6">
+            <p className="text-white/80 mb-4 leading-relaxed">
+              Electrical work often requires specialist tools that may not be needed for general construction tasks. These tools are designed to meet the specific demands of electrical installation and ensure compliance with safety standards.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-4 mb-6">
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium text-white">Essential Specialist Tools</h3>
+
+                <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                  <p className="font-medium text-blue-400 mb-2">Torque Screwdrivers</p>
+                  <p className="text-sm text-white/70 mb-2">
+                    Required for terminations that must meet specific torque values (e.g., MCB connections, cable glands).
+                  </p>
+                  <ul className="text-sm text-white/70 list-disc pl-4">
+                    <li>Must be calibrated to ensure accuracy</li>
+                    <li>Different ranges for different applications</li>
+                    <li>Essential for BS 7671 compliance</li>
+                  </ul>
+                </div>
+
+                <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
+                  <p className="font-medium text-green-400 mb-2">Testing Equipment</p>
+                  <p className="text-sm text-white/70 mb-2">
+                    Multimeters, insulation testers, earth loop impedance testers.
+                  </p>
+                  <ul className="text-sm text-white/70 list-disc pl-4">
+                    <li>Must be calibrated and certificated</li>
+                    <li>Essential for verification testing</li>
+                    <li>Required for electrical certificates</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium text-white">When Specialist Tools Are Required</h3>
+
+                <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                  <p className="font-medium text-amber-400 mb-2">Mandatory Use</p>
+                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                    <li>When manufacturer instructions specify torque values</li>
+                    <li>For safety-critical connections</li>
+                    <li>During verification testing</li>
+                    <li>When required by BS 7671</li>
+                  </ul>
+                </div>
+
+                <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                  <p className="font-medium text-purple-400 mb-2">Quality Benefits</p>
+                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                    <li>Consistent, repeatable results</li>
+                    <li>Reduced risk of over-tightening</li>
+                    <li>Professional appearance</li>
+                    <li>Compliance documentation</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-yellow-400 mb-2">Calibration Requirements</p>
+                  <p className="text-sm text-white/70">
+                    All measuring and testing equipment must be calibrated regularly and have valid calibration certificates. Uncalibrated equipment cannot be used for compliance testing.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Quick Check 2 */}
+          <section className="mb-10">
             <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Specialist Tools</h3>
             <InlineCheck
               id="specialist-tools-check"
@@ -524,96 +508,94 @@ const Module5Section4_3 = () => {
               correctIndex={quickCheckQuestions[1].correctIndex}
               explanation={quickCheckQuestions[1].explanation}
             />
-          </div>
-        </Card>
+          </section>
 
-        {/* Learning Point 3: Tool Availability */}
-        <Card className="mb-6 p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-4">
-            <CheckCircle className="w-6 h-6 text-elec-yellow" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Learning Point 3: Tool Availability</h2>
-          </div>
-          
-          <p className="text-base text-white mb-4">
-            Having the right tools available when needed is crucial for maintaining productivity and quality. Poor tool availability leads to delays, frustration, and often results in using inappropriate alternatives that compromise safety and workmanship.
-          </p>
-          
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-6">
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-white">Planning Tool Requirements</h3>
-              
-              <div className="p-4 rounded-lg bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Pre-Project Planning</p>
-                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
-                  <li>Review project specifications and drawings</li>
-                  <li>Identify all required tools and equipment</li>
-                  <li>Check availability and condition</li>
-                  <li>Arrange procurement or hire if needed</li>
-                </ul>
-              </div>
-              
-              <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-                <p className="font-medium text-green-700 dark:text-green-400 mb-2">Daily Planning</p>
-                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
-                  <li>Check weather conditions for outdoor work</li>
-                  <li>Confirm tool availability for daily tasks</li>
-                  <li>Coordinate shared tool usage</li>
-                  <li>Plan tool transport and security</li>
-                </ul>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-white">Managing Shared Tools</h3>
-              
-              <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-                <p className="font-medium text-amber-700 dark:text-amber-400 mb-2">Sign-in/Out Systems</p>
-                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
-                  <li>Track who has which tools</li>
-                  <li>Monitor tool condition and calibration</li>
-                  <li>Prevent loss and theft</li>
-                  <li>Ensure availability for priority tasks</li>
-                </ul>
-              </div>
-              
-              <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-                <p className="font-medium text-purple-700 text-elec-yellow mb-2">Backup Strategies</p>
-                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
-                  <li>Maintain spare essential tools</li>
-                  <li>Establish emergency procurement procedures</li>
-                  <li>Coordinate with other trades and suppliers</li>
-                  <li>Plan alternative work when tools unavailable</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded border border-red-200 dark:border-red-800 mb-4">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-600 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-medium text-red-700 text-elec-yellow mb-2">Impact of Poor Tool Planning</p>
-                <ul className="text-xs sm:text-sm text-white list-disc pl-4 space-y-1">
-                  <li>Work delays and missed deadlines</li>
-                  <li>Increased safety risks from using wrong tools</li>
-                  <li>Poor workmanship and potential rework</li>
-                  <li>Team frustration and reduced morale</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          
-          <div className="rounded-lg p-4 bg-muted/50 border border-border/30">
-            <h4 className="font-medium text-white mb-2">Best Practice Example</h4>
-            <p className="text-xs sm:text-sm text-white">
-              <strong>Tool Coordination Meeting:</strong> Start each day with a brief team meeting to coordinate tool requirements, identify conflicts, and plan sharing of specialist equipment. This prevents delays and ensures critical tools are available when needed.
+          {/* Learning Point 3: Tool Availability */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Tool Availability
+            </h2>
+
+            <p className="text-white/80 mb-4 leading-relaxed">
+              Having the right tools available when needed is crucial for maintaining productivity and quality. Poor tool availability leads to delays, frustration, and often results in using inappropriate alternatives that compromise safety and workmanship.
             </p>
-          </div>
-        </Card>
 
-        {/* Quick Check for Learning Point 3 */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="mb-6">
+            <div className="grid sm:grid-cols-2 gap-4 mb-6">
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium text-white">Planning Tool Requirements</h3>
+
+                <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                  <p className="font-medium text-blue-400 mb-2">Pre-Project Planning</p>
+                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                    <li>Review project specifications and drawings</li>
+                    <li>Identify all required tools and equipment</li>
+                    <li>Check availability and condition</li>
+                    <li>Arrange procurement or hire if needed</li>
+                  </ul>
+                </div>
+
+                <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
+                  <p className="font-medium text-green-400 mb-2">Daily Planning</p>
+                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                    <li>Check weather conditions for outdoor work</li>
+                    <li>Confirm tool availability for daily tasks</li>
+                    <li>Coordinate shared tool usage</li>
+                    <li>Plan tool transport and security</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium text-white">Managing Shared Tools</h3>
+
+                <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                  <p className="font-medium text-amber-400 mb-2">Sign-in/Out Systems</p>
+                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                    <li>Track who has which tools</li>
+                    <li>Monitor tool condition and calibration</li>
+                    <li>Prevent loss and theft</li>
+                    <li>Ensure availability for priority tasks</li>
+                  </ul>
+                </div>
+
+                <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                  <p className="font-medium text-purple-400 mb-2">Backup Strategies</p>
+                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                    <li>Maintain spare essential tools</li>
+                    <li>Establish emergency procurement procedures</li>
+                    <li>Coordinate with other trades and suppliers</li>
+                    <li>Plan alternative work when tools unavailable</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 mb-4">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="font-medium text-red-400 mb-2">Impact of Poor Tool Planning</p>
+                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                    <li>Work delays and missed deadlines</li>
+                    <li>Increased safety risks from using wrong tools</li>
+                    <li>Poor workmanship and potential rework</li>
+                    <li>Team frustration and reduced morale</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="font-medium text-white mb-2">Best Practice Example</h4>
+              <p className="text-sm text-white/70">
+                <strong className="text-white">Tool Coordination Meeting:</strong> Start each day with a brief team meeting to coordinate tool requirements, identify conflicts, and plan sharing of specialist equipment. This prevents delays and ensures critical tools are available when needed.
+              </p>
+            </div>
+          </section>
+
+          {/* Quick Check 3 */}
+          <section className="mb-10">
             <h3 className="text-lg font-semibold text-white mb-4">Quick Check - Tool Availability</h3>
             <InlineCheck
               id="tool-availability-check"
@@ -622,127 +604,134 @@ const Module5Section4_3 = () => {
               correctIndex={quickCheckQuestions[2].correctIndex}
               explanation={quickCheckQuestions[2].explanation}
             />
-          </div>
-        </Card>
+          </section>
 
-        {/* Worked Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Worked Examples</h2>
-          
-          <div className="space-y-6">
-            {/* Example 1 */}
-            <div className="border border-border/30 rounded-lg p-4">
-              <h3 className="text-lg font-semibold text-white mb-3">Example 1: Selecting Tools for MCB Installation</h3>
-              
-              <div className="grid md:grid-cols-2 gap-4 mb-4">
-                <div className="space-y-3">
-                  <h4 className="font-medium text-white">Task Requirements:</h4>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>• Install 32A Type B MCB in consumer unit</li>
-                    <li>• Connect 6mm² cable to MCB terminals</li>
-                    <li>• Ensure connection meets manufacturer torque specification (2.5 Nm)</li>
-                    <li>• Verify installation quality and safety</li>
-                  </ul>
+          {/* Worked Examples */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Worked Examples
+            </h2>
+
+            <div className="space-y-6">
+              {/* Example 1 */}
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <h3 className="text-lg font-semibold text-white mb-3">Example 1: Selecting Tools for MCB Installation</h3>
+
+                <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                  <div className="space-y-3">
+                    <h4 className="font-medium text-white">Task Requirements:</h4>
+                    <ul className="text-sm text-white/70 space-y-1">
+                      <li>• Install 32A Type B MCB in consumer unit</li>
+                      <li>• Connect 6mm² cable to MCB terminals</li>
+                      <li>• Ensure connection meets manufacturer torque specification (2.5 Nm)</li>
+                      <li>• Verify installation quality and safety</li>
+                    </ul>
+                  </div>
+
+                  <div className="space-y-3">
+                    <h4 className="font-medium text-white">Required Tools:</h4>
+                    <ul className="text-sm text-white/70 space-y-1">
+                      <li>✓ Insulated screwdrivers (slotted and Pozidriv)</li>
+                      <li>✓ Calibrated torque screwdriver (0.5-3.0 Nm range)</li>
+                      <li>✓ Cable strippers for 6mm² cable</li>
+                      <li>✓ Multimeter for verification testing</li>
+                    </ul>
+                  </div>
                 </div>
-                
-                <div className="space-y-3">
-                  <h4 className="font-medium text-white">Required Tools:</h4>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>✓ Insulated screwdrivers (slotted and Pozidriv)</li>
-                    <li>✓ Calibrated torque screwdriver (0.5-3.0 Nm range)</li>
-                    <li>✓ Cable strippers for 6mm² cable</li>
-                    <li>✓ Multimeter for verification testing</li>
-                  </ul>
+
+                <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 mb-3">
+                  <p className="text-sm text-white/70">
+                    <strong className="text-amber-400">Critical Point:</strong> The torque screwdriver must be calibrated and certificated. Using an uncalibrated tool could result in over-tightening and terminal damage.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                  <p className="text-sm text-white/70">
+                    <strong className="text-green-400">Quality Outcome:</strong> Using correct tools ensures BS 7671 compliance, reduces installation time by 30%, and prevents common connection failures.
+                  </p>
                 </div>
               </div>
-              
-              <div className="bg-amber-50 dark:bg-amber-900/20 p-3 rounded border border-amber-200 dark:border-amber-800 mb-3">
-                <p className="text-xs sm:text-sm text-white">
-                  <strong>Critical Point:</strong> The torque screwdriver must be calibrated and certificated. Using an uncalibrated tool could result in over-tightening and terminal damage.
-                </p>
-              </div>
-              
-              <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800">
-                <p className="text-xs sm:text-sm text-white">
-                  <strong>Quality Outcome:</strong> Using correct tools ensures BS 7671 compliance, reduces installation time by 30%, and prevents common connection failures.
-                </p>
+
+              {/* Example 2 */}
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <h3 className="text-lg font-semibold text-white mb-3">Example 2: Tool Management System Implementation</h3>
+
+                <div className="grid sm:grid-cols-3 gap-3 mb-4">
+                  <div>
+                    <h4 className="font-medium text-white mb-2">Daily Checks</h4>
+                    <ul className="text-sm text-white/70 space-y-1">
+                      <li>✓ Visual inspection of tools</li>
+                      <li>✓ Function test for power tools</li>
+                      <li>✓ Battery levels and charging</li>
+                      <li>✓ Safety guard integrity</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="font-medium text-white mb-2">Weekly Reviews</h4>
+                    <ul className="text-sm text-white/70 space-y-1">
+                      <li>✓ Tool inventory and location</li>
+                      <li>✓ Maintenance requirements</li>
+                      <li>✓ Calibration due dates</li>
+                      <li>✓ Replacement needs</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="font-medium text-white mb-2">Monthly Actions</h4>
+                    <ul className="text-sm text-white/70 space-y-1">
+                      <li>✓ Formal tool audits</li>
+                      <li>✓ Training updates</li>
+                      <li>✓ Supplier performance review</li>
+                      <li>✓ System improvements</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                  <p className="text-sm text-white/70">
+                    <strong className="text-blue-400">Management Benefit:</strong> Systematic tool management reduces downtime by 40% and improves compliance with health and safety requirements.
+                  </p>
+                </div>
               </div>
             </div>
+          </section>
 
-            {/* Example 2 */}
-            <div className="border border-border/30 rounded-lg p-4">
-              <h3 className="text-lg font-semibold text-white mb-3">Example 2: Tool Management System Implementation</h3>
-              
-              <div className="grid md:grid-cols-3 gap-3 sm:gap-4 mb-4">
-                <div>
-                  <h4 className="font-medium text-white mb-2">Daily Checks</h4>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>✓ Visual inspection of tools</li>
-                    <li>✓ Function test for power tools</li>
-                    <li>✓ Battery levels and charging</li>
-                    <li>✓ Safety guard integrity</li>
-                  </ul>
+          {/* Practical Guidance */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Practical Guidance
+            </h2>
+            <div className="space-y-3">
+              {practicalGuidance.map((guidance, index) => (
+                <div key={index} className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                  <p className="text-white/80 text-sm">{guidance}</p>
                 </div>
-                
-                <div>
-                  <h4 className="font-medium text-white mb-2">Weekly Reviews</h4>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>✓ Tool inventory and location</li>
-                    <li>✓ Maintenance requirements</li>
-                    <li>✓ Calibration due dates</li>
-                    <li>✓ Replacement needs</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-white mb-2">Monthly Actions</h4>
-                  <ul className="text-sm text-white space-y-1">
-                    <li>✓ Formal tool audits</li>
-                    <li>✓ Training updates</li>
-                    <li>✓ Supplier performance review</li>
-                    <li>✓ System improvements</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                <p className="text-xs sm:text-sm text-white">
-                  <strong>Management Benefit:</strong> Systematic tool management reduces downtime by 40% and improves compliance with health and safety requirements.
-                </p>
-              </div>
+              ))}
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-          <div className="space-y-4">
-            {practicalGuidance.map((guidance, index) => (
-              <div key={index} className="border-l-4 border-elec-blue pl-4 bg-elec-yellow/5/50 dark:bg-blue-900/10 py-3 rounded-r">
-                <p className="text-white">{guidance}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
-
-        {/* Key Formulas (if relevant) */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Key Reference Values</h2>
-          <div className="space-y-4">
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="p-4 rounded-lg bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                <h3 className="font-medium text-blue-700 text-elec-yellow mb-2">Common Torque Values</h3>
-                <ul className="text-xs sm:text-sm text-white space-y-1">
+          {/* Key Reference Values */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Key Reference Values
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                <h3 className="font-medium text-blue-400 mb-2">Common Torque Values</h3>
+                <ul className="text-sm text-white/70 space-y-1">
                   <li>• MCB terminals: 2.5 Nm (typically)</li>
                   <li>• Cable glands: 5-10 Nm (size dependent)</li>
                   <li>• Busbar connections: 10-25 Nm</li>
                   <li>• Always check manufacturer specifications</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-                <h3 className="font-medium text-green-700 dark:text-green-400 mb-2">Calibration Intervals</h3>
-                <ul className="text-xs sm:text-sm text-white space-y-1">
+              <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
+                <h3 className="font-medium text-green-400 mb-2">Calibration Intervals</h3>
+                <ul className="text-sm text-white/70 space-y-1">
                   <li>• Torque tools: 12 months maximum</li>
                   <li>• Multimeters: 12 months</li>
                   <li>• Insulation testers: 12 months</li>
@@ -750,69 +739,73 @@ const Module5Section4_3 = () => {
                 </ul>
               </div>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border border-white/10 rounded-lg p-4">
-                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                <p className="text-white text-sm">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-3">
+              {faqs.map((faq, index) => (
+                <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
 
-        {/* Knowledge Check Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-6">
-            <Clipboard className="w-6 h-6 text-elec-yellow" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Knowledge Check</h2>
-          </div>
-          <Quiz questions={quizQuestions} />
-        </Card>
+          {/* Knowledge Check Quiz */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+              Knowledge Check
+            </h2>
+            <Quiz questions={quizQuestions} />
+          </section>
 
-        {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-6">
-            <BookOpen className="w-6 h-6 text-elec-yellow" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Pocket Guide - Tool Selection & Availability</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-4">
-            {pocketGuideItems.map((item, index) => (
-              <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30">
-                <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <p className="text-xs sm:text-sm text-white">{item}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
+          {/* Pocket Guide */}
+          <section className="mb-10">
+            <div className="flex items-center gap-3 mb-4">
+              <BookOpen className="w-5 h-5 text-elec-yellow" />
+              <h2 className="text-xl font-semibold text-white">Pocket Guide - Tool Selection & Availability</h2>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {pocketGuideItems.map((item, index) => (
+                <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-white/5">
+                  <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-white/80">{item}</p>
+                </div>
+              ))}
+            </div>
+          </section>
 
-        {/* Navigation */}
-        <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Button variant="outline" className="bg-[#121212]" asChild>
-            <Link to="../4-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-          
-          <div className="text-center">
-            <p className="text-sm text-white">Module 5, Section 4</p>
-            <p className="text-xs text-white">3 of 6 subsections</p>
-          </div>
-          
-          <Button variant="outline" className="bg-[#121212]" asChild>
-            <Link to="..">
-              Next
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
+            <Button
+              variant="ghost"
+              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../4-2">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back: Ordering Materials
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../4-4">
+                Next: Managing Wastage
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

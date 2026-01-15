@@ -15,13 +15,13 @@ interface DesignProcessingViewProps {
 
 // Stage configuration
 const STAGES = [
-  { name: 'Init', icon: '⚡' },
-  { name: 'Analyse', icon: '📋' },
-  { name: 'Regs', icon: '📚' },
-  { name: 'Design', icon: '🤖' },
-  { name: 'Validate', icon: '✓' },
-  { name: 'Finalise', icon: '📄' },
-  { name: 'Done', icon: '✨' }
+  { name: 'Preparing', icon: '⚡' },
+  { name: 'Analysing', icon: '📋' },
+  { name: 'Checking Regs', icon: '📚' },
+  { name: 'Designing', icon: '🤖' },
+  { name: 'Validating', icon: '✓' },
+  { name: 'Finalising', icon: '📄' },
+  { name: 'Complete', icon: '✨' }
 ];
 
 // Rotating tips during processing
@@ -44,10 +44,21 @@ export const DesignProcessingView = ({
   const [displayPercent, setDisplayPercent] = useState(0);
   const [lastProgressChange, setLastProgressChange] = useState(Date.now());
   const [currentTip, setCurrentTip] = useState(0);
+  const [showBurst, setShowBurst] = useState(false);
   const lastProgressRef = useRef(0);
+  const prevStageRef = useRef(0);
 
   const currentStage = Math.min(progress?.stage || 0, 6);
   const currentPercent = progress?.percent || 0;
+
+  // Track stage changes for burst animation
+  useEffect(() => {
+    if (currentStage > prevStageRef.current) {
+      setShowBurst(true);
+      setTimeout(() => setShowBurst(false), 600);
+    }
+    prevStageRef.current = currentStage;
+  }, [currentStage]);
 
   // Track elapsed time
   useEffect(() => {
@@ -119,6 +130,18 @@ export const DesignProcessingView = ({
         />
       </div>
 
+      {/* Subtle Circuit Grid */}
+      <div
+        className="absolute inset-0 opacity-[0.02] pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, hsl(47 100% 50%) 1px, transparent 1px),
+            linear-gradient(to bottom, hsl(47 100% 50%) 1px, transparent 1px)
+          `,
+          backgroundSize: '32px 32px'
+        }}
+      />
+
       {/* Main Content */}
       <div className="relative z-10 flex-1 flex flex-col justify-evenly px-4 py-6 max-w-md mx-auto w-full">
 
@@ -127,6 +150,42 @@ export const DesignProcessingView = ({
           {/* Animated Icon */}
           <div className="flex justify-center">
             <div className="relative">
+              {/* Floating Particles */}
+              {[...Array(6)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 rounded-full bg-elec-yellow/40"
+                  animate={{
+                    scale: [0.5, 1, 0.5],
+                    opacity: [0.2, 0.6, 0.2],
+                  }}
+                  transition={{
+                    duration: 2 + i * 0.3,
+                    repeat: Infinity,
+                    delay: i * 0.4,
+                  }}
+                  style={{
+                    top: `${30 + 40 * Math.sin((i * Math.PI * 2) / 6)}px`,
+                    left: `${30 + 40 * Math.cos((i * Math.PI * 2) / 6)}px`,
+                    transform: 'translate(-50%, -50%)'
+                  }}
+                />
+              ))}
+
+              {/* Stage Transition Burst Effect */}
+              <AnimatePresence>
+                {showBurst && (
+                  <motion.div
+                    initial={{ scale: 1, opacity: 0.8 }}
+                    animate={{ scale: 2.5, opacity: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute inset-0 rounded-full border-2 border-elec-yellow"
+                    style={{ width: 60, height: 60 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                  />
+                )}
+              </AnimatePresence>
+
               <motion.div
                 className="absolute inset-0 rounded-full border border-elec-yellow/20"
                 style={{ width: 72, height: 72, margin: -6 }}
@@ -276,7 +335,7 @@ export const DesignProcessingView = ({
         {/* Tip Card - Compact */}
         <div className={cn(
           "p-3 rounded-xl",
-          "bg-white/5 border border-white/10"
+          "bg-gradient-to-br from-amber-950/30 to-black/20 border border-amber-800/20"
         )}>
           <div className="flex items-start gap-2">
             <Sparkles className="h-3 w-3 text-elec-yellow shrink-0 mt-0.5" />

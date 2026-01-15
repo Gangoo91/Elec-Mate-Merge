@@ -7,7 +7,7 @@
  */
 
 import React, { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Zap,
@@ -43,21 +43,21 @@ import { SetupIncompleteBanner } from '@/components/onboarding/SetupIncompleteBa
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 
-// Animation variants
+// Animation variants - Smooth, fast entrance
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.02, delayChildren: 0 },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 8 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: 'spring', stiffness: 300, damping: 24 },
+    transition: { duration: 0.2, ease: 'easeOut' },
   },
 };
 
@@ -76,12 +76,7 @@ function ElectricalHero() {
   const firstName = profile?.full_name?.split(' ')[0] || 'Electrician';
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="relative overflow-hidden glass-premium rounded-2xl glow-yellow"
-    >
+    <div className="relative overflow-hidden glass-premium rounded-2xl glow-yellow">
       {/* Gradient accent line */}
       <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
 
@@ -145,13 +140,14 @@ function ElectricalHero() {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 // Stats Bar Component
 function ElectricalStatsBar() {
   const { business, certificates, isLoading } = useDashboardData();
+  const navigate = useNavigate();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -160,6 +156,7 @@ function ElectricalStatsBar() {
       label: 'Active Quotes',
       value: business.activeQuotes,
       icon: FileText,
+      navigateTo: '/electrician/quotes',
     },
     {
       label: 'Quote Value',
@@ -167,17 +164,22 @@ function ElectricalStatsBar() {
       prefix: '£',
       formatAsCurrency: true,
       icon: PoundSterling,
+      navigateTo: '/electrician/quotes',
     },
     {
       label: 'Certificates',
       value: certificates.total,
       icon: Zap,
+      navigateTo: '/electrician/inspection-testing',
     },
     {
       label: 'Overdue',
       value: business.overdueInvoices,
       icon: business.overdueInvoices === 0 ? CheckCircle : AlertCircle,
       variant: business.overdueInvoices === 0 ? 'success' : 'danger',
+      navigateTo: business.overdueInvoices > 0
+        ? '/electrician/invoices?filter=overdue'
+        : '/electrician/invoices',
     },
   ];
 
@@ -222,29 +224,36 @@ function ElectricalStatsBar() {
           const isDanger = stat.variant === 'danger';
 
           return (
-            <motion.div
+            <motion.button
               key={stat.label}
+              onClick={() => navigate(stat.navigateTo)}
               variants={itemVariants}
               whileTap={{ scale: 0.96 }}
               transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               className={cn(
-                'flex-shrink-0 w-[140px] snap-start touch-manipulation',
+                'flex-shrink-0 w-[140px] snap-start touch-manipulation cursor-pointer group',
                 index === statItems.length - 1 && 'mr-4 sm:mr-0',
                 'sm:w-full'
               )}
+              aria-label={`View ${stat.label}`}
             >
-              <div className="glass-premium rounded-xl p-4 h-[100px] active:bg-white/[0.02] transition-colors">
+              <div className={cn(
+                'glass-premium rounded-xl p-4 h-[100px]',
+                'group-hover:bg-white/[0.04] group-active:bg-white/[0.02]',
+                'transition-all duration-200',
+                'group-hover:shadow-lg group-hover:shadow-elec-yellow/5'
+              )}>
                 <div className="flex items-start justify-between gap-2">
                   <div className={cn(
-                    'p-2 rounded-lg',
-                    isSuccess ? 'bg-green-500/10' : isDanger ? 'bg-red-500/10' : 'bg-elec-yellow/10'
+                    'p-2 rounded-lg transition-colors',
+                    isSuccess ? 'bg-green-500/10 group-hover:bg-green-500/20' : isDanger ? 'bg-red-500/10 group-hover:bg-red-500/20' : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20'
                   )}>
                     <Icon className={cn(
                       'h-4 w-4',
                       isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
                     )} />
                   </div>
-                  <div className="text-right">
+                  <div className="text-right flex-1">
                     <div className="flex items-baseline justify-end">
                       {stat.formatAsCurrency ? (
                         <span className="text-xl font-bold text-elec-yellow">
@@ -261,11 +270,14 @@ function ElectricalStatsBar() {
                         />
                       )}
                     </div>
-                    <p className="text-xs text-white/70 mt-0.5">{stat.label}</p>
+                    <p className="text-xs text-white/70 mt-0.5 flex items-center justify-end gap-1">
+                      {stat.label}
+                      <ChevronRight className="h-3 w-3 text-white/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </p>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </motion.button>
           );
         })}
       </motion.div>
@@ -421,7 +433,7 @@ const mainResources: ToolCardProps[] = [
     title: 'Quote Builder',
     description: 'Create professional quotes',
     icon: FileText,
-    link: '/electrician/quote-builder',
+    link: '/electrician/quotes',
   },
   {
     title: 'AI Tooling',

@@ -418,7 +418,7 @@ const DailyAITipsTab = () => {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.2}
@@ -536,7 +536,7 @@ const DailyAITipsTab = () => {
       <AnimatePresence>
         {progressPercentage === 100 && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             className="mx-4 mb-2 p-3 bg-gradient-to-r from-elec-yellow/20 to-orange-500/20 border border-elec-yellow/30 rounded-xl"

@@ -60,9 +60,9 @@ const IOSSelect = React.forwardRef<HTMLButtonElement, IOSSelectProps>(
               icon ? "pl-12 pr-4" : "px-4",
               // Typography - iOS body style
               "text-ios-body text-white",
-              // Background & border - iOS style rounded rect
-              "bg-white/5 rounded-xl border-2",
-              "border-white/10",
+              // Background & border - Premium warm amber tint
+              "bg-gradient-to-br from-amber-950/30 to-black/20 rounded-xl border",
+              "border-amber-800/20",
               // Focus/Open state
               "focus:outline-none",
               isOpen && "border-elec-yellow/60 bg-white/8 shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.1)]",

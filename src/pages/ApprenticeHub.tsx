@@ -36,21 +36,21 @@ import { useApprenticeData } from '@/hooks/useApprenticeData';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
 
-// Animation variants
+// Animation variants - Smooth, fast entrance
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.02, delayChildren: 0 },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 8 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: 'spring', stiffness: 300, damping: 24 },
+    transition: { duration: 0.2, ease: 'easeOut' },
   },
 };
 
@@ -66,12 +66,7 @@ function ApprenticeHero() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="relative overflow-hidden glass-premium rounded-2xl glow-yellow"
-    >
+    <div className="relative overflow-hidden glass-premium rounded-2xl glow-yellow">
       {/* Gradient accent line */}
       <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
 
@@ -126,7 +121,7 @@ function ApprenticeHero() {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

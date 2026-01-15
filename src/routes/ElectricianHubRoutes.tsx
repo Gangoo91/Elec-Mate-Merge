@@ -18,6 +18,7 @@ const ApprenticeMentalHealth = lazy(() => import("@/pages/apprentice/ApprenticeM
 const JobVacancies = lazy(() => import("@/pages/electrician/JobVacancies"));
 const ElectricalMaterials = lazy(() => import("@/pages/electrician/ElectricalMaterials"));
 const ElectricalTools = lazy(() => import("@/pages/electrician/ElectricalTools"));
+const ToolsMarketplace = lazy(() => import("@/pages/electrician/ToolsMarketplace"));
 const LivePricingHub = lazy(() => import("@/pages/electrician/LivePricingHub"));
 const ElectricalHub = lazy(() => import("@/pages/ElectricalHub"));
 const CareerProgression = lazy(() => import("@/pages/electrician/CareerProgression"));
@@ -88,6 +89,7 @@ const ElectricianHubRoutes = () => (
     <Route path="materials/supplier/:supplierSlug" element={<LazyRoute><SupplierMaterials /></LazyRoute>} />
     <Route path="materials/:slug" element={<LazyRoute><MaterialsSlugRedirect /></LazyRoute>} />
     <Route path="tools" element={<LazyRoute><ElectricalTools /></LazyRoute>} />
+    <Route path="tools-marketplace" element={<LazyRoute><ToolsMarketplace /></LazyRoute>} />
     <Route path="safety-shares" element={<LazyRoute><SafetyShares /></LazyRoute>} />
     <Route path="safety-shares/projects" element={<LazyRoute><MajorProjects /></LazyRoute>} />
     <Route path="safety-shares/alerts" element={<LazyRoute><SafetyAlerts /></LazyRoute>} />

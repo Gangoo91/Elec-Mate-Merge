@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { PullToRefresh } from "@/components/ui/pull-to-refresh";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -53,6 +55,7 @@ import {
 const vehicleStatuses: VehicleStatus[] = ["Active", "Available", "Maintenance", "Off Road"];
 
 export function FleetSection() {
+  const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"vehicles" | "fuel">("vehicles");
@@ -197,7 +200,11 @@ export function FleetSection() {
     );
   }
 
-  return (
+  const handleRefresh = useCallback(async () => {
+    await refetch();
+  }, [refetch]);
+
+  const content = (
     <div className="space-y-4 md:space-y-6 animate-fade-in">
       <SectionHeader
         title="Fleet Management"
@@ -588,4 +595,10 @@ export function FleetSection() {
       )}
     </div>
   );
+
+  return isMobile ? (
+    <PullToRefresh onRefresh={handleRefresh} className="h-full">
+      {content}
+    </PullToRefresh>
+  ) : content;
 }

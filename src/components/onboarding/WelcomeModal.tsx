@@ -180,11 +180,11 @@ const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
         </div>
 
         {/* Actions */}
-        <div className="px-6 md:px-8 py-6 md:py-8 space-y-3">
+        <div className="px-6 md:px-8 py-6 md:py-8 pb-[max(1.5rem,env(safe-area-inset-bottom))] space-y-3">
           <Button
             onClick={handleGetStarted}
             disabled={isCompleting}
-            className="w-full h-12 md:h-14 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base md:text-lg"
+            className="w-full h-12 md:h-14 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base md:text-lg touch-manipulation"
           >
             {isCompleting ? (
               'Setting up...'
@@ -198,7 +198,7 @@ const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
           <Button
             variant="ghost"
             onClick={handleSkip}
-            className="w-full h-10 md:h-11 text-white/50 hover:text-white/70 md:text-base"
+            className="w-full h-11 text-white/50 hover:text-white/70 md:text-base touch-manipulation"
           >
             I'll explore on my own
           </Button>

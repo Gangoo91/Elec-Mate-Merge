@@ -165,12 +165,12 @@ const SignIn = () => {
                 exit={{ opacity: 0, y: -10, height: 0 }}
                 className="mb-6 overflow-hidden"
               >
-                <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20">
+                <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20">
                   <div className="flex gap-3 items-center">
-                    <div className="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center flex-shrink-0">
-                      <AlertTriangle className="h-5 w-5 text-red-400" />
+                    <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                      <AlertTriangle className="h-5 w-5 text-amber-400" />
                     </div>
-                    <p className="text-[14px] text-red-400 font-medium">{error}</p>
+                    <p className="text-[14px] text-amber-400 font-medium">{error}</p>
                   </div>
                 </div>
               </motion.div>

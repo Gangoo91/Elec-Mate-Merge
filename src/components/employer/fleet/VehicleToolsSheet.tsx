@@ -5,6 +5,16 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -57,6 +67,7 @@ export function VehicleToolsSheet({
   const [editingTool, setEditingTool] = useState<VehicleTool | null>(null);
   const [search, setSearch] = useState("");
   const [filterCategory, setFilterCategory] = useState<string>("all");
+  const [toolToDelete, setToolToDelete] = useState<VehicleTool | null>(null);
 
   const { data: tools = [], isLoading } = useVehicleTools(vehicle.id);
   const { data: stats } = useToolStats(vehicle.id);
@@ -106,8 +117,13 @@ export function VehicleToolsSheet({
   };
 
   const handleDelete = (tool: VehicleTool) => {
-    if (confirm(`Remove "${tool.name}" from this vehicle?`)) {
-      deleteTool.mutate({ id: tool.id, vehicleId: vehicle.id });
+    setToolToDelete(tool);
+  };
+
+  const confirmDelete = () => {
+    if (toolToDelete) {
+      deleteTool.mutate({ id: toolToDelete.id, vehicleId: vehicle.id });
+      setToolToDelete(null);
     }
   };
 
@@ -341,6 +357,27 @@ export function VehicleToolsSheet({
           </div>
         </div>
       </SheetContent>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={!!toolToDelete} onOpenChange={() => setToolToDelete(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remove Tool?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to remove "{toolToDelete?.name}" from this vehicle? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={confirmDelete}
+              className="h-11 touch-manipulation bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Remove
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Sheet>
   );
 }

@@ -127,6 +127,7 @@ export function ClientPortalSection() {
   const handleRefreshLink = async () => {
     if (portalLink) {
       await regenerateToken.mutateAsync(portalLink.id);
+      toast({ title: "Link refreshed", description: "A new portal link has been generated" });
     }
   };
 
@@ -261,7 +262,10 @@ export function ClientPortalSection() {
 
         {/* Contact */}
         {portalSettings.allowMessages && (
-          <Button className="w-full touch-manipulation">
+          <Button
+            className="w-full touch-manipulation"
+            onClick={() => toast({ title: "Preview Mode", description: "Clients can message you from their portal link" })}
+          >
             <Mail className="h-4 w-4 mr-2" />
             Send Message
           </Button>

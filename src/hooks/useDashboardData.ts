@@ -201,7 +201,7 @@ export function useDashboardData(): DashboardData {
         title: `Invoice #${inv.invoice_number || inv.id?.slice(0, 6)}`,
         description: `${daysOverdue}d overdue · ${inv.client?.name || 'Client'}`,
         action: 'View',
-        path: `/electrician/invoices/${inv.id}`,
+        path: `/electrician/invoices/${inv.id}/view`,
         metadata: { daysOverdue, amount: inv.total },
       });
     });
@@ -218,7 +218,7 @@ export function useDashboardData(): DashboardData {
         title: `Quote #${quote.quoteNumber || quote.id?.slice(0, 6)}`,
         description: `£${quote.total?.toLocaleString() || 0} · ${quote.client?.name || 'Client'}`,
         action: 'Follow Up',
-        path: `/electrician/quotes/${quote.id}`,
+        path: `/electrician/quotes/view/${quote.id}`,
         metadata: { amount: quote.total },
       });
     });

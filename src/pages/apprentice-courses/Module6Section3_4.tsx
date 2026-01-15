@@ -1,8 +1,5 @@
-import { ArrowLeft, Eye, Target, CheckCircle, Shield, AlertTriangle, Zap } from "lucide-react";
+import { ArrowLeft, CheckCircle, Shield, AlertTriangle, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import useSEO from "@/hooks/useSEO";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -14,7 +11,6 @@ const Module6Section3_4 = () => {
     "Essential safe isolation procedures and proving dead techniques"
   );
 
-  // Quiz questions
   const quizQuestions = [
     {
       id: 1,
@@ -132,11 +128,15 @@ const Module6Section3_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6.3
@@ -145,619 +145,603 @@ const Module6Section3_4 = () => {
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Shield className="w-6 h-6 text-white" />
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 6.3.4</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 6.3.4
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Proving Dead and Safe to Test
-          </h1>
-          <p className="text-white">
-            Essential safe isolation procedures and proving dead techniques
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Proving Dead and Safe to Test
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Essential safe isolation procedures and proving dead techniques
+            </p>
+          </header>
 
-        {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-8 p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-white" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-3">In 30 seconds</p>
-              <ul className="space-y-2 text-sm">
+          {/* Quick Reference Summary */}
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
+            <p className="font-medium text-white mb-3">Spot it in 30 Seconds</p>
+            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+              <ul className="space-y-2">
                 <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
+                  <span className="text-elec-yellow">•</span>
                   <span>Isolate → Lock off → Label → Prove tester → Test dead → Re-prove</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
+                  <span className="text-elec-yellow">•</span>
                   <span>GS38-compliant two-pole tester (no neon screwdrivers)</span>
                 </li>
+              </ul>
+              <ul className="space-y-2">
                 <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
+                  <span className="text-elec-yellow">•</span>
                   <span>Test all combinations: L–N, L–E, N–E at point of work</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
+                  <span className="text-elec-yellow">•</span>
                   <span>Keep isolation key in your possession throughout work</span>
                 </li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
-              <p className="font-medium mb-3">Spot it / Use it / Check it</p>
-              <ul className="space-y-2 text-sm">
+          </div>
+
+          {/* Introduction */}
+          <section className="mb-10">
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Before any installation or maintenance work begins, electricians must ensure that circuits are dead and safe to work on. Failure to prove dead is one of the most common causes of electrical accidents.
+              </p>
+              <p>
+                This subsection explains how to correctly isolate, prove dead, and verify safety before touching conductors or equipment, following the requirements of the Electricity at Work Regulations and industry best practices.
+              </p>
+            </div>
+          </section>
+
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">00</span>
+              Learning Outcomes
+            </h2>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <p className="text-white/80 mb-3">By the end of this subsection, you will be able to:</p>
+              <ul className="space-y-2 text-white/80">
                 <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Spot:</strong> Live circuits, faulty testers, backfed supplies, incorrect labels</span>
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+                  <span>Explain the purpose of proving dead and its legal requirements</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Use:</strong> Safe isolation procedure; proving unit before/after; lock-off devices</span>
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+                  <span>Follow the safe isolation procedure step by step</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Check:</strong> Circuit identity; tester function; all conductors dead; secure isolation</span>
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+                  <span>Use a GS38-compliant voltage tester and proving unit correctly</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+                  <span>Avoid unsafe practices such as relying on neon screwdrivers</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+                  <span>Apply correct verification procedures before starting electrical work</span>
                 </li>
               </ul>
             </div>
+          </section>
+
+          {/* Section 1: Why Prove Dead? */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Why Prove Dead?
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div>
+                <p className="font-medium text-white mb-2">Prevents Accidental Contact:</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Electric shock from live conductors can cause serious injury or death</li>
+                  <li>• Arc flash incidents can cause severe burns and blast injuries</li>
+                  <li>• Even low voltages can be lethal in certain conditions (wet hands, heart conditions)</li>
+                  <li>• Protects against induced voltages from adjacent circuits or equipment</li>
+                  <li>• Prevents damage to sensitive equipment during maintenance</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-medium text-white mb-2">Confirms Effective Isolation:</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Circuit labels may be incorrect due to modifications or poor maintenance</li>
+                  <li>• Circuits can be backfed through alternative supply routes</li>
+                  <li>• Isolators may be faulty or not fully disconnecting all poles</li>
+                  <li>• Multiple sources may supply the same equipment (normal/emergency supplies)</li>
+                  <li>• Induced voltages from parallel circuits can present hazards</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-medium text-white mb-2">Legal and Regulatory Compliance:</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Electricity at Work Regulations 1989 - Regulation 4 requires systems to be dead before work</li>
+                  <li>• Health and Safety at Work Act 1974 - duty of care to prevent foreseeable harm</li>
+                  <li>• BS 7671 requirements for safe working practices</li>
+                  <li>• Corporate manslaughter legislation applies to electrical safety failures</li>
+                  <li>• Professional liability and insurance requirements</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <div className="mb-10">
+            <InlineCheck
+              id="prove-dead-purpose"
+              question="What is the primary purpose of proving dead?"
+              options={["To comply with paperwork", "To prevent electrical accidents", "To save time", "To check circuit labels"]}
+              correctIndex={1}
+              explanation="The primary purpose is to prevent electrical accidents by confirming that circuits are actually dead before work begins."
+            />
           </div>
-        </Card>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <p className="text-base text-white mb-4">
-            Before any installation or maintenance work begins, electricians must ensure that circuits are dead and safe to work on. Failure to prove dead is one of the most common causes of electrical accidents.
-          </p>
-          <p className="text-base text-white">
-            This subsection explains how to correctly isolate, prove dead, and verify safety before touching conductors or equipment, following the requirements of the Electricity at Work Regulations and industry best practices.
-          </p>
-        </Card>
+          {/* Section 2: Safe Isolation Procedure */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Safe Isolation Procedure (Step by Step)
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div>
+                <p className="font-medium text-white mb-2">Step 1: Identify the Correct Circuit</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Use circuit schedules, labels, and physical tracing to confirm circuit identity</li>
+                  <li>• Test switching operations to verify which circuits are controlled</li>
+                  <li>• Check for multiple supplies (emergency lighting, UPS systems)</li>
+                  <li>• Identify any interconnections or parallel feeds</li>
+                  <li>• Never rely solely on labelling - always verify by testing</li>
+                </ul>
+              </div>
 
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-base text-white mb-4">By the end of this subsection, you will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>Explain the purpose of proving dead and its legal requirements.</li>
-            <li>Follow the safe isolation procedure step by step.</li>
-            <li>Use a GS38-compliant voltage tester and proving unit correctly.</li>
-            <li>Avoid unsafe practices such as relying on neon screwdrivers.</li>
-            <li>Apply correct verification procedures before starting electrical work.</li>
-          </ul>
-        </Card>
+              <div>
+                <p className="font-medium text-white mb-2">Step 2: Switch Off the Supply at the Isolator</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Use the correct isolator - main switch, MCB, or dedicated isolator</li>
+                  <li>• Ensure all poles are disconnected (single-phase and three-phase)</li>
+                  <li>• Check the isolator is suitable for the load current</li>
+                  <li>• Verify switching operation - some isolators may stick or fail to fully open</li>
+                  <li>• Look for isolation indication on the isolator (visible contact gap where possible)</li>
+                </ul>
+              </div>
 
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
+              <div>
+                <p className="font-medium text-white mb-2">Step 3: Apply Lock-off Devices and Warning Notices</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Use appropriate lock-off device: miniature lock-offs for MCBs, hasps for larger isolators</li>
+                  <li>• Apply your personal padlock - only you should have the key</li>
+                  <li>• Attach clear warning notices: "DANGER - MEN WORKING" or similar</li>
+                  <li>• Include your name, contact details, and expected completion time</li>
+                  <li>• Ensure notices are visible from all approaches to the isolator</li>
+                  <li>• Consider additional barriers or guards if necessary</li>
+                </ul>
+              </div>
 
-          {/* 1. Why Prove Dead? */}
-          <section className="mb-6">
-            <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Why Prove Dead?</p>
-                    
-                    <div className="space-y-4">
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Prevents Accidental Contact:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Electric shock from live conductors can cause serious injury or death</li>
-                           <li>Arc flash incidents can cause severe burns and blast injuries</li>
-                           <li>Even low voltages can be lethal in certain conditions (wet hands, heart conditions)</li>
-                           <li>Protects against induced voltages from adjacent circuits or equipment</li>
-                           <li>Prevents damage to sensitive equipment during maintenance</li>
-                         </ul>
-                       </div>
+              <div>
+                <p className="font-medium text-white mb-2">Step 4: Prove Your Tester on a Proving Unit</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Use a proving unit that provides a known voltage (typically 230V AC)</li>
+                  <li>• Check your two-pole voltage indicator reads the expected voltage</li>
+                  <li>• Verify the tester's audio and visual indicators work correctly</li>
+                  <li>• Check test leads are secure and undamaged</li>
+                  <li>• Ensure battery levels are adequate for reliable operation</li>
+                </ul>
+              </div>
 
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Confirms Effective Isolation:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Circuit labels may be incorrect due to modifications or poor maintenance</li>
-                           <li>Circuits can be backfed through alternative supply routes</li>
-                           <li>Isolators may be faulty or not fully disconnecting all poles</li>
-                           <li>Multiple sources may supply the same equipment (normal/emergency supplies)</li>
-                           <li>Induced voltages from parallel circuits can present hazards</li>
-                         </ul>
-                       </div>
+              <div>
+                <p className="font-medium text-white mb-2">Step 5: Test Between Live, Neutral, and Earth at Point of Work</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Test all combinations: L–N, L–E, N–E (and L1–L2, L2–L3, L3–L1 for three-phase)</li>
+                  <li>• Test at the exact point where work will be carried out</li>
+                  <li>• Hold test probes firmly against clean conductors or terminals</li>
+                  <li>• Allow sufficient time for readings to stabilise (2-3 seconds minimum)</li>
+                  <li>• All readings should indicate zero/dead - no voltage present</li>
+                  <li>• Be especially careful with control circuits and auxiliary supplies</li>
+                </ul>
+              </div>
 
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Legal and Regulatory Compliance:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Electricity at Work Regulations 1989 - Regulation 4 requires systems to be dead before work</li>
-                           <li>Health and Safety at Work Act 1974 - duty of care to prevent foreseeable harm</li>
-                           <li>BS 7671 requirements for safe working practices</li>
-                           <li>Corporate manslaughter legislation applies to electrical safety failures</li>
-                           <li>Professional liability and insurance requirements</li>
-                         </ul>
-                       </div>
-                    </div>
-                  </div>
-                </div>
+              <div>
+                <p className="font-medium text-white mb-2">Step 6: Re-prove Your Tester on the Proving Unit</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Immediately re-test the voltage indicator on the proving unit</li>
+                  <li>• Confirm it still reads the expected voltage correctly</li>
+                  <li>• This verifies the tester hasn't failed during the proving dead procedure</li>
+                  <li>• If the tester doesn't work on the proving unit, repeat the entire procedure</li>
+                  <li>• Only proceed with work once the complete procedure is successful</li>
+                </ul>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="prove-dead-purpose"
-            question="What is the primary purpose of proving dead?"
-            options={["To comply with paperwork", "To prevent electrical accidents", "To save time", "To check circuit labels"]}
-            correctIndex={1}
-            explanation="The primary purpose is to prevent electrical accidents by confirming that circuits are actually dead before work begins."
-          />
-          <Separator className="my-6" />
-
-          {/* 2. Safe Isolation Procedure */}
-          <section className="mb-6">
-            <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Safe Isolation Procedure (Step by Step)</p>
-                    
-                    <div className="space-y-4">
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Step 1: Identify the Correct Circuit</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Use circuit schedules, labels, and physical tracing to confirm circuit identity</li>
-                           <li>Test switching operations to verify which circuits are controlled</li>
-                           <li>Check for multiple supplies (emergency lighting, UPS systems)</li>
-                           <li>Identify any interconnections or parallel feeds</li>
-                           <li>Never rely solely on labelling - always verify by testing</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Step 2: Switch Off the Supply at the Isolator</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Use the correct isolator - main switch, MCB, or dedicated isolator</li>
-                           <li>Ensure all poles are disconnected (single-phase and three-phase)</li>
-                           <li>Check the isolator is suitable for the load current</li>
-                           <li>Verify switching operation - some isolators may stick or fail to fully open</li>
-                           <li>Look for isolation indication on the isolator (visible contact gap where possible)</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Step 3: Apply Lock-off Devices and Warning Notices</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Use appropriate lock-off device: miniature lock-offs for MCBs, hasps for larger isolators</li>
-                           <li>Apply your personal padlock - only you should have the key</li>
-                           <li>Attach clear warning notices: "DANGER - MEN WORKING" or similar</li>
-                           <li>Include your name, contact details, and expected completion time</li>
-                           <li>Ensure notices are visible from all approaches to the isolator</li>
-                           <li>Consider additional barriers or guards if necessary</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Step 4: Prove Your Tester on a Proving Unit</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Use a proving unit that provides a known voltage (typically 230V AC)</li>
-                           <li>Check your two-pole voltage indicator reads the expected voltage</li>
-                           <li>Verify the tester's audio and visual indicators work correctly</li>
-                           <li>Check test leads are secure and undamaged</li>
-                           <li>Ensure battery levels are adequate for reliable operation</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Step 5: Test Between Live, Neutral, and Earth at Point of Work</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Test all combinations: L–N, L–E, N–E (and L1–L2, L2–L3, L3–L1 for three-phase)</li>
-                           <li>Test at the exact point where work will be carried out</li>
-                           <li>Hold test probes firmly against clean conductors or terminals</li>
-                           <li>Allow sufficient time for readings to stabilise (2-3 seconds minimum)</li>
-                           <li>All readings should indicate zero/dead - no voltage present</li>
-                           <li>Be especially careful with control circuits and auxiliary supplies</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Step 6: Re-prove Your Tester on the Proving Unit</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Immediately re-test the voltage indicator on the proving unit</li>
-                           <li>Confirm it still reads the expected voltage correctly</li>
-                           <li>This verifies the tester hasn't failed during the proving dead procedure</li>
-                           <li>If the tester doesn't work on the proving unit, repeat the entire procedure</li>
-                           <li>Only proceed with work once the complete procedure is successful</li>
-                         </ul>
-                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            id="isolation-steps"
-            question="What is the correct sequence for safe isolation?"
-            options={["Test, isolate, lock off", "Isolate, lock off, test", "Lock off, test, isolate", "Identify, isolate, lock off, prove tester, test, re-prove"]}
-            correctIndex={3}
-            explanation="The correct sequence ensures circuit identity is confirmed before isolation, and tester function is verified before and after testing."
-          />
-          <Separator className="my-6" />
-
-          {/* 3. GS38-Compliant Tester Use */}
-          <section className="mb-6">
-            <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-600 dark:text-green-400 mb-3">GS38-Compliant Tester Use</p>
-                    
-                    <div className="space-y-4">
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Two-pole Voltage Indicators Only:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Uses two separate probes to measure voltage between conductors</li>
-                           <li>Provides clear indication of voltage presence through LED and audible signals</li>
-                           <li>Self-checking circuitry that identifies internal faults</li>
-                           <li>Designed specifically for proving dead applications</li>
-                           <li>Reliable operation even in harsh electrical environments</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Prohibited Equipment:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li><strong>Neon screwdrivers:</strong> Unreliable, can fail without indication, single-pole operation</li>
-                           <li><strong>Voltage pens:</strong> Prone to false readings, affected by electromagnetic fields</li>
-                           <li><strong>Single-pole testers:</strong> Rely on body capacitance, inconsistent operation</li>
-                           <li><strong>Non-contact voltage detectors:</strong> Not suitable for proving dead applications</li>
-                           <li><strong>Multimeters:</strong> Not designed for safety-critical proving dead function</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>CAT-rated and Fused Test Leads:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>CAT III or CAT IV rating appropriate for the installation voltage</li>
-                           <li>In-line fuses to protect against short-circuit currents</li>
-                           <li>Finger guards on probes to prevent accidental contact</li>
-                           <li>Maximum 4mm exposed probe tip to reduce short-circuit risk</li>
-                           <li>High-quality insulation rated for the working voltage</li>
-                           <li>Regular inspection for damage, wear, or contamination</li>
-                         </ul>
-                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            id="gs38-compliance"
-            question="Which tester is GS38-compliant for proving dead?"
-            options={["Neon screwdriver", "Two-pole voltage indicator", "Voltage pen", "Digital multimeter"]}
-            correctIndex={1}
-            explanation="Only two-pole voltage indicators meet GS38 requirements for proving dead - they are specifically designed for this safety-critical function."
-          />
-          <Separator className="my-6" />
-
-          {/* 4. Consequences of Skipping Proving Dead */}
-          <section className="mb-6">
-            <div className="space-y-6">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-600 bg-red-600/5">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Consequences of Skipping Proving Dead</p>
-                    
-                    <div className="space-y-4">
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Electric Shock or Electrocution:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Direct contact with live conductors can cause immediate cardiac arrest</li>
-                           <li>Even non-fatal shocks can cause falls from height or into hazards</li>
-                           <li>Secondary injuries from muscular contraction or loss of control</li>
-                           <li>Long-term health effects including nerve damage and psychological trauma</li>
-                           <li>Risk increases in wet conditions or with damaged PPE</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Arc Flash Burns:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>Temperatures can exceed 20,000°C - hotter than the sun's surface</li>
-                           <li>Severe burns to exposed skin and airways</li>
-                           <li>Blast pressure can cause hearing damage and throw personnel</li>
-                           <li>Molten metal splatter can penetrate clothing and embed in skin</li>
-                           <li>Toxic gases from burning insulation and metal vapourisation</li>
-                         </ul>
-                       </div>
-
-                       <div>
-                         <p className="text-base text-white mb-2"><strong>Legal and Professional Consequences:</strong></p>
-                         <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                           <li>HSE prosecution under EAWR - unlimited fines and imprisonment</li>
-                           <li>Corporate manslaughter charges for companies</li>
-                           <li>Loss of professional qualifications and certifications</li>
-                           <li>Civil liability for damages and compensation</li>
-                           <li>Increased insurance premiums and potential exclusions</li>
-                           <li>Prohibition notices stopping all electrical work</li>
-                         </ul>
-                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            id="consequences"
-            question="What is the most serious consequence of not proving dead?"
-            options={["Paperwork issues", "Equipment damage", "Serious injury or death", "Delayed completion"]}
-            correctIndex={2}
-            explanation="The most serious consequence is serious injury or death from electric shock, burns, or arc flash incidents."
-          />
-          <Separator className="my-6" />
-        </Card>
-
-        {/* Safe Isolation Checklist */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-4">
-            <CheckCircle className="w-6 h-6 text-green-500" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Safe Isolation Checklist</h2>
+          <div className="mb-10">
+            <InlineCheck
+              id="isolation-steps"
+              question="What is the correct sequence for safe isolation?"
+              options={["Test, isolate, lock off", "Isolate, lock off, test", "Lock off, test, isolate", "Identify, isolate, lock off, prove tester, test, re-prove"]}
+              correctIndex={3}
+              explanation="The correct sequence ensures circuit identity is confirmed before isolation, and tester function is verified before and after testing."
+            />
           </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+
+          {/* Section 3: GS38-Compliant Tester Use */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              GS38-Compliant Tester Use
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div>
+                <p className="font-medium text-white mb-2">Two-pole Voltage Indicators Only:</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• Uses two separate probes to measure voltage between conductors</li>
+                  <li>• Provides clear indication of voltage presence through LED and audible signals</li>
+                  <li>• Self-checking circuitry that identifies internal faults</li>
+                  <li>• Designed specifically for proving dead applications</li>
+                  <li>• Reliable operation even in harsh electrical environments</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-medium text-white mb-2">Prohibited Equipment:</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• <strong>Neon screwdrivers:</strong> Unreliable, can fail without indication, single-pole operation</li>
+                  <li>• <strong>Voltage pens:</strong> Prone to false readings, affected by electromagnetic fields</li>
+                  <li>• <strong>Single-pole testers:</strong> Rely on body capacitance, inconsistent operation</li>
+                  <li>• <strong>Non-contact voltage detectors:</strong> Not suitable for proving dead applications</li>
+                  <li>• <strong>Multimeters:</strong> Not designed for safety-critical proving dead function</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-medium text-white mb-2">CAT-rated and Fused Test Leads:</p>
+                <ul className="ml-4 space-y-1 text-sm">
+                  <li>• CAT III or CAT IV rating appropriate for the installation voltage</li>
+                  <li>• In-line fuses to protect against short-circuit currents</li>
+                  <li>• Finger guards on probes to prevent accidental contact</li>
+                  <li>• Maximum 4mm exposed probe tip to reduce short-circuit risk</li>
+                  <li>• High-quality insulation rated for the working voltage</li>
+                  <li>• Regular inspection for damage, wear, or contamination</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <div className="mb-10">
+            <InlineCheck
+              id="gs38-compliance"
+              question="Which tester is GS38-compliant for proving dead?"
+              options={["Neon screwdriver", "Two-pole voltage indicator", "Voltage pen", "Digital multimeter"]}
+              correctIndex={1}
+              explanation="Only two-pole voltage indicators meet GS38 requirements for proving dead - they are specifically designed for this safety-critical function."
+            />
+          </div>
+
+          {/* Section 4: Consequences of Skipping */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Consequences of Skipping Proving Dead
+            </h2>
+            <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30 mb-4">
+              <div className="text-white/80 space-y-4 leading-relaxed">
+                <div>
+                  <p className="font-medium text-white mb-2">Electric Shock or Electrocution:</p>
+                  <ul className="ml-4 space-y-1 text-sm">
+                    <li>• Direct contact with live conductors can cause immediate cardiac arrest</li>
+                    <li>• Even non-fatal shocks can cause falls from height or into hazards</li>
+                    <li>• Secondary injuries from muscular contraction or loss of control</li>
+                    <li>• Long-term health effects including nerve damage and psychological trauma</li>
+                    <li>• Risk increases in wet conditions or with damaged PPE</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <p className="font-medium text-white mb-2">Arc Flash Burns:</p>
+                  <ul className="ml-4 space-y-1 text-sm">
+                    <li>• Temperatures can exceed 20,000°C - hotter than the sun's surface</li>
+                    <li>• Severe burns to exposed skin and airways</li>
+                    <li>• Blast pressure can cause hearing damage and throw personnel</li>
+                    <li>• Molten metal splatter can penetrate clothing and embed in skin</li>
+                    <li>• Toxic gases from burning insulation and metal vapourisation</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <p className="font-medium text-white mb-2">Legal and Professional Consequences:</p>
+                  <ul className="ml-4 space-y-1 text-sm">
+                    <li>• HSE prosecution under EAWR - unlimited fines and imprisonment</li>
+                    <li>• Corporate manslaughter charges for companies</li>
+                    <li>• Loss of professional qualifications and certifications</li>
+                    <li>• Civil liability for damages and compensation</li>
+                    <li>• Increased insurance premiums and potential exclusions</li>
+                    <li>• Prohibition notices stopping all electrical work</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div className="mb-10">
+            <InlineCheck
+              id="consequences"
+              question="What is the most serious consequence of not proving dead?"
+              options={["Paperwork issues", "Equipment damage", "Serious injury or death", "Delayed completion"]}
+              correctIndex={2}
+              explanation="The most serious consequence is serious injury or death from electric shock, burns, or arc flash incidents."
+            />
+          </div>
+
+          {/* Safe Isolation Checklist */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Safe Isolation Checklist
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white mb-3">Before Starting:</p>
+                <ul className="space-y-2 text-sm text-white/80">
+                  <li className="flex items-center gap-2">
+                    <div className="w-4 h-4 border border-white/40 rounded" />
+                    <span>Circuit identity confirmed and verified</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-4 h-4 border border-white/40 rounded" />
+                    <span>Voltage tester checked on proving unit</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-4 h-4 border border-white/40 rounded" />
+                    <span>Lock-off devices and warning notices ready</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-4 h-4 border border-white/40 rounded" />
+                    <span>PPE inspected and appropriate for task</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white mb-3">During Isolation:</p>
+                <ul className="space-y-2 text-sm text-white/80">
+                  <li className="flex items-center gap-2">
+                    <div className="w-4 h-4 border border-white/40 rounded" />
+                    <span>Supply isolated at appropriate point</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-4 h-4 border border-white/40 rounded" />
+                    <span>Lock-off device fitted with personal padlock</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-4 h-4 border border-white/40 rounded" />
+                    <span>Warning notices clearly displayed</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-4 h-4 border border-white/40 rounded" />
+                    <span>All conductors tested dead at point of work</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="w-4 h-4 border border-white/40 rounded" />
+                    <span>Voltage tester re-proved on proving unit</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Practical Guidance */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Practical Guidance
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="space-y-4">
+                <div>
+                  <p className="font-medium text-white mb-2">Essential Practices:</p>
+                  <ul className="space-y-1 text-sm text-white/80">
+                    <li>• Always lock off isolators and keep the key in your possession</li>
+                    <li>• Never trust labelling alone; circuits may be misidentified</li>
+                    <li>• Test between all combinations: L–N, L–E, and N–E</li>
+                    <li>• Always re-prove the tester before and after use</li>
+                    <li>• Check for alternative supplies and backfeed routes</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="font-medium text-white mb-2">Emergency Procedures:</p>
+                  <ul className="space-y-1 text-sm text-white/80">
+                    <li>• If someone is in contact with live conductors, switch off supply immediately</li>
+                    <li>• Do not touch the person until supply is confirmed dead</li>
+                    <li>• Call emergency services and provide first aid if trained</li>
+                    <li>• Report all electrical accidents to HSE and company management</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div>
+                  <p className="font-medium text-white mb-2">Common Mistakes to Avoid:</p>
+                  <ul className="space-y-1 text-sm text-white/80">
+                    <li>• Using unreliable test equipment (neon screwdrivers, voltage pens)</li>
+                    <li>• Assuming circuits are dead without testing</li>
+                    <li>• Working on circuits controlled by others</li>
+                    <li>• Removing lock-off devices belonging to other workers</li>
+                    <li>• Failing to check for induced voltages from adjacent circuits</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="font-medium text-white mb-2">Best Practice Tips:</p>
+                  <ul className="space-y-1 text-sm text-white/80">
+                    <li>• Develop and stick to a personal proving dead routine</li>
+                    <li>• Keep proving units calibrated and in good condition</li>
+                    <li>• Use high-quality GS38-compliant test equipment</li>
+                    <li>• Consider using voltage-indicating devices as secondary protection</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Quick Knowledge Check */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <Zap className="w-5 h-5 text-amber-500" />
+              Quick Knowledge Check
+            </h2>
+            <div className="grid sm:grid-cols-3 gap-3">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white mb-2">Challenge 1:</p>
+                <p className="text-sm text-white/70">Why is proving dead important before electrical work?</p>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white mb-2">Challenge 2:</p>
+                <p className="text-sm text-white/70">Name the correct type of tester to prove dead.</p>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white mb-2">Challenge 3:</p>
+                <p className="text-sm text-white/70">What must you do after proving dead?</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Real-World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <AlertTriangle className="w-5 h-5 text-amber-500" />
+              Real-World Example
+            </h2>
+            <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
+              <p className="font-medium text-white mb-3">Case Study: Incorrect Circuit Identification</p>
+              <p className="text-white/80 mb-4">
+                An electrician working in an office assumed a labelled MCB controlled a lighting circuit. Without testing, they touched the live conductor and suffered an electric shock requiring hospital treatment.
+              </p>
+              <p className="text-white/80 mb-4">
+                Investigation revealed the labelling was wrong due to a previous alteration where circuits had been reconfigured but labels not updated. The "lighting" MCB actually controlled socket outlets that remained energised.
+              </p>
+              <p className="text-white/80">
+                <strong>Lesson:</strong> Had the electrician followed the prove-dead procedure and tested all conductors at the point of work, the accident would have been completely avoided. Never trust labelling alone.
+              </p>
+            </div>
+          </section>
+
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Frequently Asked Questions
+            </h2>
             <div className="space-y-3">
-              <h3 className="font-semibold text-white">Before Starting:</h3>
-              <div className="space-y-2 text-sm">
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="rounded" />
-                  <span>Circuit identity confirmed and verified</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="rounded" />
-                  <span>Voltage tester checked on proving unit</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="rounded" />
-                  <span>Lock-off devices and warning notices ready</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="rounded" />
-                  <span>PPE inspected and appropriate for task</span>
-                </label>
-              </div>
+              {faqs.map((faq, index) => (
+                <details key={index} className="group">
+                  <summary className="font-medium text-white cursor-pointer list-none flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                    <span>{faq.question}</span>
+                    <span className="transition-transform group-open:rotate-180 text-white/40">▼</span>
+                  </summary>
+                  <div className="mt-2 p-3 text-sm text-white/70 bg-white/5 rounded-lg">
+                    {faq.answer}
+                  </div>
+                </details>
+              ))}
             </div>
-            <div className="space-y-3">
-              <h3 className="font-semibold text-white">During Isolation:</h3>
-              <div className="space-y-2 text-sm">
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="rounded" />
-                  <span>Supply isolated at appropriate point</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="rounded" />
-                  <span>Lock-off device fitted with personal padlock</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="rounded" />
-                  <span>Warning notices clearly displayed</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="rounded" />
-                  <span>All conductors tested dead at point of work</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="rounded" />
-                  <span>Voltage tester re-proved on proving unit</span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-semibold text-white mb-2">Essential Practices:</h3>
-                <ul className="text-xs sm:text-sm text-white space-y-1">
-                  <li>• Always lock off isolators and keep the key in your possession</li>
-                  <li>• Never trust labelling alone; circuits may be misidentified</li>
-                  <li>• Test between all combinations: L–N, L–E, and N–E</li>
-                  <li>• Always re-prove the tester before and after use</li>
-                  <li>• Check for alternative supplies and backfeed routes</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-2">Emergency Procedures:</h3>
-                <ul className="text-xs sm:text-sm text-white space-y-1">
-                  <li>• If someone is in contact with live conductors, switch off supply immediately</li>
-                  <li>• Do not touch the person until supply is confirmed dead</li>
-                  <li>• Call emergency services and provide first aid if trained</li>
-                  <li>• Report all electrical accidents to HSE and company management</li>
-                </ul>
-              </div>
-            </div>
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-semibold text-white mb-2">Common Mistakes to Avoid:</h3>
-                <ul className="text-xs sm:text-sm text-white space-y-1">
-                  <li>• Using unreliable test equipment (neon screwdrivers, voltage pens)</li>
-                  <li>• Assuming circuits are dead without testing</li>
-                  <li>• Working on circuits controlled by others</li>
-                  <li>• Removing lock-off devices belonging to other workers</li>
-                  <li>• Failing to check for induced voltages from adjacent circuits</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-2">Best Practice Tips:</h3>
-                <ul className="text-xs sm:text-sm text-white space-y-1">
-                  <li>• Develop and stick to a personal proving dead routine</li>
-                  <li>• Keep proving units calibrated and in good condition</li>
-                  <li>• Use high-quality GS38-compliant test equipment</li>
-                  <li>• Consider using voltage-indicating devices as secondary protection</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* Micro-challenges */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-4">
-            <Zap className="w-6 h-6 text-amber-500" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Quick Knowledge Check</h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-            <div className="p-4 rounded-lg bg-muted/50 border border-border/30">
-              <p className="font-semibold text-white mb-2">Challenge 1:</p>
-              <p className="text-sm text-white">Why is proving dead important before electrical work?</p>
-            </div>
-            <div className="p-4 rounded-lg bg-muted/50 border border-border/30">
-              <p className="font-semibold text-white mb-2">Challenge 2:</p>
-              <p className="text-sm text-white">Name the correct type of tester to prove dead.</p>
-            </div>
-            <div className="p-4 rounded-lg bg-muted/50 border border-border/30">
-              <p className="font-semibold text-white mb-2">Challenge 3:</p>
-              <p className="text-sm text-white">What must you do after proving dead?</p>
-            </div>
-          </div>
-        </Card>
-
-        {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-4">
-            <AlertTriangle className="w-6 h-6 text-amber-500" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Real-World Example</h2>
-          </div>
-          <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-            <p className="text-white mb-4">
-              <strong>Case Study: Incorrect Circuit Identification</strong>
-            </p>
-            <p className="text-white mb-4">
-              An electrician working in an office assumed a labelled MCB controlled a lighting circuit. Without testing, they touched the live conductor and suffered an electric shock requiring hospital treatment.
-            </p>
-            <p className="text-white mb-4">
-              Investigation revealed the labelling was wrong due to a previous alteration where circuits had been reconfigured but labels not updated. The "lighting" MCB actually controlled socket outlets that remained energised.
-            </p>
-            <p className="text-white">
-              <strong>Lesson:</strong> Had the electrician followed the prove-dead procedure and tested all conductors at the point of work, the accident would have been completely avoided. Never trust labelling alone.
-            </p>
-          </div>
-        </Card>
-
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <details key={index} className="group">
-                <summary className="font-medium text-white cursor-pointer list-none flex items-center justify-between p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
-                  <span>{faq.question}</span>
-                  <span className="transition-transform group-open:rotate-180">▼</span>
-                </summary>
-                <div className="mt-2 p-3 text-sm text-white bg-muted/10 rounded-lg">
-                  {faq.answer}
+          {/* Pocket Guide */}
+          <section className="mb-10">
+            <div className="p-5 rounded-lg bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent border border-elec-yellow/30">
+              <h2 className="text-lg font-semibold text-white mb-4">Pocket Guide</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 text-center">
+                <div className="p-3 rounded-lg border border-white/10">
+                  <Shield className="w-6 h-6 text-elec-yellow mx-auto mb-2" />
+                  <p className="text-xs font-medium text-white">Always lock off and label</p>
                 </div>
-              </details>
-            ))}
-          </div>
-        </Card>
+                <div className="p-3 rounded-lg border border-white/10">
+                  <Zap className="w-6 h-6 text-elec-yellow mx-auto mb-2" />
+                  <p className="text-xs font-medium text-white">Use only two-pole testers</p>
+                </div>
+                <div className="p-3 rounded-lg border border-white/10">
+                  <AlertTriangle className="w-6 h-6 text-amber-500 mx-auto mb-2" />
+                  <p className="text-xs font-medium text-white">Test L–N, L–E, N–E</p>
+                </div>
+                <div className="p-3 rounded-lg border border-white/10">
+                  <CheckCircle className="w-6 h-6 text-green-500 mx-auto mb-2" />
+                  <p className="text-xs font-medium text-white">Prove tester before and after</p>
+                </div>
+                <div className="p-3 rounded-lg border border-white/10">
+                  <Shield className="w-6 h-6 text-elec-yellow mx-auto mb-2" />
+                  <p className="text-xs font-medium text-white">Never assume dead</p>
+                </div>
+              </div>
+            </div>
+          </section>
 
-        {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide</h2>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 text-center">
-            <div className="p-4 rounded-lg border border-red-500/20">
-              <Shield className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
-              <p className="font-semibold text-red-600 text-elec-yellow text-sm">Always lock off and label</p>
+          {/* Recap */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+              Recap
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <p className="font-medium text-white mb-2">Key Points:</p>
+                <ul className="space-y-1 text-sm text-white/80">
+                  <li>• Proving dead is a life-saving step before work</li>
+                  <li>• Safe isolation involves lock-off, testing, and proving</li>
+                  <li>• Only GS38-compliant testers should be used</li>
+                  <li>• Failure to prove dead can result in injury, death, or prosecution</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-white mb-2">Remember:</p>
+                <ul className="space-y-1 text-sm text-white/80">
+                  <li>• Follow the six-step isolation procedure every time</li>
+                  <li>• Test all conductor combinations at point of work</li>
+                  <li>• Keep isolation keys in your possession throughout work</li>
+                  <li>• Re-prove tester function before and after testing</li>
+                </ul>
+              </div>
             </div>
-            <div className="p-4 rounded-lg border border-orange-500/20">
-              <Eye className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
-              <p className="font-semibold text-orange-600 text-elec-yellow text-sm">Use only two-pole testers</p>
-            </div>
-            <div className="p-4 rounded-lg border border-amber-500/20">
-              <Zap className="w-8 h-8 text-amber-500 mx-auto mb-2" />
-              <p className="font-semibold text-amber-600 dark:text-amber-400 text-sm">Test L–N, L–E, N–E</p>
-            </div>
-            <div className="p-4 rounded-lg border border-green-500/20">
-              <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-2" />
-              <p className="font-semibold text-green-600 dark:text-green-400 text-sm">Prove tester before and after use</p>
-            </div>
-            <div className="p-4 rounded-lg border border-elec-yellow/20">
-              <Target className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
-              <p className="font-semibold text-elec-yellow text-elec-yellow text-sm">Never assume circuits are dead</p>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h3 className="font-semibold text-white mb-2">Key Points:</h3>
-              <ul className="text-xs sm:text-sm text-white space-y-1">
-                <li>• Proving dead is a life-saving step before work</li>
-                <li>• Safe isolation involves lock-off, testing, and proving</li>
-                <li>• Only GS38-compliant testers should be used</li>
-                <li>• Failure to prove dead can result in injury, death, or prosecution</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold text-white mb-2">Remember:</h3>
-              <ul className="text-xs sm:text-sm text-white space-y-1">
-                <li>• Follow the six-step isolation procedure every time</li>
-                <li>• Test all conductor combinations at point of work</li>
-                <li>• Keep isolation keys in your possession throughout work</li>
-                <li>• Re-prove tester function before and after testing</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+          {/* Quiz */}
+          <section className="mb-10">
+            <Quiz
+              title="Test Your Knowledge: Proving Dead and Safe to Test"
+              questions={quizQuestions}
+            />
+          </section>
 
-        {/* Quiz */}
-        <Quiz 
-          title="Test Your Knowledge: Proving Dead and Safe to Test"
-          questions={quizQuestions}
-        />
-
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row gap-4 mt-8">
-          <Button variant="outline" className="flex-1 h-auto py-3 px-4" asChild>
-            <Link to="module6-section3/3" className="flex items-center justify-center text-center">
-              <ArrowLeft className="w-4 h-4 mr-2 flex-shrink-0" />
-              <span className="flex-1">
-                <span className="block text-xs text-white">Previous</span>
-                <span className="block font-medium">Setting Up and Zeroing Instruments</span>
-              </span>
-            </Link>
-          </Button>
-          <Button className="flex-1 h-auto py-3 px-4" asChild>
-            <Link to="module6-section3/5" className="flex items-center justify-center text-center">
-              <span className="flex-1">
-                <span className="block text-xs text-primary-foreground/80">Next</span>
-                <span className="block font-medium">Testing for Earth Continuity</span>
-              </span>
-              <ArrowLeft className="w-4 h-4 ml-2 flex-shrink-0 rotate-180" />
-            </Link>
-          </Button>
+          {/* Navigation Footer */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+            <Button
+              variant="ghost"
+              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../3-3">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Setting Up and Zeroing
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../3-5">
+                Next: Proving Unit and Two-Pole Tester
+                <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

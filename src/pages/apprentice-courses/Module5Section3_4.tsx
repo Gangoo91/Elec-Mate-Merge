@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, Target, CheckCircle, AlertTriangle, Users, BookOpen, Clipboard, UserCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, UserCheck, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -11,7 +8,6 @@ import useSEO from "@/hooks/useSEO";
 const TITLE = "Minimising Disruption to Other Site Activities - Module 5.3.4 | Level 2 Electrical Course";
 const DESCRIPTION = "Learn to coordinate electrical work with other trades, prevent clashes, and maintain smooth site operations through effective planning and communication.";
 
-// Inline check questions
 const quickCheckQuestions = [
   {
     id: 1,
@@ -128,342 +124,236 @@ const Module5Section3_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 3
+              Back to Section 5.3
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <UserCheck className="w-6 h-6 text-white" />
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 5.3.4</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 5.3.4
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Minimising Disruption to Other Site Activities
-          </h1>
-          <p className="text-white">
-            Learn to coordinate electrical work with other trades, prevent clashes, and maintain smooth site operations through effective planning.
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Minimising Disruption to Other Site Activities
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Learn to coordinate electrical work with other trades, prevent clashes, and maintain smooth site operations through effective planning.
+            </p>
+          </header>
 
-        {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-white" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Introduction</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
+          {/* In 30 Seconds */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">00</span>
+              In 30 Seconds
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <ul className="text-white/80 space-y-2 list-disc pl-4">
                 <li>Review site programme to understand other trades' schedules.</li>
                 <li>Sequence work to avoid clashes (first fix, second fix phases).</li>
                 <li>Protect installations from damage during wet trades.</li>
               </ul>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Overlapping work areas, unprotected installations.</li>
-                <li><strong>Use:</strong> Coordination meetings, protective covers, clear markings.</li>
-                <li><strong>Check:</strong> Site programme updated, all trades informed.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <p className="text-base text-white mb-4">
-            Construction projects involve multiple trades working alongside each other. Electrical installation must be carefully planned to avoid disrupting others, such as plasterers, carpenters, plumbers, or decorators. Poor coordination can cause delays, damage to work, and safety hazards. Minimising disruption ensures smoother progress for all trades and helps maintain good professional relationships.
-          </p>
-          
-          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
-            <div className="flex items-start gap-3">
-              <UserCheck className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
-                <p className="text-xs sm:text-sm text-white">
-                  Poor trade coordination is responsible for up to 30% of construction delays and 20% of cost overruns, making effective collaboration essential for project success.
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="mt-4 space-y-3">
-            <p className="text-base text-white">
-              <strong>Real Impact:</strong> Well-coordinated projects show 40% fewer defects, 25% faster completion times, and significantly improved relationships between trades.
-            </p>
-            
-            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
-              <p className="text-xs sm:text-sm text-white">
-                <strong>Industry Standard:</strong> CDM 2015 regulations require effective coordination between trades to ensure health, safety, and quality throughout construction projects.
+          {/* Introduction */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Introduction
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Construction projects involve multiple trades working alongside each other. Electrical installation must be carefully planned to avoid disrupting others, such as plasterers, carpenters, plumbers, or decorators. Poor coordination can cause delays, damage to work, and safety hazards. Minimising disruption ensures smoother progress for all trades and helps maintain good professional relationships.
               </p>
-            </div>
-          </div>
-        </Card>
-
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-base text-white mb-4">By the end of this subsection, you will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>Explain why minimising disruption to other trades is essential.</li>
-            <li>Identify common clashes between electrical and other site activities.</li>
-            <li>Apply planning methods to reduce disruption.</li>
-            <li>Communicate effectively with other trades on site.</li>
-            <li>Recognise the consequences of poor coordination.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
-
-          {/* Why Minimising Disruption Matters */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">1. Why Minimising Disruption Matters - Strategic Importance</h3>
-            <p className="text-base text-white mb-4">
-              Effective coordination between trades is fundamental to successful construction projects:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Project Management Benefits</p>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Schedule Management:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                          <li>Keeps projects on schedule by preventing trade conflicts</li>
-                          <li>Reduces time lost to coordination delays</li>
-                          <li>Enables efficient resource utilisation across trades</li>
-                          <li>Prevents cascading delays affecting project completion</li>
-                        </ul>
-                      </div>
-
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Quality Assurance:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                          <li>Prevents rework and damage to finished work</li>
-                          <li>Maintains installation integrity throughout construction</li>
-                          <li>Reduces defects from rushed or compromised work</li>
-                          <li>Ensures compliance with specifications and standards</li>
-                        </ul>
-                      </div>
-
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Safety and Risk Reduction:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                          <li>Reduces safety risks from overlapping tasks</li>
-                          <li>Prevents hazardous working conditions</li>
-                          <li>Minimises accidents from conflicting activities</li>
-                          <li>Ensures proper safety protocols are maintained</li>
-                        </ul>
-                      </div>
-
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Professional Relationships:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                          <li>Builds positive working relationships on site</li>
-                          <li>Establishes trust and cooperation between trades</li>
-                          <li>Creates a collaborative working environment</li>
-                          <li>Improves future project opportunities</li>
-                        </ul>
-                      </div>
-
-                      <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800">
-                        <p className="font-medium text-green-700 dark:text-green-400 mb-2">Economic Impact</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          Effective trade coordination can reduce project costs by 15-20% through reduced rework, faster completion, and improved efficiency.
-                        </p>
-                      </div>
-                    </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <div className="flex items-start gap-3">
+                  <UserCheck className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-medium text-elec-yellow mb-2">Why This Matters</p>
+                    <p className="text-white/70 text-sm">
+                      Poor trade coordination is responsible for up to 30% of construction delays and 20% of cost overruns, making effective collaboration essential for project success.
+                    </p>
                   </div>
                 </div>
               </div>
+              <p>
+                <strong className="text-white">Real Impact:</strong> Well-coordinated projects show 40% fewer defects, 25% faster completion times, and significantly improved relationships between trades.
+              </p>
+              <p className="text-sm p-3 rounded bg-white/5 border border-white/10">
+                <strong className="text-white">Industry Standard:</strong> CDM 2015 regulations require effective coordination between trades to ensure health, safety, and quality throughout construction projects.
+              </p>
             </div>
           </section>
 
-          {/* Site Programme Integration */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">1.1 Site Programme Integration and Analysis</h3>
-            <p className="text-base text-white mb-4">
-              Understanding and integrating with the overall site programme is crucial for coordination:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800">
-                <h4 className="font-medium text-yellow-800 dark:text-yellow-200 mb-3">Programme Analysis Process</h4>
-                <div className="grid gap-3">
-                  <div className="flex gap-3">
-                    <div className="w-6 h-6 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs font-bold">1</div>
-                    <div>
-                      <p className="font-medium text-yellow-800 dark:text-yellow-200">Review Master Programme</p>
-                      <p className="text-sm text-yellow-700 dark:text-yellow-300">Understand overall project timeline and critical path activities</p>
-                    </div>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Learning Outcomes
+            </h2>
+            <div className="text-white/80 space-y-2 leading-relaxed">
+              <p className="mb-3">By the end of this subsection, you will be able to:</p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Explain why minimising disruption to other trades is essential.</li>
+                <li>Identify common clashes between electrical and other site activities.</li>
+                <li>Apply planning methods to reduce disruption.</li>
+                <li>Communicate effectively with other trades on site.</li>
+                <li>Recognise the consequences of poor coordination.</li>
+              </ul>
+            </div>
+          </section>
+
+          {/* Why Minimising Disruption Matters */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Why Minimising Disruption Matters
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>Effective coordination between trades is fundamental to successful construction projects:</p>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-elec-yellow mb-3">Project Management Benefits</p>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <p className="text-white font-medium mb-1">Schedule Management:</p>
+                    <ul className="list-disc pl-6 space-y-1">
+                      <li>Keeps projects on schedule by preventing trade conflicts</li>
+                      <li>Reduces time lost to coordination delays</li>
+                      <li>Enables efficient resource utilisation across trades</li>
+                    </ul>
                   </div>
-                  <div className="flex gap-3">
-                    <div className="w-6 h-6 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs font-bold">2</div>
-                    <div>
-                      <p className="font-medium text-yellow-800 dark:text-yellow-200">Identify Trade Dependencies</p>
-                      <p className="text-sm text-yellow-700 dark:text-yellow-300">Map which trades depend on electrical work and vice versa</p>
-                    </div>
+                  <div>
+                    <p className="text-white font-medium mb-1">Quality Assurance:</p>
+                    <ul className="list-disc pl-6 space-y-1">
+                      <li>Prevents rework and damage to finished work</li>
+                      <li>Maintains installation integrity throughout construction</li>
+                      <li>Ensures compliance with specifications and standards</li>
+                    </ul>
                   </div>
-                  <div className="flex gap-3">
-                    <div className="w-6 h-6 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs font-bold">3</div>
-                    <div>
-                      <p className="font-medium text-yellow-800 dark:text-yellow-200">Plan Resource Allocation</p>
-                      <p className="text-sm text-yellow-700 dark:text-yellow-300">Coordinate labour and equipment requirements with other trades</p>
-                    </div>
+                  <div>
+                    <p className="text-white font-medium mb-1">Safety and Risk Reduction:</p>
+                    <ul className="list-disc pl-6 space-y-1">
+                      <li>Reduces safety risks from overlapping tasks</li>
+                      <li>Prevents hazardous working conditions</li>
+                      <li>Minimises accidents from conflicting activities</li>
+                    </ul>
                   </div>
+                </div>
+                <div className="mt-4 p-3 rounded bg-green-500/10 border border-green-500/20">
+                  <p className="font-medium text-green-400 mb-1">Economic Impact</p>
+                  <p className="text-sm text-white/70">
+                    Effective trade coordination can reduce project costs by 15-20% through reduced rework, faster completion, and improved efficiency.
+                  </p>
                 </div>
               </div>
             </div>
           </section>
 
           {/* Common Trade Clashes */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">2. Common Trade Clashes - Detailed Analysis</h3>
-            <p className="text-base text-white mb-4">
-              Understanding typical conflict points helps prevent problems before they occur:
-            </p>
-            
-            <div className="space-y-6">
-              {/* Electrical vs Plastering */}
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">A</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-600 dark:text-green-400 mb-3">Electrical vs Plastering Conflicts</p>
-                    
-                    <div className="space-y-4">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <p className="text-base text-white mb-2"><strong>Common Issues:</strong></p>
-                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                            <li>Electricians running cables while plastering is ongoing</li>
-                            <li>Socket boxes filled with plaster</li>
-                            <li>Cable routes blocked by wet plaster</li>
-                            <li>Dust contamination of electrical equipment</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <p className="text-base text-white mb-2"><strong>Prevention Methods:</strong></p>
-                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                            <li>Complete first fix before plastering starts</li>
-                            <li>Use protective covers on all outlets</li>
-                            <li>Mark cable routes clearly</li>
-                            <li>Coordinate access timing</li>
-                          </ul>
-                        </div>
-                      </div>
-                      
-                      <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800">
-                        <p className="font-medium text-green-700 dark:text-green-400 mb-2">Best Practice Timing</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          Complete all electrical first fix work 24-48 hours before plasterers begin. This allows time for any adjustments and ensures no wet trades interfere with electrical installations.
-                        </p>
-                      </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Common Trade Clashes
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>Understanding typical conflict points helps prevent problems before they occur:</p>
+
+              <div className="space-y-4">
+                {/* Electrical vs Plastering */}
+                <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                  <p className="font-medium text-green-400 mb-3">A. Electrical vs Plastering Conflicts</p>
+                  <div className="grid md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <p className="text-white font-medium mb-1">Common Issues:</p>
+                      <ul className="list-disc pl-6 space-y-1">
+                        <li>Electricians running cables while plastering is ongoing</li>
+                        <li>Socket boxes filled with plaster</li>
+                        <li>Cable routes blocked by wet plaster</li>
+                        <li>Dust contamination of electrical equipment</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="text-white font-medium mb-1">Prevention Methods:</p>
+                      <ul className="list-disc pl-6 space-y-1">
+                        <li>Complete first fix before plastering starts</li>
+                        <li>Use protective covers on all outlets</li>
+                        <li>Mark cable routes clearly</li>
+                        <li>Coordinate access timing</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="mt-3 p-3 rounded bg-green-500/10 border border-green-500/20">
+                    <p className="font-medium text-green-400 mb-1">Best Practice Timing</p>
+                    <p className="text-sm text-white/70">
+                      Complete all electrical first fix work 24-48 hours before plasterers begin. This allows time for any adjustments.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Electrical vs Mechanical */}
+                <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                  <p className="font-medium text-elec-yellow mb-3">B. Electrical vs Mechanical Services</p>
+                  <div className="grid md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <p className="text-white font-medium mb-1">Conflict Areas:</p>
+                      <ul className="list-disc pl-6 space-y-1">
+                        <li>Containment clashing with ductwork routes</li>
+                        <li>Cable trays interfering with pipework</li>
+                        <li>Plant room space allocation conflicts</li>
+                        <li>Ceiling void congestion issues</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="text-white font-medium mb-1">Coordination Solutions:</p>
+                      <ul className="list-disc pl-6 space-y-1">
+                        <li>Joint planning sessions for routes</li>
+                        <li>3D coordination drawings</li>
+                        <li>Agreed service hierarchy protocols</li>
+                        <li>Shared plant room layouts</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Electrical vs Mechanical Services */}
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">B</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Electrical vs Mechanical Services</p>
-                    
-                    <div className="space-y-4">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <p className="text-base text-white mb-2"><strong>Conflict Areas:</strong></p>
-                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                            <li>Containment clashing with ductwork routes</li>
-                            <li>Cable trays interfering with pipework</li>
-                            <li>Plant room space allocation conflicts</li>
-                            <li>Ceiling void congestion issues</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <p className="text-base text-white mb-2"><strong>Coordination Solutions:</strong></p>
-                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                            <li>Joint planning sessions for routes</li>
-                            <li>3D coordination drawings</li>
-                            <li>Agreed service hierarchy protocols</li>
-                            <li>Shared plant room layouts</li>
-                          </ul>
-                        </div>
-                      </div>
-                      
-                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Service Hierarchy</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          Establish clear service hierarchy: gravity drainage (highest), pressurised water, HVAC ducts, cable trays, then individual cables (lowest). This prevents later conflicts over route priority.
-                        </p>
-                      </div>
+                {/* Electrical vs Carpentry */}
+                <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                  <p className="font-medium text-purple-400 mb-3">C. Electrical vs Carpentry and Decoration</p>
+                  <div className="grid md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <p className="text-white font-medium mb-1">Typical Clashes:</p>
+                      <ul className="list-disc pl-6 space-y-1">
+                        <li>Socket outlets fitted before carpentry complete</li>
+                        <li>Lighting installation clashing with ceiling work</li>
+                        <li>Paint damage to new electrical fittings</li>
+                        <li>Trim work covering cable routes</li>
+                      </ul>
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Electrical vs Carpentry/Decoration */}
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">C</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Electrical vs Carpentry and Decoration</p>
-                    
-                    <div className="space-y-4">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <p className="text-base text-white mb-2"><strong>Typical Clashes:</strong></p>
-                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                            <li>Socket outlets fitted before carpentry complete</li>
-                            <li>Lighting installation clashing with ceiling work</li>
-                            <li>Paint damage to new electrical fittings</li>
-                            <li>Trim work covering cable routes</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <p className="text-base text-white mb-2"><strong>Sequencing Solutions:</strong></p>
-                          <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                            <li>Install accessories after carpentry/decoration</li>
-                            <li>Coordinate lighting with ceiling installers</li>
-                            <li>Protect finished work during painting</li>
-                            <li>Mark outlet positions for trim work</li>
-                          </ul>
-                        </div>
-                      </div>
-                      
-                      <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">Second Fix Coordination</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          Schedule electrical second fix after major carpentry and before final decoration. This minimises damage to finished work while ensuring electrical installations are properly integrated.
-                        </p>
-                      </div>
+                    <div>
+                      <p className="text-white font-medium mb-1">Sequencing Solutions:</p>
+                      <ul className="list-disc pl-6 space-y-1">
+                        <li>Install accessories after carpentry/decoration</li>
+                        <li>Coordinate lighting with ceiling installers</li>
+                        <li>Protect finished work during painting</li>
+                        <li>Mark outlet positions for trim work</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -478,95 +368,44 @@ const Module5Section3_4 = () => {
             correctIndex={quickCheckQuestions[1].correctIndex}
             explanation={quickCheckQuestions[1].explanation}
           />
-          <Separator className="my-6" />
 
           {/* Planning to Avoid Disruption */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">3. Planning to Avoid Disruption - Strategic Approaches</h3>
-            <p className="text-base text-white mb-4">
-              Proactive planning prevents conflicts before they occur:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-amber-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-amber-600 dark:text-amber-400 mb-3">Comprehensive Planning Framework</p>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Programme Analysis and Integration:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                          <li>Review the site programme to understand other trades' schedules</li>
-                          <li>Identify critical path activities and dependencies</li>
-                          <li>Map electrical work phases to construction sequence</li>
-                          <li>Plan resource allocation to avoid conflicts</li>
-                          <li>Build in contingency time for coordination issues</li>
-                        </ul>
-                      </div>
-
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Task Sequencing Strategy:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                          <li>Carry out task sequencing to avoid clashes</li>
-                          <li>Plan first fix before any wet trades begin</li>
-                          <li>Schedule second fix after decoration preparation</li>
-                          <li>Coordinate testing phases with project milestones</li>
-                          <li>Plan commissioning around handover requirements</li>
-                        </ul>
-                      </div>
-
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Phased Work Implementation:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                          <li>Work in phases coordinated with construction progress</li>
-                          <li>Complete work by zones or floors systematically</li>
-                          <li>Handover completed areas to following trades</li>
-                          <li>Maintain access for later phases without disruption</li>
-                        </ul>
-                      </div>
-
-                      <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 text-elec-yellow mb-2">Digital Planning Tools</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          Modern planning software with 4D scheduling capabilities can help visualise trade interactions over time, identifying potential conflicts before they occur on site.
-                        </p>
-                      </div>
-                    </div>
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Planning to Avoid Disruption
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>Proactive planning prevents conflicts before they occur:</p>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-amber-400 mb-3">Comprehensive Planning Framework</p>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <p className="text-white font-medium mb-1">Programme Analysis and Integration:</p>
+                    <ul className="list-disc pl-6 space-y-1">
+                      <li>Review the site programme to understand other trades' schedules</li>
+                      <li>Identify critical path activities and dependencies</li>
+                      <li>Map electrical work phases to construction sequence</li>
+                      <li>Build in contingency time for coordination issues</li>
+                    </ul>
                   </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Zone-Based Planning */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">3.1 Zone-Based Planning and Work Sequencing</h3>
-            <p className="text-base text-white mb-4">
-              Implementing zone-based approaches improves coordination and reduces conflicts:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-sky-50 dark:bg-sky-900/20 border border-sky-200 dark:border-sky-800">
-                  <h4 className="font-medium text-sky-800 dark:text-sky-200 mb-3">Zone Definition Strategies</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
-                    <li><strong>Floor-by-Floor:</strong> Complete each floor before moving up</li>
-                    <li><strong>Wing/Section:</strong> Work in building sections to allow parallel activities</li>
-                    <li><strong>Room Types:</strong> Group similar spaces for efficient working</li>
-                    <li><strong>Service Routes:</strong> Follow logical service distribution paths</li>
-                  </ul>
-                </div>
-
-                <div className="rounded-lg p-4 bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800">
-                  <h4 className="font-medium text-teal-800 dark:text-white mb-3">Handover Protocols</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
-                    <li><strong>Quality Checks:</strong> Complete inspection before handover</li>
-                    <li><strong>Documentation:</strong> Provide as-built information</li>
-                    <li><strong>Protection:</strong> Install temporary protection systems</li>
-                    <li><strong>Access:</strong> Maintain essential access routes</li>
-                  </ul>
+                  <div>
+                    <p className="text-white font-medium mb-1">Task Sequencing Strategy:</p>
+                    <ul className="list-disc pl-6 space-y-1">
+                      <li>Carry out task sequencing to avoid clashes</li>
+                      <li>Plan first fix before any wet trades begin</li>
+                      <li>Schedule second fix after decoration preparation</li>
+                      <li>Coordinate testing phases with project milestones</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-white font-medium mb-1">Phased Work Implementation:</p>
+                    <ul className="list-disc pl-6 space-y-1">
+                      <li>Work in phases coordinated with construction progress</li>
+                      <li>Complete work by zones or floors systematically</li>
+                      <li>Handover completed areas to following trades</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -579,94 +418,31 @@ const Module5Section3_4 = () => {
             correctIndex={quickCheckQuestions[0].correctIndex}
             explanation={quickCheckQuestions[0].explanation}
           />
-          <Separator className="my-6" />
-
-          {/* Communication and Coordination */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">4. Communication and Coordination - Best Practices</h3>
-            <p className="text-base text-white mb-4">
-              Effective communication is the foundation of successful trade coordination:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-4 bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-800">
-                <h4 className="font-medium text-cyan-700 dark:text-cyan-400 mb-3">Formal Communication Channels</h4>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <p className="font-medium text-cyan-700 dark:text-cyan-400 mb-2">Regular Meetings:</p>
-                    <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
-                      <li>Daily toolbox talks and coordination briefings</li>
-                      <li>Weekly trade coordination meetings</li>
-                      <li>Monthly progress and planning reviews</li>
-                      <li>Ad-hoc meetings for urgent coordination issues</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium text-cyan-700 dark:text-cyan-400 mb-2">Documentation Systems:</p>
-                    <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
-                      <li>Updated site drawings and specifications</li>
-                      <li>Work permit and notification systems</li>
-                      <li>Progress tracking and reporting</li>
-                      <li>Issue logs and resolution tracking</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-lg p-4 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800">
-                <h4 className="font-medium text-indigo-700 dark:text-indigo-400 mb-3">Practical Coordination Methods</h4>
-                <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
-                  <li><strong>Site Drawings:</strong> Use current drawings to check changes and coordinate activities</li>
-                  <li><strong>Work Area Agreements:</strong> Define and agree work areas and times with other trades</li>
-                  <li><strong>Resource Sharing:</strong> Coordinate use of shared equipment and facilities</li>
-                  <li><strong>Progress Updates:</strong> Provide regular updates on completion status</li>
-                  <li><strong>Issue Escalation:</strong> Clear procedures for resolving conflicts quickly</li>
-                </ul>
-              </div>
-            </div>
-          </section>
 
           {/* Consequences of Poor Coordination */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">5. Consequences of Poor Coordination - Risk Analysis</h3>
-            <p className="text-base text-white mb-4">
-              Understanding the full impact of poor coordination helps emphasise its importance:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="rounded-lg p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
-                  <h4 className="font-medium text-red-700 text-elec-yellow mb-3">Direct Consequences</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
-                    <li><strong>Time Delays:</strong> Project schedule disruption and overruns</li>
-                    <li><strong>Cost Increases:</strong> Rework, materials waste, extended site costs</li>
-                    <li><strong>Quality Issues:</strong> Damage to installed work requiring repair</li>
-                    <li><strong>Safety Risks:</strong> Unsafe working conditions from conflicting activities</li>
-                  </ul>
-                </div>
-
-                <div className="rounded-lg p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800">
-                  <h4 className="font-medium text-orange-700 text-elec-yellow mb-3">Indirect Consequences</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
-                    <li><strong>Relationship Damage:</strong> Frustration and conflict between trades</li>
-                    <li><strong>Reputation Impact:</strong> Reduced future work opportunities</li>
-                    <li><strong>Team Morale:</strong> Stress and job satisfaction issues</li>
-                    <li><strong>Client Relations:</strong> Reduced confidence and satisfaction</li>
-                  </ul>
-                </div>
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Consequences of Poor Coordination
+            </h2>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+                <h3 className="font-medium text-red-400 mb-3">Direct Consequences</h3>
+                <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
+                  <li><strong className="text-white">Time Delays:</strong> Project schedule disruption and overruns</li>
+                  <li><strong className="text-white">Cost Increases:</strong> Rework, materials waste, extended site costs</li>
+                  <li><strong className="text-white">Quality Issues:</strong> Damage to installed work requiring repair</li>
+                  <li><strong className="text-white">Safety Risks:</strong> Unsafe working conditions from conflicting activities</li>
+                </ul>
               </div>
-
-              <div className="rounded-lg p-4 bg-gray-50 dark:bg-card/50 border border-gray-200 dark:border-gray-700">
-                <h4 className="font-medium text-white mb-3">Financial Impact Analysis</h4>
-                <div className="space-y-2">
-                  <p className="text-xs sm:text-sm text-white"><strong>Typical Cost Increases from Poor Coordination:</strong></p>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
-                    <li>Rework costs: 5-15% of affected work value</li>
-                    <li>Schedule delays: £500-2000 per day extended site costs</li>
-                    <li>Material waste: 10-20% additional material requirements</li>
-                    <li>Labour inefficiency: 20-30% reduced productivity</li>
-                  </ul>
-                </div>
+              <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
+                <h3 className="font-medium text-orange-400 mb-3">Indirect Consequences</h3>
+                <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
+                  <li><strong className="text-white">Relationship Damage:</strong> Frustration and conflict between trades</li>
+                  <li><strong className="text-white">Reputation Impact:</strong> Reduced future work opportunities</li>
+                  <li><strong className="text-white">Team Morale:</strong> Stress and job satisfaction issues</li>
+                  <li><strong className="text-white">Client Relations:</strong> Reduced confidence and satisfaction</li>
+                </ul>
               </div>
             </div>
           </section>
@@ -678,97 +454,50 @@ const Module5Section3_4 = () => {
             correctIndex={quickCheckQuestions[2].correctIndex}
             explanation={quickCheckQuestions[2].explanation}
           />
-          <Separator className="my-6" />
-        </Card>
 
-        {/* Advanced Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Advanced Practical Guidance</h2>
-          <div className="space-y-6">
-            
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-              <div className="rounded-lg p-4 bg-slate-50 dark:bg-card/50 border border-slate-200 dark:border-slate-700">
+          {/* Practical Guidance */}
+          <section className="mb-10 mt-8">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Practical Guidance
+            </h2>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Protection Systems and Methods</h3>
-                <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-                  <li>Mark out containment and accessory positions clearly for other trades</li>
+                <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
+                  <li>Mark out containment and accessory positions clearly</li>
                   <li>Install temporary covers to protect accessories during wet trades</li>
                   <li>Use clear signage ("Do Not Cover" tags on back boxes)</li>
                   <li>Apply protective film to finished installations</li>
                   <li>Establish exclusion zones around sensitive equipment</li>
-                  <li>Document protection requirements for handover</li>
                 </ul>
               </div>
-
-              <div className="rounded-lg p-4 bg-slate-50 dark:bg-card/50 border border-slate-200 dark:border-slate-700">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Conflict Resolution Strategies</h3>
-                <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
+                <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
                   <li>Avoid working in confined spaces with multiple trades unless coordinated</li>
                   <li>Be flexible — adjust jobs to allow others to complete work first</li>
                   <li>Establish clear escalation procedures for disputes</li>
                   <li>Use mediation through site management when needed</li>
                   <li>Document agreements and changes in writing</li>
-                  <li>Focus on project success rather than individual trade interests</li>
                 </ul>
               </div>
             </div>
+          </section>
 
-            <div className="rounded-lg p-4 bg-elec-yellow/5 bg-elec-yellow/10 border border-elec-yellow/30 border-elec-yellow/20">
-              <h3 className="font-medium text-elec-yellow dark:text-elec-yellow mb-3">Digital Coordination Tools</h3>
-              <div className="space-y-3">
-                <div>
-                  <p className="font-medium text-elec-yellow dark:text-elec-yellow">Mobile Apps and Platforms:</p>
-                  <p className="text-xs sm:text-sm text-white">Real-time communication tools, shared calendars, and progress tracking applications improve coordination efficiency.</p>
-                </div>
-                <div>
-                  <p className="font-medium text-elec-yellow dark:text-elec-yellow">BIM (Building Information Modeling):</p>
-                  <p className="text-xs sm:text-sm text-white">3D models help visualise trade interactions and identify conflicts before they occur on site.</p>
-                </div>
-                <div>
-                  <p className="font-medium text-elec-yellow dark:text-elec-yellow">Digital Documentation:</p>
-                  <p className="text-xs sm:text-sm text-white">Cloud-based systems ensure all trades have access to current drawings, schedules, and updates.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-lg p-4 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800">
-              <h3 className="font-medium text-purple-800 dark:text-white mb-3">Quality Assurance in Multi-Trade Environments</h3>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <p className="font-medium text-purple-800 dark:text-white mb-2">Inspection Protocols:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
-                    <li>Joint inspections with other trades</li>
-                    <li>Photographic records of completed work</li>
-                    <li>Signed handover certificates</li>
-                    <li>Defect reporting and tracking systems</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-medium text-purple-800 dark:text-white mb-2">Protection Maintenance:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
-                    <li>Regular checks of protective systems</li>
-                    <li>Replacement of damaged protection</li>
-                    <li>Clear responsibility for protection maintenance</li>
-                    <li>Final protection removal procedures</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* Multiple Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Case Studies</h2>
-          
-          <div className="space-y-6">
-            <div className="rounded-lg p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-              <h3 className="font-semibold text-amber-800 dark:text-white mb-3">Case Study 1: Housing Site Protection Failure</h3>
-              <p className="text-amber-700 dark:text-amber-300 mb-3">
+          {/* Real-World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+              Real-World Example
+            </h2>
+            <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+              <p className="text-amber-300 mb-3">
                 On a housing site, electricians installed socket boxes before plastering without protective covers. Plasterers filled in the boxes, requiring electricians to dig them out later. This wasted hours of work and created friction between trades. Proper coordination and use of protective covers would have prevented the issue.
               </p>
-              <div className="bg-amber-100 dark:bg-amber-900/40 p-3 rounded">
-                <p className="font-medium text-amber-800 dark:text-white mb-1">Lessons Learned:</p>
-                <ul className="list-disc pl-5 text-sm text-amber-700 dark:text-amber-300">
+              <div className="p-3 rounded bg-amber-500/20 border border-amber-500/30">
+                <p className="font-medium text-amber-300 mb-1">Lessons Learned:</p>
+                <ul className="list-disc pl-5 text-sm text-amber-200">
                   <li>Always use appropriate protective covers for electrical boxes</li>
                   <li>Clear communication needed about protection requirements</li>
                   <li>Cost of prevention far less than cost of remedial work</li>
@@ -776,100 +505,87 @@ const Module5Section3_4 = () => {
                 </ul>
               </div>
             </div>
+          </section>
 
-            <div className="rounded-lg p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-              <h3 className="font-semibold text-green-800 dark:text-white mb-3">Case Study 2: Commercial Office Coordination Success</h3>
-              <p className="text-green-700 dark:text-green-300 mb-3">
-                A large commercial office project implemented weekly coordination meetings and shared digital planning tools. All trades worked from synchronized schedules with clear handover points. The project completed on time with minimal rework and excellent relationships between all trades.
-              </p>
-              <div className="bg-green-100 dark:bg-green-900/40 p-3 rounded">
-                <p className="font-medium text-green-800 dark:text-white mb-1">Success Factors:</p>
-                <ul className="list-disc pl-5 text-sm text-green-700 dark:text-green-300">
-                  <li>Regular formal coordination meetings</li>
-                  <li>Shared digital tools for real-time updates</li>
-                  <li>Clear work zone definitions and handover procedures</li>
-                  <li>Strong site management leadership in coordination</li>
-                </ul>
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+              FAQs
+            </h2>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                  <p className="font-medium text-white mb-2">Q: {faq.question}</p>
+                  <p className="text-white/70 text-sm">A: {faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Pocket Guide */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">10</span>
+              Pocket Guide
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+              <div className="space-y-2 text-elec-yellow">
+                <p>• Review site programme regularly.</p>
+                <p>• Sequence work with other trades.</p>
+                <p>• Use coordination meetings to plan access.</p>
+                <p>• Protect electrical work from damage.</p>
+                <p>• Stay flexible to avoid delays and conflict.</p>
               </div>
             </div>
+          </section>
 
-            <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-              <h3 className="font-semibold text-blue-800 dark:text-white mb-3">Case Study 3: Hospital Renovation Multi-Trade Challenge</h3>
-              <p className="text-blue-700 text-elec-yellow mb-3">
-                During a hospital renovation, electrical, mechanical, and decoration trades needed to work simultaneously in occupied areas. Detailed hour-by-hour scheduling and noise control measures enabled work to continue without disrupting patient care or creating conflicts.
+          {/* Summary */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">11</span>
+              Summary
+            </h2>
+            <div className="text-white/80 leading-relaxed">
+              <p>
+                In this subsection, you learned how to minimise disruption to other site activities by understanding common trade clashes, sequencing tasks properly, and communicating effectively. You saw the risks of poor coordination and explored practical methods like protective covers, clear markings, and flexible scheduling to avoid problems.
               </p>
-              <div className="bg-blue-100 dark:bg-blue-900/40 p-3 rounded">
-                <p className="font-medium text-blue-800 dark:text-white mb-1">Key Strategies:</p>
-                <ul className="list-disc pl-5 text-sm text-blue-700 text-elec-yellow">
-                  <li>Hour-by-hour detailed scheduling coordination</li>
-                  <li>Noise and disruption control measures</li>
-                  <li>Flexible working arrangements around patient needs</li>
-                  <li>Enhanced communication with facility management</li>
-                </ul>
-              </div>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-l-elec-yellow pl-4">
-                <p className="font-medium text-white mb-2">Q: {faq.question}</p>
-                <p className="text-white">A: {faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
+          {/* Knowledge Check */}
+          <section className="mb-10">
+            <div className="flex items-center gap-3 mb-4">
+              <BookOpen className="w-6 h-6 text-elec-yellow" />
+              <h2 className="text-xl font-semibold text-white">Knowledge Check</h2>
+            </div>
+            <Quiz questions={quizQuestions} />
+          </section>
 
-        {/* Pocket Guide */}
-        <Card className="mb-8 p-6 bg-elec-yellow/5 bg-elec-yellow/10 border border-elec-yellow/30 border-elec-yellow/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-elec-yellow dark:text-elec-yellow mb-4">Pocket Guide</h2>
-          <div className="space-y-2 text-elec-yellow text-elec-yellow">
-            <p>✅ Review site programme regularly.</p>
-            <p>✅ Sequence work with other trades.</p>
-            <p>✅ Use coordination meetings to plan access.</p>
-            <p>✅ Protect electrical work from damage.</p>
-            <p>✅ Stay flexible to avoid delays and conflict.</p>
-          </div>
-        </Card>
-
-        {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Summary</h2>
-          <p className="text-base text-white">
-            In this subsection, you learned how to minimise disruption to other site activities by understanding common trade clashes, sequencing tasks properly, and communicating effectively. You saw the risks of poor coordination and explored practical methods like protective covers, clear markings, and flexible scheduling to avoid problems.
-          </p>
-        </Card>
-
-        {/* Knowledge Check */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-4">
-            <BookOpen className="w-6 h-6 text-white" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Knowledge Check</h2>
-          </div>
-          <Quiz questions={quizQuestions} />
-        </Card>
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center pt-8">
-          <Button variant="outline" asChild>
-            <Link to="module5-section3/subsection3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Access Planning
-            </Link>
-          </Button>
-          
-          <Button asChild>
-            <Link to="..">
-              <ArrowRight className="w-4 h-4 ml-2" />
-              Back to Section 3
-            </Link>
-          </Button>
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
+            <Button
+              variant="ghost"
+              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../3-3">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../3-5">
+                Next
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

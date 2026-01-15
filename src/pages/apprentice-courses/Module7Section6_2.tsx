@@ -296,7 +296,7 @@ export default function Module7Section6_2() {
 
         <InlineCheck
           id="unprofessional-language"
-          question='Why is "circuit\'s a bit dodgy" an unprofessional way to report a fault?'
+          question={`Why is "circuit's a bit dodgy" an unprofessional way to report a fault?`}
           options={["It's too short but perfectly clear", "It's informal, vague, and lacks specifics (location, circuit, condition, action)", "It includes too much technical detail", "It always implies the wrong circuit"]}
           correctIndex={1}
           explanation="Reports must be factual, specific, and actionable."

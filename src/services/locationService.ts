@@ -12,9 +12,10 @@ export interface WorkerLocation {
   lng: number;
   accuracy: number | null;
   status: WorkerStatus;
-  check_in_time: string | null;
-  check_out_time: string | null;
-  recorded_at: string;
+  checked_in_at: string | null;
+  checked_out_at: string | null;
+  last_updated: string;
+  created_at: string;
 }
 
 export interface WorkerLocationWithEmployee extends WorkerLocation {
@@ -24,13 +25,13 @@ export interface WorkerLocationWithEmployee extends WorkerLocation {
 
 export const getWorkerLocations = async (): Promise<WorkerLocationWithEmployee[]> => {
   const { data, error } = await supabase
-    .from('worker_locations')
+    .from('employer_worker_locations')
     .select(`
       *,
       employer_employees (*),
       employer_jobs (*)
     `)
-    .order('recorded_at', { ascending: false });
+    .order('last_updated', { ascending: false });
   
   if (error) {
     console.error('Error fetching worker locations:', error);
@@ -42,13 +43,13 @@ export const getWorkerLocations = async (): Promise<WorkerLocationWithEmployee[]
 
 export const getLatestWorkerLocations = async (): Promise<WorkerLocationWithEmployee[]> => {
   const { data, error } = await supabase
-    .from('worker_locations')
+    .from('employer_worker_locations')
     .select(`
       *,
       employer_employees (*),
       employer_jobs (*)
     `)
-    .order('recorded_at', { ascending: false });
+    .order('last_updated', { ascending: false });
   
   if (error) {
     console.error('Error fetching latest worker locations:', error);
@@ -75,7 +76,7 @@ export const updateWorkerLocation = async (
   accuracy?: number
 ): Promise<WorkerLocation> => {
   const { data, error } = await supabase
-    .from('worker_locations')
+    .from('employer_worker_locations')
     .insert({
       employee_id: employeeId,
       lat,
@@ -83,8 +84,8 @@ export const updateWorkerLocation = async (
       status,
       job_id: jobId,
       accuracy,
-      recorded_at: new Date().toISOString(),
-      check_in_time: status === 'On Site' ? new Date().toISOString() : null,
+      last_updated: new Date().toISOString(),
+      checked_in_at: status === 'On Site' ? new Date().toISOString() : null,
     })
     .select()
     .single();
@@ -110,10 +111,11 @@ export const checkOutWorker = async (
   locationId: string
 ): Promise<boolean> => {
   const { error } = await supabase
-    .from('worker_locations')
+    .from('employer_worker_locations')
     .update({
-      check_out_time: new Date().toISOString(),
+      checked_out_at: new Date().toISOString(),
       status: 'Off Duty' as WorkerStatus,
+      last_updated: new Date().toISOString(),
     })
     .eq('id', locationId);
   
@@ -129,7 +131,7 @@ export const getWorkerLocationsByJob = async (
   jobId: string
 ): Promise<WorkerLocationWithEmployee[]> => {
   const { data, error } = await supabase
-    .from('worker_locations')
+    .from('employer_worker_locations')
     .select(`
       *,
       employer_employees (*),
@@ -137,7 +139,7 @@ export const getWorkerLocationsByJob = async (
     `)
     .eq('job_id', jobId)
     .eq('status', 'On Site')
-    .order('recorded_at', { ascending: false });
+    .order('last_updated', { ascending: false });
   
   if (error) {
     console.error('Error fetching worker locations by job:', error);
@@ -152,13 +154,13 @@ export const subscribeToLocationUpdates = (
   callback: (payload: { new: WorkerLocation; old: WorkerLocation | null }) => void
 ) => {
   const channel = supabase
-    .channel('worker-locations')
+    .channel('employer-worker-locations')
     .on(
       'postgres_changes',
       {
         event: '*',
         schema: 'public',
-        table: 'worker_locations',
+        table: 'employer_worker_locations',
       },
       (payload) => {
         callback({
@@ -168,7 +170,7 @@ export const subscribeToLocationUpdates = (
       }
     )
     .subscribe();
-  
+
   return () => {
     supabase.removeChannel(channel);
   };

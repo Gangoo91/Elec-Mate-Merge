@@ -69,8 +69,8 @@ const WelcomeTour: React.FC<WelcomeTourProps> = ({ isOpen, onClose }) => {
         <div className="relative px-4 sm:px-6 md:px-8 pt-6 md:pt-8 pb-4 border-b border-white/10">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-lg sm:text-xl md:text-2xl font-bold text-white">{step.title}</DialogTitle>
-            <Button variant="ghost" size="icon" onClick={handleSkip} className="h-8 w-8 md:h-9 md:w-9 text-gray-400 hover:text-white">
-              <X className="h-4 w-4" />
+            <Button variant="ghost" size="icon" onClick={handleSkip} className="h-11 w-11 text-gray-400 hover:text-white active:text-white touch-manipulation">
+              <X className="h-5 w-5" />
             </Button>
           </div>
         </div>
@@ -88,15 +88,18 @@ const WelcomeTour: React.FC<WelcomeTourProps> = ({ isOpen, onClose }) => {
           </DialogDescription>
 
           {/* Step indicators */}
-          <div className="flex justify-center gap-2 md:gap-3">
+          <div className="flex justify-center gap-1">
             {tourSteps.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentStep(index)}
-                className={`h-2 md:h-2.5 rounded-full transition-all duration-200 ${
-                  index === currentStep ? 'bg-yellow-500 w-6 md:w-8' : 'bg-white/20 w-2 md:w-2.5 hover:bg-white/30'
-                }`}
-              />
+                className="h-11 w-11 flex items-center justify-center touch-manipulation"
+                aria-label={`Go to step ${index + 1}`}
+              >
+                <span className={`h-2.5 rounded-full transition-all duration-200 ${
+                  index === currentStep ? 'bg-yellow-500 w-6' : 'bg-white/20 w-2.5 hover:bg-white/30 active:bg-white/40'
+                }`} />
+              </button>
             ))}
           </div>
         </div>
@@ -108,7 +111,7 @@ const WelcomeTour: React.FC<WelcomeTourProps> = ({ isOpen, onClose }) => {
               variant="ghost"
               onClick={handlePrevious}
               disabled={currentStep === 0}
-              className="h-11 md:h-12 px-4 md:px-5 text-gray-400 hover:text-white disabled:opacity-30"
+              className="h-11 md:h-12 px-4 md:px-5 text-gray-400 hover:text-white active:text-white disabled:opacity-30 touch-manipulation"
             >
               <ChevronLeft className="h-4 w-4 mr-1" />
               <span className="hidden sm:inline">Previous</span>
@@ -120,7 +123,7 @@ const WelcomeTour: React.FC<WelcomeTourProps> = ({ isOpen, onClose }) => {
 
             <Button
               onClick={handleNext}
-              className="h-11 md:h-12 px-5 md:px-6 bg-yellow-400 hover:bg-yellow-300 text-black font-semibold md:text-lg"
+              className="h-11 md:h-12 px-5 md:px-6 bg-yellow-400 hover:bg-yellow-300 active:bg-yellow-200 text-black font-semibold md:text-lg touch-manipulation"
             >
               {currentStep === tourSteps.length - 1 ? (
                 'Get Started'

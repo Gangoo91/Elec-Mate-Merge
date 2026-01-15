@@ -1,12 +1,10 @@
-import { ArrowLeft, ArrowRight, Target, CheckCircle, AlertTriangle, Users, BookOpen, Clipboard, Clock } from "lucide-react";
+import { ArrowLeft, ArrowRight, Clipboard, Clock, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import useSEO from "@/hooks/useSEO";
+import { useState } from "react";
 
 const TITLE = "Job Breakdown and Task Sequencing - Module 5.3.1 | Level 2 Electrical Course";
 const DESCRIPTION = "Break down installation work into logical tasks, sequence them efficiently, and coordinate on-site to avoid rework and delays.";
@@ -38,6 +36,7 @@ const quickCheckQuestions = [
 
 const Module5Section3_1 = () => {
   useSEO(TITLE, DESCRIPTION);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const quizQuestions = [
     {
@@ -128,385 +127,271 @@ const Module5Section3_1 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 3
+              Back to Section 5.3
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <Clipboard className="w-6 h-6 text-white" />
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 5.3.1</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 5.3.1
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Job Breakdown and Task Sequencing
-          </h1>
-          <p className="text-white">
-            Learn to divide large electrical projects into manageable tasks and sequence them for efficient, safe completion.
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Job Breakdown and Task Sequencing
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Learn to divide large electrical projects into manageable tasks and sequence them for efficient, safe completion.
+            </p>
+          </header>
 
-        {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-6">
-            <Target className="w-6 h-6 text-white" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Introduction</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Break large jobs into smaller, manageable tasks.</li>
-                <li>Sequence logically: containment → cabling → terminations → testing.</li>
-                <li>Coordinate with other trades to avoid clashes and rework.</li>
-              </ul>
+          {/* In 30 Seconds */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">00</span>
+              In 30 Seconds
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-elec-yellow mb-2">Key Points</p>
+                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                  <li>Break large jobs into smaller, manageable tasks</li>
+                  <li>Sequence logically: containment → cabling → terminations → testing</li>
+                  <li>Coordinate with other trades to avoid clashes and rework</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-elec-yellow mb-2">Spot it / Use it</p>
+                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                  <li><strong>Spot:</strong> Logical phases - groundwork first, accessories last</li>
+                  <li><strong>Use:</strong> Gantt charts, task lists, daily standups</li>
+                  <li><strong>Check:</strong> Dependencies met before starting next phase</li>
+                </ul>
+              </div>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Logical phases - groundwork first, accessories last.</li>
-                <li><strong>Use:</strong> Gantt charts, task lists, daily standups.</li>
-                <li><strong>Check:</strong> Dependencies met before starting next phase.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <p className="text-base text-white mb-4">
-            Large electrical installation projects can feel overwhelming if approached all at once. Job breakdown and sequencing is the method of dividing tasks into smaller, logical steps and planning them in the most efficient order. This ensures work is completed safely, efficiently, and without unnecessary delays or clashes with other trades.
-          </p>
-          
-          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
-            <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
-                <p className="text-xs sm:text-sm text-white">
-                  In the electrical industry, poor planning and sequencing account for approximately 30% of project delays and cost overruns. 
-                  Mastering these skills will make you a valuable team member and help ensure project success.
+          {/* Introduction */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Introduction
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Large electrical installation projects can feel overwhelming if approached all at once. Job breakdown and sequencing is the method of dividing tasks into smaller, logical steps and planning them in the most efficient order. This ensures work is completed safely, efficiently, and without unnecessary delays or clashes with other trades.
+              </p>
+
+              <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-400/50">
+                <div className="flex items-start gap-3">
+                  <Clock className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="font-medium text-blue-400 mb-1">Why This Matters</p>
+                    <p className="text-sm text-white/70">
+                      In the electrical industry, poor planning and sequencing account for approximately 30% of project delays and cost overruns. Mastering these skills will make you a valuable team member and help ensure project success.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <p>
+                <strong className="text-white">Real Impact:</strong> A well-sequenced electrical installation on a typical commercial project can save 15-20% in labour costs and reduce project completion time by 1-2 weeks compared to poorly planned work.
+              </p>
+
+              <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
+                <p className="text-sm text-white/70">
+                  <strong className="text-elec-yellow">Industry Standard:</strong> BS 7671 emphasises the importance of proper installation planning and sequencing to ensure electrical safety and compliance throughout the construction process.
                 </p>
               </div>
             </div>
-          </div>
-          
-          <div className="mt-4 space-y-3">
-            <p className="text-base text-white">
-              <strong>Real Impact:</strong> A well-sequenced electrical installation on a typical commercial project can save 15-20% in labour costs 
-              and reduce project completion time by 1-2 weeks compared to poorly planned work.
-            </p>
-            
-            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
-              <p className="text-xs sm:text-sm text-white">
-                <strong>Industry Standard:</strong> BS 7671 emphasises the importance of proper installation planning and sequencing 
-                to ensure electrical safety and compliance throughout the construction process.
-              </p>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-base text-white mb-4">By the end of this subsection, you will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>Break down electrical installation work into manageable tasks.</li>
-            <li>Understand the importance of logical sequencing in planning.</li>
-            <li>Apply sequencing to real-world electrical jobs.</li>
-            <li>Identify risks of poor planning and disorderly task execution.</li>
-            <li>Work in alignment with project schedules and site requirements.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Learning Outcomes
+            </h2>
+            <p className="text-white/80 mb-3">By the end of this subsection, you will be able to:</p>
+            <ul className="text-white/80 space-y-2 list-disc pl-6">
+              <li>Break down electrical installation work into manageable tasks</li>
+              <li>Understand the importance of logical sequencing in planning</li>
+              <li>Apply sequencing to real-world electrical jobs</li>
+              <li>Identify risks of poor planning and disorderly task execution</li>
+              <li>Work in alignment with project schedules and site requirements</li>
+            </ul>
+          </section>
 
           {/* What is Job Breakdown */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">1. What is Job Breakdown?</h3>
-            <p className="text-base text-white mb-4">
-              Job breakdown is the process of:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Breaking Down Large Projects</p>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Splitting Large Jobs:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                          <li>Dividing a large job (e.g., wiring a floor of offices) into smaller, specific tasks</li>
-                          <li>Examples: setting out containment, running cables, installing accessories, testing</li>
-                          <li>Each task becomes manageable and clearly defined</li>
-                        </ul>
-                      </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              What is Job Breakdown?
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>Job breakdown is the process of:</p>
 
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Clear Responsibilities:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                          <li>Makes responsibilities clear for each team member</li>
-                          <li>Reduces errors and confusion on site</li>
-                          <li>Enables better progress tracking and quality control</li>
-                        </ul>
-                      </div>
-
-                      <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800">
-                        <p className="font-medium text-green-700 dark:text-green-400 mb-2">Key Benefit</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          Breaking down large jobs makes complex projects manageable and reduces the risk of overlooking important tasks.
-                        </p>
-                      </div>
-                    </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-elec-yellow mb-3">Breaking Down Large Projects</p>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-white font-medium mb-2">Splitting Large Jobs:</p>
+                    <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                      <li>Dividing a large job (e.g., wiring a floor of offices) into smaller, specific tasks</li>
+                      <li>Examples: setting out containment, running cables, installing accessories, testing</li>
+                      <li>Each task becomes manageable and clearly defined</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-white font-medium mb-2">Clear Responsibilities:</p>
+                    <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                      <li>Makes responsibilities clear for each team member</li>
+                      <li>Reduces errors and confusion on site</li>
+                      <li>Enables better progress tracking and quality control</li>
+                    </ul>
                   </div>
                 </div>
+              </div>
+
+              <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/30">
+                <p className="font-medium text-green-400 mb-1">Key Benefit</p>
+                <p className="text-sm text-white/70">
+                  Breaking down large jobs makes complex projects manageable and reduces the risk of overlooking important tasks.
+                </p>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="job-breakdown-check"
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
-          <Separator className="my-6" />
+          <div className="mb-10">
+            <InlineCheck
+              id="job-breakdown-check"
+              question={quickCheckQuestions[0].question}
+              options={quickCheckQuestions[0].options}
+              correctIndex={quickCheckQuestions[0].correctIndex}
+              explanation={quickCheckQuestions[0].explanation}
+            />
+          </div>
 
           {/* Sequencing Work */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">2. Sequencing Work</h3>
-            <p className="text-base text-white mb-4">
-              Sequencing means completing tasks in a logical order to avoid rework or safety issues:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-600 dark:text-green-400 mb-3">Logical Task Ordering</p>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Typical Electrical Sequence:</strong></p>
-                        <div className="bg-[#121212]/50 p-3 rounded border mb-2">
-                          <ol className="list-decimal ml-4 space-y-1 text-xs sm:text-sm text-white">
-                            <li><strong>Groundwork:</strong> First fix, cable routes, containment positioning</li>
-                            <li><strong>Containment:</strong> Install trunking, conduit, cable trays</li>
-                            <li><strong>Cabling:</strong> Run cables through containment systems</li>
-                            <li><strong>Terminations:</strong> Connect cables to accessories and equipment</li>
-                            <li><strong>Testing:</strong> Inspect and test the completed installation</li>
-                          </ol>
-                        </div>
-                      </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Sequencing Work
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>Sequencing means completing tasks in a logical order to avoid rework or safety issues:</p>
 
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Example of Poor Sequencing:</strong></p>
-                        <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                          <p className="text-xs sm:text-sm text-white">
-                            <strong>Wrong:</strong> Installing socket outlets before containment and cables are in place - 
-                            you would not install accessories before containment and cables are ready.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+              <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-400/50">
+                <p className="font-medium text-green-400 mb-3">Logical Task Ordering</p>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-white font-medium mb-2">Typical Electrical Sequence:</p>
+                    <ol className="text-sm text-white/70 list-decimal pl-4 space-y-1">
+                      <li><strong>Groundwork:</strong> First fix, cable routes, containment positioning</li>
+                      <li><strong>Containment:</strong> Install trunking, conduit, cable trays</li>
+                      <li><strong>Cabling:</strong> Run cables through containment systems</li>
+                      <li><strong>Terminations:</strong> Connect cables to accessories and equipment</li>
+                      <li><strong>Testing:</strong> Inspect and test the completed installation</li>
+                    </ol>
+                  </div>
+                  <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+                    <p className="font-medium text-red-400 mb-1">Example of Poor Sequencing</p>
+                    <p className="text-sm text-white/70">
+                      <strong>Wrong:</strong> Installing socket outlets before containment and cables are in place — you would not install accessories before containment and cables are ready.
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="sequencing-check"
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-          <Separator className="my-6" />
+          <div className="mb-10">
+            <InlineCheck
+              id="sequencing-check"
+              question={quickCheckQuestions[1].question}
+              options={quickCheckQuestions[1].options}
+              correctIndex={quickCheckQuestions[1].correctIndex}
+              explanation={quickCheckQuestions[1].explanation}
+            />
+          </div>
 
           {/* Steps in Task Sequencing */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">3. Steps in Task Sequencing</h3>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">Systematic Planning Process</p>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-base text-white mb-3"><strong>Essential Planning Steps:</strong></p>
-                        <ol className="list-decimal ml-4 space-y-3 text-base text-white">
-                          <li>
-                            <strong>Review installation drawings and specifications</strong>
-                            <p className="text-sm text-white mt-1">Study electrical layouts, cable schedules, and equipment specifications thoroughly</p>
-                          </li>
-                          <li>
-                            <strong>List all required tasks</strong>
-                            <p className="text-sm text-white mt-1">Break down into specific, measurable activities with clear deliverables</p>
-                          </li>
-                          <li>
-                            <strong>Order them logically</strong>
-                            <p className="text-sm text-white mt-1">Follow the sequence: groundwork → containment → cabling → terminations → testing</p>
-                          </li>
-                          <li>
-                            <strong>Factor in dependencies</strong>
-                            <p className="text-sm text-white mt-1">Consider other trades - wait for walls to be plastered before fixing accessories</p>
-                          </li>
-                          <li>
-                            <strong>Estimate timeframes</strong>
-                            <p className="text-sm text-white mt-1">Allocate realistic time for each task including potential delays</p>
-                          </li>
-                          <li>
-                            <strong>Identify critical path</strong>
-                            <p className="text-sm text-white mt-1">Determine which tasks, if delayed, would affect the overall project timeline</p>
-                          </li>
-                        </ol>
-                      </div>
-
-                      <div className="bg-[#121212]/50 p-4 rounded border">
-                        <p className="font-medium text-white mb-2">Example Task Breakdown - Office Floor Installation:</p>
-                        <div className="grid md:grid-cols-2 gap-4 text-sm">
-                          <div>
-                            <p className="font-medium mb-2">Week 1 - Preparation:</p>
-                            <ul className="list-disc ml-4 space-y-1 text-white">
-                              <li>Set out cable routes</li>
-                              <li>Mark containment positions</li>
-                              <li>Coordinate with building services</li>
-                              <li>Order materials and equipment</li>
-                            </ul>
-                          </div>
-                          <div>
-                            <p className="font-medium mb-2">Week 2 - First Fix:</p>
-                            <ul className="list-disc ml-4 space-y-1 text-white">
-                              <li>Install cable containment systems</li>
-                              <li>Run main distribution cables</li>
-                              <li>Install back boxes and mounting systems</li>
-                              <li>First fix inspection</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-3 rounded border border-blue-200 dark:border-blue-800">
-                        <p className="font-medium text-blue-700 text-elec-yellow mb-2">Dependencies Example</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          You cannot install socket outlets until: containment is secure, cables are pulled, 
-                          plastering is complete, and wall surfaces are ready for fixing.
-                        </p>
-                      </div>
-                    </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Steps in Task Sequencing
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-400/50">
+                <p className="font-medium text-purple-400 mb-3">Systematic Planning Process</p>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-white font-medium mb-2">Essential Planning Steps:</p>
+                    <ol className="text-sm text-white/70 list-decimal pl-4 space-y-2">
+                      <li>
+                        <strong>Review installation drawings and specifications</strong>
+                        <p className="mt-1">Study electrical layouts, cable schedules, and equipment specifications thoroughly</p>
+                      </li>
+                      <li>
+                        <strong>List all required tasks</strong>
+                        <p className="mt-1">Break down into specific, measurable activities with clear deliverables</p>
+                      </li>
+                      <li>
+                        <strong>Order them logically</strong>
+                        <p className="mt-1">Follow the sequence: groundwork → containment → cabling → terminations → testing</p>
+                      </li>
+                      <li>
+                        <strong>Factor in dependencies</strong>
+                        <p className="mt-1">Consider other trades — wait for walls to be plastered before fixing accessories</p>
+                      </li>
+                      <li>
+                        <strong>Estimate timeframes</strong>
+                        <p className="mt-1">Allocate realistic time for each task including potential delays</p>
+                      </li>
+                      <li>
+                        <strong>Identify critical path</strong>
+                        <p className="mt-1">Determine which tasks, if delayed, would affect the overall project timeline</p>
+                      </li>
+                    </ol>
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
 
-          {/* Why Sequencing Matters */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">4. Why Sequencing Matters</h3>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Benefits of Proper Sequencing</p>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-base text-white mb-3"><strong>Key Benefits:</strong></p>
-                        <ul className="list-disc ml-4 space-y-2 text-base text-white">
-                          <li><strong>Prevents rework and wasted labour</strong> - work is done right the first time</li>
-                          <li><strong>Avoids clashes with other trades</strong> - coordinate with plasterers, carpenters, etc.</li>
-                          <li><strong>Helps meet deadlines and milestones</strong> - keeps project on schedule</li>
-                          <li><strong>Improves safety and organisation on site</strong> - reduces hazards and confusion</li>
-                          <li><strong>Optimises resource allocation</strong> - tools and materials are available when needed</li>
-                          <li><strong>Maintains quality standards</strong> - proper sequence prevents damage and ensures compliance</li>
-                        </ul>
-                      </div>
-
-                      <div className="bg-[#121212]/50 p-4 rounded border">
-                        <p className="font-medium text-white mb-2">Cost Impact Analysis:</p>
-                        <div className="grid md:grid-cols-2 gap-4 text-sm">
-                          <div>
-                            <p className="font-medium mb-2 text-green-600 dark:text-green-400">Proper Sequencing:</p>
-                            <ul className="list-disc ml-4 space-y-1 text-white">
-                              <li>5-10% faster completion</li>
-                              <li>Reduced material waste</li>
-                              <li>Lower labour costs</li>
-                              <li>Fewer site accidents</li>
-                              <li>Better client satisfaction</li>
-                            </ul>
-                          </div>
-                          <div>
-                            <p className="font-medium mb-2 text-red-600 text-elec-yellow">Poor Sequencing:</p>
-                            <ul className="list-disc ml-4 space-y-1 text-white">
-                              <li>20-30% increased costs</li>
-                              <li>Extended project timelines</li>
-                              <li>Higher accident rates</li>
-                              <li>Client complaints</li>
-                              <li>Reputation damage</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="bg-orange-50 dark:bg-orange-900/20 p-3 rounded border border-orange-200 dark:border-orange-800">
-                        <p className="font-medium text-orange-700 text-elec-yellow mb-2">Industry Insight</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          Studies show that electrical contractors who implement structured sequencing and planning 
-                          complete projects 15% faster and with 25% fewer defects than those who don't.
-                        </p>
-                      </div>
-                    </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white mb-3">Example Task Breakdown — Office Floor Installation:</p>
+                <div className="grid sm:grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <p className="font-medium text-white mb-2">Week 1 — Preparation:</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white/70">
+                      <li>Set out cable routes</li>
+                      <li>Mark containment positions</li>
+                      <li>Coordinate with building services</li>
+                      <li>Order materials and equipment</li>
+                    </ul>
                   </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Risks of Poor Breakdown/Sequencing */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">5. Risks of Poor Breakdown/Sequencing</h3>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">!</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-3">Consequences of Poor Planning</p>
-                    
-                    <ul className="list-disc ml-4 space-y-2 text-base text-white">
-                      <li><strong>Wasted time and materials</strong> - rework costs money and delays completion</li>
-                      <li><strong>Increased accidents or unsafe conditions</strong> - rushing or working around problems</li>
-                      <li><strong>Delays caused by rework or obstruction of other trades</strong> - knock-on effects</li>
-                      <li><strong>Non-compliance with project schedule</strong> - penalties and damage to reputation</li>
+                  <div>
+                    <p className="font-medium text-white mb-2">Week 2 — First Fix:</p>
+                    <ul className="list-disc pl-4 space-y-1 text-white/70">
+                      <li>Install cable containment systems</li>
+                      <li>Run main distribution cables</li>
+                      <li>Install back boxes and mounting systems</li>
+                      <li>First fix inspection</li>
                     </ul>
                   </div>
                 </div>
@@ -514,26 +399,86 @@ const Module5Section3_1 = () => {
             </div>
           </section>
 
-          <InlineCheck
-            id="risks-check"
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-        </Card>
+          {/* Why Sequencing Matters */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Why Sequencing Matters
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div className="p-4 rounded-lg bg-orange-500/10 border-l-2 border-orange-400/50">
+                <p className="font-medium text-orange-400 mb-3">Benefits of Proper Sequencing</p>
+                <ul className="text-sm text-white/70 list-disc pl-4 space-y-2">
+                  <li><strong>Prevents rework and wasted labour</strong> — work is done right the first time</li>
+                  <li><strong>Avoids clashes with other trades</strong> — coordinate with plasterers, carpenters, etc.</li>
+                  <li><strong>Helps meet deadlines and milestones</strong> — keeps project on schedule</li>
+                  <li><strong>Improves safety and organisation on site</strong> — reduces hazards and confusion</li>
+                  <li><strong>Optimises resource allocation</strong> — tools and materials are available when needed</li>
+                  <li><strong>Maintains quality standards</strong> — proper sequence prevents damage and ensures compliance</li>
+                </ul>
+              </div>
 
-        {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-4">
-            <Users className="w-6 h-6 text-white" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Practical Guidance</h2>
+              <div className="grid sm:grid-cols-2 gap-4 text-sm">
+                <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/30">
+                  <p className="font-medium text-green-400 mb-2">Proper Sequencing:</p>
+                  <ul className="list-disc pl-4 space-y-1 text-white/70">
+                    <li>5-10% faster completion</li>
+                    <li>Reduced material waste</li>
+                    <li>Lower labour costs</li>
+                    <li>Fewer site accidents</li>
+                    <li>Better client satisfaction</li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+                  <p className="font-medium text-red-400 mb-2">Poor Sequencing:</p>
+                  <ul className="list-disc pl-4 space-y-1 text-white/70">
+                    <li>20-30% increased costs</li>
+                    <li>Extended project timelines</li>
+                    <li>Higher accident rates</li>
+                    <li>Client complaints</li>
+                    <li>Reputation damage</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Risks of Poor Breakdown/Sequencing */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Risks of Poor Breakdown/Sequencing
+            </h2>
+            <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50">
+              <p className="font-medium text-red-400 mb-3">Consequences of Poor Planning</p>
+              <ul className="text-sm text-white/70 list-disc pl-4 space-y-2">
+                <li><strong>Wasted time and materials</strong> — rework costs money and delays completion</li>
+                <li><strong>Increased accidents or unsafe conditions</strong> — rushing or working around problems</li>
+                <li><strong>Delays caused by rework or obstruction of other trades</strong> — knock-on effects</li>
+                <li><strong>Non-compliance with project schedule</strong> — penalties and damage to reputation</li>
+              </ul>
+            </div>
+          </section>
+
+          <div className="mb-10">
+            <InlineCheck
+              id="risks-check"
+              question={quickCheckQuestions[2].question}
+              options={quickCheckQuestions[2].options}
+              correctIndex={quickCheckQuestions[2].correctIndex}
+              explanation={quickCheckQuestions[2].explanation}
+            />
           </div>
-          
-          <div className="space-y-4">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">On-Site Best Practices</h3>
-              <ul className="list-disc pl-6 space-y-2 text-base text-white">
+
+          {/* Practical Guidance */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+              Practical Guidance
+            </h2>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <p className="font-medium text-elec-yellow mb-3">On-Site Best Practices</p>
+              <ul className="text-sm text-white/70 list-disc pl-4 space-y-2">
                 <li><strong>Use planning tools:</strong> Task lists or Gantt charts to track work stages and dependencies</li>
                 <li><strong>Coordinate daily:</strong> Don't run cables if ductwork or plastering is due in that area</li>
                 <li><strong>Safety first sequencing:</strong> Ensure containment is secure before pulling cables</li>
@@ -544,57 +489,64 @@ const Module5Section3_1 = () => {
                 <li><strong>Quality checkpoints:</strong> Build in inspection points at key sequence stages</li>
               </ul>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-4">
-            <AlertTriangle className="w-6 h-6 text-amber-500" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Real-World Example</h2>
-          </div>
-          
-          <div className="rounded-lg p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-            <h3 className="font-semibold text-amber-700 dark:text-amber-400 mb-3">School Refurbishment Project</h3>
-            <p className="text-base text-white mb-3">
-              On a school refurbishment project, an electrical team installed socket outlets before plastering was finished. 
-              The plasterers damaged several sockets while working, forcing the electricians to remove and reinstall them.
-            </p>
-            <p className="text-base text-white mb-3">
-              <strong>Result:</strong> This led to wasted materials, extra costs, and project delays.
-            </p>
-            <p className="text-base text-white">
-              <strong>Solution:</strong> If the work had been sequenced correctly, the accessories would have been installed 
-              after plastering, saving time and money.
-            </p>
-          </div>
-        </Card>
+          {/* Real-World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+              Real-World Example
+            </h2>
+            <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-400/50">
+              <p className="font-medium text-amber-400 mb-3">School Refurbishment Project</p>
+              <p className="text-white/80 text-sm mb-3">
+                On a school refurbishment project, an electrical team installed socket outlets before plastering was finished. The plasterers damaged several sockets while working, forcing the electricians to remove and reinstall them.
+              </p>
+              <p className="text-white/80 text-sm mb-3">
+                <strong className="text-white">Result:</strong> This led to wasted materials, extra costs, and project delays.
+              </p>
+              <p className="text-white/80 text-sm">
+                <strong className="text-white">Solution:</strong> If the work had been sequenced correctly, the accessories would have been installed after plastering, saving time and money.
+              </p>
+            </div>
+          </section>
 
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="rounded-lg p-4 bg-muted/30 border border-border/50">
-                <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
-                <p className="text-sm text-white"><strong>A:</strong> {faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">10</span>
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-2">
+              {faqs.map((faq, index) => (
+                <div key={index} className="border border-white/10 rounded-lg overflow-hidden">
+                  <button
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                    className="w-full flex items-center justify-between p-4 text-left min-h-[44px] touch-manipulation active:scale-[0.99]"
+                  >
+                    <span className="font-medium text-white text-sm">{faq.question}</span>
+                    <ChevronDown className={`w-5 h-5 text-white/60 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
+                  </button>
+                  {openFaq === index && (
+                    <div className="px-4 pb-4">
+                      <p className="text-white/70 text-sm">{faq.answer}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
 
-        {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-3 mb-4">
-            <BookOpen className="w-6 h-6 text-white" />
-            <h2 className="text-lg sm:text-xl font-semibold text-white">Pocket Guide</h2>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div className="space-y-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
-                <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">Quick Task Breakdown</h3>
-                <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
+          {/* Pocket Guide */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">11</span>
+              Pocket Guide
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/30">
+                <p className="font-medium text-elec-yellow mb-3">Quick Task Breakdown</p>
+                <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
                   <li>Break down big jobs into smaller, manageable tasks</li>
                   <li>Sequence logically: containment → cabling → terminations → testing</li>
                   <li>Always check site conditions before starting</li>
@@ -602,12 +554,9 @@ const Module5Section3_1 = () => {
                   <li>Review and adjust sequencing daily</li>
                 </ul>
               </div>
-            </div>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-                <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-3">Planning Tools</h3>
-                <ul className="list-disc pl-6 space-y-1 text-xs sm:text-sm text-white">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-elec-yellow mb-3">Planning Tools</p>
+                <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
                   <li>Use Gantt charts for complex projects</li>
                   <li>Create task lists with dependencies</li>
                   <li>Hold daily coordination meetings</li>
@@ -616,44 +565,49 @@ const Module5Section3_1 = () => {
                 </ul>
               </div>
             </div>
+          </section>
+
+          {/* Recap */}
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
+            <h3 className="font-semibold text-white mb-2">Recap</h3>
+            <p className="text-white/80 text-sm leading-relaxed">
+              In this subsection, you learned how to break down jobs into smaller tasks, sequence them in a logical order, and avoid risks of poor planning. You've seen how sequencing prevents delays, reduces rework, and ensures safe, efficient installations. Remember: good planning and sequencing at the start saves time, money, and frustration throughout the project.
+            </p>
           </div>
-        </Card>
 
-        {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
-          <p className="text-base text-white">
-            In this subsection, you learned how to break down jobs into smaller tasks, sequence them in a logical order, 
-            and avoid risks of poor planning. You've seen how sequencing prevents delays, reduces rework, and ensures 
-            safe, efficient installations. Remember: good planning and sequencing at the start saves time, money, and 
-            frustration throughout the project.
-          </p>
-        </Card>
+          {/* Quiz */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">12</span>
+              Knowledge Check
+            </h2>
+            <Quiz questions={quizQuestions} />
+          </section>
 
-        {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check</h2>
-          <Quiz 
-            questions={quizQuestions}
-          />
-        </Card>
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center mt-12 pt-8 border-t border-white/10">
-          <Button variant="outline" asChild>
-            <Link to=".." className="flex items-center gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              Back
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link to="../3-2" className="flex items-center gap-2">
-              Next
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </Button>
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
+            <Button
+              variant="ghost"
+              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="..">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Section 5.3
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../3-2">
+                Next: Setting Timescales
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

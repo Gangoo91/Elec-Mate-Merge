@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowLeft, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,6 +10,7 @@ import { ContactDetailsStep } from './steps/ContactDetailsStep';
 import { BankDetailsStep } from './steps/BankDetailsStep';
 import { BrandingStep } from './steps/BrandingStep';
 import { useSetupWizard } from '@/hooks/useSetupWizard';
+import { useMediaQuery } from '@/hooks/use-media-query';
 
 interface SetupWizardProps {
   isOpen: boolean;
@@ -19,6 +21,7 @@ interface SetupWizardProps {
 export function SetupWizard({ isOpen, onComplete, onSkip }: SetupWizardProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const { saveData, completeOnboarding, isLoading } = useSetupWizard();
+  const isMobile = useMediaQuery('(max-width: 640px)');
 
   const [formData, setFormData] = useState({
     companyName: '',
@@ -81,80 +84,102 @@ export function SetupWizard({ isOpen, onComplete, onSkip }: SetupWizardProps) {
   const isLastStep = currentStep === steps.length - 1;
   const isFirstStep = currentStep === 0;
 
+  // Shared wizard content for both Sheet and Dialog
+  const wizardContent = (
+    <div className="flex flex-col h-full">
+      {/* Header with Progress */}
+      <div className="p-6 border-b border-border/30">
+        <h2 className="text-2xl font-bold mb-4">Welcome to ElecMate!</h2>
+        <StepProgress current={currentStep} total={steps.length} />
+      </div>
+
+      {/* Step Content with Animation */}
+      <div className="flex-1 overflow-y-auto p-6">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentStep}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.2 }}
+          >
+            <CurrentStepComponent
+              formData={formData}
+              onChange={setFormData}
+            />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Navigation Footer */}
+      <div className="p-6 border-t border-border/30 bg-card/50 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+        <div className="flex items-center justify-between gap-3">
+          <Button
+            variant="ghost"
+            onClick={handleBack}
+            disabled={isFirstStep || isLoading}
+            className="flex items-center gap-2 h-11 touch-manipulation"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back
+          </Button>
+
+          <Button
+            variant="outline"
+            onClick={handleSkip}
+            disabled={isLoading}
+            className="text-muted-foreground hover:text-foreground h-11 touch-manipulation"
+          >
+            Skip for now
+          </Button>
+
+          <Button
+            onClick={isLastStep ? handleComplete : handleNext}
+            disabled={isLoading}
+            className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold flex items-center gap-2 h-11 px-6 touch-manipulation"
+          >
+            {isLastStep ? (
+              <>
+                <CheckCircle className="h-4 w-4" />
+                Complete Setup
+              </>
+            ) : (
+              <>
+                Next
+                <ArrowRight className="h-4 w-4" />
+              </>
+            )}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Mobile: Bottom sheet for native feel
+  if (isMobile) {
+    return (
+      <Sheet open={isOpen} onOpenChange={() => {}}>
+        <SheetContent
+          side="bottom"
+          className="h-[90vh] p-0 rounded-t-2xl overflow-hidden"
+          onPointerDownOutside={(e) => e.preventDefault()}
+          onInteractOutside={(e) => e.preventDefault()}
+        >
+          {wizardContent}
+        </SheetContent>
+      </Sheet>
+    );
+  }
+
+  // Desktop: Centered dialog
   return (
     <Dialog open={isOpen} onOpenChange={() => {}} modal>
       <DialogContent
-        className="max-w-2xl w-full h-screen sm:h-auto sm:max-h-[90vh] p-0 overflow-hidden"
+        className="max-w-2xl w-full max-h-[90vh] p-0 overflow-hidden"
         onPointerDownOutside={(e) => e.preventDefault()}
         onInteractOutside={(e) => e.preventDefault()}
       >
-        <div className="flex flex-col h-full">
-          {/* Header with Progress */}
-          <div className="p-6 border-b border-border/30">
-            <h2 className="text-2xl font-bold mb-4">Welcome to ElecMate!</h2>
-            <StepProgress current={currentStep} total={steps.length} />
-          </div>
-
-          {/* Step Content with Animation */}
-          <div className="flex-1 overflow-y-auto p-6">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentStep}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.2 }}
-              >
-                <CurrentStepComponent
-                  formData={formData}
-                  onChange={setFormData}
-                />
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Navigation Footer */}
-          <div className="p-6 border-t border-border/30 bg-card/50">
-            <div className="flex items-center justify-between gap-3">
-              <Button
-                variant="ghost"
-                onClick={handleBack}
-                disabled={isFirstStep || isLoading}
-                className="flex items-center gap-2 h-11 touch-manipulation"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back
-              </Button>
-
-              <Button
-                variant="outline"
-                onClick={handleSkip}
-                disabled={isLoading}
-                className="text-muted-foreground hover:text-foreground h-11 touch-manipulation"
-              >
-                Skip for now
-              </Button>
-
-              <Button
-                onClick={isLastStep ? handleComplete : handleNext}
-                disabled={isLoading}
-                className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold flex items-center gap-2 h-11 px-6 touch-manipulation"
-              >
-                {isLastStep ? (
-                  <>
-                    <CheckCircle className="h-4 w-4" />
-                    Complete Setup
-                  </>
-                ) : (
-                  <>
-                    Next
-                    <ArrowRight className="h-4 w-4" />
-                  </>
-                )}
-              </Button>
-            </div>
-          </div>
-        </div>
+        {wizardContent}
       </DialogContent>
     </Dialog>
   );

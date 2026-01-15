@@ -16,7 +16,7 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.05,
+      staggerChildren: 0.02,
     },
   },
 };
@@ -52,7 +52,7 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick, isLoading }: Mod
   if (filteredCourses.length === 0) {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         className="text-center py-16"
       >

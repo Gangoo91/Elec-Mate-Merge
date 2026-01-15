@@ -141,7 +141,7 @@ export function PortfolioSetupAnimation({
             {/* Title */}
             <motion.div
               className="text-center space-y-2"
-              initial={{ y: 20, opacity: 0 }}
+              initial={{ y: 8, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
@@ -158,7 +158,7 @@ export function PortfolioSetupAnimation({
             {/* Steps */}
             <motion.div
               className="space-y-3"
-              initial={{ y: 20, opacity: 0 }}
+              initial={{ y: 8, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.3 }}
             >

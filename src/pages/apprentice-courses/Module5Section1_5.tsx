@@ -1,12 +1,10 @@
-import { ArrowLeft, ArrowRight, FileText, Target, CheckCircle, AlertTriangle, Users, BookOpen, Clipboard, Shield } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import useSEO from "@/hooks/useSEO";
+import { useState } from "react";
 
 const TITLE = "Identifying Installation Requirements from Drawings - Module 5.1.5 | Level 2 Electrical Course";
 const DESCRIPTION = "Learn how to analyse electrical drawings to identify materials, routes, accessories, and compliance requirements before beginning installation work.";
@@ -38,6 +36,7 @@ const quickCheckQuestions = [
 
 const Module5Section1_5 = () => {
   useSEO(TITLE, DESCRIPTION);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const quizQuestions = [
     {
@@ -186,110 +185,111 @@ const Module5Section1_5 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 1
+              Back to Section 5.1
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg ">
-              <FileText className="w-6 h-6 text-white" />
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 5.1.5</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              Section 5.1.5
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Identifying Installation Requirements from Drawings
-          </h1>
-          <p className="text-white">
-            Drawings are more than just pictures of layouts — they are instructions for how an installation must be carried out. Learn to analyse drawings for materials, routes, accessories, and compliance requirements.
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Identifying Installation Requirements from Drawings
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Drawings are more than just pictures of layouts — they are instructions for how an installation must be carried out.
+            </p>
+          </header>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Drawings provide detailed instructions for electrical installation work.</li>
-                <li>Title blocks and notes contain critical project and material information.</li>
-                <li>Must be cross-referenced with specifications for complete requirements.</li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Material lists, installation methods, BS standards, testing requirements.</li>
-                <li><strong>Use:</strong> Follow specifications exactly, cross-check with drawings, report conflicts.</li>
-                <li><strong>Check:</strong> Materials match spec, methods are correct, standards are current.</li>
-              </ul>
+          {/* Summary Box */}
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
+                <ul className="list-disc pl-5 space-y-1 text-white/80 text-sm">
+                  <li>Drawings provide detailed instructions for electrical installation work.</li>
+                  <li>Title blocks and notes contain critical project and material information.</li>
+                  <li>Must be cross-referenced with specifications for complete requirements.</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
+                <ul className="list-disc pl-5 space-y-1 text-white/80 text-sm">
+                  <li><strong>Spot:</strong> Material lists, installation methods, BS standards, testing requirements.</li>
+                  <li><strong>Use:</strong> Follow specifications exactly, cross-check with drawings, report conflicts.</li>
+                  <li><strong>Check:</strong> Materials match spec, methods are correct, standards are current.</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </Card>
 
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>Identify key installation requirements from electrical drawings.</li>
-            <li>Recognise how to determine materials, routes, and accessories from drawings.</li>
-            <li>Understand the role of notes, legends, and circuit codes in drawings.</li>
-            <li>Cross-check requirements with project specifications effectively.</li>
-            <li>Avoid common mistakes when interpreting installation needs from drawings.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">00</span>
+              Learning Outcomes
+            </h2>
+            <ul className="list-disc pl-6 space-y-2 text-white/80">
+              <li>Identify key installation requirements from electrical drawings.</li>
+              <li>Recognise how to determine materials, routes, and accessories from drawings.</li>
+              <li>Understand the role of notes, legends, and circuit codes in drawings.</li>
+              <li>Cross-check requirements with project specifications effectively.</li>
+              <li>Avoid common mistakes when interpreting installation needs from drawings.</li>
+            </ul>
+          </section>
 
           {/* Reading the Title Block and Notes */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">1. Reading the Title Block and Notes</h3>
-            <p className="text-base text-white mb-4">
-              The title block and notes provide essential information that must be understood before beginning any installation work:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Title Block Information</p>
-                    <p className="text-base text-white mb-2"><strong>Title block gives:</strong> Drawing type, project details, scale, and date.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Drawing type (layout, schematic, detail drawing)</li>
-                      <li>Project name, address, and reference numbers</li>
-                      <li>Scale information for accurate measurements</li>
-                      <li>Issue date and revision information</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Notes often contain:</strong> Vital instructions (e.g., "all cables to be LSF – low smoke and fume").</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Material specifications and requirements</li>
-                      <li>Installation method requirements</li>
-                      <li>Special safety or environmental considerations</li>
-                      <li>Testing and commissioning requirements</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Key principle:</strong> Always read title blocks and notes first - they contain mandatory requirements that override standard practices
-                    </div>
-                  </div>
-                </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Reading the Title Block and Notes
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                The title block and notes provide essential information that must be understood before beginning any installation work:
+              </p>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-3">Title Block Information</p>
+
+                <p className="mb-2"><strong className="text-white">Title block gives:</strong> Drawing type, project details, scale, and date.</p>
+                <ul className="text-sm ml-4 mb-3 list-disc space-y-1">
+                  <li>Drawing type (layout, schematic, detail drawing)</li>
+                  <li>Project name, address, and reference numbers</li>
+                  <li>Scale information for accurate measurements</li>
+                  <li>Issue date and revision information</li>
+                </ul>
+
+                <p className="mb-2"><strong className="text-white">Notes often contain:</strong> Vital instructions (e.g., "all cables to be LSF – low smoke and fume").</p>
+                <ul className="text-sm ml-4 mb-3 list-disc space-y-1">
+                  <li>Material specifications and requirements</li>
+                  <li>Installation method requirements</li>
+                  <li>Special safety or environmental considerations</li>
+                  <li>Testing and commissioning requirements</li>
+                </ul>
+
+                <p className="text-sm text-white/60 mt-3">
+                  <strong>Key principle:</strong> Always read title blocks and notes first - they contain mandatory requirements that override standard practices
+                </p>
               </div>
             </div>
           </section>
@@ -301,40 +301,42 @@ const Module5Section1_5 = () => {
             correctIndex={quickCheckQuestions[0].correctIndex}
             explanation={quickCheckQuestions[0].explanation}
           />
-          <Separator className="my-6" />
+
+          <div className="border-t border-white/10 my-8" />
 
           {/* Identifying Materials */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">2. Identifying Materials</h3>
-            <p className="text-base text-white mb-4">
-              Drawings use symbols and annotations to specify exactly which materials and accessories are required:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Material Identification from Drawings</p>
-                    <p className="text-base text-white mb-2"><strong>Symbols and annotations</strong> show whether to use PVC, steel conduit, trunking, tray, or other containment.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Containment symbols indicate material type and size</li>
-                      <li>Different line styles may represent different materials</li>
-                      <li>Annotations provide specific material codes or specifications</li>
-                      <li>Legend or symbol key explains all material representations</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Socket, switch, and luminaire symbols</strong> specify accessory types.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Different symbols for socket types (13A, industrial, RCD-protected)</li>
-                      <li>Switch symbols indicate type (1-way, 2-way, intermediate)</li>
-                      <li>Luminaire symbols show fitting types and mounting methods</li>
-                      <li>Control device symbols (PIR, timers, dimmers)</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Selection guide:</strong> Always refer to the drawing legend and cross-check with specifications for complete material details
-                    </div>
-                  </div>
-                </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Identifying Materials
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Drawings use symbols and annotations to specify exactly which materials and accessories are required:
+              </p>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                <p className="font-medium text-white mb-3">Material Identification from Drawings</p>
+
+                <p className="mb-2"><strong className="text-white">Symbols and annotations</strong> show whether to use PVC, steel conduit, trunking, tray, or other containment.</p>
+                <ul className="text-sm ml-4 mb-3 list-disc space-y-1">
+                  <li>Containment symbols indicate material type and size</li>
+                  <li>Different line styles may represent different materials</li>
+                  <li>Annotations provide specific material codes or specifications</li>
+                  <li>Legend or symbol key explains all material representations</li>
+                </ul>
+
+                <p className="mb-2"><strong className="text-white">Socket, switch, and luminaire symbols</strong> specify accessory types.</p>
+                <ul className="text-sm ml-4 mb-3 list-disc space-y-1">
+                  <li>Different symbols for socket types (13A, industrial, RCD-protected)</li>
+                  <li>Switch symbols indicate type (1-way, 2-way, intermediate)</li>
+                  <li>Luminaire symbols show fitting types and mounting methods</li>
+                  <li>Control device symbols (PIR, timers, dimmers)</li>
+                </ul>
+
+                <p className="text-sm text-white/60 mt-3">
+                  <strong>Selection guide:</strong> Always refer to the drawing legend and cross-check with specifications for complete material details
+                </p>
               </div>
             </div>
           </section>
@@ -346,116 +348,120 @@ const Module5Section1_5 = () => {
             correctIndex={quickCheckQuestions[1].correctIndex}
             explanation={quickCheckQuestions[1].explanation}
           />
-          <Separator className="my-6" />
+
+          <div className="border-t border-white/10 my-8" />
 
           {/* Circuit Identification */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">3. Circuit Identification</h3>
-            <p className="text-base text-white mb-4">
-              Every circuit must be properly identified and cross-referenced to ensure correct installation:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Circuit Codes and References</p>
-                    <p className="text-base text-white mb-2"><strong>Circuits labelled</strong> with numbers or codes (e.g., L1/03).</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Circuit numbers link to distribution board schedules</li>
-                      <li>Codes may indicate floor level, area, or circuit type</li>
-                      <li>Sub-circuits may have additional identification</li>
-                      <li>Emergency circuits often have special coding</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Must be cross-referenced</strong> with distribution schedules.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Distribution schedules show protective device ratings</li>
-                      <li>Cable sizes and types specified in schedules</li>
-                      <li>Load calculations and diversity factors included</li>
-                      <li>Testing requirements and acceptance criteria</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Critical process:</strong> Never assume circuit details - always cross-reference with distribution schedules and specifications
-                    </div>
-                  </div>
-                </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Circuit Identification
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Every circuit must be properly identified and cross-referenced to ensure correct installation:
+              </p>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                <p className="font-medium text-white mb-3">Circuit Codes and References</p>
+
+                <p className="mb-2"><strong className="text-white">Circuits labelled</strong> with numbers or codes (e.g., L1/03).</p>
+                <ul className="text-sm ml-4 mb-3 list-disc space-y-1">
+                  <li>Circuit numbers link to distribution board schedules</li>
+                  <li>Codes may indicate floor level, area, or circuit type</li>
+                  <li>Sub-circuits may have additional identification</li>
+                  <li>Emergency circuits often have special coding</li>
+                </ul>
+
+                <p className="mb-2"><strong className="text-white">Must be cross-referenced</strong> with distribution schedules.</p>
+                <ul className="text-sm ml-4 mb-3 list-disc space-y-1">
+                  <li>Distribution schedules show protective device ratings</li>
+                  <li>Cable sizes and types specified in schedules</li>
+                  <li>Load calculations and diversity factors included</li>
+                  <li>Testing requirements and acceptance criteria</li>
+                </ul>
+
+                <p className="text-sm text-white/60 mt-3">
+                  <strong>Critical process:</strong> Never assume circuit details - always cross-reference with distribution schedules and specifications
+                </p>
               </div>
             </div>
           </section>
 
-          <Separator className="my-6" />
+          <div className="border-t border-white/10 my-8" />
 
           {/* Safe Zones and Routes */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">4. Safe Zones and Routes</h3>
-            <p className="text-base text-white mb-4">
-              Cable routes must be carefully planned to comply with safety regulations:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Cable Routes and Safe Zones</p>
-                    <p className="text-base text-white mb-2"><strong>Drawings show intended routes</strong> within walls, floors, and ceilings.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Horizontal routes typically 150mm from ceiling or floor</li>
-                      <li>Vertical routes typically 150mm from corners or edges</li>
-                      <li>Routes around openings (doors, windows) clearly marked</li>
-                      <li>Service zones for multi-story buildings indicated</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Routes must follow regulations</strong> for safe cable zones.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>BS 7671 requirements for concealed cable routes</li>
-                      <li>Protection requirements for cables in walls</li>
-                      <li>Segregation requirements for different cable types</li>
-                      <li>Fire stopping requirements at compartment boundaries</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Safety priority:</strong> Routes must comply with BS 7671 safe zones to prevent damage during future work
-                    </div>
-                  </div>
-                </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Safe Zones and Routes
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Cable routes must be carefully planned to comply with safety regulations:
+              </p>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
+                <p className="font-medium text-white mb-3">Cable Routes and Safe Zones</p>
+
+                <p className="mb-2"><strong className="text-white">Drawings show intended routes</strong> within walls, floors, and ceilings.</p>
+                <ul className="text-sm ml-4 mb-3 list-disc space-y-1">
+                  <li>Horizontal routes typically 150mm from ceiling or floor</li>
+                  <li>Vertical routes typically 150mm from corners or edges</li>
+                  <li>Routes around openings (doors, windows) clearly marked</li>
+                  <li>Service zones for multi-story buildings indicated</li>
+                </ul>
+
+                <p className="mb-2"><strong className="text-white">Routes must follow regulations</strong> for safe cable zones.</p>
+                <ul className="text-sm ml-4 mb-3 list-disc space-y-1">
+                  <li>BS 7671 requirements for concealed cable routes</li>
+                  <li>Protection requirements for cables in walls</li>
+                  <li>Segregation requirements for different cable types</li>
+                  <li>Fire stopping requirements at compartment boundaries</li>
+                </ul>
+
+                <p className="text-sm text-white/60 mt-3">
+                  <strong>Safety priority:</strong> Routes must comply with BS 7671 safe zones to prevent damage during future work
+                </p>
               </div>
             </div>
           </section>
 
-          <Separator className="my-6" />
+          <div className="border-t border-white/10 my-8" />
 
           {/* Cross-Referencing Specifications */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">5. Cross-Referencing Specifications</h3>
-            <p className="text-base text-white mb-4">
-              Drawings and specifications must be used together for complete installation information:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-teal-500 bg-teal-500/5">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-teal-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-teal-600 dark:text-teal-400 mb-1">Drawings and Specifications Integration</p>
-                    <p className="text-base text-white mb-2"><strong>Drawings give visual positions;</strong> specifications give technical detail (e.g., cable sizes, protective devices).</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Drawings show where to install components and routing</li>
-                      <li>Specifications define materials, methods, and standards</li>
-                      <li>Both documents are contractually binding requirements</li>
-                      <li>Conflicts must be resolved before work begins</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Both must be used together</strong> for complete installation requirements.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Never rely on drawings alone for technical details</li>
-                      <li>Never rely on specifications alone for positioning</li>
-                      <li>Cross-check for consistency between documents</li>
-                      <li>Document any discrepancies and seek clarification</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Working principle:</strong> Drawings show where, specifications show how - both are essential for compliant installation
-                    </div>
-                  </div>
-                </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Cross-Referencing Specifications
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Drawings and specifications must be used together for complete installation information:
+              </p>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-teal-500/50">
+                <p className="font-medium text-white mb-3">Drawings and Specifications Integration</p>
+
+                <p className="mb-2"><strong className="text-white">Drawings give visual positions;</strong> specifications give technical detail (e.g., cable sizes, protective devices).</p>
+                <ul className="text-sm ml-4 mb-3 list-disc space-y-1">
+                  <li>Drawings show where to install components and routing</li>
+                  <li>Specifications define materials, methods, and standards</li>
+                  <li>Both documents are contractually binding requirements</li>
+                  <li>Conflicts must be resolved before work begins</li>
+                </ul>
+
+                <p className="mb-2"><strong className="text-white">Both must be used together</strong> for complete installation requirements.</p>
+                <ul className="text-sm ml-4 mb-3 list-disc space-y-1">
+                  <li>Never rely on drawings alone for technical details</li>
+                  <li>Never rely on specifications alone for positioning</li>
+                  <li>Cross-check for consistency between documents</li>
+                  <li>Document any discrepancies and seek clarification</li>
+                </ul>
+
+                <p className="text-sm text-white/60 mt-3">
+                  <strong>Working principle:</strong> Drawings show where, specifications show how - both are essential for compliant installation
+                </p>
               </div>
             </div>
           </section>
@@ -467,130 +473,178 @@ const Module5Section1_5 = () => {
             correctIndex={quickCheckQuestions[2].correctIndex}
             explanation={quickCheckQuestions[2].explanation}
           />
-          <Separator className="my-6" />
+
+          <div className="border-t border-white/10 my-8" />
 
           {/* Common Errors */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">6. Common Errors</h3>
-            <p className="text-base text-white mb-4">
-              Avoid these common mistakes when interpreting installation requirements from drawings:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-red-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-1">Common Interpretation Errors</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li><strong>Ignoring notes:</strong> Missing critical material or method requirements</li>
-                      <li><strong>Misreading symbols:</strong> Installing wrong accessory or material types</li>
-                      <li><strong>Assuming cable sizes:</strong> Not checking specifications for cable requirements</li>
-                      <li><strong>Wrong scale interpretation:</strong> Incorrect measurements and positioning</li>
-                      <li><strong>Outdated drawings:</strong> Working from superseded versions</li>
-                      <li><strong>Missing cross-references:</strong> Not checking distribution schedules</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Prevention strategy:</strong> Always read carefully, check specifications, and seek clarification when uncertain
-                    </div>
-                  </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Common Errors
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Avoid these common mistakes when interpreting installation requirements from drawings:
+              </p>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
+                <p className="font-medium text-white mb-3">Common Interpretation Errors</p>
+
+                <ul className="text-sm ml-4 mb-3 list-disc space-y-1">
+                  <li><strong className="text-white">Ignoring notes:</strong> Missing critical material or method requirements</li>
+                  <li><strong className="text-white">Misreading symbols:</strong> Installing wrong accessory or material types</li>
+                  <li><strong className="text-white">Assuming cable sizes:</strong> Not checking specifications for cable requirements</li>
+                  <li><strong className="text-white">Wrong scale interpretation:</strong> Incorrect measurements and positioning</li>
+                  <li><strong className="text-white">Outdated drawings:</strong> Working from superseded versions</li>
+                  <li><strong className="text-white">Missing cross-references:</strong> Not checking distribution schedules</li>
+                </ul>
+
+                <p className="text-sm text-white/60 mt-3">
+                  <strong>Prevention strategy:</strong> Always read carefully, check specifications, and seek clarification when uncertain
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Real-World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Real-World Example
+            </h2>
+            <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                <div className="text-white/80">
+                  <p className="font-medium text-white mb-2">Commercial Site Socket Assumption</p>
+                  <p className="text-sm mb-3">
+                    On a commercial site, an installer assumed all sockets were standard 13A types based on the drawing symbols.
+                    However, the drawing notes specified that some sockets required RCD-protected outlets for outdoor use.
+                    The oversight led to failed inspection, rework, and project delays, costing both time and money.
+                  </p>
+                  <p className="text-sm font-medium text-white">
+                    <strong>Lesson:</strong> Always read all notes and cross-check with specifications - symbols alone don't provide complete information.
+                  </p>
                 </div>
               </div>
             </div>
           </section>
-        </Card>
 
-        {/* Real-World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
-          <div className="bg-amber-50 dark:bg-amber-950/20 p-4 rounded-lg border border-amber-200 dark:border-amber-800">
-            <p className="text-base text-white">
-              <strong>Commercial site scenario:</strong> On a commercial site, an installer assumed all sockets were standard 13A types based on the drawing symbols. However, the drawing notes specified that some sockets required RCD-protected outlets for outdoor use. The oversight led to failed inspection, rework, and project delays, costing both time and money.
-            </p>
-            <p className="text-sm text-white mt-2">
-              <strong>Lesson:</strong> Always read all notes and cross-check with specifications - symbols alone don't provide complete information.
-            </p>
-          </div>
-        </Card>
-
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
-                <p className="font-medium text-white mb-2">Q: {faq.question}</p>
-                <p className="text-white">A: {faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
-
-        {/* Pocket Guide */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Pocket Guide</h2>
-          <div className="grid md:grid-cols-2 gap-4">
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+              Frequently Asked Questions
+            </h2>
             <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
-                <span className="text-sm font-medium">Read the title block and notes first</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
-                <span className="text-sm font-medium">Identify materials and accessories from symbols</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
-                <span className="text-sm font-medium">Cross-reference circuits with schedules</span>
+              {faqs.map((faq, index) => (
+                <div key={index} className="border border-white/10 rounded-lg overflow-hidden">
+                  <button
+                    className="w-full flex items-center justify-between p-4 text-left min-h-[48px] touch-manipulation active:bg-white/5"
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  >
+                    <span className="font-medium text-white pr-4">{faq.question}</span>
+                    <ChevronDown className={`w-5 h-5 text-white/60 flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
+                  </button>
+                  {openFaq === index && (
+                    <div className="px-4 pb-4 text-white/70 text-sm border-t border-white/10 pt-3">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Pocket Guide */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+              Pocket Guide
+            </h2>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
+                <div className="space-y-2">
+                  <p className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>Read the title block and notes first</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>Identify materials and accessories from symbols</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>Cross-reference circuits with schedules</span>
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <p className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>Always use drawings and specifications together</span>
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                    <span>Never assume — confirm details before starting work</span>
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
-                <span className="text-sm font-medium">Always use drawings and specifications together</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
-                <span className="text-sm font-medium">Never assume — confirm details before starting work</span>
-              </div>
+          </section>
+
+          {/* Recap */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">10</span>
+              Recap
+            </h2>
+            <div className="text-white/80 space-y-4">
+              <p>In this subsection, you learned:</p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>How to identify installation requirements from electrical drawings effectively.</li>
+                <li>The importance of title blocks, notes, and legends in drawing interpretation.</li>
+                <li>How to determine materials, accessories, and routes from drawing symbols.</li>
+                <li>Why cross-referencing with specifications is essential for complete information.</li>
+                <li>Common mistakes and how to avoid them when interpreting installation needs.</li>
+              </ul>
+              <p className="mt-4 font-medium text-elec-yellow">
+                Accurate interpretation of installation requirements ensures safe, compliant, and efficient electrical installations.
+              </p>
             </div>
+          </section>
+
+          {/* Quiz */}
+          <div className="mb-10">
+            <Quiz
+              title="Installation Requirements Quiz"
+              questions={quizQuestions}
+            />
           </div>
-        </Card>
 
-        {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
-          <p className="text-base text-white mb-4">In this subsection, you learned:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>How to identify installation requirements from electrical drawings effectively.</li>
-            <li>The importance of title blocks, notes, and legends in drawing interpretation.</li>
-            <li>How to determine materials, accessories, and routes from drawing symbols.</li>
-            <li>Why cross-referencing with specifications is essential for complete information.</li>
-            <li>Common mistakes and how to avoid them when interpreting installation needs.</li>
-          </ul>
-        </Card>
-
-        {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <Quiz questions={quizQuestions} />
-        </Card>
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center pt-6 border-t border-white/10">
-          <Button variant="outline" asChild>
-            <Link to="../1-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Planning and Preparation
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link to="..">
-              Section Complete
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+          {/* Navigation Footer */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+            <Button
+              variant="ghost"
+              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../1-4">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../1-6">
+                Next
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };
