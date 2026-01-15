@@ -46,11 +46,11 @@ export default function AdminRevenue() {
           .eq("subscribed", true)
           .gte("subscription_start", lastMonthStart.toISOString())
           .lte("subscription_start", lastMonthEnd.toISOString()),
-        supabase.from("profiles").select("subscribed, role, subscription_tier, subscription_start")
+        supabase.from("profiles").select("subscribed, role, subscription_tier, subscription_start, free_access_granted")
       ]);
 
       // Calculate MRR based on subscription tiers
-      // UK pricing: Apprentice £4.99/mo, Electrician £9.99/mo, Employer £29.99/mo
+      // UK pricing: Apprentice £4.99/mo, Electrician £9.99/mo, Employer £29.99/mo, Founder £3.99/mo
       const tierPricing: Record<string, number> = {
         Apprentice: 4.99,
         apprentice: 4.99,
@@ -58,6 +58,8 @@ export default function AdminRevenue() {
         electrician: 9.99,
         Employer: 29.99,
         employer: 29.99,
+        Founder: 3.99,
+        founder: 3.99,
         basic: 9.99, // Legacy fallback
         pro: 9.99,
         enterprise: 29.99,
@@ -65,7 +67,9 @@ export default function AdminRevenue() {
       };
 
       const subscribedProfiles = allProfilesRes.data?.filter(p => p.subscribed) || [];
-      const mrr = subscribedProfiles.reduce((total, p) => {
+      // Exclude free_access_granted users from MRR (they pay £0)
+      const paidProfiles = subscribedProfiles.filter(p => !p.free_access_granted);
+      const mrr = paidProfiles.reduce((total, p) => {
         const tier = p.subscription_tier || "basic";
         return total + (tierPricing[tier] || 9.99);
       }, 0);

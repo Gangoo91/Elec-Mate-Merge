@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, Wrench, CheckCircle, AlertTriangle, FileText, Users, HardHat } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -11,7 +8,6 @@ import useSEO from "@/hooks/useSEO";
 const TITLE = "Testing One Component or Section at a Time - Module 7.3.3 | Level 2 Electrical Course";
 const DESCRIPTION = "Isolate and confirm faults efficiently with step-by-step testing methodology.";
 
-// Inline check questions
 const quickCheckQuestions = [
   {
     id: 1,
@@ -182,130 +178,127 @@ const Module7Section3_3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 3
+              <span className="hidden sm:inline">Back to Section 3</span>
+              <span className="sm:hidden">Back</span>
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg w-fit">
-              <Wrench className="w-6 h-6 text-white" />
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Title Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 3.3</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow w-fit">
-              Section 7.3.3
-            </Badge>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
+              Testing One Component or Section at a Time
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+              Isolate and confirm faults efficiently with step-by-step testing.
+            </p>
+          </header>
+
+          {/* In 30 Seconds Summary */}
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
+            <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
+            <ul className="text-white/80 space-y-1 text-sm list-disc pl-4">
+              <li>Testing one section at a time prevents confusion and wasted effort.</li>
+              <li>This structured method gradually narrows down fault locations.</li>
+              <li>It prevents replacing working components while missing real faults.</li>
+            </ul>
           </div>
-          <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Testing One Component or Section at a Time
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Isolate and confirm faults efficiently with step-by-step testing
-          </p>
-        </header>
 
-        {/* Introduction */}
-        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>Testing one section at a time prevents confusion and wasted effort.</li>
-                <li>This structured method gradually narrows down fault locations.</li>
-                <li>It prevents replacing working components while missing real faults.</li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
-              <p className="font-medium mb-2">Spot it / Use it / Check</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Circuit complexity that could cause confusion.</li>
-                <li><strong>Use:</strong> Isolate one section, test thoroughly, record results.</li>
-                <li><strong>Check:</strong> Confirm pass/fail status before moving to next section.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Learning Outcomes
+            </h2>
+            <ul className="text-white/80 space-y-2 text-sm list-disc pl-4">
+              <li>Explain why testing one part of a circuit at a time is effective for fault diagnosis.</li>
+              <li>Describe how this method helps isolate faults in both simple and complex installations.</li>
+              <li>Apply the principle systematically to different types of electrical circuits.</li>
+              <li>Prevent wasted time and effort by focusing on actual fault locations.</li>
+              <li>Build confidence through structured, logical testing approaches.</li>
+            </ul>
+          </section>
 
-        {/* Learning outcomes */}
-        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-sm sm:text-base text-white">
-            <li>Explain why testing one part of a circuit at a time is effective for fault diagnosis.</li>
-            <li>Describe how this method helps isolate faults in both simple and complex installations.</li>
-            <li>Apply the principle systematically to different types of electrical circuits.</li>
-            <li>Prevent wasted time and effort by focusing on actual fault locations.</li>
-            <li>Build confidence through structured, logical testing approaches.</li>
-          </ul>
-        </Card>
+          {/* Why Testing One Section at a Time Works */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Why Testing One Section at a Time Works
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                This approach reduces variables and provides clear pass/fail results for each part of the circuit, building a logical picture of where faults lie.
+              </p>
 
-        {/* Content */}
-        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">Key Benefits</p>
+                <ul className="text-sm list-disc pl-4 space-y-1">
+                  <li><strong className="text-white">Reduces complexity:</strong> Breaking circuits into manageable parts prevents overwhelm</li>
+                  <li><strong className="text-white">Clear results:</strong> Each test gives definitive pass/fail for that section</li>
+                  <li><strong className="text-white">Eliminates guesswork:</strong> Systematic approach prevents random testing</li>
+                  <li><strong className="text-white">Builds confidence:</strong> Confirmed good sections focus effort on problem areas</li>
+                  <li><strong className="text-white">Prevents damage:</strong> Avoids unnecessary work on functioning components</li>
+                </ul>
+              </div>
 
-          {/* Why testing one section at a time works */}
-          <section className="mb-6">
-            <div className="space-y-4">
-              <div className="rounded-lg p-4 sm:p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Why Testing One Section at a Time Works</p>
-                    <p className="text-sm sm:text-base text-white mb-2">This approach reduces variables and provides clear pass/fail results for each part of the circuit, building a logical picture of where faults lie.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li><strong>Reduces complexity:</strong> Breaking circuits into manageable parts prevents overwhelm</li>
-                      <li><strong>Clear results:</strong> Each test gives definitive pass/fail for that section</li>
-                      <li><strong>Eliminates guesswork:</strong> Systematic approach prevents random testing</li>
-                      <li><strong>Builds confidence:</strong> Confirmed good sections focus effort on problem areas</li>
-                      <li><strong>Prevents damage:</strong> Avoids unnecessary work on functioning components</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Core principle:</strong> Isolate variables to identify the specific fault location accurately
-                    </div>
-                  </div>
-                </div>
+              <div className="p-3 rounded bg-white/5 text-sm">
+                <strong className="text-white">Core principle:</strong> Isolate variables to identify the specific fault location accurately.
               </div>
             </div>
           </section>
 
-          {/* How to break circuits into sections */}
-          <section className="mb-6">
-            <div className="space-y-4">
-              <div className="rounded-lg p-4 sm:p-5 border-l-4 border-l-green-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-600 dark:text-green-400 mb-1">How to Break Circuits into Sections</p>
-                    <p className="text-sm sm:text-base text-white mb-2">Divide circuits into logical sections: supply, control, and load components, with clear test points between each section.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li><strong>Supply section:</strong> Distribution board to first accessory or control</li>
-                      <li><strong>Control section:</strong> Switches, contactors, and protection devices</li>
-                      <li><strong>Load section:</strong> Final equipment and return paths</li>
-                      <li><strong>Protection section:</strong> Earth paths and RCD circuits</li>
-                      <li><strong>Interface points:</strong> Junction boxes, terminals, and connection points</li>
-                    </ul>
-                    <p className="text-sm sm:text-base text-white mb-2"><strong>Examples by circuit type:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li><strong>Lighting:</strong> Supply → Switch → Lamp holder → Return</li>
-                      <li><strong>Ring final:</strong> Supply → R1 → Accessories → R2 → Return</li>
-                      <li><strong>Motor control:</strong> Supply → Control circuit → Contactor → Motor</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Logical division:</strong> Each section should have clear input/output points for testing
-                    </div>
-                  </div>
-                </div>
+          {/* How to Break Circuits into Sections */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              How to Break Circuits into Sections
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Divide circuits into logical sections: supply, control, and load components, with clear test points between each section.
+              </p>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                <p className="font-medium text-white mb-2">Circuit Sections</p>
+                <ul className="text-sm list-disc pl-4 space-y-1">
+                  <li><strong className="text-white">Supply section:</strong> Distribution board to first accessory or control</li>
+                  <li><strong className="text-white">Control section:</strong> Switches, contactors, and protection devices</li>
+                  <li><strong className="text-white">Load section:</strong> Final equipment and return paths</li>
+                  <li><strong className="text-white">Protection section:</strong> Earth paths and RCD circuits</li>
+                  <li><strong className="text-white">Interface points:</strong> Junction boxes, terminals, and connection points</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
+                <p className="font-medium text-white mb-2">Examples by Circuit Type</p>
+                <ul className="text-sm list-disc pl-4 space-y-1">
+                  <li><strong className="text-white">Lighting:</strong> Supply → Switch → Lamp holder → Return</li>
+                  <li><strong className="text-white">Ring final:</strong> Supply → R1 → Accessories → R2 → Return</li>
+                  <li><strong className="text-white">Motor control:</strong> Supply → Control circuit → Contactor → Motor</li>
+                </ul>
+              </div>
+
+              <div className="p-3 rounded bg-white/5 text-sm">
+                <strong className="text-white">Logical division:</strong> Each section should have clear input/output points for testing.
               </div>
             </div>
           </section>
@@ -317,35 +310,40 @@ const Module7Section3_3 = () => {
             correctIndex={quickCheckQuestions[0].correctIndex}
             explanation={quickCheckQuestions[0].explanation}
           />
-          <Separator className="my-6" />
 
-          {/* Method: Isolate, test, record, conclude */}
-          <section className="mb-6">
-            <div className="space-y-4">
-              <div className="rounded-lg p-4 sm:p-5 border-l-4 border-l-orange-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-orange-600 text-elec-yellow mb-1">Method: Isolate, Test, Record, Conclude</p>
-                    <p className="text-sm sm:text-base text-white mb-2">Follow a systematic four-step process for each section to ensure thorough and accurate fault diagnosis.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li><strong>Isolate:</strong> Safely disconnect the section from rest of circuit</li>
-                      <li><strong>Test:</strong> Apply appropriate tests (continuity, IR, polarity, functional)</li>
-                      <li><strong>Record:</strong> Document results clearly with pass/fail status</li>
-                      <li><strong>Conclude:</strong> Determine if fault is in this section or elsewhere</li>
-                    </ul>
-                    <p className="text-sm sm:text-base text-white mb-2"><strong>Test selection criteria:</strong></p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li><strong>Continuity:</strong> For cable runs and connections</li>
-                      <li><strong>Insulation resistance:</strong> For cable and equipment integrity</li>
-                      <li><strong>Polarity:</strong> For correct conductor identification</li>
-                      <li><strong>Functional tests:</strong> For switches and control equipment</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Decision point:</strong> Only move to next section when current section status is confirmed
-                    </div>
-                  </div>
-                </div>
+          {/* Method: Isolate, Test, Record, Conclude */}
+          <section className="mb-10 mt-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Method: Isolate, Test, Record, Conclude
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Follow a systematic four-step process for each section to ensure thorough and accurate fault diagnosis.
+              </p>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
+                <p className="font-medium text-white mb-2">Four-Step Process</p>
+                <ul className="text-sm list-disc pl-4 space-y-1">
+                  <li><strong className="text-white">Isolate:</strong> Safely disconnect the section from rest of circuit</li>
+                  <li><strong className="text-white">Test:</strong> Apply appropriate tests (continuity, IR, polarity, functional)</li>
+                  <li><strong className="text-white">Record:</strong> Document results clearly with pass/fail status</li>
+                  <li><strong className="text-white">Conclude:</strong> Determine if fault is in this section or elsewhere</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                <p className="font-medium text-white mb-2">Test Selection Criteria</p>
+                <ul className="text-sm list-disc pl-4 space-y-1">
+                  <li><strong className="text-white">Continuity:</strong> For cable runs and connections</li>
+                  <li><strong className="text-white">Insulation resistance:</strong> For cable and equipment integrity</li>
+                  <li><strong className="text-white">Polarity:</strong> For correct conductor identification</li>
+                  <li><strong className="text-white">Functional tests:</strong> For switches and control equipment</li>
+                </ul>
+              </div>
+
+              <div className="p-3 rounded bg-white/5 text-sm">
+                <strong className="text-white">Decision point:</strong> Only move to next section when current section status is confirmed.
               </div>
             </div>
           </section>
@@ -357,86 +355,87 @@ const Module7Section3_3 = () => {
             correctIndex={quickCheckQuestions[1].correctIndex}
             explanation={quickCheckQuestions[1].explanation}
           />
-          <Separator className="my-6" />
 
-          {/* Applications */}
-          <section className="mb-6">
-            <div className="space-y-4">
-              <div className="rounded-lg p-4 sm:p-5 border-l-4 border-l-purple-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Practical Applications</p>
-                    <p className="text-sm sm:text-base text-white mb-2">Apply systematic section testing to common circuit types with specific test points and procedures.</p>
-                    
-                    <div className="space-y-3">
-                      <div className="bg-[#121212]/50 p-3 rounded border">
-                        <p className="font-medium text-sm mb-1">Lighting Circuit Testing</p>
-                        <ul className="text-xs text-white ml-4 list-disc space-y-1">
-                          <li>Supply: Test voltage at distribution board MCB</li>
-                          <li>Cable run: Continuity from board to switch</li>
-                          <li>Switch: Operation and contact integrity</li>
-                          <li>Switch to lamp: Continuity of switched live</li>
-                          <li>Lamp holder: Connection integrity and function</li>
-                          <li>Return path: Neutral continuity back to board</li>
-                        </ul>
-                      </div>
-                      
-                      <div className="bg-[#121212]/50 p-3 rounded border">
-                        <p className="font-medium text-sm mb-1">Ring Final Circuit Testing</p>
-                        <ul className="text-xs text-white ml-4 list-disc space-y-1">
-                          <li>R1+R2 values: Test at each socket progressively</li>
-                          <li>Ring continuity: Verify unbroken ring at each point</li>
-                          <li>Cross connections: Check for leg transposition</li>
-                          <li>Socket testing: Each outlet individually</li>
-                          <li>Earth continuity: Verify CPC integrity throughout</li>
-                          <li>Polarity verification: Correct L/N at each point</li>
-                        </ul>
-                      </div>
-                      
-                      <div className="bg-[#121212]/50 p-3 rounded border">
-                        <p className="font-medium text-sm mb-1">Industrial Control Circuit Testing</p>
-                        <ul className="text-xs text-white ml-4 list-disc space-y-1">
-                          <li>Supply: Incoming power to control panel</li>
-                          <li>Control circuit: Start/stop and interlock operation</li>
-                          <li>Contactor: Coil operation and contact integrity</li>
-                          <li>Motor supply: Power circuit from contactor to motor</li>
-                          <li>Motor windings: Continuity and insulation resistance</li>
-                          <li>Protection: Overload and earth fault systems</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Progressive testing:</strong> Each confirmed section narrows focus to remaining possibilities
-                    </div>
-                  </div>
+          {/* Practical Applications */}
+          <section className="mb-10 mt-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Practical Applications
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Apply systematic section testing to common circuit types with specific test points and procedures.
+              </p>
+
+              <div className="space-y-3">
+                <div className="p-3 rounded-lg bg-white/5">
+                  <p className="font-medium text-white text-sm mb-2">Lighting Circuit Testing</p>
+                  <ul className="text-xs list-disc pl-4 space-y-1">
+                    <li>Supply: Test voltage at distribution board MCB</li>
+                    <li>Cable run: Continuity from board to switch</li>
+                    <li>Switch: Operation and contact integrity</li>
+                    <li>Switch to lamp: Continuity of switched live</li>
+                    <li>Lamp holder: Connection integrity and function</li>
+                    <li>Return path: Neutral continuity back to board</li>
+                  </ul>
                 </div>
+
+                <div className="p-3 rounded-lg bg-white/5">
+                  <p className="font-medium text-white text-sm mb-2">Ring Final Circuit Testing</p>
+                  <ul className="text-xs list-disc pl-4 space-y-1">
+                    <li>R1+R2 values: Test at each socket progressively</li>
+                    <li>Ring continuity: Verify unbroken ring at each point</li>
+                    <li>Cross connections: Check for leg transposition</li>
+                    <li>Socket testing: Each outlet individually</li>
+                    <li>Earth continuity: Verify CPC integrity throughout</li>
+                    <li>Polarity verification: Correct L/N at each point</li>
+                  </ul>
+                </div>
+
+                <div className="p-3 rounded-lg bg-white/5">
+                  <p className="font-medium text-white text-sm mb-2">Industrial Control Circuit Testing</p>
+                  <ul className="text-xs list-disc pl-4 space-y-1">
+                    <li>Supply: Incoming power to control panel</li>
+                    <li>Control circuit: Start/stop and interlock operation</li>
+                    <li>Contactor: Coil operation and contact integrity</li>
+                    <li>Motor supply: Power circuit from contactor to motor</li>
+                    <li>Motor windings: Continuity and insulation resistance</li>
+                    <li>Protection: Overload and earth fault systems</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="p-3 rounded bg-white/5 text-sm">
+                <strong className="text-white">Progressive testing:</strong> Each confirmed section narrows focus to remaining possibilities.
               </div>
             </div>
           </section>
 
-          {/* Documentation and repeatability */}
-          <section className="mb-6">
-            <div className="space-y-4">
-              <div className="rounded-lg p-4 sm:p-5 border-l-4 border-l-teal-500 bg-teal-500/5">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-teal-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-teal-600 dark:text-teal-400 mb-1">Documentation and Repeatability</p>
-                    <p className="text-sm sm:text-base text-white mb-2">Record results after each step to build a clear diagnostic picture and ensure the fault is properly resolved.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li><strong>Test results:</strong> Record actual values, not just pass/fail</li>
-                      <li><strong>Section status:</strong> Clear indication of good/faulty for each part</li>
-                      <li><strong>Fault location:</strong> Precise identification of problem area</li>
-                      <li><strong>Remedial action:</strong> What was done to correct the fault</li>
-                      <li><strong>Verification testing:</strong> Confirm repair effectiveness</li>
-                      <li><strong>Final checks:</strong> Ensure all sections now function correctly</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Professional standard:</strong> Comprehensive records demonstrate systematic competence and aid future maintenance
-                    </div>
-                  </div>
-                </div>
+          {/* Documentation and Repeatability */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Documentation and Repeatability
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Record results after each step to build a clear diagnostic picture and ensure the fault is properly resolved.
+              </p>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-teal-500/50">
+                <p className="font-medium text-white mb-2">Documentation Requirements</p>
+                <ul className="text-sm list-disc pl-4 space-y-1">
+                  <li><strong className="text-white">Test results:</strong> Record actual values, not just pass/fail</li>
+                  <li><strong className="text-white">Section status:</strong> Clear indication of good/faulty for each part</li>
+                  <li><strong className="text-white">Fault location:</strong> Precise identification of problem area</li>
+                  <li><strong className="text-white">Remedial action:</strong> What was done to correct the fault</li>
+                  <li><strong className="text-white">Verification testing:</strong> Confirm repair effectiveness</li>
+                  <li><strong className="text-white">Final checks:</strong> Ensure all sections now function correctly</li>
+                </ul>
+              </div>
+
+              <div className="p-3 rounded bg-white/5 text-sm">
+                <strong className="text-white">Professional standard:</strong> Comprehensive records demonstrate systematic competence and aid future maintenance.
               </div>
             </div>
           </section>
@@ -448,183 +447,180 @@ const Module7Section3_3 = () => {
             correctIndex={quickCheckQuestions[2].correctIndex}
             explanation={quickCheckQuestions[2].explanation}
           />
-        </Card>
 
-        {/* Practical Guidance */}
-        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-          
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div className="h-full">
-              <div className="p-4 rounded-lg border border-green-400/30 h-full">
-                <div className="flex items-start gap-3 mb-3">
-                  <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-green-600 dark:text-green-400 mb-3">Best Practice Approach</h3>
-                    <ul className="text-sm space-y-2 text-white">
-                      <li>• Keep tests focused and targeted on one section</li>
-                      <li>• Record results after each test to build clear picture</li>
-                      <li>• Don't skip sections even if fault seems obvious</li>
-                      <li>• Use appropriate test methods for each section type</li>
-                      <li>• Progress systematically through logical sequence</li>
-                      <li>• Verify complete system operation after repair</li>
-                    </ul>
+          {/* Practical Guidance */}
+          <section className="mb-10 mt-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Practical Guidance
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                <p className="font-medium text-white mb-2">Best Practice Approach</p>
+                <ul className="text-sm list-disc pl-4 space-y-1 text-white/80">
+                  <li>Keep tests focused and targeted on one section</li>
+                  <li>Record results after each test to build clear picture</li>
+                  <li>Don't skip sections even if fault seems obvious</li>
+                  <li>Use appropriate test methods for each section type</li>
+                  <li>Progress systematically through logical sequence</li>
+                  <li>Verify complete system operation after repair</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-amber-500/50">
+                <p className="font-medium text-amber-400 mb-2">Common Mistakes to Avoid</p>
+                <ul className="text-sm list-disc pl-4 space-y-1 text-white/80">
+                  <li>Replacing parts without testing first</li>
+                  <li>Testing too many things at once</li>
+                  <li>Jumping around the circuit randomly</li>
+                  <li>Not recording results after each test</li>
+                  <li>Assuming sections are good without confirmation</li>
+                  <li>Stopping testing once fault seems identified</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Real-World Examples */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+              Real-World Examples
+            </h2>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">Domestic Lighting Circuit Fault</p>
+                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white/80">
+                  <div>
+                    <p className="text-elec-yellow font-medium mb-1">Situation</p>
+                    <p>Lighting circuit stopped working. Inexperienced worker immediately replaced ceiling rose without testing.</p>
+                  </div>
+                  <div>
+                    <p className="text-orange-400 font-medium mb-1">Tests Performed</p>
+                    <p>Structured electrician tested: supply at board (✓), then switch operation (✗), then lamp holder (not reached).</p>
+                  </div>
+                  <div>
+                    <p className="text-green-400 font-medium mb-1">Result</p>
+                    <p>Testing revealed loose line conductor at switch, interrupting circuit. Fixed within minutes.</p>
+                  </div>
+                  <div>
+                    <p className="text-purple-400 font-medium mb-1">Lesson</p>
+                    <p>Section-by-section testing located fault immediately without replacing working components.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
+                <p className="font-medium text-white mb-2">Factory Machine Motor Fault</p>
+                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white/80">
+                  <div>
+                    <p className="text-elec-yellow font-medium mb-1">Situation</p>
+                    <p>Factory machine would not start. Staff prepared to replace entire motor assembly.</p>
+                  </div>
+                  <div>
+                    <p className="text-orange-400 font-medium mb-1">Tests Performed</p>
+                    <p>Systematic testing: supply to panel (✓), control circuit (✓), contactor operation (✓), motor windings (✗).</p>
+                  </div>
+                  <div>
+                    <p className="text-green-400 font-medium mb-1">Result</p>
+                    <p>Motor windings failed continuity checks. Only motor needed replacement, not entire system.</p>
+                  </div>
+                  <div>
+                    <p className="text-purple-400 font-medium mb-1">Lesson</p>
+                    <p>Section testing avoided unnecessary work on functioning control systems and panels.</p>
                   </div>
                 </div>
               </div>
             </div>
+          </section>
 
-            <div className="h-full">
-              <div className="p-4 rounded-lg border border-border/30 h-full">
-                <div className="flex items-start gap-3 mb-3">
-                  <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-red-600 text-elec-yellow mb-3">Common Mistakes to Avoid</h3>
-                    <ul className="text-sm space-y-2 text-white">
-                      <li>• Replacing parts without testing first</li>
-                      <li>• Testing too many things at once</li>
-                      <li>• Jumping around the circuit randomly</li>
-                      <li>• Not recording results after each test</li>
-                      <li>• Assuming sections are good without confirmation</li>
-                      <li>• Stopping testing once fault seems identified</li>
-                    </ul>
-                  </div>
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
+                  <p className="font-medium text-white mb-2">{faq.question}</p>
+                  <p className="text-white/70 text-sm">{faq.answer}</p>
                 </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Recap */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">10</span>
+              Recap
+            </h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="p-3 rounded-lg bg-white/5">
+                <p className="font-medium text-elec-yellow text-sm mb-1">Systematic Isolation</p>
+                <p className="text-xs text-white/70">Test one section at a time to isolate faults logically and efficiently.</p>
+              </div>
+              <div className="p-3 rounded-lg bg-white/5">
+                <p className="font-medium text-green-400 text-sm mb-1">Record Everything</p>
+                <p className="text-xs text-white/70">Document results after each test to build clear diagnostic picture.</p>
+              </div>
+              <div className="p-3 rounded-lg bg-white/5">
+                <p className="font-medium text-orange-400 text-sm mb-1">Prevent Waste</p>
+                <p className="text-xs text-white/70">Avoid replacing working components by confirming faults first.</p>
+              </div>
+              <div className="p-3 rounded-lg bg-white/5">
+                <p className="font-medium text-purple-400 text-sm mb-1">Apply Universally</p>
+                <p className="text-xs text-white/70">Method works for all systems from simple lighting to complex industrial.</p>
+              </div>
+              <div className="p-3 rounded-lg bg-white/5">
+                <p className="font-medium text-teal-400 text-sm mb-1">Build Confidence</p>
+                <p className="text-xs text-white/70">Structured approach provides certainty and professional competence.</p>
+              </div>
+              <div className="p-3 rounded-lg bg-white/5">
+                <p className="font-medium text-red-400 text-sm mb-1">Stay Focused</p>
+                <p className="text-xs text-white/70">Resist temptation to jump around - systematic progression saves time.</p>
               </div>
             </div>
-          </div>
-        </Card>
 
-        {/* Real-World Examples */}
-        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Real-World Examples</h2>
-          
-          <div className="space-y-6">
-            <div className="p-4 rounded-lg border border-border/30 ">
-              <h3 className="font-semibold text-white mb-3">Domestic Lighting Circuit Fault</h3>
-              <div className="grid sm:grid-cols-4 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-elec-yellow text-elec-yellow mb-1">Situation</p>
-                  <p className="text-white">Lighting circuit stopped working. Inexperienced worker immediately replaced ceiling rose without testing.</p>
-                </div>
-                <div>
-                  <p className="font-medium text-orange-600 text-elec-yellow mb-1">Tests Performed</p>
-                  <p className="text-white">Structured electrician tested: supply at board (✓), then switch operation (✗), then lamp holder (not reached).</p>
-                </div>
-                <div>
-                  <p className="font-medium text-green-600 dark:text-green-400 mb-1">Result</p>
-                  <p className="text-white">Testing revealed loose line conductor at switch, interrupting circuit. Fixed within minutes.</p>
-                </div>
-                <div>
-                  <p className="font-medium text-purple-600 text-elec-yellow mb-1">Lesson</p>
-                  <p className="text-white">Section-by-section testing located fault immediately without replacing working components.</p>
-                </div>
-              </div>
+            <div className="mt-4 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="font-medium text-elec-yellow mb-1 text-sm">Key Success Factors</p>
+              <p className="text-xs text-white/70">Master this disciplined testing approach - it transforms fault finding from guesswork into professional, efficient diagnosis.</p>
             </div>
+          </section>
 
-            <div className="p-4 rounded-lg border border-border/30 ">
-              <h3 className="font-semibold text-white mb-3">Factory Machine Motor Fault</h3>
-              <div className="grid sm:grid-cols-4 gap-4 text-sm">
-                <div>
-                  <p className="font-medium text-elec-yellow text-elec-yellow mb-1">Situation</p>
-                  <p className="text-white">Factory machine would not start. Staff prepared to replace entire motor assembly.</p>
-                </div>
-                <div>
-                  <p className="font-medium text-orange-600 text-elec-yellow mb-1">Tests Performed</p>
-                  <p className="text-white">Systematic testing: supply to panel (✓), control circuit (✓), contactor operation (✓), motor windings (✗).</p>
-                </div>
-                <div>
-                  <p className="font-medium text-green-600 dark:text-green-400 mb-1">Result</p>
-                  <p className="text-white">Motor windings failed continuity checks. Only motor needed replacement, not entire system.</p>
-                </div>
-                <div>
-                  <p className="font-medium text-purple-600 text-elec-yellow mb-1">Lesson</p>
-                  <p className="text-white">Section testing avoided unnecessary work on functioning control systems and panels.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
+          {/* Quiz */}
+          <section className="mb-10">
+            <Quiz
+              title="Knowledge Check: Testing One Component at a Time"
+              questions={quizQuestions}
+            />
+          </section>
 
-        {/* FAQs */}
-        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-white/10 last:border-b-0 pb-4 last:pb-0">
-                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                <p className="text-sm text-white">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
-
-        {/* Recap */}
-        <Card className="mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Recap</h2>
-          
-          {/* Mobile-friendly grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div className="p-4 rounded-lg border border-border/30">
-              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-2">Systematic Isolation</h3>
-              <p className="text-xs sm:text-sm text-white">Test one section at a time to isolate faults logically and efficiently.</p>
-            </div>
-            
-            <div className="p-4 rounded-lg border border-green-400/30">
-              <h3 className="font-semibold text-green-600 dark:text-green-400 mb-2">Record Everything</h3>
-              <p className="text-xs sm:text-sm text-white">Document results after each test to build clear diagnostic picture.</p>
-            </div>
-            
-            <div className="p-4 rounded-lg border border-border/30">
-              <h3 className="font-semibold text-orange-600 text-elec-yellow mb-2">Prevent Waste</h3>
-              <p className="text-xs sm:text-sm text-white">Avoid replacing working components by confirming faults first.</p>
-            </div>
-            
-            <div className="p-4 rounded-lg border border-border/30">
-              <h3 className="font-semibold text-purple-600 text-elec-yellow mb-2">Apply Universally</h3>
-              <p className="text-xs sm:text-sm text-white">Method works for all systems from simple lighting to complex industrial.</p>
-            </div>
-            
-            <div className="p-4 rounded-lg bg-teal-500/10 border border-teal-400/30">
-              <h3 className="font-semibold text-teal-600 dark:text-teal-400 mb-2">Build Confidence</h3>
-              <p className="text-xs sm:text-sm text-white">Structured approach provides certainty and professional competence.</p>
-            </div>
-            
-            <div className="p-4 rounded-lg border border-border/30">
-              <h3 className="font-semibold text-red-600 text-elec-yellow mb-2">Stay Focused</h3>
-              <p className="text-xs sm:text-sm text-white">Resist temptation to jump around - systematic progression saves time.</p>
-            </div>
-          </div>
-          
-          {/* Key Success Factors */}
-          <div className="mt-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-            <h3 className="font-semibold text-elec-yellow mb-2">Key Success Factors</h3>
-            <p className="text-xs sm:text-sm text-white">Master this disciplined testing approach - it transforms fault finding from guesswork into professional, efficient diagnosis.</p>
-          </div>
-        </Card>
-
-        {/* Quiz */}
-        <Quiz 
-          title="Knowledge Check: Testing One Component at a Time"
-          questions={quizQuestions}
-        />
-
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between gap-4 mt-8">
-          <Button variant="outline" asChild>
-            <Link to="../3-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to 3.2 - Sequence of Operation
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link to="../3-4">
-              Next: 3.4 - Buzzing Sounds & Arcing
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
+            <Button
+              variant="ghost"
+              className="w-full sm:w-auto text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../3-2">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back: Sequence of Operation
+              </Link>
+            </Button>
+            <Button
+              className="w-full sm:w-auto bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../3-4">
+                Next: Buzzing, Arcing & Sparking
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

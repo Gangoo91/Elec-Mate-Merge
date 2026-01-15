@@ -391,8 +391,29 @@ export const exportCompleteEICRToPDF = async (
   // Enhanced data formatting with comprehensive field mapping
   const formattedCircuits = formatCircuitDataForPDF(sanitizedFormData);
   const formattedTestResults = formatTestResultsForPDF(sanitizedFormData);
-  const formattedInspectionData = formatInspectionDataForPDF(sanitizedFormData.inspectionItems || inspectionItems);
-  const formattedObservations = formatObservationsForPDF(sanitizedFormData.observations || observations);
+
+  // FIX: Use explicit length check - empty arrays are truthy and won't trigger || fallback
+  const inspectionSource = (sanitizedFormData.inspectionItems?.length > 0)
+    ? sanitizedFormData.inspectionItems
+    : inspectionItems;
+  const formattedInspectionData = formatInspectionDataForPDF(inspectionSource);
+
+  // FIX: Form uses 'defectObservations', not 'observations' (legacy field)
+  const observationsSource = (sanitizedFormData.defectObservations?.length > 0)
+    ? sanitizedFormData.defectObservations
+    : (sanitizedFormData.observations?.length > 0)
+      ? sanitizedFormData.observations
+      : observations;
+  const formattedObservations = formatObservationsForPDF(observationsSource);
+
+  // Debug logging for PDF data verification
+  console.log('[PDF Export] Data check:', {
+    clientName: sanitizedFormData.clientName || 'MISSING',
+    scheduleOfTests: sanitizedFormData.scheduleOfTests?.length || 0,
+    inspectionItems: inspectionSource?.length || 0,
+    defectObservations: observationsSource?.length || 0,
+  });
+
   const supplyCharacteristics = formatSupplyCharacteristics(sanitizedFormData);
   const installationDetails = formatInstallationDetails(sanitizedFormData);
   const clientDetails = formatClientDetails(sanitizedFormData);
@@ -632,8 +653,8 @@ export const exportCompleteEICRToPDF = async (
       pdf.setTextColor(0, 0, 0); // Reset to black
       yPosition += 6;
       
-      // Fetch and add photos for this observation
-      const originalObs = (sanitizedFormData.observations || observations)[index];
+      // Fetch and add photos for this observation (use observationsSource for consistency)
+      const originalObs = observationsSource[index];
       if (originalObs?.id) {
         const photos = await fetchObservationPhotos(originalObs.id);
         

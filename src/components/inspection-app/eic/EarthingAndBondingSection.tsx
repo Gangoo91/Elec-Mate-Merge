@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Zap } from 'lucide-react';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
@@ -101,28 +101,25 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="earthElectrodeType" className="font-medium text-sm">Earth Electrode Type</Label>
-            <Select
+            <MobileSelectPicker
               value={formData.earthElectrodeType || ''}
               onValueChange={(value) => {
                 onUpdate('earthElectrodeType', value);
-                // Clear resistance value when PME is selected
                 if (value === 'pme') {
                   onUpdate('earthElectrodeResistance', '');
                 }
               }}
-            >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="Select electrode type" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="rod">Earth Rod</SelectItem>
-                <SelectItem value="plate">Earth Plate</SelectItem>
-                <SelectItem value="tape">Earth Tape</SelectItem>
-                <SelectItem value="foundation">Foundation Earth</SelectItem>
-                <SelectItem value="pme">PME (No electrode required)</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { value: 'rod', label: 'Earth Rod' },
+                { value: 'plate', label: 'Earth Plate' },
+                { value: 'tape', label: 'Earth Tape' },
+                { value: 'foundation', label: 'Foundation Earth' },
+                { value: 'pme', label: 'PME (No electrode required)' },
+                { value: 'other', label: 'Other' },
+              ]}
+              placeholder="Select electrode type"
+              title="Earth Electrode Type"
+            />
           </div>
 
           {!isPMESelected && (
@@ -150,22 +147,20 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="mainBondingSize" className="font-medium text-sm">Main Bonding Conductor Size</Label>
-            <Select
+            <MobileSelectPicker
               value={formData.mainBondingSize || ''}
               onValueChange={(value) => onUpdate('mainBondingSize', value)}
-            >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="Select conductor size" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="6mm">6mm²</SelectItem>
-                <SelectItem value="10mm">10mm²</SelectItem>
-                <SelectItem value="16mm">16mm²</SelectItem>
-                <SelectItem value="25mm">25mm²</SelectItem>
-                <SelectItem value="35mm">35mm²</SelectItem>
-                <SelectItem value="custom">Other/Custom</SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { value: '6mm', label: '6mm²' },
+                { value: '10mm', label: '10mm²' },
+                { value: '16mm', label: '16mm²' },
+                { value: '25mm', label: '25mm²' },
+                { value: '35mm', label: '35mm²' },
+                { value: 'custom', label: 'Other/Custom' },
+              ]}
+              placeholder="Select conductor size"
+              title="Main Bonding Conductor Size"
+            />
             {formData.mainBondingSize === 'custom' && (
               <Input
                 placeholder="Enter custom size (mm²)"
@@ -179,19 +174,17 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
 
           <div>
             <Label htmlFor="bondingCompliance" className="font-medium text-sm">Bonding Compliance</Label>
-            <Select
+            <MobileSelectPicker
               value={formData.bondingCompliance || ''}
               onValueChange={(value) => onUpdate('bondingCompliance', value)}
-            >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="Select compliance" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="satisfactory">Satisfactory</SelectItem>
-                <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
-                <SelectItem value="not-applicable">Not Applicable</SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { value: 'satisfactory', label: 'Satisfactory' },
+                { value: 'unsatisfactory', label: 'Unsatisfactory' },
+                { value: 'not-applicable', label: 'Not Applicable' },
+              ]}
+              placeholder="Select compliance"
+              title="Bonding Compliance"
+            />
           </div>
         </div>
 
@@ -284,22 +277,20 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="supplementaryBondingSize" className="font-medium text-sm">Supplementary Bonding Size</Label>
-            <Select
+            <MobileSelectPicker
               value={formData.supplementaryBondingSize || ''}
               onValueChange={(value) => onUpdate('supplementaryBondingSize', value)}
-            >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="Select conductor size" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="2.5mm">2.5mm²</SelectItem>
-                <SelectItem value="4mm">4mm²</SelectItem>
-                <SelectItem value="6mm">6mm²</SelectItem>
-                <SelectItem value="10mm">10mm²</SelectItem>
-                <SelectItem value="not-required">Not Required</SelectItem>
-                <SelectItem value="custom">Other/Custom</SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { value: '2.5mm', label: '2.5mm²' },
+                { value: '4mm', label: '4mm²' },
+                { value: '6mm', label: '6mm²' },
+                { value: '10mm', label: '10mm²' },
+                { value: 'not-required', label: 'Not Required' },
+                { value: 'custom', label: 'Other/Custom' },
+              ]}
+              placeholder="Select conductor size"
+              title="Supplementary Bonding Size"
+            />
             {formData.supplementaryBondingSize === 'custom' && (
               <Input
                 placeholder="Enter custom size (mm²)"
@@ -318,19 +309,17 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
 
           <div>
             <Label htmlFor="equipotentialBonding" className="font-medium text-sm">Equipotential Bonding</Label>
-            <Select
+            <MobileSelectPicker
               value={formData.equipotentialBonding || ''}
               onValueChange={(value) => onUpdate('equipotentialBonding', value)}
-            >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="satisfactory">Satisfactory</SelectItem>
-                <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
-                <SelectItem value="not-applicable">Not Applicable</SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { value: 'satisfactory', label: 'Satisfactory' },
+                { value: 'unsatisfactory', label: 'Unsatisfactory' },
+                { value: 'not-applicable', label: 'Not Applicable' },
+              ]}
+              placeholder="Select status"
+              title="Equipotential Bonding"
+            />
           </div>
         </div>
           </CardContent>

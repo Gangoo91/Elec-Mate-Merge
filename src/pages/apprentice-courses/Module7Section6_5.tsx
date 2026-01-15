@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, ClipboardCheck, Target, CheckCircle, TestTube, AlertTriangle } from "lucide-react";
+import { ArrowLeft, ArrowRight, ClipboardCheck, CheckCircle, TestTube, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -211,11 +208,15 @@ export default function Module7Section6_5() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 7.6
@@ -225,528 +226,501 @@ export default function Module7Section6_5() {
       </div>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <div className="p-1.5 sm:p-2 rounded-lg ">
-              <ClipboardCheck className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Title Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 6.5</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
-              Section 7.6.5
-            </Badge>
-          </div>
-          <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 leading-tight">
-            Following Up with Re-Testing or Certification (Awareness)
-          </h1>
-          <p className="text-white text-sm sm:text-base leading-relaxed">
-            Understanding retesting requirements and certification processes following fault rectification under supervision
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
+              Following Up with Re-Testing or Certification (Awareness)
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+              Understanding retesting requirements and certification processes following fault rectification under supervision
+            </p>
+          </header>
 
-        {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
+          {/* In 30 Seconds Summary */}
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
+            <h2 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+              <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
+              In 30 Seconds
+            </h2>
+            <ul className="space-y-2 text-white/80 text-sm sm:text-base">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow mt-1">•</span>
+                <span>Always retest after repairs to prove faults are eliminated</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow mt-1">•</span>
+                <span>Update certification documents with corrected test results</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow mt-1">•</span>
+                <span>Apprentices assist with testing but cannot sign certificates</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow mt-1">•</span>
+                <span>Proper documentation protects both client and contractor</span>
+              </li>
+            </ul>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-2 sm:mb-3">In 30 seconds</p>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>Always retest after repairs to prove faults are eliminated</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>Update certification documents with corrected test results</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>Apprentices assist with testing but cannot sign certificates</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>Proper documentation protects both client and contractor</span>
-                </li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
-              <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Spot:</strong> Need for retesting, certificate requirements, recording responsibilities</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Use:</strong> Same test methods, accurate recording, proper documentation processes</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Check:</strong> Test results improved, certificates updated, supervisor approval obtained</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Card>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Introduction</h2>
-          <p className="text-sm sm:text-base text-white mb-4">
-            Finding and rectifying a fault is not the final step in the process. Every repair must be proven safe by retesting, and in some cases, certification updates are required to record the change. This ensures compliance with BS 7671 and provides documented evidence that the installation is safe for continued use. Apprentices at Level 2 are not responsible for certification, but they must understand why follow-up testing matters and how it fits into professional electrical practice.
-          </p>
-        </Card>
+          {/* Introduction */}
+          <section className="mb-10">
+            <p className="text-white/80 text-base sm:text-lg leading-relaxed">
+              Finding and rectifying a fault is not the final step in the process. Every repair must be proven safe by retesting, and in some cases, certification updates are required to record the change. This ensures compliance with BS 7671 and provides documented evidence that the installation is safe for continued use. Apprentices at Level 2 are not responsible for certification, but they must understand why follow-up testing matters and how it fits into professional electrical practice.
+            </p>
+          </section>
 
-        {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Learning Outcomes</h2>
-          <p className="text-sm sm:text-base text-white mb-4 sm:mb-6">By the end of this subsection, you should be able to:</p>
-          
-          <div className="bg-card border border-elec-yellow/20 rounded-lg p-4 sm:p-5">
-            <div className="grid gap-3 sm:gap-4">
-              <div className="flex items-start gap-3 sm:gap-4 group">
-                <div className="bg-elec-yellow/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow" />
-                </div>
-                <div className="space-y-1">
-                  <span className="text-sm sm:text-base font-medium text-white block">Explain why follow-up testing is required after fault rectification</span>
-                  <span className="text-xs sm:text-sm text-white">Understand the critical role of verification in proving repairs</span>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Learning Outcomes
+            </h2>
+            <p className="text-white/80 mb-4">By the end of this subsection, you should be able to:</p>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-white/5">
+                <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <div>
+                  <span className="text-white font-medium block">Explain why follow-up testing is required after fault rectification</span>
+                  <span className="text-white/60 text-sm">Understand the critical role of verification in proving repairs</span>
                 </div>
               </div>
-              
-              <div className="flex items-start gap-3 sm:gap-4 group">
-                <div className="bg-elec-yellow/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow" />
-                </div>
-                <div className="space-y-1">
-                  <span className="text-sm sm:text-base font-medium text-white block">Describe the role of certification in electrical work</span>
-                  <span className="text-xs sm:text-sm text-white">Appreciate legal documentation and compliance requirements</span>
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-white/5">
+                <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <div>
+                  <span className="text-white font-medium block">Describe the role of certification in electrical work</span>
+                  <span className="text-white/60 text-sm">Appreciate legal documentation and compliance requirements</span>
                 </div>
               </div>
-              
-              <div className="flex items-start gap-3 sm:gap-4 group">
-                <div className="bg-elec-yellow/20 rounded-full p-1.5 mt-0.5 flex-shrink-0">
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow" />
-                </div>
-                <div className="space-y-1">
-                  <span className="text-sm sm:text-base font-medium text-white block">Recognise the apprentice's part in supporting these processes under supervision</span>
-                  <span className="text-xs sm:text-sm text-white">Know boundaries and responsibilities in professional practice</span>
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-white/5">
+                <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                <div>
+                  <span className="text-white font-medium block">Recognise the apprentice's part in supporting these processes under supervision</span>
+                  <span className="text-white/60 text-sm">Know boundaries and responsibilities in professional practice</span>
                 </div>
               </div>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Content / Learning</h2>
-          
-          {/* Section 1 */}
-          <div className="border-l-4 border-l-elec-yellow pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
-            <h3 className="text-sm sm:text-base font-semibold text-white mb-2 sm:mb-3">1. The Purpose of Retesting</h3>
-            <div className="prose prose-invert max-w-none">
-              <p className="text-white leading-relaxed mb-4">
+          {/* Section 1: The Purpose of Retesting */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              The Purpose of Retesting
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
                 After any fault repair, the circuit must be retested to prove that the fault has been eliminated and that no new defects have been introduced. For example, if a loose connection has been re-terminated, continuity must be checked again; if miswiring has been corrected, polarity must be verified. Retesting provides objective proof that the installation once again complies with BS 7671. Without retesting, repairs cannot be trusted and the installation cannot be energised safely.
               </p>
-              
-              <p className="text-white leading-relaxed mb-3">
-                <strong>Key Reasons for Retesting:</strong>
-              </p>
-              <ul className="text-white leading-relaxed mb-4 space-y-1">
-                <li>• Confirms the specific fault has been completely eliminated</li>
-                <li>• Verifies that repair work hasn't introduced new defects</li>
-                <li>• Provides measurable evidence of compliance with BS 7671</li>
-                <li>• Ensures the circuit is safe for re-energisation</li>
-                <li>• Creates documented proof for legal and insurance purposes</li>
-                <li>• Demonstrates professional competence and accountability</li>
-              </ul>
-              
-              <p className="text-white leading-relaxed mb-3">
-                <strong>Types of Retesting Required:</strong>
-              </p>
-              <ul className="text-white leading-relaxed mb-4 space-y-1">
-                <li>• <strong>Continuity tests</strong> - After reconnecting CPCs or circuit conductors</li>
-                <li>• <strong>Polarity tests</strong> - After correcting miswired connections</li>
-                <li>• <strong>Insulation resistance tests</strong> - After replacing damaged cables or accessories</li>
-                <li>• <strong>RCD testing</strong> - After any work affecting protective devices</li>
-                <li>• <strong>Earth fault loop impedance tests</strong> - After changes to earthing arrangements</li>
-              </ul>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">Key Reasons for Retesting:</p>
+                <ul className="space-y-1.5 text-sm">
+                  <li>• Confirms the specific fault has been completely eliminated</li>
+                  <li>• Verifies that repair work hasn't introduced new defects</li>
+                  <li>• Provides measurable evidence of compliance with BS 7671</li>
+                  <li>• Ensures the circuit is safe for re-energisation</li>
+                  <li>• Creates documented proof for legal and insurance purposes</li>
+                  <li>• Demonstrates professional competence and accountability</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
+                <p className="font-medium text-white mb-2">Types of Retesting Required:</p>
+                <ul className="space-y-1.5 text-sm">
+                  <li>• <strong>Continuity tests</strong> - After reconnecting CPCs or circuit conductors</li>
+                  <li>• <strong>Polarity tests</strong> - After correcting miswired connections</li>
+                  <li>• <strong>Insulation resistance tests</strong> - After replacing damaged cables or accessories</li>
+                  <li>• <strong>RCD testing</strong> - After any work affecting protective devices</li>
+                  <li>• <strong>Earth fault loop impedance tests</strong> - After changes to earthing arrangements</li>
+                </ul>
+              </div>
             </div>
-          </div>
 
-          <InlineCheck {...quickCheckQuestions[0]} />
+            <div className="mt-6">
+              <InlineCheck {...quickCheckQuestions[0]} />
+            </div>
+          </section>
 
-          {/* Section 2 */}
-          <div className="border-l-4 border-l-green-500 pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
-            <h3 className="text-sm sm:text-base font-semibold text-white mb-2 sm:mb-3">2. Certification Requirements</h3>
-            <div className="prose prose-invert max-w-none">
-              <p className="text-white leading-relaxed mb-4">
+          {/* Section 2: Certification Requirements */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Certification Requirements
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
                 In many cases, test results form part of formal certification. If faults are identified and corrected during initial verification, the corrected results are recorded on an Electrical Installation Certificate (EIC) or Minor Works Certificate (MWC). During periodic inspections (EICRs), repaired faults and their updated test results should also be documented. Certification provides a legal record that the installation has been tested and found safe. Apprentices must understand that while they can assist with recording values, only competent persons can sign certification.
               </p>
-              
-              <p className="text-white leading-relaxed mb-3">
-                <strong>Certificate Types and Their Uses:</strong>
-              </p>
-              <ul className="text-white leading-relaxed mb-4 space-y-1">
-                <li>• <strong>Electrical Installation Certificate (EIC)</strong> - New installations and major alterations</li>
-                <li>• <strong>Minor Works Certificate (MWC)</strong> - Small additions and alterations</li>
-                <li>• <strong>Electrical Installation Condition Report (EICR)</strong> - Periodic inspection results</li>
-                <li>• <strong>Schedule of Test Results</strong> - Detailed test data supporting certificates</li>
-              </ul>
-              
-              <p className="text-white leading-relaxed mb-3">
-                <strong>Legal and Professional Implications:</strong>
-              </p>
-              <ul className="text-white leading-relaxed mb-4 space-y-1">
-                <li>• Certificates provide legal proof of compliance with BS 7671</li>
-                <li>• Required for building control approval and insurance purposes</li>
-                <li>• Protect electricians and clients from liability claims</li>
-                <li>• Enable future electricians to understand the installation history</li>
-                <li>• Support property sales and lettings compliance</li>
-              </ul>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                <p className="font-medium text-white mb-2">Certificate Types and Their Uses:</p>
+                <ul className="space-y-1.5 text-sm">
+                  <li>• <strong>Electrical Installation Certificate (EIC)</strong> - New installations and major alterations</li>
+                  <li>• <strong>Minor Works Certificate (MWC)</strong> - Small additions and alterations</li>
+                  <li>• <strong>Electrical Installation Condition Report (EICR)</strong> - Periodic inspection results</li>
+                  <li>• <strong>Schedule of Test Results</strong> - Detailed test data supporting certificates</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                <p className="font-medium text-white mb-2">Legal and Professional Implications:</p>
+                <ul className="space-y-1.5 text-sm">
+                  <li>• Certificates provide legal proof of compliance with BS 7671</li>
+                  <li>• Required for building control approval and insurance purposes</li>
+                  <li>• Protect electricians and clients from liability claims</li>
+                  <li>• Enable future electricians to understand the installation history</li>
+                  <li>• Support property sales and lettings compliance</li>
+                </ul>
+              </div>
             </div>
-          </div>
 
-          <InlineCheck {...quickCheckQuestions[1]} />
+            <div className="mt-6">
+              <InlineCheck {...quickCheckQuestions[1]} />
+            </div>
+          </section>
 
-          {/* Section 3 */}
-          <div className="border-l-4 border-l-orange-500 pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
-            <h3 className="text-sm sm:text-base font-semibold text-white mb-2 sm:mb-3">3. The Apprentice's Role in Follow-Up</h3>
-            <div className="prose prose-invert max-w-none">
-              <p className="text-white leading-relaxed mb-4">
+          {/* Section 3: The Apprentice's Role */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              The Apprentice's Role in Follow-Up
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
                 At Level 2, apprentices support the process rather than taking full responsibility. You may carry out the physical retests under supervision, record the values, and assist in updating test schedules. However, you cannot sign or certify results as valid — this responsibility rests with the qualified supervisor. By assisting carefully and recording accurately, apprentices build both competence and trust.
               </p>
-              
-              <p className="text-white leading-relaxed mb-3">
-                <strong>What Apprentices Can Do:</strong>
-              </p>
-              <ul className="text-white leading-relaxed mb-4 space-y-1">
-                <li>• Carry out physical retests under direct supervision</li>
-                <li>• Record test values accurately and legibly</li>
-                <li>• Assist with updating test schedules and documentation</li>
-                <li>• Learn proper testing procedures and techniques</li>
-                <li>• Support supervisors in maintaining quality standards</li>
-                <li>• Ask questions to understand certification processes</li>
-              </ul>
-              
-              <p className="text-white leading-relaxed mb-3">
-                <strong>What Apprentices Must NOT Do:</strong>
-              </p>
-              <ul className="text-white leading-relaxed mb-4 space-y-1">
-                <li>• Sign or certify test results as valid</li>
-                <li>• Take independent responsibility for verification</li>
-                <li>• Issue certificates to clients or building control</li>
-                <li>• Make final judgements on compliance without supervision</li>
-                <li>• Work on certification without qualified oversight</li>
-              </ul>
-              
-              <p className="text-white leading-relaxed mb-3">
-                <strong>Building Professional Competence:</strong>
-              </p>
-              <ul className="text-white leading-relaxed mb-4 space-y-1">
-                <li>• Observe how supervisors interpret and validate test results</li>
-                <li>• Learn the connection between testing and legal compliance</li>
-                <li>• Understand the importance of accurate documentation</li>
-                <li>• Develop skills that will support future qualifications</li>
-                <li>• Build trust through consistent, accurate assistance</li>
-              </ul>
+
+              <div className="grid gap-4">
+                <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+                  <p className="font-semibold text-green-400 mb-2">What Apprentices Can Do:</p>
+                  <ul className="space-y-1.5 text-sm text-white/80">
+                    <li>• Carry out physical retests under direct supervision</li>
+                    <li>• Record test values accurately and legibly</li>
+                    <li>• Assist with updating test schedules and documentation</li>
+                    <li>• Learn proper testing procedures and techniques</li>
+                    <li>• Support supervisors in maintaining quality standards</li>
+                    <li>• Ask questions to understand certification processes</li>
+                  </ul>
+                </div>
+
+                <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+                  <p className="font-semibold text-red-400 mb-2">What Apprentices Must NOT Do:</p>
+                  <ul className="space-y-1.5 text-sm text-white/80">
+                    <li>• Sign or certify test results as valid</li>
+                    <li>• Take independent responsibility for verification</li>
+                    <li>• Issue certificates to clients or building control</li>
+                    <li>• Make final judgements on compliance without supervision</li>
+                    <li>• Work on certification without qualified oversight</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">Building Professional Competence:</p>
+                <ul className="space-y-1.5 text-sm">
+                  <li>• Observe how supervisors interpret and validate test results</li>
+                  <li>• Learn the connection between testing and legal compliance</li>
+                  <li>• Understand the importance of accurate documentation</li>
+                  <li>• Develop skills that will support future qualifications</li>
+                  <li>• Build trust through consistent, accurate assistance</li>
+                </ul>
+              </div>
             </div>
-          </div>
 
-          <InlineCheck {...quickCheckQuestions[2]} />
+            <div className="mt-6">
+              <InlineCheck {...quickCheckQuestions[2]} />
+            </div>
+          </section>
 
-          {/* Section 4 */}
-          <div className="border-l-4 border-l-purple-500 pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4 mb-4 sm:mb-6">
-            <h3 className="text-sm sm:text-base font-semibold text-white mb-2 sm:mb-3">4. Professionalism and Accountability</h3>
-            <div className="prose prose-invert max-w-none">
-              <p className="text-white leading-relaxed mb-4">
+          {/* Section 4: Professionalism and Accountability */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Professionalism and Accountability
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
                 Retesting and certification are not just technical exercises; they are matters of legal compliance and professional reputation. If faults are repaired but not properly proven safe, both the electrician and the client are exposed to risk. Proper follow-up protects users, meets the requirements of BS 7671, and demonstrates professionalism. Apprentices should learn early that "finding and fixing" is only complete once the work is retested, recorded, and handed over with evidence.
               </p>
-              
-              <p className="text-white leading-relaxed mb-3">
-                <strong>Professional Standards:</strong>
-              </p>
-              <ul className="text-white leading-relaxed mb-4 space-y-1">
-                <li>• Electrical work is only complete when properly verified and documented</li>
-                <li>• Professional reputation depends on thorough, accountable practices</li>
-                <li>• Client safety and legal compliance are non-negotiable priorities</li>
-                <li>• Quality assurance requires proper testing and documentation</li>
-                <li>• Professional integrity means never cutting corners on verification</li>
-              </ul>
-              
-              <p className="text-white leading-relaxed mb-3">
-                <strong>Risk Management:</strong>
-              </p>
-              <ul className="text-white leading-relaxed mb-4 space-y-1">
-                <li>• Unverified repairs expose clients to continued safety risks</li>
-                <li>• Missing documentation can invalidate insurance claims</li>
-                <li>• Poor records make future fault-finding more difficult</li>
-                <li>• Professional liability requires proper verification procedures</li>
-                <li>• Building control may reject work without proper certification</li>
-              </ul>
-              
-              <p className="text-white leading-relaxed mb-3">
-                <strong>Industry Reputation:</strong>
-              </p>
-              <ul className="text-white leading-relaxed mb-4 space-y-1">
-                <li>• Thorough follow-up distinguishes professional electricians</li>
-                <li>• Proper documentation supports industry credibility</li>
-                <li>• Quality practices protect the entire electrical trade</li>
-                <li>• Apprentices learn professional standards from the beginning</li>
-                <li>• Accountability creates trust between electricians and clients</li>
-              </ul>
-            </div>
-          </div>
 
-          <InlineCheck {...quickCheckQuestions[3]} />
-        </Card>
+              <div className="grid gap-4">
+                <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                  <p className="font-medium text-white mb-2">Professional Standards:</p>
+                  <ul className="space-y-1.5 text-sm">
+                    <li>• Electrical work is only complete when properly verified and documented</li>
+                    <li>• Professional reputation depends on thorough, accountable practices</li>
+                    <li>• Client safety and legal compliance are non-negotiable priorities</li>
+                    <li>• Quality assurance requires proper testing and documentation</li>
+                    <li>• Professional integrity means never cutting corners on verification</li>
+                  </ul>
+                </div>
 
-        {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Practical Guidance</h2>
-          
-          <div className="grid gap-4 sm:gap-6">
-            {/* Essential Actions Card */}
-            <div className="bg-card border border-border/30 rounded-lg p-4 sm:p-6">
-              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                <TestTube className="w-5 h-5 sm:w-6 sm:h-6 text-elec-yellow" />
-                <h3 className="text-base sm:text-lg font-semibold text-white">Essential Testing Actions</h3>
-              </div>
-              <div className="grid gap-3 sm:gap-4 text-sm sm:text-base">
-                <div className="flex items-start gap-2">
-                  <span className="text-white font-medium mt-0.5">•</span>
-                  <span className="text-white"><strong>Repeat Exact Tests:</strong> Always repeat the specific test that revealed the original fault using the same test method</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-white font-medium mt-0.5">•</span>
-                  <span className="text-white"><strong>Record Clearly:</strong> Document updated values clearly with circuit references and descriptions of actions taken</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-white font-medium mt-0.5">•</span>
-                  <span className="text-white"><strong>Compare Results:</strong> Check new test results against original readings and acceptable limits</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-white font-medium mt-0.5">•</span>
-                  <span className="text-white"><strong>Verify Improvement:</strong> Ensure readings now meet BS 7671 requirements and demonstrate fault elimination</span>
+                <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
+                  <p className="font-medium text-white mb-2">Risk Management:</p>
+                  <ul className="space-y-1.5 text-sm">
+                    <li>• Unverified repairs expose clients to continued safety risks</li>
+                    <li>• Missing documentation can invalidate insurance claims</li>
+                    <li>• Poor records make future fault-finding more difficult</li>
+                    <li>• Professional liability requires proper verification procedures</li>
+                    <li>• Building control may reject work without proper certification</li>
+                  </ul>
                 </div>
               </div>
             </div>
 
-            {/* Documentation Support Card */}
-            <div className="bg-card border border-green-500/30 rounded-lg p-4 sm:p-6">
-              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                <ClipboardCheck className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
-                <h3 className="text-base sm:text-lg font-semibold text-white">Documentation Support</h3>
-              </div>
-              <div className="grid gap-3 sm:gap-4 text-sm sm:text-base">
-                <div className="flex items-start gap-2">
-                  <span className="text-white font-medium mt-0.5">•</span>
-                  <span className="text-white"><strong>Accurate Notes:</strong> Provide precise circuit references, fault descriptions, and repair actions</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-white font-medium mt-0.5">•</span>
-                  <span className="text-white"><strong>Support Supervisors:</strong> Assist with entering results into certificates and maintaining schedules</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-white font-medium mt-0.5">•</span>
-                  <span className="text-white"><strong>Learn Processes:</strong> Ask to review how test results link to compliance and certification</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-white font-medium mt-0.5">•</span>
-                  <span className="text-white"><strong>Understand Importance:</strong> Appreciate how proper documentation protects both client and contractor</span>
-                </div>
-              </div>
+            <div className="mt-6">
+              <InlineCheck {...quickCheckQuestions[3]} />
             </div>
+          </section>
 
-            {/* Professional Development Card */}
-            <div className="bg-card border border-border/30 rounded-lg p-4 sm:p-6">
-              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-elec-yellow" />
-                <h3 className="text-base sm:text-lg font-semibold text-white">Professional Development</h3>
-              </div>
-              <div className="grid gap-3 sm:gap-4 text-sm sm:text-base">
-                <div className="flex items-start gap-2">
-                  <span className="text-white font-medium mt-0.5">•</span>
-                  <span className="text-white"><strong>Build Competence:</strong> Gain experience with proper testing procedures and quality standards</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-white font-medium mt-0.5">•</span>
-                  <span className="text-white"><strong>Establish Trust:</strong> Demonstrate reliability through careful assistance and accurate recording</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-white font-medium mt-0.5">•</span>
-                  <span className="text-white"><strong>Understand Boundaries:</strong> Know what you can and cannot do in terms of certification responsibility</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-white font-medium mt-0.5">•</span>
-                  <span className="text-white"><strong>Prepare for Future:</strong> Build skills and knowledge that support progression to higher qualifications</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
+          {/* Practical Guidance */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Practical Guidance
+            </h2>
 
-        {/* Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Real-World Examples</h2>
-          
-          {/* Example 1 */}
-          <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
-            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-              <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-elec-yellow" />
-              <h3 className="text-base sm:text-lg font-semibold text-white">Example 1: Domestic Rewire Success Story</h3>
-            </div>
-            <div className="space-y-3 sm:space-y-4 text-sm sm:text-base">
-              <p className="text-white">
-                <strong>Situation:</strong> During testing on a domestic rewire, a ring final circuit showed an open circuit on the CPC (earth conductor). Initial continuity readings were infinite, indicating a complete break in the protective conductor.
-              </p>
-              <p className="text-white">
-                <strong>Action:</strong> The apprentice, working under supervision, located the problem at a socket outlet where the CPC had not been properly terminated. The connection was re-made with correct technique and torque settings.
-              </p>
-              <p className="text-white">
-                <strong>Follow-up:</strong> The apprentice retested continuity across the entire ring, recording readings that now showed proper values (typically less than 0.05Ω for domestic rings). The corrected results were entered onto the Electrical Installation Certificate.
-              </p>
-              <p className="text-white">
-                <strong>Outcome:</strong> Without retesting and updating the certificate, the fault would have remained undocumented, leaving the certificate incomplete and the installation legally non-compliant. The thorough follow-up ensured safety and compliance.
-              </p>
-              <div className="bg-elec-yellow/20 rounded-lg p-3 sm:p-4 mt-3 sm:mt-4">
-                <p className="text-white font-medium">Key Learning: Proper retesting and documentation turned a potentially dangerous situation into a compliant, safe installation.</p>
+            <div className="space-y-4">
+              {/* Essential Testing Actions */}
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <div className="flex items-center gap-2 mb-3">
+                  <TestTube className="w-5 h-5 text-elec-yellow" />
+                  <h3 className="font-semibold text-white">Essential Testing Actions</h3>
+                </div>
+                <ul className="space-y-2 text-white/80 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span><strong>Repeat Exact Tests:</strong> Always repeat the specific test that revealed the original fault using the same test method</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span><strong>Record Clearly:</strong> Document updated values clearly with circuit references and descriptions of actions taken</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span><strong>Compare Results:</strong> Check new test results against original readings and acceptable limits</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span><strong>Verify Improvement:</strong> Ensure readings now meet BS 7671 requirements and demonstrate fault elimination</span>
+                  </li>
+                </ul>
               </div>
-            </div>
-          </div>
 
-          {/* Example 2 */}
-          <div className="bg-card border border-border/30 rounded-lg p-4 sm:p-6">
-            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-              <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-elec-yellow" />
-              <h3 className="text-base sm:text-lg font-semibold text-white">Example 2: Documentation Failure Consequences</h3>
-            </div>
-            <div className="space-y-3 sm:space-y-4 text-sm sm:text-base">
-              <p className="text-white">
-                <strong>Situation:</strong> A periodic inspection (EICR) identified low insulation resistance on a lighting circuit in a commercial building. The reading was 0.3MΩ, well below the minimum 1MΩ required by BS 7671.
-              </p>
-              <p className="text-white">
-                <strong>Action:</strong> The faulty section of cable was identified and replaced. Post-repair testing showed insulation resistance had improved to 150MΩ, well within acceptable limits.
-              </p>
-              <p className="text-white">
-                <strong>Problem:</strong> However, the electrician failed to update the EICR with the new test results. The original report was submitted to building control showing the fault as unresolved.
-              </p>
-              <p className="text-white">
-                <strong>Consequences:</strong> Months later, when the report was reviewed by building control during a routine audit, the missing updated information raised serious questions about whether the repair had actually been verified. The contractor was forced to:
-              </p>
-              <ul className="ml-4 space-y-1 text-white">
-                <li>• Return to site for additional testing and documentation</li>
-                <li>• Issue a supplementary report with corrected information</li>
-                <li>• Face questioning about their quality assurance procedures</li>
-                <li>• Risk damage to their professional reputation</li>
-                <li>• Absorb additional costs for the return visit</li>
-              </ul>
-              <div className="bg-red-500/20 rounded-lg p-3 sm:p-4 mt-3 sm:mt-4">
-                <p className="text-white font-medium">Key Learning: Incomplete documentation can have serious professional and financial consequences, even when the technical work is completed correctly.</p>
+              {/* Documentation Support */}
+              <div className="p-4 rounded-lg bg-white/5 border border-green-500/30">
+                <div className="flex items-center gap-2 mb-3">
+                  <ClipboardCheck className="w-5 h-5 text-green-400" />
+                  <h3 className="font-semibold text-white">Documentation Support</h3>
+                </div>
+                <ul className="space-y-2 text-white/80 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400 mt-1">•</span>
+                    <span><strong>Accurate Notes:</strong> Provide precise circuit references, fault descriptions, and repair actions</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400 mt-1">•</span>
+                    <span><strong>Support Supervisors:</strong> Assist with entering results into certificates and maintaining schedules</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400 mt-1">•</span>
+                    <span><strong>Learn Processes:</strong> Ask to review how test results link to compliance and certification</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400 mt-1">•</span>
+                    <span><strong>Understand Importance:</strong> Appreciate how proper documentation protects both client and contractor</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Professional Development */}
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle className="w-5 h-5 text-elec-yellow" />
+                  <h3 className="font-semibold text-white">Professional Development</h3>
+                </div>
+                <ul className="space-y-2 text-white/80 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span><strong>Build Competence:</strong> Gain experience with proper testing procedures and quality standards</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span><strong>Establish Trust:</strong> Demonstrate reliability through careful assistance and accurate recording</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span><strong>Understand Boundaries:</strong> Know what you can and cannot do in terms of certification responsibility</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span><strong>Prepare for Future:</strong> Build skills and knowledge that support progression to higher qualifications</span>
+                  </li>
+                </ul>
               </div>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Frequently Asked Questions</h2>
-          <div className="space-y-4 sm:space-y-6">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border-l-4 border-l-elec-yellow bg-elec-yellow/5 pl-4 sm:pl-6 pr-3 sm:pr-4 py-3 sm:py-4">
-                <h3 className="text-sm sm:text-base font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-sm sm:text-base text-white">{faq.answer}</p>
+          {/* Real-World Examples */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Real-World Examples
+            </h2>
+
+            <div className="space-y-4">
+              {/* Success Example */}
+              <div className="p-4 rounded-lg bg-white/5 border border-elec-yellow/30">
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle className="w-5 h-5 text-elec-yellow" />
+                  <h3 className="font-semibold text-white">Domestic Rewire Success Story</h3>
+                </div>
+                <div className="space-y-3 text-white/80 text-sm">
+                  <p><strong className="text-white">Situation:</strong> During testing on a domestic rewire, a ring final circuit showed an open circuit on the CPC (earth conductor). Initial continuity readings were infinite, indicating a complete break in the protective conductor.</p>
+                  <p><strong className="text-white">Action:</strong> The apprentice, working under supervision, located the problem at a socket outlet where the CPC had not been properly terminated. The connection was re-made with correct technique and torque settings.</p>
+                  <p><strong className="text-white">Follow-up:</strong> The apprentice retested continuity across the entire ring, recording readings that now showed proper values (typically less than 0.05Ω for domestic rings). The corrected results were entered onto the Electrical Installation Certificate.</p>
+                  <p><strong className="text-white">Outcome:</strong> Without retesting and updating the certificate, the fault would have remained undocumented, leaving the certificate incomplete and the installation legally non-compliant. The thorough follow-up ensured safety and compliance.</p>
+                </div>
+                <div className="mt-3 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                  <p className="text-white text-sm font-medium">Key Learning: Proper retesting and documentation turned a potentially dangerous situation into a compliant, safe installation.</p>
+                </div>
               </div>
-            ))}
-          </div>
-        </Card>
 
-        {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6">Recap</h2>
-          
-          <div className="prose prose-invert max-w-none">
-            <p className="text-white leading-relaxed mb-4">
-              Following up with re-testing and certification ensures that repaired faults are proven safe, compliant, and fully documented. This critical final step transforms fault rectification from a simple repair into a professional, accountable process.
-            </p>
-            
-            <div className="bg-card border border-border/30 rounded-lg p-4 sm:p-6 mb-4">
-              <h3 className="text-base sm:text-lg font-semibold text-white mb-3">Key Points to Remember:</h3>
-              <ul className="space-y-2 text-sm sm:text-base text-white">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow font-bold mt-1">•</span>
-                  <span><strong>Retesting is Essential:</strong> Every repair must be verified through appropriate testing to prove the fault is eliminated</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow font-bold mt-1">•</span>
-                  <span><strong>Certification Updates:</strong> Test results must be recorded on appropriate certificates (EIC, MWC, or EICR) to provide legal compliance</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow font-bold mt-1">•</span>
-                  <span><strong>Apprentice Support Role:</strong> Level 2 apprentices can assist with retesting and recording but cannot sign certification</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow font-bold mt-1">•</span>
-                  <span><strong>Professional Standards:</strong> Proper follow-up demonstrates professionalism, ensures safety, and protects reputation</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow font-bold mt-1">•</span>
-                  <span><strong>Legal Protection:</strong> Complete documentation protects both electricians and clients from liability and compliance issues</span>
-                </li>
-              </ul>
+              {/* Failure Example */}
+              <div className="p-4 rounded-lg bg-white/5 border border-red-500/30">
+                <div className="flex items-center gap-2 mb-3">
+                  <AlertTriangle className="w-5 h-5 text-red-400" />
+                  <h3 className="font-semibold text-white">Documentation Failure Consequences</h3>
+                </div>
+                <div className="space-y-3 text-white/80 text-sm">
+                  <p><strong className="text-white">Situation:</strong> A periodic inspection (EICR) identified low insulation resistance on a lighting circuit in a commercial building. The reading was 0.3MΩ, well below the minimum 1MΩ required by BS 7671.</p>
+                  <p><strong className="text-white">Action:</strong> The faulty section of cable was identified and replaced. Post-repair testing showed insulation resistance had improved to 150MΩ, well within acceptable limits.</p>
+                  <p><strong className="text-white">Problem:</strong> However, the electrician failed to update the EICR with the new test results. The original report was submitted to building control showing the fault as unresolved.</p>
+                  <p><strong className="text-white">Consequences:</strong> Months later, when the report was reviewed by building control during a routine audit, the missing updated information raised serious questions about whether the repair had actually been verified. The contractor was forced to:</p>
+                  <ul className="ml-4 space-y-1">
+                    <li>• Return to site for additional testing and documentation</li>
+                    <li>• Issue a supplementary report with corrected information</li>
+                    <li>• Face questioning about their quality assurance procedures</li>
+                    <li>• Risk damage to their professional reputation</li>
+                    <li>• Absorb additional costs for the return visit</li>
+                  </ul>
+                </div>
+                <div className="mt-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                  <p className="text-white text-sm font-medium">Key Learning: Incomplete documentation can have serious professional and financial consequences, even when the technical work is completed correctly.</p>
+                </div>
+              </div>
             </div>
-            
-            <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 sm:p-6">
-              <h3 className="text-base sm:text-lg font-semibold text-white mb-3">If You Only Remember 3 Things:</h3>
-              <ul className="space-y-2 text-sm sm:text-base text-white">
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow font-bold mt-1">•</span>
-                  <span className="font-medium">Always retest after repairs - it's the only way to prove the fault is eliminated and the installation is safe</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow font-bold mt-1">•</span>
-                  <span className="font-medium">Update certificates with corrected results - proper documentation is essential for legal compliance</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-elec-yellow font-bold mt-1">•</span>
-                  <span className="font-medium">Work within your scope - apprentices assist with testing but only qualified persons can certify results</span>
-                </li>
-              </ul>
+          </section>
+
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-3">
+              {faqs.map((faq, index) => (
+                <div key={index} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                  <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
+                  <p className="text-white/80 text-sm">{faq.answer}</p>
+                </div>
+              ))}
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Quiz */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <Quiz questions={quizQuestions} title="Section 7.6.5 Knowledge Check" />
-        </Card>
+          {/* Recap */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+              Recap
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Following up with re-testing and certification ensures that repaired faults are proven safe, compliant, and fully documented. This critical final step transforms fault rectification from a simple repair into a professional, accountable process.
+              </p>
 
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6 pt-6 border-t border-white/10">
-          <Button variant="outline" asChild className="w-full sm:w-auto">
-            <Link to="../6-4" className="flex items-center gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              Previous: Rectifying Minor Faults
-            </Link>
-          </Button>
-          
-          <div className="flex items-center gap-2 text-sm text-white">
-            <span>Section 7.6.5</span>
-            <span>•</span>
-            <span>Following Up with Re-Testing</span>
-          </div>
-          
-          <Button asChild className="w-full sm:w-auto">
-            <Link to=".." className="flex items-center gap-2">
-              Complete Section 7.6
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </Button>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <h3 className="font-semibold text-white mb-3">Key Points to Remember:</h3>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span><strong className="text-white">Retesting is Essential:</strong> Every repair must be verified through appropriate testing to prove the fault is eliminated</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span><strong className="text-white">Certification Updates:</strong> Test results must be recorded on appropriate certificates (EIC, MWC, or EICR) to provide legal compliance</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span><strong className="text-white">Apprentice Support Role:</strong> Level 2 apprentices can assist with retesting and recording but cannot sign certification</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span><strong className="text-white">Professional Standards:</strong> Proper follow-up demonstrates professionalism, ensures safety, and protects reputation</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span><strong className="text-white">Legal Protection:</strong> Complete documentation protects both electricians and clients from liability and compliance issues</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/30">
+                <h3 className="font-semibold text-white mb-3">If You Only Remember 3 Things:</h3>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow font-bold mt-1">1.</span>
+                    <span className="font-medium text-white">Always retest after repairs - it's the only way to prove the fault is eliminated and the installation is safe</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow font-bold mt-1">2.</span>
+                    <span className="font-medium text-white">Update certificates with corrected results - proper documentation is essential for legal compliance</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow font-bold mt-1">3.</span>
+                    <span className="font-medium text-white">Work within your scope - apprentices assist with testing but only qualified persons can certify results</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* Quiz */}
+          <section className="mb-10">
+            <Quiz questions={quizQuestions} title="Section 7.6.5 Knowledge Check" />
+          </section>
+
+          {/* Navigation Footer */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+            <Button
+              variant="ghost"
+              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../6-4">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Rectifying Minor Faults
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="..">
+                Complete Section 7.6
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 }

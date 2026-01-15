@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, MapPin, User, FileText, AlertTriangle } from 'lucide-react';
 
@@ -140,46 +140,36 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               <Label htmlFor="workType" className="text-sm font-medium">
                 Primary Work Category *
               </Label>
-              <Select 
-                value={formData.workType || ''} 
+              <MobileSelectPicker
+                value={formData.workType || ''}
                 onValueChange={(value) => {
                   onUpdate('workType', value);
                   onUpdate('workSubcategory', ''); // Reset subcategory
                 }}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select primary work category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.entries(workTypeCategories).map(([key, category]) => (
-                    <SelectItem key={key} value={key}>
-                      {category.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                options={Object.entries(workTypeCategories).map(([key, category]) => ({
+                  value: key,
+                  label: category.label,
+                }))}
+                placeholder="Select primary work category"
+                title="Primary Work Category"
+              />
             </div>
-            
+
             {selectedCategory && (
               <div>
                 <Label htmlFor="workSubcategory" className="text-sm font-medium">
                   Specific Work Type *
                 </Label>
-                <Select 
-                  value={formData.workSubcategory || ''} 
+                <MobileSelectPicker
+                  value={formData.workSubcategory || ''}
                   onValueChange={(value) => onUpdate('workSubcategory', value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select specific work type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {selectedCategory.subcategories.map((sub, index) => (
-                      <SelectItem key={index} value={sub}>
-                        {sub}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  options={selectedCategory.subcategories.map((sub) => ({
+                    value: sub,
+                    label: sub,
+                  }))}
+                  placeholder="Select specific work type"
+                  title="Specific Work Type"
+                />
               </div>
             )}
           </div>
@@ -224,19 +214,17 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               <Label htmlFor="supplyVoltage" className="text-sm font-medium">
                 Supply Voltage
               </Label>
-              <Select 
-                value={formData.supplyVoltage || ''} 
+              <MobileSelectPicker
+                value={formData.supplyVoltage || ''}
                 onValueChange={(value) => onUpdate('supplyVoltage', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select voltage" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="230V">230V Single Phase</SelectItem>
-                  <SelectItem value="400V">400V Three Phase</SelectItem>
-                  <SelectItem value="110V">110V Reduced Low Voltage</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: '230V', label: '230V Single Phase' },
+                  { value: '400V', label: '400V Three Phase' },
+                  { value: '110V', label: '110V Reduced Low Voltage' },
+                ]}
+                placeholder="Select voltage"
+                title="Supply Voltage"
+              />
             </div>
             
             <div>
@@ -257,20 +245,18 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               <Label htmlFor="earthingArrangement" className="text-sm font-medium">
                 Earthing Arrangement *
               </Label>
-              <Select 
-                value={formData.earthingArrangement || ''} 
+              <MobileSelectPicker
+                value={formData.earthingArrangement || ''}
                 onValueChange={(value) => onUpdate('earthingArrangement', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select earthing system" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="TN-S">TN-S (Separate neutral and earth)</SelectItem>
-                  <SelectItem value="TN-C-S">TN-C-S (PME/CNE)</SelectItem>
-                  <SelectItem value="TT">TT (Earth electrode)</SelectItem>
-                  <SelectItem value="IT">IT (Isolated/impedance earthed)</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: 'TN-S', label: 'TN-S (Separate neutral and earth)' },
+                  { value: 'TN-C-S', label: 'TN-C-S (PME/CNE)' },
+                  { value: 'TT', label: 'TT (Earth electrode)' },
+                  { value: 'IT', label: 'IT (Isolated/impedance earthed)' },
+                ]}
+                placeholder="Select earthing system"
+                title="Earthing Arrangement"
+              />
             </div>
             
             <div>
@@ -302,19 +288,17 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               <Label htmlFor="partPRequired" className="text-sm font-medium">
                 Part P Notification Required
               </Label>
-              <Select 
-                value={formData.partPRequired || ''} 
+              <MobileSelectPicker
+                value={formData.partPRequired || ''}
                 onValueChange={(value) => onUpdate('partPRequired', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select requirement" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="yes">Yes - Notifiable work</SelectItem>
-                  <SelectItem value="no">No - Non-notifiable work</SelectItem>
-                  <SelectItem value="self-cert">Self-certification scheme</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: 'yes', label: 'Yes - Notifiable work' },
+                  { value: 'no', label: 'No - Non-notifiable work' },
+                  { value: 'self-cert', label: 'Self-certification scheme' },
+                ]}
+                placeholder="Select requirement"
+                title="Part P Notification"
+              />
             </div>
             
             {formData.partPRequired === 'yes' && (

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -155,22 +155,20 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                         Installation Type *
                         <span className="text-destructive">*</span>
                       </Label>
-                      <Select
+                      <MobileSelectPicker
                         value={formData.installationType || ''}
                         onValueChange={(value) => onUpdate('installationType', value)}
-                      >
-                        <SelectTrigger className="h-11">
-                          <SelectValue placeholder="Select installation type" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                          <SelectItem value="domestic">Domestic Dwelling</SelectItem>
-                          <SelectItem value="commercial">Commercial Premises</SelectItem>
-                          <SelectItem value="industrial">Industrial Installation</SelectItem>
-                          <SelectItem value="agricultural">Agricultural Building</SelectItem>
-                          <SelectItem value="temporary">Temporary Installation</SelectItem>
-                          <SelectItem value="other">Other (Specify in Notes)</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: 'domestic', label: 'Domestic Dwelling' },
+                          { value: 'commercial', label: 'Commercial Premises' },
+                          { value: 'industrial', label: 'Industrial Installation' },
+                          { value: 'agricultural', label: 'Agricultural Building' },
+                          { value: 'temporary', label: 'Temporary Installation' },
+                          { value: 'other', label: 'Other (Specify in Notes)' },
+                        ]}
+                        placeholder="Select installation type"
+                        title="Installation Type"
+                      />
                     </div>
 
                     <div className="space-y-2">
@@ -220,21 +218,19 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                       <Label htmlFor="installationPurpose" className="text-sm font-medium">
                         Installation Purpose
                       </Label>
-                      <Select
+                      <MobileSelectPicker
                         value={formData.installationPurpose || ''}
                         onValueChange={(value) => onUpdate('installationPurpose', value)}
-                      >
-                        <SelectTrigger className="h-11">
-                          <SelectValue placeholder="Select purpose" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                          <SelectItem value="lighting">Lighting Circuits</SelectItem>
-                          <SelectItem value="power">Power Circuits</SelectItem>
-                          <SelectItem value="heating">Heating Systems</SelectItem>
-                          <SelectItem value="mixed">Mixed Installation</SelectItem>
-                          <SelectItem value="specialised">Specialised Equipment</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: 'lighting', label: 'Lighting Circuits' },
+                          { value: 'power', label: 'Power Circuits' },
+                          { value: 'heating', label: 'Heating Systems' },
+                          { value: 'mixed', label: 'Mixed Installation' },
+                          { value: 'specialised', label: 'Specialised Equipment' },
+                        ]}
+                        placeholder="Select purpose"
+                        title="Installation Purpose"
+                      />
                     </div>
                   </>
                 )}
@@ -263,41 +259,37 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                         Installation Method *
                         <span className="text-destructive">*</span>
                       </Label>
-                      <Select
+                      <MobileSelectPicker
                         value={formData.installationMethod || ''}
                         onValueChange={(value) => onUpdate('installationMethod', value)}
-                      >
-                        <SelectTrigger className="h-11">
-                          <SelectValue placeholder="Select method" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                          <SelectItem value="surface">Surface Mounted</SelectItem>
-                          <SelectItem value="concealed">Concealed/Embedded</SelectItem>
-                          <SelectItem value="mixed">Mixed Methods</SelectItem>
-                          <SelectItem value="conduit">Conduit System</SelectItem>
-                          <SelectItem value="trunking">Trunking System</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: 'surface', label: 'Surface Mounted' },
+                          { value: 'concealed', label: 'Concealed/Embedded' },
+                          { value: 'mixed', label: 'Mixed Methods' },
+                          { value: 'conduit', label: 'Conduit System' },
+                          { value: 'trunking', label: 'Trunking System' },
+                        ]}
+                        placeholder="Select method"
+                        title="Installation Method"
+                      />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="installationExtent" className="text-sm font-medium">
                         Installation Extent
                       </Label>
-                      <Select
+                      <MobileSelectPicker
                         value={formData.installationExtent || ''}
                         onValueChange={(value) => onUpdate('installationExtent', value)}
-                      >
-                        <SelectTrigger className="h-11">
-                          <SelectValue placeholder="Select extent" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                          <SelectItem value="complete">Complete Installation (100%)</SelectItem>
-                          <SelectItem value="partial">Partial Installation</SelectItem>
-                          <SelectItem value="sample">Sample Testing Only</SelectItem>
-                          <SelectItem value="specific">Specific Areas Only</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: 'complete', label: 'Complete Installation (100%)' },
+                          { value: 'partial', label: 'Partial Installation' },
+                          { value: 'sample', label: 'Sample Testing Only' },
+                          { value: 'specific', label: 'Specific Areas Only' },
+                        ]}
+                        placeholder="Select extent"
+                        title="Installation Extent"
+                      />
                     </div>
                   </>
                 )}
@@ -309,45 +301,41 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                         Location Type *
                         <span className="text-destructive">*</span>
                       </Label>
-                      <Select
+                      <MobileSelectPicker
                         value={formData.locationType || ''}
                         onValueChange={(value) => onUpdate('locationType', value)}
-                      >
-                        <SelectTrigger className="h-11">
-                          <SelectValue placeholder="Select location" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                          <SelectItem value="indoor-dry">Indoor - Dry Conditions</SelectItem>
-                          <SelectItem value="indoor-damp">Indoor - Damp Conditions</SelectItem>
-                          <SelectItem value="outdoor">Outdoor Installation</SelectItem>
-                          <SelectItem value="bathroom">Bathroom/Wet Room</SelectItem>
-                          <SelectItem value="kitchen">Kitchen Areas</SelectItem>
-                          <SelectItem value="garage">Garage/Outbuilding</SelectItem>
-                          <SelectItem value="special">Special Location (BS 7671 Part 7)</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: 'indoor-dry', label: 'Indoor - Dry Conditions' },
+                          { value: 'indoor-damp', label: 'Indoor - Damp Conditions' },
+                          { value: 'outdoor', label: 'Outdoor Installation' },
+                          { value: 'bathroom', label: 'Bathroom/Wet Room' },
+                          { value: 'kitchen', label: 'Kitchen Areas' },
+                          { value: 'garage', label: 'Garage/Outbuilding' },
+                          { value: 'special', label: 'Special Location (BS 7671 Part 7)' },
+                        ]}
+                        placeholder="Select location"
+                        title="Location Type"
+                      />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="environmentalConditions" className="text-sm font-medium">
                         Environmental Conditions
                       </Label>
-                      <Select
+                      <MobileSelectPicker
                         value={formData.environmentalConditions || ''}
                         onValueChange={(value) => onUpdate('environmentalConditions', value)}
-                      >
-                        <SelectTrigger className="h-11">
-                          <SelectValue placeholder="Select conditions" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                          <SelectItem value="normal">Normal Conditions</SelectItem>
-                          <SelectItem value="dusty">Dusty Environment</SelectItem>
-                          <SelectItem value="corrosive">Corrosive Atmosphere</SelectItem>
-                          <SelectItem value="high-temp">High Temperature</SelectItem>
-                          <SelectItem value="vibration">Subject to Vibration</SelectItem>
-                          <SelectItem value="mechanical-damage">Risk of Mechanical Damage</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: 'normal', label: 'Normal Conditions' },
+                          { value: 'dusty', label: 'Dusty Environment' },
+                          { value: 'corrosive', label: 'Corrosive Atmosphere' },
+                          { value: 'high-temp', label: 'High Temperature' },
+                          { value: 'vibration', label: 'Subject to Vibration' },
+                          { value: 'mechanical-damage', label: 'Risk of Mechanical Damage' },
+                        ]}
+                        placeholder="Select conditions"
+                        title="Environmental Conditions"
+                      />
                     </div>
 
                     <div className="space-y-2">
@@ -448,20 +436,18 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                       <Label htmlFor="previousRecords" className="text-sm font-medium">
                         Previous Records Available
                       </Label>
-                      <Select
+                      <MobileSelectPicker
                         value={formData.previousRecords || ''}
                         onValueChange={(value) => onUpdate('previousRecords', value)}
-                      >
-                        <SelectTrigger className="h-11">
-                          <SelectValue placeholder="Select availability" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-background border-border z-50">
-                          <SelectItem value="yes-complete">Yes - Complete Records</SelectItem>
-                          <SelectItem value="yes-partial">Yes - Partial Records</SelectItem>
-                          <SelectItem value="no">No Records Available</SelectItem>
-                          <SelectItem value="unknown">Unknown</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: 'yes-complete', label: 'Yes - Complete Records' },
+                          { value: 'yes-partial', label: 'Yes - Partial Records' },
+                          { value: 'no', label: 'No Records Available' },
+                          { value: 'unknown', label: 'Unknown' },
+                        ]}
+                        placeholder="Select availability"
+                        title="Previous Records Available"
+                      />
                     </div>
                   </>
                 )}

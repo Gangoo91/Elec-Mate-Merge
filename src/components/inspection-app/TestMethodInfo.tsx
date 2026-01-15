@@ -3,7 +3,7 @@ import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { insulationTestVoltageOptions } from '@/types/testOptions';
 
 interface TestMethodInfoProps {
@@ -27,21 +27,13 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
         </div>
         <div className="space-y-2">
           <Label htmlFor="testVoltage" className="text-sm">Test Voltage Applied</Label>
-          <Select 
-            value={formData.testVoltage || ''} 
+          <MobileSelectPicker
+            value={formData.testVoltage || ''}
             onValueChange={(value) => onUpdate('testVoltage', value)}
-          >
-            <SelectTrigger className="h-10">
-              <SelectValue placeholder="Select test voltage..." />
-            </SelectTrigger>
-            <SelectContent className="bg-background z-50 max-h-[200px] overflow-y-auto">
-              {insulationTestVoltageOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            options={insulationTestVoltageOptions}
+            placeholder="Select test voltage..."
+            title="Test Voltage"
+          />
         </div>
       </div>
 

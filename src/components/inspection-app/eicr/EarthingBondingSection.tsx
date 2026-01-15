@@ -3,7 +3,7 @@ import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Separator } from '@/components/ui/separator';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Zap, Info } from 'lucide-react';
@@ -149,21 +149,19 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                   <Label htmlFor="mainBondingSize">
                     Main Bonding Conductor Size *
                   </Label>
-                  <Select 
-                    value={formData.mainBondingSize || ''} 
+                  <MobileSelectPicker
+                    value={formData.mainBondingSize || ''}
                     onValueChange={(value) => onUpdate('mainBondingSize', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                      <SelectValue placeholder="Select conductor size" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="6mm">6mm²</SelectItem>
-                      <SelectItem value="10mm">10mm²</SelectItem>
-                      <SelectItem value="16mm">16mm²</SelectItem>
-                      <SelectItem value="25mm">25mm²</SelectItem>
-                      <SelectItem value="custom">Other/Custom</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    options={[
+                      { value: '6mm', label: '6mm²' },
+                      { value: '10mm', label: '10mm²' },
+                      { value: '16mm', label: '16mm²' },
+                      { value: '25mm', label: '25mm²' },
+                      { value: 'custom', label: 'Other/Custom' },
+                    ]}
+                    placeholder="Select conductor size"
+                    title="Main Bonding Conductor Size"
+                  />
                   <p className="text-xs text-muted-foreground mt-1">
                     Typical sizes: 10mm² for most domestic installations
                   </p>
@@ -188,19 +186,17 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                   <Label htmlFor="bondingCompliance">
                     Bonding Compliance *
                   </Label>
-                  <Select 
-                    value={formData.bondingCompliance || ''} 
+                  <MobileSelectPicker
+                    value={formData.bondingCompliance || ''}
                     onValueChange={(value) => onUpdate('bondingCompliance', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                      <SelectValue placeholder="Select compliance status" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="satisfactory">Satisfactory</SelectItem>
-                      <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
-                      <SelectItem value="not-applicable">Not Applicable</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    options={[
+                      { value: 'satisfactory', label: 'Satisfactory' },
+                      { value: 'unsatisfactory', label: 'Unsatisfactory' },
+                      { value: 'not-applicable', label: 'Not Applicable' },
+                    ]}
+                    placeholder="Select compliance status"
+                    title="Bonding Compliance"
+                  />
                 </div>
 
                 <div className="space-y-3">
@@ -306,22 +302,20 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                   <Label htmlFor="supplementaryBondingSize">
                     Supplementary Bonding Conductor Size
                   </Label>
-                  <Select 
-                    value={formData.supplementaryBondingSize || ''} 
+                  <MobileSelectPicker
+                    value={formData.supplementaryBondingSize || ''}
                     onValueChange={(value) => onUpdate('supplementaryBondingSize', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                      <SelectValue placeholder="Select conductor size" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="2.5mm">2.5mm²</SelectItem>
-                      <SelectItem value="4mm">4mm²</SelectItem>
-                      <SelectItem value="6mm">6mm²</SelectItem>
-                      <SelectItem value="10mm">10mm²</SelectItem>
-                      <SelectItem value="not-required">Not Required</SelectItem>
-                      <SelectItem value="custom">Other/Custom</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    options={[
+                      { value: '2.5mm', label: '2.5mm²' },
+                      { value: '4mm', label: '4mm²' },
+                      { value: '6mm', label: '6mm²' },
+                      { value: '10mm', label: '10mm²' },
+                      { value: 'not-required', label: 'Not Required' },
+                      { value: 'custom', label: 'Other/Custom' },
+                    ]}
+                    placeholder="Select conductor size"
+                    title="Supplementary Bonding Conductor Size"
+                  />
                   <p className="text-xs text-muted-foreground mt-1">
                     Required in locations with increased risk (e.g., bathrooms)
                   </p>
@@ -346,20 +340,18 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                   <Label htmlFor="equipotentialBonding">
                     Equipotential Bonding Status
                   </Label>
-                  <Select 
-                    value={formData.equipotentialBonding || ''} 
+                  <MobileSelectPicker
+                    value={formData.equipotentialBonding || ''}
                     onValueChange={(value) => onUpdate('equipotentialBonding', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                      <SelectValue placeholder="Select status" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="present">Present and Satisfactory</SelectItem>
-                      <SelectItem value="present-unsatisfactory">Present but Unsatisfactory</SelectItem>
-                      <SelectItem value="not-present">Not Present</SelectItem>
-                      <SelectItem value="not-required">Not Required</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    options={[
+                      { value: 'present', label: 'Present and Satisfactory' },
+                      { value: 'present-unsatisfactory', label: 'Present but Unsatisfactory' },
+                      { value: 'not-present', label: 'Not Present' },
+                      { value: 'not-required', label: 'Not Required' },
+                    ]}
+                    placeholder="Select status"
+                    title="Equipotential Bonding Status"
+                  />
                 </div>
               </div>
 

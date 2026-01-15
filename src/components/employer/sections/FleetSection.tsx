@@ -23,6 +23,10 @@ import {
   type UpdateVehicleInput
 } from "@/hooks/useFleet";
 import { EditVehicleSheet } from "@/components/employer/dialogs/EditVehicleSheet";
+import { VehicleToolsSheet } from "@/components/employer/fleet/VehicleToolsSheet";
+import { VehicleDocumentsSheet } from "@/components/employer/fleet/VehicleDocumentsSheet";
+import { DailyCheckSheet } from "@/components/employer/fleet/DailyCheckSheet";
+import { ServiceHistorySheet } from "@/components/employer/fleet/ServiceHistorySheet";
 import {
   Car,
   Search,
@@ -39,7 +43,11 @@ import {
   Loader2,
   RefreshCw,
   Trash2,
-  Pencil
+  Pencil,
+  Package,
+  FileText,
+  ClipboardCheck,
+  Settings
 } from "lucide-react";
 
 const vehicleStatuses: VehicleStatus[] = ["Active", "Available", "Maintenance", "Off Road"];
@@ -54,6 +62,13 @@ export function FleetSection() {
   // Edit vehicle state
   const [editVehicle, setEditVehicle] = useState<Vehicle | null>(null);
   const [showEditSheet, setShowEditSheet] = useState(false);
+
+  // New feature sheets
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
+  const [showToolsSheet, setShowToolsSheet] = useState(false);
+  const [showDocumentsSheet, setShowDocumentsSheet] = useState(false);
+  const [showCheckSheet, setShowCheckSheet] = useState(false);
+  const [showServiceSheet, setShowServiceSheet] = useState(false);
 
   // Vehicle form state
   const [registration, setRegistration] = useState("");
@@ -438,6 +453,46 @@ export function FleetSection() {
                           {vehicle.next_service && <div><span className="text-muted-foreground">Next Service:</span><p className="font-medium">{new Date(vehicle.next_service).toLocaleDateString("en-GB")}</p></div>}
                           <div><span className="text-muted-foreground">Tracker:</span><p className="font-medium flex items-center gap-1">{vehicle.tracker_fitted ? <><CheckCircle className="h-3 w-3 text-success" /> Fitted</> : <><AlertTriangle className="h-3 w-3 text-warning" /> Not fitted</>}</p></div>
                         </div>
+                        {/* Quick Actions */}
+                        <div className="grid grid-cols-4 gap-2 mb-3">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="flex-col h-16 gap-1"
+                            onClick={() => { setSelectedVehicle(vehicle); setShowToolsSheet(true); }}
+                          >
+                            <Package className="h-4 w-4 text-orange-400" />
+                            <span className="text-xs">Tools</span>
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="flex-col h-16 gap-1"
+                            onClick={() => { setSelectedVehicle(vehicle); setShowDocumentsSheet(true); }}
+                          >
+                            <FileText className="h-4 w-4 text-blue-400" />
+                            <span className="text-xs">Docs</span>
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="flex-col h-16 gap-1"
+                            onClick={() => { setSelectedVehicle(vehicle); setShowCheckSheet(true); }}
+                          >
+                            <ClipboardCheck className="h-4 w-4 text-green-400" />
+                            <span className="text-xs">Check</span>
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="flex-col h-16 gap-1"
+                            onClick={() => { setSelectedVehicle(vehicle); setShowServiceSheet(true); }}
+                          >
+                            <Settings className="h-4 w-4 text-purple-400" />
+                            <span className="text-xs">Service</span>
+                          </Button>
+                        </div>
+
                         <div className="flex gap-2">
                           <Button variant="outline" size="sm" className="flex-1" onClick={() => { setFuelVehicleId(vehicle.id); setShowNewFuel(true); }}><Fuel className="h-4 w-4 mr-2" />Log Fuel</Button>
                           <Button variant="outline" size="sm" className="flex-1" onClick={() => handleEditVehicle(vehicle)}><Pencil className="h-4 w-4 mr-2" />Edit</Button>
@@ -495,6 +550,42 @@ export function FleetSection() {
         isSaving={updateVehicle.isPending}
         isDeleting={deleteVehicle.isPending}
       />
+
+      {/* Tool Inventory Sheet */}
+      {selectedVehicle && (
+        <VehicleToolsSheet
+          open={showToolsSheet}
+          onOpenChange={setShowToolsSheet}
+          vehicle={selectedVehicle}
+        />
+      )}
+
+      {/* Documents Sheet */}
+      {selectedVehicle && (
+        <VehicleDocumentsSheet
+          open={showDocumentsSheet}
+          onOpenChange={setShowDocumentsSheet}
+          vehicle={selectedVehicle}
+        />
+      )}
+
+      {/* Daily Check Sheet */}
+      {selectedVehicle && (
+        <DailyCheckSheet
+          open={showCheckSheet}
+          onOpenChange={setShowCheckSheet}
+          vehicle={selectedVehicle}
+        />
+      )}
+
+      {/* Service History Sheet */}
+      {selectedVehicle && (
+        <ServiceHistorySheet
+          open={showServiceSheet}
+          onOpenChange={setShowServiceSheet}
+          vehicle={selectedVehicle}
+        />
+      )}
     </div>
   );
 }

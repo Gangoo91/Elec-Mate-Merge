@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown, Trash2 } from 'lucide-react';
 
@@ -81,21 +81,13 @@ const TestResultCard = ({ result, onUpdate, onRemove, circuitTypes }: TestResult
               </div>
               <div className="space-y-2">
                 <Label htmlFor={`type-${result.id}`}>Type of Circuit</Label>
-                <Select
+                <MobileSelectPicker
                   value={result.type}
                   onValueChange={(value) => onUpdate(result.id, 'type', value)}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select circuit type" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-elec-gray text-foreground shadow-md z-50">
-                    {circuitTypes.map((type) => (
-                      <SelectItem key={type} value={type}>
-                        {type}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  options={circuitTypes.map((type) => ({ value: type, label: type }))}
+                  placeholder="Select circuit type"
+                  title="Type of Circuit"
+                />
               </div>
             </div>
 

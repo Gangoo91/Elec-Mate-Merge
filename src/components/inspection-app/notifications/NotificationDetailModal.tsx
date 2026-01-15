@@ -4,13 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Notification, NotificationStatus } from '@/hooks/useNotifications';
 import { StatusBadge } from './StatusBadge';
 import { FileText, Building2, Calendar, Clock } from 'lucide-react';
@@ -134,17 +128,18 @@ export const NotificationDetailModal = ({
 
             <div>
               <Label htmlFor="status">Notification Status</Label>
-              <Select value={status} onValueChange={(value) => setStatus(value as NotificationStatus)}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="in-progress">In Progress</SelectItem>
-                  <SelectItem value="submitted">Submitted</SelectItem>
-                  <SelectItem value="cancelled">Cancelled</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={status}
+                onValueChange={(value) => setStatus(value as NotificationStatus)}
+                options={[
+                  { value: 'pending', label: 'Pending' },
+                  { value: 'in-progress', label: 'In Progress' },
+                  { value: 'submitted', label: 'Submitted' },
+                  { value: 'cancelled', label: 'Cancelled' },
+                ]}
+                placeholder="Select status"
+                title="Notification Status"
+              />
             </div>
           </div>
 

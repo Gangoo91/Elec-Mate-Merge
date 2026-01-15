@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import { insulationTestVoltageOptions } from '@/types/testOptions';
@@ -30,21 +30,13 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
     <>
       {/* Column 21: Test voltage (V) */}
       <TableCell className="p-0 bg-black h-5 align-middle w-20 min-w-[80px] max-w-[80px]">
-        <Select
+        <MobileSelectPicker
           value={result.insulationTestVoltage || ''}
           onValueChange={(value) => onUpdate(result.id, 'insulationTestVoltage', value)}
-        >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0">
-            <SelectValue placeholder="Test V" />
-          </SelectTrigger>
-          <SelectContent className="bg-background border border-border rounded-md z-[100]">
-            {insulationTestVoltageOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
-                {option.value}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={insulationTestVoltageOptions}
+          placeholder="Test V"
+          title="Test Voltage"
+        />
       </TableCell>
       
       {/* Column 22: Live - Live (MΩ) */}

@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, Target, CheckCircle, AlertTriangle, Wrench, Layers, BookOpen, Clipboard, Clock, Settings, Hammer, Shield } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -135,505 +132,453 @@ const Module7Section1_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5 -ml-2 px-3"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 1
+              Back to Section
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-3 md:px-6 py-4 md:py-8">
-        {/* Header */}
-        <header className="mb-4 md:mb-6 lg:mb-8">
-          <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
-            <div className="p-1.5 md:p-2 rounded-lg ">
-              <Layers className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-white" />
+      {/* Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="font-medium">Module 7</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/70">Section 1.4</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs md:text-sm">
-              Section 7.1.4
-            </Badge>
-          </div>
-          <h1 className="text-lg md:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 md:mb-2">
-            Categories of Electrical Faults
-          </h1>
-          <p className="text-xs md:text-sm lg:text-base text-white max-w-3xl">
-            Learn about the four main categories of electrical faults and their characteristics.
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+              Categories of Electrical Faults
+            </h1>
+            <p className="text-white/70 max-w-xl mx-auto">
+              Learn about the four main categories of electrical faults and their characteristics.
+            </p>
+          </header>
 
-        {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-4 md:mb-6 lg:mb-8 p-3 md:p-4 lg:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4 lg:mb-6">
-            <Target className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-white" />
-            <h2 className="text-base md:text-lg lg:text-lg sm:text-xl font-semibold text-white">Introduction</h2>
+          {/* Summary Box */}
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
+            <p className="text-white/90 text-sm leading-relaxed">
+              <strong className="text-elec-yellow">Key Points:</strong> Four main categories: design, installation, deterioration, external damage. Each category has different causes and prevention strategies. Understanding categories helps with fault finding and responsibility.
+            </p>
           </div>
-          <div className="grid gap-3 md:gap-4 lg:gap-6 md:grid-cols-2 text-xs md:text-sm lg:text-base text-white">
-            <div className="rounded-lg p-2 md:p-3 lg:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-1 md:mb-2 text-xs md:text-sm">In 30 seconds</p>
-              <ul className="list-disc pl-4 md:pl-6 space-y-0.5 md:space-y-1">
-                <li>Four main categories: design, installation, deterioration, external damage.</li>
-                <li>Each category has different causes and prevention strategies.</li>
-                <li>Understanding categories helps with fault finding and responsibility.</li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-2 md:p-3 lg:p-4 bg-transparent border border-elec-yellow/30">
-              <p className="font-medium mb-1 md:mb-2 text-xs md:text-sm">Spot it / Use it</p>
-              <ul className="list-disc pl-4 md:pl-6 space-y-0.5 md:space-y-1">
-                <li><strong>Spot:</strong> When faults occurred, how they developed, what caused them.</li>
-                <li><strong>Use:</strong> Category knowledge for prevention strategies and responsibility.</li>
-                <li><strong>Check:</strong> Design adequacy, installation quality, maintenance needs.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
 
-        {/* Introduction */}
-        <Card className="mb-4 md:mb-6 lg:mb-8 p-3 md:p-4 lg:p-6 bg-transparent border-white/20">
-          <h2 className="text-base md:text-lg lg:text-lg sm:text-xl font-semibold text-white mb-3 md:mb-4">Introduction</h2>
-          <p className="text-sm md:text-base text-white mb-3 md:mb-4">
-            Not all electrical faults are the same—they arise from different causes and require different approaches for prevention and correction. Understanding the four main categories of electrical faults helps electricians identify root causes, assign responsibility, and implement effective prevention strategies. This classification system is essential for proper fault diagnosis and long-term system reliability.
-          </p>
-          
-          <div className="rounded-lg p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-4">
-            <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-medium text-blue-700 text-elec-yellow mb-2">Why This Matters</p>
-                <p className="text-xs sm:text-sm text-white">
-                  Proper fault categorisation helps determine liability, guides maintenance strategies, and prevents recurrence. It's the difference between reactive repairs and proactive system management.
+          {/* Introduction */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Introduction
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Not all electrical faults are the same—they arise from different causes and require different approaches for prevention and correction. Understanding the four main categories of electrical faults helps electricians identify root causes, assign responsibility, and implement effective prevention strategies.
+              </p>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="text-sm">
+                  <strong className="text-elec-yellow">Why This Matters:</strong> Proper fault categorisation helps determine liability, guides maintenance strategies, and prevents recurrence. It's the difference between reactive repairs and proactive system management.
+                </p>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="text-sm">
+                  <strong className="text-elec-yellow">Industry Standard:</strong> BS 7671 emphasises the importance of understanding fault origins to ensure appropriate protective measures and maintenance schedules are implemented.
                 </p>
               </div>
             </div>
-          </div>
-          
-          <div className="mt-4 space-y-3">
-            <p className="text-base text-white">
-              <strong>Professional Benefit:</strong> Understanding fault categories allows electricians to provide better advice to clients, implement targeted prevention measures, and maintain safer electrical systems.
-            </p>
-            
-            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
-              <p className="text-xs sm:text-sm text-white">
-                <strong>Industry Standard:</strong> BS 7671 emphasises the importance of understanding fault origins to ensure appropriate protective measures and maintenance schedules are implemented.
-              </p>
-            </div>
-            
-            <div className="bg-amber-50 dark:bg-amber-900/20 p-3 rounded border border-amber-200 dark:border-amber-800">
-              <p className="text-xs sm:text-sm text-white">
-                <strong>Legal Importance:</strong> Fault categorisation helps establish liability and demonstrates due diligence in maintenance and safety management under EAWR 1989.
-              </p>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Learning outcomes */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-base text-white mb-4">By the end of this subsection, learners will be able to:</p>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>Identify and describe the four main categories of electrical faults.</li>
-            <li>Explain how each category of fault develops and their typical characteristics.</li>
-            <li>Recognise real-world examples of each fault type in electrical installations.</li>
-            <li>Appreciate why classification helps with fault finding, prevention, and responsibility.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Learning Outcomes
+            </h2>
+            <div className="text-white/80 space-y-3 leading-relaxed">
+              <p>By the end of this subsection, learners will be able to:</p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Identify and describe the four main categories of electrical faults.</li>
+                <li>Explain how each category of fault develops and their typical characteristics.</li>
+                <li>Recognise real-world examples of each fault type in electrical installations.</li>
+                <li>Appreciate why classification helps with fault finding, prevention, and responsibility.</li>
+              </ul>
+            </div>
+          </section>
 
           {/* Design Faults */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">1. Design Faults</h3>
-            <p className="text-base text-white mb-4">
-              Design faults occur before installation begins—they are errors in the planning and specification phase:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Design Fault Characteristics</p>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-sm md:text-base text-white mb-2"><strong>Common Design Faults:</strong></p>
-                        <div className="grid gap-3 sm:grid-cols-2 mb-3">
-                          <div className="bg-[#121212]/50 p-3 rounded border">
-                            <p className="font-medium text-white mb-1 text-sm md:text-base">Undersized Cables</p>
-                            <p className="text-xs md:text-xs sm:text-sm text-white">Cable ratings insufficient for intended loads</p>
-                          </div>
-                          <div className="bg-[#121212]/50 p-3 rounded border">
-                            <p className="font-medium text-white mb-1 text-sm md:text-base">Inadequate Protection</p>
-                            <p className="text-xs md:text-xs sm:text-sm text-white">Protective devices not sized for fault conditions</p>
-                          </div>
-                          <div className="bg-[#121212]/50 p-3 rounded border">
-                            <p className="font-medium text-white mb-1 text-sm md:text-base">Poor Load Assessment</p>
-                            <p className="text-xs md:text-xs sm:text-sm text-white">Incorrect calculation of anticipated loads</p>
-                          </div>
-                          <div className="bg-[#121212]/50 p-3 rounded border">
-                            <p className="font-medium text-white mb-1 text-sm md:text-base">Environmental Neglect</p>
-                            <p className="text-xs md:text-xs sm:text-sm text-white">Failure to account for environmental conditions</p>
-                          </div>
-                        </div>
-                      </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Design Faults
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Design faults occur before installation begins—they are errors in the planning and specification phase.
+              </p>
 
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Key Characteristics:</strong></p>
-                        <div className="bg-[#121212]/50 p-3 rounded border mb-2">
-                          <ul className="list-disc ml-4 space-y-1 text-xs sm:text-sm text-white">
-                            <li>Present from day one of installation</li>
-                            <li>Often require complete redesign to correct</li>
-                            <li>Can be detected through proper design review</li>
-                            <li>May not be apparent until systems are loaded</li>
-                          </ul>
-                        </div>
-                      </div>
-
-                      <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200 dark:border-green-800">
-                        <p className="font-medium text-green-700 dark:text-green-400 mb-2">Prevention Strategy</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          Design faults are prevented through proper design review, adequate load assessment, compliance with BS 7671, and consideration of future requirements and environmental factors.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Undersized Cables</p>
+                  <p className="text-sm text-white/70">Cable ratings insufficient for intended loads</p>
                 </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Inadequate Protection</p>
+                  <p className="text-sm text-white/70">Protective devices not sized for fault conditions</p>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Poor Load Assessment</p>
+                  <p className="text-sm text-white/70">Incorrect calculation of anticipated loads</p>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Environmental Neglect</p>
+                  <p className="text-sm text-white/70">Failure to account for environmental conditions</p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white mb-2">Key Characteristics:</p>
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white/70">
+                  <li>Present from day one of installation</li>
+                  <li>Often require complete redesign to correct</li>
+                  <li>Can be detected through proper design review</li>
+                  <li>May not be apparent until systems are loaded</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
+                <p className="text-sm">
+                  <strong className="text-green-400">Prevention Strategy:</strong> Design faults are prevented through proper design review, adequate load assessment, compliance with BS 7671, and consideration of future requirements and environmental factors.
+                </p>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="design-faults-check"
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
-          <Separator className="my-6" />
+          <div className="mb-10">
+            <InlineCheck
+              id="design-faults-check"
+              question={quickCheckQuestions[0].question}
+              options={quickCheckQuestions[0].options}
+              correctIndex={quickCheckQuestions[0].correctIndex}
+              explanation={quickCheckQuestions[0].explanation}
+            />
+          </div>
 
           {/* Installation Faults */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">2. Installation Faults</h3>
-            <p className="text-base text-white mb-4">
-              Installation faults arise during construction and are typically caused by poor workmanship:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-orange-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Installation Fault Types</p>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Common Installation Faults:</strong></p>
-                        <div className="bg-[#121212]/50 p-3 rounded border mb-3">
-                          <div className="grid gap-3 lg:grid-cols-2">
-                            <div>
-                              <p className="font-medium text-white mb-2 text-sm md:text-base">Workmanship Issues</p>
-                              <ul className="list-disc ml-4 space-y-1 text-xs md:text-xs sm:text-sm text-white">
-                                <li>Loose terminal connections</li>
-                                <li>Incorrect polarity connections</li>
-                                <li>Damaged cables during installation</li>
-                                <li>Poor cable management</li>
-                              </ul>
-                            </div>
-                            <div>
-                              <p className="font-medium text-white mb-2 text-sm md:text-base">System Errors</p>
-                              <ul className="list-disc ml-4 space-y-1 text-xs md:text-xs sm:text-sm text-white">
-                                <li>Missing or incorrect earthing</li>
-                                <li>Cross-connected circuits</li>
-                                <li>Inadequate IP ratings for location</li>
-                                <li>Non-compliance with BS 7671</li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Installation Faults
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Installation faults arise during construction and are typically caused by poor workmanship.
+              </p>
 
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Detection and Prevention:</strong></p>
-                        <div className="grid md:grid-cols-2 gap-4">
-                          <div className="bg-[#121212]/50 p-3 rounded border">
-                            <p className="font-medium text-white mb-2">Detection Methods</p>
-                            <p className="text-xs sm:text-sm text-white">Initial testing and inspection reveals most installation faults</p>
-                          </div>
-                          <div className="bg-[#121212]/50 p-3 rounded border">
-                            <p className="font-medium text-white mb-2">Prevention</p>
-                            <p className="text-xs sm:text-sm text-white">Proper training, supervision, and quality control procedures</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="bg-amber-50 dark:bg-amber-900/20 p-3 rounded border border-amber-200 dark:border-amber-800">
-                        <p className="font-medium text-amber-700 dark:text-amber-400 mb-2">Important Note</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          Installation faults are the most preventable category through proper training, supervision, and adherence to installation standards and procedures.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-2">Workmanship Issues</p>
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                    <li>Loose terminal connections</li>
+                    <li>Incorrect polarity connections</li>
+                    <li>Damaged cables during installation</li>
+                    <li>Poor cable management</li>
+                  </ul>
                 </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-2">System Errors</p>
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                    <li>Missing or incorrect earthing</li>
+                    <li>Cross-connected circuits</li>
+                    <li>Inadequate IP ratings for location</li>
+                    <li>Non-compliance with BS 7671</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-2">Detection Methods</p>
+                  <p className="text-sm text-white/70">Initial testing and inspection reveals most installation faults</p>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-2">Prevention</p>
+                  <p className="text-sm text-white/70">Proper training, supervision, and quality control procedures</p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
+                <p className="text-sm">
+                  <strong className="text-amber-400">Important Note:</strong> Installation faults are the most preventable category through proper training, supervision, and adherence to installation standards and procedures.
+                </p>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="installation-faults-check"
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-          <Separator className="my-6" />
+          <div className="mb-10">
+            <InlineCheck
+              id="installation-faults-check"
+              question={quickCheckQuestions[1].question}
+              options={quickCheckQuestions[1].options}
+              correctIndex={quickCheckQuestions[1].correctIndex}
+              explanation={quickCheckQuestions[1].explanation}
+            />
+          </div>
 
           {/* Deterioration Faults */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">3. Deterioration Faults</h3>
-            <p className="text-base text-white mb-4">
-              Deterioration faults develop over time as systems age and components degrade:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-600 dark:text-green-400 mb-3">Deterioration Processes</p>
-                    
-                    <div className="space-y-4">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="bg-[#121212]/50 p-3 rounded border">
-                          <p className="font-medium text-white mb-2">Environmental Factors</p>
-                          <p className="text-xs sm:text-sm text-white">Heat, moisture, chemicals, and UV causing material degradation</p>
-                        </div>
-                        <div className="bg-[#121212]/50 p-3 rounded border">
-                          <p className="font-medium text-white mb-2">Operational Stress</p>
-                          <p className="text-xs sm:text-sm text-white">Thermal cycling, vibration, and electrical stress over time</p>
-                        </div>
-                        <div className="bg-[#121212]/50 p-3 rounded border">
-                          <p className="font-medium text-white mb-2">Material Aging</p>
-                          <p className="text-xs sm:text-sm text-white">Natural degradation of insulation, conductors, and protective devices</p>
-                        </div>
-                        <div className="bg-[#121212]/50 p-3 rounded border">
-                          <p className="font-medium text-white mb-2">Corrosion</p>
-                          <p className="text-xs sm:text-sm text-white">Electrochemical processes affecting connections and components</p>
-                        </div>
-                      </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Deterioration Faults
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Deterioration faults develop over time as systems age and components degrade.
+              </p>
 
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Management Strategy:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                          <li>Regular inspection and testing programs</li>
-                          <li>Planned maintenance and component replacement</li>
-                          <li>Environmental protection measures</li>
-                          <li>Monitoring of system performance indicators</li>
-                        </ul>
-                      </div>
-
-                      <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">Key Understanding</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          Deterioration is inevitable but manageable. Regular inspection and maintenance can identify degradation before it becomes dangerous or causes system failure.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Environmental Factors</p>
+                  <p className="text-sm text-white/70">Heat, moisture, chemicals, and UV causing material degradation</p>
                 </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Operational Stress</p>
+                  <p className="text-sm text-white/70">Thermal cycling, vibration, and electrical stress over time</p>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Material Aging</p>
+                  <p className="text-sm text-white/70">Natural degradation of insulation, conductors, and protective devices</p>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Corrosion</p>
+                  <p className="text-sm text-white/70">Electrochemical processes affecting connections and components</p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white mb-2">Management Strategy:</p>
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white/70">
+                  <li>Regular inspection and testing programs</li>
+                  <li>Planned maintenance and component replacement</li>
+                  <li>Environmental protection measures</li>
+                  <li>Monitoring of system performance indicators</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-500/50">
+                <p className="text-sm">
+                  <strong className="text-purple-400">Key Understanding:</strong> Deterioration is inevitable but manageable. Regular inspection and maintenance can identify degradation before it becomes dangerous or causes system failure.
+                </p>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="deterioration-faults-check"
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-          <Separator className="my-6" />
+          <div className="mb-10">
+            <InlineCheck
+              id="deterioration-faults-check"
+              question={quickCheckQuestions[2].question}
+              options={quickCheckQuestions[2].options}
+              correctIndex={quickCheckQuestions[2].correctIndex}
+              explanation={quickCheckQuestions[2].explanation}
+            />
+          </div>
 
           {/* External Damage Faults */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">4. External Damage Faults</h3>
-            <p className="text-base text-white mb-4">
-              External damage faults are caused by influences outside the electrical system itself:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-purple-600 text-elec-yellow mb-3">External Damage Sources</p>
-                    
-                    <div className="space-y-4">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="bg-[#121212]/50 p-3 rounded border">
-                          <p className="font-medium text-white mb-2">Physical Impact</p>
-                          <p className="text-xs sm:text-sm text-white">Construction work, vehicle impact, or accidental damage to equipment</p>
-                        </div>
-                        <div className="bg-[#121212]/50 p-3 rounded border">
-                          <p className="font-medium text-white mb-2">Penetration Damage</p>
-                          <p className="text-xs sm:text-sm text-white">Nails, screws, or drilling through concealed cables</p>
-                        </div>
-                        <div className="bg-[#121212]/50 p-3 rounded border">
-                          <p className="font-medium text-white mb-2">Animal Damage</p>
-                          <p className="text-xs sm:text-sm text-white">Rodents chewing through cables or nesting in equipment</p>
-                        </div>
-                        <div className="bg-[#121212]/50 p-3 rounded border">
-                          <p className="font-medium text-white mb-2">Environmental Events</p>
-                          <p className="text-xs sm:text-sm text-white">Flooding, fire, lightning, or extreme weather damage</p>
-                        </div>
-                      </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              External Damage Faults
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                External damage faults are caused by influences outside the electrical system itself.
+              </p>
 
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Protection Strategies:</strong></p>
-                        <ul className="text-xs sm:text-sm text-white ml-4 list-disc space-y-1">
-                          <li>Proper cable routing and mechanical protection</li>
-                          <li>Adequate IP ratings for environmental conditions</li>
-                          <li>Physical barriers and enclosures</li>
-                          <li>Clear marking and identification of electrical services</li>
-                        </ul>
-                      </div>
-
-                      <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Critical Point</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          While external damage may be unpredictable, proper installation practices and protective measures can significantly reduce the risk and severity of such incidents.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Physical Impact</p>
+                  <p className="text-sm text-white/70">Construction work, vehicle impact, or accidental damage to equipment</p>
                 </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Penetration Damage</p>
+                  <p className="text-sm text-white/70">Nails, screws, or drilling through concealed cables</p>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Animal Damage</p>
+                  <p className="text-sm text-white/70">Rodents chewing through cables or nesting in equipment</p>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Environmental Events</p>
+                  <p className="text-sm text-white/70">Flooding, fire, lightning, or extreme weather damage</p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white mb-2">Protection Strategies:</p>
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white/70">
+                  <li>Proper cable routing and mechanical protection</li>
+                  <li>Adequate IP ratings for environmental conditions</li>
+                  <li>Physical barriers and enclosures</li>
+                  <li>Clear marking and identification of electrical services</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+                <p className="text-sm">
+                  <strong className="text-red-400">Critical Point:</strong> While external damage may be unpredictable, proper installation practices and protective measures can significantly reduce the risk and severity of such incidents.
+                </p>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="external-damage-check"
-            question={quickCheckQuestions[3].question}
-            options={quickCheckQuestions[3].options}
-            correctIndex={quickCheckQuestions[3].correctIndex}
-            explanation={quickCheckQuestions[3].explanation}
-          />
-        </Card>
-
-        {/* Practical Guidance */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
-          <div className="space-y-4">
-            <div>
-              <p className="text-sm md:text-base text-white font-medium mb-2">Fault Identification and Classification:</p>
-              <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-white">
-                <li>Always determine the fault category as part of the investigation process.</li>
-                <li>Consider when the fault likely occurred and what may have caused it.</li>
-                <li>Document the category in fault reports to help with prevention strategies.</li>
-                <li>Use categorisation to guide discussions about responsibility and liability.</li>
-              </ul>
-            </div>
-            
-            <div>
-              <p className="text-sm md:text-base text-white font-medium mb-2">Prevention Strategies by Category:</p>
-              <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-white">
-                <li><strong>Design:</strong> Thorough design review, proper load assessment, compliance verification.</li>
-                <li><strong>Installation:</strong> Skilled tradespeople, proper supervision, quality control procedures.</li>
-                <li><strong>Deterioration:</strong> Regular inspection, planned maintenance, environmental protection.</li>
-                <li><strong>External Damage:</strong> Proper protection, clear marking, risk assessment.</li>
-              </ul>
-            </div>
-            
-            <div>
-              <p className="text-sm md:text-base text-white font-medium mb-2">Professional Application:</p>
-              <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-white">
-                <li>Use fault categories to advise clients on prevention and maintenance needs.</li>
-                <li>Implement targeted inspection procedures based on likely fault categories.</li>
-                <li>Establish responsibility and liability through proper fault categorisation.</li>
-                <li>Develop maintenance schedules appropriate to fault risk categories.</li>
-              </ul>
-            </div>
+          <div className="mb-10">
+            <InlineCheck
+              id="external-damage-check"
+              question={quickCheckQuestions[3].question}
+              options={quickCheckQuestions[3].options}
+              correctIndex={quickCheckQuestions[3].correctIndex}
+              explanation={quickCheckQuestions[3].explanation}
+            />
           </div>
-        </Card>
 
-        {/* Real-World Example */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
-          <div className="space-y-4">
-            <div className="rounded-lg p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-              <h3 className="font-medium text-white mb-3">Case Study: Office Building Fault Investigation</h3>
-              <p className="text-base text-white mb-4">
-                During testing of an office refurbishment, electricians found multiple faults that clearly demonstrated all four categories:
-              </p>
-              <ul className="space-y-3 text-base text-white">
-                <li><strong>Design Fault:</strong> The main distribution board cables were consistently overheating because they were undersized for the connected load—a design error that existed from day one.</li>
-                <li><strong>Installation Fault:</strong> Several socket circuits had loose earth connections at terminals, clearly resulting from poor workmanship during installation.</li>
-                <li><strong>Deterioration Fault:</strong> Lighting circuits in the roof space showed degraded insulation due to prolonged exposure to heat from poorly ventilated areas.</li>
-                <li><strong>External Damage Fault:</strong> One circuit was completely dead due to a cable damaged by a contractor's screw during recent partition installation work.</li>
-              </ul>
-              <p className="text-base text-white mt-4">
-                <strong>Outcome:</strong> Each fault category required a different response—redesign for the undersized cables, repair work for installation faults, planned replacement for deteriorated circuits, and protection measures to prevent future external damage.
-              </p>
-            </div>
-          </div>
-        </Card>
-
-        {/* FAQ */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index}>
-                <h3 className="text-base font-medium text-white mb-2">{faq.question}</h3>
-                <p className="text-sm text-white">{faq.answer}</p>
+          {/* Practical Guidance */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Practical Guidance
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div>
+                <p className="font-medium text-white mb-2">Fault Identification and Classification:</p>
+                <ul className="list-disc pl-5 space-y-2 text-sm">
+                  <li>Always determine the fault category as part of the investigation process.</li>
+                  <li>Consider when the fault likely occurred and what may have caused it.</li>
+                  <li>Document the category in fault reports to help with prevention strategies.</li>
+                  <li>Use categorisation to guide discussions about responsibility and liability.</li>
+                </ul>
               </div>
-            ))}
-          </div>
-        </Card>
 
-        {/* Recap */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>Design faults occur during planning and typically require redesign to correct properly.</li>
-            <li>Installation faults result from poor workmanship and are preventable through proper training and supervision.</li>
-            <li>Deterioration faults develop over time and require regular inspection and maintenance to manage effectively.</li>
-            <li>External damage faults are caused by outside influences but can be minimised through proper protection and installation practices.</li>
-          </ul>
-        </Card>
+              <div>
+                <p className="font-medium text-white mb-2">Prevention Strategies by Category:</p>
+                <ul className="list-disc pl-5 space-y-2 text-sm">
+                  <li><strong>Design:</strong> Thorough design review, proper load assessment, compliance verification.</li>
+                  <li><strong>Installation:</strong> Skilled tradespeople, proper supervision, quality control procedures.</li>
+                  <li><strong>Deterioration:</strong> Regular inspection, planned maintenance, environmental protection.</li>
+                  <li><strong>External Damage:</strong> Proper protection, clear marking, risk assessment.</li>
+                </ul>
+              </div>
 
-        {/* Quiz */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Quiz</h2>
-          <Quiz questions={quizQuestions} title="Categories of Electrical Faults" />
-        </Card>
+              <div>
+                <p className="font-medium text-white mb-2">Professional Application:</p>
+                <ul className="list-disc pl-5 space-y-2 text-sm">
+                  <li>Use fault categories to advise clients on prevention and maintenance needs.</li>
+                  <li>Implement targeted inspection procedures based on likely fault categories.</li>
+                  <li>Establish responsibility and liability through proper fault categorisation.</li>
+                  <li>Develop maintenance schedules appropriate to fault risk categories.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
 
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4">
-          <Button variant="outline" className="w-full sm:w-auto" asChild>
-            <Link to="../1-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              <span className="hidden sm:inline">Previous: Risks and Consequences</span>
-              <span className="sm:hidden">Previous</span>
-            </Link>
-          </Button>
-          <Button className="w-full sm:w-auto" asChild>
-            <Link to="../1-5">
-              <span className="hidden sm:inline">Legal Responsibilities</span>
-              <span className="sm:hidden">Next</span>
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+          {/* Real-World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+              Real-World Example
+            </h2>
+            <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
+              <p className="font-medium text-white mb-3">Case Study: Office Building Fault Investigation</p>
+              <div className="text-white/80 space-y-3 text-sm leading-relaxed">
+                <p>
+                  During testing of an office refurbishment, electricians found multiple faults that clearly demonstrated all four categories:
+                </p>
+                <ul className="space-y-2">
+                  <li><strong>Design Fault:</strong> The main distribution board cables were consistently overheating because they were undersized for the connected load—a design error that existed from day one.</li>
+                  <li><strong>Installation Fault:</strong> Several socket circuits had loose earth connections at terminals, clearly resulting from poor workmanship during installation.</li>
+                  <li><strong>Deterioration Fault:</strong> Lighting circuits in the roof space showed degraded insulation due to prolonged exposure to heat from poorly ventilated areas.</li>
+                  <li><strong>External Damage Fault:</strong> One circuit was completely dead due to a cable damaged by a contractor's screw during recent partition installation work.</li>
+                </ul>
+                <p>
+                  <strong>Outcome:</strong> Each fault category required a different response—redesign for the undersized cables, repair work for installation faults, planned replacement for deteriorated circuits, and protection measures to prevent future external damage.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+              FAQs
+            </h2>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-2">{faq.question}</p>
+                  <p className="text-sm text-white/70">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Recap */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">10</span>
+              Recap
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <ul className="list-disc pl-5 space-y-2 text-white/80 text-sm">
+                <li>Design faults occur during planning and typically require redesign to correct properly.</li>
+                <li>Installation faults result from poor workmanship and are preventable through proper training and supervision.</li>
+                <li>Deterioration faults develop over time and require regular inspection and maintenance to manage effectively.</li>
+                <li>External damage faults are caused by outside influences but can be minimised through proper protection and installation practices.</li>
+              </ul>
+            </div>
+          </section>
+
+          {/* Quiz */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">11</span>
+              Quiz
+            </h2>
+            <Quiz questions={quizQuestions} title="Categories of Electrical Faults" />
+          </section>
+
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+            <Button
+              variant="ghost"
+              className="min-h-[48px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5 justify-start"
+              asChild
+            >
+              <Link to="../1-3">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Risks and Consequences
+              </Link>
+            </Button>
+            <Button
+              className="min-h-[48px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90 justify-center sm:justify-end"
+              asChild
+            >
+              <Link to="../1-5">
+                Legal Responsibilities
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

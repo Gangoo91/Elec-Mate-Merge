@@ -4,7 +4,7 @@ import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -110,79 +110,83 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="cuLocation">Location *</Label>
-              <Select value={formData.cuLocation || ''} onValueChange={(value) => onUpdate('cuLocation', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select location" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="Hallway cupboard">Hallway cupboard</SelectItem>
-                  <SelectItem value="Under stairs cupboard">Under stairs cupboard</SelectItem>
-                  <SelectItem value="Garage">Garage</SelectItem>
-                  <SelectItem value="Utility room">Utility room</SelectItem>
-                  <SelectItem value="Kitchen">Kitchen</SelectItem>
-                  <SelectItem value="Entrance hallway">Entrance hallway</SelectItem>
-                  <SelectItem value="Meter cupboard">Meter cupboard</SelectItem>
-                  <SelectItem value="Airing cupboard">Airing cupboard</SelectItem>
-                  <SelectItem value="Basement">Basement</SelectItem>
-                  <SelectItem value="Outside (external box)">Outside (external box)</SelectItem>
-                  <SelectItem value="Loft">Loft</SelectItem>
-                  <SelectItem value="Other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.cuLocation || ''}
+                onValueChange={(value) => onUpdate('cuLocation', value)}
+                options={[
+                  { value: 'Hallway cupboard', label: 'Hallway cupboard' },
+                  { value: 'Under stairs cupboard', label: 'Under stairs cupboard' },
+                  { value: 'Garage', label: 'Garage' },
+                  { value: 'Utility room', label: 'Utility room' },
+                  { value: 'Kitchen', label: 'Kitchen' },
+                  { value: 'Entrance hallway', label: 'Entrance hallway' },
+                  { value: 'Meter cupboard', label: 'Meter cupboard' },
+                  { value: 'Airing cupboard', label: 'Airing cupboard' },
+                  { value: 'Basement', label: 'Basement' },
+                  { value: 'Outside (external box)', label: 'Outside (external box)' },
+                  { value: 'Loft', label: 'Loft' },
+                  { value: 'Other', label: 'Other' },
+                ]}
+                placeholder="Select location"
+                title="Consumer Unit Location"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="cuManufacturer">Manufacturer *</Label>
-              <Select value={formData.cuManufacturer || ''} onValueChange={(value) => onUpdate('cuManufacturer', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select manufacturer" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="Hager">Hager</SelectItem>
-                  <SelectItem value="MK Electric">MK Electric</SelectItem>
-                  <SelectItem value="Schneider Electric">Schneider Electric</SelectItem>
-                  <SelectItem value="Fusebox">Fusebox</SelectItem>
-                  <SelectItem value="Elucian">Elucian</SelectItem>
-                  <SelectItem value="Eaton">Eaton</SelectItem>
-                  <SelectItem value="Wylex">Wylex</SelectItem>
-                  <SelectItem value="BG Electrical">BG Electrical</SelectItem>
-                  <SelectItem value="Lewden">Lewden</SelectItem>
-                  <SelectItem value="Crabtree">Crabtree</SelectItem>
-                  <SelectItem value="ABB">ABB</SelectItem>
-                  <SelectItem value="Legrand">Legrand</SelectItem>
-                  <SelectItem value="Other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.cuManufacturer || ''}
+                onValueChange={(value) => onUpdate('cuManufacturer', value)}
+                options={[
+                  { value: 'Hager', label: 'Hager' },
+                  { value: 'MK Electric', label: 'MK Electric' },
+                  { value: 'Schneider Electric', label: 'Schneider Electric' },
+                  { value: 'Fusebox', label: 'Fusebox' },
+                  { value: 'Elucian', label: 'Elucian' },
+                  { value: 'Eaton', label: 'Eaton' },
+                  { value: 'Wylex', label: 'Wylex' },
+                  { value: 'BG Electrical', label: 'BG Electrical' },
+                  { value: 'Lewden', label: 'Lewden' },
+                  { value: 'Crabtree', label: 'Crabtree' },
+                  { value: 'ABB', label: 'ABB' },
+                  { value: 'Legrand', label: 'Legrand' },
+                  { value: 'Other', label: 'Other' },
+                ]}
+                placeholder="Select manufacturer"
+                title="Consumer Unit Manufacturer"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="cuType">Type *</Label>
-              <Select value={formData.cuType || ''} onValueChange={(value) => onUpdate('cuType', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="metal">Metal Enclosure</SelectItem>
-                  <SelectItem value="plastic">Plastic Enclosure</SelectItem>
-                  <SelectItem value="metal-clad">Metal Clad</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.cuType || ''}
+                onValueChange={(value) => onUpdate('cuType', value)}
+                options={[
+                  { value: 'metal', label: 'Metal Enclosure' },
+                  { value: 'plastic', label: 'Plastic Enclosure' },
+                  { value: 'metal-clad', label: 'Metal Clad' },
+                ]}
+                placeholder="Select type"
+                title="Consumer Unit Type"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="boardSize">Board Size / Number of Ways *</Label>
-              <Select value={formData.boardSize || ''} onValueChange={(value) => onUpdate('boardSize', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select board size" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="4-way">4 Way</SelectItem>
-                  <SelectItem value="6-way">6 Way</SelectItem>
-                  <SelectItem value="8-way">8 Way</SelectItem>
-                  <SelectItem value="10-way">10 Way</SelectItem>
-                  <SelectItem value="12-way">12 Way</SelectItem>
-                  <SelectItem value="16-way">16 Way</SelectItem>
-                  <SelectItem value="18-way">18 Way</SelectItem>
-                  <SelectItem value="24-way">24 Way</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.boardSize || ''}
+                onValueChange={(value) => onUpdate('boardSize', value)}
+                options={[
+                  { value: '4-way', label: '4 Way' },
+                  { value: '6-way', label: '6 Way' },
+                  { value: '8-way', label: '8 Way' },
+                  { value: '10-way', label: '10 Way' },
+                  { value: '12-way', label: '12 Way' },
+                  { value: '16-way', label: '16 Way' },
+                  { value: '18-way', label: '18 Way' },
+                  { value: '24-way', label: '24 Way' },
+                ]}
+                placeholder="Select board size"
+                title="Board Size"
+              />
               {formData.circuits && formData.circuits.length > 0 && (
                 <p className="text-xs text-emerald-600 mt-1 flex items-center gap-1">
                   <div className="w-1 h-1 rounded-full bg-emerald-400"></div>
@@ -192,34 +196,36 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
             </div>
             <div className="space-y-2">
               <Label htmlFor="intakeCableSize">Intake Cable Size *</Label>
-              <Select value={formData.intakeCableSize || ''} onValueChange={(value) => onUpdate('intakeCableSize', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select cable size" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="16mm">16mm²</SelectItem>
-                  <SelectItem value="25mm">25mm²</SelectItem>
-                  <SelectItem value="35mm">35mm²</SelectItem>
-                  <SelectItem value="50mm">50mm²</SelectItem>
-                  <SelectItem value="70mm">70mm²</SelectItem>
-                  <SelectItem value="95mm">95mm²</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.intakeCableSize || ''}
+                onValueChange={(value) => onUpdate('intakeCableSize', value)}
+                options={[
+                  { value: '16mm', label: '16mm²' },
+                  { value: '25mm', label: '25mm²' },
+                  { value: '35mm', label: '35mm²' },
+                  { value: '50mm', label: '50mm²' },
+                  { value: '70mm', label: '70mm²' },
+                  { value: '95mm', label: '95mm²' },
+                ]}
+                placeholder="Select cable size"
+                title="Intake Cable Size"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="intakeCableType">Intake Cable Type *</Label>
-              <Select value={formData.intakeCableType || ''} onValueChange={(value) => onUpdate('intakeCableType', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select cable type" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="swa">Steel Wire Armoured (SWA)</SelectItem>
-                  <SelectItem value="pvc-singles">PVC Singles</SelectItem>
-                  <SelectItem value="xlpe">XLPE</SelectItem>
-                  <SelectItem value="concentric">Concentric Cable</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.intakeCableType || ''}
+                onValueChange={(value) => onUpdate('intakeCableType', value)}
+                options={[
+                  { value: 'swa', label: 'Steel Wire Armoured (SWA)' },
+                  { value: 'pvc-singles', label: 'PVC Singles' },
+                  { value: 'xlpe', label: 'XLPE' },
+                  { value: 'concentric', label: 'Concentric Cable' },
+                  { value: 'other', label: 'Other' },
+                ]}
+                placeholder="Select cable type"
+                title="Intake Cable Type"
+              />
             </div>
           </div>
         </div>
@@ -233,16 +239,17 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
           <div className="space-y-3 sm:space-y-4">
             <div className="space-y-2">
               <Label htmlFor="tailsSize">Tails Size *</Label>
-              <Select value={formData.tailsSize || ''} onValueChange={(value) => onUpdate('tailsSize', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-emerald-500 focus:ring-emerald-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select tails size" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="16mm">16mm²</SelectItem>
-                  <SelectItem value="25mm">25mm²</SelectItem>
-                  <SelectItem value="35mm">35mm²</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.tailsSize || ''}
+                onValueChange={(value) => onUpdate('tailsSize', value)}
+                options={[
+                  { value: '16mm', label: '16mm²' },
+                  { value: '25mm', label: '25mm²' },
+                  { value: '35mm', label: '35mm²' },
+                ]}
+                placeholder="Select tails size"
+                title="Tails Size"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="tailsLength">Approximate Length (m)</Label>

@@ -5,7 +5,7 @@ import StartNewEICRDialog from '@/components/StartNewEICRDialog';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
@@ -1158,16 +1158,13 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="workType">Type of Work *</Label>
-                    <Select value={formData.workType} onValueChange={(value) => handleUpdate('workType', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select type of work" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-card border-border z-50">
-                        {Object.entries(workTypeOptions).map(([value, label]) => (
-                          <SelectItem key={value} value={value}>{label}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <MobileSelectPicker
+                      value={formData.workType}
+                      onValueChange={(value) => handleUpdate('workType', value)}
+                      options={Object.entries(workTypeOptions).map(([value, label]) => ({ value, label }))}
+                      placeholder="Select type of work"
+                      title="Type of Work"
+                    />
                   </div>
                   <div>
                     <Label htmlFor="workLocation">Location of Work</Label>
@@ -1222,16 +1219,17 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div>
                     <Label htmlFor="supplyVoltage">Nominal Voltage</Label>
-                    <Select value={formData.supplyVoltage} onValueChange={(value) => handleUpdate('supplyVoltage', value)}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-card border-border z-50">
-                        <SelectItem value="230V">230V</SelectItem>
-                        <SelectItem value="400V">400V</SelectItem>
-                        <SelectItem value="110V">110V</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <MobileSelectPicker
+                      value={formData.supplyVoltage}
+                      onValueChange={(value) => handleUpdate('supplyVoltage', value)}
+                      options={[
+                        { value: '230V', label: '230V' },
+                        { value: '400V', label: '400V' },
+                        { value: '110V', label: '110V' },
+                      ]}
+                      placeholder="Select voltage"
+                      title="Nominal Voltage"
+                    />
                   </div>
                   <div>
                     <Label htmlFor="frequency">Frequency</Label>
@@ -1243,28 +1241,26 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                   </div>
                   <div>
                     <Label htmlFor="supplyPhases">No. of Phases</Label>
-                    <Select value={formData.supplyPhases} onValueChange={(value) => handleUpdate('supplyPhases', value)}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-card border-border z-50">
-                        <SelectItem value="1">1</SelectItem>
-                        <SelectItem value="3">3</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <MobileSelectPicker
+                      value={formData.supplyPhases}
+                      onValueChange={(value) => handleUpdate('supplyPhases', value)}
+                      options={[
+                        { value: '1', label: '1' },
+                        { value: '3', label: '3' },
+                      ]}
+                      placeholder="Select phases"
+                      title="Number of Phases"
+                    />
                   </div>
                   <div>
                     <Label htmlFor="earthingArrangement">Earthing Arrangement *</Label>
-                    <Select value={formData.earthingArrangement} onValueChange={(value) => handleUpdate('earthingArrangement', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-card border-border z-50">
-                        {earthingOptions.map(option => (
-                          <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <MobileSelectPicker
+                      value={formData.earthingArrangement}
+                      onValueChange={(value) => handleUpdate('earthingArrangement', value)}
+                      options={earthingOptions}
+                      placeholder="Select"
+                      title="Earthing Arrangement"
+                    />
                   </div>
                 </div>
 
@@ -1324,25 +1320,23 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="mainEarthingConductorSize">Main Earthing Conductor (mm²)</Label>
-                    <Select
+                    <MobileSelectPicker
                       value={formData.mainEarthingConductorSize || ''}
                       onValueChange={(value) => handleUpdate('mainEarthingConductorSize', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select conductor size" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-card border-border z-50">
-                        <SelectItem value="6mm">6mm²</SelectItem>
-                        <SelectItem value="10mm">10mm²</SelectItem>
-                        <SelectItem value="16mm">16mm²</SelectItem>
-                        <SelectItem value="25mm">25mm²</SelectItem>
-                        <SelectItem value="35mm">35mm²</SelectItem>
-                        <SelectItem value="50mm">50mm²</SelectItem>
-                        <SelectItem value="70mm">70mm²</SelectItem>
-                        <SelectItem value="95mm">95mm²</SelectItem>
-                        <SelectItem value="custom">Other/Custom</SelectItem>
-                      </SelectContent>
-                    </Select>
+                      options={[
+                        { value: '6mm', label: '6mm²' },
+                        { value: '10mm', label: '10mm²' },
+                        { value: '16mm', label: '16mm²' },
+                        { value: '25mm', label: '25mm²' },
+                        { value: '35mm', label: '35mm²' },
+                        { value: '50mm', label: '50mm²' },
+                        { value: '70mm', label: '70mm²' },
+                        { value: '95mm', label: '95mm²' },
+                        { value: 'custom', label: 'Other/Custom' },
+                      ]}
+                      placeholder="Select conductor size"
+                      title="Main Earthing Conductor"
+                    />
                     {formData.mainEarthingConductorSize === 'custom' && (
                       <Input
                         placeholder="Enter custom size (mm²)"
@@ -1355,24 +1349,22 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                   </div>
                   <div>
                     <Label htmlFor="mainBondingConductorSize">Main Protective Bonding (mm²)</Label>
-                    <Select
+                    <MobileSelectPicker
                       value={formData.mainBondingConductorSize || ''}
                       onValueChange={(value) => handleUpdate('mainBondingConductorSize', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select conductor size" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-card border-border z-50">
-                        <SelectItem value="2.5mm">2.5mm²</SelectItem>
-                        <SelectItem value="4mm">4mm²</SelectItem>
-                        <SelectItem value="6mm">6mm²</SelectItem>
-                        <SelectItem value="10mm">10mm²</SelectItem>
-                        <SelectItem value="16mm">16mm²</SelectItem>
-                        <SelectItem value="25mm">25mm²</SelectItem>
-                        <SelectItem value="35mm">35mm²</SelectItem>
-                        <SelectItem value="custom">Other/Custom</SelectItem>
-                      </SelectContent>
-                    </Select>
+                      options={[
+                        { value: '2.5mm', label: '2.5mm²' },
+                        { value: '4mm', label: '4mm²' },
+                        { value: '6mm', label: '6mm²' },
+                        { value: '10mm', label: '10mm²' },
+                        { value: '16mm', label: '16mm²' },
+                        { value: '25mm', label: '25mm²' },
+                        { value: '35mm', label: '35mm²' },
+                        { value: 'custom', label: 'Other/Custom' },
+                      ]}
+                      placeholder="Select conductor size"
+                      title="Main Protective Bonding"
+                    />
                     {formData.mainBondingConductorSize === 'custom' && (
                       <Input
                         placeholder="Enter custom size (mm²)"
@@ -1616,16 +1608,17 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                       <div>
                         <Label htmlFor="insulationTestVoltage">Test Voltage</Label>
-                        <Select value={formData.insulationTestVoltage} onValueChange={(value) => handleUpdate('insulationTestVoltage', value)}>
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-card border-border z-50">
-                            <SelectItem value="250V">250V DC</SelectItem>
-                            <SelectItem value="500V">500V DC</SelectItem>
-                            <SelectItem value="1000V">1000V DC</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <MobileSelectPicker
+                          value={formData.insulationTestVoltage}
+                          onValueChange={(value) => handleUpdate('insulationTestVoltage', value)}
+                          options={[
+                            { value: '250V', label: '250V DC' },
+                            { value: '500V', label: '500V DC' },
+                            { value: '1000V', label: '1000V DC' },
+                          ]}
+                          placeholder="Select voltage"
+                          title="Test Voltage"
+                        />
                       </div>
                       <div>
                         <Label htmlFor="insulationLiveNeutral">Live-Neutral</Label>
@@ -1693,15 +1686,16 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                     <h4 className="font-medium text-sm mb-2">Polarity Test</h4>
                     <div className="max-w-xs">
                       <Label htmlFor="polarity">Polarity *</Label>
-                      <Select value={formData.polarity} onValueChange={(value) => handleUpdate('polarity', value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select result" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-card border-border z-50">
-                          <SelectItem value="correct">✓ Correct</SelectItem>
-                          <SelectItem value="incorrect">✗ Incorrect</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <MobileSelectPicker
+                        value={formData.polarity}
+                        onValueChange={(value) => handleUpdate('polarity', value)}
+                        options={[
+                          { value: 'correct', label: '✓ Correct' },
+                          { value: 'incorrect', label: '✗ Incorrect' },
+                        ]}
+                        placeholder="Select result"
+                        title="Polarity"
+                      />
                       <p className="text-xs text-muted-foreground mt-1">
                         Verify correct phase/neutral connections (BS 7671 Reg 612.6)
                       </p>
@@ -1817,19 +1811,17 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                     <h4 className="font-medium text-sm">Phase Rotation Test</h4>
                     <div className="max-w-xs">
                       <Label htmlFor="phaseRotation">Phase Rotation</Label>
-                      <Select 
-                        value={formData.phaseRotation} 
+                      <MobileSelectPicker
+                        value={formData.phaseRotation}
                         onValueChange={(value) => handleUpdate('phaseRotation', value)}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select result" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-card border-border z-50">
-                          <SelectItem value="correct">✓ Correct (L1-L2-L3)</SelectItem>
-                          <SelectItem value="incorrect">✗ Incorrect</SelectItem>
-                          <SelectItem value="na">N/A (Single Phase)</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: 'correct', label: '✓ Correct (L1-L2-L3)' },
+                          { value: 'incorrect', label: '✗ Incorrect' },
+                          { value: 'na', label: 'N/A (Single Phase)' },
+                        ]}
+                        placeholder="Select result"
+                        title="Phase Rotation"
+                      />
                       <p className="text-xs text-muted-foreground mt-1">
                         Required for three-phase circuits. Select "N/A" for single phase (BS 7671 Reg 612.12)
                       </p>
@@ -1864,16 +1856,17 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
                             <Label htmlFor="rcdRating">RCD Rating (mA)</Label>
-                            <Select value={formData.rcdRating} onValueChange={(value) => handleUpdate('rcdRating', value)}>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select rating" />
-                              </SelectTrigger>
-                              <SelectContent className="bg-card border-border z-50">
-                                <SelectItem value="30">30mA</SelectItem>
-                                <SelectItem value="100">100mA</SelectItem>
-                                <SelectItem value="300">300mA</SelectItem>
-                              </SelectContent>
-                            </Select>
+                            <MobileSelectPicker
+                              value={formData.rcdRating}
+                              onValueChange={(value) => handleUpdate('rcdRating', value)}
+                              options={[
+                                { value: '30', label: '30mA' },
+                                { value: '100', label: '100mA' },
+                                { value: '300', label: '300mA' },
+                              ]}
+                              placeholder="Select rating"
+                              title="RCD Rating"
+                            />
                           </div>
                           
                           <div>
@@ -1931,18 +1924,16 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
                             <Label htmlFor="afddTestButton">AFDD Test Button Operation</Label>
-                            <Select 
-                              value={formData.afddTestButton} 
+                            <MobileSelectPicker
+                              value={formData.afddTestButton}
                               onValueChange={(value) => handleUpdate('afddTestButton', value)}
-                            >
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select result" />
-                              </SelectTrigger>
-                              <SelectContent className="bg-card border-border z-50">
-                                <SelectItem value="satisfactory">✓ Satisfactory</SelectItem>
-                                <SelectItem value="unsatisfactory">✗ Unsatisfactory</SelectItem>
-                              </SelectContent>
-                            </Select>
+                              options={[
+                                { value: 'satisfactory', label: '✓ Satisfactory' },
+                                { value: 'unsatisfactory', label: '✗ Unsatisfactory' },
+                              ]}
+                              placeholder="Select result"
+                              title="AFDD Test Button"
+                            />
                             <p className="text-xs text-muted-foreground mt-1">
                               Device must trip when test button is pressed
                             </p>
@@ -1985,14 +1976,14 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                         
                         <div className="max-w-xs">
                           <Label htmlFor="spdTestingOverall">SPD Testing Result</Label>
-                          <Select 
+                          <MobileSelectPicker
                             value={
-                              formData.spdIndicatorStatus === 'normal' && 
-                              formData.spdTestButton === 'satisfactory' && 
-                              formData.spdVisualInspection === 'satisfactory' 
-                                ? 'all-ok' 
-                                : formData.spdIndicatorStatus === 'na' && 
-                                  formData.spdTestButton === 'na' && 
+                              formData.spdIndicatorStatus === 'normal' &&
+                              formData.spdTestButton === 'satisfactory' &&
+                              formData.spdVisualInspection === 'satisfactory'
+                                ? 'all-ok'
+                                : formData.spdIndicatorStatus === 'na' &&
+                                  formData.spdTestButton === 'na' &&
                                   formData.spdVisualInspection === 'na'
                                   ? 'na'
                                   : 'issue'
@@ -2009,16 +2000,14 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                               }
                               // For 'issue', leave fields for manual entry below
                             }}
-                          >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select result" />
-                            </SelectTrigger>
-                            <SelectContent className="bg-card border-border z-50">
-                              <SelectItem value="all-ok">✓ All Satisfactory</SelectItem>
-                              <SelectItem value="issue">✗ Issue Found</SelectItem>
-                              <SelectItem value="na">N/A</SelectItem>
-                            </SelectContent>
-                          </Select>
+                            options={[
+                              { value: 'all-ok', label: '✓ All Satisfactory' },
+                              { value: 'issue', label: '✗ Issue Found' },
+                              { value: 'na', label: 'N/A' },
+                            ]}
+                            placeholder="Select result"
+                            title="SPD Testing Result"
+                          />
                           <p className="text-xs text-muted-foreground mt-1">
                             Overall SPD testing outcome
                           </p>
@@ -2034,16 +2023,17 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                     <h4 className="font-medium text-sm">Functional Testing</h4>
                     <div className="max-w-xs">
                       <Label htmlFor="functionalTesting">Test Result</Label>
-                      <Select value={formData.functionalTesting} onValueChange={(value) => handleUpdate('functionalTesting', value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select result" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-card border-border z-50">
-                          <SelectItem value="satisfactory">✓ Satisfactory</SelectItem>
-                          <SelectItem value="unsatisfactory">✗ Unsatisfactory</SelectItem>
-                          <SelectItem value="na">N/A</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <MobileSelectPicker
+                        value={formData.functionalTesting}
+                        onValueChange={(value) => handleUpdate('functionalTesting', value)}
+                        options={[
+                          { value: 'satisfactory', label: '✓ Satisfactory' },
+                          { value: 'unsatisfactory', label: '✗ Unsatisfactory' },
+                          { value: 'na', label: 'N/A' },
+                        ]}
+                        placeholder="Select result"
+                        title="Functional Testing"
+                      />
                       <p className="text-xs text-muted-foreground mt-1">
                         Test operation of switches, controls, and protective devices
                       </p>
@@ -2075,26 +2065,18 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                     <div>
                       <Label htmlFor="testEquipmentModel">Test Instrument Make/Model</Label>
                       {formData.testEquipmentModel !== 'Other' ? (
-                        <Select 
-                          value={formData.testEquipmentModel || ''} 
+                        <MobileSelectPicker
+                          value={formData.testEquipmentModel || ''}
                           onValueChange={(value) => {
                             handleUpdate('testEquipmentModel', value);
                             if (value !== 'Other' && formData.customTestEquipment) {
                               handleUpdate('customTestEquipment', '');
                             }
                           }}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select test instrument..." />
-                          </SelectTrigger>
-                          <SelectContent className="bg-card border-border z-50 max-h-64">
-                            {commonTestInstruments.map((instrument) => (
-                              <SelectItem key={instrument.value} value={instrument.value}>
-                                {instrument.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                          options={commonTestInstruments}
+                          placeholder="Select test instrument..."
+                          title="Test Instrument"
+                        />
                       ) : (
                         <div className="space-y-4">
                           <Input
@@ -2182,34 +2164,36 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
                   </div>
                   <div>
                     <Label htmlFor="qualificationLevel">Qualification Level</Label>
-                    <Select value={formData.qualificationLevel} onValueChange={(value) => handleUpdate('qualificationLevel', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select qualification" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="level2">City & Guilds Level 2</SelectItem>
-                        <SelectItem value="level3">City & Guilds Level 3</SelectItem>
-                        <SelectItem value="nvq2">NVQ Level 2</SelectItem>
-                        <SelectItem value="nvq3">NVQ Level 3</SelectItem>
-                        <SelectItem value="degree">Electrical Engineering Degree</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <MobileSelectPicker
+                      value={formData.qualificationLevel}
+                      onValueChange={(value) => handleUpdate('qualificationLevel', value)}
+                      options={[
+                        { value: 'level2', label: 'City & Guilds Level 2' },
+                        { value: 'level3', label: 'City & Guilds Level 3' },
+                        { value: 'nvq2', label: 'NVQ Level 2' },
+                        { value: 'nvq3', label: 'NVQ Level 3' },
+                        { value: 'degree', label: 'Electrical Engineering Degree' },
+                        { value: 'other', label: 'Other' },
+                      ]}
+                      placeholder="Select qualification"
+                      title="Qualification Level"
+                    />
                   </div>
                   <div>
                     <Label htmlFor="schemeProvider">Competent Person Scheme</Label>
-                    <Select value={formData.schemeProvider} onValueChange={(value) => handleUpdate('schemeProvider', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select scheme" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="niceic">NICEIC</SelectItem>
-                        <SelectItem value="napit">NAPIT</SelectItem>
-                        <SelectItem value="elecsa">ELECSA</SelectItem>
-                        <SelectItem value="stroma">Stroma</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <MobileSelectPicker
+                      value={formData.schemeProvider}
+                      onValueChange={(value) => handleUpdate('schemeProvider', value)}
+                      options={[
+                        { value: 'niceic', label: 'NICEIC' },
+                        { value: 'napit', label: 'NAPIT' },
+                        { value: 'elecsa', label: 'ELECSA' },
+                        { value: 'stroma', label: 'Stroma' },
+                        { value: 'other', label: 'Other' },
+                      ]}
+                      placeholder="Select scheme"
+                      title="Competent Person Scheme"
+                    />
                   </div>
                   <div>
                     <Label htmlFor="registrationNumber">Registration Number</Label>

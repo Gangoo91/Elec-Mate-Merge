@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import { protectiveDeviceTypeOptions, protectiveDeviceRatingOptions, protectiveDeviceCurveOptions, bsStandardOptions, bsStandardRequiresCurve } from '@/types/protectiveDeviceTypes';
@@ -106,78 +106,36 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({ 
     <>
       {/* Column 8: BS (EN) */}
       <TableCell className="p-0 bg-black h-5 align-middle w-36 min-w-[140px] max-w-[140px]">
-        <Select
-          name={`bsStandard-${result.id}`}
+        <MobileSelectPicker
           value={result.bsStandard || ''}
           onValueChange={handleBsStandardChange}
-        >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0">
-            <SelectValue placeholder="BS EN" className="truncate" />
-          </SelectTrigger>
-          <SelectContent 
-            key={`bsStandard-content-${result.id}`} 
-            position="popper"
-            sideOffset={5}
-            className="bg-background border border-border rounded-md z-[9999]"
-          >
-            {bsStandardOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={bsStandardOptions}
+          placeholder="BS EN"
+          title="BS (EN) Standard"
+        />
       </TableCell>
 
       {/* Column 9: Type (Curve) */}
       <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[100px] max-w-[100px]">
-        <Select
-          name={`protectiveDeviceCurve-${result.id}`}
+        <MobileSelectPicker
           value={result.protectiveDeviceCurve || ''}
           onValueChange={handleCurveChange}
+          options={protectiveDeviceCurveOptions}
+          placeholder="Type"
+          title="Protective Device Curve"
           disabled={!showCurveSelector}
-        >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0 disabled:opacity-50">
-            <SelectValue placeholder="Type" className="truncate" />
-          </SelectTrigger>
-          <SelectContent 
-            key={`protectiveDeviceCurve-content-${result.id}`} 
-            position="popper"
-            sideOffset={5}
-            className="bg-background border border-border rounded-md z-[9999]"
-          >
-            {protectiveDeviceCurveOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        />
       </TableCell>
 
       {/* Column 10: Rating (A) */}
       <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[95px] max-w-[95px]">
-        <Select
-          name={`protectiveDeviceRating-${result.id}`}
+        <MobileSelectPicker
           value={result.protectiveDeviceRating || ''}
           onValueChange={handleRatingChange}
-        >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0">
-            <SelectValue placeholder="A" className="truncate" />
-          </SelectTrigger>
-          <SelectContent 
-            key={`protectiveDeviceRating-content-${result.id}`} 
-            position="popper"
-            sideOffset={5}
-            className="bg-background border border-border rounded-md z-[9999]"
-          >
-            {protectiveDeviceRatingOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={protectiveDeviceRatingOptions}
+          placeholder="A"
+          title="Device Rating (A)"
+        />
       </TableCell>
 
       {/* Column 11: Breaking capacity (kA) */}

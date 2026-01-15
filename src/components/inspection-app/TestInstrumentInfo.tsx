@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 
 interface TestInstrumentInfoProps {
   formData: any;
@@ -137,7 +137,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
       <div className="space-y-2">
         <Label htmlFor="testInstrumentMake" className="text-sm">Test Instrument Make/Model</Label>
         {!isOtherSelected ? (
-            <Select
+            <MobileSelectPicker
               value={formData.testInstrumentMake || ""}
               onValueChange={(value) => {
                 onUpdate("testInstrumentMake", value);
@@ -145,37 +145,19 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
                 loadInstrumentDetails(value); // Auto-fill serial & calibration
                 setSearchTerm('');
               }}
-            >
-              <SelectTrigger className="h-10">
-                <SelectValue placeholder="Select test instrument..." />
-              </SelectTrigger>
-              <SelectContent className="bg-background z-50 max-h-[300px] overflow-y-auto">
-                {recentInstruments.length > 0 && (
-                  <>
-                    <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">
-                      Recently Used
-                    </div>
-                    {recentInstruments.map((instrument) => (
-                      <SelectItem key={`recent-${instrument}`} value={instrument}>
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs">⏱️</span>
-                          {instrument}
-                        </div>
-                      </SelectItem>
-                    ))}
-                    <div className="my-1 border-t" />
-                  </>
-                )}
-                <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">
-                  All Instruments
-                </div>
-                {filteredInstruments.map((instrument) => (
-                  <SelectItem key={instrument.value} value={instrument.value}>
-                    {instrument.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              options={[
+                ...recentInstruments.map((instrument) => ({
+                  value: instrument,
+                  label: `⏱️ ${instrument}`,
+                })),
+                ...filteredInstruments.map((instrument) => ({
+                  value: instrument.value,
+                  label: instrument.label,
+                })),
+              ]}
+              placeholder="Select test instrument..."
+              title="Test Instrument"
+            />
         ) : (
           <div className="space-y-2">
               <Input

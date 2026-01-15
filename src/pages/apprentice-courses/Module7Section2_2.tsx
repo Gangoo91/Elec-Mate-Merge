@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, Zap, Lightbulb, AlertTriangle, CheckCircle, Shield, Flame, Search, Target } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { Link } from "react-router-dom";
@@ -136,133 +133,119 @@ const Module7Section2_2 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Header */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              <span className="hidden sm:inline">Back to Section 2</span>
-              <span className="sm:hidden">Back</span>
+              Back to Section 2
             </Link>
           </Button>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-start gap-4">
-          <div className="p-2 rounded-lg self-start">
-            <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-          </div>
-          <div className="flex-1">
-            <Badge variant="outline" className="mb-2 sm:mb-3 border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
-              Section 7.2.2
-            </Badge>
-            <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-              2.2 Short Circuits
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Title Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
+              <span className="text-white/40">•</span>
+              <span>Section 2.2</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+              Short Circuits
             </h1>
-            <p className="text-sm sm:text-base text-white max-w-3xl">
+            <p className="text-white/60 max-w-xl mx-auto">
               Understanding detection, causes, and rectification of short circuit faults
             </p>
+          </header>
+
+          {/* Summary Box */}
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
+            <p className="text-white/80 text-sm leading-relaxed">
+              A <strong className="text-white">short circuit fault</strong> occurs when current flows along an unintended path with very low resistance, causing dangerously high current levels. These require immediate attention and protective device operation.
+            </p>
           </div>
-        </div>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 text-xs sm:text-sm text-white">
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
-                <ul className="list-disc pl-4 space-y-1 sm:space-y-2">
-                  <li>A <strong>short circuit fault</strong> occurs when current flows along an unintended path</li>
-                  <li>Creates very low resistance path bypassing the normal load</li>
-                  <li>Causes dangerously high current levels</li>
-                  <li>Can damage equipment, cause fires, and pose serious safety risks</li>
-                  <li>Requires immediate attention and protective device operation</li>
-                </ul>
-              </div>
-              
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
-                <h3 className="font-medium text-white mb-2">Spot / Use / Check</h3>
-                <ul className="list-disc pl-4 space-y-1">
-                  <li><strong>Spot:</strong> Tripped protective devices, burning smells</li>
-                  <li><strong>Use:</strong> Insulation resistance tester, visual inspection</li>
-                  <li><strong>Check:</strong> All cable routes and terminations</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-              <li>Identify the characteristics and dangers of short circuit faults</li>
-              <li>Understand the common causes of short circuits in electrical installations</li>
-              <li>Apply safe testing methods to locate short circuit faults</li>
-              <li>Implement emergency response procedures for short circuit incidents</li>
-              <li>Recognise the operation and selection of protective devices</li>
-              <li>Apply BS 7671 requirements for short circuit protection and disconnection times</li>
-            </ul>
-          </CardContent>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Content</h2>
-            
-            {/* Section 1: Definition and Characteristics */}
-            <div className="border-l-4 border-l-red-500 p-4 sm:p-6 rounded-r-lg mb-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</div>
-                <h3 className="text-base sm:text-lg font-semibold text-white">Definition and Characteristics</h3>
-              </div>
-              
-              <p className="text-sm text-white mb-4 leading-relaxed">
+          {/* Section 1 */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Definition and Characteristics
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
                 A short circuit occurs when live conductors at different potentials come into direct contact, either physically or through a conductive path with very low resistance. This creates an unintended path that bypasses the normal load, allowing current to flow at levels far exceeding the circuit's design capacity.
               </p>
 
-              <div className="space-y-3 mb-4">
-                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2">Key Characteristics</h4>
-                  <ul className="text-xs text-white space-y-1">
-                    <li>• Extremely low resistance path (typically less than 1 ohm)</li>
-                    <li>• Fault current many times higher than normal operating current</li>
-                    <li>• Immediate operation of protective devices (fuses, MCBs)</li>
-                    <li>• Potential for arcing, heating, and fire</li>
-                    <li>• Voltage drop to near zero at the fault point</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2">Types of Short Circuit Faults</h4>
-                  <ul className="text-xs text-white space-y-1">
-                    <li>• <strong>Line to Neutral:</strong> Most common in single-phase systems</li>
-                    <li>• <strong>Line to Line:</strong> Between phase conductors in three-phase systems</li>
-                    <li>• <strong>Line to Earth:</strong> Phase conductor touching earthed metalwork</li>
-                    <li>• <strong>Three-phase:</strong> All phases short-circuited together</li>
-                    <li>• <strong>Arcing faults:</strong> Intermittent contact causing arcing</li>
-                  </ul>
-                </div>
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <h4 className="font-medium text-white mb-3">Key Characteristics</h4>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    Extremely low resistance path (typically less than 1 ohm)
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    Fault current many times higher than normal operating current
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    Immediate operation of protective devices (fuses, MCBs)
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    Potential for arcing, heating, and fire
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    Voltage drop to near zero at the fault point
+                  </li>
+                </ul>
               </div>
 
-              <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 p-3 rounded-lg mb-4">
-                <div className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-red-600 text-elec-yellow mt-0.5" />
-                  <div>
-                    <h4 className="font-medium text-sm text-red-700 text-elec-yellow mb-1">Immediate Danger</h4>
-                    <p className="text-xs text-red-600 text-elec-yellow">
-                      Short circuits can generate fault currents of thousands of amperes within milliseconds, creating intense heat, dangerous arcing, and potential for explosion or fire.
-                    </p>
-                  </div>
-                </div>
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <h4 className="font-medium text-white mb-3">Types of Short Circuit Faults</h4>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <strong className="text-white">Line to Neutral:</strong> Most common in single-phase systems
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <strong className="text-white">Line to Line:</strong> Between phase conductors in three-phase systems
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <strong className="text-white">Line to Earth:</strong> Phase conductor touching earthed metalwork
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <strong className="text-white">Three-phase:</strong> All phases short-circuited together
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <strong className="text-white">Arcing faults:</strong> Intermittent contact causing arcing
+                  </li>
+                </ul>
               </div>
 
+              <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+                <p className="text-sm text-red-200/80">
+                  <strong className="text-red-300">Immediate Danger:</strong> Short circuits can generate fault currents of thousands of amperes within milliseconds, creating intense heat, dangerous arcing, and potential for explosion or fire.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6">
               <InlineCheck
                 id="short-circuit-current"
                 question="What happens to circuit current when a line and neutral conductor come into contact?"
@@ -276,24 +259,23 @@ const Module7Section2_2 = () => {
                 explanation="When line and neutral conductors come into direct contact, the resistance becomes very low, causing current to increase dramatically to dangerous levels."
               />
             </div>
+          </section>
 
-            <Separator className="my-6" />
-
-            {/* Section 2: Causes and Contributing Factors */}
-            <div className="border-l-4 border-l-orange-500 p-4 sm:p-6 rounded-r-lg mb-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">2</div>
-                <h3 className="text-base sm:text-lg font-semibold text-white">Causes and Contributing Factors</h3>
-              </div>
-              
-              <p className="text-sm text-white mb-4 leading-relaxed">
+          {/* Section 2 */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Causes and Contributing Factors
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
                 Short circuits can result from numerous factors, often involving a combination of installation errors, environmental conditions, and equipment failures:
               </p>
 
-              <div className="grid gap-3 sm:grid-cols-2 mb-4">
-                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-red-600 text-elec-yellow">Installation Faults</h4>
-                  <ul className="text-xs text-white space-y-1">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                  <h4 className="font-medium text-elec-yellow mb-3 text-sm">Installation Faults</h4>
+                  <ul className="space-y-1.5 text-sm">
                     <li>• Incorrect or careless installation practices</li>
                     <li>• Stripped insulation left too long at terminations</li>
                     <li>• Poor cable management causing conductor contact</li>
@@ -301,10 +283,10 @@ const Module7Section2_2 = () => {
                     <li>• Wrong cable types for the application</li>
                   </ul>
                 </div>
-                
-                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-orange-600 text-elec-yellow">Mechanical Damage</h4>
-                  <ul className="text-xs text-white space-y-1">
+
+                <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                  <h4 className="font-medium text-elec-yellow mb-3 text-sm">Mechanical Damage</h4>
+                  <ul className="space-y-1.5 text-sm">
                     <li>• Drilling or nailing through cables</li>
                     <li>• Cable crushing during construction work</li>
                     <li>• Impact damage from vehicles or machinery</li>
@@ -312,10 +294,10 @@ const Module7Section2_2 = () => {
                     <li>• Vibration causing insulation breakdown</li>
                   </ul>
                 </div>
-                
-                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-purple-600 text-elec-yellow">Environmental Factors</h4>
-                  <ul className="text-xs text-white space-y-1">
+
+                <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                  <h4 className="font-medium text-elec-yellow mb-3 text-sm">Environmental Factors</h4>
+                  <ul className="space-y-1.5 text-sm">
                     <li>• Moisture ingress causing tracking and flashover</li>
                     <li>• Overheating leading to insulation failure</li>
                     <li>• UV radiation degrading cable insulation</li>
@@ -323,10 +305,10 @@ const Module7Section2_2 = () => {
                     <li>• Rodent damage to cable insulation</li>
                   </ul>
                 </div>
-                
-                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-elec-yellow text-elec-yellow">Equipment Failures</h4>
-                  <ul className="text-xs text-white space-y-1">
+
+                <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                  <h4 className="font-medium text-elec-yellow mb-3 text-sm">Equipment Failures</h4>
+                  <ul className="space-y-1.5 text-sm">
                     <li>• Internal faults in electrical equipment</li>
                     <li>• Insulation breakdown in motors and transformers</li>
                     <li>• Failed switching devices creating short paths</li>
@@ -335,7 +317,9 @@ const Module7Section2_2 = () => {
                   </ul>
                 </div>
               </div>
+            </div>
 
+            <div className="mt-6">
               <InlineCheck
                 id="short-circuit-causes"
                 question="Name two common causes of short circuit faults."
@@ -349,126 +333,97 @@ const Module7Section2_2 = () => {
                 explanation="Damaged or deteriorated insulation and mechanical damage to cables (such as by nails, screws, or rodents) are common causes of short circuit faults."
               />
             </div>
+          </section>
 
-            <Separator className="my-6" />
-
-            {/* Section 3: Dangers and Immediate Effects */}
-            <div className="border-l-4 border-l-purple-500 p-4 sm:p-6 rounded-r-lg mb-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">3</div>
-                <h3 className="text-base sm:text-lg font-semibold text-white">Dangers and Immediate Effects</h3>
-              </div>
-              
-              <p className="text-sm text-white mb-4 leading-relaxed">
+          {/* Section 3 */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Dangers and Immediate Effects
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
                 Short circuits represent one of the most dangerous electrical fault conditions, capable of causing immediate and severe consequences:
               </p>
 
-              <div className="space-y-3 mb-4">
-                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-red-600 text-elec-yellow">Immediate Physical Dangers</h4>
-                  <ul className="text-xs text-white space-y-1">
-                    <li>• <strong>Arcing:</strong> Intense electrical arcs reaching thousands of degrees</li>
-                    <li>• <strong>Fire risk:</strong> Ignition of surrounding materials</li>
-                    <li>• <strong>Explosion:</strong> Rapid heating causing metal expansion and arc blast</li>
-                    <li>• <strong>Toxic gases:</strong> Burning insulation releasing harmful fumes</li>
-                    <li>• <strong>Electric shock:</strong> Touch potentials and step potentials</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-amber-600 dark:text-amber-400">Equipment and System Effects</h4>
-                  <ul className="text-xs text-white space-y-1">
-                    <li>• <strong>Equipment destruction:</strong> Severe damage to electrical components</li>
-                    <li>• <strong>System instability:</strong> Voltage dips affecting other circuits</li>
-                    <li>• <strong>Power outages:</strong> Protective device operation causing loss of supply</li>
-                    <li>• <strong>Data loss:</strong> Sudden power interruption to IT systems</li>
-                    <li>• <strong>Process disruption:</strong> Industrial systems shutting down</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-elec-yellow text-elec-yellow">Economic Consequences</h4>
-                  <ul className="text-xs text-white space-y-1">
-                    <li>• Equipment replacement and repair costs</li>
-                    <li>• Business interruption and lost productivity</li>
-                    <li>• Insurance claims and potential premium increases</li>
-                    <li>• Investigation and remedial work expenses</li>
-                    <li>• Potential legal liability for safety breaches</li>
-                  </ul>
-                </div>
+              <div className="bg-red-500/10 rounded-lg p-4 border border-red-500/30">
+                <h4 className="font-medium text-red-400 mb-3">Immediate Physical Dangers</h4>
+                <ul className="space-y-1.5 text-sm text-red-200/80">
+                  <li>• <strong className="text-red-300">Arcing:</strong> Intense electrical arcs reaching thousands of degrees</li>
+                  <li>• <strong className="text-red-300">Fire risk:</strong> Ignition of surrounding materials</li>
+                  <li>• <strong className="text-red-300">Explosion:</strong> Rapid heating causing metal expansion and arc blast</li>
+                  <li>• <strong className="text-red-300">Toxic gases:</strong> Burning insulation releasing harmful fumes</li>
+                  <li>• <strong className="text-red-300">Electric shock:</strong> Touch potentials and step potentials</li>
+                </ul>
               </div>
 
-              <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 p-3 rounded-lg">
-                <div className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-red-600 text-elec-yellow mt-0.5" />
-                  <div>
-                    <h4 className="font-medium text-sm text-red-700 text-elec-yellow mb-1">Arc Flash Hazard</h4>
-                    <p className="text-xs text-red-600 text-elec-yellow">
-                      Arc flash incidents can reach temperatures of 20,000°C (four times hotter than the sun's surface) and produce pressure waves capable of causing severe burns and hearing damage. Proper PPE and safety procedures are essential when working on live equipment.
-                    </p>
-                  </div>
-                </div>
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <h4 className="font-medium text-white mb-3">Equipment and System Effects</h4>
+                <ul className="space-y-1.5 text-sm">
+                  <li>• <strong className="text-white">Equipment destruction:</strong> Severe damage to electrical components</li>
+                  <li>• <strong className="text-white">System instability:</strong> Voltage dips affecting other circuits</li>
+                  <li>• <strong className="text-white">Power outages:</strong> Protective device operation causing loss of supply</li>
+                  <li>• <strong className="text-white">Data loss:</strong> Sudden power interruption to IT systems</li>
+                  <li>• <strong className="text-white">Process disruption:</strong> Industrial systems shutting down</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+                <p className="text-sm text-red-200/80">
+                  <strong className="text-red-300">Arc Flash Hazard:</strong> Arc flash incidents can reach temperatures of 20,000°C (four times hotter than the sun's surface) and produce pressure waves capable of causing severe burns and hearing damage. Proper PPE and safety procedures are essential when working on live equipment.
+                </p>
               </div>
             </div>
 
-            <InlineCheck
-              id="short-circuit-dangers"
-              question="What immediate danger can arc flash from a short circuit create?"
-              options={[
-                "It reduces the voltage in the circuit",
-                "It can reach temperatures of 20,000°C causing severe burns",
-                "It makes the current decrease safely",
-                "It only affects the protective devices"
-              ]}
-              correctIndex={1}
-              explanation="Arc flash from short circuits can reach temperatures of 20,000°C (four times hotter than the sun's surface) and can cause severe burns, hearing damage, and even death."
-            />
+            <div className="mt-6">
+              <InlineCheck
+                id="short-circuit-dangers"
+                question="What immediate danger can arc flash from a short circuit create?"
+                options={[
+                  "It reduces the voltage in the circuit",
+                  "It can reach temperatures of 20,000°C causing severe burns",
+                  "It makes the current decrease safely",
+                  "It only affects the protective devices"
+                ]}
+                correctIndex={1}
+                explanation="Arc flash from short circuits can reach temperatures of 20,000°C (four times hotter than the sun's surface) and can cause severe burns, hearing damage, and even death."
+              />
+            </div>
+          </section>
 
-            <Separator className="my-6" />
-
-            {/* Section 4: Protective Devices and BS 7671 Requirements */}
-            <div className="border-l-4 border-l-teal-500 bg-teal-500/5 p-4 sm:p-6 rounded-r-lg mb-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-teal-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">4</div>
-                <h3 className="text-base sm:text-lg font-semibold text-white">Protective Devices and Standards</h3>
-              </div>
-              
-              <p className="text-sm text-white mb-4 leading-relaxed">
+          {/* Section 4 */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Protective Devices and Standards
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
                 BS 7671 requires appropriate protection against short circuit currents with specific performance criteria:
               </p>
 
-              <div className="space-y-3 mb-4">
-                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-elec-yellow text-elec-yellow">Protective Device Types</h4>
-                  <ul className="text-xs text-white space-y-1">
-                    <li>• <strong>Fuses (BS 88, BS 1361):</strong> Reliable interruption, high breaking capacity</li>
-                    <li>• <strong>MCBs (BS EN 60898):</strong> Automatic reset, precise characteristics</li>
-                    <li>• <strong>MCCBs (BS EN 60947):</strong> High current ratings, adjustable settings</li>
-                    <li>• <strong>RCBOs:</strong> Combined overcurrent and earth fault protection</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-green-600 dark:text-green-400">BS 7671 Requirements</h4>
-                  <ul className="text-xs text-white space-y-1">
-                    <li>• <strong>Breaking capacity:</strong> Must exceed prospective short circuit current</li>
-                    <li>• <strong>Discrimination:</strong> Selective operation between protective devices</li>
-                    <li>• <strong>Disconnection times:</strong> Maximum times specified for safety</li>
-                    <li>• <strong>Let-through energy:</strong> Limitation of thermal and dynamic effects</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-purple-600 text-elec-yellow">Key Performance Criteria</h4>
-                  <ul className="text-xs text-white space-y-1">
-                    <li>• <strong>Prospective fault current (PFC):</strong> Maximum current available</li>
-                    <li>• <strong>Breaking capacity (Icn/Icu):</strong> Maximum current device can interrupt</li>
-                    <li>• <strong>Operating time:</strong> Speed of operation under fault conditions</li>
-                    <li>• <strong>Energy limitation:</strong> Reducing thermal and mechanical stress</li>
-                  </ul>
-                </div>
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <h4 className="font-medium text-elec-yellow mb-3">Protective Device Types</h4>
+                <ul className="space-y-1.5 text-sm">
+                  <li>• <strong className="text-white">Fuses (BS 88, BS 1361):</strong> Reliable interruption, high breaking capacity</li>
+                  <li>• <strong className="text-white">MCBs (BS EN 60898):</strong> Automatic reset, precise characteristics</li>
+                  <li>• <strong className="text-white">MCCBs (BS EN 60947):</strong> High current ratings, adjustable settings</li>
+                  <li>• <strong className="text-white">RCBOs:</strong> Combined overcurrent and earth fault protection</li>
+                </ul>
               </div>
 
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <h4 className="font-medium text-white mb-3">BS 7671 Requirements</h4>
+                <ul className="space-y-1.5 text-sm">
+                  <li>• <strong className="text-white">Breaking capacity:</strong> Must exceed prospective short circuit current</li>
+                  <li>• <strong className="text-white">Discrimination:</strong> Selective operation between protective devices</li>
+                  <li>• <strong className="text-white">Disconnection times:</strong> Maximum times specified for safety</li>
+                  <li>• <strong className="text-white">Let-through energy:</strong> Limitation of thermal and dynamic effects</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-6">
               <InlineCheck
                 id="protective-devices"
                 question="What must the breaking capacity of a protective device exceed?"
@@ -482,234 +437,184 @@ const Module7Section2_2 = () => {
                 explanation="The breaking capacity of protective devices must exceed the prospective short circuit current to safely interrupt fault currents."
               />
             </div>
+          </section>
 
-            <Separator className="my-6" />
-
-            {/* Section 5: Detection and Testing */}
-            <div className="border-l-4 border-l-indigo-500 bg-indigo-500/5 p-4 sm:p-6 rounded-r-lg">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">5</div>
-                <h3 className="text-base sm:text-lg font-semibold text-white">Detection and Emergency Response</h3>
-              </div>
-              
-              <p className="text-sm text-white mb-4 leading-relaxed">
+          {/* Section 5 */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Detection and Emergency Response
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
                 Proper detection methods and emergency procedures are critical for managing short circuit incidents safely:
               </p>
 
-              <div className="space-y-3 mb-4">
-                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-elec-yellow text-elec-yellow">Detection Methods</h4>
-                  <ul className="text-xs text-white space-y-1">
-                    <li>• <strong>Insulation resistance testing:</strong> Low readings indicate potential problems</li>
-                    <li>• <strong>Visual inspection:</strong> Signs of overheating, burning, or damage</li>
-                    <li>• <strong>Thermal imaging:</strong> Hot spots indicating high resistance joints</li>
-                    <li>• <strong>Protective device operation:</strong> Repeated tripping indicates faults</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-orange-600 text-elec-yellow">Emergency Response</h4>
-                  <ul className="text-xs text-white space-y-1">
-                    <li>• <strong>Immediate isolation:</strong> Switch off supply if safe to do so</li>
-                    <li>• <strong>Evacuation:</strong> Clear area of personnel if arc flash risk</li>
-                    <li>• <strong>Fire suppression:</strong> Use appropriate extinguishing methods</li>
-                    <li>• <strong>Medical attention:</strong> For any injuries from arc flash or shock</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-[#121212]/50 p-3 rounded border border-white/10">
-                  <h4 className="font-medium text-sm mb-2 text-red-600 text-elec-yellow">Investigation Rules</h4>
-                  <ul className="text-xs text-white space-y-1">
-                    <li>• <strong>Never re-energise:</strong> Until fault is found and rectified</li>
-                    <li>• <strong>Systematic approach:</strong> Logical fault-finding methodology</li>
-                    <li>• <strong>Safe isolation:</strong> Proper isolation and verification procedures</li>
-                    <li>• <strong>Competent person:</strong> Qualified electrician to investigate</li>
-                  </ul>
-                </div>
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <h4 className="font-medium text-elec-yellow mb-3">Detection Methods</h4>
+                <ul className="space-y-1.5 text-sm">
+                  <li>• <strong className="text-white">Insulation resistance testing:</strong> Low readings indicate potential problems</li>
+                  <li>• <strong className="text-white">Visual inspection:</strong> Signs of overheating, burning, or damage</li>
+                  <li>• <strong className="text-white">Thermal imaging:</strong> Hot spots indicating high resistance joints</li>
+                  <li>• <strong className="text-white">Protective device operation:</strong> Repeated tripping indicates faults</li>
+                </ul>
+              </div>
+
+              <div className="bg-orange-500/10 rounded-lg p-4 border border-orange-500/30">
+                <h4 className="font-medium text-orange-300 mb-3">Emergency Response</h4>
+                <ul className="space-y-1.5 text-sm text-orange-200/80">
+                  <li>• <strong className="text-orange-300">Immediate isolation:</strong> Switch off supply if safe to do so</li>
+                  <li>• <strong className="text-orange-300">Evacuation:</strong> Clear area of personnel if arc flash risk</li>
+                  <li>• <strong className="text-orange-300">Fire suppression:</strong> Use appropriate extinguishing methods</li>
+                  <li>• <strong className="text-orange-300">Medical attention:</strong> For any injuries from arc flash or shock</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+                <h4 className="font-medium text-red-300 mb-2">Investigation Rules</h4>
+                <ul className="space-y-1.5 text-sm text-red-200/80">
+                  <li>• <strong className="text-red-300">Never re-energise:</strong> Until fault is found and rectified</li>
+                  <li>• <strong className="text-red-300">Systematic approach:</strong> Logical fault-finding methodology</li>
+                  <li>• <strong className="text-red-300">Safe isolation:</strong> Proper isolation and verification procedures</li>
+                  <li>• <strong className="text-red-300">Competent person:</strong> Qualified electrician to investigate</li>
+                </ul>
               </div>
             </div>
 
-            <InlineCheck
-              id="short-circuit-response"
-              question="What is the most important rule when investigating a short circuit fault?"
-              options={[
-                "Re-energise immediately to test the circuit",
-                "Never re-energise until the fault is found and rectified",
-                "Only use visual inspection methods",
-                "Work on live circuits to save time"
-              ]}
-              correctIndex={1}
-              explanation="The most important safety rule is to never re-energise a circuit that has experienced a short circuit until the fault has been found and properly rectified by a competent person."
-            />
-          </CardContent>
-        </Card>
-
-        {/* Real World Example */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-[#121212] border-white/10">
-          <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Real World Example</h2>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-4 border-l-4 border-l-red-400 bg-red-400/20">
-                <div className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-400 text-black rounded-full flex items-center justify-center text-sm font-bold">
-                    <Flame className="w-4 h-4" />
-                  </span>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-elec-yellow mb-2">Case Study: Lighting Circuit Short Circuit</h3>
-                    <p className="text-xs sm:text-sm text-white">
-                      During the installation of new LED downlights in an office ceiling, an electrician experienced a dramatic short circuit that tripped the lighting MCB and caused a small fire in the ceiling void.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-lg p-4 border-l-4 border-l-orange-400 bg-orange-400/20">
-                <div className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-8 h-8 bg-orange-400 text-black rounded-full flex items-center justify-center text-sm font-bold">
-                    <Zap className="w-4 h-4" />
-                  </span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow mb-2">The Incident:</p>
-                    <p className="text-xs sm:text-sm text-white">
-                      While fixing a recessed LED fitting to the ceiling, the electrician used a screw that was too long. The screw penetrated through the plasterboard and pinched the twin and earth cable supplying the lighting circuit. There was a loud bang, bright flash, and the lighting MCB tripped immediately.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-lg p-4 border-l-4 border-l-elec-yellow bg-elec-yellow/20">
-                <div className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold">
-                    <Target className="w-4 h-4" />
-                  </span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow mb-2">What Happened:</p>
-                    <p className="text-xs sm:text-sm text-white">
-                      The screw had penetrated the cable insulation, causing the line and neutral conductors to come into contact through the metal screw. This created a short circuit with extremely low resistance, allowing a fault current of approximately 1,500A to flow for the brief moment before the 6A Type B MCB operated.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-lg p-4 border-l-4 border-l-purple-400 bg-purple-400/20">
-                <div className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-400 text-black rounded-full flex items-center justify-center text-sm font-bold">
-                    <AlertTriangle className="w-4 h-4" />
-                  </span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow mb-2">The Damage:</p>
-                    <p className="text-xs sm:text-sm text-white">
-                      The intense heat generated by the fault current caused the cable insulation to burn, creating smoke and a small fire in the ceiling void. The screw was welded to the cable by the arcing, and approximately 500mm of cable was damaged by heat. Fortunately, the ceiling insulation was mineral wool which did not ignite.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-lg p-4 border-l-4 border-l-elec-yellow bg-elec-yellow/20">
-                <div className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold">
-                    <Search className="w-4 h-4" />
-                  </span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-yellow-300 mb-2">The Investigation:</p>
-                    <p className="text-xs sm:text-sm text-white">
-                      The electrician immediately isolated the main switch and called the fire brigade as a precaution. Investigation revealed that the cable route had not been marked on the ceiling plan, and the electrician had not used a cable detector. The damaged section of cable was replaced, and all other new fixings were checked.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-lg p-4 border-l-4 border-l-green-400 bg-green-400/20">
-                <div className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-400 text-black rounded-full flex items-center justify-center text-sm font-bold">
-                    <Lightbulb className="w-4 h-4" />
-                  </span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-300 mb-2">Lessons Learned:</p>
-                    <ul className="text-xs sm:text-sm text-white space-y-1">
-                      <li>• Always use cable detection equipment before drilling or screwing</li>
-                      <li>• Mark cable routes clearly on installation drawings</li>
-                      <li>• Use appropriate screw lengths for the application</li>
-                      <li>• Install cables in safe zones where possible</li>
-                      <li>• Protective devices operated correctly, preventing more serious damage</li>
-                      <li>• Proper emergency response prevented escalation</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+            <div className="mt-6">
+              <InlineCheck
+                id="short-circuit-response"
+                question="What is the most important rule when investigating a short circuit fault?"
+                options={[
+                  "Re-energise immediately to test the circuit",
+                  "Never re-energise until the fault is found and rectified",
+                  "Only use visual inspection methods",
+                  "Work on live circuits to save time"
+                ]}
+                correctIndex={1}
+                explanation="The most important safety rule is to never re-energise a circuit that has experienced a short circuit until the fault has been found and properly rectified by a competent person."
+              />
             </div>
-          </CardContent>
-        </Card>
+          </section>
 
-
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">FAQs</h2>
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-medium text-white mb-2 text-sm">What's the main difference between a short circuit and an overload?</h3>
-                <p className="text-xs sm:text-sm text-white">A short circuit creates an unintended low-resistance path with very high current, while an overload is excessive current through the intended path due to too much load.</p>
-              </div>
-              
-              <Separator />
-              
-              <div>
-                <h3 className="font-medium text-white mb-2 text-sm">How quickly do protective devices respond to short circuits?</h3>
-                <p className="text-xs sm:text-sm text-white">MCBs and fuses can respond in milliseconds to short circuits, but the exact time depends on the fault current magnitude and device characteristics.</p>
-              </div>
-              
-              <Separator />
-              
-              <div>
-                <h3 className="font-medium text-white mb-2 text-sm">Can I test for short circuits with the power on?</h3>
-                <p className="text-xs sm:text-sm text-white">No, never test for short circuits on live circuits. Always isolate, verify isolation, and use insulation resistance testing methods.</p>
-              </div>
-              
-              <Separator />
-              
-              <div>
-                <h3 className="font-medium text-white mb-2 text-sm">What causes most short circuit faults?</h3>
-                <p className="text-xs sm:text-sm text-white">Common causes include damaged cable insulation, moisture ingress, incorrect connections, and physical damage to conductors.</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-green-500" />
-              Summary
+          {/* Real World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Real World Example
             </h2>
-            <p className="text-xs sm:text-sm text-white">
-              Short circuit faults represent the most dangerous type of electrical fault, creating extremely low resistance paths that allow dangerous fault currents to flow. These can result from installation errors, mechanical damage, and equipment failures, causing intense arcing, fire risks, and potential injury. BS 7671 requires appropriate protective devices with sufficient breaking capacity to interrupt fault currents safely. Prevention relies on quality installation practices and proper maintenance, while systematic investigation following safe isolation procedures is crucial when faults occur.
-            </p>
-          </CardContent>
-        </Card>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+                <h4 className="font-medium text-red-300 mb-2">Case Study: Lighting Circuit Short Circuit</h4>
+                <p className="text-sm text-red-200/80">
+                  During the installation of new LED downlights in an office ceiling, an electrician experienced a dramatic short circuit that tripped the lighting MCB and caused a small fire in the ceiling void.
+                </p>
+              </div>
 
-        <Quiz questions={quizQuestions} title="Test your knowledge of short circuits" />
+              <div className="p-4 rounded-lg bg-orange-500/10 border-l-2 border-orange-500/50">
+                <h4 className="font-medium text-orange-300 mb-2">The Incident</h4>
+                <p className="text-sm text-orange-200/80">
+                  While fixing a recessed LED fitting to the ceiling, the electrician used a screw that was too long. The screw penetrated through the plasterboard and pinched the twin and earth cable supplying the lighting circuit. There was a loud bang, bright flash, and the lighting MCB tripped immediately.
+                </p>
+              </div>
 
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 sm:justify-between mt-6 sm:mt-8">
-          <Button variant="outline" className="w-full sm:w-auto" asChild>
-            <Link to="../2-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              <span className="hidden sm:inline">Previous: Open Circuits</span>
-              <span className="sm:hidden">Previous</span>
-            </Link>
-          </Button>
-          <Button className="w-full sm:w-auto" asChild>
-            <Link to="../2-3">
-              <span className="hidden sm:inline">Next: 2.3 Earth Faults</span>
-              <span className="sm:hidden">Next</span>
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+              <div className="p-4 rounded-lg bg-elec-yellow/10 border-l-2 border-elec-yellow/50">
+                <h4 className="font-medium text-elec-yellow mb-2">What Happened</h4>
+                <p className="text-sm text-elec-yellow/80">
+                  The screw had penetrated the cable insulation, causing the line and neutral conductors to come into contact through the metal screw. This created a short circuit with extremely low resistance, allowing a fault current of approximately 1,500A to flow for the brief moment before the 6A Type B MCB operated.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-500/50">
+                <h4 className="font-medium text-purple-300 mb-2">The Damage</h4>
+                <p className="text-sm text-purple-200/80">
+                  The intense heat generated by the fault current caused the cable insulation to burn, creating smoke and a small fire in the ceiling void. The screw was welded to the cable by the arcing, and approximately 500mm of cable was damaged by heat. Fortunately, the ceiling insulation was mineral wool which did not ignite.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
+                <h4 className="font-medium text-green-300 mb-2">Lessons Learned</h4>
+                <ul className="text-sm text-green-200/80 space-y-1">
+                  <li>• Always use cable detection equipment before drilling or screwing</li>
+                  <li>• Mark cable routes clearly on installation drawings</li>
+                  <li>• Use appropriate screw lengths for the application</li>
+                  <li>• Install cables in safe zones where possible</li>
+                  <li>• Protective devices operated correctly, preventing more serious damage</li>
+                  <li>• Proper emergency response prevented escalation</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <h4 className="font-medium text-white mb-2">What's the main difference between a short circuit and an overload?</h4>
+                <p className="text-sm text-white/70">A short circuit creates an unintended low-resistance path with very high current, while an overload is excessive current through the intended path due to too much load.</p>
+              </div>
+
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <h4 className="font-medium text-white mb-2">How quickly do protective devices respond to short circuits?</h4>
+                <p className="text-sm text-white/70">MCBs and fuses can respond in milliseconds to short circuits, but the exact time depends on the fault current magnitude and device characteristics.</p>
+              </div>
+
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <h4 className="font-medium text-white mb-2">Can I test for short circuits with the power on?</h4>
+                <p className="text-sm text-white/70">No, never test for short circuits on live circuits. Always isolate, verify isolation, and use insulation resistance testing methods.</p>
+              </div>
+
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <h4 className="font-medium text-white mb-2">What causes most short circuit faults?</h4>
+                <p className="text-sm text-white/70">Common causes include damaged cable insulation, moisture ingress, incorrect connections, and physical damage to conductors.</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Summary */}
+          <section className="mb-10">
+            <div className="p-5 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <div className="flex items-center gap-2 mb-3">
+                <CheckCircle className="w-5 h-5 text-green-400" />
+                <h3 className="font-semibold text-white">Summary</h3>
+              </div>
+              <p className="text-sm text-white/80 leading-relaxed">
+                Short circuit faults represent the most dangerous type of electrical fault, creating extremely low resistance paths that allow dangerous fault currents to flow. These can result from installation errors, mechanical damage, and equipment failures, causing intense arcing, fire risks, and potential injury. BS 7671 requires appropriate protective devices with sufficient breaking capacity to interrupt fault currents safely. Prevention relies on quality installation practices and proper maintenance, while systematic investigation following safe isolation procedures is crucial when faults occur.
+              </p>
+            </div>
+          </section>
+
+          {/* Quiz */}
+          <Quiz questions={quizQuestions} title="Test your knowledge of short circuits" />
+
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
+            <Button
+              variant="ghost"
+              className="w-full sm:w-auto min-h-[48px] touch-manipulation active:scale-[0.98] justify-center sm:justify-start"
+              asChild
+            >
+              <Link to="../2-1">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Open Circuits
+              </Link>
+            </Button>
+            <Button
+              className="w-full sm:w-auto min-h-[48px] touch-manipulation active:scale-[0.98] bg-elec-yellow hover:bg-elec-yellow/90 text-black justify-center sm:justify-start"
+              asChild
+            >
+              <Link to="../2-3">
+                Next: Earth Faults
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </div>
+      </article>
     </div>
   );
 };

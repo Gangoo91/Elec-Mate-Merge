@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { SmartTabs } from '@/components/ui/smart-tabs';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { CheckCircle2, AlertTriangle, Calculator, BookOpen, Zap, RotateCcw } from 'lucide-react';
 
 interface PolarityTestResult {
@@ -113,57 +113,55 @@ const PolarityTestCard = () => {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="testMethod">Test Method</Label>
-                      <Select value={currentTest.testMethod} onValueChange={(value) => updateCurrentTest('testMethod', value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select test method" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {testMethods.map((method) => (
-                            <SelectItem key={method.value} value={method.value}>
-                              {method.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <MobileSelectPicker
+                        value={currentTest.testMethod}
+                        onValueChange={(value) => updateCurrentTest('testMethod', value)}
+                        options={testMethods}
+                        placeholder="Select test method"
+                        title="Test Method"
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="socketOutlets">Socket Outlets</Label>
-                      <Select value={currentTest.socketOutlets} onValueChange={(value) => updateCurrentTest('socketOutlets', value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select result" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="correct">Correct Polarity</SelectItem>
-                          <SelectItem value="incorrect">Incorrect Polarity</SelectItem>
-                          <SelectItem value="not-tested">Not Tested</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <MobileSelectPicker
+                        value={currentTest.socketOutlets}
+                        onValueChange={(value) => updateCurrentTest('socketOutlets', value)}
+                        options={[
+                          { value: 'correct', label: 'Correct Polarity' },
+                          { value: 'incorrect', label: 'Incorrect Polarity' },
+                          { value: 'not-tested', label: 'Not Tested' },
+                        ]}
+                        placeholder="Select result"
+                        title="Socket Outlets"
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="lightingPoints">Lighting Points</Label>
-                      <Select value={currentTest.lightingPoints} onValueChange={(value) => updateCurrentTest('lightingPoints', value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select result" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="correct">Correct Polarity</SelectItem>
-                          <SelectItem value="incorrect">Incorrect Polarity</SelectItem>
-                          <SelectItem value="not-tested">Not Tested</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <MobileSelectPicker
+                        value={currentTest.lightingPoints}
+                        onValueChange={(value) => updateCurrentTest('lightingPoints', value)}
+                        options={[
+                          { value: 'correct', label: 'Correct Polarity' },
+                          { value: 'incorrect', label: 'Incorrect Polarity' },
+                          { value: 'not-tested', label: 'Not Tested' },
+                        ]}
+                        placeholder="Select result"
+                        title="Lighting Points"
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="isolatorSwitches">Isolator Switches</Label>
-                      <Select value={currentTest.isolatorSwitches} onValueChange={(value) => updateCurrentTest('isolatorSwitches', value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select result" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="correct">Correct Polarity</SelectItem>
-                          <SelectItem value="incorrect">Incorrect Polarity</SelectItem>
-                          <SelectItem value="not-tested">Not Tested</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <MobileSelectPicker
+                        value={currentTest.isolatorSwitches}
+                        onValueChange={(value) => updateCurrentTest('isolatorSwitches', value)}
+                        options={[
+                          { value: 'correct', label: 'Correct Polarity' },
+                          { value: 'incorrect', label: 'Incorrect Polarity' },
+                          { value: 'not-tested', label: 'Not Tested' },
+                        ]}
+                        placeholder="Select result"
+                        title="Isolator Switches"
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="notes">Test Notes</Label>

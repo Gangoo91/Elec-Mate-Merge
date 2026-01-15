@@ -128,6 +128,10 @@ export const CommunicationsSection = () => {
   const acknowledgeMutation = useAcknowledgeMessage();
   const deleteCommunication = useDeleteCommunication();
 
+  // Recipients for selected message (for detail sheet)
+  const [recipientsMessageId, setRecipientsMessageId] = useState<string | null>(null);
+  const { data: recipients = [] } = useCommunicationRecipients(recipientsMessageId || '');
+
   // Local read/acknowledged state (would be per-user in real app with auth)
   const [localReadIds, setLocalReadIds] = useState<Set<string>>(new Set());
   const [localAcknowledgedIds, setLocalAcknowledgedIds] = useState<Set<string>>(new Set());
@@ -142,6 +146,8 @@ export const CommunicationsSection = () => {
   // Detail sheet state
   const [selectedMessage, setSelectedMessage] = useState<Communication | null>(null);
   const [showDetail, setShowDetail] = useState(false);
+  const [showReplySheet, setShowReplySheet] = useState(false);
+  const [replyContent, setReplyContent] = useState("");
 
   // Compose state
   const [showCompose, setShowCompose] = useState(false);
@@ -220,15 +226,15 @@ export const CommunicationsSection = () => {
     return { pinned: pinnedMessages, groups: groups.filter(g => g.messages.length > 0) };
   }, [filteredComms, activeTab]);
 
-  // Computed stats
-  const computedStats = useMemo(() => ({
-    total: communications.length,
-    unread: communications.filter(c => !localReadIds.has(c.id)).length,
+  // Use stats from backend hook, with fallbacks
+  const displayStats = useMemo(() => ({
+    total: stats?.totalAnnouncements ?? communications.length,
+    unread: stats?.unreadCount ?? communications.filter(c => !localReadIds.has(c.id)).length,
     mandatoryPending: communications.filter(c =>
       (c.priority === 'urgent' || c.priority === 'high') && !localAcknowledgedIds.has(c.id)
     ).length,
     safetyWarnings: communications.filter(c => c.type === 'alert').length,
-  }), [communications, localReadIds, localAcknowledgedIds]);
+  }), [stats, communications, localReadIds, localAcknowledgedIds]);
 
   // Actions
   const togglePin = useCallback(async (id: string, currentPinned: boolean) => {
@@ -270,8 +276,47 @@ export const CommunicationsSection = () => {
     toast({ title: "Signed Off", description: "Acknowledged" });
   }, []);
 
+  const handleReply = useCallback(async () => {
+    if (!selectedMessage || !replyContent.trim()) return;
+
+    try {
+      // Determine target - if original was to specific employees, reply goes back to sender
+      // For broadcasts, reply creates a follow-up broadcast
+      const isReplyToSpecific = selectedMessage.sender_id != null;
+
+      await createCommunication.mutateAsync({
+        type: 'message',
+        title: `Re: ${selectedMessage.title}`,
+        content: replyContent,
+        priority: 'normal',
+        target_audience: isReplyToSpecific ? 'specific' : selectedMessage.target_audience,
+        target_employee_ids: isReplyToSpecific && selectedMessage.sender_id
+          ? [selectedMessage.sender_id]
+          : selectedMessage.target_employee_ids,
+        is_pinned: false,
+        expires_at: null,
+        sender_id: null,
+        attachments: null,
+      });
+
+      toast({
+        title: "Reply sent",
+        description: "Your reply has been sent.",
+      });
+      setReplyContent("");
+      setShowReplySheet(false);
+    } catch {
+      toast({
+        title: "Error",
+        description: "Failed to send reply. Please try again.",
+        variant: "destructive",
+      });
+    }
+  }, [selectedMessage, replyContent, createCommunication]);
+
   const openMessage = useCallback((comm: Communication) => {
     setSelectedMessage(comm);
+    setRecipientsMessageId(comm.id);
     setShowDetail(true);
     setLocalReadIds(prev => new Set([...prev, comm.id]));
   }, []);
@@ -395,8 +440,8 @@ export const CommunicationsSection = () => {
   const tabs = [
     { id: "inbox", icon: Inbox, label: "Inbox", count: null },
     { id: "briefs", icon: Megaphone, label: "Briefs", count: null },
-    { id: "safety", icon: AlertTriangle, label: "Safety", count: computedStats.safetyWarnings > 0 ? computedStats.safetyWarnings : null },
-    { id: "mandatory", icon: FileCheck, label: "Sign", count: computedStats.mandatoryPending > 0 ? computedStats.mandatoryPending : null },
+    { id: "safety", icon: AlertTriangle, label: "Safety", count: displayStats.safetyWarnings > 0 ? displayStats.safetyWarnings : null },
+    { id: "mandatory", icon: FileCheck, label: "Sign", count: displayStats.mandatoryPending > 0 ? displayStats.mandatoryPending : null },
   ];
 
   // Message Card Component
@@ -598,6 +643,71 @@ export const CommunicationsSection = () => {
                   </span>
                 </span>
               </div>
+
+              {/* Recipients list with read/acknowledged status */}
+              {recipients.length > 0 && (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                      <Eye className="h-4 w-4 text-muted-foreground" />
+                      Recipients ({recipients.length})
+                    </h4>
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                      <span className="flex items-center gap-1">
+                        <div className="w-2 h-2 rounded-full bg-success" />
+                        {recipients.filter(r => r.read_at).length} read
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <div className="w-2 h-2 rounded-full bg-blue-500" />
+                        {recipients.filter(r => r.acknowledged_at).length} signed
+                      </span>
+                    </div>
+                  </div>
+                  <div className="max-h-[200px] overflow-y-auto rounded-xl border border-border bg-muted/20">
+                    {recipients.map((recipient) => (
+                      <div
+                        key={recipient.id}
+                        className="flex items-center justify-between p-3 border-b border-border last:border-b-0"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-elec-gray flex items-center justify-center">
+                            {recipient.employee?.photo_url ? (
+                              <img
+                                src={recipient.employee.photo_url}
+                                alt=""
+                                className="w-8 h-8 rounded-full object-cover"
+                              />
+                            ) : (
+                              <User className="h-4 w-4 text-muted-foreground" />
+                            )}
+                          </div>
+                          <span className="text-sm font-medium">
+                            {recipient.employee?.name || 'Unknown'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {recipient.acknowledged_at ? (
+                            <Badge variant="outline" className="text-[10px] py-0 h-5 px-1.5 bg-blue-500/10 text-blue-400 border-blue-500/30 gap-0.5">
+                              <CheckCheck className="h-2.5 w-2.5" />
+                              Signed
+                            </Badge>
+                          ) : recipient.read_at ? (
+                            <Badge variant="outline" className="text-[10px] py-0 h-5 px-1.5 bg-success/10 text-success border-success/30 gap-0.5">
+                              <Check className="h-2.5 w-2.5" />
+                              Read
+                            </Badge>
+                          ) : (
+                            <Badge variant="outline" className="text-[10px] py-0 h-5 px-1.5 bg-muted text-muted-foreground gap-0.5">
+                              <Clock className="h-2.5 w-2.5" />
+                              Pending
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </ScrollArea>
 
@@ -627,7 +737,7 @@ export const CommunicationsSection = () => {
                 variant="outline"
                 size="lg"
                 className="flex-col h-auto py-3 gap-1.5 rounded-xl"
-                disabled
+                onClick={() => setShowReplySheet(true)}
               >
                 <MessageSquare className="h-5 w-5" />
                 <span className="text-[11px]">Reply</span>
@@ -891,6 +1001,61 @@ export const CommunicationsSection = () => {
     </Sheet>
   );
 
+  // Reply Sheet
+  const ReplySheet = () => (
+    <Sheet open={showReplySheet} onOpenChange={setShowReplySheet}>
+      <SheetContent side="bottom" className="h-[50vh] p-0 rounded-t-2xl">
+        {/* Drag handle */}
+        <div className="flex justify-center pt-3 pb-2">
+          <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+        </div>
+
+        {/* Header */}
+        <div className="flex items-center justify-between px-4 pb-3 border-b border-border">
+          <Button variant="ghost" size="sm" onClick={() => setShowReplySheet(false)}>
+            Cancel
+          </Button>
+          <h3 className="font-semibold text-foreground">
+            Reply to: {selectedMessage?.title}
+          </h3>
+          <Button
+            size="sm"
+            onClick={handleReply}
+            disabled={!replyContent.trim() || createCommunication.isPending}
+            className="gap-1.5"
+          >
+            {createCommunication.isPending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Send className="h-4 w-4" />
+            )}
+            Send
+          </Button>
+        </div>
+
+        <div className="p-4 space-y-4">
+          {/* Original message preview */}
+          <div className="p-3 rounded-xl bg-muted/30 border border-border">
+            <p className="text-xs text-muted-foreground mb-1">Replying to:</p>
+            <p className="text-sm text-foreground line-clamp-2">{selectedMessage?.content}</p>
+          </div>
+
+          {/* Reply input */}
+          <div className="space-y-2">
+            <Label>Your Reply</Label>
+            <Textarea
+              placeholder="Type your reply..."
+              className="min-h-[100px] rounded-xl resize-none touch-manipulation text-base"
+              value={replyContent}
+              onChange={(e) => setReplyContent(e.target.value)}
+              autoFocus
+            />
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+
   // Empty State Component
   const EmptyState = () => {
     const state = emptyStates[activeTab as keyof typeof emptyStates] || emptyStates.inbox;
@@ -937,7 +1102,7 @@ export const CommunicationsSection = () => {
           </div>
           <div>
             <h1 className="text-lg font-bold text-foreground">Messages</h1>
-            <p className="text-xs text-muted-foreground">{computedStats.unread} unread</p>
+            <p className="text-xs text-muted-foreground">{displayStats.unread} unread</p>
           </div>
         </div>
 
@@ -968,9 +1133,9 @@ export const CommunicationsSection = () => {
             <Button variant="ghost" size="icon" className="h-10 w-10">
               <Bell className="h-5 w-5" />
             </Button>
-            {computedStats.unread > 0 && (
+            {displayStats.unread > 0 && (
               <div className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] rounded-full bg-elec-yellow text-elec-yellow-foreground text-[10px] font-bold flex items-center justify-center px-1">
-                {computedStats.unread}
+                {displayStats.unread}
               </div>
             )}
           </div>
@@ -1016,30 +1181,30 @@ export const CommunicationsSection = () => {
         stats={[
           {
             icon: Inbox,
-            value: computedStats.total,
+            value: displayStats.total,
             label: "All",
             color: "blue",
           },
           {
             icon: Bell,
-            value: computedStats.unread,
+            value: displayStats.unread,
             label: "Unread",
             color: "yellow",
-            pulse: computedStats.unread > 0,
+            pulse: displayStats.unread > 0,
           },
           {
             icon: FileCheck,
-            value: computedStats.mandatoryPending,
+            value: displayStats.mandatoryPending,
             label: "Sign",
             color: "orange",
-            pulse: computedStats.mandatoryPending > 0,
+            pulse: displayStats.mandatoryPending > 0,
           },
           {
             icon: AlertTriangle,
-            value: computedStats.safetyWarnings,
+            value: displayStats.safetyWarnings,
             label: "Safety",
             color: "red",
-            pulse: computedStats.safetyWarnings > 0,
+            pulse: displayStats.safetyWarnings > 0,
           },
         ]}
       />
@@ -1148,6 +1313,7 @@ export const CommunicationsSection = () => {
       {/* Sheets */}
       <ComposeSheet />
       <MessageDetailSheet />
+      <ReplySheet />
     </div>
   );
 };

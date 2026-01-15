@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, Target, CheckCircle, FileText } from "lucide-react";
+import { ArrowLeft, ArrowRight, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import useSEO from "@/hooks/useSEO";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -21,7 +18,7 @@ const Module7Section5_3 = () => {
       options: [
         "Installation methods for electrical circuits",
         "Safety requirements for electrical test equipment",
-        "Certification procedures for electricians", 
+        "Certification procedures for electricians",
         "Maintenance schedules for electrical systems"
       ],
       correctAnswer: 1,
@@ -44,7 +41,7 @@ const Module7Section5_3 = () => {
       question: "How much exposed metal is permitted at a probe tip under GS38?",
       options: [
         "No more than 1 mm",
-        "No more than 2 mm", 
+        "No more than 2 mm",
         "No more than 4 mm",
         "No more than 6 mm"
       ],
@@ -138,165 +135,137 @@ const Module7Section5_3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 7.5
+              <span className="hidden sm:inline">Back to Section 5</span>
+              <span className="sm:hidden">Back</span>
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <div className="p-1.5 sm:p-2 rounded-lg ">
-              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Title Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <Search className="w-4 h-4" />
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 5.3</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
-              Section 7.5.3
-            </Badge>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
+              GS38-Compliant Testing Practices
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+              Master GS38 safety standards for electrical test equipment, including fused leads, shrouded probes, and compliance requirements
+            </p>
+          </header>
+
+          {/* In 30 Seconds Summary */}
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
+            <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
+            <ul className="text-white/80 space-y-1 text-sm">
+              <li>• Check test leads have fuses fitted</li>
+              <li>• Verify probe tips show maximum 2mm exposed metal</li>
+              <li>• Confirm finger guards are present on probes</li>
+              <li>• Check leads are double-insulated and undamaged</li>
+            </ul>
           </div>
-          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            GS38-Compliant Testing Practices
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Master GS38 safety standards for electrical test equipment, including fused leads, shrouded probes, and compliance requirements for safe electrical testing practices.
-          </p>
-        </header>
 
-        {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-2 sm:mb-3">In 30 seconds</p>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>Check test leads have fuses fitted</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>Verify probe tips show maximum 2mm exposed metal</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>Confirm finger guards are present on probes</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>Check leads are double-insulated and undamaged</span>
-                </li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
-              <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Spot:</strong> Damaged insulation, excessive exposed tips, missing fuses, homemade equipment</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Use:</strong> Only GS38-compliant test equipment with proper ratings</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Check:</strong> Visual inspection before each use, report non-compliant equipment</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+          {/* Introduction */}
+          <section className="mb-10">
+            <p className="text-white/80 leading-relaxed">
+              When using test equipment, safety depends not only on the electrician but also on the design and condition of the instruments themselves. The Health and Safety Executive's GS38 guidance note sets out the minimum safety requirements for electrical test equipment in the UK. Compliance with GS38 protects electricians from shock, burns, and arc flash injuries during testing. Apprentices must become familiar with these requirements and treat them as standard practice in every situation, not just during formal inspections.
+            </p>
+          </section>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Introduction</h2>
-          <p className="text-sm sm:text-base text-white mb-4">
-            When using test equipment, safety depends not only on the electrician but also on the design and condition of the instruments themselves. The Health and Safety Executive's GS38 guidance note sets out the minimum safety requirements for electrical test equipment in the UK. Compliance with GS38 protects electricians from shock, burns, and arc flash injuries during testing. Apprentices must become familiar with these requirements and treat them as standard practice in every situation, not just during formal inspections.
-          </p>
-        </Card>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Learning Outcomes
+            </h2>
+            <p className="text-white/80 mb-4">By the end of this subsection, you should be able to:</p>
+            <ul className="space-y-2 text-white/80">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">✓</span>
+                <span>Explain what GS38 requires for electrical test equipment</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">✓</span>
+                <span>Describe the design features of GS38-compliant equipment</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">✓</span>
+                <span>Apply these principles in everyday testing to maintain personal safety</span>
+              </li>
+            </ul>
+          </section>
 
-        {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Learning Outcomes</h2>
-          <p className="text-sm sm:text-base text-white mb-3 sm:mb-4">By the end of this subsection, you should be able to:</p>
-          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white">
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
-              <span>Explain what GS38 requires for electrical test equipment</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
-              <span>Describe the design features of GS38-compliant equipment</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 mt-0.5" />
-              <span>Apply these principles in everyday testing to maintain personal safety</span>
-            </li>
-          </ul>
-        </Card>
-
-        {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-xl sm:text-2xl font-bold text-white mb-6">Content / Learning</h2>
-          
           {/* Section 1: GS38 Safety Requirements */}
-          <div className="border-l-4 border-elec-yellow pl-4 sm:pl-6 space-y-3 sm:space-y-4 mb-6">
-            <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow">1. GS38 Safety Requirements</h3>
-            <p className="text-sm sm:text-base text-white">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              GS38 Safety Requirements
+            </h2>
+            <p className="text-white/80 mb-4">
               GS38 focuses on the safe design of test leads, probes, and instruments used for electrical testing. The key requirements are designed to protect electricians from electrical shock, arc flash, and related injuries during routine testing work.
             </p>
-            <div className="bg-card border border-elec-yellow/20 rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
-              <h4 className="font-semibold text-elec-yellow text-sm sm:text-base">Essential GS38 Features:</h4>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-xs sm:text-sm text-white">
-                <li><strong>Fused leads:</strong> Test leads must contain high-breaking capacity (HBC) fuses to protect the user if a short circuit occurs during testing</li>
-                <li><strong>Shrouded probes:</strong> Only 2 mm of exposed metal should be visible at the probe tip to reduce accidental contact risk</li>
-                <li><strong>Finger guards:</strong> Probes must have guards to prevent fingers from slipping forward onto live conductors</li>
-                <li><strong>Double insulation:</strong> Leads should be flexible, robust, and resistant to cuts, abrasion, and heat</li>
-                <li><strong>Category ratings:</strong> Equipment must be rated (CAT II, III, or IV) for the electrical system being tested</li>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-4">
+              <h3 className="font-semibold text-elec-yellow mb-3">Essential GS38 Features:</h3>
+              <ul className="space-y-2 text-sm text-white/80">
+                <li><strong className="text-white">Fused leads:</strong> Test leads must contain high-breaking capacity (HBC) fuses to protect the user if a short circuit occurs during testing</li>
+                <li><strong className="text-white">Shrouded probes:</strong> Only 2 mm of exposed metal should be visible at the probe tip to reduce accidental contact risk</li>
+                <li><strong className="text-white">Finger guards:</strong> Probes must have guards to prevent fingers from slipping forward onto live conductors</li>
+                <li><strong className="text-white">Double insulation:</strong> Leads should be flexible, robust, and resistant to cuts, abrasion, and heat</li>
+                <li><strong className="text-white">Category ratings:</strong> Equipment must be rated (CAT II, III, or IV) for the electrical system being tested</li>
               </ul>
             </div>
+
             <InlineCheck
               id="gs38-requirements"
               question="Which of these is NOT a GS38 requirement for test equipment?"
               options={[
                 "Fused leads with HBC fuses",
-                "Shrouded probes with 2mm maximum exposure", 
+                "Shrouded probes with 2mm maximum exposure",
                 "Digital display with backlight",
                 "Finger guards on probes"
               ]}
               correctIndex={2}
               explanation="Digital displays with backlights are convenience features, not GS38 safety requirements. GS38 focuses on physical safety features like fused leads, shrouded probes, and finger guards."
             />
-          </div>
+          </section>
 
           {/* Section 2: Prohibited Equipment */}
-          <div className="border-l-4 border-green-500 pl-4 sm:pl-6 space-y-3 sm:space-y-4 mb-6">
-            <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-green-400">2. Prohibited Equipment and Practices</h3>
-            <p className="text-sm sm:text-base text-white">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Prohibited Equipment and Practices
+            </h2>
+            <p className="text-white/80 mb-4">
               GS38 explicitly prohibits the use of certain types of equipment and modifications that compromise safety standards. Understanding what cannot be used is as important as knowing what should be used.
             </p>
-            <div className="bg-card border border-green-500/20 rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
-              <h4 className="font-semibold text-green-400 text-sm sm:text-base">Never Use:</h4>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-xs sm:text-sm text-white">
-                <li><strong>Homemade test equipment:</strong> Cannot guarantee compliance with safety standards</li>
-                <li><strong>Modified equipment:</strong> Alterations may compromise safety features</li>
-                <li><strong>Damaged leads:</strong> Cracked insulation or exposed conductors are dangerous</li>
-                <li><strong>Incorrect fuses:</strong> Wrong ratings won't provide adequate protection</li>
-                <li><strong>Excessive probe tips:</strong> More than 2mm exposure increases contact risk</li>
+            <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50 mb-4">
+              <h3 className="font-semibold text-green-400 mb-3">Never Use:</h3>
+              <ul className="space-y-2 text-sm text-white/80">
+                <li><strong className="text-white">Homemade test equipment:</strong> Cannot guarantee compliance with safety standards</li>
+                <li><strong className="text-white">Modified equipment:</strong> Alterations may compromise safety features</li>
+                <li><strong className="text-white">Damaged leads:</strong> Cracked insulation or exposed conductors are dangerous</li>
+                <li><strong className="text-white">Incorrect fuses:</strong> Wrong ratings won't provide adequate protection</li>
+                <li><strong className="text-white">Excessive probe tips:</strong> More than 2mm exposure increases contact risk</li>
               </ul>
             </div>
+
             <InlineCheck
               id="prohibited-equipment"
               question="Why does GS38 prohibit homemade or modified test equipment?"
@@ -309,24 +278,28 @@ const Module7Section5_3 = () => {
               correctIndex={1}
               explanation="Homemade or modified equipment cannot guarantee compliance with safety standards, making them potentially dangerous to use in electrical testing situations."
             />
-          </div>
+          </section>
 
           {/* Section 3: Legal Compliance */}
-          <div className="border-l-4 border-amber-500 pl-4 sm:pl-6 space-y-3 sm:space-y-4 mb-6">
-            <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-amber-400">3. Legal Framework and Compliance</h3>
-            <p className="text-sm sm:text-base text-white">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Legal Framework and Compliance
+            </h2>
+            <p className="text-white/80 mb-4">
               GS38 compliance is not optional—it is underpinned by legal requirements that make adherence to these standards a duty for all electrical workers. Understanding the legal context helps emphasise why these standards matter.
             </p>
-            <div className="bg-card border border-amber-500/20 rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
-              <h4 className="font-semibold text-amber-400 text-sm sm:text-base">Legal Requirements:</h4>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-xs sm:text-sm text-white">
-                <li><strong>Electricity at Work Regulations 1989:</strong> Provides the legal framework requiring safe electrical work practices</li>
-                <li><strong>Daily inspection duty:</strong> Electricians must visually inspect test equipment before each use</li>
-                <li><strong>Employer responsibilities:</strong> Must provide GS38-compliant equipment and training</li>
-                <li><strong>Individual accountability:</strong> Each electrician is personally responsible for refusing non-compliant equipment</li>
-                <li><strong>Reporting requirements:</strong> Non-compliant equipment must be reported and removed from service</li>
+            <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50 mb-4">
+              <h3 className="font-semibold text-amber-400 mb-3">Legal Requirements:</h3>
+              <ul className="space-y-2 text-sm text-white/80">
+                <li><strong className="text-white">Electricity at Work Regulations 1989:</strong> Provides the legal framework requiring safe electrical work practices</li>
+                <li><strong className="text-white">Daily inspection duty:</strong> Electricians must visually inspect test equipment before each use</li>
+                <li><strong className="text-white">Employer responsibilities:</strong> Must provide GS38-compliant equipment and training</li>
+                <li><strong className="text-white">Individual accountability:</strong> Each electrician is personally responsible for refusing non-compliant equipment</li>
+                <li><strong className="text-white">Reporting requirements:</strong> Non-compliant equipment must be reported and removed from service</li>
               </ul>
             </div>
+
             <InlineCheck
               id="legal-compliance"
               question="What regulation makes GS38 compliance a legal requirement?"
@@ -339,24 +312,28 @@ const Module7Section5_3 = () => {
               correctIndex={2}
               explanation="The Electricity at Work Regulations 1989 provide the legal framework that makes GS38 compliance a legal expectation for safe electrical work."
             />
-          </div>
+          </section>
 
           {/* Section 4: Professional Practice */}
-          <div className="border-l-4 border-purple-500 pl-4 sm:pl-6 space-y-3 sm:space-y-4">
-            <h3 className="text-lg sm:text-lg sm:text-xl font-semibold text-elec-yellow">4. Professional Practice and Implementation</h3>
-            <p className="text-sm sm:text-base text-white">
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Professional Practice and Implementation
+            </h2>
+            <p className="text-white/80 mb-4">
               Developing professional habits around GS38 compliance ensures that safety becomes automatic rather than an afterthought. This section covers how to integrate these standards into daily electrical work.
             </p>
-            <div className="bg-card border border-purple-500/20 rounded-lg p-3 sm:p-4 space-y-2 sm:space-y-3">
-              <h4 className="font-semibold text-elec-yellow text-sm sm:text-base">Daily Practice Routine:</h4>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-xs sm:text-sm text-white">
-                <li><strong>Pre-use inspection:</strong> Check every piece of test equipment before starting work</li>
-                <li><strong>Equipment selection:</strong> Choose appropriate category-rated instruments for the system being tested</li>
-                <li><strong>Damage reporting:</strong> Immediately report and remove any non-compliant equipment from service</li>
-                <li><strong>Refusal protocols:</strong> Know how to professionally refuse unsafe equipment and escalate concerns</li>
-                <li><strong>Continuous learning:</strong> Stay updated on GS38 requirements and best practices</li>
+            <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50 mb-4">
+              <h3 className="font-semibold text-purple-400 mb-3">Daily Practice Routine:</h3>
+              <ul className="space-y-2 text-sm text-white/80">
+                <li><strong className="text-white">Pre-use inspection:</strong> Check every piece of test equipment before starting work</li>
+                <li><strong className="text-white">Equipment selection:</strong> Choose appropriate category-rated instruments for the system being tested</li>
+                <li><strong className="text-white">Damage reporting:</strong> Immediately report and remove any non-compliant equipment from service</li>
+                <li><strong className="text-white">Refusal protocols:</strong> Know how to professionally refuse unsafe equipment and escalate concerns</li>
+                <li><strong className="text-white">Continuous learning:</strong> Stay updated on GS38 requirements and best practices</li>
               </ul>
             </div>
+
             <InlineCheck
               id="professional-practice"
               question="What should an apprentice do if asked to use non-compliant test equipment?"
@@ -369,84 +346,98 @@ const Module7Section5_3 = () => {
               correctIndex={1}
               explanation="The correct professional response is to refuse to use non-compliant equipment and escalate the issue to ensure proper GS38-compliant equipment is provided."
             />
-          </div>
-        </Card>
+          </section>
 
-        {/* Real-World Applications */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-r from-green-500/5 to-elec-yellow/10 border-green-500/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Real-World Applications</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
-              <h3 className="font-semibold text-white mb-2">Case Study 1: Non-Compliant Probes</h3>
-              <p className="text-sm text-white mb-2">
-                An electrician using old test probes with 8mm exposed tips was testing a distribution board. The long metal tips slipped and created a short circuit between phases, causing a flashover that resulted in burns and equipment damage.
-              </p>
-              <p className="text-xs text-amber-400 font-medium">
-                GS38-compliant probes with 2mm tips and finger guards would have prevented this accident.
-              </p>
+          {/* Real-World Applications */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Real-World Applications
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
+                <h3 className="font-semibold text-red-400 mb-3">Case Study 1: Non-Compliant Probes</h3>
+                <p className="text-sm text-white/80 mb-2">
+                  An electrician using old test probes with 8mm exposed tips was testing a distribution board. The long metal tips slipped and created a short circuit between phases, causing a flashover that resulted in burns and equipment damage.
+                </p>
+                <p className="text-xs text-amber-400 font-medium">
+                  GS38-compliant probes with 2mm tips and finger guards would have prevented this accident.
+                </p>
+              </div>
+              <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
+                <h3 className="font-semibold text-green-400 mb-3">Case Study 2: Proper Equipment Management</h3>
+                <p className="text-sm text-white/80 mb-2">
+                  An apprentice noticed damaged insulation on test leads and immediately reported it to his supervisor. He was provided with GS38-compliant replacement equipment and commended for following safety protocols.
+                </p>
+                <p className="text-xs text-green-400 font-medium">
+                  Professional approach to equipment safety protects everyone on site.
+                </p>
+              </div>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
-              <h3 className="font-semibold text-white mb-2">Case Study 2: Proper Equipment Management</h3>
-              <p className="text-sm text-white mb-2">
-                An apprentice noticed damaged insulation on test leads and immediately reported it to his supervisor. He was provided with GS38-compliant replacement equipment and commended for following safety protocols.
-              </p>
-              <p className="text-xs text-green-400 font-medium">
-                Professional approach to equipment safety protects everyone on site.
-              </p>
+          </section>
+
+          {/* Key Takeaways */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Key Takeaways
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <ul className="space-y-2 text-sm text-white/80">
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">✓</span>
+                  <span>GS38 sets mandatory safety standards for electrical test equipment in the UK</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">✓</span>
+                  <span>Key features include fused leads, shrouded probes, finger guards, and proper category ratings</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">✓</span>
+                  <span>Non-compliant equipment must never be used, regardless of convenience or pressure</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">✓</span>
+                  <span>Legal compliance is backed by the Electricity at Work Regulations 1989</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">✓</span>
+                  <span>Daily inspection and professional equipment management are essential practices</span>
+                </li>
+              </ul>
             </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Key Takeaways */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-gradient-to-r from-purple-500/5 to-pink-500/5 border-purple-500/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Key Takeaways</h2>
-          <ul className="space-y-2 text-xs sm:text-sm text-white">
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-              <span>GS38 sets mandatory safety standards for electrical test equipment in the UK</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-              <span>Key features include fused leads, shrouded probes, finger guards, and proper category ratings</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-              <span>Non-compliant equipment must never be used, regardless of convenience or pressure</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-              <span>Legal compliance is backed by the Electricity at Work Regulations 1989</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-              <span>Daily inspection and professional equipment management are essential practices</span>
-            </li>
-          </ul>
-        </Card>
+          {/* Quiz */}
+          <section className="mb-10">
+            <Quiz questions={quizQuestions} title="GS38-Compliant Testing Practices Quiz" />
+          </section>
 
-        {/* Test Your Knowledge */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Test Your Knowledge</h2>
-          <Quiz questions={quizQuestions} title="GS38-Compliant Testing Practices Quiz" />
-        </Card>
-
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <Button variant="outline" className="flex-1" asChild>
-            <Link to="../5-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Instrument Checks
-            </Link>
-          </Button>
-          
-          <Button className="flex-1" asChild>
-            <Link to="../5-4">
-              Next: PPE & Environment
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+          {/* Navigation Footer */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
+            <Button
+              variant="ghost"
+              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../5-2">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Instrument Checks
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../5-4">
+                Next: PPE & Environment
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

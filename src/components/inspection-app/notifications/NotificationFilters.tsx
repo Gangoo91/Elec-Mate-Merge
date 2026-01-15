@@ -1,13 +1,7 @@
 import { Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { NotificationStatus } from '@/hooks/useNotifications';
 
 interface NotificationFiltersProps {
@@ -45,33 +39,36 @@ export const NotificationFilters = ({
       </div>
 
       {/* Status Filter */}
-      <Select value={statusFilter} onValueChange={onStatusFilterChange}>
-        <SelectTrigger className="w-full sm:w-[180px] min-h-[48px] sm:min-h-[40px]">
-          <Filter className="w-4 h-4 mr-2 flex-shrink-0" />
-          <SelectValue placeholder="Filter by status" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all" className="min-h-[44px] sm:min-h-[36px]">All Statuses</SelectItem>
-          <SelectItem value="pending" className="min-h-[44px] sm:min-h-[36px]">Pending</SelectItem>
-          <SelectItem value="in-progress" className="min-h-[44px] sm:min-h-[36px]">In Progress</SelectItem>
-          <SelectItem value="submitted" className="min-h-[44px] sm:min-h-[36px]">Submitted</SelectItem>
-          <SelectItem value="overdue" className="min-h-[44px] sm:min-h-[36px]">Overdue</SelectItem>
-          <SelectItem value="cancelled" className="min-h-[44px] sm:min-h-[36px]">Cancelled</SelectItem>
-        </SelectContent>
-      </Select>
+      <MobileSelectPicker
+        value={statusFilter}
+        onValueChange={onStatusFilterChange}
+        options={[
+          { value: 'all', label: 'All Statuses' },
+          { value: 'pending', label: 'Pending' },
+          { value: 'in-progress', label: 'In Progress' },
+          { value: 'submitted', label: 'Submitted' },
+          { value: 'overdue', label: 'Overdue' },
+          { value: 'cancelled', label: 'Cancelled' },
+        ]}
+        placeholder="Filter by status"
+        title="Status Filter"
+        className="w-full sm:w-[180px]"
+      />
 
       {/* Report Type Filter */}
-      <Select value={reportTypeFilter} onValueChange={onReportTypeFilterChange}>
-        <SelectTrigger className="w-full sm:w-[180px] min-h-[48px] sm:min-h-[40px]">
-          <SelectValue placeholder="Filter by type" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all" className="min-h-[44px] sm:min-h-[36px]">All Types</SelectItem>
-          <SelectItem value="eicr" className="min-h-[44px] sm:min-h-[36px]">EICR</SelectItem>
-          <SelectItem value="eic" className="min-h-[44px] sm:min-h-[36px]">EIC</SelectItem>
-          <SelectItem value="minor-works" className="min-h-[44px] sm:min-h-[36px]">Minor Works</SelectItem>
-        </SelectContent>
-      </Select>
+      <MobileSelectPicker
+        value={reportTypeFilter}
+        onValueChange={onReportTypeFilterChange}
+        options={[
+          { value: 'all', label: 'All Types' },
+          { value: 'eicr', label: 'EICR' },
+          { value: 'eic', label: 'EIC' },
+          { value: 'minor-works', label: 'Minor Works' },
+        ]}
+        placeholder="Filter by type"
+        title="Report Type Filter"
+        className="w-full sm:w-[180px]"
+      />
 
       {/* Clear Filters */}
       {hasActiveFilters && (

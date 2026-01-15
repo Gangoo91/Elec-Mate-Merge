@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { FieldTooltip } from '@/components/ui/field-tooltip';
 import { rcdBsStandardOptions } from '@/types/protectiveDeviceTypes';
 import { rcdTypeOptions } from '@/types/wiringTypes';
@@ -72,23 +72,20 @@ const QuickFillRcdPanel: React.FC<QuickFillRcdPanelProps> = ({
           <div className="space-y-2">
             <label className="text-xs font-medium text-muted-foreground">BS (EN) Standard</label>
             <div className="flex gap-2">
-              <Select value={selectedBsStandard} onValueChange={setSelectedBsStandard}>
-                <SelectTrigger className="flex-1 h-9">
-                  <SelectValue placeholder="Select..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {rcdBsStandardOptions.map(option => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Button 
-                size="sm" 
+              <div className="flex-1">
+                <MobileSelectPicker
+                  value={selectedBsStandard}
+                  onValueChange={setSelectedBsStandard}
+                  options={rcdBsStandardOptions}
+                  placeholder="Select..."
+                  title="BS (EN) Standard"
+                />
+              </div>
+              <Button
+                size="sm"
                 onClick={() => selectedBsStandard && onFillAllRcdBsStandard(selectedBsStandard)}
                 disabled={!selectedBsStandard}
-                className="whitespace-nowrap"
+                className="whitespace-nowrap h-11"
               >
                 Apply to All
               </Button>
@@ -99,23 +96,20 @@ const QuickFillRcdPanel: React.FC<QuickFillRcdPanelProps> = ({
           <div className="space-y-2">
             <label className="text-xs font-medium text-muted-foreground">Type</label>
             <div className="flex gap-2">
-              <Select value={selectedType} onValueChange={setSelectedType}>
-                <SelectTrigger className="flex-1 h-9">
-                  <SelectValue placeholder="Select..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {rcdTypeOptions.map(option => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Button 
-                size="sm" 
+              <div className="flex-1">
+                <MobileSelectPicker
+                  value={selectedType}
+                  onValueChange={setSelectedType}
+                  options={rcdTypeOptions}
+                  placeholder="Select..."
+                  title="RCD Type"
+                />
+              </div>
+              <Button
+                size="sm"
                 onClick={() => selectedType && onFillAllRcdType(selectedType)}
                 disabled={!selectedType}
-                className="whitespace-nowrap"
+                className="whitespace-nowrap h-11"
               >
                 Apply to All
               </Button>
@@ -126,23 +120,20 @@ const QuickFillRcdPanel: React.FC<QuickFillRcdPanelProps> = ({
           <div className="space-y-2">
             <label className="text-xs font-medium text-muted-foreground">IΔn (mA)</label>
             <div className="flex gap-2">
-              <Select value={selectedRating} onValueChange={setSelectedRating}>
-                <SelectTrigger className="flex-1 h-9">
-                  <SelectValue placeholder="Select..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {rcdRatingOptions.map(option => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Button 
-                size="sm" 
+              <div className="flex-1">
+                <MobileSelectPicker
+                  value={selectedRating}
+                  onValueChange={setSelectedRating}
+                  options={rcdRatingOptions}
+                  placeholder="Select..."
+                  title="RCD Rating (mA)"
+                />
+              </div>
+              <Button
+                size="sm"
                 onClick={() => selectedRating && onFillAllRcdRating(selectedRating)}
                 disabled={!selectedRating}
-                className="whitespace-nowrap"
+                className="whitespace-nowrap h-11"
               >
                 Apply to All
               </Button>
@@ -153,23 +144,20 @@ const QuickFillRcdPanel: React.FC<QuickFillRcdPanelProps> = ({
           <div className="space-y-2">
             <label className="text-xs font-medium text-muted-foreground">Rating (A)</label>
             <div className="flex gap-2">
-              <Select value={selectedRatingA} onValueChange={setSelectedRatingA}>
-                <SelectTrigger className="flex-1 h-9">
-                  <SelectValue placeholder="Select..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {rcdRatingAOptions.map(option => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Button 
-                size="sm" 
+              <div className="flex-1">
+                <MobileSelectPicker
+                  value={selectedRatingA}
+                  onValueChange={setSelectedRatingA}
+                  options={rcdRatingAOptions}
+                  placeholder="Select..."
+                  title="RCD Rating (A)"
+                />
+              </div>
+              <Button
+                size="sm"
                 onClick={() => selectedRatingA && onFillAllRcdRatingA(selectedRatingA)}
                 disabled={!selectedRatingA}
-                className="whitespace-nowrap"
+                className="whitespace-nowrap h-11"
               >
                 Apply to All
               </Button>

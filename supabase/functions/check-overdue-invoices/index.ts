@@ -88,7 +88,7 @@ serve(async (req: Request) => {
             body: {
               userId: invoice.created_by,
               title: '⚠️ Invoice Overdue',
-              body: `Invoice #${invoice.invoice_number} for ${invoice.client} (£${invoice.amount.toFixed(2)}) is ${daysText} overdue`,
+              body: `Invoice #${invoice.invoice_number} for ${invoice.client} (£${typeof invoice.amount === 'number' && !isNaN(invoice.amount) ? invoice.amount.toFixed(2) : '0.00'}) is ${daysText} overdue`,
               type: 'invoice',
               data: {
                 invoiceId: invoice.id,

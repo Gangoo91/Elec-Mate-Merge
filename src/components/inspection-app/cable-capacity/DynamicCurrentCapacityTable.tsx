@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { cableSizeOptions } from '@/types/cableTypes';
@@ -58,60 +58,59 @@ export const DynamicCurrentCapacityTable = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
           <div>
             <label className="text-sm text-white/80 mb-1 block">Installation Method</label>
-            <Select value={selectedMethod} onValueChange={setSelectedMethod}>
-               <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(installationMethods).map(([key, method]) => (
-                  <SelectItem key={key} value={key}>
-                    {method.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <MobileSelectPicker
+              value={selectedMethod}
+              onValueChange={setSelectedMethod}
+              options={Object.entries(installationMethods).map(([key, method]) => ({
+                value: key,
+                label: method.label,
+              }))}
+              placeholder="Select method"
+              title="Installation Method"
+            />
           </div>
 
           <div>
             <label className="text-sm text-white/80 mb-1 block">Ambient Temperature (°C)</label>
-            <Select value={ambientTemp} onValueChange={setAmbientTemp}>
-             <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.keys(ambientTemperatureFactors).map(temp => (
-                  <SelectItem key={temp} value={temp}>{temp}°C</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <MobileSelectPicker
+              value={ambientTemp}
+              onValueChange={setAmbientTemp}
+              options={Object.keys(ambientTemperatureFactors).map(temp => ({
+                value: temp,
+                label: `${temp}°C`,
+              }))}
+              placeholder="Select temperature"
+              title="Ambient Temperature"
+            />
           </div>
 
           <div>
             <label className="text-sm text-white/80 mb-1 block">Circuits Grouped</label>
-            <Select value={groupingCount} onValueChange={setGroupingCount}>
-             <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.keys(groupingFactors).map(count => (
-                  <SelectItem key={count} value={count}>{count} circuit{count !== '1' ? 's' : ''}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <MobileSelectPicker
+              value={groupingCount}
+              onValueChange={setGroupingCount}
+              options={Object.keys(groupingFactors).map(count => ({
+                value: count,
+                label: `${count} circuit${count !== '1' ? 's' : ''}`,
+              }))}
+              placeholder="Select grouping"
+              title="Circuits Grouped"
+            />
           </div>
 
           <div>
             <label className="text-sm text-white/80 mb-1 block">Thermal Insulation</label>
-            <Select value={thermalInsulation} onValueChange={setThermalInsulation}>
-              <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="none">None</SelectItem>
-                <SelectItem value="partial">Partial</SelectItem>
-                <SelectItem value="full">Fully Surrounded</SelectItem>
-              </SelectContent>
-            </Select>
+            <MobileSelectPicker
+              value={thermalInsulation}
+              onValueChange={setThermalInsulation}
+              options={[
+                { value: 'none', label: 'None' },
+                { value: 'partial', label: 'Partial' },
+                { value: 'full', label: 'Fully Surrounded' },
+              ]}
+              placeholder="Select insulation"
+              title="Thermal Insulation"
+            />
           </div>
         </div>
       </CardHeader>

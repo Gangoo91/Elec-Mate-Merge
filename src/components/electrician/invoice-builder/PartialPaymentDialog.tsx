@@ -50,14 +50,17 @@ export const PartialPaymentDialog = ({
   const [notes, setNotes] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const formatCurrency = (value: number) =>
-    new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(value);
+  const formatCurrency = (value: number) => {
+    const safeValue = typeof value === 'number' && !isNaN(value) ? value : 0;
+    return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(safeValue);
+  };
 
-  // Calculate remaining balance
+  // Calculate remaining balance with NaN protection
   const existingPayments = (invoice as any).partial_payments || [];
-  const totalPaid = (invoice as any).total_paid || existingPayments.reduce((sum: number, p: PartialPayment) => sum + p.amount, 0);
-  const remainingBalance = invoice.total - totalPaid;
-  const paidPercentage = Math.min((totalPaid / invoice.total) * 100, 100);
+  const totalPaid = (invoice as any).total_paid || existingPayments.reduce((sum: number, p: PartialPayment) => sum + (p.amount || 0), 0);
+  const invoiceTotal = typeof invoice.total === 'number' && !isNaN(invoice.total) ? invoice.total : 0;
+  const remainingBalance = invoiceTotal - totalPaid;
+  const paidPercentage = invoiceTotal > 0 ? Math.min((totalPaid / invoiceTotal) * 100, 100) : 0;
 
   const handleRecordPayment = async () => {
     const paymentAmount = parseFloat(amount);

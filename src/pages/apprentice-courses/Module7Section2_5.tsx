@@ -1,11 +1,8 @@
-import { ArrowLeft, ArrowRight, Eye } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { Link } from "react-router-dom";
 import useSEO from "@/hooks/useSEO";
 
 const Module7Section2_5 = () => {
@@ -136,10 +133,15 @@ const Module7Section2_5 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               <span className="hidden sm:inline">Back to Section 2</span>
@@ -149,79 +151,70 @@ const Module7Section2_5 = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-start gap-4">
-          <div className="p-2 rounded-lg self-start">
-            <Eye className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-          </div>
-          <div className="flex-1">
-            <Badge variant="outline" className="mb-2 sm:mb-3 border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
-              Section 7.2.5
-            </Badge>
-            <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-              2.5 Incorrect Polarity
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Title Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 2.5</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
+              Incorrect Polarity
             </h1>
-            <p className="text-sm sm:text-base text-white max-w-3xl">
+            <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
               Understanding polarity faults, risks, testing and correction in electrical installations
             </p>
-          </div>
-        </div>
+          </header>
 
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-            <div className="grid gap-4 sm:gap-6 md:grid-cols-2 text-xs sm:text-sm text-white">
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
-                <ul className="list-disc pl-4 space-y-1 sm:space-y-2">
-                  <li><strong>Polarity</strong> refers to correct connection of line, neutral, and earth conductors</li>
-                  <li>Incorrect polarity creates hidden dangers even when equipment appears to work</li>
-                  <li>Common example: switch wired into neutral instead of line conductor</li>
-                  <li>Equipment may remain live when switched off, creating shock risks</li>
-                  <li>Compliance with BS 7671 requires correct polarity for all installations</li>
+          {/* In 30 Seconds Summary */}
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
+            <h2 className="text-lg font-semibold text-white mb-3">In 30 seconds</h2>
+            <div className="grid gap-4 sm:grid-cols-2 text-sm text-white/80">
+              <div>
+                <h3 className="font-medium text-white mb-2">Spot it</h3>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>Equipment works but can shock when switched off</li>
+                  <li>Unusual meter readings during testing</li>
+                  <li>Switch in neutral instead of line conductor</li>
                 </ul>
               </div>
-              
-              <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
-                <h3 className="font-medium text-white mb-2">Spot / Use / Check</h3>
+              <div>
+                <h3 className="font-medium text-white mb-2">Use it</h3>
                 <ul className="list-disc pl-4 space-y-1">
-                  <li><strong>Spot:</strong> Equipment works but can shock when switched off; unusual readings</li>
-                  <li><strong>Use:</strong> Two-pole voltage indicator, proving unit, plug-in polarity tester</li>
-                  <li><strong>Check:</strong> Switch in line conductor, correct L/N/E termination and identification</li>
+                  <li>Two-pole voltage indicator and proving unit</li>
+                  <li>Plug-in polarity tester for sockets</li>
+                  <li>Continuity testing to verify connections</li>
                 </ul>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-            <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
+          {/* Learning Outcomes */}
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 mb-10">
+            <h2 className="text-lg font-semibold text-white mb-3">Learning Outcomes</h2>
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white/80">
               <li>Define what incorrect polarity means in electrical installations</li>
               <li>Identify how polarity faults occur</li>
               <li>Recognise the dangers associated with incorrect polarity</li>
               <li>Understand how polarity faults are tested and corrected</li>
             </ul>
-          </CardContent>
-        </Card>
+          </div>
 
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-6">Content</h2>
-            
-            <div className="border-l-4 border-l-elec-yellow p-4 sm:p-6 rounded-r-lg mb-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</div>
-                <h3 className="text-base sm:text-lg font-semibold text-white">Definition of Incorrect Polarity</h3>
-              </div>
-              
-              <p className="text-sm text-white mb-4 leading-relaxed">
-                Polarity refers to the correct connection of line, neutral, and earth conductors in a circuit. Incorrect polarity occurs when line and neutral are swapped, or when a protective or switching device is connected in the wrong conductor. A common example is a light switch wired into the neutral conductor instead of the line.
-              </p>
+          {/* Section 1 */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Definition of Incorrect Polarity
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>Polarity refers to the correct connection of line, neutral, and earth conductors in a circuit. Incorrect polarity occurs when line and neutral are swapped, or when a protective or switching device is connected in the wrong conductor. A common example is a light switch wired into the neutral conductor instead of the line.</p>
 
-              <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800 mb-4">
-                <h4 className="font-semibold text-blue-800 dark:text-white mb-2">Key Polarity Requirements:</h4>
-                <ul className="text-sm text-blue-700 text-elec-yellow space-y-1">
+              <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30 mb-4">
+                <h3 className="font-medium text-blue-400 mb-2">Key Polarity Requirements:</h3>
+                <ul className="text-sm space-y-1">
                   <li>• Single-pole switches and protective devices must be in the line conductor</li>
                   <li>• Edison screw lampholders must have the centre contact connected to line</li>
                   <li>• Socket outlets must have line connected to the correct terminal</li>
@@ -229,9 +222,9 @@ const Module7Section2_5 = () => {
                 </ul>
               </div>
 
-              <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
-                <h4 className="font-semibold text-red-800 dark:text-white mb-2">Critical Safety Point:</h4>
-                <p className="text-sm text-red-700 text-elec-yellow">
+              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+                <h3 className="font-medium text-red-400 mb-2">Critical Safety Point:</h3>
+                <p className="text-sm">
                   With incorrect polarity, equipment may function normally but remain live when switched off, creating unexpected shock hazards during maintenance or bulb changes.
                 </p>
               </div>
@@ -249,33 +242,31 @@ const Module7Section2_5 = () => {
                 explanation="Incorrect polarity occurs when line and neutral are swapped, or when switching/protective devices are connected in the wrong conductor."
               />
             </div>
+          </section>
 
-            <Separator className="my-6" />
+          {/* Section 2 */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Causes of Polarity Faults
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>Polarity faults are usually the result of human error during installation. Understanding these causes helps prevent future occurrences:</p>
 
-            <div className="border-l-4 border-l-green-500 p-4 sm:p-6 rounded-r-lg mb-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">2</div>
-                <h3 className="text-base sm:text-lg font-semibold text-white">Causes of Polarity Faults</h3>
-              </div>
-              
-              <p className="text-sm text-white mb-4 leading-relaxed">
-                Polarity faults are usually the result of human error during installation. Understanding these causes helps prevent future occurrences:
-              </p>
-
-              <div className="grid gap-4 md:grid-cols-2 mb-4">
-                <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-                  <h4 className="font-semibold text-orange-800 dark:text-white mb-2">Installation Errors:</h4>
-                  <ul className="text-sm text-orange-700 text-elec-yellow space-y-1">
+              <div className="grid gap-4 sm:grid-cols-2 mb-4">
+                <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
+                  <h3 className="font-medium text-orange-400 mb-2">Installation Errors:</h3>
+                  <ul className="text-sm space-y-1">
                     <li>• Misidentification of conductors</li>
                     <li>• Careless or rushed wiring</li>
                     <li>• Poor cable management</li>
                     <li>• Inadequate conductor marking</li>
                   </ul>
                 </div>
-                
-                <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-                  <h4 className="font-semibold text-purple-800 dark:text-white mb-2">Human Factors:</h4>
-                  <ul className="text-sm text-purple-700 text-elec-yellow space-y-1">
+
+                <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/30">
+                  <h3 className="font-medium text-purple-400 mb-2">Human Factors:</h3>
+                  <ul className="text-sm space-y-1">
                     <li>• Poor training or supervision</li>
                     <li>• Time pressure on installations</li>
                     <li>• Reconnection errors during maintenance</li>
@@ -284,9 +275,9 @@ const Module7Section2_5 = () => {
                 </div>
               </div>
 
-              <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg border border-yellow-200 dark:border-yellow-800">
-                <h4 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">Prevention Strategy:</h4>
-                <p className="text-sm text-yellow-700 dark:text-yellow-300">
+              <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+                <h3 className="font-medium text-elec-yellow mb-2">Prevention Strategy:</h3>
+                <p className="text-sm">
                   Always use a systematic approach: identify conductors correctly, follow wiring diagrams, apply proper labelling, and conduct thorough testing before energising.
                 </p>
               </div>
@@ -304,26 +295,22 @@ const Module7Section2_5 = () => {
                 explanation="The main causes are misidentification of conductors and careless or rushed wiring during installation or maintenance."
               />
             </div>
+          </section>
 
-            <Separator className="my-6" />
+          {/* Section 3 */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Risks and Dangers of Incorrect Polarity
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>Incorrect polarity is especially dangerous because the installation may still appear to work. However, the risks include:</p>
 
-            <div className="border-l-4 border-l-orange-500 p-4 sm:p-6 rounded-r-lg mb-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">3</div>
-                <h3 className="text-base sm:text-lg font-semibold text-white">Risks and Dangers of Incorrect Polarity</h3>
-              </div>
-              
-              <p className="text-sm text-white mb-4 leading-relaxed">
-                Incorrect polarity is especially dangerous because the installation may still appear to work. However, the risks include:
-              </p>
-
-              <div className="space-y-3 mb-4">
-                <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-                  <li><strong>Electric shock risk:</strong> A switched-off appliance may still have live components</li>
-                  <li><strong>Inoperative protective devices:</strong> Fuses and breakers may not disconnect the circuit correctly</li>
-                  <li><strong>Legal and compliance issues:</strong> BS 7671 requires correct polarity for all installations</li>
-                </ul>
-              </div>
+              <ul className="list-disc pl-6 space-y-2">
+                <li><strong>Electric shock risk:</strong> A switched-off appliance may still have live components</li>
+                <li><strong>Inoperative protective devices:</strong> Fuses and breakers may not disconnect the circuit correctly</li>
+                <li><strong>Legal and compliance issues:</strong> BS 7671 requires correct polarity for all installations</li>
+              </ul>
 
               <InlineCheck
                 id="polarity-dangers"
@@ -338,33 +325,31 @@ const Module7Section2_5 = () => {
                 explanation="Incorrect polarity is dangerous because equipment may function normally but remain electrically live when switched off, creating unexpected shock risks."
               />
             </div>
+          </section>
 
-            <Separator className="my-6" />
+          {/* Section 4 */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Testing and Correction of Polarity Faults
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>Polarity is checked during initial verification and periodic inspection using continuity and functional tests. Multiple testing methods ensure comprehensive verification:</p>
 
-            <div className="border-l-4 border-l-purple-500 p-4 sm:p-6 rounded-r-lg mb-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">4</div>
-                <h3 className="text-base sm:text-lg font-semibold text-white">Testing and Correction of Polarity Faults</h3>
-              </div>
-              
-              <p className="text-sm text-white mb-4 leading-relaxed">
-                Polarity is checked during initial verification and periodic inspection using continuity and functional tests. Multiple testing methods ensure comprehensive verification:
-              </p>
-
-              <div className="grid gap-4 md:grid-cols-2 mb-4">
-                <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
-                  <h4 className="font-semibold text-green-800 dark:text-white mb-2">Testing Methods:</h4>
-                  <ul className="text-sm text-green-700 dark:text-green-300 space-y-1">
+              <div className="grid gap-4 sm:grid-cols-2 mb-4">
+                <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+                  <h3 className="font-medium text-green-400 mb-2">Testing Methods:</h3>
+                  <ul className="text-sm space-y-1">
                     <li>• Plug-in polarity testers for socket outlets</li>
                     <li>• Continuity testing with test meters</li>
                     <li>• Functional testing of switching</li>
                     <li>• Visual inspection of terminations</li>
                   </ul>
                 </div>
-                
-                <div className="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-lg border border-indigo-200 dark:border-indigo-800">
-                  <h4 className="font-semibold text-indigo-800 dark:text-indigo-200 mb-2">Correction Process:</h4>
-                  <ul className="text-sm text-indigo-700 dark:text-indigo-300 space-y-1">
+
+                <div className="p-4 rounded-lg bg-indigo-500/10 border border-indigo-500/30">
+                  <h3 className="font-medium text-indigo-400 mb-2">Correction Process:</h3>
+                  <ul className="text-sm space-y-1">
                     <li>• Isolate the circuit safely</li>
                     <li>• Re-terminate conductors correctly</li>
                     <li>• Retest the circuit thoroughly</li>
@@ -373,9 +358,9 @@ const Module7Section2_5 = () => {
                 </div>
               </div>
 
-              <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
-                <h4 className="font-semibold text-red-800 dark:text-white mb-2">Important:</h4>
-                <p className="text-sm text-red-700 text-elec-yellow">
+              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+                <h3 className="font-medium text-red-400 mb-2">Important:</h3>
+                <p className="text-sm">
                   Never energise a circuit with suspected polarity faults. All corrections must be verified through retesting before the installation can be considered safe for use.
                 </p>
               </div>
@@ -393,71 +378,57 @@ const Module7Section2_5 = () => {
                 explanation="A plug-in polarity tester is a simple and effective way to check that socket outlets are wired with correct polarity."
               />
             </div>
-          </CardContent>
-        </Card>
+          </section>
 
-        {/* Practical Guidance Section */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
-            <div className="space-y-3 text-xs sm:text-sm text-white">
-              <ul className="list-disc pl-6 space-y-2">
+          {/* Practical Guidance */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4">Practical Guidance</h2>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <ul className="list-disc pl-6 space-y-2 text-sm text-white/80">
                 <li>Always double-check conductor identification before termination</li>
                 <li>Test polarity during every new installation, alteration, or inspection</li>
                 <li>Never energise a circuit until polarity has been confirmed correct</li>
                 <li>Treat polarity faults as urgent — they are never acceptable under BS 7671</li>
               </ul>
             </div>
-          </CardContent>
-        </Card>
+          </section>
 
-        {/* Real-World Example Section */}
-        <Card className="mb-6 sm:mb-8 p-0 border border-white/10 overflow-hidden">
-          <CardContent className="p-0">
-            <div className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 p-4 sm:p-6 border-b border-white/10">
-              <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-2 flex items-center gap-3">
-                <div className="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-white text-sm font-bold">!</span>
+          {/* Real-World Case Study */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4">Real-World Case Study: The Hidden Danger</h2>
+            <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
+              <div className="space-y-4">
+                <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+                  <h3 className="font-medium text-red-400 mb-2 text-sm">The Incident:</h3>
+                  <p className="text-xs text-white/70">
+                    During a domestic lighting installation, an apprentice electrician incorrectly wired a bedroom light switch into the neutral conductor instead of the line. The installation was completed and commissioned without proper polarity testing.
+                  </p>
                 </div>
-                <span>Real-World Case Study: The Hidden Danger</span>
-              </h2>
-            </div>
-            
-            <div className="p-4 sm:p-6">
-              <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
-                <div className="space-y-4">
-                  <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
-                    <h3 className="font-semibold text-red-800 dark:text-white mb-3 text-sm sm:text-base">The Incident:</h3>
-                    <p className="text-xs sm:text-sm text-red-700 text-elec-yellow leading-relaxed">
-                      During a domestic lighting installation, an apprentice electrician incorrectly wired a bedroom light switch into the neutral conductor instead of the line. The installation was completed and commissioned without proper polarity testing.
-                    </p>
-                  </div>
-                  
-                  <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-                    <h3 className="font-semibold text-orange-800 dark:text-white mb-3 text-sm sm:text-base">What Happened:</h3>
-                    <ul className="text-xs sm:text-sm text-orange-700 text-elec-yellow space-y-1">
-                      <li>• Lights operated normally when switched on/off</li>
-                      <li>• No immediate signs of fault detected</li>
-                      <li>• Homeowner received shock while changing bulb</li>
-                      <li>• Lamp holder remained live when "switched off"</li>
-                    </ul>
-                  </div>
+
+                <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/30">
+                  <h3 className="font-medium text-orange-400 mb-2 text-sm">What Happened:</h3>
+                  <ul className="text-xs text-white/70 space-y-1">
+                    <li>• Lights operated normally when switched on/off</li>
+                    <li>• No immediate signs of fault detected</li>
+                    <li>• Homeowner received shock while changing bulb</li>
+                    <li>• Lamp holder remained live when "switched off"</li>
+                  </ul>
                 </div>
-                
-                <div className="space-y-4">
-                  <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <h3 className="font-semibold text-blue-800 dark:text-white mb-3 text-sm sm:text-base">Investigation Revealed:</h3>
-                    <ul className="text-xs sm:text-sm text-blue-700 text-elec-yellow space-y-1">
+
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
+                    <h3 className="font-medium text-blue-400 mb-2 text-sm">Investigation Revealed:</h3>
+                    <ul className="text-xs text-white/70 space-y-1">
                       <li>• Switch wired in neutral conductor</li>
                       <li>• Line remained connected to lamp holder</li>
                       <li>• No polarity testing carried out</li>
                       <li>• Poor supervision during installation</li>
                     </ul>
                   </div>
-                  
-                  <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-                    <h3 className="font-semibold text-purple-800 dark:text-white mb-3 text-sm sm:text-base">Consequences:</h3>
-                    <ul className="text-xs sm:text-sm text-purple-700 text-elec-yellow space-y-1">
+
+                  <div className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/30">
+                    <h3 className="font-medium text-purple-400 mb-2 text-sm">Consequences:</h3>
+                    <ul className="text-xs text-white/70 space-y-1">
                       <li>• Minor shock injury to homeowner</li>
                       <li>• Complete rewiring of lighting circuit</li>
                       <li>• Investigation by building control</li>
@@ -465,127 +436,113 @@ const Module7Section2_5 = () => {
                     </ul>
                   </div>
                 </div>
-              </div>
-              
-              <div className="mt-6 p-4 rounded-lg bg-elec-yellow/5 bg-elec-yellow/10 border-l-4 border-elec-yellow">
-                <h3 className="font-semibold text-elec-yellow dark:text-elec-yellow mb-3 text-sm sm:text-base">✅ Critical Lessons Learned:</h3>
-                <div className="grid gap-3 sm:gap-4 md:grid-cols-2 text-xs sm:text-sm text-elec-yellow text-elec-yellow">
-                  <ul className="space-y-1">
-                    <li>• Always test polarity before energising</li>
-                    <li>• Switches must be in the line conductor</li>
-                  </ul>
-                  <ul className="space-y-1">
-                    <li>• Proper supervision is essential</li>
-                    <li>• Functional testing saves lives</li>
-                  </ul>
+
+                <div className="p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+                  <h3 className="font-medium text-elec-yellow mb-2 text-sm">Critical Lessons Learned:</h3>
+                  <div className="grid gap-3 sm:grid-cols-2 text-xs text-white/70">
+                    <ul className="space-y-1">
+                      <li>• Always test polarity before energising</li>
+                      <li>• Switches must be in the line conductor</li>
+                    </ul>
+                    <ul className="space-y-1">
+                      <li>• Proper supervision is essential</li>
+                      <li>• Functional testing saves lives</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </section>
 
-        {/* FAQs Section */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <CardContent className="p-0">
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
-            <div className="space-y-4 text-sm">
-              <div>
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <h3 className="font-medium text-white mb-2">Q: Can a circuit still work with incorrect polarity?</h3>
-                <p className="text-white">A: Yes, but it will be unsafe, as equipment may remain live when switched off.</p>
+                <p className="text-sm text-white/70">A: Yes, but it will be unsafe, as equipment may remain live when switched off.</p>
               </div>
-              <Separator />
-              <div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <h3 className="font-medium text-white mb-2">Q: How is polarity checked during testing?</h3>
-                <p className="text-white">A: By continuity and functional tests to confirm correct line, neutral, and earth connections.</p>
+                <p className="text-sm text-white/70">A: By continuity and functional tests to confirm correct line, neutral, and earth connections.</p>
               </div>
-              <Separator />
-              <div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <h3 className="font-medium text-white mb-2">Q: Why must polarity faults always be corrected before energising?</h3>
-                <p className="text-white">A: Because they create immediate shock hazards and make protective devices unreliable.</p>
+                <p className="text-sm text-white/70">A: Because they create immediate shock hazards and make protective devices unreliable.</p>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </section>
 
-        {/* Enhanced Summary Section */}
-        <Card className="mb-6 sm:mb-8 p-0 border border-white/10 overflow-hidden">
-          <CardContent className="p-0">
-            <div className="bg-gradient-to-r from-elec-yellow/10 to-indigo-500/10 p-4 sm:p-6 border-b border-white/10">
-              <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-2 flex items-center gap-3">
-                <div className="w-8 h-8 bg-elec-yellow rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-white text-sm font-bold">✓</span>
+          {/* Summary */}
+          <section className="mb-10">
+            <div className="p-4 rounded-lg bg-gradient-to-r from-elec-yellow/10 to-indigo-500/10 border border-white/10">
+              <h2 className="text-xl font-semibold text-white mb-4">Essential Knowledge Recap</h2>
+              <div className="grid gap-4 sm:grid-cols-2 text-sm">
+                <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
+                  <h3 className="font-medium text-blue-400 mb-2">What is Incorrect Polarity?</h3>
+                  <p className="text-xs text-white/70">
+                    Line and neutral conductors swapped, or switches/protective devices connected in wrong conductor, creating hidden shock hazards.
+                  </p>
                 </div>
-                <span>Essential Knowledge Recap</span>
-              </h2>
-            </div>
-            
-            <div className="p-4 sm:p-6">
-              <div className="grid gap-4 sm:gap-6 lg:grid-cols-2 mb-6">
-                <div className="space-y-4">
-                  <div className="bg-elec-yellow/5 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <h3 className="font-semibold text-blue-800 dark:text-white mb-3 text-sm sm:text-base">What is Incorrect Polarity?</h3>
-                    <p className="text-xs sm:text-sm text-blue-700 text-elec-yellow leading-relaxed">
-                      Line and neutral conductors swapped, or switches/protective devices connected in wrong conductor, creating hidden shock hazards.
-                    </p>
-                  </div>
-                  
-                  <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
-                    <h3 className="font-semibold text-red-800 dark:text-white mb-3 text-sm sm:text-base">Why It&apos;s Dangerous:</h3>
-                    <p className="text-xs sm:text-sm text-red-700 text-elec-yellow leading-relaxed">
-                      Equipment functions normally but remains live when switched off, creating unexpected shock risks during maintenance.
-                    </p>
-                  </div>
+
+                <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+                  <h3 className="font-medium text-red-400 mb-2">Why It's Dangerous:</h3>
+                  <p className="text-xs text-white/70">
+                    Equipment functions normally but remains live when switched off, creating unexpected shock risks during maintenance.
+                  </p>
                 </div>
-                
-                <div className="space-y-4">
-                  <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-                    <h3 className="font-semibold text-orange-800 dark:text-white mb-3 text-sm sm:text-base">Common Causes:</h3>
-                    <p className="text-xs sm:text-sm text-orange-700 text-elec-yellow leading-relaxed">
-                      Poor workmanship, misidentification of conductors, rushed installations, and inadequate supervision.
-                    </p>
-                  </div>
-                  
-                  <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
-                    <h3 className="font-semibold text-green-800 dark:text-white mb-3 text-sm sm:text-base">Prevention & Testing:</h3>
-                    <p className="text-xs sm:text-sm text-green-700 dark:text-green-300 leading-relaxed">
-                      Systematic conductor identification, proper testing procedures, and thorough verification before energising.
-                    </p>
-                  </div>
+
+                <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/30">
+                  <h3 className="font-medium text-orange-400 mb-2">Common Causes:</h3>
+                  <p className="text-xs text-white/70">
+                    Poor workmanship, misidentification of conductors, rushed installations, and inadequate supervision.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/30">
+                  <h3 className="font-medium text-green-400 mb-2">Prevention & Testing:</h3>
+                  <p className="text-xs text-white/70">
+                    Systematic conductor identification, proper testing procedures, and thorough verification before energising.
+                  </p>
                 </div>
               </div>
-              
-              <div className="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 p-4 sm:p-5 rounded-lg border border-yellow-200 dark:border-yellow-800">
-                <h3 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-3 text-sm sm:text-base flex items-center gap-2">
-                  <span className="text-base">🔑</span>
-                  <span>Key Takeaway for Professionals:</span>
-                </h3>
-                <p className="text-xs sm:text-sm text-yellow-700 dark:text-yellow-300 leading-relaxed">
+
+              <div className="mt-4 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+                <h3 className="font-medium text-elec-yellow mb-2 text-sm">Key Takeaway for Professionals:</h3>
+                <p className="text-xs text-white/70">
                   Incorrect polarity is a "silent killer" - installations appear to work correctly but create life-threatening shock hazards. BS 7671 compliance demands correct polarity, and thorough testing is the only way to ensure safety. Never compromise on polarity verification - lives depend on it.
                 </p>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </section>
 
-        <Quiz questions={quizQuestions} />
+          {/* Quiz */}
+          <Quiz questions={quizQuestions} />
 
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-6">
-          <Button variant="outline" className="flex-1 sm:flex-none" asChild>
-            <Link to="../2-4" className="flex items-center justify-center gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              <span className="hidden sm:inline">Previous: 2.4 Earth Faults</span>
-              <span className="sm:hidden">Previous</span>
-            </Link>
-          </Button>
-          <Button className="flex-1 sm:flex-none" asChild>
-            <Link to="../2-6" className="flex items-center justify-center gap-2">
-              <span className="hidden sm:inline">Next: 2.6 Loose or Poor Connections</span>
-              <span className="sm:hidden">Next</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </Button>
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
+            <Button
+              variant="ghost"
+              className="w-full sm:w-auto text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../2-4">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Overload Protection
+              </Link>
+            </Button>
+            <Button
+              className="w-full sm:w-auto bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../2-6">
+                Next: Loose Connections
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </div>
+      </article>
     </div>
   );
 };

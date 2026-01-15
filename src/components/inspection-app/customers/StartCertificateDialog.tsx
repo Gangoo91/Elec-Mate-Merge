@@ -7,13 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Customer } from '@/hooks/inspection/useCustomers';
@@ -65,7 +59,7 @@ export const StartCertificateDialog = ({ open, onOpenChange, customer }: StartCe
       state: {
         section: selectedType,
         customerId: customer.id,
-        customerName: customer.name,
+        customerData: customer, // Full customer object for pre-filling name, phone, email, address
         propertyId: selectedPropertyId || undefined,
         // If a property is selected, use its address, otherwise use customer's default address
         address: selectedPropertyId
@@ -133,32 +127,17 @@ export const StartCertificateDialog = ({ open, onOpenChange, customer }: StartCe
                 <MapPin className="h-4 w-4" />
                 Property
               </Label>
-              <Select
+              <MobileSelectPicker
                 value={selectedPropertyId || defaultProperty?.id || ''}
                 onValueChange={setSelectedPropertyId}
-              >
-                <SelectTrigger className="h-11 touch-manipulation bg-background border-border">
-                  <SelectValue placeholder="Select property" />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-border max-h-60">
-                  {properties.map((property) => (
-                    <SelectItem
-                      key={property.id}
-                      value={property.id}
-                      className="min-h-[48px] touch-manipulation"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="truncate">{property.address}</span>
-                        {property.isPrimary && (
-                          <span className="text-[10px] bg-elec-yellow/20 text-elec-yellow px-1.5 py-0.5 rounded">
-                            Primary
-                          </span>
-                        )}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                options={properties.map((property) => ({
+                  value: property.id,
+                  label: property.address + (property.isPrimary ? ' (Primary)' : ''),
+                }))}
+                placeholder="Select property"
+                title="Select Property"
+                triggerClassName="h-11 bg-background border-border"
+              />
               <p className="text-xs text-muted-foreground">
                 The property address will be pre-filled in the certificate
               </p>

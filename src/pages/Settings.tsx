@@ -26,6 +26,8 @@ import {
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useNotifications } from "@/components/notifications/NotificationProvider";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 // Import all tab components
 import AccountTab from "@/components/settings/AccountTab";
@@ -62,6 +64,26 @@ const SettingsPage = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [searchParams, setSearchParams] = useSearchParams();
+
+  // Check company profile completeness for red dot indicators
+  const { data: companyStatus } = useQuery({
+    queryKey: ['company-profile-completeness'],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return null;
+
+      const { data } = await supabase
+        .from('company_profiles')
+        .select('company_name, bank_details, company_email')
+        .eq('user_id', user.id)
+        .single();
+
+      return {
+        companyIncomplete: !data?.company_name || !data?.company_email,
+        bankDetailsIncomplete: !data?.bank_details?.accountNumber,
+      };
+    },
+  });
 
   // Get tab from URL - null means show grid on mobile
   const tabParam = searchParams.get("tab");
@@ -234,7 +256,13 @@ const SettingsPage = () => {
                 )}
 
                 {/* Settings Grid */}
-                <SettingsNavGrid onSelect={handleMobileTabSelect} isSubscribed={isSubscribed} />
+                <SettingsNavGrid
+                  onSelect={handleMobileTabSelect}
+                  isSubscribed={isSubscribed}
+                  incompleteItems={{
+                    company: companyStatus?.companyIncomplete || companyStatus?.bankDetailsIncomplete || false,
+                  }}
+                />
               </div>
             </motion.div>
           ) : (
@@ -362,12 +390,13 @@ const SettingsPage = () => {
             {ALL_TABS.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeDesktopTab === tab.id;
+              const hasIncompleteData = tab.id === 'company' && (companyStatus?.companyIncomplete || companyStatus?.bankDetailsIncomplete);
               return (
                 <button
                   key={tab.id}
                   onClick={() => handleDesktopTabSelect(tab.id)}
                   className={cn(
-                    "flex items-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap transition-all duration-200 border-b-2 flex-shrink-0",
+                    "relative flex items-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap transition-all duration-200 border-b-2 flex-shrink-0",
                     "touch-manipulation active:scale-[0.98] min-h-[48px]",
                     isActive
                       ? "text-elec-yellow border-elec-yellow"
@@ -376,6 +405,9 @@ const SettingsPage = () => {
                 >
                   <Icon className={cn("h-4 w-4", isActive ? "text-elec-yellow" : "")} />
                   <span>{tab.label}</span>
+                  {hasIncompleteData && (
+                    <span className="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full animate-pulse" />
+                  )}
                 </button>
               );
             })}

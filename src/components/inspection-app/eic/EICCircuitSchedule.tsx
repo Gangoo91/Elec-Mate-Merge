@@ -3,7 +3,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Plus, Trash2 } from 'lucide-react';
 import { cableSizeOptions } from '@/types/cableTypes';
 
@@ -102,128 +102,105 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
                     </div>
                     <div>
                       <label className="text-sm font-medium">Circuit Type</label>
-                      <Select
+                      <MobileSelectPicker
                         value={circuit.type}
                         onValueChange={(value) => updateCircuit(circuit.id, 'type', value)}
-                      >
-                        <SelectTrigger className="bg-transparent">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="lighting">Lighting</SelectItem>
-                          <SelectItem value="power">Power/Sockets</SelectItem>
-                          <SelectItem value="cooker">Cooker</SelectItem>
-                          <SelectItem value="shower">Shower</SelectItem>
-                          <SelectItem value="heating">Heating</SelectItem>
-                          <SelectItem value="immersion">Immersion Heater</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: 'lighting', label: 'Lighting' },
+                          { value: 'power', label: 'Power/Sockets' },
+                          { value: 'cooker', label: 'Cooker' },
+                          { value: 'shower', label: 'Shower' },
+                          { value: 'heating', label: 'Heating' },
+                          { value: 'immersion', label: 'Immersion Heater' },
+                          { value: 'other', label: 'Other' },
+                        ]}
+                        placeholder="Select type"
+                        title="Circuit Type"
+                      />
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-medium">MCB Rating (A)</label>
-                      <Select
+                      <MobileSelectPicker
                         value={circuit.rating}
                         onValueChange={(value) => updateCircuit(circuit.id, 'rating', value)}
-                      >
-                        <SelectTrigger className="bg-transparent">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="6">6A</SelectItem>
-                          <SelectItem value="10">10A</SelectItem>
-                          <SelectItem value="16">16A</SelectItem>
-                          <SelectItem value="20">20A</SelectItem>
-                          <SelectItem value="25">25A</SelectItem>
-                          <SelectItem value="32">32A</SelectItem>
-                          <SelectItem value="40">40A</SelectItem>
-                          <SelectItem value="45">45A</SelectItem>
-                          <SelectItem value="50">50A</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: '6', label: '6A' },
+                          { value: '10', label: '10A' },
+                          { value: '16', label: '16A' },
+                          { value: '20', label: '20A' },
+                          { value: '25', label: '25A' },
+                          { value: '32', label: '32A' },
+                          { value: '40', label: '40A' },
+                          { value: '45', label: '45A' },
+                          { value: '50', label: '50A' },
+                        ]}
+                        placeholder="Select rating"
+                        title="MCB Rating"
+                      />
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-medium">Live Conductor Size</label>
-                      <Select
+                      <MobileSelectPicker
                         value={circuit.liveSize}
                         onValueChange={(value) => updateCircuit(circuit.id, 'liveSize', value)}
-                      >
-                        <SelectTrigger className="bg-transparent">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {cableSizeOptions.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                        options={cableSizeOptions.map((option) => ({ value: option.value, label: option.label }))}
+                        placeholder="Select size"
+                        title="Live Conductor Size"
+                      />
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-medium">CPC Size</label>
-                      <Select
+                      <MobileSelectPicker
                         value={circuit.cpcSize}
                         onValueChange={(value) => updateCircuit(circuit.id, 'cpcSize', value)}
-                      >
-                        <SelectTrigger className="bg-transparent">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {cableSizeOptions.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                        options={cableSizeOptions.map((option) => ({ value: option.value, label: option.label }))}
+                        placeholder="Select size"
+                        title="CPC Size"
+                      />
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-medium">Installation Method</label>
-                      <Select
+                      <MobileSelectPicker
                         value={circuit.installationMethod}
                         onValueChange={(value) => updateCircuit(circuit.id, 'installationMethod', value)}
-                      >
-                        <SelectTrigger className="bg-transparent">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="100">100 - Enclosed in conduit</SelectItem>
-                          <SelectItem value="101">101 - Clipped direct</SelectItem>
-                          <SelectItem value="102">102 - In trunking</SelectItem>
-                          <SelectItem value="103">103 - In conduit</SelectItem>
-                          <SelectItem value="104">104 - In ducting</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: '100', label: '100 - Enclosed in conduit' },
+                          { value: '101', label: '101 - Clipped direct' },
+                          { value: '102', label: '102 - In trunking' },
+                          { value: '103', label: '103 - In conduit' },
+                          { value: '104', label: '104 - In ducting' },
+                        ]}
+                        placeholder="Select method"
+                        title="Installation Method"
+                      />
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-medium">Circuit Length (m)</label>
                       <Input
                         placeholder="e.g., 25"
                         value={circuit.length}
                         onChange={(e) => updateCircuit(circuit.id, 'length', e.target.value)}
+                        className="h-11 touch-manipulation"
                       />
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-medium">RCD Protected</label>
-                      <Select
+                      <MobileSelectPicker
                         value={circuit.rcdProtected ? 'yes' : 'no'}
                         onValueChange={(value) => updateCircuit(circuit.id, 'rcdProtected', value === 'yes')}
-                      >
-                        <SelectTrigger className="bg-transparent">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="yes">Yes</SelectItem>
-                          <SelectItem value="no">No</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: 'yes', label: 'Yes' },
+                          { value: 'no', label: 'No' },
+                        ]}
+                        placeholder="Select"
+                        title="RCD Protected"
+                      />
                     </div>
                   </div>
                 </CardContent>

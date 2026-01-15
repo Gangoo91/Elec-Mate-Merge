@@ -36,6 +36,7 @@ import {
   Trash2,
   Gift,
   AlertTriangle,
+  XCircle,
 } from "lucide-react";
 import {
   AlertDialog,
@@ -59,6 +60,8 @@ interface UserProfile {
   admin_role: string | null;
   subscribed: boolean;
   subscription_tier: string | null;
+  stripe_customer_id?: string | null;
+  free_access_granted?: boolean;
   created_at: string;
   updated_at: string | null;
   elec_id_enabled: boolean;
@@ -267,14 +270,45 @@ export default function AdminUsers() {
     },
   });
 
+  // Revoke subscription mutation
+  const revokeSubscriptionMutation = useMutation({
+    mutationFn: async (userId: string) => {
+      const { data, error } = await supabase.functions.invoke("admin-manage-subscription", {
+        body: { action: "revoke_free_access", target_user_id: userId },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+
+      // Log the action
+      await supabase.from("admin_audit_logs").insert({
+        user_id: profile?.id,
+        action: "revoke_subscription",
+        entity_type: "profile",
+        entity_id: userId,
+      });
+
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
+      setSelectedUser(null);
+      toast({ title: "Access revoked", description: "User subscription removed" });
+    },
+    onError: (error) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+
   // Delete user mutation (super admin only)
   const deleteUserMutation = useMutation({
     mutationFn: async (userId: string) => {
       // Call edge function to delete user (requires admin privileges)
-      const { error } = await supabase.functions.invoke("admin-delete-user", {
+      const { data, error } = await supabase.functions.invoke("admin-delete-user", {
         body: { userId },
       });
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
 
       // Log the action
       await supabase.from("admin_audit_logs").insert({
@@ -283,6 +317,8 @@ export default function AdminUsers() {
         entity_type: "profile",
         entity_id: userId,
       });
+
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-users"] });
@@ -689,23 +725,51 @@ export default function AdminUsers() {
 
             {/* Actions Footer */}
             <SheetFooter className="p-4 border-t border-border space-y-2">
-              {/* Grant Free Access - for non-subscribed users */}
-              {!selectedUser?.subscribed && (
+              {/* Subscription Actions - Grant/Revoke/Stripe-managed */}
+              {(selectedUser?.free_access_granted || (selectedUser?.subscribed && !selectedUser?.stripe_customer_id)) ? (
+                // Show Revoke for admin-granted access
+                <Button
+                  variant="destructive"
+                  className="w-full h-12 touch-manipulation rounded-xl"
+                  onClick={() => selectedUser && revokeSubscriptionMutation.mutate(selectedUser.id)}
+                  disabled={revokeSubscriptionMutation.isPending}
+                >
+                  {revokeSubscriptionMutation.isPending ? (
+                    <>Revoking...</>
+                  ) : (
+                    <>
+                      <XCircle className="h-5 w-5 mr-2" />
+                      Revoke Access
+                    </>
+                  )}
+                </Button>
+              ) : !selectedUser?.subscribed ? (
+                // Show Grant for non-subscribed users
                 <Button
                   className="w-full h-12 touch-manipulation rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
                   onClick={() =>
                     selectedUser &&
                     grantSubscriptionMutation.mutate({
                       userId: selectedUser.id,
-                      tier: selectedUser.role === "employer" ? "Employer" :
-                            selectedUser.role === "apprentice" ? "Apprentice" : "Electrician",
+                      tier: "Employer",
                     })
                   }
                   disabled={grantSubscriptionMutation.isPending}
                 >
-                  <Gift className="h-5 w-5 mr-2" />
-                  Grant Free Access
+                  {grantSubscriptionMutation.isPending ? (
+                    <>Granting...</>
+                  ) : (
+                    <>
+                      <Gift className="h-5 w-5 mr-2" />
+                      Grant Free Access
+                    </>
+                  )}
                 </Button>
+              ) : (
+                // Stripe-managed subscription
+                <p className="w-full text-center text-sm text-muted-foreground py-3">
+                  Subscription managed via Stripe
+                </p>
               )}
 
               {/* Admin toggle - super admin only */}

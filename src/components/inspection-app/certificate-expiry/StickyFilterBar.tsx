@@ -1,5 +1,5 @@
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -49,32 +49,36 @@ export const StickyFilterBar = ({
         </div>
 
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-          <Select value={timeRange} onValueChange={onTimeRangeChange}>
-            <SelectTrigger className={cn("flex-1 bg-card border-border text-foreground", isMobile && "min-h-[48px] text-base")}>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="overdue">Overdue</SelectItem>
-              <SelectItem value="30">Next 30 Days</SelectItem>
-              <SelectItem value="60">Next 60 Days</SelectItem>
-              <SelectItem value="90">Next 90 Days</SelectItem>
-              <SelectItem value="all">All</SelectItem>
-            </SelectContent>
-          </Select>
+          <MobileSelectPicker
+            value={timeRange}
+            onValueChange={onTimeRangeChange}
+            options={[
+              { value: 'overdue', label: 'Overdue' },
+              { value: '30', label: 'Next 30 Days' },
+              { value: '60', label: 'Next 60 Days' },
+              { value: '90', label: 'Next 90 Days' },
+              { value: 'all', label: 'All' },
+            ]}
+            placeholder="Time Range"
+            title="Time Range"
+            className="flex-1"
+          />
 
-          <Select value={statusFilter} onValueChange={onStatusFilterChange}>
-            <SelectTrigger className={cn("flex-1 bg-card border-border text-foreground", isMobile && "min-h-[48px] text-base")}>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Statuses</SelectItem>
-              <SelectItem value="pending">Pending</SelectItem>
-              <SelectItem value="viewed">Viewed</SelectItem>
-              <SelectItem value="contacted">Contacted</SelectItem>
-              <SelectItem value="booked">Booked</SelectItem>
-              <SelectItem value="completed">Completed</SelectItem>
-            </SelectContent>
-          </Select>
+          <MobileSelectPicker
+            value={statusFilter}
+            onValueChange={onStatusFilterChange}
+            options={[
+              { value: 'all', label: 'All Statuses' },
+              { value: 'pending', label: 'Pending' },
+              { value: 'viewed', label: 'Viewed' },
+              { value: 'contacted', label: 'Contacted' },
+              { value: 'booked', label: 'Booked' },
+              { value: 'completed', label: 'Completed' },
+            ]}
+            placeholder="Status"
+            title="Status Filter"
+            className="flex-1"
+          />
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
 import { FileCheck } from 'lucide-react';
@@ -28,35 +28,31 @@ const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="designStandard" className="font-medium text-sm">Design Standard</Label>
-            <Select
+            <MobileSelectPicker
               value={formData.designStandard || 'BS7671'}
               onValueChange={(value) => onUpdate('designStandard', value)}
-            >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="Select standard" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="BS7671">BS 7671:18+A3:2024</SelectItem>
-                <SelectItem value="other">Other Standard</SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { value: 'BS7671', label: 'BS 7671:18+A3:2024' },
+                { value: 'other', label: 'Other Standard' },
+              ]}
+              placeholder="Select standard"
+              title="Design Standard"
+            />
           </div>
-          
+
           <div>
             <Label htmlFor="partPCompliance" className="font-medium text-sm">Part P Compliance</Label>
-            <Select
+            <MobileSelectPicker
               value={formData.partPCompliance || ''}
               onValueChange={(value) => onUpdate('partPCompliance', value)}
-            >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="Select compliance" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="compliant">Compliant</SelectItem>
-                <SelectItem value="notApplicable">Not Applicable</SelectItem>
-                <SelectItem value="nonNotifiable">Non-notifiable</SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { value: 'compliant', label: 'Compliant' },
+                { value: 'notApplicable', label: 'Not Applicable' },
+                { value: 'nonNotifiable', label: 'Non-notifiable' },
+              ]}
+              placeholder="Select compliance"
+              title="Part P Compliance"
+            />
           </div>
         </div>
           </CardContent>

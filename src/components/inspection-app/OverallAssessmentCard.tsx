@@ -3,7 +3,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 
 interface OverallAssessmentCardProps {
   formData: any;
@@ -19,34 +19,30 @@ const OverallAssessmentCard = ({ formData, onUpdate }: OverallAssessmentCardProp
       <CardContent className="p-3 sm:p-4 md:p-6 space-y-3 sm:space-y-4">
         <div>
           <Label>Overall assessment of the installation</Label>
-          <Select
+          <MobileSelectPicker
             value={formData.overallAssessment || ''}
             onValueChange={(value) => onUpdate('overallAssessment', value)}
-          >
-            <SelectTrigger className="h-11 touch-manipulation data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-              <SelectValue placeholder="Select overall assessment" />
-            </SelectTrigger>
-            <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-              <SelectItem value="satisfactory">Satisfactory</SelectItem>
-              <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
-            </SelectContent>
-          </Select>
+            options={[
+              { value: 'satisfactory', label: 'Satisfactory' },
+              { value: 'unsatisfactory', label: 'Unsatisfactory' },
+            ]}
+            placeholder="Select overall assessment"
+            title="Overall Assessment"
+          />
         </div>
         <div>
           <Label>Installation is satisfactory for continued use</Label>
-          <Select
+          <MobileSelectPicker
             value={formData.satisfactoryForContinuedUse || ''}
             onValueChange={(value) => onUpdate('satisfactoryForContinuedUse', value)}
-          >
-            <SelectTrigger className="h-11 touch-manipulation data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-              <SelectValue placeholder="Select recommendation" />
-            </SelectTrigger>
-            <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-              <SelectItem value="yes">Yes</SelectItem>
-              <SelectItem value="no">No</SelectItem>
-              <SelectItem value="yes-with-observations">Yes, with observations</SelectItem>
-            </SelectContent>
-          </Select>
+            options={[
+              { value: 'yes', label: 'Yes' },
+              { value: 'no', label: 'No' },
+              { value: 'yes-with-observations', label: 'Yes, with observations' },
+            ]}
+            placeholder="Select recommendation"
+            title="Satisfactory for Continued Use"
+          />
         </div>
         <div>
           <Label>Additional Comments</Label>

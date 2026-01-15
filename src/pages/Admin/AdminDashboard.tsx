@@ -21,6 +21,7 @@ import {
   Building2,
   CheckCircle,
   Gift,
+  Crown,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useState, useCallback } from "react";
@@ -60,6 +61,7 @@ const pricingTiers = {
   apprentice: { monthly: "£4.99", yearly: "£49.99" },
   electrician: { monthly: "£9.99", yearly: "£99.99" },
   employer: { monthly: "£29.99", yearly: "£299.99" },
+  founder: { monthly: "£3.99", yearly: "£39.99" },
 };
 
 export default function AdminDashboard() {
@@ -101,21 +103,27 @@ export default function AdminDashboard() {
         supabase.from("profiles").select("*", { count: "exact", head: true }).gte("created_at", monthAgo.toISOString()),
         supabase.from("user_presence").select("*", { count: "exact", head: true }).gte("last_seen", dayAgo.toISOString()),
         supabase.from("employer_elec_id_profiles").select("*", { count: "exact", head: true }),
-        supabase.from("profiles").select("subscription_tier").eq("subscribed", true),
+        supabase.from("profiles").select("subscription_tier, free_access_granted").eq("subscribed", true),
         supabase.functions.invoke("admin-get-users"),
       ]);
 
       const subscribedData = subscribedDataRes.data || [];
       const subscribedUsers = subscribedData.length;
+      // Exclude free_access_granted users from paid counts (they pay £0)
+      const paidSubscribers = subscribedData.filter(u => !u.free_access_granted);
+      const freeSubscribers = subscribedData.filter(u => u.free_access_granted);
       const tierCounts = {
-        apprentice: subscribedData.filter(u => u.subscription_tier === "Apprentice").length,
-        electrician: subscribedData.filter(u => u.subscription_tier === "Electrician").length,
-        employer: subscribedData.filter(u => u.subscription_tier === "Employer").length,
+        apprentice: paidSubscribers.filter(u => u.subscription_tier === "Apprentice").length,
+        electrician: paidSubscribers.filter(u => u.subscription_tier === "Electrician").length,
+        employer: paidSubscribers.filter(u => u.subscription_tier === "Employer").length,
+        founder: paidSubscribers.filter(u => u.subscription_tier === "Founder").length,
+        free: freeSubscribers.length,
       };
 
       const mrr = (tierCounts.apprentice * 4.99) +
                   (tierCounts.electrician * 9.99) +
-                  (tierCounts.employer * 29.99);
+                  (tierCounts.employer * 29.99) +
+                  (tierCounts.founder * 3.99);
 
       const usersWithEmails = edgeDataRes.data?.users || [];
 
@@ -206,9 +214,9 @@ export default function AdminDashboard() {
             </Badge>
           </div>
           {/* Tier Breakdown */}
-          <div className="grid grid-cols-3 gap-2 mt-4">
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-4">
             <div
-              className="bg-purple-500/10 rounded-xl p-3 text-center cursor-pointer hover:bg-purple-500/20 transition-colors active:scale-[0.98]"
+              className="bg-purple-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-purple-500/20 transition-colors active:scale-[0.98]"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=apprentice"); }}
             >
               <GraduationCap className="h-4 w-4 text-purple-400 mx-auto mb-1" />
@@ -217,7 +225,7 @@ export default function AdminDashboard() {
               <p className="text-[10px] text-purple-400/70">{pricingTiers.apprentice.monthly}/mo</p>
             </div>
             <div
-              className="bg-yellow-500/10 rounded-xl p-3 text-center cursor-pointer hover:bg-yellow-500/20 transition-colors active:scale-[0.98]"
+              className="bg-yellow-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-yellow-500/20 transition-colors active:scale-[0.98]"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=electrician"); }}
             >
               <Zap className="h-4 w-4 text-yellow-400 mx-auto mb-1" />
@@ -226,13 +234,31 @@ export default function AdminDashboard() {
               <p className="text-[10px] text-yellow-400/70">{pricingTiers.electrician.monthly}/mo</p>
             </div>
             <div
-              className="bg-blue-500/10 rounded-xl p-3 text-center cursor-pointer hover:bg-blue-500/20 transition-colors active:scale-[0.98]"
+              className="bg-blue-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-blue-500/20 transition-colors active:scale-[0.98]"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=employer"); }}
             >
               <Building2 className="h-4 w-4 text-blue-400 mx-auto mb-1" />
               <p className="text-lg font-bold text-blue-400">{stats?.tierCounts?.employer || 0}</p>
               <p className="text-[10px] text-muted-foreground">Employer</p>
               <p className="text-[10px] text-blue-400/70">{pricingTiers.employer.monthly}/mo</p>
+            </div>
+            <div
+              className="bg-amber-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-amber-500/20 transition-colors active:scale-[0.98]"
+              onClick={(e) => { e.stopPropagation(); navigate("/admin/founders"); }}
+            >
+              <Crown className="h-4 w-4 text-amber-400 mx-auto mb-1" />
+              <p className="text-lg font-bold text-amber-400">{stats?.tierCounts?.founder || 0}</p>
+              <p className="text-[10px] text-muted-foreground">Founder</p>
+              <p className="text-[10px] text-amber-400/70">{pricingTiers.founder.monthly}/mo</p>
+            </div>
+            <div
+              className="bg-emerald-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-emerald-500/20 transition-colors active:scale-[0.98]"
+              onClick={(e) => { e.stopPropagation(); navigate("/admin/users"); }}
+            >
+              <Gift className="h-4 w-4 text-emerald-400 mx-auto mb-1" />
+              <p className="text-lg font-bold text-emerald-400">{stats?.tierCounts?.free || 0}</p>
+              <p className="text-[10px] text-muted-foreground">Free Beta</p>
+              <p className="text-[10px] text-emerald-400/70">£0/mo</p>
             </div>
           </div>
         </CardContent>

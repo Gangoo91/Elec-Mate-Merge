@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Checkbox } from '@/components/ui/checkbox';
 import { AlertTriangle, FileText, Trash2, Minus, Info } from 'lucide-react';
 import { EICObservation } from '@/hooks/useEICObservations';
@@ -117,29 +117,24 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
         </div>
         <div>
           <Label className="text-sm font-medium mb-1.5 block">Classification</Label>
-          <Select
+          <MobileSelectPicker
             value={observation.defectCode}
-            onValueChange={(value: 'unsatisfactory' | 'limitation' | 'not-applicable') => {
+            onValueChange={(value) => {
               // Update observation locally
-              onUpdate(observation.id, 'defectCode', value);
-              
+              onUpdate(observation.id, 'defectCode', value as 'unsatisfactory' | 'limitation' | 'not-applicable');
+
               // Sync back to inspection item if linked
               if (observation.inspectionItemId && onSyncToInspectionItem) {
                 onSyncToInspectionItem(observation.inspectionItemId, value);
               }
             }}
-          >
-            <SelectTrigger className="h-10">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {defectCodes.map((code) => (
-                <SelectItem key={code.code} value={code.code}>
-                  {code.code.toUpperCase()} - {code.description}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            options={defectCodes.map((code) => ({
+              value: code.code,
+              label: `${code.code.toUpperCase()} - ${code.description}`,
+            }))}
+            placeholder="Select classification"
+            title="Classification"
+          />
         </div>
         <div>
           <Label className="text-sm font-medium mb-1.5 block">

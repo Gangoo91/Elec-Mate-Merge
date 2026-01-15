@@ -4,13 +4,7 @@ import { TestResult } from '@/types/testResult';
 import ValidatedInput from '../ValidatedInput';
 import { Badge } from '@/components/ui/badge';
 import { Info } from 'lucide-react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import {
   Tooltip,
   TooltipContent,
@@ -55,21 +49,19 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
       {/* Phase Rotation (L1-L2-L3 sequence) */}
       <TableCell className="px-2 py-0 bg-purple-50/40 h-10 align-middle">
         <div className="flex items-center gap-1">
-          <Select
+          <MobileSelectPicker
             value={result.phaseRotation || ''}
             onValueChange={(value) => onUpdate(result.id, 'phaseRotation', value)}
-          >
-            <SelectTrigger className="h-10 text-sm w-full px-4 bg-transparent">
-              <SelectValue placeholder="Select..." />
-            </SelectTrigger>
-            <SelectContent className="bg-background border border-border rounded-md z-[100]">
-              <SelectItem value="✓" className="text-sm text-green-400 font-medium hover:text-green-300">✓ Correct</SelectItem>
-              <SelectItem value="✗" className="text-sm text-red-400 font-medium hover:text-red-300">✗ Incorrect</SelectItem>
-              <SelectItem value="L1-L2-L3" className="text-sm text-neutral-100">L1-L2-L3</SelectItem>
-              <SelectItem value="L1-L3-L2" className="text-sm text-neutral-100">L1-L3-L2 (Reversed)</SelectItem>
-              <SelectItem value="N/A" className="text-sm text-neutral-100">N/A</SelectItem>
-            </SelectContent>
-          </Select>
+            options={[
+              { value: '✓', label: '✓ Correct' },
+              { value: '✗', label: '✗ Incorrect' },
+              { value: 'L1-L2-L3', label: 'L1-L2-L3' },
+              { value: 'L1-L3-L2', label: 'L1-L3-L2 (Reversed)' },
+              { value: 'N/A', label: 'N/A' },
+            ]}
+            placeholder="Select..."
+            title="Phase Rotation"
+          />
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>

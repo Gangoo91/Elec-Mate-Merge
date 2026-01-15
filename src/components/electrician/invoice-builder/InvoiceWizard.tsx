@@ -192,7 +192,7 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
     <div className="min-h-screen bg-gradient-to-b from-elec-dark to-black">
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 backdrop-blur-xl bg-black/80 border-b border-white/10">
-        <div className="px-4 py-3 max-w-2xl mx-auto">
+        <div className="px-4 py-3">
           <div className="flex items-center justify-between">
             <Button
               variant="ghost"
@@ -267,7 +267,7 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
       </header>
 
       {/* Step Title Card */}
-      <div className="px-4 pt-6 max-w-2xl mx-auto">
+      <div className="px-4 pt-6">
         <motion.div
           key={currentStep}
           initial={{ opacity: 0, y: -10 }}
@@ -288,7 +288,7 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
       </div>
 
       {/* Step Content with Animation */}
-      <main className="px-4 py-6 pb-36 sm:pb-32 max-w-2xl mx-auto">
+      <main className="px-4 py-6 pb-36 sm:pb-32">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={currentStep}
@@ -306,7 +306,7 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
 
       {/* Bottom Navigation - iOS Style */}
       <div className="fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-xl border-t border-white/10">
-        <div className="px-4 py-4 pb-safe max-w-2xl mx-auto">
+        <div className="px-4 py-4 pb-safe">
           {/* Step Dots - Mobile */}
           <div className="flex justify-center gap-2 mb-4 sm:hidden">
             {steps.map((_, index) => (

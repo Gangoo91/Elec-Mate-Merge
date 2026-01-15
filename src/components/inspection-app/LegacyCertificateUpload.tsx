@@ -10,13 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { useCustomers } from '@/hooks/inspection/useCustomers';
 import { useLegacyCertificates, CertificateType, CreateLegacyCertificateInput } from '@/hooks/useLegacyCertificates';
 import {
@@ -312,21 +306,13 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label>Certificate Type</Label>
-                      <Select
+                      <MobileSelectPicker
                         value={formData.certificate_type}
                         onValueChange={(value) => setFormData(prev => ({ ...prev, certificate_type: value as CertificateType }))}
-                      >
-                        <SelectTrigger className="h-11 touch-manipulation">
-                          <SelectValue placeholder="Select type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {CERTIFICATE_TYPES.map(type => (
-                            <SelectItem key={type.value} value={type.value}>
-                              {type.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                        options={CERTIFICATE_TYPES}
+                        placeholder="Select type"
+                        title="Certificate Type"
+                      />
                     </div>
 
                     <div className="space-y-2">
@@ -351,21 +337,13 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
 
                     <div className="space-y-2">
                       <Label>Link to Customer</Label>
-                      <Select
+                      <MobileSelectPicker
                         value={formData.customer_id}
                         onValueChange={(value) => setFormData(prev => ({ ...prev, customer_id: value }))}
-                      >
-                        <SelectTrigger className="h-11 touch-manipulation">
-                          <SelectValue placeholder="Select customer" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {customers.map(customer => (
-                            <SelectItem key={customer.id} value={customer.id}>
-                              {customer.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                        options={customers.map(customer => ({ value: customer.id, label: customer.name }))}
+                        placeholder="Select customer"
+                        title="Link to Customer"
+                      />
                     </div>
 
                     <div className="space-y-2 sm:col-span-2">
@@ -410,21 +388,13 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
 
                     <div className="space-y-2">
                       <Label>Imported From</Label>
-                      <Select
+                      <MobileSelectPicker
                         value={formData.imported_from_system}
                         onValueChange={(value) => setFormData(prev => ({ ...prev, imported_from_system: value }))}
-                      >
-                        <SelectTrigger className="h-11 touch-manipulation">
-                          <SelectValue placeholder="Select source" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {IMPORT_SOURCES.map(source => (
-                            <SelectItem key={source.value} value={source.value}>
-                              {source.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                        options={IMPORT_SOURCES}
+                        placeholder="Select source"
+                        title="Import Source"
+                      />
                     </div>
 
                     <div className="space-y-2 sm:col-span-2">

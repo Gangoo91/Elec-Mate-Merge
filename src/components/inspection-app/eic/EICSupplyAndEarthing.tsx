@@ -3,7 +3,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 
 interface EICSupplyAndEarthingProps {
   formData: any;
@@ -21,87 +21,77 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <Label htmlFor="supplyVoltage">Nominal Voltage (V) *</Label>
-              <Select
+              <MobileSelectPicker
                 value={formData.supplyVoltage || ''}
                 onValueChange={(value) => onUpdate('supplyVoltage', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Voltage" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="230/400">230/400V</SelectItem>
-                  <SelectItem value="240/415">240/415V</SelectItem>
-                  <SelectItem value="110">110V</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: '230/400', label: '230/400V' },
+                  { value: '240/415', label: '240/415V' },
+                  { value: '110', label: '110V' },
+                  { value: 'other', label: 'Other' },
+                ]}
+                placeholder="Voltage"
+                title="Nominal Voltage"
+              />
             </div>
             <div>
               <Label htmlFor="supplyFrequency">Frequency (Hz) *</Label>
-              <Select
+              <MobileSelectPicker
                 value={formData.supplyFrequency || '50'}
                 onValueChange={(value) => onUpdate('supplyFrequency', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Frequency" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="50">50 Hz</SelectItem>
-                  <SelectItem value="60">60 Hz</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: '50', label: '50 Hz' },
+                  { value: '60', label: '60 Hz' },
+                ]}
+                placeholder="Frequency"
+                title="Supply Frequency"
+              />
             </div>
             <div>
               <Label htmlFor="phases">Number of Phases</Label>
-              <Select
+              <MobileSelectPicker
                 value={formData.phases || ''}
                 onValueChange={(value) => onUpdate('phases', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Phases" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1">Single Phase</SelectItem>
-                  <SelectItem value="3">Three Phase</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: '1', label: 'Single Phase' },
+                  { value: '3', label: 'Three Phase' },
+                ]}
+                placeholder="Phases"
+                title="Number of Phases"
+              />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="earthingArrangement">Earthing Arrangement *</Label>
-              <Select
+              <MobileSelectPicker
                 value={formData.earthingArrangement || ''}
                 onValueChange={(value) => onUpdate('earthingArrangement', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select earthing arrangement" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="TN-C-S">TN-C-S (PME)</SelectItem>
-                  <SelectItem value="TN-S">TN-S</SelectItem>
-                  <SelectItem value="TT">TT</SelectItem>
-                  <SelectItem value="IT">IT</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: 'TN-C-S', label: 'TN-C-S (PME)' },
+                  { value: 'TN-S', label: 'TN-S' },
+                  { value: 'TT', label: 'TT' },
+                  { value: 'IT', label: 'IT' },
+                ]}
+                placeholder="Select earthing arrangement"
+                title="Earthing Arrangement"
+              />
             </div>
             <div>
               <Label htmlFor="supplyType">Supply Type</Label>
-              <Select
+              <MobileSelectPicker
                 value={formData.supplyType || ''}
                 onValueChange={(value) => onUpdate('supplyType', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Supply type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="mains">Mains Supply</SelectItem>
-                  <SelectItem value="generator">Generator</SelectItem>
-                  <SelectItem value="ups">UPS</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: 'mains', label: 'Mains Supply' },
+                  { value: 'generator', label: 'Generator' },
+                  { value: 'ups', label: 'UPS' },
+                  { value: 'other', label: 'Other' },
+                ]}
+                placeholder="Supply type"
+                title="Supply Type"
+              />
             </div>
           </div>
         </CardContent>
@@ -115,21 +105,19 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <Label htmlFor="mainProtectiveDevice">Type *</Label>
-              <Select
+              <MobileSelectPicker
                 value={formData.mainProtectiveDevice || ''}
                 onValueChange={(value) => onUpdate('mainProtectiveDevice', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Device type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="MCB">MCB</SelectItem>
-                  <SelectItem value="RCBO">RCBO</SelectItem>
-                  <SelectItem value="fuse">Fuse</SelectItem>
-                  <SelectItem value="isolator">Isolator</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: 'MCB', label: 'MCB' },
+                  { value: 'RCBO', label: 'RCBO' },
+                  { value: 'fuse', label: 'Fuse' },
+                  { value: 'isolator', label: 'Isolator' },
+                  { value: 'other', label: 'Other' },
+                ]}
+                placeholder="Device type"
+                title="Main Protective Device"
+              />
             </div>
             <div>
               <Label htmlFor="mainSwitchRating">Rating (A)</Label>
@@ -161,21 +149,19 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="earthElectrodeType">Earth Electrode Type</Label>
-              <Select
+              <MobileSelectPicker
                 value={formData.earthElectrodeType || ''}
                 onValueChange={(value) => onUpdate('earthElectrodeType', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Electrode type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="rod">Earth Rod</SelectItem>
-                  <SelectItem value="plate">Earth Plate</SelectItem>
-                  <SelectItem value="tape">Earth Tape</SelectItem>
-                  <SelectItem value="pme">PME Terminal</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: 'rod', label: 'Earth Rod' },
+                  { value: 'plate', label: 'Earth Plate' },
+                  { value: 'tape', label: 'Earth Tape' },
+                  { value: 'pme', label: 'PME Terminal' },
+                  { value: 'other', label: 'Other' },
+                ]}
+                placeholder="Electrode type"
+                title="Earth Electrode Type"
+              />
             </div>
             <div>
               <Label htmlFor="earthElectrodeResistance">Earth Electrode Resistance (Ω)</Label>
@@ -191,36 +177,32 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="mainBondingConductor">Main Bonding Conductor (mm²)</Label>
-              <Select
+              <MobileSelectPicker
                 value={formData.mainBondingConductor || ''}
                 onValueChange={(value) => onUpdate('mainBondingConductor', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Conductor size" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="6">6 mm²</SelectItem>
-                  <SelectItem value="10">10 mm²</SelectItem>
-                  <SelectItem value="16">16 mm²</SelectItem>
-                  <SelectItem value="25">25 mm²</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: '6', label: '6 mm²' },
+                  { value: '10', label: '10 mm²' },
+                  { value: '16', label: '16 mm²' },
+                  { value: '25', label: '25 mm²' },
+                ]}
+                placeholder="Conductor size"
+                title="Main Bonding Conductor"
+              />
             </div>
             <div>
               <Label htmlFor="supplementaryBonding">Supplementary Bonding Required</Label>
-              <Select
+              <MobileSelectPicker
                 value={formData.supplementaryBonding || ''}
                 onValueChange={(value) => onUpdate('supplementaryBonding', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Required?" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="yes">Yes</SelectItem>
-                  <SelectItem value="no">No</SelectItem>
-                  <SelectItem value="notApplicable">Not Applicable</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: 'yes', label: 'Yes' },
+                  { value: 'no', label: 'No' },
+                  { value: 'notApplicable', label: 'Not Applicable' },
+                ]}
+                placeholder="Required?"
+                title="Supplementary Bonding Required"
+              />
             </div>
           </div>
         </CardContent>

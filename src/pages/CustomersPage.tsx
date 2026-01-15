@@ -9,13 +9,7 @@ import { StartCertificateDialog } from '@/components/inspection-app/customers/St
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import {
   Search,
   Plus,
@@ -178,21 +172,14 @@ export default function CustomersPage() {
         {/* Sort Controls */}
         <div className="flex items-center gap-2 text-sm">
           <span className="text-muted-foreground">Sort by:</span>
-          <Select
+          <MobileSelectPicker
             value={sortField}
             onValueChange={(value) => setSortField(value as SortField)}
-          >
-            <SelectTrigger className="w-[140px] h-9 touch-manipulation">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {sortOptions.map(option => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            options={sortOptions}
+            placeholder="Sort by..."
+            title="Sort Customers"
+            triggerClassName="w-[140px] h-9"
+          />
           <Button
             variant="ghost"
             size="icon"

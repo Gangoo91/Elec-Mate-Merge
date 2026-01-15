@@ -5,7 +5,6 @@ import { InvoiceWizard } from "@/components/electrician/invoice-builder/InvoiceW
 import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
 import { useState, useEffect } from "react";
 import { VoiceFormProvider } from "@/contexts/VoiceFormContext";
-import { ElectricianVoiceAssistant } from "@/components/electrician/ElectricianVoiceAssistant";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -142,12 +141,6 @@ const InvoiceBuilderCreate = () => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-
-        {/* Voice Assistant */}
-        <ElectricianVoiceAssistant
-          onNavigate={handleVoiceNavigate}
-          currentSection="invoice-create"
-        />
       </div>
     </VoiceFormProvider>
   );

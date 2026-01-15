@@ -27,6 +27,7 @@ const NotificationsPage = lazy(() => import("@/pages/NotificationsPage"));
 const PublicQuote = lazy(() => import("@/pages/PublicQuote"));
 const PublicSignature = lazy(() => import("@/pages/PublicSignature"));
 const BriefingSignOff = lazy(() => import("@/pages/BriefingSignOff"));
+const ClientPortalView = lazy(() => import("@/pages/public/ClientPortalView"));
 const LaTeXPDFGeneratorPage = lazy(() => import("@/pages/LaTeXPDFGeneratorPage"));
 const InvoiceQuoteBuilder = lazy(() => import("@/pages/electrician/InvoiceQuoteBuilder"));
 const InvoiceViewPage = lazy(() => import("@/pages/electrician/InvoiceViewPage"));
@@ -59,6 +60,9 @@ const AdminEmailLogs = lazy(() => import("@/pages/Admin/AdminEmailLogs"));
 const AdminEmployerModeration = lazy(() => import("@/pages/Admin/AdminEmployerModeration"));
 const AdminDataExport = lazy(() => import("@/pages/Admin/AdminDataExport"));
 const AdminPricingModeration = lazy(() => import("@/pages/Admin/AdminPricingModeration"));
+const AdminFounders = lazy(() => import("@/pages/Admin/AdminFounders"));
+const FounderClaim = lazy(() => import("@/pages/founder/FounderClaim"));
+const FounderSuccess = lazy(() => import("@/pages/founder/FounderSuccess"));
 const CustomersPage = lazy(() => import("@/pages/CustomersPage"));
 const CustomerDetailPage = lazy(() => import("@/pages/CustomerDetailPage"));
 const CertificateExpiryPage = lazy(() => import("@/pages/CertificateExpiryPage"));
@@ -103,7 +107,10 @@ const AppRouter = () => {
       <Route path="/public-quote/:token" element={<LazyRoute><PublicQuote /></LazyRoute>} />
       <Route path="/sign/:token" element={<LazyRoute><PublicSignature /></LazyRoute>} />
       <Route path="/briefing-signoff/:briefingId" element={<LazyRoute><BriefingSignOff /></LazyRoute>} />
+      <Route path="/portal/:token" element={<LazyRoute><ClientPortalView /></LazyRoute>} />
       <Route path="/pdf-generator" element={<LazyRoute><LaTeXPDFGeneratorPage /></LazyRoute>} />
+      <Route path="/founder/claim" element={<LazyRoute><FounderClaim /></LazyRoute>} />
+      <Route path="/founder/success" element={<LazyRoute><FounderSuccess /></LazyRoute>} />
 
       {/* Legacy/Direct Access Routes - Redirect to proper paths */}
       <Route path="/rights-and-pay" element={<Navigate to="/apprentice/rights-and-pay" replace />} />
@@ -149,6 +156,7 @@ const AppRouter = () => {
           <Route path="audit" element={<LazyRoute><AdminAuditLogs /></LazyRoute>} />
           <Route path="emails" element={<LazyRoute><AdminEmailLogs /></LazyRoute>} />
           <Route path="export" element={<LazyRoute><AdminDataExport /></LazyRoute>} />
+          <Route path="founders" element={<LazyRoute><AdminFounders /></LazyRoute>} />
           <Route path="system" element={<LazyRoute><AdminSystem /></LazyRoute>} />
         </Route>
 

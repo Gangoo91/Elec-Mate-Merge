@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { 
   Building2, 
   Phone, 
@@ -39,16 +39,17 @@ const CompanyDetailsSection = ({
           Company/Organisation Details
         </div>
         <div className="flex items-center gap-2">
-          <Select onValueChange={onQuickFill}>
-            <SelectTrigger className="w-52 bg-elec-gray border-elec-gray text-foreground focus:border-elec-yellow focus:ring-elec-yellow">
-              <SelectValue placeholder="Quick fill template" />
-            </SelectTrigger>
-            <SelectContent className="bg-elec-gray border-elec-gray">
-              <SelectItem value="sole_trader">Sole Trader Template</SelectItem>
-              <SelectItem value="limited_company">Limited Company Template</SelectItem>
-              <SelectItem value="partnership">Partnership Template</SelectItem>
-            </SelectContent>
-          </Select>
+          <MobileSelectPicker
+            value=""
+            onValueChange={onQuickFill}
+            options={[
+              { value: 'sole_trader', label: 'Sole Trader Template' },
+              { value: 'limited_company', label: 'Limited Company Template' },
+              { value: 'partnership', label: 'Partnership Template' },
+            ]}
+            placeholder="Quick fill template"
+            title="Select Template"
+          />
           <Button
             variant="outline"
             size="sm"

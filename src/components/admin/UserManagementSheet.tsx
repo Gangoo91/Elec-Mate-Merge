@@ -43,6 +43,7 @@ interface UserData {
   role?: string;
   subscribed?: boolean;
   subscription_tier?: string;
+  stripe_customer_id?: string | null;
   free_access_granted?: boolean;
   free_access_expires_at?: string | null;
   free_access_reason?: string | null;
@@ -80,7 +81,7 @@ export default function UserManagementSheet({
   onOpenChange,
 }: UserManagementSheetProps) {
   const queryClient = useQueryClient();
-  const [selectedTier, setSelectedTier] = useState<string>("Electrician");
+  const [selectedTier, setSelectedTier] = useState<string>("Employer");
   const [expiresOption, setExpiresOption] = useState<string>("never");
   const [customExpiry, setCustomExpiry] = useState<string>("");
   const [reason, setReason] = useState<string>("");
@@ -378,7 +379,8 @@ export default function UserManagementSheet({
 
           {/* Footer Actions */}
           <SheetFooter className="p-4 border-t border-border gap-2">
-            {user.free_access_granted ? (
+            {/* Show Revoke for any admin-granted access (free_access_granted OR subscribed without Stripe) */}
+            {(user.free_access_granted || (user.subscribed && !user.stripe_customer_id)) ? (
               <Button
                 variant="destructive"
                 className="flex-1 h-12 touch-manipulation"
@@ -393,7 +395,7 @@ export default function UserManagementSheet({
                 ) : (
                   <>
                     <XCircle className="h-4 w-4 mr-2" />
-                    Revoke Free Access
+                    Revoke Access
                   </>
                 )}
               </Button>
@@ -415,7 +417,11 @@ export default function UserManagementSheet({
                   </>
                 )}
               </Button>
-            ) : null}
+            ) : (
+              <p className="flex-1 text-sm text-muted-foreground text-center py-3">
+                Managed via Stripe subscription
+              </p>
+            )}
           </SheetFooter>
         </div>
       </SheetContent>

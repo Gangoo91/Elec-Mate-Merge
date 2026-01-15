@@ -4,7 +4,7 @@ import { Calculator, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { InsulationTestResult, testVoltages } from './types';
 
 interface PracticeTestFormProps {
@@ -32,18 +32,13 @@ const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTest
         </div>
         <div className="space-y-2">
           <Label htmlFor="testVoltage">Test Voltage</Label>
-          <Select value={currentTest.testVoltage} onValueChange={(value) => onUpdateTest('testVoltage', value)}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select test voltage" />
-            </SelectTrigger>
-            <SelectContent>
-              {testVoltages.map((voltage) => (
-                <SelectItem key={voltage.value} value={voltage.value}>
-                  {voltage.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <MobileSelectPicker
+            value={currentTest.testVoltage}
+            onValueChange={(value) => onUpdateTest('testVoltage', value)}
+            options={testVoltages}
+            placeholder="Select test voltage"
+            title="Test Voltage"
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="liveNeutral">Live-Neutral (MΩ)</Label>

@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
@@ -162,17 +162,18 @@ const EICClientDetailsSection = ({ formData, onUpdate, isOpen, onToggle }: EICCl
             </div>
             <div className="space-y-2">
               <Label htmlFor="installationType" className="font-medium text-sm">Installation Type</Label>
-              <Select value={formData.installationType || ''} onValueChange={(value) => onUpdate('installationType', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select installation type" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  <SelectItem value="domestic">Domestic</SelectItem>
-                  <SelectItem value="commercial">Commercial</SelectItem>
-                  <SelectItem value="industrial">Industrial</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.installationType || ''}
+                onValueChange={(value) => onUpdate('installationType', value)}
+                options={[
+                  { value: 'domestic', label: 'Domestic' },
+                  { value: 'commercial', label: 'Commercial' },
+                  { value: 'industrial', label: 'Industrial' },
+                  { value: 'other', label: 'Other' },
+                ]}
+                placeholder="Select installation type"
+                title="Installation Type"
+              />
             </div>
           </div>
         </div>

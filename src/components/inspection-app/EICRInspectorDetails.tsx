@@ -5,6 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { AlertTriangle, User, Upload, X, Palette, Shield, Zap } from 'lucide-react';
 import { useInspectorProfiles, InspectorProfile } from '@/hooks/useInspectorProfiles';
 import { useProfileDataService } from '@/hooks/useProfileDataService';
@@ -565,22 +566,22 @@ const EICRInspectorDetails = ({ formData, onUpdate, isOpen, onToggle }: EICRInsp
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="registrationScheme">Registration Scheme</Label>
-                        <select
-                          id="registrationScheme"
+                        <MobileSelectPicker
                           value={formData.registrationScheme || ''}
-                          onChange={(e) => onUpdate('registrationScheme', e.target.value)}
-                          className="flex h-11 w-full items-center justify-between rounded-md border border-white/30 bg-background px-3 py-2 text-base touch-manipulation focus:border-yellow-500 focus:ring-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-0"
-                        >
-                          <option value="">Select scheme</option>
-                          <option value="NICEIC">NICEIC</option>
-                          <option value="NAPIT">NAPIT</option>
-                          <option value="ELECSA">ELECSA</option>
-                          <option value="STROMA">STROMA</option>
-                          <option value="BRE">BRE</option>
-                          <option value="ECA">ECA</option>
-                          <option value="SELECT">SELECT (Scotland)</option>
-                          <option value="other">Other</option>
-                        </select>
+                          onValueChange={(value) => onUpdate('registrationScheme', value)}
+                          options={[
+                            { value: 'NICEIC', label: 'NICEIC' },
+                            { value: 'NAPIT', label: 'NAPIT' },
+                            { value: 'ELECSA', label: 'ELECSA' },
+                            { value: 'STROMA', label: 'STROMA' },
+                            { value: 'BRE', label: 'BRE' },
+                            { value: 'ECA', label: 'ECA' },
+                            { value: 'SELECT', label: 'SELECT (Scotland)' },
+                            { value: 'other', label: 'Other' },
+                          ]}
+                          placeholder="Select scheme"
+                          title="Registration Scheme"
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="registrationNumber">Registration Number</Label>

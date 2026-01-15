@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   FileText, Send, Edit, Eye, AlertCircle, Plus, CheckCircle,
-  TrendingUp, Search, ArrowLeft, X, RefreshCw, Clock, LayoutGrid, List
+  TrendingUp, Search, ArrowLeft, X, RefreshCw, Clock, LayoutGrid, List, PoundSterling
 } from "lucide-react";
 import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
 import { isPast } from "date-fns";
@@ -251,7 +251,10 @@ const InvoicesPage = () => {
       return isOverdue || i.invoice_status === 'overdue';
     });
     const paid = invoices.filter(i => i.invoice_status === 'paid');
-    const monthlyPaid = paid.reduce((sum, inv) => sum + inv.total, 0);
+    const monthlyPaid = paid.reduce((sum, inv) => {
+      const total = typeof inv.total === 'number' && !isNaN(inv.total) ? inv.total : 0;
+      return sum + total;
+    }, 0);
 
     return {
       total: invoices.length,
@@ -458,60 +461,69 @@ const InvoicesPage = () => {
           {/* Stripe Connect Banner - Prompt to enable card payments */}
           <StripeConnectBanner />
 
-          {/* Stats Summary - Tappable Cards */}
-          <div className="grid grid-cols-2 gap-3">
-            {/* Monthly Revenue Card */}
-            <Card className="col-span-2 bg-gradient-to-br from-emerald-500/15 to-emerald-500/5 border-emerald-500/20">
-              <CardContent className="p-4 flex items-center gap-4">
-                <div className="h-12 w-12 rounded-2xl bg-emerald-500/20 flex items-center justify-center">
-                  <TrendingUp className="h-6 w-6 text-emerald-400" />
-                </div>
-                <div className="flex-1">
-                  <p className="text-xs text-muted-foreground font-medium">Paid Total</p>
-                  <p className="text-2xl font-bold text-emerald-400">
-                    £{stats.monthlyTotal.toLocaleString()}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs text-muted-foreground">{stats.paid} paid</p>
-                  <p className="text-xs text-blue-400">+{stats.sent} sent</p>
-                </div>
-              </CardContent>
-            </Card>
+          {/* Hero Stats Card */}
+          <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 via-green-500 to-teal-500 p-5 text-white">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-black/5 rounded-full translate-y-1/2 -translate-x-1/2" />
 
-            {/* Quick Stats */}
-            <Card
+            <div className="relative space-y-3">
+              <div className="flex items-center gap-2 text-white/70">
+                <PoundSterling className="h-4 w-4" />
+                <span className="text-sm font-medium">Total Paid</span>
+              </div>
+
+              <div className="text-4xl font-bold tracking-tight">
+                £{stats.monthlyTotal.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+              </div>
+
+              <div className="flex items-center justify-between pt-2">
+                <div className="flex items-center gap-4 text-sm">
+                  <div className="flex items-center gap-1.5">
+                    <FileText className="h-4 w-4" />
+                    <span className="font-medium">{stats.total} invoices</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <CheckCircle className="h-4 w-4" />
+                    <span className="font-medium">{stats.paid} paid</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Quick Stats Row */}
+          <section className="grid grid-cols-3 gap-3">
+            <div
               className={cn(
-                "cursor-pointer active:scale-[0.98] transition-transform",
+                "bg-card border rounded-xl p-3 text-center cursor-pointer active:scale-[0.98] transition-transform touch-manipulation",
                 activeFilter === 'overdue' && "ring-2 ring-red-400"
               )}
               onClick={() => handleFilterChange('overdue')}
             >
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <AlertCircle className="h-5 w-5 text-red-400" />
-                  <span className="text-2xl font-bold">{stats.overdue}</span>
-                </div>
-                <p className="text-xs text-muted-foreground">Overdue</p>
-              </CardContent>
-            </Card>
-
-            <Card
+              <div className="text-lg font-bold text-red-500">{stats.overdue}</div>
+              <div className="text-xs text-muted-foreground">Overdue</div>
+            </div>
+            <div
               className={cn(
-                "cursor-pointer active:scale-[0.98] transition-transform",
-                activeFilter === 'paid' && "ring-2 ring-emerald-400"
+                "bg-card border rounded-xl p-3 text-center cursor-pointer active:scale-[0.98] transition-transform touch-manipulation",
+                activeFilter === 'sent' && "ring-2 ring-blue-400"
               )}
-              onClick={() => handleFilterChange('paid')}
+              onClick={() => handleFilterChange('sent')}
             >
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <CheckCircle className="h-5 w-5 text-emerald-400" />
-                  <span className="text-2xl font-bold">{stats.paid}</span>
-                </div>
-                <p className="text-xs text-muted-foreground">Paid</p>
-              </CardContent>
-            </Card>
-          </div>
+              <div className="text-lg font-bold text-blue-500">{stats.sent}</div>
+              <div className="text-xs text-muted-foreground">Sent</div>
+            </div>
+            <div
+              className={cn(
+                "bg-card border rounded-xl p-3 text-center cursor-pointer active:scale-[0.98] transition-transform touch-manipulation",
+                activeFilter === 'draft' && "ring-2 ring-slate-400"
+              )}
+              onClick={() => handleFilterChange('draft')}
+            >
+              <div className="text-lg font-bold text-muted-foreground">{stats.draft}</div>
+              <div className="text-xs text-muted-foreground">Drafts</div>
+            </div>
+          </section>
 
           {/* Analytics Dashboard */}
           {invoices.length > 0 && (

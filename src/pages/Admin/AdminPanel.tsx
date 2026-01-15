@@ -26,6 +26,7 @@ import {
   ChevronDown,
   ChevronUp,
   PoundSterling,
+  Crown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -44,6 +45,7 @@ const secondaryNavItems = [
   { name: "Vacancies", path: "/admin/vacancies", icon: Briefcase },
   { name: "Pricing", path: "/admin/pricing", icon: PoundSterling },
   { name: "Subscriptions", path: "/admin/subscriptions", icon: CreditCard },
+  { name: "Founders", path: "/admin/founders", icon: Crown },
   { name: "Offers", path: "/admin/offers", icon: Gift },
   { name: "Chats", path: "/admin/conversations", icon: MessageSquare },
 ];

@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Calculator } from 'lucide-react';
 import { ZsTestResult, protectiveDevices, testMethods } from './types';
 
@@ -80,40 +80,24 @@ const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTest
         
         <div className="space-y-2">
           <Label htmlFor="testMethod">Test Method</Label>
-          <Select 
-            value={currentTest.testMethod} 
+          <MobileSelectPicker
+            value={currentTest.testMethod}
             onValueChange={(value) => onUpdateTest('testMethod', value)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select test method" />
-            </SelectTrigger>
-            <SelectContent>
-              {testMethods.map((method) => (
-                <SelectItem key={method.value} value={method.value}>
-                  {method.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            options={testMethods}
+            placeholder="Select test method"
+            title="Test Method"
+          />
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="protectiveDevice">Protective Device</Label>
-          <Select 
-            value={currentTest.protectiveDevice} 
+          <MobileSelectPicker
+            value={currentTest.protectiveDevice}
             onValueChange={handleDeviceChange}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select protective device" />
-            </SelectTrigger>
-            <SelectContent>
-              {protectiveDevices.map((device) => (
-                <SelectItem key={device.value} value={device.value}>
-                  {device.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            options={protectiveDevices}
+            placeholder="Select protective device"
+            title="Protective Device"
+          />
         </div>
 
         <div className="space-y-2">

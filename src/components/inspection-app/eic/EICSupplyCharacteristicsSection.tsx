@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Power } from 'lucide-react';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
@@ -51,19 +51,17 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <Label htmlFor="supplyVoltage" className="font-medium text-sm">Supply Voltage *</Label>
-            <Select
+            <MobileSelectPicker
               value={formData.supplyVoltage || ''}
               onValueChange={(value) => onUpdate('supplyVoltage', value)}
-            >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="Select voltage" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="230V">230V (Single Phase)</SelectItem>
-                <SelectItem value="400V">400V (Three Phase)</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { value: '230V', label: '230V (Single Phase)' },
+                { value: '400V', label: '400V (Three Phase)' },
+                { value: 'other', label: 'Other' },
+              ]}
+              placeholder="Select voltage"
+              title="Supply Voltage"
+            />
           </div>
 
           <InputWithValidation
@@ -78,55 +76,49 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
 
           <div>
             <Label htmlFor="phases" className="font-medium text-sm">Number of Phases *</Label>
-            <Select
+            <MobileSelectPicker
               value={formData.phases || ''}
               onValueChange={handlePhasesChange}
-            >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="Select phases" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="single">Single Phase</SelectItem>
-                <SelectItem value="three">Three Phase</SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { value: 'single', label: 'Single Phase' },
+                { value: 'three', label: 'Three Phase' },
+              ]}
+              placeholder="Select phases"
+              title="Number of Phases"
+            />
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="earthingArrangement" className="font-medium text-sm">Earthing Arrangement *</Label>
-            <Select
+            <MobileSelectPicker
               value={formData.earthingArrangement || ''}
               onValueChange={handleEarthingArrangementChange}
-            >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="Select earthing type" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="tncs">TN-C-S (PME)</SelectItem>
-                <SelectItem value="tns">TN-S</SelectItem>
-                <SelectItem value="tt">TT</SelectItem>
-                <SelectItem value="it">IT</SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { value: 'tncs', label: 'TN-C-S (PME)' },
+                { value: 'tns', label: 'TN-S' },
+                { value: 'tt', label: 'TT' },
+                { value: 'it', label: 'IT' },
+              ]}
+              placeholder="Select earthing type"
+              title="Earthing Arrangement"
+            />
           </div>
 
           <div>
             <Label htmlFor="supplyPME" className="font-medium text-sm">Supply PME</Label>
-            <Select
+            <MobileSelectPicker
               value={formData.supplyPME || ''}
               onValueChange={(value) => onUpdate('supplyPME', value)}
-            >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="PME status" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="yes">Yes</SelectItem>
-                <SelectItem value="no">No</SelectItem>
-                <SelectItem value="unknown">Unknown</SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { value: 'yes', label: 'Yes' },
+                { value: 'no', label: 'No' },
+                { value: 'unknown', label: 'Unknown' },
+              ]}
+              placeholder="PME status"
+              title="Supply PME"
+            />
             {formData.earthingArrangement === 'tncs' && formData.supplyPME !== 'yes' && (
               <p className="text-xs text-amber-600 mt-1">
                 TN-C-S systems typically have PME

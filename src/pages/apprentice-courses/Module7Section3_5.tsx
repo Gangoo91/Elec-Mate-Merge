@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, Users, Target, CheckCircle, AlertTriangle, FileText, MessageSquare, Wrench, HardHat } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -11,7 +8,6 @@ import useSEO from "@/hooks/useSEO";
 const TITLE = "Understanding User Complaints - Module 7.3.5 | Level 2 Electrical Course";
 const DESCRIPTION = "Using user complaints as early indicators of electrical faults and implementing effective investigation procedures.";
 
-// Inline check questions
 const quickCheckQuestions = [
   {
     id: 1,
@@ -186,117 +182,112 @@ const Module7Section3_5 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 3
+              <span className="hidden sm:inline">Back to Section 3</span>
+              <span className="sm:hidden">Back</span>
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg w-fit">
-              <Users className="w-6 h-6 text-white" />
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Title Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 3.5</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow w-fit">
-              Section 7.3.5
-            </Badge>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
+              Understanding User Complaints
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+              Using user complaints as early indicators of electrical faults and implementing effective investigation procedures.
+            </p>
+          </header>
+
+          {/* In 30 Seconds Summary */}
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
+            <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
+            <ul className="text-white/80 space-y-1 text-sm list-disc pl-4">
+              <li>User complaints provide early warning of developing electrical faults.</li>
+              <li>Proper investigation of complaints prevents minor issues becoming dangerous.</li>
+              <li>Systematic questioning reveals patterns that guide effective fault diagnosis.</li>
+            </ul>
           </div>
-          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            Understanding User Complaints
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Using user complaints as early indicators of electrical faults and implementing effective investigation procedures.
-          </p>
-        </header>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>User complaints provide early warning of developing electrical faults.</li>
-                <li>Proper investigation of complaints prevents minor issues becoming dangerous.</li>
-                <li>Systematic questioning reveals patterns that guide effective fault diagnosis.</li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/30">
-              <p className="font-medium mb-2">Spot it / Use it / Check</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Spot:</strong> Patterns in reports (trips with appliances, flicker on load, smells).</li>
-                <li><strong>Use:</strong> Systematic questioning, thermal imaging, load monitoring.</li>
-                <li><strong>Check:</strong> Circuit loading, connections, earth continuity, insulation.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* Learning outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning outcomes</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>Recognise the value of user complaints as early indicators of developing electrical faults.</li>
-            <li>Apply systematic questioning techniques to gather comprehensive fault information from users.</li>
-            <li>Identify patterns in user reports that indicate specific types of electrical problems.</li>
-            <li>Prioritise investigation activities based on safety implications of reported symptoms.</li>
-            <li>Implement effective communication strategies for gathering and responding to electrical fault reports.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Content / Learning</h2>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Learning Outcomes
+            </h2>
+            <ul className="text-white/80 space-y-2 text-sm list-disc pl-4">
+              <li>Recognise the value of user complaints as early indicators of developing electrical faults.</li>
+              <li>Apply systematic questioning techniques to gather comprehensive fault information from users.</li>
+              <li>Identify patterns in user reports that indicate specific types of electrical problems.</li>
+              <li>Prioritise investigation activities based on safety implications of reported symptoms.</li>
+              <li>Implement effective communication strategies for gathering and responding to electrical fault reports.</li>
+            </ul>
+          </section>
 
           {/* Value of User Complaints */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Recognising the Value of User Complaints</h3>
-            <p className="text-base text-white mb-4">
-              User complaints represent one of the most valuable sources of information for early electrical fault detection. Users often notice subtle changes in electrical system behaviour that precede serious failures:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-green-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-green-600 dark:text-green-400 mb-1">Early Warning System</p>
-                    <p className="text-base text-white mb-2"><strong>Sensitivity to change:</strong> Users notice subtle variations in normal electrical behaviour.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Lights dimming slightly when appliances start (indicating voltage drop)</li>
-                      <li>Increased sensitivity of RCD devices (suggesting developing earth leakage)</li>
-                      <li>Appliances running warmer or noisier than usual (overloading or poor connections)</li>
-                      <li>Intermittent operation of electrical equipment (loose connections developing)</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Pattern recognition:</strong> Multiple complaints revealing systematic problems.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Similar complaints from multiple users indicating widespread issues</li>
-                      <li>Complaints following specific trigger events (weather, load changes)</li>
-                      <li>Progressive complaints showing fault development over time</li>
-                      <li>Location-specific patterns indicating localised problems</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Safety implications:</strong> Complaints often indicate developing dangerous conditions.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Reports of 'tingles' indicating earth fault development</li>
-                      <li>Burning smells suggesting overheating and fire risk</li>
-                      <li>Tripping patterns indicating insulation deterioration</li>
-                      <li>Flickering lights suggesting loose connections and arcing risk</li>
-                    </ul>
-                    <div className="text-xs sm:text-sm text-white bg-[#121212]/50 p-2 rounded border">
-                      <strong>Key principle:</strong> Every electrical complaint should be investigated - minor symptoms often indicate major developing problems
-                    </div>
-                  </div>
-                </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Recognising the Value of User Complaints
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                User complaints represent one of the most valuable sources of information for early electrical fault detection. Users often notice subtle changes in electrical system behaviour that precede serious failures.
+              </p>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                <p className="font-medium text-white mb-2">Early Warning System</p>
+                <p className="text-sm mb-2"><strong className="text-white">Sensitivity to change:</strong> Users notice subtle variations in normal electrical behaviour.</p>
+                <ul className="text-sm list-disc pl-4 space-y-1">
+                  <li>Lights dimming slightly when appliances start (indicating voltage drop)</li>
+                  <li>Increased sensitivity of RCD devices (suggesting developing earth leakage)</li>
+                  <li>Appliances running warmer or noisier than usual (overloading or poor connections)</li>
+                  <li>Intermittent operation of electrical equipment (loose connections developing)</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
+                <p className="font-medium text-white mb-2">Pattern Recognition</p>
+                <p className="text-sm mb-2">Multiple complaints revealing systematic problems:</p>
+                <ul className="text-sm list-disc pl-4 space-y-1">
+                  <li>Similar complaints from multiple users indicating widespread issues</li>
+                  <li>Complaints following specific trigger events (weather, load changes)</li>
+                  <li>Progressive complaints showing fault development over time</li>
+                  <li>Location-specific patterns indicating localised problems</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-amber-500/50">
+                <p className="font-medium text-white mb-2">Safety Implications</p>
+                <p className="text-sm mb-2">Complaints often indicate developing dangerous conditions:</p>
+                <ul className="text-sm list-disc pl-4 space-y-1">
+                  <li>Reports of 'tingles' indicating earth fault development</li>
+                  <li>Burning smells suggesting overheating and fire risk</li>
+                  <li>Tripping patterns indicating insulation deterioration</li>
+                  <li>Flickering lights suggesting loose connections and arcing risk</li>
+                </ul>
+              </div>
+
+              <div className="p-3 rounded bg-white/5 text-sm">
+                <strong className="text-white">Key principle:</strong> Every electrical complaint should be investigated - minor symptoms often indicate major developing problems.
               </div>
             </div>
           </section>
@@ -308,51 +299,60 @@ const Module7Section3_5 = () => {
             correctIndex={quickCheckQuestions[0].correctIndex}
             explanation={quickCheckQuestions[0].explanation}
           />
-          <Separator className="my-6" />
 
           {/* Systematic Investigation */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Systematic Investigation of User Reports</h3>
-            <p className="text-base text-white mb-4">
-              Effective investigation of user complaints requires systematic questioning and documentation to extract maximum diagnostic value from reported symptoms:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-1">Essential Information Gathering</p>
-                    <p className="text-base text-white mb-2"><strong>What specifically is the problem:</strong> Detailed description of observed symptoms.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Exact nature of the fault (flickering, tripping, shocks, smells, sounds)</li>
-                      <li>Severity and duration of symptoms</li>
-                      <li>Which circuits, equipment, or areas are affected</li>
-                      <li>Any visible damage or unusual appearances</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>When does it occur:</strong> Timing patterns and frequency of problems.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Time of day, day of week, or seasonal patterns</li>
-                      <li>Correlation with weather conditions (rain, cold, humidity)</li>
-                      <li>Frequency of occurrence (continuous, intermittent, one-off)</li>
-                      <li>Duration of individual fault episodes</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Under what conditions:</strong> Circumstances triggering or affecting the fault.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Load conditions when problems occur (which appliances in use)</li>
-                      <li>Environmental factors (temperature, humidity, vibration)</li>
-                      <li>Operational states (startup, steady operation, shutdown)</li>
-                      <li>Triggering events or activities that precede the fault</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Where exactly:</strong> Precise location and extent of the problem.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>Specific rooms, floors, or areas affected</li>
-                      <li>Individual circuits, sockets, or equipment involved</li>
-                      <li>Extent of the problem (single point or widespread)</li>
-                      <li>Relationship to other electrical installations</li>
-                    </ul>
-                  </div>
-                </div>
+          <section className="mb-10 mt-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Systematic Investigation of User Reports
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Effective investigation of user complaints requires systematic questioning and documentation to extract maximum diagnostic value from reported symptoms.
+              </p>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">What Specifically is the Problem</p>
+                <p className="text-sm mb-2">Detailed description of observed symptoms:</p>
+                <ul className="text-sm list-disc pl-4 space-y-1">
+                  <li>Exact nature of the fault (flickering, tripping, shocks, smells, sounds)</li>
+                  <li>Severity and duration of symptoms</li>
+                  <li>Which circuits, equipment, or areas are affected</li>
+                  <li>Any visible damage or unusual appearances</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
+                <p className="font-medium text-white mb-2">When Does It Occur</p>
+                <p className="text-sm mb-2">Timing patterns and frequency of problems:</p>
+                <ul className="text-sm list-disc pl-4 space-y-1">
+                  <li>Time of day, day of week, or seasonal patterns</li>
+                  <li>Correlation with weather conditions (rain, cold, humidity)</li>
+                  <li>Frequency of occurrence (continuous, intermittent, one-off)</li>
+                  <li>Duration of individual fault episodes</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
+                <p className="font-medium text-white mb-2">Under What Conditions</p>
+                <p className="text-sm mb-2">Circumstances triggering or affecting the fault:</p>
+                <ul className="text-sm list-disc pl-4 space-y-1">
+                  <li>Load conditions when problems occur (which appliances in use)</li>
+                  <li>Environmental factors (temperature, humidity, vibration)</li>
+                  <li>Operational states (startup, steady operation, shutdown)</li>
+                  <li>Triggering events or activities that precede the fault</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-teal-500/50">
+                <p className="font-medium text-white mb-2">Where Exactly</p>
+                <p className="text-sm mb-2">Precise location and extent of the problem:</p>
+                <ul className="text-sm list-disc pl-4 space-y-1">
+                  <li>Specific rooms, floors, or areas affected</li>
+                  <li>Individual circuits, sockets, or equipment involved</li>
+                  <li>Extent of the problem (single point or widespread)</li>
+                  <li>Relationship to other electrical installations</li>
+                </ul>
               </div>
             </div>
           </section>
@@ -364,50 +364,57 @@ const Module7Section3_5 = () => {
             correctIndex={quickCheckQuestions[1].correctIndex}
             explanation={quickCheckQuestions[1].explanation}
           />
-          <Separator className="my-6" />
 
           {/* Common Complaint Patterns */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">Recognising Common Complaint Patterns</h3>
-            <p className="text-base text-white mb-4">
-              Different types of electrical faults produce characteristic patterns of user complaints that help guide investigation priorities and testing approaches:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-purple-500 ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-purple-600 text-elec-yellow mb-1">Diagnostic Complaint Patterns</p>
-                    <p className="text-base text-white mb-2"><strong>Voltage drop indicators:</strong> Complaints suggesting supply or connection problems.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>"Lights dim when the kettle/washing machine starts" - circuit overloading</li>
-                      <li>"Equipment runs slower than usual" - sustained voltage drop</li>
-                      <li>"Lights flicker during windy weather" - overhead supply problems</li>
-                      <li>"Everything seems less bright lately" - neutral or supply connection issues</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Earth fault development:</strong> Complaints indicating insulation deterioration.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>"RCD trips when it rains" - water ingress causing earth leakage</li>
-                      <li>"Slight tingle from washing machine" - developing earth fault</li>
-                      <li>"Tripping more frequently lately" - progressive insulation failure</li>
-                      <li>"Trips when vacuum cleaner used" - specific equipment earth fault</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Connection deterioration:</strong> Complaints indicating loose or corroded connections.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>"Switch/socket getting warm" - high resistance connection heating</li>
-                      <li>"Crackling sounds from electrical panels" - arcing at connections</li>
-                      <li>"Intermittent power loss" - loose connections causing poor contact</li>
-                      <li>"Burning smell but can't see source" - concealed connection overheating</li>
-                    </ul>
-                    <p className="text-base text-white mb-2"><strong>Overloading symptoms:</strong> Complaints indicating excessive circuit loading.</p>
-                    <ul className="text-xs sm:text-sm text-white ml-4 mb-2 list-disc space-y-1">
-                      <li>"Circuit breaker trips when using multiple appliances" - circuit overload</li>
-                      <li>"Extension leads getting hot" - excessive current through inadequate cables</li>
-                      <li>"Can't use everything at once anymore" - increased load beyond design</li>
-                      <li>"Fuses blow regularly" - sustained overloading of circuits</li>
-                    </ul>
-                  </div>
+          <section className="mb-10 mt-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Recognising Common Complaint Patterns
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Different types of electrical faults produce characteristic patterns of user complaints that help guide investigation priorities and testing approaches.
+              </p>
+
+              <div className="space-y-3">
+                <div className="p-3 rounded-lg bg-white/5">
+                  <p className="font-medium text-elec-yellow text-sm mb-2">Voltage Drop Indicators</p>
+                  <ul className="text-xs list-disc pl-4 space-y-1">
+                    <li>"Lights dim when the kettle/washing machine starts" - circuit overloading</li>
+                    <li>"Equipment runs slower than usual" - sustained voltage drop</li>
+                    <li>"Lights flicker during windy weather" - overhead supply problems</li>
+                    <li>"Everything seems less bright lately" - neutral or supply connection issues</li>
+                  </ul>
+                </div>
+
+                <div className="p-3 rounded-lg bg-white/5">
+                  <p className="font-medium text-blue-400 text-sm mb-2">Earth Fault Development</p>
+                  <ul className="text-xs list-disc pl-4 space-y-1">
+                    <li>"RCD trips when it rains" - water ingress causing earth leakage</li>
+                    <li>"Slight tingle from washing machine" - developing earth fault</li>
+                    <li>"Tripping more frequently lately" - progressive insulation failure</li>
+                    <li>"Trips when vacuum cleaner used" - specific equipment earth fault</li>
+                  </ul>
+                </div>
+
+                <div className="p-3 rounded-lg bg-white/5">
+                  <p className="font-medium text-orange-400 text-sm mb-2">Connection Deterioration</p>
+                  <ul className="text-xs list-disc pl-4 space-y-1">
+                    <li>"Switch/socket getting warm" - high resistance connection heating</li>
+                    <li>"Crackling sounds from electrical panels" - arcing at connections</li>
+                    <li>"Intermittent power loss" - loose connections causing poor contact</li>
+                    <li>"Burning smell but can't see source" - concealed connection overheating</li>
+                  </ul>
+                </div>
+
+                <div className="p-3 rounded-lg bg-white/5">
+                  <p className="font-medium text-purple-400 text-sm mb-2">Overloading Symptoms</p>
+                  <ul className="text-xs list-disc pl-4 space-y-1">
+                    <li>"Circuit breaker trips when using multiple appliances" - circuit overload</li>
+                    <li>"Extension leads getting hot" - excessive current through inadequate cables</li>
+                    <li>"Can't use everything at once anymore" - increased load beyond design</li>
+                    <li>"Fuses blow regularly" - sustained overloading of circuits</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -420,129 +427,144 @@ const Module7Section3_5 = () => {
             correctIndex={quickCheckQuestions[2].correctIndex}
             explanation={quickCheckQuestions[2].explanation}
           />
-        </Card>
 
-        {/* Practical Guidance */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div>
-              <h3 className="font-medium text-white mb-3">Communication Techniques</h3>
-              <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-                <li>Use open-ended questions to encourage detailed descriptions</li>
-                <li>Ask for demonstrations or recreating conditions if safe to do so</li>
-                <li>Translate technical language to user-friendly terms</li>
-                <li>Document exact user words - they may contain important clues</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-medium text-white mb-3">Follow-up Actions</h3>
-              <ul className="list-disc pl-6 space-y-2 text-xs sm:text-sm text-white">
-                <li>Prioritise complaints indicating safety risks (shocks, burning smells)</li>
-                <li>Schedule investigations based on fault severity and safety implications</li>
-                <li>Follow-up questions reveal patterns that guide effective testing</li>
-                <li>Always close the loop - inform users of findings and actions taken</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* Real-World Examples */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Real-World Examples</h2>
-          
-          <div className="space-y-6">
-            <div className="rounded-lg p-4 border border-white/10 ">
-              <h3 className="font-medium text-white mb-2">Case Study: Office Computer Problems</h3>
-              <p className="text-xs sm:text-sm text-white mb-2">
-                <strong>Complaints:</strong> Multiple office workers reported computers randomly restarting, particularly during morning startup periods.
-              </p>
-              <p className="text-xs sm:text-sm text-white mb-2">
-                <strong>Investigation:</strong> Pattern analysis revealed problems coincided with high heating load startup and specific workstation clusters.
-              </p>
-              <p className="text-xs sm:text-sm text-white mb-2">
-                <strong>Findings:</strong> Loose neutral connections in distribution board caused voltage variations affecting sensitive electronic equipment.
-              </p>
-              <p className="text-xs sm:text-sm text-white">
-                <strong>Resolution:</strong> Re-termination of all neutral connections eliminated voltage variations and computer problems.
-              </p>
-            </div>
-
-            <div className="rounded-lg p-4 border border-white/10 ">
-              <h3 className="font-medium text-white mb-2">Case Study: Residential Tripping Issues</h3>
-              <p className="text-xs sm:text-sm text-white mb-2">
-                <strong>Complaints:</strong> Homeowner reported RCD tripping "only when it rains" and "slight tingles" from washing machine.
-              </p>
-              <p className="text-xs sm:text-sm text-white mb-2">
-                <strong>Investigation:</strong> Weather correlation suggested water ingress, while shock reports indicated earth fault development.
-              </p>
-              <p className="text-xs sm:text-sm text-white mb-2">
-                <strong>Findings:</strong> Damaged cable in external wall allowed water penetration, creating earth leakage path to washing machine circuit.
-              </p>
-              <p className="text-xs sm:text-sm text-white">
-                <strong>Resolution:</strong> Cable replacement and improved weatherproofing eliminated both tripping and shock hazard.
-              </p>
-            </div>
-          </div>
-        </Card>
-
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
-                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                <p className="text-sm text-white">{faq.answer}</p>
+          {/* Practical Guidance */}
+          <section className="mb-10 mt-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Practical Guidance
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">Communication Techniques</p>
+                <ul className="text-sm list-disc pl-4 space-y-1 text-white/80">
+                  <li>Use open-ended questions to encourage detailed descriptions</li>
+                  <li>Ask for demonstrations or recreating conditions if safe to do so</li>
+                  <li>Translate technical language to user-friendly terms</li>
+                  <li>Document exact user words - they may contain important clues</li>
+                </ul>
               </div>
-            ))}
-          </div>
-        </Card>
 
-        {/* Recap */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
-          <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
-              <CheckCircle className="w-5 h-5 text-green-500 mb-2" />
-              <p className="font-medium text-sm mb-1">Early Warning Value</p>
-              <p className="text-xs text-white">User complaints provide early detection of developing electrical faults before they become dangerous.</p>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
+                <p className="font-medium text-white mb-2">Follow-up Actions</p>
+                <ul className="text-sm list-disc pl-4 space-y-1 text-white/80">
+                  <li>Prioritise complaints indicating safety risks (shocks, burning smells)</li>
+                  <li>Schedule investigations based on fault severity and safety implications</li>
+                  <li>Follow-up questions reveal patterns that guide effective testing</li>
+                  <li>Always close the loop - inform users of findings and actions taken</li>
+                </ul>
+              </div>
             </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
-              <MessageSquare className="w-5 h-5 text-elec-yellow mb-2" />
-              <p className="font-medium text-sm mb-1">Systematic Investigation</p>
-              <p className="text-xs text-white">Comprehensive questioning about what, when, where, and under what conditions reveals diagnostic patterns.</p>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/10">
-              <Target className="w-5 h-5 text-elec-yellow mb-2" />
-              <p className="font-medium text-sm mb-1">Safety Priority</p>
-              <p className="text-xs text-white">Complaints about shocks, burning smells, or progressive symptoms require immediate priority investigation.</p>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Knowledge Check */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Knowledge Check</h2>
-          <Quiz questions={quizQuestions} title="Understanding User Complaints Quiz" />
-        </Card>
+          {/* Real-World Examples */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Real-World Examples
+            </h2>
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
+                <p className="font-medium text-white mb-2">Office Computer Problems</p>
+                <p className="text-white/80 text-sm mb-2">
+                  <strong className="text-elec-yellow">Complaints:</strong> Multiple office workers reported computers randomly restarting, particularly during morning startup periods.
+                </p>
+                <p className="text-white/80 text-sm mb-2">
+                  <strong className="text-orange-400">Investigation:</strong> Pattern analysis revealed problems coincided with high heating load startup and specific workstation clusters.
+                </p>
+                <p className="text-white/80 text-sm mb-2">
+                  <strong className="text-green-400">Findings:</strong> Loose neutral connections in distribution board caused voltage variations affecting sensitive electronic equipment.
+                </p>
+                <p className="text-white/80 text-sm">
+                  <strong className="text-purple-400">Resolution:</strong> Re-termination of all neutral connections eliminated voltage variations and computer problems.
+                </p>
+              </div>
 
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between gap-4">
-          <Button variant="outline" className="flex-1 sm:flex-none" asChild>
-            <Link to="../module7-section3-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Buzzing, Arcing & Sparking
-            </Link>
-          </Button>
-          <Button className="flex-1 sm:flex-none" asChild>
-            <Link to="../module7-section3-6">
-              Next: Section 3.6
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+              <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
+                <p className="font-medium text-white mb-2">Residential Tripping Issues</p>
+                <p className="text-white/80 text-sm mb-2">
+                  <strong className="text-elec-yellow">Complaints:</strong> Homeowner reported RCD tripping "only when it rains" and "slight tingles" from washing machine.
+                </p>
+                <p className="text-white/80 text-sm mb-2">
+                  <strong className="text-orange-400">Investigation:</strong> Weather correlation suggested water ingress, while shock reports indicated earth fault development.
+                </p>
+                <p className="text-white/80 text-sm mb-2">
+                  <strong className="text-green-400">Findings:</strong> Damaged cable in external wall allowed water penetration, creating earth leakage path to washing machine circuit.
+                </p>
+                <p className="text-white/80 text-sm">
+                  <strong className="text-purple-400">Resolution:</strong> Cable replacement and improved weatherproofing eliminated both tripping and shock hazard.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
+                  <p className="font-medium text-white mb-2">{faq.question}</p>
+                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Recap */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+              Recap
+            </h2>
+            <div className="grid sm:grid-cols-3 gap-3">
+              <div className="p-3 rounded-lg bg-white/5">
+                <p className="font-medium text-green-400 text-sm mb-1">Early Warning Value</p>
+                <p className="text-xs text-white/70">User complaints provide early detection of developing electrical faults before they become dangerous.</p>
+              </div>
+              <div className="p-3 rounded-lg bg-white/5">
+                <p className="font-medium text-elec-yellow text-sm mb-1">Systematic Investigation</p>
+                <p className="text-xs text-white/70">Comprehensive questioning about what, when, where, and under what conditions reveals diagnostic patterns.</p>
+              </div>
+              <div className="p-3 rounded-lg bg-white/5">
+                <p className="font-medium text-amber-400 text-sm mb-1">Safety Priority</p>
+                <p className="text-xs text-white/70">Complaints about shocks, burning smells, or progressive symptoms require immediate priority investigation.</p>
+              </div>
+            </div>
+          </section>
+
+          {/* Quiz */}
+          <section className="mb-10">
+            <Quiz questions={quizQuestions} title="Understanding User Complaints Quiz" />
+          </section>
+
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
+            <Button
+              variant="ghost"
+              className="w-full sm:w-auto text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../3-4">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back: Buzzing, Arcing & Sparking
+              </Link>
+            </Button>
+            <Button
+              className="w-full sm:w-auto bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="..">
+                Complete Section 3
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

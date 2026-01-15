@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Plus, ArrowLeft, PoundSterling, TrendingUp, FileText, Clock, CheckCircle, XCircle, Send, RefreshCw } from "lucide-react";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
-import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
 import { filterQuotesByStatus } from "@/utils/quote-analytics";
 import { useMemo, useState, useCallback } from "react";
 import { cn } from "@/lib/utils";
@@ -11,12 +10,17 @@ import { VoiceHeaderButton } from "@/components/electrician/VoiceHeaderButton";
 import { EmptyStateGuide } from "@/components/electrician/shared/EmptyStateGuide";
 import { Card, CardContent } from "@/components/ui/card";
 import { QuoteInvoiceAnalytics } from "@/components/electrician/analytics";
+import { SwipeableQuoteCard } from "@/components/electrician/quote-builder/SwipeableQuoteCard";
+import { AnimatePresence } from "framer-motion";
+import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
+import { toast } from "@/hooks/use-toast";
 
 const QuotesPage = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const filter = searchParams.get('filter') || 'all';
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [quoteToDelete, setQuoteToDelete] = useState<string | null>(null);
 
   const {
     savedQuotes,
@@ -26,6 +30,17 @@ const QuotesPage = () => {
     refreshQuotes,
     loading
   } = useQuoteStorage();
+
+  const handleDeleteQuote = async (quoteId: string) => {
+    const success = await deleteQuote(quoteId);
+    if (success) {
+      toast({
+        title: "Quote deleted",
+        description: "The quote has been removed successfully.",
+      });
+    }
+    setQuoteToDelete(null);
+  };
 
   // Refresh handler
   const handleRefresh = useCallback(async () => {
@@ -192,22 +207,31 @@ const QuotesPage = () => {
         </section>
 
 
-        {/* Quick Stats Row */}
+        {/* Quick Stats Row - Tappable to filter */}
         <section className="grid grid-cols-3 gap-3">
-          <div className="bg-card border rounded-xl p-3 text-center">
+          <button
+            onClick={() => setFilter('approved')}
+            className="bg-card border rounded-xl p-3 text-center cursor-pointer hover:bg-muted/30 active:scale-[0.98] transition-all touch-manipulation"
+          >
             <div className="text-lg font-bold text-green-500">
               £{stats.approvedValue.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
             </div>
             <div className="text-xs text-muted-foreground">Approved</div>
-          </div>
-          <div className="bg-card border rounded-xl p-3 text-center">
+          </button>
+          <button
+            onClick={() => setFilter('sent')}
+            className="bg-card border rounded-xl p-3 text-center cursor-pointer hover:bg-muted/30 active:scale-[0.98] transition-all touch-manipulation"
+          >
             <div className="text-lg font-bold text-amber-500">{stats.counts.sent}</div>
             <div className="text-xs text-muted-foreground">Awaiting</div>
-          </div>
-          <div className="bg-card border rounded-xl p-3 text-center">
+          </button>
+          <button
+            onClick={() => setFilter('draft')}
+            className="bg-card border rounded-xl p-3 text-center cursor-pointer hover:bg-muted/30 active:scale-[0.98] transition-all touch-manipulation"
+          >
             <div className="text-lg font-bold text-muted-foreground">{stats.counts.draft}</div>
             <div className="text-xs text-muted-foreground">Drafts</div>
-          </div>
+          </button>
         </section>
 
         {/* Analytics Dashboard */}
@@ -251,17 +275,34 @@ const QuotesPage = () => {
               </Card>
             )
           ) : (
-            <RecentQuotesList
-              quotes={filteredQuotes}
-              onDeleteQuote={deleteQuote}
-              onUpdateQuoteStatus={updateQuoteStatus}
-              onSendPaymentReminder={sendPaymentReminder}
-              showAll={true}
-            />
+            <div className="space-y-3">
+              <AnimatePresence>
+                {filteredQuotes.map((quote, idx) => (
+                  <SwipeableQuoteCard
+                    key={quote.id}
+                    quote={quote}
+                    onDelete={() => setQuoteToDelete(quote.id)}
+                    onEdit={() => navigate(`/electrician/quote-builder/edit/${quote.id}`)}
+                    onView={() => navigate(`/electrician/quote/${quote.id}`)}
+                    delay={idx * 0.05}
+                  />
+                ))}
+              </AnimatePresence>
+            </div>
           )}
         </section>
       </div>
 
+      {/* Delete Confirmation Dialog */}
+      <ConfirmationDialog
+        open={!!quoteToDelete}
+        onOpenChange={(open) => !open && setQuoteToDelete(null)}
+        onConfirm={() => quoteToDelete && handleDeleteQuote(quoteToDelete)}
+        title="Delete Quote"
+        description="Are you sure you want to delete this quote? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+      />
     </div>
   );
 };

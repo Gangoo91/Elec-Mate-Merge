@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Calculator, Target } from 'lucide-react';
 import { ZsTestResult } from './types';
 import { getMcbZsLimit, getFuseZsLimit, type FuseType } from '@/data/zsLimits';
@@ -115,18 +115,13 @@ const BasicZsTestCard = ({ currentTest, onUpdateTest, onAddTest }: BasicZsTestCa
           </div>
           <div className="space-y-2">
             <Label htmlFor="protectiveDevice">Protective Device</Label>
-            <Select value={currentTest.protectiveDevice} onValueChange={(value) => updateCurrentTest('protectiveDevice', value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select protective device" />
-              </SelectTrigger>
-              <SelectContent>
-                {protectiveDevices.map((device) => (
-                  <SelectItem key={device.value} value={device.value}>
-                    {device.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <MobileSelectPicker
+              value={currentTest.protectiveDevice}
+              onValueChange={(value) => updateCurrentTest('protectiveDevice', value)}
+              options={protectiveDevices}
+              placeholder="Select protective device"
+              title="Protective Device"
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="zsReading">Zs Reading (Ω)</Label>

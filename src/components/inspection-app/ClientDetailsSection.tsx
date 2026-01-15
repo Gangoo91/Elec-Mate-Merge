@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
@@ -148,30 +148,32 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="description">Description of Premises *</Label>
-              <Select value={formData.description || ''} onValueChange={(value) => onUpdate('description', value)}>
-                <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select property type" />
-                </SelectTrigger>
-                 <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
-                  <SelectItem value="domestic">Domestic</SelectItem>
-                  <SelectItem value="commercial">Commercial</SelectItem>
-                  <SelectItem value="industrial">Industrial</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.description || ''}
+                onValueChange={(value) => onUpdate('description', value)}
+                options={[
+                  { value: 'domestic', label: 'Domestic' },
+                  { value: 'commercial', label: 'Commercial' },
+                  { value: 'industrial', label: 'Industrial' },
+                ]}
+                placeholder="Select property type"
+                title="Description of Premises"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="installationType">Installation Type</Label>
-              <Select value={formData.installationType || ''} onValueChange={(value) => onUpdate('installationType', value)}>
-                <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select installation type" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
-                  <SelectItem value="new-installation">New Installation</SelectItem>
-                  <SelectItem value="existing-installation">Existing Installation</SelectItem>
-                  <SelectItem value="extended-installation">Extended Installation</SelectItem>
-                  <SelectItem value="altered-installation">Altered Installation</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.installationType || ''}
+                onValueChange={(value) => onUpdate('installationType', value)}
+                options={[
+                  { value: 'new-installation', label: 'New Installation' },
+                  { value: 'existing-installation', label: 'Existing Installation' },
+                  { value: 'extended-installation', label: 'Extended Installation' },
+                  { value: 'altered-installation', label: 'Altered Installation' },
+                ]}
+                placeholder="Select installation type"
+                title="Installation Type"
+              />
             </div>
           </div>
 
@@ -184,20 +186,21 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="dnoName">DNO (Distribution Network Operator)</Label>
-                <Select value={formData.dnoName || ''} onValueChange={(value) => onUpdate('dnoName', value)}>
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                    <SelectValue placeholder="Select DNO" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
-                    <SelectItem value="electricity-north-west">Electricity North West</SelectItem>
-                    <SelectItem value="northern-powergrid">Northern Powergrid</SelectItem>
-                    <SelectItem value="sp-energy-networks">SP Energy Networks</SelectItem>
-                    <SelectItem value="sse-networks">SSE Networks</SelectItem>
-                    <SelectItem value="uk-power-networks">UK Power Networks</SelectItem>
-                    <SelectItem value="western-power-distribution">Western Power Distribution</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
+                <MobileSelectPicker
+                  value={formData.dnoName || ''}
+                  onValueChange={(value) => onUpdate('dnoName', value)}
+                  options={[
+                    { value: 'electricity-north-west', label: 'Electricity North West' },
+                    { value: 'northern-powergrid', label: 'Northern Powergrid' },
+                    { value: 'sp-energy-networks', label: 'SP Energy Networks' },
+                    { value: 'sse-networks', label: 'SSE Networks' },
+                    { value: 'uk-power-networks', label: 'UK Power Networks' },
+                    { value: 'western-power-distribution', label: 'Western Power Distribution' },
+                    { value: 'other', label: 'Other' },
+                  ]}
+                  placeholder="Select DNO"
+                  title="DNO"
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="mpan">MPAN (Meter Point Administration Number)</Label>
@@ -255,15 +258,16 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                     placeholder="0"
                     className="h-11 text-base touch-manipulation flex-1 border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                   />
-                  <Select value={formData.ageUnit || 'years'} onValueChange={(value) => onUpdate('ageUnit', value)}>
-                    <SelectTrigger className="h-11 touch-manipulation w-20 sm:w-24 bg-elec-gray border-white/30 focus:border-yellow-500 focus:ring-yellow-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="years">Years</SelectItem>
-                      <SelectItem value="months">Months</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.ageUnit || 'years'}
+                    onValueChange={(value) => onUpdate('ageUnit', value)}
+                    options={[
+                      { value: 'years', label: 'Years' },
+                      { value: 'months', label: 'Months' },
+                    ]}
+                    placeholder="Unit"
+                    title="Age Unit"
+                  />
                 </div>
                 <p className="text-xs text-muted-foreground">Approximate age since installation or last major work</p>
               </div>

@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 import { circuitTypes } from '@/types/circuitTypes';
@@ -74,27 +74,19 @@ const FormField = memo(({
           className="h-12 text-base touch-manipulation"
         />
       ) : (
-        <div 
-          className="relative" 
+        <div
+          className="relative"
           onClick={(e) => e.stopPropagation()}
           onTouchStart={(e) => e.stopPropagation()}
         >
-          <Select value={value} onValueChange={onChange}>
-            <SelectTrigger className="h-12 text-base touch-manipulation">
-              <SelectValue placeholder={placeholder || `Select ${label.toLowerCase()}`} />
-            </SelectTrigger>
-            <SelectContent className="bg-popover max-w-[calc(100vw-2rem)] w-auto z-[100]" position="popper">
-              {options.map((option) => (
-                <SelectItem 
-                  key={option.value} 
-                  value={option.value} 
-                  className="text-base py-3 whitespace-normal break-words"
-                >
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <MobileSelectPicker
+            value={value}
+            onValueChange={onChange}
+            options={options}
+            placeholder={placeholder || `Select ${label.toLowerCase()}`}
+            title={label}
+            triggerClassName="h-12 text-base"
+          />
         </div>
       )}
     </div>

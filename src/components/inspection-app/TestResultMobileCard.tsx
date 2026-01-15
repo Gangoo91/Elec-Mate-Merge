@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Button } from '@/components/ui/button';
 import { Trash2, ChevronDown } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
@@ -146,41 +146,25 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                   {/* Field 3: Type of Wiring - NEW */}
                   <div className="space-y-2">
                     <Label htmlFor={`typeOfWiring-${result.id}`}>3. Type of Wiring</Label>
-                    <Select
+                    <MobileSelectPicker
                       value={result.typeOfWiring || ''}
                       onValueChange={(value) => onUpdate(result.id, 'typeOfWiring', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select wiring type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {wiringTypeOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                      options={wiringTypeOptions}
+                      placeholder="Select wiring type"
+                      title="Type of Wiring"
+                    />
                   </div>
 
                   {/* Field 4: Reference Method */}
                   <div className="space-y-2">
                     <Label htmlFor={`referenceMethod-${result.id}`}>4. Reference Method</Label>
-                    <Select
+                    <MobileSelectPicker
                       value={result.referenceMethod || ''}
                       onValueChange={(value) => onUpdate(result.id, 'referenceMethod', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select method" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {referenceMethodOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                      options={referenceMethodOptions}
+                      placeholder="Select method"
+                      title="Reference Method"
+                    />
                   </div>
 
                   {/* Field 5: Points Served */}
@@ -211,41 +195,25 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                   {/* Field 6: Live Conductor Size */}
                   <div className="space-y-2">
                     <Label htmlFor={`liveSize-${result.id}`}>6. Live Conductor Size</Label>
-                    <Select
+                    <MobileSelectPicker
                       value={result.liveSize || ''}
                       onValueChange={(value) => onUpdate(result.id, 'liveSize', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select size" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {cableSizeOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                      options={cableSizeOptions}
+                      placeholder="Select size"
+                      title="Live Conductor Size"
+                    />
                   </div>
 
                   {/* Field 7: CPC Conductor Size */}
                   <div className="space-y-2">
                     <Label htmlFor={`cpcSize-${result.id}`}>7. CPC Conductor Size</Label>
-                    <Select
+                    <MobileSelectPicker
                       value={result.cpcSize || ''}
                       onValueChange={(value) => onUpdate(result.id, 'cpcSize', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select size" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {cableSizeOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                      options={cableSizeOptions}
+                      placeholder="Select size"
+                      title="CPC Conductor Size"
+                    />
                   </div>
                 </AccordionContent>
               </AccordionItem>
@@ -263,21 +231,13 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                   {/* Field 8: BS (EN) Standard - NEW */}
                   <div className="space-y-2">
                     <Label htmlFor={`bsStandard-${result.id}`}>8. BS (EN) Standard</Label>
-                    <Select
+                    <MobileSelectPicker
                       value={result.bsStandard || ''}
                       onValueChange={handleBsStandardChange}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select standard" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {bsStandardOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                      options={bsStandardOptions}
+                      placeholder="Select standard"
+                      title="BS (EN) Standard"
+                    />
                   </div>
 
                   {/* Field 9: Protective Device Curve Type */}
@@ -285,44 +245,26 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                     <Label htmlFor={`protectiveDeviceCurve-${result.id}`}>
                       9. Type {!showCurveSelector && <span className="text-xs text-muted-foreground">(MCB/RCBO only)</span>}
                     </Label>
-                    <Select
+                    <MobileSelectPicker
                       value={result.protectiveDeviceCurve || ''}
                       onValueChange={handleCurveChange}
+                      options={protectiveDeviceCurveOptions}
+                      placeholder="Select curve type"
+                      title="Protective Device Curve"
                       disabled={!showCurveSelector}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select curve type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {protectiveDeviceCurveOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    />
                   </div>
 
                   {/* Field 11: Protective Device Rating */}
                   <div className="space-y-2">
                     <Label htmlFor={`protectiveDeviceRating-${result.id}`}>11. Device Rating (A)</Label>
-                    <Select
+                    <MobileSelectPicker
                       value={result.protectiveDeviceRating || ''}
                       onValueChange={handleRatingChange}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select rating">
-                          {result.protectiveDeviceRating || "Select rating"}
-                        </SelectValue>
-                      </SelectTrigger>
-                      <SelectContent>
-                        {protectiveDeviceRatingOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                      options={protectiveDeviceRatingOptions}
+                      placeholder="Select rating"
+                      title="Device Rating (A)"
+                    />
                   </div>
 
                   {/* Field 12: Breaking Capacity (kA) */}
@@ -369,59 +311,43 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                   {/* Field 14: RCD BS (EN) Standard - NEW */}
                   <div className="space-y-2">
                     <Label htmlFor={`rcdBsStandard-${result.id}`}>14. RCD BS (EN) Standard</Label>
-                    <Select
+                    <MobileSelectPicker
                       value={result.rcdBsStandard || ''}
                       onValueChange={(value) => onUpdate(result.id, 'rcdBsStandard', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select standard" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {rcdBsStandardOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                      options={rcdBsStandardOptions}
+                      placeholder="Select standard"
+                      title="RCD BS (EN) Standard"
+                    />
                   </div>
 
                   {/* Field 15: RCD Type - NEW */}
                   <div className="space-y-2">
                     <Label htmlFor={`rcdType-${result.id}`}>15. RCD Type</Label>
-                    <Select
+                    <MobileSelectPicker
                       value={result.rcdType || ''}
                       onValueChange={(value) => onUpdate(result.id, 'rcdType', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {rcdTypeOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                      options={rcdTypeOptions}
+                      placeholder="Select type"
+                      title="RCD Type"
+                    />
                   </div>
 
                   {/* Field 16: RCD IΔn (mA) */}
                   <div className="space-y-2">
                     <Label htmlFor={`rcdRating-${result.id}`}>16. RCD IΔn (mA)</Label>
-                    <Select
+                    <MobileSelectPicker
                       value={result.rcdRating || ''}
                       onValueChange={(value) => onUpdate(result.id, 'rcdRating', value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select rating" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="10mA">10mA</SelectItem>
-                        <SelectItem value="30mA">30mA</SelectItem>
-                        <SelectItem value="100mA">100mA</SelectItem>
-                        <SelectItem value="300mA">300mA</SelectItem>
-                        <SelectItem value="500mA">500mA</SelectItem>
-                      </SelectContent>
-                    </Select>
+                      options={[
+                        { value: '10mA', label: '10mA' },
+                        { value: '30mA', label: '30mA' },
+                        { value: '100mA', label: '100mA' },
+                        { value: '300mA', label: '300mA' },
+                        { value: '500mA', label: '500mA' },
+                      ]}
+                      placeholder="Select rating"
+                      title="RCD Rating (mA)"
+                    />
                   </div>
 
                   {/* Field 17: RCD Rating (A) - NEW */}
@@ -513,21 +439,13 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                     {/* Field 23: Test Voltage */}
                     <div className="space-y-2">
                       <Label htmlFor={`insulationTestVoltage-${result.id}`}>23. Test Voltage</Label>
-                      <Select
+                      <MobileSelectPicker
                         value={result.insulationTestVoltage || ''}
                         onValueChange={(value) => onUpdate(result.id, 'insulationTestVoltage', value)}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select voltage" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {insulationTestVoltageOptions.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                        options={insulationTestVoltageOptions}
+                        placeholder="Select voltage"
+                        title="Test Voltage"
+                      />
                     </div>
 
                     {/* Fields 24-25: Detailed Insulation Results - NEW */}
@@ -608,19 +526,17 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                     {/* Field 29: RCD Test Button */}
                     <div className="space-y-2">
                       <Label htmlFor={`rcdTestButton-${result.id}`}>29. RCD Test Button</Label>
-                      <Select
+                      <MobileSelectPicker
                         value={result.rcdTestButton || ''}
                         onValueChange={(value) => onUpdate(result.id, 'rcdTestButton', value)}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select result" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Pass">Pass</SelectItem>
-                          <SelectItem value="Fail">Fail</SelectItem>
-                          <SelectItem value="N/A">N/A</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: 'Pass', label: 'Pass' },
+                          { value: 'Fail', label: 'Fail' },
+                          { value: 'N/A', label: 'N/A' },
+                        ]}
+                        placeholder="Select result"
+                        title="RCD Test Button"
+                      />
                     </div>
                   </div>
 
@@ -631,19 +547,17 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                     {/* Field 30: AFDD Test */}
                     <div className="space-y-2">
                       <Label htmlFor={`afddTest-${result.id}`}>30. AFDD Test</Label>
-                      <Select
+                      <MobileSelectPicker
                         value={result.afddTest || ''}
                         onValueChange={(value) => onUpdate(result.id, 'afddTest', value)}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select result" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="✓">✓ Pass</SelectItem>
-                          <SelectItem value="✗">✗ Fail</SelectItem>
-                          <SelectItem value="N/A">N/A</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: '✓', label: '✓ Pass' },
+                          { value: '✗', label: '✗ Fail' },
+                          { value: 'N/A', label: 'N/A' },
+                        ]}
+                        placeholder="Select result"
+                        title="AFDD Test"
+                      />
                     </div>
 
                     {/* Field 31: PFC */}
@@ -662,22 +576,17 @@ const TestResultMobileCard: React.FC<TestResultMobileCardProps> = ({
                     {/* Field 32: Functional Testing */}
                     <div className="space-y-2">
                       <Label htmlFor={`functionalTesting-${result.id}`}>32. Functional Testing</Label>
-                      <Select
+                      <MobileSelectPicker
                         value={result.functionalTesting || ''}
                         onValueChange={(value) => onUpdate(result.id, 'functionalTesting', value)}
-                      >
-                        <SelectTrigger className={cn("h-9",
-                          result.functionalTesting === '✓' && 'text-green-600',
-                          result.functionalTesting === '✗' && 'text-red-600'
-                        )}>
-                          <SelectValue placeholder="Select result" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="✓">✓ Satisfactory</SelectItem>
-                          <SelectItem value="✗">✗ Unsatisfactory</SelectItem>
-                          <SelectItem value="N/A">N/A</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: '✓', label: '✓ Satisfactory' },
+                          { value: '✗', label: '✗ Unsatisfactory' },
+                          { value: 'N/A', label: 'N/A' },
+                        ]}
+                        placeholder="Select result"
+                        title="Functional Testing"
+                      />
                     </div>
                   </div>
                 </AccordionContent>

@@ -174,6 +174,18 @@ const handler = async (req: Request): Promise<Response> => {
       // Don't fail the request if email fails
     }
 
+    // Send follow-up email to client
+    try {
+      if (action === 'accept') {
+        await sendAcceptanceConfirmationEmail(quote, clientEmail, clientName);
+      } else {
+        await sendRejectionThankYouEmail(quote, clientEmail, clientName);
+      }
+    } catch (clientEmailError) {
+      console.error('Client follow-up email failed (non-critical):', clientEmailError);
+      // Don't fail the request if email fails
+    }
+
     // Return success page to customer
     if (action === 'accept') {
       return acceptSuccessPage(quote.quote_number, clientName, isExpired);
@@ -211,7 +223,7 @@ async function sendEmailNotification(
     .single();
 
   const companyName = company?.company_name || 'ElecMate';
-  const toEmail = company?.email || 'andrewgangoo91@gmail.com';
+  const toEmail = company?.email || quote.user_email || 'support@elec-mate.com';
 
   const subject = action === 'accept'
     ? `✓ Quote ${quote.quote_number} Accepted - ${clientName}`
@@ -328,6 +340,166 @@ async function sendEmailNotification(
 }
 
 /**
+ * Send confirmation email to client after accepting quote
+ */
+async function sendAcceptanceConfirmationEmail(
+  quote: any,
+  clientEmail: string,
+  clientName: string
+) {
+  const resendApiKey = Deno.env.get('RESEND_API_KEY');
+  if (!resendApiKey) {
+    console.warn('RESEND_API_KEY not configured, skipping client confirmation email');
+    return;
+  }
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="font-family: -apple-system, system-ui, sans-serif; background: #f9fafb; padding: 40px 20px; margin: 0;">
+      <div style="max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden;">
+        <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 40px; text-align: center;">
+          <div style="width: 80px; height: 80px; background: white; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #10b981;">✓</div>
+          <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 700;">Thank You for Accepting Our Quote!</h1>
+        </div>
+        <div style="padding: 40px;">
+          <p style="font-size: 16px; color: #1f2937; margin: 0 0 24px;">Hi ${clientName},</p>
+          <p style="font-size: 16px; color: #1f2937; margin: 0 0 24px;">This email confirms your acceptance of quote <strong>${quote.quote_number}</strong> for <strong>£${Number(quote.total).toFixed(2)}</strong>.</p>
+
+          <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 20px; border-radius: 6px; margin: 24px 0;">
+            <h3 style="margin: 0 0 12px; color: #166534; font-size: 16px;">What Happens Next:</h3>
+            <ol style="margin: 0; padding-left: 20px; color: #15803d; font-size: 14px; line-height: 1.8;">
+              <li>Our team will contact you within 24 hours to schedule the work</li>
+              <li>We'll confirm the start date and any site-specific requirements</li>
+              <li>You'll receive a formal confirmation with project timeline</li>
+            </ol>
+          </div>
+
+          <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px; border-radius: 6px; margin: 24px 0;">
+            <p style="margin: 0; font-size: 14px; color: #92400e;"><strong>Questions?</strong><br>Reply to this email or call us directly. We're here to help!</p>
+          </div>
+
+          <p style="margin: 24px 0 0; font-size: 16px; color: #1f2937;">Looking forward to working with you!</p>
+
+          <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
+            <p style="margin: 0; font-size: 13px; color: #9ca3af; text-align: center;">⚡ Powered by ElecMate Professional Suite</p>
+          </div>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'ElecMate <Founder@elec-mate.com>',
+        to: clientEmail,
+        subject: `Quote Accepted - Next Steps | ${quote.quote_number}`,
+        html: html,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Failed to send acceptance confirmation:', errorText);
+    } else {
+      console.log('✅ Acceptance confirmation email sent to client');
+    }
+  } catch (error) {
+    console.error('Error sending acceptance confirmation:', error);
+  }
+}
+
+/**
+ * Send thank you email to client after declining quote
+ */
+async function sendRejectionThankYouEmail(
+  quote: any,
+  clientEmail: string,
+  clientName: string
+) {
+  const resendApiKey = Deno.env.get('RESEND_API_KEY');
+  if (!resendApiKey) {
+    console.warn('RESEND_API_KEY not configured, skipping client thank you email');
+    return;
+  }
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="font-family: -apple-system, system-ui, sans-serif; background: #f9fafb; padding: 40px 20px; margin: 0;">
+      <div style="max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden;">
+        <div style="background: #6b7280; padding: 40px; text-align: center;">
+          <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 700;">Thanks for Letting Us Know</h1>
+        </div>
+        <div style="padding: 40px;">
+          <p style="font-size: 16px; color: #1f2937; margin: 0 0 24px;">Hi ${clientName},</p>
+          <p style="font-size: 16px; color: #1f2937; margin: 0 0 24px;">Thank you for taking the time to review our quote <strong>${quote.quote_number}</strong>.</p>
+
+          <p style="font-size: 16px; color: #1f2937; margin: 0 0 24px;">We understand that circumstances and requirements can vary, and we appreciate your honest feedback.</p>
+
+          <div style="background: #f9fafb; border-left: 4px solid #9ca3af; padding: 20px; border-radius: 6px; margin: 24px 0;">
+            <p style="margin: 0 0 12px; font-weight: 600; color: #374151; font-size: 15px;">Keep Us in Mind</p>
+            <p style="margin: 0 0 12px; font-size: 14px; color: #4b5563;">If you need electrical work in the future, we'd love to hear from you. We're always here to help with:</p>
+            <ul style="margin: 0; padding-left: 20px; color: #4b5563; font-size: 14px; line-height: 1.6;">
+              <li>Free quotes and consultations</li>
+              <li>Emergency electrical services</li>
+              <li>Commercial and domestic projects</li>
+            </ul>
+          </div>
+
+          <p style="margin: 24px 0 0; font-size: 16px; color: #1f2937;">Feel free to reach out anytime. We're just an email or phone call away!</p>
+
+          <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
+            <p style="margin: 0; font-size: 13px; color: #9ca3af; text-align: center;">⚡ Powered by ElecMate Professional Suite</p>
+          </div>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'ElecMate <Founder@elec-mate.com>',
+        to: clientEmail,
+        subject: `Thank You for Your Consideration | ${quote.quote_number}`,
+        html: html,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Failed to send rejection thank you:', errorText);
+    } else {
+      console.log('✅ Rejection thank you email sent to client');
+    }
+  } catch (error) {
+    console.error('Error sending rejection thank you:', error);
+  }
+}
+
+/**
  * Success page for accepted quotes
  */
 function acceptSuccessPage(quoteNumber: string, clientName: string, isExpired: boolean): Response {
@@ -336,39 +508,159 @@ function acceptSuccessPage(quoteNumber: string, clientName: string, isExpired: b
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quote Accepted</title>
+<title>Quote Accepted - ElecMate</title>
 <style>
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #ffffff; padding: 60px 20px; margin: 0; -webkit-font-smoothing: antialiased; }
-.container { max-width: 500px; margin: 0 auto; background: white; padding: 48px; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center; }
-.icon { width: 80px; height: 80px; background: #10b981; border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; }
-h1 { font-size: 28px; font-weight: 700; color: #0a0a0a; margin: 0 0 12px; letter-spacing: -0.5px; }
-p { color: #6b7280; font-size: 16px; line-height: 1.6; margin: 0 0 32px; }
-.note-box { background: #fef3c7; border-left: 3px solid #f59e0b; padding: 16px; border-radius: 6px; text-align: left; margin-bottom: 24px; }
-.info-box { background: #f0fdf4; border-left: 3px solid #10b981; padding: 20px; border-radius: 6px; text-align: left; margin-bottom: 32px; }
-.footer { padding-top: 24px; border-top: 1px solid #e5e7eb; }
-button { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; border: none; padding: 14px 32px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; margin-bottom: 24px; transition: opacity 0.2s; }
-button:hover { opacity: 0.9; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.container {
+  background: white;
+  border-radius: 24px;
+  padding: 48px 32px;
+  max-width: 560px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  text-align: center;
+  animation: slideUp 0.4s ease-out;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  animation: scaleIn 0.5s ease-out 0.2s both;
+}
+@keyframes scaleIn {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+.checkmark {
+  width: 40px;
+  height: 40px;
+  stroke: white;
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: draw 0.8s ease-out 0.4s both;
+}
+@keyframes draw {
+  from { stroke-dasharray: 100; stroke-dashoffset: 100; }
+  to { stroke-dasharray: 100; stroke-dashoffset: 0; }
+}
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 16px;
+}
+.quote-number {
+  display: inline-block;
+  background: #f3f4f6;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 24px;
+}
+.message {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #6b7280;
+  margin-bottom: 32px;
+}
+.info-box {
+  background: #f0fdf4;
+  border-left: 4px solid #10b981;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: left;
+  margin-bottom: 32px;
+}
+.info-box strong {
+  color: #166534;
+  font-size: 15px;
+  display: block;
+  margin-bottom: 8px;
+}
+.note-box {
+  background: #fef3c7;
+  border-left: 4px solid #f59e0b;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: left;
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: #92400e;
+}
+.button {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 16px 32px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(102,126,234,0.4);
+}
+.footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 14px;
+  color: #9ca3af;
+}
 </style>
 </head>
 <body>
 <div class="container">
-<div class="icon">
-<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-<polyline points="20 6 9 17 4 12"></polyline>
-</svg>
+  <div class="icon-circle">
+    <svg class="checkmark" viewBox="0 0 52 52">
+      <path d="M14 27l8 8 16-16" />
+    </svg>
+  </div>
+  <h1>Quote Accepted!</h1>
+  <div class="quote-number">${quoteNumber}</div>
+  ${isExpired ? `<div class="note-box"><strong>Note:</strong> This quote had expired, but we've recorded your acceptance and will contact you to confirm details.</div>` : ''}
+  <p class="message">
+    Thank you for accepting our quote. We've sent you a confirmation email with all the details.<br><br>
+    <strong>What happens next?</strong><br>
+    Our team will be in touch within 24 hours to schedule the work and answer any questions you may have.
+  </p>
+  <button class="button" onclick="window.close(); return false;">
+    Close Window
+  </button>
+  <div class="footer">
+    ElecMate Professional Suite | A confirmation email has been sent
+  </div>
 </div>
-<h1>Quote Accepted!</h1>
-<p>Thank you for accepting quote <strong style="color: #1f2937;">${quoteNumber}</strong>. We've notified our team and will be in touch shortly to schedule the work.</p>
-${isExpired ? `<div class="note-box"><p style="margin: 0; font-size: 14px; color: #92400e;"><strong>Note:</strong> This quote had expired, but we've still recorded your acceptance. We'll contact you to confirm details.</p></div>` : ''}
-<div class="info-box">
-<p style="margin: 0 0 8px; font-size: 15px; font-weight: 600; color: #166534;">Next Steps:</p>
-<p style="margin: 0; font-size: 14px; color: #15803d; line-height: 1.6;">You'll receive a confirmation email shortly with project details and scheduling information.</p>
-</div>
-<button onclick="window.close()">Close this window</button>
-<div class="footer">
-<p style="margin: 0; font-size: 13px; color: #9ca3af;">⚡ Powered by ElecMate Professional Suite</p>
-</div>
-</div>
+<script>
+  // Auto-close after 10 seconds
+  setTimeout(() => window.close(), 10000);
+</script>
 </body>
 </html>`;
 
@@ -392,32 +684,158 @@ function rejectSuccessPage(quoteNumber: string, clientName: string): Response {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quote Declined</title>
+<title>Quote Declined - ElecMate</title>
 <style>
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #ffffff; padding: 60px 20px; margin: 0; -webkit-font-smoothing: antialiased; }
-.container { max-width: 500px; margin: 0 auto; background: white; padding: 48px; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center; }
-.icon { width: 80px; height: 80px; background: #6b7280; border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; font-size: 32px; color: white; }
-h1 { font-size: 28px; font-weight: 700; color: #0a0a0a; margin: 0 0 12px; letter-spacing: -0.5px; }
-p { color: #6b7280; font-size: 16px; line-height: 1.6; margin: 0 0 32px; }
-.info-box { background: #f9fafb; border-left: 3px solid #9ca3af; padding: 20px; border-radius: 6px; text-align: left; margin-bottom: 32px; }
-.footer { padding-top: 24px; border-top: 1px solid #e5e7eb; }
-button { background: #6b7280; color: white; border: none; padding: 14px 32px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; margin-bottom: 24px; transition: opacity 0.2s; }
-button:hover { opacity: 0.9; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.container {
+  background: white;
+  border-radius: 24px;
+  padding: 48px 32px;
+  max-width: 560px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  text-align: center;
+  animation: slideUp 0.4s ease-out;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  animation: scaleIn 0.5s ease-out 0.2s both;
+}
+@keyframes scaleIn {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+.icon {
+  width: 40px;
+  height: 40px;
+  stroke: white;
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 16px;
+}
+.quote-number {
+  display: inline-block;
+  background: #f3f4f6;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 24px;
+}
+.message {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #6b7280;
+  margin-bottom: 32px;
+}
+.info-box {
+  background: #f9fafb;
+  border-left: 4px solid #9ca3af;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: left;
+  margin-bottom: 32px;
+}
+.info-box strong {
+  color: #374151;
+  font-size: 15px;
+  display: block;
+  margin-bottom: 8px;
+}
+.info-box ul {
+  margin: 12px 0 0 0;
+  padding-left: 20px;
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.button {
+  display: inline-block;
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  color: white;
+  padding: 16px 32px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(107,114,128,0.4);
+}
+.footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 14px;
+  color: #9ca3af;
+}
 </style>
 </head>
 <body>
 <div class="container">
-<div class="icon">✕</div>
-<h1>Quote Declined</h1>
-<p>Thank you for letting us know about quote <strong style="color: #1f2937;">${quoteNumber}</strong>. We appreciate your consideration and hope to work with you in the future.</p>
-<div class="info-box">
-<p style="margin: 0; font-size: 14px; color: #4b5563; line-height: 1.6;">If you'd like to discuss alternative options or have any questions, please don't hesitate to contact us.</p>
+  <div class="icon-circle">
+    <svg class="icon" viewBox="0 0 52 52">
+      <path d="M16 16l20 20M36 16l-20 20" />
+    </svg>
+  </div>
+  <h1>Thanks for Letting Us Know</h1>
+  <div class="quote-number">${quoteNumber}</div>
+  <p class="message">
+    We appreciate you taking the time to review our quote.<br><br>
+    If circumstances change or you have any questions about our services, please don't hesitate to reach out. We'd love to help with any future projects.
+  </p>
+  <div class="info-box">
+    <strong>Keep Us in Mind</strong>
+    <p style="margin: 8px 0; font-size: 14px; color: #4b5563;">If you need electrical work in the future, we're always here to help with:</p>
+    <ul>
+      <li>Free quotes and consultations</li>
+      <li>Emergency electrical services</li>
+      <li>Commercial and domestic projects</li>
+    </ul>
+  </div>
+  <button class="button" onclick="window.close(); return false;">
+    Close Window
+  </button>
+  <div class="footer">
+    ElecMate Professional Suite | Keep us in mind for future work
+  </div>
 </div>
-<button onclick="window.close()">Close this window</button>
-<div class="footer">
-<p style="margin: 0; font-size: 13px; color: #9ca3af;">⚡ Powered by ElecMate Professional Suite</p>
-</div>
-</div>
+<script>
+  // Auto-close after 10 seconds
+  setTimeout(() => window.close(), 10000);
+</script>
 </body>
 </html>`;
 

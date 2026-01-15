@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import { rcdTypeOptions } from '@/types/wiringTypes';
@@ -29,77 +29,41 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({ result, onUp
     <>
       {/* Column 13: BS (EN) - RCD */}
       <TableCell className="p-0 bg-black h-5 align-middle w-40 min-w-[140px] max-w-[140px]">
-        <Select
-          name={`rcdBsStandard-${result.id}`}
+        <MobileSelectPicker
           value={result.rcdBsStandard || ''}
           onValueChange={handleRcdBsStandardChange}
-        >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0 focus:bg-transparent data-[state=open]:bg-transparent">
-            <SelectValue placeholder="BS EN" />
-          </SelectTrigger>
-          <SelectContent 
-            key={`rcdBsStandard-content-${result.id}`} 
-            position="popper"
-            sideOffset={5}
-            className="bg-background border border-border rounded-md z-[9999]"
-          >
-            {rcdBsStandardOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={rcdBsStandardOptions}
+          placeholder="BS EN"
+          title="RCD BS (EN) Standard"
+        />
       </TableCell>
 
       {/* Column 14: Type - RCD */}
       <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[105px] max-w-[105px]">
-        <Select
-          name={`rcdType-${result.id}`}
+        <MobileSelectPicker
           value={result.rcdType || ''}
           onValueChange={handleRcdTypeChange}
-        >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0 focus:bg-transparent data-[state=open]:bg-transparent">
-            <SelectValue placeholder="Type" />
-          </SelectTrigger>
-          <SelectContent 
-            key={`rcdType-content-${result.id}`} 
-            position="popper"
-            sideOffset={5}
-            className="bg-background border border-border rounded-md z-[9999]"
-          >
-            {rcdTypeOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={rcdTypeOptions}
+          placeholder="Type"
+          title="RCD Type"
+        />
       </TableCell>
 
       {/* Column 15: IΔn (mA) */}
       <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[100px] max-w-[100px]">
-        <Select
-          name={`rcdRating-${result.id}`}
+        <MobileSelectPicker
           value={result.rcdRating || ''}
           onValueChange={handleRcdRatingChange}
-        >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0 focus:bg-transparent data-[state=open]:bg-transparent">
-            <SelectValue placeholder="mA" />
-          </SelectTrigger>
-          <SelectContent 
-            key={`rcdRating-content-${result.id}`} 
-            position="popper"
-            sideOffset={5}
-            className="bg-background border border-border rounded-md z-[9999]"
-          >
-            <SelectItem value="10mA" className="text-xs text-neutral-100">10mA</SelectItem>
-            <SelectItem value="30mA" className="text-xs text-neutral-100">30mA</SelectItem>
-            <SelectItem value="100mA" className="text-xs text-neutral-100">100mA</SelectItem>
-            <SelectItem value="300mA" className="text-xs text-neutral-100">300mA</SelectItem>
-            <SelectItem value="500mA" className="text-xs text-neutral-100">500mA</SelectItem>
-          </SelectContent>
-        </Select>
+          options={[
+            { value: '10mA', label: '10mA' },
+            { value: '30mA', label: '30mA' },
+            { value: '100mA', label: '100mA' },
+            { value: '300mA', label: '300mA' },
+            { value: '500mA', label: '500mA' },
+          ]}
+          placeholder="mA"
+          title="RCD Rating (mA)"
+        />
       </TableCell>
 
       {/* Column 16: Rating (A) - RCD */}

@@ -35,6 +35,9 @@ interface SettingsSection {
 interface SettingsNavGridProps {
   onSelect: (tabId: string) => void;
   isSubscribed?: boolean;
+  incompleteItems?: {
+    [key: string]: boolean;
+  };
 }
 
 // Grouped settings sections - iOS style
@@ -180,7 +183,7 @@ const sectionVariants = {
   },
 };
 
-const SettingsNavGrid = ({ onSelect }: SettingsNavGridProps) => {
+const SettingsNavGrid = ({ onSelect, incompleteItems = {} }: SettingsNavGridProps) => {
   return (
     <motion.div
       variants={containerVariants}
@@ -200,13 +203,14 @@ const SettingsNavGrid = ({ onSelect }: SettingsNavGridProps) => {
             {section.items.map((item, index) => {
               const Icon = item.icon;
               const isLast = index === section.items.length - 1;
+              const isIncomplete = incompleteItems[item.id] || false;
 
               return (
                 <button
                   key={item.id}
                   onClick={() => onSelect(item.id)}
                   className={cn(
-                    "w-full flex items-center gap-3 px-4 py-3.5",
+                    "relative w-full flex items-center gap-3 px-4 py-3.5",
                     "text-left transition-all duration-150",
                     "hover:bg-white/[0.04] active:bg-white/[0.08]",
                     "active:scale-[0.99] touch-manipulation",
@@ -238,6 +242,9 @@ const SettingsNavGrid = ({ onSelect }: SettingsNavGridProps) => {
                         >
                           {item.badge}
                         </span>
+                      )}
+                      {isIncomplete && (
+                        <span className="h-2 w-2 bg-red-500 rounded-full animate-pulse" />
                       )}
                     </div>
                     <p className="text-[12px] text-white/40 truncate">

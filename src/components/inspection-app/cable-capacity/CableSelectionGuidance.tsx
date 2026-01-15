@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Badge } from '@/components/ui/badge';
 import { Lightbulb, Calculator, CheckCircle, AlertTriangle, ArrowRight } from 'lucide-react';
 import { getCableCapacity, getCableSizeForRating, installationMethods } from '@/utils/regulationChecker/cableCapacityCalculator';
@@ -101,46 +101,48 @@ export const CableSelectionGuidance = () => {
             
             <div>
               <Label className="text-foreground">Installation Method</Label>
-              <Select value={installationMethod} onValueChange={setInstallationMethod}>
-                 <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.entries(installationMethods).map(([key, method]) => (
-                    <SelectItem key={key} value={key}>{method.label}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={installationMethod}
+                onValueChange={setInstallationMethod}
+                options={Object.entries(installationMethods).map(([key, method]) => ({
+                  value: key,
+                  label: method.label,
+                }))}
+                placeholder="Select method"
+                title="Installation Method"
+              />
             </div>
-            
+
             <div>
               <Label className="text-foreground">Ambient Temperature (°C)</Label>
-              <Select value={ambientTemp} onValueChange={setAmbientTemp}>
-                 <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="25">25°C</SelectItem>
-                  <SelectItem value="30">30°C</SelectItem>
-                  <SelectItem value="40">40°C (Standard)</SelectItem>
-                  <SelectItem value="50">50°C</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={ambientTemp}
+                onValueChange={setAmbientTemp}
+                options={[
+                  { value: '25', label: '25°C' },
+                  { value: '30', label: '30°C' },
+                  { value: '40', label: '40°C (Standard)' },
+                  { value: '50', label: '50°C' },
+                ]}
+                placeholder="Select temperature"
+                title="Ambient Temperature"
+              />
             </div>
-            
+
             <div>
               <Label className="text-foreground">Grouping Factor</Label>
-              <Select value={groupingFactor} onValueChange={setGroupingFactor}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1.0">1.0 (Single circuit)</SelectItem>
-                  <SelectItem value="0.8">0.8 (Two circuits)</SelectItem>
-                  <SelectItem value="0.7">0.7 (Three circuits)</SelectItem>
-                  <SelectItem value="0.65">0.65 (Four circuits)</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={groupingFactor}
+                onValueChange={setGroupingFactor}
+                options={[
+                  { value: '1.0', label: '1.0 (Single circuit)' },
+                  { value: '0.8', label: '0.8 (Two circuits)' },
+                  { value: '0.7', label: '0.7 (Three circuits)' },
+                  { value: '0.65', label: '0.65 (Four circuits)' },
+                ]}
+                placeholder="Select factor"
+                title="Grouping Factor"
+              />
             </div>
             
             <div className="flex items-center space-x-2">

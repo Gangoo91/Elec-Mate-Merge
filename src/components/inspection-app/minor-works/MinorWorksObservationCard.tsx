@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { AlertTriangle, Info, Minus, Search, Trash2 } from 'lucide-react';
 
 export interface MinorWorksObservation {
@@ -133,39 +133,35 @@ const MinorWorksObservationCard: React.FC<MinorWorksObservationCardProps> = ({
       <div className="space-y-4">
         <div>
           <Label className="text-sm font-semibold mb-1.5 block">Classification</Label>
-          <Select
+          <MobileSelectPicker
             value={observation.defectCode}
-            onValueChange={(value: 'C1' | 'C2' | 'C3' | 'FI' | 'N/A') => 
-              onUpdate(observation.id, 'defectCode', value)
+            onValueChange={(value) =>
+              onUpdate(observation.id, 'defectCode', value as 'C1' | 'C2' | 'C3' | 'FI' | 'N/A')
             }
-          >
-            <SelectTrigger className="h-12 min-h-[48px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="C1">C1 - {getDefectDescription('C1')}</SelectItem>
-              <SelectItem value="C2">C2 - {getDefectDescription('C2')}</SelectItem>
-              <SelectItem value="C3">C3 - {getDefectDescription('C3')}</SelectItem>
-              <SelectItem value="FI">FI - {getDefectDescription('FI')}</SelectItem>
-              <SelectItem value="N/A">N/A - {getDefectDescription('N/A')}</SelectItem>
-            </SelectContent>
-          </Select>
+            options={[
+              { value: 'C1', label: `C1 - ${getDefectDescription('C1')}` },
+              { value: 'C2', label: `C2 - ${getDefectDescription('C2')}` },
+              { value: 'C3', label: `C3 - ${getDefectDescription('C3')}` },
+              { value: 'FI', label: `FI - ${getDefectDescription('FI')}` },
+              { value: 'N/A', label: `N/A - ${getDefectDescription('N/A')}` },
+            ]}
+            placeholder="Select classification"
+            title="Classification"
+          />
         </div>
 
         <div>
           <Label className="text-sm font-semibold mb-1.5 block">Quick Select Common Observations</Label>
-          <Select onValueChange={handleQuickSelect}>
-            <SelectTrigger className="h-12 min-h-[48px]">
-              <SelectValue placeholder="Select a common observation or type custom below" />
-            </SelectTrigger>
-            <SelectContent>
-              {commonObservations[observation.defectCode].map((text, idx) => (
-                <SelectItem key={idx} value={text}>
-                  {text}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <MobileSelectPicker
+            value=""
+            onValueChange={handleQuickSelect}
+            options={commonObservations[observation.defectCode].map((text) => ({
+              value: text,
+              label: text,
+            }))}
+            placeholder="Select a common observation or type custom below"
+            title="Common Observations"
+          />
         </div>
 
         <div>

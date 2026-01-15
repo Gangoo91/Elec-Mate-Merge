@@ -10,13 +10,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -458,18 +452,17 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
                     
                     {/* Phase Selection */}
                     <td className="px-2 py-1.5">
-                      <Select
+                      <MobileSelectPicker
                         value={circuit.phase || '1P'}
-                        onValueChange={(value: '1P' | '3P') => updateCircuit(circuit.id, 'phase', value)}
-                      >
-                        <SelectTrigger className="h-7 text-xs w-full">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="1P">1P</SelectItem>
-                          <SelectItem value="3P">3P</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        onValueChange={(value) => updateCircuit(circuit.id, 'phase', value as '1P' | '3P')}
+                        options={[
+                          { value: '1P', label: '1P' },
+                          { value: '3P', label: '3P' },
+                        ]}
+                        placeholder="Phase"
+                        title="Phase Type"
+                        triggerClassName="h-7 text-xs"
+                      />
                     </td>
                     
                     {/* Description with Tooltip */}
@@ -517,16 +510,14 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
                     {/* Device Type */}
                     <td className="px-2 py-1.5 border-l border-border">
                       <div className="flex items-center gap-1">
-                        <Select value={circuit.device} onValueChange={(val) => updateCircuit(circuit.id, 'device', val)}>
-                          <SelectTrigger className="h-7 text-xs w-[80px]">
-                            <SelectValue placeholder="-" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {protectiveDeviceTypeOptions.map(opt => (
-                              <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        <MobileSelectPicker
+                          value={circuit.device}
+                          onValueChange={(val) => updateCircuit(circuit.id, 'device', val)}
+                          options={protectiveDeviceTypeOptions}
+                          placeholder="-"
+                          title="Device Type"
+                          triggerClassName="h-7 text-xs w-[80px]"
+                        />
                         <EvidenceTooltip evidence={circuit.evidence?.device} />
                       </div>
                     </td>
@@ -534,18 +525,20 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
                     {/* Curve */}
                     <td className="px-2 py-1.5">
                       <div className="flex items-center gap-1">
-                        <Select value={circuit.curve || ''} onValueChange={(val) => updateCircuit(circuit.id, 'curve', val || null)}>
-                          <SelectTrigger className="h-7 text-xs w-[80px]">
-                            <SelectValue placeholder="-" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="B">B</SelectItem>
-                            <SelectItem value="C">C</SelectItem>
-                            <SelectItem value="D">D</SelectItem>
-                            <SelectItem value="K">K</SelectItem>
-                            <SelectItem value="Z">Z</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <MobileSelectPicker
+                          value={circuit.curve || ''}
+                          onValueChange={(val) => updateCircuit(circuit.id, 'curve', val || null)}
+                          options={[
+                            { value: 'B', label: 'B' },
+                            { value: 'C', label: 'C' },
+                            { value: 'D', label: 'D' },
+                            { value: 'K', label: 'K' },
+                            { value: 'Z', label: 'Z' },
+                          ]}
+                          placeholder="-"
+                          title="Curve Type"
+                          triggerClassName="h-7 text-xs w-[80px]"
+                        />
                         <EvidenceTooltip evidence={circuit.evidence?.curve} />
                       </div>
                     </td>
@@ -561,19 +554,14 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
                           </div>
                         ) : (
                           <>
-                            <Select 
-                              value={circuit.rating?.toString() || ''} 
+                            <MobileSelectPicker
+                              value={circuit.rating?.toString() || ''}
                               onValueChange={(val) => updateCircuit(circuit.id, 'rating', val ? Number(val) : null)}
-                            >
-                              <SelectTrigger className="h-7 text-xs w-[80px]">
-                                <SelectValue placeholder="-" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {protectiveDeviceRatingOptions.map(opt => (
-                                  <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
+                              options={protectiveDeviceRatingOptions}
+                              placeholder="-"
+                              title="Device Rating"
+                              triggerClassName="h-7 text-xs w-[80px]"
+                            />
                             <EvidenceTooltip evidence={circuit.evidence?.rating} />
                             {detectRatingMismatch(circuit.rating, circuit.label) && (
                               <TooltipProvider>
@@ -596,64 +584,61 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
                     
                     {/* Live Conductor Size */}
                     <td className="px-2 py-1.5 border-l border-border">
-                      <Select 
-                        value={circuit.liveConductorSize || ''} 
+                      <MobileSelectPicker
+                        value={circuit.liveConductorSize || ''}
                         onValueChange={(val) => updateCircuit(circuit.id, 'liveConductorSize', val || null)}
-                      >
-                        <SelectTrigger className="h-7 text-xs w-[80px]">
-                          <SelectValue placeholder="-" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="1.0">1.0</SelectItem>
-                          <SelectItem value="1.5">1.5</SelectItem>
-                          <SelectItem value="2.5">2.5</SelectItem>
-                          <SelectItem value="4.0">4.0</SelectItem>
-                          <SelectItem value="6.0">6.0</SelectItem>
-                          <SelectItem value="10">10</SelectItem>
-                          <SelectItem value="16">16</SelectItem>
-                          <SelectItem value="25">25</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: '1.0', label: '1.0' },
+                          { value: '1.5', label: '1.5' },
+                          { value: '2.5', label: '2.5' },
+                          { value: '4.0', label: '4.0' },
+                          { value: '6.0', label: '6.0' },
+                          { value: '10', label: '10' },
+                          { value: '16', label: '16' },
+                          { value: '25', label: '25' },
+                        ]}
+                        placeholder="-"
+                        title="Live Conductor Size (mm²)"
+                        triggerClassName="h-7 text-xs w-[80px]"
+                      />
                     </td>
-                    
+
                     {/* CPC Size */}
                     <td className="px-2 py-1.5">
-                      <Select 
-                        value={circuit.cpcSize || ''} 
+                      <MobileSelectPicker
+                        value={circuit.cpcSize || ''}
                         onValueChange={(val) => updateCircuit(circuit.id, 'cpcSize', val || null)}
-                      >
-                        <SelectTrigger className="h-7 text-xs w-[80px]">
-                          <SelectValue placeholder="-" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="1.0">1.0</SelectItem>
-                          <SelectItem value="1.5">1.5</SelectItem>
-                          <SelectItem value="2.5">2.5</SelectItem>
-                          <SelectItem value="4.0">4.0</SelectItem>
-                          <SelectItem value="6.0">6.0</SelectItem>
-                          <SelectItem value="10">10</SelectItem>
-                          <SelectItem value="16">16</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: '1.0', label: '1.0' },
+                          { value: '1.5', label: '1.5' },
+                          { value: '2.5', label: '2.5' },
+                          { value: '4.0', label: '4.0' },
+                          { value: '6.0', label: '6.0' },
+                          { value: '10', label: '10' },
+                          { value: '16', label: '16' },
+                        ]}
+                        placeholder="-"
+                        title="CPC Size (mm²)"
+                        triggerClassName="h-7 text-xs w-[80px]"
+                      />
                     </td>
-                    
+
                     {/* kA Rating */}
                     <td className="px-2 py-1.5 border-l border-border">
-                      <Select 
-                        value={circuit.kaRating || ''} 
+                      <MobileSelectPicker
+                        value={circuit.kaRating || ''}
                         onValueChange={(val) => updateCircuit(circuit.id, 'kaRating', val || null)}
-                      >
-                        <SelectTrigger className="h-7 text-xs w-[80px]">
-                          <SelectValue placeholder="-" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="3">3kA</SelectItem>
-                          <SelectItem value="6">6kA</SelectItem>
-                          <SelectItem value="10">10kA</SelectItem>
-                          <SelectItem value="16">16kA</SelectItem>
-                          <SelectItem value="16.5">16.5kA</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: '3', label: '3kA' },
+                          { value: '6', label: '6kA' },
+                          { value: '10', label: '10kA' },
+                          { value: '16', label: '16kA' },
+                          { value: '16.5', label: '16.5kA' },
+                        ]}
+                        placeholder="-"
+                        title="kA Rating"
+                        triggerClassName="h-7 text-xs w-[80px]"
+                      />
                     </td>
                     
                     {/* Confidence */}

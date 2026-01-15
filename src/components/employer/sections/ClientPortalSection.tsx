@@ -94,13 +94,24 @@ export function ClientPortalSection() {
     showIssuePhotos: false,
   };
 
+  const getPortalUrl = () => {
+    if (!portalLink) return "";
+    return `${window.location.origin}/portal/${portalLink.access_token}`;
+  };
+
   const handleCopyLink = () => {
     if (portalLink) {
-      navigator.clipboard.writeText(`https://portal.elec-mate.uk/view/${portalLink.access_token}`);
+      navigator.clipboard.writeText(getPortalUrl());
       toast({
         title: "Link Copied",
         description: "Client portal link copied to clipboard.",
       });
+    }
+  };
+
+  const handleOpenPortal = () => {
+    if (portalLink) {
+      window.open(getPortalUrl(), "_blank");
     }
   };
 
@@ -396,7 +407,7 @@ export function ClientPortalSection() {
                     <>
                       <div className="flex gap-2">
                         <Input
-                          value={`https://portal.elec-mate.uk/view/${portalLink.access_token}`}
+                          value={getPortalUrl()}
                           readOnly
                           className="bg-muted text-xs h-10"
                         />
@@ -455,9 +466,9 @@ export function ClientPortalSection() {
                             </SheetContent>
                           </Sheet>
                         ) : (
-                          <Button variant="outline" className="h-11 touch-manipulation">
+                          <Button variant="outline" className="h-11 touch-manipulation" onClick={handleOpenPortal}>
                             <ExternalLink className="h-4 w-4 mr-2" />
-                            Open Preview
+                            Open Portal
                           </Button>
                         )}
                       </div>

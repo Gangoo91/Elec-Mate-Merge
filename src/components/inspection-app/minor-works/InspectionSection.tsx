@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Search, CheckCircle, AlertTriangle, Eye, Shield } from 'lucide-react';
@@ -216,48 +216,21 @@ const InspectionSection = ({ formData, onUpdate }: InspectionSectionProps) => {
                           <Label className="text-xs text-muted-foreground mb-1 block">
                             Inspection Result *
                           </Label>
-                          <Select
+                          <MobileSelectPicker
                             value={result?.outcome || ''}
                             onValueChange={(value) => handleInspectionUpdate(item.id, value, result?.notes)}
-                          >
-                            <SelectTrigger className="text-sm">
-                              <SelectValue placeholder="Select outcome" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="satisfactory">
-                                <div className="flex items-center gap-2">
-                                  <CheckCircle className="h-3 w-3 text-green-600" />
-                                  Satisfactory
-                                </div>
-                              </SelectItem>
-                              <SelectItem value="unsatisfactory">
-                                <div className="flex items-center gap-2">
-                                  <AlertTriangle className="h-3 w-3 text-red-600" />
-                                  Unsatisfactory
-                                </div>
-                              </SelectItem>
-                              <SelectItem value="C1">
-                                <div className="flex items-center gap-2">
-                                  <AlertTriangle className="h-3 w-3 text-red-700" />
-                                  C1 - Danger present
-                                </div>
-                              </SelectItem>
-                              <SelectItem value="C2">
-                                <div className="flex items-center gap-2">
-                                  <AlertTriangle className="h-3 w-3 text-orange-600" />
-                                  C2 - Potentially dangerous
-                                </div>
-                              </SelectItem>
-                              <SelectItem value="C3">
-                                <div className="flex items-center gap-2">
-                                  <AlertTriangle className="h-3 w-3 text-yellow-600" />
-                                  C3 - Improvement recommended
-                                </div>
-                              </SelectItem>
-                              <SelectItem value="na">N/A - Not applicable</SelectItem>
-                              <SelectItem value="limitation">LIM - Inspection limitation</SelectItem>
-                            </SelectContent>
-                          </Select>
+                            options={[
+                              { value: 'satisfactory', label: 'Satisfactory' },
+                              { value: 'unsatisfactory', label: 'Unsatisfactory' },
+                              { value: 'C1', label: 'C1 - Danger present' },
+                              { value: 'C2', label: 'C2 - Potentially dangerous' },
+                              { value: 'C3', label: 'C3 - Improvement recommended' },
+                              { value: 'na', label: 'N/A - Not applicable' },
+                              { value: 'limitation', label: 'LIM - Inspection limitation' },
+                            ]}
+                            placeholder="Select outcome"
+                            title="Inspection Result"
+                          />
                         </div>
                         
                         <div>
@@ -318,34 +291,17 @@ const InspectionSection = ({ formData, onUpdate }: InspectionSectionProps) => {
             <Label htmlFor="overallAssessment" className="text-sm font-medium">
               Overall Visual Inspection Result *
             </Label>
-            <Select
+            <MobileSelectPicker
               value={formData.overallInspectionResult || ''}
               onValueChange={(value) => onUpdate('overallInspectionResult', value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select overall result" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="satisfactory">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-600" />
-                    Satisfactory - No defects found
-                  </div>
-                </SelectItem>
-                <SelectItem value="unsatisfactory">
-                  <div className="flex items-center gap-2">
-                    <AlertTriangle className="h-4 w-4 text-red-600" />
-                    Unsatisfactory - Defects require attention
-                  </div>
-                </SelectItem>
-                <SelectItem value="limitation">
-                  <div className="flex items-center gap-2">
-                    <Eye className="h-4 w-4 text-amber-600" />
-                    Limited inspection - Access restrictions apply
-                  </div>
-                </SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { value: 'satisfactory', label: 'Satisfactory - No defects found' },
+                { value: 'unsatisfactory', label: 'Unsatisfactory - Defects require attention' },
+                { value: 'limitation', label: 'Limited inspection - Access restrictions apply' },
+              ]}
+              placeholder="Select overall result"
+              title="Overall Inspection Result"
+            />
           </div>
           
           <div>

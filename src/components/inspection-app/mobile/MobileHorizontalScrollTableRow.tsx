@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { referenceMethodOptions } from '@/types/cableTypes';
 import { cableSizeOptions } from '@/types/cableTypes';
 import { protectiveDeviceTypeOptions, protectiveDeviceRatingOptions, bsStandardOptions, protectiveDeviceCurveOptions, rcdBsStandardOptions, bsStandardRequiresCurve } from '@/types/protectiveDeviceTypes';
@@ -113,42 +113,22 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
         />
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[96px] min-w-[96px] max-w-[96px]">
-        <Select
+        <MobileSelectPicker
           value={result.typeOfWiring || ''}
           onValueChange={(value) => onUpdate(result.id, 'typeOfWiring', value)}
-        >
-          <SelectTrigger className={cn(selectTriggerClassName, "text-xs px-1")}>
-            <SelectValue placeholder="Ty">
-              {result.typeOfWiring || "Ty"}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent className="z-[100]">
-            {wiringTypeOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs py-2">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={wiringTypeOptions}
+          placeholder="Ty"
+          title="Type of Wiring"
+        />
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[66px] min-w-[66px] max-w-[66px]">
-        <Select
+        <MobileSelectPicker
           value={result.referenceMethod || ''}
           onValueChange={(value) => onUpdate(result.id, 'referenceMethod', value)}
-        >
-          <SelectTrigger className={cn(selectTriggerClassName, "text-xs px-0")}>
-            <SelectValue placeholder="M">
-              {result.referenceMethod || "M"}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent className="z-[100]">
-            {referenceMethodOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs py-2">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={referenceMethodOptions}
+          placeholder="M"
+          title="Reference Method"
+        />
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[72px] min-w-[72px] max-w-[72px]">
         <Input
@@ -163,96 +143,52 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
 
       {/* Conductor Details Group */}
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[96px] min-w-[96px] max-w-[96px]">
-        <Select
+        <MobileSelectPicker
           value={result.liveSize || ''}
           onValueChange={(value) => onUpdate(result.id, 'liveSize', value)}
-        >
-          <SelectTrigger className={cn(selectTriggerClassName, "text-xs px-1")}>
-            <SelectValue placeholder="mm²" />
-          </SelectTrigger>
-          <SelectContent className="z-[100]">
-            {cableSizeOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs py-2">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={cableSizeOptions}
+          placeholder="mm²"
+          title="Live Conductor Size"
+        />
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[96px] min-w-[96px] max-w-[96px]">
-        <Select
+        <MobileSelectPicker
           value={result.cpcSize || ''}
           onValueChange={(value) => onUpdate(result.id, 'cpcSize', value)}
-        >
-          <SelectTrigger className={cn(selectTriggerClassName, "text-xs px-1")}>
-            <SelectValue placeholder="mm²" />
-          </SelectTrigger>
-          <SelectContent className="z-[100]">
-            {cableSizeOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs py-2">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={cableSizeOptions}
+          placeholder="mm²"
+          title="CPC Size"
+        />
       </TableCell>
 
       {/* Protection Group */}
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[96px] min-w-[96px] max-w-[96px]">
-        <Select
+        <MobileSelectPicker
           value={result.bsStandard || ''}
           onValueChange={handleBsStandardChange}
-        >
-          <SelectTrigger className={cn(selectTriggerClassName, "text-xs px-1")}>
-            <SelectValue placeholder="BS" />
-          </SelectTrigger>
-          <SelectContent className="z-[9999]">
-            {bsStandardOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs py-2">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={bsStandardOptions}
+          placeholder="BS"
+          title="BS Standard"
+        />
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[66px] min-w-[66px] max-w-[66px]">
-        <Select
+        <MobileSelectPicker
           value={result.protectiveDeviceCurve || ''}
           onValueChange={handleCurveChange}
+          options={protectiveDeviceCurveOptions}
+          placeholder="-"
+          title="Device Curve"
           disabled={!bsStandardRequiresCurve(result.bsStandard || '')}
-        >
-          <SelectTrigger className={cn(selectTriggerClassName, "text-xs px-0")}>
-          <SelectValue placeholder="-">
-            {result.protectiveDeviceCurve || "-"}
-          </SelectValue>
-          </SelectTrigger>
-          <SelectContent className="z-[100]">
-            {protectiveDeviceCurveOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs py-2">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        />
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[80px] min-w-[80px] max-w-[80px]">
-        <Select
+        <MobileSelectPicker
           value={result.protectiveDeviceRating || ''}
           onValueChange={handleRatingChange}
-        >
-          <SelectTrigger className={cn(selectTriggerClassName, "text-xs px-1")}>
-            <SelectValue placeholder="A">
-              {result.protectiveDeviceRating || "A"}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent className="z-[100]">
-            {protectiveDeviceRatingOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs py-2">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={protectiveDeviceRatingOptions}
+          placeholder="A"
+          title="Device Rating"
+        />
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[72px] min-w-[72px] max-w-[72px]">
         <Input
@@ -275,59 +211,37 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
 
       {/* RCD Details Group */}
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 w-[96px] min-w-[96px] max-w-[96px]">
-        <Select
+        <MobileSelectPicker
           value={result.rcdBsStandard || ''}
           onValueChange={(value) => onUpdate(result.id, 'rcdBsStandard', value)}
-        >
-          <SelectTrigger className={cn(selectTriggerClassName, "text-xs px-1")}>
-            <SelectValue placeholder="BS">
-              {result.rcdBsStandard || "BS"}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent className="z-[9999]">
-            {rcdBsStandardOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs py-2">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={rcdBsStandardOptions}
+          placeholder="BS"
+          title="RCD BS Standard"
+        />
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 w-[96px] min-w-[96px] max-w-[96px]">
-        <Select
+        <MobileSelectPicker
           value={result.rcdType || ''}
           onValueChange={(value) => onUpdate(result.id, 'rcdType', value)}
-        >
-          <SelectTrigger className={cn(selectTriggerClassName, "text-xs px-0")}>
-            <SelectValue placeholder="Ty">
-              {result.rcdType || "Ty"}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent className="z-[100]">
-            {rcdTypeOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs py-2">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={rcdTypeOptions}
+          placeholder="Ty"
+          title="RCD Type"
+        />
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 w-[80px] min-w-[80px] max-w-[80px]">
-        <Select
+        <MobileSelectPicker
           value={result.rcdRating || ''}
           onValueChange={(value) => onUpdate(result.id, 'rcdRating', value)}
-        >
-          <SelectTrigger className={cn(selectTriggerClassName, "text-xs px-1")}>
-            <SelectValue placeholder="mA" />
-          </SelectTrigger>
-          <SelectContent className="z-[100]">
-            <SelectItem value="10" className="text-xs py-2">10</SelectItem>
-            <SelectItem value="30" className="text-xs py-2">30</SelectItem>
-            <SelectItem value="100" className="text-xs py-2">100</SelectItem>
-            <SelectItem value="300" className="text-xs py-2">300</SelectItem>
-            <SelectItem value="500" className="text-xs py-2">500</SelectItem>
-          </SelectContent>
-        </Select>
+          options={[
+            { value: '10', label: '10' },
+            { value: '30', label: '30' },
+            { value: '100', label: '100' },
+            { value: '300', label: '300' },
+            { value: '500', label: '500' },
+          ]}
+          placeholder="mA"
+          title="RCD Rating (mA)"
+        />
       </TableCell>
       <TableCell className="p-0.5 border-r-2 border-border whitespace-nowrap bg-red-50/30 dark:bg-red-950/20 w-[80px] min-w-[80px] max-w-[80px]">
         <Input
@@ -404,21 +318,13 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
 
       {/* Insulation Tests Group */}
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[96px] min-w-[96px] max-w-[96px]">
-        <Select
+        <MobileSelectPicker
           value={result.insulationTestVoltage || ''}
           onValueChange={(value) => onUpdate(result.id, 'insulationTestVoltage', value)}
-        >
-          <SelectTrigger className={cn(selectTriggerClassName, "text-xs px-1")}>
-            <SelectValue placeholder="V" />
-          </SelectTrigger>
-          <SelectContent className="z-[100]">
-            {insulationTestVoltageOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs py-2">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={insulationTestVoltageOptions}
+          placeholder="V"
+          title="Insulation Test Voltage"
+        />
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[96px] min-w-[96px] max-w-[96px]">
         <Input
@@ -443,19 +349,17 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
 
       {/* Earth Fault Tests Group */}
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[66px] min-w-[66px] max-w-[66px]">
-        <Select
+        <MobileSelectPicker
           value={result.polarity || ''}
           onValueChange={(value) => onUpdate(result.id, 'polarity', value)}
-        >
-          <SelectTrigger className={cn(selectTriggerClassName, "text-xs px-0")}>
-            <SelectValue placeholder="✓" />
-          </SelectTrigger>
-          <SelectContent className="z-[100]">
-            <SelectItem value="Correct" className="text-xs py-2">✓</SelectItem>
-            <SelectItem value="Incorrect" className="text-xs py-2">✗</SelectItem>
-            <SelectItem value="N/A" className="text-xs py-2">N/A</SelectItem>
-          </SelectContent>
-        </Select>
+          options={[
+            { value: 'Correct', label: '✓ Correct' },
+            { value: 'Incorrect', label: '✗ Incorrect' },
+            { value: 'N/A', label: 'N/A' },
+          ]}
+          placeholder="✓"
+          title="Polarity"
+        />
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[96px] min-w-[96px] max-w-[96px]">
         <Input
@@ -479,56 +383,47 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
         />
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[66px] min-w-[66px] max-w-[66px]">
-        <Select
+        <MobileSelectPicker
           value={result.rcdTestButton || ''}
           onValueChange={(value) => onUpdate(result.id, 'rcdTestButton', value)}
-        >
-          <SelectTrigger className={cn(selectTriggerClassName, "text-xs px-0")}>
-            <SelectValue placeholder="✓" />
-          </SelectTrigger>
-          <SelectContent className="z-[100]">
-            <SelectItem value="✓" className="text-xs py-2">✓</SelectItem>
-            <SelectItem value="✗" className="text-xs py-2">✗</SelectItem>
-            <SelectItem value="N/A" className="text-xs py-2">N/A</SelectItem>
-          </SelectContent>
-        </Select>
+          options={[
+            { value: '✓', label: '✓ Pass' },
+            { value: '✗', label: '✗ Fail' },
+            { value: 'N/A', label: 'N/A' },
+          ]}
+          placeholder="✓"
+          title="RCD Test Button"
+        />
       </TableCell>
 
       {/* AFDD Group */}
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[66px] min-w-[66px] max-w-[66px]">
-        <Select
+        <MobileSelectPicker
           value={result.afddTest || ''}
           onValueChange={(value) => onUpdate(result.id, 'afddTest', value)}
-        >
-          <SelectTrigger className={cn(selectTriggerClassName, "text-xs px-0")}>
-            <SelectValue placeholder="✓" />
-          </SelectTrigger>
-          <SelectContent className="z-[100]">
-            <SelectItem value="✓" className="text-xs py-2 text-green-600">✓</SelectItem>
-            <SelectItem value="✗" className="text-xs py-2 text-red-600">✗</SelectItem>
-            <SelectItem value="N/A" className="text-xs py-2">N/A</SelectItem>
-          </SelectContent>
-        </Select>
+          options={[
+            { value: '✓', label: '✓ Pass' },
+            { value: '✗', label: '✗ Fail' },
+            { value: 'N/A', label: 'N/A' },
+          ]}
+          placeholder="✓"
+          title="AFDD Test"
+        />
       </TableCell>
 
       {/* Functional Group */}
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[66px] min-w-[66px] max-w-[66px]">
-        <Select
+        <MobileSelectPicker
           value={result.functionalTesting || ''}
           onValueChange={(value) => onUpdate(result.id, 'functionalTesting', value)}
-        >
-          <SelectTrigger className={cn(selectTriggerClassName, "text-xs px-0",
-            result.functionalTesting === '✓' && 'text-green-600',
-            result.functionalTesting === '✗' && 'text-red-600'
-          )}>
-            <SelectValue placeholder="✓" />
-          </SelectTrigger>
-          <SelectContent className="z-[100]">
-            <SelectItem value="✓" className="text-xs py-2 text-green-600">✓</SelectItem>
-            <SelectItem value="✗" className="text-xs py-2 text-red-600">✗</SelectItem>
-            <SelectItem value="N/A" className="text-xs py-2">N/A</SelectItem>
-          </SelectContent>
-        </Select>
+          options={[
+            { value: '✓', label: '✓ Satisfactory' },
+            { value: '✗', label: '✗ Unsatisfactory' },
+            { value: 'N/A', label: 'N/A' },
+          ]}
+          placeholder="✓"
+          title="Functional Testing"
+        />
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[132px] min-w-[132px] max-w-[132px]">
         <Input

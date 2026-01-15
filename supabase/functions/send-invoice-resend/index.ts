@@ -201,12 +201,13 @@ const handler = async (req: Request): Promise<Response> => {
       console.warn('⚠️ No PDF URL available - will send email with link only');
     }
 
-    // Format currency
-    const formatCurrency = (amount: number) => {
+    // Format currency with NaN protection
+    const formatCurrency = (amount: number | undefined | null) => {
+      const safeAmount = typeof amount === 'number' && !isNaN(amount) ? amount : 0;
       return new Intl.NumberFormat('en-GB', {
         style: 'currency',
         currency: 'GBP',
-      }).format(amount);
+      }).format(safeAmount);
     };
 
     // Generate brilliant mobile-first HTML email
@@ -241,6 +242,9 @@ const handler = async (req: Request): Promise<Response> => {
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
                   <td style="text-align: center;">
+                    ${companyProfile?.logo_url ? `
+                    <img src="${companyProfile.logo_url}" alt="${companyProfile.company_name || 'Company Logo'}" style="max-height: 60px; max-width: 200px; margin-bottom: 16px; display: block; margin-left: auto; margin-right: auto;" />
+                    ` : ''}
                     <h1 style="margin: 0; color: #FFD700; font-size: 26px; font-weight: 700; letter-spacing: 0.5px;">
                       ⚡ ${companyProfile?.company_name || 'ElecMate Professional'}
                     </h1>
@@ -398,14 +402,16 @@ const handler = async (req: Request): Promise<Response> => {
                   <th style="padding: 12px; text-align: right; font-size: 13px; font-weight: 700; color: #374151; border-bottom: 2px solid #e5e7eb; white-space: nowrap;">Total</th>
                 </tr>
                 <!-- Table Body -->
-                ${invoice.items.map((item: any, index: number) => `
+                ${invoice.items.map((item: any, index: number) => {
+                  const lineTotal = item.total ?? item.totalPrice ?? ((item.quantity || 0) * (item.unitPrice || 0));
+                  return `
                 <tr style="background: ${index % 2 === 0 ? '#ffffff' : '#f9fafb'};">
-                  <td style="padding: 12px; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${item.description}</td>
-                  <td style="padding: 12px; text-align: center; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${item.quantity}</td>
+                  <td style="padding: 12px; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${item.description || ''}</td>
+                  <td style="padding: 12px; text-align: center; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${item.quantity || 0}</td>
                   <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap;">${formatCurrency(item.unitPrice)}</td>
-                  <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap; font-weight: 600;">${formatCurrency(item.total)}</td>
+                  <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap; font-weight: 600;">${formatCurrency(lineTotal)}</td>
                 </tr>
-                `).join('')}
+                `;}).join('')}
               </table>
             </td>
           </tr>
@@ -430,7 +436,7 @@ const handler = async (req: Request): Promise<Response> => {
                       </tr>
                       <tr>
                         <td style="padding: 12px 12px 0 0; font-size: 16px; color: #374151; font-weight: 700; text-align: right;">Total Amount:</td>
-                        <td style="padding: 12px 0 0; font-size: 36px; color: #FFD700; font-weight: 700; text-align: right; line-height: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">£${parseFloat(invoice.total).toFixed(2)}</td>
+                        <td style="padding: 12px 0 0; font-size: 36px; color: #FFD700; font-weight: 700; text-align: right; line-height: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">${formatCurrency(parseFloat(invoice.total) || 0)}</td>
                       </tr>
                     </table>
                   </td>
@@ -521,7 +527,7 @@ const handler = async (req: Request): Promise<Response> => {
       html: string;
       attachments?: Array<{ filename: string; content: string }>;
     } = {
-      from: `${companyProfile?.company_name || 'ElecMate'} <founder@elec-mate.com>`,
+      from: `${companyProfile?.company_name || 'ElecMate'} <${replyToEmail}>`,
       replyTo: replyToEmail,
       to: [clientEmail],
       subject: subject,

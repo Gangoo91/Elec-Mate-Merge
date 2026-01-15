@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
@@ -111,20 +111,18 @@ const DeclarationSection = ({
                 <Label htmlFor="qualificationLevel" className="text-sm font-medium">
                   Qualification Level
                 </Label>
-                <Select
+                <MobileSelectPicker
                   value={formData.qualificationLevel || ''}
                   onValueChange={(value) => onUpdate('qualificationLevel', value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select qualification level" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="level3">Level 3 - 18th Edition</SelectItem>
-                    <SelectItem value="level4">Level 4 - HNC/HND</SelectItem>
-                    <SelectItem value="degree">Degree in Electrical Engineering</SelectItem>
-                    <SelectItem value="other">Other (specify in notes)</SelectItem>
-                  </SelectContent>
-                </Select>
+                  options={[
+                    { value: 'level3', label: 'Level 3 - 18th Edition' },
+                    { value: 'level4', label: 'Level 4 - HNC/HND' },
+                    { value: 'degree', label: 'Degree in Electrical Engineering' },
+                    { value: 'other', label: 'Other (specify in notes)' },
+                  ]}
+                  placeholder="Select qualification level"
+                  title="Qualification Level"
+                />
               </div>
             </div>
             
@@ -133,23 +131,21 @@ const DeclarationSection = ({
                 <Label htmlFor="schemeProvider" className="text-sm font-medium">
                   Competent Person Scheme
                 </Label>
-                <Select
+                <MobileSelectPicker
                   value={formData.schemeProvider || ''}
                   onValueChange={(value) => onUpdate('schemeProvider', value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select scheme provider" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="niceic">NICEIC</SelectItem>
-                    <SelectItem value="napit">NAPIT</SelectItem>
-                    <SelectItem value="elecsa">ELECSA</SelectItem>
-                    <SelectItem value="bpec">BPEC</SelectItem>
-                    <SelectItem value="stroma">Stroma</SelectItem>
-                    <SelectItem value="other">Other scheme</SelectItem>
-                    <SelectItem value="none">Not applicable</SelectItem>
-                  </SelectContent>
-                </Select>
+                  options={[
+                    { value: 'niceic', label: 'NICEIC' },
+                    { value: 'napit', label: 'NAPIT' },
+                    { value: 'elecsa', label: 'ELECSA' },
+                    { value: 'bpec', label: 'BPEC' },
+                    { value: 'stroma', label: 'Stroma' },
+                    { value: 'other', label: 'Other scheme' },
+                    { value: 'none', label: 'Not applicable' },
+                  ]}
+                  placeholder="Select scheme provider"
+                  title="Competent Person Scheme"
+                />
               </div>
               
               <div>

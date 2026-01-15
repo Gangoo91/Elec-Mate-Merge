@@ -233,8 +233,14 @@ export const InvoiceItemsStep = ({
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
 
-  const originalTotal = originalItems.reduce((sum, item) => sum + item.totalPrice, 0);
-  const additionalTotal = additionalItems.reduce((sum, item) => sum + item.totalPrice, 0);
+  const originalTotal = originalItems.reduce((sum, item) => {
+    const price = item.totalPrice ?? ((item.quantity || 0) * (item.unitPrice || 0));
+    return sum + (isNaN(price) ? 0 : price);
+  }, 0);
+  const additionalTotal = additionalItems.reduce((sum, item) => {
+    const price = item.totalPrice ?? ((item.quantity || 0) * (item.unitPrice || 0));
+    return sum + (isNaN(price) ? 0 : price);
+  }, 0);
   const grandTotal = originalTotal + additionalTotal;
 
   return (

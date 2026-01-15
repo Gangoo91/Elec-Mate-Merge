@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { CheckCircle, XCircle, AlertTriangle, AlertCircle, Info, FileText } from 'lucide-react';
 
 interface InspectionItem {
@@ -59,72 +59,22 @@ const InspectionOutcomeSelect = ({ itemId, currentOutcome, onOutcomeChange }: In
     timestamp: new Date().toISOString()
   });
 
-  // Use undefined for empty state to show placeholder properly
-  const selectValue = currentOutcome === '' ? undefined : currentOutcome;
-
   return (
-    <Select
-      value={selectValue}
+    <MobileSelectPicker
+      value={currentOutcome || ''}
       onValueChange={handleValueChange}
-    >
-      <SelectTrigger className="w-full min-h-[44px] touch-manipulation">
-        <SelectValue>
-          <div className="flex items-center gap-3">
-            {getOutcomeIcon(currentOutcome)}
-            <span>{getOutcomeLabel(currentOutcome)}</span>
-          </div>
-        </SelectValue>
-      </SelectTrigger>
-      <SelectContent 
-        className="z-50 bg-background border shadow-lg rounded-lg w-full max-w-sm mx-auto"
-        align="center"
-        sideOffset={4}
-        avoidCollisions={true}
-      >
-        <SelectItem value="satisfactory" className="min-h-[48px] px-4 py-3 cursor-pointer focus:bg-muted">
-          <div className="flex items-center gap-3">
-            <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
-            <span>Satisfactory</span>
-          </div>
-        </SelectItem>
-        <SelectItem value="C1" className="min-h-[48px] px-4 py-3 cursor-pointer focus:bg-muted">
-          <div className="flex items-center gap-3">
-            <XCircle className="h-5 w-5 text-red-500 flex-shrink-0" />
-            <span>C1 - Danger Present</span>
-          </div>
-        </SelectItem>
-        <SelectItem value="C2" className="min-h-[48px] px-4 py-3 cursor-pointer focus:bg-muted">
-          <div className="flex items-center gap-3">
-            <AlertCircle className="h-5 w-5 text-orange-500 flex-shrink-0" />
-            <span>C2 - Potentially Dangerous</span>
-          </div>
-        </SelectItem>
-        <SelectItem value="C3" className="min-h-[48px] px-4 py-3 cursor-pointer focus:bg-muted">
-          <div className="flex items-center gap-3">
-            <AlertTriangle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
-            <span>C3 - Improvement Recommended</span>
-          </div>
-        </SelectItem>
-        <SelectItem value="not-applicable" className="min-h-[48px] px-4 py-3 cursor-pointer focus:bg-muted">
-          <div className="flex items-center gap-3">
-            <div className="h-5 w-5 bg-muted-foreground/40 rounded-full flex-shrink-0" />
-            <span>N/A - Not Applicable</span>
-          </div>
-        </SelectItem>
-        <SelectItem value="not-verified" className="min-h-[48px] px-4 py-3 cursor-pointer focus:bg-muted">
-          <div className="flex items-center gap-3">
-            <FileText className="h-5 w-5 text-blue-500 flex-shrink-0" />
-            <span>N/V - Not Verified</span>
-          </div>
-        </SelectItem>
-        <SelectItem value="limitation" className="min-h-[48px] px-4 py-3 cursor-pointer focus:bg-muted">
-          <div className="flex items-center gap-3">
-            <Info className="h-5 w-5 text-purple-500 flex-shrink-0" />
-            <span>LIM - Limitation</span>
-          </div>
-        </SelectItem>
-      </SelectContent>
-    </Select>
+      options={[
+        { value: 'satisfactory', label: 'Satisfactory' },
+        { value: 'C1', label: 'C1 - Danger Present' },
+        { value: 'C2', label: 'C2 - Potentially Dangerous' },
+        { value: 'C3', label: 'C3 - Improvement Recommended' },
+        { value: 'not-applicable', label: 'N/A - Not Applicable' },
+        { value: 'not-verified', label: 'N/V - Not Verified' },
+        { value: 'limitation', label: 'LIM - Limitation' },
+      ]}
+      placeholder="Select outcome"
+      title="Inspection Outcome"
+    />
   );
 };
 

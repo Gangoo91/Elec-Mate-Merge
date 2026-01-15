@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { TestTube, AlertTriangle, CheckCircle, Settings, Calendar } from 'lucide-react';
@@ -198,38 +198,34 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
               <Label htmlFor="isolationConfirmed" className="text-sm font-medium">
                 Safe Isolation Confirmed *
               </Label>
-              <Select 
-                value={formData.isolationConfirmed || ''} 
+              <MobileSelectPicker
+                value={formData.isolationConfirmed || ''}
                 onValueChange={(value) => onUpdate('isolationConfirmed', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="yes">Yes - Properly isolated</SelectItem>
-                  <SelectItem value="no">No - Testing limitations</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: 'yes', label: 'Yes - Properly isolated' },
+                  { value: 'no', label: 'No - Testing limitations' },
+                ]}
+                placeholder="Select"
+                title="Safe Isolation"
+              />
             </div>
-            
+
             <div>
               <Label htmlFor="testingLimitations" className="text-sm font-medium">
                 Testing Limitations
               </Label>
-              <Select 
-                value={formData.testingLimitations || ''} 
+              <MobileSelectPicker
+                value={formData.testingLimitations || ''}
                 onValueChange={(value) => onUpdate('testingLimitations', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">None</SelectItem>
-                  <SelectItem value="partial">Partial access only</SelectItem>
-                  <SelectItem value="live">Live circuits present</SelectItem>
-                  <SelectItem value="other">Other (specify in notes)</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: 'none', label: 'None' },
+                  { value: 'partial', label: 'Partial access only' },
+                  { value: 'live', label: 'Live circuits present' },
+                  { value: 'other', label: 'Other (specify in notes)' },
+                ]}
+                placeholder="Select"
+                title="Testing Limitations"
+              />
             </div>
           </div>
         </CardContent>
@@ -250,70 +246,64 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
               <Label htmlFor="circuitType" className="text-sm font-medium">
                 Circuit Type
               </Label>
-              <Select 
-                value={formData.circuitType || ''} 
+              <MobileSelectPicker
+                value={formData.circuitType || ''}
                 onValueChange={(value) => onUpdate('circuitType', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select circuit type" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover border shadow-lg z-[60]">
-                  <SelectItem value="lighting">Lighting Circuit</SelectItem>
-                  <SelectItem value="socket-radial">Socket Outlet - Radial</SelectItem>
-                  <SelectItem value="socket-ring">Socket Outlet - Ring Final</SelectItem>
-                  <SelectItem value="shower">Shower Circuit</SelectItem>
-                  <SelectItem value="cooker">Cooker Circuit</SelectItem>
-                  <SelectItem value="immersion">Immersion Heater</SelectItem>
-                  <SelectItem value="outdoor">Outdoor Circuit</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: 'lighting', label: 'Lighting Circuit' },
+                  { value: 'socket-radial', label: 'Socket Outlet - Radial' },
+                  { value: 'socket-ring', label: 'Socket Outlet - Ring Final' },
+                  { value: 'shower', label: 'Shower Circuit' },
+                  { value: 'cooker', label: 'Cooker Circuit' },
+                  { value: 'immersion', label: 'Immersion Heater' },
+                  { value: 'outdoor', label: 'Outdoor Circuit' },
+                  { value: 'other', label: 'Other' },
+                ]}
+                placeholder="Select circuit type"
+                title="Circuit Type"
+              />
             </div>
 
             <div>
               <Label htmlFor="protectiveDeviceType" className="text-sm font-medium">
                 Protective Device Type
               </Label>
-              <Select 
-                value={formData.protectiveDeviceType || ''} 
+              <MobileSelectPicker
+                value={formData.protectiveDeviceType || ''}
                 onValueChange={(value) => onUpdate('protectiveDeviceType', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover border shadow-lg z-[60]">
-                  <SelectItem value="mcb-b">MCB Type B</SelectItem>
-                  <SelectItem value="mcb-c">MCB Type C</SelectItem>
-                  <SelectItem value="mcb-d">MCB Type D</SelectItem>
-                  <SelectItem value="rcbo">RCBO</SelectItem>
-                  <SelectItem value="fuse-bs3036">BS 3036 Fuse</SelectItem>
-                  <SelectItem value="fuse-bs1361">BS 1361 Fuse</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: 'mcb-b', label: 'MCB Type B' },
+                  { value: 'mcb-c', label: 'MCB Type C' },
+                  { value: 'mcb-d', label: 'MCB Type D' },
+                  { value: 'rcbo', label: 'RCBO' },
+                  { value: 'fuse-bs3036', label: 'BS 3036 Fuse' },
+                  { value: 'fuse-bs1361', label: 'BS 1361 Fuse' },
+                ]}
+                placeholder="Select type"
+                title="Protective Device Type"
+              />
             </div>
-            
+
             <div>
               <Label htmlFor="protectiveDeviceRating" className="text-sm font-medium">
                 Rating (A)
               </Label>
-              <Select 
-                value={formData.protectiveDeviceRating || ''} 
+              <MobileSelectPicker
+                value={formData.protectiveDeviceRating || ''}
                 onValueChange={(value) => onUpdate('protectiveDeviceRating', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select rating" />
-                </SelectTrigger>
-                <SelectContent className="bg-popover border shadow-lg z-[60]">
-                  <SelectItem value="6A">6A</SelectItem>
-                  <SelectItem value="10A">10A</SelectItem>
-                  <SelectItem value="16A">16A</SelectItem>
-                  <SelectItem value="20A">20A</SelectItem>
-                  <SelectItem value="25A">25A</SelectItem>
-                  <SelectItem value="32A">32A</SelectItem>
-                  <SelectItem value="40A">40A</SelectItem>
-                  <SelectItem value="50A">50A</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: '6A', label: '6A' },
+                  { value: '10A', label: '10A' },
+                  { value: '16A', label: '16A' },
+                  { value: '20A', label: '20A' },
+                  { value: '25A', label: '25A' },
+                  { value: '32A', label: '32A' },
+                  { value: '40A', label: '40A' },
+                  { value: '50A', label: '50A' },
+                ]}
+                placeholder="Select rating"
+                title="Protective Device Rating"
+              />
             </div>
             
             <div>
@@ -448,19 +438,17 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                   <Label htmlFor="insulationTestVoltage" className="text-sm font-medium">
                     Test Voltage *
                   </Label>
-                  <Select 
-                    value={formData.insulationTestVoltage || ''} 
+                  <MobileSelectPicker
+                    value={formData.insulationTestVoltage || ''}
                     onValueChange={(value) => onUpdate('insulationTestVoltage', value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border shadow-lg z-[60]">
-                      <SelectItem value="250">250V DC</SelectItem>
-                      <SelectItem value="500">500V DC</SelectItem>
-                      <SelectItem value="1000">1000V DC</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    options={[
+                      { value: '250', label: '250V DC' },
+                      { value: '500', label: '500V DC' },
+                      { value: '1000', label: '1000V DC' },
+                    ]}
+                    placeholder="Select"
+                    title="Test Voltage"
+                  />
                 </div>
                 
                 <div>
@@ -528,19 +516,17 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                 <Label htmlFor="polarityResult" className="text-sm font-medium">
                   Polarity Check *
                 </Label>
-                <Select 
-                  value={formData.polarityResult || ''} 
+                <MobileSelectPicker
+                  value={formData.polarityResult || ''}
                   onValueChange={(value) => onUpdate('polarityResult', value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select result" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-popover border shadow-lg z-[60]">
-                    <SelectItem value="correct">Correct</SelectItem>
-                    <SelectItem value="incorrect">Incorrect - Defect</SelectItem>
-                    <SelectItem value="na">N/A</SelectItem>
-                  </SelectContent>
-                </Select>
+                  options={[
+                    { value: 'correct', label: 'Correct' },
+                    { value: 'incorrect', label: 'Incorrect - Defect' },
+                    { value: 'na', label: 'N/A' },
+                  ]}
+                  placeholder="Select result"
+                  title="Polarity Check"
+                />
               </div>
             </div>
           </div>
@@ -613,21 +599,19 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                       <Label htmlFor="rcdRating" className="text-sm font-medium">
                         RCD Rating (mA)
                       </Label>
-                      <Select 
-                        value={formData.rcdRating || ''} 
+                      <MobileSelectPicker
+                        value={formData.rcdRating || ''}
                         onValueChange={(value) => onUpdate('rcdRating', value)}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover border shadow-lg z-[60]">
-                          <SelectItem value="30">30mA</SelectItem>
-                          <SelectItem value="100">100mA</SelectItem>
-                          <SelectItem value="300">300mA</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: '30', label: '30mA' },
+                          { value: '100', label: '100mA' },
+                          { value: '300', label: '300mA' },
+                        ]}
+                        placeholder="Select"
+                        title="RCD Rating"
+                      />
                     </div>
-                    
+
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <Label htmlFor="rcdTripTime" className="text-sm font-medium">
@@ -641,25 +625,24 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                         placeholder="Max 300ms"
                         value={formData.rcdTripTime || ''}
                         onChange={(e) => onUpdate('rcdTripTime', e.target.value)}
+                        className="h-11 touch-manipulation"
                       />
                     </div>
-                    
+
                     <div>
                       <Label htmlFor="rcdTestButton" className="text-sm font-medium">
                         Test Button Operation *
                       </Label>
-                      <Select 
-                        value={formData.rcdTestButton || ''} 
+                      <MobileSelectPicker
+                        value={formData.rcdTestButton || ''}
                         onValueChange={(value) => onUpdate('rcdTestButton', value)}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select result" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover border shadow-lg z-[60]">
-                          <SelectItem value="satisfactory">Satisfactory</SelectItem>
-                          <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
-                        </SelectContent>
-                      </Select>
+                        options={[
+                          { value: 'satisfactory', label: 'Satisfactory' },
+                          { value: 'unsatisfactory', label: 'Unsatisfactory' },
+                        ]}
+                        placeholder="Select result"
+                        title="Test Button Operation"
+                      />
                     </div>
                   </div>
                 </div>
@@ -672,19 +655,17 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                   <Label htmlFor="functionalTesting" className="text-sm font-medium">
                     Functional Testing *
                   </Label>
-                  <Select 
-                    value={formData.functionalTesting || ''} 
+                  <MobileSelectPicker
+                    value={formData.functionalTesting || ''}
                     onValueChange={(value) => onUpdate('functionalTesting', value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select result" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover border shadow-lg z-[60]">
-                      <SelectItem value="satisfactory">Satisfactory</SelectItem>
-                      <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
-                      <SelectItem value="na">N/A</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    options={[
+                      { value: 'satisfactory', label: 'Satisfactory' },
+                      { value: 'unsatisfactory', label: 'Unsatisfactory' },
+                      { value: 'na', label: 'N/A' },
+                    ]}
+                    placeholder="Select result"
+                    title="Functional Testing"
+                  />
                   <p className="text-xs text-muted-foreground mt-1">
                     Verify operation of switches, sockets, and connected equipment
                   </p>

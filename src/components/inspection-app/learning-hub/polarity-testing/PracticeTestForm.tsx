@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Calculator } from 'lucide-react';
 import { PolarityTestResult, testMethods } from './types';
 
@@ -37,62 +37,60 @@ const PracticeTestForm = ({ currentTest, onUpdateTest, onAddTest }: PracticeTest
           
           <div className="space-y-2">
             <Label htmlFor="testMethod">Test Method</Label>
-            <Select value={currentTest.testMethod} onValueChange={(value) => onUpdateTest('testMethod', value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select test method" />
-              </SelectTrigger>
-              <SelectContent>
-                {testMethods.map((method) => (
-                  <SelectItem key={method.value} value={method.value}>
-                    {method.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <MobileSelectPicker
+              value={currentTest.testMethod}
+              onValueChange={(value) => onUpdateTest('testMethod', value)}
+              options={testMethods}
+              placeholder="Select test method"
+              title="Test Method"
+            />
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div className="space-y-2">
             <Label htmlFor="socketOutlets">Socket Outlets</Label>
-            <Select value={currentTest.socketOutlets} onValueChange={(value) => onUpdateTest('socketOutlets', value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Test result" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="pass">Pass</SelectItem>
-                <SelectItem value="fail">Fail</SelectItem>
-                <SelectItem value="n/a">N/A</SelectItem>
-              </SelectContent>
-            </Select>
+            <MobileSelectPicker
+              value={currentTest.socketOutlets}
+              onValueChange={(value) => onUpdateTest('socketOutlets', value)}
+              options={[
+                { value: 'pass', label: 'Pass' },
+                { value: 'fail', label: 'Fail' },
+                { value: 'n/a', label: 'N/A' },
+              ]}
+              placeholder="Test result"
+              title="Socket Outlets"
+            />
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="lightingPoints">Lighting Points</Label>
-            <Select value={currentTest.lightingPoints} onValueChange={(value) => onUpdateTest('lightingPoints', value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Test result" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="pass">Pass</SelectItem>
-                <SelectItem value="fail">Fail</SelectItem>
-                <SelectItem value="n/a">N/A</SelectItem>
-              </SelectContent>
-            </Select>
+            <MobileSelectPicker
+              value={currentTest.lightingPoints}
+              onValueChange={(value) => onUpdateTest('lightingPoints', value)}
+              options={[
+                { value: 'pass', label: 'Pass' },
+                { value: 'fail', label: 'Fail' },
+                { value: 'n/a', label: 'N/A' },
+              ]}
+              placeholder="Test result"
+              title="Lighting Points"
+            />
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="isolatorSwitches">Isolator Switches</Label>
-            <Select value={currentTest.isolatorSwitches} onValueChange={(value) => onUpdateTest('isolatorSwitches', value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Test result" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="pass">Pass</SelectItem>
-                <SelectItem value="fail">Fail</SelectItem>
-                <SelectItem value="n/a">N/A</SelectItem>
-              </SelectContent>
-            </Select>
+            <MobileSelectPicker
+              value={currentTest.isolatorSwitches}
+              onValueChange={(value) => onUpdateTest('isolatorSwitches', value)}
+              options={[
+                { value: 'pass', label: 'Pass' },
+                { value: 'fail', label: 'Fail' },
+                { value: 'n/a', label: 'N/A' },
+              ]}
+              placeholder="Test result"
+              title="Isolator Switches"
+            />
           </div>
         </div>
 

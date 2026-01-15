@@ -4,7 +4,7 @@ import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { AlertCircle, Info, Zap } from 'lucide-react';
@@ -100,21 +100,22 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="dnoName">DNO (Distribution Network Operator)</Label>
-              <Select value={formData.dnoName || ''} onValueChange={(value) => onUpdate('dnoName', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select DNO" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="UK Power Networks">UK Power Networks</SelectItem>
-                  <SelectItem value="Western Power Distribution">Western Power Distribution</SelectItem>
-                  <SelectItem value="Scottish Power Energy Networks">Scottish Power Energy Networks</SelectItem>
-                  <SelectItem value="Northern Powergrid">Northern Powergrid</SelectItem>
-                  <SelectItem value="Electricity North West">Electricity North West</SelectItem>
-                  <SelectItem value="SSE Networks">SSE Networks (SSEN)</SelectItem>
-                  <SelectItem value="National Grid Electricity Distribution">National Grid Electricity Distribution</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.dnoName || ''}
+                onValueChange={(value) => onUpdate('dnoName', value)}
+                options={[
+                  { value: 'UK Power Networks', label: 'UK Power Networks' },
+                  { value: 'Western Power Distribution', label: 'Western Power Distribution' },
+                  { value: 'Scottish Power Energy Networks', label: 'Scottish Power Energy Networks' },
+                  { value: 'Northern Powergrid', label: 'Northern Powergrid' },
+                  { value: 'Electricity North West', label: 'Electricity North West' },
+                  { value: 'SSE Networks', label: 'SSE Networks (SSEN)' },
+                  { value: 'National Grid Electricity Distribution', label: 'National Grid Electricity Distribution' },
+                  { value: 'other', label: 'Other' },
+                ]}
+                placeholder="Select DNO"
+                title="DNO (Distribution Network Operator)"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="mpan">MPAN (Meter Point Admin Number)</Label>
@@ -160,29 +161,31 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="phases">Number of Phases *</Label>
-              <Select value={formData.phases || ''} onValueChange={handlePhasesChange}>
-                <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="1">Single Phase</SelectItem>
-                  <SelectItem value="3">Three Phase</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.phases || ''}
+                onValueChange={handlePhasesChange}
+                options={[
+                  { value: '1', label: 'Single Phase' },
+                  { value: '3', label: 'Three Phase' },
+                ]}
+                placeholder="Select"
+                title="Number of Phases"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="supplyVoltage">Supply Voltage *</Label>
-              <Select value={formData.supplyVoltage || ''} onValueChange={(value) => onUpdate('supplyVoltage', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select voltage" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="230">230V (Single Phase)</SelectItem>
-                  <SelectItem value="400">400V (Three Phase)</SelectItem>
-                  <SelectItem value="230/400">230/400V (Both)</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.supplyVoltage || ''}
+                onValueChange={(value) => onUpdate('supplyVoltage', value)}
+                options={[
+                  { value: '230', label: '230V (Single Phase)' },
+                  { value: '400', label: '400V (Three Phase)' },
+                  { value: '230/400', label: '230/400V (Both)' },
+                  { value: 'other', label: 'Other' },
+                ]}
+                placeholder="Select voltage"
+                title="Supply Voltage"
+              />
               {formData.supplyVoltage === 'other' && (
                 <Input
                   id="supplyVoltageCustom"
@@ -212,15 +215,16 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
               </div>
               <div className="space-y-2">
                 <Label htmlFor="supplyPME">Supply PME</Label>
-                <Select value={formData.supplyPME || ''} onValueChange={handleSupplyPMEChange}>
-                  <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                    <SelectValue placeholder="Yes/No" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="yes">Yes</SelectItem>
-                    <SelectItem value="no">No</SelectItem>
-                  </SelectContent>
-                </Select>
+                <MobileSelectPicker
+                  value={formData.supplyPME || ''}
+                  onValueChange={handleSupplyPMEChange}
+                  options={[
+                    { value: 'yes', label: 'Yes' },
+                    { value: 'no', label: 'No' },
+                  ]}
+                  placeholder="Yes/No"
+                  title="Supply PME"
+                />
                 {formData.supplyPME === 'yes' && formData.earthingArrangement === 'TN-C-S' && (
                   <p className="text-xs text-green-600 mt-1 flex items-center gap-1">
                     <Info className="h-3 w-3" />
@@ -242,30 +246,28 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="mainProtectiveDevice">Main Protective Device *</Label>
-              <Select 
-                value={showCustomProtectiveDevice ? 'other' : (formData.mainProtectiveDevice || '')} 
+              <MobileSelectPicker
+                value={showCustomProtectiveDevice ? 'other' : (formData.mainProtectiveDevice || '')}
                 onValueChange={handleMainProtectiveDeviceChange}
-              >
-                <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select protective device" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="100A BS 88 Fuse">100A BS 88 Fuse</SelectItem>
-                  <SelectItem value="80A BS 88 Fuse">80A BS 88 Fuse</SelectItem>
-                  <SelectItem value="63A BS 88 Fuse">63A BS 88 Fuse</SelectItem>
-                  <SelectItem value="32A BS 1361 Fuse">32A BS 1361 Fuse</SelectItem>
-                  <SelectItem value="100A MCCB">100A MCCB</SelectItem>
-                  <SelectItem value="80A MCCB">80A MCCB</SelectItem>
-                  <SelectItem value="63A MCCB">63A MCCB</SelectItem>
-                  <SelectItem value="100A MCB Type B">100A MCB Type B</SelectItem>
-                  <SelectItem value="80A MCB Type B">80A MCB Type B</SelectItem>
-                  <SelectItem value="63A MCB Type B">63A MCB Type B</SelectItem>
-                  <SelectItem value="100A MCB Type C">100A MCB Type C</SelectItem>
-                  <SelectItem value="80A MCB Type C">80A MCB Type C</SelectItem>
-                  <SelectItem value="63A MCB Type C">63A MCB Type C</SelectItem>
-                  <SelectItem value="other">Other (specify)</SelectItem>
-                </SelectContent>
-              </Select>
+                options={[
+                  { value: '100A BS 88 Fuse', label: '100A BS 88 Fuse' },
+                  { value: '80A BS 88 Fuse', label: '80A BS 88 Fuse' },
+                  { value: '63A BS 88 Fuse', label: '63A BS 88 Fuse' },
+                  { value: '32A BS 1361 Fuse', label: '32A BS 1361 Fuse' },
+                  { value: '100A MCCB', label: '100A MCCB' },
+                  { value: '80A MCCB', label: '80A MCCB' },
+                  { value: '63A MCCB', label: '63A MCCB' },
+                  { value: '100A MCB Type B', label: '100A MCB Type B' },
+                  { value: '80A MCB Type B', label: '80A MCB Type B' },
+                  { value: '63A MCB Type B', label: '63A MCB Type B' },
+                  { value: '100A MCB Type C', label: '100A MCB Type C' },
+                  { value: '80A MCB Type C', label: '80A MCB Type C' },
+                  { value: '63A MCB Type C', label: '63A MCB Type C' },
+                  { value: 'other', label: 'Other (specify)' },
+                ]}
+                placeholder="Select protective device"
+                title="Main Protective Device"
+              />
               <p className="text-xs text-muted-foreground mt-1">
                 Common protective devices per BS 7671
               </p>
@@ -298,17 +300,18 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="earthingArrangement">Earthing Arrangement *</Label>
-              <Select value={formData.earthingArrangement || ''} onValueChange={(value) => onUpdate('earthingArrangement', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="TN-S">TN-S</SelectItem>
-                  <SelectItem value="TN-C-S">TN-C-S</SelectItem>
-                  <SelectItem value="TT">TT</SelectItem>
-                  <SelectItem value="IT">IT</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.earthingArrangement || ''}
+                onValueChange={(value) => onUpdate('earthingArrangement', value)}
+                options={[
+                  { value: 'TN-S', label: 'TN-S', description: 'Separate neutral and protective conductors' },
+                  { value: 'TN-C-S', label: 'TN-C-S', description: 'Combined in supply, separate in installation (PME)' },
+                  { value: 'TT', label: 'TT', description: 'Installation earth electrode independent of supply' },
+                  { value: 'IT', label: 'IT', description: 'Isolated or impedance earthed supply' },
+                ]}
+                placeholder="Select"
+                title="Earthing Arrangement"
+              />
               {formData.earthingArrangement && (
                 <p className="text-xs text-white/70 mt-1 flex items-center gap-1">
                   <span className="w-1 h-1 rounded-full bg-white/70 block"></span>
@@ -318,20 +321,21 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
             </div>
             <div className="space-y-2">
               <Label htmlFor="earthElectrodeType">Earth Electrode Type</Label>
-              <Select value={formData.earthElectrodeType || ''} onValueChange={(value) => onUpdate('earthElectrodeType', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="rod">Rod</SelectItem>
-                  <SelectItem value="tape">Tape</SelectItem>
-                  <SelectItem value="plate">Plate</SelectItem>
-                  <SelectItem value="structural">Structural Steel</SelectItem>
-                  <SelectItem value="water-pipe">Water Pipe</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                  <SelectItem value="n/a">N/A (TN-S/TN-C-S)</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.earthElectrodeType || ''}
+                onValueChange={(value) => onUpdate('earthElectrodeType', value)}
+                options={[
+                  { value: 'rod', label: 'Rod' },
+                  { value: 'tape', label: 'Tape' },
+                  { value: 'plate', label: 'Plate' },
+                  { value: 'structural', label: 'Structural Steel' },
+                  { value: 'water-pipe', label: 'Water Pipe' },
+                  { value: 'other', label: 'Other' },
+                  { value: 'n/a', label: 'N/A (TN-S/TN-C-S)' },
+                ]}
+                placeholder="Select"
+                title="Earth Electrode Type"
+              />
               {(formData.earthingArrangement === 'TN-S' || formData.earthingArrangement === 'TN-C-S') && (
                 <p className="text-xs text-muted-foreground mt-1">
                   Usually N/A for TN systems
@@ -351,30 +355,32 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="rcdMainSwitch">RCD Main Switch</Label>
-              <Select value={formData.rcdMainSwitch || ''} onValueChange={(value) => onUpdate('rcdMainSwitch', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Yes/No" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="yes">Yes</SelectItem>
-                  <SelectItem value="no">No</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.rcdMainSwitch || ''}
+                onValueChange={(value) => onUpdate('rcdMainSwitch', value)}
+                options={[
+                  { value: 'yes', label: 'Yes' },
+                  { value: 'no', label: 'No' },
+                ]}
+                placeholder="Yes/No"
+                title="RCD Main Switch"
+              />
             </div>
             {showRCDFields && (
               <div className="space-y-2">
                 <Label htmlFor="rcdRating">RCD Rating *</Label>
-                <Select value={formData.rcdRating || ''} onValueChange={(value) => onUpdate('rcdRating', value)}>
-                  <SelectTrigger className="h-11 touch-manipulation border-white/10 focus:border-purple-500 focus:ring-purple-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                    <SelectValue placeholder="Select rating" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="30mA">30mA</SelectItem>
-                    <SelectItem value="100mA">100mA</SelectItem>
-                    <SelectItem value="300mA">300mA</SelectItem>
-                    <SelectItem value="500mA">500mA</SelectItem>
-                  </SelectContent>
-                </Select>
+                <MobileSelectPicker
+                  value={formData.rcdRating || ''}
+                  onValueChange={(value) => onUpdate('rcdRating', value)}
+                  options={[
+                    { value: '30mA', label: '30mA' },
+                    { value: '100mA', label: '100mA' },
+                    { value: '300mA', label: '300mA' },
+                    { value: '500mA', label: '500mA' },
+                  ]}
+                  placeholder="Select rating"
+                  title="RCD Rating"
+                />
                 <p className="text-xs text-red-600 mt-1 flex items-center gap-1">
                   <span className="w-1 h-1 rounded-full bg-red-400 block"></span>
                   30mA typical for domestic installations

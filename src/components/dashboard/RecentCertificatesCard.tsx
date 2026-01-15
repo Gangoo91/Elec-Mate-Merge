@@ -19,18 +19,47 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
     supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
   }, []);
 
-  const { data: reportsData = { reports: [], totalCount: 0, hasMore: false }, isLoading } = useQuery({
+  const { data: reportsData = { recent: [], completed: [] }, isLoading } = useQuery({
     queryKey: ['recent-certificates', user?.id],
     queryFn: async () => {
-      if (!user) return { reports: [], totalCount: 0, hasMore: false };
-      return await reportCloud.getUserReports(user.id, { limit: 5 });
+      if (!user) return { recent: [], completed: [] };
+
+      // Get 5 most recent (any status) for activity feed
+      const recentData = await reportCloud.getUserReports(user.id, { limit: 5 });
+
+      // Get 3 recently completed certificates separately
+      const { data: completedData } = await supabase
+        .from('reports')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('status', 'completed')
+        .is('deleted_at', null)
+        .order('updated_at', { ascending: false })
+        .limit(3);
+
+      return {
+        recent: recentData.reports,
+        completed: (completedData || []).map(r => ({
+          report_id: r.report_id,
+          report_type: r.report_type,
+          status: r.status,
+          client_name: r.client_name,
+          installation_address: r.installation_address,
+          updated_at: r.updated_at,
+          created_at: r.created_at,
+        })) as CloudReport[]
+      };
     },
     enabled: !!user,
     staleTime: 10 * 1000,
     refetchOnWindowFocus: true,
   });
 
-  const reports = reportsData.reports;
+  const recentReports = reportsData.recent;
+  // Filter completed from recent to avoid duplicates in the completed section
+  const completedReports = reportsData.completed.filter(
+    c => !recentReports.some(r => r.report_id === c.report_id)
+  );
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -115,7 +144,7 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
     );
   }
 
-  if (reports.length === 0) {
+  if (recentReports.length === 0 && completedReports.length === 0) {
     return (
       <Card className="bg-card border border-elec-yellow/30">
         <CardHeader className="px-3 md:px-4 lg:px-6 pb-2 md:pb-3 lg:pb-4">
@@ -137,6 +166,47 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
     );
   }
 
+  // Helper to render a certificate card
+  const renderCertificateCard = (report: CloudReport) => (
+    <div
+      key={report.report_id}
+      className="p-3 md:p-4 rounded-lg border border-elec-yellow/30 hover:border-elec-yellow/50 bg-background/50 hover:bg-background transition-all cursor-pointer group active:scale-[0.98] touch-manipulation"
+      onClick={() => handleOpenCertificate(report)}
+    >
+      <div className="flex items-start justify-between gap-2 md:gap-3">
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-wrap items-center gap-1 md:gap-1.5 mb-1.5 md:mb-2">
+            <Badge variant="outline" className="text-xs whitespace-nowrap">
+              {getCertificateTypeLabel(report.report_type)}
+            </Badge>
+            {getStatusBadge(report.status)}
+          </div>
+          <p className="font-medium text-sm md:text-base truncate mb-0.5">
+            {report.client_name || 'Untitled'}
+          </p>
+          <p className="text-xs md:text-sm text-muted-foreground truncate line-clamp-1 mb-1 md:mb-1.5">
+            {report.installation_address || 'No address'}
+          </p>
+          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+            <Clock className="h-3 w-3 flex-shrink-0" />
+            <span>{formatTimeAgo(report.updated_at)}</span>
+          </div>
+        </div>
+        <Button
+          size="sm"
+          variant="ghost"
+          className="hidden sm:flex flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity text-xs md:text-sm"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleOpenCertificate(report);
+          }}
+        >
+          Open <ArrowRight className="h-3 w-3 ml-1" />
+        </Button>
+      </div>
+    </div>
+  );
+
   return (
     <Card className="bg-card border border-elec-yellow/30">
       <CardHeader className="pb-2 md:pb-3 lg:pb-4 px-3 md:px-4 lg:px-6">
@@ -155,46 +225,34 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
           </Button>
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-2 md:space-y-3 px-3 md:px-4 lg:px-6 pb-3 md:pb-4 lg:pb-6">
-        {reports.map((report) => (
-          <div
-            key={report.report_id}
-            className="p-3 md:p-4 rounded-lg border border-elec-yellow/30 hover:border-elec-yellow/50 bg-background/50 hover:bg-background transition-all cursor-pointer group active:scale-[0.98] touch-manipulation"
-            onClick={() => handleOpenCertificate(report)}
-          >
-            <div className="flex items-start justify-between gap-2 md:gap-3">
-              <div className="flex-1 min-w-0">
-                <div className="flex flex-wrap items-center gap-1 md:gap-1.5 mb-1.5 md:mb-2">
-                  <Badge variant="outline" className="text-xs whitespace-nowrap">
-                    {getCertificateTypeLabel(report.report_type)}
-                  </Badge>
-                  {getStatusBadge(report.status)}
-                </div>
-                <p className="font-medium text-sm md:text-base truncate mb-0.5">
-                  {report.client_name || 'Untitled'}
-                </p>
-                <p className="text-xs md:text-sm text-muted-foreground truncate line-clamp-1 mb-1 md:mb-1.5">
-                  {report.installation_address || 'No address'}
-                </p>
-                <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <Clock className="h-3 w-3 flex-shrink-0" />
-                  <span>{formatTimeAgo(report.updated_at)}</span>
-                </div>
-              </div>
-              <Button
-                size="sm"
-                variant="ghost"
-                className="hidden sm:flex flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity text-xs md:text-sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleOpenCertificate(report);
-                }}
-              >
-                Open <ArrowRight className="h-3 w-3 ml-1" />
-              </Button>
+      <CardContent className="space-y-4 px-3 md:px-4 lg:px-6 pb-3 md:pb-4 lg:pb-6">
+        {/* Recently Completed Section */}
+        {completedReports.length > 0 && (
+          <div className="space-y-2">
+            <h4 className="text-xs font-medium text-green-400 uppercase tracking-wide flex items-center gap-1.5">
+              <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
+              Recently Completed
+            </h4>
+            <div className="space-y-2 md:space-y-3">
+              {completedReports.map(renderCertificateCard)}
             </div>
           </div>
-        ))}
+        )}
+
+        {/* Recent Activity Section */}
+        {recentReports.length > 0 && (
+          <div className="space-y-2">
+            {completedReports.length > 0 && (
+              <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-yellow-400" />
+                Recent Activity
+              </h4>
+            )}
+            <div className="space-y-2 md:space-y-3">
+              {recentReports.map(renderCertificateCard)}
+            </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

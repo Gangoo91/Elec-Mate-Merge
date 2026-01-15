@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Checkbox } from '@/components/ui/checkbox';
 import { AlertTriangle, CheckCircle, XCircle, FileText, Trash2, Minus, Info } from 'lucide-react';
 import { useParams } from 'react-router-dom';
@@ -166,21 +166,16 @@ const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove }: 
         </div>
         <div>
           <Label className="mb-1.5 block">Classification</Label>
-          <Select
+          <MobileSelectPicker
             value={defect.defectCode}
-            onValueChange={(value: 'C1' | 'C2' | 'C3' | 'FI' | 'N/A' | 'LIM') => onUpdate(defect.id, 'defectCode', value)}
-          >
-            <SelectTrigger className="h-11 text-base touch-manipulation">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]" position="popper">
-              {defectCodes.map((code) => (
-                <SelectItem key={code.code} value={code.code}>
-                  {code.code} - {code.description}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            onValueChange={(value) => onUpdate(defect.id, 'defectCode', value as 'C1' | 'C2' | 'C3' | 'FI' | 'N/A' | 'LIM')}
+            options={defectCodes.map((code) => ({
+              value: code.code,
+              label: `${code.code} - ${code.description}`,
+            }))}
+            placeholder="Select classification"
+            title="Defect Classification"
+          />
         </div>
         <div>
           <Label className="mb-1.5 block">

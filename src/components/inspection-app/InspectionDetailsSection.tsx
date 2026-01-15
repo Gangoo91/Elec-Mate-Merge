@@ -4,7 +4,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { Calendar, Calculator, ClipboardList } from 'lucide-react';
@@ -96,18 +96,19 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
         <div className="space-y-3 sm:space-y-4">
           <div className="space-y-2">
             <Label htmlFor="purposeOfInspection">Purpose of Inspection *</Label>
-            <Select value={formData.purposeOfInspection || ''} onValueChange={(value) => onUpdate('purposeOfInspection', value)}>
-              <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-blue-500 focus:ring-blue-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                <SelectValue placeholder="Select purpose" />
-              </SelectTrigger>
-              <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                <SelectItem value="periodic">Periodic Inspection</SelectItem>
-                <SelectItem value="change-of-occupancy">Change of Occupancy</SelectItem>
-                <SelectItem value="change-of-use">Change of Use</SelectItem>
-                <SelectItem value="extension">Extension to Installation</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
+            <MobileSelectPicker
+              value={formData.purposeOfInspection || ''}
+              onValueChange={(value) => onUpdate('purposeOfInspection', value)}
+              options={[
+                { value: 'periodic', label: 'Periodic Inspection' },
+                { value: 'change-of-occupancy', label: 'Change of Occupancy' },
+                { value: 'change-of-use', label: 'Change of Use' },
+                { value: 'extension', label: 'Extension to Installation' },
+                { value: 'other', label: 'Other' },
+              ]}
+              placeholder="Select purpose"
+              title="Purpose of Inspection"
+            />
           </div>
           {isOtherPurposeRequired && (
             <div className="space-y-2">
@@ -155,18 +156,19 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
             </div>
             <div className="space-y-2">
               <Label htmlFor="inspectionInterval">Inspection Interval (Years) *</Label>
-              <Select value={formData.inspectionInterval || ''} onValueChange={(value) => onUpdate('inspectionInterval', value)}>
-                <SelectTrigger className="h-11 touch-manipulation border-white/30 focus:border-blue-500 focus:ring-blue-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                  <SelectValue placeholder="Select interval" />
-                </SelectTrigger>
-                <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                  <SelectItem value="1">1 Year</SelectItem>
-                  <SelectItem value="3">3 Years</SelectItem>
-                  <SelectItem value="5">5 Years</SelectItem>
-                  <SelectItem value="10">10 Years</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.inspectionInterval || ''}
+                onValueChange={(value) => onUpdate('inspectionInterval', value)}
+                options={[
+                  { value: '1', label: '1 Year' },
+                  { value: '3', label: '3 Years' },
+                  { value: '5', label: '5 Years' },
+                  { value: '10', label: '10 Years' },
+                  { value: 'other', label: 'Other' },
+                ]}
+                placeholder="Select interval"
+                title="Inspection Interval"
+              />
               {formData.description && (
                 <p className="text-xs text-blue-600 mt-1 flex items-center gap-1">
                   <div className="w-1 h-1 rounded-full bg-blue-400"></div>

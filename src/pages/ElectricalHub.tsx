@@ -6,7 +6,7 @@
  * Yellow/gold theme throughout.
  */
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -38,6 +38,10 @@ import { useDashboardData } from '@/hooks/useDashboardData';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import { useAuth } from '@/contexts/AuthContext';
 import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
+import { SetupWizard } from '@/components/onboarding/SetupWizard';
+import { SetupIncompleteBanner } from '@/components/onboarding/SetupIncompleteBanner';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 // Animation variants
 const containerVariants = {
@@ -502,6 +506,36 @@ const additionalResources: ToolCardProps[] = [
 ];
 
 const ElectricalHub = () => {
+  const [showSetupWizard, setShowSetupWizard] = useState(false);
+
+  // Check if onboarding is complete
+  const { data: profile } = useQuery({
+    queryKey: ['onboarding-check'],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return null;
+
+      const { data } = await supabase
+        .from('profiles')
+        .select('onboarding_completed')
+        .eq('id', user.id)
+        .single();
+
+      return data;
+    },
+  });
+
+  useEffect(() => {
+    // Show wizard if onboarding not complete and not already shown this session
+    if (profile && !profile.onboarding_completed) {
+      const hasSeenWizard = sessionStorage.getItem('setup_wizard_shown');
+      if (!hasSeenWizard) {
+        setShowSetupWizard(true);
+        sessionStorage.setItem('setup_wizard_shown', 'true');
+      }
+    }
+  }, [profile]);
+
   return (
     <div className="min-h-screen bg-[hsl(240,5.9%,10%)] flex flex-col safe-area-inset-top">
       <div className="flex-1 overflow-y-auto momentum-scroll-y overscroll-contain">
@@ -538,6 +572,11 @@ const ElectricalHub = () => {
             {/* Elec-ID Banner */}
             <motion.section variants={itemVariants} className="px-4 sm:px-0">
               <ElecIdBanner variant="electrician" />
+            </motion.section>
+
+            {/* Setup Incomplete Banner */}
+            <motion.section variants={itemVariants} className="px-4 sm:px-0">
+              <SetupIncompleteBanner />
             </motion.section>
 
             {/* Featured AI Card */}
@@ -586,6 +625,13 @@ const ElectricalHub = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Setup Wizard */}
+      <SetupWizard
+        isOpen={showSetupWizard}
+        onComplete={() => setShowSetupWizard(false)}
+        onSkip={() => setShowSetupWizard(false)}
+      />
     </div>
   );
 };

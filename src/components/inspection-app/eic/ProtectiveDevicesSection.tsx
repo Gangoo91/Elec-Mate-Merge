@@ -3,7 +3,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Shield } from 'lucide-react';
 import InputWithValidation from './InputWithValidation';
 
@@ -25,21 +25,19 @@ const ProtectiveDevicesSection: React.FC<ProtectiveDevicesSectionProps> = ({ for
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <Label htmlFor="mainProtectiveDevice">Type *</Label>
-            <Select
+            <MobileSelectPicker
               value={formData.mainProtectiveDevice || ''}
               onValueChange={(value) => onUpdate('mainProtectiveDevice', value)}
-            >
-              <SelectTrigger className="mt-1">
-                <SelectValue placeholder="Device type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="MCB">MCB</SelectItem>
-                <SelectItem value="RCBO">RCBO</SelectItem>
-                <SelectItem value="fuse">Fuse</SelectItem>
-                <SelectItem value="isolator">Isolator</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { value: 'MCB', label: 'MCB' },
+                { value: 'RCBO', label: 'RCBO' },
+                { value: 'fuse', label: 'Fuse' },
+                { value: 'isolator', label: 'Isolator' },
+                { value: 'other', label: 'Other' },
+              ]}
+              placeholder="Device type"
+              title="Main Protective Device Type"
+            />
           </div>
           
           <InputWithValidation

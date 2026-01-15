@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Separator } from '@/components/ui/separator';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
@@ -50,55 +50,58 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <Label htmlFor="mainProtectiveDevice" className="font-medium text-sm">Device Type *</Label>
-              <Select value={formData.mainProtectiveDevice || ''} onValueChange={(value) => onUpdate('mainProtectiveDevice', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select device type" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  <SelectItem value="mcb">MCB</SelectItem>
-                  <SelectItem value="mccb">MCCB</SelectItem>
-                  <SelectItem value="fuse">Fuse</SelectItem>
-                  <SelectItem value="switch-fuse">Switch Fuse</SelectItem>
-                  <SelectItem value="isolator">Isolator</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.mainProtectiveDevice || ''}
+                onValueChange={(value) => onUpdate('mainProtectiveDevice', value)}
+                options={[
+                  { value: 'mcb', label: 'MCB' },
+                  { value: 'mccb', label: 'MCCB' },
+                  { value: 'fuse', label: 'Fuse' },
+                  { value: 'switch-fuse', label: 'Switch Fuse' },
+                  { value: 'isolator', label: 'Isolator' },
+                ]}
+                placeholder="Select device type"
+                title="Device Type"
+              />
             </div>
             <div>
               <Label htmlFor="mainSwitchRating" className="font-medium text-sm">Rating (A) *</Label>
-              <Select value={formData.mainSwitchRating || ''} onValueChange={(value) => onUpdate('mainSwitchRating', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select rating" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  <SelectItem value="16">16A</SelectItem>
-                  <SelectItem value="20">20A</SelectItem>
-                  <SelectItem value="25">25A</SelectItem>
-                  <SelectItem value="32">32A</SelectItem>
-                  <SelectItem value="40">40A</SelectItem>
-                  <SelectItem value="50">50A</SelectItem>
-                  <SelectItem value="63">63A</SelectItem>
-                  <SelectItem value="80">80A</SelectItem>
-                  <SelectItem value="100">100A</SelectItem>
-                  <SelectItem value="125">125A</SelectItem>
-                  <SelectItem value="160">160A</SelectItem>
-                  <SelectItem value="200">200A</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.mainSwitchRating || ''}
+                onValueChange={(value) => onUpdate('mainSwitchRating', value)}
+                options={[
+                  { value: '16', label: '16A' },
+                  { value: '20', label: '20A' },
+                  { value: '25', label: '25A' },
+                  { value: '32', label: '32A' },
+                  { value: '40', label: '40A' },
+                  { value: '50', label: '50A' },
+                  { value: '63', label: '63A' },
+                  { value: '80', label: '80A' },
+                  { value: '100', label: '100A' },
+                  { value: '125', label: '125A' },
+                  { value: '160', label: '160A' },
+                  { value: '200', label: '200A' },
+                ]}
+                placeholder="Select rating"
+                title="Rating (A)"
+              />
             </div>
             <div>
               <Label htmlFor="breakingCapacity" className="font-medium text-sm">Breaking Capacity (kA) *</Label>
-              <Select value={formData.breakingCapacity || ''} onValueChange={(value) => onUpdate('breakingCapacity', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select capacity" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  <SelectItem value="3">3kA</SelectItem>
-                  <SelectItem value="6">6kA</SelectItem>
-                  <SelectItem value="10">10kA</SelectItem>
-                  <SelectItem value="16">16kA</SelectItem>
-                  <SelectItem value="25">25kA</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.breakingCapacity || ''}
+                onValueChange={(value) => onUpdate('breakingCapacity', value)}
+                options={[
+                  { value: '3', label: '3kA' },
+                  { value: '6', label: '6kA' },
+                  { value: '10', label: '10kA' },
+                  { value: '16', label: '16kA' },
+                  { value: '25', label: '25kA' },
+                ]}
+                placeholder="Select capacity"
+                title="Breaking Capacity"
+              />
             </div>
           </div>
         </div>
@@ -114,46 +117,49 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <Label htmlFor="rcdMainSwitch" className="font-medium text-sm">RCD Main Switch</Label>
-              <Select value={formData.rcdMainSwitch || ''} onValueChange={handleRCDMainSwitchChange}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select RCD type" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  <SelectItem value="yes">Yes</SelectItem>
-                  <SelectItem value="no">No</SelectItem>
-                  <SelectItem value="rcbo">RCBO</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.rcdMainSwitch || ''}
+                onValueChange={handleRCDMainSwitchChange}
+                options={[
+                  { value: 'yes', label: 'Yes' },
+                  { value: 'no', label: 'No' },
+                  { value: 'rcbo', label: 'RCBO' },
+                ]}
+                placeholder="Select RCD type"
+                title="RCD Main Switch"
+              />
             </div>
-            
+
             {showRCDFields ? (
               <>
                 <div>
                   <Label htmlFor="rcdRating" className="font-medium text-sm">RCD Rating (mA)</Label>
-                  <Select value={formData.rcdRating || ''} onValueChange={(value) => onUpdate('rcdRating', value)}>
-                    <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select rating" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                      <SelectItem value="30">30mA</SelectItem>
-                      <SelectItem value="100">100mA</SelectItem>
-                      <SelectItem value="300">300mA</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.rcdRating || ''}
+                    onValueChange={(value) => onUpdate('rcdRating', value)}
+                    options={[
+                      { value: '30', label: '30mA' },
+                      { value: '100', label: '100mA' },
+                      { value: '300', label: '300mA' },
+                    ]}
+                    placeholder="Select rating"
+                    title="RCD Rating"
+                  />
                 </div>
                 <div>
                   <Label htmlFor="rcdType" className="font-medium text-sm">RCD Type</Label>
-                  <Select value={formData.rcdType || ''} onValueChange={(value) => onUpdate('rcdType', value)}>
-                    <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                      <SelectItem value="ac">AC Type</SelectItem>
-                      <SelectItem value="a">A Type</SelectItem>
-                      <SelectItem value="b">B Type</SelectItem>
-                      <SelectItem value="f">F Type</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.rcdType || ''}
+                    onValueChange={(value) => onUpdate('rcdType', value)}
+                    options={[
+                      { value: 'ac', label: 'AC Type' },
+                      { value: 'a', label: 'A Type' },
+                      { value: 'b', label: 'B Type' },
+                      { value: 'f', label: 'F Type' },
+                    ]}
+                    placeholder="Select type"
+                    title="RCD Type"
+                  />
                 </div>
               </>
             ) : (
@@ -179,54 +185,57 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <Label htmlFor="boardSize" className="font-medium text-sm">Number of Ways</Label>
-              <Select value={formData.boardSize || ''} onValueChange={(value) => onUpdate('boardSize', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select number of ways" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  <SelectItem value="4">4 Way</SelectItem>
-                  <SelectItem value="6">6 Way</SelectItem>
-                  <SelectItem value="8">8 Way</SelectItem>
-                  <SelectItem value="10">10 Way</SelectItem>
-                  <SelectItem value="12">12 Way</SelectItem>
-                  <SelectItem value="16">16 Way</SelectItem>
-                  <SelectItem value="18">18 Way</SelectItem>
-                  <SelectItem value="20">20 Way</SelectItem>
-                  <SelectItem value="24">24 Way</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.boardSize || ''}
+                onValueChange={(value) => onUpdate('boardSize', value)}
+                options={[
+                  { value: '4', label: '4 Way' },
+                  { value: '6', label: '6 Way' },
+                  { value: '8', label: '8 Way' },
+                  { value: '10', label: '10 Way' },
+                  { value: '12', label: '12 Way' },
+                  { value: '16', label: '16 Way' },
+                  { value: '18', label: '18 Way' },
+                  { value: '20', label: '20 Way' },
+                  { value: '24', label: '24 Way' },
+                ]}
+                placeholder="Select number of ways"
+                title="Number of Ways"
+              />
             </div>
             <div>
               <Label htmlFor="boardType" className="font-medium text-sm">Board Type</Label>
-              <Select value={formData.boardType || ''} onValueChange={(value) => onUpdate('boardType', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select board type" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  <SelectItem value="metal">Metal Clad</SelectItem>
-                  <SelectItem value="plastic">Plastic</SelectItem>
-                  <SelectItem value="flush">Flush Mount</SelectItem>
-                  <SelectItem value="surface">Surface Mount</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.boardType || ''}
+                onValueChange={(value) => onUpdate('boardType', value)}
+                options={[
+                  { value: 'metal', label: 'Metal Clad' },
+                  { value: 'plastic', label: 'Plastic' },
+                  { value: 'flush', label: 'Flush Mount' },
+                  { value: 'surface', label: 'Surface Mount' },
+                ]}
+                placeholder="Select board type"
+                title="Board Type"
+              />
             </div>
             <div>
               <Label htmlFor="boardLocation" className="font-medium text-sm">Board Location</Label>
-              <Select value={formData.boardLocation || ''} onValueChange={(value) => onUpdate('boardLocation', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select location" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  <SelectItem value="kitchen">Kitchen</SelectItem>
-                  <SelectItem value="utility">Utility Room</SelectItem>
-                  <SelectItem value="garage">Garage</SelectItem>
-                  <SelectItem value="hallway">Hallway</SelectItem>
-                  <SelectItem value="cupboard">Cupboard</SelectItem>
-                  <SelectItem value="basement">Basement</SelectItem>
-                  <SelectItem value="plant-room">Plant Room</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.boardLocation || ''}
+                onValueChange={(value) => onUpdate('boardLocation', value)}
+                options={[
+                  { value: 'kitchen', label: 'Kitchen' },
+                  { value: 'utility', label: 'Utility Room' },
+                  { value: 'garage', label: 'Garage' },
+                  { value: 'hallway', label: 'Hallway' },
+                  { value: 'cupboard', label: 'Cupboard' },
+                  { value: 'basement', label: 'Basement' },
+                  { value: 'plant-room', label: 'Plant Room' },
+                  { value: 'other', label: 'Other' },
+                ]}
+                placeholder="Select location"
+                title="Board Location"
+              />
             </div>
           </div>
         </div>
@@ -242,68 +251,68 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="intakeCableSize" className="font-medium text-sm">Intake Cable Size</Label>
-              <Select value={formData.intakeCableSize || ''} onValueChange={(value) => onUpdate('intakeCableSize', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select cable size" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  {cableSizeOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                  <SelectItem value="custom">Other/Custom</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.intakeCableSize || ''}
+                onValueChange={(value) => onUpdate('intakeCableSize', value)}
+                options={[
+                  ...cableSizeOptions.map((option) => ({ value: option.value, label: option.label })),
+                  { value: 'custom', label: 'Other/Custom' },
+                ]}
+                placeholder="Select cable size"
+                title="Intake Cable Size"
+              />
             </div>
             <div>
               <Label htmlFor="intakeCableType" className="font-medium text-sm">Intake Cable Type</Label>
-              <Select value={formData.intakeCableType || ''} onValueChange={(value) => onUpdate('intakeCableType', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select cable type" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  <SelectItem value="pvc">PVC</SelectItem>
-                  <SelectItem value="xlpe">XLPE</SelectItem>
-                  <SelectItem value="paper">Paper Insulated</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.intakeCableType || ''}
+                onValueChange={(value) => onUpdate('intakeCableType', value)}
+                options={[
+                  { value: 'pvc', label: 'PVC' },
+                  { value: 'xlpe', label: 'XLPE' },
+                  { value: 'paper', label: 'Paper Insulated' },
+                  { value: 'other', label: 'Other' },
+                ]}
+                placeholder="Select cable type"
+                title="Intake Cable Type"
+              />
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="tailsSize" className="font-medium text-sm">Meter Tails Size</Label>
-              <Select value={formData.tailsSize || ''} onValueChange={(value) => onUpdate('tailsSize', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select tails size" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  <SelectItem value="16mm">16mm²</SelectItem>
-                  <SelectItem value="25mm">25mm²</SelectItem>
-                  <SelectItem value="35mm">35mm²</SelectItem>
-                  <SelectItem value="50mm">50mm²</SelectItem>
-                  <SelectItem value="custom">Other/Custom</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.tailsSize || ''}
+                onValueChange={(value) => onUpdate('tailsSize', value)}
+                options={[
+                  { value: '16mm', label: '16mm²' },
+                  { value: '25mm', label: '25mm²' },
+                  { value: '35mm', label: '35mm²' },
+                  { value: '50mm', label: '50mm²' },
+                  { value: 'custom', label: 'Other/Custom' },
+                ]}
+                placeholder="Select tails size"
+                title="Meter Tails Size"
+              />
             </div>
             <div>
               <Label htmlFor="tailsLength" className="font-medium text-sm">Meter Tails Length</Label>
-              <Select value={formData.tailsLength || ''} onValueChange={(value) => onUpdate('tailsLength', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                  <SelectValue placeholder="Select length" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                  <SelectItem value="1m">1m</SelectItem>
-                  <SelectItem value="1.5m">1.5m</SelectItem>
-                  <SelectItem value="2m">2m</SelectItem>
-                  <SelectItem value="2.5m">2.5m</SelectItem>
-                  <SelectItem value="3m">3m</SelectItem>
-                  <SelectItem value="4m">4m</SelectItem>
-                  <SelectItem value="5m">5m</SelectItem>
-                  <SelectItem value="custom">Custom Length</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.tailsLength || ''}
+                onValueChange={(value) => onUpdate('tailsLength', value)}
+                options={[
+                  { value: '1m', label: '1m' },
+                  { value: '1.5m', label: '1.5m' },
+                  { value: '2m', label: '2m' },
+                  { value: '2.5m', label: '2.5m' },
+                  { value: '3m', label: '3m' },
+                  { value: '4m', label: '4m' },
+                  { value: '5m', label: '5m' },
+                  { value: 'custom', label: 'Custom Length' },
+                ]}
+                placeholder="Select length"
+                title="Meter Tails Length"
+              />
             </div>
           </div>
         </div>

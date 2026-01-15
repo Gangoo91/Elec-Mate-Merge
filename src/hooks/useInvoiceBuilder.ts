@@ -1,15 +1,52 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Invoice, InvoiceItem, InvoiceSettings } from '@/types/invoice';
 import { Quote } from '@/types/quote';
 import { toast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
 import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
+import { supabase } from '@/integrations/supabase/client';
+import type { CompanyProfile } from '@/types/company';
+
+// Helper to safely get item price with NaN protection
+const safeItemPrice = (item: InvoiceItem): number => {
+  const price = item.totalPrice ?? ((item.quantity || 0) * (item.unitPrice || 0));
+  return isNaN(price) ? 0 : price;
+};
+
+// Helper to calculate safe subtotal from items
+const calculateSafeSubtotal = (items: InvoiceItem[]): number => {
+  return items.reduce((sum, item) => sum + safeItemPrice(item), 0);
+};
 
 const generateInvoiceNumber = async (): Promise<string> => {
   return await generateSequentialInvoiceNumber();
 };
 
-const createInvoiceFromQuote = (quote: Quote): Partial<Invoice> => {
+// Hook to fetch company profile for invoice conversion
+export function useCompanyProfileForInvoice() {
+  return useQuery({
+    queryKey: ['company-profile-invoice'],
+    queryFn: async (): Promise<CompanyProfile | null> => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return null;
+
+      const { data, error } = await supabase
+        .from('company_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      if (error) return null;
+      return data as CompanyProfile;
+    },
+  });
+}
+
+export const createInvoiceFromQuote = (
+  quote: Quote,
+  companyProfile: CompanyProfile | null = null
+): Partial<Invoice> => {
   const invoiceDate = new Date();
   const dueDate = new Date();
   dueDate.setDate(dueDate.getDate() + 30); // 30 days payment terms
@@ -31,8 +68,9 @@ const createInvoiceFromQuote = (quote: Quote): Partial<Invoice> => {
     })),
     settings: {
       ...quote.settings,
-      paymentTerms: '30 days',
+      paymentTerms: companyProfile?.payment_terms || '30 days',
       dueDate: dueDate,
+      bankDetails: companyProfile?.bank_details || undefined,
     },
   };
 };
@@ -81,6 +119,8 @@ const createEmptyInvoice = (): Partial<Invoice> => {
 };
 
 export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial<Invoice>) => {
+  const { data: companyProfile } = useCompanyProfileForInvoice();
+
   const [invoice, setInvoice] = useState<Partial<Invoice>>(() => {
     // If editing an existing invoice, preserve it
     if (existingInvoice) {
@@ -88,11 +128,25 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
     }
     // Otherwise create from quote
     if (sourceQuote) {
-      return createInvoiceFromQuote(sourceQuote);
+      return createInvoiceFromQuote(sourceQuote, null);  // Will be updated when profile loads
     }
     // Create empty invoice for standalone creation
     return createEmptyInvoice();
   });
+
+  // Update invoice with company profile when it loads (only for quote conversions)
+  useEffect(() => {
+    if (sourceQuote && companyProfile && !existingInvoice) {
+      setInvoice(prev => ({
+        ...prev,
+        settings: {
+          ...prev.settings!,
+          paymentTerms: companyProfile.payment_terms || prev.settings!.paymentTerms,
+          bankDetails: companyProfile.bank_details || prev.settings!.bankDetails,
+        },
+      }));
+    }
+  }, [companyProfile, sourceQuote, existingInvoice]);
 
   const addInvoiceItem = useCallback((item: Omit<InvoiceItem, 'id' | 'totalPrice'>) => {
     const newItem: InvoiceItem = {
@@ -111,7 +165,7 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
       
       // Recalculate totals with updated items
       const allItems = [...(updatedInvoice.items || []), ...(updatedInvoice.additional_invoice_items || [])];
-      const subtotal = allItems.reduce((sum, item) => sum + item.totalPrice, 0);
+      const subtotal = calculateSafeSubtotal(allItems);
       const settings = updatedInvoice.settings!;
       const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
       const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
@@ -139,21 +193,21 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
           item.id === itemId ? { 
             ...item, 
             ...updates,
-            totalPrice: (updates.quantity ?? item.quantity) * (updates.unitPrice ?? item.unitPrice)
+            totalPrice: ((updates.quantity ?? item.quantity) || 0) * ((updates.unitPrice ?? item.unitPrice) || 0)
           } : item
         ),
         additional_invoice_items: prev.additional_invoice_items?.map(item =>
           item.id === itemId ? { 
             ...item, 
             ...updates,
-            totalPrice: (updates.quantity ?? item.quantity) * (updates.unitPrice ?? item.unitPrice)
+            totalPrice: ((updates.quantity ?? item.quantity) || 0) * ((updates.unitPrice ?? item.unitPrice) || 0)
           } : item
         ),
       };
 
       // Recalculate totals with updated items
       const allItems = [...(updatedInvoice.items || []), ...(updatedInvoice.additional_invoice_items || [])];
-      const subtotal = allItems.reduce((sum, item) => sum + item.totalPrice, 0);
+      const subtotal = calculateSafeSubtotal(allItems);
       const settings = updatedInvoice.settings!;
       const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
       const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
@@ -182,7 +236,7 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
 
       // Recalculate totals with updated items
       const allItems = [...(updatedInvoice.items || []), ...(updatedInvoice.additional_invoice_items || [])];
-      const subtotal = allItems.reduce((sum, item) => sum + item.totalPrice, 0);
+      const subtotal = calculateSafeSubtotal(allItems);
       const settings = updatedInvoice.settings!;
       const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
       const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
@@ -211,7 +265,7 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
 
       // Recalculate totals with updated settings
       const allItems = [...(updatedInvoice.items || []), ...(updatedInvoice.additional_invoice_items || [])];
-      const subtotal = allItems.reduce((sum, item) => sum + item.totalPrice, 0);
+      const subtotal = calculateSafeSubtotal(allItems);
       const updatedSettings = updatedInvoice.settings!;
       const overhead = subtotal * ((updatedSettings.overheadPercentage || 0) / 100);
       const profit = (subtotal + overhead) * ((updatedSettings.profitMargin || 0) / 100);
@@ -234,13 +288,13 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
   const recalculateTotals = useCallback(() => {
     setInvoice(prev => {
       const allItems = [...(prev.items || []), ...(prev.additional_invoice_items || [])];
-      const subtotal = allItems.reduce((sum, item) => sum + item.totalPrice, 0);
-      
+      const subtotal = calculateSafeSubtotal(allItems);
+
       const settings = prev.settings!;
-      const overhead = subtotal * (settings.overheadPercentage / 100);
-      const profit = (subtotal + overhead) * (settings.profitMargin / 100);
-      const vatAmount = settings.vatRegistered 
-        ? (subtotal + overhead + profit) * (settings.vatRate / 100)
+      const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
+      const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
+      const vatAmount = settings.vatRegistered
+        ? (subtotal + overhead + profit) * ((settings.vatRate || 0) / 100)
         : 0;
       const total = subtotal + overhead + profit + vatAmount;
 

@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, Target, CheckCircle, FileText } from "lucide-react";
+import { ArrowLeft, ArrowRight, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import useSEO from "@/hooks/useSEO";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
@@ -14,7 +11,6 @@ const Module7Section5_4 = () => {
     "Combining PPE and environmental controls for safer electrical fault investigation"
   );
 
-  // Quiz questions
   const quizQuestions = [
     {
       id: 1,
@@ -89,310 +85,274 @@ const Module7Section5_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white p-0 text-sm sm:text-base" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-4">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 7.5
+              <span className="hidden sm:inline">Back to Section 5</span>
+              <span className="sm:hidden">Back</span>
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Header */}
-        <header className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <div className="p-1.5 sm:p-2 rounded-lg ">
-              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Centered Title Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <Search className="w-4 h-4" />
+              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/60">Section 5.4</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs sm:text-sm">
-              Section 7.5.4
-            </Badge>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
+              PPE and Environmental Precautions During Fault Investigation
+            </h1>
+            <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+              Combining PPE and environmental controls for safer electrical fault investigation
+            </p>
+          </header>
+
+          {/* In 30 Seconds Summary */}
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
+            <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
+            <ul className="text-white/80 space-y-1 text-sm">
+              <li>• Verify PPE condition: gloves, glasses, footwear, FR clothing</li>
+              <li>• Confirm area is dry and well lit</li>
+              <li>• Remove trip hazards, tidy cables, ensure clear escape route</li>
+              <li>• Set up barriers/signage for public areas</li>
+            </ul>
           </div>
-          <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-            PPE and Environmental Precautions During Fault Investigation
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Combining PPE and environmental controls for safer electrical fault investigation
-          </p>
-        </header>
 
-        {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <Target className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-            <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Spot it in 30 Seconds</h2>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 text-sm sm:text-base text-white">
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-2 sm:mb-3">In 30 seconds</p>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>Verify PPE condition: gloves, glasses, footwear, FR clothing</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>Confirm area is dry and well lit</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>Remove trip hazards, tidy cables, ensure clear escape route</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span>Set up barriers/signage for public areas</span>
-                </li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-elec-yellow/20">
-              <p className="font-medium mb-2 sm:mb-3">Spot it / Use it / Check it</p>
-              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Spot:</strong> Wet floors/condensation, poor lighting, confined space, cluttered area</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Use:</strong> Insulated gloves, safety glasses, protective footwear, FR clothing</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-white">•</span>
-                  <span><strong>Check:</strong> Area dry, adequate lighting, barriers in place, safe footing</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+          {/* Introduction */}
+          <section className="mb-10">
+            <p className="text-white/80 leading-relaxed">
+              Even with the correct test equipment, electrical fault investigation remains hazardous work. The risks are not only from electricity itself but also from the environment in which testing takes place. Wet areas, confined spaces, poor lighting, and cluttered work areas can all increase danger. Personal protective equipment (PPE) provides a final layer of protection against shock, burns, and injury, while good environmental precautions reduce the likelihood of accidents occurring in the first place. For apprentices, learning to combine PPE with safe working environments is a key professional discipline.
+            </p>
+          </section>
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Introduction</h2>
-          <p className="text-sm sm:text-base text-white mb-4">
-            Even with the correct test equipment, electrical fault investigation remains hazardous work. The risks are not only from electricity itself but also from the environment in which testing takes place. Wet areas, confined spaces, poor lighting, and cluttered work areas can all increase danger. Personal protective equipment (PPE) provides a final layer of protection against shock, burns, and injury, while good environmental precautions reduce the likelihood of accidents occurring in the first place. For apprentices, learning to combine PPE with safe working environments is a key professional discipline.
-          </p>
-        </Card>
-
-        {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Learning Outcomes</h2>
-          <p className="text-sm sm:text-base text-white mb-3 sm:mb-4">By the end of this subsection, you should be able to:</p>
-          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white">
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Explain why PPE and environmental safety are vital during fault investigation</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Identify the main items of PPE used in electrical work</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Describe environmental checks that must be carried out before testing begins</span>
-            </li>
-          </ul>
-        </Card>
-
-        {/* Content / Learning */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Content / Learning</h2>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Learning Outcomes
+            </h2>
+            <p className="text-white/80 mb-4">By the end of this subsection, you should be able to:</p>
+            <ul className="space-y-2 text-white/80">
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">✓</span>
+                <span>Explain why PPE and environmental safety are vital during fault investigation</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">✓</span>
+                <span>Identify the main items of PPE used in electrical work</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow">✓</span>
+                <span>Describe environmental checks that must be carried out before testing begins</span>
+              </li>
+            </ul>
+          </section>
 
           {/* Section 1 — PPE Essentials */}
-          <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-elec-yellow ">
-              <div className="flex items-start gap-3 mb-4">
-                <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-4 text-base">PPE Essentials and Their Purpose</h3>
-                  
-                  <div className="space-y-4 text-xs sm:text-sm text-white">
-                    <p><strong>Insulated gloves:</strong> Reduce the chance of electric shock by providing a barrier between hands and live conductors. Must be regularly inspected for holes, tears, or degradation. Different voltage ratings available - ensure gloves match the system voltage being worked on.</p>
-                    
-                    <p><strong>Safety glasses:</strong> Protect eyes from sparks, flying debris, and molten metal particles that can occur during arc faults. Essential when working near switchgear or when probing live circuits. Side shields provide additional protection from peripheral hazards.</p>
-                    
-                    <p><strong>Protective footwear:</strong> Prevents earthing through the body by providing electrical insulation from ground. Must have non-conductive soles and be free from metal components that could create conductive paths. Regular inspection for sole damage critical.</p>
-                    
-                    <p><strong>Flame-retardant clothing:</strong> Limits burn injuries in the event of an arc fault by self-extinguishing rather than continuing to burn. Made from materials that do not melt and stick to skin. Essential in higher-risk environments like distribution boards and industrial installations.</p>
-                  </div>
-                </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              PPE Essentials and Their Purpose
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-4">
+              <div className="space-y-4 text-sm text-white/80">
+                <p><strong className="text-white">Insulated gloves:</strong> Reduce the chance of electric shock by providing a barrier between hands and live conductors. Must be regularly inspected for holes, tears, or degradation. Different voltage ratings available - ensure gloves match the system voltage being worked on.</p>
+
+                <p><strong className="text-white">Safety glasses:</strong> Protect eyes from sparks, flying debris, and molten metal particles that can occur during arc faults. Essential when working near switchgear or when probing live circuits. Side shields provide additional protection from peripheral hazards.</p>
+
+                <p><strong className="text-white">Protective footwear:</strong> Prevents earthing through the body by providing electrical insulation from ground. Must have non-conductive soles and be free from metal components that could create conductive paths. Regular inspection for sole damage critical.</p>
+
+                <p><strong className="text-white">Flame-retardant clothing:</strong> Limits burn injuries in the event of an arc fault by self-extinguishing rather than continuing to burn. Made from materials that do not melt and stick to skin. Essential in higher-risk environments like distribution boards and industrial installations.</p>
               </div>
             </div>
-          </section>
 
-          <InlineCheck
-            id="ppe-flame-retardant"
-            question="What is the primary purpose of flame-retardant clothing during testing?"
-            options={["To stay warm", "To look professional", "To reduce burn injury in an arc fault", "To be visible to others"]}
-            correctIndex={2}
-            explanation="Flame-retardant clothing is specifically designed to self-extinguish and limit burn injuries if an electrical arc fault occurs during testing, preventing the clothing from continuing to burn."
-          />
+            <InlineCheck
+              id="ppe-flame-retardant"
+              question="What is the primary purpose of flame-retardant clothing during testing?"
+              options={["To stay warm", "To look professional", "To reduce burn injury in an arc fault", "To be visible to others"]}
+              correctIndex={2}
+              explanation="Flame-retardant clothing is specifically designed to self-extinguish and limit burn injuries if an electrical arc fault occurs during testing, preventing the clothing from continuing to burn."
+            />
+          </section>
 
           {/* Section 2 — Environmental Precautions */}
-          <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-green-500 ">
-              <div className="flex items-start gap-3 mb-4">
-                <span className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-green-600 dark:text-green-400 mb-4 text-base">Environmental Precautions and Risk Assessment</h3>
-                  
-                  <div className="space-y-4 text-xs sm:text-sm text-white">
-                    <p><strong>Dry working conditions:</strong> Water and electricity are a deadly combination. Check for leaks, condensation, or standing water before testing. Even damp walls or high humidity can increase shock risk significantly. If dampness cannot be eliminated, additional precautions like rubber matting are essential.</p>
-                    
-                    <p><strong>Adequate lighting:</strong> Poor lighting leads to mistakes and accidents. Ensure sufficient illumination to clearly see what you're testing, read instrument displays, and identify potential hazards. Temporary lighting may be needed in basements, roof spaces, or when main lighting is isolated.</p>
-                    
-                    <p><strong>Clear workspace:</strong> Remove trip hazards, tidy cables, and ensure adequate space to move safely without contacting live parts. Tools and equipment should be organised to prevent creating additional hazards. Keep escape routes clear in case of emergency evacuation.</p>
-                    
-                    <p><strong>Crowd control and barriers:</strong> In commercial or public environments, use barriers and warning signs to keep unauthorised people away. This protects others and prevents interruption during critical safety procedures. Barriers also create a defined safe working zone.</p>
-                  </div>
-                </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Environmental Precautions and Risk Assessment
+            </h2>
+            <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50 mb-4">
+              <div className="space-y-4 text-sm text-white/80">
+                <p><strong className="text-white">Dry working conditions:</strong> Water and electricity are a deadly combination. Check for leaks, condensation, or standing water before testing. Even damp walls or high humidity can increase shock risk significantly. If dampness cannot be eliminated, additional precautions like rubber matting are essential.</p>
+
+                <p><strong className="text-white">Adequate lighting:</strong> Poor lighting leads to mistakes and accidents. Ensure sufficient illumination to clearly see what you're testing, read instrument displays, and identify potential hazards. Temporary lighting may be needed in basements, roof spaces, or when main lighting is isolated.</p>
+
+                <p><strong className="text-white">Clear workspace:</strong> Remove trip hazards, tidy cables, and ensure adequate space to move safely without contacting live parts. Tools and equipment should be organised to prevent creating additional hazards. Keep escape routes clear in case of emergency evacuation.</p>
+
+                <p><strong className="text-white">Crowd control and barriers:</strong> In commercial or public environments, use barriers and warning signs to keep unauthorised people away. This protects others and prevents interruption during critical safety procedures. Barriers also create a defined safe working zone.</p>
               </div>
             </div>
-          </section>
 
-          <InlineCheck
-            id="environmental-water-action"
-            question="If the work area is wet, what should you do?"
-            options={["Continue carefully", "Work faster to finish quickly", "Stop, make safe with drying/rubber matting, then proceed", "Use different tools"]}
-            correctIndex={2}
-            explanation="Water significantly increases electric shock risk. Work must stop immediately, the area made safe through drying and/or installation of rubber matting, before testing can safely continue."
-          />
+            <InlineCheck
+              id="environmental-water-action"
+              question="If the work area is wet, what should you do?"
+              options={["Continue carefully", "Work faster to finish quickly", "Stop, make safe with drying/rubber matting, then proceed", "Use different tools"]}
+              correctIndex={2}
+              explanation="Water significantly increases electric shock risk. Work must stop immediately, the area made safe through drying and/or installation of rubber matting, before testing can safely continue."
+            />
+          </section>
 
           {/* Section 3 — PPE and Environment Link */}
-          <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-amber-500 ">
-              <div className="flex items-start gap-3 mb-4">
-                <span className="flex-shrink-0 w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-amber-600 dark:text-amber-400 mb-4 text-base">Understanding the PPE-Environment Connection</h3>
-                  
-                  <div className="space-y-4 text-xs sm:text-sm text-white">
-                    <p><strong>PPE is not a substitute:</strong> Personal protective equipment provides essential protection when things go wrong, but it cannot replace proper safe working practices. The best protection comes from eliminating hazards through good planning and environmental control, with PPE as the final safety barrier.</p>
-                    
-                    <p><strong>Combined approach essential:</strong> PPE and environmental safety must work together. For example, insulated gloves may reduce shock risk, but if testing in a wet basement with poor footing, the overall risk remains unacceptably high. Both the person and workplace must be prepared.</p>
-                    
-                    <p><strong>Dynamic risk assessment:</strong> Conditions can change during work. Weather may worsen, lighting may fail, or new hazards may appear. Continuously reassess both PPE effectiveness and environmental conditions throughout the job, not just at the start.</p>
-                    
-                    <p><strong>Professional responsibility:</strong> Skilled electricians understand that using PPE in unsafe environments gives false confidence. The professional approach is to control environmental risks first, then use appropriate PPE as backup protection.</p>
-                  </div>
-                </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Understanding the PPE-Environment Connection
+            </h2>
+            <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50 mb-4">
+              <div className="space-y-4 text-sm text-white/80">
+                <p><strong className="text-white">PPE is not a substitute:</strong> Personal protective equipment provides essential protection when things go wrong, but it cannot replace proper safe working practices. The best protection comes from eliminating hazards through good planning and environmental control, with PPE as the final safety barrier.</p>
+
+                <p><strong className="text-white">Combined approach essential:</strong> PPE and environmental safety must work together. For example, insulated gloves may reduce shock risk, but if testing in a wet basement with poor footing, the overall risk remains unacceptably high. Both the person and workplace must be prepared.</p>
+
+                <p><strong className="text-white">Dynamic risk assessment:</strong> Conditions can change during work. Weather may worsen, lighting may fail, or new hazards may appear. Continuously reassess both PPE effectiveness and environmental conditions throughout the job, not just at the start.</p>
+
+                <p><strong className="text-white">Professional responsibility:</strong> Skilled electricians understand that using PPE in unsafe environments gives false confidence. The professional approach is to control environmental risks first, then use appropriate PPE as backup protection.</p>
               </div>
             </div>
-          </section>
 
-          <InlineCheck
-            id="ppe-substitute-practices"
-            question="True or False: PPE can replace safe working practices."
-            options={["True", "False"]}
-            correctIndex={1}
-            explanation="False. PPE is a final layer of protection but cannot replace proper safe working practices and environmental risk control. The best protection comes from eliminating hazards through good planning."
-          />
+            <InlineCheck
+              id="ppe-substitute-practices"
+              question="True or False: PPE can replace safe working practices."
+              options={["True", "False"]}
+              correctIndex={1}
+              explanation="False. PPE is a final layer of protection but cannot replace proper safe working practices and environmental risk control. The best protection comes from eliminating hazards through good planning."
+            />
+          </section>
 
           {/* Section 4 — Risk Assessment Routine */}
-          <section className="mb-6 sm:mb-8">
-            <div className="rounded-lg p-4 sm:p-6 border-l-4 border-l-purple-500 ">
-              <div className="flex items-start gap-3 mb-4">
-                <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-purple-600 text-elec-yellow mb-4 text-base">Quick Risk Assessment Routine</h3>
-                  
-                  <div className="space-y-4 text-xs sm:text-sm text-white">
-                    <p><strong>Pre-work checks:</strong> Before any testing begins, ask: Is the area dry? Is there adequate lighting? Are escape routes clear? Are there trip hazards? Is appropriate PPE available and in good condition? If any answer is 'no', stop and address the issue.</p>
-                    
-                    <p><strong>Environmental hazard identification:</strong> Look for water sources, poor drainage, inadequate lighting, confined spaces, presence of flammable materials, or unstable surfaces. Consider weather conditions for outdoor work and ventilation for indoor work in enclosed spaces.</p>
-                    
-                    <p><strong>Stop and report procedure:</strong> If conditions are unsafe and cannot be immediately rectified, the correct professional response is to stop work and report the issue to supervision. Document the hazards identified and actions needed before work can proceed safely.</p>
-                    
-                    <p><strong>Making areas safe:</strong> Common solutions include installing temporary lighting, laying rubber matting, removing water sources, setting up barriers, or waiting for weather to improve. Never compromise on safety to meet deadlines - accidents cost far more than delays.</p>
-                  </div>
-                </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Quick Risk Assessment Routine
+            </h2>
+            <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50 mb-4">
+              <div className="space-y-4 text-sm text-white/80">
+                <p><strong className="text-white">Pre-work checks:</strong> Before any testing begins, ask: Is the area dry? Is there adequate lighting? Are escape routes clear? Are there trip hazards? Is appropriate PPE available and in good condition? If any answer is 'no', stop and address the issue.</p>
+
+                <p><strong className="text-white">Environmental hazard identification:</strong> Look for water sources, poor drainage, inadequate lighting, confined spaces, presence of flammable materials, or unstable surfaces. Consider weather conditions for outdoor work and ventilation for indoor work in enclosed spaces.</p>
+
+                <p><strong className="text-white">Stop and report procedure:</strong> If conditions are unsafe and cannot be immediately rectified, the correct professional response is to stop work and report the issue to supervision. Document the hazards identified and actions needed before work can proceed safely.</p>
+
+                <p><strong className="text-white">Making areas safe:</strong> Common solutions include installing temporary lighting, laying rubber matting, removing water sources, setting up barriers, or waiting for weather to improve. Never compromise on safety to meet deadlines - accidents cost far more than delays.</p>
+              </div>
+            </div>
+
+            <InlineCheck
+              id="unsafe-environment-action"
+              question="What's the correct action if the environment is unsafe for testing?"
+              options={["Continue but be extra careful", "Work faster to minimise exposure", "Stop work, report, make safe before continuing", "Use more PPE to compensate"]}
+              correctIndex={2}
+              explanation="If environmental conditions are unsafe, work must stop immediately. The issue should be reported and the area made safe before testing can continue. PPE alone cannot compensate for unsafe environmental conditions."
+            />
+          </section>
+
+          {/* Real-World Applications */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Real-World Applications
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
+                <h3 className="font-semibold text-red-400 mb-3">Case Study: Arc Flash Injury</h3>
+                <p className="text-sm text-white/80 mb-3">
+                  An experienced electrician was testing a 400V distribution board when a short circuit caused an arc fault. Without safety glasses, molten copper particles struck his face and eyes, causing serious burns and temporary blindness.
+                </p>
+                <p className="text-sm text-white/80">
+                  <strong className="text-red-400">Lesson:</strong> Even routine testing can escalate rapidly. PPE is essential regardless of experience level.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h3 className="font-semibold text-elec-yellow mb-3">Case Study: Environmental Awareness</h3>
+                <p className="text-sm text-white/80 mb-3">
+                  An apprentice was asked to test circuits in a basement with a wet floor and poor lighting. Rather than proceeding, they stopped work and reported the unsafe conditions. Testing resumed only after temporary lighting was installed and rubber matting laid.
+                </p>
+                <p className="text-sm text-white/80">
+                  <strong className="text-elec-yellow">Lesson:</strong> Recognising and reporting unsafe conditions is professional responsibility, not hesitation.
+                </p>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="unsafe-environment-action"
-            question="What's the correct action if the environment is unsafe for testing?"
-            options={["Continue but be extra careful", "Work faster to minimise exposure", "Stop work, report, make safe before continuing", "Use more PPE to compensate"]}
-            correctIndex={2}
-            explanation="If environmental conditions are unsafe, work must stop immediately. The issue should be reported and the area made safe before testing can continue. PPE alone cannot compensate for unsafe environmental conditions."
-          />
-
-        </Card>
-
-        {/* Real-World Applications */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Real-World Applications</h2>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-            <div className="rounded-lg p-4 border border-destructive/30 bg-destructive/5">
-              <h3 className="font-semibold text-destructive mb-2 text-sm sm:text-base">Case Study: Arc Flash Injury</h3>
-              <p className="text-xs sm:text-xs sm:text-sm text-white mb-3">
-                An experienced electrician was testing a 400V distribution board when a short circuit caused an arc fault. Without safety glasses, molten copper particles struck his face and eyes, causing serious burns and temporary blindness.
-              </p>
-              <p className="text-xs sm:text-sm text-white">
-                <strong>Lesson:</strong> Even routine testing can escalate rapidly. PPE is essential regardless of experience level.
-              </p>
+          {/* Key Takeaways */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Key Takeaways
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <ul className="space-y-2 text-sm text-white/80">
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">✓</span>
+                  <span>PPE provides essential protection but cannot replace safe working practices</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">✓</span>
+                  <span>Environmental hazards must be identified and controlled before testing begins</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-elec-yellow">✓</span>
+                  <span>Stop work and report if conditions are unsafe - no testing deadline justifies compromising safety</span>
+                </li>
+              </ul>
             </div>
-            
-            <div className="rounded-lg p-4 border border-elec-yellow/30 bg-elec-yellow/5">
-              <h3 className="font-semibold text-elec-yellow text-elec-yellow mb-2 text-sm sm:text-base">Case Study: Environmental Awareness</h3>
-              <p className="text-xs sm:text-xs sm:text-sm text-white mb-3">
-                An apprentice was asked to test circuits in a basement with a wet floor and poor lighting. Rather than proceeding, they stopped work and reported the unsafe conditions. Testing resumed only after temporary lighting was installed and rubber matting laid.
-              </p>
-              <p className="text-xs sm:text-sm text-white">
-                <strong>Lesson:</strong> Recognising and reporting unsafe conditions is professional responsibility, not hesitation.
-              </p>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Key Takeaways */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-primary/5 border-primary/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Key Takeaways</h2>
-          <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white">
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>PPE provides essential protection but cannot replace safe working practices</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Environmental hazards must be identified and controlled before testing begins</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span>Stop work and report if conditions are unsafe - no testing deadline justifies compromising safety</span>
-            </li>
-          </ul>
-        </Card>
+          {/* Quiz */}
+          <section className="mb-10">
+            <Quiz questions={quizQuestions} title="Test Your Knowledge: PPE and Environmental Precautions" />
+          </section>
 
-        {/* Quiz Section */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg sm:text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">Test Your Knowledge</h2>
-          <Quiz questions={quizQuestions} />
-        </Card>
-
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6">
-          <Button variant="outline" className="flex-1" asChild>
-            <Link to="../5-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: GS38 Testing
-            </Link>
-          </Button>
-          
-          <Button className="flex-1" asChild>
-            <Link to="..">
-              Back to Section 5 Overview
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+          {/* Navigation Footer */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
+            <Button
+              variant="ghost"
+              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../5-3">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: GS38 Testing
+              </Link>
+            </Button>
+            <Button
+              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium min-h-[48px] touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../5-5">
+                Next: Avoiding Live Testing
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

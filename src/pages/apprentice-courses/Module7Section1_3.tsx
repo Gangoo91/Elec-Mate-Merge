@@ -1,8 +1,5 @@
-import { ArrowLeft, ArrowRight, Target, CheckCircle, AlertTriangle, Shield, Zap, BookOpen, Clipboard, Clock, TrendingDown, Building } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -128,431 +125,383 @@ const Module7Section1_3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212]">
-      {/* Top header bar */}
-      <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" className="text-white hover:text-white active:text-white p-0 -ml-1" asChild>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5 -ml-2 px-3"
+            asChild
+          >
             <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 1
+              Back to Section
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-3 md:px-6 py-4 md:py-8">
-        {/* Header */}
-        <header className="mb-4 md:mb-6 lg:mb-8">
-          <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
-            <div className="p-1.5 md:p-2 rounded-lg ">
-              <AlertTriangle className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-white" />
+      {/* Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl mx-auto">
+          {/* Header */}
+          <header className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+              <span className="font-medium">Module 7</span>
+              <span className="text-white/40">•</span>
+              <span className="text-white/70">Section 1.3</span>
             </div>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs md:text-sm">
-              Section 7.1.3
-            </Badge>
-          </div>
-          <h1 className="text-lg md:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 md:mb-2">
-            Risks and Consequences of Electrical Faults
-          </h1>
-          <p className="text-xs md:text-sm lg:text-base text-white max-w-3xl">
-            Understanding the safety, legal, and business risks associated with electrical faults and their potential consequences.
-          </p>
-        </header>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+              Risks and Consequences of Electrical Faults
+            </h1>
+            <p className="text-white/70 max-w-xl mx-auto">
+              Understanding the safety, legal, and business risks associated with electrical faults and their potential consequences.
+            </p>
+          </header>
 
-        {/* Spot it in 30 Seconds Card */}
-        <Card className="mb-4 md:mb-6 lg:mb-8 p-3 md:p-4 lg:p-6 bg-transparent border-white/20">
-          <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4 lg:mb-6">
-            <Target className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-white" />
-            <h2 className="text-base md:text-lg lg:text-lg sm:text-xl font-semibold text-white">Introduction</h2>
+          {/* Summary Box */}
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
+            <p className="text-white/90 text-sm leading-relaxed">
+              <strong className="text-elec-yellow">Key Points:</strong> Electrical faults can cause shock, fire, and property damage. Legal consequences include prosecution and liability. Business impacts include downtime and reputation damage.
+            </p>
           </div>
-          <div className="grid gap-3 md:gap-4 lg:gap-6 md:grid-cols-2 text-xs md:text-sm lg:text-base text-white">
-            <div className="rounded-lg p-2 md:p-3 lg:p-4 bg-transparent border border-border/30">
-              <p className="font-medium mb-1 md:mb-2 text-xs md:text-sm">In 30 seconds</p>
-              <ul className="list-disc pl-4 md:pl-6 space-y-0.5 md:space-y-1">
-                <li>Electrical faults can cause shock, fire, and property damage.</li>
-                <li>Legal consequences include prosecution and liability.</li>
-                <li>Business impacts include downtime and reputation damage.</li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-2 md:p-3 lg:p-4 bg-transparent border border-elec-yellow/30">
-              <p className="font-medium mb-1 md:mb-2 text-xs md:text-sm">Spot it / Use it</p>
-              <ul className="list-disc pl-4 md:pl-6 space-y-0.5 md:space-y-1">
-                <li><strong>Spot:</strong> Burning smells, sparks, repeated tripping, hot surfaces.</li>
-                <li><strong>Use:</strong> Immediate isolation, risk assessment, proper PPE.</li>
-                <li><strong>Check:</strong> Insurance implications, legal compliance, safety procedures.</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
 
-        {/* Introduction */}
-        <Card className="mb-4 md:mb-6 lg:mb-8 p-3 md:p-4 lg:p-6 bg-transparent border-white/20">
-          <h2 className="text-base md:text-lg lg:text-lg sm:text-xl font-semibold text-white mb-3 md:mb-4">Introduction</h2>
-          <p className="text-sm md:text-base text-white mb-3 md:mb-4">
-            Electrical faults are not just technical problems—they represent serious risks that can have devastating consequences for safety, legal compliance, and business operations. Understanding these risks is essential for every electrician, as it drives the urgency and care required when dealing with electrical installations. This section examines the three main categories of consequences: immediate safety risks, legal and financial implications, and business impact.
-          </p>
-          
-          <div className="rounded-lg p-3 md:p-4 bg-elec-yellow/5 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mt-3 md:mt-4">
-            <div className="flex items-start gap-2 md:gap-3">
-              <Clock className="w-4 h-4 md:w-5 md:h-5 text-elec-yellow text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-medium text-blue-700 text-elec-yellow mb-1 md:mb-2 text-sm md:text-base">Why This Matters</p>
-                <p className="text-xs md:text-xs sm:text-sm text-white">
-                  HSE statistics show that electrical incidents cause over 1,000 workplace accidents annually in the UK, with approximately 30% of structural fires being electrical in origin. Understanding consequences helps prioritise safety and drives proper fault management practices.
+          {/* Introduction */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Introduction
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Electrical faults are not just technical problems—they represent serious risks that can have devastating consequences for safety, legal compliance, and business operations. Understanding these risks is essential for every electrician, as it drives the urgency and care required when dealing with electrical installations.
+              </p>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="text-sm">
+                  <strong className="text-elec-yellow">Why This Matters:</strong> HSE statistics show that electrical incidents cause over 1,000 workplace accidents annually in the UK, with approximately 30% of structural fires being electrical in origin.
+                </p>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="text-sm">
+                  <strong className="text-elec-yellow">Industry Standard:</strong> BS 7671 requires that installations are safe for persons, livestock, and property. Any fault that compromises this safety must be treated as a priority requiring immediate action.
                 </p>
               </div>
             </div>
-          </div>
-          
-          <div className="mt-3 md:mt-4 space-y-2 md:space-y-3">
-            <p className="text-sm md:text-base text-white">
-              <strong>Real Impact:</strong> A single electrical fault can escalate from a minor inconvenience to a major incident causing injury, prosecution, and business failure if not properly managed.
-            </p>
-            
-            <div className="bg-elec-yellow/5 bg-elec-yellow/10 p-2 md:p-3 rounded border border-elec-yellow/30 border-elec-yellow/20">
-              <p className="text-xs md:text-xs sm:text-sm text-white">
-                <strong>Industry Standard:</strong> BS 7671 requires that installations are safe for persons, livestock, and property. Any fault that compromises this safety must be treated as a priority requiring immediate action.
-              </p>
-            </div>
-            
-            <div className="bg-amber-50 dark:bg-amber-900/20 p-2 md:p-3 rounded border border-amber-200 dark:border-amber-800">
-              <p className="text-xs md:text-xs sm:text-sm text-white">
-                <strong>Legal Requirement:</strong> Under EAWR 1989, employers must ensure electrical systems are safe and maintained. Failing to address known faults can result in prosecution and unlimited fines.
-              </p>
-            </div>
-            
-            <div className="bg-purple-50 dark:bg-purple-900/20 p-2 md:p-3 rounded border border-purple-200 dark:border-purple-800">
-              <p className="text-xs md:text-xs sm:text-sm text-white">
-                <strong>Cost Factor:</strong> The average cost of electrical accidents to UK businesses exceeds £15 million annually when including insurance, legal costs, lost production, and reputation damage.
-              </p>
-            </div>
-          </div>
-        </Card>
+          </section>
 
-        {/* Learning outcomes */}
-        <Card className="mb-4 md:mb-6 lg:mb-8 p-3 md:p-4 lg:p-6 bg-transparent border-white/20">
-          <h2 className="text-base md:text-lg lg:text-lg sm:text-xl font-semibold text-white mb-3 md:mb-4">Learning Outcomes</h2>
-          <p className="text-sm md:text-base text-white mb-3 md:mb-4">By the end of this subsection, learners will be able to:</p>
-          <ul className="list-disc pl-4 md:pl-6 space-y-1 md:space-y-2 text-sm md:text-base text-white">
-            <li>Identify immediate safety risks from electrical faults including shock, fire, and arc flash hazards.</li>
-            <li>Understand legal and financial consequences of fault-related incidents including prosecution and liability.</li>
-            <li>Recognise impacts on business operations including downtime, data loss, and reputation damage.</li>
-            <li>Appreciate why immediate action is required when faults are discovered to prevent escalation.</li>
-            <li>Evaluate the cost-benefit relationship between preventive maintenance and incident response.</li>
-            <li>Apply risk assessment principles to electrical fault scenarios in different environments.</li>
-          </ul>
-        </Card>
-
-        {/* Content */}
-        <Card className="mb-4 md:mb-6 lg:mb-8 p-3 md:p-4 lg:p-6 bg-transparent border-white/20">
-          <h2 className="text-base md:text-lg lg:text-lg sm:text-xl font-semibold text-white mb-3 md:mb-4">Content / Learning</h2>
+          {/* Learning Outcomes */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+              Learning Outcomes
+            </h2>
+            <div className="text-white/80 space-y-3 leading-relaxed">
+              <p>By the end of this subsection, learners will be able to:</p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Identify immediate safety risks from electrical faults including shock, fire, and arc flash hazards.</li>
+                <li>Understand legal and financial consequences of fault-related incidents including prosecution and liability.</li>
+                <li>Recognise impacts on business operations including downtime, data loss, and reputation damage.</li>
+                <li>Appreciate why immediate action is required when faults are discovered to prevent escalation.</li>
+                <li>Evaluate the cost-benefit relationship between preventive maintenance and incident response.</li>
+                <li>Apply risk assessment principles to electrical fault scenarios in different environments.</li>
+              </ul>
+            </div>
+          </section>
 
           {/* Safety Risks */}
-          <section className="mb-4 md:mb-6">
-            <h3 className="font-medium text-white mb-3 md:mb-4 text-sm md:text-base">1. Safety Risks</h3>
-            <p className="text-sm md:text-base text-white mb-3 md:mb-4">
-              Electrical faults pose immediate and serious safety risks that can result in injury or death. Understanding these risks is crucial for maintaining workplace safety and protecting both workers and the general public:
-            </p>
-            
-            <div className="space-y-3 md:space-y-4">
-              <div className="rounded-lg p-3 md:p-4 lg:p-5 border-l-4 border-l-red-500 ">
-                <div className="flex items-start gap-2 md:gap-3 mb-1 md:mb-2">
-                  <span className="flex-shrink-0 w-6 h-6 md:w-8 md:h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-xs md:text-sm font-bold">1</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-red-600 text-elec-yellow mb-2 md:mb-3 text-sm md:text-base">Immediate Safety Hazards</p>
-                    
-                    <div className="space-y-3 md:space-y-4">
-                      <div>
-                        <p className="text-xs md:text-sm lg:text-base text-white mb-1 md:mb-2"><strong>Primary Safety Risks:</strong></p>
-                        <div className="grid gap-2 md:gap-3 sm:grid-cols-2 mb-2 md:mb-3">
-                          <div className="bg-[#121212]/50 p-2 md:p-3 rounded border">
-                            <p className="font-medium text-white mb-1 text-xs md:text-sm lg:text-base">Electric Shock</p>
-                            <p className="text-xs md:text-xs sm:text-sm text-white">Direct contact with live parts can cause cardiac arrest and death</p>
-                          </div>
-                          <div className="bg-[#121212]/50 p-2 md:p-3 rounded border">
-                            <p className="font-medium text-white mb-1 text-xs md:text-sm lg:text-base">Fire Hazards</p>
-                            <p className="text-xs md:text-xs sm:text-sm text-white">Overheating and arcing can ignite surrounding materials</p>
-                          </div>
-                          <div className="bg-[#121212]/50 p-2 md:p-3 rounded border">
-                            <p className="font-medium text-white mb-1 text-xs md:text-sm lg:text-base">Arc Flash</p>
-                            <p className="text-xs md:text-xs sm:text-sm text-white">Explosive energy release reaching 19,000°C temperatures</p>
-                          </div>
-                          <div className="bg-[#121212]/50 p-2 md:p-3 rounded border">
-                            <p className="font-medium text-white mb-1 text-xs md:text-sm lg:text-base">Secondary Injuries</p>
-                            <p className="text-xs md:text-xs sm:text-sm text-white">Falls, burns, and trauma from shock incidents</p>
-                          </div>
-                        </div>
-                      </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+              Safety Risks
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Electrical faults pose immediate and serious safety risks that can result in injury or death. Understanding these risks is crucial for maintaining workplace safety and protecting both workers and the general public.
+              </p>
 
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>HSE Statistics:</strong></p>
-                        <div className="bg-[#121212]/50 p-3 rounded border mb-2">
-                          <ul className="list-disc ml-4 space-y-1 text-xs sm:text-sm text-white">
-                            <li>Over 1,000 electrical workplace accidents annually in the UK</li>
-                            <li>Approximately 30% of UK structural fires are electrical in origin</li>
-                            <li>Voltages as low as 50V can be lethal under certain conditions</li>
-                            <li>Electric shock is the leading cause of electrical workplace fatalities</li>
-                          </ul>
-                        </div>
-                      </div>
-
-                      <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200 dark:border-red-800">
-                        <p className="font-medium text-red-700 text-elec-yellow mb-2">Critical Understanding</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          Electrical faults create unpredictable hazards that can escalate rapidly. Even apparently minor faults can become life-threatening under certain conditions, making immediate action essential.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Electric Shock</p>
+                  <p className="text-sm text-white/70">Direct contact with live parts can cause cardiac arrest and death</p>
                 </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Fire Hazards</p>
+                  <p className="text-sm text-white/70">Overheating and arcing can ignite surrounding materials</p>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Arc Flash</p>
+                  <p className="text-sm text-white/70">Explosive energy release reaching 19,000°C temperatures</p>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Secondary Injuries</p>
+                  <p className="text-sm text-white/70">Falls, burns, and trauma from shock incidents</p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white mb-2">HSE Statistics:</p>
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white/70">
+                  <li>Over 1,000 electrical workplace accidents annually in the UK</li>
+                  <li>Approximately 30% of UK structural fires are electrical in origin</li>
+                  <li>Voltages as low as 50V can be lethal under certain conditions</li>
+                  <li>Electric shock is the leading cause of electrical workplace fatalities</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+                <p className="text-sm">
+                  <strong className="text-red-400">Critical Understanding:</strong> Electrical faults create unpredictable hazards that can escalate rapidly. Even apparently minor faults can become life-threatening under certain conditions, making immediate action essential.
+                </p>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="safety-risks-check"
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
-          <Separator className="my-6" />
+          <div className="mb-10">
+            <InlineCheck
+              id="safety-risks-check"
+              question={quickCheckQuestions[0].question}
+              options={quickCheckQuestions[0].options}
+              correctIndex={quickCheckQuestions[0].correctIndex}
+              explanation={quickCheckQuestions[0].explanation}
+            />
+          </div>
 
           {/* Legal and Financial Consequences */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">2. Legal and Financial Consequences</h3>
-            <p className="text-base text-white mb-4">
-              Electrical faults that cause injury or damage can result in severe legal and financial penalties:
-            </p>
-            
-            <div className="space-y-3 md:space-y-4">
-              <div className="rounded-lg p-3 md:p-4 lg:p-5 border-l-4 border-l-orange-500 ">
-                <div className="flex items-start gap-2 md:gap-3 mb-1 md:mb-2">
-                  <span className="flex-shrink-0 w-6 h-6 md:w-8 md:h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs md:text-sm font-bold">2</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-orange-600 text-elec-yellow mb-3">Legal and Financial Impact</p>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Legal Consequences:</strong></p>
-                        <div className="bg-[#121212]/50 p-3 rounded border mb-3">
-                          <div className="grid gap-3 lg:grid-cols-2">
-                            <div>
-                              <p className="font-medium text-white mb-2 text-sm md:text-base">Criminal Prosecution</p>
-                              <ul className="list-disc ml-4 space-y-1 text-xs md:text-xs sm:text-sm text-white">
-                                <li>Electricity at Work Regulations 1989 breaches</li>
-                                <li>Health and Safety at Work Act violations</li>
-                                <li>Corporate manslaughter in severe cases</li>
-                                <li>Unlimited fines and imprisonment possible</li>
-                              </ul>
-                            </div>
-                            <div>
-                              <p className="font-medium text-white mb-2 text-sm md:text-base">Civil Liability</p>
-                              <ul className="list-disc ml-4 space-y-1 text-xs md:text-xs sm:text-sm text-white">
-                                <li>Compensation claims for injury and damage</li>
-                                <li>Property damage costs</li>
-                                <li>Loss of earnings claims</li>
-                                <li>Legal costs and expert witness fees</li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+              Legal and Financial Consequences
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Electrical faults that cause injury or damage can result in severe legal and financial penalties.
+              </p>
 
-                      <div>
-                        <p className="text-base text-white mb-2"><strong>Financial Impact:</strong></p>
-                        <div className="bg-[#121212]/50 p-3 rounded border mb-3">
-                          <ul className="list-disc ml-4 space-y-1 text-xs sm:text-sm text-white">
-                            <li><strong>Fines:</strong> Unlimited in Crown Court for serious EAWR breaches</li>
-                            <li><strong>Compensation:</strong> Can reach millions for serious injury cases</li>
-                            <li><strong>Insurance:</strong> Policies may be invalidated if proper maintenance not carried out</li>
-                            <li><strong>Property damage:</strong> Fire damage can cost millions to rectify</li>
-                          </ul>
-                        </div>
-                      </div>
-
-                      <div className="bg-amber-50 dark:bg-amber-900/20 p-3 rounded border border-amber-200 dark:border-amber-800">
-                        <p className="font-medium text-amber-700 dark:text-amber-400 mb-2">Important Note</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          Personal liability applies to individuals as well as companies. Electricians can face personal prosecution, fines, and imprisonment for safety breaches under EAWR 1989.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-2">Criminal Prosecution</p>
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                    <li>Electricity at Work Regulations 1989 breaches</li>
+                    <li>Health and Safety at Work Act violations</li>
+                    <li>Corporate manslaughter in severe cases</li>
+                    <li>Unlimited fines and imprisonment possible</li>
+                  </ul>
                 </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-2">Civil Liability</p>
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                    <li>Compensation claims for injury and damage</li>
+                    <li>Property damage costs</li>
+                    <li>Loss of earnings claims</li>
+                    <li>Legal costs and expert witness fees</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-medium text-white mb-2">Financial Impact:</p>
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white/70">
+                  <li><strong>Fines:</strong> Unlimited in Crown Court for serious EAWR breaches</li>
+                  <li><strong>Compensation:</strong> Can reach millions for serious injury cases</li>
+                  <li><strong>Insurance:</strong> Policies may be invalidated if proper maintenance not carried out</li>
+                  <li><strong>Property damage:</strong> Fire damage can cost millions to rectify</li>
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
+                <p className="text-sm">
+                  <strong className="text-amber-400">Important Note:</strong> Personal liability applies to individuals as well as companies. Electricians can face personal prosecution, fines, and imprisonment for safety breaches under EAWR 1989.
+                </p>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="legal-consequences-check"
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-          <Separator className="my-6" />
+          <div className="mb-10">
+            <InlineCheck
+              id="legal-consequences-check"
+              question={quickCheckQuestions[1].question}
+              options={quickCheckQuestions[1].options}
+              correctIndex={quickCheckQuestions[1].correctIndex}
+              explanation={quickCheckQuestions[1].explanation}
+            />
+          </div>
 
           {/* Business Impact */}
-          <section className="mb-6">
-            <h3 className="font-medium text-white mb-4">3. Impact on Business Operations and Reputation</h3>
-            <p className="text-base text-white mb-4">
-              Electrical faults can severely disrupt business operations and cause lasting damage to reputation:
-            </p>
-            
-            <div className="space-y-4">
-              <div className="rounded-lg p-5 border-l-4 border-l-elec-yellow ">
-                <div className="flex items-start gap-3 mb-2">
-                  <span className="flex-shrink-0 w-8 h-8 bg-elec-yellow text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-elec-yellow text-elec-yellow mb-3">Business and Operational Impact</p>
-                    
-                    <div className="space-y-4">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="bg-[#121212]/50 p-3 rounded border">
-                          <p className="font-medium text-white mb-2">Production Losses</p>
-                          <p className="text-xs sm:text-sm text-white">Equipment downtime, missed deadlines, and lost production capacity</p>
-                        </div>
-                        <div className="bg-[#121212]/50 p-3 rounded border">
-                          <p className="font-medium text-white mb-2">Data Loss</p>
-                          <p className="text-xs sm:text-sm text-white">Power surges and outages causing data corruption and system failures</p>
-                        </div>
-                        <div className="bg-[#121212]/50 p-3 rounded border">
-                          <p className="font-medium text-white mb-2">Reputation Damage</p>
-                          <p className="text-xs sm:text-sm text-white">Public incidents damaging company reputation and customer confidence</p>
-                        </div>
-                        <div className="bg-[#121212]/50 p-3 rounded border">
-                          <p className="font-medium text-white mb-2">Regulatory Scrutiny</p>
-                          <p className="text-xs sm:text-sm text-white">Increased inspection and monitoring by HSE and other authorities</p>
-                        </div>
-                      </div>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+              Impact on Business Operations and Reputation
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <p>
+                Electrical faults can severely disrupt business operations and cause lasting damage to reputation.
+              </p>
 
-                      <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded border border-purple-200 dark:border-purple-800">
-                        <p className="font-medium text-purple-700 text-elec-yellow mb-2">Long-term Consequences</p>
-                        <p className="text-xs sm:text-sm text-white">
-                          Business impact extends beyond immediate costs. Loss of customer confidence, difficulty obtaining insurance, and regulatory restrictions can affect operations for years after an electrical incident.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Production Losses</p>
+                  <p className="text-sm text-white/70">Equipment downtime, missed deadlines, and lost production capacity</p>
                 </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Data Loss</p>
+                  <p className="text-sm text-white/70">Power surges and outages causing data corruption and system failures</p>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Reputation Damage</p>
+                  <p className="text-sm text-white/70">Public incidents damaging company reputation and customer confidence</p>
+                </div>
+                <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-1">Regulatory Scrutiny</p>
+                  <p className="text-sm text-white/70">Increased inspection and monitoring by HSE and other authorities</p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-500/50">
+                <p className="text-sm">
+                  <strong className="text-purple-400">Long-term Consequences:</strong> Business impact extends beyond immediate costs. Loss of customer confidence, difficulty obtaining insurance, and regulatory restrictions can affect operations for years after an electrical incident.
+                </p>
               </div>
             </div>
           </section>
 
-          <InlineCheck
-            id="business-impact-check"
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-        </Card>
-
-        {/* Practical Guidance */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Practical Guidance</h2>
-          <div className="space-y-4">
-            <div>
-              <p className="text-sm md:text-base text-white font-medium mb-2">Risk Assessment and Management:</p>
-              <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-white">
-                <li>Treat all electrical faults as potential safety hazards until proven otherwise.</li>
-                <li>Isolate faulty circuits immediately and secure against unauthorised energisation.</li>
-                <li>Assess the potential for escalation and take appropriate precautions.</li>
-                <li>Communicate risks clearly to all affected parties.</li>
-              </ul>
-            </div>
-            
-            <div>
-              <p className="text-sm md:text-base text-white font-medium mb-2">Legal Compliance:</p>
-              <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-white">
-                <li>Document all faults and corrective actions taken with timestamps and details.</li>
-                <li>Report serious faults to supervisors and duty holders immediately.</li>
-                <li>Ensure compliance with EAWR 1989 and BS 7671 requirements.</li>
-                <li>Maintain evidence of due diligence through proper record keeping.</li>
-              </ul>
-            </div>
-            
-            <div>
-              <p className="text-sm md:text-base text-white font-medium mb-2">Business Protection:</p>
-              <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-white">
-                <li>Prioritise safety over production deadlines or convenience.</li>
-                <li>Implement proper fault management procedures and training.</li>
-                <li>Maintain appropriate insurance coverage with proper electrical maintenance records.</li>
-                <li>Establish clear communication channels for reporting electrical hazards.</li>
-              </ul>
-            </div>
+          <div className="mb-10">
+            <InlineCheck
+              id="business-impact-check"
+              question={quickCheckQuestions[2].question}
+              options={quickCheckQuestions[2].options}
+              correctIndex={quickCheckQuestions[2].correctIndex}
+              explanation={quickCheckQuestions[2].explanation}
+            />
           </div>
-        </Card>
 
-        {/* Real-World Example */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Real-World Example</h2>
-          <div className="space-y-4">
-            <div className="rounded-lg p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-              <h3 className="font-medium text-white mb-3">Case Study: Manufacturing Plant Fire</h3>
-              <p className="text-base text-white mb-4">
-                A manufacturing plant ignored a recurring earth fault indication on their main distribution board for several weeks, assuming it was a "nuisance trip." The fault eventually escalated when moisture ingress combined with the existing earth fault to create a sustained arc. The resulting fire destroyed a significant portion of the facility, injured two employees, and led to a six-month production shutdown.
-              </p>
-              <p className="text-base text-white mb-4">
-                <strong>Consequences:</strong> The company faced £2.4 million in direct fire damage, £1.8 million in lost production, £500,000 in legal costs, and unlimited fines for EAWR 1989 breaches. Two employees required hospital treatment for smoke inhalation, and the company's insurance claim was partially rejected due to inadequate electrical maintenance records.
-              </p>
-              <p className="text-base text-white mb-2">
-                <strong>The Reality:</strong> What started as a minor earth fault that could have been corrected for a few hundred pounds ultimately cost the business over £5 million and resulted in criminal prosecution of the facilities manager.
-              </p>
-            </div>
-          </div>
-        </Card>
-
-        {/* FAQ */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">FAQs</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index}>
-                <h3 className="text-base font-medium text-white mb-2">{faq.question}</h3>
-                <p className="text-sm text-white">{faq.answer}</p>
+          {/* Practical Guidance */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+              Practical Guidance
+            </h2>
+            <div className="text-white/80 space-y-4 leading-relaxed">
+              <div>
+                <p className="font-medium text-white mb-2">Risk Assessment and Management:</p>
+                <ul className="list-disc pl-5 space-y-2 text-sm">
+                  <li>Treat all electrical faults as potential safety hazards until proven otherwise.</li>
+                  <li>Isolate faulty circuits immediately and secure against unauthorised energisation.</li>
+                  <li>Assess the potential for escalation and take appropriate precautions.</li>
+                  <li>Communicate risks clearly to all affected parties.</li>
+                </ul>
               </div>
-            ))}
-          </div>
-        </Card>
 
-        {/* Recap */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Recap</h2>
-          <ul className="list-disc pl-6 space-y-2 text-base text-white">
-            <li>Electrical faults pose serious safety risks including shock, fire, and arc flash hazards that can cause injury or death.</li>
-            <li>Legal consequences include prosecution under EAWR 1989 with unlimited fines, imprisonment, and civil liability for damages.</li>
-            <li>Business impacts include production losses, data loss, reputation damage, and long-term regulatory scrutiny.</li>
-            <li>Immediate action is required when faults are discovered to prevent escalation and protect people, property, and business operations.</li>
-          </ul>
-        </Card>
+              <div>
+                <p className="font-medium text-white mb-2">Legal Compliance:</p>
+                <ul className="list-disc pl-5 space-y-2 text-sm">
+                  <li>Document all faults and corrective actions taken with timestamps and details.</li>
+                  <li>Report serious faults to supervisors and duty holders immediately.</li>
+                  <li>Ensure compliance with EAWR 1989 and BS 7671 requirements.</li>
+                  <li>Maintain evidence of due diligence through proper record keeping.</li>
+                </ul>
+              </div>
 
-        {/* Quiz */}
-        <Card className="mb-6 md:mb-8 p-4 md:p-6 bg-transparent border-white/20">
-          <h2 className="text-lg md:text-lg sm:text-xl font-semibold text-white mb-4">Quiz</h2>
-          <Quiz questions={quizQuestions} title="Risks and Consequences of Electrical Faults" />
-        </Card>
+              <div>
+                <p className="font-medium text-white mb-2">Business Protection:</p>
+                <ul className="list-disc pl-5 space-y-2 text-sm">
+                  <li>Prioritise safety over production deadlines or convenience.</li>
+                  <li>Implement proper fault management procedures and training.</li>
+                  <li>Maintain appropriate insurance coverage with proper electrical maintenance records.</li>
+                  <li>Establish clear communication channels for reporting electrical hazards.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
 
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4">
-          <Button variant="outline" className="w-full sm:w-auto" asChild>
-            <Link to="../1-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Types of Faults
-            </Link>
-          </Button>
-          <Button className="w-full sm:w-auto" asChild>
-            <Link to="../1-4">
-              <span className="hidden sm:inline">Fault Categories</span>
-              <span className="sm:hidden">Next</span>
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+          {/* Real-World Example */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">07</span>
+              Real-World Example
+            </h2>
+            <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
+              <p className="font-medium text-white mb-3">Case Study: Manufacturing Plant Fire</p>
+              <div className="text-white/80 space-y-3 text-sm leading-relaxed">
+                <p>
+                  A manufacturing plant ignored a recurring earth fault indication on their main distribution board for several weeks, assuming it was a "nuisance trip." The fault eventually escalated when moisture ingress combined with the existing earth fault to create a sustained arc. The resulting fire destroyed a significant portion of the facility, injured two employees, and led to a six-month production shutdown.
+                </p>
+                <p>
+                  <strong>Consequences:</strong> The company faced £2.4 million in direct fire damage, £1.8 million in lost production, £500,000 in legal costs, and unlimited fines for EAWR 1989 breaches. Two employees required hospital treatment for smoke inhalation, and the company's insurance claim was partially rejected due to inadequate electrical maintenance records.
+                </p>
+                <p>
+                  <strong>The Reality:</strong> What started as a minor earth fault that could have been corrected for a few hundred pounds ultimately cost the business over £5 million and resulted in criminal prosecution of the facilities manager.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">08</span>
+              FAQs
+            </h2>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
+                  <p className="font-medium text-white mb-2">{faq.question}</p>
+                  <p className="text-sm text-white/70">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Recap */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">09</span>
+              Recap
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <ul className="list-disc pl-5 space-y-2 text-white/80 text-sm">
+                <li>Electrical faults pose serious safety risks including shock, fire, and arc flash hazards that can cause injury or death.</li>
+                <li>Legal consequences include prosecution under EAWR 1989 with unlimited fines, imprisonment, and civil liability for damages.</li>
+                <li>Business impacts include production losses, data loss, reputation damage, and long-term regulatory scrutiny.</li>
+                <li>Immediate action is required when faults are discovered to prevent escalation and protect people, property, and business operations.</li>
+              </ul>
+            </div>
+          </section>
+
+          {/* Quiz */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">10</span>
+              Quiz
+            </h2>
+            <Quiz questions={quizQuestions} title="Risks and Consequences of Electrical Faults" />
+          </section>
+
+          {/* Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+            <Button
+              variant="ghost"
+              className="min-h-[48px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5 justify-start"
+              asChild
+            >
+              <Link to="../1-2">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous: Why Faults Occur
+              </Link>
+            </Button>
+            <Button
+              className="min-h-[48px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90 justify-center sm:justify-end"
+              asChild
+            >
+              <Link to="../1-4">
+                Fault Categories
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </nav>
         </div>
-      </main>
+      </article>
     </div>
   );
 };

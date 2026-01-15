@@ -5,7 +5,6 @@ import { QuoteWizard } from "@/components/electrician/quote-builder/QuoteWizard"
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import { useState, useEffect } from "react";
 import { VoiceFormProvider } from "@/contexts/VoiceFormContext";
-import { ElectricianVoiceAssistant } from "@/components/electrician/ElectricianVoiceAssistant";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -142,12 +141,6 @@ const QuoteBuilderCreate = () => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-
-        {/* Voice Assistant */}
-        <ElectricianVoiceAssistant
-          onNavigate={handleVoiceNavigate}
-          currentSection="quote-create"
-        />
       </div>
     </VoiceFormProvider>
   );

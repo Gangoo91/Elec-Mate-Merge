@@ -137,7 +137,7 @@ export default function InvoiceQuoteBuilder() {
         <meta name="description" content="Adjust costs and items before generating your invoice" />
       </Helmet>
 
-      <div className="container mx-auto p-4 sm:px-4 sm:py-6 animate-fade-in">
+      <div className="px-4 py-4 sm:py-6 animate-fade-in">
         <div className="mb-6">
           <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
             <span>Business Hub</span>

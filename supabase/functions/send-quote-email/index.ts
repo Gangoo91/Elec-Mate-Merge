@@ -84,7 +84,7 @@ const handler = async (req: Request): Promise<Response> => {
       .single();
 
     const companyName = companyProfile?.company_name || 'Your Company';
-    const senderEmail = (companyProfile?.company_email || 'andrewgangoo91@gmail.com').trim();
+    const senderEmail = (companyProfile?.company_email || user.email || 'support@elec-mate.com').trim();
 
     console.log(`Sending quote ${quoteNumber} to ${clientEmail}`);
 
@@ -125,7 +125,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Build public URLs for Accept/Decline buttons
-    const baseUrl = 'https://jtwygbeceundfgnkirof.supabase.co';
+    const baseUrl = Deno.env.get('SUPABASE_URL') || 'https://jtwygbeceundfgnkirof.supabase.co';
     const acceptUrl = `${baseUrl}/functions/v1/quote-action?token=${publicToken}&action=accept`;
     const rejectUrl = `${baseUrl}/functions/v1/quote-action?token=${publicToken}&action=reject`;
 
@@ -393,7 +393,7 @@ function generateEmailHTML(
   // Use company profile data with fallbacks
   const finalCompanyName = company?.company_name || companyName || 'Elec-Mate';
     const companyPhone = company?.company_phone || '07506026934';
-    const companyEmail = company?.company_email || 'andrewgangoo91@gmail.com';
+    const companyEmail = company?.company_email || 'support@elec-mate.com';
   
   return `
 <!DOCTYPE html>

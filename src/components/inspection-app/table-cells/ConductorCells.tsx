@@ -1,6 +1,6 @@
 
 import React, { useCallback } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import { cableSizeOptions } from '@/types/cableTypes';
@@ -23,42 +23,24 @@ const ConductorCellsComponent: React.FC<ConductorCellsProps> = ({ result, onUpda
     <>
       {/* Column 8: Live (mm²) */}
       <TableCell className="p-0 bg-black h-5 align-middle w-24 min-w-[90px] max-w-[90px]">
-        <Select
-          name={`liveSize-${result.id}`}
+        <MobileSelectPicker
           value={result.liveSize || ''}
           onValueChange={handleLiveSizeChange}
-        >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0">
-            <SelectValue placeholder="Live" />
-          </SelectTrigger>
-          <SelectContent key={`liveSize-content-${result.id}`} className="bg-background border border-border rounded-md z-[100]">
-            {cableSizeOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={cableSizeOptions}
+          placeholder="Live"
+          title="Live Conductor Size"
+                  />
       </TableCell>
 
       {/* Column 9: CPC (mm²) */}
       <TableCell className="p-0 bg-black h-5 align-middle w-24 min-w-[90px] max-w-[90px]">
-        <Select
-          name={`cpcSize-${result.id}`}
+        <MobileSelectPicker
           value={result.cpcSize || ''}
           onValueChange={handleCpcSizeChange}
-        >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0">
-            <SelectValue placeholder="CPC" />
-          </SelectTrigger>
-          <SelectContent key={`cpcSize-content-${result.id}`} className="bg-background border border-border rounded-md z-[100]">
-            {cableSizeOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="text-xs text-neutral-100">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={cableSizeOptions}
+          placeholder="CPC"
+          title="CPC Size"
+                  />
       </TableCell>
     </>
   );

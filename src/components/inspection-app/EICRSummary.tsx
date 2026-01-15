@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { AlertTriangle, CheckCircle, XCircle, FileText, FileDown, Save, Beaker, Copy, ChevronDown, ChevronUp, Loader2, User } from 'lucide-react';
@@ -279,35 +279,31 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <Label className="text-sm font-medium">Overall Assessment</Label>
-            <Select
-              value={formData.overallAssessment} 
+            <MobileSelectPicker
+              value={formData.overallAssessment || ''}
               onValueChange={(value) => onUpdate('overallAssessment', value)}
-            >
-              <SelectTrigger className="h-11 text-base touch-manipulation">
-                <SelectValue placeholder="Select overall assessment" />
-              </SelectTrigger>
-              <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]" position="popper">
-                <SelectItem value="satisfactory">Satisfactory</SelectItem>
-                <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { value: 'satisfactory', label: 'Satisfactory' },
+                { value: 'unsatisfactory', label: 'Unsatisfactory' },
+              ]}
+              placeholder="Select overall assessment"
+              title="Overall Assessment"
+            />
           </div>
-          
+
           <div className="space-y-2">
             <Label className="text-sm font-medium">Satisfactory for Continued Use</Label>
-            <Select
-              value={formData.satisfactoryForContinuedUse} 
+            <MobileSelectPicker
+              value={formData.satisfactoryForContinuedUse || ''}
               onValueChange={(value) => onUpdate('satisfactoryForContinuedUse', value)}
-            >
-              <SelectTrigger className="h-11 text-base touch-manipulation">
-                <SelectValue placeholder="Yes/No" />
-              </SelectTrigger>
-              <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]" position="popper">
-                <SelectItem value="yes">Yes</SelectItem>
-                <SelectItem value="no">No</SelectItem>
-                <SelectItem value="yes-with-recommendations">Yes, subject to recommendations</SelectItem>
-              </SelectContent>
-            </Select>
+              options={[
+                { value: 'yes', label: 'Yes' },
+                { value: 'no', label: 'No' },
+                { value: 'yes-with-recommendations', label: 'Yes, subject to recommendations' },
+              ]}
+              placeholder="Yes/No"
+              title="Satisfactory for Continued Use"
+            />
           </div>
         </div>
 

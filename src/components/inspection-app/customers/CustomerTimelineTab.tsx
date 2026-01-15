@@ -3,13 +3,7 @@ import { useCustomerActivity, ActivityType, activityTypeConfig } from '@/hooks/i
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -92,23 +86,21 @@ export const CustomerTimelineTab = ({ customerId }: CustomerTimelineTabProps) =>
       {/* Filter */}
       <div className="flex items-center gap-3">
         <span className="text-sm text-muted-foreground">Filter:</span>
-        <Select
+        <MobileSelectPicker
           value={filterType}
           onValueChange={(value) => setFilterType(value as ActivityType | 'all')}
-        >
-          <SelectTrigger className="w-[160px] h-10 touch-manipulation">
-            <SelectValue placeholder="All activities" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Activities</SelectItem>
-            <SelectItem value="note">Notes</SelectItem>
-            <SelectItem value="call">Calls</SelectItem>
-            <SelectItem value="email">Emails</SelectItem>
-            <SelectItem value="certificate">Certificates</SelectItem>
-            <SelectItem value="visit">Site Visits</SelectItem>
-            <SelectItem value="property_added">Properties</SelectItem>
-          </SelectContent>
-        </Select>
+          options={[
+            { value: 'all', label: 'All Activities' },
+            { value: 'note', label: 'Notes' },
+            { value: 'call', label: 'Calls' },
+            { value: 'email', label: 'Emails' },
+            { value: 'certificate', label: 'Certificates' },
+            { value: 'visit', label: 'Site Visits' },
+            { value: 'property_added', label: 'Properties' },
+          ]}
+          placeholder="All activities"
+          title="Filter Activities"
+        />
       </div>
 
       {/* Timeline */}

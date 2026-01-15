@@ -505,7 +505,7 @@ const handler = async (req: Request): Promise<Response> => {
       html: string;
       attachments?: Array<{ filename: string; content: string }>;
     } = {
-      from: `${companyName} <founder@elec-mate.com>`,
+      from: `${companyName} <${replyToEmail}>`,
       replyTo: replyToEmail,
       to: [clientEmail],
       subject: subject,

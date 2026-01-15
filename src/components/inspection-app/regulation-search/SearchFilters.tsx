@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Badge } from '@/components/ui/badge';
 import { Search, Filter, X } from 'lucide-react';
 
@@ -76,59 +76,63 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
-        <Select value={filterPart} onValueChange={setFilterPart}>
-          <SelectTrigger className="bg-muted border-border text-foreground">
-            <SelectValue placeholder="Part" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Parts</SelectItem>
-            <SelectItem value="1">Part 1</SelectItem>
-            <SelectItem value="4">Part 4</SelectItem>
-            <SelectItem value="5">Part 5</SelectItem>
-            <SelectItem value="6">Part 6</SelectItem>
-            <SelectItem value="7">Part 7</SelectItem>
-          </SelectContent>
-        </Select>
+        <MobileSelectPicker
+          value={filterPart}
+          onValueChange={setFilterPart}
+          options={[
+            { value: 'all', label: 'All Parts' },
+            { value: '1', label: 'Part 1' },
+            { value: '4', label: 'Part 4' },
+            { value: '5', label: 'Part 5' },
+            { value: '6', label: 'Part 6' },
+            { value: '7', label: 'Part 7' },
+          ]}
+          placeholder="Part"
+          title="Filter by Part"
+        />
 
-        <Select value={filterDifficulty} onValueChange={setFilterDifficulty}>
-          <SelectTrigger className="bg-muted border-border text-foreground">
-            <SelectValue placeholder="Difficulty" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Levels</SelectItem>
-            <SelectItem value="beginner">Beginner</SelectItem>
-            <SelectItem value="intermediate">Intermediate</SelectItem>
-            <SelectItem value="advanced">Advanced</SelectItem>
-          </SelectContent>
-        </Select>
+        <MobileSelectPicker
+          value={filterDifficulty}
+          onValueChange={setFilterDifficulty}
+          options={[
+            { value: 'all', label: 'All Levels' },
+            { value: 'beginner', label: 'Beginner' },
+            { value: 'intermediate', label: 'Intermediate' },
+            { value: 'advanced', label: 'Advanced' },
+          ]}
+          placeholder="Difficulty"
+          title="Filter by Difficulty"
+        />
 
-        <Select value={filterCategory} onValueChange={setFilterCategory}>
-          <SelectTrigger className="bg-muted border-border text-foreground">
-            <SelectValue placeholder="Category" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Categories</SelectItem>
-            <SelectItem value="testing">Testing</SelectItem>
-            <SelectItem value="protection">Protection</SelectItem>
-            <SelectItem value="installation">Installation</SelectItem>
-            <SelectItem value="special-locations">Special Locations</SelectItem>
-            <SelectItem value="earthing">Earthing</SelectItem>
-            <SelectItem value="cables">Cables</SelectItem>
-            <SelectItem value="equipment">Equipment</SelectItem>
-          </SelectContent>
-        </Select>
+        <MobileSelectPicker
+          value={filterCategory}
+          onValueChange={setFilterCategory}
+          options={[
+            { value: 'all', label: 'All Categories' },
+            { value: 'testing', label: 'Testing' },
+            { value: 'protection', label: 'Protection' },
+            { value: 'installation', label: 'Installation' },
+            { value: 'special-locations', label: 'Special Locations' },
+            { value: 'earthing', label: 'Earthing' },
+            { value: 'cables', label: 'Cables' },
+            { value: 'equipment', label: 'Equipment' },
+          ]}
+          placeholder="Category"
+          title="Filter by Category"
+        />
 
-        <Select value={filterFrequency} onValueChange={setFilterFrequency}>
-          <SelectTrigger className="bg-muted border-border text-foreground">
-            <SelectValue placeholder="Frequency" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All</SelectItem>
-            <SelectItem value="common">Common</SelectItem>
-            <SelectItem value="frequent">Frequent</SelectItem>
-            <SelectItem value="occasional">Occasional</SelectItem>
-          </SelectContent>
-        </Select>
+        <MobileSelectPicker
+          value={filterFrequency}
+          onValueChange={setFilterFrequency}
+          options={[
+            { value: 'all', label: 'All' },
+            { value: 'common', label: 'Common' },
+            { value: 'frequent', label: 'Frequent' },
+            { value: 'occasional', label: 'Occasional' },
+          ]}
+          placeholder="Frequency"
+          title="Filter by Frequency"
+        />
 
         <div className="col-span-2 md:col-span-1">
           {hasActiveFilters && (

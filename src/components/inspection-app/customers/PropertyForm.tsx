@@ -9,13 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -105,33 +99,16 @@ export const PropertyForm = ({ open, onOpenChange, property, onSave }: PropertyF
             <Label className="text-foreground">
               Property Type <span className="text-red-400">*</span>
             </Label>
-            <Select
+            <MobileSelectPicker
               value={selectedType}
               onValueChange={(value) => setValue('propertyType', value as PropertyFormData['propertyType'])}
-            >
-              <SelectTrigger className="h-11 touch-manipulation bg-background border-border">
-                <SelectValue placeholder="Select property type" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border">
-                {propertyTypes.map((type) => (
-                  <SelectItem
-                    key={type.value}
-                    value={type.value}
-                    className="min-h-[48px] touch-manipulation"
-                  >
-                    <div className="flex items-center gap-2">
-                      <type.icon className="h-4 w-4" />
-                      <div>
-                        <span className="font-medium">{type.label}</span>
-                        <span className="text-xs text-muted-foreground ml-2 hidden sm:inline">
-                          {type.description}
-                        </span>
-                      </div>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              options={propertyTypes.map((type) => ({
+                value: type.value,
+                label: `${type.label} - ${type.description}`,
+              }))}
+              placeholder="Select property type"
+              title="Property Type"
+            />
           </div>
 
           {/* Address */}

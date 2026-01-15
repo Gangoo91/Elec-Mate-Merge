@@ -18,13 +18,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import {
   Collapsible,
   CollapsibleContent,
@@ -442,35 +436,31 @@ export const EICRCertificateTab: React.FC<EICRCertificateTabProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Overall Assessment *</Label>
-                  <Select
+                  <MobileSelectPicker
                     value={formData.overallAssessment}
                     onValueChange={(value) => onUpdate('overallAssessment', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                      <SelectValue placeholder="Select assessment" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="satisfactory">Satisfactory</SelectItem>
-                      <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    options={[
+                      { value: 'satisfactory', label: 'Satisfactory' },
+                      { value: 'unsatisfactory', label: 'Unsatisfactory' },
+                    ]}
+                    placeholder="Select assessment"
+                    title="Overall Assessment"
+                  />
                 </div>
 
                 <div className="space-y-2">
                   <Label>Satisfactory for Continued Use *</Label>
-                  <Select
+                  <MobileSelectPicker
                     value={formData.satisfactoryForContinuedUse}
                     onValueChange={(value) => onUpdate('satisfactoryForContinuedUse', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                      <SelectValue placeholder="Yes/No" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="yes">Yes</SelectItem>
-                      <SelectItem value="no">No</SelectItem>
-                      <SelectItem value="yes-with-recommendations">Yes, subject to recommendations</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    options={[
+                      { value: 'yes', label: 'Yes' },
+                      { value: 'no', label: 'No' },
+                      { value: 'yes-with-recommendations', label: 'Yes, subject to recommendations' },
+                    ]}
+                    placeholder="Yes/No"
+                    title="Satisfactory for Continued Use"
+                  />
                 </div>
               </div>
 

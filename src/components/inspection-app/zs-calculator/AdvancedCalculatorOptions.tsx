@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Settings, Thermometer, AlertTriangle } from 'lucide-react';
@@ -96,38 +96,30 @@ export const AdvancedCalculatorOptions: React.FC<AdvancedOptionsProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-6 border-l-2 border-blue-400/30">
                 <div className="space-y-2">
                   <Label className="text-foreground">Conductor Material</Label>
-                  <Select value={conductorMaterial} onValueChange={onConductorMaterialChange}>
-                    <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="copper" className="text-foreground">Copper</SelectItem>
-                      <SelectItem value="aluminium" className="text-foreground">Aluminium</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={conductorMaterial}
+                    onValueChange={onConductorMaterialChange}
+                    options={[
+                      { value: 'copper', label: 'Copper' },
+                      { value: 'aluminium', label: 'Aluminium' },
+                    ]}
+                    placeholder="Select material"
+                    title="Conductor Material"
+                  />
                 </div>
 
                 <div className="space-y-2">
                   <Label className="text-foreground">Operating Temperature</Label>
-                  <Select 
-                    value={operatingTemperature.toString()} 
+                  <MobileSelectPicker
+                    value={operatingTemperature.toString()}
                     onValueChange={(value) => onOperatingTemperatureChange(parseInt(value))}
-                  >
-                    <SelectTrigger className="bg-elec-gray border-elec-gray text-foreground">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-elec-gray text-foreground">
-                      {temperatureOptions.map(option => (
-                        <SelectItem 
-                          key={option.value} 
-                          value={option.value.toString()}
-                          className="text-foreground"
-                        >
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    options={temperatureOptions.map(option => ({
+                      value: option.value.toString(),
+                      label: option.label,
+                    }))}
+                    placeholder="Select temperature"
+                    title="Operating Temperature"
+                  />
                 </div>
 
                 <div className="md:col-span-2">
