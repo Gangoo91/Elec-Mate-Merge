@@ -15,6 +15,9 @@ const API_KEY = 'sk_a88cf76a8e4f26859699dd0a6c50539ce7e0a31d0a1fe9e5';
 const AGENT_ID = 'agent_0801kdxbb7hhepg80gfpgq8kgpgs';
 const API_BASE = 'https://api.elevenlabs.io/v1';
 
+// Supabase anon key for authentication
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8';
+
 // The 6 tools with their parameters
 const QUOTE_TOOLS = [
   {
@@ -271,6 +274,22 @@ const QUOTE_TOOLS = [
   }
 ];
 
+async function getExistingTools() {
+  const response = await fetch(`${API_BASE}/convai/tools`, {
+    headers: { 'xi-api-key': API_KEY }
+  });
+  const data = await response.json();
+  return data.tools || [];
+}
+
+async function deleteTool(toolId) {
+  const response = await fetch(`${API_BASE}/convai/tools/${toolId}`, {
+    method: 'DELETE',
+    headers: { 'xi-api-key': API_KEY }
+  });
+  return response.ok;
+}
+
 async function createTool(tool) {
   console.log(`Creating tool: ${tool.name}...`);
 
@@ -303,6 +322,11 @@ async function createTool(tool) {
         api_schema: {
           url: 'https://jtwygbeceundfgnkirof.supabase.co/functions/v1/voice-tools',
           method: 'POST',
+          request_headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          },
           request_body_schema: {
             type: 'object',
             properties: requestBodyProps,
@@ -357,6 +381,19 @@ async function main() {
   console.log('=== Setup 6 Quote/Invoice Tools in ElevenLabs ===\n');
   console.log(`Agent ID: ${AGENT_ID}`);
   console.log(`Tools to create: ${QUOTE_TOOLS.length}\n`);
+
+  // First, get existing tools and delete ones with matching names
+  console.log('Checking for existing tools to update...');
+  const existingTools = await getExistingTools();
+  const toolNames = QUOTE_TOOLS.map(t => t.name);
+
+  for (const existing of existingTools) {
+    if (toolNames.includes(existing.tool_config?.name)) {
+      console.log(`  Deleting existing tool: ${existing.tool_config.name}`);
+      await deleteTool(existing.id);
+    }
+  }
+  console.log('');
 
   const toolIds = [];
 
