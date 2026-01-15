@@ -207,14 +207,14 @@ export default function AdminUsers() {
     admins: users?.filter((u) => u.admin_role).length || 0,
   };
 
-  // Grant admin mutation
+  // Grant admin mutation - uses edge function to bypass RLS
   const grantAdminMutation = useMutation({
     mutationFn: async ({ userId, role }: { userId: string; role: "admin" | null }) => {
-      const { error } = await supabase
-        .from("profiles")
-        .update({ admin_role: role })
-        .eq("id", userId);
+      const { data, error } = await supabase.functions.invoke("admin-manage-role", {
+        body: { userId, adminRole: role },
+      });
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
 
       // Log the action
       await supabase.from("admin_audit_logs").insert({
@@ -223,6 +223,8 @@ export default function AdminUsers() {
         entity_type: "profile",
         entity_id: userId,
       });
+
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-users"] });
@@ -234,18 +236,14 @@ export default function AdminUsers() {
     },
   });
 
-  // Grant free subscription mutation
+  // Grant free subscription mutation - uses edge function to bypass RLS
   const grantSubscriptionMutation = useMutation({
     mutationFn: async ({ userId, tier }: { userId: string; tier: string }) => {
-      const { error } = await supabase
-        .from("profiles")
-        .update({
-          subscribed: true,
-          subscription_tier: tier,
-          subscription_start: new Date().toISOString(),
-        })
-        .eq("id", userId);
+      const { data, error } = await supabase.functions.invoke("admin-grant-subscription", {
+        body: { userId, tier },
+      });
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
 
       // Log the action
       await supabase.from("admin_audit_logs").insert({
@@ -255,9 +253,12 @@ export default function AdminUsers() {
         entity_id: userId,
         details: { tier },
       });
+
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
       setSelectedUser(null);
       toast({ title: "Subscription granted", description: "User now has free access" });
     },
