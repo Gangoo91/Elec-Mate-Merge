@@ -45,7 +45,7 @@ const hubs = [
 
 export const HubsGrid = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   return (
     <section ref={ref} className="w-full py-16 sm:py-24 bg-black">
@@ -53,7 +53,7 @@ export const HubsGrid = () => {
         {/* Header */}
         <motion.div
           className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
         >
@@ -65,12 +65,17 @@ export const HubsGrid = () => {
           </p>
         </motion.div>
 
-        {/* Mobile: Stack, Desktop: 2x2 grid */}
-        <div className="grid sm:grid-cols-2 gap-6">
-          {hubs.map((hub, index) => (
-            <HubCard key={hub.title} {...hub} delay={index * 0.1} />
+        {/* Grid */}
+        <motion.div
+          className="grid sm:grid-cols-2 gap-6"
+          initial={{ opacity: 0, y: 15 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          {hubs.map((hub) => (
+            <HubCard key={hub.title} {...hub} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

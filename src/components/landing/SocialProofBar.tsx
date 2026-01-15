@@ -16,15 +16,13 @@ const stats: StatItem[] = [
   { icon: <Bot className="w-5 h-5" />, value: 8, suffix: '', label: 'AI Agents' },
 ];
 
-const AnimatedCounter = ({ value, suffix }: { value: number; suffix: string }) => {
+const AnimatedCounter = ({ value, suffix, isInView }: { value: number; suffix: string; isInView: boolean }) => {
   const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   useEffect(() => {
-    if (isInView) {
-      const duration = 2000;
-      const steps = 60;
+    if (isInView && count === 0) {
+      const duration = 1500;
+      const steps = 40;
       const increment = value / steps;
       let current = 0;
 
@@ -40,10 +38,10 @@ const AnimatedCounter = ({ value, suffix }: { value: number; suffix: string }) =
 
       return () => clearInterval(timer);
     }
-  }, [isInView, value]);
+  }, [isInView, value, count]);
 
   return (
-    <span ref={ref} className="tabular-nums">
+    <span className="tabular-nums">
       {count.toLocaleString()}{suffix}
     </span>
   );
@@ -51,33 +49,27 @@ const AnimatedCounter = ({ value, suffix }: { value: number; suffix: string }) =
 
 export const SocialProofBar = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
 
   return (
     <section ref={ref} className="w-full bg-neutral-900/80 border-y border-white/5 py-8 sm:py-10">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8"
-          initial={{ opacity: 0, y: 8 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, staggerChildren: 0.02 }}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5 }}
         >
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              className="text-center"
-              initial={{ opacity: 0, y: 8 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: index * 0.1 }}
-            >
+          {stats.map((stat) => (
+            <div key={stat.label} className="text-center">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <span className="text-yellow-400">{stat.icon}</span>
                 <span className="text-2xl sm:text-3xl font-bold text-white">
-                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                  <AnimatedCounter value={stat.value} suffix={stat.suffix} isInView={isInView} />
                 </span>
               </div>
               <p className="text-sm text-white/60">{stat.label}</p>
-            </motion.div>
+            </div>
           ))}
         </motion.div>
       </div>

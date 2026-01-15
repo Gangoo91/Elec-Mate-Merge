@@ -187,7 +187,7 @@ const SignUp = () => {
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 400, damping: 20 }}
+            transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
             className="flex flex-col items-center gap-4"
           >
             <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center">
@@ -322,7 +322,7 @@ const SignUp = () => {
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.1, type: "spring", stiffness: 400 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
           >
             <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center shadow-lg shadow-elec-yellow/30">
               <Zap className="h-5 w-5 text-black" />

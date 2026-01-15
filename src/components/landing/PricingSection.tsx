@@ -102,16 +102,18 @@ export const PricingSection = () => {
         </motion.div>
 
         {/* Pricing cards */}
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-          {tiers.map((tier, index) => (
-            <motion.div
+        <motion.div
+          className="grid md:grid-cols-3 gap-6 lg:gap-8"
+          initial={{ opacity: 0, y: 15 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          {tiers.map((tier) => (
+            <div
               key={tier.name}
               className={`relative rounded-2xl p-6 lg:p-8 bg-gradient-to-br ${tier.gradient} border ${
                 tier.popular ? 'border-yellow-500/50' : 'border-white/10'
               }`}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: index * 0.1 }}
             >
               {tier.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-yellow-500 text-black text-xs font-semibold">
@@ -154,9 +156,9 @@ export const PricingSection = () => {
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Trust note */}
         <motion.p

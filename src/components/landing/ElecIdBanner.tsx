@@ -42,17 +42,14 @@ export const ElecIdBanner = () => {
             </p>
 
             <div className="flex flex-wrap gap-4 mb-8">
-              {benefits.map((benefit, index) => (
-                <motion.div
+              {benefits.map((benefit) => (
+                <div
                   key={benefit.text}
                   className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: 0.2 + index * 0.1 }}
                 >
                   <benefit.icon className="w-4 h-4 text-yellow-400" />
                   <span className="text-sm text-white/80">{benefit.text}</span>
-                </motion.div>
+                </div>
               ))}
             </div>
 
@@ -74,11 +71,8 @@ export const ElecIdBanner = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <motion.div
-              className="relative w-[320px] aspect-[1.6/1] rounded-2xl bg-gradient-to-br from-yellow-400 via-amber-500 to-yellow-600 p-[2px] shadow-2xl shadow-yellow-500/20 touch-manipulation"
-              whileHover={{ scale: 1.02, rotateY: 5 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: 'spring', stiffness: 300 }}
+            <div
+              className="relative w-[320px] aspect-[1.6/1] rounded-2xl bg-gradient-to-br from-yellow-400 via-amber-500 to-yellow-600 p-[2px] shadow-2xl shadow-yellow-500/20 touch-manipulation transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]"
             >
               <div className="absolute inset-[2px] rounded-2xl bg-neutral-900 p-5 flex flex-col justify-between">
                 {/* Top row */}
@@ -110,7 +104,7 @@ export const ElecIdBanner = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Glow effect */}
             <div className="absolute inset-0 -z-10 bg-yellow-500/20 blur-[60px] rounded-full" />

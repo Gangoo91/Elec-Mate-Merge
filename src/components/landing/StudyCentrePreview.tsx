@@ -61,17 +61,14 @@ export const StudyCentrePreview = () => {
           {/* Left: Topic cards */}
           <motion.div
             className="space-y-3"
-            initial={{ opacity: 0, x: -20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            initial={{ opacity: 0, y: 15 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
           >
-            {topics.map((topic, index) => (
-              <motion.div
+            {topics.map((topic) => (
+              <div
                 key={topic.name}
                 className="p-4 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/30 active:border-blue-500/30 transition-colors touch-manipulation"
-                initial={{ opacity: 0, x: -20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: 0.3 + index * 0.05 }}
               >
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="font-medium text-white text-sm">{topic.name}</h4>
@@ -83,32 +80,29 @@ export const StudyCentrePreview = () => {
                       className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full"
                       initial={{ width: 0 }}
                       animate={isInView ? { width: `${topic.mastery}%` } : {}}
-                      transition={{ delay: 0.5 + index * 0.1, duration: 0.8 }}
+                      transition={{ duration: 0.8, delay: 0.3 }}
                     />
                   </div>
                   <span className="text-xs font-medium text-blue-400 w-10">{topic.mastery}%</span>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </motion.div>
 
           {/* Right: Features + CTA */}
           <motion.div
             className="space-y-6"
-            initial={{ opacity: 0, x: 20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            initial={{ opacity: 0, y: 15 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
             <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 to-indigo-500/10 border border-blue-500/20">
               <h3 className="text-xl font-semibold text-white mb-6">Why Study With Us</h3>
               <div className="space-y-4">
-                {features.map((feature, index) => (
-                  <motion.div
+                {features.map((feature) => (
+                  <div
                     key={feature.title}
                     className="flex items-start gap-4"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: 0.5 + index * 0.1 }}
                   >
                     <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
                       <feature.icon className="w-5 h-5 text-blue-400" />
@@ -117,7 +111,7 @@ export const StudyCentrePreview = () => {
                       <h4 className="font-medium text-white">{feature.title}</h4>
                       <p className="text-sm text-white/60">{feature.description}</p>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>

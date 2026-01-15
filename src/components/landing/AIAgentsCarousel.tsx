@@ -91,9 +91,9 @@ export const AIAgentsCarousel = () => {
         {/* Mobile: Horizontal scroll */}
         <div className="sm:hidden -mx-6 px-6">
           <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
-            {agents.map((agent, index) => (
+            {agents.map((agent) => (
               <div key={agent.name} className="snap-start">
-                <AIAgentCard {...agent} delay={index * 0.05} />
+                <AIAgentCard {...agent} />
               </div>
             ))}
           </div>
@@ -102,11 +102,16 @@ export const AIAgentsCarousel = () => {
         </div>
 
         {/* Desktop: Grid */}
-        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {agents.map((agent, index) => (
-            <AIAgentCard key={agent.name} {...agent} delay={index * 0.05} />
+        <motion.div
+          className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4"
+          initial={{ opacity: 0, y: 15 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          {agents.map((agent) => (
+            <AIAgentCard key={agent.name} {...agent} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

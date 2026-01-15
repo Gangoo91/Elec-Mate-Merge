@@ -83,7 +83,7 @@ export const TestimonialCarousel = () => {
               <motion.div
                 className="flex"
                 animate={{ x: `-${currentIndex * 100}%` }}
-                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
               >
                 {testimonials.map((testimonial, index) => (
                   <div key={index} className="w-full flex-shrink-0 px-2">
@@ -128,18 +128,16 @@ export const TestimonialCarousel = () => {
         </div>
 
         {/* Desktop: 2x2 grid */}
-        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div
+          className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          initial={{ opacity: 0, y: 15 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
           {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: index * 0.1 }}
-            >
-              <TestimonialCard testimonial={testimonial} />
-            </motion.div>
+            <TestimonialCard key={index} testimonial={testimonial} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
