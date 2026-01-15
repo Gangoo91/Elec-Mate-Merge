@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -114,6 +115,10 @@ const DocumentCamera = ({
         setHasTorch(!!capabilities?.torch);
       }
     } catch (err: any) {
+      // AbortError is expected when switching cameras or closing dialog quickly
+      if (err.name === "AbortError") {
+        return;
+      }
       console.error("Camera error:", err);
       if (err.name === "NotAllowedError") {
         setError("Camera access denied. Please allow camera permissions.");
@@ -211,6 +216,9 @@ const DocumentCamera = ({
     }
   }, [capturedImage, onCapture, onOpenChange]);
 
+  // Track if this is the initial mount for facingMode effect
+  const isInitialMount = useRef(true);
+
   // Start camera when dialog opens
   useEffect(() => {
     if (open) {
@@ -226,12 +234,16 @@ const DocumentCamera = ({
     };
   }, [open, startCamera, stopCamera]);
 
-  // Restart camera when facing mode changes
+  // Restart camera when facing mode changes (but not on initial mount)
   useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
     if (open && !capturedImage) {
       startCamera();
     }
-  }, [facingMode, open, capturedImage, startCamera]);
+  }, [facingMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -250,6 +262,9 @@ const DocumentCamera = ({
               <X className="h-5 w-5" />
             </Button>
           </div>
+          <DialogDescription className="sr-only">
+            Use your camera to capture a photo of your {guide.title.toLowerCase()}
+          </DialogDescription>
         </DialogHeader>
 
         <div className="relative aspect-[3/4] bg-black">
