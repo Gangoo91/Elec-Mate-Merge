@@ -756,8 +756,8 @@ serve(async (req: Request) => {
           // Extras
           notes,
           expiryDays = 30,
-          // Send control - default FALSE for draft behavior
-          sendNow = false
+          // Send control - TRUE for create_and_send_quote (the whole point is to send)
+          sendNow = true
         } = params as {
           clientName: string;
           clientEmail: string;
@@ -925,8 +925,8 @@ serve(async (req: Request) => {
           // Extras
           invoiceNotes,
           purchaseOrder,
-          // Send control - default FALSE for draft behavior
-          sendNow: invoiceSendNow = false
+          // Send control - TRUE for create_and_send_invoice (the whole point is to send)
+          sendNow: invoiceSendNow = true
         } = params as {
           quoteNumber?: string;
           clientName?: string;
