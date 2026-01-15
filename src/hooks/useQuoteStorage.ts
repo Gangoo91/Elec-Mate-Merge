@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from '@/hooks/use-toast';
 
 // Database storage for quotes (no longer using localStorage)
 
@@ -71,26 +72,83 @@ export const useQuoteStorage = () => {
 
     loadQuotes();
 
-    // Set up real-time subscription for quote updates
-    const channel = supabase
-      .channel('quote-updates')
-      .on(
-        'postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'quotes'
-        },
-        (payload) => {
-          console.log('Quote updated in real-time:', payload);
-          // Refresh quotes when any quote is updated (e.g., client accepts/rejects)
-          refreshQuotes();
-        }
-      )
-      .subscribe();
+    // Set up real-time subscription for quote updates AND inserts
+    const setupRealtimeSubscription = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return null;
+
+      const channel = supabase
+        .channel('quote-changes')
+        .on(
+          'postgres_changes',
+          {
+            event: 'INSERT',
+            schema: 'public',
+            table: 'quotes',
+            filter: `user_id=eq.${user.id}`,
+          },
+          (payload) => {
+            console.log('New quote/invoice created in real-time:', payload);
+
+            const newRecord = payload.new as any;
+            const isInvoice = !!newRecord.invoice_number;
+            const clientName = newRecord.client_data?.name || 'Client';
+            const total = parseFloat(newRecord.total || 0).toFixed(2);
+
+            // Show toast notification for new quote or invoice (likely from voice)
+            toast({
+              title: isInvoice ? "Invoice Created" : "Quote Created",
+              description: `${isInvoice ? newRecord.invoice_number : newRecord.quote_number} for ${clientName} - £${total}`,
+              duration: 5000,
+            });
+
+            // Refresh quotes to update UI
+            refreshQuotes();
+          }
+        )
+        .on(
+          'postgres_changes',
+          {
+            event: 'UPDATE',
+            schema: 'public',
+            table: 'quotes',
+            filter: `user_id=eq.${user.id}`,
+          },
+          (payload) => {
+            console.log('Quote updated in real-time:', payload);
+
+            const updatedQuote = payload.new as any;
+
+            // Show toast notification for acceptance/rejection
+            if (updatedQuote.acceptance_status === 'accepted') {
+              toast({
+                title: "Quote Accepted!",
+                description: `${updatedQuote.client_data?.name || 'Client'} accepted quote ${updatedQuote.quote_number}`,
+                duration: 5000,
+              });
+            } else if (updatedQuote.acceptance_status === 'rejected') {
+              toast({
+                title: "Quote Declined",
+                description: `${updatedQuote.client_data?.name || 'Client'} declined quote ${updatedQuote.quote_number}`,
+                variant: "destructive",
+                duration: 5000,
+              });
+            }
+
+            // Refresh quotes to update UI
+            refreshQuotes();
+          }
+        )
+        .subscribe();
+
+      return channel;
+    };
+
+    let channel: any = null;
+    setupRealtimeSubscription().then(ch => { channel = ch; });
 
     return () => {
-      supabase.removeChannel(channel);
+      if (channel) supabase.removeChannel(channel);
     };
   }, [convertDbRowToQuote]);
 
