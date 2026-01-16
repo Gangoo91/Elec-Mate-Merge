@@ -10,6 +10,7 @@ interface SubscriptionState {
   isSubscribed: boolean;
   subscriptionTier: string | null;
   isCheckingStatus: boolean;
+  hasCompletedInitialCheck: boolean;
   lastError: string | null;
   lastCheckedAt: Date | null;
 }
@@ -20,6 +21,7 @@ const initialState: SubscriptionState = {
   isSubscribed: false,
   subscriptionTier: null,
   isCheckingStatus: false,
+  hasCompletedInitialCheck: false,
   lastError: null,
   lastCheckedAt: null,
 };
@@ -84,7 +86,7 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
 
       if (error) {
         console.error('Error checking subscription:', error);
-        setState(prev => ({ ...prev, isCheckingStatus: false, lastError: error.message }));
+        setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true, lastError: error.message }));
         return;
       }
 
@@ -97,18 +99,19 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
           isTrialActive: data.subscribed ? false : prev.isTrialActive,
           lastCheckedAt: new Date(),
           isCheckingStatus: false,
+          hasCompletedInitialCheck: true,
           lastError: null,
         }));
 
         hasCheckedRef.current = true;
         profileIdRef.current = profile.id;
       } else {
-        setState(prev => ({ ...prev, isCheckingStatus: false }));
+        setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true }));
       }
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       console.error('Error in checkSubscriptionStatus:', message);
-      setState(prev => ({ ...prev, isCheckingStatus: false, lastError: message }));
+      setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true, lastError: message }));
     }
   }, [profile]);
 
@@ -133,6 +136,7 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
     isSubscribed: state.isSubscribed,
     subscriptionTier: state.subscriptionTier,
     isCheckingStatus: state.isCheckingStatus,
+    hasCompletedInitialCheck: state.hasCompletedInitialCheck,
     lastError: state.lastError,
     lastCheckedAt: state.lastCheckedAt,
     checkSubscriptionStatus

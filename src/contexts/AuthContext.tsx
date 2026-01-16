@@ -31,15 +31,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     };
   }, [user?.id]);
-  const { 
-    isTrialActive, 
-    trialEndsAt, 
-    isSubscribed, 
-    subscriptionTier, 
-    isCheckingStatus, 
+  const {
+    isTrialActive,
+    trialEndsAt,
+    isSubscribed,
+    subscriptionTier,
+    isCheckingStatus,
+    hasCompletedInitialCheck,
     lastError,
     lastCheckedAt,
-    checkSubscriptionStatus 
+    checkSubscriptionStatus
   } = useSubscriptionStatus(profile);
   const { isDevelopmentMode, toggleDevelopmentMode } = useDevelopmentMode();
   const { signIn, signUp, signOut, resetPassword, updatePassword, resendConfirmationEmail, updateProfile } = useAuthentication();
@@ -55,6 +56,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     isSubscribed,
     subscriptionTier,
     isCheckingStatus,
+    hasCompletedInitialCheck,
     lastError,
     lastCheckedAt,
     checkSubscriptionStatus,

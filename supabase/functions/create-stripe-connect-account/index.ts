@@ -23,16 +23,42 @@ serve(async (req) => {
     const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
-    // IMPORTANT: Always use www.elec-mate.com (non-www has no SSL certificate)
-    // Force www regardless of APP_URL env var
-    const appUrl = 'https://www.elec-mate.com';
+
+    // Parse request body to get returnUrl
+    let returnUrl: string | undefined;
+    try {
+      const body = await req.json();
+      returnUrl = body?.returnUrl;
+    } catch {
+      // No body or invalid JSON - that's fine
+    }
+
+    // Validate returnUrl - must be from allowed origins
+    const allowedOrigins = [
+      'http://localhost:',
+      'https://www.elec-mate.com',
+      'https://elec-mate.com'
+    ];
+
+    let finalReturnUrl = 'https://www.elec-mate.com/electrician/invoices';
+    if (returnUrl) {
+      const isAllowed = allowedOrigins.some(origin => returnUrl!.startsWith(origin));
+      if (isAllowed) {
+        finalReturnUrl = returnUrl;
+      }
+    }
+
+    // Build success/refresh URLs by adding query params to returnUrl
+    const separator = finalReturnUrl.includes('?') ? '&' : '?';
+    const successUrl = `${finalReturnUrl}${separator}stripe=success`;
+    const refreshUrl = `${finalReturnUrl}${separator}stripe=refresh`;
 
     console.log('🔧 Environment check:', {
       hasStripeKey: !!stripeKey,
       stripeKeyPrefix: stripeKey ? stripeKey.substring(0, 10) + '...' : 'MISSING',
       hasSupabaseUrl: !!supabaseUrl,
       hasSupabaseAnonKey: !!supabaseAnonKey,
-      appUrl
+      returnUrl: finalReturnUrl
     });
 
     if (!stripeKey) {
@@ -152,8 +178,8 @@ serve(async (req) => {
 
       const linkParams = new URLSearchParams();
       linkParams.append('account', profile.stripe_account_id);
-      linkParams.append('refresh_url', `${appUrl}/stripe-callback?refresh=true`);
-      linkParams.append('return_url', `${appUrl}/stripe-callback?success=true`);
+      linkParams.append('refresh_url', refreshUrl);
+      linkParams.append('return_url', successUrl);
       linkParams.append('type', 'account_onboarding');
 
       const linkResponse = await fetch('https://api.stripe.com/v1/account_links', {
@@ -267,8 +293,8 @@ serve(async (req) => {
 
     const onboardingParams = new URLSearchParams();
     onboardingParams.append('account', accountData.id);
-    onboardingParams.append('refresh_url', `${appUrl}/stripe-callback?refresh=true`);
-    onboardingParams.append('return_url', `${appUrl}/stripe-callback?success=true`);
+    onboardingParams.append('refresh_url', refreshUrl);
+    onboardingParams.append('return_url', successUrl);
     onboardingParams.append('type', 'account_onboarding');
 
     const onboardingResponse = await fetch('https://api.stripe.com/v1/account_links', {

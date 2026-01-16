@@ -33,7 +33,7 @@ export const InvoiceSendDropdown = ({
   const [isConnectingStripe, setIsConnectingStripe] = useState(false);
   const [stripeConnected, setStripeConnected] = useState<boolean | null>(null);
 
-  // Check if user has Stripe connected - refresh on focus, postMessage, or localStorage change
+  // Check if user has Stripe connected - simple focus-based refresh
   useEffect(() => {
     const checkStripeStatus = async () => {
       try {
@@ -46,17 +46,7 @@ export const InvoiceSendDropdown = ({
           .eq('user_id', user.id)
           .single();
 
-        const wasConnected = stripeConnected;
-        const isNowConnected = profile?.stripe_account_status === 'active';
-        setStripeConnected(isNowConnected);
-
-        // Show toast if just connected
-        if (!wasConnected && isNowConnected) {
-          sonnerToast.success('Stripe Connected!', {
-            description: 'You can now send invoices with card payment links.',
-            duration: 5000,
-          });
-        }
+        setStripeConnected(profile?.stripe_account_status === 'active');
       } catch (error) {
         console.error('Error checking Stripe status:', error);
       }
@@ -65,41 +55,13 @@ export const InvoiceSendDropdown = ({
     checkStripeStatus();
 
     // Re-check when window regains focus (after returning from Stripe)
-    const handleFocus = () => {
-      // Check localStorage for stripe completion signal
-      const stripeComplete = localStorage.getItem('stripe-connect-complete');
-      if (stripeComplete) {
-        localStorage.removeItem('stripe-connect-complete');
-        checkStripeStatus();
-      } else {
-        checkStripeStatus();
-      }
-    };
+    const handleFocus = () => checkStripeStatus();
     window.addEventListener('focus', handleFocus);
-
-    // Listen for postMessage from Stripe callback popup
-    const handleMessage = (event: MessageEvent) => {
-      if (event.data?.type === 'stripe-connect-complete') {
-        checkStripeStatus();
-      }
-    };
-    window.addEventListener('message', handleMessage);
-
-    // Listen for localStorage changes (cross-tab communication)
-    const handleStorage = (event: StorageEvent) => {
-      if (event.key === 'stripe-connect-complete') {
-        localStorage.removeItem('stripe-connect-complete');
-        checkStripeStatus();
-      }
-    };
-    window.addEventListener('storage', handleStorage);
 
     return () => {
       window.removeEventListener('focus', handleFocus);
-      window.removeEventListener('message', handleMessage);
-      window.removeEventListener('storage', handleStorage);
     };
-  }, [stripeConnected]);
+  }, []);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
   const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {

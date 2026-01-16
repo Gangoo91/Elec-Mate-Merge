@@ -10,7 +10,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { user, profile, isLoading, isTrialActive, isSubscribed, isCheckingStatus } = useAuth();
+  const { user, profile, isLoading, isTrialActive, isSubscribed, isCheckingStatus, hasCompletedInitialCheck } = useAuth();
   const location = useLocation();
 
   // Development mode - full access during development only
@@ -34,8 +34,9 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   // Show loading indicator while checking initial authentication OR subscription status
-  // This prevents the paywall from flashing briefly during pull-to-refresh
-  if (isLoading || isCheckingStatus) {
+  // This prevents the paywall/trial banner from flashing briefly during pull-to-refresh
+  // We wait until: auth is done AND (no profile OR initial check completed)
+  if (isLoading || isCheckingStatus || (profile && !hasCompletedInitialCheck)) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-black">
         <Loader2 className="h-12 w-12 text-yellow-400 animate-spin" />
