@@ -16,59 +16,69 @@ import SmartHomeModule6Section3Quiz from '@/components/upskilling/quiz/SmartHome
 
 const SmartHomeModule6Section3 = () => {
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
+      {/* Header */}
+      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8 bg-[#1a1a1a]/95">
         <Link to="../smart-home-module-6">
-          <Button variant="ghost" className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md">
+          <Button
+            variant="ghost"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
+          >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 6
           </Button>
         </Link>
+
         <div className="space-y-3">
           <div className="flex items-center gap-3">
             <Settings className="h-8 w-8 text-elec-yellow" />
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">Voice Control Logic and Routine Mapping</h1>
+            <Badge
+              variant="secondary"
+              className="bg-yellow-600/40 text-elec-yellow hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
+            >
+              Module 6 - Section 3
+            </Badge>
           </div>
-          <p className="text-lg sm:text-xl text-white max-w-3xl">Programming voice commands and automation routines for efficient smart home control</p>
-          <div className="flex gap-4">
-            <Badge variant="secondary" className="bg-elec-yellow text-black">Module 6.3</Badge>
-            <Badge variant="outline" className="border-gray-600 text-gray-300">45 minutes</Badge>
-          </div>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+            Voice Control Logic and Routine Mapping
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl">
+            Programming voice commands and automation routines for efficient smart home control
+          </p>
         </div>
       </header>
+
+      {/* Main Content */}
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="space-y-4 sm:space-y-6">
+        <div className="max-w-3xl mx-auto space-y-8 module-content">
+
+          {/* Introduction */}
           <SmartHomeModule6Section3Intro />
+
+          {/* Learning Outcomes */}
           <SmartHomeModule6Section3LearningOutcomes />
+
+          {/* Content Sections */}
           <SmartHomeModule6Section3Routines />
           <SmartHomeModule6Section3VoiceLogic />
           <SmartHomeModule6Section3Types />
           <SmartHomeModule6Section3Troubleshooting />
           <SmartHomeModule6Section3Practical />
+
+          {/* Real-World Scenario */}
           <SmartHomeModule6Section3RealWorld />
+
+          {/* FAQ Section */}
           <SmartHomeModule6Section3FAQ />
+
+          {/* Summary */}
           <SmartHomeModule6Section3Summary />
+
+          {/* Quiz Section */}
           <SmartHomeModule6Section3Quiz />
+
         </div>
       </main>
-      <footer className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div>
-          <div className="flex justify-between items-center">
-            <Link to="../smart-home-module-6-section-2">
-              <Button variant="outline" className="bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-200">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous: Voice Assistants
-              </Button>
-            </Link>
-            <Link to="../smart-home-module-6-section-4">
-              <Button className="bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200">
-                Next: Bridging Systems
-                <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

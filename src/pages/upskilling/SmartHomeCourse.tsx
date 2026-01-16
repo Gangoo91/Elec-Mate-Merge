@@ -65,10 +65,10 @@ const SmartHomeCourse = () => {
   ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
       {/* Back Button */}
       <Link to="/electrician/upskilling">
-        <Button variant="ghost" className="text-muted-foreground hover:text-foreground transition-colors p-0 h-auto">
+        <Button variant="ghost" className="text-muted-foreground hover:text-foreground transition-colors p-0 h-auto touch-manipulation active:scale-[0.98]">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Courses
         </Button>
@@ -85,7 +85,7 @@ const SmartHomeCourse = () => {
       </div>
 
       {/* Module Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {modules.map((module, index) => (
             <motion.div
               key={module.id}

@@ -136,7 +136,7 @@ const InstrumentationModule4Section3 = () => {
   return (
     <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
+      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8 bg-[#1a1a1a]/95">
         <Link to="../instrumentation-module-4">
           <Button
             variant="ghost"

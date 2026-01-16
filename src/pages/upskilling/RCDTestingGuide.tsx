@@ -6,19 +6,23 @@ import { Link } from 'react-router-dom';
 
 const RCDTestingGuide = () => {
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-8 pt-8 pb-12">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Header */}
+      <header className="sticky top-0 z-10 bg-[#1a1a1a]/95 backdrop-blur-sm px-4 sm:px-6 lg:px-8 pt-8 pb-4">
         <Link to="module-8/section-3">
           <Button
             variant="ghost"
-            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 min-h-[48px]"
+            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-4 min-h-[48px] touch-manipulation active:scale-[0.98]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Practical Assessment
           </Button>
         </Link>
-        
-        <div className="space-y-4 sm:space-y-6">
+      </header>
+
+      {/* Main Content */}
+      <main className="px-4 sm:px-6 lg:px-8 pb-12">
+        <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
           {/* Header */}
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold text-white">RCD Testing Guide</h1>
@@ -666,7 +670,7 @@ const RCDTestingGuide = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

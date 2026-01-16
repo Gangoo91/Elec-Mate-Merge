@@ -375,13 +375,13 @@ const SafeIsolationGuide = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
+      <header className="sticky top-0 z-10 bg-[#1a1a1a]/95 backdrop-blur-sm px-4 sm:px-6 lg:px-8 pt-8 pb-4">
         <Link to="module-8/section-3">
           <Button
             variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px] touch-manipulation active:scale-[0.98]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Practical Assessment
@@ -395,7 +395,7 @@ const SafeIsolationGuide = () => {
               Safe Isolation Procedures
             </h1>
           </div>
-          <p className="text-lg sm:text-xl text-white max-w-4xl">
+          <p className="text-lg sm:text-xl text-white max-w-3xl">
             Comprehensive guide to safe isolation procedures for electrical work - the foundation of electrical safety
           </p>
         </div>

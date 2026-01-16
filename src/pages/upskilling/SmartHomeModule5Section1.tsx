@@ -21,11 +21,11 @@ const SmartHomeModule5Section1 = () => {
   return (
     <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
+      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8 bg-[#1a1a1a]/95">
         <Link to="../smart-home-module-5">
           <Button
             variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 5
@@ -53,7 +53,7 @@ const SmartHomeModule5Section1 = () => {
 
       {/* Main Content */}
       <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="max-w-4xl mx-auto space-y-8 module-content">
+        <div className="max-w-3xl mx-auto space-y-8 module-content">
           
           {/* Introduction */}
           <SmartHomeModule5Section1Intro />

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Clock, CheckCircle, XCircle, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Clock, CheckCircle, XCircle, RotateCcw, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -103,75 +103,87 @@ const SmartHomeMockExam = () => {
   // Start Screen
   if (examState === 'start') {
     return (
-      <div className="space-y-4 sm:space-y-6 animate-fade-in">
-        <div className="px-4 sm:px-8 pt-8 pb-12">
+      <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
+        {/* Header */}
+        <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8 bg-[#1a1a1a]/95">
           <Link to="../smart-home-course">
             <Button
               variant="ghost"
-              className="text-foreground hover:bg-transparent hover:text-elec-yellow transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+              className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Smart Home Course
             </Button>
           </Link>
-          
-          <div className="space-y-4 sm:space-y-6">
-            <div className="text-center">
-              <h1 className="text-4xl font-bold text-white mb-4">
-                Smart Home Mock Exam
-              </h1>
-              <p className="text-xl text-white mb-6">
-                Test your knowledge with a comprehensive examination covering all aspects of smart home technology
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <Badge variant="secondary" className="bg-elec-yellow text-black">
-                  30 Questions
-                </Badge>
-                <Badge variant="outline" className="border-gray-600 text-white">
-                  45 Minutes
-                </Badge>
-                <Badge variant="outline" className="border-gray-600 text-white">
-                  Pass Mark: 70%
-                </Badge>
-              </div>
+
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <GraduationCap className="h-8 w-8 text-elec-yellow" />
+              <Badge
+                variant="secondary"
+                className="bg-yellow-600/40 text-elec-yellow hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
+              >
+                Mock Exam
+              </Badge>
+            </div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+              Smart Home Mock Exam
+            </h1>
+            <p className="text-lg sm:text-xl text-gray-400 max-w-3xl">
+              Test your knowledge with a comprehensive examination covering all aspects of smart home technology
+            </p>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="px-4 sm:px-6 lg:px-8 pb-8">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <div className="flex flex-wrap gap-4">
+              <Badge variant="secondary" className="bg-elec-yellow text-black">
+                30 Questions
+              </Badge>
+              <Badge variant="outline" className="border-gray-600 text-white">
+                45 Minutes
+              </Badge>
+              <Badge variant="outline" className="border-gray-600 text-white">
+                Pass Mark: 70%
+              </Badge>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="bg-transparent border-transparent">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Clock className="h-6 w-6 text-elec-yellow" />
-                    <h3 className="text-xl font-bold text-white">Exam Details</h3>
-                  </div>
-                  <div className="space-y-3 text-white">
-                    <p>• 30 randomly selected questions</p>
-                    <p>• 45-minute time limit</p>
-                    <p>• Pass mark: 70% (21 correct answers)</p>
-                    <p>• Covers all smart home technology areas</p>
-                    <p>• Immediate results and detailed feedback</p>
-                  </div>
-                </CardContent>
-              </Card>
+            <Card className="bg-card/50 border-gray-700">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <Clock className="h-6 w-6 text-elec-yellow" />
+                  <h3 className="text-xl font-bold text-white">Exam Details</h3>
+                </div>
+                <div className="space-y-3 text-gray-300">
+                  <p>30 randomly selected questions</p>
+                  <p>45-minute time limit</p>
+                  <p>Pass mark: 70% (21 correct answers)</p>
+                  <p>Covers all smart home technology areas</p>
+                  <p>Immediate results and detailed feedback</p>
+                </div>
+              </CardContent>
+            </Card>
 
-              <Card className="bg-transparent border-transparent">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <CheckCircle className="h-6 w-6 text-elec-yellow" />
-                    <h3 className="text-xl font-bold text-white">Topics Covered</h3>
-                  </div>
-                  <div className="space-y-3 text-white">
-                    <p>• Smart home system fundamentals</p>
-                    <p>• Communication protocols (WiFi, Zigbee, Z-Wave, Matter)</p>
-                    <p>• Lighting control and scene programming</p>
-                    <p>• HVAC and environmental systems</p>
-                    <p>• Security and access control</p>
-                    <p>• Hubs and voice assistants</p>
-                    <p>• Installation and safety (BS 7671)</p>
-                    <p>• Troubleshooting and maintenance</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+            <Card className="bg-card/50 border-gray-700">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <CheckCircle className="h-6 w-6 text-elec-yellow" />
+                  <h3 className="text-xl font-bold text-white">Topics Covered</h3>
+                </div>
+                <div className="space-y-3 text-gray-300">
+                  <p>Smart home system fundamentals</p>
+                  <p>Communication protocols (WiFi, Zigbee, Z-Wave, Matter)</p>
+                  <p>Lighting control and scene programming</p>
+                  <p>HVAC and environmental systems</p>
+                  <p>Security and access control</p>
+                  <p>Hubs and voice assistants</p>
+                  <p>Installation and safety (BS 7671)</p>
+                  <p>Troubleshooting and maintenance</p>
+                </div>
+              </CardContent>
+            </Card>
 
             <Card className="bg-elec-yellow/10 border-elec-yellow/30">
               <CardContent className="p-6">
@@ -179,27 +191,27 @@ const SmartHomeMockExam = () => {
                   <CheckCircle className="h-6 w-6 text-elec-yellow" />
                   <h3 className="text-xl font-bold text-white">Before You Begin</h3>
                 </div>
-                <div className="space-y-3 text-white">
-                  <p>• Ensure you have a stable internet connection</p>
-                  <p>• Find a quiet environment for concentration</p>
-                  <p>• Allow uninterrupted time for the full 45-minute duration</p>
-                  <p>• Have a calculator and notepad available if needed</p>
-                  <p>• Review key concepts from all modules if needed</p>
+                <div className="space-y-3 text-gray-300">
+                  <p>Ensure you have a stable internet connection</p>
+                  <p>Find a quiet environment for concentration</p>
+                  <p>Allow uninterrupted time for the full 45-minute duration</p>
+                  <p>Have a calculator and notepad available if needed</p>
+                  <p>Review key concepts from all modules if needed</p>
                 </div>
               </CardContent>
             </Card>
 
-            <div className="text-center">
-              <Button 
+            <div className="text-center pt-4">
+              <Button
                 onClick={startExam}
-                className="bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200 px-8 py-3 text-lg font-semibold"
+                className="bg-elec-yellow text-black hover:bg-yellow-600 transition-all duration-200 px-8 py-3 text-lg font-semibold touch-manipulation active:scale-[0.98]"
               >
                 <Clock className="mr-2 h-5 w-5" />
                 Start Mock Exam
               </Button>
             </div>
           </div>
-        </div>
+        </main>
       </div>
     );
   }
@@ -213,55 +225,74 @@ const SmartHomeMockExam = () => {
     const timeTaken = formatTime(Math.min(timeElapsed, EXAM_DURATION));
 
     return (
-      <div className="space-y-4 sm:space-y-6 animate-fade-in">
-        <div className="px-4 sm:px-8 pt-8 pb-12">
+      <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
+        {/* Header */}
+        <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8 bg-[#1a1a1a]/95">
           <Link to="../smart-home-course">
             <Button
               variant="ghost"
-              className="text-foreground hover:bg-transparent hover:text-elec-yellow transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+              className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Smart Home Course
             </Button>
           </Link>
 
-          <div className="space-y-4 sm:space-y-6">
-            <div className="text-center">
-              <h1 className="text-4xl font-bold text-white mb-4">Exam Results</h1>
-              
-              <Card className="bg-transparent border-transparent">
-                <CardContent className="p-8">
-                  <div className="text-center space-y-4">
-                    <div className="text-6xl font-bold text-elec-yellow">
-                      {percentage}%
-                    </div>
-                    <div className={`text-2xl font-bold ${color}`}>
-                      {grade}
-                    </div>
-                    <div className="text-white">
-                      {correctAnswers} out of {EXAM_QUESTION_COUNT} questions correct
-                    </div>
-                    <div className="text-white">
-                      Time taken: {timeTaken}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <GraduationCap className="h-8 w-8 text-elec-yellow" />
+              <Badge
+                variant="secondary"
+                className="bg-yellow-600/40 text-elec-yellow hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
+              >
+                Exam Complete
+              </Badge>
             </div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+              Exam Results
+            </h1>
+            <p className="text-lg sm:text-xl text-gray-400 max-w-3xl">
+              Review your performance and learn from the explanations
+            </p>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="px-4 sm:px-6 lg:px-8 pb-8">
+          <div className="max-w-3xl mx-auto space-y-6">
+            {/* Score Card */}
+            <Card className="bg-card/50 border-gray-700">
+              <CardContent className="p-6 sm:p-8">
+                <div className="text-center space-y-4">
+                  <div className="text-6xl font-bold text-elec-yellow">
+                    {percentage}%
+                  </div>
+                  <div className={`text-2xl font-bold ${color}`}>
+                    {grade}
+                  </div>
+                  <div className="text-gray-300">
+                    {correctAnswers} out of {EXAM_QUESTION_COUNT} questions correct
+                  </div>
+                  <div className="text-gray-300">
+                    Time taken: {timeTaken}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
             {/* Question Review */}
-            <Card className="bg-transparent border-transparent">
+            <Card className="bg-card/50 border-gray-700">
               <CardContent className="p-4 sm:p-6">
                 <h3 className="text-xl font-bold text-white mb-6">Question Review</h3>
                 <div className="space-y-4">
                   {questions.map((question, index) => {
                     const isCorrect = selectedAnswers[index] === question.correctAnswer;
                     const wasAnswered = selectedAnswers[index] !== undefined;
-                    
+
                     return (
                       <div
                         key={question.id}
-                        className="p-4 sm:p-5 border border-gray-600 rounded-lg bg-transparent hover:bg-transparent/80 transition-colors"
+                        className="p-4 sm:p-5 border border-gray-600 rounded-lg bg-[#1a1a1a]/50"
                       >
                         <div className="flex items-start gap-4 mb-3">
                           {isCorrect ? (
@@ -273,26 +304,26 @@ const SmartHomeMockExam = () => {
                             <p className="text-white font-medium mb-3 text-sm sm:text-base">
                               Question {index + 1}: {question.question}
                             </p>
-                            
+
                             {wasAnswered && (
-                              <div className="mb-3 p-3 bg-transparent rounded-lg">
+                              <div className="mb-3 p-3 bg-[#1a1a1a] rounded-lg">
                                 <span className="text-white text-sm font-medium">Your answer: </span>
                                 <span className={`text-sm ${isCorrect ? 'text-green-400' : 'text-red-400'} font-medium`}>
                                   {question.options[selectedAnswers[index]]}
                                 </span>
                               </div>
                             )}
-                            
+
                             {!isCorrect && (
-                              <div className="mb-3 p-3 bg-transparent border border-green-500/20 rounded-lg">
+                              <div className="mb-3 p-3 bg-[#1a1a1a] border border-green-500/20 rounded-lg">
                                 <span className="text-white text-sm font-medium">Correct answer: </span>
                                 <span className="text-green-400 text-sm font-medium">
                                   {question.options[question.correctAnswer]}
                                 </span>
                               </div>
                             )}
-                            
-                            <div className="text-sm text-white bg-[#1a1a1a] p-4 rounded-lg">
+
+                            <div className="text-sm text-gray-300 bg-[#1a1a1a] p-4 rounded-lg">
                               <strong className="text-elec-yellow">Explanation:</strong> {question.explanation}
                             </div>
                           </div>
@@ -304,61 +335,75 @@ const SmartHomeMockExam = () => {
               </CardContent>
             </Card>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Button
                 onClick={handleRestart}
-                className="bg-elec-yellow text-black hover:bg-elec-yellow"
+                className="bg-elec-yellow text-black hover:bg-yellow-600 transition-all duration-200 px-8 py-3 text-lg font-semibold touch-manipulation active:scale-[0.98]"
               >
-                <RotateCcw className="mr-2 h-4 w-4" />
+                <RotateCcw className="mr-2 h-5 w-5" />
                 Take Again
               </Button>
               <Link to="../smart-home-course">
-                <Button variant="outline" className="border-gray-600 text-white hover:bg-transparent w-full sm:w-auto">
+                <Button
+                  variant="outline"
+                  className="border-gray-600 text-white hover:bg-gray-700 transition-all duration-200 px-8 py-3 text-lg font-semibold w-full sm:w-auto touch-manipulation active:scale-[0.98]"
+                >
                   Return to Course
                 </Button>
               </Link>
             </div>
           </div>
-        </div>
+        </main>
       </div>
     );
   }
 
   // Exam Screen
   const question = questions[currentQuestion];
-  
+
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-4 sm:px-8 pt-8 pb-12">
-        {/* Header with timer */}
-        <div className="flex flex-col gap-4 mb-6 sm:mb-8">
-          <div className="flex justify-between items-center">
-            <Link to="../smart-home-course">
-              <Button
-                variant="ghost"
-                className="text-foreground hover:bg-transparent hover:text-elec-yellow transition-all duration-200 px-4 py-2 rounded-md"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                <span className="hidden sm:inline">Back to Smart Home Course</span>
-                <span className="sm:hidden">Back</span>
-              </Button>
-            </Link>
-            
-            <Badge variant="outline" className="border-elec-yellow text-elec-yellow px-3 py-1">
-              <Clock className="mr-1 h-4 w-4" />
-              {formatTime(timeRemaining)}
-            </Badge>
-          </div>
-          
-          <div className="text-center">
-            <Badge variant="secondary" className="bg-elec-yellow text-black px-4 py-2 text-sm font-medium">
-              Smart Home Mock Exam
-            </Badge>
-          </div>
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
+      {/* Header */}
+      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6 bg-[#1a1a1a]/95">
+        <div className="flex justify-between items-center mb-4">
+          <Link to="../smart-home-course">
+            <Button
+              variant="ghost"
+              className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              <span className="hidden sm:inline">Back to Smart Home Course</span>
+              <span className="sm:hidden">Back</span>
+            </Button>
+          </Link>
+
+          <Badge variant="outline" className="border-elec-yellow text-elec-yellow px-3 py-2 text-base font-semibold">
+            <Clock className="mr-2 h-4 w-4" />
+            {formatTime(timeRemaining)}
+          </Badge>
         </div>
 
-        <div className="space-y-4 sm:space-y-6">
-          <QuizProgress 
+        <div className="space-y-3">
+          <div className="flex items-center gap-3">
+            <GraduationCap className="h-8 w-8 text-elec-yellow" />
+            <Badge
+              variant="secondary"
+              className="bg-yellow-600/40 text-elec-yellow hover:bg-yellow-600/50 font-semibold text-sm px-3 py-1 border-0"
+            >
+              In Progress
+            </Badge>
+          </div>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
+            Smart Home Mock Exam
+          </h1>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="px-4 sm:px-6 lg:px-8 pb-8">
+        <div className="max-w-3xl mx-auto space-y-6">
+          <QuizProgress
             currentQuestion={currentQuestion}
             totalQuestions={questions.length}
           />
@@ -382,7 +427,7 @@ const SmartHomeMockExam = () => {
             </>
           )}
         </div>
-      </div>
+      </main>
     </div>
   );
 };

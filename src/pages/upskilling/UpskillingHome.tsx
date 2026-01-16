@@ -187,9 +187,9 @@ export default function UpskillingHome() {
   const inProgressCount = courses.filter(c => c.progress > 0 && c.progress < 100).length;
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Header */}
-      <div className="bg-transparent border-b border-border sticky top-0 z-10">
+      <div className="bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-border sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-4">
             <div>

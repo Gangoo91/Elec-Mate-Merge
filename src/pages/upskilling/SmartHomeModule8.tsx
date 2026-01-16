@@ -36,12 +36,12 @@ const SmartHomeModule8 = () => {
   ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
       <div className="px-8 pt-8 pb-12">
         <Link to="../smart-home-course">
           <Button
             variant="ghost"
-            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md min-h-[48px]"
+            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md min-h-[48px] touch-manipulation active:scale-[0.98]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Smart Home Course
@@ -69,7 +69,7 @@ const SmartHomeModule8 = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 max-w-3xl">
             {infoCards.map((card, index) => (
               <motion.div
                 key={card.id}
@@ -142,7 +142,7 @@ const SmartHomeModule8 = () => {
           <div className="flex justify-center pt-6">
             <Link to="../smart-home-mock-exam">
               <Button
-                className="bg-yellow-400 text-black hover:bg-yellow-400 transition-all duration-200 px-8 py-3 text-lg font-semibold min-h-[48px]"
+                className="bg-yellow-400 text-black hover:bg-yellow-400 transition-all duration-200 px-8 py-3 text-lg font-semibold min-h-[48px] touch-manipulation active:scale-[0.98]"
               >
                 <Clock className="mr-2 h-5 w-5" />
                 Start Mock Exam

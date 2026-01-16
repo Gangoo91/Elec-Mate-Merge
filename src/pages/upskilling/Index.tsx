@@ -134,30 +134,35 @@ const courses = [
 
 const Index = () => {
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      {/* Back Button */}
-      <Link to="/electrician/study-centre">
-        <Button
-          variant="ghost"
-          className="text-muted-foreground hover:text-foreground transition-colors p-0 h-auto"
-        >
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Header */}
+      <header className="sticky top-0 z-10 bg-[#1a1a1a]/95 backdrop-blur-sm px-4 sm:px-6 pt-6 pb-4">
+        <Link to="/electrician/study-centre">
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground transition-colors p-0 h-auto touch-manipulation active:scale-[0.98]"
+          >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Study Centre
         </Button>
-      </Link>
+        </Link>
+      </header>
 
-      {/* Header */}
-      <div className="space-y-1">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-          Electrical Upskilling
-        </h1>
-        <p className="text-sm sm:text-base text-muted-foreground">
-          Advanced courses for qualified electricians
-        </p>
-      </div>
+      {/* Main Content */}
+      <main className="px-4 sm:px-6 pb-12">
+        <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
+          {/* Page Title */}
+          <div className="space-y-1">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+              Electrical Upskilling
+            </h1>
+            <p className="text-sm sm:text-base text-muted-foreground">
+              Advanced courses for qualified electricians
+            </p>
+          </div>
 
-      {/* Course Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+          {/* Course Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
         {courses.map((course) => {
           const IconComponent = course.icon;
           return (
@@ -202,7 +207,9 @@ const Index = () => {
             </Link>
           );
         })}
-      </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 };

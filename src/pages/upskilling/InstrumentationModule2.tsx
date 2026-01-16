@@ -68,7 +68,7 @@ const InstrumentationModule2 = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
+          <div className="grid grid-cols-1 gap-4 auto-rows-fr">
             {sections.map((section, index) => (
               <motion.div
                 key={section.id}
