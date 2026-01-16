@@ -184,7 +184,7 @@ const IndustrialElectricalModule1Section4: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
       <div className="bg-gradient-to-r from-[#1a1a1a] to-[#2a2a2a] border-b border-gray-800">
         <div className="container mx-auto px-4 py-6">
@@ -201,7 +201,7 @@ const IndustrialElectricalModule1Section4: React.FC = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="container mx-auto px-4 py-8 max-w-3xl">
         {/* Introduction */}
         <div className="bg-[#242424] rounded-lg p-6 mb-8 border border-gray-700">
           <div className="flex items-start gap-4">

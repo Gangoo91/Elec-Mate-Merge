@@ -222,10 +222,10 @@ const IndustrialElectricalModule1Section5: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
       <div className="bg-gradient-to-r from-[#1a1a1a] to-[#2a2a2a] border-b border-elec-yellow/20">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+        <div className="max-w-3xl mx-auto px-4 py-6">
           <div className="flex items-center gap-2 text-elec-yellow/70 text-sm mb-2">
             <BookOpen className="w-4 h-4" />
             <span>Industrial Electrical • Module 1 • Section 5</span>
@@ -239,7 +239,7 @@ const IndustrialElectricalModule1Section5: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-12">
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-12">
 
         {/* Section 1: TN-S and TN-C-S Systems */}
         <section className="space-y-4">

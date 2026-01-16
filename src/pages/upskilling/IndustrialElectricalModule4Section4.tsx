@@ -157,8 +157,8 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
+      <div className="max-w-3xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-2 text-elec-yellow mb-2">
@@ -1044,7 +1044,7 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
               </h2>
               <Button
                 onClick={() => setShowQuiz(!showQuiz)}
-                className="bg-elec-yellow text-[#1a1a1a] hover:bg-yellow-400 min-h-[44px] touch-manipulation"
+                className="bg-elec-yellow text-[#1a1a1a] hover:bg-yellow-400 min-h-[44px] touch-manipulation active:scale-[0.98]"
               >
                 {showQuiz ? 'Hide Quiz' : 'Start Quiz'}
               </Button>
@@ -1063,14 +1063,14 @@ const IndustrialElectricalModule4Section4: React.FC = () => {
           <Button
             onClick={() => navigate('/upskilling/industrial-electrical/module4/section3')}
             variant="outline"
-            className="flex items-center gap-2 min-h-[44px] touch-manipulation border-gray-600 text-white hover:bg-[#242424]"
+            className="flex items-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] border-gray-600 text-white hover:bg-[#242424]"
           >
             <ChevronLeft className="w-5 h-5" />
             <span>Previous: Section 3 - PLC Hardware</span>
           </Button>
           <Button
             onClick={() => navigate('/upskilling/industrial-electrical/module4/section5')}
-            className="flex items-center gap-2 min-h-[44px] touch-manipulation bg-elec-yellow text-[#1a1a1a] hover:bg-yellow-400"
+            className="flex items-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a] hover:bg-yellow-400"
           >
             <span>Next: Section 5 - HMI and SCADA</span>
             <ChevronRight className="w-5 h-5" />

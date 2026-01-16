@@ -96,7 +96,7 @@ const BMSModule3Section3 = () => {
         </div>
       </div>
 
-      <article className="px-4 sm:px-6 py-8 sm:py-12 max-w-4xl mx-auto">
+      <article className="px-4 sm:px-6 py-8 sm:py-12 max-w-3xl mx-auto">
         {/* Page Title Header */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -363,7 +363,7 @@ const BMSModule3Section3 = () => {
             <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">5,000m² Office Implementation</h3>
             <div className="text-sm text-white space-y-3">
               <p><strong>Installation:</strong> 45 dual-technology occupancy sensors, 12 CO₂ sensors in conference rooms, 8 scheduling zones.</p>
-              <div className="grid grid-cols-2 gap-4 my-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-3">
                 <div>
                   <p className="text-xs text-white/70 mb-1">Energy Savings</p>
                   <ul className="text-xs space-y-0.5">

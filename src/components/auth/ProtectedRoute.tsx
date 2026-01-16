@@ -10,7 +10,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { user, isLoading, isTrialActive, isSubscribed, isCheckingStatus } = useAuth();
+  const { user, profile, isLoading, isTrialActive, isSubscribed, isCheckingStatus } = useAuth();
   const location = useLocation();
 
   // Development mode - full access during development only
@@ -20,19 +20,22 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   // Check if the current route is the subscription page
   const isSubscriptionPage = location.pathname === '/subscriptions';
 
+  // Check profile directly as fallback - this prevents flash during refresh
+  // when derived state (isSubscribed) hasn't updated yet from the new profile
+  const hasProfileAccess = profile?.subscribed || profile?.free_access_granted;
+
   // Check if user can access the page based on subscription/trial status
   // In development mode, always allow access for testing
-  const canAccess = isDevelopment || isSubscribed || isTrialActive || isSubscriptionPage;
+  const canAccess = isDevelopment || isSubscribed || isTrialActive || hasProfileAccess || isSubscriptionPage;
 
   // Redirect to sign in if not logged in
   if (!isLoading && !user) {
     return <Navigate to="/auth/signin" state={{ from: location }} replace />;
   }
 
-  // Show loading indicator only while checking initial authentication
-  // Subscription check now runs in background - we use profile.subscribed for instant access
-  // This prevents mobile from hanging on slow serverless function calls
-  if (isLoading) {
+  // Show loading indicator while checking initial authentication OR subscription status
+  // This prevents the paywall from flashing briefly during pull-to-refresh
+  if (isLoading || isCheckingStatus) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-black">
         <Loader2 className="h-12 w-12 text-yellow-400 animate-spin" />

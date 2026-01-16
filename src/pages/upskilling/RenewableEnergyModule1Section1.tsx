@@ -17,12 +17,12 @@ const RenewableEnergyModule1Section1 = () => {
   }));
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
       <div className="px-4 md:px-8 pt-8 pb-12">
         <Link to="../renewable-energy-module-1">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md"
+            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 1
@@ -367,7 +367,7 @@ const RenewableEnergyModule1Section1 = () => {
           <div className="flex justify-between mt-8">
             <div></div>
             <Link to="../renewable-energy-module-1-section-2">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
+              <Button className="bg-yellow-400 text-black hover:bg-yellow-600 touch-manipulation active:scale-[0.98]">
                 Next Section
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

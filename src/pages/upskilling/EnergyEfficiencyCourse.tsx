@@ -53,7 +53,7 @@ const EnergyEfficiencyCourse = () => {
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Back Button */}
       <Link to="/electrician/upskilling">
-        <Button variant="ghost" className="text-white hover:text-foreground transition-colors min-h-[48px] px-4">
+        <Button variant="ghost" className="text-white hover:text-foreground transition-colors min-h-[48px] px-4 touch-manipulation active:scale-[0.98]">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Courses
         </Button>
@@ -70,7 +70,7 @@ const EnergyEfficiencyCourse = () => {
       </div>
 
       {/* Module Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {modules.map((module, index) => (
             <motion.div
               key={module.id}

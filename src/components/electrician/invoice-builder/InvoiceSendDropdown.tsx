@@ -9,11 +9,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import { Mail, MessageCircle, Loader2, CreditCard, Zap } from 'lucide-react';
+import { Mail, MessageCircle, Loader2, CreditCard, Zap, CheckCircle } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { toast as sonnerToast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
 
 interface InvoiceSendDropdownProps {
   invoice: Quote;
@@ -28,12 +28,12 @@ export const InvoiceSendDropdown = ({
   disabled = false,
   className = '',
 }: InvoiceSendDropdownProps) => {
-  const navigate = useNavigate();
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
+  const [isConnectingStripe, setIsConnectingStripe] = useState(false);
   const [stripeConnected, setStripeConnected] = useState<boolean | null>(null);
 
-  // Check if user has Stripe connected
+  // Check if user has Stripe connected - refresh on focus, postMessage, or localStorage change
   useEffect(() => {
     const checkStripeStatus = async () => {
       try {
@@ -46,14 +46,60 @@ export const InvoiceSendDropdown = ({
           .eq('user_id', user.id)
           .single();
 
-        setStripeConnected(profile?.stripe_account_status === 'active');
+        const wasConnected = stripeConnected;
+        const isNowConnected = profile?.stripe_account_status === 'active';
+        setStripeConnected(isNowConnected);
+
+        // Show toast if just connected
+        if (!wasConnected && isNowConnected) {
+          sonnerToast.success('Stripe Connected!', {
+            description: 'You can now send invoices with card payment links.',
+            duration: 5000,
+          });
+        }
       } catch (error) {
         console.error('Error checking Stripe status:', error);
       }
     };
 
     checkStripeStatus();
-  }, []);
+
+    // Re-check when window regains focus (after returning from Stripe)
+    const handleFocus = () => {
+      // Check localStorage for stripe completion signal
+      const stripeComplete = localStorage.getItem('stripe-connect-complete');
+      if (stripeComplete) {
+        localStorage.removeItem('stripe-connect-complete');
+        checkStripeStatus();
+      } else {
+        checkStripeStatus();
+      }
+    };
+    window.addEventListener('focus', handleFocus);
+
+    // Listen for postMessage from Stripe callback popup
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'stripe-connect-complete') {
+        checkStripeStatus();
+      }
+    };
+    window.addEventListener('message', handleMessage);
+
+    // Listen for localStorage changes (cross-tab communication)
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key === 'stripe-connect-complete') {
+        localStorage.removeItem('stripe-connect-complete');
+        checkStripeStatus();
+      }
+    };
+    window.addEventListener('storage', handleStorage);
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('message', handleMessage);
+      window.removeEventListener('storage', handleStorage);
+    };
+  }, [stripeConnected]);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
   const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {
@@ -154,7 +200,7 @@ export const InvoiceSendDropdown = ({
                 size="sm"
                 variant="outline"
                 className="border-indigo-500/30 hover:bg-indigo-500/10"
-                onClick={() => navigate('/electrician/settings')}
+                onClick={() => navigate('/electrician/settings?tab=billing')}
               >
                 <CreditCard className="h-4 w-4 mr-1" />
                 Set up
@@ -329,7 +375,62 @@ ${companyName}`;
     }
   };
 
-  const isLoading = isSendingEmail || isSharingWhatsApp;
+  // Connect to Stripe directly from invoice page
+  const handleConnectStripe = async () => {
+    try {
+      setIsConnectingStripe(true);
+      const { data: session } = await supabase.auth.getSession();
+
+      if (!session.session) {
+        sonnerToast.error('Please log in to connect Stripe');
+        return;
+      }
+
+      const response = await supabase.functions.invoke('create-stripe-connect-account', {
+        headers: {
+          Authorization: `Bearer ${session.session.access_token}`,
+        },
+      });
+
+      if (response.error) throw response.error;
+
+      // Check for error in response data
+      if (response.data?.error) {
+        sonnerToast.error(response.data.error, {
+          description: response.data.action || undefined,
+          duration: 6000,
+        });
+        return;
+      }
+
+      const { url, type } = response.data || {};
+
+      if (url) {
+        if (type === 'dashboard') {
+          sonnerToast.success('Opening Stripe Dashboard');
+          window.open(url, '_blank');
+        } else {
+          // Store current URL to return here after Stripe onboarding
+          localStorage.setItem('stripe-return-url', window.location.pathname + window.location.search);
+          // Redirect in same tab - user never leaves the app context
+          window.location.href = url;
+        }
+      } else {
+        sonnerToast.error('Could not start Stripe setup', {
+          description: 'Please try again or contact support.',
+        });
+      }
+    } catch (error: any) {
+      console.error('Error connecting Stripe:', error);
+      const errorMessage = error?.message || error?.error ||
+        (typeof error === 'string' ? error : 'Failed to connect Stripe');
+      sonnerToast.error(errorMessage);
+    } finally {
+      setIsConnectingStripe(false);
+    }
+  };
+
+  const isLoading = isSendingEmail || isSharingWhatsApp || isConnectingStripe;
 
   return (
     <DropdownMenu>
@@ -395,24 +496,38 @@ ${companyName}`;
           </div>
         </DropdownMenuItem>
 
-        {/* Stripe Connect Prompt - only show if not connected */}
+        {/* Stripe Connect - show connect button or connected status */}
         {stripeConnected === false && (
           <>
             <DropdownMenuSeparator className="my-2 bg-border/30" />
             <DropdownMenuItem
-              onClick={() => navigate('/electrician/settings')}
+              onClick={handleConnectStripe}
+              disabled={isConnectingStripe}
               className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-indigo-500/10 touch-manipulation bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20"
             >
               <div className="h-10 w-10 rounded-xl bg-indigo-500/20 flex items-center justify-center mr-3 flex-shrink-0">
-                <CreditCard className="h-5 w-5 text-indigo-400" />
+                {isConnectingStripe ? (
+                  <Loader2 className="h-5 w-5 text-indigo-400 animate-spin" />
+                ) : (
+                  <CreditCard className="h-5 w-5 text-indigo-400" />
+                )}
               </div>
               <div className="flex flex-col">
                 <span className="font-semibold text-sm flex items-center gap-1">
-                  Enable Card Payments <Zap className="h-3 w-3 text-elec-yellow" />
+                  {isConnectingStripe ? 'Connecting...' : 'Enable Card Payments'} <Zap className="h-3 w-3 text-elec-yellow" />
                 </span>
                 <span className="text-xs text-muted-foreground">Get paid faster with Stripe</span>
               </div>
             </DropdownMenuItem>
+          </>
+        )}
+        {stripeConnected === true && (
+          <>
+            <DropdownMenuSeparator className="my-2 bg-border/30" />
+            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-green-500/10 border border-green-500/20">
+              <CheckCircle className="h-4 w-4 text-green-400" />
+              <span className="text-xs text-green-400 font-medium">Card payments enabled</span>
+            </div>
           </>
         )}
       </DropdownMenuContent>

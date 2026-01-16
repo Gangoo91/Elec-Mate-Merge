@@ -40,18 +40,23 @@ const DataCablingModule5 = () => {
   ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="../data-cabling-course">
-          <Button
-            variant="ghost"
-            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md min-h-[48px]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Data Cabling Course
-          </Button>
-        </Link>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Link to="../data-cabling-course">
+            <Button
+              variant="ghost"
+              className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Data Cabling Course
+            </Button>
+          </Link>
+        </div>
+      </div>
 
+      <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="space-y-6">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-white mb-4">

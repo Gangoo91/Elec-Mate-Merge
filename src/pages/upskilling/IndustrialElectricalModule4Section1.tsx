@@ -216,10 +216,10 @@ const IndustrialElectricalModule4Section1: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#1a1a1a] to-[#2d2d2d] border-b border-gray-700 px-4 py-6">
-        <div className="max-w-4xl mx-auto">
+      <div className="bg-[#1a1a1a]/95 border-b border-gray-700 px-4 py-6">
+        <div className="max-w-3xl mx-auto">
           <div className="flex items-center gap-2 text-elec-yellow mb-2">
             <Cpu className="w-5 h-5" />
             <span className="text-sm font-medium">Module 4 • Section 1</span>
@@ -233,7 +233,7 @@ const IndustrialElectricalModule4Section1: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-12">
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-12">
         {/* Section 1: PLC System Architecture */}
         <section className="space-y-6">
           <div className="flex items-center gap-3">
@@ -975,14 +975,14 @@ const IndustrialElectricalModule4Section1: React.FC = () => {
           <Button
             onClick={() => navigate('/upskilling/industrial-electrical-module-3')}
             variant="outline"
-            className="min-h-[44px] touch-manipulation flex items-center gap-2 bg-transparent border-gray-600 text-white hover:bg-[#2d2d2d] hover:text-elec-yellow"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] flex items-center gap-2 bg-transparent border-gray-600 text-white hover:bg-[#2d2d2d] hover:text-elec-yellow"
           >
             <ChevronLeft className="w-5 h-5" />
             <span>Previous: Module 3</span>
           </Button>
           <Button
             onClick={() => navigate('/upskilling/industrial-electrical-module-4-section-2')}
-            className="min-h-[44px] touch-manipulation flex items-center gap-2 bg-elec-yellow text-[#1a1a1a] hover:bg-yellow-400"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] flex items-center gap-2 bg-elec-yellow text-[#1a1a1a] hover:bg-yellow-400"
           >
             <span>Next: Section 2 - PLC Programming Basics</span>
             <ChevronRight className="w-5 h-5" />

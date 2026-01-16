@@ -192,8 +192,8 @@ const EnergyEfficiencyModule4Section4: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
+      <div className="max-w-3xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-2 text-elec-yellow mb-2">
@@ -1144,7 +1144,7 @@ const EnergyEfficiencyModule4Section4: React.FC = () => {
               >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full px-5 py-4 text-left flex items-center justify-between gap-4 min-h-[44px] touch-manipulation hover:bg-[#2a2a2a] transition-colors"
+                  className="w-full px-5 py-4 text-left flex items-center justify-between gap-4 min-h-[44px] touch-manipulation active:scale-[0.98] hover:bg-[#2a2a2a] transition-colors"
                 >
                   <span className="font-medium text-white">{faq.question}</span>
                   {expandedFAQ === index ? (
@@ -1177,14 +1177,14 @@ const EnergyEfficiencyModule4Section4: React.FC = () => {
           <Button
             onClick={() => navigate('/upskilling/energy-efficiency-module-4-section-3')}
             variant="outline"
-            className="w-full sm:w-auto min-h-[44px] touch-manipulation bg-transparent border-gray-600 text-white hover:bg-[#252525] hover:border-elec-yellow"
+            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-transparent border-gray-600 text-white hover:bg-[#252525] hover:border-elec-yellow"
           >
             <ChevronLeft className="w-5 h-5 mr-2" />
             Previous: Section 3 - Energy Auditing
           </Button>
           <Button
             onClick={() => navigate('/upskilling/energy-efficiency-module-4-section-5')}
-            className="w-full sm:w-auto min-h-[44px] touch-manipulation bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90"
+            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90"
           >
             Next: Section 5 - Financial Analysis
             <ChevronRight className="w-5 h-5 ml-2" />

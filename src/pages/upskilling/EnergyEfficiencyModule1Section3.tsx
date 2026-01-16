@@ -127,9 +127,9 @@ const EnergyEfficiencyModule1Section3 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       <div className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link to="../energy-efficiency-module-1">
             <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98] min-h-[44px]">
               <ArrowLeft className="h-4 w-4" />
@@ -141,7 +141,7 @@ const EnergyEfficiencyModule1Section3 = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8 space-y-8 pb-24">
+      <div className="max-w-3xl mx-auto px-4 py-6 sm:py-8 space-y-8 pb-24">
         <div className="text-center space-y-4">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-elec-yellow/20 border border-elec-yellow/30 mb-4">
             <AlertTriangle className="h-8 w-8 text-elec-yellow" />
@@ -637,7 +637,7 @@ const EnergyEfficiencyModule1Section3 = () => {
           <div className="space-y-3">
             {faqs.map((faq, i) => (
               <details key={i} className="group bg-white/5 rounded-xl border border-white/10 overflow-hidden">
-                <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-white/5 transition-colors list-none min-h-[44px] touch-manipulation">
+                <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-white/5 transition-colors list-none min-h-[44px] touch-manipulation active:scale-[0.98]">
                   <span className="text-white font-medium pr-4">{faq.question}</span>
                   <ChevronRight className="h-5 w-5 text-white/50 group-open:rotate-90 transition-transform flex-shrink-0" />
                 </summary>

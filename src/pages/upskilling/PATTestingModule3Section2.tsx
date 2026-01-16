@@ -181,7 +181,7 @@ const PATTestingModule3Section2 = () => {
   useSEO({ title: TITLE, description: DESCRIPTION });
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
       <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-md border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">

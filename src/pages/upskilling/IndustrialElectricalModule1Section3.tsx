@@ -223,10 +223,10 @@ const IndustrialElectricalModule1Section3: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
       <div className="bg-gradient-to-r from-[#1a1a1a] to-[#2d2d2d] border-b border-gray-700 px-4 py-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <div className="flex items-center gap-2 text-elec-yellow mb-2">
             <Server className="w-5 h-5" />
             <span className="text-sm font-medium">
@@ -244,7 +244,7 @@ const IndustrialElectricalModule1Section3: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-12">
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-12">
         {/* Section 1: MCC Architecture */}
         <section className="space-y-4">
           <div className="flex items-center gap-3">

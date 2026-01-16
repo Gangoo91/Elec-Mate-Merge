@@ -139,10 +139,10 @@ const IndustrialElectricalModule2Section1: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#1a1a1a] to-[#2a2a2a] border-b border-gray-700 px-4 py-6">
-        <div className="max-w-4xl mx-auto">
+      <div className="bg-[#1a1a1a]/95 border-b border-gray-700 px-4 py-6">
+        <div className="max-w-3xl mx-auto">
           <p className="text-elec-yellow text-sm font-medium mb-2">
             Module 2: Motor Control Systems • Section 1
           </p>
@@ -155,7 +155,7 @@ const IndustrialElectricalModule2Section1: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-8">
         {/* Section 1: Direct Online (DOL) Starting */}
         <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
           <div className="flex items-center gap-3 mb-4">
@@ -656,7 +656,7 @@ const IndustrialElectricalModule2Section1: React.FC = () => {
             <Button
               onClick={() => setShowQuiz(!showQuiz)}
               variant="outline"
-              className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-[#1a1a1a] min-h-[44px] touch-manipulation"
+              className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-[#1a1a1a] min-h-[44px] touch-manipulation active:scale-[0.98]"
             >
               {showQuiz ? 'Hide Quiz' : 'Start Quiz'}
             </Button>
@@ -676,14 +676,14 @@ const IndustrialElectricalModule2Section1: React.FC = () => {
           <Button
             onClick={() => navigate('/upskilling/industrial-electrical/module-1')}
             variant="outline"
-            className="flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white min-h-[44px] touch-manipulation"
+            className="flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white min-h-[44px] touch-manipulation active:scale-[0.98]"
           >
             <ChevronLeft className="w-4 h-4" />
             Previous: Module 1
           </Button>
           <Button
             onClick={() => navigate('/upskilling/industrial-electrical/module-2/section-2')}
-            className="flex items-center gap-2 bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation"
+            className="flex items-center gap-2 bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation active:scale-[0.98]"
           >
             Next: Section 2
             <ChevronRight className="w-4 h-4" />

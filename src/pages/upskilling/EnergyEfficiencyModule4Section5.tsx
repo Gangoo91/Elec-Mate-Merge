@@ -218,10 +218,10 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
       <header className="bg-[#242424] border-b border-gray-700 px-4 py-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <div className="flex items-center gap-2 text-sm text-gray-400 mb-2">
             <BookOpen className="w-4 h-4" />
             <span>Module 4: Financial Analysis for Energy Projects</span>
@@ -238,7 +238,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-4 py-8 space-y-10">
+      <main className="max-w-3xl mx-auto px-4 py-8 space-y-10">
         {/* Learning Objectives */}
         <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
           <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
@@ -1313,7 +1313,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
               >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full px-5 py-4 flex items-center justify-between text-left min-h-[44px] touch-manipulation"
+                  className="w-full px-5 py-4 flex items-center justify-between text-left min-h-[44px] touch-manipulation active:scale-[0.98]"
                 >
                   <span className="font-medium text-white pr-4">
                     {faq.question}
@@ -1355,7 +1355,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
               navigate('/upskilling/energy-efficiency-module-4-section-4')
             }
             variant="outline"
-            className="min-h-[44px] touch-manipulation flex items-center gap-2 bg-transparent border-gray-600 text-white hover:bg-[#2a2a2a] hover:text-elec-yellow"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] flex items-center gap-2 bg-transparent border-gray-600 text-white hover:bg-[#2a2a2a] hover:text-elec-yellow"
           >
             <ChevronLeft className="w-5 h-5" />
             <span>Previous: Section 4</span>
@@ -1364,7 +1364,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
             onClick={() =>
               navigate('/upskilling/energy-efficiency-module-5')
             }
-            className="min-h-[44px] touch-manipulation flex items-center gap-2 bg-elec-yellow text-[#1a1a1a] hover:bg-yellow-400"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] flex items-center gap-2 bg-elec-yellow text-[#1a1a1a] hover:bg-yellow-400"
           >
             <span>Next: Module 5</span>
             <ChevronRight className="w-5 h-5" />

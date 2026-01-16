@@ -26,8 +26,9 @@ import {
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useNotifications } from "@/components/notifications/NotificationProvider";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 // Import all tab components
 import AccountTab from "@/components/settings/AccountTab";
@@ -64,6 +65,40 @@ const SettingsPage = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [searchParams, setSearchParams] = useSearchParams();
+  const queryClient = useQueryClient();
+
+  // Handle Stripe Connect return - show success and try to close tab
+  useEffect(() => {
+    const success = searchParams.get('success');
+    const refresh = searchParams.get('refresh');
+
+    if (success === 'true') {
+      // Show success toast
+      toast.success('Stripe Connected Successfully!', {
+        description: 'You can now accept card payments. Close this tab to return to the app.',
+        duration: 10000,
+      });
+
+      // Clean the URL
+      searchParams.delete('success');
+      setSearchParams(searchParams, { replace: true });
+
+      // Invalidate queries so status refreshes
+      queryClient.invalidateQueries({ queryKey: ['stripe-connect-status'] });
+
+      // Try to close this tab (works if opened by script)
+      setTimeout(() => {
+        window.close();
+      }, 2000);
+    }
+
+    if (refresh === 'true') {
+      // User needs to continue onboarding
+      toast.info('Please complete Stripe setup to accept payments.');
+      searchParams.delete('refresh');
+      setSearchParams(searchParams, { replace: true });
+    }
+  }, [searchParams, setSearchParams, queryClient]);
 
   // Check company profile completeness for red dot indicators
   const { data: companyStatus } = useQuery({

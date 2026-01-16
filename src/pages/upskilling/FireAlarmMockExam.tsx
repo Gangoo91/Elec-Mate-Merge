@@ -2,7 +2,7 @@ import FireAlarmMockExam from '@/components/upskilling/FireAlarmMockExam';
 
 const FireAlarmMockExamPage = () => {
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       <div className="container mx-auto px-4 py-8">
         <FireAlarmMockExam />
       </div>

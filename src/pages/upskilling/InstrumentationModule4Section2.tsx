@@ -133,13 +133,13 @@ const InstrumentationModule4Section2 = () => {
   const percentage = Math.round((score / quizQuestions.length) * 100);
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         <Link to="../instrumentation-module-4">
           <Button
             variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 4

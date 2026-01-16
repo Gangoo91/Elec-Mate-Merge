@@ -13,18 +13,26 @@ import { EmergencyLightingModule5Section4Quiz } from '@/components/upskilling/em
 
 const EmergencyLightingModule5Section4 = () => {
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
-      {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
-        <Link to="../emergency-lighting-module-5">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 5
+            <Link to="../emergency-lighting-module-5">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 5
+            </Link>
           </Button>
-        </Link>
+        </div>
+      </div>
+
+      {/* Header */}
+      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
@@ -57,24 +65,30 @@ const EmergencyLightingModule5Section4 = () => {
           <EmergencyLightingModule5Section4Summary />
           <EmergencyLightingModule5Section4Quiz />
 
-          {/* Mobile Navigation */}
-          <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-gray-700">
-            <Link to="../emergency-lighting-module-5-section-3" className="flex-1">
-              <Button 
-                variant="outline" 
-                className="w-full border-gray-600 text-white hover:bg-transparent hover:text-elec-yellow"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous: Initial Verification
-              </Button>
-            </Link>
-            <Link to="../emergency-lighting-module-5" className="flex-1">
-              <Button className="w-full bg-elec-yellow text-black hover:bg-yellow-600">
-                Complete Module
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
+          {/* Bottom Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+            <Button
+              variant="ghost"
+              size="lg"
+              className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../emergency-lighting-module-5-section-3">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous Section
+              </Link>
+            </Button>
+            <Button
+              size="lg"
+              className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="../emergency-lighting-module-5-section-5">
+                Next Section
+                <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+              </Link>
+            </Button>
+          </nav>
 
         </div>
       </main>

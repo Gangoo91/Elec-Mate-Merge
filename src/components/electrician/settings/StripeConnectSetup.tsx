@@ -40,7 +40,26 @@ const StripeConnectSetup: React.FC = () => {
       checkStatus();
     };
     window.addEventListener('focus', handleFocus);
-    return () => window.removeEventListener('focus', handleFocus);
+
+    // Listen for postMessage from Stripe callback popup
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'stripe-connect-complete') {
+        console.log('Stripe connect complete message received');
+        checkStatus();
+        if (event.data.success) {
+          toast.success('Stripe Connected Successfully!', {
+            description: 'You can now accept card payments on invoices.',
+            duration: 5000,
+          });
+        }
+      }
+    };
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('message', handleMessage);
+    };
   }, []);
 
   // Show success toast when status changes to active
@@ -101,19 +120,40 @@ const StripeConnectSetup: React.FC = () => {
 
       if (response.error) throw response.error;
 
-      const { url, type } = response.data;
+      // Check for error in response data (edge function returns errors this way)
+      if (response.data?.error) {
+        toast.error(response.data.error, {
+          description: response.data.action || undefined,
+          duration: 6000,
+        });
+        return;
+      }
+
+      const { url, type } = response.data || {};
 
       if (url) {
         if (type === 'dashboard') {
+          // Dashboard opens in new tab
           toast.success('Opening Stripe Dashboard');
+          window.open(url, '_blank');
         } else {
-          toast.success('Redirecting to Stripe onboarding...');
+          // Store current URL to return here after Stripe onboarding
+          localStorage.setItem('stripe-return-url', window.location.pathname + window.location.search);
+          // Redirect in same tab - seamless experience
+          window.location.href = url;
         }
-        window.open(url, '_blank');
+      } else {
+        // Handle missing URL case - show error instead of silent return
+        toast.error('Could not start Stripe setup', {
+          description: 'Please try again or contact support if this persists.',
+        });
       }
     } catch (error: any) {
       console.error('Error connecting Stripe:', error);
-      toast.error(error.message || 'Failed to connect Stripe');
+      // Better error message extraction from various formats
+      const errorMessage = error?.message || error?.error ||
+        (typeof error === 'string' ? error : 'Failed to connect Stripe');
+      toast.error(errorMessage);
     } finally {
       setConnecting(false);
     }

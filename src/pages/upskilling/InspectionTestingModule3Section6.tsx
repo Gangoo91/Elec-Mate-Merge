@@ -148,9 +148,9 @@ const InspectionTestingModule3Section6 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* iOS Header */}
-      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
+      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
         <div className="flex items-center justify-between px-4 h-14">
           <button
             onClick={() => navigate('/study-centre/upskilling/inspection-testing/module3')}

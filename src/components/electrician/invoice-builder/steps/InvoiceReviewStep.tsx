@@ -7,9 +7,10 @@ import { FileText, User, Banknote } from 'lucide-react';
 
 interface InvoiceReviewStepProps {
   invoice: Partial<Invoice>;
+  showSummaryOnly?: boolean;
 }
 
-export const InvoiceReviewStep = ({ invoice }: InvoiceReviewStepProps) => {
+export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceReviewStepProps) => {
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
 
@@ -19,6 +20,101 @@ export const InvoiceReviewStep = ({ invoice }: InvoiceReviewStepProps) => {
   };
 
   const totalAmount = invoice.total || 0;
+
+  // Summary only mode - used in step 0 when coming from a quote
+  if (showSummaryOnly) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-xl font-bold mb-2">Quote Summary</h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Review the original quote before creating an invoice.
+          </p>
+        </div>
+
+        {/* Summary Card */}
+        <Card className="bg-primary/5 border-primary/20">
+          <CardContent className="pt-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <p className="text-xs text-muted-foreground">Quote Number</p>
+                <p className="text-sm font-semibold">{invoice.quoteNumber || 'N/A'}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-xs text-muted-foreground">Client</p>
+                <p className="text-sm font-semibold truncate">{invoice.client?.name || 'N/A'}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-xs text-muted-foreground">Date</p>
+                <p className="text-sm font-semibold">{formatDate(invoice.createdAt)}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-xs text-muted-foreground">Total</p>
+                <p className="text-lg font-bold text-primary">{formatCurrency(totalAmount)}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Client Details */}
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-2 mb-4">
+              <User className="h-4 w-4 text-muted-foreground" />
+              <h3 className="font-semibold">Client Details</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+              <div>
+                <p className="text-muted-foreground text-xs">Name</p>
+                <p className="font-medium">{invoice.client?.name || 'N/A'}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground text-xs">Email</p>
+                <p className="font-medium break-all">{invoice.client?.email || 'N/A'}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground text-xs">Phone</p>
+                <p className="font-medium">{invoice.client?.phone || 'N/A'}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground text-xs">Address</p>
+                <p className="font-medium">{invoice.client?.address || 'N/A'}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Items Summary */}
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Banknote className="h-4 w-4 text-muted-foreground" />
+                <h3 className="font-semibold">Items ({invoice.items?.length || 0})</h3>
+              </div>
+              <p className="text-lg font-bold text-primary">{formatCurrency(totalAmount)}</p>
+            </div>
+            <div className="space-y-2">
+              {invoice.items?.slice(0, 5).map((item, index) => (
+                <div key={index} className="flex justify-between items-center py-2 border-b border-border/50 last:border-0">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium truncate">{item.description}</p>
+                    <p className="text-xs text-muted-foreground">{item.quantity} × {formatCurrency(item.unitPrice)}</p>
+                  </div>
+                  <p className="text-sm font-semibold ml-4">{formatCurrency(item.totalPrice)}</p>
+                </div>
+              ))}
+              {(invoice.items?.length || 0) > 5 && (
+                <p className="text-xs text-muted-foreground text-center pt-2">
+                  +{(invoice.items?.length || 0) - 5} more items
+                </p>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -47,9 +143,9 @@ export const InvoiceReviewStep = ({ invoice }: InvoiceReviewStepProps) => {
       </Card>
 
       <div>
-        <h2 className="text-xl font-bold mb-2">Review Quote Details</h2>
+        <h2 className="text-xl font-bold mb-2">Review Invoice</h2>
         <p className="text-sm text-muted-foreground mb-4">
-          Review the original quote details before adding any additional items or settings.
+          Review all invoice details before creating.
         </p>
       </div>
 

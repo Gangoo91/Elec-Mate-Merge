@@ -25,6 +25,7 @@ const ApprenticeMentalHealth = lazy(() => import("@/pages/apprentice/ApprenticeM
 const RightsAndPay = lazy(() => import("@/pages/apprentice/RightsAndPay"));
 const NotificationsPage = lazy(() => import("@/pages/NotificationsPage"));
 const PublicQuote = lazy(() => import("@/pages/PublicQuote"));
+const StripeCallback = lazy(() => import("@/pages/StripeCallback"));
 const PublicSignature = lazy(() => import("@/pages/PublicSignature"));
 const BriefingSignOff = lazy(() => import("@/pages/BriefingSignOff"));
 const ClientPortalView = lazy(() => import("@/pages/public/ClientPortalView"));
@@ -105,6 +106,7 @@ const AppRouter = () => {
       <Route path="/privacy" element={<LazyRoute><PrivacyPolicy /></LazyRoute>} />
       <Route path="/terms" element={<LazyRoute><TermsOfService /></LazyRoute>} />
       <Route path="/quote/:token" element={<LazyRoute><PublicQuote /></LazyRoute>} />
+      <Route path="/stripe-callback" element={<LazyRoute><StripeCallback /></LazyRoute>} />
       <Route path="/public-quote/:token" element={<LazyRoute><PublicQuote /></LazyRoute>} />
       <Route path="/sign/:token" element={<LazyRoute><PublicSignature /></LazyRoute>} />
       <Route path="/briefing-signoff/:briefingId" element={<LazyRoute><BriefingSignOff /></LazyRoute>} />

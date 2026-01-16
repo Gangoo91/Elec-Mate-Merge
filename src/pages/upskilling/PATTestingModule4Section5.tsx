@@ -59,9 +59,9 @@ const PATTestingModule4Section5 = () => {
   useSEO({ title: TITLE, description: DESCRIPTION });
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       <div className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link to="../pat-testing-module-4">
             <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98]">
               <ArrowLeft className="h-4 w-4" />
@@ -73,7 +73,7 @@ const PATTestingModule4Section5 = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8 space-y-8 pb-24">
+      <div className="max-w-3xl mx-auto px-4 py-6 sm:py-8 space-y-8 pb-24">
         <div className="text-center space-y-4">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-elec-yellow/20 border border-elec-yellow/30 mb-4">
             <Wrench className="h-8 w-8 text-elec-yellow" />

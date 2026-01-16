@@ -239,10 +239,10 @@ const IndustrialElectricalModule2Section2: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#252525] to-[#1a1a1a] border-b border-elec-yellow/20">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="bg-[#1a1a1a]/95 border-b border-elec-yellow/20">
+        <div className="max-w-3xl mx-auto px-4 py-6">
           <div className="flex items-center gap-3 mb-2">
             <CircuitBoard className="w-8 h-8 text-elec-yellow" />
             <span className="text-elec-yellow font-medium">
@@ -259,7 +259,7 @@ const IndustrialElectricalModule2Section2: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-8">
         {/* Section 1: Reading Control Circuit Diagrams */}
         <section className="bg-[#252525] rounded-xl p-6 border border-gray-700">
           <div className="flex items-center gap-3 mb-4">
@@ -1005,7 +1005,7 @@ const IndustrialElectricalModule2Section2: React.FC = () => {
             <Button
               onClick={() => setShowQuiz(!showQuiz)}
               variant="outline"
-              className="min-h-[44px] touch-manipulation border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black"
+              className="min-h-[44px] touch-manipulation active:scale-[0.98] border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black"
             >
               {showQuiz ? 'Hide Quiz' : 'Take Quiz'}
             </Button>
@@ -1026,7 +1026,7 @@ const IndustrialElectricalModule2Section2: React.FC = () => {
               navigate('/upskilling/industrial-electrical/module-2/section-1')
             }
             variant="outline"
-            className="min-h-[44px] touch-manipulation border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white flex items-center gap-2"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white flex items-center gap-2"
           >
             <ChevronLeft className="w-5 h-5" />
             <div className="text-left">
@@ -1039,7 +1039,7 @@ const IndustrialElectricalModule2Section2: React.FC = () => {
             onClick={() =>
               navigate('/upskilling/industrial-electrical/module-2/section-3')
             }
-            className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
           >
             <div className="text-right">
               <div className="text-xs text-black/60">Next</div>

@@ -122,7 +122,7 @@ const FiberOpticsModule2Section4 = () => {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#1a1a1a]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a1a1a]/60">
         <div className="container flex h-14 max-w-screen-2xl items-center px-4">
@@ -136,7 +136,7 @@ const FiberOpticsModule2Section4 = () => {
         </div>
       </header>
 
-      <main className="container max-w-4xl mx-auto px-4 py-6 space-y-8">
+      <main className="container max-w-3xl mx-auto px-4 py-6 space-y-8">
         {/* Title Section */}
         <section className="text-center space-y-4">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm font-medium px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">

@@ -180,8 +180,8 @@ const IndustrialElectricalModule1Section2: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
+      <div className="max-w-3xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-2 text-elec-yellow mb-2">
@@ -842,7 +842,7 @@ const IndustrialElectricalModule1Section2: React.FC = () => {
             {!showQuiz ? (
               <Button
                 onClick={() => setShowQuiz(true)}
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation"
+                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation active:scale-[0.98]"
               >
                 Start Quiz
               </Button>
@@ -857,7 +857,7 @@ const IndustrialElectricalModule1Section2: React.FC = () => {
           <Button
             onClick={() => navigate('/upskilling/industrial-electrical-module-1-section-1')}
             variant="outline"
-            className="flex items-center gap-2 min-h-[44px] touch-manipulation border-gray-600 hover:bg-gray-800"
+            className="flex items-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] border-gray-600 hover:bg-gray-800"
           >
             <ChevronLeft className="w-5 h-5" />
             <span>Previous: Section 1 - Introduction to Industrial Systems</span>
@@ -865,7 +865,7 @@ const IndustrialElectricalModule1Section2: React.FC = () => {
 
           <Button
             onClick={() => navigate('/upskilling/industrial-electrical-module-1-section-3')}
-            className="flex items-center gap-2 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            className="flex items-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
             <span>Next: Section 3 - Switchgear and Protection</span>
             <ChevronRight className="w-5 h-5" />

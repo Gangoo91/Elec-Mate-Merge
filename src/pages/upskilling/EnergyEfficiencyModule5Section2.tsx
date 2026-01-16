@@ -223,10 +223,10 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#1a1a1a] to-[#2a2a2a] border-b border-gray-800">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="bg-[#1a1a1a]/95 border-b border-gray-800">
+        <div className="max-w-3xl mx-auto px-4 py-6">
           <div className="flex items-center gap-3 mb-2">
             <LayoutDashboard className="w-8 h-8 text-elec-yellow" />
             <span className="text-elec-yellow text-sm font-medium">Module 5 - Section 2</span>
@@ -241,7 +241,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-8">
 
         {/* Section 1: Dashboard Design Principles */}
         <section className="bg-[#242424] rounded-xl p-6 border border-gray-800">
@@ -981,7 +981,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
               <div key={index} className="border border-gray-700 rounded-lg overflow-hidden">
                 <button
                   onClick={() => toggleFaq(index)}
-                  className="w-full flex items-center justify-between p-4 text-left bg-[#1a1a1a] hover:bg-[#2a2a2a] transition-colors min-h-[44px] touch-manipulation"
+                  className="w-full flex items-center justify-between p-4 text-left bg-[#1a1a1a] hover:bg-[#2a2a2a] transition-colors min-h-[44px] touch-manipulation active:scale-[0.98]"
                 >
                   <span className="text-white font-medium pr-4">{faq.question}</span>
                   {expandedFaq === index ? (
@@ -1010,7 +1010,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
             {!showQuiz && (
               <Button
                 onClick={() => setShowQuiz(true)}
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation"
+                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation active:scale-[0.98]"
               >
                 Start Quiz
               </Button>
@@ -1037,7 +1037,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
           <Button
             onClick={() => navigate('/upskilling/energy-efficiency/module-5/section-1')}
             variant="outline"
-            className="flex items-center gap-2 min-h-[44px] touch-manipulation border-gray-600 text-white hover:bg-gray-800"
+            className="flex items-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] border-gray-600 text-white hover:bg-gray-800"
           >
             <ChevronLeft className="w-5 h-5" />
             <span>Previous: Section 1 - Data Collection Systems</span>
@@ -1045,7 +1045,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
 
           <Button
             onClick={() => navigate('/upskilling/energy-efficiency/module-5/section-3')}
-            className="flex items-center gap-2 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            className="flex items-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
             <span>Next: Section 3 - Automated Reporting</span>
             <ChevronRight className="w-5 h-5" />

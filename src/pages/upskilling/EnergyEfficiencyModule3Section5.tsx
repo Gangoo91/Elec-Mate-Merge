@@ -158,10 +158,10 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#1a1a1a] to-[#2a2a2a] border-b border-gray-700">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="bg-[#1a1a1a]/95 border-b border-gray-700">
+        <div className="max-w-3xl mx-auto px-4 py-6">
           <div className="flex items-center gap-3 mb-2">
             <FileText className="w-8 h-8 text-elec-yellow" />
             <span className="text-elec-yellow font-medium">Module 3 • Section 5</span>
@@ -175,7 +175,7 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-3xl mx-auto px-4 py-8">
         {/* Learning Objectives */}
         <div className="bg-[#2a2a2a] rounded-lg p-6 mb-8 border border-gray-700">
           <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
@@ -876,7 +876,7 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
         <div className="mb-10">
           <Button
             onClick={() => setShowQuickRef(!showQuickRef)}
-            className="w-full bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white border border-gray-700 min-h-[44px] touch-manipulation"
+            className="w-full bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white border border-gray-700 min-h-[44px] touch-manipulation active:scale-[0.98]"
           >
             <BookOpen className="w-5 h-5 mr-2" />
             Quick Reference Card
@@ -968,7 +968,7 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
               <div key={index} className="bg-[#2a2a2a] rounded-lg border border-gray-700 overflow-hidden">
                 <button
                   onClick={() => setExpandedFAQ(expandedFAQ === index ? null : index)}
-                  className="w-full px-4 py-3 flex items-center justify-between text-left min-h-[44px] touch-manipulation hover:bg-[#3a3a3a] transition-colors"
+                  className="w-full px-4 py-3 flex items-center justify-between text-left min-h-[44px] touch-manipulation active:scale-[0.98] hover:bg-[#3a3a3a] transition-colors"
                 >
                   <span className="font-medium text-white pr-4">{faq.question}</span>
                   {expandedFAQ === index ? (
@@ -1005,14 +1005,14 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
           <Button
             onClick={() => navigate('/upskilling/energy-efficiency/module-3/section-4')}
             variant="outline"
-            className="min-h-[44px] touch-manipulation bg-transparent border-gray-600 text-gray-300 hover:bg-[#2a2a2a] hover:text-white"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-transparent border-gray-600 text-gray-300 hover:bg-[#2a2a2a] hover:text-white"
           >
             <ChevronLeft className="w-5 h-5 mr-2" />
             Previous: Section 4 - Building Fabric Assessment
           </Button>
           <Button
             onClick={() => navigate('/upskilling/energy-efficiency/module-4')}
-            className="min-h-[44px] touch-manipulation bg-elec-yellow text-[#1a1a1a] hover:bg-yellow-400"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a] hover:bg-yellow-400"
           >
             Next: Module 4 - Implementation & Verification
             <ChevronRight className="w-5 h-5 ml-2" />

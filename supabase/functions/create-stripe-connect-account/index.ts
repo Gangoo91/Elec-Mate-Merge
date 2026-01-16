@@ -23,7 +23,9 @@ serve(async (req) => {
     const stripeKey = Deno.env.get('STRIPE_SECRET_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
-    const appUrl = Deno.env.get('APP_URL') || 'https://elec-mate.com';
+    // IMPORTANT: Always use www.elec-mate.com (non-www has no SSL certificate)
+    // Force www regardless of APP_URL env var
+    const appUrl = 'https://www.elec-mate.com';
 
     console.log('🔧 Environment check:', {
       hasStripeKey: !!stripeKey,
@@ -150,8 +152,8 @@ serve(async (req) => {
 
       const linkParams = new URLSearchParams();
       linkParams.append('account', profile.stripe_account_id);
-      linkParams.append('refresh_url', `${appUrl}/electrician/settings?tab=billing&refresh=true`);
-      linkParams.append('return_url', `${appUrl}/electrician/settings?tab=billing&success=true`);
+      linkParams.append('refresh_url', `${appUrl}/stripe-callback?refresh=true`);
+      linkParams.append('return_url', `${appUrl}/stripe-callback?success=true`);
       linkParams.append('type', 'account_onboarding');
 
       const linkResponse = await fetch('https://api.stripe.com/v1/account_links', {
@@ -265,8 +267,8 @@ serve(async (req) => {
 
     const onboardingParams = new URLSearchParams();
     onboardingParams.append('account', accountData.id);
-    onboardingParams.append('refresh_url', `${appUrl}/electrician/settings?tab=billing&refresh=true`);
-    onboardingParams.append('return_url', `${appUrl}/electrician/settings?tab=billing&success=true`);
+    onboardingParams.append('refresh_url', `${appUrl}/stripe-callback?refresh=true`);
+    onboardingParams.append('return_url', `${appUrl}/stripe-callback?success=true`);
     onboardingParams.append('type', 'account_onboarding');
 
     const onboardingResponse = await fetch('https://api.stripe.com/v1/account_links', {

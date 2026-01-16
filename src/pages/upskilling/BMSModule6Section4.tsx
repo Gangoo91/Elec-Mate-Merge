@@ -22,18 +22,21 @@ const BMSModule6Section4 = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../bms-module-6">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 6
+            </Link>
+          </Button>
+        </div>
+      </div>
+
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
-        <Link to="../bms-module-6">
-          <Button
-            variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 6
-          </Button>
-        </Link>
         
         <div className="space-y-3">
           <div className="flex items-center gap-3">
@@ -42,7 +45,7 @@ const BMSModule6Section4 = () => {
               Event Triggers and Auto-Reporting
             </h1>
           </div>
-          <p className="text-sm sm:text-lg lg:text-xl text-white max-w-4xl leading-relaxed">
+          <p className="text-sm sm:text-lg lg:text-xl text-white max-w-3xl leading-relaxed">
             Automated systems for intelligent building response and comprehensive reporting
           </p>
           <div className="flex flex-wrap gap-2 sm:gap-4">

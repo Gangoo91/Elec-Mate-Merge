@@ -187,7 +187,7 @@ const FiberOpticsModule3Section5 = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Minimal Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-screen-2xl mx-auto px-4 h-14 flex items-center justify-between">
@@ -202,7 +202,7 @@ const FiberOpticsModule3Section5 = () => {
         </div>
       </header>
 
-      <main className="pt-20 pb-24 px-4 max-w-4xl mx-auto">
+      <main className="pt-20 pb-24 px-4 max-w-3xl mx-auto">
         {/* Module Number Badge */}
         <div className="flex justify-center mb-4">
           <span className="inline-flex items-center gap-1.5 text-sm text-elec-yellow">

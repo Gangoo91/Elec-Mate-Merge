@@ -71,27 +71,32 @@ const BS7671Course = () => {
   ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      {/* Back Button */}
-      <Link to="/electrician/upskilling">
-        <Button variant="ghost" className="text-white hover:text-foreground transition-colors p-0 min-h-[48px]">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Courses
-        </Button>
-      </Link>
-
-      {/* Header */}
-      <div className="space-y-1">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-          18th Edition (BS7671)
-        </h1>
-        <p className="text-sm sm:text-base text-muted-foreground">
-          Wiring regulations and electrical safety
-        </p>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Link to="/electrician/upskilling">
+            <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Courses
+            </Button>
+          </Link>
+        </div>
       </div>
 
-      {/* Module Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="px-4 sm:px-6 py-8 sm:py-12 max-w-3xl mx-auto">
+        {/* Header */}
+        <div className="space-y-1 mb-8">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+            18th Edition (BS7671)
+          </h1>
+          <p className="text-sm sm:text-base text-muted-foreground">
+            Wiring regulations and electrical safety
+          </p>
+        </div>
+
+        {/* Module Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           {modules.map((module, index) => (
             <motion.div
               key={module.id}
@@ -134,6 +139,7 @@ const BS7671Course = () => {
               </Link>
             </motion.div>
           ))}
+        </div>
       </div>
     </div>
   );

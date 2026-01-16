@@ -199,10 +199,10 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#1a1a1a] to-[#2a2a2a] border-b border-gray-700">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="bg-[#1a1a1a]/95 border-b border-gray-700">
+        <div className="max-w-3xl mx-auto px-4 py-6">
           <div className="flex items-center gap-3 mb-2">
             <BarChart3 className="w-8 h-8 text-elec-yellow" />
             <span className="text-elec-yellow text-sm font-medium">Module 3 • Section 3</span>
@@ -217,7 +217,7 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-12">
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-12">
 
         {/* Section 1: CIBSE TM46 and DEC Benchmarks */}
         <section className="space-y-6">
@@ -812,7 +812,7 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
               >
                 <button
                   onClick={() => setExpandedFAQ(expandedFAQ === index ? null : index)}
-                  className="w-full flex items-center justify-between p-4 text-left min-h-[44px] touch-manipulation"
+                  className="w-full flex items-center justify-between p-4 text-left min-h-[44px] touch-manipulation active:scale-[0.98]"
                 >
                   <span className="font-medium pr-4">{faq.question}</span>
                   {expandedFAQ === index ? (
@@ -836,14 +836,14 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
           <Button
             onClick={() => navigate('/upskilling/energy-efficiency/module-3/section-2')}
             variant="outline"
-            className="flex-1 min-h-[44px] touch-manipulation bg-transparent border-gray-600 hover:border-elec-yellow hover:text-elec-yellow"
+            className="flex-1 min-h-[44px] touch-manipulation active:scale-[0.98] bg-transparent border-gray-600 hover:border-elec-yellow hover:text-elec-yellow"
           >
             <ChevronLeft className="w-4 h-4 mr-2" />
             Previous: Section 2 - Energy Analysis
           </Button>
           <Button
             onClick={() => navigate('/upskilling/energy-efficiency/module-3/section-4')}
-            className="flex-1 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            className="flex-1 min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
             Next: Section 4 - Carbon Calculations
             <ChevronRight className="w-4 h-4 ml-2" />

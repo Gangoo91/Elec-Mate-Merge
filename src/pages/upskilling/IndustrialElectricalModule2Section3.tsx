@@ -191,10 +191,10 @@ const IndustrialElectricalModule2Section3: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#1a1a1a] to-[#2a2a2a] border-b border-gray-700 px-4 py-6">
-        <div className="max-w-4xl mx-auto">
+      <div className="bg-[#1a1a1a]/95 border-b border-gray-700 px-4 py-6">
+        <div className="max-w-3xl mx-auto">
           <div className="flex items-center gap-2 text-gray-400 text-sm mb-2">
             <BookOpen className="w-4 h-4" />
             <span>Module 2: Motor Control and Protection</span>
@@ -209,7 +209,7 @@ const IndustrialElectricalModule2Section3: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-8">
 
         {/* Section 1: Thermal Overload Relay Principles and Types */}
         <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
@@ -958,7 +958,7 @@ const IndustrialElectricalModule2Section3: React.FC = () => {
           <Button
             onClick={() => navigate('/upskilling/industrial-electrical/module-2/section-2')}
             variant="outline"
-            className="min-h-[44px] touch-manipulation flex items-center gap-2 bg-transparent border-gray-600 text-white hover:bg-gray-800 hover:border-elec-yellow"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] flex items-center gap-2 bg-transparent border-gray-600 text-white hover:bg-gray-800 hover:border-elec-yellow"
           >
             <ChevronLeft className="w-5 h-5" />
             <span>Previous: Section 2 - Contactors and Relays</span>
@@ -966,7 +966,7 @@ const IndustrialElectricalModule2Section3: React.FC = () => {
 
           <Button
             onClick={() => navigate('/upskilling/industrial-electrical/module-2/section-4')}
-            className="min-h-[44px] touch-manipulation flex items-center gap-2 bg-elec-yellow text-black hover:bg-yellow-400"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] flex items-center gap-2 bg-elec-yellow text-black hover:bg-yellow-400"
           >
             <span>Next: Section 4 - DOL Motor Starters</span>
             <ChevronRight className="w-5 h-5" />

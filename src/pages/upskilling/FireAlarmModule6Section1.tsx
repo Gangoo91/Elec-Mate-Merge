@@ -164,10 +164,10 @@ const FireAlarmModule6Section1 = () => {
     selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* iOS Header */}
-      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-4xl mx-auto">
+      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
           <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
             <Link to="../module-6">
               <ArrowLeft className="h-5 w-5" />
@@ -180,7 +180,7 @@ const FireAlarmModule6Section1 = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="px-4 pt-8 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
         <div className="flex items-center gap-3 mb-4">
           <div className="p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/20">
             <ClipboardCheck className="h-7 w-7 text-cyan-400" />
@@ -208,7 +208,7 @@ const FireAlarmModule6Section1 = () => {
       </section>
 
       {/* In 30 Seconds Card */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <Card variant="ios-elevated" className="border-cyan-500/20">
           <CardHeader className="pb-2">
             <CardTitle className="text-[15px] font-semibold text-cyan-400 flex items-center gap-2">
@@ -234,7 +234,7 @@ const FireAlarmModule6Section1 = () => {
       </section>
 
       {/* Learning Outcomes */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
@@ -258,7 +258,7 @@ const FireAlarmModule6Section1 = () => {
       </section>
 
       {/* Main Content */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto space-y-6">
+      <section className="px-4 pb-6 max-w-3xl mx-auto space-y-6">
         {/* Section 01 */}
         <Card variant="ios">
           <CardContent className="p-4">
@@ -449,7 +449,7 @@ const FireAlarmModule6Section1 = () => {
       </section>
 
       {/* Practical Guidance */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
 
         <div className="space-y-3">
@@ -496,7 +496,7 @@ const FireAlarmModule6Section1 = () => {
       </section>
 
       {/* FAQs */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
         <div className="space-y-3">
           {[
@@ -518,7 +518,7 @@ const FireAlarmModule6Section1 = () => {
       </section>
 
       {/* Quiz Section */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <Card variant="ios-elevated" className="border-cyan-500/20">
           <CardHeader className="pb-2">
             <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
@@ -615,7 +615,7 @@ const FireAlarmModule6Section1 = () => {
       </section>
 
       {/* Navigation Footer */}
-      <section className="px-4 pb-safe max-w-4xl mx-auto">
+      <section className="px-4 pb-safe max-w-3xl mx-auto">
         <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
           <Button variant="ios-secondary" asChild className="flex-1">
             <Link to="../module-6">

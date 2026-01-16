@@ -113,10 +113,10 @@ const FireAlarmModule4Section2 = () => {
   const score = selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* iOS Header */}
-      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-4xl mx-auto">
+      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
           <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
             <Link to="../module-4">
               <ArrowLeft className="h-5 w-5" />
@@ -129,7 +129,7 @@ const FireAlarmModule4Section2 = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="px-4 pt-8 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
         <div className="flex items-center gap-3 mb-4">
           <div className="p-3 rounded-2xl bg-purple-500/10 border border-purple-500/20">
             <Battery className="h-7 w-7 text-purple-400" />
@@ -157,7 +157,7 @@ const FireAlarmModule4Section2 = () => {
       </section>
 
       {/* In 30 Seconds Card */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <Card variant="ios-elevated" className="border-purple-500/20">
           <CardHeader className="pb-2">
             <CardTitle className="text-[15px] font-semibold text-white/80 flex items-center gap-2">
@@ -185,7 +185,7 @@ const FireAlarmModule4Section2 = () => {
       </section>
 
       {/* Learning Outcomes */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
@@ -207,7 +207,7 @@ const FireAlarmModule4Section2 = () => {
       </section>
 
       {/* Content Section 01 */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <Card variant="ios">
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -235,7 +235,7 @@ const FireAlarmModule4Section2 = () => {
       </section>
 
       {/* Content Section 02 */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <Card variant="ios">
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -266,7 +266,7 @@ const FireAlarmModule4Section2 = () => {
       </section>
 
       {/* Content Section 03 */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <Card variant="ios">
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -302,7 +302,7 @@ const FireAlarmModule4Section2 = () => {
       </section>
 
       {/* Quick Check 1 */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <Card variant="ios" className="border-amber-500/20 bg-amber-500/5">
           <CardContent className="p-4">
             <div className="flex items-start gap-3">
@@ -322,7 +322,7 @@ const FireAlarmModule4Section2 = () => {
       </section>
 
       {/* Content Section 04 */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <Card variant="ios">
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -362,7 +362,7 @@ const FireAlarmModule4Section2 = () => {
       </section>
 
       {/* Content Section 05 */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <Card variant="ios">
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -400,7 +400,7 @@ const FireAlarmModule4Section2 = () => {
       </section>
 
       {/* Quick Check 2 */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <Card variant="ios" className="border-amber-500/20 bg-amber-500/5">
           <CardContent className="p-4">
             <div className="flex items-start gap-3">
@@ -420,7 +420,7 @@ const FireAlarmModule4Section2 = () => {
       </section>
 
       {/* Content Section 06 */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <Card variant="ios">
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -457,7 +457,7 @@ const FireAlarmModule4Section2 = () => {
       </section>
 
       {/* Pro Tips */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Pro Tips</h2>
         <div className="space-y-3">
           {[
@@ -478,7 +478,7 @@ const FireAlarmModule4Section2 = () => {
       </section>
 
       {/* Common Mistakes */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Common Mistakes</h2>
         <div className="space-y-3">
           {[
@@ -499,7 +499,7 @@ const FireAlarmModule4Section2 = () => {
       </section>
 
       {/* FAQs */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
         <div className="space-y-3">
           {[
@@ -521,7 +521,7 @@ const FireAlarmModule4Section2 = () => {
       </section>
 
       {/* Quiz Section */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <Card variant="ios">
           <CardHeader>
             <CardTitle className="text-[17px] text-white">Knowledge Check: Battery Sizing</CardTitle>
@@ -598,7 +598,7 @@ const FireAlarmModule4Section2 = () => {
       </section>
 
       {/* Navigation Footer */}
-      <section className="px-4 pb-safe max-w-4xl mx-auto">
+      <section className="px-4 pb-safe max-w-3xl mx-auto">
         <div className="flex justify-between items-center py-4 border-t border-white/10">
           <Button variant="outline" asChild className="border-white/20 text-white/70">
             <Link to="../module-4/section-1">

@@ -137,10 +137,10 @@ const InspectionTestingModule1Section3 = () => {
   useSEO({ title: TITLE, description: DESCRIPTION });
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* iOS-style Header */}
-      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-4xl mx-auto">
+      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
           <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
             <Link to="../module1">
               <ArrowLeft className="h-5 w-5" />
@@ -153,7 +153,7 @@ const InspectionTestingModule1Section3 = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="px-4 pt-8 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
         <div className="flex items-center gap-3 mb-4">
           <div className="p-3 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
             <Wrench className="h-7 w-7 text-elec-yellow" />
@@ -171,7 +171,7 @@ const InspectionTestingModule1Section3 = () => {
       </section>
 
       {/* In 30 Seconds */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <Card variant="ios-elevated" className="border-elec-yellow/20">
           <CardHeader className="pb-2">
             <CardTitle className="text-[17px] font-semibold flex items-center gap-2">
@@ -197,7 +197,7 @@ const InspectionTestingModule1Section3 = () => {
       </section>
 
       {/* Learning Outcomes */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <h2 className="text-[22px] font-semibold text-white mb-4">Learning Outcomes</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
@@ -221,7 +221,7 @@ const InspectionTestingModule1Section3 = () => {
       </section>
 
       {/* Content Section 01 */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <div className="flex items-center gap-4 mb-4">
           <span className="text-[48px] font-bold text-elec-yellow/20">01</span>
           <h2 className="text-[22px] font-semibold text-white">Essential Test Instruments</h2>
@@ -267,7 +267,7 @@ const InspectionTestingModule1Section3 = () => {
       </section>
 
       {/* Content Section 02 */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <div className="flex items-center gap-4 mb-4">
           <span className="text-[48px] font-bold text-elec-yellow/20">02</span>
           <h2 className="text-[22px] font-semibold text-white">Multifunction Testers</h2>
@@ -340,12 +340,12 @@ const InspectionTestingModule1Section3 = () => {
       </section>
 
       {/* InlineCheck 1 */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <InlineCheck question={quickCheckQuestions[0]} />
       </section>
 
       {/* Content Section 03 */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <div className="flex items-center gap-4 mb-4">
           <span className="text-[48px] font-bold text-elec-yellow/20">03</span>
           <h2 className="text-[22px] font-semibold text-white">Calibration Requirements</h2>
@@ -402,7 +402,7 @@ const InspectionTestingModule1Section3 = () => {
       </section>
 
       {/* Content Section 04 */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <div className="flex items-center gap-4 mb-4">
           <span className="text-[48px] font-bold text-elec-yellow/20">04</span>
           <h2 className="text-[22px] font-semibold text-white">Pre-Test Checks</h2>
@@ -456,12 +456,12 @@ const InspectionTestingModule1Section3 = () => {
       </section>
 
       {/* InlineCheck 2 */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <InlineCheck question={quickCheckQuestions[1]} />
       </section>
 
       {/* Content Section 05 */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <div className="flex items-center gap-4 mb-4">
           <span className="text-[48px] font-bold text-elec-yellow/20">05</span>
           <h2 className="text-[22px] font-semibold text-white">Accuracy and Uncertainty</h2>
@@ -498,7 +498,7 @@ const InspectionTestingModule1Section3 = () => {
       </section>
 
       {/* Content Section 06 */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <div className="flex items-center gap-4 mb-4">
           <span className="text-[48px] font-bold text-elec-yellow/20">06</span>
           <h2 className="text-[22px] font-semibold text-white">Instrument Selection</h2>
@@ -554,12 +554,12 @@ const InspectionTestingModule1Section3 = () => {
       </section>
 
       {/* InlineCheck 3 */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <InlineCheck question={quickCheckQuestions[2]} />
       </section>
 
       {/* Practical Guidance */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <Card variant="ios-elevated" className="border-elec-yellow/20">
           <CardHeader>
             <CardTitle className="text-[17px] font-semibold flex items-center gap-2">
@@ -600,7 +600,7 @@ const InspectionTestingModule1Section3 = () => {
       </section>
 
       {/* FAQs */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <h2 className="text-[22px] font-semibold text-white mb-4 flex items-center gap-2">
           <HelpCircle className="h-6 w-6 text-elec-yellow" />
           Frequently Asked Questions
@@ -616,7 +616,7 @@ const InspectionTestingModule1Section3 = () => {
       </section>
 
       {/* Reference Card */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <UnitsPocketCard
           title="Test Equipment Reference"
           items={referenceItems}
@@ -624,7 +624,7 @@ const InspectionTestingModule1Section3 = () => {
       </section>
 
       {/* Quiz */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <Quiz
           questions={quizQuestions}
           title="Section 3 Quiz"
@@ -633,7 +633,7 @@ const InspectionTestingModule1Section3 = () => {
       </section>
 
       {/* Navigation */}
-      <footer className="px-4 pb-safe pt-6 max-w-4xl mx-auto border-t border-white/10">
+      <footer className="px-4 pb-safe pt-6 max-w-3xl mx-auto border-t border-white/10">
         <div className="flex gap-3">
           <Button variant="ios-secondary" size="ios-default" className="flex-1" asChild>
             <Link to="../section2">

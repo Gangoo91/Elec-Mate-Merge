@@ -18,7 +18,7 @@ const InstrumentationModule9 = () => {
   ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
       <div className="px-4 md:px-8 pt-4 pb-10">
 
         <div className="space-y-4">

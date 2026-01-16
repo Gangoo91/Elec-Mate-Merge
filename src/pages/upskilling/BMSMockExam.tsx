@@ -5,18 +5,20 @@ import BMSMockExam from '@/components/upskilling/BMSMockExam';
 
 const BMSMockExamPage = () => {
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
-      <div className="container mx-auto px-4 py-8">
-        {/* Back Button */}
-        <div className="mb-6">
-          <Link to="../bms-course">
-            <Button variant="ghost" className="text-white hover:text-elec-yellow hover:bg-white/5">
-              <ArrowLeft className="mr-2 h-4 w-4" />
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../bms-course">
+              <ArrowLeft className="w-4 h-4 mr-2" />
               Back to BMS Course
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
+      </div>
 
+      <div className="px-4 sm:px-6 py-8">
         <BMSMockExam />
       </div>
     </div>

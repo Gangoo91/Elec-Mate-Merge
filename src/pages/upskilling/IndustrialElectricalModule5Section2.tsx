@@ -220,10 +220,10 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#1a1a1a] to-[#2a2a2a] border-b border-gray-700 px-4 py-6">
-        <div className="max-w-4xl mx-auto">
+      <div className="bg-[#1a1a1a]/95 border-b border-gray-700 px-4 py-6">
+        <div className="max-w-3xl mx-auto">
           <div className="flex items-center gap-2 text-elec-yellow mb-2">
             <AlertTriangle className="w-5 h-5" />
             <span className="text-sm font-medium">Module 5 - Control Circuit Troubleshooting</span>
@@ -238,7 +238,7 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-12">
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-12">
         {/* Introduction */}
         <section className="prose prose-invert max-w-none">
           <p className="text-lg text-gray-300 leading-relaxed">
@@ -904,7 +904,7 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
           <Button
             onClick={() => navigate('/upskilling/industrial-electrical/module-5/section-1')}
             variant="outline"
-            className="min-h-[44px] touch-manipulation bg-transparent border-gray-600 text-white hover:bg-gray-800 hover:border-elec-yellow"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-transparent border-gray-600 text-white hover:bg-gray-800 hover:border-elec-yellow"
           >
             <ChevronLeft className="w-5 h-5 mr-2" />
             <span>
@@ -915,7 +915,7 @@ const IndustrialElectricalModule5Section2: React.FC = () => {
 
           <Button
             onClick={() => navigate('/upskilling/industrial-electrical/module-5/section-3')}
-            className="min-h-[44px] touch-manipulation bg-elec-yellow text-[#1a1a1a] hover:bg-yellow-400"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a] hover:bg-yellow-400"
           >
             <span className="text-right">
               <span className="text-[#1a1a1a]/70 text-sm block">Next</span>

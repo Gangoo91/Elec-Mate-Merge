@@ -228,8 +228,8 @@ const EnergyEfficiencyModule6Section4: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
-      <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
+      <div className="max-w-3xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-2 text-elec-yellow mb-2">
@@ -1002,7 +1002,7 @@ const EnergyEfficiencyModule6Section4: React.FC = () => {
               >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-4 text-left min-h-[44px] touch-manipulation"
+                  className="w-full flex items-center justify-between p-4 text-left min-h-[44px] touch-manipulation active:scale-[0.98]"
                 >
                   <span className="font-medium pr-4">{faq.question}</span>
                   {expandedFAQ === index ? (
@@ -1030,7 +1030,7 @@ const EnergyEfficiencyModule6Section4: React.FC = () => {
               navigate('/upskilling/energy-efficiency/module-6/section-3')
             }
             variant="outline"
-            className="min-h-[44px] touch-manipulation bg-transparent border-gray-600 hover:border-elec-yellow hover:text-elec-yellow"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-transparent border-gray-600 hover:border-elec-yellow hover:text-elec-yellow"
           >
             <ChevronLeft className="w-5 h-5 mr-2" />
             Previous: Section 3
@@ -1039,7 +1039,7 @@ const EnergyEfficiencyModule6Section4: React.FC = () => {
             onClick={() =>
               navigate('/upskilling/energy-efficiency/module-6/section-5')
             }
-            className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-yellow-400"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-yellow-400"
           >
             Next: Section 5
             <ChevronRight className="w-5 h-5 ml-2" />

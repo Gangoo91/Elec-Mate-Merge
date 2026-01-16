@@ -203,7 +203,7 @@ const BMSModule5Section3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Essential Function Codes</p>
-              <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                 <div>
                   <ul className="text-white space-y-1">
                     <li><strong>01</strong> - Read Coils (digital outputs)</li>

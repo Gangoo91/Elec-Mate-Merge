@@ -221,10 +221,10 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#2a2a2a] to-[#1a1a1a] border-b border-gray-700">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="bg-[#1a1a1a]/95 border-b border-gray-700">
+        <div className="max-w-3xl mx-auto px-4 py-6">
           <div className="flex items-center gap-3 mb-2">
             <Layout className="w-8 h-8 text-elec-yellow" />
             <span className="text-elec-yellow font-medium">Module 3 - Section 1</span>
@@ -238,7 +238,7 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-8">
         {/* Learning Objectives */}
         <div className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
           <div className="flex items-center gap-2 mb-4">
@@ -962,14 +962,14 @@ const IndustrialElectricalModule3Section1: React.FC = () => {
           <Button
             variant="outline"
             onClick={() => navigate('/upskilling/industrial-electrical/module-2')}
-            className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation bg-transparent border-gray-600 text-white hover:bg-gray-700 hover:text-white"
+            className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] bg-transparent border-gray-600 text-white hover:bg-gray-700 hover:text-white"
           >
             <ChevronLeft className="w-5 h-5" />
             <span>Previous: Module 2</span>
           </Button>
           <Button
             onClick={() => navigate('/upskilling/industrial-electrical/module-3/section-2')}
-            className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-yellow-400"
+            className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-yellow-400"
           >
             <span>Next: Section 2</span>
             <ChevronRight className="w-5 h-5" />

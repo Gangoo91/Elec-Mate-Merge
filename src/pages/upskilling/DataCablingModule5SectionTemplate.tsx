@@ -57,16 +57,21 @@ const DataCablingModule5SectionTemplate = ({
   const sequentialQuestions = useMemo(() => quiz.map(q => ({ id: q.id, question: q.question, options: q.options, correct: q.correctAnswer, explanation: q.explanation })), [quiz]);
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="../data-cabling-module-5">
-          <Button variant="ghost" className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 5
-          </Button>
-        </Link>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Link to="../data-cabling-module-5">
+            <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Module 5
+            </Button>
+          </Link>
+        </div>
+      </div>
 
-        <div className="space-y-6 max-w-7xl mx-auto">
+      <div className="px-4 sm:px-6 py-8 sm:py-12">
+        <div className="space-y-6 max-w-3xl mx-auto">
           {/* Header */}
           <header className="rounded-lg bg-card/40 border border-[hsl(var(--border))]/30 p-5">
             <div className="flex items-start gap-4">
@@ -188,10 +193,10 @@ const DataCablingModule5SectionTemplate = ({
           <SingleQuestionQuiz questions={sequentialQuestions} title="Knowledge Check" />
 
           {/* Nav */}
-          <div className="flex justify-between mt-8">
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             {prev ? (
               <Link to={prev}>
-                <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
+                <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]">
                   <ArrowLeft className="mr-2 h-4 w-4" />
                   Previous Section
                 </Button>
@@ -199,20 +204,20 @@ const DataCablingModule5SectionTemplate = ({
             ) : <div />}
             {next ? (
               <Link to={next}>
-                <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
+                <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]">
                   Next Section
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             ) : (
               <Link to="../data-cabling-module-5">
-                <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
+                <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]">
                   Module Overview
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             )}
-          </div>
+          </nav>
         </div>
       </div>
     </div>

@@ -228,10 +228,10 @@ const IndustrialElectricalModule2Section5: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#1a1a1a] to-[#2a2a2a] border-b border-elec-yellow/20">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="bg-[#1a1a1a]/95 border-b border-elec-yellow/20">
+        <div className="max-w-3xl mx-auto px-4 py-6">
           <div className="flex items-center gap-2 text-elec-yellow/70 text-sm mb-2">
             <BookOpen className="w-4 h-4" />
             <span>Industrial Electrical - Module 2 - Section 5</span>
@@ -245,7 +245,7 @@ const IndustrialElectricalModule2Section5: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-12">
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-12">
 
         {/* Section 1: Phase Sequence and Rotation Direction */}
         <section className="space-y-4">
@@ -1012,7 +1012,7 @@ Note: Both circuits share common STOP button and OL contact`}</pre>
             {!showQuiz ? (
               <Button
                 onClick={() => setShowQuiz(true)}
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation font-medium"
+                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation active:scale-[0.98] font-medium"
               >
                 Start Quiz
               </Button>
@@ -1030,7 +1030,7 @@ Note: Both circuits share common STOP button and OL contact`}</pre>
           <Button
             onClick={() => navigate('/upskilling/industrial-electrical-module-2/section-4')}
             variant="outline"
-            className="flex items-center gap-2 min-h-[44px] touch-manipulation border-gray-600 text-gray-300 hover:bg-[#2a2a2a] hover:text-white"
+            className="flex items-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] border-gray-600 text-gray-300 hover:bg-[#2a2a2a] hover:text-white"
           >
             <ChevronLeft className="w-5 h-5" />
             <div className="text-left">
@@ -1041,7 +1041,7 @@ Note: Both circuits share common STOP button and OL contact`}</pre>
 
           <Button
             onClick={() => navigate('/upskilling/industrial-electrical-module-2/section-6')}
-            className="flex items-center gap-2 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            className="flex items-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
             <div className="text-right">
               <div className="text-xs opacity-70">Next</div>

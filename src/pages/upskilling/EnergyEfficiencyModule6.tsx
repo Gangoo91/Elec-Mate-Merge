@@ -45,7 +45,7 @@ const EnergyEfficiencyModule6 = () => {
         <Link to="../energy-efficiency-course">
           <Button
             variant="ghost"
-            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 min-h-[48px] rounded-md"
+            className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 min-h-[48px] rounded-md touch-manipulation active:scale-[0.98]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Energy Efficiency Course

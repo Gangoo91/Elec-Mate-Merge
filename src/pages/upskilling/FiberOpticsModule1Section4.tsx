@@ -119,7 +119,7 @@ const FiberOpticsModule1Section4 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-[#1a1a1a]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a1a1a]/60">
         <div className="container flex h-14 items-center px-4">
@@ -133,7 +133,7 @@ const FiberOpticsModule1Section4 = () => {
         </div>
       </header>
 
-      <main className="container px-4 py-6 md:py-8 max-w-4xl mx-auto">
+      <main className="container px-4 py-6 md:py-8 max-w-3xl mx-auto">
         {/* Title Section */}
         <div className="mb-8 text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/10 mb-4">
@@ -694,7 +694,7 @@ const FiberOpticsModule1Section4 = () => {
               of fibre technology, its advantages, applications, and essential safety practices.
             </p>
             <Link to="/electrical-upskilling/fiber-optics-module-2">
-              <Button className="bg-green-500 text-white hover:bg-green-600 touch-manipulation min-h-[44px]">
+              <Button className="bg-green-500 text-white hover:bg-green-600 touch-manipulation active:scale-[0.98] min-h-[44px]">
                 Continue to Module 2: Fibre Types and Connectors
               </Button>
             </Link>
@@ -704,13 +704,13 @@ const FiberOpticsModule1Section4 = () => {
         {/* Navigation */}
         <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-gray-800">
           <Link to="/electrical-upskilling/fiber-optics-module-1-section-3">
-            <Button variant="outline" className="w-full sm:w-auto border-gray-700 hover:bg-gray-800 touch-manipulation min-h-[44px]">
+            <Button variant="outline" className="w-full sm:w-auto border-gray-700 hover:bg-gray-800 touch-manipulation active:scale-[0.98] min-h-[44px]">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Previous: Commercial & Industrial
             </Button>
           </Link>
           <Link to="/electrical-upskilling/fiber-optics-module-2">
-            <Button className="w-full sm:w-auto bg-elec-yellow text-gray-900 hover:bg-elec-yellow/90 touch-manipulation min-h-[44px]">
+            <Button className="w-full sm:w-auto bg-elec-yellow text-gray-900 hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] min-h-[44px]">
               Next Module: Fibre Types
               <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
             </Button>

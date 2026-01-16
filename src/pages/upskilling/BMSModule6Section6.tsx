@@ -13,14 +13,20 @@ const BMSModule6Section6 = () => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
-        <Link to="../bms-module-6">
-          <Button variant="ghost" className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 6
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../bms-module-6">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module 6
+            </Link>
           </Button>
-        </Link>
+        </div>
+      </div>
+
+      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
         <div className="space-y-3">
           <div className="flex items-center gap-3">
             <Smartphone className="h-8 w-8 text-elec-yellow" />

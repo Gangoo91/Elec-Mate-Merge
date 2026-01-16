@@ -1,10 +1,18 @@
+import React from 'react';
 import { ArrowLeft, BookOpen, Thermometer, Wind, Lightbulb, Wifi, Bell, Settings, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const BMSCourse = () => {
-  const modules = [
+  const modules: Array<{
+    id: number;
+    title: string;
+    description: string;
+    duration: string;
+    icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+    isExam?: boolean;
+  }> = [
     {
       id: 1,
       title: "BMS Overview and Industry Applications",
@@ -65,14 +73,20 @@ const BMSCourse = () => {
   ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      {/* Back Button */}
-      <Link to="/electrician/upskilling">
-        <Button variant="ghost" className="text-muted-foreground hover:text-foreground transition-colors p-0 h-auto">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Courses
-        </Button>
-      </Link>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="/electrician/upskilling">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Courses
+            </Link>
+          </Button>
+        </div>
+      </div>
+
+      <div className="px-4 sm:px-6 py-8 space-y-6 animate-fade-in">
 
       {/* Header */}
       <div className="space-y-1">
@@ -85,7 +99,7 @@ const BMSCourse = () => {
       </div>
 
       {/* Module Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {modules.map((module, index) => {
             const IconComponent = module.icon;
             return (
@@ -134,6 +148,7 @@ const BMSCourse = () => {
               </motion.div>
             );
           })}
+      </div>
       </div>
     </div>
   );

@@ -32,29 +32,35 @@ const EmergencyLightingModule6Section4 = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
-      <div className="container mx-auto px-4 py-8">
-        <Button 
-          variant="outline" 
-          onClick={() => navigate('/emergency-lighting-module-6')}
-          className="mb-6 border-elec-yellow text-white hover:bg-elec-yellow hover:text-black"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Module 6
-        </Button>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            onClick={() => navigate('../emergency-lighting-module-6')}
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Module 6
+          </Button>
+        </div>
+      </div>
 
+      <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-4">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
             Section 4: Documentation for Audits and Fire Authorities
           </h1>
-          <p className="text-xl text-white mb-4">
+          <p className="text-lg sm:text-xl text-white/80 mb-4">
             Understanding documentation requirements, audit expectations, and maintaining compliance records
           </p>
           <div className="flex gap-2">
             <span className="px-3 py-1 bg-elec-yellow/10 text-elec-yellow rounded-full text-sm font-medium border border-elec-yellow/30">
               Module 6
             </span>
-            <span className="px-3 py-1 bg-elec-yellow/20 text-elec-yellow rounded-full text-sm font-medium border border-blue-600/30">
+            <span className="px-3 py-1 bg-elec-yellow/20 text-elec-yellow rounded-full text-sm font-medium border border-elec-yellow/30">
               30 minutes
             </span>
           </div>
@@ -71,24 +77,26 @@ const EmergencyLightingModule6Section4 = () => {
           <DocumentationAuditsQuiz />
         </div>
 
-        <div className="flex justify-between mt-12">
-          <Button 
-            variant="outline" 
-            onClick={() => navigate('/emergency-lighting-module-6-section-3')}
-            className="border-gray-600 text-white hover:bg-gray-700"
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 mt-8 border-t border-white/10">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            onClick={() => navigate('../emergency-lighting-module-6-section-3')}
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
+            <ArrowLeft className="w-4 h-4 mr-2" />
             Previous Section
           </Button>
-          
-          <Button 
-            onClick={() => navigate('/emergency-lighting-module-6')}
-            className="bg-elec-yellow text-black hover:bg-yellow-600"
+          <Button
+            size="lg"
+            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+            onClick={() => navigate('../emergency-lighting-module-6')}
           >
             Complete Module 6
-            <ArrowRight className="ml-2 h-4 w-4" />
+            <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
-        </div>
+        </nav>
       </div>
     </div>
   );

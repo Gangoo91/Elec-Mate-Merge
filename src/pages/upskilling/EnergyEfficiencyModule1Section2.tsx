@@ -142,10 +142,10 @@ const EnergyEfficiencyModule1Section2: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-900/50 to-emerald-900/50 border-b border-green-700/30">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="bg-[#1a1a1a]/95 border-b border-green-700/30">
+        <div className="max-w-3xl mx-auto px-4 py-6">
           <div className="flex items-center gap-2 text-green-400 text-sm mb-2">
             <Leaf className="w-4 h-4" />
             <span>Energy Efficiency Module 1</span>
@@ -159,7 +159,7 @@ const EnergyEfficiencyModule1Section2: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-3xl mx-auto px-4 py-8">
         {/* Introduction */}
         <div className="bg-green-900/20 border border-green-700/30 rounded-lg p-6 mb-8">
           <div className="flex items-start gap-4">
@@ -762,7 +762,7 @@ const EnergyEfficiencyModule1Section2: React.FC = () => {
               >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-4 text-left min-h-[44px] touch-manipulation hover:bg-[#2a2a2a] transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left min-h-[44px] touch-manipulation active:scale-[0.98] hover:bg-[#2a2a2a] transition-colors"
                 >
                   <span className="font-medium text-white pr-4">{faq.question}</span>
                   {expandedFAQ === index ? (
@@ -795,14 +795,14 @@ const EnergyEfficiencyModule1Section2: React.FC = () => {
           <Button
             onClick={() => navigate('/upskilling/energy-efficiency/module-1/section-1')}
             variant="outline"
-            className="min-h-[44px] touch-manipulation border-gray-600 text-gray-300 hover:text-white hover:bg-[#242424] flex items-center gap-2"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] border-gray-600 text-gray-300 hover:text-white hover:bg-[#242424] flex items-center gap-2"
           >
             <ChevronLeft className="w-4 h-4" />
             <span>Previous: Why Energy Efficiency Matters</span>
           </Button>
           <Button
             onClick={() => navigate('/upskilling/energy-efficiency/module-1/section-3')}
-            className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
           >
             <span>Next: Building Fabric Fundamentals</span>
             <ChevronRight className="w-4 h-4" />

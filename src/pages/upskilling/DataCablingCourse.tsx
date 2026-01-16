@@ -58,27 +58,32 @@ const DataCablingCourse = () => {
   ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      {/* Back Button */}
-      <Link to="/electrician/upskilling">
-        <Button variant="ghost" className="text-muted-foreground hover:text-foreground transition-colors p-0 h-auto">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Courses
-        </Button>
-      </Link>
-
-      {/* Header */}
-      <div className="space-y-1">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-          Data & Communications Cabling
-        </h1>
-        <p className="text-sm sm:text-base text-muted-foreground">
-          Structured cabling systems, fiber optics, and network infrastructure
-        </p>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Link to="/electrician/upskilling">
+            <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Courses
+            </Button>
+          </Link>
+        </div>
       </div>
 
-      {/* Module Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Header */}
+        <div className="space-y-1 mb-8">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight">
+            Data & Communications Cabling
+          </h1>
+          <p className="text-sm sm:text-base text-white/70">
+            Structured cabling systems, fiber optics, and network infrastructure
+          </p>
+        </div>
+
+        {/* Module Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {modules.map((module, index) => (
             <motion.div
               key={module.id}
@@ -90,7 +95,7 @@ const DataCablingCourse = () => {
                 to={module.isExam ? `../data-cabling-mock-exam` : `../data-cabling-module-${module.id}`}
                 className="block h-full"
               >
-                <div className={`group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 hover:bg-white/10 hover:border-elec-yellow/30 hover:shadow-lg hover:shadow-elec-yellow/10 active:scale-[0.98] transition-all duration-300 cursor-pointer touch-manipulation h-full min-h-[160px] flex flex-col ${module.isExam ? 'ring-2 ring-elec-yellow/30' : ''}`}>
+                <div className={`group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 hover:bg-white/10 hover:border-elec-yellow/30 hover:shadow-lg hover:shadow-elec-yellow/10 transition-all duration-300 cursor-pointer touch-manipulation active:scale-[0.98] h-full min-h-[160px] flex flex-col ${module.isExam ? 'ring-2 ring-elec-yellow/30' : ''}`}>
                   {/* Accent line at top */}
                   <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/50 to-transparent" />
 
@@ -124,6 +129,7 @@ const DataCablingCourse = () => {
               </Link>
             </motion.div>
           ))}
+        </div>
       </div>
     </div>
   );

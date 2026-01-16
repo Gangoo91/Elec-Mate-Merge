@@ -334,86 +334,48 @@ const InvoicesPage = () => {
           <link rel="canonical" href={canonical} />
         </Helmet>
 
-        {/* Compact Mobile Header */}
+        {/* Native Mobile App Header - Stacked Layout */}
         <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border/50">
-          <div className="flex items-center h-14 px-4 gap-3">
-            {/* Back Button */}
-            <button
-              onClick={() => navigate('/electrician')}
-              className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation -ml-1"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </button>
-
-            {/* Title or Search */}
-            {isSearchOpen ? (
-              <div className="flex-1 flex items-center gap-2">
-                <div className="flex-1 relative">
-                  <Input
-                    autoFocus
-                    placeholder="Search invoices..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="h-10 pl-4 pr-10 bg-elec-gray/50 border-0 rounded-full text-sm"
-                  />
-                  {searchQuery && (
-                    <button
-                      onClick={() => setSearchQuery("")}
-                      className="absolute right-3 top-1/2 -translate-y-1/2"
-                    >
-                      <X className="h-4 w-4 text-muted-foreground" />
-                    </button>
-                  )}
-                </div>
-                <button
-                  onClick={() => { setIsSearchOpen(false); setSearchQuery(""); }}
-                  className="text-sm text-muted-foreground"
-                >
-                  Cancel
-                </button>
+          {/* Search Mode */}
+          {isSearchOpen ? (
+            <div className="flex items-center h-14 px-4 gap-2">
+              <div className="flex-1 relative">
+                <Input
+                  autoFocus
+                  placeholder="Search invoices..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="h-11 pl-4 pr-10 bg-elec-gray/50 border-0 rounded-full text-base touch-manipulation"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center"
+                  >
+                    <X className="h-4 w-4 text-muted-foreground" />
+                  </button>
+                )}
               </div>
-            ) : (
-              <>
-                <h1 className="flex-1 text-lg font-bold">Invoices</h1>
-                <div className="flex items-center gap-2">
-                  {/* Quick Link to Quotes - Prominent */}
-                  <Button
-                    variant="outline"
-                    onClick={() => navigate('/electrician/quotes')}
-                    className="h-11 px-3 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 touch-manipulation gap-2"
-                    title="View Quotes"
-                  >
-                    <FileText className="h-4 w-4" />
-                    <span className="text-xs font-medium">Quotes</span>
-                  </Button>
+              <button
+                onClick={() => { setIsSearchOpen(false); setSearchQuery(""); }}
+                className="text-sm text-muted-foreground font-medium px-2"
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <>
+              {/* Row 1: Back + Title */}
+              <div className="flex items-center h-14 px-4">
+                <button
+                  onClick={() => navigate('/electrician')}
+                  className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation -ml-2"
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                </button>
+                <h1 className="flex-1 text-xl font-bold">Invoices</h1>
 
-                  <VoiceHeaderButton
-                    hint="Send invoice"
-                    currentSection="invoices"
-                    onToolResult={handleRefresh}
-                  />
-                  <button
-                    onClick={() => setIsSearchOpen(true)}
-                    className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation"
-                  >
-                    <Search className="h-5 w-5" />
-                  </button>
-                  <button
-                    onClick={handleRefresh}
-                    disabled={isRefreshing}
-                    className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
-                  >
-                    <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
-                  </button>
-                  <Button
-                    onClick={() => navigate('/electrician/invoice-builder/create')}
-                    className="bg-emerald-500 text-white hover:bg-emerald-600 gap-1.5 h-11 px-3 touch-manipulation active:scale-[0.98]"
-                  >
-                    <Plus className="h-4 w-4" />
-                    <span className="hidden sm:inline">New</span>
-                  </Button>
-                </div>
-                {/* View Toggle - Hidden on mobile */}
+                {/* Desktop View Toggle */}
                 <div className="hidden lg:flex items-center gap-1 bg-elec-gray/30 rounded-lg p-1">
                   <button
                     onClick={() => setViewMode('card')}
@@ -438,37 +400,85 @@ const InvoicesPage = () => {
                     <List className="h-4 w-4" />
                   </button>
                 </div>
-              </>
-            )}
-          </div>
+              </div>
 
-          {/* Filter Pills - Horizontal Scroll */}
-          <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
-            {filters.map((filter) => {
-              const Icon = filter.icon;
-              return (
-                <button
-                  key={filter.id}
-                  onClick={() => handleFilterChange(filter.id)}
-                  className={cn(
-                    "shrink-0 h-11 px-4 rounded-full text-sm font-medium transition-all active:scale-[0.98] touch-manipulation flex items-center gap-2",
-                    activeFilter === filter.id
-                      ? "bg-emerald-500 text-white"
-                      : "bg-elec-gray/50 text-foreground hover:bg-elec-gray"
-                  )}
+              {/* Row 2: Action Tools - Horizontally scrollable on mobile */}
+              <div className="flex items-center gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
+                {/* New Invoice - Primary Action */}
+                <Button
+                  onClick={() => navigate('/electrician/invoice-builder/create')}
+                  className="shrink-0 bg-emerald-500 text-white hover:bg-emerald-600 gap-2 h-11 px-4 touch-manipulation active:scale-[0.98] font-semibold"
                 >
-                  <Icon className="h-4 w-4" />
-                  {filter.label}
-                  <span className={cn(
-                    "text-xs px-1.5 py-0.5 rounded-full min-w-[20px] text-center",
-                    activeFilter === filter.id ? "bg-black/20" : "bg-muted"
-                  )}>
-                    {filter.count}
-                  </span>
+                  <Plus className="h-4 w-4" />
+                  New Invoice
+                </Button>
+
+                {/* Quick Link to Quotes */}
+                <Button
+                  variant="outline"
+                  onClick={() => navigate('/electrician/quotes')}
+                  className="shrink-0 h-11 px-4 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 touch-manipulation gap-2"
+                >
+                  <FileText className="h-4 w-4" />
+                  Quotes
+                </Button>
+
+                {/* Search */}
+                <button
+                  onClick={() => setIsSearchOpen(true)}
+                  className="shrink-0 h-11 w-11 flex items-center justify-center rounded-full bg-elec-gray/50 hover:bg-elec-gray active:scale-[0.98] transition-all touch-manipulation"
+                >
+                  <Search className="h-5 w-5" />
                 </button>
-              );
-            })}
-          </div>
+
+                {/* Refresh */}
+                <button
+                  onClick={handleRefresh}
+                  disabled={isRefreshing}
+                  className="shrink-0 h-11 w-11 flex items-center justify-center rounded-full bg-elec-gray/50 hover:bg-elec-gray active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
+                >
+                  <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
+                </button>
+
+                {/* Voice */}
+                <VoiceHeaderButton
+                  hint="Send invoice"
+                  currentSection="invoices"
+                  onToolResult={handleRefresh}
+                />
+              </div>
+            </>
+          )}
+
+          {/* Row 3: Filter Pills - Horizontal Scroll */}
+          {!isSearchOpen && (
+            <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
+              {filters.map((filter) => {
+                const Icon = filter.icon;
+                return (
+                  <button
+                    key={filter.id}
+                    onClick={() => handleFilterChange(filter.id)}
+                    className={cn(
+                      "shrink-0 h-10 px-4 rounded-full text-sm font-medium transition-all active:scale-[0.98] touch-manipulation flex items-center gap-2",
+                      activeFilter === filter.id
+                        ? "bg-emerald-500 text-white"
+                        : "bg-elec-gray/50 text-foreground hover:bg-elec-gray"
+                    )}
+                  >
+                    <Icon className="h-4 w-4" />
+                    {filter.label}
+                    <span className={cn(
+                      "text-xs px-1.5 py-0.5 rounded-full min-w-[20px] text-center",
+                      activeFilter === filter.id ? "bg-black/20" : "bg-muted"
+                    )}>
+                      {filter.count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </header>
 
         {/* Main Content */}

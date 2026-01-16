@@ -79,10 +79,10 @@ const FireAlarmCourse = () => {
   const totalSections = modules.reduce((acc, m) => acc + m.sections, 0);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* iOS-style Sticky Header */}
-      <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-4xl mx-auto">
+      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
           <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
             <Link to="/electrician/upskilling">
               <ArrowLeft className="h-5 w-5" />
@@ -95,7 +95,7 @@ const FireAlarmCourse = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="px-4 pt-8 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
         <div className="flex items-center gap-3 mb-4">
           <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20">
             <Flame className="h-8 w-8 text-red-500" />
@@ -126,7 +126,7 @@ const FireAlarmCourse = () => {
       </section>
 
       {/* Course Highlights */}
-      <section className="px-4 pb-6 max-w-4xl mx-auto">
+      <section className="px-4 pb-6 max-w-3xl mx-auto">
         <Card variant="ios-elevated" className="border-red-500/20">
           <CardHeader className="pb-2">
             <CardTitle className="text-[17px] font-semibold flex items-center gap-2">
@@ -160,9 +160,9 @@ const FireAlarmCourse = () => {
       </section>
 
       {/* Modules Grid */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <h2 className="text-[22px] font-bold text-white mb-4">Course Modules</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4">
           {modules.map((module) => (
             <Link key={module.id} to={module.link}>
               <Card variant="ios" className="h-full active:scale-[0.98] transition-transform touch-manipulation">
@@ -204,7 +204,7 @@ const FireAlarmCourse = () => {
       </section>
 
       {/* Mock Exam Card */}
-      <section className="px-4 pb-8 max-w-4xl mx-auto">
+      <section className="px-4 pb-8 max-w-3xl mx-auto">
         <Link to="mock-exam">
           <Card variant="ios-elevated" className="border-red-500/30 active:scale-[0.98] transition-transform touch-manipulation">
             <CardContent className="p-4">
@@ -224,7 +224,7 @@ const FireAlarmCourse = () => {
       </section>
 
       {/* Key Standards Reference */}
-      <section className="px-4 pb-safe max-w-4xl mx-auto">
+      <section className="px-4 pb-safe max-w-3xl mx-auto">
         <Card variant="ios" className="border-white/10">
           <CardHeader className="pb-2">
             <CardTitle className="text-[15px] font-semibold flex items-center gap-2 text-white/80">

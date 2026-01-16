@@ -222,10 +222,10 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#1a1a1a] to-[#2a2a2a] border-b border-gray-700">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="bg-[#1a1a1a]/95 border-b border-gray-700">
+        <div className="max-w-3xl mx-auto px-4 py-6">
           <div className="flex items-center gap-2 text-elec-yellow mb-2">
             <ClipboardList className="w-5 h-5" />
             <span className="text-sm font-medium">Module 3 • Section 1</span>
@@ -239,7 +239,7 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-3xl mx-auto px-4 py-8">
         {/* Introduction */}
         <div className="bg-[#2a2a2a] rounded-lg p-6 mb-8 border-l-4 border-elec-yellow">
           <div className="flex items-start gap-4">
@@ -1055,7 +1055,7 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
               >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-4 text-left min-h-[44px] touch-manipulation"
+                  className="w-full flex items-center justify-between p-4 text-left min-h-[44px] touch-manipulation active:scale-[0.98]"
                 >
                   <span className="font-medium pr-4">{faq.question}</span>
                   {expandedFAQ === index ? (
@@ -1092,7 +1092,7 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
                 </p>
                 <Button
                   onClick={() => setShowQuiz(true)}
-                  className="bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation px-8"
+                  className="bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation active:scale-[0.98] px-8"
                 >
                   Start Quiz
                 </Button>
@@ -1113,7 +1113,7 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
           <Button
             variant="outline"
             onClick={() => navigate('/upskilling/energy-efficiency/module-2')}
-            className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation border-gray-600 hover:bg-gray-800"
+            className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] border-gray-600 hover:bg-gray-800"
           >
             <ChevronLeft className="w-4 h-4" />
             <span>Previous: Module 2</span>
@@ -1121,7 +1121,7 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
 
           <Button
             onClick={() => navigate('/upskilling/energy-efficiency/module-3/section-2')}
-            className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90"
+            className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90"
           >
             <span>Next: Section 2</span>
             <ChevronRight className="w-4 h-4" />

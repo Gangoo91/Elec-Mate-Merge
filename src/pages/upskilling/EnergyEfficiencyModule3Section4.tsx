@@ -158,10 +158,10 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#1a1a1a] to-[#2a2a2a] border-b border-elec-yellow/20">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="bg-[#1a1a1a]/95 border-b border-elec-yellow/20">
+        <div className="max-w-3xl mx-auto px-4 py-6">
           <div className="flex items-center gap-2 text-elec-yellow/70 text-sm mb-2">
             <BookOpen size={16} />
             <span>Module 3: Professional Energy Auditing</span>
@@ -175,7 +175,7 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-12">
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-12">
         {/* Introduction */}
         <section className="prose prose-invert max-w-none">
           <p className="text-lg text-gray-300 leading-relaxed">
@@ -859,7 +859,7 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
               >
                 <button
                   onClick={() => setExpandedFAQ(expandedFAQ === index ? null : index)}
-                  className="w-full px-6 py-4 text-left flex items-center justify-between min-h-[44px] touch-manipulation"
+                  className="w-full px-6 py-4 text-left flex items-center justify-between min-h-[44px] touch-manipulation active:scale-[0.98]"
                 >
                   <span className="font-medium text-white pr-4">{faq.question}</span>
                   {expandedFAQ === index ? (
@@ -883,7 +883,7 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
           <Button
             variant="outline"
             onClick={() => navigate('/upskilling/energy-efficiency/module-3/section-3')}
-            className="min-h-[44px] touch-manipulation border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
           >
             <ChevronLeft size={20} className="mr-2" />
             Previous: Analysis Techniques
@@ -891,7 +891,7 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
 
           <Button
             onClick={() => navigate('/upskilling/energy-efficiency/module-3/section-5')}
-            className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
             Next: Presenting Audit Findings
             <ChevronRight size={20} className="ml-2" />

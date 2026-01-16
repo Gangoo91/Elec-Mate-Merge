@@ -119,7 +119,7 @@ const PATTestingModule5Section2 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-[#1a1a1a]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a1a1a]/60">
         <div className="container flex h-14 items-center px-4">
@@ -133,7 +133,7 @@ const PATTestingModule5Section2 = () => {
         </div>
       </header>
 
-      <main className="container px-4 py-6 md:py-8 max-w-4xl mx-auto">
+      <main className="container px-4 py-6 md:py-8 max-w-3xl mx-auto">
         {/* Title Section */}
         <div className="mb-8 text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/10 mb-4">

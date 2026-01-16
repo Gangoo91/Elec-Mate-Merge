@@ -168,10 +168,10 @@ const EnergyEfficiencyModule6Section1: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#2a2a2a] to-[#1a1a1a] border-b border-gray-800">
-        <div className="max-w-4xl mx-auto px-4 py-6">
+      <div className="bg-[#1a1a1a]/95 border-b border-gray-800">
+        <div className="max-w-3xl mx-auto px-4 py-6">
           <div className="flex items-center gap-3 mb-2">
             <Scale className="h-8 w-8 text-elec-yellow" />
             <span className="text-elec-yellow font-semibold">Module 6 - Section 1</span>
@@ -186,7 +186,7 @@ const EnergyEfficiencyModule6Section1: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-12">
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-12">
 
         {/* Introduction */}
         <section className="bg-[#242424] rounded-xl p-6 border border-gray-800">
@@ -1099,7 +1099,7 @@ const EnergyEfficiencyModule6Section1: React.FC = () => {
               >
                 <button
                   onClick={() => setExpandedFAQ(expandedFAQ === index ? null : index)}
-                  className="w-full flex items-center justify-between p-4 text-left min-h-[44px] touch-manipulation hover:bg-[#2a2a2a] transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-left min-h-[44px] touch-manipulation active:scale-[0.98] hover:bg-[#2a2a2a] transition-colors"
                 >
                   <span className="font-medium pr-4">{faq.question}</span>
                   {expandedFAQ === index ? (
@@ -1135,14 +1135,14 @@ const EnergyEfficiencyModule6Section1: React.FC = () => {
           <Button
             variant="outline"
             onClick={() => navigate('/upskilling/energy-efficiency-module-5')}
-            className="min-h-[44px] touch-manipulation bg-transparent border-gray-700 hover:bg-[#242424] hover:border-elec-yellow text-white"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-transparent border-gray-700 hover:bg-[#242424] hover:border-elec-yellow text-white"
           >
             <ChevronLeft className="h-5 w-5 mr-2" />
             <span>Previous: Module 5</span>
           </Button>
           <Button
             onClick={() => navigate('/upskilling/energy-efficiency-module-6-section-2')}
-            className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
             <span>Next: Section 2</span>
             <ChevronRight className="h-5 w-5 ml-2" />

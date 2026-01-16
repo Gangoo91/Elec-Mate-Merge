@@ -326,7 +326,7 @@ const BMSModule2Section1 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Signal Conditioning</p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Amplification</p>
                   <p className="text-white/90 text-xs">Boost weak signals</p>

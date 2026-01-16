@@ -70,19 +70,19 @@ const InstrumentationModule2Section1 = () => {
   }  ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
       <div className="px-4 sm:px-6 lg:px-8 pt-6 pb-8 sm:pt-8 sm:pb-12">
         <Link to="../instrumentation-module-2">
           <Button
             variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-6 sm:mb-8 px-3 py-2 rounded-md text-sm sm:text-base"
+            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-6 sm:mb-8 px-3 py-2 rounded-md text-sm sm:text-base touch-manipulation active:scale-[0.98]"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 2
           </Button>
         </Link>
         
-        <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
+        <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
           {/* Header */}
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
@@ -491,13 +491,13 @@ const InstrumentationModule2Section1 = () => {
           {/* Navigation */}
           <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-0 pt-6 sm:pt-8">
             <Link to="../instrumentation-module-2" className="w-full sm:w-auto">
-              <Button variant="outline" className="w-full sm:w-auto border-gray-600 text-gray-300 hover:border-yellow-400 hover:text-yellow-400">
+              <Button variant="outline" className="w-full sm:w-auto border-gray-600 text-gray-300 hover:border-yellow-400 hover:text-yellow-400 touch-manipulation active:scale-[0.98]">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Module 2
               </Button>
             </Link>
             <Link to="../instrumentation-module-2-section-2" className="w-full sm:w-auto">
-              <Button className="w-full sm:w-auto bg-yellow-400 text-black hover:bg-yellow-400/10">
+              <Button className="w-full sm:w-auto bg-yellow-400 text-black hover:bg-yellow-400/10 touch-manipulation active:scale-[0.98]">
                 Next Section
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
