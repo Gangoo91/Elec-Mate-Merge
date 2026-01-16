@@ -3,12 +3,14 @@ import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Calendar as CalendarIcon, CreditCard, FileText, Info } from 'lucide-react';
+import { Calendar as CalendarIcon, CreditCard, FileText, Info, Receipt } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { Switch } from '@/components/ui/switch';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -35,9 +37,59 @@ export const InvoiceSettingsStep = ({
       <div>
         <h2 className="text-xl font-bold mb-2">Invoice Settings</h2>
         <p className="text-sm text-muted-foreground">
-          Configure payment terms and bank details for this invoice.
+          Configure VAT, payment terms and bank details for this invoice.
         </p>
       </div>
+
+      {/* VAT Settings Section */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Receipt className="h-5 w-5 text-primary" />
+            <CardTitle className="text-lg">VAT Settings</CardTitle>
+          </div>
+          <CardDescription>
+            Configure VAT for this invoice (leave off if not VAT registered)
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* VAT Registered Toggle */}
+          <div className="flex items-center justify-between p-4 bg-elec-gray/30 rounded-lg">
+            <div>
+              <p className="font-medium">VAT Registered</p>
+              <p className="text-sm text-muted-foreground">Add VAT to this invoice?</p>
+            </div>
+            <Switch
+              checked={settings?.vatRegistered || false}
+              onCheckedChange={(checked) => onUpdateSettings({ vatRegistered: checked })}
+              className="data-[state=checked]:bg-elec-yellow"
+            />
+          </div>
+
+          {/* VAT Rate - Only shown if VAT registered */}
+          {settings?.vatRegistered && (
+            <div className="pl-4">
+              <Label htmlFor="vatRate" className="text-sm">VAT Rate (%)</Label>
+              <Input
+                id="vatRate"
+                type="number"
+                inputMode="decimal"
+                step="0.1"
+                min="0"
+                max="100"
+                value={settings?.vatRate ?? 20}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  onUpdateSettings({ vatRate: value === '' ? 20 : parseFloat(value) || 20 });
+                }}
+                className="mt-1 h-14 max-w-[150px]"
+                placeholder="20"
+              />
+              <p className="text-xs text-muted-foreground mt-1">Standard UK VAT rate is 20%</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Payment Terms Section */}
       <Card>

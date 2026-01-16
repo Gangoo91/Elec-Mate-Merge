@@ -4,7 +4,8 @@ import {
   Menu, X, Check, ArrowRight,
   GraduationCap, Wrench, Building2,
   Cpu, PoundSterling, Hammer, Settings, Shield,
-  FileText, BookOpen, Calculator, Clock
+  FileText, BookOpen, Calculator, Clock,
+  Mic, CreditCard, Send
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -162,7 +163,7 @@ const LandingPage = () => {
               icon={<Wrench className="w-6 h-6" />}
               title="Electricians"
               tagline="Work smarter on site"
-              features={['8 AI assistants', 'Certificates & forms', '60+ calculators', 'Voice quotes']}
+              features={['Voice quotes in 2 mins', 'Stripe payment links', '8 AI assistants', 'Certificates & forms']}
               color="yellow"
               highlight
             />
@@ -198,8 +199,44 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Features */}
+      {/* Get Paid Faster */}
       <section className="py-16 px-5">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-xl sm:text-2xl font-bold mb-2">Get paid faster</h2>
+            <p className="text-white/50">From voice to payment in minutes</p>
+          </div>
+
+          <div className="grid sm:grid-cols-3 gap-4">
+            <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] text-center">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 bg-yellow-500/20 text-yellow-400">
+                <Mic className="w-6 h-6" />
+              </div>
+              <h3 className="font-semibold text-white mb-1">Voice quotes</h3>
+              <p className="text-sm text-white/50">Speak your quote, send in 2 mins</p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] text-center">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 bg-blue-500/20 text-blue-400">
+                <Send className="w-6 h-6" />
+              </div>
+              <h3 className="font-semibold text-white mb-1">Instant invoices</h3>
+              <p className="text-sm text-white/50">Professional PDFs, one tap send</p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] text-center">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 bg-green-500/20 text-green-400">
+                <CreditCard className="w-6 h-6" />
+              </div>
+              <h3 className="font-semibold text-white mb-1">Payment links</h3>
+              <p className="text-sm text-white/50">Stripe-powered, get paid today</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="py-16 px-5 border-t border-white/5">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-xl sm:text-2xl font-bold text-center mb-10">Everything you need</h2>
 
