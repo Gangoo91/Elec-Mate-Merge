@@ -10,35 +10,35 @@ const sections = [
     title: 'Purpose and Legal Requirements',
     description: 'Understanding why inspection and testing is essential, legal obligations under the Electricity at Work Regulations, and duty of care responsibilities.',
     icon: Scale,
-    href: 'section1',
+    href: 'section-1',
   },
   {
     number: "Section 2",
     title: 'BS 7671 Testing Requirements Overview',
     description: 'Comprehensive overview of the testing requirements specified in BS 7671, including initial verification and periodic inspection.',
     icon: FileText,
-    href: 'section2',
+    href: 'section-2',
   },
   {
     number: "Section 3",
     title: 'Test Equipment and Calibration',
     description: 'Essential test instruments, their specifications, calibration requirements, and how to verify equipment accuracy.',
     icon: Wrench,
-    href: 'section3',
+    href: 'section-3',
   },
   {
     number: "Section 4",
     title: 'Safety During Testing',
     description: 'Safe isolation procedures, personal protective equipment, risk assessment, and safe working practices during electrical testing.',
     icon: Shield,
-    href: 'section4',
+    href: 'section-4',
   },
   {
     number: "Section 5",
     title: 'Test Sequence and Documentation',
     description: 'The correct sequence for carrying out tests and how to properly document results on electrical installation certificates.',
     icon: ClipboardList,
-    href: 'section5',
+    href: 'section-5',
   }
 ];
 
