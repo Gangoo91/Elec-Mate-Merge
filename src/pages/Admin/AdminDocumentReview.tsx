@@ -83,9 +83,11 @@ interface DocumentRecord {
   review_action: string | null;
   created_at: string;
   // Joined profile data
-  profile?: {
-    full_name: string | null;
-    email: string | null;
+  elec_id_profile?: {
+    employee?: {
+      name: string | null;
+      email: string | null;
+    };
   };
 }
 
@@ -130,9 +132,11 @@ export default function AdminDocumentReview() {
         .from("elec_id_documents")
         .select(`
           *,
-          profile:employer_elec_id_profiles(
-            full_name,
-            email:profiles(email)
+          elec_id_profile:employer_elec_id_profiles(
+            employee:employer_employees(
+              name,
+              email
+            )
           )
         `)
         .order("created_at", { ascending: false })

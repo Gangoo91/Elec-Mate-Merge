@@ -32,16 +32,36 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
         return;
       }
 
-      // Quick check via company_profiles
-      const { data: profile } = await supabase
-        .from('company_profiles')
-        .select('stripe_account_id, stripe_account_status')
-        .eq('user_id', session.session.user.id)
-        .single();
+      // Call edge function to check actual Stripe status and sync database
+      const { data, error } = await supabase.functions.invoke('get-stripe-connect-status', {
+        headers: {
+          Authorization: `Bearer ${session.session.access_token}`,
+        },
+      });
 
-      if (profile?.stripe_account_status === 'active') {
+      if (error) {
+        console.error('Error checking Stripe status via edge function:', error);
+        // Fallback to database read
+        const { data: profile } = await supabase
+          .from('company_profiles')
+          .select('stripe_account_id, stripe_account_status')
+          .eq('user_id', session.session.user.id)
+          .single();
+
+        if (profile?.stripe_account_status === 'active') {
+          setStatus('active');
+        } else if (profile?.stripe_account_id) {
+          setStatus('pending');
+        } else {
+          setStatus('not_connected');
+        }
+        return;
+      }
+
+      // Edge function syncs with Stripe and updates DB
+      if (data?.status === 'active') {
         setStatus('active');
-      } else if (profile?.stripe_account_id) {
+      } else if (data?.connected) {
         setStatus('pending');
       } else {
         setStatus('not_connected');

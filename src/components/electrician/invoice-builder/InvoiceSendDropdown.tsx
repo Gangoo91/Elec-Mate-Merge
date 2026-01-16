@@ -36,19 +36,34 @@ export const InvoiceSendDropdown = ({
   const [stripeConnected, setStripeConnected] = useState<boolean | null>(null);
 
   // Check if user has Stripe connected - refreshes on mount, focus, or refreshKey change
+  // Calls edge function to sync with Stripe API and update database
   useEffect(() => {
     const checkStripeStatus = async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) return;
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) return;
 
-        const { data: profile } = await supabase
-          .from('company_profiles')
-          .select('stripe_account_id, stripe_account_status')
-          .eq('user_id', user.id)
-          .single();
+        // Call edge function to check actual Stripe status and sync database
+        const { data, error } = await supabase.functions.invoke('get-stripe-connect-status', {
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
+        });
 
-        setStripeConnected(profile?.stripe_account_status === 'active');
+        if (error) {
+          console.error('Error checking Stripe status:', error);
+          // Fallback to database read
+          const { data: profile } = await supabase
+            .from('company_profiles')
+            .select('stripe_account_status')
+            .eq('user_id', session.user.id)
+            .single();
+          setStripeConnected(profile?.stripe_account_status === 'active');
+          return;
+        }
+
+        // Edge function returns actual Stripe status and updates DB
+        setStripeConnected(data?.status === 'active');
       } catch (error) {
         console.error('Error checking Stripe status:', error);
       }
