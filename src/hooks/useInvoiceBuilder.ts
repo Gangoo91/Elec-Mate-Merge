@@ -68,6 +68,10 @@ export const createInvoiceFromQuote = (
     })),
     settings: {
       ...quote.settings,
+      // Quote builder sets overhead/profit to 0 because they're built into item prices
+      // Ensure invoice doesn't re-apply these percentages during recalculation
+      overheadPercentage: 0,
+      profitMargin: 0,
       paymentTerms: companyProfile?.payment_terms || '30 days',
       dueDate: dueDate,
       bankDetails: companyProfile?.bank_details || undefined,

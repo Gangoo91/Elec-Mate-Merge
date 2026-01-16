@@ -33,6 +33,7 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
 
   // Handle profile updates - calculate trial status from profile data
   // This runs synchronously and doesn't cause loading states
+  // IMPORTANT: Don't reset state when profile is null to prevent "trial ended" flash
   useEffect(() => {
     if (profile) {
       const createdAt = new Date(profile.created_at || new Date());
@@ -52,15 +53,9 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
         isSubscribed: isUserSubscribed,
         subscriptionTier: profile.subscription_tier || prev.subscriptionTier, // Use profile tier if available
       }));
-    } else {
-      setState(prev => ({
-        ...prev,
-        isTrialActive: false,
-        trialEndsAt: null,
-        isSubscribed: false,
-        subscriptionTier: null,
-      }));
     }
+    // When profile is null (during refresh/navigation), keep previous state
+    // This prevents the "free trial has ended" flash
   }, [profile]);
 
   // Function to check subscription status with Stripe

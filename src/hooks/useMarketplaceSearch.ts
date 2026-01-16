@@ -49,6 +49,7 @@ export interface SearchResponse {
   page: number;
   pageSize: number;
   totalPages: number;
+  lastUpdated: string | null;
   facets: SearchFacets;
 }
 

@@ -217,12 +217,22 @@ serve(async (req: Request) => {
         }),
     ]);
 
+    // Get last scraped timestamp
+    const { data: lastScrapedData } = await supabase
+      .from('marketplace_suppliers')
+      .select('last_scraped_at')
+      .eq('scrape_enabled', true)
+      .order('last_scraped_at', { ascending: false })
+      .limit(1)
+      .single();
+
     const response = {
       products: transformedProducts,
       total: totalCount,
       page,
       pageSize,
       totalPages,
+      lastUpdated: lastScrapedData?.last_scraped_at || null,
       facets: {
         categories: categoryFacets,
         suppliers: supplierFacets,

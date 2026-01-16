@@ -37,6 +37,7 @@ const InvoicesPage = () => {
   const [deletingInvoiceId, setDeletingInvoiceId] = useState<string | null>(null);
   const [sharingWhatsAppId, setSharingWhatsAppId] = useState<string | null>(null);
   const [sharingEmailId, setSharingEmailId] = useState<string | null>(null);
+  const [stripeRefreshKey, setStripeRefreshKey] = useState(0);
 
   // Pull to refresh handler
   const handleRefresh = useCallback(async () => {
@@ -323,7 +324,9 @@ const InvoicesPage = () => {
       // Clean URL - remove stripe param
       searchParams.delete('stripe');
       setSearchParams(searchParams, { replace: true });
-      // Refresh to show updated Stripe status
+      // Trigger refresh of Stripe status in child components
+      setStripeRefreshKey(prev => prev + 1);
+      // Refresh invoice list
       fetchInvoices();
     } else if (stripeParam === 'refresh') {
       toast({
@@ -510,7 +513,7 @@ const InvoicesPage = () => {
         {/* Main Content */}
         <main className="px-4 py-4 space-y-4">
           {/* Stripe Connect Banner - Prompt to enable card payments */}
-          <StripeConnectBanner />
+          <StripeConnectBanner refreshKey={stripeRefreshKey} />
 
           {/* Premium Financial Snapshot - Matches QuotesPage Design */}
           <section className="relative overflow-hidden rounded-3xl glass-premium p-6 border border-white/[0.08]">
@@ -675,6 +678,7 @@ const InvoicesPage = () => {
                     markingPaidId={markingPaidId}
                     downloadingPdfId={downloadingPdfId}
                     deletingInvoiceId={deletingInvoiceId}
+                    stripeRefreshKey={stripeRefreshKey}
                   />
                 )}
                 {/* Card view (or mobile fallback) */}
@@ -692,6 +696,7 @@ const InvoicesPage = () => {
                     downloadingPdfId={downloadingPdfId}
                     deletingInvoiceId={deletingInvoiceId}
                     formatCurrency={formatCurrency}
+                    stripeRefreshKey={stripeRefreshKey}
                   />
                 </div>
               </>

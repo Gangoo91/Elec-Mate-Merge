@@ -6,15 +6,16 @@ import { cn } from '@/lib/utils';
 
 interface StripeConnectBannerProps {
   className?: string;
+  refreshKey?: number;
 }
 
-const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className }) => {
+const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, refreshKey = 0 }) => {
   const [status, setStatus] = useState<'loading' | 'not_connected' | 'pending' | 'active' | 'dismissed'>('loading');
   const [connecting, setConnecting] = useState(false);
 
   useEffect(() => {
     checkStatus();
-  }, []);
+  }, [refreshKey]);
 
   const checkStatus = async () => {
     // Check if user dismissed the banner
@@ -65,6 +66,7 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className }) 
         headers: {
           Authorization: `Bearer ${session.session.access_token}`,
         },
+        body: { returnUrl: window.location.href },
       });
 
       console.log('Stripe Connect full response:', JSON.stringify(response, null, 2));
@@ -89,10 +91,15 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className }) 
         throw new Error(errorDetails);
       }
 
-      const { url } = response.data;
+      const { url, type } = response.data;
       if (url) {
-        toast.success('Opening Stripe setup...');
-        window.open(url, '_blank');
+        if (type === 'dashboard') {
+          toast.success('Opening Stripe Dashboard');
+          window.open(url, '_blank');
+        } else {
+          // Redirect to Stripe onboarding - will return to same page with ?stripe=success
+          window.location.href = url;
+        }
       }
     } catch (error: any) {
       console.error('Error connecting Stripe:', error);

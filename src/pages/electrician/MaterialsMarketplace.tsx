@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { Cable, ArrowLeft, Flame, Tag, Search, RefreshCw } from 'lucide-react';
+import { Cable, ArrowLeft, Flame, Tag, Search, RefreshCw, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ProductGrid } from '@/components/marketplace/ProductGrid';
@@ -11,6 +11,25 @@ import {
   SortOption,
   MarketplaceProduct,
 } from '@/hooks/useMarketplaceSearch';
+
+/**
+ * Format last updated time as relative string
+ */
+function formatLastUpdated(dateString: string): string {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMins / 60);
+  const diffDays = Math.floor(diffHours / 24);
+
+  if (diffMins < 1) return 'just now';
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  if (diffDays === 1) return 'yesterday';
+  if (diffDays < 7) return `${diffDays}d ago`;
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
 
 /**
  * Materials Marketplace Page
@@ -146,16 +165,25 @@ export default function MaterialsMarketplace() {
           </Link>
 
           {/* Title Row */}
-          <div className="flex items-center gap-3 mb-5">
-            <div className="p-2 bg-yellow-500/20 rounded-xl">
-              <Cable className="h-6 w-6 text-yellow-400" />
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-yellow-500/20 rounded-xl">
+                <Cable className="h-6 w-6 text-yellow-400" />
+              </div>
+              <div>
+                <h1 className="text-xl sm:text-2xl font-bold">Materials Marketplace</h1>
+                <p className="text-muted-foreground text-sm">
+                  {data?.total?.toLocaleString() || '...'} products from 10 UK wholesalers
+                </p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-xl sm:text-2xl font-bold">Materials Marketplace</h1>
-              <p className="text-muted-foreground text-sm">
-                {data?.total?.toLocaleString() || '50,000+'} products from UK wholesalers
-              </p>
-            </div>
+            {/* Last Updated Indicator */}
+            {data?.lastUpdated && (
+              <div className="hidden sm:flex items-center gap-1.5 text-xs text-muted-foreground bg-card/50 px-3 py-1.5 rounded-full border border-border">
+                <Clock className="h-3 w-3" />
+                <span>Updated {formatLastUpdated(data.lastUpdated)}</span>
+              </div>
+            )}
           </div>
 
           {/* Search Bar */}

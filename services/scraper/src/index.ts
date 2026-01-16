@@ -7,6 +7,10 @@ import { CEFScraper } from './scrapers/cef-scraper.js';
 import { ElectricalDirectScraper } from './scrapers/electrical-direct-scraper.js';
 import { RSComponentsScraper } from './scrapers/rs-components-scraper.js';
 import { TLCElectricalScraper } from './scrapers/tlc-electrical-scraper.js';
+import { EdmundsonScraper } from './scrapers/edmundson-scraper.js';
+import { YesssScraper } from './scrapers/yesss-scraper.js';
+import { ElectricCenterScraper } from './scrapers/electric-center-scraper.js';
+import { RexelScraper } from './scrapers/rexel-scraper.js';
 import { CouponAggregatorScraper } from './scrapers/coupon-aggregator-scraper.js';
 import { DatabaseClient } from './database/supabase-client.js';
 import { BaseScraper } from './scrapers/base-scraper.js';
@@ -19,7 +23,7 @@ const PORT = process.env.PORT || 3001;
 // Initialize database client
 const db = new DatabaseClient();
 
-// Scraper registry - all 6 suppliers + coupon aggregator
+// Scraper registry - all 10 suppliers + coupon aggregator
 const scrapers: Record<string, () => BaseScraper> = {
   screwfix: () => new ScrewfixScraper(),
   toolstation: () => new ToolstationScraper(),
@@ -27,6 +31,10 @@ const scrapers: Record<string, () => BaseScraper> = {
   'electrical-direct': () => new ElectricalDirectScraper(),
   'rs-components': () => new RSComponentsScraper(),
   'tlc-electrical': () => new TLCElectricalScraper(),
+  edmundson: () => new EdmundsonScraper(),
+  yesss: () => new YesssScraper(),
+  'electric-center': () => new ElectricCenterScraper(),
+  rexel: () => new RexelScraper(),
   'coupon-aggregator': () => new CouponAggregatorScraper(),
 };
 

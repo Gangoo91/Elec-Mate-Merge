@@ -20,6 +20,7 @@ interface InvoiceSendDropdownProps {
   onSuccess?: () => void;
   disabled?: boolean;
   className?: string;
+  refreshKey?: number;
 }
 
 export const InvoiceSendDropdown = ({
@@ -27,13 +28,14 @@ export const InvoiceSendDropdown = ({
   onSuccess,
   disabled = false,
   className = '',
+  refreshKey = 0,
 }: InvoiceSendDropdownProps) => {
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
   const [isConnectingStripe, setIsConnectingStripe] = useState(false);
   const [stripeConnected, setStripeConnected] = useState<boolean | null>(null);
 
-  // Check if user has Stripe connected - simple focus-based refresh
+  // Check if user has Stripe connected - refreshes on mount, focus, or refreshKey change
   useEffect(() => {
     const checkStripeStatus = async () => {
       try {
@@ -61,7 +63,7 @@ export const InvoiceSendDropdown = ({
     return () => {
       window.removeEventListener('focus', handleFocus);
     };
-  }, []);
+  }, [refreshKey]);
 
   // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
   const pollPdfDownloadUrl = async (documentId: string, accessToken: string): Promise<string | null> => {

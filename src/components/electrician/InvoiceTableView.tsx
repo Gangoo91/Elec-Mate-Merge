@@ -46,6 +46,7 @@ interface InvoiceTableViewProps {
   markingPaidId: string | null;
   downloadingPdfId: string | null;
   deletingInvoiceId: string | null;
+  stripeRefreshKey?: number;
 }
 
 const InvoiceTableView = ({
@@ -60,6 +61,7 @@ const InvoiceTableView = ({
   markingPaidId,
   downloadingPdfId,
   deletingInvoiceId,
+  stripeRefreshKey = 0,
 }: InvoiceTableViewProps) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [invoiceToDelete, setInvoiceToDelete] = useState<Quote | null>(null);

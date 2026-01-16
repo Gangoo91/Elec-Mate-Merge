@@ -23,6 +23,7 @@ interface InvoiceCardViewProps {
   downloadingPdfId: string | null;
   deletingInvoiceId: string | null;
   formatCurrency: (amount: number) => string;
+  stripeRefreshKey?: number;
 }
 
 const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
@@ -36,6 +37,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
   downloadingPdfId,
   deletingInvoiceId,
   formatCurrency,
+  stripeRefreshKey = 0,
 }) => {
   const [partialPaymentInvoice, setPartialPaymentInvoice] = useState<Quote | null>(null);
 
@@ -269,10 +271,11 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
 
                 {/* Send Dropdown - Full Width */}
                 <div className="col-span-2">
-                  <InvoiceSendDropdown 
+                  <InvoiceSendDropdown
                     invoice={invoice}
                     onSuccess={onSendSuccess}
                     disabled={!clientData?.email || invoice.invoice_status === 'paid'}
+                    refreshKey={stripeRefreshKey}
                   />
                 </div>
 
