@@ -33,7 +33,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import {
-  Search,
   PoundSterling,
   RefreshCw,
   ChevronRight,
@@ -45,12 +44,14 @@ import {
   Flag,
   User,
   Briefcase,
-  Calendar,
   TrendingUp,
   TrendingDown,
+  Loader2,
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
+import AdminSearchInput from "@/components/admin/AdminSearchInput";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
 
 interface PricingSubmission {
   id: string;
@@ -356,15 +357,11 @@ export default function AdminPricingModeration() {
       </div>
 
       {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Search by job type, postcode, user..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="pl-10 h-11 touch-manipulation"
-        />
-      </div>
+      <AdminSearchInput
+        value={search}
+        onChange={setSearch}
+        placeholder="Search by job type, postcode, user..."
+      />
 
       {/* Submissions List */}
       {isLoading ? (
@@ -377,12 +374,12 @@ export default function AdminPricingModeration() {
         </div>
       ) : submissions?.length === 0 ? (
         <Card>
-          <CardContent className="pt-6 text-center py-12">
-            <PoundSterling className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-semibold mb-2">No pricing submissions</h3>
-            <p className="text-sm text-muted-foreground">
-              {statusFilter === "pending" ? "All caught up!" : "No submissions match this filter."}
-            </p>
+          <CardContent className="pt-6">
+            <AdminEmptyState
+              icon={PoundSterling}
+              title="No pricing submissions"
+              description={statusFilter === "pending" ? "All caught up!" : "No submissions match this filter."}
+            />
           </CardContent>
         </Card>
       ) : (
@@ -612,24 +609,33 @@ export default function AdminPricingModeration() {
                   <Button
                     className="h-12 touch-manipulation bg-green-600 hover:bg-green-700"
                     onClick={() => selectedSubmission && approveMutation.mutate(selectedSubmission.id)}
-                    disabled={approveMutation.isPending}
+                    disabled={approveMutation.isPending || flagMutation.isPending}
                   >
-                    <Check className="h-4 w-4 mr-2" />
-                    Approve
+                    {approveMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <Check className="h-4 w-4 mr-2" />
+                    )}
+                    {approveMutation.isPending ? "..." : "Approve"}
                   </Button>
                   <Button
                     variant="outline"
                     className="h-12 touch-manipulation border-amber-500 text-amber-500"
                     onClick={() => selectedSubmission && flagMutation.mutate(selectedSubmission.id)}
-                    disabled={flagMutation.isPending}
+                    disabled={flagMutation.isPending || approveMutation.isPending}
                   >
-                    <Flag className="h-4 w-4 mr-2" />
-                    Flag
+                    {flagMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <Flag className="h-4 w-4 mr-2" />
+                    )}
+                    {flagMutation.isPending ? "..." : "Flag"}
                   </Button>
                   <Button
                     variant="destructive"
                     className="h-12 touch-manipulation"
                     onClick={() => setShowRejectDialog(true)}
+                    disabled={approveMutation.isPending || flagMutation.isPending}
                   >
                     <X className="h-4 w-4 mr-2" />
                     Reject
@@ -657,13 +663,22 @@ export default function AdminPricingModeration() {
             className="min-h-[100px]"
           />
           <AlertDialogFooter>
-            <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="h-11 touch-manipulation" disabled={rejectMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
               onClick={() => selectedSubmission && rejectMutation.mutate({ id: selectedSubmission.id, reason: rejectReason })}
-              disabled={!rejectReason.trim()}
+              disabled={!rejectReason.trim() || rejectMutation.isPending}
             >
-              Reject
+              {rejectMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Rejecting...
+                </>
+              ) : (
+                "Reject"
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -268,7 +268,7 @@ const VoiceSettingsTab: React.FC = () => {
         {/* Electrician Hub Card */}
         <button
           onClick={() => setActiveTab('electrician')}
-          className={`p-4 rounded-xl border text-left transition-all ${
+          className={`p-4 rounded-xl border text-left transition-all touch-manipulation active:scale-[0.98] ${
             activeTab === 'electrician'
               ? 'bg-elec-yellow/10 border-elec-yellow/30'
               : 'bg-white/[0.03] border-white/10 hover:bg-white/[0.06]'
@@ -295,7 +295,7 @@ const VoiceSettingsTab: React.FC = () => {
         {/* Employer Hub Card */}
         <button
           onClick={() => setActiveTab('employer')}
-          className={`p-4 rounded-xl border text-left transition-all ${
+          className={`p-4 rounded-xl border text-left transition-all touch-manipulation active:scale-[0.98] ${
             activeTab === 'employer'
               ? 'bg-blue-500/10 border-blue-500/30'
               : 'bg-white/[0.03] border-white/10 hover:bg-white/[0.06]'
@@ -355,19 +355,19 @@ const VoiceSettingsTab: React.FC = () => {
                     }));
                   }}
                   placeholder="Enter your Agent ID..."
-                  className="flex-1 bg-white/5 border-white/10 focus:border-elec-yellow/50"
+                  className="flex-1 h-11 text-base touch-manipulation bg-white/5 border-white/10 focus:border-elec-yellow/50"
                 />
                 <Button
                   onClick={saveElectricianAgent}
                   disabled={!electricianConfig.agentId.trim() || electricianConfig.isSaved}
-                  className={electricianConfig.isSaved
+                  className={`h-11 touch-manipulation active:scale-[0.98] ${electricianConfig.isSaved
                     ? "bg-green-500/20 text-green-400 hover:bg-green-500/30"
-                    : "bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"}
+                    : "bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"}`}
                 >
                   {electricianConfig.isSaved ? <CheckCircle2 className="h-4 w-4" /> : 'Save'}
                 </Button>
                 {electricianConfig.isSaved && (
-                  <Button variant="outline" onClick={clearElectricianAgent} className="border-white/10 hover:bg-white/5">
+                  <Button variant="outline" onClick={clearElectricianAgent} className="h-11 touch-manipulation active:scale-[0.98] border-white/10 hover:bg-white/5">
                     <XCircle className="h-4 w-4" />
                   </Button>
                 )}
@@ -454,19 +454,19 @@ const VoiceSettingsTab: React.FC = () => {
                     }));
                   }}
                   placeholder="Enter your Agent ID..."
-                  className="flex-1 bg-white/5 border-white/10 focus:border-blue-500/50"
+                  className="flex-1 h-11 text-base touch-manipulation bg-white/5 border-white/10 focus:border-blue-500/50"
                 />
                 <Button
                   onClick={saveEmployerAgent}
                   disabled={!employerConfig.agentId.trim() || employerConfig.isSaved}
-                  className={employerConfig.isSaved
+                  className={`h-11 touch-manipulation active:scale-[0.98] ${employerConfig.isSaved
                     ? "bg-green-500/20 text-green-400 hover:bg-green-500/30"
-                    : "bg-blue-500 hover:bg-blue-500/90 text-white"}
+                    : "bg-blue-500 hover:bg-blue-500/90 text-white"}`}
                 >
                   {employerConfig.isSaved ? <CheckCircle2 className="h-4 w-4" /> : 'Save'}
                 </Button>
                 {employerConfig.isSaved && (
-                  <Button variant="outline" onClick={clearEmployerAgent} className="border-white/10 hover:bg-white/5">
+                  <Button variant="outline" onClick={clearEmployerAgent} className="h-11 touch-manipulation active:scale-[0.98] border-white/10 hover:bg-white/5">
                     <XCircle className="h-4 w-4" />
                   </Button>
                 )}
@@ -491,19 +491,19 @@ const VoiceSettingsTab: React.FC = () => {
                     }));
                   }}
                   placeholder="Enter your API Key..."
-                  className="flex-1 bg-white/5 border-white/10 focus:border-blue-500/50"
+                  className="flex-1 h-11 text-base touch-manipulation bg-white/5 border-white/10 focus:border-blue-500/50"
                 />
                 <Button
                   onClick={saveEmployerApiKey}
                   disabled={!employerConfig.apiKey?.trim() || employerConfig.isApiKeySaved}
-                  className={employerConfig.isApiKeySaved
+                  className={`h-11 touch-manipulation active:scale-[0.98] ${employerConfig.isApiKeySaved
                     ? "bg-green-500/20 text-green-400 hover:bg-green-500/30"
-                    : "bg-blue-500 hover:bg-blue-500/90 text-white"}
+                    : "bg-blue-500 hover:bg-blue-500/90 text-white"}`}
                 >
                   {employerConfig.isApiKeySaved ? <CheckCircle2 className="h-4 w-4" /> : 'Save'}
                 </Button>
                 {employerConfig.isApiKeySaved && (
-                  <Button variant="outline" onClick={clearEmployerApiKey} className="border-white/10 hover:bg-white/5">
+                  <Button variant="outline" onClick={clearEmployerApiKey} className="h-11 touch-manipulation active:scale-[0.98] border-white/10 hover:bg-white/5">
                     <XCircle className="h-4 w-4" />
                   </Button>
                 )}

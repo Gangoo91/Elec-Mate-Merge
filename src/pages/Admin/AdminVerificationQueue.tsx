@@ -32,7 +32,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import {
-  Search,
   IdCard,
   CheckCircle,
   XCircle,
@@ -44,9 +43,12 @@ import {
   ShieldX,
   Award,
   User,
+  Loader2,
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
+import AdminSearchInput from "@/components/admin/AdminSearchInput";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
 
 interface ElecIdProfile {
   id: string;
@@ -187,15 +189,12 @@ export default function AdminVerificationQueue() {
       <Card>
         <CardContent className="pt-4 pb-4">
           <div className="flex gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-10 h-11 touch-manipulation"
-              />
-            </div>
+            <AdminSearchInput
+              value={search}
+              onChange={setSearch}
+              placeholder="Search..."
+              className="flex-1"
+            />
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="w-[130px] h-11 touch-manipulation">
                 <SelectValue />
@@ -225,10 +224,12 @@ export default function AdminVerificationQueue() {
         </div>
       ) : queue?.length === 0 ? (
         <Card>
-          <CardContent className="pt-6 text-center py-12">
-            <IdCard className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-semibold mb-2">No profiles to verify</h3>
-            <p className="text-sm text-muted-foreground">Verification requests will appear here.</p>
+          <CardContent className="pt-6">
+            <AdminEmptyState
+              icon={IdCard}
+              title="No profiles to verify"
+              description="Verification requests will appear here."
+            />
           </CardContent>
         </Card>
       ) : (
@@ -373,6 +374,7 @@ export default function AdminVerificationQueue() {
                     variant="outline"
                     className="flex-1 h-12 touch-manipulation gap-2 border-red-500/30 text-red-400 hover:bg-red-500/10"
                     onClick={() => setShowRejectDialog(true)}
+                    disabled={approveMutation.isPending}
                   >
                     <ShieldX className="h-4 w-4" />
                     Reject
@@ -382,8 +384,12 @@ export default function AdminVerificationQueue() {
                     onClick={() => selectedProfile && approveMutation.mutate(selectedProfile.id)}
                     disabled={approveMutation.isPending}
                   >
-                    <ShieldCheck className="h-4 w-4" />
-                    Approve
+                    {approveMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <ShieldCheck className="h-4 w-4" />
+                    )}
+                    {approveMutation.isPending ? "Approving..." : "Approve"}
                   </Button>
                 </div>
               </SheetFooter>
@@ -408,13 +414,22 @@ export default function AdminVerificationQueue() {
             className="min-h-[100px]"
           />
           <AlertDialogFooter>
-            <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="h-11 touch-manipulation" disabled={rejectMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
               onClick={() => selectedProfile && rejectMutation.mutate({ id: selectedProfile.id, reason: rejectReason })}
-              disabled={!rejectReason.trim()}
+              disabled={!rejectReason.trim() || rejectMutation.isPending}
             >
-              Reject
+              {rejectMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Rejecting...
+                </>
+              ) : (
+                "Reject"
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

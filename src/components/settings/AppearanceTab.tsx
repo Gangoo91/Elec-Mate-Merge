@@ -176,7 +176,7 @@ const AppearanceTab = () => {
             <Button
               variant="outline"
               size="icon"
-              className="border-white/20 hover:bg-white/10"
+              className="h-11 w-11 touch-manipulation active:scale-[0.98] border-white/20 hover:bg-white/10"
               onClick={() => {
                 const sizes: ('small' | 'medium' | 'large')[] = ['small', 'medium', 'large'];
                 const currentIndex = sizes.indexOf(appearanceSettings.fontSize);
@@ -194,7 +194,7 @@ const AppearanceTab = () => {
                 <button
                   key={option.value}
                   onClick={() => handleFontSizeChange(option.value as 'small' | 'medium' | 'large')}
-                  className={`p-3 rounded-lg border transition-all duration-200 ${
+                  className={`p-3 min-h-[52px] rounded-lg border transition-all duration-200 touch-manipulation active:scale-[0.98] ${
                     appearanceSettings.fontSize === option.value
                       ? 'bg-elec-yellow/10 border-elec-yellow text-elec-yellow'
                       : 'bg-white/5 border-white/10 text-foreground hover:bg-white/10'
@@ -209,7 +209,7 @@ const AppearanceTab = () => {
             <Button
               variant="outline"
               size="icon"
-              className="border-white/20 hover:bg-white/10"
+              className="h-11 w-11 touch-manipulation active:scale-[0.98] border-white/20 hover:bg-white/10"
               onClick={() => {
                 const sizes: ('small' | 'medium' | 'large')[] = ['small', 'medium', 'large'];
                 const currentIndex = sizes.indexOf(appearanceSettings.fontSize);
@@ -257,7 +257,7 @@ const AppearanceTab = () => {
       <div className="flex flex-col-reverse sm:flex-row justify-end gap-3">
         <Button
           variant="outline"
-          className="border-white/20 hover:bg-white/5"
+          className="w-full sm:w-auto h-11 touch-manipulation active:scale-[0.98] border-white/20 hover:bg-white/5"
           onClick={handleResetToDefaults}
         >
           <RotateCcw className="h-4 w-4 mr-2" />
@@ -265,7 +265,7 @@ const AppearanceTab = () => {
         </Button>
         <Button
           onClick={handleSavePreferences}
-          className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
+          className="w-full sm:w-auto h-11 touch-manipulation active:scale-[0.98] bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
           disabled={isSaving}
         >
           {isSaving ? (

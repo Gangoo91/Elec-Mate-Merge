@@ -64,7 +64,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
 
     return parsed.map((item: any) => ({
       id: item.id || "",
-      item_number: item.itemNumber || "",
+      item_number: item.itemNumber || item.number || "",  // Support both itemNumber and number fields
       description: item.item || item.description || "",
       outcome: item.outcome || "",
       notes: item.notes || ""

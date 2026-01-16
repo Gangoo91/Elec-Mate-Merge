@@ -132,13 +132,13 @@ const HelpSupportTab = () => {
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-12 pl-12 pr-24 bg-white/5 border-white/10 text-base"
+                className="h-12 pl-12 pr-24 bg-white/5 border-white/10 text-base touch-manipulation"
                 placeholder="Search for help topics..."
               />
               <Button
                 type="submit"
                 size="sm"
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
+                className="absolute right-2 top-1/2 -translate-y-1/2 h-9 touch-manipulation active:scale-[0.98] bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark"
               >
                 Search
               </Button>
@@ -163,7 +163,7 @@ const HelpSupportTab = () => {
             >
               <button
                 onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                className="w-full flex items-center justify-between gap-4 p-4 text-left hover:bg-white/5 transition-colors"
+                className="w-full flex items-center justify-between gap-4 p-4 min-h-[56px] text-left hover:bg-white/5 transition-colors touch-manipulation active:bg-white/[0.08]"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
@@ -195,7 +195,7 @@ const HelpSupportTab = () => {
         <div className="p-4 md:p-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {/* Live Chat */}
-            <button className="flex flex-col items-center gap-3 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-center">
+            <button className="flex flex-col items-center gap-3 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-center touch-manipulation active:scale-[0.98]">
               <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center">
                 <MessagesSquare className="h-6 w-6 text-green-400" />
               </div>
@@ -210,7 +210,7 @@ const HelpSupportTab = () => {
             </button>
 
             {/* Email Support */}
-            <button className="flex flex-col items-center gap-3 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-center">
+            <button className="flex flex-col items-center gap-3 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-center touch-manipulation active:scale-[0.98]">
               <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center">
                 <Mail className="h-6 w-6 text-blue-400" />
               </div>
@@ -225,7 +225,7 @@ const HelpSupportTab = () => {
             </button>
 
             {/* Phone Support */}
-            <button className="flex flex-col items-center gap-3 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-center sm:col-span-2 lg:col-span-1">
+            <button className="flex flex-col items-center gap-3 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-center sm:col-span-2 lg:col-span-1 touch-manipulation active:scale-[0.98]">
               <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center">
                 <Phone className="h-6 w-6 text-purple-400" />
               </div>
@@ -263,7 +263,7 @@ const HelpSupportTab = () => {
             return (
               <button
                 key={index}
-                className="w-full flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left"
+                className="w-full flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left touch-manipulation active:bg-white/[0.08]"
               >
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-lg ${resource.bgColor} flex items-center justify-center`}>
@@ -296,13 +296,13 @@ const HelpSupportTab = () => {
           <Textarea
             value={feedbackText}
             onChange={(e) => setFeedbackText(e.target.value)}
-            className="min-h-[100px] bg-white/5 border-white/10 resize-none"
+            className="min-h-[100px] bg-white/5 border-white/10 resize-none text-base touch-manipulation"
             placeholder="What would you like to tell us?"
           />
           <div className="flex justify-end">
             <Button
               onClick={handleSendFeedback}
-              className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
+              className="h-11 touch-manipulation active:scale-[0.98] bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
               disabled={isSubmitting}
             >
               {isSubmitting ? (

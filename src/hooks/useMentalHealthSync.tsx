@@ -75,13 +75,33 @@ export const useMoodData = () => {
   const [moodHistory, setMoodHistory] = useState<MoodEntry[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Load mood data
+  // Load mood data - merge cloud and local for reliability
   const loadMoodData = useCallback(async () => {
     if (user) {
       setIsLoading(true);
       try {
-        const data = await moodService.getAll();
-        setMoodHistory(data);
+        const cloudData = await moodService.getAll();
+        const local = localStorage.getItem('elec-mate-mood-history');
+        const localData = local ? JSON.parse(local) : [];
+
+        // If cloud is empty but we have local data, sync it to cloud
+        if (cloudData.length === 0 && localData.length > 0) {
+          console.log('Cloud empty, syncing local mood data...');
+          for (const entry of localData) {
+            try {
+              await moodService.upsert(entry);
+            } catch (e) {
+              console.error('Failed to sync mood entry:', e);
+            }
+          }
+          setMoodHistory(localData);
+        } else if (cloudData.length > 0) {
+          // Use cloud data and update localStorage as backup
+          setMoodHistory(cloudData);
+          localStorage.setItem('elec-mate-mood-history', JSON.stringify(cloudData));
+        } else {
+          setMoodHistory([]);
+        }
       } catch (err) {
         console.error('Error loading mood data:', err);
         // Fall back to localStorage
@@ -119,6 +139,8 @@ export const useMoodData = () => {
         await moodService.upsert(entry);
       } catch (err) {
         console.error('Error syncing mood entry:', err);
+        // Notify user that sync failed but data is saved locally
+        toast.error('Check-in saved locally. Cloud sync will retry when online.');
       }
     }
   }, [user]);
@@ -136,8 +158,28 @@ export const useJournalData = () => {
     if (user) {
       setIsLoading(true);
       try {
-        const data = await journalService.getAll();
-        setEntries(data);
+        const cloudData = await journalService.getAll();
+        const local = localStorage.getItem('wellbeing-journal');
+        const localData = local ? JSON.parse(local) : [];
+
+        // If cloud is empty but we have local data, sync it to cloud
+        if (cloudData.length === 0 && localData.length > 0) {
+          console.log('Cloud empty, syncing local journal data...');
+          for (const entry of localData) {
+            try {
+              await journalService.create(entry);
+            } catch (e) {
+              console.error('Failed to sync journal entry:', e);
+            }
+          }
+          setEntries(localData);
+        } else if (cloudData.length > 0) {
+          // Use cloud data and update localStorage as backup
+          setEntries(cloudData);
+          localStorage.setItem('wellbeing-journal', JSON.stringify(cloudData));
+        } else {
+          setEntries([]);
+        }
       } catch (err) {
         console.error('Error loading journal data:', err);
         const local = localStorage.getItem('wellbeing-journal');
@@ -169,6 +211,7 @@ export const useJournalData = () => {
         await journalService.create(entry);
       } catch (err) {
         console.error('Error syncing journal entry:', err);
+        toast.error('Entry saved locally. Cloud sync will retry when online.');
       }
     }
   }, [user]);
@@ -202,8 +245,28 @@ export const useSleepData = () => {
     if (user) {
       setIsLoading(true);
       try {
-        const data = await sleepService.getAll();
-        setEntries(data);
+        const cloudData = await sleepService.getAll();
+        const local = localStorage.getItem('sleep-tracker');
+        const localData = local ? JSON.parse(local) : [];
+
+        // If cloud is empty but we have local data, sync it to cloud
+        if (cloudData.length === 0 && localData.length > 0) {
+          console.log('Cloud empty, syncing local sleep data...');
+          for (const entry of localData) {
+            try {
+              await sleepService.upsert(entry);
+            } catch (e) {
+              console.error('Failed to sync sleep entry:', e);
+            }
+          }
+          setEntries(localData);
+        } else if (cloudData.length > 0) {
+          // Use cloud data and update localStorage as backup
+          setEntries(cloudData);
+          localStorage.setItem('sleep-tracker', JSON.stringify(cloudData));
+        } else {
+          setEntries([]);
+        }
       } catch (err) {
         console.error('Error loading sleep data:', err);
         const local = localStorage.getItem('sleep-tracker');
@@ -240,6 +303,7 @@ export const useSleepData = () => {
         await sleepService.upsert(entry);
       } catch (err) {
         console.error('Error syncing sleep entry:', err);
+        toast.error('Entry saved locally. Cloud sync will retry when online.');
       }
     }
   }, [user]);

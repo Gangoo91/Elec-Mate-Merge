@@ -35,6 +35,7 @@ import {
 } from "lucide-react";
 import { formatDistanceToNow, format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { getInitials, getRoleColor } from "@/utils/adminUtils";
 
 interface UserData {
   id: string;
@@ -56,23 +57,10 @@ interface UserManagementSheetProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const roleColors: Record<string, { bg: string; text: string }> = {
-  apprentice: { bg: "bg-purple-500/20", text: "text-purple-400" },
-  electrician: { bg: "bg-yellow-500/20", text: "text-yellow-400" },
-  employer: { bg: "bg-blue-500/20", text: "text-blue-400" },
-};
-
 const tierPricing: Record<string, string> = {
   Apprentice: "£4.99/mo",
   Electrician: "£9.99/mo",
   Employer: "£29.99/mo",
-};
-
-const getInitials = (name: string | null): string => {
-  if (!name) return "?";
-  const parts = name.trim().split(/\s+/);
-  if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
-  return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
 };
 
 export default function UserManagementSheet({
@@ -183,10 +171,7 @@ export default function UserManagementSheet({
 
   if (!user) return null;
 
-  const colors = roleColors[user.role?.toLowerCase() || ""] || {
-    bg: "bg-gray-500/20",
-    text: "text-gray-400",
-  };
+  const colors = getRoleColor(user.role);
 
   const isLoading = grantMutation.isPending || revokeMutation.isPending;
 

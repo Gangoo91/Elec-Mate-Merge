@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { FileText, Download, Trash2, ChevronRight, Loader2 } from 'lucide-react';
+import { FileText, Download, Trash2, ChevronRight, Loader2, Sparkles, FileUp } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 
@@ -12,6 +13,8 @@ interface SavedRAMS {
   pdf_url: string | null;
   created_at: string;
   updated_at: string;
+  source?: string;
+  original_filename?: string;
 }
 
 interface SwipeableDocumentCardProps {
@@ -198,9 +201,23 @@ export const SwipeableDocumentCard: React.FC<SwipeableDocumentCardProps> = ({
 
             {/* Content */}
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-white truncate text-[15px]">
-                {doc.project_name}
-              </h3>
+              <div className="flex items-center gap-2">
+                <h3 className="font-semibold text-white truncate text-[15px]">
+                  {doc.project_name}
+                </h3>
+                {/* Source badge */}
+                {doc.source === 'user-uploaded' ? (
+                  <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/20 text-[10px] px-1.5 py-0 h-5 shrink-0">
+                    <FileUp className="h-2.5 w-2.5 mr-0.5" />
+                    Uploaded
+                  </Badge>
+                ) : (
+                  <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 text-[10px] px-1.5 py-0 h-5 shrink-0">
+                    <Sparkles className="h-2.5 w-2.5 mr-0.5" />
+                    AI
+                  </Badge>
+                )}
+              </div>
               <p className="text-sm text-white/50 truncate mt-0.5">
                 {doc.location}
               </p>

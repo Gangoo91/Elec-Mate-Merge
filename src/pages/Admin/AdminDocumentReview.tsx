@@ -33,7 +33,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import {
-  Search,
   FileCheck,
   RefreshCw,
   ChevronRight,
@@ -44,7 +43,6 @@ import {
   Flag,
   Eye,
   User,
-  Calendar,
   IdCard,
   GraduationCap,
   Car,
@@ -52,11 +50,13 @@ import {
   Award,
   HardHat,
   Image,
-  ExternalLink,
+  Loader2,
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import AdminSearchInput from "@/components/admin/AdminSearchInput";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
 
 interface DocumentRecord {
   id: string;
@@ -338,15 +338,12 @@ export default function AdminDocumentReview() {
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-4">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search documents..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 bg-white/5 border-white/20"
-          />
-        </div>
+        <AdminSearchInput
+          value={search}
+          onChange={setSearch}
+          placeholder="Search documents..."
+          className="flex-1"
+        />
         <Select value={statusFilter} onValueChange={setStatusFilter}>
           <SelectTrigger className="w-[180px] bg-white/5 border-white/20">
             <SelectValue placeholder="Filter by status" />
@@ -368,9 +365,12 @@ export default function AdminDocumentReview() {
         </div>
       ) : documents?.length === 0 ? (
         <Card className="bg-white/5 border-white/10">
-          <CardContent className="py-12 text-center">
-            <FileCheck className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground">No documents found</p>
+          <CardContent className="pt-6">
+            <AdminEmptyState
+              icon={FileCheck}
+              title="No documents found"
+              description="Documents matching your filters will appear here."
+            />
           </CardContent>
         </Card>
       ) : (
@@ -639,9 +639,13 @@ export default function AdminDocumentReview() {
               )}
             >
               {reviewMutation.isPending ? (
-                <RefreshCw className="h-4 w-4 animate-spin mr-2" />
-              ) : null}
-              Confirm
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  Processing...
+                </>
+              ) : (
+                "Confirm"
+              )}
             </Button>
           </SheetFooter>
         </SheetContent>

@@ -109,7 +109,7 @@ export default function CustomersPage() {
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="h-11 w-11 touch-manipulation -ml-2"
+            className="h-11 w-11 touch-manipulation active:scale-[0.98] -ml-2"
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
@@ -140,7 +140,7 @@ export default function CustomersPage() {
               variant="outline"
               size="icon"
               onClick={() => setShowImportDialog(true)}
-              className="h-11 w-11 touch-manipulation"
+              className="h-11 w-11 touch-manipulation active:scale-[0.98]"
               title="Import CSV"
             >
               <Upload className="h-4 w-4" />
@@ -150,7 +150,7 @@ export default function CustomersPage() {
               size="icon"
               onClick={exportCustomers}
               disabled={customers.length === 0}
-              className="h-11 w-11 touch-manipulation"
+              className="h-11 w-11 touch-manipulation active:scale-[0.98]"
               title="Export CSV"
             >
               <Download className="h-4 w-4" />
@@ -161,7 +161,7 @@ export default function CustomersPage() {
                 setEditingCustomer(null);
                 setShowAddDialog(true);
               }}
-              className="h-11 gap-2 touch-manipulation"
+              className="h-11 gap-2 touch-manipulation active:scale-[0.98]"
             >
               <Plus className="h-4 w-4" />
               <span className="hidden sm:inline">Add Customer</span>
@@ -184,7 +184,7 @@ export default function CustomersPage() {
             variant="ghost"
             size="icon"
             onClick={toggleSortDirection}
-            className="h-9 w-9 touch-manipulation"
+            className="h-9 w-9 touch-manipulation active:scale-[0.98]"
             title={sortDirection === 'asc' ? 'Ascending' : 'Descending'}
           >
             {sortDirection === 'asc' ? (

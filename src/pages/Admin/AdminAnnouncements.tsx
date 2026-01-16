@@ -33,6 +33,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
 import {
   Megaphone,
   Plus,
@@ -46,10 +47,9 @@ import {
   Trash2,
   Edit,
   Users,
-  Calendar,
-  ChevronRight,
+  Loader2,
 } from "lucide-react";
-import { format, formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
 
 interface Announcement {
@@ -202,13 +202,16 @@ export default function AdminAnnouncements() {
         </div>
       ) : announcements?.length === 0 ? (
         <Card>
-          <CardContent className="pt-6 text-center py-12">
-            <Megaphone className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-semibold mb-2">No announcements</h3>
-            <p className="text-sm text-muted-foreground mb-4">Create your first announcement to notify users.</p>
-            <Button onClick={() => setCreateOpen(true)} className="gap-2">
-              <Plus className="h-4 w-4" /> Create Announcement
-            </Button>
+          <CardContent className="pt-6">
+            <AdminEmptyState
+              icon={Megaphone}
+              title="No announcements"
+              description="Create your first announcement to notify users."
+              action={{
+                label: "Create Announcement",
+                onClick: () => setCreateOpen(true),
+              }}
+            />
           </CardContent>
         </Card>
       ) : (
@@ -377,7 +380,14 @@ export default function AdminAnnouncements() {
                 }}
                 disabled={createMutation.isPending || updateMutation.isPending}
               >
-                {editAnnouncement ? "Save Changes" : "Create Announcement"}
+                {(createMutation.isPending || updateMutation.isPending) ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    {editAnnouncement ? "Saving..." : "Creating..."}
+                  </>
+                ) : (
+                  editAnnouncement ? "Save Changes" : "Create Announcement"
+                )}
               </Button>
             </SheetFooter>
           </div>
@@ -392,12 +402,22 @@ export default function AdminAnnouncements() {
             <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="h-11 touch-manipulation" disabled={deleteMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
               onClick={() => deleteId && deleteMutation.mutate(deleteId)}
+              disabled={deleteMutation.isPending}
             >
-              Delete
+              {deleteMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                "Delete"
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

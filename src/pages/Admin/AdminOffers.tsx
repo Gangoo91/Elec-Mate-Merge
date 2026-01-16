@@ -15,19 +15,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetFooter,
 } from "@/components/ui/sheet";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
 import {
   Plus,
   Copy,
@@ -35,11 +39,11 @@ import {
   Users,
   Calendar,
   Check,
-  Link2,
   Trash2,
   ChevronRight,
   User,
-  Mail,
+  Loader2,
+  AlertTriangle,
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
@@ -75,6 +79,7 @@ export default function AdminOffers() {
   const [createOpen, setCreateOpen] = useState(false);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+  const [deleteOfferId, setDeleteOfferId] = useState<string | null>(null);
 
   // Form state
   const [newOffer, setNewOffer] = useState({
@@ -193,6 +198,7 @@ export default function AdminOffers() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-offers"] });
+      setDeleteOfferId(null);
       toast({
         title: "Offer deleted",
         description: "The promo offer has been removed.",
@@ -237,94 +243,13 @@ export default function AdminOffers() {
             Create and manage promotional pricing links
           </p>
         </div>
-        <Dialog open={createOpen} onOpenChange={setCreateOpen}>
-          <DialogTrigger asChild>
-            <Button className="gap-2 bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600">
-              <Plus className="h-4 w-4" />
-              Create Offer
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Create Promo Offer</DialogTitle>
-              <DialogDescription>
-                Create a special pricing offer with a unique signup link.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4 pt-4">
-              <div className="space-y-2">
-                <Label htmlFor="name">Offer Name</Label>
-                <Input
-                  id="name"
-                  placeholder="e.g., Founder Offer"
-                  value={newOffer.name}
-                  onChange={(e) => setNewOffer({ ...newOffer, name: e.target.value })}
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="price">Price (GBP)</Label>
-                  <Input
-                    id="price"
-                    type="number"
-                    step="0.01"
-                    placeholder="3.99"
-                    value={newOffer.price}
-                    onChange={(e) => setNewOffer({ ...newOffer, price: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="plan">Plan</Label>
-                  <Select
-                    value={newOffer.plan_id}
-                    onValueChange={(v) => setNewOffer({ ...newOffer, plan_id: v })}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="apprentice">Apprentice</SelectItem>
-                      <SelectItem value="electrician">Electrician</SelectItem>
-                      <SelectItem value="employer">Employer</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="max">Max Redemptions</Label>
-                  <Input
-                    id="max"
-                    type="number"
-                    placeholder="Unlimited"
-                    value={newOffer.max_redemptions}
-                    onChange={(e) => setNewOffer({ ...newOffer, max_redemptions: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="expires">Expires In (days)</Label>
-                  <Input
-                    id="expires"
-                    type="number"
-                    placeholder="30"
-                    value={newOffer.expires_days}
-                    onChange={(e) => setNewOffer({ ...newOffer, expires_days: e.target.value })}
-                  />
-                </div>
-              </div>
-
-              <Button
-                className="w-full"
-                onClick={() => createOfferMutation.mutate()}
-                disabled={!newOffer.name || createOfferMutation.isPending}
-              >
-                {createOfferMutation.isPending ? "Creating..." : "Create Offer"}
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+        <Button
+          className="gap-2 bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 h-11 touch-manipulation"
+          onClick={() => setCreateOpen(true)}
+        >
+          <Plus className="h-4 w-4" />
+          Create Offer
+        </Button>
       </div>
 
       {/* Offers List */}
@@ -340,16 +265,16 @@ export default function AdminOffers() {
         </div>
       ) : offers?.length === 0 ? (
         <Card>
-          <CardContent className="pt-6 text-center py-12">
-            <Gift className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-semibold mb-2">No offers yet</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Create your first promo offer to get started.
-            </p>
-            <Button onClick={() => setCreateOpen(true)} className="gap-2">
-              <Plus className="h-4 w-4" />
-              Create Offer
-            </Button>
+          <CardContent className="pt-6">
+            <AdminEmptyState
+              icon={Gift}
+              title="No offers yet"
+              description="Create your first promo offer to get started."
+              action={{
+                label: "Create Offer",
+                onClick: () => setCreateOpen(true),
+              }}
+            />
           </CardContent>
         </Card>
       ) : (
@@ -431,7 +356,7 @@ export default function AdminOffers() {
                         variant="ghost"
                         size="icon"
                         className="text-red-400 hover:text-red-500 hover:bg-red-500/10"
-                        onClick={() => deleteOfferMutation.mutate(offer.id)}
+                        onClick={() => setDeleteOfferId(offer.id)}
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -500,6 +425,151 @@ export default function AdminOffers() {
           </div>
         </SheetContent>
       </Sheet>
+
+      {/* Create Offer Sheet */}
+      <Sheet open={createOpen} onOpenChange={setCreateOpen}>
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
+          <div className="flex flex-col h-full">
+            {/* Drag Handle */}
+            <div className="flex justify-center pt-3 pb-2">
+              <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+            </div>
+
+            <SheetHeader className="px-4 pb-4 border-b border-border">
+              <SheetTitle className="text-left flex items-center gap-2">
+                <Gift className="h-5 w-5 text-orange-400" />
+                Create Promo Offer
+              </SheetTitle>
+              <p className="text-sm text-muted-foreground text-left">
+                Create a special pricing offer with a unique signup link.
+              </p>
+            </SheetHeader>
+
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Offer Name</Label>
+                <Input
+                  id="name"
+                  placeholder="e.g., Founder Offer"
+                  value={newOffer.name}
+                  onChange={(e) => setNewOffer({ ...newOffer, name: e.target.value })}
+                  className="h-11 touch-manipulation"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="price">Price (GBP)</Label>
+                  <Input
+                    id="price"
+                    type="number"
+                    step="0.01"
+                    placeholder="3.99"
+                    value={newOffer.price}
+                    onChange={(e) => setNewOffer({ ...newOffer, price: e.target.value })}
+                    className="h-11 touch-manipulation"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="plan">Plan</Label>
+                  <Select
+                    value={newOffer.plan_id}
+                    onValueChange={(v) => setNewOffer({ ...newOffer, plan_id: v })}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="apprentice">Apprentice</SelectItem>
+                      <SelectItem value="electrician">Electrician</SelectItem>
+                      <SelectItem value="employer">Employer</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="max">Max Redemptions</Label>
+                  <Input
+                    id="max"
+                    type="number"
+                    placeholder="Unlimited"
+                    value={newOffer.max_redemptions}
+                    onChange={(e) => setNewOffer({ ...newOffer, max_redemptions: e.target.value })}
+                    className="h-11 touch-manipulation"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="expires">Expires In (days)</Label>
+                  <Input
+                    id="expires"
+                    type="number"
+                    placeholder="30"
+                    value={newOffer.expires_days}
+                    onChange={(e) => setNewOffer({ ...newOffer, expires_days: e.target.value })}
+                    className="h-11 touch-manipulation"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <SheetFooter className="p-4 border-t border-border">
+              <Button
+                className="w-full h-12 touch-manipulation bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600"
+                onClick={() => createOfferMutation.mutate()}
+                disabled={!newOffer.name || createOfferMutation.isPending}
+              >
+                {createOfferMutation.isPending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Creating...
+                  </>
+                ) : (
+                  <>
+                    <Plus className="h-4 w-4 mr-2" />
+                    Create Offer
+                  </>
+                )}
+              </Button>
+            </SheetFooter>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={!!deleteOfferId} onOpenChange={() => setDeleteOfferId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="h-5 w-5 text-red-500" />
+              Delete Offer?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete this promo offer. Users who have already redeemed it will keep their subscription, but no new redemptions will be possible.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-11 touch-manipulation" disabled={deleteOfferMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
+              onClick={() => deleteOfferId && deleteOfferMutation.mutate(deleteOfferId)}
+              disabled={deleteOfferMutation.isPending}
+            >
+              {deleteOfferMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                "Delete Offer"
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

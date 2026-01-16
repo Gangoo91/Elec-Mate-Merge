@@ -3,7 +3,6 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,18 +20,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import AdminSearchInput from "@/components/admin/AdminSearchInput";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
 import {
-  Search,
   Ticket,
-  MessageCircle,
-  Clock,
-  CheckCircle,
-  AlertCircle,
   User,
   Send,
   RefreshCw,
   ChevronRight,
-  Filter,
+  Loader2,
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
@@ -210,17 +206,14 @@ export default function AdminSupport() {
       <Card>
         <CardContent className="pt-4 pb-4">
           <div className="flex gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search tickets..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-10 h-11 touch-manipulation"
-              />
-            </div>
+            <AdminSearchInput
+              value={search}
+              onChange={setSearch}
+              placeholder="Search tickets..."
+              className="flex-1"
+            />
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-[120px] h-11 touch-manipulation">
+              <SelectTrigger className="w-[120px] h-12 touch-manipulation">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -232,7 +225,7 @@ export default function AdminSupport() {
                 <SelectItem value="closed">Closed</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="outline" size="icon" className="h-11 w-11 touch-manipulation" onClick={() => refetch()}>
+            <Button variant="outline" size="icon" className="h-12 w-12 touch-manipulation" onClick={() => refetch()}>
               <RefreshCw className="h-4 w-4" />
             </Button>
           </div>
@@ -250,10 +243,12 @@ export default function AdminSupport() {
         </div>
       ) : tickets?.length === 0 ? (
         <Card>
-          <CardContent className="pt-6 text-center py-12">
-            <Ticket className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-semibold mb-2">No support tickets</h3>
-            <p className="text-sm text-muted-foreground">Tickets will appear here when users submit them.</p>
+          <CardContent className="pt-6">
+            <AdminEmptyState
+              icon={Ticket}
+              title="No support tickets"
+              description="Tickets will appear here when users submit them."
+            />
           </CardContent>
         </Card>
       ) : (
@@ -372,7 +367,11 @@ export default function AdminSupport() {
                   onClick={() => selectedTicket && replyMutation.mutate({ ticketId: selectedTicket.id, message: replyMessage })}
                   disabled={!replyMessage.trim() || replyMutation.isPending}
                 >
-                  <Send className="h-4 w-4" />
+                  {replyMutation.isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Send className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
             </SheetFooter>

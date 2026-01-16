@@ -80,7 +80,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
 
   // Use centralised hooks for conversations, messages, and profile (all cached)
   const { data: conversations = [], isLoading: conversationsLoading, isError: conversationsError, error: conversationsErrorDetails, refetch: refetchConversations } = usePeerConversations();
-  const { data: myProfile, refetch: refetchProfile } = usePeerSupporterProfile();
+  const { data: myProfile, isLoading: profileLoading, refetch: refetchProfile } = usePeerSupporterProfile();
   const { data: chatMessages = [], isLoading: messagesLoading } = usePeerMessages(selectedConversation?.id);
   const sendMessage = useSendPeerMessage();
   const markAsRead = useMarkPeerMessagesAsRead();
@@ -231,15 +231,27 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
         </div>
 
         <CardContent className="p-0">
-          {/* Supporter Dashboard (if registered) */}
-          {myProfile && (
+          {/* Supporter Dashboard (if registered) - show loading while checking */}
+          {profileLoading ? (
+            <div className="p-4">
+              <div className="p-4 rounded-xl bg-white/[0.03] border border-purple-500/20">
+                <div className="flex items-center gap-4">
+                  <Skeleton className="w-12 h-12 rounded-xl bg-white/10" />
+                  <div className="flex-1 space-y-2">
+                    <Skeleton className="h-4 w-32 bg-white/10" />
+                    <Skeleton className="h-3 w-24 bg-white/10" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : myProfile ? (
             <div className="p-4">
               <SupporterDashboard
                 profile={myProfile}
                 onProfileUpdated={handleProfileUpdated}
               />
             </div>
-          )}
+          ) : null}
 
           {/* Main Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -261,8 +273,8 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
 
             {/* Browse Supporters Tab */}
             <TabsContent value="browse" className="mt-4 space-y-4">
-              {/* Premium CTA Button (if not registered) */}
-              {!myProfile && (
+              {/* Premium CTA Button (if not registered) - only show after profile check completes */}
+              {!profileLoading && !myProfile && (
                 <div className="px-4">
                   <Button
                     onClick={() => setViewState('become-supporter')}

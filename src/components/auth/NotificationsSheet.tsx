@@ -1,4 +1,4 @@
-import { Bell, Check, CheckCheck, Sparkles, Clock, AlertTriangle, MessageSquare, FileText, Zap, ChevronRight } from 'lucide-react';
+import { Bell, Check, CheckCheck, Sparkles, Clock, AlertTriangle, MessageSquare, FileText, Zap, ChevronRight, X, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -50,10 +50,12 @@ const formatTime = (date: Date) => {
 const NotificationItem = ({
   notification,
   onRead,
+  onDelete,
   index
 }: {
   notification: Notification;
   onRead: () => void;
+  onDelete: () => void;
   index: number;
 }) => {
   const iconConfig = getNotificationIcon(notification.type || 'info');
@@ -114,10 +116,18 @@ const NotificationItem = ({
           </div>
         </div>
 
-        {/* Hover action */}
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0 self-center">
-          <ChevronRight className="h-4 w-4 text-muted-foreground" />
-        </div>
+        {/* Delete button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 shrink-0 self-start opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500/10 hover:text-red-400"
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+        >
+          <X className="h-4 w-4" />
+        </Button>
       </div>
     </motion.div>
   );
@@ -132,6 +142,8 @@ export function NotificationsSheet({ open, onOpenChange }: NotificationsSheetPro
   let unreadCount = 0;
   let markAsRead = (id: string) => {};
   let markAllAsRead = () => {};
+  let deleteNotification = (id: string) => {};
+  let clearAllNotifications = () => {};
 
   try {
     const notificationContext = useNotifications();
@@ -139,6 +151,8 @@ export function NotificationsSheet({ open, onOpenChange }: NotificationsSheetPro
     unreadCount = notificationContext.unreadCount;
     markAsRead = notificationContext.markAsRead;
     markAllAsRead = notificationContext.markAllAsRead;
+    deleteNotification = notificationContext.deleteNotification;
+    clearAllNotifications = notificationContext.clearAllNotifications;
   } catch (e) {
     console.warn('NotificationProvider not available');
   }
@@ -169,17 +183,30 @@ export function NotificationsSheet({ open, onOpenChange }: NotificationsSheetPro
                 </Badge>
               )}
             </SheetTitle>
-            {unreadCount > 0 && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-8 text-xs gap-1.5 text-muted-foreground hover:text-foreground"
-                onClick={markAllAsRead}
-              >
-                <CheckCheck className="h-3.5 w-3.5" />
-                Mark all read
-              </Button>
-            )}
+            <div className="flex items-center gap-1">
+              {unreadCount > 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 text-xs gap-1.5 text-muted-foreground hover:text-foreground"
+                  onClick={markAllAsRead}
+                >
+                  <CheckCheck className="h-3.5 w-3.5" />
+                  Mark read
+                </Button>
+              )}
+              {notifications.length > 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 text-xs gap-1.5 text-muted-foreground hover:text-red-400"
+                  onClick={clearAllNotifications}
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                  Clear all
+                </Button>
+              )}
+            </div>
           </div>
         </SheetHeader>
 
@@ -205,6 +232,7 @@ export function NotificationsSheet({ open, onOpenChange }: NotificationsSheetPro
                     key={notification.id}
                     notification={notification}
                     onRead={() => markAsRead(notification.id)}
+                    onDelete={() => deleteNotification(notification.id)}
                     index={index}
                   />
                 ))}

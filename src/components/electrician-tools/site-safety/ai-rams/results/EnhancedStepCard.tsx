@@ -105,48 +105,70 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
           isExpanded ? 'bg-white/[0.02]' : 'bg-transparent hover:bg-white/[0.02]'
         )}
       >
+        {/* Collapsed Row - Native Mobile Design */}
         <button
           onClick={() => !isEditing && setIsExpanded(!isExpanded)}
-          className="w-full p-4 flex items-start gap-4 text-left"
+          className="w-full p-4 sm:p-5 flex flex-col gap-3 text-left min-h-[80px] touch-manipulation active:bg-white/[0.04]"
         >
-          <div className={cn(
-            'w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm shrink-0',
-            riskColors.bg, riskColors.text
-          )}>
-            {index + 1}
+          {/* Top Row: Number + Badges */}
+          <div className="flex items-center justify-between w-full">
+            <div className="flex items-center gap-3">
+              {/* Step Number Badge */}
+              <div className={cn(
+                'w-11 h-11 rounded-xl flex items-center justify-center font-bold text-base shrink-0 shadow-lg',
+                riskColors.bg, riskColors.text
+              )}>
+                {index + 1}
+              </div>
+              {/* Duration Badge */}
+              {step.duration && (
+                <Badge variant="outline" className="text-xs border-white/20 text-white/70 px-3 py-1">
+                  <Clock className="h-3.5 w-3.5 mr-1.5" />{step.duration}
+                </Badge>
+              )}
+              {/* Risk Level */}
+              <Badge className={cn(riskColors.bg, riskColors.text, 'border-0 text-xs font-semibold px-3 py-1 capitalize')}>
+                {step.riskLevel || 'Low'}
+              </Badge>
+            </div>
+
+            {/* Right Controls */}
+            <div className="flex items-center gap-1 shrink-0">
+              {editable && !isEditing && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleEditClick}
+                  className="h-11 w-11 p-0 touch-manipulation rounded-xl hover:bg-white/10 active:bg-white/20"
+                >
+                  <Edit3 className="h-5 w-5 text-white/60" />
+                </Button>
+              )}
+              {!isEditing && (
+                <div className="h-11 w-11 flex items-center justify-center">
+                  <ChevronDown className={cn('h-5 w-5 text-white/40 transition-transform duration-200', isExpanded && 'rotate-180')} />
+                </div>
+              )}
+            </div>
           </div>
 
-          <div className="flex-1 min-w-0">
+          {/* Content */}
+          <div className="flex-1 min-w-0 pl-1">
             {isEditing ? (
               <Input
                 value={editedStep.title}
                 onChange={(e) => setEditedStep({ ...editedStep, title: e.target.value })}
                 placeholder="Step title"
                 onClick={(e) => e.stopPropagation()}
+                className="h-11 text-base touch-manipulation"
               />
             ) : (
               <>
-                <h4 className="font-semibold text-white line-clamp-1">{step.title || 'Untitled Step'}</h4>
-                <p className="text-sm text-white/50 line-clamp-1 mt-1">
+                <h4 className="font-semibold text-white text-base leading-snug line-clamp-2">{step.title || 'Untitled Step'}</h4>
+                <p className="text-sm text-white/50 line-clamp-2 mt-1.5 leading-relaxed">
                   {step.description || 'No description'}
                 </p>
               </>
-            )}
-          </div>
-
-          <div className="flex items-center gap-2 shrink-0">
-            {step.duration && (
-              <Badge variant="outline" className="text-xs border-white/10 text-white/60">
-                <Clock className="h-3 w-3 mr-1" />{step.duration}
-              </Badge>
-            )}
-            {editable && !isEditing && (
-              <Button variant="ghost" size="sm" onClick={handleEditClick} className="h-8 w-8 p-0">
-                <Edit3 className="h-4 w-4 text-white/50" />
-              </Button>
-            )}
-            {!isEditing && (
-              <ChevronDown className={cn('h-5 w-5 text-white/30 transition-transform', isExpanded && 'rotate-180')} />
             )}
           </div>
         </button>

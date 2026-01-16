@@ -91,7 +91,7 @@ const BillingTab = () => {
               {!isSubscribed && (
                 <Button
                   onClick={() => navigate('/subscriptions')}
-                  className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
+                  className="h-11 touch-manipulation active:scale-[0.98] bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
                 >
                   <Zap className="h-4 w-4 mr-2" />
                   Upgrade Now
@@ -101,7 +101,7 @@ const BillingTab = () => {
                 <Button
                   variant="outline"
                   onClick={() => navigate('/subscriptions')}
-                  className="border-white/20 hover:bg-white/5"
+                  className="h-11 touch-manipulation active:scale-[0.98] border-white/20 hover:bg-white/5"
                 >
                   Change Plan
                   <ChevronRight className="h-4 w-4 ml-2" />
@@ -138,7 +138,7 @@ const BillingTab = () => {
         <div className="p-4 md:p-6 space-y-3">
           <button
             onClick={() => navigate('/subscriptions')}
-            className="w-full flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left"
+            className="w-full flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left touch-manipulation active:bg-white/[0.08]"
           >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
@@ -156,7 +156,7 @@ const BillingTab = () => {
             <>
               <button
                 onClick={() => window.open('https://billing.stripe.com/p/login/test_8wM6pY7xJ4j2bks000', '_blank')}
-                className="w-full flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left"
+                className="w-full flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left touch-manipulation active:bg-white/[0.08]"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
@@ -172,7 +172,7 @@ const BillingTab = () => {
 
               <button
                 onClick={() => window.open('https://billing.stripe.com/p/login/test_8wM6pY7xJ4j2bks000', '_blank')}
-                className="w-full flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left"
+                className="w-full flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left touch-manipulation active:bg-white/[0.08]"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">

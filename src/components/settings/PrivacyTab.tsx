@@ -202,11 +202,12 @@ const PrivacyTab = () => {
             return (
               <div
                 key={setting.key}
-                className={`flex items-center justify-between gap-4 p-4 rounded-lg border transition-all duration-200 ${
+                className={`flex items-center justify-between gap-4 p-4 rounded-lg border transition-all duration-200 touch-manipulation cursor-pointer active:bg-white/[0.08] ${
                   setting.enabled
                     ? 'bg-white/5 border-white/10'
                     : 'bg-white/[0.02] border-white/5 opacity-60'
                 }`}
+                onClick={() => handleToggle(profileSettings, setProfileSettings, setting.key)}
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
@@ -246,11 +247,12 @@ const PrivacyTab = () => {
             return (
               <div
                 key={setting.key}
-                className={`flex items-center justify-between gap-4 p-4 rounded-lg border transition-all duration-200 ${
+                className={`flex items-center justify-between gap-4 p-4 rounded-lg border transition-all duration-200 ${setting.locked ? '' : 'touch-manipulation cursor-pointer active:bg-white/[0.08]'} ${
                   setting.enabled
                     ? 'bg-white/5 border-white/10'
                     : 'bg-white/[0.02] border-white/5 opacity-60'
                 }`}
+                onClick={() => !setting.locked && handleToggle(dataSettings, setDataSettings, setting.key)}
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
@@ -314,7 +316,7 @@ const PrivacyTab = () => {
             <Button
               variant="outline"
               onClick={handleDataDownload}
-              className="flex items-center justify-center gap-2 h-12 border-white/10 hover:bg-white/5"
+              className="flex items-center justify-center gap-2 h-12 touch-manipulation active:scale-[0.98] border-white/10 hover:bg-white/5"
             >
               <Download className="h-4 w-4 text-elec-yellow" />
               <span>Download Data</span>
@@ -322,7 +324,7 @@ const PrivacyTab = () => {
 
             <Button
               variant="outline"
-              className="flex items-center justify-center gap-2 h-12 border-white/10 hover:bg-white/5"
+              className="flex items-center justify-center gap-2 h-12 touch-manipulation active:scale-[0.98] border-white/10 hover:bg-white/5"
             >
               <FileText className="h-4 w-4 text-elec-yellow" />
               <span>Privacy Policy</span>
@@ -331,7 +333,7 @@ const PrivacyTab = () => {
             <Button
               variant="outline"
               onClick={handleDeleteRequest}
-              className="flex items-center justify-center gap-2 h-12 border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300"
+              className="flex items-center justify-center gap-2 h-12 touch-manipulation active:scale-[0.98] border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300"
             >
               <Trash2 className="h-4 w-4" />
               <span>Delete Account</span>

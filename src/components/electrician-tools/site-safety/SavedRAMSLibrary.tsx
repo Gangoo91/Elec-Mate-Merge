@@ -19,6 +19,9 @@ import {
   Search,
   SlidersHorizontal,
   X,
+  Upload,
+  Sparkles,
+  FileUp,
 } from 'lucide-react';
 import { format, subDays } from 'date-fns';
 import { RAMSAmendDialog } from './ai-rams/RAMSAmendDialog';
@@ -27,6 +30,7 @@ import { RAMSFilterPanel } from './rams-library/RAMSFilterPanel';
 import { RAMSEmptyState } from './rams-library/RAMSEmptyState';
 import { SwipeableDocumentCard } from './rams-library/SwipeableDocumentCard';
 import { RAMSFilterSheet } from './rams-library/RAMSFilterSheet';
+import { UserRAMSUpload } from './UserRAMSUpload';
 import { cn } from '@/lib/utils';
 
 interface SavedRAMS {
@@ -37,6 +41,8 @@ interface SavedRAMS {
   pdf_url: string | null;
   created_at: string;
   updated_at: string;
+  source?: string;
+  original_filename?: string;
 }
 
 export const SavedRAMSLibrary = () => {
@@ -54,7 +60,9 @@ export const SavedRAMSLibrary = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('all');
   const [locationFilter, setLocationFilter] = useState('all');
+  const [sourceFilter, setSourceFilter] = useState<'all' | 'ai-generated' | 'user-uploaded'>('all');
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
+  const [uploadSheetOpen, setUploadSheetOpen] = useState(false);
 
   // Edit/Selection mode state
   const [editMode, setEditMode] = useState(false);
@@ -95,9 +103,23 @@ export const SavedRAMSLibrary = () => {
 
       const matchesLocation = locationFilter === 'all' || doc.location === locationFilter;
 
-      return matchesSearch && matchesStatus && matchesDate && matchesLocation;
+      // Source filter - treat null/undefined as 'ai-generated' (legacy docs)
+      const docSource = doc.source || 'ai-generated';
+      const matchesSource = sourceFilter === 'all' || docSource === sourceFilter;
+
+      return matchesSearch && matchesStatus && matchesDate && matchesLocation && matchesSource;
     });
-  }, [documents, searchTerm, statusFilter, dateFilter, locationFilter]);
+  }, [documents, searchTerm, statusFilter, dateFilter, locationFilter, sourceFilter]);
+
+  // Count documents by source for tabs
+  const aiGeneratedCount = useMemo(() =>
+    documents.filter(d => !d.source || d.source === 'ai-generated').length,
+    [documents]
+  );
+  const uploadedCount = useMemo(() =>
+    documents.filter(d => d.source === 'user-uploaded').length,
+    [documents]
+  );
 
   const displayedDocuments = showAll ? filteredDocuments : filteredDocuments.slice(0, 12);
 
@@ -323,6 +345,7 @@ export const SavedRAMSLibrary = () => {
     setStatusFilter('all');
     setDateFilter('all');
     setLocationFilter('all');
+    setSourceFilter('all');
   };
 
   const toggleEditMode = () => {
@@ -382,6 +405,14 @@ export const SavedRAMSLibrary = () => {
               <div className="flex items-center gap-1">
                 <Button
                   variant="ghost"
+                  size="icon"
+                  onClick={() => setUploadSheetOpen(true)}
+                  className="h-9 w-9 text-elec-yellow"
+                >
+                  <Upload className="h-5 w-5" />
+                </Button>
+                <Button
+                  variant="ghost"
                   size="sm"
                   onClick={toggleEditMode}
                   className={cn(
@@ -405,6 +436,45 @@ export const SavedRAMSLibrary = () => {
                   )}
                 </Button>
               </div>
+            </div>
+
+            {/* Source Filter Tabs */}
+            <div className="flex items-center gap-2 mb-3 overflow-x-auto scrollbar-hide -mx-1 px-1">
+              <button
+                onClick={() => setSourceFilter('all')}
+                className={cn(
+                  'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation',
+                  sourceFilter === 'all'
+                    ? 'bg-elec-yellow text-black'
+                    : 'bg-white/[0.06] text-white/70 hover:bg-white/10'
+                )}
+              >
+                All ({documents.length})
+              </button>
+              <button
+                onClick={() => setSourceFilter('ai-generated')}
+                className={cn(
+                  'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation flex items-center gap-1.5',
+                  sourceFilter === 'ai-generated'
+                    ? 'bg-elec-yellow text-black'
+                    : 'bg-white/[0.06] text-white/70 hover:bg-white/10'
+                )}
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                AI ({aiGeneratedCount})
+              </button>
+              <button
+                onClick={() => setSourceFilter('user-uploaded')}
+                className={cn(
+                  'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation flex items-center gap-1.5',
+                  sourceFilter === 'user-uploaded'
+                    ? 'bg-elec-yellow text-black'
+                    : 'bg-white/[0.06] text-white/70 hover:bg-white/10'
+                )}
+              >
+                <FileUp className="h-3.5 w-3.5" />
+                Uploaded ({uploadedCount})
+              </button>
             </div>
 
             {/* Search bar */}
@@ -839,6 +909,13 @@ export const SavedRAMSLibrary = () => {
         onClearFilters={clearFilters}
         onApply={() => {}}
         hasActiveFilters={hasActiveFilters}
+      />
+
+      {/* Upload Sheet */}
+      <UserRAMSUpload
+        open={uploadSheetOpen}
+        onOpenChange={setUploadSheetOpen}
+        onUploadComplete={() => fetchDocuments()}
       />
 
       {/* Amend Dialogs */}

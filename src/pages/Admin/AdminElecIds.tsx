@@ -19,12 +19,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  Search,
   IdCard,
-  Shield,
   ShieldCheck,
   Eye,
-  Calendar,
   Award,
   CheckCircle,
   XCircle,
@@ -34,6 +31,8 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
+import AdminSearchInput from "@/components/admin/AdminSearchInput";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
 
 interface ElecIdProfile {
   id: string;
@@ -216,15 +215,12 @@ export default function AdminElecIds() {
       <Card>
         <CardContent className="pt-4 pb-4">
           <div className="flex flex-col sm:flex-row gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search name, Elec-ID, ECS..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-10 h-11 touch-manipulation"
-              />
-            </div>
+            <AdminSearchInput
+              value={search}
+              onChange={setSearch}
+              placeholder="Search name, Elec-ID, ECS..."
+              className="flex-1"
+            />
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="w-full sm:w-[140px] h-11 touch-manipulation">
                 <SelectValue placeholder="Status" />
@@ -253,12 +249,12 @@ export default function AdminElecIds() {
         </div>
       ) : elecIds?.length === 0 ? (
         <Card>
-          <CardContent className="pt-6 text-center py-12">
-            <IdCard className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-semibold mb-2">No Elec-ID profiles found</h3>
-            <p className="text-sm text-muted-foreground">
-              Elec-ID profiles will appear here as users create them.
-            </p>
+          <CardContent className="pt-6">
+            <AdminEmptyState
+              icon={IdCard}
+              title="No Elec-ID profiles found"
+              description="Elec-ID profiles will appear here as users create them."
+            />
           </CardContent>
         </Card>
       ) : (

@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import AdminSearchInput from "@/components/admin/AdminSearchInput";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
+import AdminPagination from "@/components/admin/AdminPagination";
 import {
   Sheet,
   SheetContent,
@@ -20,7 +22,6 @@ import {
 } from "@/components/ui/select";
 import {
   Mail,
-  Search,
   RefreshCw,
   ChevronRight,
   Check,
@@ -31,6 +32,33 @@ import {
   Inbox,
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
+
+// Static status styles - extracted to module scope for performance
+const STATUS_BADGE_STYLES: Record<string, string> = {
+  sent: "bg-green-500/20 text-green-400",
+  delivered: "bg-green-500/20 text-green-400",
+  failed: "bg-red-500/20 text-red-400",
+  bounced: "bg-red-500/20 text-red-400",
+  pending: "bg-amber-500/20 text-amber-400",
+};
+
+const STATUS_ICON_COLORS: Record<string, string> = {
+  sent: "text-green-400",
+  delivered: "text-green-400",
+  failed: "text-red-400",
+  bounced: "text-red-400",
+  pending: "text-amber-400",
+  default: "text-gray-400",
+};
+
+const STATUS_BG_COLORS: Record<string, string> = {
+  sent: "bg-green-500/10",
+  delivered: "bg-green-500/10",
+  failed: "bg-red-500/10",
+  bounced: "bg-red-500/10",
+  pending: "bg-amber-500/10",
+  default: "bg-gray-500/10",
+};
 
 interface EmailLog {
   id: string;
@@ -52,6 +80,8 @@ export default function AdminEmailLogs() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedEmail, setSelectedEmail] = useState<EmailLog | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
 
   // Fetch email logs
   const { data: emails, isLoading, refetch, isFetching } = useQuery({
@@ -102,31 +132,41 @@ export default function AdminEmailLogs() {
     },
   });
 
+  // Pagination
+  const totalPages = Math.ceil((emails?.length || 0) / itemsPerPage);
+  const paginatedEmails = useMemo(() => {
+    if (!emails) return [];
+    const start = (currentPage - 1) * itemsPerPage;
+    return emails.slice(start, start + itemsPerPage);
+  }, [emails, currentPage, itemsPerPage]);
+
+  // Reset page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, statusFilter]);
+
   const getStatusIcon = (status: string) => {
+    const colorClass = STATUS_ICON_COLORS[status] || STATUS_ICON_COLORS.default;
     switch (status) {
       case "sent":
       case "delivered":
-        return <Check className="h-4 w-4 text-green-400" />;
+        return <Check className={`h-4 w-4 ${colorClass}`} />;
       case "failed":
       case "bounced":
-        return <X className="h-4 w-4 text-red-400" />;
+        return <X className={`h-4 w-4 ${colorClass}`} />;
       case "pending":
-        return <Clock className="h-4 w-4 text-amber-400" />;
+        return <Clock className={`h-4 w-4 ${colorClass}`} />;
       default:
-        return <Mail className="h-4 w-4 text-gray-400" />;
+        return <Mail className={`h-4 w-4 ${colorClass}`} />;
     }
   };
 
-  const getStatusBadge = (status: string) => {
-    const styles: Record<string, string> = {
-      sent: "bg-green-500/20 text-green-400",
-      delivered: "bg-green-500/20 text-green-400",
-      failed: "bg-red-500/20 text-red-400",
-      bounced: "bg-red-500/20 text-red-400",
-      pending: "bg-amber-500/20 text-amber-400",
-    };
-    return <Badge className={styles[status] || ""}>{status}</Badge>;
-  };
+  const getStatusBadge = (status: string) => (
+    <Badge className={STATUS_BADGE_STYLES[status] || ""}>{status}</Badge>
+  );
+
+  const getStatusBgColor = (status: string) =>
+    STATUS_BG_COLORS[status] || STATUS_BG_COLORS.default;
 
   return (
     <div className="space-y-4">
@@ -199,17 +239,14 @@ export default function AdminEmailLogs() {
       <Card>
         <CardContent className="pt-4 pb-4">
           <div className="flex gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search emails..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-10 h-11 touch-manipulation"
-              />
-            </div>
+            <AdminSearchInput
+              value={search}
+              onChange={setSearch}
+              placeholder="Search emails..."
+              className="flex-1"
+            />
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-[120px] h-11 touch-manipulation">
+              <SelectTrigger className="w-[120px] h-12 touch-manipulation">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
@@ -236,15 +273,18 @@ export default function AdminEmailLogs() {
         </div>
       ) : emails?.length === 0 ? (
         <Card>
-          <CardContent className="pt-6 text-center py-12">
-            <Mail className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-semibold mb-2">No emails logged</h3>
-            <p className="text-sm text-muted-foreground">Email activity will appear here.</p>
+          <CardContent className="pt-6">
+            <AdminEmptyState
+              icon={Mail}
+              title="No emails logged"
+              description="Email activity will appear here."
+            />
           </CardContent>
         </Card>
       ) : (
+        <>
         <div className="space-y-1">
-          {emails?.map((email) => (
+          {paginatedEmails.map((email) => (
             <Card
               key={email.id}
               className="touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
@@ -253,13 +293,7 @@ export default function AdminEmailLogs() {
               <CardContent className="pt-3 pb-3">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-0 flex-1">
-                    <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${
-                      email.status === "sent" || email.status === "delivered"
-                        ? "bg-green-500/10"
-                        : email.status === "failed" || email.status === "bounced"
-                        ? "bg-red-500/10"
-                        : "bg-amber-500/10"
-                    }`}>
+                    <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${getStatusBgColor(email.status)}`}>
                       {getStatusIcon(email.status)}
                     </div>
                     <div className="min-w-0 flex-1">
@@ -280,6 +314,23 @@ export default function AdminEmailLogs() {
             </Card>
           ))}
         </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <AdminPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={emails?.length || 0}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+            onItemsPerPageChange={(val) => {
+              setItemsPerPage(val);
+              setCurrentPage(1);
+            }}
+            className="mt-4"
+          />
+        )}
+        </>
       )}
 
       {/* Email Detail Sheet */}

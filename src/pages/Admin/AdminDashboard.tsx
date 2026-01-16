@@ -23,38 +23,13 @@ import {
   Gift,
   Crown,
 } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow, differenceInMinutes } from "date-fns";
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { getInitials, getRoleColor } from "@/utils/adminUtils";
 import UserManagementSheet from "@/components/admin/UserManagementSheet";
-
-// Helper to get initials from name
-const getInitials = (name: string | null): string => {
-  if (!name) return "?";
-  const parts = name.trim().split(/\s+/);
-  if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
-  return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
-};
-
-// Role color mapping
-const roleColors: Record<string, { bg: string; text: string; badge: string }> = {
-  apprentice: {
-    bg: "bg-purple-500/20",
-    text: "text-purple-400",
-    badge: "bg-purple-500/20 text-purple-400 border-purple-500/30",
-  },
-  electrician: {
-    bg: "bg-yellow-500/20",
-    text: "text-yellow-400",
-    badge: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-  },
-  employer: {
-    bg: "bg-blue-500/20",
-    text: "text-blue-400",
-    badge: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-  },
-};
+import UserActivitySheet from "@/components/admin/UserActivitySheet";
 
 // UK Pricing tiers
 const pricingTiers = {
@@ -69,6 +44,11 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any>(null);
+  const [selectedOnlineUser, setSelectedOnlineUser] = useState<{
+    userId: string;
+    userName: string;
+    userRole: string;
+  } | null>(null);
 
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
@@ -150,9 +130,9 @@ export default function AdminDashboard() {
     queryFn: async () => {
       const { data } = await supabase
         .from("user_presence")
-        .select("user_id, last_seen, status, profiles(full_name, role, avatar_url)")
+        .select("user_id, last_seen, status, session_started_at, current_page, device_info, profiles(full_name, role, avatar_url)")
         .order("last_seen", { ascending: false })
-        .limit(15);
+        .limit(20);
       return data || [];
     },
     staleTime: 10 * 1000, // 10 second cache
@@ -405,11 +385,7 @@ export default function AdminDashboard() {
                 <p className="text-sm text-muted-foreground p-4">No recent signups</p>
               ) : (
                 stats?.recentSignups?.map((user: any) => {
-                  const colors = roleColors[user.role?.toLowerCase()] || {
-                    bg: "bg-gray-500/20",
-                    text: "text-gray-400",
-                    badge: "bg-gray-500/20 text-gray-400 border-gray-500/30",
-                  };
+                  const colors = getRoleColor(user.role);
                   return (
                     <button
                       key={user.id}
@@ -471,84 +447,138 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        {/* Online Now */}
-        <Card className="border-green-500/30">
-          <CardHeader className="pb-2">
+        {/* Online Now - Improved */}
+        <Card className="border-green-500/30 bg-gradient-to-br from-green-500/5 to-transparent">
+          <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-green-400">Online Now</span>
-              <Badge className="ml-auto bg-green-500/20 text-green-400 text-[10px]">
+              <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-green-400 font-semibold">Live Users</span>
+              <Badge className="ml-auto bg-green-500/20 text-green-400 text-xs px-2 py-0.5 border border-green-500/30">
                 {onlineUsers?.filter((a: any) =>
                   new Date(a.last_seen).getTime() > Date.now() - 5 * 60 * 1000
-                ).length || 0} users
+                ).length || 0} online
               </Badge>
             </CardTitle>
           </CardHeader>
           <CardContent className="p-0">
-            <div className="divide-y divide-border max-h-[300px] overflow-y-auto">
+            <div className="max-h-[400px] overflow-y-auto">
               {onlineUsers?.length === 0 ? (
-                <p className="text-sm text-muted-foreground p-4">No one online</p>
+                <div className="flex flex-col items-center justify-center py-8 text-muted-foreground">
+                  <Users className="h-8 w-8 mb-2 opacity-50" />
+                  <p className="text-sm">No users online</p>
+                </div>
               ) : (
-                onlineUsers?.map((activity: any) => {
-                  const lastSeenMs = new Date(activity.last_seen).getTime();
-                  const nowMs = Date.now();
-                  const diffMins = Math.floor((nowMs - lastSeenMs) / 60000);
+                <div className="space-y-1 p-2">
+                  {onlineUsers?.map((activity: any) => {
+                    const lastSeenMs = new Date(activity.last_seen).getTime();
+                    const nowMs = Date.now();
+                    const diffMins = Math.floor((nowMs - lastSeenMs) / 60000);
 
-                  // Calculate status from last_seen time
-                  const isOnline = diffMins < 5;
-                  const isAway = diffMins >= 5 && diffMins < 10;
+                    // Calculate status from last_seen time
+                    const isOnline = diffMins < 5;
+                    const isAway = diffMins >= 5 && diffMins < 10;
 
-                  const profile = activity.profiles as any;
-                  const roleColor = roleColors[profile?.role?.toLowerCase()] || { bg: "bg-gray-500/20", text: "text-gray-400", badge: "bg-gray-500/20 text-gray-400 border-gray-500/30" };
+                    const profile = activity.profiles as any;
+                    const roleColor = getRoleColor(profile?.role);
 
-                  // Status indicator color
-                  const statusColor = isOnline ? "bg-green-500" : isAway ? "bg-yellow-500" : "bg-gray-500";
+                    // Status indicator color
+                    const statusColor = isOnline ? "bg-green-500" : isAway ? "bg-yellow-500" : "bg-gray-500";
 
-                  return (
-                    <div
-                      key={activity.user_id}
-                      className="flex items-center justify-between p-3 touch-manipulation active:bg-muted/50 transition-colors"
-                    >
-                      <div className="flex items-center gap-3">
+                    // Session duration
+                    const sessionMins = activity.session_started_at
+                      ? differenceInMinutes(new Date(), new Date(activity.session_started_at))
+                      : 0;
+                    const sessionDisplay = sessionMins < 60
+                      ? `${sessionMins}m`
+                      : `${Math.floor(sessionMins / 60)}h ${sessionMins % 60}m`;
+
+                    // Device info
+                    const deviceInfo = activity.device_info as { isMobile?: boolean } | null;
+                    const isMobile = deviceInfo?.isMobile;
+
+                    return (
+                      <button
+                        key={activity.user_id}
+                        onClick={() => setSelectedOnlineUser({
+                          userId: activity.user_id,
+                          userName: profile?.full_name || "Unknown",
+                          userRole: profile?.role || ""
+                        })}
+                        className={cn(
+                          "w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-200",
+                          "hover:bg-muted/50 active:scale-[0.98] touch-manipulation",
+                          "border border-transparent hover:border-border/50",
+                          isOnline && "bg-green-500/5"
+                        )}
+                      >
+                        {/* Avatar with status */}
                         <div className={cn(
-                          "w-10 h-10 rounded-xl flex items-center justify-center relative font-bold text-sm",
+                          "w-11 h-11 rounded-xl flex items-center justify-center relative font-bold text-sm shrink-0",
                           roleColor.bg, roleColor.text
                         )}>
                           {getInitials(profile?.full_name)}
                           <div className={cn(
-                            "absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-background",
+                            "absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full border-2 border-background",
                             statusColor
                           )} />
                         </div>
-                        <div>
+
+                        {/* User info - aligned */}
+                        <div className="flex-1 min-w-0 text-left">
                           <div className="flex items-center gap-2">
-                            <p className="font-medium text-sm">
+                            <p className="font-medium text-sm truncate">
                               {profile?.full_name || "Unknown User"}
                             </p>
                             {profile?.role && (
-                              <Badge className={cn("text-[10px] capitalize", roleColor.badge)}>
+                              <Badge className={cn("text-[10px] capitalize shrink-0", roleColor.badge)}>
                                 {profile.role}
                               </Badge>
                             )}
                           </div>
-                          <p className="text-xs text-muted-foreground">
-                            {isOnline ? (
-                              <span className="text-green-400">Active now</span>
-                            ) : isAway ? (
-                              <span className="text-yellow-400">Away ({diffMins}m)</span>
-                            ) : diffMins < 60 ? (
-                              `${diffMins}m ago`
-                            ) : diffMins < 1440 ? (
-                              `${Math.floor(diffMins / 60)}h ago`
-                            ) : (
-                              formatDistanceToNow(new Date(activity.last_seen), { addSuffix: true })
+                          <div className="flex items-center gap-2 mt-0.5">
+                            <span className={cn(
+                              "text-xs",
+                              isOnline ? "text-green-400" : isAway ? "text-yellow-400" : "text-muted-foreground"
+                            )}>
+                              {isOnline ? "Active" : isAway ? `Away ${diffMins}m` : `${diffMins}m ago`}
+                            </span>
+                            {activity.current_page && (
+                              <>
+                                <span className="text-muted-foreground/50">•</span>
+                                <span className="text-xs text-muted-foreground truncate max-w-[100px]">
+                                  {activity.current_page}
+                                </span>
+                              </>
                             )}
-                          </p>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  );
-                })
+
+                        {/* Session time & device */}
+                        <div className="text-right shrink-0">
+                          {activity.session_started_at && (
+                            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                              <Clock className="h-3 w-3" />
+                              <span>{sessionDisplay}</span>
+                            </div>
+                          )}
+                          <div className="flex items-center justify-end gap-1 mt-0.5">
+                            {isMobile ? (
+                              <Badge variant="outline" className="text-[9px] px-1.5 py-0 border-blue-500/30 text-blue-400">
+                                Mobile
+                              </Badge>
+                            ) : (
+                              <Badge variant="outline" className="text-[9px] px-1.5 py-0 border-gray-500/30 text-gray-400">
+                                Desktop
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+
+                        <ChevronRight className="h-4 w-4 text-muted-foreground/50 shrink-0" />
+                      </button>
+                    );
+                  })}
+                </div>
               )}
             </div>
           </CardContent>
@@ -560,6 +590,15 @@ export default function AdminDashboard() {
         user={selectedUser}
         open={!!selectedUser}
         onOpenChange={(open) => !open && setSelectedUser(null)}
+      />
+
+      {/* User Activity Sheet - for online users */}
+      <UserActivitySheet
+        userId={selectedOnlineUser?.userId || null}
+        userName={selectedOnlineUser?.userName || null}
+        userRole={selectedOnlineUser?.userRole || null}
+        open={!!selectedOnlineUser}
+        onOpenChange={(open) => !open && setSelectedOnlineUser(null)}
       />
     </div>
   );

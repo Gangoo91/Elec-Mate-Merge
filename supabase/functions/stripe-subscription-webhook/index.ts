@@ -163,23 +163,28 @@ async function sendWelcomeEmail(
 }
 
 // Map Stripe price IDs to subscription tiers
+// CURRENT ACTIVE PRICES (as of Jan 2026)
 const PRICE_TO_TIER: Record<string, string> = {
-  // Current prices
-  'price_1RhtdT2RKw5t5RAmv6b2xE6p': 'apprentice', // £6.99/month
-  'price_1Rhtgl2RKw5t5RAmkQVKVnKn': 'apprentice_yearly', // £69.99/year
-  'price_1RhteS2RKw5t5RAmzRbaTE8U': 'electrician', // £9.99/month
-  'price_1RhtiS2RKw5t5RAmha0s6PJA': 'electrician_yearly', // £99.99/year
-  'price_1RL1wd2RKw5t5RAms8S0sLAt': 'desktop', // £3.99/month
-  'price_1RL1zR2RKw5t5RAmVABR93Zy': 'desktop', // £5.99/month
-  'price_1RL2582RKw5t5RAm2qG45wK0': 'desktop_yearly', // £39.99/year
-  'price_1RL25t2RKw5t5RAmXYxxJivo': 'desktop_yearly', // £59.99/year
-  'price_1SPK8c2RKw5t5RAmRGJxXfjc': 'apprentice', // £3.99/month
-  'price_1SPKAD2RKw5t5RAmDlBa1tbV': 'employer', // £14.99/month
-  'price_1SPKBK2RKw5t5RAm09sTsgaK': 'employer_yearly', // £149.99/year
-  'price_1SlyAT2RKw5t5RAmUmTRGimH': 'college', // £29.99/month
-  'price_1SlyB82RKw5t5RAmN447YJUW': 'college_yearly', // £299.99/year
-  'price_1SmUef2RKw5t5RAmRIMTWTqU': 'apprentice', // £4.99/month
-  'price_1SmUfK2RKw5t5RAml6bj1I77': 'apprentice_yearly', // £49.99/year
+  // Apprentice - £4.99/month, £49.99/year
+  'price_1SmUef2RKw5t5RAmRIMTWTqU': 'apprentice', // £4.99/month (current)
+  'price_1SmUfK2RKw5t5RAml6bj1I77': 'apprentice_yearly', // £49.99/year (current)
+
+  // Electrician Pro - £9.99/month, £99.99/year
+  'price_1SqJVr2RKw5t5RAmaiTGelLN': 'electrician', // £9.99/month (current)
+  'price_1SqJVs2RKw5t5RAmVeD2QVsb': 'electrician_yearly', // £99.99/year (current)
+
+  // Employer - £29.99/month, £299.99/year
+  'price_1SlyAT2RKw5t5RAmUmTRGimH': 'employer', // £29.99/month (current)
+  'price_1SlyB82RKw5t5RAmN447YJUW': 'employer_yearly', // £299.99/year (current)
+
+  // Founders Offer - £3.99/month (gets Electrician Pro access)
+  'price_1SPK8c2RKw5t5RAmRGJxXfjc': 'electrician', // £3.99/month founders offer
+
+  // Legacy prices (for existing subscribers)
+  'price_1RhtdT2RKw5t5RAmv6b2xE6p': 'apprentice', // £6.99/month (legacy)
+  'price_1Rhtgl2RKw5t5RAmkQVKVnKn': 'apprentice_yearly', // £69.99/year (legacy)
+  'price_1RhteS2RKw5t5RAmzRbaTE8U': 'electrician', // £9.99/month (legacy)
+  'price_1RhtiS2RKw5t5RAmha0s6PJA': 'electrician_yearly', // £99.99/year (legacy)
 };
 
 serve(async (req) => {

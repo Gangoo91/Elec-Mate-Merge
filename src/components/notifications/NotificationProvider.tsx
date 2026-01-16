@@ -20,6 +20,8 @@ type NotificationContextType = {
   markAsRead: (id: string) => void;
   markAllAsRead: () => void;
   addNotification: (notification: Omit<Notification, 'id' | 'read' | 'createdAt'>) => void;
+  deleteNotification: (id: string) => void;
+  clearAllNotifications: () => void;
 };
 
 const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
@@ -104,9 +106,21 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   };
 
   const markAllAsRead = () => {
-    setNotifications(prev => 
+    setNotifications(prev =>
       prev.map(n => ({ ...n, read: true }))
     );
+  };
+
+  const deleteNotification = (id: string) => {
+    setNotifications(prev => prev.filter(n => n.id !== id));
+  };
+
+  const clearAllNotifications = () => {
+    setNotifications([]);
+    // Also clear from localStorage
+    if (user) {
+      localStorage.removeItem(`notifications_${user.id}`);
+    }
   };
 
   const addNotification = (notification: Omit<Notification, 'id' | 'read' | 'createdAt'>) => {
@@ -136,6 +150,8 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
       markAsRead,
       markAllAsRead,
       addNotification,
+      deleteNotification,
+      clearAllNotifications,
     }}>
       {children}
     </NotificationContext.Provider>

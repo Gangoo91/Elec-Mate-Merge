@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -18,14 +17,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import AdminSearchInput from "@/components/admin/AdminSearchInput";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
+import AdminPagination from "@/components/admin/AdminPagination";
 import {
-  Search,
   History,
-  User,
-  Clock,
   ChevronRight,
   RefreshCw,
-  FileText,
   Shield,
   Settings,
   Trash2,
@@ -34,6 +32,20 @@ import {
   Eye,
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
+
+// Static action badge styles - extracted to module scope for performance
+const ACTION_BADGE_STYLES: Record<string, string> = {
+  create: "bg-green-500/20 text-green-400",
+  update: "bg-blue-500/20 text-blue-400",
+  delete: "bg-red-500/20 text-red-400",
+};
+
+const getActionType = (action: string): string => {
+  if (action.includes("create")) return "create";
+  if (action.includes("update")) return "update";
+  if (action.includes("delete")) return "delete";
+  return action.split("_")[0];
+};
 
 interface AuditLog {
   id: string;
@@ -53,6 +65,8 @@ export default function AdminAuditLogs() {
   const [search, setSearch] = useState("");
   const [actionFilter, setActionFilter] = useState("all");
   const [selectedLog, setSelectedLog] = useState<AuditLog | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
 
   // Fetch audit logs
   const { data: logs, isLoading, refetch } = useQuery({
@@ -95,14 +109,30 @@ export default function AdminAuditLogs() {
   };
 
   const getActionBadge = (action: string) => {
-    if (action.includes("create")) return <Badge className="bg-green-500/20 text-green-400">create</Badge>;
-    if (action.includes("update")) return <Badge className="bg-blue-500/20 text-blue-400">update</Badge>;
-    if (action.includes("delete")) return <Badge className="bg-red-500/20 text-red-400">delete</Badge>;
-    return <Badge variant="outline">{action.split("_")[0]}</Badge>;
+    const actionType = getActionType(action);
+    const style = ACTION_BADGE_STYLES[actionType];
+    if (style) return <Badge className={style}>{actionType}</Badge>;
+    return <Badge variant="outline">{actionType}</Badge>;
   };
 
-  // Get unique entity types for filter
-  const entityTypes = [...new Set(logs?.map((l) => l.entity_type) || [])];
+  // Get unique entity types for filter - memoized to avoid recreation
+  const entityTypes = useMemo(
+    () => [...new Set(logs?.map((l) => l.entity_type) || [])],
+    [logs]
+  );
+
+  // Pagination
+  const totalPages = Math.ceil((logs?.length || 0) / itemsPerPage);
+  const paginatedLogs = useMemo(() => {
+    if (!logs) return [];
+    const start = (currentPage - 1) * itemsPerPage;
+    return logs.slice(start, start + itemsPerPage);
+  }, [logs, currentPage, itemsPerPage]);
+
+  // Reset page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, actionFilter]);
 
   return (
     <div className="space-y-4">
@@ -121,17 +151,14 @@ export default function AdminAuditLogs() {
       <Card>
         <CardContent className="pt-4 pb-4">
           <div className="flex gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search logs..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-10 h-11 touch-manipulation"
-              />
-            </div>
+            <AdminSearchInput
+              value={search}
+              onChange={setSearch}
+              placeholder="Search logs..."
+              className="flex-1"
+            />
             <Select value={actionFilter} onValueChange={setActionFilter}>
-              <SelectTrigger className="w-[120px] h-11 touch-manipulation">
+              <SelectTrigger className="w-[120px] h-12 touch-manipulation">
                 <SelectValue placeholder="Action" />
               </SelectTrigger>
               <SelectContent>
@@ -157,15 +184,18 @@ export default function AdminAuditLogs() {
         </div>
       ) : logs?.length === 0 ? (
         <Card>
-          <CardContent className="pt-6 text-center py-12">
-            <History className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-semibold mb-2">No audit logs</h3>
-            <p className="text-sm text-muted-foreground">Activity will be logged here.</p>
+          <CardContent className="pt-6">
+            <AdminEmptyState
+              icon={History}
+              title="No audit logs"
+              description="Activity will be logged here when actions are performed."
+            />
           </CardContent>
         </Card>
       ) : (
+        <>
         <div className="space-y-1">
-          {logs?.map((log) => (
+          {paginatedLogs.map((log) => (
             <Card
               key={log.id}
               className="touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
@@ -197,6 +227,23 @@ export default function AdminAuditLogs() {
             </Card>
           ))}
         </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <AdminPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={logs?.length || 0}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+            onItemsPerPageChange={(val) => {
+              setItemsPerPage(val);
+              setCurrentPage(1);
+            }}
+            className="mt-4"
+          />
+        )}
+        </>
       )}
 
       {/* Log Detail Sheet */}

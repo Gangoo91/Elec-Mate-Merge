@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import AdminSearchInput from "@/components/admin/AdminSearchInput";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
+import { AdminMessageCard } from "@/components/admin/cards/AdminMessageCard";
 import {
   Sheet,
   SheetContent,
@@ -31,20 +33,30 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import {
-  Search,
   MessageSquare,
-  Users,
   Clock,
   Trash2,
-  Flag,
   ThumbsUp,
   ChevronRight,
   AlertTriangle,
   MessageCircle,
   RefreshCw,
+  Loader2,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
+
+// Static color map - extracted to module scope for performance
+const CATEGORY_COLORS: Record<string, string> = {
+  general: "bg-blue-500/20 text-blue-400",
+  technical: "bg-purple-500/20 text-purple-400",
+  jobs: "bg-green-500/20 text-green-400",
+  study: "bg-amber-500/20 text-amber-400",
+  default: "bg-gray-500/20 text-gray-400",
+};
+
+const getCategoryColor = (category: string | null): string =>
+  CATEGORY_COLORS[category || ""] || CATEGORY_COLORS.default;
 
 interface ChatMessage {
   id: string;
@@ -108,8 +120,11 @@ export default function AdminConversations() {
     staleTime: 2 * 60 * 1000,
   });
 
-  // Get unique categories from messages
-  const categories = [...new Set(messages?.map(m => m.category).filter(Boolean))] as string[];
+  // Get unique categories from messages - memoized to avoid recreation
+  const categories = useMemo(
+    () => [...new Set(messages?.map(m => m.category).filter(Boolean))] as string[],
+    [messages]
+  );
 
   // Delete message mutation via edge function
   const deleteMessageMutation = useMutation({
@@ -139,20 +154,10 @@ export default function AdminConversations() {
     },
   });
 
-  const getCategoryColor = (category: string | null) => {
-    switch (category) {
-      case "general":
-        return "bg-blue-500/20 text-blue-400";
-      case "technical":
-        return "bg-purple-500/20 text-purple-400";
-      case "jobs":
-        return "bg-green-500/20 text-green-400";
-      case "study":
-        return "bg-amber-500/20 text-amber-400";
-      default:
-        return "bg-gray-500/20 text-gray-400";
-    }
-  };
+  // Memoized callback for message click
+  const handleMessageClick = useCallback((message: ChatMessage) => {
+    setSelectedMessage(message);
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -199,17 +204,14 @@ export default function AdminConversations() {
       <Card>
         <CardContent className="pt-4 pb-4">
           <div className="flex flex-col sm:flex-row gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search messages..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-10 h-11 touch-manipulation"
-              />
-            </div>
+            <AdminSearchInput
+              value={search}
+              onChange={setSearch}
+              placeholder="Search messages..."
+              className="flex-1"
+            />
             <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-              <SelectTrigger className="w-full sm:w-[140px] h-11 touch-manipulation">
+              <SelectTrigger className="w-full sm:w-[140px] h-12 touch-manipulation">
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
@@ -224,7 +226,7 @@ export default function AdminConversations() {
             <Button
               variant="outline"
               size="icon"
-              className="h-11 w-11 shrink-0 touch-manipulation"
+              className="h-12 w-12 shrink-0 touch-manipulation"
               onClick={() => refetch()}
             >
               <RefreshCw className="h-4 w-4" />
@@ -246,51 +248,23 @@ export default function AdminConversations() {
         </div>
       ) : messages?.length === 0 ? (
         <Card>
-          <CardContent className="pt-6 text-center py-12">
-            <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-semibold mb-2">No messages found</h3>
-            <p className="text-sm text-muted-foreground">
-              Chat messages will appear here.
-            </p>
+          <CardContent className="pt-6">
+            <AdminEmptyState
+              icon={MessageSquare}
+              title="No messages found"
+              description="Chat messages will appear here."
+            />
           </CardContent>
         </Card>
       ) : (
         <div className="space-y-2">
           {messages?.map((message) => (
-            <Card
+            <AdminMessageCard
               key={message.id}
-              className="touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
-              onClick={() => setSelectedMessage(message)}
-            >
-              <CardContent className="pt-4 pb-4">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <p className="font-medium text-sm truncate">{message.author_name}</p>
-                      {message.category && (
-                        <Badge className={`${getCategoryColor(message.category)} text-[10px] py-0`}>
-                          {message.category}
-                        </Badge>
-                      )}
-                    </div>
-                    <p className="text-sm text-muted-foreground line-clamp-2">{message.content}</p>
-                    <div className="flex items-center gap-3 mt-2">
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        {formatDistanceToNow(new Date(message.created_at), { addSuffix: true })}
-                      </span>
-                      {message.upvotes > 0 && (
-                        <span className="text-xs text-muted-foreground flex items-center gap-1">
-                          <ThumbsUp className="h-3 w-3" />
-                          {message.upvotes}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0 mt-1" />
-                </div>
-              </CardContent>
-            </Card>
+              message={message}
+              onClick={handleMessageClick}
+              getCategoryColor={getCategoryColor}
+            />
           ))}
         </div>
       )}
@@ -368,6 +342,7 @@ export default function AdminConversations() {
                   variant="destructive"
                   className="w-full h-12 touch-manipulation gap-2"
                   onClick={() => setDeleteConfirmId(selectedMessage?.id || null)}
+                  disabled={deleteMessageMutation.isPending}
                 >
                   <Trash2 className="h-4 w-4" />
                   Delete Message
@@ -391,12 +366,22 @@ export default function AdminConversations() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="h-11 touch-manipulation" disabled={deleteMessageMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
               onClick={() => deleteConfirmId && deleteMessageMutation.mutate(deleteConfirmId)}
+              disabled={deleteMessageMutation.isPending}
             >
-              Delete
+              {deleteMessageMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                "Delete"
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

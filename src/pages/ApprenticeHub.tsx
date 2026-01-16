@@ -489,7 +489,7 @@ const ApprenticeHub = () => {
               <Link to="/dashboard">
                 <Button
                   variant="ghost"
-                  className="text-white/70 hover:text-white hover:bg-white/[0.05] -ml-2 h-11 touch-manipulation"
+                  className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
                 >
                   <ArrowLeft className="mr-2 h-5 w-5" />
                   Back to Dashboard

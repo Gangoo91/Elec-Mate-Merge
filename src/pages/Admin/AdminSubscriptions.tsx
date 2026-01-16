@@ -18,7 +18,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  Search,
   CreditCard,
   TrendingUp,
   Users,
@@ -27,12 +26,24 @@ import {
   Briefcase,
   GraduationCap,
   ChevronRight,
-  Calendar,
   PoundSterling,
   Target,
   Gift,
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
+import AdminSearchInput from "@/components/admin/AdminSearchInput";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
+
+// Static role styles - extracted to module scope for performance
+const ROLE_BADGE_COLORS: Record<string, string> = {
+  apprentice: "bg-purple-500/20 text-purple-400 border-purple-500/30",
+  electrician: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
+  employer: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+  default: "bg-gray-500/20 text-gray-400",
+};
+
+const getRoleBadgeColor = (role: string): string =>
+  ROLE_BADGE_COLORS[role] || ROLE_BADGE_COLORS.default;
 
 interface SubscribedUser {
   id: string;
@@ -61,41 +72,34 @@ export default function AdminSubscriptions() {
   const [roleFilter, setRoleFilter] = useState<string>("all");
   const [selectedUser, setSelectedUser] = useState<SubscribedUser | null>(null);
 
-  // Fetch subscription stats
+  // Fetch subscription stats - consolidated from 5 queries to 1
   const { data: stats } = useQuery({
     queryKey: ["admin-subscription-stats"],
     queryFn: async () => {
-      const [
-        totalRes,
-        subscribedRes,
-        apprenticeRes,
-        electricianRes,
-        employerRes,
-      ] = await Promise.all([
-        supabase.from("profiles").select("*", { count: "exact", head: true }),
-        supabase.from("profiles").select("*", { count: "exact", head: true }).eq("subscribed", true),
-        supabase.from("profiles").select("*", { count: "exact", head: true }).eq("role", "apprentice").eq("subscribed", true),
-        supabase.from("profiles").select("*", { count: "exact", head: true }).eq("role", "electrician").eq("subscribed", true),
-        supabase.from("profiles").select("*", { count: "exact", head: true }).eq("role", "employer").eq("subscribed", true),
+      // Single query to get all profile data needed for stats
+      const [profilesRes, offersRes] = await Promise.all([
+        supabase.from("profiles").select("role, subscribed", { count: "exact" }),
+        supabase.from("promo_offers").select("redemptions, price"),
       ]);
 
-      // Get promo offers for MRR calculation
-      const { data: offers } = await supabase.from("promo_offers").select("*");
+      const profiles = profilesRes.data || [];
+      const total = profilesRes.count || 0;
+      const subscribed = profiles.filter(p => p.subscribed);
 
       // Calculate potential MRR based on offer redemptions
       let estimatedMRR = 0;
-      offers?.forEach((offer: PromoOffer) => {
+      offersRes.data?.forEach((offer: { redemptions: number; price: number }) => {
         estimatedMRR += (offer.redemptions || 0) * (offer.price || 0);
       });
 
       return {
-        total: totalRes.count || 0,
-        subscribed: subscribedRes.count || 0,
-        apprentice: apprenticeRes.count || 0,
-        electrician: electricianRes.count || 0,
-        employer: employerRes.count || 0,
+        total,
+        subscribed: subscribed.length,
+        apprentice: subscribed.filter(p => p.role === "apprentice").length,
+        electrician: subscribed.filter(p => p.role === "electrician").length,
+        employer: subscribed.filter(p => p.role === "employer").length,
         estimatedMRR,
-        conversionRate: totalRes.count ? ((subscribedRes.count || 0) / totalRes.count * 100).toFixed(1) : "0",
+        conversionRate: total ? ((subscribed.length / total) * 100).toFixed(1) : "0",
       };
     },
     staleTime: 2 * 60 * 1000, // Cache for 2 minutes
@@ -160,19 +164,6 @@ export default function AdminSubscriptions() {
         return <Briefcase className="h-4 w-4 text-blue-400" />;
       default:
         return <Users className="h-4 w-4 text-gray-400" />;
-    }
-  };
-
-  const getRoleBadgeColor = (role: string) => {
-    switch (role) {
-      case "apprentice":
-        return "bg-purple-500/20 text-purple-400 border-purple-500/30";
-      case "electrician":
-        return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      case "employer":
-        return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      default:
-        return "bg-gray-500/20 text-gray-400";
     }
   };
 
@@ -295,15 +286,12 @@ export default function AdminSubscriptions() {
       <Card>
         <CardContent className="pt-4 pb-4">
           <div className="flex flex-col sm:flex-row gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search subscribers..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-10 h-11 touch-manipulation"
-              />
-            </div>
+            <AdminSearchInput
+              value={search}
+              onChange={setSearch}
+              placeholder="Search subscribers..."
+              className="flex-1"
+            />
             <Select value={roleFilter} onValueChange={setRoleFilter}>
               <SelectTrigger className="w-full sm:w-[140px] h-11 touch-manipulation">
                 <SelectValue placeholder="Role" />
@@ -332,12 +320,12 @@ export default function AdminSubscriptions() {
         </div>
       ) : users?.length === 0 ? (
         <Card>
-          <CardContent className="pt-6 text-center py-12">
-            <Crown className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-semibold mb-2">No subscribers yet</h3>
-            <p className="text-sm text-muted-foreground">
-              Subscribed users will appear here.
-            </p>
+          <CardContent className="pt-6">
+            <AdminEmptyState
+              icon={Crown}
+              title="No subscribers yet"
+              description="Subscribed users will appear here."
+            />
           </CardContent>
         </Card>
       ) : (

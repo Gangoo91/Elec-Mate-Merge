@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
+import { useAdminPrefetch } from "@/hooks/useAdminPrefetch";
 import {
   LayoutDashboard,
   Users,
@@ -68,6 +70,8 @@ export default function AdminPanel() {
   const { profile, isLoading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const queryClient = useQueryClient();
+  const { handlePrefetch } = useAdminPrefetch(queryClient);
   const [showMore, setShowMore] = useState(false);
   const [showTools, setShowTools] = useState(false);
 
@@ -104,6 +108,12 @@ export default function AdminPanel() {
 
   const isSuperAdmin = profile.admin_role === "super_admin";
 
+  // Prefetch data on hover/touch for faster navigation
+  const onPrefetch = useCallback(
+    (path: string) => handlePrefetch(path),
+    [handlePrefetch]
+  );
+
   const renderNavItem = (item: { name: string; path: string; icon: any }) => {
     const isActive =
       location.pathname === item.path ||
@@ -116,6 +126,8 @@ export default function AdminPanel() {
         variant={isActive ? "default" : "ghost"}
         size="sm"
         onClick={() => navigate(item.path)}
+        onMouseEnter={() => onPrefetch(item.path)}
+        onTouchStart={() => onPrefetch(item.path)}
         className={cn(
           "shrink-0 gap-2 touch-manipulation h-9",
           isActive

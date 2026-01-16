@@ -172,3 +172,98 @@ export async function updateRAMSPDFInStorage(
     return { success: false, error: 'Failed to update PDF' };
   }
 }
+
+/**
+ * Save a user-uploaded RAMS PDF to storage
+ * For users uploading their own existing RAMS documents
+ */
+export async function saveUserUploadedRAMS(
+  file: File,
+  metadata: {
+    projectName?: string;
+    location?: string;
+    date?: string;
+  }
+): Promise<{ success: boolean; error?: string; documentId?: string }> {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      return { success: false, error: 'User not authenticated' };
+    }
+
+    // Validate file type
+    if (file.type !== 'application/pdf') {
+      return { success: false, error: 'Only PDF files are allowed' };
+    }
+
+    // Validate file size (50MB max for scanned documents)
+    const maxSize = 50 * 1024 * 1024; // 50MB
+    if (file.size > maxSize) {
+      return { success: false, error: 'File size exceeds 50MB limit' };
+    }
+
+    const currentDate = new Date().toISOString().split('T')[0];
+    const projectName = metadata.projectName || file.name.replace('.pdf', '') || 'Uploaded RAMS';
+    const location = metadata.location || 'Not specified';
+
+    // Create unique filename for uploaded files
+    const timestamp = Date.now();
+    const sanitizedName = projectName.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+    const fileName = `${user.id}/uploaded_${sanitizedName}_${timestamp}.pdf`;
+
+    console.log('Uploading user RAMS PDF to storage:', fileName);
+
+    // Upload to storage
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from('rams-pdfs')
+      .upload(fileName, file, {
+        contentType: 'application/pdf',
+        upsert: false
+      });
+
+    if (uploadError) {
+      console.error('Storage upload error:', uploadError);
+      return { success: false, error: uploadError.message };
+    }
+
+    console.log('User RAMS PDF uploaded successfully:', uploadData.path);
+
+    // Save reference in database
+    const { data: docData, error: dbError } = await supabase
+      .from('rams_documents')
+      .insert([{
+        user_id: user.id,
+        project_name: projectName,
+        location: location,
+        date: metadata.date || currentDate,
+        assessor: 'User Uploaded',
+        status: 'approved', // User-uploaded docs assumed approved
+        pdf_url: uploadData.path,
+        source: 'user-uploaded',
+        original_filename: file.name,
+        risks: [], // No AI-generated risks
+        activities: [],
+        ai_generation_metadata: {
+          uploaded_at: new Date().toISOString(),
+          original_size: file.size,
+          original_name: file.name
+        } as any
+      }])
+      .select()
+      .single();
+
+    if (dbError) {
+      console.error('Database insert error:', dbError);
+      // Clean up uploaded file
+      await supabase.storage.from('rams-pdfs').remove([uploadData.path]);
+      return { success: false, error: dbError.message };
+    }
+
+    console.log('User uploaded RAMS saved successfully:', docData.id);
+    return { success: true, documentId: docData.id };
+  } catch (error) {
+    console.error('Error saving user uploaded RAMS:', error);
+    return { success: false, error: 'Failed to upload PDF' };
+  }
+}

@@ -33,7 +33,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import {
-  Search,
   Briefcase,
   RefreshCw,
   ChevronRight,
@@ -43,9 +42,12 @@ import {
   AlertTriangle,
   MapPin,
   Flag,
+  Loader2,
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
+import AdminSearchInput from "@/components/admin/AdminSearchInput";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
 
 interface Vacancy {
   id: string;
@@ -275,15 +277,11 @@ export default function AdminEmployerModeration() {
       </div>
 
       {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Search vacancies..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="pl-10 h-11 touch-manipulation"
-        />
-      </div>
+      <AdminSearchInput
+        value={search}
+        onChange={setSearch}
+        placeholder="Search vacancies..."
+      />
 
       {/* Vacancy List */}
       {isLoading ? (
@@ -296,12 +294,12 @@ export default function AdminEmployerModeration() {
         </div>
       ) : vacancies?.length === 0 ? (
         <Card>
-          <CardContent className="pt-6 text-center py-12">
-            <Briefcase className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-semibold mb-2">No vacancies to moderate</h3>
-            <p className="text-sm text-muted-foreground">
-              {statusFilter === "pending" ? "All caught up!" : "No vacancies match this filter."}
-            </p>
+          <CardContent className="pt-6">
+            <AdminEmptyState
+              icon={Briefcase}
+              title="No vacancies to moderate"
+              description={statusFilter === "pending" ? "All caught up!" : "No vacancies match this filter."}
+            />
           </CardContent>
         </Card>
       ) : (
@@ -503,7 +501,14 @@ export default function AdminEmployerModeration() {
               onClick={handleModerate}
               disabled={moderateMutation.isPending}
             >
-              {moderateMutation.isPending ? "Processing..." : "Confirm"}
+              {moderateMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                "Confirm"
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

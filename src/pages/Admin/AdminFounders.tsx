@@ -36,9 +36,11 @@ import {
   Copy,
   Trash2,
   RotateCw,
+  Loader2,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
 
 interface FounderInvite {
   id: string;
@@ -312,13 +314,16 @@ export default function AdminFounders() {
         </div>
       ) : invites?.length === 0 ? (
         <Card>
-          <CardContent className="pt-6 text-center py-12">
-            <Crown className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-semibold mb-2">No founder invites yet</h3>
-            <p className="text-sm text-muted-foreground mb-4">Upload founder emails to get started</p>
-            <Button onClick={() => setShowUpload(true)} className="gap-2">
-              <Upload className="h-4 w-4" /> Upload Emails
-            </Button>
+          <CardContent className="pt-6">
+            <AdminEmptyState
+              icon={Crown}
+              title="No founder invites yet"
+              description="Upload founder emails to get started"
+              action={{
+                label: "Upload Emails",
+                onClick: () => setShowUpload(true),
+              }}
+            />
           </CardContent>
         </Card>
       ) : (
@@ -504,13 +509,22 @@ export default function AdminFounders() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="h-11 touch-manipulation" disabled={sendAllMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               className="h-11 touch-manipulation"
               onClick={() => sendAllMutation.mutate()}
               disabled={sendAllMutation.isPending}
             >
-              {sendAllMutation.isPending ? "Sending..." : "Send All"}
+              {sendAllMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                "Send All"
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -524,12 +538,22 @@ export default function AdminFounders() {
             <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="h-11 touch-manipulation" disabled={deleteMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
               onClick={() => deleteId && deleteMutation.mutate(deleteId)}
+              disabled={deleteMutation.isPending}
             >
-              Delete
+              {deleteMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                "Delete"
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

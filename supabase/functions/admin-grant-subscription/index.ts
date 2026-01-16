@@ -170,11 +170,12 @@ Deno.serve(async (req) => {
     const targetEmail = authData?.user?.email;
 
     if (action === "revoke") {
-      // Revoke subscription
+      // Revoke subscription - clear both subscribed AND free_access_granted
       const { error: updateError } = await supabaseAdmin
         .from("profiles")
         .update({
           subscribed: false,
+          free_access_granted: false,
           subscription_tier: null,
           subscription_start: null,
           subscription_end: null,
@@ -197,11 +198,13 @@ Deno.serve(async (req) => {
       );
     } else {
       // Grant subscription - default to Employer (full access) for beta testers
+      // IMPORTANT: Set free_access_granted = true so they don't count as paying revenue
       const subscriptionTier = tier || "Employer";
       const { error: updateError } = await supabaseAdmin
         .from("profiles")
         .update({
           subscribed: true,
+          free_access_granted: true,
           subscription_tier: subscriptionTier,
           subscription_start: new Date().toISOString(),
           subscription_end: null, // No end date for founder/free access

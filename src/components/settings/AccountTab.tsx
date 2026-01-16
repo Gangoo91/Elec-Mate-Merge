@@ -108,7 +108,7 @@ const AccountTab = () => {
             <Button
               variant="outline"
               size="sm"
-              className="border-white/20 hover:bg-white/5"
+              className="h-11 border-white/20 hover:bg-white/5 touch-manipulation active:scale-[0.98]"
               onClick={() => setIsEditingProfile(!isEditingProfile)}
             >
               {isEditingProfile ? (
@@ -134,7 +134,7 @@ const AccountTab = () => {
                   <Input
                     value={profileData.displayName}
                     onChange={(e) => handleProfileDataChange('displayName', e.target.value)}
-                    className="bg-white/5 border-white/10 focus:border-elec-yellow/50"
+                    className="h-11 text-base touch-manipulation bg-white/5 border-white/10 focus:border-elec-yellow/50"
                   />
                 </div>
 
@@ -143,7 +143,7 @@ const AccountTab = () => {
                   <Input
                     value={profileData.jobTitle}
                     onChange={(e) => handleProfileDataChange('jobTitle', e.target.value)}
-                    className="bg-white/5 border-white/10 focus:border-elec-yellow/50"
+                    className="h-11 text-base touch-manipulation bg-white/5 border-white/10 focus:border-elec-yellow/50"
                   />
                 </div>
 
@@ -153,7 +153,7 @@ const AccountTab = () => {
                     value={profileData.yearsExperience}
                     onChange={(e) => handleProfileDataChange('yearsExperience', e.target.value)}
                     type="number"
-                    className="bg-white/5 border-white/10 focus:border-elec-yellow/50"
+                    className="h-11 text-base touch-manipulation bg-white/5 border-white/10 focus:border-elec-yellow/50"
                   />
                 </div>
               </div>
@@ -161,7 +161,7 @@ const AccountTab = () => {
               <div className="flex justify-end">
                 <Button
                   onClick={handleProfileUpdate}
-                  className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
+                  className="h-11 touch-manipulation active:scale-[0.98] bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
                   disabled={isSaving}
                 >
                   {isSaving ? (
@@ -214,7 +214,7 @@ const AccountTab = () => {
               </div>
             </div>
             <Select value={language} onValueChange={handleLanguageChange}>
-              <SelectTrigger className="w-full sm:w-40 bg-white/5 border-white/10">
+              <SelectTrigger className="w-full sm:w-40 h-11 touch-manipulation bg-white/5 border-white/10">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-elec-gray border-white/10">

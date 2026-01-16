@@ -6,6 +6,13 @@ export interface UserPresence {
   is_online: boolean;
   status: 'online' | 'away' | 'offline';
   updated_at: string;
+  session_started_at?: string;
+  current_page?: string;
+  device_info?: {
+    userAgent?: string;
+    platform?: string;
+    isMobile?: boolean;
+  };
 }
 
 const HEARTBEAT_INTERVAL = 30000; // 30 seconds
@@ -17,17 +24,41 @@ const OFFLINE_THRESHOLD = 10 * 60 * 1000; // 10 minutes
  */
 export const updatePresence = async (
   userId: string,
-  status: 'online' | 'away' | 'offline' = 'online'
+  status: 'online' | 'away' | 'offline' = 'online',
+  options?: { currentPage?: string; isNewSession?: boolean }
 ): Promise<void> => {
+  const now = new Date().toISOString();
+
+  // Detect device info
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const deviceInfo = {
+    userAgent: navigator.userAgent.substring(0, 200),
+    platform: navigator.platform,
+    isMobile,
+  };
+
+  const updateData: Record<string, any> = {
+    user_id: userId,
+    last_seen: now,
+    is_online: status !== 'offline',
+    status,
+    updated_at: now,
+    device_info: deviceInfo,
+  };
+
+  // Only update current_page if provided
+  if (options?.currentPage) {
+    updateData.current_page = options.currentPage;
+  }
+
+  // Set session start on new session
+  if (options?.isNewSession) {
+    updateData.session_started_at = now;
+  }
+
   const { error } = await supabase
     .from('user_presence')
-    .upsert({
-      user_id: userId,
-      last_seen: new Date().toISOString(),
-      is_online: status !== 'offline',
-      status,
-      updated_at: new Date().toISOString(),
-    }, {
+    .upsert(updateData, {
       onConflict: 'user_id',
     });
 
@@ -140,14 +171,27 @@ export class PresenceManager {
   private activityHandler: (() => void) | null = null;
   private unloadHandler: (() => void) | null = null;
   private activityTimeout: NodeJS.Timeout | null = null;
+  private routeChangeHandler: (() => void) | null = null;
 
   constructor(userId: string) {
     this.userId = userId;
   }
 
+  private getCurrentPage(): string {
+    // Extract a clean page name from the URL
+    const path = window.location.pathname;
+    // Remove leading slash and format nicely
+    return path === '/' ? 'Dashboard' : path.substring(1).split('/').map(
+      s => s.charAt(0).toUpperCase() + s.slice(1).replace(/-/g, ' ')
+    ).join(' / ');
+  }
+
   start(): void {
-    // Initial presence update
-    updatePresence(this.userId, 'online');
+    // Initial presence update with session start
+    updatePresence(this.userId, 'online', {
+      currentPage: this.getCurrentPage(),
+      isNewSession: true
+    });
 
     // Track page unload to set offline immediately
     this.unloadHandler = () => {
@@ -158,9 +202,9 @@ export class PresenceManager {
     window.addEventListener('beforeunload', this.unloadHandler);
     window.addEventListener('pagehide', this.unloadHandler);
 
-    // Set up heartbeat interval
+    // Set up heartbeat interval - includes current page
     this.intervalId = setInterval(() => {
-      updatePresence(this.userId, 'online');
+      updatePresence(this.userId, 'online', { currentPage: this.getCurrentPage() });
     }, HEARTBEAT_INTERVAL);
 
     // Track page visibility

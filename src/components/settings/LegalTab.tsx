@@ -142,7 +142,7 @@ const LegalTab = () => {
               <button
                 key={index}
                 onClick={() => window.open(doc.url, '_blank')}
-                className="w-full flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left group"
+                className="w-full flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left group touch-manipulation active:bg-white/[0.08]"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div className={`w-10 h-10 rounded-lg ${doc.bgColor} flex items-center justify-center flex-shrink-0`}>
@@ -257,7 +257,7 @@ const LegalTab = () => {
           <div className="mt-4 pt-4 border-t border-white/10">
             <Button
               variant="outline"
-              className="border-white/20 hover:bg-white/5"
+              className="h-11 touch-manipulation active:scale-[0.98] border-white/20 hover:bg-white/5"
               onClick={() => window.open('/data-request', '_blank')}
             >
               <FileText className="h-4 w-4 mr-2" />

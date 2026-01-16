@@ -1,8 +1,13 @@
+# Elec-Mate Robots.txt
+# https://elec-mate.co.uk
+
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 2
 
 User-agent: Twitterbot
 Allow: /
@@ -10,5 +15,23 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: LinkedInBot
+Allow: /
+
 User-agent: *
 Allow: /
+Crawl-delay: 5
+
+# Disallow admin and private areas
+Disallow: /admin
+Disallow: /api
+Disallow: /auth/callback
+
+# Allow important assets
+Allow: /logo.jpg
+Allow: /og-image.png
+Allow: /*.css
+Allow: /*.js
+
+# Sitemap location
+Sitemap: https://elec-mate.co.uk/sitemap.xml

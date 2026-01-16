@@ -69,7 +69,7 @@ export const InspectorProfileList: React.FC<InspectorProfileListProps> = ({
 
         <Button
           variant="outline"
-          className="w-full h-12 border-dashed border-2 hover:border-primary/50 hover:bg-primary/5"
+          className="w-full h-12 border-dashed border-2 hover:border-primary/50 hover:bg-primary/5 touch-manipulation active:scale-[0.98]"
           onClick={onCreate}
         >
           <Plus className="h-4 w-4 mr-2" />
@@ -97,7 +97,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     <button
       onClick={onSelect}
       className={cn(
-        'w-full p-3 rounded-lg border text-left transition-all',
+        'w-full p-3 rounded-lg border text-left transition-all touch-manipulation active:bg-primary/20',
         'hover:bg-muted/50',
         isSelected
           ? 'border-primary bg-primary/10'
@@ -126,10 +126,10 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
               e.stopPropagation();
               onSetDefault();
             }}
-            className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-amber-400 transition-colors"
+            className="p-2 -m-1 rounded hover:bg-muted text-muted-foreground hover:text-amber-400 transition-colors touch-manipulation"
             title="Set as default"
           >
-            <Star className="h-3.5 w-3.5" />
+            <Star className="h-4 w-4" />
           </button>
         )}
       </div>

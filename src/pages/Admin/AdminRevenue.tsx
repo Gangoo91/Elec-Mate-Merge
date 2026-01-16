@@ -78,16 +78,30 @@ export default function AdminRevenue() {
       const arr = mrr * 12;
 
       // Get cancellations (profiles with subscribed = false but had subscription_start)
-      const { count: cancelledCount } = await supabase
+      // IMPORTANT: Exclude free_access_granted = true users - revoked free access is not churn
+      // Also exclude users where free_access_granted is null (never had free access)
+      // but still had a subscription_start (they paid and cancelled)
+      const { count: cancelledPaidCount } = await supabase
         .from("profiles")
         .select("*", { count: "exact", head: true })
         .eq("subscribed", false)
+        .eq("free_access_granted", false) // Don't count revoked free access as churn
         .not("subscription_start", "is", null);
 
-      // Calculate churn rate (cancelled / total who ever subscribed)
-      const totalEverSubscribed = (totalSubscribedRes.count || 0) + (cancelledCount || 0);
-      const churnRate = totalEverSubscribed > 0
-        ? ((cancelledCount || 0) / totalEverSubscribed) * 100
+      // Also get count of users with revoked free access (for display purposes)
+      const { count: revokedFreeCount } = await supabase
+        .from("profiles")
+        .select("*", { count: "exact", head: true })
+        .eq("subscribed", false)
+        .eq("free_access_granted", false)
+        .not("subscription_start", "is", null);
+
+      // Calculate churn rate based on PAID subscribers only
+      // Total ever paid = currently paid + cancelled paid
+      const paidSubscribers = subscribedProfiles.filter(p => !p.free_access_granted);
+      const totalEverPaid = paidSubscribers.length + (cancelledPaidCount || 0);
+      const churnRate = totalEverPaid > 0
+        ? ((cancelledPaidCount || 0) / totalEverPaid) * 100
         : 0;
 
       // Monthly growth
@@ -157,7 +171,7 @@ export default function AdminRevenue() {
         lastMonthSubs: lastMonthSubsRes.count || 0,
         monthGrowth,
         churnRate,
-        cancelledCount: cancelledCount || 0,
+        cancelledCount: cancelledPaidCount || 0,
         tierBreakdown,
         roleBreakdown,
         dailyRevenue,

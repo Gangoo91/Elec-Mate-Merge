@@ -26,6 +26,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import AdminSearchInput from "@/components/admin/AdminSearchInput";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
 import {
   Flag,
   Plus,
@@ -33,12 +35,10 @@ import {
   Edit,
   ToggleLeft,
   ToggleRight,
-  Users,
   Percent,
-  Search,
   RefreshCw,
+  Loader2,
 } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
 
 interface FeatureFlag {
@@ -182,15 +182,11 @@ export default function AdminFeatureFlags() {
       </div>
 
       {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Search flags..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="pl-10 h-11 touch-manipulation"
-        />
-      </div>
+      <AdminSearchInput
+        value={search}
+        onChange={setSearch}
+        placeholder="Search flags..."
+      />
 
       {/* Flags List */}
       {isLoading ? (
@@ -203,10 +199,16 @@ export default function AdminFeatureFlags() {
         </div>
       ) : filteredFlags?.length === 0 ? (
         <Card>
-          <CardContent className="pt-6 text-center py-12">
-            <Flag className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-semibold mb-2">No feature flags</h3>
-            <p className="text-sm text-muted-foreground">Create flags to control feature rollouts.</p>
+          <CardContent className="pt-6">
+            <AdminEmptyState
+              icon={Flag}
+              title="No feature flags"
+              description="Create flags to control feature rollouts."
+              action={isSuperAdmin ? {
+                label: "Add Flag",
+                onClick: () => setCreateOpen(true),
+              } : undefined}
+            />
           </CardContent>
         </Card>
       ) : (
@@ -346,7 +348,14 @@ export default function AdminFeatureFlags() {
                 }}
                 disabled={createMutation.isPending || updateMutation.isPending}
               >
-                {editFlag ? "Save Changes" : "Create Flag"}
+                {(createMutation.isPending || updateMutation.isPending) ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    {editFlag ? "Saving..." : "Creating..."}
+                  </>
+                ) : (
+                  editFlag ? "Save Changes" : "Create Flag"
+                )}
               </Button>
             </SheetFooter>
           </div>
@@ -361,12 +370,22 @@ export default function AdminFeatureFlags() {
             <AlertDialogDescription>This may break features that depend on this flag.</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="h-11 touch-manipulation" disabled={deleteMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
               onClick={() => deleteId && deleteMutation.mutate(deleteId)}
+              disabled={deleteMutation.isPending}
             >
-              Delete
+              {deleteMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                "Delete"
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

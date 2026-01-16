@@ -49,6 +49,7 @@ const EICRInspectionChecklist = ({ formData, onUpdate, onNavigateToObservations 
     const expectedItems = filteredSections.flatMap(section =>
       section.items.map(item => ({
         id: item.id,
+        number: item.number,  // Preserve item number for PDF mapping (e.g., "1.0", "3.1")
         section: section.title,
         item: item.item,
         clause: item.clause,

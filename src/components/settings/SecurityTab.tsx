@@ -169,7 +169,7 @@ const SecurityTab = () => {
                 <p className="text-sm font-medium text-foreground">Enable Two-Factor Authentication</p>
                 <p className="text-xs text-muted-foreground">Add an extra layer of security to your account</p>
               </div>
-              <Button size="sm" className="bg-amber-500 hover:bg-amber-600 text-foreground flex-shrink-0">
+              <Button size="sm" className="h-11 touch-manipulation active:scale-[0.98] bg-amber-500 hover:bg-amber-600 text-foreground flex-shrink-0">
                 Enable
               </Button>
             </div>
@@ -256,7 +256,7 @@ const SecurityTab = () => {
             <Button
               variant="outline"
               size="sm"
-              className="border-white/20 hover:bg-white/5"
+              className="h-11 touch-manipulation active:scale-[0.98] border-white/20 hover:bg-white/5"
               onClick={() => setIsChangingPassword(true)}
             >
               <Key className="h-4 w-4 mr-2" />
@@ -274,13 +274,13 @@ const SecurityTab = () => {
                   type={showCurrentPassword ? 'text' : 'password'}
                   value={passwordForm.currentPassword}
                   onChange={(e) => setPasswordForm(prev => ({ ...prev, currentPassword: e.target.value }))}
-                  className="bg-white/5 border-white/10 pr-10"
+                  className="h-11 text-base touch-manipulation bg-white/5 border-white/10 pr-12"
                   placeholder="Enter current password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 touch-manipulation text-muted-foreground hover:text-foreground"
                 >
                   {showCurrentPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -294,13 +294,13 @@ const SecurityTab = () => {
                   type={showNewPassword ? 'text' : 'password'}
                   value={passwordForm.newPassword}
                   onChange={(e) => setPasswordForm(prev => ({ ...prev, newPassword: e.target.value }))}
-                  className="bg-white/5 border-white/10 pr-10"
+                  className="h-11 text-base touch-manipulation bg-white/5 border-white/10 pr-12"
                   placeholder="Enter new password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowNewPassword(!showNewPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 touch-manipulation text-muted-foreground hover:text-foreground"
                 >
                   {showNewPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -313,7 +313,7 @@ const SecurityTab = () => {
                 type="password"
                 value={passwordForm.confirmPassword}
                 onChange={(e) => setPasswordForm(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                className="bg-white/5 border-white/10"
+                className="h-11 text-base touch-manipulation bg-white/5 border-white/10"
                 placeholder="Confirm new password"
               />
             </div>
@@ -321,7 +321,7 @@ const SecurityTab = () => {
             <div className="flex justify-end gap-3 pt-2">
               <Button
                 variant="outline"
-                className="border-white/20"
+                className="h-11 touch-manipulation active:scale-[0.98] border-white/20"
                 onClick={() => {
                   setIsChangingPassword(false);
                   setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
@@ -332,7 +332,7 @@ const SecurityTab = () => {
               </Button>
               <Button
                 onClick={handlePasswordChange}
-                className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
+                className="h-11 touch-manipulation active:scale-[0.98] bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
                 disabled={isLoading || !passwordForm.currentPassword || !passwordForm.newPassword}
               >
                 {isLoading ? (
@@ -359,7 +359,7 @@ const SecurityTab = () => {
           <Button
             variant="outline"
             size="sm"
-            className="border-red-500/30 text-red-400 hover:bg-red-500/10"
+            className="h-11 touch-manipulation active:scale-[0.98] border-red-500/30 text-red-400 hover:bg-red-500/10"
             onClick={handleSignOutAllDevices}
           >
             <LogOut className="h-4 w-4 mr-2" />
@@ -397,8 +397,8 @@ const SecurityTab = () => {
                   {!device.current && (
                     <Button
                       variant="ghost"
-                      size="sm"
-                      className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                      size="icon"
+                      className="h-10 w-10 touch-manipulation active:scale-[0.98] text-red-400 hover:text-red-300 hover:bg-red-500/10"
                       onClick={() => handleSignOutDevice(device.id)}
                     >
                       <LogOut className="h-4 w-4" />

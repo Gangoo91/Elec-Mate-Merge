@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Sheet,
   SheetContent,
@@ -15,6 +16,9 @@ import {
   SheetTitle,
   SheetFooter,
 } from "@/components/ui/sheet";
+import AdminPagination from "@/components/admin/AdminPagination";
+import AdminSearchInput from "@/components/admin/AdminSearchInput";
+import AdminEmptyState from "@/components/admin/AdminEmptyState";
 import {
   Search,
   Shield,
@@ -32,11 +36,13 @@ import {
   CreditCard,
   Mail,
   User,
-  MoreHorizontal,
   Trash2,
   Gift,
   AlertTriangle,
   XCircle,
+  CheckSquare,
+  Square,
+  Loader2,
 } from "lucide-react";
 import {
   AlertDialog,
@@ -50,6 +56,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { formatDistanceToNow, format } from "date-fns";
 import { toast } from "@/hooks/use-toast";
+import { getInitials, ROLE_COLORS } from "@/utils/adminUtils";
+import { AdminUserCard } from "@/components/admin/cards/AdminUserCard";
 
 interface UserProfile {
   id: string;
@@ -73,13 +81,13 @@ interface UserProfile {
   last_sign_in?: string | null;
 }
 
-const roleColors: Record<string, { bg: string; text: string; border: string }> = {
-  electrician: { bg: "bg-yellow-500/10", text: "text-yellow-400", border: "border-yellow-500/30" },
-  apprentice: { bg: "bg-purple-500/10", text: "text-purple-400", border: "border-purple-500/30" },
-  employer: { bg: "bg-blue-500/10", text: "text-blue-400", border: "border-blue-500/30" },
-  college: { bg: "bg-green-500/10", text: "text-green-400", border: "border-green-500/30" },
-  visitor: { bg: "bg-gray-500/10", text: "text-gray-400", border: "border-gray-500/30" },
-};
+// Use ROLE_COLORS from adminUtils but map to the local format with border
+const roleColors: Record<string, { bg: string; text: string; border: string }> = Object.fromEntries(
+  Object.entries(ROLE_COLORS).map(([role, colors]) => [
+    role,
+    { bg: colors.bg.replace('/20', '/10'), text: colors.text, border: colors.badge.split(' ').pop() || 'border-gray-500/30' }
+  ])
+);
 
 const roleFilters = [
   { value: "all", label: "All" },
@@ -106,6 +114,14 @@ export default function AdminUsers() {
   const [timeFilter, setTimeFilter] = useState(() => searchParams.get("filter") || "all");
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
+
+  // Bulk selection state
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [bulkActionPending, setBulkActionPending] = useState(false);
 
   // Sync timeFilter with URL params
   useEffect(() => {
@@ -210,6 +226,103 @@ export default function AdminUsers() {
     admins: users?.filter((u) => u.admin_role).length || 0,
   };
 
+  // Pagination logic
+  const totalPages = Math.ceil((users?.length || 0) / itemsPerPage);
+  const paginatedUsers = useMemo(() => {
+    if (!users) return [];
+    const start = (currentPage - 1) * itemsPerPage;
+    return users.slice(start, start + itemsPerPage);
+  }, [users, currentPage, itemsPerPage]);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+    setSelectedIds(new Set()); // Clear selection on filter change
+  }, [search, roleFilter, timeFilter]);
+
+  // Bulk selection functions - memoized for child component stability
+  const toggleSelection = useCallback((id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }, []);
+
+  const toggleSelectAll = () => {
+    if (selectedIds.size === paginatedUsers.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(paginatedUsers.map((u) => u.id)));
+    }
+  };
+
+  const isAllSelected = paginatedUsers.length > 0 && selectedIds.size === paginatedUsers.length;
+  const isSomeSelected = selectedIds.size > 0 && selectedIds.size < paginatedUsers.length;
+
+  // Bulk grant subscription mutation
+  const bulkGrantMutation = useMutation({
+    mutationFn: async (userIds: string[]) => {
+      setBulkActionPending(true);
+      const results = await Promise.allSettled(
+        userIds.map((userId) =>
+          supabase.functions.invoke("admin-grant-subscription", {
+            body: { userId, tier: "Employer" },
+          })
+        )
+      );
+      const failures = results.filter((r) => r.status === "rejected").length;
+      if (failures > 0) {
+        throw new Error(`${failures} of ${userIds.length} grants failed`);
+      }
+      return results;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
+      setSelectedIds(new Set());
+      toast({ title: "Access granted", description: `Granted access to ${selectedIds.size} users` });
+    },
+    onError: (error) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+    onSettled: () => {
+      setBulkActionPending(false);
+    },
+  });
+
+  // Bulk revoke subscription mutation
+  const bulkRevokeMutation = useMutation({
+    mutationFn: async (userIds: string[]) => {
+      setBulkActionPending(true);
+      const results = await Promise.allSettled(
+        userIds.map((userId) =>
+          supabase.functions.invoke("admin-manage-subscription", {
+            body: { action: "revoke_free_access", target_user_id: userId },
+          })
+        )
+      );
+      const failures = results.filter((r) => r.status === "rejected").length;
+      if (failures > 0) {
+        throw new Error(`${failures} of ${userIds.length} revokes failed`);
+      }
+      return results;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
+      setSelectedIds(new Set());
+      toast({ title: "Access revoked", description: `Revoked access from ${selectedIds.size} users` });
+    },
+    onError: (error) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+    onSettled: () => {
+      setBulkActionPending(false);
+    },
+  });
+
   // Grant admin mutation - uses edge function to bypass RLS
   const grantAdminMutation = useMutation({
     mutationFn: async ({ userId, role }: { userId: string; role: "admin" | null }) => {
@@ -239,7 +352,7 @@ export default function AdminUsers() {
     },
   });
 
-  // Grant free subscription mutation - uses edge function to bypass RLS
+  // Grant free subscription mutation - uses edge function with optimistic updates
   const grantSubscriptionMutation = useMutation({
     mutationFn: async ({ userId, tier }: { userId: string; tier: string }) => {
       const { data, error } = await supabase.functions.invoke("admin-grant-subscription", {
@@ -259,18 +372,53 @@ export default function AdminUsers() {
 
       return data;
     },
+    // Optimistic update - show change immediately
+    onMutate: async ({ userId }) => {
+      // Cancel outgoing refetches
+      await queryClient.cancelQueries({ queryKey: ["admin-users"] });
+
+      // Snapshot current value
+      const previousUsers = queryClient.getQueryData(["admin-users", search, roleFilter, timeFilter]);
+
+      // Optimistically update the user
+      queryClient.setQueryData(
+        ["admin-users", search, roleFilter, timeFilter],
+        (old: UserProfile[] | undefined) =>
+          old?.map((u) =>
+            u.id === userId ? { ...u, subscribed: true, free_access_granted: true } : u
+          )
+      );
+
+      // Also update selectedUser if it matches
+      if (selectedUser?.id === userId) {
+        setSelectedUser((prev) =>
+          prev ? { ...prev, subscribed: true, free_access_granted: true } : null
+        );
+      }
+
+      toast({ title: "Granting access...", description: "Please wait" });
+
+      return { previousUsers };
+    },
+    onError: (error, _variables, context) => {
+      // Rollback on error
+      if (context?.previousUsers) {
+        queryClient.setQueryData(["admin-users", search, roleFilter, timeFilter], context.previousUsers);
+      }
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
-      queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
       setSelectedUser(null);
       toast({ title: "Subscription granted", description: "User now has free access" });
     },
-    onError: (error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
+    onSettled: () => {
+      // Always refetch to ensure consistency
+      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
     },
   });
 
-  // Revoke subscription mutation
+  // Revoke subscription mutation with optimistic updates
   const revokeSubscriptionMutation = useMutation({
     mutationFn: async (userId: string) => {
       const { data, error } = await supabase.functions.invoke("admin-manage-subscription", {
@@ -289,14 +437,49 @@ export default function AdminUsers() {
 
       return data;
     },
+    // Optimistic update - show change immediately
+    onMutate: async (userId) => {
+      // Cancel outgoing refetches
+      await queryClient.cancelQueries({ queryKey: ["admin-users"] });
+
+      // Snapshot current value
+      const previousUsers = queryClient.getQueryData(["admin-users", search, roleFilter, timeFilter]);
+
+      // Optimistically update the user
+      queryClient.setQueryData(
+        ["admin-users", search, roleFilter, timeFilter],
+        (old: UserProfile[] | undefined) =>
+          old?.map((u) =>
+            u.id === userId ? { ...u, subscribed: false, free_access_granted: false } : u
+          )
+      );
+
+      // Also update selectedUser if it matches
+      if (selectedUser?.id === userId) {
+        setSelectedUser((prev) =>
+          prev ? { ...prev, subscribed: false, free_access_granted: false } : null
+        );
+      }
+
+      toast({ title: "Revoking access...", description: "Please wait" });
+
+      return { previousUsers };
+    },
+    onError: (error, _variables, context) => {
+      // Rollback on error
+      if (context?.previousUsers) {
+        queryClient.setQueryData(["admin-users", search, roleFilter, timeFilter], context.previousUsers);
+      }
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
-      queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
       setSelectedUser(null);
       toast({ title: "Access revoked", description: "User subscription removed" });
     },
-    onError: (error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
+    onSettled: () => {
+      // Always refetch to ensure consistency
+      queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
     },
   });
 
@@ -331,19 +514,14 @@ export default function AdminUsers() {
     },
   });
 
-  const getInitials = (name: string | null) => {
-    if (!name) return "?";
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
-  const getRoleStyle = (role: string | null) => {
+  const getRoleStyle = useCallback((role: string | null) => {
     return roleColors[role || "visitor"] || roleColors.visitor;
-  };
+  }, []);
+
+  // Memoized callback for user click
+  const handleUserClick = useCallback((user: UserProfile) => {
+    setSelectedUser(user);
+  }, []);
 
   return (
     <div className="space-y-4">
@@ -397,15 +575,12 @@ export default function AdminUsers() {
 
       {/* Search Bar */}
       <div className="flex gap-2">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search users..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 h-12 touch-manipulation text-base rounded-xl"
-          />
-        </div>
+        <AdminSearchInput
+          value={search}
+          onChange={setSearch}
+          placeholder="Search users..."
+          className="flex-1"
+        />
         <Button
           variant="outline"
           size="icon"
@@ -465,6 +640,63 @@ export default function AdminUsers() {
         ))}
       </div>
 
+      {/* Bulk Action Bar */}
+      {selectedIds.size > 0 && (
+        <Card className="sticky top-0 z-10 border-yellow-500/30 bg-yellow-500/10">
+          <CardContent className="py-3 px-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  checked={isAllSelected}
+                  onCheckedChange={toggleSelectAll}
+                  className="border-yellow-500/50 data-[state=checked]:bg-yellow-500 data-[state=checked]:border-yellow-500"
+                />
+                <span className="text-sm font-medium text-yellow-400">
+                  {selectedIds.size} selected
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  size="sm"
+                  className="h-9 bg-green-600 hover:bg-green-700 touch-manipulation"
+                  onClick={() => bulkGrantMutation.mutate([...selectedIds])}
+                  disabled={bulkActionPending}
+                >
+                  {bulkActionPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Gift className="h-4 w-4 mr-1" />
+                  )}
+                  Grant Access
+                </Button>
+                <Button
+                  size="sm"
+                  variant="destructive"
+                  className="h-9 touch-manipulation"
+                  onClick={() => bulkRevokeMutation.mutate([...selectedIds])}
+                  disabled={bulkActionPending}
+                >
+                  {bulkActionPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <XCircle className="h-4 w-4 mr-1" />
+                  )}
+                  Revoke
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="h-9 touch-manipulation"
+                  onClick={() => setSelectedIds(new Set())}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* User Cards */}
       {isLoading ? (
         <div className="space-y-3">
@@ -484,93 +716,57 @@ export default function AdminUsers() {
         </div>
       ) : users?.length === 0 ? (
         <Card>
-          <CardContent className="pt-8 pb-8 text-center">
-            <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-semibold mb-2">No users found</h3>
-            <p className="text-sm text-muted-foreground">Try adjusting your search or filters.</p>
+          <CardContent className="pt-6">
+            <AdminEmptyState
+              icon={Users}
+              title="No users found"
+              description="Try adjusting your search or filters."
+            />
           </CardContent>
         </Card>
       ) : (
-        <div className="space-y-2">
-          {users?.map((user) => {
-            const roleStyle = getRoleStyle(user.role);
-            return (
-              <Card
+        <>
+          {/* Select All Header */}
+          <div className="flex items-center gap-3 px-1 py-2">
+            <Checkbox
+              checked={isAllSelected}
+              onCheckedChange={toggleSelectAll}
+              className="border-muted-foreground/50"
+            />
+            <span className="text-xs text-muted-foreground">
+              {isAllSelected ? "Deselect all" : "Select all on this page"}
+            </span>
+          </div>
+
+          <div className="space-y-2">
+            {paginatedUsers.map((user) => (
+              <AdminUserCard
                 key={user.id}
-                className="touch-manipulation active:scale-[0.98] transition-all duration-150 cursor-pointer border-transparent hover:border-primary/20"
-                onClick={() => setSelectedUser(user)}
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-4">
-                    {/* Avatar */}
-                    <div className="relative">
-                      <Avatar className="h-14 w-14 rounded-2xl border-2 border-muted">
-                        <AvatarImage src={user.avatar_url || undefined} />
-                        <AvatarFallback className={`rounded-2xl text-lg font-bold ${roleStyle.bg} ${roleStyle.text}`}>
-                          {getInitials(user.full_name)}
-                        </AvatarFallback>
-                      </Avatar>
-                      {/* Online indicator */}
-                      {user.isOnline && (
-                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-background" />
-                      )}
-                      {/* Admin crown */}
-                      {user.admin_role && (
-                        <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
-                          <Crown className="h-3 w-3 text-white" />
-                        </div>
-                      )}
-                    </div>
+                user={user}
+                isSelected={selectedIds.has(user.id)}
+                onToggleSelection={toggleSelection}
+                onClick={handleUserClick}
+                roleStyle={getRoleStyle(user.role)}
+              />
+            ))}
+          </div>
 
-                    {/* User Info */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <p className="font-semibold text-base truncate">
-                          {user.full_name || "No name"}
-                        </p>
-                        {user.subscribed && (
-                          <Zap className="h-4 w-4 text-amber-400 shrink-0" />
-                        )}
-                      </div>
-                      {user.email ? (
-                        <p className="text-sm text-muted-foreground truncate flex items-center gap-1">
-                          <Mail className="h-3 w-3" />
-                          {user.email}
-                        </p>
-                      ) : (
-                        <p className="text-sm text-muted-foreground truncate">
-                          @{user.username || "unknown"}
-                        </p>
-                      )}
-                      <div className="flex items-center gap-2 mt-1.5">
-                        <Badge
-                          variant="outline"
-                          className={`text-[10px] px-2 py-0 h-5 ${roleStyle.bg} ${roleStyle.text} ${roleStyle.border}`}
-                        >
-                          {user.role || "visitor"}
-                        </Badge>
-                        {user.elec_id_enabled && (
-                          <Badge variant="outline" className="text-[10px] px-2 py-0 h-5 bg-cyan-500/10 text-cyan-400 border-cyan-500/30">
-                            <IdCard className="h-3 w-3 mr-1" />
-                            ID
-                          </Badge>
-                        )}
-                        {user.admin_role && (
-                          <Badge className="text-[10px] px-2 py-0 h-5 bg-red-500/20 text-red-400 border-red-500/30">
-                            {user.admin_role === "super_admin" ? "Super" : "Admin"}
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Chevron */}
-                    <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <AdminPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              totalItems={users?.length || 0}
+              itemsPerPage={itemsPerPage}
+              onPageChange={setCurrentPage}
+              onItemsPerPageChange={(val) => {
+                setItemsPerPage(val);
+                setCurrentPage(1);
+              }}
+              className="mt-4"
+            />
+          )}
+        </>
       )}
 
       {/* User Detail Sheet */}
