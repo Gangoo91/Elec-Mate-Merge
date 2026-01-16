@@ -1,6 +1,6 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
-import { Users, Wrench, HelpCircle, Bot } from 'lucide-react';
+import { Calculator, HelpCircle, BookOpen, Bot } from 'lucide-react';
 
 interface StatItem {
   icon: React.ReactNode;
@@ -10,10 +10,10 @@ interface StatItem {
 }
 
 const stats: StatItem[] = [
-  { icon: <Wrench className="w-5 h-5" />, value: 50, suffix: '+', label: 'Calculators' },
-  { icon: <HelpCircle className="w-5 h-5" />, value: 6800, suffix: '+', label: 'Questions' },
-  { icon: <Users className="w-5 h-5" />, value: 14, suffix: '', label: 'Study Topics' },
-  { icon: <Bot className="w-5 h-5" />, value: 8, suffix: '', label: 'AI Agents' },
+  { icon: <Calculator className="w-4 h-4 sm:w-5 sm:h-5" />, value: 50, suffix: '+', label: 'Calculators' },
+  { icon: <HelpCircle className="w-4 h-4 sm:w-5 sm:h-5" />, value: 6800, suffix: '+', label: 'Questions' },
+  { icon: <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />, value: 14, suffix: '', label: 'Study Topics' },
+  { icon: <Bot className="w-4 h-4 sm:w-5 sm:h-5" />, value: 8, suffix: '', label: 'AI Agents' },
 ];
 
 const AnimatedCounter = ({ value, suffix, isInView }: { value: number; suffix: string; isInView: boolean }) => {
@@ -21,8 +21,8 @@ const AnimatedCounter = ({ value, suffix, isInView }: { value: number; suffix: s
 
   useEffect(() => {
     if (isInView && count === 0) {
-      const duration = 1500;
-      const steps = 40;
+      const duration = 1200;
+      const steps = 30;
       const increment = value / steps;
       let current = 0;
 
@@ -52,24 +52,32 @@ export const SocialProofBar = () => {
   const isInView = useInView(ref, { once: true, amount: 0.5 });
 
   return (
-    <section ref={ref} className="w-full bg-neutral-900/80 border-y border-white/5 py-8 sm:py-10">
-      <div className="max-w-7xl mx-auto px-6">
+    <section ref={ref} className="w-full bg-white/[0.02] border-y border-white/[0.04] py-6 sm:py-8">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <motion.div
-          className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8"
+          className="flex justify-between sm:grid sm:grid-cols-4 gap-4 sm:gap-6"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.4 }}
         >
-          {stats.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <span className="text-yellow-400">{stat.icon}</span>
-                <span className="text-2xl sm:text-3xl font-bold text-white">
-                  <AnimatedCounter value={stat.value} suffix={stat.suffix} isInView={isInView} />
-                </span>
+          {stats.map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              className="text-center flex-1"
+              initial={{ opacity: 0, y: 10 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+            >
+              <div className="flex flex-col items-center gap-1 sm:gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <span className="text-yellow-400/80">{stat.icon}</span>
+                  <span className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
+                    <AnimatedCounter value={stat.value} suffix={stat.suffix} isInView={isInView} />
+                  </span>
+                </div>
+                <p className="text-[10px] sm:text-xs text-white/40 font-medium uppercase tracking-wider">{stat.label}</p>
               </div>
-              <p className="text-sm text-white/60">{stat.label}</p>
-            </div>
+            </motion.div>
           ))}
         </motion.div>
       </div>

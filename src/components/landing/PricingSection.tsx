@@ -15,22 +15,22 @@ interface PricingTier {
   popular?: boolean;
   gradient: string;
   buttonClass: string;
+  disabled?: boolean;
 }
 
 const tiers: PricingTier[] = [
   {
     name: 'Apprentice',
-    icon: <GraduationCap className="w-6 h-6" />,
+    icon: <GraduationCap className="w-5 h-5" />,
     price: '£4.99',
     period: '/month',
-    description: 'Everything you need to pass your exams and qualify.',
+    description: 'Everything you need to pass your exams.',
     features: [
       'Level 2 & 3 courses',
       '6,800+ practice questions',
       'AM2 exam preparation',
-      'Progress tracking & streaks',
+      'Progress tracking',
       'Mental Health Hub',
-      'Career progression tools',
       'Elec-ID credential',
     ],
     cta: 'Start Free Trial',
@@ -39,43 +39,41 @@ const tiers: PricingTier[] = [
   },
   {
     name: 'Electrician',
-    icon: <Sparkles className="w-6 h-6" />,
+    icon: <Sparkles className="w-5 h-5" />,
     price: '£9.99',
     period: '/month',
-    description: 'Everything you need for professional electrical work.',
+    description: 'Everything for professional electrical work.',
     features: [
       'Everything in Apprentice',
-      'Inspection Suite (EICR, EIC, MW)',
+      'Inspection Suite (EICR, EIC)',
       'All 8 AI Agents',
-      'Voice quotes & invoices in 2 mins',
-      '50+ electrical calculators',
+      'Voice quotes in 2 mins',
+      '50+ calculators',
       'AI Board Scanner',
-      'Fault finding codes',
-      'Elec-ID credential',
     ],
     cta: 'Start Free Trial',
     popular: true,
-    gradient: 'from-yellow-500/20 to-amber-500/10',
+    gradient: 'from-yellow-500/15 to-amber-500/5',
     buttonClass: 'bg-yellow-500 hover:bg-yellow-400 text-black',
   },
   {
     name: 'Employer',
-    icon: <Building2 className="w-6 h-6" />,
+    icon: <Building2 className="w-5 h-5" />,
     price: '£29.99',
     period: '/month',
-    description: 'Manage your team and grow your electrical business.',
+    description: 'Manage your team and grow your business.',
     features: [
       'Everything in Electrician',
-      'Team management (up to 20)',
+      'Team management (20)',
       'Job allocation & tracking',
-      'Team performance analytics',
-      'Apprentice progress monitoring',
-      'Company branding on certs',
-      'Elec-ID credential',
+      'Team analytics',
+      'Apprentice progress',
+      'Company branding',
     ],
     cta: 'Coming Soon',
     gradient: 'from-purple-500/10 to-purple-600/5',
-    buttonClass: 'bg-purple-500 hover:bg-purple-400 text-white',
+    buttonClass: 'bg-purple-500/50 text-white/70 cursor-not-allowed',
+    disabled: true,
   },
 ];
 
@@ -84,92 +82,107 @@ export const PricingSection = () => {
   const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   return (
-    <section ref={ref} className="w-full py-16 sm:py-24 bg-black">
-      <div className="max-w-7xl mx-auto px-6">
+    <section ref={ref} className="w-full py-12 sm:py-20 bg-black">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
         {/* Header */}
         <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
+          className="text-center mb-8 sm:mb-12"
+          initial={{ opacity: 0, y: 12 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.4 }}
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Simple, Transparent Pricing
           </h2>
-          <p className="text-white/70 max-w-2xl mx-auto">
-            Choose the plan that fits your needs. All plans include a 7-day free trial.
+          <p className="text-white/50 max-w-lg mx-auto text-sm sm:text-base">
+            All plans include a 7-day free trial. No card required.
           </p>
         </motion.div>
 
-        {/* Pricing cards */}
+        {/* Mobile: Horizontal scroll, Desktop: Grid */}
+        <div className="sm:hidden -mx-5 px-5">
+          <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide">
+            {tiers.map((tier) => (
+              <div key={tier.name} className="snap-start flex-shrink-0 w-[280px]">
+                <PricingCard tier={tier} />
+              </div>
+            ))}
+          </div>
+          <p className="text-center text-white/30 text-[10px] mt-3 uppercase tracking-wider">Swipe for more</p>
+        </div>
+
         <motion.div
-          className="grid md:grid-cols-3 gap-6 lg:gap-8"
-          initial={{ opacity: 0, y: 15 }}
+          className="hidden sm:grid sm:grid-cols-3 gap-4 lg:gap-6"
+          initial={{ opacity: 0, y: 12 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
         >
           {tiers.map((tier) => (
-            <div
-              key={tier.name}
-              className={`relative rounded-2xl p-6 lg:p-8 bg-gradient-to-br ${tier.gradient} border ${
-                tier.popular ? 'border-yellow-500/50' : 'border-white/10'
-              }`}
-            >
-              {tier.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-yellow-500 text-black text-xs font-semibold">
-                  Most Popular
-                </div>
-              )}
-
-              <div className="flex items-center gap-3 mb-4">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                  tier.popular ? 'bg-yellow-500/20 text-yellow-400' : 'bg-white/10 text-white'
-                }`}>
-                  {tier.icon}
-                </div>
-                <h3 className="text-xl font-bold text-white">{tier.name}</h3>
-              </div>
-
-              <div className="mb-4">
-                <span className="text-4xl font-bold text-white">{tier.price}</span>
-                <span className="text-white/60">{tier.period}</span>
-              </div>
-
-              <p className="text-white/70 text-sm mb-6">{tier.description}</p>
-
-              <Link to="/auth/signup" className="block mb-6">
-                <Button
-                  size="lg"
-                  className={`w-full h-14 font-semibold touch-manipulation ${tier.buttonClass}`}
-                >
-                  {tier.cta}
-                </Button>
-              </Link>
-
-              <div className="space-y-3">
-                {tier.features.map((feature, featureIndex) => (
-                  <div key={featureIndex} className="flex items-start gap-3">
-                    <Check className={`w-5 h-5 flex-shrink-0 ${
-                      tier.popular ? 'text-yellow-400' : 'text-green-400'
-                    }`} />
-                    <span className="text-sm text-white/80">{feature}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <PricingCard key={tier.name} tier={tier} />
           ))}
         </motion.div>
 
         {/* Trust note */}
         <motion.p
-          className="text-center text-white/50 text-sm mt-8"
+          className="text-center text-white/30 text-xs mt-6 sm:mt-8"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.3 }}
         >
-          No card required to start. Cancel anytime. Prices exclude VAT.
+          Cancel anytime. Prices exclude VAT.
         </motion.p>
       </div>
     </section>
   );
 };
+
+const PricingCard = ({ tier }: { tier: PricingTier }) => (
+  <div
+    className={`relative rounded-xl p-5 sm:p-6 bg-gradient-to-br ${tier.gradient} border ${
+      tier.popular ? 'border-yellow-500/30' : 'border-white/[0.06]'
+    } h-full flex flex-col`}
+  >
+    {tier.popular && (
+      <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-yellow-500 text-black text-[10px] sm:text-xs font-semibold">
+        Most Popular
+      </div>
+    )}
+
+    <div className="flex items-center gap-2.5 mb-3">
+      <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${
+        tier.popular ? 'bg-yellow-500/20 text-yellow-400' : 'bg-white/10 text-white'
+      }`}>
+        {tier.icon}
+      </div>
+      <h3 className="text-lg font-bold text-white">{tier.name}</h3>
+    </div>
+
+    <div className="mb-3">
+      <span className="text-3xl sm:text-4xl font-bold text-white">{tier.price}</span>
+      <span className="text-white/40 text-sm">{tier.period}</span>
+    </div>
+
+    <p className="text-white/50 text-sm mb-4">{tier.description}</p>
+
+    <Link to={tier.disabled ? '#' : '/auth/signup'} className="block mb-4">
+      <Button
+        size="lg"
+        className={`w-full h-12 sm:h-14 font-semibold touch-manipulation ${tier.buttonClass}`}
+        disabled={tier.disabled}
+      >
+        {tier.cta}
+      </Button>
+    </Link>
+
+    <div className="space-y-2.5 mt-auto">
+      {tier.features.map((feature, featureIndex) => (
+        <div key={featureIndex} className="flex items-start gap-2.5">
+          <Check className={`w-4 h-4 flex-shrink-0 mt-0.5 ${
+            tier.popular ? 'text-yellow-400/80' : 'text-green-400/80'
+          }`} />
+          <span className="text-xs sm:text-sm text-white/60">{feature}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+);
