@@ -12,13 +12,13 @@ on:
       scrape_type:
         description: 'What to scrape'
         required: true
-        default: 'all'
+        default: 'materials'
         type: choice
         options:
-          - all
           - materials
           - tools
           - deals
+          - all
       supplier:
         description: 'Specific supplier (leave empty for all)'
         required: false
@@ -29,146 +29,92 @@ env:
   SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
 
 jobs:
-  scrape-materials:
-    name: Scrape Materials
+  scrape:
+    name: Run Scraper
     runs-on: ubuntu-latest
-    if: github.event_name == 'schedule' || github.event.inputs.scrape_type == 'all' || github.event.inputs.scrape_type == 'materials'
-    timeout-minutes: 60
+    timeout-minutes: 90
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: services/scraper/package-lock.json
-
-      - name: Install dependencies
-        working-directory: services/scraper
-        run: npm ci
-
-      - name: Install Chromium for Puppeteer
-        run: npx puppeteer browsers install chrome
-
-      - name: Run Materials Scraper
-        working-directory: services/scraper
+      - name: Validate secrets
         run: |
-          echo "Starting materials scrape at $(date)"
-          npm run scrape:materials
-          echo "Completed materials scrape at $(date)"
-
-      - name: Notify on failure
-        if: failure()
-        run: |
-          echo "::error::Materials scrape failed at $(date)"
-
-  scrape-tools:
-    name: Scrape Tools
-    runs-on: ubuntu-latest
-    if: github.event.inputs.scrape_type == 'all' || github.event.inputs.scrape_type == 'tools'
-    timeout-minutes: 45
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+          if [ -z "${{ secrets.SUPABASE_URL }}" ]; then
+            echo "::error::SUPABASE_URL secret is not set"
+            exit 1
+          fi
+          if [ -z "${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" ]; then
+            echo "::error::SUPABASE_SERVICE_ROLE_KEY secret is not set"
+            exit 1
+          fi
+          echo "Secrets validated successfully"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: services/scraper/package-lock.json
 
-      - name: Install dependencies
+      - name: Install system dependencies for Puppeteer
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libnss3 \
+            libnspr4 \
+            libatk1.0-0 \
+            libatk-bridge2.0-0 \
+            libcups2 \
+            libdrm2 \
+            libxkbcommon0 \
+            libxcomposite1 \
+            libxdamage1 \
+            libxfixes3 \
+            libxrandr2 \
+            libgbm1 \
+            libasound2 \
+            libpango-1.0-0 \
+            libcairo2
+
+      - name: Install scraper dependencies
         working-directory: services/scraper
-        run: npm ci
+        run: npm install
 
-      - name: Install Chromium for Puppeteer
-        run: npx puppeteer browsers install chrome
+      - name: Determine scrape type
+        id: scrape-type
+        run: |
+          if [ "${{ github.event_name }}" == "schedule" ]; then
+            echo "type=materials" >> $GITHUB_OUTPUT
+          elif [ -n "${{ github.event.inputs.supplier }}" ]; then
+            echo "type=supplier" >> $GITHUB_OUTPUT
+            echo "supplier=${{ github.event.inputs.supplier }}" >> $GITHUB_OUTPUT
+          else
+            echo "type=${{ github.event.inputs.scrape_type }}" >> $GITHUB_OUTPUT
+          fi
 
-      - name: Run Tools Scraper
+      - name: Run scraper
         working-directory: services/scraper
         run: |
-          echo "Starting tools scrape at $(date)"
-          npm run scrape:tools
-          echo "Completed tools scrape at $(date)"
+          echo "=========================================="
+          echo "Starting scrape at $(date)"
+          echo "Type: ${{ steps.scrape-type.outputs.type }}"
+          echo "=========================================="
 
-  scrape-deals:
-    name: Scrape Deals
-    runs-on: ubuntu-latest
-    if: github.event.inputs.scrape_type == 'deals'
-    timeout-minutes: 30
+          if [ "${{ steps.scrape-type.outputs.type }}" == "supplier" ]; then
+            npx tsx src/cli.ts ${{ steps.scrape-type.outputs.supplier }}
+          else
+            npm run scrape:${{ steps.scrape-type.outputs.type }}
+          fi
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: services/scraper/package-lock.json
-
-      - name: Install dependencies
-        working-directory: services/scraper
-        run: npm ci
-
-      - name: Install Chromium for Puppeteer
-        run: npx puppeteer browsers install chrome
-
-      - name: Run Deals Scraper
-        working-directory: services/scraper
-        run: |
-          echo "Starting deals scrape at $(date)"
-          npm run scrape:deals
-          echo "Completed deals scrape at $(date)"
-
-  scrape-single-supplier:
-    name: Scrape Single Supplier
-    runs-on: ubuntu-latest
-    if: github.event.inputs.supplier != ''
-    timeout-minutes: 30
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: services/scraper/package-lock.json
-
-      - name: Install dependencies
-        working-directory: services/scraper
-        run: npm ci
-
-      - name: Install Chromium for Puppeteer
-        run: npx puppeteer browsers install chrome
-
-      - name: Run Supplier Scraper
-        working-directory: services/scraper
-        run: |
-          echo "Starting scrape for ${{ github.event.inputs.supplier }} at $(date)"
-          npx tsx src/cli.ts ${{ github.event.inputs.supplier }}
+          echo "=========================================="
           echo "Completed scrape at $(date)"
+          echo "=========================================="
 
-  update-scrape-timestamp:
-    name: Update Last Scraped Timestamp
-    runs-on: ubuntu-latest
-    needs: [scrape-materials]
-    if: always() && needs.scrape-materials.result == 'success'
-
-    steps:
-      - name: Update timestamp in Supabase
+      - name: Update scrape timestamp
+        if: success()
         run: |
-          curl -X POST "${{ secrets.SUPABASE_URL }}/rest/v1/rpc/update_scrape_metadata" \
+          curl -X POST "${{ secrets.SUPABASE_URL }}/rest/v1/marketplace_suppliers" \
             -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
             -H "Content-Type: application/json" \
-            -d '{"key": "last_materials_scrape", "value": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}'
+            -H "Prefer: resolution=merge-duplicates" \
+            -d '{"slug": "github-actions", "last_scraped_at": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}'
