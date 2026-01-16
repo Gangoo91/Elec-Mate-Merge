@@ -33,7 +33,7 @@ export const InvoiceSendDropdown = ({
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
   const [isConnectingStripe, setIsConnectingStripe] = useState(false);
-  const [stripeConnected, setStripeConnected] = useState<boolean | null>(null);
+  const [stripeStatus, setStripeStatus] = useState<'loading' | 'not_connected' | 'pending' | 'active'>('loading');
 
   // Check if user has Stripe connected - refreshes on mount, focus, or refreshKey change
   // Calls edge function to sync with Stripe API and update database
@@ -41,7 +41,10 @@ export const InvoiceSendDropdown = ({
     const checkStripeStatus = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
-        if (!session) return;
+        if (!session) {
+          setStripeStatus('not_connected');
+          return;
+        }
 
         // Call edge function to check actual Stripe status and sync database
         const { data, error } = await supabase.functions.invoke('get-stripe-connect-status', {
@@ -55,17 +58,31 @@ export const InvoiceSendDropdown = ({
           // Fallback to database read
           const { data: profile } = await supabase
             .from('company_profiles')
-            .select('stripe_account_status')
+            .select('stripe_account_id, stripe_account_status')
             .eq('user_id', session.user.id)
             .single();
-          setStripeConnected(profile?.stripe_account_status === 'active');
+
+          if (profile?.stripe_account_status === 'active') {
+            setStripeStatus('active');
+          } else if (profile?.stripe_account_id) {
+            setStripeStatus('pending');
+          } else {
+            setStripeStatus('not_connected');
+          }
           return;
         }
 
         // Edge function returns actual Stripe status and updates DB
-        setStripeConnected(data?.status === 'active');
+        if (data?.status === 'active') {
+          setStripeStatus('active');
+        } else if (data?.connected) {
+          setStripeStatus('pending');
+        } else {
+          setStripeStatus('not_connected');
+        }
       } catch (error) {
         console.error('Error checking Stripe status:', error);
+        setStripeStatus('not_connected');
       }
     };
 
@@ -169,7 +186,7 @@ export const InvoiceSendDropdown = ({
       });
 
       // Prompt to connect Stripe if not connected
-      if (!payNowIncluded && stripeConnected === false) {
+      if (!payNowIncluded && stripeStatus === 'not_connected') {
         setTimeout(() => {
           toast({
             title: 'Get paid faster with card payments',
@@ -354,8 +371,51 @@ ${companyName}`;
     }
   };
 
-  // Connect to Stripe directly from invoice page
-  const handleConnectStripe = async () => {
+  // Connect existing Stripe account via OAuth (instant!)
+  const handleConnectStripeOAuth = async () => {
+    try {
+      setIsConnectingStripe(true);
+      const { data: session } = await supabase.auth.getSession();
+
+      if (!session.session) {
+        sonnerToast.error('Please log in to connect Stripe');
+        return;
+      }
+
+      const response = await supabase.functions.invoke('stripe-connect-oauth', {
+        headers: {
+          Authorization: `Bearer ${session.session.access_token}`,
+        },
+        body: {
+          action: 'get_oauth_url',
+          returnUrl: window.location.href,
+        },
+      });
+
+      if (response.error) throw response.error;
+
+      if (response.data?.error) {
+        sonnerToast.error(response.data.error);
+        return;
+      }
+
+      const { url } = response.data || {};
+      if (url) {
+        // Redirect to Stripe OAuth - user logs into their existing account
+        window.location.href = url;
+      } else {
+        sonnerToast.error('Could not start Stripe connection');
+      }
+    } catch (error: any) {
+      console.error('Error connecting Stripe OAuth:', error);
+      sonnerToast.error(error?.message || 'Failed to connect Stripe');
+    } finally {
+      setIsConnectingStripe(false);
+    }
+  };
+
+  // Create new Stripe Express account (for users without Stripe)
+  const handleConnectStripeExpress = async () => {
     try {
       setIsConnectingStripe(true);
       const { data: session } = await supabase.auth.getSession();
@@ -475,32 +535,68 @@ ${companyName}`;
           </div>
         </DropdownMenuItem>
 
-        {/* Stripe Connect - show connect button or connected status */}
-        {stripeConnected === false && (
+        {/* Stripe Connect - show connect options, pending status, or connected status */}
+        {stripeStatus === 'not_connected' && (
           <>
             <DropdownMenuSeparator className="my-2 bg-border/30" />
+            <DropdownMenuLabel className="text-[10px] font-semibold text-muted-foreground px-3 py-1 uppercase tracking-wider">
+              Accept Card Payments
+            </DropdownMenuLabel>
+            {/* Primary: Connect existing Stripe via OAuth (INSTANT!) */}
             <DropdownMenuItem
-              onClick={handleConnectStripe}
+              onClick={handleConnectStripeOAuth}
               disabled={isConnectingStripe}
-              className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-indigo-500/10 touch-manipulation bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20"
+              className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-indigo-500/10 touch-manipulation bg-gradient-to-r from-indigo-500/15 to-purple-500/15 border border-indigo-500/30"
             >
               <div className="h-10 w-10 rounded-xl bg-indigo-500/20 flex items-center justify-center mr-3 flex-shrink-0">
                 {isConnectingStripe ? (
                   <Loader2 className="h-5 w-5 text-indigo-400 animate-spin" />
                 ) : (
-                  <CreditCard className="h-5 w-5 text-indigo-400" />
+                  <Zap className="h-5 w-5 text-indigo-400" />
+                )}
+              </div>
+              <div className="flex flex-col">
+                <span className="font-semibold text-sm text-foreground">Connect Stripe</span>
+                <span className="text-[10px] text-green-400 font-medium">Instant - just log in</span>
+              </div>
+            </DropdownMenuItem>
+            {/* Secondary: Small link for users without Stripe */}
+            <div className="px-3 py-2">
+              <button
+                onClick={handleConnectStripeExpress}
+                disabled={isConnectingStripe}
+                className="text-[11px] text-muted-foreground hover:text-foreground underline underline-offset-2 touch-manipulation"
+              >
+                Don't have Stripe? Create free account
+              </button>
+            </div>
+          </>
+        )}
+        {stripeStatus === 'pending' && (
+          <>
+            <DropdownMenuSeparator className="my-2 bg-border/30" />
+            <DropdownMenuItem
+              onClick={handleConnectStripeExpress}
+              disabled={isConnectingStripe}
+              className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-amber-500/10 touch-manipulation bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20"
+            >
+              <div className="h-10 w-10 rounded-xl bg-amber-500/20 flex items-center justify-center mr-3 flex-shrink-0">
+                {isConnectingStripe ? (
+                  <Loader2 className="h-5 w-5 text-amber-400 animate-spin" />
+                ) : (
+                  <CreditCard className="h-5 w-5 text-amber-400" />
                 )}
               </div>
               <div className="flex flex-col">
                 <span className="font-semibold text-sm flex items-center gap-1">
-                  {isConnectingStripe ? 'Connecting...' : 'Enable Card Payments'} <Zap className="h-3 w-3 text-elec-yellow" />
+                  {isConnectingStripe ? 'Loading...' : 'Finish Stripe Setup'}
                 </span>
-                <span className="text-xs text-muted-foreground">Get paid faster with Stripe</span>
+                <span className="text-xs text-muted-foreground">Complete verification to accept payments</span>
               </div>
             </DropdownMenuItem>
           </>
         )}
-        {stripeConnected === true && (
+        {stripeStatus === 'active' && (
           <>
             <DropdownMenuSeparator className="my-2 bg-border/30" />
             <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-green-500/10 border border-green-500/20">

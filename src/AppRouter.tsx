@@ -20,6 +20,7 @@ const Profile = lazy(() => import("@/pages/Profile"));
 const Settings = lazy(() => import("@/pages/Settings"));
 const Subscriptions = lazy(() => import("@/pages/Subscriptions"));
 const PaymentSuccess = lazy(() => import("@/pages/PaymentSuccess"));
+const InvoicePaymentSuccess = lazy(() => import("@/pages/InvoicePaymentSuccess"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 const ApprenticeMentalHealth = lazy(() => import("@/pages/apprentice/ApprenticeMentalHealth"));
 const RightsAndPay = lazy(() => import("@/pages/apprentice/RightsAndPay"));
@@ -112,6 +113,7 @@ const AppRouter = () => {
       <Route path="/pdf-generator" element={<LazyRoute><LaTeXPDFGeneratorPage /></LazyRoute>} />
       <Route path="/founder/claim" element={<LazyRoute><FounderClaim /></LazyRoute>} />
       <Route path="/founder/success" element={<LazyRoute><FounderSuccess /></LazyRoute>} />
+      <Route path="/invoice-payment-success" element={<LazyRoute><InvoicePaymentSuccess /></LazyRoute>} />
 
       {/* Legacy/Direct Access Routes - Redirect to proper paths */}
       <Route path="/rights-and-pay" element={<Navigate to="/apprentice/rights-and-pay" replace />} />

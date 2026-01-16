@@ -126,7 +126,7 @@ serve(async (req) => {
         },
       },
       customer_email: clientData?.email || undefined,
-      success_url: `${appUrl}/payment-success?invoice=${invoiceId}&session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${appUrl}/invoice-payment-success?invoice=${invoiceId}&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${appUrl}/invoice/${invoiceId}?cancelled=true`,
       metadata: {
         invoice_id: invoiceId,

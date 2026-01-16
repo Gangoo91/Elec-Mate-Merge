@@ -21,6 +21,12 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
 
   const totalAmount = invoice.total || 0;
 
+  // Combine all items for display
+  const allItems = [
+    ...(invoice.items || []),
+    ...(invoice.additional_invoice_items || [])
+  ];
+
   // Summary only mode - used in step 0 when coming from a quote
   if (showSummaryOnly) {
     return (
@@ -90,13 +96,13 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Banknote className="h-4 w-4 text-muted-foreground" />
-                <h3 className="font-semibold">Items ({invoice.items?.length || 0})</h3>
+                <h3 className="font-semibold">Items ({allItems.length})</h3>
               </div>
               <p className="text-lg font-bold text-primary">{formatCurrency(totalAmount)}</p>
             </div>
             <div className="space-y-2">
-              {invoice.items?.slice(0, 5).map((item, index) => (
-                <div key={index} className="flex justify-between items-center py-2 border-b border-border/50 last:border-0">
+              {allItems.slice(0, 5).map((item, index) => (
+                <div key={item.id || index} className="flex justify-between items-center py-2 border-b border-border/50 last:border-0">
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium truncate">{item.description}</p>
                     <p className="text-xs text-muted-foreground">{item.quantity} × {formatCurrency(item.unitPrice)}</p>
@@ -104,9 +110,9 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                   <p className="text-sm font-semibold ml-4">{formatCurrency(item.totalPrice)}</p>
                 </div>
               ))}
-              {(invoice.items?.length || 0) > 5 && (
+              {allItems.length > 5 && (
                 <p className="text-xs text-muted-foreground text-center pt-2">
-                  +{(invoice.items?.length || 0) - 5} more items
+                  +{allItems.length - 5} more items
                 </p>
               )}
             </div>
@@ -123,16 +129,16 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
         <CardContent className="pt-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="space-y-1">
-              <p className="text-xs text-muted-foreground">Quote Number</p>
-              <p className="text-sm font-semibold">{invoice.quoteNumber || 'N/A'}</p>
+              <p className="text-xs text-muted-foreground">Invoice No.</p>
+              <p className="text-sm font-semibold">{invoice.invoice_number || invoice.quoteNumber || 'Draft'}</p>
             </div>
             <div className="space-y-1">
               <p className="text-xs text-muted-foreground">Client</p>
               <p className="text-sm font-semibold truncate">{invoice.client?.name || 'N/A'}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-xs text-muted-foreground">Date</p>
-              <p className="text-sm font-semibold">{formatDate(invoice.createdAt)}</p>
+              <p className="text-xs text-muted-foreground">Due Date</p>
+              <p className="text-sm font-semibold">{formatDate(invoice.invoice_due_date || invoice.createdAt)}</p>
             </div>
             <div className="space-y-1">
               <p className="text-xs text-muted-foreground">Total</p>
@@ -179,25 +185,25 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
 
         <MobileAccordionItem value="quote">
           <MobileAccordionTrigger icon={<FileText className="h-4 w-4" />}>
-            Quote Details
+            Invoice Details
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
               <div>
-                <Label className="text-xs text-muted-foreground">Quote Number</Label>
+                <Label className="text-xs text-muted-foreground">Reference</Label>
                 <p className="font-medium">{invoice.quoteNumber || 'N/A'}</p>
               </div>
               <div>
-                <Label className="text-xs text-muted-foreground">Quote Date</Label>
-                <p className="font-medium">{formatDate(invoice.createdAt)}</p>
+                <Label className="text-xs text-muted-foreground">Invoice Date</Label>
+                <p className="font-medium">{formatDate(invoice.invoice_date || invoice.createdAt)}</p>
               </div>
               <div>
-                <Label className="text-xs text-muted-foreground">Expiry Date</Label>
-                <p className="font-medium">{formatDate(invoice.expiryDate)}</p>
+                <Label className="text-xs text-muted-foreground">Due Date</Label>
+                <p className="font-medium">{formatDate(invoice.invoice_due_date || invoice.expiryDate)}</p>
               </div>
               <div>
                 <Label className="text-xs text-muted-foreground">Status</Label>
-                <Badge variant="secondary" className="mt-1">{invoice.status || 'N/A'}</Badge>
+                <Badge variant="secondary" className="mt-1">{invoice.invoice_status || invoice.status || 'Draft'}</Badge>
               </div>
             </div>
           </MobileAccordionContent>
@@ -205,14 +211,14 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
 
         <MobileAccordionItem value="items">
           <MobileAccordionTrigger icon={<Banknote className="h-4 w-4" />}>
-            Quote Items ({invoice.items?.length || 0})
+            Invoice Items ({allItems.length})
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="p-4 space-y-3">
               {/* Mobile-optimized item cards */}
               <div className="block md:hidden space-y-3">
-                {invoice.items?.map((item, index) => (
-                  <Card key={index} className="p-3">
+                {allItems.map((item, index) => (
+                  <Card key={item.id || index} className="p-3">
                     <div className="space-y-2">
                       <div>
                         <p className="font-medium">{item.description}</p>
@@ -252,8 +258,8 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                     </tr>
                   </thead>
                   <tbody>
-                    {invoice.items?.map((item, index) => (
-                      <tr key={index} className="border-b">
+                    {allItems.map((item, index) => (
+                      <tr key={item.id || index} className="border-b">
                         <td className="py-3">
                           <div className="font-medium">{item.description}</div>
                           {item.notes && (
@@ -273,7 +279,7 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               </div>
 
               <div className="mt-4 pt-4 border-t flex justify-between items-center">
-                <span className="font-semibold">Quote Total:</span>
+                <span className="font-semibold">Invoice Total:</span>
                 <span className="text-xl md:text-2xl font-bold text-primary">
                   {formatCurrency(totalAmount)}
                 </span>

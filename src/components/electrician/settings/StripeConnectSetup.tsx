@@ -13,7 +13,20 @@ import {
   ArrowRight,
   Banknote,
   Shield,
+  Unlink,
+  Zap,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface StripeConnectStatus {
   connected: boolean;
@@ -30,6 +43,7 @@ const StripeConnectSetup: React.FC = () => {
   const [status, setStatus] = useState<StripeConnectStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [connecting, setConnecting] = useState(false);
+  const [disconnecting, setDisconnecting] = useState(false);
 
   useEffect(() => {
     checkStatus();
@@ -70,7 +84,51 @@ const StripeConnectSetup: React.FC = () => {
     }
   };
 
-  const handleConnectStripe = async () => {
+  // PRIMARY: Connect existing Stripe via OAuth (instant!)
+  const handleConnectOAuth = async () => {
+    try {
+      setConnecting(true);
+      const { data: session } = await supabase.auth.getSession();
+
+      if (!session.session) {
+        toast.error('Please log in to connect Stripe');
+        return;
+      }
+
+      const response = await supabase.functions.invoke('stripe-connect-oauth', {
+        headers: {
+          Authorization: `Bearer ${session.session.access_token}`,
+        },
+        body: {
+          action: 'get_oauth_url',
+          returnUrl: window.location.href,
+        },
+      });
+
+      if (response.error) throw response.error;
+
+      if (response.data?.error) {
+        toast.error(response.data.error);
+        return;
+      }
+
+      const { url } = response.data || {};
+      if (url) {
+        // Redirect to Stripe OAuth - user logs into their existing account
+        window.location.href = url;
+      } else {
+        toast.error('Could not start Stripe connection');
+      }
+    } catch (error: any) {
+      console.error('Error connecting Stripe OAuth:', error);
+      toast.error(error?.message || 'Failed to connect Stripe');
+    } finally {
+      setConnecting(false);
+    }
+  };
+
+  // SECONDARY: Create new Express account (for users without Stripe)
+  const handleConnectExpress = async () => {
     try {
       setConnecting(true);
       const { data: session } = await supabase.auth.getSession();
@@ -125,6 +183,46 @@ const StripeConnectSetup: React.FC = () => {
     }
   };
 
+  // For dashboard/continue setup, use Express handler
+  const handleConnectStripe = handleConnectExpress;
+
+  const handleDisconnect = async () => {
+    try {
+      setDisconnecting(true);
+      const { data: session } = await supabase.auth.getSession();
+
+      if (!session.session) {
+        toast.error('Please log in to disconnect Stripe');
+        return;
+      }
+
+      // Clear Stripe connection from database
+      const { error } = await supabase
+        .from('company_profiles')
+        .update({
+          stripe_account_id: null,
+          stripe_account_status: null,
+        })
+        .eq('user_id', session.session.user.id);
+
+      if (error) throw error;
+
+      toast.success('Stripe account disconnected', {
+        description: 'You can reconnect anytime to accept card payments.',
+      });
+
+      // Refresh status
+      await checkStatus();
+    } catch (error: any) {
+      console.error('Error disconnecting Stripe:', error);
+      toast.error('Failed to disconnect Stripe', {
+        description: error.message || 'Please try again or contact support.',
+      });
+    } finally {
+      setDisconnecting(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="rounded-xl bg-elec-gray/50 border border-white/10 p-6">
@@ -172,19 +270,30 @@ const StripeConnectSetup: React.FC = () => {
               </div>
             </div>
 
-            <Button
-              onClick={handleConnectStripe}
-              disabled={connecting}
-              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold whitespace-nowrap"
-            >
-              {connecting ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <CreditCard className="h-4 w-4 mr-2" />
-              )}
-              Connect with Stripe
-              <ArrowRight className="h-4 w-4 ml-2" />
-            </Button>
+            <div className="flex flex-col gap-2 items-end">
+              {/* Primary: OAuth - instant for existing Stripe users */}
+              <Button
+                onClick={handleConnectOAuth}
+                disabled={connecting}
+                className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold whitespace-nowrap"
+              >
+                {connecting ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <Zap className="h-4 w-4 mr-2" />
+                )}
+                Connect Stripe
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </Button>
+              {/* Secondary: Express - for new users */}
+              <button
+                onClick={handleConnectExpress}
+                disabled={connecting}
+                className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2"
+              >
+                Don't have Stripe? Create free account
+              </button>
+            </div>
           </div>
 
           <div className="mt-4 pt-4 border-t border-white/10">
@@ -224,19 +333,55 @@ const StripeConnectSetup: React.FC = () => {
               </div>
             </div>
 
-            <Button
-              onClick={handleConnectStripe}
-              disabled={connecting}
-              variant="outline"
-              className="border-amber-500/30 hover:bg-amber-500/10 whitespace-nowrap"
-            >
-              {connecting ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <ExternalLink className="h-4 w-4 mr-2" />
-              )}
-              Continue Setup
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={handleConnectStripe}
+                disabled={connecting}
+                variant="outline"
+                className="border-amber-500/30 hover:bg-amber-500/10 whitespace-nowrap"
+              >
+                {connecting ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                )}
+                Continue Setup
+              </Button>
+
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    disabled={disconnecting}
+                    className="text-muted-foreground hover:text-red-400 hover:bg-red-500/10"
+                  >
+                    {disconnecting ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Unlink className="h-4 w-4" />
+                    )}
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Disconnect Stripe?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This will remove your Stripe connection. You won't be able to accept card payments until you reconnect. You can reconnect anytime.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDisconnect}
+                      className="bg-red-500 hover:bg-red-600"
+                    >
+                      Disconnect
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </div>
         </div>
       </motion.div>
@@ -270,19 +415,55 @@ const StripeConnectSetup: React.FC = () => {
               </div>
             </div>
 
-            <Button
-              onClick={handleConnectStripe}
-              disabled={connecting}
-              variant="outline"
-              className="border-red-500/30 hover:bg-red-500/10 whitespace-nowrap"
-            >
-              {connecting ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <ExternalLink className="h-4 w-4 mr-2" />
-              )}
-              Fix Issues
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={handleConnectStripe}
+                disabled={connecting}
+                variant="outline"
+                className="border-red-500/30 hover:bg-red-500/10 whitespace-nowrap"
+              >
+                {connecting ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                )}
+                Fix Issues
+              </Button>
+
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    disabled={disconnecting}
+                    className="text-muted-foreground hover:text-red-400 hover:bg-red-500/10"
+                  >
+                    {disconnecting ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Unlink className="h-4 w-4" />
+                    )}
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Disconnect Stripe?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This will remove your Stripe connection. You can then connect a different Stripe account if you wish.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDisconnect}
+                      className="bg-red-500 hover:bg-red-600"
+                    >
+                      Disconnect
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </div>
         </div>
       </motion.div>
@@ -320,19 +501,55 @@ const StripeConnectSetup: React.FC = () => {
             </div>
           </div>
 
-          <Button
-            onClick={handleConnectStripe}
-            disabled={connecting}
-            variant="outline"
-            className="border-green-500/30 hover:bg-green-500/10 whitespace-nowrap"
-          >
-            {connecting ? (
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-            ) : (
-              <ExternalLink className="h-4 w-4 mr-2" />
-            )}
-            Open Dashboard
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              onClick={handleConnectStripe}
+              disabled={connecting}
+              variant="outline"
+              className="border-green-500/30 hover:bg-green-500/10 whitespace-nowrap"
+            >
+              {connecting ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <ExternalLink className="h-4 w-4 mr-2" />
+              )}
+              Open Dashboard
+            </Button>
+
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  disabled={disconnecting}
+                  className="text-muted-foreground hover:text-red-400 hover:bg-red-500/10"
+                >
+                  {disconnecting ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Unlink className="h-4 w-4" />
+                  )}
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Disconnect Stripe?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This will remove your Stripe connection. You won't be able to accept card payments until you reconnect. Your Stripe account and any existing payments are not affected.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleDisconnect}
+                    className="bg-red-500 hover:bg-red-600"
+                  >
+                    Disconnect
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
         </div>
       </div>
     </motion.div>

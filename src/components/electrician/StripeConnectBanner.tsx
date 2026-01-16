@@ -72,7 +72,48 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
     }
   };
 
-  const handleConnect = async () => {
+  // Connect existing Stripe via OAuth (instant)
+  const handleConnectOAuth = async () => {
+    try {
+      setConnecting(true);
+      const { data: session } = await supabase.auth.getSession();
+
+      if (!session.session) {
+        toast.error('Please log in first');
+        return;
+      }
+
+      const response = await supabase.functions.invoke('stripe-connect-oauth', {
+        headers: {
+          Authorization: `Bearer ${session.session.access_token}`,
+        },
+        body: {
+          action: 'get_oauth_url',
+          returnUrl: window.location.href,
+        },
+      });
+
+      if (response.error) throw response.error;
+
+      if (response.data?.error) {
+        toast.error(response.data.error);
+        return;
+      }
+
+      const { url } = response.data || {};
+      if (url) {
+        window.location.href = url;
+      }
+    } catch (error: any) {
+      console.error('Error connecting Stripe OAuth:', error);
+      toast.error(error.message || 'Failed to connect Stripe');
+    } finally {
+      setConnecting(false);
+    }
+  };
+
+  // Create new Express account (for users without Stripe)
+  const handleConnectExpress = async () => {
     try {
       setConnecting(true);
       const { data: session } = await supabase.auth.getSession();
@@ -89,25 +130,8 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
         body: { returnUrl: window.location.href },
       });
 
-      console.log('Stripe Connect full response:', JSON.stringify(response, null, 2));
-
-      // Handle error responses - try to get details from response body
       if (response.error) {
-        // Try to parse the context which might contain the actual error
-        let errorDetails = 'Unknown error';
-        try {
-          // The error context might contain the response body
-          if (response.error.context) {
-            const body = await response.error.context.json?.() || response.error.context;
-            console.error('Error context:', body);
-            errorDetails = body?.error || body?.message || response.error.message;
-          } else {
-            errorDetails = response.error.message;
-          }
-        } catch (e) {
-          errorDetails = response.error.message || 'Failed to connect Stripe';
-        }
-        console.error('Stripe Connect error details:', errorDetails);
+        let errorDetails = response.error.message || 'Failed to connect Stripe';
         throw new Error(errorDetails);
       }
 
@@ -117,13 +141,11 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
           toast.success('Opening Stripe Dashboard');
           window.open(url, '_blank');
         } else {
-          // Redirect to Stripe onboarding - will return to same page with ?stripe=success
           window.location.href = url;
         }
       }
     } catch (error: any) {
       console.error('Error connecting Stripe:', error);
-      // Check if this is a platform setup message (not a real error for users)
       if (error.message?.includes('coming soon') || error.message?.includes('being set up')) {
         toast.info(error.message);
       } else {
@@ -133,6 +155,8 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
       setConnecting(false);
     }
   };
+
+  const handleConnect = handleConnectOAuth; // Default to OAuth for existing accounts
 
   const handleDismiss = () => {
     localStorage.setItem('stripe_connect_banner_dismissed', 'true');

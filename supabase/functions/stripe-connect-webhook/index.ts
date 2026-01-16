@@ -7,11 +7,140 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import Stripe from "https://esm.sh/stripe@14.21.0?target=deno";
+import { Resend } from "npm:resend@2.0.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, stripe-signature',
 };
+
+/**
+ * Format currency in GBP
+ */
+function formatCurrency(amount: number): string {
+  return new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+  }).format(amount);
+}
+
+/**
+ * Send thank-you email to client after payment
+ */
+async function sendClientThankYouEmail(
+  invoiceNumber: string,
+  clientEmail: string,
+  clientName: string,
+  amount: number,
+  companyName: string,
+  companyEmail?: string,
+  companyPhone?: string
+): Promise<void> {
+  const resendApiKey = Deno.env.get("RESEND_API_KEY");
+
+  if (!resendApiKey) {
+    console.warn('⚠️ RESEND_API_KEY not configured - skipping thank-you email');
+    return;
+  }
+
+  const resend = new Resend(resendApiKey);
+
+  const emailHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Confirmation</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8f9fa;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa;">
+    <tr>
+      <td style="padding: 20px 10px;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
+              <h1 style="margin: 0; color: #22c55e; font-size: 26px; font-weight: 700;">✓ Payment Received</h1>
+            </td>
+          </tr>
+
+          <!-- Content -->
+          <tr>
+            <td style="padding: 32px 24px;">
+              <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: #374151;">
+                Dear <strong style="color: #1f2937;">${clientName}</strong>,
+              </p>
+              <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #374151;">
+                Thank you for your payment. This email confirms that your payment has been successfully processed.
+              </p>
+
+              <!-- Payment Details Card -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-radius: 12px; border: 2px solid #22c55e;">
+                <tr>
+                  <td style="padding: 24px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td style="padding: 8px 0; font-size: 14px; color: #166534;">Invoice Number:</td>
+                        <td style="text-align: right; font-size: 14px; color: #166534; font-weight: 700;">${invoiceNumber}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; font-size: 14px; color: #166534;">Amount Paid:</td>
+                        <td style="text-align: right; font-size: 20px; color: #166534; font-weight: 700;">${formatCurrency(amount)}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 8px 0; font-size: 14px; color: #166534;">Status:</td>
+                        <td style="text-align: right; font-size: 14px; color: #166534; font-weight: 700;">✓ Paid</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin: 24px 0 0; font-size: 15px; line-height: 1.6; color: #374151;">
+                If you have any questions about this payment, please contact:
+              </p>
+              <p style="margin: 16px 0 0; font-size: 16px; font-weight: 700; color: #1f2937;">${companyName}</p>
+              ${companyPhone ? `<p style="margin: 8px 0 0; font-size: 14px; color: #6b7280;">📞 ${companyPhone}</p>` : ''}
+              ${companyEmail ? `<p style="margin: 4px 0 0; font-size: 14px; color: #6b7280;">✉️ ${companyEmail}</p>` : ''}
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
+              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ Powered by ElecMate</p>
+              <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical contracting tools</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+  `;
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: `${companyName} <founder@elec-mate.com>`,
+      reply_to: companyEmail || 'info@elec-mate.com',
+      to: [clientEmail],
+      subject: `Payment Confirmation - Invoice ${invoiceNumber}`,
+      html: emailHtml,
+    });
+
+    if (error) {
+      console.error('❌ Failed to send thank-you email:', error);
+    } else {
+      console.log(`✅ Thank-you email sent to ${clientEmail}:`, data?.id);
+    }
+  } catch (err) {
+    console.error('❌ Error sending thank-you email:', err);
+  }
+}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -112,6 +241,63 @@ serve(async (req) => {
             });
 
           console.log(`🔔 Notification created for user ${electricianUserId}`);
+        }
+
+        // Send thank-you email to client
+        try {
+          // Fetch invoice details for client info
+          const { data: invoice } = await supabase
+            .from('quotes')
+            .select('client_data')
+            .eq('id', invoiceId)
+            .single();
+
+          if (invoice?.client_data) {
+            const clientData = typeof invoice.client_data === 'string'
+              ? JSON.parse(invoice.client_data)
+              : invoice.client_data;
+
+            const clientEmail = clientData?.email?.trim();
+            const clientName = clientData?.name || 'Valued Customer';
+
+            if (clientEmail) {
+              // Fetch company profile for sender info
+              let companyName = 'Your Electrician';
+              let companyEmail: string | undefined;
+              let companyPhone: string | undefined;
+
+              if (electricianUserId) {
+                const { data: companyProfile } = await supabase
+                  .from('company_profiles')
+                  .select('company_name, company_email, company_phone')
+                  .eq('user_id', electricianUserId)
+                  .single();
+
+                if (companyProfile) {
+                  companyName = companyProfile.company_name || companyName;
+                  companyEmail = companyProfile.company_email;
+                  companyPhone = companyProfile.company_phone;
+                }
+              }
+
+              const amount = session.amount_total ? session.amount_total / 100 : 0;
+
+              await sendClientThankYouEmail(
+                invoiceNumber || `INV-${invoiceId.substring(0, 8)}`,
+                clientEmail,
+                clientName,
+                amount,
+                companyName,
+                companyEmail,
+                companyPhone
+              );
+            } else {
+              console.log('⚠️ No client email found - skipping thank-you email');
+            }
+          }
+        } catch (emailError) {
+          // Don't fail the webhook if email fails
+          console.error('⚠️ Failed to send client thank-you email (non-fatal):', emailError);
         }
 
         break;
