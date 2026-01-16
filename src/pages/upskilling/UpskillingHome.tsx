@@ -2,65 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Zap, BookOpen, Cpu, Lightbulb, Network, Home, Sun, BatteryCharging, Cable, Settings, Shield, Wrench, Activity, Wifi, ArrowLeft, ChevronRight } from "lucide-react";
+import { ModuleCard } from "@/components/shared/ModuleCard";
+import { Search, Zap, BookOpen, Cpu, Lightbulb, Network, Home, Sun, BatteryCharging, Settings, Shield, Wrench, Activity, Wifi, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import { cn } from "@/lib/utils";
-
-// Simple course card matching apprentice study centre style
-interface CourseCardProps {
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  href: string;
-}
-
-function CourseCard({ title, description, icon, href }: CourseCardProps) {
-  const navigate = useNavigate();
-
-  return (
-    <div
-      className={cn(
-        "group relative overflow-hidden transition-all duration-300 h-full min-h-[120px] cursor-pointer",
-        "bg-white/5 border border-white/10 rounded-xl",
-        "hover:bg-white/10 hover:border-white/20 active:scale-[0.98]",
-        "hover:shadow-lg hover:shadow-black/20"
-      )}
-      onClick={() => navigate(href)}
-    >
-      {/* Accent line at top */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/50 to-transparent" />
-
-      {/* Hover glow effect */}
-      <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-br from-elec-yellow to-amber-500" />
-
-      <div className="relative p-4 sm:p-5">
-        <div className="flex items-start gap-4">
-          {/* Icon container */}
-          <div className="p-2.5 sm:p-3 rounded-xl flex-shrink-0 transition-colors bg-gradient-to-br from-elec-yellow/20 to-amber-500/20 border border-white/10 group-hover:from-elec-yellow/30 group-hover:to-amber-500/30">
-            {icon}
-          </div>
-
-          {/* Content */}
-          <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-sm sm:text-base mb-1.5 leading-tight text-white group-hover:text-elec-yellow/90 transition-colors">
-              {title}
-            </h3>
-            <p className="text-xs sm:text-sm leading-relaxed line-clamp-2 text-white/50">
-              {description}
-            </p>
-          </div>
-
-          {/* Arrow indicator */}
-          <div className="p-1.5 rounded-full bg-white/5 group-hover:bg-white/10 transition-colors shrink-0 self-center">
-            <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-white/40 group-hover:text-elec-yellow transition-colors" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+import { motion } from "framer-motion";
 
 export default function UpskillingHome() {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
   // All professional upskilling courses
@@ -69,85 +17,127 @@ export default function UpskillingHome() {
       id: "bs7671-course",
       title: "BS 7671 Wiring Regulations",
       description: "Comprehensive guide to the 18th Edition wiring regulations",
-      icon: <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+      icon: <BookOpen className="h-4 w-4 text-elec-yellow" />,
+      lessonsCount: 12,
+      questionsCount: 200,
+      duration: "6 weeks"
     },
     {
       id: "inspection-testing",
       title: "Inspection & Testing",
       description: "Complete guide to electrical inspection and testing procedures",
-      icon: <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+      icon: <Activity className="h-4 w-4 text-elec-yellow" />,
+      lessonsCount: 8,
+      questionsCount: 180,
+      duration: "4 weeks"
     },
     {
       id: "pat-testing-course",
       title: "PAT Testing",
       description: "Portable appliance testing certification course",
-      icon: <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+      icon: <Shield className="h-4 w-4 text-elec-yellow" />,
+      lessonsCount: 6,
+      questionsCount: 120,
+      duration: "2 weeks"
     },
     {
       id: "renewable-energy-course",
       title: "Renewable Energy Systems",
       description: "Solar PV, wind turbines, and sustainable energy solutions",
-      icon: <Sun className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+      icon: <Sun className="h-4 w-4 text-elec-yellow" />,
+      lessonsCount: 10,
+      questionsCount: 160,
+      duration: "5 weeks"
     },
     {
       id: "smart-home-course",
       title: "Smart Home Technology",
       description: "Home automation, IoT devices, and intelligent systems",
-      icon: <Home className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+      icon: <Home className="h-4 w-4 text-elec-yellow" />,
+      lessonsCount: 8,
+      questionsCount: 140,
+      duration: "4 weeks"
     },
     {
       id: "ev-charging-course",
       title: "EV Charging Installation",
       description: "Electric vehicle charging points and infrastructure",
-      icon: <BatteryCharging className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+      icon: <BatteryCharging className="h-4 w-4 text-elec-yellow" />,
+      lessonsCount: 7,
+      questionsCount: 130,
+      duration: "3 weeks"
     },
     {
       id: "data-cabling-course",
       title: "Data Cabling & Networks",
       description: "Structured cabling systems and network installation",
-      icon: <Network className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+      icon: <Network className="h-4 w-4 text-elec-yellow" />,
+      lessonsCount: 9,
+      questionsCount: 150,
+      duration: "4 weeks"
     },
     {
       id: "fiber-optics-course",
       title: "Fiber Optics",
       description: "Fiber optic cable installation and termination",
-      icon: <Wifi className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+      icon: <Wifi className="h-4 w-4 text-elec-yellow" />,
+      lessonsCount: 8,
+      questionsCount: 140,
+      duration: "4 weeks"
     },
     {
       id: "emergency-lighting-course",
       title: "Emergency Lighting Systems",
       description: "Design, installation, and testing of emergency lighting",
-      icon: <Lightbulb className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+      icon: <Lightbulb className="h-4 w-4 text-elec-yellow" />,
+      lessonsCount: 6,
+      questionsCount: 110,
+      duration: "3 weeks"
     },
     {
       id: "fire-alarm-course",
       title: "Fire Alarm Systems",
       description: "Fire detection and alarm system installation",
-      icon: <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+      icon: <Zap className="h-4 w-4 text-elec-yellow" />,
+      lessonsCount: 8,
+      questionsCount: 150,
+      duration: "4 weeks"
     },
     {
       id: "bms-course",
       title: "Building Management Systems",
       description: "BMS integration and control systems",
-      icon: <Settings className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+      icon: <Settings className="h-4 w-4 text-elec-yellow" />,
+      lessonsCount: 10,
+      questionsCount: 180,
+      duration: "5 weeks"
     },
     {
       id: "industrial-electrical-course",
       title: "Industrial Electrical Systems",
       description: "Industrial power distribution and motor control",
-      icon: <Cpu className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+      icon: <Cpu className="h-4 w-4 text-elec-yellow" />,
+      lessonsCount: 12,
+      questionsCount: 200,
+      duration: "6 weeks"
     },
     {
       id: "instrumentation-course",
       title: "Instrumentation & Control",
       description: "PLCs, sensors, and process control systems",
-      icon: <Settings className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+      icon: <Settings className="h-4 w-4 text-elec-yellow" />,
+      lessonsCount: 10,
+      questionsCount: 170,
+      duration: "5 weeks"
     },
     {
       id: "energy-efficiency-course",
       title: "Energy Efficiency",
       description: "Energy auditing and efficiency improvements",
-      icon: <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+      icon: <Wrench className="h-4 w-4 text-elec-yellow" />,
+      lessonsCount: 6,
+      questionsCount: 100,
+      duration: "3 weeks"
     }
   ];
 
@@ -211,15 +201,28 @@ export default function UpskillingHome() {
             <h2 className="text-lg font-semibold text-white mb-6">
               Available Courses ({filteredCourses.length})
             </h2>
-            <div className="grid grid-cols-1 gap-4">
-              {filteredCourses.map((course) => (
-                <CourseCard
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {filteredCourses.map((course, index) => (
+                <motion.div
                   key={course.id}
-                  title={course.title}
-                  description={course.description}
-                  icon={course.icon}
-                  href={course.id}
-                />
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + index * 0.05 }}
+                >
+                  <ModuleCard
+                    title={course.title}
+                    description={course.description}
+                    category="Upskilling"
+                    duration={course.duration}
+                    progress={0}
+                    completed={false}
+                    lessonsCount={course.lessonsCount}
+                    questionsCount={course.questionsCount}
+                    icon={course.icon}
+                    colorScheme="Upskilling"
+                    onClick={() => navigate(course.id)}
+                  />
+                </motion.div>
               ))}
             </div>
           </section>

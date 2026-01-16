@@ -1,4 +1,4 @@
-import { ArrowLeft, BookOpen, Shield, Link2, Zap, CircleDot, FileCheck, ToggleRight, Eye, CheckCircle } from 'lucide-react';
+import { ArrowLeft, BookOpen, Shield, Link2, Zap, CircleDot, FileCheck, ToggleRight, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
 import { Link } from 'react-router-dom';
@@ -69,13 +69,6 @@ const InspectionTesting = () => {
     }
   ];
 
-  const learningOutcomes = [
-    "Safe isolation procedures and proving dead techniques",
-    "All BS 7671 required tests: continuity, insulation, earth fault loop, RCD",
-    "Electrical Installation Certificates and condition reports",
-    "Practical fault-finding and troubleshooting skills",
-  ];
-
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
@@ -111,22 +104,6 @@ const InspectionTesting = () => {
               Master electrical inspection and testing procedures to BS 7671. From safe isolation to certification documentation.
             </p>
           </header>
-
-          {/* Learning Outcomes */}
-          <section className="mb-12">
-            <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-            <div className="grid sm:grid-cols-2 gap-2">
-              {learningOutcomes.map((item, i) => (
-                <div key={i} className="flex items-start gap-2 text-sm text-white">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Divider */}
-          <hr className="border-white/5 mb-12" />
 
           {/* Modules Grid */}
           <section>

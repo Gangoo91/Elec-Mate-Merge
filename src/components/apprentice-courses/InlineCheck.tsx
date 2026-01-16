@@ -1,21 +1,89 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
-import { CheckCircle2, XCircle, HelpCircle } from "lucide-react";
+import { CheckCircle2, XCircle, HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
 
 export interface InlineCheckProps {
-  id: string;
+  id?: string;
   question: string;
-  options: string[];
-  correctIndex: number;
+  // Multiple choice mode
+  options?: string[];
+  correctIndex?: number;
+  // Free-text reveal mode (alternative to options)
+  correctAnswer?: string;
   explanation?: string;
 }
 
-export const InlineCheck: React.FC<InlineCheckProps> = ({ id, question, options, correctIndex, explanation }) => {
+export const InlineCheck: React.FC<InlineCheckProps> = ({
+  id = `inline-check-${Math.random().toString(36).substr(2, 9)}`,
+  question,
+  options,
+  correctIndex,
+  correctAnswer,
+  explanation
+}) => {
   const [selected, setSelected] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [revealed, setRevealed] = useState(false);
+
+  // Determine mode: multiple choice (has options) or free-text reveal (has correctAnswer)
+  const isMultipleChoice = options && Array.isArray(options) && options.length > 0;
+  const isFreeText = !isMultipleChoice && correctAnswer;
 
   const isCorrect = submitted && selected === correctIndex;
   const isWrong = submitted && selected !== correctIndex;
+
+  // Free-text reveal mode
+  if (isFreeText) {
+    return (
+      <section aria-labelledby={`${id}-label`} className="my-6 sm:my-8">
+        <div className="flex items-center gap-2 text-elec-yellow mb-3 sm:mb-4">
+          <HelpCircle className="h-5 w-5 sm:h-6 sm:w-6" />
+          <h3 id={`${id}-label`} className="text-base sm:text-lg font-semibold">Quick Check</h3>
+        </div>
+        <div className="space-y-4">
+          <p className="text-white font-medium text-base sm:text-lg leading-relaxed">{question}</p>
+
+          <button
+            type="button"
+            onClick={() => setRevealed(!revealed)}
+            className={cn(
+              "w-full min-h-[52px] text-left rounded-xl border-2 px-4 py-3 transition-all duration-200 cursor-pointer touch-manipulation active:scale-[0.98]",
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50",
+              revealed
+                ? "border-elec-yellow/50 bg-elec-yellow/10"
+                : "border-white/10 hover:border-elec-yellow/30 hover:bg-white/5"
+            )}
+          >
+            <div className="flex items-center justify-between gap-3">
+              <span className="text-sm sm:text-base text-white/80">
+                {revealed ? "Hide Answer" : "Tap to reveal answer"}
+              </span>
+              {revealed ? (
+                <ChevronUp className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+              ) : (
+                <ChevronDown className="h-5 w-5 text-white/40 flex-shrink-0" />
+              )}
+            </div>
+          </button>
+
+          {revealed && (
+            <div className="rounded-xl border border-green-400/30 bg-green-500/10 p-4">
+              <p className="font-semibold mb-2 text-base text-green-300">Answer:</p>
+              <p className="text-white text-sm sm:text-base leading-relaxed">{correctAnswer}</p>
+              {explanation && (
+                <p className="text-white/70 text-sm mt-3 leading-relaxed">{explanation}</p>
+              )}
+            </div>
+          )}
+        </div>
+      </section>
+    );
+  }
+
+  // Multiple choice mode - guard against invalid options
+  if (!isMultipleChoice) {
+    return null;
+  }
 
   return (
     <section aria-labelledby={`${id}-label`} className="my-6 sm:my-8">
