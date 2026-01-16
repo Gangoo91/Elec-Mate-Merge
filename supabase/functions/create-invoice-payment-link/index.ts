@@ -98,8 +98,8 @@ serve(async (req) => {
     console.log(`💰 Invoice: £${invoice.total}, Platform fee: £${(platformFeePence / 100).toFixed(2)}`);
 
     // Create Stripe Checkout Session
-    // IMPORTANT: Always use www.elec-mate.com (non-www has no SSL certificate)
-    const appUrl = Deno.env.get('APP_URL') || 'https://www.elec-mate.com';
+    // HARDCODED: Always use www.elec-mate.com (non-www has no SSL certificate)
+    const appUrl = 'https://www.elec-mate.com';
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',

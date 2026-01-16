@@ -55,16 +55,19 @@ serve(async (req) => {
           assessor: ramsData.assessor,
           contractor: ramsData.contractor,
           supervisor: ramsData.supervisor,
-          // Sort risks by rating (highest first)
-          risks: [...ramsData.risks].sort((a: any, b: any) => (b.riskRating || 0) - (a.riskRating || 0)).map((risk: any) => ({
-            hazard: risk.hazard,
-            likelihood: risk.likelihood,
-            severity: risk.severity,
-            riskRating: risk.riskRating,
-            riskLevel: getRiskLevel(risk.riskRating),
-            controls: risk.controls,
-            residualRisk: risk.residualRisk
-          })),
+          // Sort risks by rating (highest first) and add hazard numbers
+          risks: [...ramsData.risks]
+            .sort((a: any, b: any) => (b.riskRating || 0) - (a.riskRating || 0))
+            .map((risk: any, index: number) => ({
+              hazardNumber: index + 1,  // 1 = highest risk
+              hazard: risk.hazard,
+              likelihood: risk.likelihood,
+              severity: risk.severity,
+              riskRating: risk.riskRating,
+              riskLevel: getRiskLevel(risk.riskRating),
+              controls: formatControls(risk.controls),
+              residualRisk: risk.residualRisk
+            })),
           emergencyContacts: {
             siteManager: ramsData.siteManagerName,
             siteManagerPhone: ramsData.siteManagerPhone,
@@ -174,6 +177,43 @@ function getRiskLevel(rating: number): string {
   if (rating <= 9) return 'Medium';
   if (rating <= 16) return 'High';
   return 'Very High';
+}
+
+function formatControls(controls: string): string {
+  if (!controls) return '';
+
+  // Section headers that should have line breaks before them
+  const sections = [
+    'PRIMARY ACTION:',
+    'ELIMINATE:',
+    'SUBSTITUTE:',
+    'ENGINEERING CONTROLS:',
+    'ENGINEER CONTROLS:',
+    'ADMINISTRATIVE CONTROLS:',
+    'PPE REQUIREMENTS:',
+    'PPE:',
+    'VERIFICATION:',
+    'COMPETENCY REQUIREMENT:',
+    'EQUIPMENT STANDARDS:',
+    'REGULATION:',
+  ];
+
+  let formatted = controls;
+
+  // Add line breaks before section headers (simple approach)
+  sections.forEach(section => {
+    // Replace the section header with newlines + header
+    formatted = formatted.replace(
+      new RegExp(section, 'gi'),
+      `\n\n${section}`
+    );
+  });
+
+  // Clean up multiple consecutive line breaks (more than 2)
+  formatted = formatted.replace(/\n{3,}/g, '\n\n');
+
+  // Trim leading/trailing whitespace
+  return formatted.trim();
 }
 
 function applyFieldMapping(data: any, fieldMapping: Record<string, string>): any {
