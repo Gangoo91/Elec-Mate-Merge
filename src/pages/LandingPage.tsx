@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Check, ArrowRight, Zap, FileText, GraduationCap } from 'lucide-react';
+import { Menu, X, Check, ArrowRight, Zap, FileText, GraduationCap, Building2, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { motion, useReducedMotion } from 'framer-motion';
@@ -162,15 +162,16 @@ const LandingPage = () => {
 
       {/* Pricing - simple */}
       <section className="py-16 px-5 border-t border-white/5">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <h2 className="text-xl sm:text-2xl font-bold text-center mb-10">Simple pricing</h2>
 
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-3 gap-4">
             <PricingCard
               name="Apprentice"
               price="£4.99"
               description="Training and exam prep"
               features={['Level 2 & 3 courses', 'Practice questions', 'Progress tracking', 'Mental health support']}
+              color="green"
             />
             <PricingCard
               name="Electrician"
@@ -178,6 +179,15 @@ const LandingPage = () => {
               description="Everything for site work"
               features={['All apprentice features', 'AI assistants', 'Certificate forms', 'Voice quotes']}
               popular
+              color="yellow"
+            />
+            <PricingCard
+              name="Employer"
+              price="£TBC"
+              description="Team management tools"
+              features={['Manage apprentices', 'Track progress', 'Compliance dashboard', 'Team analytics']}
+              comingSoon
+              color="purple"
             />
           </div>
 
@@ -225,59 +235,120 @@ const FeatureCard = ({ icon, title, description, color }: {
   description: string;
   color: 'yellow' | 'blue' | 'green';
 }) => {
-  const colors = {
-    yellow: 'bg-yellow-500/10 text-yellow-400',
-    blue: 'bg-blue-500/10 text-blue-400',
-    green: 'bg-green-500/10 text-green-400',
+  const colorConfig = {
+    yellow: {
+      icon: 'bg-gradient-to-br from-yellow-500/20 to-amber-600/20 text-yellow-400 border-yellow-500/20',
+      glow: 'group-hover:shadow-yellow-500/10',
+      border: 'hover:border-yellow-500/30',
+    },
+    blue: {
+      icon: 'bg-gradient-to-br from-blue-500/20 to-cyan-600/20 text-blue-400 border-blue-500/20',
+      glow: 'group-hover:shadow-blue-500/10',
+      border: 'hover:border-blue-500/30',
+    },
+    green: {
+      icon: 'bg-gradient-to-br from-green-500/20 to-emerald-600/20 text-green-400 border-green-500/20',
+      glow: 'group-hover:shadow-green-500/10',
+      border: 'hover:border-green-500/30',
+    },
   };
 
+  const config = colorConfig[color];
+
   return (
-    <div className="p-5 rounded-xl bg-white/[0.02] border border-white/5">
-      <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-3 ${colors[color]}`}>
+    <div className={`group relative p-6 rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] transition-all duration-300 ${config.border} ${config.glow} hover:shadow-xl`}>
+      <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 border ${config.icon}`}>
         {icon}
       </div>
-      <h3 className="font-semibold text-white mb-1">{title}</h3>
-      <p className="text-sm text-white/40">{description}</p>
+      <h3 className="font-semibold text-white text-lg mb-2">{title}</h3>
+      <p className="text-sm text-white/50 leading-relaxed">{description}</p>
     </div>
   );
 };
 
 // Pricing card component
-const PricingCard = ({ name, price, description, features, popular }: {
+const PricingCard = ({ name, price, description, features, popular, comingSoon, color }: {
   name: string;
   price: string;
   description: string;
   features: string[];
   popular?: boolean;
-}) => (
-  <div className={`p-5 rounded-xl border ${popular ? 'bg-yellow-500/5 border-yellow-500/20' : 'bg-white/[0.02] border-white/5'}`}>
-    {popular && (
-      <span className="inline-block px-2 py-0.5 rounded text-[10px] font-semibold bg-yellow-500 text-black mb-3">
-        POPULAR
-      </span>
-    )}
-    <h3 className="font-semibold text-white">{name}</h3>
-    <div className="flex items-baseline gap-1 mt-1 mb-2">
-      <span className="text-2xl font-bold text-white">{price}</span>
-      <span className="text-sm text-white/40">/month</span>
-    </div>
-    <p className="text-sm text-white/40 mb-4">{description}</p>
+  comingSoon?: boolean;
+  color?: 'yellow' | 'green' | 'purple';
+}) => {
+  const colorConfig = {
+    yellow: {
+      bg: 'bg-gradient-to-b from-yellow-500/10 to-yellow-600/5',
+      border: 'border-yellow-500/30',
+      badge: 'bg-yellow-500 text-black',
+      button: 'bg-yellow-500 hover:bg-yellow-400 text-black',
+      check: 'text-yellow-400',
+      glow: 'shadow-yellow-500/5',
+    },
+    green: {
+      bg: 'bg-gradient-to-b from-green-500/5 to-emerald-600/5',
+      border: 'border-green-500/20',
+      badge: 'bg-green-500 text-black',
+      button: 'bg-white/10 hover:bg-white/15 text-white',
+      check: 'text-green-400',
+      glow: '',
+    },
+    purple: {
+      bg: 'bg-gradient-to-b from-purple-500/5 to-violet-600/5',
+      border: 'border-purple-500/20',
+      badge: 'bg-purple-500 text-white',
+      button: 'bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 cursor-not-allowed',
+      check: 'text-purple-400',
+      glow: '',
+    },
+  };
 
-    <Link to="/auth/signup">
-      <Button className={`w-full h-11 font-semibold ${popular ? 'bg-yellow-500 hover:bg-yellow-400 text-black' : 'bg-white/10 hover:bg-white/15 text-white'}`}>
-        Start Free
-      </Button>
-    </Link>
+  const config = colorConfig[color || 'green'];
 
-    <div className="mt-4 space-y-2">
-      {features.map((feature) => (
-        <div key={feature} className="flex items-center gap-2 text-sm text-white/50">
-          <Check className={`w-4 h-4 ${popular ? 'text-yellow-400' : 'text-green-400'}`} />
-          {feature}
-        </div>
-      ))}
+  return (
+    <div className={`relative p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${config.bg} ${config.border} ${popular ? `shadow-lg ${config.glow}` : ''}`}>
+      {/* Badge */}
+      {popular && (
+        <span className={`absolute -top-3 left-1/2 -translate-x-1/2 inline-block px-3 py-1 rounded-full text-[11px] font-bold ${config.badge}`}>
+          POPULAR
+        </span>
+      )}
+      {comingSoon && (
+        <span className={`absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold ${config.badge}`}>
+          <Clock className="w-3 h-3" />
+          COMING SOON
+        </span>
+      )}
+
+      <h3 className="font-bold text-white text-lg mt-1">{name}</h3>
+      <div className="flex items-baseline gap-1 mt-2 mb-1">
+        <span className="text-3xl font-bold text-white">{price}</span>
+        {!comingSoon && <span className="text-sm text-white/40">/month</span>}
+      </div>
+      <p className="text-sm text-white/50 mb-5">{description}</p>
+
+      {comingSoon ? (
+        <Button disabled className={`w-full h-12 font-semibold rounded-xl ${config.button}`}>
+          Notify Me
+        </Button>
+      ) : (
+        <Link to="/auth/signup">
+          <Button className={`w-full h-12 font-semibold rounded-xl ${config.button}`}>
+            Start Free
+          </Button>
+        </Link>
+      )}
+
+      <div className="mt-5 space-y-3">
+        {features.map((feature) => (
+          <div key={feature} className="flex items-center gap-2.5 text-sm text-white/60">
+            <Check className={`w-4 h-4 flex-shrink-0 ${config.check}`} />
+            {feature}
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default LandingPage;

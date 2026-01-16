@@ -162,7 +162,7 @@ export const InvoiceSendDropdown = ({
                 size="sm"
                 variant="outline"
                 className="border-indigo-500/30 hover:bg-indigo-500/10"
-                onClick={() => navigate('/electrician/settings?tab=billing')}
+                onClick={() => window.location.href = '/electrician/settings?tab=billing'}
               >
                 <CreditCard className="h-4 w-4 mr-1" />
                 Set up
@@ -348,10 +348,12 @@ ${companyName}`;
         return;
       }
 
+      // Pass current URL so Stripe redirects back here after onboarding
       const response = await supabase.functions.invoke('create-stripe-connect-account', {
         headers: {
           Authorization: `Bearer ${session.session.access_token}`,
         },
+        body: { returnUrl: window.location.href },
       });
 
       if (response.error) throw response.error;
@@ -372,9 +374,7 @@ ${companyName}`;
           sonnerToast.success('Opening Stripe Dashboard');
           window.open(url, '_blank');
         } else {
-          // Store current URL to return here after Stripe onboarding
-          localStorage.setItem('stripe-return-url', window.location.pathname + window.location.search);
-          // Redirect in same tab - user never leaves the app context
+          // Redirect to Stripe onboarding - will return to same page with ?stripe=success
           window.location.href = url;
         }
       } else {

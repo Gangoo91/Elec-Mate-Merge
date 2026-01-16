@@ -310,6 +310,32 @@ const InvoicesPage = () => {
     { id: 'paid', label: 'Paid', count: stats.paid, icon: CheckCircle },
   ];
 
+  // Detect ?stripe=success when returning from Stripe onboarding
+  useEffect(() => {
+    const stripeParam = searchParams.get('stripe');
+    if (stripeParam === 'success') {
+      toast({
+        title: 'Stripe Connected!',
+        description: 'You can now accept card payments on invoices.',
+        variant: 'success',
+        duration: 5000,
+      });
+      // Clean URL - remove stripe param
+      searchParams.delete('stripe');
+      setSearchParams(searchParams, { replace: true });
+      // Refresh to show updated Stripe status
+      fetchInvoices();
+    } else if (stripeParam === 'refresh') {
+      toast({
+        title: 'Complete Stripe Setup',
+        description: 'Please finish connecting your Stripe account.',
+        duration: 5000,
+      });
+      searchParams.delete('stripe');
+      setSearchParams(searchParams, { replace: true });
+    }
+  }, []); // Only run once on mount
+
   // Highlight invoice when navigating from quote
   useEffect(() => {
     if (highlightId) {

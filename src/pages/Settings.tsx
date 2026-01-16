@@ -67,35 +67,23 @@ const SettingsPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const queryClient = useQueryClient();
 
-  // Handle Stripe Connect return - show success and try to close tab
+  // Handle Stripe Connect return
   useEffect(() => {
-    const success = searchParams.get('success');
-    const refresh = searchParams.get('refresh');
+    const stripeParam = searchParams.get('stripe');
 
-    if (success === 'true') {
-      // Show success toast
+    if (stripeParam === 'success') {
       toast.success('Stripe Connected Successfully!', {
-        description: 'You can now accept card payments. Close this tab to return to the app.',
-        duration: 10000,
+        description: 'You can now accept card payments on invoices.',
+        duration: 5000,
       });
-
-      // Clean the URL
-      searchParams.delete('success');
+      searchParams.delete('stripe');
       setSearchParams(searchParams, { replace: true });
-
-      // Invalidate queries so status refreshes
       queryClient.invalidateQueries({ queryKey: ['stripe-connect-status'] });
-
-      // Try to close this tab (works if opened by script)
-      setTimeout(() => {
-        window.close();
-      }, 2000);
     }
 
-    if (refresh === 'true') {
-      // User needs to continue onboarding
+    if (stripeParam === 'refresh') {
       toast.info('Please complete Stripe setup to accept payments.');
-      searchParams.delete('refresh');
+      searchParams.delete('stripe');
       setSearchParams(searchParams, { replace: true });
     }
   }, [searchParams, setSearchParams, queryClient]);

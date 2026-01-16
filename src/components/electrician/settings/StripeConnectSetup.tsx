@@ -30,50 +30,18 @@ const StripeConnectSetup: React.FC = () => {
   const [status, setStatus] = useState<StripeConnectStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [connecting, setConnecting] = useState(false);
-  const [previousStatus, setPreviousStatus] = useState<string | null>(null);
 
   useEffect(() => {
     checkStatus();
 
-    // Check for status changes when returning from Stripe onboarding
-    const handleFocus = () => {
-      checkStatus();
-    };
+    // Re-check status when window regains focus (after returning from Stripe)
+    const handleFocus = () => checkStatus();
     window.addEventListener('focus', handleFocus);
-
-    // Listen for postMessage from Stripe callback popup
-    const handleMessage = (event: MessageEvent) => {
-      if (event.data?.type === 'stripe-connect-complete') {
-        console.log('Stripe connect complete message received');
-        checkStatus();
-        if (event.data.success) {
-          toast.success('Stripe Connected Successfully!', {
-            description: 'You can now accept card payments on invoices.',
-            duration: 5000,
-          });
-        }
-      }
-    };
-    window.addEventListener('message', handleMessage);
 
     return () => {
       window.removeEventListener('focus', handleFocus);
-      window.removeEventListener('message', handleMessage);
     };
   }, []);
-
-  // Show success toast when status changes to active
-  useEffect(() => {
-    if (previousStatus && previousStatus !== 'active' && status?.status === 'active') {
-      toast.success('Stripe Connected Successfully!', {
-        description: 'You can now accept card payments on invoices. Clients will see a "Pay Now" button.',
-        duration: 6000,
-      });
-    }
-    if (status?.status) {
-      setPreviousStatus(status.status);
-    }
-  }, [status?.status]);
 
   const checkStatus = async () => {
     try {
@@ -112,10 +80,12 @@ const StripeConnectSetup: React.FC = () => {
         return;
       }
 
+      // Pass current URL so Stripe redirects back here after onboarding
       const response = await supabase.functions.invoke('create-stripe-connect-account', {
         headers: {
           Authorization: `Bearer ${session.session.access_token}`,
         },
+        body: { returnUrl: window.location.href },
       });
 
       if (response.error) throw response.error;
@@ -137,20 +107,16 @@ const StripeConnectSetup: React.FC = () => {
           toast.success('Opening Stripe Dashboard');
           window.open(url, '_blank');
         } else {
-          // Store current URL to return here after Stripe onboarding
-          localStorage.setItem('stripe-return-url', window.location.pathname + window.location.search);
-          // Redirect in same tab - seamless experience
+          // Redirect to Stripe onboarding - will return to same page with ?stripe=success
           window.location.href = url;
         }
       } else {
-        // Handle missing URL case - show error instead of silent return
         toast.error('Could not start Stripe setup', {
           description: 'Please try again or contact support if this persists.',
         });
       }
     } catch (error: any) {
       console.error('Error connecting Stripe:', error);
-      // Better error message extraction from various formats
       const errorMessage = error?.message || error?.error ||
         (typeof error === 'string' ? error : 'Failed to connect Stripe');
       toast.error(errorMessage);
