@@ -76,6 +76,7 @@ const ProjectManagerPage = lazy(() => import("@/pages/electrician-tools/ProjectM
 const MaintenancePage = lazy(() => import("@/pages/electrician-tools/MaintenancePage"));
 const TutorPage = lazy(() => import("@/pages/electrician-tools/TutorPage"));
 const AIMethodStatementPage = lazy(() => import("@/pages/electrician-tools/AIMethodStatementPage"));
+const PremiumCVBuilder = lazy(() => import("@/components/cv-builder/premium/PremiumCVBuilder"));
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -83,6 +84,7 @@ const ElectricianHubRoutes = () => (
     <Route index element={<LazyRoute><ElectricalHub /></LazyRoute>} />
 
     <Route path="job-vacancies" element={<LazyRoute><JobVacancies /></LazyRoute>} />
+    <Route path="cv-builder" element={<LazyRoute><PremiumCVBuilder /></LazyRoute>} />
     <Route path="materials" element={<LazyRoute><MaterialsMarketplace /></LazyRoute>} />
     <Route path="materials-old" element={<LazyRoute><ElectricalMaterials /></LazyRoute>} />
     <Route path="materials/compare" element={<LazyRoute><MaterialPriceComparisonPage /></LazyRoute>} />

@@ -62,38 +62,38 @@ export const MaterialsForm = ({ onAddMaterial }: MaterialsFormProps) => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <div className="md:col-span-2 space-y-2">
             <Label htmlFor="materialName">Material Name</Label>
-            <Input 
-              id="materialName" 
-              value={newMaterial.name} 
-              onChange={(e) => setNewMaterial({ ...newMaterial, name: e.target.value })} 
+            <Input
+              id="materialName"
+              value={newMaterial.name}
+              onChange={(e) => setNewMaterial({ ...newMaterial, name: e.target.value })}
               placeholder="2.5mm T&E Cable"
-              className="w-full"
+              className="w-full h-11 text-base touch-manipulation"
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor="quantity">Quantity</Label>
-            <Input 
-              id="quantity" 
-              type="number" 
-              value={newMaterial.quantity} 
-              onChange={(e) => setNewMaterial({ ...newMaterial, quantity: parseFloat(e.target.value) || 0 })} 
-              className="w-full"
+            <Input
+              id="quantity"
+              type="number"
+              value={newMaterial.quantity}
+              onChange={(e) => setNewMaterial({ ...newMaterial, quantity: parseFloat(e.target.value) || 0 })}
+              className="w-full h-11 text-base touch-manipulation"
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor="unitCost">Unit Cost (£)</Label>
-            <Input 
-              id="unitCost" 
-              type="number" 
-              value={newMaterial.unitCost} 
-              onChange={(e) => setNewMaterial({ ...newMaterial, unitCost: parseFloat(e.target.value) || 0 })} 
-              className="w-full"
+            <Input
+              id="unitCost"
+              type="number"
+              value={newMaterial.unitCost}
+              onChange={(e) => setNewMaterial({ ...newMaterial, unitCost: parseFloat(e.target.value) || 0 })}
+              className="w-full h-11 text-base touch-manipulation"
             />
           </div>
           <div className="flex items-end">
-            <Button 
-              onClick={handleAddMaterial} 
-              className="w-full flex items-center gap-2"
+            <Button
+              onClick={handleAddMaterial}
+              className="w-full h-11 flex items-center gap-2 touch-manipulation active:scale-[0.98]"
             >
               <Plus className="h-4 w-4" /> Add
             </Button>

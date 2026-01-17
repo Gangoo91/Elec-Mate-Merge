@@ -419,3 +419,234 @@ export const getTrainingByProfileId = async (profileId: string): Promise<ElecIdT
   if (error) throw error;
   return data || [];
 };
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CV Storage Functions
+// ═══════════════════════════════════════════════════════════════════════════
+
+export interface UserCV {
+  id: string;
+  user_id: string;
+  template_id: 'classic' | 'modern' | 'creative' | 'technical';
+  cv_data: Record<string, unknown>;
+  pdf_url: string | null;
+  is_primary: boolean;
+  title: string;
+  created_at: string;
+  updated_at: string;
+}
+
+// Get all CVs for the current user
+export const getUserCVs = async (): Promise<UserCV[]> => {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+
+  const { data, error } = await supabase
+    .from('user_cvs')
+    .select('*')
+    .eq('user_id', user.id)
+    .order('updated_at', { ascending: false });
+
+  if (error) throw error;
+  return data || [];
+};
+
+// Get a specific CV by ID
+export const getCVById = async (cvId: string): Promise<UserCV | null> => {
+  const { data, error } = await supabase
+    .from('user_cvs')
+    .select('*')
+    .eq('id', cvId)
+    .maybeSingle();
+
+  if (error) throw error;
+  return data;
+};
+
+// Get user's primary CV
+export const getPrimaryCV = async (): Promise<UserCV | null> => {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+
+  const { data, error } = await supabase
+    .from('user_cvs')
+    .select('*')
+    .eq('user_id', user.id)
+    .eq('is_primary', true)
+    .maybeSingle();
+
+  if (error) throw error;
+  return data;
+};
+
+// Save a new CV
+export const saveCV = async (cvData: {
+  template_id: UserCV['template_id'];
+  cv_data: Record<string, unknown>;
+  title?: string;
+  is_primary?: boolean;
+  pdf_url?: string;
+}): Promise<UserCV> => {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+
+  const { data, error } = await supabase
+    .from('user_cvs')
+    .insert({
+      user_id: user.id,
+      template_id: cvData.template_id,
+      cv_data: cvData.cv_data,
+      title: cvData.title || 'My CV',
+      is_primary: cvData.is_primary ?? false,
+      pdf_url: cvData.pdf_url,
+    })
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+};
+
+// Update an existing CV
+export const updateCV = async (cvId: string, updates: Partial<{
+  template_id: UserCV['template_id'];
+  cv_data: Record<string, unknown>;
+  title: string;
+  is_primary: boolean;
+  pdf_url: string;
+}>): Promise<UserCV> => {
+  const { data, error } = await supabase
+    .from('user_cvs')
+    .update(updates)
+    .eq('id', cvId)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+};
+
+// Delete a CV
+export const deleteCV = async (cvId: string): Promise<void> => {
+  const { error } = await supabase
+    .from('user_cvs')
+    .delete()
+    .eq('id', cvId);
+
+  if (error) throw error;
+};
+
+// Set a CV as primary (and unset others)
+export const setAsPrimaryCV = async (cvId: string): Promise<void> => {
+  const { error } = await supabase
+    .from('user_cvs')
+    .update({ is_primary: true })
+    .eq('id', cvId);
+
+  if (error) throw error;
+};
+
+// Get current user's Elec-ID profile for CV import
+export const getCurrentUserElecIdForCV = async (): Promise<{
+  profile: ElecIdProfile | null;
+  userInfo: { full_name: string; email: string } | null;
+}> => {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { profile: null, userInfo: null };
+
+  // Get user's basic info from profiles
+  const { data: userProfile } = await supabase
+    .from('profiles')
+    .select('full_name, elec_id_number')
+    .eq('id', user.id)
+    .maybeSingle();
+
+  const userInfo = userProfile ? {
+    full_name: userProfile.full_name || '',
+    email: user.email || '',
+  } : null;
+
+  // If they have an Elec-ID number, try to find their profile
+  if (userProfile?.elec_id_number) {
+    const profile = await getElecIdProfileByNumber(userProfile.elec_id_number);
+    return { profile, userInfo };
+  }
+
+  return { profile: null, userInfo };
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CV PDF Storage Functions
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * Upload a CV PDF to storage
+ * @param cvId - The CV ID (used in filename)
+ * @param pdfBlob - The PDF blob to upload
+ * @returns The public URL of the uploaded PDF
+ */
+export const uploadCVPDF = async (cvId: string, pdfBlob: Blob): Promise<string> => {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error('User not authenticated');
+
+  const timestamp = Date.now();
+  const fileName = `${user.id}/${cvId}/${timestamp}.pdf`;
+
+  const { data, error } = await supabase.storage
+    .from('cv-documents')
+    .upload(fileName, pdfBlob, {
+      contentType: 'application/pdf',
+      upsert: true,
+    });
+
+  if (error) {
+    throw new Error(`Failed to upload CV PDF: ${error.message}`);
+  }
+
+  // Get public URL
+  const { data: { publicUrl } } = supabase.storage
+    .from('cv-documents')
+    .getPublicUrl(data.path);
+
+  return publicUrl;
+};
+
+/**
+ * Delete a CV PDF from storage
+ * @param pdfUrl - The public URL of the PDF to delete
+ */
+export const deleteCVPDF = async (pdfUrl: string): Promise<void> => {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error('User not authenticated');
+
+  // Extract path from URL
+  const url = new URL(pdfUrl);
+  const pathMatch = url.pathname.match(/\/cv-documents\/(.+)$/);
+  if (!pathMatch) {
+    throw new Error('Invalid CV PDF URL');
+  }
+
+  const filePath = decodeURIComponent(pathMatch[1]);
+
+  const { error } = await supabase.storage
+    .from('cv-documents')
+    .remove([filePath]);
+
+  if (error) {
+    throw new Error(`Failed to delete CV PDF: ${error.message}`);
+  }
+};
+
+/**
+ * Update a user_cv record with the PDF URL
+ */
+export const updateCVPDFUrl = async (cvId: string, pdfUrl: string): Promise<void> => {
+  const { error } = await supabase
+    .from('user_cvs')
+    .update({ pdf_url: pdfUrl, updated_at: new Date().toISOString() })
+    .eq('id', cvId);
+
+  if (error) {
+    throw new Error(`Failed to update CV PDF URL: ${error.message}`);
+  }
+};

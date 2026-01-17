@@ -10,6 +10,7 @@ import {
   AlertTriangle,
   Share2,
   FileCheck,
+  FileText,
   Loader2,
   ChevronLeft,
   ChevronRight,
@@ -24,6 +25,7 @@ import ElecIdSkills from "./elec-id/ElecIdSkills";
 import ElecIdCompliance from "./elec-id/ElecIdCompliance";
 import ElecIdShare from "./elec-id/ElecIdShare";
 import DocumentUploader from "./elec-id/DocumentUploader";
+import ElecIdCVTab from "./elec-id/ElecIdCVTab";
 import ElecIdOnboarding, { type OnboardingFormData } from "./elec-id/ElecIdOnboarding";
 import { useElecIdProfile } from "@/hooks/useElecIdProfile";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -73,6 +75,15 @@ const ELEC_ID_TABS = [
     component: ElecIdSkills,
     description: "Competencies",
     color: "from-green-500 to-emerald-500",
+  },
+  {
+    id: "cv",
+    label: "My CV",
+    shortLabel: "CV",
+    icon: FileText,
+    component: ElecIdCVTab,
+    description: "Manage your CV",
+    color: "from-cyan-500 to-blue-500",
   },
   {
     id: "compliance",

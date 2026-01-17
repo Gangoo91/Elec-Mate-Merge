@@ -279,8 +279,8 @@ const ToolCard: React.FC<ToolCardProps> = ({
   const savingsAmount = getSavingsAmount();
 
   return (
-    <Card 
-      className="group relative h-full overflow-hidden rounded-xl border border-border/50 bg-elec-gray backdrop-blur-sm transition-all duration-300 hover:border-primary/60 hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-1 cursor-pointer"
+    <Card
+      className="group relative h-full overflow-hidden rounded-xl border border-border/50 bg-elec-gray backdrop-blur-sm transition-all duration-300 touch-manipulation active:scale-[0.98] active:border-primary/60 sm:hover:border-primary/60 sm:hover:shadow-xl sm:hover:shadow-primary/20 sm:hover:-translate-y-1 cursor-pointer"
       onClick={() => onCardClick?.(item)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -381,18 +381,18 @@ const ToolCard: React.FC<ToolCardProps> = ({
 
           {/* Enhanced action buttons */}
           <div className="flex gap-2">
-            <Button 
+            <Button
               size="sm"
               onClick={(e) => {
                 e.stopPropagation();
                 window.open(getProductUrl(), '_blank');
               }}
-              className="flex-1 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all h-10 text-sm"
+              className="flex-1 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-semibold shadow-md hover:shadow-lg sm:hover:scale-105 transition-all h-11 text-sm touch-manipulation active:scale-[0.98]"
             >
               <ShoppingCart className="mr-2 h-4 w-4" />
               Buy Now
             </Button>
-            <Button 
+            <Button
               size="sm"
               variant="outline"
               onClick={(e) => {
@@ -404,9 +404,9 @@ const ToolCard: React.FC<ToolCardProps> = ({
                 }
               }}
               disabled={isCompareDisabled && !isSelected}
-              className="rounded-xl px-3 border-border/50 hover:bg-accent hover:scale-105 transition-all h-10"
+              className="rounded-xl px-0 w-11 h-11 border-border/50 hover:bg-accent sm:hover:scale-105 transition-all touch-manipulation active:scale-[0.98]"
             >
-              {isSelected ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+              {isSelected ? <Check className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
             </Button>
           </div>
         </div>

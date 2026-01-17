@@ -264,7 +264,7 @@ const JIBGradingScheme = () => {
                 <TrendingUp className="h-5 w-5" />
                 2026 Industry Update
               </h3>
-              <p className="text-white text-sm max-w-3xl mx-auto leading-relaxed">
+              <p className="text-white text-sm max-w-4xl mx-auto leading-relaxed">
                 Record skills shortage pushing rates up 15-20% year-on-year. Net Zero targets creating unprecedented 
                 demand for EV charging, heat pump, and data centre specialists. Prime time for career advancement.
               </p>

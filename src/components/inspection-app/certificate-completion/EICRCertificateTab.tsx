@@ -245,6 +245,15 @@ export const EICRCertificateTab: React.FC<EICRCertificateTabProps> = ({
       // Format data and call edge function
       const formattedJson = await formatEICRJson(formData, savedReportId);
 
+      // DEBUG: Log payload size
+      const allKeys = Object.keys(formattedJson);
+      const flatInspKeys = allKeys.filter(k => k.startsWith('insp_'));
+      console.log('[EICRCertificateTab] Total keys in payload:', allKeys.length);
+      console.log('[EICRCertificateTab] Flat inspection keys:', flatInspKeys.length);
+      console.log('[EICRCertificateTab] Sample flat keys:', flatInspKeys.slice(0, 10));
+      console.log('[EICRCertificateTab] inspection_debug_test:', formattedJson.inspection_debug_test);
+      console.log('[EICRCertificateTab] insp_1_0_acc:', formattedJson.insp_1_0_acc);
+
       const { data, error } = await supabase.functions.invoke('generate-eicr-pdf', {
         body: { formData: formattedJson }
       });

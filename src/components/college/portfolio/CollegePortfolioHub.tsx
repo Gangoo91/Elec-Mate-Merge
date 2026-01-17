@@ -288,12 +288,12 @@ const CollegePortfolioHub: React.FC = () => {
                 className="pl-8 bg-white/5 border-elec-gray/40"
               />
             </div>
-            <Select value={statusFilter || ''} onValueChange={(v) => setStatusFilter(v || null)}>
+            <Select value={statusFilter || 'all'} onValueChange={(v) => setStatusFilter(v === 'all' ? null : v)}>
               <SelectTrigger className="w-full sm:w-40 bg-white/5 border-elec-gray/40">
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
               <SelectContent className="bg-elec-dark border-elec-gray/40">
-                <SelectItem value="">All Status</SelectItem>
+                <SelectItem value="all">All Status</SelectItem>
                 <SelectItem value="active">Active</SelectItem>
                 <SelectItem value="at_risk">At Risk</SelectItem>
                 <SelectItem value="on_break">On Break</SelectItem>

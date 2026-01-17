@@ -198,6 +198,18 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         inspectorName: formattedJson.inspector?.name
       });
 
+      // Critical debug: flat inspection keys
+      const allKeys = Object.keys(formattedJson);
+      const flatInspKeys = allKeys.filter(k => k.startsWith('insp_'));
+      console.log('[PDF Generation] ========== FLAT KEYS DEBUG ==========');
+      console.log('[PDF Generation] Total keys in formattedJson:', allKeys.length);
+      console.log('[PDF Generation] Flat inspection keys count:', flatInspKeys.length);
+      console.log('[PDF Generation] Sample flat keys:', flatInspKeys.slice(0, 10));
+      console.log('[PDF Generation] insp_1_0_acc:', (formattedJson as any).insp_1_0_acc);
+      console.log('[PDF Generation] insp_3_5_acc:', (formattedJson as any).insp_3_5_acc);
+      console.log('[PDF Generation] inspection_debug_test:', (formattedJson as any).inspection_debug_test);
+      console.log('[PDF Generation] =================================================');
+
       // Step 3: Call the edge function
       console.log('[PDF Generation] Step 3: Calling edge function generate-eicr-pdf...');
       console.log('[PDF Generation] Sending payload with keys:', Object.keys({ formData: formattedJson }));

@@ -3,6 +3,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import type { VerificationTier } from "@/components/employer/SparkProfileSheet";
 
+export interface WorkHistoryItem {
+  jobTitle: string;
+  employer: string;
+  startDate: string;
+  endDate?: string;
+  isCurrent: boolean;
+}
+
 export interface TalentPoolWorker {
   id: string;
   elecIdProfileId: string;
@@ -27,6 +35,10 @@ export interface TalentPoolWorker {
   skills: string[];
   skillsCount: number;
   verifiedDocsCount: number;
+  // Work history & experience
+  workHistory: WorkHistoryItem[];
+  currentRole?: string;
+  totalYearsExperience: number;
   // UI enhancement fields
   availability: 'Immediate' | '1 week notice' | 'Limited';
   experience: number;
@@ -37,11 +49,20 @@ export interface TalentPoolWorker {
   responseTime: string;
 }
 
+export type ExperienceLevel = 'all' | 'entry' | 'mid' | 'senior';
+
 interface UseTalentPoolOptions {
   searchQuery?: string;
   tierFilter?: 'all' | 'verified' | 'premium';
   availabilityFilter?: 'all' | 'now' | 'week';
   specialismsFilter?: string[];
+  // New filter options
+  experienceFilter?: ExperienceLevel;
+  ecsCardFilter?: string[];
+  skillsFilter?: string[];
+  qualificationsFilter?: string[];
+  minRate?: number;
+  maxRate?: number;
 }
 
 interface UseTalentPoolReturn {
@@ -86,6 +107,27 @@ const generateStableValue = (id: string, min: number, max: number): number => {
     hash = hash & hash;
   }
   return min + (Math.abs(hash) % (max - min + 1));
+};
+
+// Calculate total years of experience from work history
+const calculateTotalExperience = (workHistory: WorkHistoryItem[]): number => {
+  if (!workHistory || workHistory.length === 0) return 0;
+
+  let totalMonths = 0;
+  const now = new Date();
+
+  for (const job of workHistory) {
+    const startDate = new Date(job.startDate);
+    const endDate = job.endDate ? new Date(job.endDate) : now;
+
+    // Calculate months between dates
+    const months = (endDate.getFullYear() - startDate.getFullYear()) * 12
+      + (endDate.getMonth() - startDate.getMonth());
+    totalMonths += Math.max(0, months);
+  }
+
+  // Return years (rounded to 1 decimal)
+  return Math.round(totalMonths / 12 * 10) / 10;
 };
 
 export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPoolReturn {
@@ -162,6 +204,13 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
         .in("profile_id", profileIds)
         .eq("verification_status", "verified");
 
+      // Fetch work history for all profiles
+      const { data: workHistoryData } = await supabase
+        .from("employer_elec_id_work_history")
+        .select("profile_id, job_title, employer_name, start_date, end_date, is_current")
+        .in("profile_id", profileIds)
+        .order("start_date", { ascending: false });
+
       // Map qualifications by profile
       const qualsByProfile = (qualifications || []).reduce((acc, q) => {
         if (!acc[q.profile_id]) acc[q.profile_id] = [];
@@ -182,17 +231,41 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
         return acc;
       }, {} as Record<string, number>);
 
+      // Map work history by profile
+      const workHistoryByProfile = (workHistoryData || []).reduce((acc, wh) => {
+        if (!acc[wh.profile_id]) acc[wh.profile_id] = [];
+        acc[wh.profile_id].push({
+          jobTitle: wh.job_title,
+          employer: wh.employer_name,
+          startDate: wh.start_date,
+          endDate: wh.end_date,
+          isCurrent: wh.is_current,
+        } as WorkHistoryItem);
+        return acc;
+      }, {} as Record<string, WorkHistoryItem[]>);
+
       // Transform to TalentPoolWorker format
       const transformedWorkers: TalentPoolWorker[] = profiles.map((profile: any) => {
         const employee = profile.employer_employees;
         const hourlyRate = parseFloat(employee.hourly_rate) || 25;
         const profileQuals = qualsByProfile[profile.id] || [];
         const profileSkills = skillsByProfile[profile.id] || [];
+        const profileWorkHistory = workHistoryByProfile[profile.id] || [];
 
         // Use profile rate if set, otherwise calculate from hourly
         const dayRate = profile.rate_amount
           ? convertToDayRate(profile.rate_amount, profile.rate_type || 'daily')
           : calculateDayRate(hourlyRate);
+
+        // Calculate experience from work history, or fallback to stable demo value
+        const calculatedExperience = calculateTotalExperience(profileWorkHistory);
+        const yearsExperience = calculatedExperience > 0
+          ? calculatedExperience
+          : generateStableValue(profile.id, 2, 20);
+
+        // Get current role from work history (most recent current job)
+        const currentJob = profileWorkHistory.find(wh => wh.isCurrent);
+        const currentRole = currentJob?.jobTitle || employee.role || 'Electrician';
 
         return {
           id: employee.id,
@@ -218,9 +291,13 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
           skills: profileSkills,
           skillsCount: profileSkills.length,
           verifiedDocsCount: verifiedDocsByProfile[profile.id] || 0,
-          // Generate stable demo values
+          // Work history & calculated experience
+          workHistory: profileWorkHistory,
+          currentRole,
+          totalYearsExperience: yearsExperience,
+          // UI enhancement fields
           availability: determineAvailability(profile.verification_tier),
-          experience: generateStableValue(profile.id, 2, 20),
+          experience: yearsExperience, // Keep for backwards compatibility
           rating: 4 + (generateStableValue(profile.id, 0, 10) / 10),
           completedJobs: generateStableValue(profile.id, 5, 150),
           distance: generateStableValue(profile.id, 1, 25),
@@ -279,8 +356,68 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
       );
     }
 
+    // Experience level filter
+    if (options.experienceFilter && options.experienceFilter !== 'all') {
+      result = result.filter(w => {
+        const years = w.totalYearsExperience;
+        switch (options.experienceFilter) {
+          case 'entry': return years >= 0 && years <= 2;
+          case 'mid': return years >= 3 && years <= 7;
+          case 'senior': return years >= 8;
+          default: return true;
+        }
+      });
+    }
+
+    // ECS Card type filter
+    if (options.ecsCardFilter && options.ecsCardFilter.length > 0) {
+      result = result.filter(w =>
+        options.ecsCardFilter!.some(cardType =>
+          w.ecsCardType.toLowerCase() === cardType.toLowerCase()
+        )
+      );
+    }
+
+    // Skills filter
+    if (options.skillsFilter && options.skillsFilter.length > 0) {
+      result = result.filter(w =>
+        options.skillsFilter!.some(skill =>
+          w.skills.some(s => s.toLowerCase().includes(skill.toLowerCase()))
+        )
+      );
+    }
+
+    // Qualifications filter
+    if (options.qualificationsFilter && options.qualificationsFilter.length > 0) {
+      result = result.filter(w =>
+        options.qualificationsFilter!.some(qual =>
+          w.qualifications.some(q => q.toLowerCase().includes(qual.toLowerCase()))
+        )
+      );
+    }
+
+    // Day rate range filter
+    if (options.minRate !== undefined && options.minRate > 0) {
+      result = result.filter(w => w.dayRate >= options.minRate!);
+    }
+    if (options.maxRate !== undefined && options.maxRate > 0) {
+      result = result.filter(w => w.dayRate <= options.maxRate!);
+    }
+
     return result;
-  }, [workers, options.searchQuery, options.tierFilter, options.availabilityFilter, options.specialismsFilter]);
+  }, [
+    workers,
+    options.searchQuery,
+    options.tierFilter,
+    options.availabilityFilter,
+    options.specialismsFilter,
+    options.experienceFilter,
+    options.ecsCardFilter,
+    options.skillsFilter,
+    options.qualificationsFilter,
+    options.minRate,
+    options.maxRate,
+  ]);
 
   // Calculate counts
   const totalCount = filteredWorkers.length;

@@ -33,12 +33,26 @@ import {
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useEmployer } from "@/contexts/EmployerContext";
-import { useTalentPool, type TalentPoolWorker } from "@/hooks/useTalentPool";
+import { useTalentPool, type TalentPoolWorker, type ExperienceLevel } from "@/hooks/useTalentPool";
 import { addDays, format } from "date-fns";
+import { Slider } from "@/components/ui/slider";
 
 type ViewMode = 'list' | 'map' | 'calendar';
 type AvailabilityFilter = 'all' | 'now' | 'week';
 type TierFilter = 'all' | 'verified' | 'premium';
+
+// Common ECS card types
+const ECS_CARD_TYPES = ['Gold', 'Blue', 'Green', 'Apprentice'];
+
+// Common qualifications
+const COMMON_QUALIFICATIONS = [
+  '18th Edition BS7671',
+  'C&G 2391 Inspection & Testing',
+  'C&G 2382 18th Edition',
+  'EV Charging Installation',
+  'Solar PV Installation',
+  'Part P Competent Person',
+];
 
 // Simple hash function for deterministic positioning
 const hashCode = (str: string): number => {
@@ -99,7 +113,11 @@ const generateAvailabilitySlots = (id: string) => {
 };
 
 // Convert TalentPoolWorker to EnhancedElectrician for UI compatibility
-const convertToEnhancedElectrician = (worker: TalentPoolWorker): EnhancedElectrician => ({
+const convertToEnhancedElectrician = (worker: TalentPoolWorker): EnhancedElectrician & {
+  skills: string[];
+  currentRole?: string;
+  totalYearsExperience: number;
+} => ({
   id: worker.id,
   name: worker.name,
   location: worker.location,
@@ -114,7 +132,7 @@ const convertToEnhancedElectrician = (worker: TalentPoolWorker): EnhancedElectri
   rating: worker.rating,
   completedJobs: worker.completedJobs,
   verified: worker.isVerified,
-  bio: worker.bio || `Experienced ${worker.role.toLowerCase()} with ${worker.experience} years in the industry.`,
+  bio: worker.bio || `Experienced ${worker.role.toLowerCase()} with ${worker.totalYearsExperience || worker.experience} years in the industry.`,
   qualifications: worker.qualifications.length > 0 ? worker.qualifications : ['18th Edition BS7671'],
   status: 'Active',
   avatar: worker.avatar || '',
@@ -126,6 +144,10 @@ const convertToEnhancedElectrician = (worker: TalentPoolWorker): EnhancedElectri
   verifiedDocsCount: worker.verifiedDocsCount,
   elecIdNumber: worker.elecIdNumber,
   elecIdProfileId: worker.elecIdProfileId,
+  // New enhanced fields
+  skills: worker.skills,
+  currentRole: worker.currentRole,
+  totalYearsExperience: worker.totalYearsExperience,
 });
 
 const specialisms = ["Commercial", "Industrial", "Domestic", "EV Charging", "Solar PV", "Fire Alarm", "Smart Home", "Testing"];
@@ -153,6 +175,11 @@ export function TalentPoolSection() {
   const [tierFilter, setTierFilter] = useState<TierFilter>('all');
   const [selectedSpecialisms, setSelectedSpecialisms] = useState<string[]>([]);
   const [labourBankOnly, setLabourBankOnly] = useState(false);
+  // New enhanced filters
+  const [experienceFilter, setExperienceFilter] = useState<ExperienceLevel>('all');
+  const [selectedEcsCards, setSelectedEcsCards] = useState<string[]>([]);
+  const [selectedQualifications, setSelectedQualifications] = useState<string[]>([]);
+  const [rateRange, setRateRange] = useState<[number, number]>([150, 500]);
 
   // Fetch real talent pool data from database
   const {
@@ -167,6 +194,11 @@ export function TalentPoolSection() {
     tierFilter,
     availabilityFilter,
     specialismsFilter: selectedSpecialisms,
+    experienceFilter,
+    ecsCardFilter: selectedEcsCards,
+    qualificationsFilter: selectedQualifications,
+    minRate: rateRange[0],
+    maxRate: rateRange[1] < 500 ? rateRange[1] : undefined, // Only apply max if not at default max
   });
 
   // Pull to refresh handler
@@ -195,6 +227,10 @@ export function TalentPoolSection() {
     tierFilter !== 'all',
     selectedSpecialisms.length > 0,
     labourBankOnly,
+    experienceFilter !== 'all',
+    selectedEcsCards.length > 0,
+    selectedQualifications.length > 0,
+    rateRange[0] > 150 || rateRange[1] < 500,
   ].filter(Boolean).length;
 
   // Apply Labour Bank filter (client-side since it's local state)
@@ -213,6 +249,10 @@ export function TalentPoolSection() {
     setTierFilter('all');
     setSelectedSpecialisms([]);
     setLabourBankOnly(false);
+    setExperienceFilter('all');
+    setSelectedEcsCards([]);
+    setSelectedQualifications([]);
+    setRateRange([150, 500]);
   };
 
   const toggleSpecialism = (spec: string) => {
@@ -423,6 +463,99 @@ export function TalentPoolSection() {
                 </div>
               </div>
 
+              {/* Experience Level */}
+              <div className="space-y-3">
+                <Label className="text-sm font-medium">Experience Level</Label>
+                <div className="flex gap-2">
+                  {[
+                    { value: 'all', label: 'Any' },
+                    { value: 'entry', label: 'Entry (0-2yr)' },
+                    { value: 'mid', label: 'Mid (3-7yr)' },
+                    { value: 'senior', label: 'Senior (8+yr)' },
+                  ].map((opt) => (
+                    <Button
+                      key={opt.value}
+                      variant={experienceFilter === opt.value ? "default" : "outline"}
+                      size="sm"
+                      className="h-10 flex-1"
+                      onClick={() => setExperienceFilter(opt.value as ExperienceLevel)}
+                    >
+                      {opt.label}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {/* ECS Card Type */}
+              <div className="space-y-3">
+                <Label className="text-sm font-medium">ECS Card Type</Label>
+                <div className="flex flex-wrap gap-2">
+                  {ECS_CARD_TYPES.map((card) => (
+                    <Badge
+                      key={card}
+                      variant={selectedEcsCards.includes(card) ? "default" : "outline"}
+                      className={`cursor-pointer h-9 px-4 text-sm ${
+                        selectedEcsCards.includes(card)
+                          ? card === 'Gold' ? 'bg-amber-500' :
+                            card === 'Blue' ? 'bg-blue-500' :
+                            card === 'Green' ? 'bg-emerald-500' : 'bg-purple-500'
+                          : ''
+                      }`}
+                      onClick={() => setSelectedEcsCards(prev =>
+                        prev.includes(card) ? prev.filter(c => c !== card) : [...prev, card]
+                      )}
+                    >
+                      {selectedEcsCards.includes(card) && <Check className="h-3 w-3 mr-1" />}
+                      {card}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              {/* Qualifications */}
+              <div className="space-y-3">
+                <Label className="text-sm font-medium">Qualifications</Label>
+                <div className="flex flex-wrap gap-2">
+                  {COMMON_QUALIFICATIONS.map((qual) => (
+                    <Badge
+                      key={qual}
+                      variant={selectedQualifications.includes(qual) ? "default" : "outline"}
+                      className="cursor-pointer h-9 px-4 text-sm"
+                      onClick={() => setSelectedQualifications(prev =>
+                        prev.includes(qual) ? prev.filter(q => q !== qual) : [...prev, qual]
+                      )}
+                    >
+                      {selectedQualifications.includes(qual) && <Check className="h-3 w-3 mr-1" />}
+                      {qual}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              {/* Day Rate Range */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <Label className="text-sm font-medium">Day Rate</Label>
+                  <span className="text-sm text-muted-foreground">
+                    £{rateRange[0]} - £{rateRange[1]}{rateRange[1] >= 500 ? '+' : ''}
+                  </span>
+                </div>
+                <div className="px-2">
+                  <Slider
+                    value={rateRange}
+                    min={150}
+                    max={500}
+                    step={25}
+                    onValueChange={(value) => setRateRange(value as [number, number])}
+                    className="touch-manipulation"
+                  />
+                </div>
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <span>£150</span>
+                  <span>£500+</span>
+                </div>
+              </div>
+
               {/* Labour Bank Toggle */}
               <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
                 <div className="flex items-center gap-3">
@@ -454,16 +587,79 @@ export function TalentPoolSection() {
         </Sheet>
       </div>
 
+      {/* Quick Filter Bar - Horizontal Scrollable Chips */}
+      <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+        <Badge
+          variant={availabilityFilter === 'now' ? "default" : "outline"}
+          className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation bg-success/10 border-success/30 hover:bg-success/20"
+          onClick={() => setAvailabilityFilter(availabilityFilter === 'now' ? 'all' : 'now')}
+        >
+          {availabilityFilter === 'now' && <Check className="h-3 w-3 mr-1" />}
+          <Sparkles className="h-3 w-3 mr-1" />
+          Available Now
+        </Badge>
+        <Badge
+          variant={tierFilter === 'verified' ? "default" : "outline"}
+          className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation"
+          onClick={() => setTierFilter(tierFilter === 'verified' ? 'all' : 'verified')}
+        >
+          {tierFilter === 'verified' && <Check className="h-3 w-3 mr-1" />}
+          <Shield className="h-3 w-3 mr-1" />
+          Verified+
+        </Badge>
+        <Badge
+          variant={tierFilter === 'premium' ? "default" : "outline"}
+          className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation bg-amber-500/10 border-amber-500/30 hover:bg-amber-500/20"
+          onClick={() => setTierFilter(tierFilter === 'premium' ? 'all' : 'premium')}
+        >
+          {tierFilter === 'premium' && <Check className="h-3 w-3 mr-1" />}
+          <Award className="h-3 w-3 mr-1" />
+          Premium
+        </Badge>
+        <Badge
+          variant={selectedSpecialisms.includes('EV Charging') ? "default" : "outline"}
+          className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation"
+          onClick={() => toggleSpecialism('EV Charging')}
+        >
+          {selectedSpecialisms.includes('EV Charging') && <Check className="h-3 w-3 mr-1" />}
+          EV Specialists
+        </Badge>
+        <Badge
+          variant={selectedSpecialisms.includes('Solar PV') ? "default" : "outline"}
+          className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation"
+          onClick={() => toggleSpecialism('Solar PV')}
+        >
+          {selectedSpecialisms.includes('Solar PV') && <Check className="h-3 w-3 mr-1" />}
+          Solar PV
+        </Badge>
+        <Badge
+          variant={experienceFilter === 'senior' ? "default" : "outline"}
+          className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation"
+          onClick={() => setExperienceFilter(experienceFilter === 'senior' ? 'all' : 'senior')}
+        >
+          {experienceFilter === 'senior' && <Check className="h-3 w-3 mr-1" />}
+          8+ Years Exp
+        </Badge>
+      </div>
+
       {/* Inline Filter Chips */}
       <TalentFilterChips
         availabilityFilter={availabilityFilter}
         tierFilter={tierFilter}
         selectedSpecialisms={selectedSpecialisms}
         labourBankOnly={labourBankOnly}
+        experienceFilter={experienceFilter}
+        selectedEcsCards={selectedEcsCards}
+        selectedQualifications={selectedQualifications}
+        rateRange={rateRange}
         onRemoveAvailability={() => setAvailabilityFilter('all')}
         onRemoveTier={() => setTierFilter('all')}
         onRemoveSpecialism={(spec) => setSelectedSpecialisms(prev => prev.filter(s => s !== spec))}
         onRemoveLabourBank={() => setLabourBankOnly(false)}
+        onRemoveExperience={() => setExperienceFilter('all')}
+        onRemoveEcsCard={(card) => setSelectedEcsCards(prev => prev.filter(c => c !== card))}
+        onRemoveQualification={(qual) => setSelectedQualifications(prev => prev.filter(q => q !== qual))}
+        onResetRateRange={() => setRateRange([150, 500])}
         onOpenFilters={() => setFilterSheetOpen(true)}
         totalResults={filteredElectricians.length}
       />
@@ -515,6 +711,9 @@ export function TalentPoolSection() {
                 verifiedDocsCount={(electrician as any).verifiedDocsCount || 0}
                 specialisms={electrician.specialisms}
                 qualifications={electrician.qualifications}
+                skills={(electrician as any).skills || []}
+                currentRole={(electrician as any).currentRole}
+                totalYearsExperience={(electrician as any).totalYearsExperience}
                 completedJobs={electrician.completedJobs}
                 elecIdNumber={(electrician as any).elecIdNumber}
                 isSaved={isSaved}

@@ -109,7 +109,7 @@ const MaterialListCard: React.FC<MaterialListCardProps> = ({
   })();
 
   return (
-    <Card className="group hover:border-elec-yellow/30 transition-all duration-200 border-elec-yellow/20">
+    <Card className="group touch-manipulation active:scale-[0.99] active:border-elec-yellow/30 sm:hover:border-elec-yellow/30 transition-all duration-200 border-elec-yellow/20">
       <CardContent className="p-4">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Image */}
@@ -215,7 +215,7 @@ const MaterialListCard: React.FC<MaterialListCardProps> = ({
                 </div>
 
                 {/* Action buttons */}
-                <div className="flex flex-col gap-2 w-full md:w-32">
+                <div className="flex flex-col gap-2 w-full md:w-36">
                   {onAddToCompare && (
                     <Button
                       onClick={() => {
@@ -227,8 +227,7 @@ const MaterialListCard: React.FC<MaterialListCardProps> = ({
                       }}
                       disabled={isCompareDisabled && !isSelected}
                       variant={isSelected ? "gold" : "outline"}
-                      size="sm"
-                      className={`w-full ${isSelected ? 'shadow-sm' : 'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20'}`}
+                      className={`w-full h-11 touch-manipulation active:scale-[0.98] ${isSelected ? 'shadow-sm' : 'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20'}`}
                     >
                       {isSelected ? (
                         <>
@@ -243,9 +242,9 @@ const MaterialListCard: React.FC<MaterialListCardProps> = ({
                       )}
                     </Button>
                   )}
-                  
+
                   <a href={getProductUrl()} target="_blank" rel="noopener noreferrer" className="block w-full">
-                    <Button variant="gold" size="sm" className="w-full shadow-sm hover:shadow-md transition-shadow duration-200">
+                    <Button variant="gold" className="w-full h-11 shadow-sm hover:shadow-md transition-shadow duration-200 touch-manipulation active:scale-[0.98]">
                       View Deal
                       <ExternalLink className="h-4 w-4 ml-2" />
                     </Button>

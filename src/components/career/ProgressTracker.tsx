@@ -89,7 +89,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
               {new Date(progressData.target_completion_date).toLocaleDateString()}
             </span>
           ) : (
-            <Button variant="outline" size="sm" onClick={setTargetDate}>
+            <Button variant="outline" size="sm" onClick={setTargetDate} className="touch-manipulation active:scale-[0.98]">
               Set Target
             </Button>
           )}
@@ -104,7 +104,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({
               return (
                 <div
                   key={index}
-                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-elec-yellow/5 cursor-pointer transition-colors"
+                  className="flex items-center gap-3 p-3 min-h-[44px] rounded-lg hover:bg-elec-yellow/5 cursor-pointer transition-colors touch-manipulation active:scale-[0.98]"
                   onClick={() => handleMilestoneToggle(milestone)}
                 >
                   {isCompleted ? (

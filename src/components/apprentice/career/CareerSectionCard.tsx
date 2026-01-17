@@ -11,8 +11,8 @@ interface CareerSectionCardProps {
 
 const CareerSectionCard = ({ title, description, icon, onClick }: CareerSectionCardProps) => {
   return (
-    <Card 
-      className="border-elec-yellow/20 bg-white/5 hover:border-elec-yellow/50 hover:bg-white/5 transition-all duration-300 cursor-pointer h-full flex flex-col group"
+    <Card
+      className="border-elec-yellow/20 bg-white/5 hover:border-elec-yellow/50 hover:bg-white/10 transition-all duration-300 cursor-pointer h-full flex flex-col group touch-manipulation active:scale-[0.98]"
       onClick={onClick}
     >
       <CardHeader className="pb-3">

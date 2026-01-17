@@ -52,24 +52,130 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
 
   // Format inspection items as flat array for checklist
   const formatInspectionItems = () => {
-    const items = get('inspectionItems', []);
+    // Get raw value directly - don't use get() which stringifies objects
+    const rawItems = formData['inspectionItems'];
+    console.log('[formatInspectionItems] >>> RAW inspectionItems:', {
+      type: typeof rawItems,
+      isArray: Array.isArray(rawItems),
+      length: Array.isArray(rawItems) ? rawItems.length : 'N/A'
+    });
+
     let parsed;
     try {
-      parsed = typeof items === 'string' ? JSON.parse(items) : items;
+      parsed = typeof rawItems === 'string' ? JSON.parse(rawItems) : rawItems;
     } catch (e) {
-      console.error('[formatEICRJson] Failed to parse inspectionItems:', e);
+      console.error('[formatInspectionItems] Failed to parse inspectionItems:', e);
       return [];
     }
-    if (!Array.isArray(parsed)) return [];
 
-    return parsed.map((item: any) => ({
-      id: item.id || "",
-      item_number: item.itemNumber || item.number || "",  // Support both itemNumber and number fields
-      description: item.item || item.description || "",
-      outcome: item.outcome || "",
-      clause: item.clause || "",
-      notes: item.notes || ""
-    }));
+    if (!Array.isArray(parsed)) {
+      console.warn('[formatInspectionItems] parsed is NOT an array:', typeof parsed);
+      return [];
+    }
+
+    console.log('[formatInspectionItems] Parsed array length:', parsed.length);
+    if (parsed.length > 0) {
+      console.log('[formatInspectionItems] First item sample:', JSON.stringify(parsed[0]));
+      console.log('[formatInspectionItems] Outcomes sample:', parsed.slice(0, 5).map((i: any) => i.outcome));
+    }
+
+    const result = parsed.map((item: any) => {
+      const outcome = item.outcome || "";
+      const itemNumber = item.itemNumber || item.number || "";
+
+      // Pre-format columns so template doesn't need conditionals
+      // Get section number for section header detection
+      const sectionNum = itemNumber.split('.')[0];
+
+      return {
+        id: item.id || "",
+        item_number: itemNumber,
+        description: item.item || item.description || "",
+        outcome: outcome,
+        clause: item.clause || "",
+        notes: item.notes || "",
+        section_num: sectionNum,
+        // Pre-formatted outcome columns - no conditionals needed in template
+        col_acc: outcome === "satisfactory" ? "✓" : "",
+        col_na: outcome === "not-applicable" || outcome === "N/A" ? "✓" : "",
+        col_c1c2: outcome === "C1" ? "C1" : (outcome === "C2" ? "C2" : ""),
+        col_c3: outcome === "C3" ? "✓" : "",
+        col_nv: outcome === "not-verified" || outcome === "N/V" ? "✓" : "",
+        col_lim: outcome === "limitation" || outcome === "LIM" ? "✓" : ""
+      };
+    });
+
+    console.log('[formatInspectionItems] >>> RESULT:', result.length, 'items');
+    if (result.length > 0) {
+      console.log('[formatInspectionItems] First formatted item:', JSON.stringify(result[0]));
+    }
+    return result;
+  };
+
+  // Format inspection items as FLAT keys at root level (no nested objects)
+  // Returns object like { insp_1_0_acc: "✓", insp_1_0_na: "", insp_3_5_c1c2: "C1", ... }
+  const formatFlatInspection = () => {
+    // Hardcoded lookup map: item id -> item number (from BS7671 checklist)
+    const itemNumberLookup: Record<string, string> = {
+      'item_1_0': '1.0', 'item_1_1': '1.1', 'item_1_2': '1.2',
+      'item_2_0': '2.0',
+      'item_3_1': '3.1', 'item_3_2': '3.2', 'item_3_3': '3.3', 'item_3_4': '3.4', 'item_3_5': '3.5',
+      'item_3_6': '3.6', 'item_3_7': '3.7', 'item_3_8': '3.8', 'item_3_9': '3.9',
+      'item_4_1': '4.1', 'item_4_2': '4.2', 'item_4_3': '4.3', 'item_4_4': '4.4', 'item_4_5': '4.5',
+      'item_4_6': '4.6', 'item_4_7': '4.7', 'item_4_8': '4.8', 'item_4_9': '4.9', 'item_4_10': '4.10',
+      'item_4_11': '4.11', 'item_4_12': '4.12', 'item_4_13': '4.13', 'item_4_14': '4.14', 'item_4_15': '4.15',
+      'item_4_16': '4.16', 'item_4_17': '4.17', 'item_4_18': '4.18', 'item_4_19': '4.19', 'item_4_20': '4.20',
+      'item_4_21': '4.21', 'item_4_22': '4.22', 'item_4_23': '4.23', 'item_4_24': '4.24', 'item_4_25': '4.25',
+      'item_5_1': '5.1', 'item_5_2': '5.2', 'item_5_3': '5.3', 'item_5_4': '5.4', 'item_5_5': '5.5',
+      'item_5_6': '5.6', 'item_5_7': '5.7', 'item_5_8': '5.8', 'item_5_9': '5.9', 'item_5_10': '5.10',
+      'item_5_11': '5.11', 'item_5_12': '5.12', 'item_5_13': '5.13', 'item_5_14': '5.14', 'item_5_15': '5.15',
+      'item_5_16': '5.16', 'item_5_17': '5.17', 'item_5_18': '5.18', 'item_5_19': '5.19', 'item_5_20': '5.20',
+      'item_5_21': '5.21', 'item_5_22': '5.22', 'item_5_23': '5.23',
+      'item_6_1': '6.1', 'item_6_2': '6.2', 'item_6_3': '6.3', 'item_6_4': '6.4', 'item_6_5': '6.5',
+      'item_6_6': '6.6', 'item_6_7': '6.7', 'item_6_8': '6.8', 'item_6_9': '6.9', 'item_6_10': '6.10',
+      'item_6_11': '6.11', 'item_6_12': '6.12', 'item_6_13': '6.13',
+      'item_7_1': '7.1', 'item_7_2': '7.2', 'item_7_3': '7.3',
+      'item_8_1': '8.1', 'item_8_2': '8.2', 'item_8_3': '8.3', 'item_8_4': '8.4'
+    };
+
+    const rawItems = formData['inspectionItems'];
+    let parsed;
+    try {
+      parsed = typeof rawItems === 'string' ? JSON.parse(rawItems) : rawItems;
+    } catch (e) {
+      console.error('[formatFlatInspection] Failed to parse:', e);
+      return {};
+    }
+    if (!Array.isArray(parsed)) {
+      console.warn('[formatFlatInspection] Not an array, returning empty');
+      return {};
+    }
+
+    console.log('[formatFlatInspection] Processing', parsed.length, 'items');
+
+    const result: Record<string, string> = {};
+
+    parsed.forEach((item: any) => {
+      const outcome = item.outcome || "";
+      // Use lookup map as primary source, fall back to item properties
+      const itemNumber = itemNumberLookup[item.id] || item.itemNumber || item.number || "";
+      if (!itemNumber) return;
+
+      // Convert "1.0" to "1_0" for key prefix
+      const prefix = "insp_" + itemNumber.replace(/\./g, "_");
+
+      // Create flat keys for each outcome column
+      // Use simple "Y" text - PDFMonkey can't handle Unicode/HTML entities reliably
+      result[`${prefix}_acc`] = outcome === "satisfactory" ? "Y" : "";
+      result[`${prefix}_na`] = outcome === "not-applicable" || outcome === "N/A" ? "Y" : "";
+      result[`${prefix}_c1c2`] = outcome === "C1" ? "C1" : (outcome === "C2" ? "C2" : "");
+      result[`${prefix}_c3`] = outcome === "C3" ? "Y" : "";
+      result[`${prefix}_nv`] = outcome === "not-verified" || outcome === "N/V" ? "Y" : "";
+      result[`${prefix}_lim`] = outcome === "limitation" || outcome === "LIM" ? "Y" : "";
+    });
+
+    console.log('[formatFlatInspection] Created', Object.keys(result).length, 'flat keys');
+    return result;
   };
 
   // Format inspection items grouped by section for PDF template
@@ -289,13 +395,21 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
   };
 
   // NESTED, GROUPED structure for improved organization
+  // Put flat inspection keys FIRST to avoid truncation issues
+  const flatKeys = formatFlatInspection();
+  console.log('[formatEICRJson] Flat keys object has', Object.keys(flatKeys).length, 'keys');
+  console.log('[formatEICRJson] Sample flat key insp_1_0_acc:', flatKeys['insp_1_0_acc']);
+
   return {
+    // Spread flat keys at the TOP of the object
+    ...flatKeys,
+
     metadata: {
       certificate_number: get('reportReference') || get('certificateNumber'),
       form_version: '1.0',
       export_timestamp: new Date().toISOString()
     },
-    
+
     client_details: {
       client_name: get('clientName'),
       client_address: get('clientAddress'),
@@ -403,6 +517,8 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     },
     
     inspection_checklist: formatInspectionItems(),
+
+    // Flat inspection keys already spread at TOP of return object
 
     // Inspection items grouped by section for PDF template
     inspection_items: formatInspectionItemsBySections(),

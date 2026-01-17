@@ -104,6 +104,29 @@ Deno.serve(async (req: Request) => {
     console.log('[generate-eicr-pdf] Client:', formData.client_details?.client_name);
     console.log('[generate-eicr-pdf] Address:', formData.installation_details?.address);
 
+    // Debug inspection_checklist
+    console.log('[generate-eicr-pdf] inspection_checklist present:', !!formData.inspection_checklist);
+    console.log('[generate-eicr-pdf] inspection_checklist length:', formData.inspection_checklist?.length || 0);
+    if (formData.inspection_checklist?.length > 0) {
+      console.log('[generate-eicr-pdf] First inspection item:', JSON.stringify(formData.inspection_checklist[0]));
+      console.log('[generate-eicr-pdf] Sample outcomes:', formData.inspection_checklist.slice(0, 5).map((i: any) => i.outcome));
+    }
+
+    // Log full payload keys
+    console.log('[generate-eicr-pdf] Payload top-level keys:', Object.keys(formData));
+
+    // Debug flat inspection keys
+    const flatInspKeys = Object.keys(formData).filter(k => k.startsWith('insp_'));
+    console.log('[generate-eicr-pdf] Flat inspection keys count:', flatInspKeys.length);
+    console.log('[generate-eicr-pdf] Sample flat keys:', flatInspKeys.slice(0, 10));
+    if (flatInspKeys.length > 0) {
+      console.log('[generate-eicr-pdf] insp_1_0_acc =', formData.insp_1_0_acc);
+      console.log('[generate-eicr-pdf] insp_3_5_c1c2 =', formData.insp_3_5_c1c2);
+    }
+
+    // Debug test value
+    console.log('[generate-eicr-pdf] inspection_debug_test =', formData.inspection_debug_test);
+
     // Create the document
     const document = await createPDFMonkeyDocument(formData);
     console.log('[generate-eicr-pdf] Document created:', document.id);

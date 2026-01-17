@@ -20,6 +20,7 @@ import {
   Loader2,
   Shield,
   Building2,
+  IdCard,
 } from "lucide-react";
 
 // Premium components
@@ -31,6 +32,7 @@ import EmployerJobDetailSheet from "./EmployerJobDetailSheet";
 import JobSearchSheet from "./JobSearchSheet";
 import SavedJobsTab from "./SavedJobsTab";
 import JobCardSkeleton from "./JobCardSkeleton";
+import QuickCVSheet from "./QuickCVSheet";
 
 // Hooks
 import { useSavedJobs } from "./hooks/useSavedJobs";
@@ -122,6 +124,7 @@ const PremiumJobsHub = () => {
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isEmployerDetailOpen, setIsEmployerDetailOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isCVSheetOpen, setIsCVSheetOpen] = useState(false);
   const [isApplyDialogOpen, setIsApplyDialogOpen] = useState(false);
   const [jobToApply, setJobToApply] = useState<InternalVacancy | null>(null);
 
@@ -371,6 +374,14 @@ const PremiumJobsHub = () => {
           </div>
 
           <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsCVSheetOpen(true)}
+              className="h-10 w-10 rounded-xl text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10"
+            >
+              <IdCard className="h-5 w-5" />
+            </Button>
             <Button
               variant="ghost"
               size="icon"
@@ -686,6 +697,12 @@ const PremiumJobsHub = () => {
         onSearch={handleSearch}
         initialQuery={searchQuery}
         initialLocation={searchLocation}
+      />
+
+      {/* Quick CV Sheet */}
+      <QuickCVSheet
+        isOpen={isCVSheetOpen}
+        onClose={() => setIsCVSheetOpen(false)}
       />
 
       {/* Apply Dialog for Employer Jobs */}

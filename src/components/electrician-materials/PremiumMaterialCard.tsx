@@ -144,7 +144,7 @@ const PremiumMaterialCard = ({
   // Compact variant
   if (variant === "compact") {
     return (
-      <div className="group relative rounded-xl border border-border/50 bg-gradient-to-br from-elec-gray to-elec-card overflow-hidden hover:border-primary/40 transition-all duration-300">
+      <div className="group relative rounded-xl border border-border/50 bg-gradient-to-br from-elec-gray to-elec-card overflow-hidden touch-manipulation active:scale-[0.98] active:border-primary/40 sm:hover:border-primary/40 transition-all duration-300">
         {/* Sale Badge */}
         {discount && discount > 0 && (
           <div className="absolute top-2 right-2 z-10">
@@ -186,7 +186,7 @@ const PremiumMaterialCard = ({
 
   // Default variant
   return (
-    <div className="group relative h-full rounded-xl border border-border/50 bg-gradient-to-br from-elec-gray to-elec-card overflow-hidden hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 transition-all duration-300">
+    <div className="group relative h-full rounded-xl border border-border/50 bg-gradient-to-br from-elec-gray to-elec-card overflow-hidden touch-manipulation active:scale-[0.98] active:border-primary/40 sm:hover:border-primary/40 sm:hover:shadow-xl sm:hover:shadow-primary/10 sm:hover:-translate-y-1 transition-all duration-300">
       {/* Sale Ribbon */}
       {discount && discount > 0 && (
         <div className="absolute top-3 -right-8 z-10 rotate-45">
@@ -313,7 +313,7 @@ const PremiumMaterialCard = ({
                 e.stopPropagation();
                 window.open(getProductUrl(), "_blank");
               }}
-              className="flex-1 h-10 rounded-xl bg-primary hover:bg-primary/90 font-semibold"
+              className="flex-1 h-11 rounded-xl bg-primary hover:bg-primary/90 font-semibold touch-manipulation active:scale-[0.98]"
             >
               <ShoppingCart className="h-4 w-4 mr-2" />
               Buy Now
@@ -330,12 +330,12 @@ const PremiumMaterialCard = ({
                 }
               }}
               disabled={isCompareDisabled && !isSelected}
-              className="h-10 px-3 rounded-xl border-white/10 hover:bg-white/10"
+              className="h-11 w-11 px-0 rounded-xl border-white/10 hover:bg-white/10 touch-manipulation active:scale-[0.98]"
             >
               {isSelected ? (
-                <Check className="h-4 w-4 text-green-500" />
+                <Check className="h-5 w-5 text-green-500" />
               ) : (
-                <Plus className="h-4 w-4" />
+                <Plus className="h-5 w-5" />
               )}
             </Button>
           </div>

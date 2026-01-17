@@ -142,7 +142,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
   );
 
   return (
-    <div className="max-w-3xl mx-auto pb-32 md:pb-8">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10 pb-32 md:pb-8">
       {/* Enhanced Header */}
       <div
         className="flex items-center justify-between mb-8 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
@@ -382,18 +382,20 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
       </div>
 
       {/* Sticky Bottom CTA - Mobile */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-elec-dark via-elec-dark to-transparent md:hidden z-50">
-        <MobileButton
-          onClick={handleSubmit}
-          disabled={!isFormValid || isProcessing}
-          loading={isProcessing}
-          size="lg"
-          variant="elec"
-          icon={<Sparkles className="h-5 w-5" />}
-          className="w-full text-base font-bold h-14 rounded-xl shadow-lg shadow-elec-yellow/20"
-        >
-          {isProcessing ? 'Generating RAMS...' : 'Generate RAMS'}
-        </MobileButton>
+      <div className="fixed bottom-0 left-0 right-0 bg-[#1a1a1a]/95 backdrop-blur-sm border-t border-white/10 md:hidden z-50">
+        <div className="max-w-5xl mx-auto px-4 py-4">
+          <MobileButton
+            onClick={handleSubmit}
+            disabled={!isFormValid || isProcessing}
+            loading={isProcessing}
+            size="lg"
+            variant="elec"
+            icon={<Sparkles className="h-5 w-5" />}
+            className="w-full text-base font-bold h-14 rounded-xl shadow-lg shadow-elec-yellow/20 touch-manipulation active:scale-[0.98]"
+          >
+            {isProcessing ? 'Generating RAMS...' : 'Generate RAMS'}
+          </MobileButton>
+        </div>
       </div>
 
       {/* Desktop CTA */}
@@ -408,7 +410,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
           size="lg"
           variant="elec"
           icon={<Sparkles className="h-5 w-5" />}
-          className="w-full text-base font-bold h-14 rounded-xl shadow-lg shadow-elec-yellow/20"
+          className="w-full text-base font-bold h-14 rounded-xl shadow-lg shadow-elec-yellow/20 touch-manipulation active:scale-[0.98]"
         >
           {isProcessing ? 'Generating RAMS...' : 'Generate RAMS'}
         </MobileButton>

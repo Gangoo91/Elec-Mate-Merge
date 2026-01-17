@@ -366,7 +366,7 @@ const CareerDetailModal = ({
             exit="exit"
             className="fixed inset-0 z-50 hidden sm:flex items-center justify-center p-4"
           >
-            <div className="w-full max-w-2xl max-h-[85vh] bg-elec-gray rounded-2xl border border-white/10 overflow-hidden flex flex-col shadow-2xl">
+            <div className="w-full max-w-3xl max-h-[85vh] bg-elec-gray rounded-2xl border border-white/10 overflow-hidden flex flex-col shadow-2xl">
               {/* Header */}
               <div className="flex-shrink-0 border-b border-white/10">
                 <div className={cn("h-1", colors.accent)} />

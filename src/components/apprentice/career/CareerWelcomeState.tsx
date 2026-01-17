@@ -11,7 +11,7 @@ const CareerWelcomeState = () => {
           <GraduationCap className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow" />
         </div>
         <h3 className="text-xl font-semibold text-white mb-2">Choose a Career Path Section</h3>
-        <p className="text-white/70 px-2 sm:px-0 max-w-md mx-auto">
+        <p className="text-white/70 px-4 sm:px-0 max-w-xl mx-auto">
           Click on one of the boxes above to explore different aspects of your electrical career progression.
         </p>
       </CardContent>

@@ -1,0 +1,346 @@
+/**
+ * Modern Template PDF Generator
+ *
+ * Clean minimalist design with:
+ * - Amber accent (#f59e0b)
+ * - Left sidebar for contact/skills
+ * - Two-column layout
+ * - Bold section headers
+ * - Professional visual hierarchy
+ */
+
+import jsPDF from 'jspdf';
+import { CVData } from '../types';
+import {
+  PDF_CONFIG,
+  TEMPLATE_COLORS,
+  getDateRange,
+  checkPageBreak,
+  addWrappedText,
+  setColor,
+  drawRect,
+  getFileName,
+  splitToBulletPoints,
+  addPageFooter,
+  generateProfessionalTitle,
+  categoriseCertifications,
+  getSkillProficiency,
+} from './shared';
+
+const colors = TEMPLATE_COLORS.modern;
+
+// Layout constants for two-column design
+const SIDEBAR_WIDTH = 58;
+const MAIN_START = 72;
+
+export const generateModernPDF = async (cvData: CVData): Promise<void> => {
+  const pdf = new jsPDF('p', 'mm', 'a4');
+  const { margin, pageWidth, pageHeight } = PDF_CONFIG;
+  const mainWidth = pageWidth - MAIN_START - margin;
+  let y = margin;
+  let sidebarY = margin;
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SIDEBAR BACKGROUND
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Draw sidebar background
+  drawRect(pdf, 0, 0, SIDEBAR_WIDTH + margin, pageHeight, '#f8fafc');
+
+  // Accent bar at top of sidebar
+  drawRect(pdf, 0, 0, SIDEBAR_WIDTH + margin, 50, colors.primary);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SIDEBAR - NAME (in accent bar)
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  pdf.setFont('helvetica', 'bold');
+  pdf.setFontSize(18);
+  setColor(pdf, '#ffffff');
+  const nameParts = (cvData.personalInfo.fullName || 'Your Name').split(' ');
+  pdf.text(nameParts[0] || '', margin, sidebarY + 14);
+  if (nameParts.length > 1) {
+    pdf.text(nameParts.slice(1).join(' '), margin, sidebarY + 22);
+  }
+
+  // Professional title in accent bar
+  const professionalTitle = generateProfessionalTitle(cvData);
+  pdf.setFont('helvetica', 'normal');
+  pdf.setFontSize(9);
+  setColor(pdf, '#ffffff', 'text');
+  // Wrap title if needed
+  const titleLines = pdf.splitTextToSize(professionalTitle, SIDEBAR_WIDTH);
+  pdf.text(titleLines, margin, sidebarY + 32);
+
+  sidebarY = 60;
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SIDEBAR - CONTACT
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  // Section title
+  pdf.setFont('helvetica', 'bold');
+  pdf.setFontSize(10);
+  setColor(pdf, colors.primary);
+  pdf.text('CONTACT', margin, sidebarY);
+  sidebarY += 7;
+
+  // Contact details
+  pdf.setFont('helvetica', 'normal');
+  pdf.setFontSize(8);
+  setColor(pdf, colors.text);
+
+  if (cvData.personalInfo.email) {
+    pdf.text(cvData.personalInfo.email, margin, sidebarY);
+    sidebarY += 5;
+  }
+  if (cvData.personalInfo.phone) {
+    pdf.text(cvData.personalInfo.phone, margin, sidebarY);
+    sidebarY += 5;
+  }
+  if (cvData.personalInfo.address || cvData.personalInfo.postcode) {
+    const location = [cvData.personalInfo.address, cvData.personalInfo.postcode]
+      .filter(Boolean)
+      .join(', ');
+    const locationLines = pdf.splitTextToSize(location, SIDEBAR_WIDTH);
+    pdf.text(locationLines, margin, sidebarY);
+    sidebarY += locationLines.length * 4 + 2;
+  }
+
+  sidebarY += 12;
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SIDEBAR - SKILLS with proficiency bars
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  if (cvData.skills.length > 0) {
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(10);
+    setColor(pdf, colors.primary);
+    pdf.text('SKILLS', margin, sidebarY);
+    sidebarY += 7;
+
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(8);
+    setColor(pdf, colors.text);
+
+    cvData.skills.slice(0, 10).forEach((skill) => {
+      if (sidebarY > 220) return; // Don't overflow sidebar
+
+      // Skill name
+      const skillLines = pdf.splitTextToSize(skill, SIDEBAR_WIDTH - 5);
+      pdf.text(skillLines, margin, sidebarY);
+      sidebarY += skillLines.length * 4;
+
+      // Proficiency bar with intelligent calculation
+      const proficiency = getSkillProficiency(skill);
+      drawRect(pdf, margin, sidebarY, SIDEBAR_WIDTH - 5, 2.5, '#e2e8f0');
+      drawRect(pdf, margin, sidebarY, (SIDEBAR_WIDTH - 5) * proficiency, 2.5, colors.primary);
+      sidebarY += 7;
+    });
+
+    sidebarY += 10;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SIDEBAR - CERTIFICATIONS (categorised)
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const { essential: essentialCerts, additional: additionalCerts } =
+    categoriseCertifications(cvData.certifications);
+
+  if (essentialCerts.length > 0 && sidebarY < 200) {
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(10);
+    setColor(pdf, colors.primary);
+    pdf.text('KEY CERTS', margin, sidebarY);
+    sidebarY += 7;
+
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(8);
+    setColor(pdf, colors.text);
+
+    essentialCerts.slice(0, 5).forEach((cert) => {
+      if (sidebarY > 260) return;
+
+      // Draw small accent dot
+      setColor(pdf, colors.primary, 'fill');
+      pdf.circle(margin + 1.5, sidebarY - 1, 1, 'F');
+
+      const certLines = pdf.splitTextToSize(cert, SIDEBAR_WIDTH - 8);
+      setColor(pdf, colors.text);
+      pdf.text(certLines, margin + 5, sidebarY);
+      sidebarY += certLines.length * 4 + 3;
+    });
+
+    sidebarY += 8;
+  }
+
+  if (additionalCerts.length > 0 && sidebarY < 240) {
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(9);
+    setColor(pdf, colors.muted);
+    pdf.text('OTHER CERTS', margin, sidebarY);
+    sidebarY += 6;
+
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(7);
+
+    additionalCerts.slice(0, 4).forEach((cert) => {
+      if (sidebarY > 275) return;
+      const certLines = pdf.splitTextToSize(cert, SIDEBAR_WIDTH - 3);
+      setColor(pdf, colors.muted);
+      pdf.text(certLines, margin, sidebarY);
+      sidebarY += certLines.length * 3.5 + 2;
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // MAIN CONTENT - PROFESSIONAL SUMMARY
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  if (cvData.personalInfo.professionalSummary) {
+    // Section header with accent line
+    drawRect(pdf, MAIN_START, y, 3, 14, colors.primary);
+
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(14);
+    setColor(pdf, colors.text);
+    pdf.text('Profile', MAIN_START + 7, y + 9);
+    y += 18;
+
+    // Summary text
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(10);
+    setColor(pdf, colors.text);
+    y = addWrappedText(pdf, cvData.personalInfo.professionalSummary, MAIN_START, y, mainWidth, 5);
+    y += 16;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // MAIN CONTENT - WORK EXPERIENCE
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  if (cvData.experience.length > 0) {
+    y = checkPageBreak(pdf, y, 50);
+
+    // Section header with accent line
+    drawRect(pdf, MAIN_START, y, 3, 14, colors.primary);
+
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(14);
+    setColor(pdf, colors.text);
+    pdf.text('Experience', MAIN_START + 7, y + 9);
+    y += 20;
+
+    cvData.experience.forEach((exp, index) => {
+      y = checkPageBreak(pdf, y, 40);
+
+      // Job title - bold and prominent
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(11);
+      setColor(pdf, colors.text);
+      pdf.text(exp.jobTitle, MAIN_START, y);
+      y += 5;
+
+      // Company | Location | Date range
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(9);
+      setColor(pdf, colors.primary);
+      const dateRange = getDateRange(exp.startDate, exp.endDate, exp.current);
+      const companyDate = `${exp.company}${exp.location ? `, ${exp.location}` : ''} | ${dateRange}`;
+      pdf.text(companyDate, MAIN_START, y);
+      y += 7;
+
+      // Description bullets
+      if (exp.description) {
+        const bullets = splitToBulletPoints(exp.description);
+        pdf.setFontSize(9);
+        setColor(pdf, colors.text);
+
+        bullets.forEach((bullet) => {
+          y = checkPageBreak(pdf, y, 10);
+          setColor(pdf, colors.primary, 'fill');
+          pdf.circle(MAIN_START + 2, y - 1, 0.8, 'F');
+          y = addWrappedText(pdf, bullet, MAIN_START + 6, y, mainWidth - 6, 4.5);
+          y += 2;
+        });
+      }
+
+      if (index < cvData.experience.length - 1) {
+        y += 10;
+      }
+    });
+
+    y += 14;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // MAIN CONTENT - EDUCATION
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  if (cvData.education.length > 0) {
+    y = checkPageBreak(pdf, y, 45);
+
+    // Section header with accent line
+    drawRect(pdf, MAIN_START, y, 3, 14, colors.primary);
+
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(14);
+    setColor(pdf, colors.text);
+    pdf.text('Education', MAIN_START + 7, y + 9);
+    y += 20;
+
+    cvData.education.forEach((edu, index) => {
+      y = checkPageBreak(pdf, y, 25);
+
+      // Qualification
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(11);
+      setColor(pdf, colors.text);
+      pdf.text(edu.qualification, MAIN_START, y);
+      y += 5;
+
+      // Institution | Location | Date range
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(9);
+      setColor(pdf, colors.primary);
+      const dateRange = getDateRange(edu.startDate, edu.endDate, edu.current);
+      const institutionDate = `${edu.institution}${edu.location ? `, ${edu.location}` : ''} | ${dateRange}`;
+      pdf.text(institutionDate, MAIN_START, y);
+      y += 5;
+
+      // Grade
+      if (edu.grade) {
+        setColor(pdf, colors.muted);
+        pdf.text(`Grade: ${edu.grade}`, MAIN_START, y);
+        y += 5;
+      }
+
+      if (index < cvData.education.length - 1) {
+        y += 7;
+      }
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PAGE FOOTER
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const totalPages = pdf.getNumberOfPages();
+  for (let i = 1; i <= totalPages; i++) {
+    pdf.setPage(i);
+    // Custom footer position for modern template (right side only)
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(8);
+    setColor(pdf, colors.muted);
+    pdf.text(`Page ${i} of ${totalPages}`, pageWidth - margin, pageHeight - 8, { align: 'right' });
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SAVE PDF
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  const fileName = getFileName(cvData, 'Modern');
+  pdf.save(fileName);
+};

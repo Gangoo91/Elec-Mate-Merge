@@ -865,14 +865,14 @@ const RcdTabContent: React.FC<RcdTabContentProps> = ({ getValue, onChange, hasRc
       <FormRow>
         <FormField label="RCD BS Standard">
           <Select
-            value={getValue('rcdBsStandard') as string}
-            onValueChange={(v) => onChange('rcdBsStandard', v)}
+            value={getValue('rcdBsStandard') as string || "na"}
+            onValueChange={(v) => onChange('rcdBsStandard', v === "na" ? "" : v)}
           >
             <SelectTrigger className="h-11 text-sm">
               <SelectValue placeholder="N/A" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">N/A</SelectItem>
+              <SelectItem value="na">N/A</SelectItem>
               <SelectItem value="BS EN 61008-1">RCCB</SelectItem>
               <SelectItem value="BS EN 61009-1">RCBO</SelectItem>
               <SelectItem value="BS EN 62423">F Type</SelectItem>
@@ -881,14 +881,14 @@ const RcdTabContent: React.FC<RcdTabContentProps> = ({ getValue, onChange, hasRc
         </FormField>
         <FormField label="RCD Type">
           <Select
-            value={getValue('rcdType') as string}
-            onValueChange={(v) => onChange('rcdType', v)}
+            value={getValue('rcdType') as string || "na"}
+            onValueChange={(v) => onChange('rcdType', v === "na" ? "" : v)}
           >
             <SelectTrigger className="h-11 text-sm">
               <SelectValue placeholder="N/A" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">N/A</SelectItem>
+              <SelectItem value="na">N/A</SelectItem>
               <SelectItem value="AC">AC</SelectItem>
               <SelectItem value="A">A</SelectItem>
               <SelectItem value="F">F</SelectItem>
@@ -900,14 +900,14 @@ const RcdTabContent: React.FC<RcdTabContentProps> = ({ getValue, onChange, hasRc
       <FormRow>
         <FormField label="IΔn (mA)">
           <Select
-            value={getValue('rcdRating') as string}
-            onValueChange={(v) => onChange('rcdRating', v)}
+            value={getValue('rcdRating') as string || "na"}
+            onValueChange={(v) => onChange('rcdRating', v === "na" ? "" : v)}
           >
             <SelectTrigger className="h-11 text-sm">
               <SelectValue placeholder="N/A" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">N/A</SelectItem>
+              <SelectItem value="na">N/A</SelectItem>
               <SelectItem value="30">30mA</SelectItem>
               <SelectItem value="100">100mA</SelectItem>
               <SelectItem value="300">300mA</SelectItem>
@@ -916,14 +916,14 @@ const RcdTabContent: React.FC<RcdTabContentProps> = ({ getValue, onChange, hasRc
         </FormField>
         <FormField label="Rating (A)">
           <Select
-            value={getValue('rcdRatingA') as string}
-            onValueChange={(v) => onChange('rcdRatingA', v)}
+            value={getValue('rcdRatingA') as string || "na"}
+            onValueChange={(v) => onChange('rcdRatingA', v === "na" ? "" : v)}
           >
             <SelectTrigger className="h-11 text-sm">
               <SelectValue placeholder="N/A" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">N/A</SelectItem>
+              <SelectItem value="na">N/A</SelectItem>
               {['40', '63', '80', '100'].map((v) => (
                 <SelectItem key={v} value={v}>{v}A</SelectItem>
               ))}

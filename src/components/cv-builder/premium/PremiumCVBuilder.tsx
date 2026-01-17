@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import {
   ArrowLeft,
@@ -26,6 +27,9 @@ import {
   Loader2,
   Plus,
   X,
+  Download,
+  Upload,
+  IdCard,
 } from "lucide-react";
 
 // Premium components
@@ -37,8 +41,9 @@ import CVPreviewSheet from "./CVPreviewSheet";
 
 // Types and utilities
 import { CVData, defaultCVData, WorkExperience, Education } from "../types";
-import { generateCVPDF } from "../pdfGenerator";
+import { generateCVPDFByTemplate } from "../pdfGenerators";
 import { AIService } from "../ai/AIService";
+import { getCurrentUserElecIdForCV, saveCV } from "@/services/elecIdService";
 import { toast } from "@/hooks/use-toast";
 import { pageVariants, stepSlideVariants, listContainerVariants } from "./animations/variants";
 
@@ -67,6 +72,8 @@ const PremiumCVBuilder = () => {
   const [aiCurrentContent, setAICurrentContent] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isImporting, setIsImporting] = useState(false);
+  const [hasImportedElecId, setHasImportedElecId] = useState(false);
 
   // Load draft on mount
   useEffect(() => {
@@ -256,16 +263,17 @@ const PremiumCVBuilder = () => {
     }));
   };
 
-  // Download PDF
+  // Download PDF - uses template-specific generator
   const handleDownload = async () => {
     setIsGenerating(true);
     try {
-      await generateCVPDF(cvData);
+      await generateCVPDFByTemplate(cvData, template);
       toast({
         title: "CV Downloaded",
-        description: "Your CV has been downloaded as a PDF.",
+        description: `Your ${template.charAt(0).toUpperCase() + template.slice(1)} CV has been downloaded as a PDF.`,
       });
     } catch (error) {
+      console.error('PDF generation error:', error);
       toast({
         title: "Download Failed",
         description: "Failed to generate PDF. Please try again.",
@@ -273,6 +281,109 @@ const PremiumCVBuilder = () => {
       });
     } finally {
       setIsGenerating(false);
+    }
+  };
+
+  // Import data from Elec-ID profile
+  const handleImportFromElecId = async () => {
+    setIsImporting(true);
+    try {
+      const { profile, userInfo } = await getCurrentUserElecIdForCV();
+
+      if (!profile && !userInfo) {
+        toast({
+          title: "No Elec-ID Found",
+          description: "Please set up your Elec-ID profile first to import data.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Build CV data from Elec-ID profile
+      const importedData: Partial<CVData> = {
+        personalInfo: {
+          fullName: profile?.employee?.name || userInfo?.full_name || '',
+          email: profile?.employee?.email || userInfo?.email || '',
+          phone: profile?.employee?.phone || '',
+          address: '',
+          postcode: '',
+          professionalSummary: profile?.bio || '',
+        },
+        experience: (profile?.work_history || []).map((wh) => ({
+          id: wh.id,
+          jobTitle: wh.job_title,
+          company: wh.employer_name,
+          location: '',
+          startDate: wh.start_date ? wh.start_date.substring(0, 7) : '',
+          endDate: wh.end_date ? wh.end_date.substring(0, 7) : '',
+          current: wh.is_current,
+          description: wh.description || '',
+        })),
+        education: [], // Education typically separate from Elec-ID
+        skills: (profile?.skills || []).map((s) => s.skill_name),
+        certifications: (profile?.qualifications || []).map((q) =>
+          `${q.qualification_name}${q.awarding_body ? ` - ${q.awarding_body}` : ''}`
+        ),
+      };
+
+      // Merge with existing data (don't overwrite non-empty fields)
+      setCvData((prev) => ({
+        personalInfo: {
+          fullName: importedData.personalInfo?.fullName || prev.personalInfo.fullName,
+          email: importedData.personalInfo?.email || prev.personalInfo.email,
+          phone: importedData.personalInfo?.phone || prev.personalInfo.phone,
+          address: prev.personalInfo.address,
+          postcode: prev.personalInfo.postcode,
+          professionalSummary: importedData.personalInfo?.professionalSummary || prev.personalInfo.professionalSummary,
+        },
+        experience: importedData.experience?.length ? importedData.experience : prev.experience,
+        education: prev.education,
+        skills: importedData.skills?.length ? [...new Set([...prev.skills, ...importedData.skills])] : prev.skills,
+        certifications: importedData.certifications?.length
+          ? [...new Set([...prev.certifications, ...importedData.certifications])]
+          : prev.certifications,
+      }));
+
+      setHasImportedElecId(true);
+      toast({
+        title: "Elec-ID Data Imported",
+        description: "Your profile information has been imported successfully.",
+      });
+    } catch (error) {
+      console.error('Import error:', error);
+      toast({
+        title: "Import Failed",
+        description: "Failed to import Elec-ID data. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsImporting(false);
+    }
+  };
+
+  // Save CV to database
+  const handleSaveCV = async () => {
+    setIsSaving(true);
+    try {
+      await saveCV({
+        template_id: template,
+        cv_data: cvData as unknown as Record<string, unknown>,
+        title: `${cvData.personalInfo.fullName || 'My'} CV - ${template}`,
+        is_primary: true,
+      });
+      toast({
+        title: "CV Saved",
+        description: "Your CV has been saved to your profile.",
+      });
+    } catch (error) {
+      console.error('Save error:', error);
+      toast({
+        title: "Save Failed",
+        description: "Failed to save CV. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -417,57 +528,150 @@ const PremiumCVBuilder = () => {
         return (
           <CVSectionCard
             title="Work Experience"
-            description="Your employment history"
+            description="Your employment history - most recent first"
             icon={<Briefcase className="h-5 w-5" />}
             completionCount={cvData.experience.length}
             totalCount={Math.max(cvData.experience.length, 1)}
             defaultExpanded
           >
-            <div className="space-y-3">
-              {cvData.experience.map((exp) => (
-                <div key={exp.id} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
+            <div className="space-y-4">
+              {cvData.experience.length === 0 && (
+                <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-sm text-amber-300">
+                  Add at least one work experience entry to showcase your professional background.
+                </div>
+              )}
+              {cvData.experience.map((exp, index) => (
+                <div key={exp.id} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-4">
+                  {/* Job badge */}
+                  <div className="flex items-center justify-between">
+                    <Badge variant="outline" className="text-xs text-white/60 border-white/20">
+                      Position {index + 1}
+                    </Badge>
+                    {exp.current && (
+                      <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs">
+                        Current Role
+                      </Badge>
+                    )}
+                  </div>
+
+                  {/* Job title and company */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                        Job Title *
+                      </label>
+                      <Input
+                        value={exp.jobTitle}
+                        onChange={(e) => updateExperience(exp.id, "jobTitle", e.target.value)}
+                        placeholder="e.g., Qualified Electrician"
+                        className="bg-white/5 border-white/10 text-white h-11"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                        Company *
+                      </label>
+                      <Input
+                        value={exp.company}
+                        onChange={(e) => updateExperience(exp.id, "company", e.target.value)}
+                        placeholder="e.g., ABC Electrical Ltd"
+                        className="bg-white/5 border-white/10 text-white h-11"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Location */}
+                  <div>
+                    <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                      Location
+                    </label>
                     <Input
-                      value={exp.jobTitle}
-                      onChange={(e) => updateExperience(exp.id, "jobTitle", e.target.value)}
-                      placeholder="Job Title"
-                      className="bg-white/5 border-white/10 text-white"
-                    />
-                    <Input
-                      value={exp.company}
-                      onChange={(e) => updateExperience(exp.id, "company", e.target.value)}
-                      placeholder="Company Name"
-                      className="bg-white/5 border-white/10 text-white"
+                      value={exp.location}
+                      onChange={(e) => updateExperience(exp.id, "location", e.target.value)}
+                      placeholder="e.g., London, UK"
+                      className="bg-white/5 border-white/10 text-white h-11"
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <Input
-                      type="month"
-                      value={exp.startDate}
-                      onChange={(e) => updateExperience(exp.id, "startDate", e.target.value)}
-                      className="bg-white/5 border-white/10 text-white"
-                    />
-                    <Input
-                      type="month"
-                      value={exp.endDate}
-                      onChange={(e) => updateExperience(exp.id, "endDate", e.target.value)}
-                      disabled={exp.current}
-                      placeholder={exp.current ? "Present" : ""}
-                      className="bg-white/5 border-white/10 text-white"
-                    />
+
+                  {/* Dates and current checkbox */}
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                          Start Date
+                        </label>
+                        <Input
+                          type="month"
+                          value={exp.startDate}
+                          onChange={(e) => updateExperience(exp.id, "startDate", e.target.value)}
+                          className="bg-white/5 border-white/10 text-white h-11"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                          End Date
+                        </label>
+                        <Input
+                          type="month"
+                          value={exp.endDate}
+                          onChange={(e) => updateExperience(exp.id, "endDate", e.target.value)}
+                          disabled={exp.current}
+                          placeholder={exp.current ? "Present" : ""}
+                          className="bg-white/5 border-white/10 text-white h-11 disabled:opacity-50"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`current-${exp.id}`}
+                        checked={exp.current}
+                        onCheckedChange={(checked) => updateExperience(exp.id, "current", checked)}
+                        className="border-white/40 data-[state=checked]:bg-emerald-500 data-[state=checked]:border-emerald-500"
+                      />
+                      <label
+                        htmlFor={`current-${exp.id}`}
+                        className="text-sm text-white/70 cursor-pointer touch-manipulation"
+                      >
+                        I currently work here
+                      </label>
+                    </div>
                   </div>
-                  <Textarea
-                    value={exp.description}
-                    onChange={(e) => updateExperience(exp.id, "description", e.target.value)}
-                    placeholder="Describe your responsibilities and achievements..."
-                    className="min-h-[80px] bg-white/5 border-white/10 text-white resize-none"
-                  />
-                  <div className="flex justify-end">
+
+                  {/* Description with AI assist */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="text-xs font-medium text-white/60">
+                        Key Responsibilities & Achievements
+                      </label>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => openAIPanel("Job Description", exp.description)}
+                        className="h-7 text-xs text-purple-400 hover:text-purple-300 hover:bg-purple-500/10"
+                      >
+                        <Sparkles className="h-3 w-3 mr-1" />
+                        AI Assist
+                      </Button>
+                    </div>
+                    <Textarea
+                      value={exp.description}
+                      onChange={(e) => updateExperience(exp.id, "description", e.target.value)}
+                      placeholder="• Installed and maintained electrical systems in commercial buildings&#10;• Carried out testing and inspection to BS 7671 standards&#10;• Supervised apprentices and junior electricians"
+                      className="min-h-[100px] bg-white/5 border-white/10 text-white resize-none"
+                    />
+                    <p className="text-xs text-white/40 mt-1">
+                      Use bullet points (•) to highlight key achievements
+                    </p>
+                  </div>
+
+                  {/* Remove button */}
+                  <div className="flex justify-end pt-2 border-t border-white/5">
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => removeExperience(exp.id)}
-                      className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                      className="text-red-400 hover:text-red-300 hover:bg-red-500/10 h-9"
                     >
                       <X className="h-4 w-4 mr-1" />
                       Remove
@@ -484,39 +688,138 @@ const PremiumCVBuilder = () => {
         return (
           <CVSectionCard
             title="Education & Qualifications"
-            description="Your academic background"
+            description="Your academic background and professional certifications"
             icon={<GraduationCap className="h-5 w-5" />}
             completionCount={cvData.education.length}
             totalCount={Math.max(cvData.education.length, 1)}
             defaultExpanded
           >
-            <div className="space-y-3">
-              {cvData.education.map((edu) => (
-                <div key={edu.id} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
-                  <Input
-                    value={edu.qualification}
-                    onChange={(e) => updateEducation(edu.id, "qualification", e.target.value)}
-                    placeholder="Qualification (e.g., City & Guilds 2391)"
-                    className="bg-white/5 border-white/10 text-white"
-                  />
-                  <Input
-                    value={edu.institution}
-                    onChange={(e) => updateEducation(edu.id, "institution", e.target.value)}
-                    placeholder="Institution/Provider"
-                    className="bg-white/5 border-white/10 text-white"
-                  />
-                  <Input
-                    value={edu.endDate}
-                    onChange={(e) => updateEducation(edu.id, "endDate", e.target.value)}
-                    placeholder="Year Completed (e.g., 2023)"
-                    className="bg-white/5 border-white/10 text-white"
-                  />
-                  <div className="flex justify-end">
+            <div className="space-y-4">
+              {cvData.education.length === 0 && (
+                <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-sm text-amber-300">
+                  Add your qualifications and certifications - these are crucial for electricians.
+                </div>
+              )}
+              {cvData.education.map((edu, index) => (
+                <div key={edu.id} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-4">
+                  {/* Qualification badge */}
+                  <div className="flex items-center justify-between">
+                    <Badge variant="outline" className="text-xs text-white/60 border-white/20">
+                      Qualification {index + 1}
+                    </Badge>
+                    {edu.current && (
+                      <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
+                        Currently Studying
+                      </Badge>
+                    )}
+                  </div>
+
+                  {/* Qualification and Institution */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                        Qualification *
+                      </label>
+                      <Input
+                        value={edu.qualification}
+                        onChange={(e) => updateEducation(edu.id, "qualification", e.target.value)}
+                        placeholder="e.g., City & Guilds 2391"
+                        className="bg-white/5 border-white/10 text-white h-11"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                        Institution *
+                      </label>
+                      <Input
+                        value={edu.institution}
+                        onChange={(e) => updateEducation(edu.id, "institution", e.target.value)}
+                        placeholder="e.g., Electrical Training College"
+                        className="bg-white/5 border-white/10 text-white h-11"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Location */}
+                  <div>
+                    <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                      Location
+                    </label>
+                    <Input
+                      value={edu.location}
+                      onChange={(e) => updateEducation(edu.id, "location", e.target.value)}
+                      placeholder="e.g., Birmingham, UK"
+                      className="bg-white/5 border-white/10 text-white h-11"
+                    />
+                  </div>
+
+                  {/* Dates and current checkbox */}
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                          Start Date
+                        </label>
+                        <Input
+                          type="month"
+                          value={edu.startDate}
+                          onChange={(e) => updateEducation(edu.id, "startDate", e.target.value)}
+                          className="bg-white/5 border-white/10 text-white h-11"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                          End Date
+                        </label>
+                        <Input
+                          type="month"
+                          value={edu.endDate}
+                          onChange={(e) => updateEducation(edu.id, "endDate", e.target.value)}
+                          disabled={edu.current}
+                          placeholder={edu.current ? "Present" : ""}
+                          className="bg-white/5 border-white/10 text-white h-11 disabled:opacity-50"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`current-edu-${edu.id}`}
+                        checked={edu.current}
+                        onCheckedChange={(checked) => updateEducation(edu.id, "current", checked)}
+                        className="border-white/40 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
+                      />
+                      <label
+                        htmlFor={`current-edu-${edu.id}`}
+                        className="text-sm text-white/70 cursor-pointer touch-manipulation"
+                      >
+                        I am currently studying this
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Grade/Classification */}
+                  <div>
+                    <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                      Grade / Classification
+                    </label>
+                    <Input
+                      value={edu.grade}
+                      onChange={(e) => updateEducation(edu.id, "grade", e.target.value)}
+                      placeholder="e.g., Distinction, Pass, 2:1"
+                      className="bg-white/5 border-white/10 text-white h-11"
+                    />
+                    <p className="text-xs text-white/40 mt-1">
+                      Leave blank if not applicable or still studying
+                    </p>
+                  </div>
+
+                  {/* Remove button */}
+                  <div className="flex justify-end pt-2 border-t border-white/5">
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => removeEducation(edu.id)}
-                      className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                      className="text-red-400 hover:text-red-300 hover:bg-red-500/10 h-9"
                     >
                       <X className="h-4 w-4 mr-1" />
                       Remove
@@ -645,11 +948,25 @@ const PremiumCVBuilder = () => {
             <Button
               variant="ghost"
               size="sm"
+              onClick={handleImportFromElecId}
+              disabled={isImporting}
+              className="text-white/60 hover:text-white"
+            >
+              {isImporting ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <IdCard className="h-4 w-4 mr-2" />
+              )}
+              <span className="hidden sm:inline">Import Elec-ID</span>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => setIsPreviewOpen(true)}
               className="text-white/60 hover:text-white"
             >
               <Eye className="h-4 w-4 mr-2" />
-              Preview
+              <span className="hidden sm:inline">Preview</span>
             </Button>
             <Badge className="bg-emerald-500/20 border-emerald-500/30 text-emerald-300 text-xs">
               <Save className="h-3 w-3 mr-1" />
@@ -732,6 +1049,7 @@ const PremiumCVBuilder = () => {
         cvData={cvData}
         template={template}
         onDownload={handleDownload}
+        onSave={handleSaveCV}
         onEditSection={(section) => {
           setIsPreviewOpen(false);
           // Map section to step

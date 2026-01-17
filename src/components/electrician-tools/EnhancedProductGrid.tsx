@@ -193,23 +193,23 @@ const EnhancedProductGrid = ({
               variant={viewMode === "grid" ? "gold" : "ghost"}
               size="sm"
               onClick={() => setViewMode("grid")}
-              className="h-8 px-3"
+              className="h-10 w-10 px-0 touch-manipulation active:scale-[0.98]"
             >
-              <Grid className="h-4 w-4" />
+              <Grid className="h-5 w-5" />
             </Button>
             <Button
               variant={viewMode === "list" ? "gold" : "ghost"}
               size="sm"
               onClick={() => setViewMode("list")}
-              className="h-8 px-3"
+              className="h-10 w-10 px-0 touch-manipulation active:scale-[0.98]"
             >
-              <List className="h-4 w-4" />
+              <List className="h-5 w-5" />
             </Button>
           </div>
 
           {/* Sort Options */}
           <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
-            <SelectTrigger className="w-48 h-[42px] rounded-md bg-elec-card/50 border-elec-yellow/20 text-elec-light">
+            <SelectTrigger className="w-48 h-11 rounded-lg bg-elec-card/50 border-elec-yellow/20 text-elec-light touch-manipulation">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="z-50 bg-elec-card border-elec-yellow/20 shadow-lg">

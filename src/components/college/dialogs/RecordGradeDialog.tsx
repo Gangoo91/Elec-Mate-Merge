@@ -142,7 +142,7 @@ export function RecordGradeDialog({ open, onOpenChange, assessmentId }: RecordGr
                   );
                 })}
                 {pendingAssessments.length === 0 && (
-                  <SelectItem value="" disabled>
+                  <SelectItem value="no-assessments" disabled>
                     No assessments pending
                   </SelectItem>
                 )}

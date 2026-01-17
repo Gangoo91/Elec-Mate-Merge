@@ -154,12 +154,12 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
             {/* Category Filter */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-foreground">Category</label>
-              <Select value={filters.category} onValueChange={(value) => handleFilterChange("category", value)}>
+              <Select value={filters.category || "all"} onValueChange={(value) => handleFilterChange("category", value === "all" ? "" : value)}>
                 <SelectTrigger className="bg-white/10 border-white/20 text-foreground text-sm">
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border">
-                  <SelectItem value="">All Categories</SelectItem>
+                  <SelectItem value="all">All Categories</SelectItem>
                   {categories.map((category) => (
                     <SelectItem key={category} value={category}>{category}</SelectItem>
                   ))}
@@ -170,12 +170,12 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
             {/* Level Filter */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-foreground">Level</label>
-              <Select value={filters.level} onValueChange={(value) => handleFilterChange("level", value)}>
+              <Select value={filters.level || "all"} onValueChange={(value) => handleFilterChange("level", value === "all" ? "" : value)}>
                 <SelectTrigger className="bg-white/10 border-white/20 text-foreground text-sm">
                   <SelectValue placeholder="All Levels" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border">
-                  <SelectItem value="">All Levels</SelectItem>
+                  <SelectItem value="all">All Levels</SelectItem>
                   {levels.map((level) => (
                     <SelectItem key={level} value={level}>{level}</SelectItem>
                   ))}
@@ -186,12 +186,12 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
             {/* Study Mode Filter */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-foreground">Study Mode</label>
-              <Select value={filters.studyMode} onValueChange={(value) => handleFilterChange("studyMode", value)}>
+              <Select value={filters.studyMode || "all"} onValueChange={(value) => handleFilterChange("studyMode", value === "all" ? "" : value)}>
                 <SelectTrigger className="bg-white/10 border-white/20 text-foreground text-sm">
                   <SelectValue placeholder="All Modes" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border">
-                  <SelectItem value="">All Modes</SelectItem>
+                  <SelectItem value="all">All Modes</SelectItem>
                   {studyModes.map((mode) => (
                     <SelectItem key={mode} value={mode}>{mode}</SelectItem>
                   ))}
@@ -202,12 +202,12 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
             {/* Location Filter */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-foreground">Location</label>
-              <Select value={filters.location} onValueChange={(value) => handleFilterChange("location", value)}>
+              <Select value={filters.location || "all"} onValueChange={(value) => handleFilterChange("location", value === "all" ? "" : value)}>
                 <SelectTrigger className="bg-white/10 border-white/20 text-foreground text-sm">
                   <SelectValue placeholder="All Locations" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border max-h-48">
-                  <SelectItem value="">All Locations</SelectItem>
+                  <SelectItem value="all">All Locations</SelectItem>
                   {locations.slice(0, 20).map((location) => (
                     <SelectItem key={location} value={location}>{location}</SelectItem>
                   ))}

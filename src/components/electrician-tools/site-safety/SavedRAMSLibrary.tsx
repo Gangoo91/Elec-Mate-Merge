@@ -407,7 +407,7 @@ export const SavedRAMSLibrary = () => {
                   variant="ghost"
                   size="icon"
                   onClick={() => setUploadSheetOpen(true)}
-                  className="h-9 w-9 text-elec-yellow"
+                  className="h-11 w-11 text-elec-yellow touch-manipulation active:scale-[0.98]"
                 >
                   <Upload className="h-5 w-5" />
                 </Button>
@@ -416,7 +416,7 @@ export const SavedRAMSLibrary = () => {
                   size="sm"
                   onClick={toggleEditMode}
                   className={cn(
-                    'h-8 px-3 text-sm font-medium',
+                    'h-11 px-3 text-sm font-medium touch-manipulation active:scale-[0.98]',
                     editMode ? 'text-elec-yellow' : 'text-white/70'
                   )}
                 >
@@ -426,7 +426,7 @@ export const SavedRAMSLibrary = () => {
                   variant="ghost"
                   size="icon"
                   onClick={() => setFilterSheetOpen(true)}
-                  className="relative h-9 w-9 text-white/70"
+                  className="relative h-11 w-11 text-white/70 touch-manipulation active:scale-[0.98]"
                 >
                   <SlidersHorizontal className="h-5 w-5" />
                   {activeFilterCount > 0 && (
@@ -586,7 +586,7 @@ export const SavedRAMSLibrary = () => {
               <Button
                 variant="ghost"
                 onClick={() => setShowAll(!showAll)}
-                className="w-full h-12 text-elec-yellow hover:text-elec-yellow/80 hover:bg-elec-yellow/10"
+                className="w-full h-12 text-elec-yellow hover:text-elec-yellow/80 hover:bg-elec-yellow/10 touch-manipulation active:scale-[0.98]"
               >
                 {showAll ? (
                   <>
@@ -619,7 +619,7 @@ export const SavedRAMSLibrary = () => {
                   variant="ghost"
                   size="sm"
                   onClick={toggleSelectAll}
-                  className="text-white/70 h-9"
+                  className="text-white/70 h-11 touch-manipulation active:scale-[0.98]"
                 >
                   {selectedDocIds.size === displayedDocuments.length ? 'Deselect All' : 'Select All'}
                 </Button>
@@ -630,7 +630,7 @@ export const SavedRAMSLibrary = () => {
                 variant="destructive"
                 onClick={handleBulkDelete}
                 disabled={bulkDeleting || selectedDocIds.size === 0}
-                className="h-10 px-4"
+                className="h-11 px-4 touch-manipulation active:scale-[0.98]"
               >
                 {bulkDeleting ? (
                   <Loader2 className="h-4 w-4 animate-spin mr-2" />
@@ -650,14 +650,14 @@ export const SavedRAMSLibrary = () => {
         <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
           <CardContent className="pt-6">
             <div className="space-y-4">
-              <div className="relative flex-1 max-w-md">
+              <div className="relative flex-1 max-w-xl">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="text"
                   placeholder="Search by project, location, or assessor..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-10 h-11 bg-background border-border"
+                  className="pl-10 pr-10 h-11 bg-background border-border touch-manipulation"
                 />
                 {searchTerm && (
                   <Button

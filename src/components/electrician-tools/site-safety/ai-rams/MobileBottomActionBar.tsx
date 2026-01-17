@@ -23,21 +23,21 @@ export const MobileBottomActionBar: React.FC<MobileBottomActionBarProps> = ({
 
   return (
     <div className={cn(
-      "fixed bottom-0 left-0 right-0 z-50 p-4 bg-gradient-to-t from-elec-grey via-elec-grey to-elec-grey/95 border-t border-elec-yellow/30 backdrop-blur-lg shadow-[0_-4px_20px_rgba(0,0,0,0.4)]",
+      "fixed bottom-0 left-0 right-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm border-t border-white/10",
       className
     )}>
-      <div className="flex gap-3 max-w-md mx-auto">
+      <div className="flex gap-3 px-4 py-4">
         <Button
           onClick={onSave}
           disabled={isSaving}
-          className="flex-1 h-14 text-base font-semibold bg-elec-yellow/10 hover:bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow shadow-[0_0_15px_rgba(255,193,7,0.2)]"
+          className="flex-1 h-14 text-base font-semibold bg-white/5 hover:bg-white/10 border border-white/10 text-elec-yellow touch-manipulation active:scale-[0.98]"
         >
           <Save className="h-5 w-5 mr-2" />
           {isSaving ? 'Saving...' : 'Save'}
         </Button>
         <Button
           onClick={onDownload}
-          className="flex-1 h-14 text-base font-semibold bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-elec-dark border-0 shadow-[0_0_20px_rgba(255,193,7,0.4)]"
+          className="flex-1 h-14 text-base font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black border-0 touch-manipulation active:scale-[0.98]"
         >
           <Download className="h-5 w-5 mr-2" />
           Download

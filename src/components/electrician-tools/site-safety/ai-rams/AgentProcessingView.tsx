@@ -89,7 +89,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
   };
 
   return (
-    <div className="h-[100dvh] bg-gradient-to-b from-black via-[#0a0a0f] to-black flex flex-col overflow-hidden">
+    <div className="min-h-[100dvh] bg-[#1a1a1a] flex flex-col overflow-hidden relative">
       {/* Background Glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -100,7 +100,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
       </div>
 
       {/* Main Content - Flex column with justify-between */}
-      <div className="relative z-10 flex-1 flex flex-col justify-evenly px-4 py-6 max-w-md mx-auto w-full">
+      <div className="relative z-10 flex-1 flex flex-col justify-evenly px-4 sm:px-6 py-6 max-w-2xl mx-auto w-full">
 
         {/* Header Section */}
         <div className="text-center space-y-3">
@@ -321,7 +321,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
           <button
             onClick={() => setShowCancelDialog(true)}
             disabled={isCancelling}
-            className="w-full py-3 text-xs text-white/40 hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all disabled:opacity-50 flex items-center justify-center gap-1.5"
+            className="w-full py-3 min-h-[48px] text-xs text-white/40 hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all disabled:opacity-50 flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]"
           >
             {isCancelling ? (
               <>

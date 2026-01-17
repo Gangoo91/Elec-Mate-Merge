@@ -235,9 +235,11 @@ export function useApplyToVacancy() {
     mutationFn: async ({
       vacancyId,
       coverLetter,
+      cvUrl,
     }: {
       vacancyId: string;
       coverLetter?: string;
+      cvUrl?: string;
     }) => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
@@ -255,7 +257,7 @@ export function useApplyToVacancy() {
 
       const employee = (profile as any).employee;
 
-      // Create application
+      // Create application with optional CV attachment
       const { data: application, error } = await supabase
         .from('employer_vacancy_applications')
         .insert({
@@ -265,6 +267,7 @@ export function useApplyToVacancy() {
           applicant_email: employee?.email,
           applicant_phone: employee?.phone,
           cover_letter: coverLetter,
+          cv_url: cvUrl, // Include CV if provided
           status: 'New',
         })
         .select()

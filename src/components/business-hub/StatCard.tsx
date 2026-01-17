@@ -68,15 +68,16 @@ const StatCard = ({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-xl p-3 sm:p-4",
+        "relative overflow-hidden rounded-xl p-4 sm:p-5",
         "border border-white/10",
+        "touch-manipulation active:scale-[0.98] transition-transform",
         colors.bg,
         className
       )}
     >
       <div className="flex items-start gap-3">
         {/* Icon */}
-        <div className={cn("flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center", colors.iconBg)}>
+        <div className={cn("flex-shrink-0 w-11 h-11 rounded-lg flex items-center justify-center", colors.iconBg)}>
           <Icon className={cn("h-5 w-5", colors.text)} />
         </div>
 

@@ -207,12 +207,12 @@ export function CreateExpenseDialog({ open, onOpenChange }: CreateExpenseDialogP
               {/* Link to Job */}
               <div className="space-y-2">
                 <Label>Link to Job (Optional)</Label>
-                <Select value={jobId || ""} onValueChange={(v) => setJobId(v || null)}>
+                <Select value={jobId || "none"} onValueChange={(v) => setJobId(v === "none" ? null : v)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select job (optional)" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">No job linked</SelectItem>
+                    <SelectItem value="none">No job linked</SelectItem>
                     {activeJobs.map((job) => (
                       <SelectItem key={job.id} value={job.id}>
                         {job.title} - {job.client}

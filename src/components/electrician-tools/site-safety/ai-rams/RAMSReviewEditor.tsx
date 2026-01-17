@@ -723,12 +723,12 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
   return (
     <div className={cn(
-      "space-y-4 sm:space-y-6",
+      "max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-4 sm:space-y-6",
       isMobile && keyboardVisible && "pb-[100px]",
       isMobile && !keyboardVisible && "pb-[100px]"
     )}>
-      <Card className="bg-elec-dark border border-white/[0.06] rounded-2xl overflow-hidden">
-        <CardHeader className="p-4 sm:p-5 border-b border-white/[0.06]">
+      <div className="bg-white/5 rounded-2xl overflow-hidden">
+        <div className="p-4 sm:p-6 border-b border-white/10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <h2 className="text-lg sm:text-xl font-semibold text-white">
@@ -764,7 +764,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               {isSaving ? 'Saving...' : `Saved ${lastSaved.toLocaleTimeString()}`}
             </span>
           )}
-        </CardHeader>
+        </div>
         
         {/* PHASE 4: Partial Completion Warning Banner */}
         {isPartial && (
@@ -789,14 +789,14 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
           </div>
         )}
         
-        <CardContent className="p-0">
+        <div>
           <Tabs defaultValue="rams" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 h-14 bg-transparent rounded-none p-2 gap-2 border-b border-white/[0.06]">
+            <TabsList className="grid w-full grid-cols-2 h-14 bg-transparent rounded-none p-2 gap-2 border-b border-white/10">
               <TabsTrigger
                 value="rams"
                 className={cn(
-                  "h-full rounded-xl text-sm font-medium transition-all duration-200",
-                  "flex items-center justify-center gap-2",
+                  "h-full min-h-[48px] rounded-xl text-sm font-medium transition-all duration-200",
+                  "flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98]",
                   "bg-white/[0.03] border border-transparent",
                   "data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow",
                   "data-[state=active]:border-elec-yellow/20 data-[state=active]:shadow-sm",
@@ -810,8 +810,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               <TabsTrigger
                 value="method"
                 className={cn(
-                  "h-full rounded-xl text-sm font-medium transition-all duration-200",
-                  "flex items-center justify-center gap-2",
+                  "h-full min-h-[48px] rounded-xl text-sm font-medium transition-all duration-200",
+                  "flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98]",
                   "bg-white/[0.03] border border-transparent",
                   "data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow",
                   "data-[state=active]:border-elec-yellow/20 data-[state=active]:shadow-sm",
@@ -1034,12 +1034,12 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
           </Tabs>
 
           {/* Export Section - Desktop */}
-          <div className="hidden sm:block p-4 sm:p-6 border-t border-white/[0.06] bg-white/[0.02]">
+          <div className="hidden sm:block p-4 sm:p-6 border-t border-white/10 bg-white/[0.02]">
             <div className="flex gap-3">
               <Button
                 onClick={handleSaveToLibrary}
                 disabled={isGenerating || localIsSaving}
-                className="gap-2 flex-1 h-14 bg-white/[0.03] hover:bg-white/[0.06] text-white border border-white/[0.08] hover:border-white/[0.12] rounded-xl font-medium transition-all"
+                className="gap-2 flex-1 h-14 min-h-[48px] bg-white/[0.03] hover:bg-white/[0.06] text-white border border-white/[0.08] hover:border-white/[0.12] rounded-xl font-medium transition-all touch-manipulation active:scale-[0.98]"
                 variant="outline"
               >
                 {localIsSaving ? (
@@ -1057,7 +1057,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               <Button
                 onClick={handleGenerateCombinedRAMS}
                 disabled={isGenerating}
-                className="gap-2 flex-1 h-14 bg-gradient-to-r from-elec-yellow to-amber-500 text-black hover:from-elec-yellow/90 hover:to-amber-500/90 rounded-xl font-semibold shadow-lg shadow-elec-yellow/20 transition-all"
+                className="gap-2 flex-1 h-14 min-h-[48px] bg-gradient-to-r from-elec-yellow to-amber-500 text-black hover:from-elec-yellow/90 hover:to-amber-500/90 rounded-xl font-semibold shadow-lg shadow-elec-yellow/20 transition-all touch-manipulation active:scale-[0.98]"
               >
                 {isGenerating ? (
                   <>
@@ -1073,8 +1073,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               </Button>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
 
 

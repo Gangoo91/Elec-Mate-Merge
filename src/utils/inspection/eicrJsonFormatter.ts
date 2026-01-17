@@ -50,19 +50,40 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     inspectorName: formData.inspectorName || 'MISSING'
   });
 
+  // DEBUG: Check inspectionItems immediately
+  console.log('>>> [DEBUG] inspectionItems in formData:', {
+    exists: 'inspectionItems' in formData,
+    type: typeof formData['inspectionItems'],
+    isArray: Array.isArray(formData['inspectionItems']),
+    length: Array.isArray(formData['inspectionItems']) ? formData['inspectionItems'].length : 'N/A'
+  });
+
   // Format inspection items as flat array for checklist
   const formatInspectionItems = () => {
-    const items = get('inspectionItems', []);
+    // Get raw value directly from formData, not through get() helper which stringifies
+    const rawItems = formData['inspectionItems'];
+    console.log('[formatInspectionItems] Raw inspectionItems type:', typeof rawItems);
+    console.log('[formatInspectionItems] Raw inspectionItems length:', Array.isArray(rawItems) ? rawItems.length : 'not array');
+
     let parsed;
     try {
-      parsed = typeof items === 'string' ? JSON.parse(items) : items;
+      parsed = typeof rawItems === 'string' ? JSON.parse(rawItems) : rawItems;
     } catch (e) {
-      console.error('[formatEICRJson] Failed to parse inspectionItems:', e);
+      console.error('[formatInspectionItems] Failed to parse inspectionItems:', e);
       return [];
     }
-    if (!Array.isArray(parsed)) return [];
-    
-    return parsed.map((item: any) => ({
+
+    if (!Array.isArray(parsed)) {
+      console.error('[formatInspectionItems] parsed is not an array:', typeof parsed);
+      return [];
+    }
+
+    console.log('[formatInspectionItems] Parsed array length:', parsed.length);
+    if (parsed.length > 0) {
+      console.log('[formatInspectionItems] First item:', JSON.stringify(parsed[0]));
+    }
+
+    const result = parsed.map((item: any) => ({
       id: item.id || "",
       item_number: item.itemNumber || item.number || "",
       description: item.item || item.description || "",
@@ -70,6 +91,13 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       clause: item.clause || "",
       notes: item.notes || ""
     }));
+
+    console.log('[formatInspectionItems] Result length:', result.length);
+    if (result.length > 0) {
+      console.log('[formatInspectionItems] First result item:', JSON.stringify(result[0]));
+    }
+
+    return result;
   };
 
   // Format circuits/test results

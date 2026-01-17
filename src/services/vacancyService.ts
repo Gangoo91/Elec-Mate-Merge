@@ -237,7 +237,7 @@ export const getApplicationsForVacancy = async (vacancyId: string): Promise<Vaca
     .from('employer_vacancy_applications')
     .select(`
       *,
-      elec_id_profile:elec_id_profiles (
+      elec_id_profile:employer_elec_id_profiles (
         elec_id_number,
         ecs_card_type,
         verification_tier,
@@ -266,7 +266,7 @@ export const getAllApplications = async (): Promise<VacancyApplication[]> => {
         location,
         status
       ),
-      elec_id_profile:elec_id_profiles (
+      elec_id_profile:employer_elec_id_profiles (
         elec_id_number,
         ecs_card_type,
         verification_tier,
@@ -289,7 +289,7 @@ export const getApplicationById = async (id: string): Promise<VacancyApplication
     .select(`
       *,
       vacancy:employer_vacancies (*),
-      elec_id_profile:elec_id_profiles (*)
+      elec_id_profile:employer_elec_id_profiles (*)
     `)
     .eq('id', id)
     .single();

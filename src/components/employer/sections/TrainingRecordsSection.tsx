@@ -166,12 +166,12 @@ export function TrainingRecordsSection() {
 
                 <div className="space-y-2">
                   <Label>Employee (Optional)</Label>
-                  <Select value={selectedEmployee} onValueChange={setSelectedEmployee}>
+                  <Select value={selectedEmployee || "all"} onValueChange={(v) => setSelectedEmployee(v === "all" ? "" : v)}>
                     <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select employee..." />
                     </SelectTrigger>
                     <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="">All employees / General</SelectItem>
+                      <SelectItem value="all">All employees / General</SelectItem>
                       {employees?.map(emp => (
                         <SelectItem key={emp.id} value={emp.id}>{emp.name}</SelectItem>
                       ))}

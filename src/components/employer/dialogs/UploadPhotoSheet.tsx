@@ -200,12 +200,12 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
           {/* Job Selection */}
           <div className="space-y-2">
             <Label>Job (optional)</Label>
-            <Select value={jobId} onValueChange={setJobId}>
+            <Select value={jobId || "none"} onValueChange={(v) => setJobId(v === "none" ? "" : v)}>
               <SelectTrigger className="h-12 touch-manipulation">
                 <SelectValue placeholder="Select a job..." />
               </SelectTrigger>
               <SelectContent className="z-[100]">
-                <SelectItem value="">No job selected</SelectItem>
+                <SelectItem value="none">No job selected</SelectItem>
                 {activeJobs.map((job) => (
                   <SelectItem key={job.id} value={job.id}>
                     {job.title} - {job.client}

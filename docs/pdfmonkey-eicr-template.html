@@ -438,16 +438,16 @@
 
         .inspection-table tbody td.outcome {
             width: 28px;
-        }
-
-        .inspection-table tbody td.outcome input[type="checkbox"] {
-            width: 10px;
-            height: 10px;
+            text-align: center;
+            font-weight: bold;
+            color: #166534;
         }
 
         .inspection-table tbody td.outcome-text {
             width: 35px;
             font-weight: 600;
+            text-align: center;
+            color: #dc2626;
         }
 
         .inspection-table .section-header-row td {
@@ -1612,14 +1612,15 @@
 </div>
 {% endif %}
 
-<!-- Inspection Checklist -->
+<!-- Inspection Checklist - FLAT KEYS -->
+<!-- Debug removed -->
 <div class="section">
     <table class="inspection-table">
         <thead>
             <tr>
                 <th style="width: 35px;">Item</th>
                 <th class="desc-header" style="width: auto;">Description</th>
-                <th style="width: 30px;">Acc</th>
+                <th style="width: 28px;">Acc</th>
                 <th style="width: 28px;">N/A</th>
                 <th style="width: 35px;">C1/C2</th>
                 <th style="width: 28px;">C3</th>
@@ -1628,18 +1629,88 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in inspection_checklist %}
-            <tr>
-                <td class="item-num">{{ item.item_number }}</td>
-                <td class="item-desc">{{ item.description }}{% if item.clause %} <span class="item-reg">({{ item.clause }})</span>{% endif %}</td>
-                <td class="outcome">{% if item.outcome == 'satisfactory' %}✓{% endif %}</td>
-                <td class="outcome">{% if item.outcome == 'not-applicable' or item.outcome == 'N/A' %}✓{% endif %}</td>
-                <td class="outcome-text">{% if item.outcome == 'C1' or item.outcome == 'C2' %}{{ item.outcome }}{% endif %}</td>
-                <td class="outcome">{% if item.outcome == 'C3' %}✓{% endif %}</td>
-                <td class="outcome">{% if item.outcome == 'N/V' or item.outcome == 'not-verified' %}✓{% endif %}</td>
-                <td class="outcome">{% if item.outcome == 'LIM' or item.outcome == 'limitation' %}✓{% endif %}</td>
-            </tr>
-            {% endfor %}
+            <!-- SECTION 1: INTAKE EQUIPMENT -->
+            <tr class="section-header-row"><td colspan="8">1.0 &nbsp; INTAKE EQUIPMENT (VISUAL INSPECTION ONLY)</td></tr>
+            <tr><td class="item-num">1.0</td><td class="item-desc">Service cable, Service head, Earthing arrangement, Meter tails, Metering equipment, Isolator (where present)</td><td class="outcome">{{ insp_1_0_acc }}</td><td class="outcome">{{ insp_1_0_na }}</td><td class="outcome-text">{{ insp_1_0_c1c2 }}</td><td class="outcome">{{ insp_1_0_c3 }}</td><td class="outcome">{{ insp_1_0_nv }}</td><td class="outcome">{{ insp_1_0_lim }}</td></tr>
+            <tr><td class="item-num">1.1</td><td class="item-desc">Consumer's isolator (where present)</td><td class="outcome">{{ insp_1_1_acc }}</td><td class="outcome">{{ insp_1_1_na }}</td><td class="outcome-text">{{ insp_1_1_c1c2 }}</td><td class="outcome">{{ insp_1_1_c3 }}</td><td class="outcome">{{ insp_1_1_nv }}</td><td class="outcome">{{ insp_1_1_lim }}</td></tr>
+            <tr><td class="item-num">1.2</td><td class="item-desc">Consumer's meter tails</td><td class="outcome">{{ insp_1_2_acc }}</td><td class="outcome">{{ insp_1_2_na }}</td><td class="outcome-text">{{ insp_1_2_c1c2 }}</td><td class="outcome">{{ insp_1_2_c3 }}</td><td class="outcome">{{ insp_1_2_nv }}</td><td class="outcome">{{ insp_1_2_lim }}</td></tr>
+            <!-- SECTION 2: OTHER SOURCES -->
+            <tr class="section-header-row"><td colspan="8">2.0 &nbsp; PRESENCE OF ADEQUATE ARRANGEMENTS FOR OTHER SOURCES</td></tr>
+            <tr><td class="item-num">2.0</td><td class="item-desc">Presence of adequate arrangements for other sources such as microgenerators</td><td class="outcome">{{ insp_2_0_acc }}</td><td class="outcome">{{ insp_2_0_na }}</td><td class="outcome-text">{{ insp_2_0_c1c2 }}</td><td class="outcome">{{ insp_2_0_c3 }}</td><td class="outcome">{{ insp_2_0_nv }}</td><td class="outcome">{{ insp_2_0_lim }}</td></tr>
+            <!-- SECTION 3: EARTHING / BONDING -->
+            <tr class="section-header-row"><td colspan="8">3.0 &nbsp; EARTHING / BONDING ARRANGEMENTS</td></tr>
+            <tr><td class="item-num">3.1</td><td class="item-desc">Presence and condition of distributor's earthing arrangement</td><td class="outcome">{{ insp_3_1_acc }}</td><td class="outcome">{{ insp_3_1_na }}</td><td class="outcome-text">{{ insp_3_1_c1c2 }}</td><td class="outcome">{{ insp_3_1_c3 }}</td><td class="outcome">{{ insp_3_1_nv }}</td><td class="outcome">{{ insp_3_1_lim }}</td></tr>
+            <tr><td class="item-num">3.2</td><td class="item-desc">Presence and condition of earth electrode connection where applicable</td><td class="outcome">{{ insp_3_2_acc }}</td><td class="outcome">{{ insp_3_2_na }}</td><td class="outcome-text">{{ insp_3_2_c1c2 }}</td><td class="outcome">{{ insp_3_2_c3 }}</td><td class="outcome">{{ insp_3_2_nv }}</td><td class="outcome">{{ insp_3_2_lim }}</td></tr>
+            <tr><td class="item-num">3.3</td><td class="item-desc">Provision of earthing/bonding labels at all appropriate locations</td><td class="outcome">{{ insp_3_3_acc }}</td><td class="outcome">{{ insp_3_3_na }}</td><td class="outcome-text">{{ insp_3_3_c1c2 }}</td><td class="outcome">{{ insp_3_3_c3 }}</td><td class="outcome">{{ insp_3_3_nv }}</td><td class="outcome">{{ insp_3_3_lim }}</td></tr>
+            <tr><td class="item-num">3.4</td><td class="item-desc">Confirmation of earthing conductor size</td><td class="outcome">{{ insp_3_4_acc }}</td><td class="outcome">{{ insp_3_4_na }}</td><td class="outcome-text">{{ insp_3_4_c1c2 }}</td><td class="outcome">{{ insp_3_4_c3 }}</td><td class="outcome">{{ insp_3_4_nv }}</td><td class="outcome">{{ insp_3_4_lim }}</td></tr>
+            <tr><td class="item-num">3.5</td><td class="item-desc">Accessibility and condition of earthing conductor at MET</td><td class="outcome">{{ insp_3_5_acc }}</td><td class="outcome">{{ insp_3_5_na }}</td><td class="outcome-text">{{ insp_3_5_c1c2 }}</td><td class="outcome">{{ insp_3_5_c3 }}</td><td class="outcome">{{ insp_3_5_nv }}</td><td class="outcome">{{ insp_3_5_lim }}</td></tr>
+            <tr><td class="item-num">3.6</td><td class="item-desc">Confirmation of main protective bonding conductor sizes</td><td class="outcome">{{ insp_3_6_acc }}</td><td class="outcome">{{ insp_3_6_na }}</td><td class="outcome-text">{{ insp_3_6_c1c2 }}</td><td class="outcome">{{ insp_3_6_c3 }}</td><td class="outcome">{{ insp_3_6_nv }}</td><td class="outcome">{{ insp_3_6_lim }}</td></tr>
+            <tr><td class="item-num">3.7</td><td class="item-desc">Condition and accessibility of main protective bonding conductor connections</td><td class="outcome">{{ insp_3_7_acc }}</td><td class="outcome">{{ insp_3_7_na }}</td><td class="outcome-text">{{ insp_3_7_c1c2 }}</td><td class="outcome">{{ insp_3_7_c3 }}</td><td class="outcome">{{ insp_3_7_nv }}</td><td class="outcome">{{ insp_3_7_lim }}</td></tr>
+            <tr><td class="item-num">3.8</td><td class="item-desc">Accessibility and condition of other protective bonding connections</td><td class="outcome">{{ insp_3_8_acc }}</td><td class="outcome">{{ insp_3_8_na }}</td><td class="outcome-text">{{ insp_3_8_c1c2 }}</td><td class="outcome">{{ insp_3_8_c3 }}</td><td class="outcome">{{ insp_3_8_nv }}</td><td class="outcome">{{ insp_3_8_lim }}</td></tr>
+            <!-- SECTION 4: CONSUMER UNIT(S) / DISTRIBUTION BOARD(S) -->
+            <tr class="section-header-row"><td colspan="8">4.0 &nbsp; CONSUMER UNIT(S) / DISTRIBUTION BOARD(S)</td></tr>
+            <tr><td class="item-num">4.1</td><td class="item-desc">Adequacy of working space/accessibility to consumer unit/distribution board</td><td class="outcome">{{ insp_4_1_acc }}</td><td class="outcome">{{ insp_4_1_na }}</td><td class="outcome-text">{{ insp_4_1_c1c2 }}</td><td class="outcome">{{ insp_4_1_c3 }}</td><td class="outcome">{{ insp_4_1_nv }}</td><td class="outcome">{{ insp_4_1_lim }}</td></tr>
+            <tr><td class="item-num">4.2</td><td class="item-desc">Security of fixing</td><td class="outcome">{{ insp_4_2_acc }}</td><td class="outcome">{{ insp_4_2_na }}</td><td class="outcome-text">{{ insp_4_2_c1c2 }}</td><td class="outcome">{{ insp_4_2_c3 }}</td><td class="outcome">{{ insp_4_2_nv }}</td><td class="outcome">{{ insp_4_2_lim }}</td></tr>
+            <tr><td class="item-num">4.3</td><td class="item-desc">Condition of enclosure(s) in terms of IP rating etc.</td><td class="outcome">{{ insp_4_3_acc }}</td><td class="outcome">{{ insp_4_3_na }}</td><td class="outcome-text">{{ insp_4_3_c1c2 }}</td><td class="outcome">{{ insp_4_3_c3 }}</td><td class="outcome">{{ insp_4_3_nv }}</td><td class="outcome">{{ insp_4_3_lim }}</td></tr>
+            <tr><td class="item-num">4.4</td><td class="item-desc">Condition of enclosure(s) in terms of fire rating etc.</td><td class="outcome">{{ insp_4_4_acc }}</td><td class="outcome">{{ insp_4_4_na }}</td><td class="outcome-text">{{ insp_4_4_c1c2 }}</td><td class="outcome">{{ insp_4_4_c3 }}</td><td class="outcome">{{ insp_4_4_nv }}</td><td class="outcome">{{ insp_4_4_lim }}</td></tr>
+            <tr><td class="item-num">4.5</td><td class="item-desc">Enclosure not damaged/deteriorated so as to impair safety</td><td class="outcome">{{ insp_4_5_acc }}</td><td class="outcome">{{ insp_4_5_na }}</td><td class="outcome-text">{{ insp_4_5_c1c2 }}</td><td class="outcome">{{ insp_4_5_c3 }}</td><td class="outcome">{{ insp_4_5_nv }}</td><td class="outcome">{{ insp_4_5_lim }}</td></tr>
+            <tr><td class="item-num">4.6</td><td class="item-desc">Presence of main linked switch (as required by 462.1.201)</td><td class="outcome">{{ insp_4_6_acc }}</td><td class="outcome">{{ insp_4_6_na }}</td><td class="outcome-text">{{ insp_4_6_c1c2 }}</td><td class="outcome">{{ insp_4_6_c3 }}</td><td class="outcome">{{ insp_4_6_nv }}</td><td class="outcome">{{ insp_4_6_lim }}</td></tr>
+            <tr><td class="item-num">4.7</td><td class="item-desc">Operation of main switch (functional check)</td><td class="outcome">{{ insp_4_7_acc }}</td><td class="outcome">{{ insp_4_7_na }}</td><td class="outcome-text">{{ insp_4_7_c1c2 }}</td><td class="outcome">{{ insp_4_7_c3 }}</td><td class="outcome">{{ insp_4_7_nv }}</td><td class="outcome">{{ insp_4_7_lim }}</td></tr>
+            <tr><td class="item-num">4.8</td><td class="item-desc">Manual operation of circuit-breakers and RCDs to prove disconnection</td><td class="outcome">{{ insp_4_8_acc }}</td><td class="outcome">{{ insp_4_8_na }}</td><td class="outcome-text">{{ insp_4_8_c1c2 }}</td><td class="outcome">{{ insp_4_8_c3 }}</td><td class="outcome">{{ insp_4_8_nv }}</td><td class="outcome">{{ insp_4_8_lim }}</td></tr>
+            <tr><td class="item-num">4.9</td><td class="item-desc">Correct identification of circuit details and protective devices</td><td class="outcome">{{ insp_4_9_acc }}</td><td class="outcome">{{ insp_4_9_na }}</td><td class="outcome-text">{{ insp_4_9_c1c2 }}</td><td class="outcome">{{ insp_4_9_c3 }}</td><td class="outcome">{{ insp_4_9_nv }}</td><td class="outcome">{{ insp_4_9_lim }}</td></tr>
+            <tr><td class="item-num">4.10</td><td class="item-desc">Presence of RCD six-monthly test notice, where required</td><td class="outcome">{{ insp_4_10_acc }}</td><td class="outcome">{{ insp_4_10_na }}</td><td class="outcome-text">{{ insp_4_10_c1c2 }}</td><td class="outcome">{{ insp_4_10_c3 }}</td><td class="outcome">{{ insp_4_10_nv }}</td><td class="outcome">{{ insp_4_10_lim }}</td></tr>
+            <tr><td class="item-num">4.11</td><td class="item-desc">Presence of alternative supply warning notice at or near consumer unit</td><td class="outcome">{{ insp_4_11_acc }}</td><td class="outcome">{{ insp_4_11_na }}</td><td class="outcome-text">{{ insp_4_11_c1c2 }}</td><td class="outcome">{{ insp_4_11_c3 }}</td><td class="outcome">{{ insp_4_11_nv }}</td><td class="outcome">{{ insp_4_11_lim }}</td></tr>
+            <tr><td class="item-num">4.12</td><td class="item-desc">Presence of other required labelling</td><td class="outcome">{{ insp_4_12_acc }}</td><td class="outcome">{{ insp_4_12_na }}</td><td class="outcome-text">{{ insp_4_12_c1c2 }}</td><td class="outcome">{{ insp_4_12_c3 }}</td><td class="outcome">{{ insp_4_12_nv }}</td><td class="outcome">{{ insp_4_12_lim }}</td></tr>
+            <tr><td class="item-num">4.13</td><td class="item-desc">Compatibility of protective devices, bases and other components</td><td class="outcome">{{ insp_4_13_acc }}</td><td class="outcome">{{ insp_4_13_na }}</td><td class="outcome-text">{{ insp_4_13_c1c2 }}</td><td class="outcome">{{ insp_4_13_c3 }}</td><td class="outcome">{{ insp_4_13_nv }}</td><td class="outcome">{{ insp_4_13_lim }}</td></tr>
+            <tr><td class="item-num">4.14</td><td class="item-desc">Single-pole switching or protective devices in line conductor only</td><td class="outcome">{{ insp_4_14_acc }}</td><td class="outcome">{{ insp_4_14_na }}</td><td class="outcome-text">{{ insp_4_14_c1c2 }}</td><td class="outcome">{{ insp_4_14_c3 }}</td><td class="outcome">{{ insp_4_14_nv }}</td><td class="outcome">{{ insp_4_14_lim }}</td></tr>
+            <tr><td class="item-num">4.15</td><td class="item-desc">Protection against mechanical damage where cables enter consumer unit</td><td class="outcome">{{ insp_4_15_acc }}</td><td class="outcome">{{ insp_4_15_na }}</td><td class="outcome-text">{{ insp_4_15_c1c2 }}</td><td class="outcome">{{ insp_4_15_c3 }}</td><td class="outcome">{{ insp_4_15_nv }}</td><td class="outcome">{{ insp_4_15_lim }}</td></tr>
+            <tr><td class="item-num">4.16</td><td class="item-desc">Protection against electromagnetic effects where cables enter consumer unit</td><td class="outcome">{{ insp_4_16_acc }}</td><td class="outcome">{{ insp_4_16_na }}</td><td class="outcome-text">{{ insp_4_16_c1c2 }}</td><td class="outcome">{{ insp_4_16_c3 }}</td><td class="outcome">{{ insp_4_16_nv }}</td><td class="outcome">{{ insp_4_16_lim }}</td></tr>
+            <tr><td class="item-num">4.17</td><td class="item-desc">RCD(s) provided for fault protection – includes RCBOs</td><td class="outcome">{{ insp_4_17_acc }}</td><td class="outcome">{{ insp_4_17_na }}</td><td class="outcome-text">{{ insp_4_17_c1c2 }}</td><td class="outcome">{{ insp_4_17_c3 }}</td><td class="outcome">{{ insp_4_17_nv }}</td><td class="outcome">{{ insp_4_17_lim }}</td></tr>
+            <tr><td class="item-num">4.18</td><td class="item-desc">RCD(s) provided for additional protection – includes RCBOs</td><td class="outcome">{{ insp_4_18_acc }}</td><td class="outcome">{{ insp_4_18_na }}</td><td class="outcome-text">{{ insp_4_18_c1c2 }}</td><td class="outcome">{{ insp_4_18_c3 }}</td><td class="outcome">{{ insp_4_18_nv }}</td><td class="outcome">{{ insp_4_18_lim }}</td></tr>
+            <tr><td class="item-num">4.19</td><td class="item-desc">Confirmation of indication that SPD is functional</td><td class="outcome">{{ insp_4_19_acc }}</td><td class="outcome">{{ insp_4_19_na }}</td><td class="outcome-text">{{ insp_4_19_c1c2 }}</td><td class="outcome">{{ insp_4_19_c3 }}</td><td class="outcome">{{ insp_4_19_nv }}</td><td class="outcome">{{ insp_4_19_lim }}</td></tr>
+            <tr><td class="item-num">4.20</td><td class="item-desc">Confirmation that ALL conductor connections are correctly located and secure</td><td class="outcome">{{ insp_4_20_acc }}</td><td class="outcome">{{ insp_4_20_na }}</td><td class="outcome-text">{{ insp_4_20_c1c2 }}</td><td class="outcome">{{ insp_4_20_c3 }}</td><td class="outcome">{{ insp_4_20_nv }}</td><td class="outcome">{{ insp_4_20_lim }}</td></tr>
+            <tr><td class="item-num">4.21</td><td class="item-desc">Adequate arrangements where a generating set operates as switched alternative</td><td class="outcome">{{ insp_4_21_acc }}</td><td class="outcome">{{ insp_4_21_na }}</td><td class="outcome-text">{{ insp_4_21_c1c2 }}</td><td class="outcome">{{ insp_4_21_c3 }}</td><td class="outcome">{{ insp_4_21_nv }}</td><td class="outcome">{{ insp_4_21_lim }}</td></tr>
+            <tr><td class="item-num">4.22</td><td class="item-desc">Adequate arrangements where a generating set operates in parallel with supply</td><td class="outcome">{{ insp_4_22_acc }}</td><td class="outcome">{{ insp_4_22_na }}</td><td class="outcome-text">{{ insp_4_22_c1c2 }}</td><td class="outcome">{{ insp_4_22_c3 }}</td><td class="outcome">{{ insp_4_22_nv }}</td><td class="outcome">{{ insp_4_22_lim }}</td></tr>
+            <!-- SECTION 5: FINAL CIRCUITS -->
+            <tr class="section-header-row"><td colspan="8">5.0 &nbsp; FINAL CIRCUITS</td></tr>
+            <tr><td class="item-num">5.1</td><td class="item-desc">Identification of conductors</td><td class="outcome">{{ insp_5_1_acc }}</td><td class="outcome">{{ insp_5_1_na }}</td><td class="outcome-text">{{ insp_5_1_c1c2 }}</td><td class="outcome">{{ insp_5_1_c3 }}</td><td class="outcome">{{ insp_5_1_nv }}</td><td class="outcome">{{ insp_5_1_lim }}</td></tr>
+            <tr><td class="item-num">5.2</td><td class="item-desc">Cables correctly supported throughout their run</td><td class="outcome">{{ insp_5_2_acc }}</td><td class="outcome">{{ insp_5_2_na }}</td><td class="outcome-text">{{ insp_5_2_c1c2 }}</td><td class="outcome">{{ insp_5_2_c3 }}</td><td class="outcome">{{ insp_5_2_nv }}</td><td class="outcome">{{ insp_5_2_lim }}</td></tr>
+            <tr><td class="item-num">5.3</td><td class="item-desc">Condition of insulation of live parts</td><td class="outcome">{{ insp_5_3_acc }}</td><td class="outcome">{{ insp_5_3_na }}</td><td class="outcome-text">{{ insp_5_3_c1c2 }}</td><td class="outcome">{{ insp_5_3_c3 }}</td><td class="outcome">{{ insp_5_3_nv }}</td><td class="outcome">{{ insp_5_3_lim }}</td></tr>
+            <tr><td class="item-num">5.4</td><td class="item-desc">Non-sheathed cables protected by enclosure in conduit, ducting or trunking</td><td class="outcome">{{ insp_5_4_acc }}</td><td class="outcome">{{ insp_5_4_na }}</td><td class="outcome-text">{{ insp_5_4_c1c2 }}</td><td class="outcome">{{ insp_5_4_c3 }}</td><td class="outcome">{{ insp_5_4_nv }}</td><td class="outcome">{{ insp_5_4_lim }}</td></tr>
+            <tr><td class="item-num">5.5</td><td class="item-desc">Adequacy of cables for current-carrying capacity</td><td class="outcome">{{ insp_5_5_acc }}</td><td class="outcome">{{ insp_5_5_na }}</td><td class="outcome-text">{{ insp_5_5_c1c2 }}</td><td class="outcome">{{ insp_5_5_c3 }}</td><td class="outcome">{{ insp_5_5_nv }}</td><td class="outcome">{{ insp_5_5_lim }}</td></tr>
+            <tr><td class="item-num">5.6</td><td class="item-desc">Coordination between conductors and overload protective devices</td><td class="outcome">{{ insp_5_6_acc }}</td><td class="outcome">{{ insp_5_6_na }}</td><td class="outcome-text">{{ insp_5_6_c1c2 }}</td><td class="outcome">{{ insp_5_6_c3 }}</td><td class="outcome">{{ insp_5_6_nv }}</td><td class="outcome">{{ insp_5_6_lim }}</td></tr>
+            <tr><td class="item-num">5.7</td><td class="item-desc">Adequacy of protective devices: type and rated current for fault protection</td><td class="outcome">{{ insp_5_7_acc }}</td><td class="outcome">{{ insp_5_7_na }}</td><td class="outcome-text">{{ insp_5_7_c1c2 }}</td><td class="outcome">{{ insp_5_7_c3 }}</td><td class="outcome">{{ insp_5_7_nv }}</td><td class="outcome">{{ insp_5_7_lim }}</td></tr>
+            <tr><td class="item-num">5.8</td><td class="item-desc">Presence and adequacy of circuit protective conductors</td><td class="outcome">{{ insp_5_8_acc }}</td><td class="outcome">{{ insp_5_8_na }}</td><td class="outcome-text">{{ insp_5_8_c1c2 }}</td><td class="outcome">{{ insp_5_8_c3 }}</td><td class="outcome">{{ insp_5_8_nv }}</td><td class="outcome">{{ insp_5_8_lim }}</td></tr>
+            <tr><td class="item-num">5.9</td><td class="item-desc">Wiring system(s) appropriate for type and nature of installation</td><td class="outcome">{{ insp_5_9_acc }}</td><td class="outcome">{{ insp_5_9_na }}</td><td class="outcome-text">{{ insp_5_9_c1c2 }}</td><td class="outcome">{{ insp_5_9_c3 }}</td><td class="outcome">{{ insp_5_9_nv }}</td><td class="outcome">{{ insp_5_9_lim }}</td></tr>
+            <tr><td class="item-num">5.10</td><td class="item-desc">Concealed cables installed in prescribed zones</td><td class="outcome">{{ insp_5_10_acc }}</td><td class="outcome">{{ insp_5_10_na }}</td><td class="outcome-text">{{ insp_5_10_c1c2 }}</td><td class="outcome">{{ insp_5_10_c3 }}</td><td class="outcome">{{ insp_5_10_nv }}</td><td class="outcome">{{ insp_5_10_lim }}</td></tr>
+            <tr><td class="item-num">5.11</td><td class="item-desc">Cables concealed under floors, above ceilings or in walls adequately protected</td><td class="outcome">{{ insp_5_11_acc }}</td><td class="outcome">{{ insp_5_11_na }}</td><td class="outcome-text">{{ insp_5_11_c1c2 }}</td><td class="outcome">{{ insp_5_11_c3 }}</td><td class="outcome">{{ insp_5_11_nv }}</td><td class="outcome">{{ insp_5_11_lim }}</td></tr>
+            <tr><td class="item-num">5.12</td><td class="item-desc">Provision of additional protection by RCD not exceeding 30 mA</td><td class="outcome">{{ insp_5_12_acc }}</td><td class="outcome">{{ insp_5_12_na }}</td><td class="outcome-text">{{ insp_5_12_c1c2 }}</td><td class="outcome">{{ insp_5_12_c3 }}</td><td class="outcome">{{ insp_5_12_nv }}</td><td class="outcome">{{ insp_5_12_lim }}</td></tr>
+            <tr><td class="item-num">5.13</td><td class="item-desc">Provision of fire barriers, sealing arrangements and protection against thermal effects</td><td class="outcome">{{ insp_5_13_acc }}</td><td class="outcome">{{ insp_5_13_na }}</td><td class="outcome-text">{{ insp_5_13_c1c2 }}</td><td class="outcome">{{ insp_5_13_c3 }}</td><td class="outcome">{{ insp_5_13_nv }}</td><td class="outcome">{{ insp_5_13_lim }}</td></tr>
+            <tr><td class="item-num">5.14</td><td class="item-desc">Band II cables segregated/separated from Band I cables</td><td class="outcome">{{ insp_5_14_acc }}</td><td class="outcome">{{ insp_5_14_na }}</td><td class="outcome-text">{{ insp_5_14_c1c2 }}</td><td class="outcome">{{ insp_5_14_c3 }}</td><td class="outcome">{{ insp_5_14_nv }}</td><td class="outcome">{{ insp_5_14_lim }}</td></tr>
+            <tr><td class="item-num">5.15</td><td class="item-desc">Cables segregated/separated from communications cabling</td><td class="outcome">{{ insp_5_15_acc }}</td><td class="outcome">{{ insp_5_15_na }}</td><td class="outcome-text">{{ insp_5_15_c1c2 }}</td><td class="outcome">{{ insp_5_15_c3 }}</td><td class="outcome">{{ insp_5_15_nv }}</td><td class="outcome">{{ insp_5_15_lim }}</td></tr>
+            <tr><td class="item-num">5.16</td><td class="item-desc">Cables segregated/separated from non-electrical services</td><td class="outcome">{{ insp_5_16_acc }}</td><td class="outcome">{{ insp_5_16_na }}</td><td class="outcome-text">{{ insp_5_16_c1c2 }}</td><td class="outcome">{{ insp_5_16_c3 }}</td><td class="outcome">{{ insp_5_16_nv }}</td><td class="outcome">{{ insp_5_16_lim }}</td></tr>
+            <tr><td class="item-num">5.17</td><td class="item-desc">Termination of cables at enclosures</td><td class="outcome">{{ insp_5_17_acc }}</td><td class="outcome">{{ insp_5_17_na }}</td><td class="outcome-text">{{ insp_5_17_c1c2 }}</td><td class="outcome">{{ insp_5_17_c3 }}</td><td class="outcome">{{ insp_5_17_nv }}</td><td class="outcome">{{ insp_5_17_lim }}</td></tr>
+            <tr><td class="item-num">5.18</td><td class="item-desc">Condition of accessories including socket-outlets, switches and joint boxes</td><td class="outcome">{{ insp_5_18_acc }}</td><td class="outcome">{{ insp_5_18_na }}</td><td class="outcome-text">{{ insp_5_18_c1c2 }}</td><td class="outcome">{{ insp_5_18_c3 }}</td><td class="outcome">{{ insp_5_18_nv }}</td><td class="outcome">{{ insp_5_18_lim }}</td></tr>
+            <tr><td class="item-num">5.19</td><td class="item-desc">Suitability of accessories for external influences</td><td class="outcome">{{ insp_5_19_acc }}</td><td class="outcome">{{ insp_5_19_na }}</td><td class="outcome-text">{{ insp_5_19_c1c2 }}</td><td class="outcome">{{ insp_5_19_c3 }}</td><td class="outcome">{{ insp_5_19_nv }}</td><td class="outcome">{{ insp_5_19_lim }}</td></tr>
+            <tr><td class="item-num">5.20</td><td class="item-desc">Adequacy of working space/accessibility to equipment</td><td class="outcome">{{ insp_5_20_acc }}</td><td class="outcome">{{ insp_5_20_na }}</td><td class="outcome-text">{{ insp_5_20_c1c2 }}</td><td class="outcome">{{ insp_5_20_c3 }}</td><td class="outcome">{{ insp_5_20_nv }}</td><td class="outcome">{{ insp_5_20_lim }}</td></tr>
+            <tr><td class="item-num">5.21</td><td class="item-desc">Single-pole switching or protective devices in line conductors only</td><td class="outcome">{{ insp_5_21_acc }}</td><td class="outcome">{{ insp_5_21_na }}</td><td class="outcome-text">{{ insp_5_21_c1c2 }}</td><td class="outcome">{{ insp_5_21_c3 }}</td><td class="outcome">{{ insp_5_21_nv }}</td><td class="outcome">{{ insp_5_21_lim }}</td></tr>
+            <!-- SECTION 6: BATH/SHOWER LOCATIONS -->
+            <tr class="section-header-row"><td colspan="8">6.0 &nbsp; LOCATION(S) CONTAINING A BATH OR SHOWER</td></tr>
+            <tr><td class="item-num">6.0</td><td class="item-desc">Additional protection for all low voltage circuits by RCD not exceeding 30 mA</td><td class="outcome">{{ insp_6_0_acc }}</td><td class="outcome">{{ insp_6_0_na }}</td><td class="outcome-text">{{ insp_6_0_c1c2 }}</td><td class="outcome">{{ insp_6_0_c3 }}</td><td class="outcome">{{ insp_6_0_nv }}</td><td class="outcome">{{ insp_6_0_lim }}</td></tr>
+            <tr><td class="item-num">6.1</td><td class="item-desc">Where used as a protective measure, requirements for SELV or PELV met</td><td class="outcome">{{ insp_6_1_acc }}</td><td class="outcome">{{ insp_6_1_na }}</td><td class="outcome-text">{{ insp_6_1_c1c2 }}</td><td class="outcome">{{ insp_6_1_c3 }}</td><td class="outcome">{{ insp_6_1_nv }}</td><td class="outcome">{{ insp_6_1_lim }}</td></tr>
+            <tr><td class="item-num">6.2</td><td class="item-desc">Shaver supply units comply with BS EN 61558-2-5</td><td class="outcome">{{ insp_6_2_acc }}</td><td class="outcome">{{ insp_6_2_na }}</td><td class="outcome-text">{{ insp_6_2_c1c2 }}</td><td class="outcome">{{ insp_6_2_c3 }}</td><td class="outcome">{{ insp_6_2_nv }}</td><td class="outcome">{{ insp_6_2_lim }}</td></tr>
+            <tr><td class="item-num">6.3</td><td class="item-desc">Presence of supplementary bonding conductors, unless not required</td><td class="outcome">{{ insp_6_3_acc }}</td><td class="outcome">{{ insp_6_3_na }}</td><td class="outcome-text">{{ insp_6_3_c1c2 }}</td><td class="outcome">{{ insp_6_3_c3 }}</td><td class="outcome">{{ insp_6_3_nv }}</td><td class="outcome">{{ insp_6_3_lim }}</td></tr>
+            <tr><td class="item-num">6.4</td><td class="item-desc">Low voltage socket-outlets sited at least 2.5 m from zone 1</td><td class="outcome">{{ insp_6_4_acc }}</td><td class="outcome">{{ insp_6_4_na }}</td><td class="outcome-text">{{ insp_6_4_c1c2 }}</td><td class="outcome">{{ insp_6_4_c3 }}</td><td class="outcome">{{ insp_6_4_nv }}</td><td class="outcome">{{ insp_6_4_lim }}</td></tr>
+            <tr><td class="item-num">6.5</td><td class="item-desc">Suitability of equipment for external influences for installed location (IP rating)</td><td class="outcome">{{ insp_6_5_acc }}</td><td class="outcome">{{ insp_6_5_na }}</td><td class="outcome-text">{{ insp_6_5_c1c2 }}</td><td class="outcome">{{ insp_6_5_c3 }}</td><td class="outcome">{{ insp_6_5_nv }}</td><td class="outcome">{{ insp_6_5_lim }}</td></tr>
+            <tr><td class="item-num">6.6</td><td class="item-desc">Suitability of accessories and controlgear etc. for a particular zone</td><td class="outcome">{{ insp_6_6_acc }}</td><td class="outcome">{{ insp_6_6_na }}</td><td class="outcome-text">{{ insp_6_6_c1c2 }}</td><td class="outcome">{{ insp_6_6_c3 }}</td><td class="outcome">{{ insp_6_6_nv }}</td><td class="outcome">{{ insp_6_6_lim }}</td></tr>
+            <tr><td class="item-num">6.7</td><td class="item-desc">Suitability of current-using equipment for particular position within the location</td><td class="outcome">{{ insp_6_7_acc }}</td><td class="outcome">{{ insp_6_7_na }}</td><td class="outcome-text">{{ insp_6_7_c1c2 }}</td><td class="outcome">{{ insp_6_7_c3 }}</td><td class="outcome">{{ insp_6_7_nv }}</td><td class="outcome">{{ insp_6_7_lim }}</td></tr>
+            <tr><td class="item-num">6.8</td><td class="item-desc">(Reserved for additional items)</td><td class="outcome">{{ insp_6_8_acc }}</td><td class="outcome">{{ insp_6_8_na }}</td><td class="outcome-text">{{ insp_6_8_c1c2 }}</td><td class="outcome">{{ insp_6_8_c3 }}</td><td class="outcome">{{ insp_6_8_nv }}</td><td class="outcome">{{ insp_6_8_lim }}</td></tr>
+            <!-- SECTION 7: SPECIAL INSTALLATIONS -->
+            <tr class="section-header-row"><td colspan="8">7.0 &nbsp; OTHER PART 7 SPECIAL INSTALLATIONS OR LOCATIONS</td></tr>
+            <tr><td class="item-num">7.0</td><td class="item-desc">List all other special installations or locations present, if any</td><td class="outcome">{{ insp_7_0_acc }}</td><td class="outcome">{{ insp_7_0_na }}</td><td class="outcome-text">{{ insp_7_0_c1c2 }}</td><td class="outcome">{{ insp_7_0_c3 }}</td><td class="outcome">{{ insp_7_0_nv }}</td><td class="outcome">{{ insp_7_0_lim }}</td></tr>
+            <!-- SECTION 8: PROSUMER -->
+            <tr class="section-header-row"><td colspan="8">8.0 &nbsp; PROSUMER'S LOW VOLTAGE ELECTRICAL INSTALLATION(S)</td></tr>
+            <tr><td class="item-num">8.0</td><td class="item-desc">Additional requirements relating to Chapter 82</td><td class="outcome">{{ insp_8_0_acc }}</td><td class="outcome">{{ insp_8_0_na }}</td><td class="outcome-text">{{ insp_8_0_c1c2 }}</td><td class="outcome">{{ insp_8_0_c3 }}</td><td class="outcome">{{ insp_8_0_nv }}</td><td class="outcome">{{ insp_8_0_lim }}</td></tr>
         </tbody>
     </table>
 </div>
@@ -2121,13 +2192,7 @@
         {% if obs.photo_count > 0 %}
         <div class="observation-section">
             <div class="observation-section-title">Photographic Evidence ({{ obs.photo_count }} photos)</div>
-            <div class="photo-grid">
-                {% for photo_url in obs.photo_evidence %}
-                <div class="photo-item">
-                    <img src="{{ photo_url }}" alt="Evidence photo {{ forloop.index }}" />
-                </div>
-                {% endfor %}
-            </div>
+            <div class="photo-grid">{% for photo_url in obs.photo_evidence %}<div class="photo-item"><img src="{{ photo_url }}" alt="Evidence photo" /></div>{% endfor %}</div>
         </div>
         {% endif %}
     </div>

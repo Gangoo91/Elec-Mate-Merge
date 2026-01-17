@@ -103,7 +103,7 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed inset-0 z-50 sm:inset-4 sm:m-auto sm:max-w-2xl sm:max-h-[90vh] bg-elec-gray sm:rounded-2xl overflow-hidden flex flex-col"
+            className="fixed inset-0 z-50 sm:inset-4 sm:m-auto sm:max-w-3xl sm:max-h-[90vh] bg-elec-gray sm:rounded-2xl overflow-hidden flex flex-col"
           >
             {/* Sticky Header */}
             <div className="sticky top-0 z-10 flex items-center justify-between p-4 bg-elec-gray/95 backdrop-blur-lg border-b border-white/10">
@@ -111,7 +111,7 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
                 variant="ghost"
                 size="sm"
                 onClick={() => onOpenChange(false)}
-                className="text-white hover:text-white hover:bg-white/10 gap-1"
+                className="text-white hover:text-white hover:bg-white/10 gap-1 touch-manipulation active:scale-[0.98]"
               >
                 <ArrowLeft className="h-4 w-4" />
                 <span className="sm:hidden">Back</span>

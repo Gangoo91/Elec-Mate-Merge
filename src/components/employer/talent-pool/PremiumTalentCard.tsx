@@ -35,6 +35,9 @@ export interface PremiumTalentCardProps {
   verifiedDocsCount: number;
   specialisms: string[];
   qualifications?: string[];
+  skills?: string[];
+  currentRole?: string;
+  totalYearsExperience?: number;
   completedJobs?: number;
   elecIdNumber?: string;
   isSaved: boolean;
@@ -45,6 +48,15 @@ export interface PremiumTalentCardProps {
   onMessage: () => void;
   onBook: () => void;
 }
+
+// ECS Card type configuration with industry colours
+const ecsCardConfig: Record<string, { label: string; color: string; bg: string }> = {
+  gold: { label: 'Gold Card', color: 'text-amber-400', bg: 'bg-amber-500/20' },
+  blue: { label: 'Blue Card', color: 'text-blue-400', bg: 'bg-blue-500/20' },
+  green: { label: 'Green Card', color: 'text-emerald-400', bg: 'bg-emerald-500/20' },
+  white: { label: 'White Card', color: 'text-slate-300', bg: 'bg-slate-500/20' },
+  apprentice: { label: 'Apprentice', color: 'text-purple-400', bg: 'bg-purple-500/20' },
+};
 
 // Elec-ID verification tier configuration with premium gradients
 const tierConfig: Record<VerificationTier, {
@@ -96,6 +108,9 @@ export function PremiumTalentCard({
   verifiedDocsCount,
   specialisms,
   qualifications = [],
+  skills = [],
+  currentRole,
+  totalYearsExperience,
   completedJobs = 0,
   elecIdNumber,
   isSaved,
@@ -109,9 +124,11 @@ export function PremiumTalentCard({
   const initials = name.split(' ').map(n => n[0]).join('');
   const tier = tierConfig[verificationTier];
   const isAvailableNow = availability === 'Immediate';
+  const ecsCard = ecsCardConfig[ecsCardType.toLowerCase()] || ecsCardConfig.gold;
 
-  // Get top 3 credentials to show
+  // Get top items to show
   const topCredentials = qualifications.slice(0, 3);
+  const topSkills = skills.slice(0, 3);
 
   return (
     <Card
@@ -183,9 +200,19 @@ export function PremiumTalentCard({
                 </div>
               )}
             </div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span>{ecsCardType}</span>
-              <span>•</span>
+            {currentRole && (
+              <p className="text-sm text-foreground/80 truncate">{currentRole}</p>
+            )}
+            <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
+              {totalYearsExperience !== undefined && totalYearsExperience > 0 && (
+                <>
+                  <span className="flex items-center gap-1">
+                    <Briefcase className="h-3 w-3" />
+                    {totalYearsExperience} yrs exp
+                  </span>
+                  <span>•</span>
+                </>
+              )}
               {labourBankRate ? (
                 <span className="font-semibold text-success">£{labourBankRate}/day</span>
               ) : (
@@ -202,6 +229,26 @@ export function PremiumTalentCard({
             </Badge>
           )}
         </div>
+
+        {/* Skills Row */}
+        {topSkills.length > 0 && (
+          <div className="flex gap-1.5 flex-wrap">
+            {topSkills.map((skill) => (
+              <Badge
+                key={skill}
+                variant="secondary"
+                className="text-xs bg-primary/10 text-primary border border-primary/20"
+              >
+                {skill}
+              </Badge>
+            ))}
+            {skills.length > 3 && (
+              <Badge variant="outline" className="text-xs text-muted-foreground">
+                +{skills.length - 3} more
+              </Badge>
+            )}
+          </div>
+        )}
 
         {/* Specialisms - Collapsed */}
         {specialisms.length > 0 && (
@@ -223,25 +270,29 @@ export function PremiumTalentCard({
           </div>
         )}
 
-        {/* Credentials & Docs Row */}
+        {/* ECS Card & Credentials Row */}
         <div className="flex items-center justify-between text-xs text-muted-foreground pt-1 border-t border-border/30">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            {/* ECS Card Badge */}
+            <Badge variant="secondary" className={`text-xs px-2 py-0.5 ${ecsCard.bg} ${ecsCard.color} border-0`}>
+              <IdCard className="h-3 w-3 mr-1" />
+              {ecsCard.label}
+            </Badge>
             {topCredentials.length > 0 && (
               <span className="flex items-center gap-1">
                 <CheckCircle2 className="h-3 w-3 text-success" />
-                {topCredentials.length} credentials
+                {topCredentials.length} quals
               </span>
             )}
             {verifiedDocsCount > 0 && (
               <span className="flex items-center gap-1">
                 <FileCheck className="h-3 w-3 text-success" />
-                {verifiedDocsCount} verified docs
+                {verifiedDocsCount} docs
               </span>
             )}
           </div>
           {elecIdNumber && (
-            <span className="flex items-center gap-1">
-              <IdCard className="h-3 w-3" />
+            <span className="flex items-center gap-1 font-mono text-xs">
               {elecIdNumber}
             </span>
           )}

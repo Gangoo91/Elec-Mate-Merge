@@ -172,7 +172,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
 
       {/* Celebration card */}
       <div className={cn(
-        "relative w-full max-w-lg bg-elec-dark",
+        "relative w-full max-w-xl bg-elec-dark",
         "rounded-3xl border border-green-500/30 shadow-2xl shadow-green-500/20",
         "transform transition-all duration-500 ease-out overflow-hidden",
         phase !== 'enter'
@@ -190,9 +190,9 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
           variant="ghost"
           size="icon"
           onClick={handleClose}
-          className="absolute top-4 right-4 text-white/40 hover:text-white hover:bg-white/10 z-10 h-9 w-9 rounded-xl"
+          className="absolute top-4 right-4 text-white/40 hover:text-white hover:bg-white/10 z-10 h-11 w-11 rounded-xl touch-manipulation active:scale-[0.98]"
         >
-          <X className="h-4 w-4" />
+          <X className="h-5 w-5" />
         </Button>
 
         <div className="relative p-6 sm:p-8 space-y-6">
@@ -279,7 +279,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
               "w-full h-14 bg-gradient-to-r from-elec-yellow to-amber-500",
               "hover:from-elec-yellow/90 hover:to-amber-500/90",
               "text-black font-bold text-base sm:text-lg rounded-xl",
-              "shadow-lg shadow-elec-yellow/25 group",
+              "shadow-lg shadow-elec-yellow/25 group touch-manipulation active:scale-[0.98]",
               "transition-all duration-500 transform",
               phase === 'complete' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             )}

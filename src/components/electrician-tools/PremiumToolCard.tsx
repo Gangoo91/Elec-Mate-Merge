@@ -157,7 +157,7 @@ const PremiumToolCard = ({
 
   return (
     <div
-      className="product-card-premium h-full flex flex-col group"
+      className="product-card-premium h-full flex flex-col group touch-manipulation active:scale-[0.98]"
       onClick={() => onCardClick?.(item)}
     >
       {/* Image Section */}
@@ -274,7 +274,7 @@ const PremiumToolCard = ({
         <div className="flex gap-2 pt-1">
           <Button
             size={isCompact ? "sm" : "default"}
-            className="btn-buy-now"
+            className="btn-buy-now h-11 touch-manipulation active:scale-[0.98]"
             onClick={(e) => {
               e.stopPropagation();
               window.open(getProductUrl(), "_blank");
@@ -286,7 +286,7 @@ const PremiumToolCard = ({
           <Button
             size={isCompact ? "sm" : "default"}
             variant="outline"
-            className="btn-compare"
+            className="btn-compare h-11 w-11 px-0 touch-manipulation active:scale-[0.98]"
             onClick={(e) => {
               e.stopPropagation();
               if (isSelected && onRemoveFromCompare) {
@@ -298,9 +298,9 @@ const PremiumToolCard = ({
             disabled={isCompareDisabled && !isSelected}
           >
             {isSelected ? (
-              <Check className="h-4 w-4" />
+              <Check className="h-5 w-5" />
             ) : (
-              <Plus className="h-4 w-4" />
+              <Plus className="h-5 w-5" />
             )}
           </Button>
         </div>

@@ -10,7 +10,7 @@ interface EmptySearchResultsProps {
 const EmptySearchResults = ({ type, onReset }: EmptySearchResultsProps) => {
   return (
     <div className={`${type === "courses" ? "col-span-full" : ""} text-center py-12`}>
-      <div className="p-4 rounded-xl bg-gradient-to-br from-white/5 to-white/10 border border-white/10 max-w-md mx-auto">
+      <div className="p-4 rounded-xl bg-gradient-to-br from-white/5 to-white/10 border border-white/10 max-w-lg mx-auto">
         <div className="p-4 rounded-full bg-white/5 w-fit mx-auto mb-4">
           <SearchX className="h-8 w-8 text-white/40" />
         </div>

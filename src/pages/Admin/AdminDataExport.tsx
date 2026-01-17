@@ -70,11 +70,11 @@ const EXPORT_CONFIGS: ExportConfig[] = [
     fields: ["id", "participant_one", "participant_two", "created_at", "updated_at"],
   },
   {
-    table: "elec_id_profiles",
+    table: "employer_elec_id_profiles",
     name: "Elec-ID Profiles",
     icon: CreditCard,
     description: "Electrician verification data",
-    fields: ["id", "user_id", "ecs_card_type", "ecs_expiry", "verified", "created_at"],
+    fields: ["id", "user_id", "ecs_card_type", "ecs_expiry", "is_verified", "created_at"],
   },
   {
     table: "apprentice_progress",

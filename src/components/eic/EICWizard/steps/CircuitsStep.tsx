@@ -327,14 +327,14 @@ const CircuitEditSheet: React.FC<{
               <div className="space-y-2">
                 <Label className="text-xs">RCD Rating (mA)</Label>
                 <Select
-                  value={editData.rcdRating || ''}
-                  onValueChange={(v) => handleChange('rcdRating', v)}
+                  value={editData.rcdRating || 'na'}
+                  onValueChange={(v) => handleChange('rcdRating', v === 'na' ? '' : v)}
                 >
                   <SelectTrigger className="h-11">
                     <SelectValue placeholder="N/A" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">N/A</SelectItem>
+                    <SelectItem value="na">N/A</SelectItem>
                     <SelectItem value="30">30mA</SelectItem>
                     <SelectItem value="100">100mA</SelectItem>
                     <SelectItem value="300">300mA</SelectItem>

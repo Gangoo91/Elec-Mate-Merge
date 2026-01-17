@@ -389,9 +389,9 @@ export const AIRAMSGenerator: React.FC = () => {
     : 0;
 
   return (
-    <div className="min-h-screen bg-elec-dark">
+    <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-lg border-b border-white/10">
+      <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-lg border-b border-white/10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-4">
           <Button
             variant="ghost"
@@ -420,7 +420,7 @@ export const AIRAMSGenerator: React.FC = () => {
       </header>
 
       {/* Content */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main>
         {!showResults ? (
           <AIRAMSInput
             onGenerate={handleGenerate}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Sheet,
   SheetContent,
@@ -12,6 +12,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Send,
   Loader2,
@@ -28,13 +35,17 @@ import {
   BadgeCheck,
   ChevronDown,
   Sparkles,
+  FileText,
+  Plus,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useApplyToVacancy } from "@/hooks/useInternalVacancies";
 import { useElecIdProfile } from "@/hooks/useElecIdProfile";
+import { getUserCVs, UserCV } from "@/services/elecIdService";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 import type { InternalVacancy } from "./InternalVacancyCard";
 
 interface ApplyToVacancyDialogProps {
@@ -68,13 +79,41 @@ export function ApplyToVacancyDialog({
   vacancy,
   onSuccess,
 }: ApplyToVacancyDialogProps) {
+  const navigate = useNavigate();
   const { profile: elecIdProfile, isLoading: profileLoading } = useElecIdProfile();
   const [coverLetter, setCoverLetter] = useState("");
   const [shareProfile, setShareProfile] = useState(true);
   const [showProfilePreview, setShowProfilePreview] = useState(false);
   const [isGeneratingCoverLetter, setIsGeneratingCoverLetter] = useState(false);
 
+  // CV selection state
+  const [userCVs, setUserCVs] = useState<UserCV[]>([]);
+  const [selectedCvId, setSelectedCvId] = useState<string>("");
+  const [loadingCVs, setLoadingCVs] = useState(false);
+
   const applyMutation = useApplyToVacancy();
+
+  // Fetch user's CVs when dialog opens
+  useEffect(() => {
+    if (open) {
+      setLoadingCVs(true);
+      getUserCVs()
+        .then((cvs) => {
+          setUserCVs(cvs);
+          // Auto-select primary CV if available
+          const primaryCv = cvs.find((cv) => cv.is_primary);
+          if (primaryCv) {
+            setSelectedCvId(primaryCv.id);
+          } else if (cvs.length > 0) {
+            setSelectedCvId(cvs[0].id);
+          }
+        })
+        .catch((err) => {
+          console.error('Failed to load CVs:', err);
+        })
+        .finally(() => setLoadingCVs(false));
+    }
+  }, [open]);
 
   // AI Cover Letter Generation
   const generateCoverLetter = async () => {
@@ -129,18 +168,24 @@ export function ApplyToVacancyDialog({
   const handleApply = async () => {
     if (!vacancy) return;
 
+    // Get the selected CV's PDF URL if available
+    const selectedCv = userCVs.find((cv) => cv.id === selectedCvId);
+    const cvUrl = selectedCv?.pdf_url || undefined;
+
     try {
       await applyMutation.mutateAsync({
         vacancyId: vacancy.id,
         coverLetter: coverLetter.trim() || undefined,
+        cvUrl,
       });
 
       toast({
         title: "Application Submitted",
-        description: `Your application for "${vacancy.title}" has been sent to ${vacancy.employer?.company_name || 'the employer'}.`,
+        description: `Your application for "${vacancy.title}" has been sent to ${vacancy.employer?.company_name || 'the employer'}.${selectedCv ? ' Your CV was attached.' : ''}`,
       });
 
       setCoverLetter("");
+      setSelectedCvId("");
       onOpenChange(false);
       onSuccess?.();
     } catch (error: any) {
@@ -384,6 +429,73 @@ export function ApplyToVacancyDialog({
               </div>
             </div>
           )}
+
+          {/* CV Selection */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <Label className="text-sm font-medium flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                Attach CV (Optional)
+              </Label>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  onOpenChange(false);
+                  navigate('/electrician/cv-builder');
+                }}
+                className="gap-1.5 h-9 text-sm touch-manipulation"
+              >
+                <Plus className="h-4 w-4" />
+                Create CV
+              </Button>
+            </div>
+
+            {loadingCVs ? (
+              <div className="flex items-center gap-2 p-3 bg-muted rounded-xl">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span className="text-sm text-muted-foreground">Loading your CVs...</span>
+              </div>
+            ) : userCVs.length > 0 ? (
+              <Select value={selectedCvId} onValueChange={setSelectedCvId}>
+                <SelectTrigger className="h-12 touch-manipulation">
+                  <SelectValue placeholder="Select a CV to attach" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">No CV attached</SelectItem>
+                  {userCVs.map((cv) => (
+                    <SelectItem key={cv.id} value={cv.id}>
+                      <div className="flex items-center gap-2">
+                        <FileText className="h-4 w-4" />
+                        <span>{cv.title}</span>
+                        {cv.is_primary && (
+                          <Badge variant="secondary" className="text-xs ml-1">
+                            Primary
+                          </Badge>
+                        )}
+                        <span className="text-xs text-muted-foreground ml-1">
+                          ({cv.template_id})
+                        </span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            ) : (
+              <div className="p-3 bg-muted/50 rounded-xl">
+                <p className="text-sm text-muted-foreground">
+                  No CVs saved yet. Create one to attach to your application.
+                </p>
+              </div>
+            )}
+
+            {selectedCvId && (
+              <p className="text-xs text-emerald-400">
+                Your CV will be shared with the employer along with your Elec-ID.
+              </p>
+            )}
+          </div>
 
           {/* Cover Letter */}
           <div className="space-y-3">

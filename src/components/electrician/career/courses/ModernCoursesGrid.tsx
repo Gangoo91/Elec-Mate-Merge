@@ -60,12 +60,12 @@ const ModernCoursesGrid = ({ courses, excludeId, onCourseClick, isLoading }: Mod
           <Search className="h-12 w-12 text-blue-400" />
         </div>
         <h3 className="text-xl font-bold text-white mb-2">No courses found</h3>
-        <p className="text-white mb-6 max-w-md mx-auto">
+        <p className="text-white mb-6 max-w-lg mx-auto">
           Try adjusting your search criteria or explore different categories to find the right training for you.
         </p>
         <Button
           variant="outline"
-          className="border-white/20 text-white hover:text-white hover:bg-white/10"
+          className="border-white/20 text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
           <BookOpen className="h-4 w-4 mr-2" />
