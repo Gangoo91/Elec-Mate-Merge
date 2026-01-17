@@ -173,7 +173,7 @@ const BS7671Module1Section3 = () => {
                   <span><strong>Parts 1–8:</strong> Core requirements, definitions, design, safety, inspection</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0 ml-0.5"></span>
+                  <span className="w-2 h-2 bg-elec-yellow rounded-full flex-shrink-0 ml-0.5"></span>
                   <span><strong>Chapters:</strong> Narrow down specific principles within Parts</span>
                 </div>
                 <div className="flex items-center gap-3">
@@ -181,7 +181,7 @@ const BS7671Module1Section3 = () => {
                   <span><strong>Sections:</strong> Drill further into specific application detail</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0 ml-0.5"></span>
+                  <span className="w-2 h-2 bg-elec-yellow rounded-full flex-shrink-0 ml-0.5"></span>
                   <span><strong>Appendices:</strong> Formulas, charts, tables, reference material</span>
                 </div>
               </div>
@@ -333,15 +333,15 @@ const BS7671Module1Section3 = () => {
                 <p className="text-sm text-white">Statutory Regulations</p>
                 <p className="text-xs text-white/60">Legal framework and H&S regulations</p>
               </div>
-              <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+              <div className="p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                 <p className="font-medium text-elec-yellow text-sm mb-1">Appendix 3</p>
                 <p className="text-sm text-white">Time/Current Characteristics</p>
-                <p className="text-xs text-blue-400">MCB/fuse curves - commonly used!</p>
+                <p className="text-xs text-elec-yellow">MCB/fuse curves - commonly used!</p>
               </div>
-              <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+              <div className="p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                 <p className="font-medium text-elec-yellow text-sm mb-1">Appendix 4</p>
                 <p className="text-sm text-white">Current-carrying Capacity</p>
-                <p className="text-xs text-blue-400">Cable ratings - essential for design!</p>
+                <p className="text-xs text-elec-yellow">Cable ratings - essential for design!</p>
               </div>
               <div className="p-3 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-elec-yellow text-sm mb-1">Appendix 5</p>

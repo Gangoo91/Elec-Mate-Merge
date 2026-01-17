@@ -327,7 +327,7 @@ const BS7671Module3Section1 = () => {
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
-                <p className="text-sm font-medium text-purple-400/80 mb-2">System Benefits</p>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">System Benefits</p>
                 <ul className="text-sm text-white space-y-1">
                   <li><strong>Continuity:</strong> First fault allows continued operation</li>
                   <li><strong>Enhanced safety:</strong> Low first fault current</li>
@@ -346,8 +346,8 @@ const BS7671Module3Section1 = () => {
               </div>
             </div>
 
-            <div className="p-4 rounded-lg bg-transparent border border-purple-500/30 my-6">
-              <p className="text-sm font-medium text-purple-400 mb-2">Critical Applications</p>
+            <div className="p-4 rounded-lg bg-transparent border border-elec-yellow/30 my-6">
+              <p className="text-sm font-medium text-elec-yellow mb-2">Critical Applications</p>
               <div className="grid grid-cols-3 gap-4 text-xs">
                 <div>
                   <p className="font-medium text-white mb-1">Medical</p>

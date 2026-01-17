@@ -184,8 +184,8 @@ const BS7671Module1Section2 = () => {
                   <li>Hotels and hospitality venues</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
-                <p className="font-medium text-purple-400 mb-2">Specialised Buildings</p>
+              <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                <p className="font-medium text-elec-yellow mb-2">Specialised Buildings</p>
                 <ul className="text-sm text-white/90 space-y-1">
                   <li>Churches and places of worship</li>
                   <li>Sports facilities and gymnasiums</li>

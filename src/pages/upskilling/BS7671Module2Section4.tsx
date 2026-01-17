@@ -214,7 +214,7 @@ const BS7671Module2Section4 = () => {
                     <p className="text-white/80">Energy flows in both directions depending on generation and consumption</p>
                   </div>
                 </div>
-                <p className="text-xs mt-2"><span className="text-blue-400">Solution:</span> MCCBs or MCBs with bidirectional capability</p>
+                <p className="text-xs mt-2"><span className="text-elec-yellow">Solution:</span> MCCBs or MCBs with bidirectional capability</p>
               </div>
 
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
@@ -229,7 +229,7 @@ const BS7671Module2Section4 = () => {
                     <p className="text-white/80">Vehicle-to-grid technology creates reverse current flows</p>
                   </div>
                 </div>
-                <p className="text-xs mt-2"><span className="text-blue-400">Solution:</span> Specialist EV protective devices with anti-islanding</p>
+                <p className="text-xs mt-2"><span className="text-elec-yellow">Solution:</span> Specialist EV protective devices with anti-islanding</p>
               </div>
 
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
@@ -244,7 +244,7 @@ const BS7671Module2Section4 = () => {
                     <p className="text-white/80">Standard MCBs may not provide adequate reverse current protection</p>
                   </div>
                 </div>
-                <p className="text-xs mt-2"><span className="text-blue-400">Solution:</span> Type 2 coordination with bidirectional devices</p>
+                <p className="text-xs mt-2"><span className="text-elec-yellow">Solution:</span> Type 2 coordination with bidirectional devices</p>
               </div>
 
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
@@ -259,7 +259,7 @@ const BS7671Module2Section4 = () => {
                     <p className="text-white/80">Large-scale generation affects local grid stability</p>
                   </div>
                 </div>
-                <p className="text-xs mt-2"><span className="text-blue-400">Solution:</span> G98/G99 compliant protection schemes</p>
+                <p className="text-xs mt-2"><span className="text-elec-yellow">Solution:</span> G98/G99 compliant protection schemes</p>
               </div>
             </div>
           </div>
@@ -530,8 +530,8 @@ const BS7671Module2Section4 = () => {
             </Link>
           </Button>
           <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bs7671-module-2">
-              Complete Module 2
+            <Link to="/study-centre/upskilling/bs7671-module-3">
+              Next: Module 3
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>

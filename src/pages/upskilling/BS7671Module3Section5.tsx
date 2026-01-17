@@ -470,8 +470,8 @@ const BS7671Module3Section5 = () => {
             className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/bs7671-module-3-section-6">
-              Next Section
+            <Link to="/study-centre/upskilling/bs7671-module-4">
+              Next: Module 4
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
