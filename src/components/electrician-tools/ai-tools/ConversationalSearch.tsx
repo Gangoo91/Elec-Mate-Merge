@@ -323,7 +323,7 @@ export default function ConversationalSearch() {
         </div>
       </div>
 
-      {/* Empty State - Just spacer, questions moved to input area */}
+      {/* Empty State - Clean spacer */}
       {messages.length === 0 && (
         <ChatMessagesArea className="px-4 md:px-6">
           <div className="flex-1" />
@@ -411,25 +411,6 @@ export default function ConversationalSearch() {
 
       {/* Input Area */}
       <ChatInputArea>
-        {/* Example questions - Only when empty */}
-        {messages.length === 0 && (
-          <div className="px-4 pb-3 space-y-2">
-            {[
-              "What are the RCD requirements for bathrooms?",
-              "How do I size cables for a cooker circuit?",
-              "What Zs limits apply to a B32 MCB?"
-            ].map((question, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleSend(question)}
-                className="w-full text-left px-4 py-2.5 rounded-xl bg-muted/40 hover:bg-muted/60 text-sm text-muted-foreground hover:text-foreground transition-colors touch-manipulation"
-              >
-                {question}
-              </button>
-            ))}
-          </div>
-        )}
-
         {/* Image Preview */}
         <AnimatePresence>
           {imagePreview && (
