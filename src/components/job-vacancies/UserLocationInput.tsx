@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { MapPin, Compass } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 interface UserLocationInputProps {
   userLocation: string | null;

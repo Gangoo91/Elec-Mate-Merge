@@ -164,14 +164,13 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       // Convert "1.0" to "1_0" for key prefix
       const prefix = "insp_" + itemNumber.replace(/\./g, "_");
 
-      // Create flat keys for each outcome column
-      // Use simple "Y" text - PDFMonkey can't handle Unicode/HTML entities reliably
+      // Create flat keys for each outcome column - show actual codes
       result[`${prefix}_acc`] = outcome === "satisfactory" ? "Y" : "";
-      result[`${prefix}_na`] = outcome === "not-applicable" || outcome === "N/A" ? "Y" : "";
+      result[`${prefix}_na`] = outcome === "not-applicable" || outcome === "N/A" ? "N/A" : "";
       result[`${prefix}_c1c2`] = outcome === "C1" ? "C1" : (outcome === "C2" ? "C2" : "");
-      result[`${prefix}_c3`] = outcome === "C3" ? "Y" : "";
-      result[`${prefix}_nv`] = outcome === "not-verified" || outcome === "N/V" ? "Y" : "";
-      result[`${prefix}_lim`] = outcome === "limitation" || outcome === "LIM" ? "Y" : "";
+      result[`${prefix}_c3`] = outcome === "C3" ? "C3" : "";
+      result[`${prefix}_nv`] = outcome === "not-verified" || outcome === "N/V" ? "N/V" : "";
+      result[`${prefix}_lim`] = outcome === "limitation" || outcome === "LIM" ? "LIM" : "";
     });
 
     console.log('[formatFlatInspection] Created', Object.keys(result).length, 'flat keys');

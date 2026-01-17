@@ -14,6 +14,7 @@ import { ProfilePhotoUpload } from "./ProfilePhotoUpload";
 import { InspectorProfileViewCard } from "./InspectorProfileViewCard";
 import { User, Award, Building2, FileText, PenTool, Globe } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 
@@ -267,13 +268,15 @@ export default function InspectorProfileForm() {
               <div>
                 <Label htmlFor="companyWebsite" className="text-foreground font-semibold">Website</Label>
                 <div className="relative mt-1.5">
-                  <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  {!formData.companyWebsite && (
+                    <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                  )}
                   <Input
                     id="companyWebsite"
                     value={formData.companyWebsite}
                     onChange={(e) => setFormData({ ...formData, companyWebsite: e.target.value })}
                     placeholder="www.example.co.uk"
-                    className="pl-10 min-h-[48px]"
+                    className={cn("min-h-[48px]", !formData.companyWebsite && "pl-10")}
                   />
                 </div>
               </div>

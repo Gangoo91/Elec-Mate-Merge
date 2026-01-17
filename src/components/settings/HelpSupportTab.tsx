@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useNotifications } from '@/components/notifications/NotificationProvider';
+import { cn } from '@/lib/utils';
 import SupportTicketForm from "@/components/support/SupportTicketForm";
 import {
   HelpCircle,
@@ -128,11 +129,13 @@ const HelpSupportTab = () => {
 
           <form onSubmit={handleSearch}>
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              {!searchQuery && (
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+              )}
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-12 pl-12 pr-24 bg-white/5 border-white/10 text-base touch-manipulation"
+                className={cn("h-12 pr-24 bg-white/5 border-white/10 text-base touch-manipulation", !searchQuery ? "pl-12" : "pl-4")}
                 placeholder="Search for help topics..."
               />
               <Button

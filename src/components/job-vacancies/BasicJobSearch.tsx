@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Search, 
-  MapPin, 
-  Briefcase, 
+import {
+  Search,
+  MapPin,
+  Briefcase,
   ExternalLink,
   Building2,
   Calendar,
@@ -20,6 +20,7 @@ import { LocationService } from "@/services/locationService";
 import EnhancedJobCard from "./EnhancedJobCard";
 import { supabase } from "@/integrations/supabase/client";
 import SearchError from "./SearchError";
+import { cn } from "@/lib/utils";
 
 interface Job {
   id: string;

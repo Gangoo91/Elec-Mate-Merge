@@ -7,6 +7,7 @@ import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Search, Brain, Zap, MapPin, Clock, ExternalLink, AlertCircle, CheckCircle } from "lucide-react";
 import { Combobox, ComboboxOption } from "@/components/ui/combobox";
+import { cn } from "@/lib/utils";
 
 interface IntelligentJobResult {
   id: string;
@@ -152,12 +153,14 @@ const IntelligentJobSearch: React.FC = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium">Job Search</label>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                {!query && (
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                )}
                 <Input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="e.g. electrician, electrical engineer"
-                  className="pl-10"
+                  className={cn(!query && "pl-10")}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                 />
               </div>
@@ -166,12 +169,14 @@ const IntelligentJobSearch: React.FC = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium">Location</label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                {!location && (
+                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                )}
                 <Input
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="e.g. London, Manchester, UK"
-                  className="pl-10"
+                  className={cn(!location && "pl-10")}
                 />
               </div>
             </div>

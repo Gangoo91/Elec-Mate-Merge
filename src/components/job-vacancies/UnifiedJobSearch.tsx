@@ -5,11 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import JobPagination from "./JobPagination";
-import { 
-  Search, 
-  MapPin, 
+import {
+  Search,
+  MapPin,
   Filter,
-  Briefcase, 
+  Briefcase,
   ExternalLink,
   Building2,
   Calendar,
@@ -28,6 +28,7 @@ import SearchError from "./SearchError";
 import JobSourceProgress from "./JobSourceProgress";
 import { Skeleton } from "@/components/ui/skeleton";
 import defaultJobImage from "@/assets/default-job.jpg";
+import { cn } from "@/lib/utils";
 const UnifiedJobSearch = () => {
   const [query, setQuery] = useState("electrician");
   const [location, setLocation] = useState("Cumbria");

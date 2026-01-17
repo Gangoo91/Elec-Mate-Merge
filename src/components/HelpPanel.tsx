@@ -645,12 +645,14 @@ const HelpPanel = ({ open, onOpenChange }: HelpPanelProps) => {
           {/* Search Section */}
           <div className={cn("space-y-3", isMobile && "space-y-2")}>
             <div className="relative">
-              <Search className={cn("absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground", isMobile ? "h-3.5 w-3.5" : "h-4 w-4")} />
+              {!searchQuery && (
+                <Search className={cn("absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none", isMobile ? "h-3.5 w-3.5" : "h-4 w-4")} />
+              )}
               <Input
                 placeholder={isMobile ? "Search help..." : "Search help articles or regulations..."}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={cn("pl-10 bg-card/50 border-border", isMobile && "h-10 text-sm")}
+                className={cn("bg-card/50 border-border", isMobile && "h-10 text-sm", !searchQuery && "pl-10")}
               />
             </div>
             {searchQuery && (

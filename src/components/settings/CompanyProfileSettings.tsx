@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
+import { cn } from '@/lib/utils';
 import {
   Building2,
   Upload,
@@ -212,12 +213,14 @@ export const CompanyProfileSettings = () => {
               <div className="space-y-2">
                 <Label className="text-foreground">Company Email</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  {!watch('company_email') && (
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                  )}
                   <Input
                     type="email"
                     {...register('company_email')}
                     placeholder="info@company.com"
-                    className="bg-white/5 border-white/10 pl-10"
+                    className={cn("bg-white/5 border-white/10", !watch('company_email') && "pl-10")}
                   />
                 </div>
               </div>
@@ -225,11 +228,13 @@ export const CompanyProfileSettings = () => {
               <div className="space-y-2">
                 <Label className="text-foreground">Phone Number</Label>
                 <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  {!watch('company_phone') && (
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                  )}
                   <Input
                     {...register('company_phone')}
                     placeholder="0123 456 7890"
-                    className="bg-white/5 border-white/10 pl-10"
+                    className={cn("bg-white/5 border-white/10", !watch('company_phone') && "pl-10")}
                   />
                 </div>
               </div>
@@ -237,11 +242,13 @@ export const CompanyProfileSettings = () => {
               <div className="space-y-2">
                 <Label className="text-foreground">Website</Label>
                 <div className="relative">
-                  <Globe className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  {!watch('company_website') && (
+                    <Globe className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                  )}
                   <Input
                     {...register('company_website')}
                     placeholder="www.company.com"
-                    className="bg-white/5 border-white/10 pl-10"
+                    className={cn("bg-white/5 border-white/10", !watch('company_website') && "pl-10")}
                   />
                 </div>
               </div>
