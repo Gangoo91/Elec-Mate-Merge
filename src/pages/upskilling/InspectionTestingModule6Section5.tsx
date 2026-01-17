@@ -406,17 +406,17 @@ const InspectionTestingModule6Section5 = () => {
             <div className="my-6 space-y-4">
               <div className="border-l-4 border-emerald-500 pl-4">
                 <p className="text-emerald-400 font-semibold">Domestic with Split-Load Board</p>
-                <p className="text-white/70 text-sm">100mA S-type at incomer -> 30mA RCBOs for final circuits</p>
+                <p className="text-white/70 text-sm">100mA S-type at incomer → 30mA RCBOs for final circuits</p>
                 <p className="text-emerald-400/70 text-xs mt-1">Good discrimination</p>
               </div>
               <div className="border-l-4 border-emerald-500 pl-4">
                 <p className="text-emerald-400 font-semibold">Commercial Sub-Distribution</p>
-                <p className="text-white/70 text-sm">300mA S-type at sub-main -> 100mA S-type at DB -> 30mA general at final circuits</p>
+                <p className="text-white/70 text-sm">300mA S-type at sub-main → 100mA S-type at DB → 30mA general at final circuits</p>
                 <p className="text-emerald-400/70 text-xs mt-1">Three-stage discrimination</p>
               </div>
               <div className="border-l-4 border-red-500 pl-4">
                 <p className="text-red-400 font-semibold">Poor Practice to Avoid</p>
-                <p className="text-white/70 text-sm">30mA general at incomer -> 30mA general at final circuits</p>
+                <p className="text-white/70 text-sm">30mA general at incomer → 30mA general at final circuits</p>
                 <p className="text-red-400/70 text-xs mt-1">No discrimination - both may trip</p>
               </div>
             </div>
