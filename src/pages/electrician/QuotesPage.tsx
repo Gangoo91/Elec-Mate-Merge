@@ -127,102 +127,108 @@ const QuotesPage = () => {
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      {/* Compact Mobile Header - Matches InvoicesPage */}
+      {/* Mobile-Optimized Header - Matches InvoicesPage Layout */}
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border/50">
-        <div className="flex items-center h-14 px-4 gap-3">
-          {/* Back Button */}
-          <button
-            onClick={() => navigate('/electrician')}
-            className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation -ml-1"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </button>
-
-          {/* Title or Search Input */}
-          {showSearch ? (
-            <div className="flex-1 flex items-center gap-2">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="text"
-                  placeholder="Search by name, quote #..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-11 pl-9 pr-9 text-base touch-manipulation bg-elec-gray/50 border-elec-gray focus:border-elec-yellow"
-                  autoFocus
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery('')}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 flex items-center justify-center rounded-full bg-muted hover:bg-muted/80 touch-manipulation"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
-                )}
-              </div>
-              <button
-                onClick={() => {
-                  setShowSearch(false);
-                  setSearchQuery('');
-                }}
-                className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation"
-              >
-                <X className="h-5 w-5" />
-              </button>
+        {showSearch ? (
+          /* Search Mode - Full width search input */
+          <div className="flex items-center h-14 px-4 gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search by name, quote #..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="h-11 pl-9 pr-9 text-base touch-manipulation bg-elec-gray/50 border-elec-gray focus:border-elec-yellow"
+                autoFocus
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 flex items-center justify-center rounded-full bg-muted hover:bg-muted/80 touch-manipulation"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              )}
             </div>
-          ) : (
-            <h1 className="flex-1 text-lg font-bold">Quotes</h1>
-          )}
-
-          {/* Right Side Buttons */}
-          {!showSearch && (
-          <div className="flex items-center gap-2">
-            {/* Search Button */}
             <button
-              onClick={() => setShowSearch(true)}
-              className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation"
-              title="Search quotes"
+              onClick={() => {
+                setShowSearch(false);
+                setSearchQuery('');
+              }}
+              className="text-sm text-muted-foreground font-medium px-2"
             >
-              <Search className="h-5 w-5" />
+              Cancel
             </button>
-
-            {/* Quick Link to Invoices - Prominent */}
-            <Button
-              variant="outline"
-              onClick={() => navigate('/electrician/invoices')}
-              className="h-11 px-3 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 touch-manipulation gap-2"
-              title="View Invoices"
-            >
-              <Receipt className="h-4 w-4" />
-              <span className="text-xs font-medium">Invoices</span>
-            </Button>
-
-            <VoiceHeaderButton
-              hint="Send quote"
-              currentSection="quotes"
-              onToolResult={handleRefresh}
-            />
-            <button
-              onClick={handleRefresh}
-              disabled={isRefreshing}
-              className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
-            >
-              <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
-            </button>
-            <Button
-              onClick={() => navigate('/electrician/quote-builder/create')}
-              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 gap-1.5 h-11 px-3 touch-manipulation active:scale-[0.98]"
-            >
-              <Plus className="h-4 w-4" />
-              <span className="hidden sm:inline">New</span>
-            </Button>
           </div>
-          )}
-        </div>
+        ) : (
+          <>
+            {/* Row 1: Back + Title + Primary Action */}
+            <div className="flex items-center h-14 px-4 gap-3">
+              <button
+                onClick={() => navigate('/electrician')}
+                className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation -ml-2"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </button>
+              <h1 className="flex-1 text-xl font-bold">Quotes</h1>
 
-        {/* Filter Pills - Horizontal Scroll */}
-        <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
-          {filterOptions.map((option) => {
+              {/* New Quote - Primary Action, always visible */}
+              <Button
+                onClick={() => navigate('/electrician/quote-builder/create')}
+                className="shrink-0 bg-elec-yellow text-black hover:bg-elec-yellow/90 gap-2 h-11 px-4 touch-manipulation active:scale-[0.98] font-semibold"
+              >
+                <Plus className="h-4 w-4" />
+                <span className="hidden xs:inline">New</span>
+                <span className="hidden sm:inline"> Quote</span>
+              </Button>
+            </div>
+
+            {/* Row 2: Secondary Tools - Horizontally scrollable on mobile */}
+            <div className="flex items-center gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
+              {/* Quick Link to Invoices - Icon only on mobile */}
+              <Button
+                variant="outline"
+                onClick={() => navigate('/electrician/invoices')}
+                className="shrink-0 h-11 w-11 sm:w-auto sm:px-4 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 touch-manipulation gap-2"
+                title="View Invoices"
+              >
+                <Receipt className="h-4 w-4" />
+                <span className="hidden sm:inline">Invoices</span>
+              </Button>
+
+              {/* Search */}
+              <button
+                onClick={() => setShowSearch(true)}
+                className="shrink-0 h-11 w-11 flex items-center justify-center rounded-full bg-elec-gray/50 hover:bg-elec-gray active:scale-[0.98] transition-all touch-manipulation"
+                title="Search quotes"
+              >
+                <Search className="h-5 w-5" />
+              </button>
+
+              {/* Refresh */}
+              <button
+                onClick={handleRefresh}
+                disabled={isRefreshing}
+                className="shrink-0 h-11 w-11 flex items-center justify-center rounded-full bg-elec-gray/50 hover:bg-elec-gray active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
+              >
+                <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
+              </button>
+
+              {/* Voice */}
+              <VoiceHeaderButton
+                hint="Send quote"
+                currentSection="quotes"
+                onToolResult={handleRefresh}
+              />
+            </div>
+          </>
+        )}
+
+        {/* Row 3: Filter Pills - Horizontal Scroll */}
+        {!showSearch && (
+          <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
+            {filterOptions.map((option) => {
             const Icon = option.icon;
             return (
               <button
@@ -246,7 +252,8 @@ const QuotesPage = () => {
               </button>
             );
           })}
-        </div>
+          </div>
+        )}
       </header>
 
       <div className="px-4 py-4 space-y-4 pb-6">

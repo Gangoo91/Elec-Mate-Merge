@@ -394,8 +394,8 @@ const InvoicesPage = () => {
             </div>
           ) : (
             <>
-              {/* Row 1: Back + Title */}
-              <div className="flex items-center h-14 px-4">
+              {/* Row 1: Back + Title + Primary Action */}
+              <div className="flex items-center h-14 px-4 gap-3">
                 <button
                   onClick={() => navigate('/electrician')}
                   className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation -ml-2"
@@ -403,6 +403,16 @@ const InvoicesPage = () => {
                   <ArrowLeft className="h-5 w-5" />
                 </button>
                 <h1 className="flex-1 text-xl font-bold">Invoices</h1>
+
+                {/* New Invoice - Primary Action, always visible */}
+                <Button
+                  onClick={() => navigate('/electrician/invoice-builder/create')}
+                  className="shrink-0 bg-emerald-500 text-white hover:bg-emerald-600 gap-2 h-11 px-4 touch-manipulation active:scale-[0.98] font-semibold"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span className="hidden xs:inline">New</span>
+                  <span className="hidden sm:inline"> Invoice</span>
+                </Button>
 
                 {/* Desktop View Toggle */}
                 <div className="hidden lg:flex items-center gap-1 bg-elec-gray/30 rounded-lg p-1">
@@ -431,25 +441,16 @@ const InvoicesPage = () => {
                 </div>
               </div>
 
-              {/* Row 2: Action Tools - Horizontally scrollable on mobile */}
+              {/* Row 2: Secondary Tools - Horizontally scrollable on mobile */}
               <div className="flex items-center gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
-                {/* New Invoice - Primary Action */}
-                <Button
-                  onClick={() => navigate('/electrician/invoice-builder/create')}
-                  className="shrink-0 bg-emerald-500 text-white hover:bg-emerald-600 gap-2 h-11 px-4 touch-manipulation active:scale-[0.98] font-semibold"
-                >
-                  <Plus className="h-4 w-4" />
-                  New Invoice
-                </Button>
-
                 {/* Quick Link to Quotes */}
                 <Button
                   variant="outline"
                   onClick={() => navigate('/electrician/quotes')}
-                  className="shrink-0 h-11 px-4 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 touch-manipulation gap-2"
+                  className="shrink-0 h-11 w-11 sm:w-auto sm:px-4 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 touch-manipulation gap-2"
                 >
                   <FileText className="h-4 w-4" />
-                  Quotes
+                  <span className="hidden sm:inline">Quotes</span>
                 </Button>
 
                 {/* Search */}
