@@ -176,7 +176,7 @@ export const SmartBackButton = React.forwardRef<
       )}
     >
       <ArrowLeft className="h-4 w-4" />
-      {displayLabel}
+      <span className="hidden sm:inline">{displayLabel}</span>
     </Button>
   )
 })

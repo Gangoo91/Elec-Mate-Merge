@@ -246,7 +246,7 @@ const QuoteViewPage = () => {
     setIsConverting(true);
     try {
       // Navigate to invoice builder with quote data
-      navigate(`/electrician/invoice-builder?from_quote=${quote.id}`);
+      navigate(`/electrician/invoice-quote-builder/${quote.id}`);
     } catch (err) {
       console.error('Error converting to invoice:', err);
       toast({
