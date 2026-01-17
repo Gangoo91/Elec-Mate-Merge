@@ -11,10 +11,12 @@ import {
   Star,
   MessageSquare,
   ChevronRight,
+  Check,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 
 type ApplicationStatus =
@@ -40,6 +42,11 @@ interface PremiumCandidateCardProps {
   elecIdTier?: "basic" | "verified" | "premium";
   ecsCardType?: string;
   rating?: number;
+  // Selection mode props
+  selectionMode?: boolean;
+  isSelected?: boolean;
+  onSelectionChange?: (selected: boolean) => void;
+  // Action handlers
   onShortlist?: () => void;
   onReject?: () => void;
   onInterview?: () => void;
@@ -148,6 +155,9 @@ export function PremiumCandidateCard({
   elecIdTier,
   ecsCardType,
   rating,
+  selectionMode = false,
+  isSelected = false,
+  onSelectionChange,
   onShortlist,
   onReject,
   onInterview,
@@ -302,6 +312,14 @@ export function PremiumCandidateCard({
     }
   };
 
+  const handleCardClick = () => {
+    if (selectionMode && onSelectionChange) {
+      onSelectionChange(!isSelected);
+    } else {
+      onClick?.();
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -313,12 +331,35 @@ export function PremiumCandidateCard({
         "border border-white/10",
         "hover:border-white/20",
         "transition-all duration-300",
-        "group cursor-pointer"
+        "group cursor-pointer",
+        isSelected && "border-elec-yellow/50 bg-elec-yellow/5"
       )}
-      onClick={onClick}
+      onClick={handleCardClick}
     >
       <div className="p-4">
         <div className="flex items-start gap-4">
+          {/* Selection checkbox */}
+          {selectionMode && (
+            <div
+              className="shrink-0 flex items-center justify-center"
+              onClick={(e) => {
+                e.stopPropagation();
+                onSelectionChange?.(!isSelected);
+              }}
+            >
+              <div
+                className={cn(
+                  "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all",
+                  isSelected
+                    ? "bg-elec-yellow border-elec-yellow"
+                    : "border-white/30 hover:border-white/50"
+                )}
+              >
+                {isSelected && <Check className="h-4 w-4 text-black" />}
+              </div>
+            </div>
+          )}
+
           {/* Avatar */}
           <Avatar className="w-14 h-14 shrink-0 border-2 border-white/10">
             {avatarUrl ? (

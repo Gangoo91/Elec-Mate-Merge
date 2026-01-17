@@ -96,6 +96,28 @@ export const useDeleteApplication = () => {
   });
 };
 
+// Update application notes only
+export const useUpdateApplicationNotes = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, notes }: { id: string; notes: string }) => {
+      const { data, error } = await supabase
+        .from('employer_vacancy_applications')
+        .update({ notes, updated_at: new Date().toISOString() })
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: APPLICATIONS_KEY });
+    },
+  });
+};
+
 // Bulk status update
 export const useBulkUpdateApplicationStatus = () => {
   const queryClient = useQueryClient();

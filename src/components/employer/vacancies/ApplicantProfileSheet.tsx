@@ -39,6 +39,9 @@ import {
   AlertCircle,
 } from "lucide-react";
 import type { EmployerVacancyApplication, FullElecIdProfile } from "@/services/vacancyService";
+import { CandidateNotesSection } from "./CandidateNotesSection";
+import { useUpdateApplicationNotes } from "@/hooks/useVacancyApplications";
+import { toast } from "@/hooks/use-toast";
 
 interface ApplicantProfileSheetProps {
   application: EmployerVacancyApplication | null;
@@ -131,6 +134,25 @@ export function ApplicantProfileSheet({
   onMessage,
 }: ApplicantProfileSheetProps) {
   const [activeTab, setActiveTab] = useState("overview");
+  const updateNotes = useUpdateApplicationNotes();
+
+  const handleSaveNotes = async (notes: string) => {
+    if (!application) return;
+    try {
+      await updateNotes.mutateAsync({ id: application.id, notes });
+      toast({
+        title: "Notes saved",
+        description: "Candidate notes have been updated.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save notes. Please try again.",
+        variant: "destructive",
+      });
+      throw error;
+    }
+  };
 
   if (!application) return null;
 
@@ -261,6 +283,9 @@ export function ApplicantProfileSheet({
               </TabsTrigger>
               <TabsTrigger value="skills" className="text-xs data-[state=active]:bg-emerald-500/20">
                 Skills
+              </TabsTrigger>
+              <TabsTrigger value="notes" className="text-xs data-[state=active]:bg-amber-500/20">
+                Notes
               </TabsTrigger>
             </TabsList>
 
@@ -570,6 +595,16 @@ export function ApplicantProfileSheet({
                     ))}
                   </>
                 )}
+              </TabsContent>
+
+              {/* Notes Tab */}
+              <TabsContent value="notes" className="p-4 m-0">
+                <CandidateNotesSection
+                  notes={application.notes}
+                  updatedAt={application.updated_at}
+                  onSave={handleSaveNotes}
+                  isLoading={updateNotes.isPending}
+                />
               </TabsContent>
             </ScrollArea>
           </Tabs>

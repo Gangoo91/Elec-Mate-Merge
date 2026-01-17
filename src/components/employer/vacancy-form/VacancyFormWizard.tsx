@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Briefcase, X, Sparkles, Save, FileText } from "lucide-react";
+import { Briefcase, X, Sparkles, Save, FileText, Cloud, CloudOff, Check } from "lucide-react";
+import { formatDistanceToNow } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
@@ -49,6 +50,8 @@ export function VacancyFormWizard({
   const isMobile = useIsMobile();
   const [currentStep, setCurrentStep] = useState(0);
   const [showTemplates, setShowTemplates] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [isSavingDraft, setIsSavingDraft] = useState(false);
 
   const createVacancy = useCreateVacancy();
   const updateVacancy = useUpdateVacancy();
@@ -87,12 +90,25 @@ export function VacancyFormWizard({
   useEffect(() => {
     if (!isEditing && open) {
       const interval = setInterval(() => {
+        setIsSavingDraft(true);
         const values = methods.getValues();
         localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(values));
+        setLastSaved(new Date());
+        // Brief delay to show the saving indicator
+        setTimeout(() => setIsSavingDraft(false), 500);
       }, 30000);
       return () => clearInterval(interval);
     }
   }, [isEditing, open, methods]);
+
+  // Update lastSaved display every minute
+  const [, forceUpdate] = useState(0);
+  useEffect(() => {
+    if (lastSaved) {
+      const interval = setInterval(() => forceUpdate(n => n + 1), 60000);
+      return () => clearInterval(interval);
+    }
+  }, [lastSaved]);
 
   // Clear draft when form is submitted successfully
   const clearDraft = useCallback(() => {
@@ -156,8 +172,11 @@ export function VacancyFormWizard({
 
   // Handle save as draft
   const handleSaveDraft = () => {
+    setIsSavingDraft(true);
     const values = methods.getValues();
     localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(values));
+    setLastSaved(new Date());
+    setTimeout(() => setIsSavingDraft(false), 500);
     toast({ title: "Draft saved", description: "Your vacancy has been saved as a draft." });
   };
 
@@ -250,9 +269,34 @@ export function VacancyFormWizard({
                     <span className="text-lg font-semibold">
                       {isEditing ? "Edit Vacancy" : "Post Job Vacancy"}
                     </span>
-                    <p className="text-xs text-muted-foreground font-normal">
-                      {currentStepData.title} - {currentStepData.description}
-                    </p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-xs text-muted-foreground font-normal">
+                        {currentStepData.title} - {currentStepData.description}
+                      </p>
+                      {/* Draft save indicator */}
+                      {!isEditing && (
+                        <span className={cn(
+                          "flex items-center gap-1 text-xs transition-all duration-300",
+                          isSavingDraft
+                            ? "text-elec-yellow animate-pulse"
+                            : lastSaved
+                              ? "text-muted-foreground"
+                              : "text-transparent"
+                        )}>
+                          {isSavingDraft ? (
+                            <>
+                              <Cloud className="h-3 w-3" />
+                              <span>Saving...</span>
+                            </>
+                          ) : lastSaved ? (
+                            <>
+                              <Check className="h-3 w-3 text-success" />
+                              <span>Saved {formatDistanceToNow(lastSaved, { addSuffix: true })}</span>
+                            </>
+                          ) : null}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               </ResponsiveFormModalTitle>

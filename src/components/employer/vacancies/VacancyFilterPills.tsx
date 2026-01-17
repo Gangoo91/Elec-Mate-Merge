@@ -132,3 +132,10 @@ export const vacancyStatusColors: Record<string, FilterOption<string>["color"]> 
   Closed: "gray",
   Draft: "amber",
 };
+
+export const elecIdTierColors: Record<string, FilterOption<string>["color"]> = {
+  all: "yellow",
+  basic: "gray",
+  verified: "blue",
+  premium: "amber",
+};

@@ -14,10 +14,69 @@ import {
   CheckCircle,
   Calendar,
   Building2,
+  Flame,
+  AlertTriangle,
+  Timer,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { differenceInDays } from "date-fns";
+
+// Urgency indicator types
+type UrgencyType = 'closing' | 'noApplicants' | 'hot' | null;
+
+interface UrgencyIndicator {
+  type: UrgencyType;
+  label: string;
+  icon: React.ReactNode;
+  className: string;
+}
+
+// Calculate urgency for a vacancy
+const getUrgencyIndicator = (
+  closingDate: string | undefined,
+  applicantCount: number,
+  postedAt: string,
+  status: string
+): UrgencyIndicator | null => {
+  if (status !== 'Open') return null;
+
+  const daysToClose = closingDate
+    ? differenceInDays(new Date(closingDate), new Date())
+    : null;
+  const daysSincePosted = differenceInDays(new Date(), new Date(postedAt));
+
+  // Priority: Closing soon > No applicants > Hot
+  if (daysToClose !== null && daysToClose <= 7 && daysToClose >= 0) {
+    return {
+      type: 'closing',
+      label: daysToClose === 0 ? 'Closes today' : `${daysToClose}d left`,
+      icon: <Timer className="h-3 w-3" />,
+      className: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+    };
+  }
+
+  if (applicantCount === 0 && daysSincePosted >= 3) {
+    return {
+      type: 'noApplicants',
+      label: 'No applicants',
+      icon: <AlertTriangle className="h-3 w-3" />,
+      className: 'bg-red-500/20 text-red-400 border-red-500/30',
+    };
+  }
+
+  if (applicantCount >= 10) {
+    return {
+      type: 'hot',
+      label: 'Hot',
+      icon: <Flame className="h-3 w-3" />,
+      className: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+    };
+  }
+
+  return null;
+};
 
 interface PremiumVacancyCardProps {
   id: string;
@@ -63,6 +122,9 @@ export function PremiumVacancyCard({
   onClick,
 }: PremiumVacancyCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  // Calculate urgency indicator
+  const urgency = getUrgencyIndicator(closingDate, applicantCount, postedAt, status);
 
   const statusConfig: Record<string, { bg: string; text: string; border: string; dot: string }> = {
     Open: {
@@ -204,8 +266,21 @@ export function PremiumVacancyCard({
                 </div>
               </div>
 
-              {/* Status badge + expand indicator */}
+              {/* Status badge + urgency + expand indicator */}
               <div className="flex items-center gap-2 shrink-0">
+                {/* Urgency badge */}
+                {urgency && (
+                  <Badge
+                    variant="outline"
+                    className={cn(
+                      "text-xs font-medium px-2 py-1 animate-pulse",
+                      urgency.className
+                    )}
+                  >
+                    {urgency.icon}
+                    <span className="ml-1">{urgency.label}</span>
+                  </Badge>
+                )}
                 <Badge
                   variant="outline"
                   className={cn(
@@ -235,21 +310,54 @@ export function PremiumVacancyCard({
               </div>
             )}
 
-            {/* Metrics row */}
-            <div className="flex items-center gap-4 mt-3 pt-3 border-t border-white/5">
-              <div className="flex items-center gap-1.5">
-                <div className="p-1.5 rounded-lg bg-elec-yellow/10">
-                  <Users className="h-3.5 w-3.5 text-elec-yellow" />
+            {/* Metrics row + Quick Actions */}
+            <div className="flex items-center justify-between gap-4 mt-3 pt-3 border-t border-white/5">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-1.5">
+                  <div className="p-1.5 rounded-lg bg-elec-yellow/10">
+                    <Users className="h-3.5 w-3.5 text-elec-yellow" />
+                  </div>
+                  <span className="text-sm font-medium text-white">{applicantCount}</span>
+                  <span className="text-xs text-white/50">applicants</span>
                 </div>
-                <span className="text-sm font-medium text-white">{applicantCount}</span>
-                <span className="text-xs text-white/50">applicants</span>
+                <div className="flex items-center gap-1.5">
+                  <div className="p-1.5 rounded-lg bg-white/5">
+                    <Eye className="h-3.5 w-3.5 text-white/60" />
+                  </div>
+                  <span className="text-sm font-medium text-white/80">{views}</span>
+                  <span className="text-xs text-white/50">views</span>
+                </div>
               </div>
-              <div className="flex items-center gap-1.5">
-                <div className="p-1.5 rounded-lg bg-white/5">
-                  <Eye className="h-3.5 w-3.5 text-white/60" />
-                </div>
-                <span className="text-sm font-medium text-white/80">{views}</span>
-                <span className="text-xs text-white/50">views</span>
+
+              {/* Quick actions - visible in collapsed state */}
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-9 w-9 text-white/60 hover:text-white hover:bg-white/10"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEdit();
+                  }}
+                >
+                  <Edit2 className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-9 w-9 text-white/60 hover:text-elec-yellow hover:bg-elec-yellow/10 relative"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onViewApplicants();
+                  }}
+                >
+                  <Users className="h-4 w-4" />
+                  {applicantCount > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 bg-elec-yellow text-black text-[10px] font-bold rounded-full flex items-center justify-center">
+                      {applicantCount > 99 ? '99+' : applicantCount}
+                    </span>
+                  )}
+                </Button>
               </div>
             </div>
           </div>
