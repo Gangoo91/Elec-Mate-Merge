@@ -310,45 +310,23 @@ export default function ConversationalSearch() {
 
   return (
     <ChatContainer>
-      {/* Empty State - Clean, Centered */}
+      {/* Header - Always visible */}
+      <div className="shrink-0 px-4 py-3 border-b border-border/30">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center shadow-lg shadow-purple-500/20">
+            <Brain className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h1 className="text-lg font-bold text-foreground">Elec-AI</h1>
+            <p className="text-xs text-muted-foreground">Your electrical advisor</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Empty State - Just spacer, questions moved to input area */}
       {messages.length === 0 && (
         <ChatMessagesArea className="px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center py-12 space-y-8">
-            {/* Logo + Title - Centered */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="flex flex-col items-center text-center"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center shadow-xl shadow-purple-500/20 mb-4">
-                <Brain className="w-8 h-8 text-white" />
-              </div>
-              <h1 className="text-2xl font-bold text-foreground">Elec-AI</h1>
-              <p className="text-sm text-muted-foreground mt-1">Your electrical advisor</p>
-            </motion.div>
-
-            {/* Example questions - Centered */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
-              className="w-full max-w-sm space-y-2"
-            >
-              {[
-                "What are the RCD requirements for bathrooms?",
-                "How do I size cables for a cooker circuit?",
-                "What Zs limits apply to a B32 MCB?"
-              ].map((question, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => handleSend(question)}
-                  className="w-full text-left px-4 py-3 rounded-xl bg-muted/30 hover:bg-muted/50 text-sm text-muted-foreground hover:text-foreground transition-colors touch-manipulation"
-                >
-                  {question}
-                </button>
-              ))}
-            </motion.div>
-          </div>
+          <div className="flex-1" />
         </ChatMessagesArea>
       )}
 
@@ -433,6 +411,25 @@ export default function ConversationalSearch() {
 
       {/* Input Area */}
       <ChatInputArea>
+        {/* Example questions - Only when empty */}
+        {messages.length === 0 && (
+          <div className="px-4 pb-3 space-y-2">
+            {[
+              "What are the RCD requirements for bathrooms?",
+              "How do I size cables for a cooker circuit?",
+              "What Zs limits apply to a B32 MCB?"
+            ].map((question, idx) => (
+              <button
+                key={idx}
+                onClick={() => handleSend(question)}
+                className="w-full text-left px-4 py-2.5 rounded-xl bg-muted/40 hover:bg-muted/60 text-sm text-muted-foreground hover:text-foreground transition-colors touch-manipulation"
+              >
+                {question}
+              </button>
+            ))}
+          </div>
+        )}
+
         {/* Image Preview */}
         <AnimatePresence>
           {imagePreview && (

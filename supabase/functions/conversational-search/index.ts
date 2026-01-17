@@ -126,10 +126,15 @@ serve(async (req) => {
   }
 
   try {
-    const { messages } = await req.json();
-    
+    const { messages, imageUrl } = await req.json();
+
     if (!messages || messages.length === 0) {
       throw new Error('No messages provided');
+    }
+
+    const hasImage = !!imageUrl;
+    if (hasImage) {
+      console.log('📸 Image attached:', imageUrl);
     }
 
     const openAiKey = Deno.env.get('OPENAI_API_KEY');
@@ -351,13 +356,30 @@ What supplementary bonding is required in bathrooms under current regulations?
 ${regulationsContext}`;
 
     // Prepare messages for OpenAI
+    // If there's an image, format the last user message with vision content
+    const formattedMessages = messages.map((m: any, idx: number) => {
+      // Add image to the last user message if present
+      if (hasImage && m.role === 'user' && idx === messages.length - 1) {
+        return {
+          role: 'user',
+          content: [
+            { type: 'text', text: m.content || 'What can you tell me about this electrical component or installation?' },
+            { type: 'image_url', image_url: { url: imageUrl, detail: 'high' } }
+          ]
+        };
+      }
+      return m;
+    });
+
     const openAiMessages = [
       { role: 'system', content: systemPrompt },
-      ...messages
+      ...formattedMessages
     ];
 
     const totalPrepTime = Date.now() - ragStartTime;
-    console.log(`🤖 Calling GPT-5 Mini (prep: ${totalPrepTime}ms)`);
+    // Use vision model when image is present
+    const model = hasImage ? 'gpt-4o' : 'gpt-5-mini-2025-08-07';
+    console.log(`🤖 Calling ${model} (prep: ${totalPrepTime}ms)`);
 
     // Call OpenAI API with streaming
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -367,7 +389,7 @@ ${regulationsContext}`;
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-5-mini-2025-08-07',
+        model,
         messages: openAiMessages,
         stream: true,
         max_completion_tokens: 8000
