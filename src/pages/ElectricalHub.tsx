@@ -38,6 +38,7 @@ import { useDashboardData } from '@/hooks/useDashboardData';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import { useAuth } from '@/contexts/AuthContext';
 import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
+import { ElecAiBanner } from '@/components/elec-ai/ElecAiBanner';
 import { SetupWizard } from '@/components/onboarding/SetupWizard';
 import { SetupIncompleteBanner } from '@/components/onboarding/SetupIncompleteBanner';
 import { useQuery } from '@tanstack/react-query';
@@ -333,14 +334,14 @@ function FeaturedCard() {
           </div>
 
           <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
-            AI Design Consultation
+            Build Partners
           </h3>
           <p className="text-sm text-white/70 max-w-md mx-auto mb-4">
-            8 specialist agents for circuit design, costing, installation, safety, testing & project management
+            AI specialists for circuit design, costing, installation, safety, testing & project management
           </p>
 
           <div className="inline-flex items-center gap-2 text-elec-yellow font-medium text-sm group-hover:gap-3 group-active:gap-3 transition-all">
-            <span>Choose Agent</span>
+            <span>Choose Partner</span>
             <ArrowRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
           </div>
         </div>
@@ -586,6 +587,11 @@ const ElectricalHub = () => {
             {/* Elec-ID Banner */}
             <motion.section variants={itemVariants} className="px-4 sm:px-0">
               <ElecIdBanner variant="electrician" />
+            </motion.section>
+
+            {/* Elec-AI Banner */}
+            <motion.section variants={itemVariants} className="px-4 sm:px-0">
+              <ElecAiBanner />
             </motion.section>
 
             {/* Setup Incomplete Banner */}
