@@ -244,85 +244,89 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                 </div>
               </div>
 
-              {/* Action Buttons Grid */}
-              <div className="grid grid-cols-2 gap-2">
-                {/* PDF Download */}
-                <Button
-                  onClick={() => onDownloadPDF(invoice)}
-                  disabled={downloadingPdfId === invoice.id}
-                  variant="outline"
-                  size="sm"
-                  className="w-full"
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  {downloadingPdfId === invoice.id ? 'Loading...' : 'PDF'}
-                </Button>
+              {/* Quick Actions Bar - Mobile Native */}
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <div className="flex items-center gap-1.5">
+                  {/* PDF Download */}
+                  <Button
+                    onClick={() => onDownloadPDF(invoice)}
+                    disabled={downloadingPdfId === invoice.id}
+                    variant="ghost"
+                    size="icon"
+                    className="h-11 w-11 touch-manipulation rounded-xl bg-background/60 hover:bg-background"
+                  >
+                    <Download className="h-5 w-5" />
+                  </Button>
 
-                {/* View/Edit Invoice */}
-                <Button
-                  onClick={() => onInvoiceAction(invoice)}
-                  variant="default"
-                  size="sm"
-                  className="w-full"
-                >
-                  <Eye className="h-4 w-4 mr-2" />
-                  {invoice.invoice_status === 'draft' ? 'Edit' : 'View'}
-                </Button>
+                  {/* View/Edit */}
+                  <Button
+                    onClick={() => onInvoiceAction(invoice)}
+                    variant="ghost"
+                    size="icon"
+                    className="h-11 w-11 touch-manipulation rounded-xl bg-background/60 hover:bg-background"
+                  >
+                    {invoice.invoice_status === 'draft' ? <Edit className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  </Button>
 
-                {/* Send Dropdown - Full Width */}
-                <div className="col-span-2">
-                  <InvoiceSendDropdown
-                    invoice={invoice}
-                    onSuccess={onSendSuccess}
-                    disabled={!clientData?.email || invoice.invoice_status === 'paid'}
-                    refreshKey={stripeRefreshKey}
-                  />
+                  {/* Delete */}
+                  <Button
+                    onClick={() => onDeleteInvoice(invoice.id)}
+                    disabled={deletingInvoiceId === invoice.id}
+                    variant="ghost"
+                    size="icon"
+                    className="h-11 w-11 touch-manipulation rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-500"
+                  >
+                    <Trash2 className="h-5 w-5" />
+                  </Button>
                 </div>
 
-                {/* Payment Actions - Only for sent/overdue invoices */}
-                {(invoice.invoice_status === 'sent' || invoice.invoice_status === 'overdue' || isOverdue) && (
-                  <>
-                    {/* Record Payment + Send Reminder Row */}
+                {/* Send Dropdown */}
+                <InvoiceSendDropdown
+                  invoice={invoice}
+                  onSuccess={onSendSuccess}
+                  disabled={!clientData?.email || invoice.invoice_status === 'paid'}
+                  refreshKey={stripeRefreshKey}
+                />
+              </div>
+
+              {/* Payment Actions - Native Card Style */}
+              {(invoice.invoice_status === 'sent' || invoice.invoice_status === 'overdue' || isOverdue) && (
+                <div className="bg-gradient-to-r from-emerald-500/10 to-green-500/10 border border-emerald-500/20 rounded-xl p-3 space-y-2">
+                  <div className="flex items-center gap-2 text-xs text-emerald-400 font-medium mb-2">
+                    <PoundSterling className="h-3.5 w-3.5" />
+                    Payment Actions
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    {/* Record Partial Payment */}
                     <Button
                       onClick={() => setPartialPaymentInvoice(invoice)}
                       variant="outline"
-                      size="sm"
-                      className="w-full border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/10"
+                      className="h-11 touch-manipulation border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 rounded-xl"
                     >
-                      <PoundSterling className="h-4 w-4 mr-2" />
-                      Record Payment
+                      <PoundSterling className="h-4 w-4 sm:mr-2" />
+                      <span className="hidden sm:inline">Record</span>
                     </Button>
+
+                    {/* Send Reminder */}
                     <PaymentReminderButton
                       invoice={invoice}
                       onReminderSent={onSendSuccess}
-                      className="w-full"
+                      className="h-11 touch-manipulation rounded-xl"
                     />
-                    {/* Mark as Fully Paid */}
-                    <Button
-                      onClick={() => onMarkAsPaid(invoice)}
-                      disabled={markingPaidId === invoice.id}
-                      variant="default"
-                      size="sm"
-                      className="col-span-2 bg-green-600 hover:bg-green-700 text-foreground"
-                    >
-                      <CheckCircle className="h-4 w-4 mr-2" />
-                      {markingPaidId === invoice.id ? 'Updating...' : 'Mark as Fully Paid'}
-                    </Button>
-                  </>
-                )}
+                  </div>
 
-                {/* Delete */}
-                <Button
-                  onClick={() => onDeleteInvoice(invoice.id)}
-                  disabled={deletingInvoiceId === invoice.id}
-                  variant="destructive"
-                  size="sm"
-                  className="col-span-2"
-                >
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  {deletingInvoiceId === invoice.id ? 'Deleting...' : 'Delete Invoice'}
-                </Button>
-              </div>
+                  {/* Mark as Fully Paid - Primary Action */}
+                  <Button
+                    onClick={() => onMarkAsPaid(invoice)}
+                    disabled={markingPaidId === invoice.id}
+                    className="w-full h-12 touch-manipulation bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold"
+                  >
+                    <CheckCircle className="h-5 w-5 mr-2" />
+                    {markingPaidId === invoice.id ? 'Updating...' : 'Mark Fully Paid'}
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
             </SwipeableCard>

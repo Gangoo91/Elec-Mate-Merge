@@ -475,21 +475,16 @@ ${companyName}`;
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="outline"
+          variant="default"
           disabled={disabled || isLoading}
-          className={className}
+          className={`h-11 touch-manipulation rounded-xl bg-blue-600 hover:bg-blue-700 text-white ${className}`}
         >
           {isLoading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              {isSendingEmail ? 'Sending...' : 'Loading...'}
-            </>
+            <Loader2 className="h-4 w-4 animate-spin sm:mr-2" />
           ) : (
-            <>
-              <Mail className="mr-2 h-4 w-4" />
-              Send
-            </>
+            <Mail className="h-4 w-4 sm:mr-2" />
           )}
+          <span className="hidden sm:inline">{isLoading ? (isSendingEmail ? 'Sending...' : 'Loading...') : 'Send'}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent

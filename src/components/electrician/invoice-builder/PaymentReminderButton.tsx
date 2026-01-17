@@ -126,21 +126,17 @@ export const PaymentReminderButton = ({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          size="sm"
           disabled={sending}
-          className={cn("gap-2", className)}
+          className={cn("gap-2 border-amber-500/30 hover:bg-amber-500/10", className)}
         >
           {sending ? (
-            <>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Preparing...
-            </>
+            <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
             <>
-              <Bell className="h-4 w-4" />
-              Remind
+              <Bell className="h-4 w-4 text-amber-500" />
+              <span className="hidden sm:inline">Remind</span>
               {reminderCount > 0 && (
-                <span className="ml-1 text-xs bg-amber-500/20 text-amber-500 px-1.5 py-0.5 rounded-full">
+                <span className="text-xs bg-amber-500/20 text-amber-500 px-1.5 py-0.5 rounded-full">
                   {reminderCount}
                 </span>
               )}
