@@ -654,13 +654,13 @@ const Level3Module3Section4_5 = () => {
         {/* Navigation */}
         <div className="flex flex-col sm:flex-row justify-between gap-4 pt-8 border-t border-white/10">
           <Button variant="outline" className="text-white border-white/20 hover:bg-white/10" asChild>
-            <Link to="../level3-module3-section4-4">
+            <Link to="/study-centre/apprentice/level3-module3-section4-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Impedance and Admittance
             </Link>
           </Button>
           <Button className="bg-blue-600 hover:bg-blue-700 text-white" asChild>
-            <Link to="../level3-module3-section4-6">
+            <Link to="/study-centre/apprentice/level3-module3-section4-6">
               Next: Harmonics and Waveform Distortion
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>

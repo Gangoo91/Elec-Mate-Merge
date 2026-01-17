@@ -50,7 +50,7 @@ const Level3Module6Section6_4 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5" asChild>
-            <Link to="../level3-module6-section6"><ArrowLeft className="w-4 h-4 mr-2" />Back</Link>
+            <Link to="/study-centre/apprentice/level3-module6-section6"><ArrowLeft className="w-4 h-4 mr-2" />Back</Link>
           </Button>
         </div>
       </div>
@@ -249,10 +249,10 @@ const Level3Module6Section6_4 = () => {
 
         <nav className="flex flex-col sm:flex-row gap-4 justify-between pt-8 border-t border-white/10">
           <Button variant="outline" className="border-white/20 text-white hover:bg-white/5" asChild>
-            <Link to="../level3-module6-section6-3"><ArrowLeft className="w-4 h-4 mr-2" />Previous: Bill of Quantities</Link>
+            <Link to="/study-centre/apprentice/level3-module6-section6-3"><ArrowLeft className="w-4 h-4 mr-2" />Previous: Bill of Quantities</Link>
           </Button>
           <Button className="bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90" asChild>
-            <Link to="../level3-module6-section6-5">Next: Method Statements<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
+            <Link to="/study-centre/apprentice/level3-module6-section6-5">Next: Method Statements<ArrowLeft className="w-4 h-4 ml-2 rotate-180" /></Link>
           </Button>
         </nav>
       </article>

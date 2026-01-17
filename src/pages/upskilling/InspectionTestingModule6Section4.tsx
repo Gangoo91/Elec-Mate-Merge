@@ -182,7 +182,7 @@ const InspectionTestingModule6Section4 = () => {
       <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
         <div className="flex items-center justify-between px-4 h-14">
           <button
-            onClick={() => navigate('/study-centre/apprentice/study/inspection-testing/module6')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-6')}
             className="flex items-center gap-2 text-cyan-400 active:opacity-70 transition-opacity touch-manipulation"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -650,20 +650,30 @@ const InspectionTestingModule6Section4 = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col gap-3 pt-4 pb-safe">
-          <Button
-            variant="ios-primary"
-            size="lg"
-            className="w-full touch-target"
-            onClick={() => navigate('/study-centre/apprentice/study/inspection-testing/module6/section5')}
-          >
-            Continue to Section 5
-            <ChevronRight className="w-5 h-5 ml-2" />
-          </Button>
+          <div className="flex gap-3">
+            <Button
+              variant="ios-secondary"
+              size="lg"
+              className="flex-1 touch-target"
+              onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-6/section-3')}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="ios-primary"
+              size="lg"
+              className="flex-1 touch-target"
+              onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-6/section-5')}
+            >
+              Next Section
+              <ChevronRight className="w-5 h-5 ml-2" />
+            </Button>
+          </div>
           <Button
             variant="ios-secondary"
             size="lg"
             className="w-full touch-target"
-            onClick={() => navigate('/study-centre/apprentice/study/inspection-testing/module6')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-6')}
           >
             Back to Module 6
           </Button>

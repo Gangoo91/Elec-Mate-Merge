@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ArrowRight, Flag, CheckCircle, Clock, BookOpen, Target, FileText, X, Eye, RotateCcw } from "lucide-react";
 import { Link } from "react-router-dom";
 import useSEO from "@/hooks/useSEO";
-import { getRandomQuestions } from "@/data/apprentice-courses/level3/module3/questionBank";
+import { getRandomQuestions } from "@/data/study-centre/apprentice/level3/module3/questionBank";
 
 const Level3Module8MockExam3 = () => {
   useSEO("Mock Exam 3: Electrical Science | Level 3 Electrical Course", "Test your knowledge of Module 3 electrical science with this comprehensive 30-question mock exam.");

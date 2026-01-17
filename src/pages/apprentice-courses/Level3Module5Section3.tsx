@@ -66,7 +66,7 @@ const Level3Module5Section3 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../level3-module5">
+            <Link to="/study-centre/apprentice/level3-module5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 5
             </Link>

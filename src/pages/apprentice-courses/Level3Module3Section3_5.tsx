@@ -146,7 +146,7 @@ const Level3Module3Section3_5 = () => {
       <div className="sticky top-0 z-50 border-b border-white/10 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
           <Button variant="ghost" className="text-white/70 hover:text-white active:text-white p-0 -ml-1" asChild>
-            <Link to="../level3-module3-section3">
+            <Link to="/study-centre/apprentice/level3-module3-section3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3
             </Link>
@@ -585,13 +585,13 @@ const Level3Module3Section3_5 = () => {
         {/* Navigation */}
         <div className="flex justify-between items-center pt-8 border-t border-white/10">
           <Button variant="outline" className="text-white border-white/30 hover:bg-white/10" asChild>
-            <Link to="../level3-module3-section3-4">
+            <Link to="/study-centre/apprentice/level3-module3-section3-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Transformers
             </Link>
           </Button>
           <Button className="bg-green-600 hover:bg-green-700 text-white" asChild>
-            <Link to="../level3-module3-section4">
+            <Link to="/study-centre/apprentice/level3-module3-section4">
               Next: Section 4
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>

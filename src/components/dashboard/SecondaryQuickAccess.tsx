@@ -69,7 +69,7 @@ export function SecondaryQuickAccess() {
     {
       title: "AI Tools",
       icon: <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4" />,
-      path: "/electrician/ai-tooling",
+      path: "/electrician-tools/ai-tooling",
       badge: "New"
     },
     {

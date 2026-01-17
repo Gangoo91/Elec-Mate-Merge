@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils';
 import { CertificateImportDialog } from '@/components/certificates/CertificateImportDialog';
 import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 import { ExportToEICDialog } from '@/components/inspection-app/ExportToEICDialog';
+import { ExportToEICRDialog } from '@/components/inspection-app/ExportToEICRDialog';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useCustomers } from '@/hooks/useCustomers';
 import { linkCustomerToReport } from '@/utils/customerHelper';
@@ -92,6 +93,10 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   // Export to EIC state
   const [exportToEICDialogOpen, setExportToEICDialogOpen] = useState(false);
   const [exportToEICReportId, setExportToEICReportId] = useState<string | null>(null);
+
+  // Export to EICR state (EIC → EICR conversion)
+  const [exportToEICRDialogOpen, setExportToEICRDialogOpen] = useState(false);
+  const [exportToEICRReportId, setExportToEICRReportId] = useState<string | null>(null);
 
   // Get customers for linking
   const { customers, isLoading: isLoadingCustomers } = useCustomers();
@@ -238,6 +243,20 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     refetchReports();
     // Navigate to the new EIC form
     navigate(`/electrician/inspection-testing?section=eic&reportId=${eicReportId}`);
+  };
+
+  // Handle export EIC to EICR
+  const handleExportToEICR = (reportId: string) => {
+    setExportToEICRReportId(reportId);
+    setExportToEICRDialogOpen(true);
+  };
+
+  // Handle export complete - navigate to new EICR
+  const handleExportToEICRComplete = (eicrReportId: string) => {
+    // Refresh reports list to show the new EICR
+    refetchReports();
+    // Navigate to the new EICR form
+    navigate(`/electrician/inspection-testing?section=eicr&reportId=${eicrReportId}`);
   };
 
   // Confirm linking customer to report
@@ -857,6 +876,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   onPreview={handlePreviewReport}
                   onLinkCustomer={() => { navigator.vibrate?.(10); handleLinkCustomer(report.report_id); }}
                   onExportToEIC={() => { navigator.vibrate?.(10); handleExportToEIC(report.report_id); }}
+                  onExportToEICR={() => { navigator.vibrate?.(10); handleExportToEICR(report.report_id); }}
                   hasCustomer={!!report.customer_id}
                   isSelected={selectedReports.has(report.report_id)}
                   isBulkMode={isBulkMode}
@@ -865,6 +885,10 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                     report.report_type === 'eicr' &&
                     report.status === 'completed' &&
                     report.data?.satisfactoryForContinuedUse?.toLowerCase() === 'yes'
+                  }
+                  canExportToEICR={
+                    report.report_type === 'eic' &&
+                    (report.status === 'completed' || report.status === 'in-progress')
                   }
                 />
               ))}
@@ -1056,6 +1080,16 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
           onOpenChange={setExportToEICDialogOpen}
           reportId={exportToEICReportId}
           onExportComplete={handleExportToEICComplete}
+        />
+      )}
+
+      {/* Export EIC to EICR Dialog */}
+      {exportToEICRReportId && (
+        <ExportToEICRDialog
+          open={exportToEICRDialogOpen}
+          onOpenChange={setExportToEICRDialogOpen}
+          reportId={exportToEICRReportId}
+          onExportComplete={handleExportToEICRComplete}
         />
       )}
     </>

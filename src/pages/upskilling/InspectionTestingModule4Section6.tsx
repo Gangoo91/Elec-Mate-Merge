@@ -168,7 +168,7 @@ const InspectionTestingModule4Section6 = () => {
       <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
         <div className="flex items-center justify-between px-4 h-14">
           <button
-            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module4')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-4')}
             className="flex items-center gap-2 text-elec-yellow active:opacity-70 transition-opacity touch-manipulation"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -541,7 +541,7 @@ const InspectionTestingModule4Section6 = () => {
           <Button
             variant="ios-primary"
             className="w-full h-12 touch-manipulation"
-            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module5')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-5')}
           >
             Continue to Module 5
           </Button>
@@ -552,14 +552,14 @@ const InspectionTestingModule4Section6 = () => {
           <Button
             variant="ios-secondary"
             className="flex-1 h-12 touch-manipulation"
-            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module4/section5')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-4/section-5')}
           >
             Previous
           </Button>
           <Button
             variant="ios-primary"
             className="flex-1 h-12 touch-manipulation"
-            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module5')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-5')}
           >
             Next Module
           </Button>

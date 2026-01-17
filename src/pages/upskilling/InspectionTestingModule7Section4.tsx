@@ -182,8 +182,8 @@ const InspectionTestingModule7Section4 = () => {
       <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
         <div className="flex items-center justify-between px-4 h-14">
           <button
-            onClick={() => navigate('/study-centre/apprentice/study/inspection-testing/module7')}
-            className="flex items-center gap-2 text-rose-400 active:opacity-70 transition-opacity touch-manipulation"
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-7')}
+            className="flex items-center gap-2 text-elec-yellow active:opacity-70 transition-opacity touch-manipulation"
           >
             <ArrowLeft className="w-5 h-5" />
             <span className="text-base">Module 7</span>
@@ -195,8 +195,8 @@ const InspectionTestingModule7Section4 = () => {
       <main className="px-4 py-6 pb-safe max-w-3xl mx-auto">
         {/* Hero Section */}
         <section className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-rose-500/20 rounded-full mb-4">
-            <span className="text-rose-400 text-sm font-medium">Module 7 • Polarity & Functional Testing</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-elec-yellow/20 rounded-full mb-4">
+            <span className="text-elec-yellow text-sm font-medium">Module 7 • Polarity & Functional Testing</span>
           </div>
           <h1 className="text-ios-title-large text-white font-bold mb-3">
             Functional Testing
@@ -212,15 +212,15 @@ const InspectionTestingModule7Section4 = () => {
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-rose-500/20 flex items-center justify-center">
-                    <Play className="w-5 h-5 text-rose-400" />
+                  <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
+                    <Play className="w-5 h-5 text-elec-yellow" />
                   </div>
                   <div>
                     <h3 className="text-white font-semibold">Functional Testing Guide</h3>
                     <p className="text-white/60 text-sm">Interactive testing procedures</p>
                   </div>
                 </div>
-                <ExternalLink className="w-5 h-5 text-rose-400" />
+                <ExternalLink className="w-5 h-5 text-elec-yellow" />
               </div>
             </CardContent>
           </Card>
@@ -230,20 +230,20 @@ const InspectionTestingModule7Section4 = () => {
         <Card variant="ios-elevated" className="mb-8">
           <CardContent className="p-5">
             <div className="flex items-center gap-2 mb-4">
-              <Clock className="w-5 h-5 text-rose-400" />
+              <Clock className="w-5 h-5 text-elec-yellow" />
               <h2 className="text-white font-semibold text-lg">In 30 Seconds</h2>
             </div>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-rose-400 mt-2 shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 shrink-0" />
                 <span className="text-white/80 text-base">Functional testing verifies equipment operates as intended</span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-rose-400 mt-2 shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 shrink-0" />
                 <span className="text-white/80 text-base">Performed AFTER all other tests confirm safety</span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-rose-400 mt-2 shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 shrink-0" />
                 <span className="text-white/80 text-base">Includes switches, controls, interlocks, and safety systems</span>
               </li>
             </ul>
@@ -253,15 +253,15 @@ const InspectionTestingModule7Section4 = () => {
         {/* Learning Outcomes */}
         <section className="mb-8">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-            <Target className="w-5 h-5 text-rose-400" />
+            <Target className="w-5 h-5 text-elec-yellow" />
             Learning Outcomes
           </h2>
           <div className="grid gap-3">
             {learningOutcomes.map((outcome, index) => (
               <Card key={index} variant="ios" className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-rose-500/20 flex items-center justify-center shrink-0">
-                    <outcome.icon className="w-5 h-5 text-rose-400" />
+                  <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center shrink-0">
+                    <outcome.icon className="w-5 h-5 text-elec-yellow" />
                   </div>
                   <span className="text-white/90 text-base">{outcome.text}</span>
                 </div>
@@ -273,7 +273,7 @@ const InspectionTestingModule7Section4 = () => {
         {/* Content Section 01 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-rose-400/30">01</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Purpose of Functional Testing</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -282,26 +282,26 @@ const InspectionTestingModule7Section4 = () => {
                 Functional testing is the final stage of verification, performed after all electrical tests confirm the installation is safe. It verifies that equipment and systems work correctly - not just that they're electrically sound.
               </p>
               <div className="bg-white/5 rounded-xl p-4 border border-rose-500/20">
-                <h4 className="text-rose-400 font-semibold mb-2">What Functional Testing Reveals</h4>
+                <h4 className="text-elec-yellow font-semibold mb-2">What Functional Testing Reveals</h4>
                 <ul className="space-y-2 text-white/70">
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-rose-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Switches control the correct loads</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-rose-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Controls operate throughout their range</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-rose-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Interlocks function correctly</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-rose-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Safety systems perform as required</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-rose-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Programmable devices are correctly set</span>
                   </li>
                 </ul>
@@ -313,7 +313,7 @@ const InspectionTestingModule7Section4 = () => {
         {/* Content Section 02 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-rose-400/30">02</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">Switching and Control Devices</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -323,7 +323,7 @@ const InspectionTestingModule7Section4 = () => {
               </p>
               <div className="space-y-3">
                 <div className="bg-white/5 rounded-xl p-4 border border-rose-500/20">
-                  <h4 className="text-rose-400 font-semibold mb-2">Light Switches</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Light Switches</h4>
                   <ul className="space-y-1 text-white/70 text-sm">
                     <li>• Each switch controls its intended light(s)</li>
                     <li>• Two-way and intermediate switching operates correctly</li>
@@ -331,7 +331,7 @@ const InspectionTestingModule7Section4 = () => {
                   </ul>
                 </div>
                 <div className="bg-white/5 rounded-xl p-4 border border-rose-500/20">
-                  <h4 className="text-rose-400 font-semibold mb-2">Automatic Controls</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Automatic Controls</h4>
                   <ul className="space-y-1 text-white/70 text-sm">
                     <li>• PIR sensors detect and time out correctly</li>
                     <li>• Photocells respond to light levels</li>
@@ -339,7 +339,7 @@ const InspectionTestingModule7Section4 = () => {
                   </ul>
                 </div>
                 <div className="bg-white/5 rounded-xl p-4 border border-rose-500/20">
-                  <h4 className="text-rose-400 font-semibold mb-2">Isolators</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Isolators</h4>
                   <ul className="space-y-1 text-white/70 text-sm">
                     <li>• Isolate their intended circuits</li>
                     <li>• Indicator lights function correctly</li>
@@ -363,7 +363,7 @@ const InspectionTestingModule7Section4 = () => {
         {/* Content Section 03 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-rose-400/30">03</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Interlocks and Safety Systems</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -372,18 +372,18 @@ const InspectionTestingModule7Section4 = () => {
                 Interlocks are critical safety devices that must be comprehensively tested:
               </p>
               <div className="bg-white/5 rounded-xl p-4 border border-rose-500/20">
-                <h4 className="text-rose-400 font-semibold mb-3">Interlock Testing Requirements</h4>
+                <h4 className="text-elec-yellow font-semibold mb-3">Interlock Testing Requirements</h4>
                 <div className="space-y-3">
                   <div className="p-3 bg-white/5 rounded-lg">
-                    <span className="text-rose-400 font-semibold">Prevention Test:</span>
+                    <span className="text-elec-yellow font-semibold">Prevention Test:</span>
                     <p className="text-white/60 text-sm mt-1">Verify interlock prevents unsafe action when equipment is energised</p>
                   </div>
                   <div className="p-3 bg-white/5 rounded-lg">
-                    <span className="text-rose-400 font-semibold">De-energisation Test:</span>
+                    <span className="text-elec-yellow font-semibold">De-energisation Test:</span>
                     <p className="text-white/60 text-sm mt-1">Verify equipment de-energises if interlock is defeated or door opened</p>
                   </div>
                   <div className="p-3 bg-white/5 rounded-lg">
-                    <span className="text-rose-400 font-semibold">Indication Test:</span>
+                    <span className="text-elec-yellow font-semibold">Indication Test:</span>
                     <p className="text-white/60 text-sm mt-1">Verify any associated indicators show correct status</p>
                   </div>
                 </div>
@@ -403,7 +403,7 @@ const InspectionTestingModule7Section4 = () => {
         {/* Content Section 04 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-rose-400/30">04</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Emergency and Safety Systems</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -413,7 +413,7 @@ const InspectionTestingModule7Section4 = () => {
               </p>
               <div className="space-y-3">
                 <div className="bg-white/5 rounded-xl p-4 border border-rose-500/20">
-                  <h4 className="text-rose-400 font-semibold mb-2">Emergency Lighting</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Emergency Lighting</h4>
                   <ul className="space-y-1 text-white/70 text-sm">
                     <li>• Simulate mains failure - lights should illuminate</li>
                     <li>• Verify maintained fittings operate on both modes</li>
@@ -422,7 +422,7 @@ const InspectionTestingModule7Section4 = () => {
                   </ul>
                 </div>
                 <div className="bg-white/5 rounded-xl p-4 border border-rose-500/20">
-                  <h4 className="text-rose-400 font-semibold mb-2">Fire Alarm Systems</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Fire Alarm Systems</h4>
                   <ul className="space-y-1 text-white/70 text-sm">
                     <li>• Test detectors trigger panel indication</li>
                     <li>• Verify sounders operate throughout building</li>
@@ -431,7 +431,7 @@ const InspectionTestingModule7Section4 = () => {
                   </ul>
                 </div>
                 <div className="bg-white/5 rounded-xl p-4 border border-rose-500/20">
-                  <h4 className="text-rose-400 font-semibold mb-2">Emergency Stop Systems</h4>
+                  <h4 className="text-elec-yellow font-semibold mb-2">Emergency Stop Systems</h4>
                   <ul className="space-y-1 text-white/70 text-sm">
                     <li>• Verify stops immediately de-energise equipment</li>
                     <li>• Test that reset procedure is required</li>
@@ -455,7 +455,7 @@ const InspectionTestingModule7Section4 = () => {
         {/* Content Section 05 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-rose-400/30">05</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">HVAC and Building Services</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -464,26 +464,26 @@ const InspectionTestingModule7Section4 = () => {
                 Heating, ventilation, and air conditioning systems have multiple functional aspects to verify:
               </p>
               <div className="bg-white/5 rounded-xl p-4 border border-rose-500/20">
-                <h4 className="text-rose-400 font-semibold mb-3">HVAC Functional Testing</h4>
+                <h4 className="text-elec-yellow font-semibold mb-3">HVAC Functional Testing</h4>
                 <ul className="space-y-2 text-white/70">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-rose-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Thermostats respond to temperature changes</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-rose-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Time controls switch at programmed times</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-rose-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Zone valves and dampers operate</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-rose-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Frost protection activates correctly</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-rose-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Interlocked systems sequence correctly</span>
                   </li>
                 </ul>
@@ -495,7 +495,7 @@ const InspectionTestingModule7Section4 = () => {
         {/* Content Section 06 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-rose-400/30">06</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">06</span>
             <h2 className="text-xl font-semibold text-white">Documentation of Results</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -504,22 +504,22 @@ const InspectionTestingModule7Section4 = () => {
                 Unlike electrical measurements, functional tests record whether operation is satisfactory or identifies defects found:
               </p>
               <div className="bg-white/5 rounded-xl p-4 border border-rose-500/20">
-                <h4 className="text-rose-400 font-semibold mb-3">Recording Functional Tests</h4>
+                <h4 className="text-elec-yellow font-semibold mb-3">Recording Functional Tests</h4>
                 <ul className="space-y-2 text-white/70">
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-rose-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Schedule of Inspections: tick functional testing items</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-rose-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Record satisfactory (✓) or limitation/defect</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-rose-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Note specific defects in observations</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-rose-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Complex systems may need separate test sheets</span>
                   </li>
                 </ul>
@@ -543,7 +543,7 @@ const InspectionTestingModule7Section4 = () => {
         {/* Practical Tips */}
         <section className="mb-8">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-            <Zap className="w-5 h-5 text-rose-400" />
+            <Zap className="w-5 h-5 text-elec-yellow" />
             Practical Tips
           </h2>
           <div className="space-y-3">
@@ -633,7 +633,7 @@ const InspectionTestingModule7Section4 = () => {
             variant="ios-primary"
             size="lg"
             className="w-full touch-target bg-rose-500 hover:bg-rose-600"
-            onClick={() => navigate('/study-centre/apprentice/study/inspection-testing/module7/section5')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-7/section-5')}
           >
             Continue to Section 5
             <ChevronRight className="w-5 h-5 ml-2" />
@@ -642,7 +642,15 @@ const InspectionTestingModule7Section4 = () => {
             variant="ios-secondary"
             size="lg"
             className="w-full touch-target"
-            onClick={() => navigate('/study-centre/apprentice/study/inspection-testing/module7')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-7/section-3')}
+          >
+            Previous Section
+          </Button>
+          <Button
+            variant="ios-secondary"
+            size="lg"
+            className="w-full touch-target"
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-7')}
           >
             Back to Module 7
           </Button>

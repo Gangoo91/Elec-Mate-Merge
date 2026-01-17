@@ -173,10 +173,10 @@ const AM2Module6Section1 = () => {
 
   return (
     <AM2SectionLayout
-      backHref="/apprentice-courses/am2/module6"
+      backHref="/study-centre/apprentice/am2/module6"
       breadcrumbs={[
-        { label: "AM2", href: "/apprentice-courses/am2" },
-        { label: "Module 6", href: "/apprentice-courses/am2/module6" },
+        { label: "AM2", href: "/study-centre/apprentice/am2" },
+        { label: "Module 6", href: "/study-centre/apprentice/am2/module6" },
         { label: "Section 1" }
       ]}
     >
@@ -635,7 +635,7 @@ const AM2Module6Section1 = () => {
 
         {/* Navigation */}
         <AM2NavigationFooter
-          previousHref="/apprentice-courses/am2/module6"
+          previousHref="/study-centre/apprentice/am2/module6"
           previousLabel="Module 6 Overview"
           nextHref="../section2"
           nextLabel="Core Topics"

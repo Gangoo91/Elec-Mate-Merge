@@ -131,7 +131,7 @@ const InspectionTestingModule2Section6 = () => {
       <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
         <div className="flex items-center justify-between px-4 h-14">
           <button
-            onClick={() => navigate('/study-centre/apprentice/upskilling/inspection-testing/module2')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-2')}
             className="flex items-center text-elec-yellow touch-target"
           >
             <ArrowLeft className="w-5 h-5 mr-1" />
@@ -837,7 +837,7 @@ const InspectionTestingModule2Section6 = () => {
             <Button
               variant="ios-secondary"
               className="flex-1 h-12"
-              onClick={() => navigate('/study-centre/apprentice/upskilling/inspection-testing/module2/section5')}
+              onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-2/section-5')}
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous
@@ -845,7 +845,7 @@ const InspectionTestingModule2Section6 = () => {
             <Button
               variant="ios-primary"
               className="flex-1 h-12"
-              onClick={() => navigate('/study-centre/apprentice/upskilling/inspection-testing/module3')}
+              onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-3')}
             >
               Module 3
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

@@ -148,7 +148,7 @@ const InspectionTestingModule5Section4 = () => {
       <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
         <div className="flex items-center justify-between px-4 h-14">
           <button
-            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module5')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-5')}
             className="flex items-center gap-2 text-elec-yellow active:opacity-70 transition-opacity touch-manipulation"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -510,14 +510,14 @@ const InspectionTestingModule5Section4 = () => {
           <Button
             variant="ios-secondary"
             className="flex-1 h-12 touch-manipulation"
-            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module5/section3')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-5/section-3')}
           >
             Previous
           </Button>
           <Button
             variant="ios-primary"
             className="flex-1 h-12 touch-manipulation"
-            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module5/section5')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-5/section-5')}
           >
             Next Section
           </Button>

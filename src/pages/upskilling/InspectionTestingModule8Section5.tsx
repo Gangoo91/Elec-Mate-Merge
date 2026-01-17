@@ -184,8 +184,8 @@ const InspectionTestingModule8Section5 = () => {
       <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
         <div className="flex items-center justify-between px-4 h-14">
           <button
-            onClick={() => navigate('/study-centre/apprentice/study/inspection-testing/module8')}
-            className="flex items-center gap-2 text-sky-400 active:opacity-70 transition-opacity touch-manipulation"
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-8')}
+            className="flex items-center gap-2 text-elec-yellow active:opacity-70 transition-opacity touch-manipulation"
           >
             <ArrowLeft className="w-5 h-5" />
             <span className="text-base">Module 8</span>
@@ -197,8 +197,8 @@ const InspectionTestingModule8Section5 = () => {
       <main className="px-4 py-6 pb-safe max-w-3xl mx-auto">
         {/* Hero Section */}
         <section className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-sky-500/20 rounded-full mb-4">
-            <span className="text-sky-400 text-sm font-medium">Module 8 • Visual Inspection & Documentation</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-elec-yellow/20 rounded-full mb-4">
+            <span className="text-elec-yellow text-sm font-medium">Module 8 • Visual Inspection & Documentation</span>
           </div>
           <h1 className="text-ios-title-large text-white font-bold mb-3">
             Minor Works & EICR
@@ -212,20 +212,20 @@ const InspectionTestingModule8Section5 = () => {
         <Card variant="ios-elevated" className="mb-8">
           <CardContent className="p-5">
             <div className="flex items-center gap-2 mb-4">
-              <Clock className="w-5 h-5 text-sky-400" />
+              <Clock className="w-5 h-5 text-elec-yellow" />
               <h2 className="text-white font-semibold text-lg">In 30 Seconds</h2>
             </div>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-sky-400 mt-2 shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 shrink-0" />
                 <span className="text-white/80 text-base">Minor Works: no new circuits added</span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-sky-400 mt-2 shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 shrink-0" />
                 <span className="text-white/80 text-base">EICR: condition report for existing installations</span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-sky-400 mt-2 shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 shrink-0" />
                 <span className="text-white/80 text-base">C1/C2 = Unsatisfactory, C3 = Improvement only</span>
               </li>
             </ul>
@@ -235,15 +235,15 @@ const InspectionTestingModule8Section5 = () => {
         {/* Learning Outcomes */}
         <section className="mb-8">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-            <Target className="w-5 h-5 text-sky-400" />
+            <Target className="w-5 h-5 text-elec-yellow" />
             Learning Outcomes
           </h2>
           <div className="grid gap-3">
             {learningOutcomes.map((outcome, index) => (
               <Card key={index} variant="ios" className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-sky-500/20 flex items-center justify-center shrink-0">
-                    <outcome.icon className="w-5 h-5 text-sky-400" />
+                  <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center shrink-0">
+                    <outcome.icon className="w-5 h-5 text-elec-yellow" />
                   </div>
                   <span className="text-white/90 text-base">{outcome.text}</span>
                 </div>
@@ -255,7 +255,7 @@ const InspectionTestingModule8Section5 = () => {
         {/* Content Section 01 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-sky-400/30">01</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Minor Works Certificate</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -263,23 +263,23 @@ const InspectionTestingModule8Section5 = () => {
               <p>
                 A Minor Works Certificate is used for additions or alterations to an existing installation that do not include adding a new circuit:
               </p>
-              <div className="bg-white/5 rounded-xl p-4 border border-sky-500/20">
-                <h4 className="text-sky-400 font-semibold mb-2">Examples of Minor Works</h4>
+              <div className="bg-white/5 rounded-xl p-4 border border-elec-yellow/20">
+                <h4 className="text-elec-yellow font-semibold mb-2">Examples of Minor Works</h4>
                 <ul className="space-y-2 text-white/70">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Adding a socket outlet to an existing circuit</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Replacing a consumer unit (same circuits)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Adding a light point to an existing lighting circuit</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Replacing an accessory like-for-like</span>
                   </li>
                 </ul>
@@ -294,7 +294,7 @@ const InspectionTestingModule8Section5 = () => {
         {/* Content Section 02 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-sky-400/30">02</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">EICR Purpose and Application</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -302,27 +302,27 @@ const InspectionTestingModule8Section5 = () => {
               <p>
                 An Electrical Installation Condition Report assesses the safety and condition of an existing electrical installation:
               </p>
-              <div className="bg-white/5 rounded-xl p-4 border border-sky-500/20">
-                <h4 className="text-sky-400 font-semibold mb-2">When EICR is Required</h4>
+              <div className="bg-white/5 rounded-xl p-4 border border-elec-yellow/20">
+                <h4 className="text-elec-yellow font-semibold mb-2">When EICR is Required</h4>
                 <ul className="space-y-2 text-white/70">
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Periodic inspection (5 years domestic, varies by use)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Change of property use or occupancy</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Before major alterations or additions</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Rental properties (legal requirement)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Property sale (buyer/seller request)</span>
                   </li>
                 </ul>
@@ -343,7 +343,7 @@ const InspectionTestingModule8Section5 = () => {
         {/* Content Section 03 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-sky-400/30">03</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Classification Codes</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -396,7 +396,7 @@ const InspectionTestingModule8Section5 = () => {
         {/* Content Section 04 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-sky-400/30">04</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Overall Assessment</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -438,7 +438,7 @@ const InspectionTestingModule8Section5 = () => {
         {/* Content Section 05 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-sky-400/30">05</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Choosing the Right Certificate</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -446,32 +446,32 @@ const InspectionTestingModule8Section5 = () => {
               <p>
                 Selecting the correct certification document is essential:
               </p>
-              <div className="bg-white/5 rounded-xl p-4 border border-sky-500/20">
-                <h4 className="text-sky-400 font-semibold mb-3">Certificate Selection Guide</h4>
+              <div className="bg-white/5 rounded-xl p-4 border border-elec-yellow/20">
+                <h4 className="text-elec-yellow font-semibold mb-3">Certificate Selection Guide</h4>
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between items-center py-2 border-b border-white/10">
                     <span className="text-white/70">New installation</span>
-                    <span className="text-sky-400 font-semibold">EIC</span>
+                    <span className="text-elec-yellow font-semibold">EIC</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-white/10">
                     <span className="text-white/70">New circuit added</span>
-                    <span className="text-sky-400 font-semibold">EIC</span>
+                    <span className="text-elec-yellow font-semibold">EIC</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-white/10">
                     <span className="text-white/70">Socket added (existing circuit)</span>
-                    <span className="text-sky-400 font-semibold">Minor Works</span>
+                    <span className="text-elec-yellow font-semibold">Minor Works</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-white/10">
                     <span className="text-white/70">Consumer unit replacement</span>
-                    <span className="text-sky-400 font-semibold">Minor Works*</span>
+                    <span className="text-elec-yellow font-semibold">Minor Works*</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-white/10">
                     <span className="text-white/70">Periodic inspection</span>
-                    <span className="text-sky-400 font-semibold">EICR</span>
+                    <span className="text-elec-yellow font-semibold">EICR</span>
                   </div>
                   <div className="flex justify-between items-center py-2">
                     <span className="text-white/70">Pre-purchase check</span>
-                    <span className="text-sky-400 font-semibold">EICR</span>
+                    <span className="text-elec-yellow font-semibold">EICR</span>
                   </div>
                 </div>
                 <p className="text-white/50 text-xs mt-3">*Some schemes require EIC for consumer unit changes</p>
@@ -483,7 +483,7 @@ const InspectionTestingModule8Section5 = () => {
         {/* Content Section 06 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-sky-400/30">06</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">06</span>
             <h2 className="text-xl font-semibold text-white">Professional Standards</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -491,27 +491,27 @@ const InspectionTestingModule8Section5 = () => {
               <p>
                 Certification documentation reflects professional standards and carries legal significance:
               </p>
-              <div className="bg-white/5 rounded-xl p-4 border border-sky-500/20">
-                <h4 className="text-sky-400 font-semibold mb-3">Professional Obligations</h4>
+              <div className="bg-white/5 rounded-xl p-4 border border-elec-yellow/20">
+                <h4 className="text-elec-yellow font-semibold mb-3">Professional Obligations</h4>
                 <ul className="space-y-2 text-white/70">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Certificates are legal documents - accuracy is essential</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Never issue false or misleading certificates</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Keep copies for required retention periods</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Use only model forms or approved equivalents</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Complete all sections - don't leave blanks</span>
                   </li>
                 </ul>
@@ -532,7 +532,7 @@ const InspectionTestingModule8Section5 = () => {
         {/* Practical Tips */}
         <section className="mb-8">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-            <Zap className="w-5 h-5 text-sky-400" />
+            <Zap className="w-5 h-5 text-elec-yellow" />
             Practical Tips
           </h2>
           <div className="space-y-3">
@@ -617,7 +617,7 @@ const InspectionTestingModule8Section5 = () => {
         </section>
 
         {/* Course Completion Card */}
-        <Card variant="ios-elevated" className="mb-8 border-sky-500/30">
+        <Card variant="ios-elevated" className="mb-8 border-elec-yellow/30">
           <CardContent className="p-6 text-center">
             <div className="w-16 h-16 rounded-full bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center mx-auto mb-4">
               <Award className="w-8 h-8 text-white" />
@@ -636,7 +636,7 @@ const InspectionTestingModule8Section5 = () => {
               <p>✓ Module 7: Polarity & Functional Testing</p>
               <p>✓ Module 8: Visual Inspection & Documentation</p>
             </div>
-            <p className="text-sky-400 text-sm">
+            <p className="text-elec-yellow text-sm">
               Return to the course page to review any modules or explore other courses.
             </p>
           </CardContent>
@@ -648,7 +648,7 @@ const InspectionTestingModule8Section5 = () => {
             variant="ios-primary"
             size="lg"
             className="w-full touch-target bg-sky-500 hover:bg-sky-600"
-            onClick={() => navigate('/study-centre/apprentice/study/inspection-testing')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing')}
           >
             Return to Course Overview
             <ChevronRight className="w-5 h-5 ml-2" />
@@ -657,7 +657,7 @@ const InspectionTestingModule8Section5 = () => {
             variant="ios-secondary"
             size="lg"
             className="w-full touch-target"
-            onClick={() => navigate('/study-centre/apprentice/study/inspection-testing/module8')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-8')}
           >
             Back to Module 8
           </Button>

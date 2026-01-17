@@ -28,11 +28,13 @@ interface ReportCardProps {
   onPreview?: (id: string) => void;
   onLinkCustomer?: (id: string) => void;
   onExportToEIC?: (id: string) => void;
+  onExportToEICR?: (id: string) => void;
   hasCustomer?: boolean;
   isSelected?: boolean;
   isBulkMode?: boolean;
   onSelectToggle?: (id: string) => void;
   canExportToEIC?: boolean;
+  canExportToEICR?: boolean;
 }
 
 const ReportCard = ({
@@ -42,11 +44,13 @@ const ReportCard = ({
   onPreview,
   onLinkCustomer,
   onExportToEIC,
+  onExportToEICR,
   hasCustomer = false,
   isSelected = false,
   isBulkMode = false,
   onSelectToggle,
   canExportToEIC = false,
+  canExportToEICR = false,
 }: ReportCardProps) => {
   const formatDate = (timestamp: number | string) => {
     const date = typeof timestamp === 'string' ? new Date(timestamp) : new Date(timestamp);
@@ -179,6 +183,21 @@ const ReportCard = ({
                   }}
                   className="flex-shrink-0 min-h-[44px] min-w-[44px] sm:h-9 sm:w-9 text-elec-yellow hover:text-elec-yellow/80"
                   title="Export to EIC"
+                >
+                  <ArrowRightCircle className="h-4 w-4" />
+                </Button>
+              )}
+              {canExportToEICR && onExportToEICR && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigator.vibrate?.(10);
+                    onExportToEICR(metadata.id);
+                  }}
+                  className="flex-shrink-0 min-h-[44px] min-w-[44px] sm:h-9 sm:w-9 text-blue-500 hover:text-blue-400"
+                  title="Export to EICR"
                 >
                   <ArrowRightCircle className="h-4 w-4" />
                 </Button>

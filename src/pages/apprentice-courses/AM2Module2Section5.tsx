@@ -212,7 +212,7 @@ const AM2Module2Section5 = () => {
 
   return (
     <AM2SectionLayout
-      backHref=".."
+      backHref="/study-centre/apprentice/am2/module2"
       breadcrumbs={[
         { label: "Module 2", href: ".." },
         { label: "Section 5" }

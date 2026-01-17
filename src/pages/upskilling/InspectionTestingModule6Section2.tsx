@@ -1,255 +1,270 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, AlertTriangle, Wrench, Lightbulb, HelpCircle, ChevronDown, ChevronUp, BookOpen, ExternalLink, Timer } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import useSEO from '@/hooks/useSEO';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
-import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
+import useSEO from "@/hooks/useSEO";
+
+const TITLE = "RCD Trip Time Testing - Module 6 Section 2";
+const DESCRIPTION = "Learn how to test RCD trip times at rated and 5x rated current, and interpret results for BS 7671 compliance.";
+
+const quickCheckQuestions = [
+  {
+    id: "trip-time-1x",
+    question: "A 30mA RCD must trip within what time at rated current?",
+    options: ["40ms", "150ms", "300ms", "1000ms"],
+    correctIndex: 2,
+    explanation: "At rated residual current (IΔn), RCDs must trip within 300ms maximum."
+  },
+  {
+    id: "trip-time-5x",
+    question: "At 5x rated current, a standard RCD must trip within:",
+    options: ["40ms", "150ms", "300ms", "500ms"],
+    correctIndex: 0,
+    explanation: "At 5xIΔn (e.g., 150mA for a 30mA RCD), trip time must not exceed 40ms."
+  },
+  {
+    id: "record-times",
+    question: "When recording trip times, note the:",
+    options: [
+      "Fastest time",
+      "Average of times",
+      "Longer of the two times",
+      "Shortest time only"
+    ],
+    correctIndex: 2,
+    explanation: "Record the longer (worst case) trip time as this determines compliance with maximum limits."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "A 30mA RCD must trip within what time at rated current?",
+    options: ["40ms", "150ms", "300ms", "1000ms"],
+    correctAnswer: 2,
+    explanation: "At rated residual current (IΔn), RCDs must trip within 300ms maximum."
+  },
+  {
+    id: 2,
+    question: "At 5x rated current, a standard RCD must trip within:",
+    options: ["40ms", "150ms", "300ms", "500ms"],
+    correctAnswer: 0,
+    explanation: "At 5xIΔn (150mA for a 30mA RCD), trip time must not exceed 40ms."
+  },
+  {
+    id: 3,
+    question: "Testing at x1/2 (half rated current) should result in:",
+    options: [
+      "Instant tripping",
+      "Trip within 300ms",
+      "No trip",
+      "Trip within 40ms"
+    ],
+    correctAnswer: 2,
+    explanation: "The x1/2 test confirms the RCD doesn't trip at currents below threshold, avoiding nuisance tripping."
+  },
+  {
+    id: 4,
+    question: "For a 30mA RCD, the x5 test current is:",
+    options: ["15mA", "30mA", "150mA", "300mA"],
+    correctAnswer: 2,
+    explanation: "5 x 30mA = 150mA. This is the current used for the 5x trip time test."
+  },
+  {
+    id: 5,
+    question: "Why test at both 0 degrees and 180 degrees phase angles?",
+    options: [
+      "To check polarity",
+      "To verify operation at any point in AC waveform",
+      "To test the MCB",
+      "To measure insulation"
+    ],
+    correctAnswer: 1,
+    explanation: "Testing both angles confirms the RCD operates correctly regardless of where in the AC cycle the fault occurs."
+  },
+  {
+    id: 6,
+    question: "When recording trip times, note the:",
+    options: [
+      "Fastest time",
+      "Average of times",
+      "Longer of the two times",
+      "Shortest time only"
+    ],
+    correctAnswer: 2,
+    explanation: "Record the longer trip time (worst case) as this determines compliance with maximum limits."
+  },
+  {
+    id: 7,
+    question: "S-type (time-delayed) RCDs have trip times that are:",
+    options: [
+      "Same as standard RCDs",
+      "Faster than standard RCDs",
+      "Longer than standard RCDs",
+      "Not measurable"
+    ],
+    correctAnswer: 2,
+    explanation: "S-type RCDs are deliberately time-delayed for discrimination. They have different (longer) maximum trip times."
+  },
+  {
+    id: 8,
+    question: "If a 30mA RCD trips in 350ms at rated current:",
+    options: [
+      "This is acceptable",
+      "This is a failure",
+      "Retest at 180 degrees",
+      "Check the fuse"
+    ],
+    correctAnswer: 1,
+    explanation: "350ms exceeds the 300ms maximum. The RCD fails and should be replaced."
+  },
+  {
+    id: 9,
+    question: "The RCD test should be performed:",
+    options: [
+      "With circuit dead",
+      "With supply live to the RCD",
+      "Without an earth connection",
+      "Only on TT systems"
+    ],
+    correctAnswer: 1,
+    explanation: "RCD testing requires live supply. The test injects current to simulate a fault and measures trip response."
+  },
+  {
+    id: 10,
+    question: "At 15mA (x1/2 of 30mA RCD), the expected result is:",
+    options: [
+      "Trip within 40ms",
+      "Trip within 300ms",
+      "No trip",
+      "Trip within 1 second"
+    ],
+    correctAnswer: 2,
+    explanation: "At half rated current, the RCD should NOT trip. This confirms it won't nuisance trip at normal leakage levels."
+  }
+];
+
+const faqs = [
+  {
+    question: "What are the maximum trip times?",
+    answer: "At IΔn (rated current): 300ms maximum. At 5xIΔn: 40ms maximum. Time-delayed (S-type) RCDs have different, longer limits as they're designed for discrimination."
+  },
+  {
+    question: "Why test at both x1 and x5?",
+    answer: "The x1 test confirms the RCD operates at its threshold. The x5 test verifies fast operation for higher fault currents - important for shock protection where the dangerous current is greater."
+  },
+  {
+    question: "What does the x1/2 test confirm?",
+    answer: "Testing at half rated current (15mA for a 30mA RCD) confirms the RCD does NOT trip. This verifies it won't nuisance trip at normal leakage levels. No trip should occur within the test period."
+  },
+  {
+    question: "Why test at both 0 degrees and 180 degrees phase angles?",
+    answer: "Fault currents can occur at any point in the AC waveform. Testing at both 0 degrees and 180 degrees checks the RCD operates correctly regardless of when the fault occurs. Record the longer of the two times."
+  },
+  {
+    question: "What if trip time is just at the limit?",
+    answer: "If trip time is at or near the maximum, the RCD passes but may be deteriorating. Note this and recommend monitoring or replacement. Significantly over the limit is a failure."
+  },
+  {
+    question: "How do I test a 30mA RCD?",
+    answer: "Set tester to 30mA (x1) for standard trip test. For x5, set to 150mA. Record actual trip time displayed. Compare to maximum allowed (300ms at 30mA, 40ms at 150mA)."
+  }
+];
 
 const InspectionTestingModule6Section2 = () => {
-  useSEO({
-    title: "RCD Trip Time Testing | Inspection & Testing",
-    description: "Learn how to test RCD trip times at rated and 5× rated current, and interpret results."
-  });
-
-  const navigate = useNavigate();
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-
-  const keyPoints = [
-    "RCDs must trip within 300ms at rated residual current (IΔn) and within 40ms at 5×IΔn",
-    "Testing is performed at ×1, ×5, and optionally ×½ the rated residual current",
-    "Record actual trip times on certificates - must meet BS EN 61008/61009 requirements"
-  ];
-
-  const learningOutcomes = [
-    { title: "Trip Time Limits", desc: "300ms at IΔn, 40ms at 5×IΔn" },
-    { title: "Test Procedure", desc: "How to perform RCD tests" },
-    { title: "Test Currents", desc: "×½, ×1, ×5 testing" },
-    { title: "Record Results", desc: "Document trip times" },
-    { title: "Interpret Results", desc: "Pass/fail criteria" },
-    { title: "Troubleshoot", desc: "Common test issues" }
-  ];
-
-  const faqs = [
-    {
-      q: "What are the maximum trip times?",
-      a: "At IΔn (rated current): 300ms maximum. At 5×IΔn: 40ms maximum. Time-delayed (S-type) RCDs have different, longer limits as they're designed for discrimination."
-    },
-    {
-      q: "Why test at both ×1 and ×5?",
-      a: "The ×1 test confirms the RCD operates at its threshold. The ×5 test verifies fast operation for higher fault currents - important for shock protection where the dangerous current is greater."
-    },
-    {
-      q: "What does the ×½ test confirm?",
-      a: "Testing at half rated current (15mA for a 30mA RCD) confirms the RCD does NOT trip. This verifies it won't nuisance trip at normal leakage levels. No trip should occur within the test period."
-    },
-    {
-      q: "Why test at both 0° and 180° phase angles?",
-      a: "Fault currents can occur at any point in the AC waveform. Testing at both 0° and 180° checks the RCD operates correctly regardless of when the fault occurs. Record the longer of the two times."
-    },
-    {
-      q: "What if trip time is just at the limit?",
-      a: "If trip time is at or near the maximum, the RCD passes but may be deteriorating. Note this and recommend monitoring or replacement. Significantly over the limit is a failure."
-    },
-    {
-      q: "How do I test a 30mA RCD?",
-      a: "Set tester to 30mA (×1) for standard trip test. For ×5, set to 150mA. Record actual trip time displayed. Compare to maximum allowed (300ms at 30mA, 40ms at 150mA)."
-    }
-  ];
-
-  const quizQuestions = [
-    {
-      question: "A 30mA RCD must trip within what time at rated current?",
-      options: ["40ms", "150ms", "300ms", "1000ms"],
-      correctIndex: 2,
-      explanation: "At rated residual current (IΔn), RCDs must trip within 300ms maximum."
-    },
-    {
-      question: "At 5× rated current, a standard RCD must trip within:",
-      options: ["40ms", "150ms", "300ms", "500ms"],
-      correctIndex: 0,
-      explanation: "At 5×IΔn (150mA for a 30mA RCD), trip time must not exceed 40ms."
-    },
-    {
-      question: "Testing at ×½ (half rated current) should result in:",
-      options: [
-        "Instant tripping",
-        "Trip within 300ms",
-        "No trip",
-        "Trip within 40ms"
-      ],
-      correctIndex: 2,
-      explanation: "The ×½ test confirms the RCD doesn't trip at currents below threshold, avoiding nuisance tripping."
-    },
-    {
-      question: "For a 30mA RCD, the ×5 test current is:",
-      options: ["15mA", "30mA", "150mA", "300mA"],
-      correctIndex: 2,
-      explanation: "5 × 30mA = 150mA. This is the current used for the 5× trip time test."
-    },
-    {
-      question: "Why test at both 0° and 180° phase angles?",
-      options: [
-        "To check polarity",
-        "To verify operation at any point in AC waveform",
-        "To test the MCB",
-        "To measure insulation"
-      ],
-      correctIndex: 1,
-      explanation: "Testing both angles confirms the RCD operates correctly regardless of where in the AC cycle the fault occurs."
-    },
-    {
-      question: "When recording trip times, note the:",
-      options: [
-        "Fastest time",
-        "Average of times",
-        "Longer of the two times",
-        "Shortest time only"
-      ],
-      correctIndex: 2,
-      explanation: "Record the longer trip time (worst case) as this determines compliance with maximum limits."
-    },
-    {
-      question: "S-type (time-delayed) RCDs have trip times that are:",
-      options: [
-        "Same as standard RCDs",
-        "Faster than standard RCDs",
-        "Longer than standard RCDs",
-        "Not measurable"
-      ],
-      correctIndex: 2,
-      explanation: "S-type RCDs are deliberately time-delayed for discrimination. They have different (longer) maximum trip times."
-    },
-    {
-      question: "If a 30mA RCD trips in 350ms at rated current:",
-      options: [
-        "This is acceptable",
-        "This is a failure",
-        "Retest at 180°",
-        "Check the fuse"
-      ],
-      correctIndex: 1,
-      explanation: "350ms exceeds the 300ms maximum. The RCD fails and should be replaced."
-    },
-    {
-      question: "The RCD test should be performed:",
-      options: [
-        "With circuit dead",
-        "With supply live to the RCD",
-        "Without an earth connection",
-        "Only on TT systems"
-      ],
-      correctIndex: 1,
-      explanation: "RCD testing requires live supply. The test injects current to simulate a fault and measures trip response."
-    },
-    {
-      question: "At 15mA (×½ of 30mA RCD), the expected result is:",
-      options: [
-        "Trip within 40ms",
-        "Trip within 300ms",
-        "No trip",
-        "Trip within 1 second"
-      ],
-      correctIndex: 2,
-      explanation: "At half rated current, the RCD should NOT trip. This confirms it won't nuisance trip at normal leakage levels."
-    }
-  ];
+  useSEO(TITLE, DESCRIPTION);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* iOS Header */}
-      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center justify-between px-4 h-14">
-          <button
-            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module6')}
-            className="flex items-center gap-2 text-elec-yellow active:opacity-70 transition-opacity touch-manipulation"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span className="text-base">Module 6</span>
-          </button>
-          <span className="text-sm text-white/50 font-medium">Section 2 of 5</span>
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="/study-centre/upskilling/inspection-testing/module-6">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
         </div>
-      </header>
+      </div>
 
-      <main className="px-4 py-6 pb-safe space-y-8 max-w-3xl mx-auto">
-        {/* Hero */}
-        <section className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-cyan-500/20 rounded-full">
-            <span className="text-cyan-400 text-sm font-medium">Module 6 • RCD Testing</span>
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+
+        {/* Centered Title */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 6 Section 2</span>
           </div>
-          <h1 className="text-ios-title-large font-bold text-white">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             RCD Trip Time Testing
           </h1>
-          <p className="text-ios-body text-white/70">
-            How to test and verify RCD trip times for compliance.
+          <p className="text-white/80">
+            How to test and verify RCD trip times for compliance
           </p>
-        </section>
+        </header>
 
-        {/* In 30 Seconds */}
-        <Card variant="ios-elevated" className="p-5">
-          <h2 className="text-ios-headline font-semibold text-white mb-4 flex items-center gap-2">
-            <Lightbulb className="w-5 h-5 text-elec-yellow" />
-            In 30 Seconds
-          </h2>
-          <ul className="space-y-3">
-            {keyPoints.map((point, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-cyan-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-base">{point}</span>
-              </li>
-            ))}
-          </ul>
-        </Card>
-
-        {/* Link to detailed guide */}
-        <Card variant="ios" className="p-5">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-white font-semibold">Detailed RCD Testing Guide</p>
-              <p className="text-white/60 text-sm">Complete procedures with diagrams</p>
-            </div>
-            <Button
-              variant="ios-primary"
-              size="sm"
-              onClick={() => navigate('/study-centre/upskilling/rcd-testing-guide')}
-              className="touch-manipulation"
-            >
-              <ExternalLink className="w-4 h-4 mr-1" />
-              View
-            </Button>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>x1 Test:</strong> Must trip within 300ms</li>
+              <li><strong>x5 Test:</strong> Must trip within 40ms</li>
+              <li><strong>x1/2 Test:</strong> Must NOT trip</li>
+              <li><strong>Record:</strong> Longer of two phase angles</li>
+            </ul>
           </div>
-        </Card>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Values</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>30mA x5:</strong> 150mA test current</li>
+              <li><strong>30mA x1/2:</strong> 15mA test current</li>
+              <li><strong>S-type x1:</strong> 130-500ms</li>
+              <li><strong>S-type x5:</strong> 50-150ms</li>
+            </ul>
+          </div>
+        </div>
 
         {/* Learning Outcomes */}
-        <section className="space-y-4">
-          <h2 className="text-ios-title-2 font-bold text-white">Learning Outcomes</h2>
-          <div className="grid grid-cols-2 gap-3">
-            {learningOutcomes.map((outcome, i) => (
-              <Card key={i} variant="ios" className="p-4">
-                <p className="text-elec-yellow font-semibold text-sm mb-1">{outcome.title}</p>
-                <p className="text-white/60 text-sm">{outcome.desc}</p>
-              </Card>
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Trip time requirements: 300ms at x1, 40ms at x5",
+              "How to perform RCD trip time tests",
+              "Test currents: x1/2, x1, x5 explained",
+              "Recording and documenting results",
+              "Interpreting pass/fail criteria",
+              "S-type RCD timing differences"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
             ))}
           </div>
         </section>
 
-        {/* Content Section 01 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">01</span>
-            <h2 className="text-ios-title-2 font-bold text-white">Trip Time Requirements</h2>
-          </div>
-          <Card variant="ios" className="p-5 space-y-4">
-            <div className="flex items-center gap-3 p-4 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
-              <Timer className="w-8 h-8 text-cyan-400" />
-              <div>
-                <p className="text-cyan-400 font-semibold">Maximum Trip Times</p>
-                <p className="text-white/60 text-sm">Per BS EN 61008/61009</p>
-              </div>
-            </div>
-            <div className="overflow-x-auto">
+        {/* Divider */}
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1: Trip Time Requirements */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Trip Time Requirements
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              RCDs must disconnect within specific time limits to provide effective protection.
+              BS EN 61008/61009 specify maximum trip times:
+            </p>
+
+            <div className="my-6 overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/20">
@@ -260,259 +275,250 @@ const InspectionTestingModule6Section2 = () => {
                 </thead>
                 <tbody className="text-white/80">
                   <tr className="border-b border-white/10">
-                    <td className="py-2">×½ IΔn</td>
+                    <td className="py-2">x1/2 IΔn</td>
                     <td className="text-center text-emerald-400">No trip</td>
                     <td className="text-center text-emerald-400">No trip</td>
                   </tr>
                   <tr className="border-b border-white/10">
-                    <td className="py-2">×1 IΔn</td>
+                    <td className="py-2">x1 IΔn</td>
                     <td className="text-center font-mono">≤300ms</td>
                     <td className="text-center font-mono">130-500ms</td>
                   </tr>
                   <tr>
-                    <td className="py-2">×5 IΔn</td>
+                    <td className="py-2">x5 IΔn</td>
                     <td className="text-center font-mono text-elec-yellow">≤40ms</td>
                     <td className="text-center font-mono">50-150ms</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </Card>
+          </div>
         </section>
 
-        {/* Content Section 02 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">02</span>
-            <h2 className="text-ios-title-2 font-bold text-white">Test Procedure</h2>
-          </div>
-          <Card variant="ios" className="p-5 space-y-4">
-            <div className="space-y-3">
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2: Test Procedure */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Test Procedure
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Follow this sequence for comprehensive RCD testing:
+            </p>
+
+            <div className="my-6 space-y-3">
               {[
                 { step: 1, text: "Connect RCD tester to circuit (L-N-E or socket)" },
                 { step: 2, text: "Ensure supply is on and RCD is in 'ON' position" },
-                { step: 3, text: "Select test current (×½, ×1, or ×5)" },
-                { step: 4, text: "Select phase angle (0° or 180°)" },
+                { step: 3, text: "Select test current (x1/2, x1, or x5)" },
+                { step: 4, text: "Select phase angle (0 degrees or 180 degrees)" },
                 { step: 5, text: "Press test button" },
                 { step: 6, text: "Record displayed trip time" },
                 { step: 7, text: "Reset RCD and repeat at other phase angle" }
               ].map((item) => (
                 <div key={item.step} className="flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold flex items-center justify-center flex-shrink-0">
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex items-center justify-center flex-shrink-0">
                     {item.step}
                   </span>
                   <span className="text-white/80">{item.text}</span>
                 </div>
               ))}
             </div>
-          </Card>
+          </div>
         </section>
 
-        <InlineCheck
-          question="A 30mA RCD must trip within what time at rated current?"
-          options={["40ms", "150ms", "300ms", "1000ms"]}
-          correctIndex={2}
-          explanation="At rated residual current (IΔn), RCDs must trip within 300ms maximum."
-        />
+        {/* Section 3: Test Currents Explained */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Test Currents Explained
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Each test current serves a specific purpose:
+            </p>
 
-        {/* Content Section 03 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">03</span>
-            <h2 className="text-ios-title-2 font-bold text-white">Test Currents Explained</h2>
-          </div>
-          <Card variant="ios" className="p-5 space-y-4">
-            <div className="space-y-3">
-              <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
-                <p className="text-emerald-400 font-semibold">×½ Test (15mA for 30mA RCD)</p>
+            <div className="my-6 space-y-4">
+              <div className="border-l-4 border-emerald-500 pl-4">
+                <p className="text-emerald-400 font-semibold">x1/2 Test (15mA for 30mA RCD)</p>
                 <p className="text-white/70 text-sm">Confirms RCD does NOT trip at normal leakage levels. No trip should occur.</p>
               </div>
-              <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-                <p className="text-elec-yellow font-semibold">×1 Test (30mA for 30mA RCD)</p>
+              <div className="border-l-4 border-elec-yellow pl-4">
+                <p className="text-elec-yellow font-semibold">x1 Test (30mA for 30mA RCD)</p>
                 <p className="text-white/70 text-sm">Standard trip test at rated current. Must trip within 300ms.</p>
               </div>
-              <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4">
-                <p className="text-cyan-400 font-semibold">×5 Test (150mA for 30mA RCD)</p>
+              <div className="border-l-4 border-cyan-500 pl-4">
+                <p className="text-cyan-400 font-semibold">x5 Test (150mA for 30mA RCD)</p>
                 <p className="text-white/70 text-sm">Fast trip test for higher faults. Must trip within 40ms.</p>
               </div>
             </div>
-          </Card>
+          </div>
         </section>
 
-        {/* Content Section 04 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">04</span>
-            <h2 className="text-ios-title-2 font-bold text-white">Phase Angle Testing</h2>
-          </div>
-          <Card variant="ios" className="p-5 space-y-4">
-            <p className="text-white/80">
-              Faults can occur at any point in the AC cycle. Testing at both <strong className="text-white">0°</strong> and <strong className="text-white">180°</strong> confirms reliable operation:
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 4: Phase Angle Testing */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Phase Angle Testing
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Faults can occur at any point in the AC cycle. Testing at both 0 degrees and 180 degrees
+              confirms reliable operation:
             </p>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-white/5 rounded-lg p-4 text-center">
-                <p className="text-elec-yellow font-bold text-2xl">0°</p>
+
+            <div className="grid grid-cols-2 gap-4 my-6 text-center">
+              <div className="p-4 rounded-lg bg-white/5">
+                <p className="text-elec-yellow font-bold text-2xl">0 deg</p>
                 <p className="text-white/60 text-sm">Positive half-cycle</p>
               </div>
-              <div className="bg-white/5 rounded-lg p-4 text-center">
-                <p className="text-cyan-400 font-bold text-2xl">180°</p>
+              <div className="p-4 rounded-lg bg-white/5">
+                <p className="text-cyan-400 font-bold text-2xl">180 deg</p>
                 <p className="text-white/60 text-sm">Negative half-cycle</p>
               </div>
             </div>
-            <div className="bg-white/5 rounded-lg p-4">
-              <p className="text-sm text-white/70">
-                <strong className="text-elec-yellow">Record:</strong> The longer of the two trip times - this is the worst-case performance.
-              </p>
-            </div>
-          </Card>
+
+            <p className="text-sm text-elec-yellow/70">
+              <strong>Record:</strong> The longer of the two trip times - this is the worst-case performance.
+            </p>
+          </div>
         </section>
 
-        <InlineCheck
-          question="At 5× rated current, a standard RCD must trip within:"
-          options={["40ms", "150ms", "300ms", "500ms"]}
-          correctIndex={0}
-          explanation="At 5×IΔn (e.g., 150mA for a 30mA RCD), trip time must not exceed 40ms."
-        />
-
-        {/* Content Section 05 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">05</span>
-            <h2 className="text-ios-title-2 font-bold text-white">Recording Results</h2>
-          </div>
-          <Card variant="ios" className="p-5 space-y-4">
-            <p className="text-white/80">
+        {/* Section 5: Recording Results */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Recording Results
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
               Document for each RCD:
             </p>
-            <ul className="space-y-2">
-              {[
-                "RCD rating (30mA, 100mA, etc.)",
-                "RCD type (AC, A, F, B, S-type)",
-                "Trip time at ×1 IΔn (both angles)",
-                "Trip time at ×5 IΔn (both angles)",
-                "×½ result (no trip confirmed)",
-                "Operating current if ramp tested"
-              ].map((item, i) => (
-                <li key={i} className="flex items-center gap-2 text-white/80">
-                  <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </Card>
+
+            <div className="my-6">
+              <ul className="text-sm text-white space-y-2 ml-4">
+                <li>RCD rating (30mA, 100mA, etc.)</li>
+                <li>RCD type (AC, A, F, B, S-type)</li>
+                <li>Trip time at x1 IΔn (both angles)</li>
+                <li>Trip time at x5 IΔn (both angles)</li>
+                <li>x1/2 result (no trip confirmed)</li>
+                <li>Operating current if ramp tested</li>
+              </ul>
+            </div>
+          </div>
         </section>
 
-        <InlineCheck
-          question="When recording trip times, note the:"
-          options={[
-            "Fastest time",
-            "Average of times",
-            "Longer of the two times",
-            "Shortest time only"
-          ]}
-          correctIndex={2}
-          explanation="Record the longer (worst case) trip time as this determines compliance with maximum limits."
-        />
+        <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Practical Tips */}
-        <section className="space-y-4">
-          <h2 className="text-ios-title-2 font-bold text-white flex items-center gap-2">
-            <Wrench className="w-6 h-6 text-elec-yellow" />
-            Practical Tips
-          </h2>
-          <Card variant="ios" className="p-5 space-y-4">
-            <div className="space-y-4">
-              <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
-                <p className="text-emerald-400 font-semibold mb-1">Warn Occupants</p>
-                <p className="text-white/70 text-sm">RCD testing will cut power. Notify building users and check sensitive equipment.</p>
-              </div>
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                <p className="text-blue-400 font-semibold mb-1">Test All Applicable</p>
-                <p className="text-white/70 text-sm">Test every RCD in the installation at both ×1 and ×5 with both phase angles.</p>
-              </div>
-              <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                <p className="text-amber-400 font-semibold mb-1">Near-Limit Times</p>
-                <p className="text-white/70 text-sm">If times are close to maximum, note concern. The RCD may be deteriorating.</p>
-              </div>
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Warn Occupants</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>RCD testing will cut power</li>
+                <li>Notify building users and check sensitive equipment</li>
+                <li>Allow time for equipment to restart after testing</li>
+              </ul>
             </div>
-          </Card>
+
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Test All Applicable</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Test every RCD in the installation</li>
+                <li>Test at both x1 and x5</li>
+                <li>Test at both phase angles (0 deg and 180 deg)</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Near-Limit Times</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>If times are close to maximum, note concern</li>
+                <li>The RCD may be deteriorating</li>
+                <li>Recommend monitoring or replacement</li>
+              </ul>
+            </div>
+          </div>
         </section>
 
         {/* FAQs */}
-        <section className="space-y-4">
-          <h2 className="text-ios-title-2 font-bold text-white flex items-center gap-2">
-            <HelpCircle className="w-6 h-6 text-elec-yellow" />
-            Frequently Asked Questions
-          </h2>
-          <div className="space-y-3">
-            {faqs.map((faq, i) => (
-              <Card
-                key={i}
-                variant="ios"
-                className="overflow-hidden"
-                onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
-              >
-                <button className="w-full p-4 flex items-center justify-between text-left touch-manipulation">
-                  <span className="text-white font-medium pr-4">{faq.q}</span>
-                  {expandedFaq === i ? (
-                    <ChevronUp className="w-5 h-5 text-elec-yellow flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-white/40 flex-shrink-0" />
-                  )}
-                </button>
-                {expandedFaq === i && (
-                  <div className="px-4 pb-4">
-                    <p className="text-white/70 text-sm">{faq.a}</p>
-                  </div>
-                )}
-              </Card>
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
             ))}
           </div>
         </section>
 
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
         {/* Reference Card */}
-        <UnitsPocketCard
-          title="RCD Trip Time Reference"
-          items={[
-            { term: "×1 IΔn Standard", definition: "≤300ms" },
-            { term: "×5 IΔn Standard", definition: "≤40ms" },
-            { term: "×½ IΔn", definition: "No trip" },
-            { term: "30mA ×5", definition: "150mA test current" },
-            { term: "S-type ×1", definition: "130-500ms" },
-            { term: "Phase Angles", definition: "Test 0° and 180°" }
-          ]}
-        />
+        <section className="mb-10">
+          <UnitsPocketCard />
+
+          <div className="mt-6 p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">RCD Trip Time Reference</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-white mb-1">Standard RCD</p>
+                <ul className="space-y-0.5">
+                  <li>x1 IΔn = ≤300ms</li>
+                  <li>x5 IΔn = ≤40ms</li>
+                  <li>x1/2 IΔn = No trip</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-white mb-1">30mA Test Currents</p>
+                <ul className="space-y-0.5">
+                  <li>x1/2 = 15mA</li>
+                  <li>x1 = 30mA</li>
+                  <li>x5 = 150mA</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Quiz */}
-        <section className="space-y-4">
-          <h2 className="text-ios-title-2 font-bold text-white flex items-center gap-2">
-            <BookOpen className="w-6 h-6 text-elec-yellow" />
-            Section Quiz
-          </h2>
+        <section className="mb-10">
           <Quiz
+            title="Test Your Knowledge"
             questions={quizQuestions}
-            onComplete={() => {}}
           />
         </section>
 
         {/* Navigation */}
-        <nav className="flex gap-3 pt-6 pb-safe">
-          <Button
-            variant="ios-secondary"
-            className="flex-1 h-12 touch-manipulation"
-            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module6/section1')}
-          >
-            Previous
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="/study-centre/upskilling/inspection-testing/module-6/section-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
           </Button>
-          <Button
-            variant="ios-primary"
-            className="flex-1 h-12 touch-manipulation"
-            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module6/section3')}
-          >
-            Next Section
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="/study-centre/upskilling/inspection-testing/module-6/section-3">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
           </Button>
         </nav>
-      </main>
+
+      </article>
     </div>
   );
 };

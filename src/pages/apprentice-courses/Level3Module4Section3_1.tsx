@@ -253,7 +253,7 @@ const Level3Module4Section3_1 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../level3-module4-section3">
+            <Link to="/study-centre/apprentice/level3-module4-section3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -592,7 +592,7 @@ const Level3Module4Section3_1 = () => {
             className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../level3-module4-section2-4">
+            <Link to="/study-centre/apprentice/level3-module4-section2-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Section 2.4
             </Link>
@@ -602,7 +602,7 @@ const Level3Module4Section3_1 = () => {
             className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../level3-module4-section3-2">
+            <Link to="/study-centre/apprentice/level3-module4-section3-2">
               Next: Lighting Circuit Faults
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

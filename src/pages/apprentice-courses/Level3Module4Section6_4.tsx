@@ -150,7 +150,7 @@ const Level3Module4Section6_4 = () => {
       <div className="sticky top-0 z-50 border-b border-white/10 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="text-white/70 hover:text-white active:text-white p-0 -ml-1" asChild>
-            <Link to="../level3-module4-section6">
+            <Link to="/study-centre/apprentice/level3-module4-section6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 6
             </Link>
@@ -690,13 +690,13 @@ const Level3Module4Section6_4 = () => {
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-8 border-t border-white/10">
           <Button variant="outline" className="border-white/20 text-black hover:bg-white/10 hover:text-white" asChild>
-            <Link to="../level3-module4-section6-3">
+            <Link to="/study-centre/apprentice/level3-module4-section6-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Costing and Explaining Remedial Work
             </Link>
           </Button>
           <Button className="bg-yellow-400 text-black hover:bg-yellow-500" asChild>
-            <Link to="../level3-module5">
+            <Link to="/study-centre/apprentice/level3-module5">
               Next: Module 5 - Advanced Topics
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

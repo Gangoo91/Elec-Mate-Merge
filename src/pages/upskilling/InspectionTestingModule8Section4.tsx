@@ -182,8 +182,8 @@ const InspectionTestingModule8Section4 = () => {
       <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
         <div className="flex items-center justify-between px-4 h-14">
           <button
-            onClick={() => navigate('/study-centre/apprentice/study/inspection-testing/module8')}
-            className="flex items-center gap-2 text-sky-400 active:opacity-70 transition-opacity touch-manipulation"
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-8')}
+            className="flex items-center gap-2 text-elec-yellow active:opacity-70 transition-opacity touch-manipulation"
           >
             <ArrowLeft className="w-5 h-5" />
             <span className="text-base">Module 8</span>
@@ -195,8 +195,8 @@ const InspectionTestingModule8Section4 = () => {
       <main className="px-4 py-6 pb-safe max-w-3xl mx-auto">
         {/* Hero Section */}
         <section className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-sky-500/20 rounded-full mb-4">
-            <span className="text-sky-400 text-sm font-medium">Module 8 • Visual Inspection & Documentation</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-elec-yellow/20 rounded-full mb-4">
+            <span className="text-elec-yellow text-sm font-medium">Module 8 • Visual Inspection & Documentation</span>
           </div>
           <h1 className="text-ios-title-large text-white font-bold mb-3">
             Electrical Installation Certificates
@@ -210,20 +210,20 @@ const InspectionTestingModule8Section4 = () => {
         <Card variant="ios-elevated" className="mb-8">
           <CardContent className="p-5">
             <div className="flex items-center gap-2 mb-4">
-              <Clock className="w-5 h-5 text-sky-400" />
+              <Clock className="w-5 h-5 text-elec-yellow" />
               <h2 className="text-white font-semibold text-lg">In 30 Seconds</h2>
             </div>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-sky-400 mt-2 shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 shrink-0" />
                 <span className="text-white/80 text-base">EIC required for new installations and additions</span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-sky-400 mt-2 shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 shrink-0" />
                 <span className="text-white/80 text-base">Three signatures: Designer, Constructor, Inspector/Tester</span>
               </li>
               <li className="flex items-start gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-sky-400 mt-2 shrink-0" />
+                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 shrink-0" />
                 <span className="text-white/80 text-base">Must include Schedule of Inspections and Test Results</span>
               </li>
             </ul>
@@ -233,15 +233,15 @@ const InspectionTestingModule8Section4 = () => {
         {/* Learning Outcomes */}
         <section className="mb-8">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-            <Target className="w-5 h-5 text-sky-400" />
+            <Target className="w-5 h-5 text-elec-yellow" />
             Learning Outcomes
           </h2>
           <div className="grid gap-3">
             {learningOutcomes.map((outcome, index) => (
               <Card key={index} variant="ios" className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-sky-500/20 flex items-center justify-center shrink-0">
-                    <outcome.icon className="w-5 h-5 text-sky-400" />
+                  <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center shrink-0">
+                    <outcome.icon className="w-5 h-5 text-elec-yellow" />
                   </div>
                   <span className="text-white/90 text-base">{outcome.text}</span>
                 </div>
@@ -253,7 +253,7 @@ const InspectionTestingModule8Section4 = () => {
         {/* Content Section 01 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-sky-400/30">01</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">When to Use an EIC</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -261,23 +261,23 @@ const InspectionTestingModule8Section4 = () => {
               <p>
                 An Electrical Installation Certificate is required when new circuits are created or new installations are completed:
               </p>
-              <div className="bg-white/5 rounded-xl p-4 border border-sky-500/20">
-                <h4 className="text-sky-400 font-semibold mb-2">EIC Required For</h4>
+              <div className="bg-white/5 rounded-xl p-4 border border-elec-yellow/20">
+                <h4 className="text-elec-yellow font-semibold mb-2">EIC Required For</h4>
                 <ul className="space-y-2 text-white/70">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Complete new electrical installations</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Additions to existing installations (new circuits)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Alterations that include new circuits</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Work notifiable under Building Regulations</span>
                   </li>
                 </ul>
@@ -289,7 +289,7 @@ const InspectionTestingModule8Section4 = () => {
         {/* Content Section 02 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-sky-400/30">02</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">The Three Signatures</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -298,16 +298,16 @@ const InspectionTestingModule8Section4 = () => {
                 An EIC requires three signatures, each confirming different responsibilities:
               </p>
               <div className="space-y-3">
-                <div className="bg-white/5 rounded-xl p-4 border border-sky-500/20">
-                  <h4 className="text-sky-400 font-semibold mb-2">1. Designer</h4>
+                <div className="bg-white/5 rounded-xl p-4 border border-elec-yellow/20">
+                  <h4 className="text-elec-yellow font-semibold mb-2">1. Designer</h4>
                   <p className="text-white/70 text-sm">Confirms the design complies with BS 7671, supply characteristics are checked and recorded, and the design will provide for safe operation.</p>
                 </div>
-                <div className="bg-white/5 rounded-xl p-4 border border-sky-500/20">
-                  <h4 className="text-sky-400 font-semibold mb-2">2. Constructor (Installer)</h4>
+                <div className="bg-white/5 rounded-xl p-4 border border-elec-yellow/20">
+                  <h4 className="text-elec-yellow font-semibold mb-2">2. Constructor (Installer)</h4>
                   <p className="text-white/70 text-sm">Confirms the installation has been constructed in accordance with BS 7671, using suitable materials and good workmanship.</p>
                 </div>
-                <div className="bg-white/5 rounded-xl p-4 border border-sky-500/20">
-                  <h4 className="text-sky-400 font-semibold mb-2">3. Inspector and Tester</h4>
+                <div className="bg-white/5 rounded-xl p-4 border border-elec-yellow/20">
+                  <h4 className="text-elec-yellow font-semibold mb-2">3. Inspector and Tester</h4>
                   <p className="text-white/70 text-sm">Confirms inspection and testing has been carried out in accordance with BS 7671, the results are attached, and the installation is safe for use.</p>
                 </div>
               </div>
@@ -327,7 +327,7 @@ const InspectionTestingModule8Section4 = () => {
         {/* Content Section 03 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-sky-400/30">03</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Certificate Sections</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -335,27 +335,27 @@ const InspectionTestingModule8Section4 = () => {
               <p>
                 The EIC has several sections that must be completed fully:
               </p>
-              <div className="bg-white/5 rounded-xl p-4 border border-sky-500/20">
-                <h4 className="text-sky-400 font-semibold mb-3">Key Sections</h4>
+              <div className="bg-white/5 rounded-xl p-4 border border-elec-yellow/20">
+                <h4 className="text-elec-yellow font-semibold mb-3">Key Sections</h4>
                 <ul className="space-y-2 text-white/70 text-sm">
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-0.5 text-sky-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-0.5 text-elec-yellow shrink-0" />
                     <span><strong>Details:</strong> Address, description, extent and limitations</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-0.5 text-sky-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-0.5 text-elec-yellow shrink-0" />
                     <span><strong>Supply:</strong> Type (TN-S, TN-C-S, TT), voltage, PSCC, Ze</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-0.5 text-sky-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-0.5 text-elec-yellow shrink-0" />
                     <span><strong>Installation:</strong> Type of wiring, earthing arrangements</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-0.5 text-sky-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-0.5 text-elec-yellow shrink-0" />
                     <span><strong>Signatures:</strong> All three with dates</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-0.5 text-sky-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-0.5 text-elec-yellow shrink-0" />
                     <span><strong>Recommendation:</strong> Next inspection date</span>
                   </li>
                 </ul>
@@ -367,7 +367,7 @@ const InspectionTestingModule8Section4 = () => {
         {/* Content Section 04 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-sky-400/30">04</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Extent and Limitations</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -375,23 +375,23 @@ const InspectionTestingModule8Section4 = () => {
               <p>
                 The 'extent and limitations' section is crucial - it defines exactly what the certificate covers:
               </p>
-              <div className="bg-white/5 rounded-xl p-4 border border-sky-500/20">
-                <h4 className="text-sky-400 font-semibold mb-2">What to Include</h4>
+              <div className="bg-white/5 rounded-xl p-4 border border-elec-yellow/20">
+                <h4 className="text-elec-yellow font-semibold mb-2">What to Include</h4>
                 <ul className="space-y-2 text-white/70">
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Specific description of work covered</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Circuit numbers or distribution boards included</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Any areas that could not be inspected</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ChevronRight className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <ChevronRight className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span>Any items agreed as exclusions</span>
                   </li>
                 </ul>
@@ -420,7 +420,7 @@ const InspectionTestingModule8Section4 = () => {
         {/* Content Section 05 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-sky-400/30">05</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Recommended Inspection Intervals</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -428,28 +428,28 @@ const InspectionTestingModule8Section4 = () => {
               <p>
                 The EIC should state a recommended maximum interval before the next periodic inspection:
               </p>
-              <div className="bg-white/5 rounded-xl p-4 border border-sky-500/20">
-                <h4 className="text-sky-400 font-semibold mb-3">Typical Intervals</h4>
+              <div className="bg-white/5 rounded-xl p-4 border border-elec-yellow/20">
+                <h4 className="text-elec-yellow font-semibold mb-3">Typical Intervals</h4>
                 <div className="space-y-2">
                   <div className="flex justify-between items-center py-2 border-b border-white/10">
                     <span className="text-white/70">Domestic</span>
-                    <span className="text-sky-400">5 years / change of occupancy</span>
+                    <span className="text-elec-yellow">5 years / change of occupancy</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-white/10">
                     <span className="text-white/70">Commercial</span>
-                    <span className="text-sky-400">5 years</span>
+                    <span className="text-elec-yellow">5 years</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-white/10">
                     <span className="text-white/70">Industrial</span>
-                    <span className="text-sky-400">3 years</span>
+                    <span className="text-elec-yellow">3 years</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-white/10">
                     <span className="text-white/70">Swimming pools</span>
-                    <span className="text-sky-400">1 year</span>
+                    <span className="text-elec-yellow">1 year</span>
                   </div>
                   <div className="flex justify-between items-center py-2">
                     <span className="text-white/70">Construction sites</span>
-                    <span className="text-sky-400">3 months</span>
+                    <span className="text-elec-yellow">3 months</span>
                   </div>
                 </div>
               </div>
@@ -460,7 +460,7 @@ const InspectionTestingModule8Section4 = () => {
         {/* Content Section 06 */}
         <section className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-bold text-sky-400/30">06</span>
+            <span className="text-3xl font-bold text-elec-yellow/30">06</span>
             <h2 className="text-xl font-semibold text-white">Distribution and Retention</h2>
           </div>
           <Card variant="ios" className="p-5">
@@ -468,23 +468,23 @@ const InspectionTestingModule8Section4 = () => {
               <p>
                 Correct distribution of the certificate is a regulatory requirement:
               </p>
-              <div className="bg-white/5 rounded-xl p-4 border border-sky-500/20">
-                <h4 className="text-sky-400 font-semibold mb-3">Distribution Requirements</h4>
+              <div className="bg-white/5 rounded-xl p-4 border border-elec-yellow/20">
+                <h4 className="text-elec-yellow font-semibold mb-3">Distribution Requirements</h4>
                 <ul className="space-y-2 text-white/70">
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span><strong>Original:</strong> To the person ordering the work (client)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span><strong>Copy:</strong> Retained by the contractor</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span><strong>Building Control:</strong> Copy if notifiable work</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 mt-1 text-sky-400 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 mt-1 text-elec-yellow shrink-0" />
                     <span><strong>Scheme Provider:</strong> If registered with competent person scheme</span>
                   </li>
                 </ul>
@@ -505,7 +505,7 @@ const InspectionTestingModule8Section4 = () => {
         {/* Practical Tips */}
         <section className="mb-8">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-            <Zap className="w-5 h-5 text-sky-400" />
+            <Zap className="w-5 h-5 text-elec-yellow" />
             Practical Tips
           </h2>
           <div className="space-y-3">
@@ -595,7 +595,7 @@ const InspectionTestingModule8Section4 = () => {
             variant="ios-primary"
             size="lg"
             className="w-full touch-target bg-sky-500 hover:bg-sky-600"
-            onClick={() => navigate('/study-centre/apprentice/study/inspection-testing/module8/section5')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-8/section-5')}
           >
             Continue to Section 5
             <ChevronRight className="w-5 h-5 ml-2" />
@@ -604,7 +604,7 @@ const InspectionTestingModule8Section4 = () => {
             variant="ios-secondary"
             size="lg"
             className="w-full touch-target"
-            onClick={() => navigate('/study-centre/apprentice/study/inspection-testing/module8')}
+            onClick={() => navigate('/study-centre/upskilling/inspection-testing/module-8')}
           >
             Back to Module 8
           </Button>

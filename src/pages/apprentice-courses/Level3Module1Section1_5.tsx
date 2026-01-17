@@ -163,7 +163,7 @@ const Level3Module1Section1_5 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           <Link
-            to="../level3-module1-section1"
+            to="/study-centre/apprentice/level3-module1-section1"
             className="inline-flex items-center gap-2 text-white/70 hover:text-white active:text-elec-yellow text-sm sm:text-base min-h-[44px] touch-manipulation transition-colors"
           >
             <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -701,14 +701,14 @@ const Level3Module1Section1_5 = () => {
           {/* NAVIGATION */}
           <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
             <Link
-              to="../level3-module1-section1"
+              to="/study-centre/apprentice/level3-module1-section1"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 active:scale-[0.98] min-h-[48px] touch-manipulation transition-all"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Section 1
             </Link>
             <Link
-              to="../level3-module1-section1-6"
+              to="/study-centre/apprentice/level3-module1-section1-6"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-elec-yellow text-[#1a1a1a] font-medium hover:bg-elec-yellow/90 active:scale-[0.98] min-h-[48px] touch-manipulation transition-all"
             >
               Next: 1.6 Working at Height
