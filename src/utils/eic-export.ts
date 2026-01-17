@@ -9,8 +9,6 @@ export async function exportEICScheduleToInspectionApp(
   schedule: EICScheduleOfTests
 ): Promise<{ success: boolean; scheduleId?: string; error?: string }> {
   try {
-    console.log("📤 Exporting EIC Schedule to Inspection App...", schedule);
-    
     const { data: user } = await supabase.auth.getUser();
     if (!user.user) {
       throw new Error("User not authenticated");
@@ -35,9 +33,7 @@ export async function exportEICScheduleToInspectionApp(
       console.error("❌ Error exporting EIC schedule:", error);
       throw error;
     }
-    
-    console.log("✅ EIC Schedule exported successfully:", data);
-    
+
     const scheduleId = (data as any)?.id || "unknown";
     
     toast({

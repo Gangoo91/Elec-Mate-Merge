@@ -62,10 +62,36 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   const orientation = useOrientation();
 
   // Voice tool call handler - connects ElevenLabs agent to component state
-  // Handles fill_eic tool with actions: add_circuit, update_field, next, previous, select, delete_circuit
+  // Handles fill_schedule_of_tests and bulk_fill_circuits tools
   const handleVoiceToolCall = useCallback((toolName: string, params: Record<string, unknown>): string => {
-    // Handle fill_eic tool (the single tool for all EIC actions)
-    if (toolName === 'fill_eic' || toolName === 'fill_eicr') {
+    // Handle bulk_fill_circuits tool
+    if (toolName === 'bulk_fill_circuits') {
+      const field = resolveFieldName(params.field as string) || params.field as string;
+      const value = resolveDropdownValue(field, params.value as string);
+      const onlyEmpty = params.only_empty as boolean;
+      const board = params.board as string | undefined;
+
+      let count = 0;
+      setTestResults(prev => prev.map(circuit => {
+        // Board filter
+        if (board) {
+          const isOnBoard = circuit.protectiveDeviceLocation?.toLowerCase().includes(board.toLowerCase()) ||
+                            circuit.notes?.toLowerCase().includes(board.toLowerCase());
+          if (!isOnBoard) return circuit;
+        }
+        // Only empty filter
+        if (onlyEmpty && circuit[field as keyof TestResult]) return circuit;
+
+        count++;
+        return { ...circuit, [field]: value };
+      }));
+
+      toast.success(`Set ${field} to ${value} on ${count} circuits`);
+      return `Set ${field} to ${value} on ${count} circuits`;
+    }
+
+    // Handle fill_schedule_of_tests or legacy fill_eic/fill_eicr tools
+    if (toolName === 'fill_schedule_of_tests' || toolName === 'fill_eic' || toolName === 'fill_eicr') {
       const action = params.action as string;
 
       switch (action) {
@@ -144,18 +170,94 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
             : selectedCircuitIndex;
 
           if (targetIndex >= 0 && targetIndex < testResults.length) {
+            const circuit = testResults[targetIndex];
+            let warning = '';
+
+            // Check for high/low readings and flag warnings
+            if (resolvedField === 'zs' && value) {
+              const zsValue = parseFloat(value);
+              const maxZs = parseFloat(circuit.maxZs || '0');
+              if (maxZs > 0 && zsValue > maxZs) {
+                warning = ` WARNING: Zs ${zsValue}Ω EXCEEDS max ${maxZs}Ω!`;
+                toast.error(`Zs ${zsValue}Ω exceeds maximum ${maxZs}Ω - circuit may not disconnect in time!`);
+              }
+            }
+
+            if ((resolvedField === 'insulationLiveEarth' || resolvedField === 'insulationLiveNeutral' || resolvedField === 'insulationResistance') && value) {
+              const irValue = parseFloat(value.replace('>', '').replace('<', ''));
+              if (!isNaN(irValue) && irValue < 1) {
+                warning = ` WARNING: Insulation ${irValue}MΩ BELOW minimum 1MΩ - FAIL!`;
+                toast.error(`Insulation resistance ${irValue}MΩ is below minimum 1MΩ - FAIL!`);
+              } else if (!isNaN(irValue) && irValue < 2) {
+                warning = ` Note: Insulation ${irValue}MΩ is low (min 1MΩ)`;
+                toast.warning(`Insulation resistance ${irValue}MΩ is acceptable but low`);
+              }
+            }
+
+            if (resolvedField === 'rcdOneX' && value) {
+              const tripTime = parseFloat(value);
+              if (!isNaN(tripTime) && tripTime > 300) {
+                warning = ` WARNING: RCD trip ${tripTime}ms EXCEEDS 300ms - FAIL!`;
+                toast.error(`RCD trip time ${tripTime}ms exceeds 300ms limit - FAIL!`);
+              } else if (!isNaN(tripTime) && tripTime > 200) {
+                warning = ` Note: RCD trip ${tripTime}ms is high (typical <40ms)`;
+                toast.warning(`RCD trip time ${tripTime}ms is high but within limits`);
+              }
+            }
+
+            if (resolvedField === 'r1r2' && value) {
+              const r1r2Value = parseFloat(value);
+              if (!isNaN(r1r2Value) && r1r2Value > 1.5) {
+                warning = ` WARNING: R1+R2 ${r1r2Value}Ω is very high - check connections!`;
+                toast.warning(`R1+R2 ${r1r2Value}Ω is high - verify connections`);
+              }
+            }
+
+            if (resolvedField === 'pfc' && value) {
+              const pfcValue = parseFloat(value);
+              if (!isNaN(pfcValue) && pfcValue < 1) {
+                warning = ` Note: PFC ${pfcValue}kA is low - check supply`;
+                toast.info(`PFC ${pfcValue}kA - verify adequate for protective devices`);
+              }
+            }
+
             setTestResults(prev => {
               const updated = [...prev];
               updated[targetIndex] = { ...updated[targetIndex], [resolvedField]: value };
               return updated;
             });
             toast.success(`Set ${resolvedField} to ${value}`);
-            return `Set ${resolvedField} to ${value} on circuit ${targetIndex + 1}`;
+            return `Set ${resolvedField} to ${value} on circuit ${targetIndex + 1}${warning}`;
           }
           return 'No circuit selected - add a circuit first';
         }
 
-        case 'next': {
+        case 'update_multiple_fields': {
+          const circuitNum = params.circuit_number as number | undefined;
+          const fields = params.fields as Record<string, string> | undefined;
+
+          const targetIndex = circuitNum !== undefined
+            ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`)
+            : selectedCircuitIndex;
+
+          if (targetIndex >= 0 && targetIndex < testResults.length && fields) {
+            const resolvedFields: Partial<TestResult> = {};
+            Object.entries(fields).forEach(([key, val]) => {
+              const resolvedKey = resolveFieldName(key) || key;
+              resolvedFields[resolvedKey as keyof TestResult] = resolveDropdownValue(resolvedKey, val);
+            });
+
+            setTestResults(prev => prev.map((circuit, idx) =>
+              idx === targetIndex ? { ...circuit, ...resolvedFields } : circuit
+            ));
+            toast.success(`Updated ${Object.keys(fields).length} fields on circuit ${circuitNum || selectedCircuitIndex + 1}`);
+            return `Updated ${Object.keys(fields).length} fields`;
+          }
+          return 'Circuit not found or no fields provided';
+        }
+
+        case 'next':
+        case 'next_circuit': {
           if (selectedCircuitIndex < testResults.length - 1) {
             const newIndex = selectedCircuitIndex + 1;
             setSelectedCircuitIndex(newIndex);
@@ -165,7 +267,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           return 'Already on the last circuit';
         }
 
-        case 'previous': {
+        case 'previous':
+        case 'previous_circuit': {
           if (selectedCircuitIndex > 0) {
             const newIndex = selectedCircuitIndex - 1;
             setSelectedCircuitIndex(newIndex);
@@ -175,7 +278,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           return 'Already on the first circuit';
         }
 
-        case 'select': {
+        case 'select':
+        case 'select_circuit': {
           const num = params.circuit_number as number;
           const idx = testResults.findIndex(r =>
             r.circuitNumber === String(num) || r.circuitDesignation === `C${num}`
@@ -186,6 +290,19 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
             return `Selected circuit ${num}`;
           }
           return `Circuit ${num} not found`;
+        }
+
+        case 'get_status': {
+          const summary = testResults.map((c, i) => {
+            const missing: string[] = [];
+            if (!c.zs) missing.push('Zs');
+            if (!c.r1r2) missing.push('R1+R2');
+            if (!c.insulationLiveEarth && !c.insulationResistance) missing.push('IR');
+            if (!c.polarity) missing.push('polarity');
+            return `C${i + 1}: ${missing.length === 0 ? 'Complete' : `Missing ${missing.length}`}`;
+          });
+          const complete = testResults.filter(c => c.zs && c.r1r2 && (c.insulationLiveEarth || c.insulationResistance) && c.polarity).length;
+          return `EIC: ${testResults.length} circuits, ${complete} complete. ${summary.join('. ')}`;
         }
 
         case 'delete_circuit': {

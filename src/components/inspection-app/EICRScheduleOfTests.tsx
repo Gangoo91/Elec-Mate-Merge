@@ -65,8 +65,6 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
 
   // Voice tool call handler for ElevenLabs integration
   const handleVoiceToolCall = useCallback((toolName: string, params: Record<string, unknown>): string => {
-    console.log('[Voice] Tool call:', toolName, params);
-
     if (toolName === 'fill_schedule_of_tests') {
       const action = params.action as string;
 
@@ -143,11 +141,62 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
             : selectedCircuitIndex;
 
           if (targetIndex >= 0 && targetIndex < testResults.length) {
+            const circuit = testResults[targetIndex];
+            let warning = '';
+
+            // Check for high/low readings and flag warnings
+            if (field === 'zs' && value) {
+              const zsValue = parseFloat(value);
+              const maxZs = parseFloat(circuit.maxZs || '0');
+              if (maxZs > 0 && zsValue > maxZs) {
+                warning = ` WARNING: Zs ${zsValue}Ω EXCEEDS max ${maxZs}Ω!`;
+                toast.error(`Zs ${zsValue}Ω exceeds maximum ${maxZs}Ω - circuit may not disconnect in time!`);
+              }
+            }
+
+            if ((field === 'insulationLiveEarth' || field === 'insulationLiveNeutral' || field === 'insulationResistance') && value) {
+              const irValue = parseFloat(value.replace('>', '').replace('<', ''));
+              if (!isNaN(irValue) && irValue < 1) {
+                warning = ` WARNING: Insulation ${irValue}MΩ BELOW minimum 1MΩ - FAIL!`;
+                toast.error(`Insulation resistance ${irValue}MΩ is below minimum 1MΩ - FAIL!`);
+              } else if (!isNaN(irValue) && irValue < 2) {
+                warning = ` Note: Insulation ${irValue}MΩ is low (min 1MΩ)`;
+                toast.warning(`Insulation resistance ${irValue}MΩ is acceptable but low`);
+              }
+            }
+
+            if (field === 'rcdOneX' && value) {
+              const tripTime = parseFloat(value);
+              if (!isNaN(tripTime) && tripTime > 300) {
+                warning = ` WARNING: RCD trip ${tripTime}ms EXCEEDS 300ms - FAIL!`;
+                toast.error(`RCD trip time ${tripTime}ms exceeds 300ms limit - FAIL!`);
+              } else if (!isNaN(tripTime) && tripTime > 200) {
+                warning = ` Note: RCD trip ${tripTime}ms is high (typical <40ms)`;
+                toast.warning(`RCD trip time ${tripTime}ms is high but within limits`);
+              }
+            }
+
+            if (field === 'r1r2' && value) {
+              const r1r2Value = parseFloat(value);
+              if (!isNaN(r1r2Value) && r1r2Value > 1.5) {
+                warning = ` WARNING: R1+R2 ${r1r2Value}Ω is very high - check connections!`;
+                toast.warning(`R1+R2 ${r1r2Value}Ω is high - verify connections`);
+              }
+            }
+
+            if (field === 'pfc' && value) {
+              const pfcValue = parseFloat(value);
+              if (!isNaN(pfcValue) && pfcValue < 1) {
+                warning = ` Note: PFC ${pfcValue}kA is low - check supply`;
+                toast.info(`PFC ${pfcValue}kA - verify adequate for protective devices`);
+              }
+            }
+
             setTestResults(prev => prev.map((circuit, idx) =>
               idx === targetIndex ? { ...circuit, [field]: value } : circuit
             ));
             toast.success(`Set ${field} to ${value} on circuit ${circuitNum || selectedCircuitIndex + 1}`);
-            return `Set ${field} to ${value}`;
+            return `Set ${field} to ${value}${warning}`;
           }
           return 'Circuit not found';
         }
@@ -1678,7 +1727,6 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  console.log('Voice button clicked directly!');
                   toggleVoice();
                 }}
                 disabled={voiceConnecting}

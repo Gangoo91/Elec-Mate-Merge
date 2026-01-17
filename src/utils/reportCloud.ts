@@ -116,8 +116,6 @@ export const reportCloud = {
       if (error) {
         // Handle duplicate certificate number (unique constraint violation)
         if (error.code === '23505' && error.message.includes('uniq_reports_user_cert_active')) {
-          console.log('[reportCloud] Duplicate certificate detected, finding existing report...');
-          
           // Find existing report by certificate number
           const existingReport = await reportCloud.findReportByCertificateNumber(
             userId, 
@@ -125,7 +123,6 @@ export const reportCloud = {
           );
           
           if (existingReport) {
-            console.log('[reportCloud] Updating existing report instead:', existingReport.report_id);
             // Update the existing report
             const updateResult = await reportCloud.updateReport(
               existingReport.report_id,
@@ -142,8 +139,7 @@ export const reportCloud = {
         
         throw error;
       }
-      
-      console.log('[reportCloud] Report created:', newReport.report_id);
+
       return { success: true, reportId: newReport.report_id };
     } catch (error) {
       console.error('[reportCloud] Failed to create report:', error);
@@ -181,8 +177,7 @@ export const reportCloud = {
         .eq('user_id', userId);
 
       if (error) throw error;
-      
-      console.log('[reportCloud] Report updated:', reportId);
+
       return { success: true };
     } catch (error) {
       console.error('[reportCloud] Failed to update report:', error);
@@ -216,8 +211,6 @@ export const reportCloud = {
    */
   softDeleteReport: async (reportId: string, userId: string): Promise<{ success: boolean; error?: any }> => {
     try {
-      console.log('[reportCloud] Soft deleting report:', reportId, 'for user:', userId);
-      
       // Call the secure RPC function that bypasses RLS "returning" issues
       const { data, error } = await supabase
         .rpc('soft_delete_report', {
@@ -257,7 +250,6 @@ export const reportCloud = {
         };
       }
       
-      console.log('[reportCloud] Report deleted successfully:', reportId, result.message);
       return { success: true };
     } catch (error) {
       console.error('[reportCloud] Failed to soft delete report:', error);
@@ -386,7 +378,6 @@ export const reportCloud = {
       const conflict = await reportCloud.checkVersionConflict(reportId, userId, expectedVersion);
 
       if (conflict.hasConflict) {
-        console.log('[reportCloud] Version conflict detected:', conflict);
         return { success: false, conflict };
       }
 
@@ -416,7 +407,6 @@ export const reportCloud = {
 
       if (error) throw error;
 
-      console.log('[reportCloud] Report updated with version check:', reportId);
       return { success: true };
     } catch (error) {
       console.error('[reportCloud] Failed to update report with version check:', error);

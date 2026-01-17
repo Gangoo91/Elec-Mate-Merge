@@ -43,22 +43,10 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     }
   });
 
-  console.log('[formatEICRJson] Input formData keys:', Object.keys(formData));
-  console.log('[formatEICRJson] Critical fields check:', {
-    clientName: formData.clientName || 'MISSING',
-    installationAddress: formData.installationAddress || 'MISSING',
-    inspectorName: formData.inspectorName || 'MISSING'
-  });
-
   // Format inspection items as flat array for checklist
   const formatInspectionItems = () => {
     // Get raw value directly - don't use get() which stringifies objects
     const rawItems = formData['inspectionItems'];
-    console.log('[formatInspectionItems] >>> RAW inspectionItems:', {
-      type: typeof rawItems,
-      isArray: Array.isArray(rawItems),
-      length: Array.isArray(rawItems) ? rawItems.length : 'N/A'
-    });
 
     let parsed;
     try {
@@ -69,14 +57,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     }
 
     if (!Array.isArray(parsed)) {
-      console.warn('[formatInspectionItems] parsed is NOT an array:', typeof parsed);
       return [];
-    }
-
-    console.log('[formatInspectionItems] Parsed array length:', parsed.length);
-    if (parsed.length > 0) {
-      console.log('[formatInspectionItems] First item sample:', JSON.stringify(parsed[0]));
-      console.log('[formatInspectionItems] Outcomes sample:', parsed.slice(0, 5).map((i: any) => i.outcome));
     }
 
     const result = parsed.map((item: any) => {
@@ -105,10 +86,6 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       };
     });
 
-    console.log('[formatInspectionItems] >>> RESULT:', result.length, 'items');
-    if (result.length > 0) {
-      console.log('[formatInspectionItems] First formatted item:', JSON.stringify(result[0]));
-    }
     return result;
   };
 
@@ -147,11 +124,8 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       return {};
     }
     if (!Array.isArray(parsed)) {
-      console.warn('[formatFlatInspection] Not an array, returning empty');
       return {};
     }
-
-    console.log('[formatFlatInspection] Processing', parsed.length, 'items');
 
     const result: Record<string, string> = {};
 
@@ -173,7 +147,6 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       result[`${prefix}_lim`] = outcome === "limitation" || outcome === "LIM" ? "LIM" : "";
     });
 
-    console.log('[formatFlatInspection] Created', Object.keys(result).length, 'flat keys');
     return result;
   };
 
@@ -322,7 +295,6 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     
     if (!uuidRegex.test(reportId)) {
       // reportId is the text report_id field, need to fetch the UUID
-      console.log('[formatDefects] Resolving UUID for report_id:', reportId);
       const { data: report } = await supabase
         .from('reports')
         .select('id')
@@ -332,7 +304,6 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
 
       if (report?.id) {
         reportUuid = report.id;
-        console.log('[formatDefects] Resolved UUID:', reportUuid);
       } else {
         console.warn('[formatDefects] Could not resolve report UUID for:', reportId, '- photos will not be loaded');
       }
@@ -350,10 +321,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
         console.error('[formatDefects] Error fetching photos:', error);
       } else {
         photos = data || [];
-        console.log('[formatDefects] Found', photos.length, 'photos for report UUID:', reportUuid);
       }
-    } else {
-      console.log('[formatDefects] Skipping photo fetch - no valid UUID');
     }
     
     return defects.map((defect: any) => {
@@ -396,8 +364,6 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
   // NESTED, GROUPED structure for improved organization
   // Put flat inspection keys FIRST to avoid truncation issues
   const flatKeys = formatFlatInspection();
-  console.log('[formatEICRJson] Flat keys object has', Object.keys(flatKeys).length, 'keys');
-  console.log('[formatEICRJson] Sample flat key insp_1_0_acc:', flatKeys['insp_1_0_acc']);
 
   return {
     // Spread flat keys at the TOP of the object

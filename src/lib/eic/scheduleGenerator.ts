@@ -31,7 +31,10 @@ export interface CircuitDesign {
     kaRating: number;
   };
   rcdProtected: boolean;
+  rcdRating?: number; // RCD rating in mA (30, 100, 300)
   afddRequired?: boolean;
+  circuitTopology?: 'ring' | 'radial'; // For socket circuits
+  isRingCircuit?: boolean; // Alternative flag for ring circuits
   calculationResults: {
     zs: number;
     maxZs: number;
@@ -50,14 +53,64 @@ export interface SiteInfo {
 
 // BS 7671 Installation Method Reference Codes
 const INSTALLATION_METHOD_CODES: Record<string, string> = {
+  // Standard method names
   'Method A': '100',
   'Method B': '101',
   'Method C': '103',
+  // Common descriptions
   'Clipped Direct': '103',
+  'clipped-direct': '103',
+  'clipped direct': '103',
   'In Conduit': '100',
+  'in-conduit': '100',
+  'in conduit': '100',
   'In Trunking': '101',
-  'Buried Direct': '120'
+  'in-trunking': '101',
+  'in trunking': '101',
+  'Buried Direct': '120',
+  'buried': '120',
+  'buried-direct': '120',
+  // BS 7671 Table 4A1 reference methods
+  'A1': 'A1',  // Enclosed in conduit in thermally insulated wall
+  'A2': 'A2',  // Enclosed conduit on wall
+  'B': 'B',    // Enclosed in conduit on wall
+  'B1': 'B1',  // Enclosed in conduit on wooden wall
+  'B2': 'B2',  // Enclosed in conduit on masonry wall
+  'C': 'C',    // Direct in thermal insulation
+  'enclosed-in-wall': 'A1',
+  'on-wall': 'A2',
+  'free-air': '102',
+  'free air': '102',
+  // Reference method numbers
+  '100': '100',
+  '101': '101',
+  '102': '102',
+  '103': '103',
+  '120': '120',
 };
+
+// BS Standard based on protective device type
+function getBSStandard(deviceType: string): string {
+  const standards: Record<string, string> = {
+    'MCB': 'BS EN 60898',
+    'RCBO': 'BS EN 61009',
+    'BS88': 'BS 88-2',
+    'BS88-2': 'BS 88-2',
+    'BS88-3': 'BS 88-3',
+    'MCCB': 'BS EN 60947-2',
+    'BS1361': 'BS 1361',
+    'BS3036': 'BS 3036',
+    'HRC': 'BS 88-2',
+  };
+  // Check for device type (case-insensitive)
+  const upperType = deviceType?.toUpperCase() || '';
+  for (const [key, value] of Object.entries(standards)) {
+    if (upperType.includes(key.toUpperCase())) {
+      return value;
+    }
+  }
+  return 'BS EN 60898'; // Default to MCB standard
+}
 
 function getReferenceMethodCode(method?: string): string {
   if (!method) return '103'; // Default to Method C
@@ -116,44 +169,63 @@ export function generateEICSchedule(
   projectInfo: ProjectInfo,
   siteInfo: SiteInfo
 ): EICScheduleOfTests {
-  const circuits: EICCircuitData[] = multiCircuit.circuits.map((circuit, index) => ({
-    circuitNumber: String(index + 1),
-    phaseType: circuit.phases.includes('three') ? 'three' : 'single',
-    circuitDescription: circuit.name,
-    referenceMethod: getReferenceMethodCode(circuit.calculationResults.installationMethod),
-    pointsServed: String(getPointsServed(circuit.loadType)),
-    liveSize: `${circuit.cableSize ?? 2.5}`,
-    cpcSize: `${circuit.cpcSize ?? 1.5}`,
-    protectiveDeviceType: circuit.protectionDevice?.type ?? 'MCB',
-    protectiveDeviceCurve: circuit.protectionDevice?.curve ?? 'B',
-    protectiveDeviceRating: String(circuit.protectionDevice?.rating ?? 6),
-    protectiveDeviceKaRating: String(circuit.protectionDevice?.kaRating ?? 6),
-    bsStandard: 'BS 7671:2018+A3:2024',
+  const circuits: EICCircuitData[] = multiCircuit.circuits.map((circuit, index) => {
+    const deviceType = circuit.protectionDevice?.type ?? 'MCB';
+    // Detect ring circuit from either flag or topology
+    const isRing = circuit.isRingCircuit || circuit.circuitTopology === 'ring';
+    // Get actual RCD rating or default to 30mA
+    const rcdRatingValue = circuit.rcdRating ? `${circuit.rcdRating}mA` : '30mA';
 
-    // Pre-calculated expected values
-    r1r2: calculateExpectedR1R2(circuit.cableSize, circuit.cpcSize, circuit.cableLength),
-    insulationTestVoltage: '500V DC',
-    insulationResistance: '≥1.0 MΩ (expected)',
-    polarity: 'Correct (verify on-site)',
-    zs: String(circuit.calculationResults.zs),
-    maxZs: String(circuit.calculationResults.maxZs),
+    const baseCircuit: EICCircuitData = {
+      circuitNumber: String(index + 1),
+      phaseType: circuit.phases.includes('three') ? 'three' : 'single',
+      circuitDescription: circuit.name,
+      referenceMethod: getReferenceMethodCode(circuit.calculationResults.installationMethod),
+      pointsServed: String(getPointsServed(circuit.loadType)),
+      liveSize: `${circuit.cableSize ?? 2.5}`,
+      cpcSize: `${circuit.cpcSize ?? 1.5}`,
+      protectiveDeviceType: deviceType,
+      protectiveDeviceCurve: circuit.protectionDevice?.curve ?? 'B',
+      protectiveDeviceRating: String(circuit.protectionDevice?.rating ?? 6),
+      protectiveDeviceKaRating: String(circuit.protectionDevice?.kaRating ?? 6),
+      bsStandard: getBSStandard(deviceType),
 
-    // RCD fields if applicable
-    ...(circuit.rcdProtected && {
-      rcdRating: circuit.protectionDevice.type === 'RCBO' ? '30mA' : undefined,
-      rcdOneX: '< 200ms @ 1x IΔn',
-      rcdTestButton: 'Pass'
-    }),
+      // Pre-calculated expected values
+      r1r2: calculateExpectedR1R2(circuit.cableSize, circuit.cpcSize, circuit.cableLength),
+      insulationTestVoltage: '500V DC',
+      insulationResistance: '≥1.0 MΩ (expected)',
+      polarity: 'Correct (verify on-site)',
+      zs: String(circuit.calculationResults.zs),
+      maxZs: String(circuit.calculationResults.maxZs),
 
-    // AFDD if required
-    ...(circuit.afddRequired && {
-      afddTest: 'Pass (arc detection functional)'
-    }),
+      // To be tested on-site
+      pfc: 'To be tested',
+      functionalTesting: 'To be completed'
+    };
 
-    // To be tested on-site
-    pfc: 'To be tested',
-    functionalTesting: 'To be completed'
-  }));
+    // Add ring circuit fields if applicable
+    if (isRing) {
+      baseCircuit.ringR1 = 'To be tested';
+      baseCircuit.ringRn = 'To be tested';
+      baseCircuit.ringR2 = 'To be tested';
+      baseCircuit.ringContinuityLive = 'To be tested';
+      baseCircuit.ringContinuityNeutral = 'To be tested';
+    }
+
+    // Add RCD fields if applicable
+    if (circuit.rcdProtected) {
+      baseCircuit.rcdRating = rcdRatingValue;
+      baseCircuit.rcdOneX = '< 200ms @ 1x IΔn';
+      baseCircuit.rcdTestButton = 'To be tested';
+    }
+
+    // Add AFDD if required
+    if (circuit.afddRequired) {
+      baseCircuit.afddTest = 'To be tested';
+    }
+
+    return baseCircuit;
+  });
 
   return {
     installationId: multiCircuit.installationId,

@@ -26,6 +26,8 @@ import {
 import { useDesignedCircuit, useUpdateDesignedCircuitStatus } from '@/hooks/useDesignedCircuits';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { reportCloud } from '@/utils/reportCloud';
+import { supabase } from '@/integrations/supabase/client';
 
 // Import EIC form components
 import EICFormTabs from '@/components/inspection/eic/EICFormTabs';
@@ -82,6 +84,7 @@ export default function EICCertificate() {
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [hasLoadedDesign, setHasLoadedDesign] = useState(false);
+  const [savedReportId, setSavedReportId] = useState<string | null>(id !== 'new' ? id || null : null);
 
   // Hooks for tabs and observations
   const tabProps = useEICTabs(formData);
@@ -170,30 +173,140 @@ export default function EICCertificate() {
   const handleSaveDraft = async () => {
     setIsSaving(true);
     try {
-      // TODO: Implement save to database
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      toast.success('Draft saved');
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast.error('Please sign in to save');
+        return;
+      }
+
+      // Prepare data with status
+      const dataToSave = {
+        ...formData,
+        status: 'draft'
+      };
+
+      if (savedReportId) {
+        // Update existing report
+        const result = await reportCloud.updateReport(savedReportId, user.id, dataToSave);
+        if (result.success) {
+          toast.success('Draft saved');
+        } else {
+          throw new Error(result.error?.message || 'Failed to save');
+        }
+      } else {
+        // Create new report
+        const result = await reportCloud.createReport(user.id, 'eic', dataToSave);
+        if (result.success && result.reportId) {
+          setSavedReportId(result.reportId);
+          toast.success('Draft saved');
+          // Update URL without full navigation
+          window.history.replaceState(null, '', `/electrician/inspection/eic/${result.reportId}`);
+        } else {
+          throw new Error(result.error?.message || 'Failed to create report');
+        }
+      }
     } catch (error) {
-      toast.error('Failed to save draft');
+      toast.error(error instanceof Error ? error.message : 'Failed to save draft');
     } finally {
       setIsSaving(false);
     }
   };
 
-  // Generate certificate
+  // Generate certificate PDF
   const handleGenerateCertificate = async () => {
     setIsGenerating(true);
     try {
-      // TODO: Implement PDF generation
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      toast.success('Certificate generated');
+      // First save the current data
+      await handleSaveDraft();
+
+      // Prepare PDF data
+      const pdfData = {
+        metadata: {
+          certificate_number: formData.certificateNumber || `EIC-${Date.now()}`
+        },
+        client_details: {
+          client_name: formData.clientName || '',
+          client_address: formData.clientAddress || '',
+          client_phone: formData.clientTelephone || '',
+          client_email: formData.clientEmail || ''
+        },
+        installation_details: {
+          address: formData.installationAddress || '',
+          description: formData.description || '',
+          installation_date: formData.installationDate || ''
+        },
+        supply_characteristics: {
+          supply_voltage: formData.supplyVoltage || '',
+          phases: formData.supplyPhases || '',
+          earthing_arrangement: formData.earthingSystem || '',
+          ze: formData.ze || '',
+          pfc: formData.prospectiveFaultCurrent || ''
+        },
+        schedule_of_tests: formData.scheduleOfTests?.map((test: any) => ({
+          circuit_number: test.circuitNumber || '',
+          circuit_description: test.circuitDescription || '',
+          protective_device_type: test.protectiveDeviceType || '',
+          protective_device_rating: test.protectiveDeviceRating || '',
+          r1r2: test.r1r2 || '',
+          zs: test.zs || '',
+          max_zs: test.maxZs || '',
+          insulation_resistance: test.insulationResistance || '',
+          polarity: test.polarity || '',
+          rcd_one_x: test.rcdOneX || '',
+          pfc: test.pfc || ''
+        })) || [],
+        declarations: {
+          designer: formData.designerDeclaration || {},
+          installer: formData.installerDeclaration || {},
+          inspector: formData.inspectorDeclaration || {}
+        }
+      };
+
+      // Call edge function to generate PDF
+      const { data: functionData, error: functionError } = await supabase.functions.invoke('generate-eic-pdf', {
+        body: {
+          formData: pdfData,
+          templateId: '3D25AF58-5256-49B1-8E4E-811602303B89'
+        }
+      });
+
+      if (functionError) {
+        throw new Error(functionError.message || 'Failed to generate PDF');
+      }
+
+      if (!functionData?.success || !functionData?.pdfUrl) {
+        throw new Error(functionData?.error || 'No PDF URL returned');
+      }
+
+      // Download the PDF
+      const { generatePdfFilename } = await import('@/utils/pdfFilenameGenerator');
+      const filename = generatePdfFilename(
+        'EIC',
+        formData.certificateNumber || 'EIC',
+        formData.clientName || 'Client',
+        formData.installationDate || new Date()
+      );
+
+      const response = await fetch(functionData.pdfUrl);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+
+      toast.success('Certificate generated and downloaded');
 
       // Mark design as completed if from Circuit Designer
       if (designId) {
         updateDesignStatus.mutate({ id: designId, status: 'completed' });
       }
     } catch (error) {
-      toast.error('Failed to generate certificate');
+      toast.error(error instanceof Error ? error.message : 'Failed to generate certificate');
     } finally {
       setIsGenerating(false);
     }

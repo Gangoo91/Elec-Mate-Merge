@@ -87,14 +87,6 @@ export const optimizeForPdfGeneration = (data: any): OptimizationResult => {
   const images = findBase64Images(data);
   const totalImageSizeMB = images.reduce((sum, img) => sum + img.sizeMB, 0);
   
-  // Log image findings
-  if (images.length > 0) {
-    console.log(`Found ${images.length} base64 images totaling ${totalImageSizeMB.toFixed(2)}MB:`);
-    images.forEach(img => {
-      console.log(`  - ${img.path}: ${img.sizeMB.toFixed(2)}MB`);
-    });
-  }
-  
   // Check if data is too large
   if (originalSizeMB > MAX_SAFE_SIZE_MB) {
     warnings.push(
@@ -112,15 +104,6 @@ export const optimizeForPdfGeneration = (data: any): OptimizationResult => {
     // Strip images as optimization
     const optimizedData = stripBase64Images(data);
     const optimizedSizeMB = calculateDataSize(optimizedData);
-    
-    // Log sample of preserved data to verify required fields remain
-    console.log('[pdfDataOptimizer] Sample of optimised data:', {
-      clientName: optimizedData.clientName?.substring(0, 20),
-      installationAddress: optimizedData.installationAddress?.substring(0, 30),
-      inspectorName: optimizedData.inspectorName?.substring(0, 20),
-      hasCircuits: !!optimizedData.circuits_json,
-      hasObservations: !!optimizedData.defect_observations_json,
-    });
     
     warnings.push(
       `Attempting PDF generation without embedded images. ` +

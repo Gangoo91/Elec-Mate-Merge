@@ -44,12 +44,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const formDataRef = useRef(formData);
   useEffect(() => {
     formDataRef.current = formData;
-    // Debug: log when arrays change
-    console.log('[EICRSummary] formData updated:', {
-      inspectionItemsCount: formData.inspectionItems?.length || 0,
-      scheduleOfTestsCount: formData.scheduleOfTests?.length || 0,
-      defectObservationsCount: formData.defectObservations?.length || 0
-    });
   }, [formData]);
 
   // Clear JSON cache when form data arrays change (handles dev fill and normal form entry)
@@ -74,11 +68,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const handleCopyJson = async () => {
     // Use ref to get the absolute latest formData (solves closure timing issues)
     const latestFormData = formDataRef.current;
-    console.log('[handleCopyJson] Using formData with arrays:', {
-      inspectionItemsCount: latestFormData.inspectionItems?.length || 0,
-      scheduleOfTestsCount: latestFormData.scheduleOfTests?.length || 0,
-      defectObservationsCount: latestFormData.defectObservations?.length || 0
-    });
     const formattedJson = await formatEICRJson(latestFormData, effectiveReportId);
     navigator.clipboard.writeText(JSON.stringify(formattedJson, null, 2));
     toast({
@@ -104,12 +93,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   };
 
   const handleGenerateCertificate = async () => {
-    console.log('[EICRSummary] Starting local PDF generation:', {
-      clientName: formData.clientName,
-      certificateNumber: formData.certificateNumber,
-      inspectionDate: formData.inspectionDate
-    });
-
     setIsGenerating(true);
     setShowDialog(false); // No dialog needed for local generation
     setPdfUrl(null);
@@ -162,8 +145,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       }
 
       // Step 2: Generate PDF locally using jsPDF (no PDFMonkey dependency)
-      console.log('[EICRSummary] Generating PDF locally with jsPDF...');
-
       await exportCompleteEICRToPDF(
         formData,
         formData.inspectionItems || [],

@@ -43,27 +43,10 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     }
   });
 
-  console.log('[formatEICRJson] Input formData keys:', Object.keys(formData));
-  console.log('[formatEICRJson] Critical fields check:', {
-    clientName: formData.clientName || 'MISSING',
-    installationAddress: formData.installationAddress || 'MISSING',
-    inspectorName: formData.inspectorName || 'MISSING'
-  });
-
-  // DEBUG: Check inspectionItems immediately
-  console.log('>>> [DEBUG] inspectionItems in formData:', {
-    exists: 'inspectionItems' in formData,
-    type: typeof formData['inspectionItems'],
-    isArray: Array.isArray(formData['inspectionItems']),
-    length: Array.isArray(formData['inspectionItems']) ? formData['inspectionItems'].length : 'N/A'
-  });
-
   // Format inspection items as flat array for checklist
   const formatInspectionItems = () => {
     // Get raw value directly from formData, not through get() helper which stringifies
     const rawItems = formData['inspectionItems'];
-    console.log('[formatInspectionItems] Raw inspectionItems type:', typeof rawItems);
-    console.log('[formatInspectionItems] Raw inspectionItems length:', Array.isArray(rawItems) ? rawItems.length : 'not array');
 
     let parsed;
     try {
@@ -74,13 +57,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     }
 
     if (!Array.isArray(parsed)) {
-      console.error('[formatInspectionItems] parsed is not an array:', typeof parsed);
       return [];
-    }
-
-    console.log('[formatInspectionItems] Parsed array length:', parsed.length);
-    if (parsed.length > 0) {
-      console.log('[formatInspectionItems] First item:', JSON.stringify(parsed[0]));
     }
 
     const result = parsed.map((item: any) => ({
@@ -91,11 +68,6 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       clause: item.clause || "",
       notes: item.notes || ""
     }));
-
-    console.log('[formatInspectionItems] Result length:', result.length);
-    if (result.length > 0) {
-      console.log('[formatInspectionItems] First result item:', JSON.stringify(result[0]));
-    }
 
     return result;
   };
@@ -191,7 +163,6 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     
     if (!uuidRegex.test(reportId)) {
       // reportId is the text report_id field, need to fetch the UUID
-      console.log('[formatDefects] Resolving UUID for report_id:', reportId);
       const { data: report } = await supabase
         .from('reports')
         .select('id')
@@ -201,9 +172,6 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       
       if (report?.id) {
         reportUuid = report.id;
-        console.log('[formatDefects] Resolved UUID:', reportUuid);
-      } else {
-        console.error('[formatDefects] Could not resolve report UUID for:', reportId);
       }
     }
     
@@ -215,8 +183,6 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     
     if (error) {
       console.error('[formatDefects] Error fetching photos:', error);
-    } else {
-      console.log('[formatDefects] Found', photos?.length || 0, 'photos for report UUID:', reportUuid);
     }
     
     return defects.map((defect: any) => {

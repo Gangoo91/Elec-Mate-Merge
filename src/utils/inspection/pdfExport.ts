@@ -333,8 +333,6 @@ export const exportCompleteEICRToPDF = async (
   observations: DefectObservation[] = [],
   options: ExportOptions = {}
 ): Promise<void> => {
-  console.log('Starting enhanced EICR PDF export with professional features...');
-  
   // Sanitize all form data before PDF generation
   const { sanitizeObject } = await import('./inputSanitization');
   const sanitizedFormData = sanitizeObject(formData);
@@ -363,12 +361,6 @@ export const exportCompleteEICRToPDF = async (
   // Validate data quality before generation
   const validation = validateEICRData(sanitizedFormData, inspectionItems, observations);
   const qualityMetrics = calculateQualityMetrics(sanitizedFormData, inspectionItems, observations);
-  
-  console.log('Certificate Quality Assessment:', {
-    overall: qualityMetrics.overallScore,
-    completion: validation.completionScore,
-    isValid: validation.isValid
-  });
 
   const pdf = new jsPDF({
     orientation: 'portrait',
@@ -405,14 +397,6 @@ export const exportCompleteEICRToPDF = async (
       ? sanitizedFormData.observations
       : observations;
   const formattedObservations = formatObservationsForPDF(observationsSource);
-
-  // Debug logging for PDF data verification
-  console.log('[PDF Export] Data check:', {
-    clientName: sanitizedFormData.clientName || 'MISSING',
-    scheduleOfTests: sanitizedFormData.scheduleOfTests?.length || 0,
-    inspectionItems: inspectionSource?.length || 0,
-    defectObservations: observationsSource?.length || 0,
-  });
 
   const supplyCharacteristics = formatSupplyCharacteristics(sanitizedFormData);
   const installationDetails = formatInstallationDetails(sanitizedFormData);
@@ -792,8 +776,6 @@ export const exportCompleteEICRToPDF = async (
     console.warn(generateCompletionReport(validation, qualityMetrics));
   }
 
-  console.log('Enhanced EICR PDF generation complete with professional features');
-  
   // Professional filename using standardised generator
   const { generatePdfFilename } = await import('./pdfFilenameGenerator');
   const filename = generatePdfFilename(
@@ -804,6 +786,4 @@ export const exportCompleteEICRToPDF = async (
   );
 
   pdf.save(filename);
-  console.log(`Professional EICR certificate saved: ${filename}`);
-  console.log(`Quality Score: ${qualityMetrics.overallScore}% | Completion: ${validation.completionScore}%`);
 };

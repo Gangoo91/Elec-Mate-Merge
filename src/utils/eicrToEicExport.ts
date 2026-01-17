@@ -3,6 +3,13 @@
  *
  * Transforms completed EICR inspection data into EIC certificate format.
  * Uses measured values from EICR as baseline for EIC pre-fill.
+ *
+ * IMPORTANT: Inspection items are NOT transferred between certificate types.
+ * - EICR has 66 inspection checklist items stored in `inspectionItems`
+ * - EIC has its own inspection checklist stored in `inspections`
+ * - Each certificate type has its own native inspection requirements
+ * - Only client details, installation info, supply characteristics, and
+ *   circuit test data (scheduleOfTests) are transferred
  */
 
 import { TestResult } from '@/types/testResult';
@@ -206,9 +213,15 @@ function mapCircuitToEIC(testResult: TestResult): EICCircuitData {
 
 /**
  * Transforms EICR data to EIC format
+ *
+ * NOTE: This function deliberately DOES NOT transfer inspection items.
+ * - EICR's `inspectionItems` are NOT copied to EIC
+ * - EIC has its own `inspections` object that must be filled in fresh
+ * - Only transferable data (client, installation, supply, circuits) is mapped
  */
 export function transformEICRToEIC(eicrData: EICRFormData): EICFormData {
-  // Map circuits
+  // Map circuits - only schedule of tests transfers, NOT inspection items
+  // Note: EICR inspectionItems are NOT copied - each certificate type has its own inspection checklist
   const circuits = (eicrData.scheduleOfTests || []).map(mapCircuitToEIC);
 
   return {

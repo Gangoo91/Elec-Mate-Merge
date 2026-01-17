@@ -60,10 +60,13 @@ export interface AgentCircuitOutput {
   protectiveDevice: string;
   protectiveDeviceRating: number;
   protectiveDeviceCurve?: string;
+  protectiveDeviceKaRating?: number; // Breaking capacity in kA
   maxZs: number;
   calculatedZs?: number;
   voltageDropCompliance: boolean;
   rcdProtection?: boolean;
+  rcdRating?: number; // RCD rating in mA (30, 100, 300)
   afddRequired?: boolean;
   isRingCircuit?: boolean;
+  circuitTopology?: 'ring' | 'radial'; // Alternative ring circuit indicator
 }

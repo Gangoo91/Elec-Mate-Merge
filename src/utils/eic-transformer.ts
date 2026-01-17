@@ -80,7 +80,7 @@ export function getMaxZsForDevice(
  */
 export function mapLoadTypeToCircuitDescription(loadType: string, customDescription?: string): string {
   if (customDescription) return customDescription;
-  
+
   const descriptions: Record<string, string> = {
     "lighting": "Lighting Circuit",
     "power": "Power Sockets",
@@ -93,8 +93,33 @@ export function mapLoadTypeToCircuitDescription(loadType: string, customDescript
     "ev-charger": "EV Charging Point",
     "heat-pump": "Heat Pump",
   };
-  
+
   return descriptions[loadType] || "General Circuit";
+}
+
+/**
+ * Get BS Standard based on protective device type
+ */
+function getBSStandard(deviceType: string): string {
+  const standards: Record<string, string> = {
+    'MCB': 'BS EN 60898',
+    'RCBO': 'BS EN 61009',
+    'BS88': 'BS 88-2',
+    'BS88-2': 'BS 88-2',
+    'BS88-3': 'BS 88-3',
+    'MCCB': 'BS EN 60947-2',
+    'BS1361': 'BS 1361',
+    'BS3036': 'BS 3036',
+    'HRC': 'BS 88-2',
+  };
+  // Check for device type (case-insensitive)
+  const upperType = deviceType?.toUpperCase() || '';
+  for (const [key, value] of Object.entries(standards)) {
+    if (upperType.includes(key.toUpperCase())) {
+      return value;
+    }
+  }
+  return 'BS EN 60898'; // Default to MCB standard
 }
 
 /**
@@ -137,6 +162,13 @@ export function transformAgentOutputToEIC(
       "103": "103 (Clipped direct vertical)",
     };
     
+    // Use actual kaRating from circuit data, or default to 6kA
+    const kaRating = circuit.protectiveDeviceKaRating ?? 6;
+    // Detect ring circuit from either flag or topology
+    const isRing = circuit.isRingCircuit || circuit.circuitTopology === 'ring';
+    // Get actual RCD rating if available
+    const rcdRatingValue = circuit.rcdRating ? `${circuit.rcdRating}mA` : '30mA';
+
     const eicCircuit: EICCircuitData = {
       circuitNumber: `C${circuit.circuitNumber}`,
       phaseType: circuit.phases === "three" ? "three" : "single",
@@ -148,9 +180,9 @@ export function transformAgentOutputToEIC(
       protectiveDeviceType: deviceType,
       protectiveDeviceCurve: curve,
       protectiveDeviceRating: `${rating}A`,
-      protectiveDeviceKaRating: "6kA", // Default, can be enhanced
-      bsStandard: "BS EN 60898",
-      
+      protectiveDeviceKaRating: `${kaRating}kA`,
+      bsStandard: getBSStandard(deviceType),
+
       // Expected test values
       r1r2: `${expectedR1R2.toFixed(3)}Ω (expected)`,
       insulationTestVoltage: circuit.phases === "single" ? "500V DC" : "500V DC",
@@ -161,9 +193,9 @@ export function transformAgentOutputToEIC(
       pfc: "To be tested",
       functionalTesting: "To be tested",
     };
-    
+
     // Ring circuit fields
-    if (circuit.isRingCircuit) {
+    if (isRing) {
       const ringR1Expected = (CONDUCTOR_RESISTANCE[liveSize] / 1000) * lengthM * 1.38;
       eicCircuit.ringR1 = `${ringR1Expected.toFixed(3)}Ω (expected)`;
       eicCircuit.ringRn = `${ringR1Expected.toFixed(3)}Ω (expected)`;
@@ -171,19 +203,19 @@ export function transformAgentOutputToEIC(
       eicCircuit.ringContinuityLive = "To be tested";
       eicCircuit.ringContinuityNeutral = "To be tested";
     }
-    
+
     // RCD fields
     if (circuit.rcdProtection) {
-      eicCircuit.rcdRating = "30mA";
+      eicCircuit.rcdRating = rcdRatingValue;
       eicCircuit.rcdOneX = "To be tested (≤300ms)";
       eicCircuit.rcdTestButton = "To be tested";
     }
-    
+
     // AFDD fields
     if (circuit.afddRequired) {
       eicCircuit.afddTest = "To be tested";
     }
-    
+
     return eicCircuit;
   });
   

@@ -106,7 +106,6 @@ const validateAndEnrichReportData = (report: CloudReport): {
   if (!data.clientName || data.clientName.trim() === '') {
     if (report.client_name) {
       data.clientName = report.client_name;
-      console.log(`[bulkPdfExport] Enriched clientName from database: ${report.client_name}`);
     } else {
       missingFields.push('clientName');
     }
@@ -116,7 +115,6 @@ const validateAndEnrichReportData = (report: CloudReport): {
   if (!data.installationAddress || data.installationAddress.trim() === '') {
     if (report.installation_address) {
       data.installationAddress = report.installation_address;
-      console.log(`[bulkPdfExport] Enriched installationAddress from database: ${report.installation_address}`);
     } else if (reportType === 'eicr' || reportType === 'eic') {
       missingFields.push('installationAddress');
     }
@@ -126,7 +124,6 @@ const validateAndEnrichReportData = (report: CloudReport): {
   if (!data.inspectorName || data.inspectorName.trim() === '') {
     if (report.inspector_name) {
       data.inspectorName = report.inspector_name;
-      console.log(`[bulkPdfExport] Enriched inspectorName from database: ${report.inspector_name}`);
     } else if (reportType === 'eicr' || reportType === 'eic') {
       missingFields.push('inspectorName');
     }
@@ -144,9 +141,7 @@ const validateAndEnrichReportData = (report: CloudReport): {
 const createZipBundle = async (pdfs: PdfBlobData[]): Promise<Blob> => {
   const JSZip = (await import('jszip')).default;
   const zip = new JSZip();
-  
-  console.log(`[bulkPdfExport] Creating ZIP bundle with ${pdfs.length} PDFs...`);
-  
+
   // Add each PDF to the ZIP
   for (const pdf of pdfs) {
     zip.file(pdf.filename, pdf.blob);
@@ -158,8 +153,7 @@ const createZipBundle = async (pdfs: PdfBlobData[]): Promise<Blob> => {
     compression: 'DEFLATE',
     compressionOptions: { level: 6 } // Balance between size and speed
   });
-  
-  console.log(`[bulkPdfExport] ZIP bundle created: ${(zipBlob.size / 1024 / 1024).toFixed(2)}MB`);
+
   return zipBlob;
 };
 
@@ -183,9 +177,7 @@ export const generateBulkPDFs = async (
   // Determine if we should use ZIP bundling
   // Use ZIP if 5+ PDFs, unless explicitly disabled
   const shouldUseZip = options?.useZipBundle ?? (total >= 5);
-  
-  console.log(`[bulkPdfExport] Starting bulk export: ${total} reports, ZIP bundling: ${shouldUseZip}`);
-  
+
   // Array to collect PDF blobs for ZIP bundling
   const pdfBlobs: PdfBlobData[] = [];
   
@@ -193,8 +185,7 @@ export const generateBulkPDFs = async (
   for (const reportId of reportIds) {
     try {
       current++;
-      console.log(`[bulkPdfExport] ═══ Processing ${current}/${total}: ${reportId} ═══`);
-      
+
       // Notify progress
       if (options?.onProgress) {
         options.onProgress(current, total, reportId);
@@ -222,8 +213,7 @@ export const generateBulkPDFs = async (
       
       // Optimise data before sending (use enriched data)
       const optimizationResult = optimizeForPdfGeneration(validation.data);
-      console.log(`[bulkPdfExport] Data size for ${reportId}: ${optimizationResult.originalSizeMB.toFixed(2)}MB → ${optimizationResult.optimizedSizeMB.toFixed(2)}MB`);
-      
+
       if (optimizationResult.warnings.length > 0) {
         console.warn(`[bulkPdfExport] Warnings for ${reportId}:`, optimizationResult.warnings);
       }
@@ -235,7 +225,6 @@ export const generateBulkPDFs = async (
       }
       
       // Call edge function to generate PDF
-      console.log(`[bulkPdfExport] Invoking ${edgeFunctionName} for ${reportId}...`);
       const { data: pdfResult, error: pdfError } = await supabase.functions.invoke(edgeFunctionName, {
         body: requestBody
       });
@@ -266,11 +255,9 @@ export const generateBulkPDFs = async (
       if (shouldUseZip) {
         // Add to collection for ZIP bundling
         pdfBlobs.push({ filename, blob: pdfBlob, reportId });
-        console.log(`[bulkPdfExport] Added ${filename} to ZIP bundle`);
       } else {
         // Download immediately
         downloadBlob(pdfBlob, filename);
-        console.log(`[bulkPdfExport] Downloaded ${filename}`);
       }
       
       // Update report with PDF URL
@@ -283,8 +270,7 @@ export const generateBulkPDFs = async (
         .eq('id', report.id);
       
       result.successful++;
-      console.log(`[bulkPdfExport] Successfully exported ${reportId}`);
-      
+
     } catch (error) {
       console.error(`[bulkPdfExport] Failed to export ${reportId}:`, error);
       result.failed++;
@@ -313,7 +299,6 @@ export const generateBulkPDFs = async (
   // If using ZIP bundling and we have successful PDFs, create and download the ZIP
   if (shouldUseZip && pdfBlobs.length > 0) {
     try {
-      console.log(`[bulkPdfExport] Creating ZIP bundle with ${pdfBlobs.length} PDFs...`);
       const zipBlob = await createZipBundle(pdfBlobs);
       
       // Generate ZIP filename with current date
@@ -323,7 +308,6 @@ export const generateBulkPDFs = async (
       
       // Download the ZIP file
       downloadBlob(zipBlob, zipFilename);
-      console.log(`[bulkPdfExport] ZIP bundle downloaded: ${zipFilename}`);
     } catch (zipError) {
       console.error('[bulkPdfExport] Failed to create ZIP bundle:', zipError);
       // Don't fail the entire export if ZIP creation fails
@@ -331,7 +315,6 @@ export const generateBulkPDFs = async (
       result.errors.push('ZIP creation failed, but PDFs were generated successfully');
     }
   }
-  
-  console.log(`[bulkPdfExport] Bulk export complete: ${result.successful} successful, ${result.failed} failed`);
+
   return result;
 };
