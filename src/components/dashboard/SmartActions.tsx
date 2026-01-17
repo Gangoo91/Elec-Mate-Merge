@@ -5,6 +5,7 @@
  * Each action has colored background, title, description, and action buttons.
  */
 
+import { forwardRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -84,53 +85,58 @@ const itemVariants = {
   },
 };
 
-function ActionCard({ action }: { action: DashboardActionItem }) {
-  const navigate = useNavigate();
-  const styles = typeStyles[action.type];
-  const Icon = styles.icon;
+const ActionCard = forwardRef<HTMLDivElement, { action: DashboardActionItem }>(
+  ({ action }, ref) => {
+    const navigate = useNavigate();
+    const styles = typeStyles[action.type];
+    const Icon = styles.icon;
 
-  return (
-    <motion.div
-      variants={itemVariants}
-      className={cn(
-        // Base
-        'relative group',
-        // Glass morphism
-        'glass-premium rounded-xl',
-        // Consistent height to match skeleton
-        'min-h-[5rem]',
-        // Left border accent
-        'border-l-2',
-        styles.borderColor,
-        // Touch optimization + transform hint
-        'touch-manipulation will-change-transform'
-      )}
-    >
-      <div className="p-3 sm:p-4 flex items-start gap-3">
-        {/* Icon */}
-        <div className={cn('flex-shrink-0 p-2 rounded-lg', styles.iconBg)}>
-          <Icon className={cn('h-4 w-4 sm:h-5 sm:w-5', styles.iconColor)} />
-        </div>
+    return (
+      <motion.div
+        ref={ref}
+        variants={itemVariants}
+        className={cn(
+          // Base - relative for absolute button positioning on tablet+
+          'relative group',
+          // Glass morphism
+          'glass-premium rounded-xl',
+          // Left border accent
+          'border-l-2',
+          styles.borderColor,
+          // Touch optimization + transform hint
+          'touch-manipulation will-change-transform'
+        )}
+      >
+        <div className="p-3 sm:p-4 sm:pr-28 flex items-start gap-3">
+          {/* Icon */}
+          <div className={cn('flex-shrink-0 p-2 rounded-lg', styles.iconBg)}>
+            <Icon className={cn('h-4 w-4 sm:h-5 sm:w-5', styles.iconColor)} />
+          </div>
 
-        {/* Content */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-2">
-            <div>
-              <p className="text-sm font-medium text-white truncate">
+          {/* Content - stacks vertically on mobile */}
+          <div className="flex-1 min-w-0">
+            {/* Title and description */}
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-white line-clamp-1">
                 {action.title}
               </p>
-              <p className="text-xs text-white/70 mt-0.5 truncate">
+              <p className="text-xs text-white/70 mt-0.5 line-clamp-1">
                 {action.description}
               </p>
             </div>
 
-            {/* Action button */}
+            {/* Action button - full width on mobile, absolute on tablet+ */}
             <Button
               variant="ghost"
               size="sm"
               onClick={() => navigate(action.path)}
               className={cn(
-                'flex-shrink-0 h-10 px-3 text-xs font-medium',
+                // Mobile: full width below text
+                'mt-2 w-full h-10 text-xs font-medium',
+                // Tablet+: absolute positioned right
+                'sm:absolute sm:right-3 sm:top-1/2 sm:-translate-y-1/2',
+                'sm:w-auto sm:mt-0 sm:px-3',
+                // Styling
                 'bg-white/[0.05] hover:bg-white/[0.1] active:bg-white/[0.15]',
                 'text-white hover:text-white',
                 'transition-colors touch-manipulation'
@@ -141,10 +147,11 @@ function ActionCard({ action }: { action: DashboardActionItem }) {
             </Button>
           </div>
         </div>
-      </div>
-    </motion.div>
-  );
-}
+      </motion.div>
+    );
+  }
+);
+ActionCard.displayName = 'ActionCard';
 
 function EmptyState() {
   return (
