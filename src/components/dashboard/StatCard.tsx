@@ -103,13 +103,13 @@ export function StatCard({
         // Base styling
         'relative overflow-hidden h-full',
         // Responsive border radius
-        'rounded-lg sm:rounded-xl',
+        'rounded-xl',
         // Glass morphism
         'glass-premium',
-        // Compact mobile padding, comfortable desktop
-        'p-2.5 sm:p-4',
-        // More compact mobile height
-        'min-h-[72px] sm:min-h-[100px]',
+        // Padding
+        'p-3 sm:p-4',
+        // Fixed height for consistency
+        'h-[80px] sm:h-[100px]',
         // Cursor for clickable
         isClickable && 'cursor-pointer',
         // Touch optimization
@@ -117,58 +117,56 @@ export function StatCard({
         className
       )}
     >
-      {/* Content */}
-      <div className="flex items-start justify-between gap-1.5 sm:gap-3">
-        {/* Icon - compact mobile sizing */}
-        <div className={cn(
-          'flex-shrink-0 p-1.5 sm:p-2.5 rounded-md sm:rounded-xl',
-          styles.iconBg
-        )}>
-          <Icon className={cn('h-3.5 w-3.5 sm:h-5 sm:w-5', styles.iconColor)} />
-        </div>
-
-        {/* Stats */}
-        <div className="flex-1 min-w-0 text-right">
-          {/* Value - compact mobile text */}
-          <div className="flex items-baseline justify-end gap-0.5">
-            <AnimatedCounter
-              value={value}
-              prefix={prefix}
-              suffix={suffix}
-              decimals={decimals}
-              formatAsCurrency={formatAsCurrency}
-              className={cn(
-                'text-lg sm:text-2xl font-bold tracking-tight',
-                styles.accentColor
-              )}
-            />
+      {/* Content - centered vertically */}
+      <div className="flex flex-col justify-center h-full">
+        {/* Top row: Icon + Value */}
+        <div className="flex items-center gap-2">
+          {/* Icon - small accent */}
+          <div className={cn(
+            'flex-shrink-0 p-1.5 rounded-lg',
+            styles.iconBg
+          )}>
+            <Icon className={cn('h-4 w-4', styles.iconColor)} />
           </div>
 
-          {/* Label - compact */}
-          <p className="text-[9px] sm:text-xs text-white/70 mt-0.5 truncate">{label}</p>
-
-          {/* Trend indicator - hidden on mobile for cleaner look */}
-          {trendDirection && (
-            <div className={cn(
-              'hidden sm:inline-flex items-center gap-0.5 mt-1.5 text-[10px] font-medium px-1.5 py-0.5 rounded-full',
-              trendDirection === 'up' && 'bg-green-500/10 text-green-400',
-              trendDirection === 'down' && 'bg-red-500/10 text-red-400',
-              trendDirection === 'neutral' && 'bg-white/5 text-white/60'
-            )}>
-              {trendDirection === 'up' && <TrendingUp className="h-3 w-3" />}
-              {trendDirection === 'down' && <TrendingDown className="h-3 w-3" />}
-              {trendDirection === 'neutral' && <Minus className="h-3 w-3" />}
-              {trend !== undefined && (
-                <span>{trend > 0 ? '+' : ''}{trend}%</span>
-              )}
-            </div>
-          )}
-
-          {/* Subtitle - hidden on mobile for cleaner look */}
-          {subtitle && (
-            <p className="hidden sm:block text-[10px] text-white/60 mt-1 truncate">{subtitle}</p>
-          )}
+          {/* Value - prominent */}
+          <AnimatedCounter
+            value={value}
+            prefix={prefix}
+            suffix={suffix}
+            decimals={decimals}
+            formatAsCurrency={formatAsCurrency}
+            className={cn(
+              'text-xl sm:text-2xl font-bold tracking-tight',
+              styles.accentColor
+            )}
+          />
         </div>
+
+        {/* Label */}
+        <p className="text-[11px] sm:text-xs text-white/70 mt-1.5 truncate">{label}</p>
+
+        {/* Subtitle - shown on all sizes if present */}
+        {subtitle && (
+          <p className="text-[10px] text-white/50 mt-0.5 truncate">{subtitle}</p>
+        )}
+
+        {/* Trend indicator */}
+        {trendDirection && (
+          <div className={cn(
+            'inline-flex items-center gap-0.5 mt-1 text-[10px] font-medium',
+            trendDirection === 'up' && 'text-green-400',
+            trendDirection === 'down' && 'text-red-400',
+            trendDirection === 'neutral' && 'text-white/60'
+          )}>
+            {trendDirection === 'up' && <TrendingUp className="h-3 w-3" />}
+            {trendDirection === 'down' && <TrendingDown className="h-3 w-3" />}
+            {trendDirection === 'neutral' && <Minus className="h-3 w-3" />}
+            {trend !== undefined && (
+              <span>{trend > 0 ? '+' : ''}{trend}%</span>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Progress bar */}
