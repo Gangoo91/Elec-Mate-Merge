@@ -1,13 +1,7 @@
-import { Brain, Search, Wrench, AlertTriangle, CheckCircle, Megaphone } from "lucide-react";
+import { Search, Wrench, AlertTriangle, CheckCircle, Megaphone } from "lucide-react";
 
 export const toolOptions = [
-  { 
-    value: "assistant", 
-    label: "AI Assistant", 
-    icon: Brain,
-    description: "Your personal AI assistant for electrical queries and advice"
-  },
-  { 
+  {
     value: "component-identify", 
     label: "Component Identification", 
     icon: Search,

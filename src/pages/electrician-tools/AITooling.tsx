@@ -5,7 +5,6 @@ import { toolOptions } from "@/components/electrician-tools/ai-tools/constants";
 
 // Color assignments for each tool to add visual variety
 const toolColors: Record<string, { gradient: string; bgGradient: string }> = {
-  'assistant': { gradient: 'from-purple-400 to-purple-500', bgGradient: 'from-purple-500/20 to-purple-500/10' },
   'component-identify': { gradient: 'from-blue-400 to-blue-500', bgGradient: 'from-blue-500/20 to-blue-500/10' },
   'wiring-instruction': { gradient: 'from-emerald-400 to-green-500', bgGradient: 'from-emerald-500/20 to-green-500/10' },
   'fault-diagnosis': { gradient: 'from-orange-400 to-red-500', bgGradient: 'from-orange-500/20 to-red-500/10' },

@@ -90,13 +90,13 @@ export const InspectorMessage = memo(function InspectorMessage({
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-semibold text-foreground flex items-center gap-1.5">
-              {message.agentName || 'BS 7671 Assistant'}
+              {message.agentName || 'Elec-AI'}
               {isStreaming && (
-                <Sparkles className="w-3.5 h-3.5 text-elec-yellow animate-pulse" />
+                <Sparkles className="w-3.5 h-3.5 text-purple-400 animate-pulse" />
               )}
             </span>
             <span className="text-[11px] text-muted-foreground">
-              {message.agentName === 'Dave' ? 'Master Electrician • 20+ Years' : '18th Edition Expert'}
+              {message.agentName === 'Dave' ? 'Master Electrician • 20+ Years' : 'Electrical Expert'}
             </span>
           </div>
         </div>
@@ -242,7 +242,7 @@ export const InspectorMessage = memo(function InspectorMessage({
             <div className="border-t border-border/30 bg-muted/30 px-4 py-2 flex items-center justify-between">
               <span className="text-[11px] text-muted-foreground flex items-center gap-1.5">
                 <Zap className="w-3 h-3" />
-                Based on BS 7671:2018+A3:2024
+                Powered by Elec-AI • BS 7671
               </span>
 
               <Button
