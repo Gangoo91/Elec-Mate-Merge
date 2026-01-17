@@ -149,13 +149,27 @@ serve(async (req) => {
 
     // Extract last user message for RAG search
     const lastUserMessage = messages.filter((m: any) => m.role === 'user').pop();
-    const queryText = lastUserMessage?.content || '';
+    let queryText = lastUserMessage?.content || '';
+
+    // If image with minimal text, use broad electrical keywords for RAG
+    const isMinimalText = !queryText || queryText.length < 20 ||
+      /^(what('s| is) this|identify|help|look at this|check this)\??$/i.test(queryText.trim());
+
+    if (hasImage && isMinimalText) {
+      // Add common electrical component keywords for broad RAG coverage
+      queryText = queryText + ' electrical component consumer unit MCB RCD RCBO circuit breaker wiring installation cable accessory socket switch isolator';
+      console.log('📸 Image with minimal text - using broad electrical RAG search');
+    }
 
     console.log('🔍 Query:', queryText);
 
     // STEP 1: Classify query for smart RAG routing
     const ragStartTime = Date.now();
     const classification = classifyQuery(queryText);
+    // For images, always include design knowledge (might be sizing/identification)
+    if (hasImage) {
+      classification.needsDesignKnowledge = true;
+    }
     console.log(`📊 Query Type: ${classification.type} | Needs Design: ${classification.needsDesignKnowledge}`);
 
     // STEP 2: ULTRA-FAST GIN-INDEXED KEYWORD SEARCH
@@ -249,7 +263,26 @@ serve(async (req) => {
     if (practicalItems.length > 0) knowledgeSources.push('practical installation procedures');
     if (designItems.length > 0) knowledgeSources.push('design calculations');
 
+    // Image analysis instructions (only added when image present)
+    const imageInstructions = hasImage ? `
+## IMAGE ANALYSIS MODE
+The user has shared an image. You MUST:
+1. **Identify what's in the image** - component type, manufacturer if visible, ratings, model
+2. **Assess the installation** - is it compliant? Any visible issues?
+3. **Provide relevant BS 7671 requirements** for that component/installation
+4. **Give practical guidance** - what the electrician should know or do
+
+When analyzing images:
+- Look for component ratings (A, kA, mA, V)
+- Check for visible damage, incorrect installation, or non-compliance
+- Identify cable colours and sizes if visible
+- Note any labelling or certification marks (CE, UKCA, BS EN)
+- If it's a consumer unit, identify the devices and layout
+
+` : '';
+
     const systemPrompt = `You are Elec-AI, an expert UK electrician and technical advisor providing comprehensive, best-in-class guidance on BS 7671 (18th Edition), electrical installations, testing, and design.
+${imageInstructions}
 
 ## Your Knowledge Base
 ${knowledgeSources.map(s => `• ${s}`).join('\n')}
